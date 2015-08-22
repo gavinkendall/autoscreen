@@ -1,5 +1,6 @@
 # autoscreen
 Auto Screen Capture
+
 Small and portable automated screen capture utility.
 
 This C# application enables you to automatically take
