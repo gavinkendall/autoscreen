@@ -16,3 +16,7 @@ particular days of the week or every day.
 A calendar is included to help you keep track of what days
 screenshots were taken and a slideshow module can play through
 that day's list of screenshots.
+
+This is version 2.0.5 which has been directly pulled
+from my SourceForge repository:
+https://sourceforge.net/p/autoscreen/code/ci/master/tree/
