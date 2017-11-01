@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.5.1
+// Auto Screen Capture 2.0.5.2
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -179,6 +179,7 @@ namespace autoscreen
             toolStripMenuItemCloseWindowOnStartCapture.Checked = Properties.Settings.Default.CloseWindowOnStartCaptureCheck;
             toolStripMenuItemSearchOnStopScreenCapture.Checked = Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck;
             toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck;
+            toolStripMenuItemVirtualScreenMode.Checked = Properties.Settings.Default.VirtualScreenModeCheck;
 
             checkBoxScheduleStopAt.Checked = Properties.Settings.Default.CaptureStopAtCheck;
             checkBoxScheduleStartAt.Checked = Properties.Settings.Default.CaptureStartAtCheck;
@@ -604,6 +605,8 @@ namespace autoscreen
         private void StartScreenCapture(string folder, string format, int delay, int limit, int ratio, bool initial)
         {
             checkBoxDemoMode.Checked = false;
+
+            ScreenCapture.VirtualScreenMode = toolStripMenuItemVirtualScreenMode.Checked;
 
             if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
             {
@@ -1177,6 +1180,7 @@ namespace autoscreen
             Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
             Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck = toolStripMenuItemSearchOnStopScreenCapture.Checked;
             Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
+            Properties.Settings.Default.VirtualScreenModeCheck = toolStripMenuItemVirtualScreenMode.Checked;
 
             Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;
             Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
@@ -1657,25 +1661,20 @@ namespace autoscreen
         {
             ArrayList images = new ArrayList();
 
+            ScreenCapture.VirtualScreenMode = toolStripMenuItemVirtualScreenMode.Checked;
+
             if (demo)
             {
                 int count = 0;
 
-                if (Screen.AllScreens.Length > 1)
+                foreach (Screen screen in Screen.AllScreens)
                 {
-                    foreach (Screen screen in Screen.AllScreens)
-                    {
-                        count++;
+                    count++;
 
-                        if (count <= ScreenCapture.SCREEN_MAX)
-                        {
-                            images.Add(ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value));
-                        }
+                    if (count <= ScreenCapture.SCREEN_MAX)
+                    {
+                        images.Add(ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value));
                     }
-                }
-                else
-                {
-                    images.Add(ScreenCapture.GetScreenBitmap(Screen.PrimaryScreen, (int)numericUpDownImageResolutionRatio.Value));
                 }
             }
             else

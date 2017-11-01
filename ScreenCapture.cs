@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.5.1
+// Auto Screen Capture 2.0.5.2
 // autoscreen.ScreenCapture.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -37,6 +37,8 @@ namespace autoscreen
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
+        private static bool m_virtualScreenMode;
+
         public static void Initialize()
         {
             m_timer.Tick += new System.EventHandler(m_timer_Tick);
@@ -69,13 +71,28 @@ namespace autoscreen
             }
         }
 
+        public static bool VirtualScreenMode
+        {
+            get
+            {
+                return m_virtualScreenMode;
+            }
+
+            set
+            {
+                m_virtualScreenMode = value;
+            }
+        }
+
         public static Bitmap GetScreenBitmap(Screen screen, int ratio)
         {
-            int sourceWidth = screen.Bounds.Width;
-            int sourceHeight = screen.Bounds.Height;
+            int sourceWidth = m_virtualScreenMode ? SystemInformation.VirtualScreen.Width : screen.Bounds.Width;
+            int sourceHeight = m_virtualScreenMode ? SystemInformation.VirtualScreen.Height : screen.Bounds.Height;
 
             int destinationWidth = sourceWidth;
             int destinationHeight = sourceHeight;
+
+            Size blockRegionSize = new Size(sourceWidth, sourceHeight);
 
             if (ratio < IMAGE_RESOLUTION_RATIO_MIN || ratio > IMAGE_RESOLUTION_RATIO_MAX) { ratio = 100; }
 
@@ -86,7 +103,7 @@ namespace autoscreen
 
             Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
             Graphics graphicsSource = Graphics.FromImage(bitmapSource);
-            graphicsSource.CopyFromScreen(screen.Bounds.X, screen.Bounds.Y, 0, 0, screen.Bounds.Size);
+            graphicsSource.CopyFromScreen(screen.Bounds.X, screen.Bounds.Y, 0, 0, blockRegionSize);
 
             Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
             Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
@@ -147,25 +164,18 @@ namespace autoscreen
 
                 string filename = m_folder + StringHelper.ParseTags("%CurrentDate%") + "\\%screen%\\" + StringHelper.ParseTags("%CurrentDate%_%CurrentTime%");
 
-                if (Screen.AllScreens.Length > 1)
+                foreach (Screen screen in Screen.AllScreens)
                 {
-                    foreach (Screen screen in Screen.AllScreens)
+                    Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
+
+                    count++;
+
+                    if (count <= SCREEN_MAX)
                     {
-                        Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
-
-                        count++;
-
-                        if (count <= SCREEN_MAX)
-                        {
-                            SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
-                        }
-
-                        System.GC.Collect();
+                        SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
                     }
-                }
-                else
-                {
-                    SaveToFile(GetScreenBitmap(Screen.PrimaryScreen, m_ratio), m_format, filename.Replace("%screen%", "1") + ImageFormatCollection.GetByName(m_format).Extension);
+
+                    System.GC.Collect();
                 }
 
                 SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);

@@ -38,10 +38,13 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemOpenAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOpenOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCloseWindowOnStartCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSearchOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemVirtualScreenMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripLabelDemo = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelSchedule = new System.Windows.Forms.ToolStripStatusLabel();
@@ -148,7 +151,6 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.checkBoxEnableKeylogging = new System.Windows.Forms.CheckBox();
-            this.toolStripMenuItemCloseWindowOnStartCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -226,6 +228,8 @@
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture,
             this.toolStripMenuItemSearchOnStopScreenCapture,
             this.toolStripSeparator5,
+            this.toolStripMenuItemVirtualScreenMode,
+            this.toolStripSeparator8,
             this.toolStripMenuItemExitOnCloseWindow});
             this.toolStripDropDownButtonOptions.Image = global::autoscreen.Properties.Resources.options;
             this.toolStripDropDownButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -266,6 +270,13 @@
             this.toolStripMenuItemOpenOnStopScreenCapture.Size = new System.Drawing.Size(455, 22);
             this.toolStripMenuItemOpenOnStopScreenCapture.Text = "Open this window after stopping the running screen capture session";
             // 
+            // toolStripMenuItemCloseWindowOnStartCapture
+            // 
+            this.toolStripMenuItemCloseWindowOnStartCapture.CheckOnClick = true;
+            this.toolStripMenuItemCloseWindowOnStartCapture.Name = "toolStripMenuItemCloseWindowOnStartCapture";
+            this.toolStripMenuItemCloseWindowOnStartCapture.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemCloseWindowOnStartCapture.Text = "Close this window when starting a screen capture session";
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -289,6 +300,18 @@
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(452, 6);
+            // 
+            // toolStripMenuItemVirtualScreenMode
+            // 
+            this.toolStripMenuItemVirtualScreenMode.CheckOnClick = true;
+            this.toolStripMenuItemVirtualScreenMode.Name = "toolStripMenuItemVirtualScreenMode";
+            this.toolStripMenuItemVirtualScreenMode.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemVirtualScreenMode.Text = "Virtual Screen Mode";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(452, 6);
             // 
             // toolStripMenuItemExitOnCloseWindow
             // 
@@ -1444,13 +1467,6 @@
             this.checkBoxEnableKeylogging.UseVisualStyleBackColor = true;
             this.checkBoxEnableKeylogging.Visible = false;
             // 
-            // toolStripMenuItemCloseWindowOnStartCapture
-            // 
-            this.toolStripMenuItemCloseWindowOnStartCapture.CheckOnClick = true;
-            this.toolStripMenuItemCloseWindowOnStartCapture.Name = "toolStripMenuItemCloseWindowOnStartCapture";
-            this.toolStripMenuItemCloseWindowOnStartCapture.Size = new System.Drawing.Size(455, 22);
-            this.toolStripMenuItemCloseWindowOnStartCapture.Text = "Close this window when starting a screen capture session";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1648,5 +1664,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCloseWindowOnStartCapture;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemVirtualScreenMode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
     }
 }
