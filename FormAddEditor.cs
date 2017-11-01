@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.5
+// Auto Screen Capture 2.0.5.1
 // autoscreen.FormAddEditor.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Wednesday, 27 November 2013
+// Thursday, 15 May 2008 - Wednesday, 1 November 2017
 
 using System;
 using System.IO;

@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.5
+// Auto Screen Capture 2.0.5.1
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Wednesday, 27 November 2013
+// Thursday, 15 May 2008 - Wednesday, 1 November 2017
 
 using System;
 using System.IO;
@@ -1661,14 +1661,21 @@ namespace autoscreen
             {
                 int count = 0;
 
-                foreach (Screen screen in Screen.AllScreens)
+                if (Screen.AllScreens.Length > 1)
                 {
-                    count++;
-
-                    if (count <= ScreenCapture.SCREEN_MAX)
+                    foreach (Screen screen in Screen.AllScreens)
                     {
-                        images.Add(ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value));
+                        count++;
+
+                        if (count <= ScreenCapture.SCREEN_MAX)
+                        {
+                            images.Add(ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value));
+                        }
                     }
+                }
+                else
+                {
+                    images.Add(ScreenCapture.GetScreenBitmap(Screen.PrimaryScreen, (int)numericUpDownImageResolutionRatio.Value));
                 }
             }
             else

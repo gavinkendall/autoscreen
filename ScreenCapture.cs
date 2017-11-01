@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.5
+// Auto Screen Capture 2.0.5.1
 // autoscreen.ScreenCapture.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Wednesday, 27 November 2013
+// Thursday, 15 May 2008 - Wednesday, 1 November 2017
 
 using System;
 using System.IO;
@@ -147,18 +147,25 @@ namespace autoscreen
 
                 string filename = m_folder + StringHelper.ParseTags("%CurrentDate%") + "\\%screen%\\" + StringHelper.ParseTags("%CurrentDate%_%CurrentTime%");
 
-                foreach (Screen screen in Screen.AllScreens)
+                if (Screen.AllScreens.Length > 1)
                 {
-                    Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
-
-                    count++;
-
-                    if (count <= SCREEN_MAX)
+                    foreach (Screen screen in Screen.AllScreens)
                     {
-                        SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
-                    }
+                        Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
 
-                    System.GC.Collect();
+                        count++;
+
+                        if (count <= SCREEN_MAX)
+                        {
+                            SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
+                        }
+
+                        System.GC.Collect();
+                    }
+                }
+                else
+                {
+                    SaveToFile(GetScreenBitmap(Screen.PrimaryScreen, m_ratio), m_format, filename.Replace("%screen%", "1") + ImageFormatCollection.GetByName(m_format).Extension);
                 }
 
                 SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
