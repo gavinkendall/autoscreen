@@ -26,6 +26,8 @@ namespace autoscreen
         [DllImport("user32.dll")]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
+        private static int m_width;
+        private static int m_height;
         private static Timer m_timer = new Timer();
 
         public static event EventHandler OnCapturing = delegate { };
@@ -36,8 +38,6 @@ namespace autoscreen
         private const int CAPTURE_LIMIT_MAX = 9999;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
-
-        private static bool m_virtualScreenMode;
 
         public static void Initialize()
         {
@@ -71,23 +71,36 @@ namespace autoscreen
             }
         }
 
-        public static bool VirtualScreenMode
+        public static int Width
         {
             get
             {
-                return m_virtualScreenMode;
+                return m_width;
             }
 
             set
             {
-                m_virtualScreenMode = value;
+                m_width = value;
+            }
+        }
+
+        public static int Height
+        {
+            get
+            {
+                return m_height;
+            }
+
+            set
+            {
+                m_height = value;
             }
         }
 
         public static Bitmap GetScreenBitmap(Screen screen, int ratio)
         {
-            int sourceWidth = m_virtualScreenMode ? SystemInformation.VirtualScreen.Width : screen.Bounds.Width;
-            int sourceHeight = m_virtualScreenMode ? SystemInformation.VirtualScreen.Height : screen.Bounds.Height;
+            int sourceWidth = m_width <= screen.Bounds.Width ? m_width : screen.Bounds.Width;
+            int sourceHeight = m_height <= screen.Bounds.Height ? m_height : screen.Bounds.Height;
 
             int destinationWidth = sourceWidth;
             int destinationHeight = sourceHeight;
@@ -166,12 +179,12 @@ namespace autoscreen
 
                 foreach (Screen screen in Screen.AllScreens)
                 {
-                    Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
-
                     count++;
 
                     if (count <= SCREEN_MAX)
                     {
+                        Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
+
                         SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
                     }
 

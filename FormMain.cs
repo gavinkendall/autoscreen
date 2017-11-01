@@ -179,7 +179,6 @@ namespace autoscreen
             toolStripMenuItemCloseWindowOnStartCapture.Checked = Properties.Settings.Default.CloseWindowOnStartCaptureCheck;
             toolStripMenuItemSearchOnStopScreenCapture.Checked = Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck;
             toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck;
-            toolStripMenuItemVirtualScreenMode.Checked = Properties.Settings.Default.VirtualScreenModeCheck;
 
             checkBoxScheduleStopAt.Checked = Properties.Settings.Default.CaptureStopAtCheck;
             checkBoxScheduleStartAt.Checked = Properties.Settings.Default.CaptureStartAtCheck;
@@ -198,6 +197,33 @@ namespace autoscreen
 
             dateTimePickerScheduleStopAt.Value = Properties.Settings.Default.CaptureStopAtValue;
             dateTimePickerScheduleStartAt.Value = Properties.Settings.Default.CaptureStartAtValue;
+
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX)
+                {
+                    switch (count)
+                    {
+                        case 1:
+                            textBoxScreen1Width.Text = screen.Bounds.Width.ToString();
+                            textBoxScreen1Height.Text = screen.Bounds.Height.ToString();
+                            break;
+
+                        case 2:
+                            break;
+
+                        case 3:
+                            break;
+
+                        case 4:
+                            break;
+                    }
+                }
+            }
 
             if (toolStripMenuItemDemoModeAtApplicationStartup.Checked)
             {
@@ -605,8 +631,6 @@ namespace autoscreen
         private void StartScreenCapture(string folder, string format, int delay, int limit, int ratio, bool initial)
         {
             checkBoxDemoMode.Checked = false;
-
-            ScreenCapture.VirtualScreenMode = toolStripMenuItemVirtualScreenMode.Checked;
 
             if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
             {
@@ -1180,7 +1204,6 @@ namespace autoscreen
             Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
             Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck = toolStripMenuItemSearchOnStopScreenCapture.Checked;
             Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
-            Properties.Settings.Default.VirtualScreenModeCheck = toolStripMenuItemVirtualScreenMode.Checked;
 
             Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;
             Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
@@ -1625,6 +1648,23 @@ namespace autoscreen
             DisplayImages(true);
         }
 
+        private void SetupScreenSize(Screen screen, int screenNumber)
+        {
+            int screenWidth = screen.Bounds.Width;
+            int screenHeight = screen.Bounds.Height;
+
+            switch (screenNumber)
+            {
+                case 1:
+                    screenWidth = int.TryParse(textBoxScreen1Width.Text, out screenWidth) ? screenWidth : screen.Bounds.Width;
+                    screenHeight = int.TryParse(textBoxScreen1Height.Text, out screenHeight) ? screenHeight : screen.Bounds.Height;
+                    break;
+            }
+
+            ScreenCapture.Width = screenWidth;
+            ScreenCapture.Height = screenHeight;
+        }
+
         /// <summary>
         /// Checks the capture limit when the checkbox is selected.
         /// </summary>
@@ -1661,23 +1701,24 @@ namespace autoscreen
         {
             ArrayList images = new ArrayList();
 
-            ScreenCapture.VirtualScreenMode = toolStripMenuItemVirtualScreenMode.Checked;
+            int count = 0;
 
-            if (demo)
+            foreach (Screen screen in Screen.AllScreens)
             {
-                int count = 0;
+                count++;
 
-                foreach (Screen screen in Screen.AllScreens)
+                if (count <= ScreenCapture.SCREEN_MAX)
                 {
-                    count++;
+                    SetupScreenSize(screen, count);
 
-                    if (count <= ScreenCapture.SCREEN_MAX)
+                    if (demo)
                     {
                         images.Add(ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value));
                     }
                 }
             }
-            else
+
+            if (!demo)
             {
                 images = FileSystem.GetImages(Slideshow.SelectedSlide);
             }
@@ -2150,6 +2191,22 @@ namespace autoscreen
             else
             {
                 checkBoxScheduleStartOnSchedule.Checked = true;
+            }
+        }
+
+        private void buttonScreen1Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 1)
+                {
+                    textBoxScreen1Width.Text = screen.Bounds.Width.ToString();
+                    textBoxScreen1Height.Text = screen.Bounds.Height.ToString();
+                }
             }
         }
     }
