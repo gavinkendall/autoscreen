@@ -10,11 +10,22 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace autoscreen
 {
-    static class Program
+    public static class Program
     {
+        private enum ProcessDPIAwareness
+        {
+            ProcessDPIUnaware = 0,
+            ProcessSystemDPIAware = 1,
+            ProcessPerMonitorDPIAware = 2
+        }
+
+        [DllImport("shcore.dll")]
+        private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
+
         [STAThread]
         public static void Main(string[] args)
         {
@@ -42,6 +53,7 @@ namespace autoscreen
                 // Make sure we're running on Windows Vista or higher.
                 if (Environment.OSVersion.Version.Major >= 6)
                 {
+                    SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new FormMain(args));
