@@ -185,6 +185,9 @@ namespace autoscreen
 
             Log.Write("Loading user settings - option menu items.");
 
+            toolStripMenuItemDebugMode.Checked = Properties.Settings.Default.DebugMode;
+            toolStripMenuItemDebugMode.CheckedChanged += ToolStripMenuItemDebugMode_CheckedChanged;
+
             toolStripMenuItemDemoModeAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
             toolStripMenuItemExitOnCloseWindow.Checked = Properties.Settings.Default.ExitOnCloseWindowCheck;
             toolStripMenuItemScheduleAtApplicationStartup.Checked = Properties.Settings.Default.ScheduleOnAtStartupCheck;
@@ -319,6 +322,11 @@ namespace autoscreen
             {
                 ScheduleSet();
             }
+        }
+
+        private void ToolStripMenuItemDebugMode_CheckedChanged(object sender, EventArgs e)
+        {
+            Log.Enabled = toolStripMenuItemDebugMode.Checked;
         }
 
         /// <summary>
@@ -590,6 +598,8 @@ namespace autoscreen
         /// </summary>
         private void CloseWindow()
         {
+            Log.Write("Closing application window.");
+
             if (!toolStripMenuItemOpen.Enabled)
             {
                 // Pause the slideshow if you find it still playing.
@@ -1120,6 +1130,8 @@ namespace autoscreen
         /// </summary>
         private void Exit()
         {
+            Log.Write("Exiting application.");
+
             // Save the user's options.
             SaveApplicationSettings();
 
@@ -1283,6 +1295,7 @@ namespace autoscreen
             Properties.Settings.Default.CaptureLimitCheck = checkBoxCaptureLimit.Checked;
             Properties.Settings.Default.TakeInitialScreenshotCheck = checkBoxInitialScreenshot.Checked;
 
+            Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
             Properties.Settings.Default.DemoModeCheck = toolStripMenuItemDemoModeAtApplicationStartup.Checked;
             Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
             Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;

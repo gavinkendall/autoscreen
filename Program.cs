@@ -18,13 +18,14 @@ namespace autoscreen
         [STAThread]
         public static void Main(string[] args)
         {
+            Log.Enabled = Properties.Settings.Default.DebugMode;
+
             for (int i = 0; i < args.Length; i++)
             {
                 if (!string.IsNullOrEmpty(args[i]) && args[i].Equals("-debug"))
                 {
                     Log.Enabled = true;
-
-                    Log.Write("*** WELCOME TO AUTO SCREEN CAPTURE " + Properties.Settings.Default.ApplicationVersion + " ***");
+                    Properties.Settings.Default.DebugMode = true;
 
                     break;
                 }

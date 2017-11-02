@@ -35,6 +35,7 @@
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemDemoModeAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemScheduleAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDebugMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemOpenAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOpenOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
@@ -278,6 +279,7 @@
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemDemoModeAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
+            this.toolStripMenuItemDebugMode,
             this.toolStripSeparator7,
             this.toolStripMenuItemOpenAtApplicationStartup,
             this.toolStripMenuItemOpenOnStopScreenCapture,
@@ -306,6 +308,13 @@
             this.toolStripMenuItemScheduleAtApplicationStartup.Name = "toolStripMenuItemScheduleAtApplicationStartup";
             this.toolStripMenuItemScheduleAtApplicationStartup.Size = new System.Drawing.Size(455, 22);
             this.toolStripMenuItemScheduleAtApplicationStartup.Text = "Turn on scheduled screen capturing at application startup";
+            // 
+            // toolStripMenuItemDebugMode
+            // 
+            this.toolStripMenuItemDebugMode.CheckOnClick = true;
+            this.toolStripMenuItemDebugMode.Name = "toolStripMenuItemDebugMode";
+            this.toolStripMenuItemDebugMode.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemDebugMode.Text = "Turn on debug mode and write messages to autoscreen.log";
             // 
             // toolStripSeparator7
             // 
@@ -2268,5 +2277,6 @@
         private System.Windows.Forms.Panel panelScreen2;
         private System.Windows.Forms.Panel panelScreen3;
         private System.Windows.Forms.Panel panelScreen4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDebugMode;
     }
 }
