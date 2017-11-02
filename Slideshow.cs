@@ -40,6 +40,8 @@ namespace autoscreen
 
         public static void Play()
         {
+            Log.Write("Playing slideshow.");
+
             if (m_imageIndex == (m_imageIndexCount - 1))
             {
                 m_imageIndex = 0;
@@ -53,6 +55,8 @@ namespace autoscreen
 
         public static void Stop()
         {
+            Log.Write("Stopping slideshow.");
+
             if (m_timer.Enabled)
             {
                 m_timer.Enabled = false;

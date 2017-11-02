@@ -44,12 +44,16 @@ namespace autoscreen
 
         public static void Start()
         {
+            Log.Write("Starting screen capture.");
+
             m_timer.Interval = m_delay;
             m_timer.Enabled = true;
         }
 
         public static void Stop()
         {
+            Log.Write("Stopping screen capture.");
+
             m_count = 0;
             m_timer.Enabled = false;
         }
@@ -76,33 +80,41 @@ namespace autoscreen
 
         public static Bitmap GetScreenBitmap(Screen screen, int ratio)
         {
-            int sourceWidth = Width <= screen.Bounds.Width ? Width : screen.Bounds.Width;
-            int sourceHeight = Height <= screen.Bounds.Height ? Height : screen.Bounds.Height;
+            try
+            {
+                int sourceWidth = Width <= screen.Bounds.Width ? Width : screen.Bounds.Width;
+                int sourceHeight = Height <= screen.Bounds.Height ? Height : screen.Bounds.Height;
 
-            int destinationWidth = sourceWidth;
-            int destinationHeight = sourceHeight;
+                int destinationWidth = sourceWidth;
+                int destinationHeight = sourceHeight;
 
-            Size blockRegionSize = new Size(sourceWidth, sourceHeight);
+                Size blockRegionSize = new Size(sourceWidth, sourceHeight);
 
-            if (ratio < IMAGE_RESOLUTION_RATIO_MIN || ratio > IMAGE_RESOLUTION_RATIO_MAX) { ratio = 100; }
+                if (ratio < IMAGE_RESOLUTION_RATIO_MIN || ratio > IMAGE_RESOLUTION_RATIO_MAX) { ratio = 100; }
 
-            float imageResolutionRatio = (float)ratio / 100;
+                float imageResolutionRatio = (float)ratio / 100;
 
-            destinationWidth = (int)(sourceWidth * imageResolutionRatio);
-            destinationHeight = (int)(sourceHeight * imageResolutionRatio);
+                destinationWidth = (int)(sourceWidth * imageResolutionRatio);
+                destinationHeight = (int)(sourceHeight * imageResolutionRatio);
 
-            Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
-            Graphics graphicsSource = Graphics.FromImage(bitmapSource);
-            graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+                Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
+                Graphics graphicsSource = Graphics.FromImage(bitmapSource);
+                graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
 
-            Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
-            Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
-            graphicsDestination.DrawImage(bitmapSource, 0, 0, destinationWidth, destinationHeight);
+                Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
+                Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
+                graphicsDestination.DrawImage(bitmapSource, 0, 0, destinationWidth, destinationHeight);
 
-            graphicsSource.Flush();
-            graphicsDestination.Flush();
+                graphicsSource.Flush();
+                graphicsDestination.Flush();
 
-            return bitmapDestination;
+                return bitmapDestination;
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::GetScreenBitmap", ex);
+                return null;
+            }
         }
 
         public static Bitmap GetActiveWindowBitmap()
@@ -162,19 +174,22 @@ namespace autoscreen
                     {
                         Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
 
-                        SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
+                        if (bitmap != null)
+                        {
+                            SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
+                        }
                     }
 
-                    System.GC.Collect();
+                    GC.Collect();
                 }
 
                 SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
 
                 m_count++;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Log.Write("ScreenCapture::TakeScreenshot", ex);
             }
         }
 
@@ -189,12 +204,14 @@ namespace autoscreen
                         Directory.CreateDirectory(Path.GetDirectoryName(imagePath));
                     }
 
+                    Log.Write("Screenshot saved: " + imagePath);
+
                     bitmap.Save(imagePath, ImageFormatCollection.GetByName(imageFormat).Format);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Log.Write("ScreenCapture::SaveToFile", ex);
             }
         }
 

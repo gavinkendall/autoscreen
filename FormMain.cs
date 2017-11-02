@@ -92,6 +92,8 @@ namespace autoscreen
             this.Text = Properties.Settings.Default.ApplicationName;
             notifyIcon.Text = Properties.Settings.Default.ApplicationName;
 
+            Log.Write("Initializing image format collection.");
+
             ImageFormatCollection.Initialize();
 
             runFileSearchThread = new BackgroundWorker();
@@ -104,14 +106,22 @@ namespace autoscreen
             runFolderSearchThread.WorkerSupportsCancellation = true;
             runFolderSearchThread.DoWork += new DoWorkEventHandler(runFolderSearchThread_DoWork);
 
+            Log.Write("Initializing slideshow component.");
+
             Slideshow.Initialize();
             Slideshow.OnPlaying += new EventHandler(Slideshow_Playing);
+
+            Log.Write("Initializing screen capture component.");
 
             ScreenCapture.Initialize();
             ScreenCapture.OnCapturing += new EventHandler(Screen_Capturing);
 
+            Log.Write("Loading editors and building screenshot preview context menu.");
+
             EditorCollection.Load();
             BuildScreenshotPreviewContextMenu();
+
+            Log.Write("Setting screenshots directory.");
 
             if (Directory.Exists(Properties.Settings.Default.ScreenshotsDirectory))
             {
@@ -123,6 +133,8 @@ namespace autoscreen
             toolStripSplitButtonStartScreenCapture.DropDownItems.Clear();
 
             textBoxKeyloggingFile.Text = Properties.Settings.Default.KeyloggingFile;
+
+            Log.Write("Building image format list in system tray menu.");
 
             for (int i = 0; i < ImageFormatCollection.Count; i++)
             {
@@ -137,6 +149,8 @@ namespace autoscreen
                 toolStripMenuItemStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSystemTrayMenu);
                 toolStripSplitButtonStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSplitButton);
             }
+
+            Log.Write("Loading user settings - interval values and slideshow delays.");
 
             comboBoxScheduleImageFormat.SelectedItem = Properties.Settings.Default.ScheduleImageFormat;
 
@@ -163,6 +177,8 @@ namespace autoscreen
             numericUpDownSlideshowDelaySeconds.Value = slideshowDelaySeconds;
             numericUpDownSlideshowDelayMilliseconds.Value = slideshowDelayMilliseconds;
 
+            Log.Write("Loading user settings - slide skip, capture limit, image resolution ratio, and initial screenshot.");
+
             numericUpDownSlideSkip.Value = Properties.Settings.Default.SlideSkip;
             numericUpDownCaptureLimit.Value = Properties.Settings.Default.CaptureLimit;
             numericUpDownImageResolutionRatio.Value = Properties.Settings.Default.ImageResolutionRatio;
@@ -170,6 +186,8 @@ namespace autoscreen
             checkBoxSlideSkip.Checked = Properties.Settings.Default.SlideSkipCheck;
             checkBoxCaptureLimit.Checked = Properties.Settings.Default.CaptureLimitCheck;
             checkBoxInitialScreenshot.Checked = Properties.Settings.Default.TakeInitialScreenshotCheck;
+
+            Log.Write("Loading user settings - option menu items.");
 
             toolStripMenuItemDemoModeAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
             toolStripMenuItemExitOnCloseWindow.Checked = Properties.Settings.Default.ExitOnCloseWindowCheck;
@@ -179,6 +197,8 @@ namespace autoscreen
             toolStripMenuItemCloseWindowOnStartCapture.Checked = Properties.Settings.Default.CloseWindowOnStartCaptureCheck;
             toolStripMenuItemSearchOnStopScreenCapture.Checked = Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck;
             toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck;
+
+            Log.Write("Loading user settings - scheduled screen capture session settings.");
 
             checkBoxScheduleStopAt.Checked = Properties.Settings.Default.CaptureStopAtCheck;
             checkBoxScheduleStartAt.Checked = Properties.Settings.Default.CaptureStartAtCheck;
@@ -197,6 +217,8 @@ namespace autoscreen
 
             dateTimePickerScheduleStopAt.Value = Properties.Settings.Default.CaptureStopAtValue;
             dateTimePickerScheduleStartAt.Value = Properties.Settings.Default.CaptureStartAtValue;
+
+            Log.Write("Loading region capture controls for X, Y, Width, Height, and Reset on each available screen.");
 
             int count = 0;
 
@@ -398,6 +420,8 @@ namespace autoscreen
         {
             textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
 
+            Log.Write("Searching folders in " + textBoxScreenshotsFolderSearch.Text);
+
             ClearPreview();
             DisableToolStripButtons();
 
@@ -420,6 +444,8 @@ namespace autoscreen
             listBoxScreenshots.BeginUpdate();
 
             textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
+
+            Log.Write("Searching files in " + textBoxScreenshotsFolderSearch.Text);
 
             ClearPreview();
             DisableToolStripButtons();
@@ -688,6 +714,8 @@ namespace autoscreen
         /// <param name="initial">If an initial screenshot should be taken before the timer is started then this boolean needs to be set to true otherwise just set it as false.</param>
         private void StartScreenCapture(string folder, string format, int delay, int limit, int ratio, bool initial)
         {
+            Log.Write("Starting new screen capture session.");
+
             SaveApplicationSettings();
 
             checkBoxDemoMode.Checked = false;
@@ -1238,6 +1266,8 @@ namespace autoscreen
         /// </summary>
         private void SaveApplicationSettings()
         {
+            Log.Write("Saving application settings.");
+
             Properties.Settings.Default.ScreenshotsDirectory = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
 
             Properties.Settings.Default.ScheduleImageFormat = comboBoxScheduleImageFormat.Text;
@@ -1451,149 +1481,163 @@ namespace autoscreen
         /// <param name="args"></param>
         private void ParseCommandLine(string[] args)
         {
-            bool isScheduled = false;
-
-            checkBoxEnableKeylogging.Checked = false;
-
-            bool initial = false;
-            checkBoxInitialScreenshot.Checked = false;
-
-            int limit = CAPTURE_LIMIT_MIN;
-            checkBoxCaptureLimit.Checked = false;
-            numericUpDownCaptureLimit.Value = (decimal)CAPTURE_LIMIT_MIN;
-
-            int delay = CAPTURE_DELAY_DEFAULT;
-            numericUpDownHoursInterval.Value = 0;
-            numericUpDownMinutesInterval.Value = 0;
-            numericUpDownSecondsInterval.Value = CAPTURE_DELAY_DEFAULT / CAPTURE_DELAY_DEFAULT;
-            numericUpDownMillisecondsInterval.Value = 0;
-
-            int ratio = IMAGE_RESOLUTION_RATIO_MAX;
-            numericUpDownImageResolutionRatio.Value = (decimal)IMAGE_RESOLUTION_RATIO_MAX;
-
-            string folder = screenshotsFolder;
-
-            imageFormat = ImageFormatSpec.NAME_PNG;
-            comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_PNG;
-
-            Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
-            Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
-            Regex rgxCommandLineKeylog = new Regex(REGEX_COMMAND_LINE_KEYLOG);
-            Regex rgxCommandLineFormat = new Regex(REGEX_COMMAND_LINE_FORMAT);
-            Regex rgxCommandLineFolder = new Regex(REGEX_COMMAND_LINE_FOLDER);
-            Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
-            Regex rgxCommandLineCaptureDelay = new Regex(REGEX_COMMAND_LINE_DELAY);
-            Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
-            Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
-
-            checkBoxScheduleStopAt.Checked = false;
-            checkBoxScheduleStartAt.Checked = false;
-            checkBoxScheduleOnTheseDays.Checked = false;
-
-            toolStripMenuItemOpenOnStopScreenCapture.Checked = false;
-            toolStripMenuItemOpenAtApplicationStartup.Checked = false;
-            toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
-            toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
-            toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
-
-            for (int i = 0; i < args.Length; i++)
+            try
             {
-                if (rgxCommandLineFolder.IsMatch(args[i]))
-                {
-                    folder = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
-                    textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
-                }
+                Log.Write("Parsing command line arguments.");
 
-                if (rgxCommandLineInitial.IsMatch(args[i]))
-                {
-                    initial = true;
-                    checkBoxInitialScreenshot.Checked = true;
-                }
+                bool isScheduled = false;
 
-                if (rgxCommandLineRatio.IsMatch(args[i]))
-                {
-                    int cmdRatio = Convert.ToInt32(rgxCommandLineRatio.Match(args[i]).Groups["Ratio"].Value);
+                checkBoxEnableKeylogging.Checked = false;
 
-                    if (cmdRatio >= IMAGE_RESOLUTION_RATIO_MIN && cmdRatio <= IMAGE_RESOLUTION_RATIO_MAX)
+                bool initial = false;
+                checkBoxInitialScreenshot.Checked = false;
+
+                int limit = CAPTURE_LIMIT_MIN;
+                checkBoxCaptureLimit.Checked = false;
+                numericUpDownCaptureLimit.Value = (decimal)CAPTURE_LIMIT_MIN;
+
+                int delay = CAPTURE_DELAY_DEFAULT;
+                numericUpDownHoursInterval.Value = 0;
+                numericUpDownMinutesInterval.Value = 0;
+                numericUpDownSecondsInterval.Value = CAPTURE_DELAY_DEFAULT / CAPTURE_DELAY_DEFAULT;
+                numericUpDownMillisecondsInterval.Value = 0;
+
+                int ratio = IMAGE_RESOLUTION_RATIO_MAX;
+                numericUpDownImageResolutionRatio.Value = (decimal)IMAGE_RESOLUTION_RATIO_MAX;
+
+                string folder = screenshotsFolder;
+
+                imageFormat = ImageFormatSpec.NAME_PNG;
+                comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_PNG;
+
+                Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
+                Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
+                Regex rgxCommandLineKeylog = new Regex(REGEX_COMMAND_LINE_KEYLOG);
+                Regex rgxCommandLineFormat = new Regex(REGEX_COMMAND_LINE_FORMAT);
+                Regex rgxCommandLineFolder = new Regex(REGEX_COMMAND_LINE_FOLDER);
+                Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
+                Regex rgxCommandLineCaptureDelay = new Regex(REGEX_COMMAND_LINE_DELAY);
+                Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
+                Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
+
+                checkBoxScheduleStopAt.Checked = false;
+                checkBoxScheduleStartAt.Checked = false;
+                checkBoxScheduleOnTheseDays.Checked = false;
+
+                toolStripMenuItemOpenOnStopScreenCapture.Checked = false;
+                toolStripMenuItemOpenAtApplicationStartup.Checked = false;
+                toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
+                toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
+                toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
+
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (args[i] != null)
                     {
-                        ratio = cmdRatio;
-                        numericUpDownImageResolutionRatio.Value = (decimal)cmdRatio;
+                        Log.Write("Parsing command line argument at index " + i + " --> " + args[i]);
+                    }
+
+                    if (rgxCommandLineFolder.IsMatch(args[i]))
+                    {
+                        folder = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
+                        textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
+                    }
+
+                    if (rgxCommandLineInitial.IsMatch(args[i]))
+                    {
+                        initial = true;
+                        checkBoxInitialScreenshot.Checked = true;
+                    }
+
+                    if (rgxCommandLineRatio.IsMatch(args[i]))
+                    {
+                        int cmdRatio = Convert.ToInt32(rgxCommandLineRatio.Match(args[i]).Groups["Ratio"].Value);
+
+                        if (cmdRatio >= IMAGE_RESOLUTION_RATIO_MIN && cmdRatio <= IMAGE_RESOLUTION_RATIO_MAX)
+                        {
+                            ratio = cmdRatio;
+                            numericUpDownImageResolutionRatio.Value = (decimal)cmdRatio;
+                        }
+                    }
+
+                    if (rgxCommandLineLimit.IsMatch(args[i]))
+                    {
+                        int cmdLimit = Convert.ToInt32(rgxCommandLineLimit.Match(args[i]).Groups["Limit"].Value);
+
+                        if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
+                        {
+                            limit = cmdLimit;
+                            checkBoxCaptureLimit.Checked = true;
+                            numericUpDownCaptureLimit.Value = (decimal)cmdLimit;
+                        }
+                    }
+
+                    if (rgxCommandLineKeylog.IsMatch(args[i]))
+                    {
+                        textBoxKeyloggingFile.Text = rgxCommandLineKeylog.Match(args[i]).Groups["Keylog"].Value;
+                        checkBoxEnableKeylogging.Checked = true;
+                    }
+
+                    if (rgxCommandLineFormat.IsMatch(args[i]))
+                    {
+                        imageFormat = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
+                        comboBoxScheduleImageFormat.SelectedItem = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
+                    }
+
+                    if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
+                    {
+                        int hours = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Seconds"].Value);
+                        int milliseconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Milliseconds"].Value);
+
+                        numericUpDownHoursInterval.Value = (decimal)hours;
+                        numericUpDownMinutesInterval.Value = (decimal)minutes;
+                        numericUpDownSecondsInterval.Value = (decimal)seconds;
+                        numericUpDownMillisecondsInterval.Value = (decimal)milliseconds;
+
+                        delay = ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
+                    }
+
+                    if (rgxCommandLineScheduleStartAt.IsMatch(args[i]))
+                    {
+                        isScheduled = true;
+
+                        int hours = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
+
+                        dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+
+                        checkBoxScheduleStartAt.Checked = true;
+                    }
+
+                    if (rgxCommandLineScheduleStopAt.IsMatch(args[i]))
+                    {
+                        isScheduled = true;
+
+                        int hours = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
+
+                        dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+
+                        checkBoxScheduleStopAt.Checked = true;
                     }
                 }
 
-                if (rgxCommandLineLimit.IsMatch(args[i]))
+                if (isScheduled)
                 {
-                    int cmdLimit = Convert.ToInt32(rgxCommandLineLimit.Match(args[i]).Groups["Limit"].Value);
-
-                    if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
-                    {
-                        limit = cmdLimit;
-                        checkBoxCaptureLimit.Checked = true;
-                        numericUpDownCaptureLimit.Value = (decimal)cmdLimit;
-                    }
+                    toolStripMenuItemScheduleAtApplicationStartup.Checked = true;
                 }
-
-                if (rgxCommandLineKeylog.IsMatch(args[i]))
+                else
                 {
-                    textBoxKeyloggingFile.Text = rgxCommandLineKeylog.Match(args[i]).Groups["Keylog"].Value;
-                    checkBoxEnableKeylogging.Checked = true;
-                }
-
-                if (rgxCommandLineFormat.IsMatch(args[i]))
-                {
-                    imageFormat = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
-                    comboBoxScheduleImageFormat.SelectedItem = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
-                }
-
-                if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
-                {
-                    int hours = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Hours"].Value);
-                    int minutes = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Minutes"].Value);
-                    int seconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Seconds"].Value);
-                    int milliseconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Milliseconds"].Value);
-
-                    numericUpDownHoursInterval.Value = (decimal)hours;
-                    numericUpDownMinutesInterval.Value = (decimal)minutes;
-                    numericUpDownSecondsInterval.Value = (decimal)seconds;
-                    numericUpDownMillisecondsInterval.Value = (decimal)milliseconds;
-
-                    delay = ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
-                }
-
-                if (rgxCommandLineScheduleStartAt.IsMatch(args[i]))
-                {
-                    isScheduled = true;
-
-                    int hours = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Hours"].Value);
-                    int minutes = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
-                    int seconds = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
-
-                    dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                    checkBoxScheduleStartAt.Checked = true;
-                }
-
-                if (rgxCommandLineScheduleStopAt.IsMatch(args[i]))
-                {
-                    isScheduled = true;
-
-                    int hours = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Hours"].Value);
-                    int minutes = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
-                    int seconds = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
-
-                    dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                    checkBoxScheduleStopAt.Checked = true;
+                    StartScreenCapture(folder, imageFormat, delay, limit, ratio, initial);
                 }
             }
-
-            if (isScheduled)
+            catch (Exception ex)
             {
-                toolStripMenuItemScheduleAtApplicationStartup.Checked = true;
-            }
-            else
-            {
-                StartScreenCapture(folder, imageFormat, delay, limit, ratio, initial);
+                Log.Write("FormMain::ParseCommandLine", ex);
             }
         }
 
@@ -1821,7 +1865,12 @@ namespace autoscreen
 
                     if (demo)
                     {
-                        images.Add(ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value));
+                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value);
+
+                        if (bitmap != null)
+                        {
+                            images.Add(bitmap);
+                        }
                     }
                 }
             }
@@ -1874,7 +1923,7 @@ namespace autoscreen
             pictureBoxScreen3.Image = pictureBoxScreenshotPreviewMonitor3.Image;
             pictureBoxScreen4.Image = pictureBoxScreenshotPreviewMonitor4.Image;
 
-            System.GC.Collect();
+            GC.Collect();
         }
 
         /// <summary>

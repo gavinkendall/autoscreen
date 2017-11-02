@@ -19,9 +19,22 @@ namespace autoscreen
         [STAThread]
         public static void Main(string[] args)
         {
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(args[i]) && args[i].Equals("-debug"))
+                {
+                    Log.Enabled = true;
+
+                    Log.Write("*** WELCOME TO AUTO SCREEN CAPTURE " + Properties.Settings.Default.ApplicationVersion + " ***");
+
+                    break;
+                }
+            }
+
             // Kill this application's duplicate process in case the user executes a second instance since we want to keep a single instance.
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Length > 1)
             {
+                Log.Write("A duplicate autoscreen.exe process was found and killed.");
                 Process.GetCurrentProcess().Kill();
             }
             else
@@ -32,6 +45,10 @@ namespace autoscreen
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new FormMain(args));
+                }
+                else
+                {
+                    Log.Write("The version of Windows is not supported (" + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor + "). Windows Vista or higher is required.");
                 }
             }
         }
