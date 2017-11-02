@@ -3,11 +3,7 @@
 // autoscreen.StatusMessage.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Wednesday, 1 November 2017
-
-using System;
-using System.Text;
-using System.Collections.Generic;
+// Thursday, 15 May 2008 - Thursday, 2 November 2017
 
 namespace autoscreen
 {

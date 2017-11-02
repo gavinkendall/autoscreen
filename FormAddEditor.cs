@@ -3,17 +3,12 @@
 // autoscreen.FormAddEditor.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Wednesday, 1 November 2017
+// Thursday, 15 May 2008 - Thursday, 2 November 2017
 
 using System;
 using System.IO;
-using System.Data;
-using System.Text;
-using System.Drawing;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Collections.Generic;
 
 namespace autoscreen
 {

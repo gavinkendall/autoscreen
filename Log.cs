@@ -1,7 +1,12 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////////
+// Auto Screen Capture 2.0.6
+// autoscreen.Keylogger.cs
+//
+// Written by Gavin Kendall (gavinkendall@gmail.com)
+// Thursday, 15 May 2008 - Thursday, 2 November 2017
+
+using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
 
 namespace autoscreen
 {

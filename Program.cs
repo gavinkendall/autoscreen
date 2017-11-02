@@ -3,14 +3,13 @@
 // autoscreen.Program.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Wednesday, 1 November 2017
+// Thursday, 15 May 2008 - Thursday, 2 November 2017
 
 using System;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace autoscreen
 {
@@ -34,7 +33,7 @@ namespace autoscreen
             // Kill this application's duplicate process in case the user executes a second instance since we want to keep a single instance.
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Length > 1)
             {
-                Log.Write("A duplicate autoscreen.exe process was found and killed.");
+                Log.Write("A duplicate instance of the application was found running. Exiting.");
                 Process.GetCurrentProcess().Kill();
             }
             else
