@@ -221,6 +221,11 @@ namespace autoscreen
 
             int count = 0;
 
+            if (Screen.AllScreens.Length == 1)
+            {
+                tabControlScreens.SelectedTab = tabPageScreen1;
+            }
+
             foreach (Screen screen in Screen.AllScreens)
             {
                 count++;
@@ -1761,7 +1766,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void tabControlScreens_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex;
+            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= ScreenCapture.SCREEN_MAX ? tabControlScreens.SelectedIndex : 0;
         }
 
         /// <summary>
