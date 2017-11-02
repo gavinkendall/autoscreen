@@ -55,6 +55,12 @@
             this.pictureBoxScreenshotPreviewMonitor2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxScreenshotPreviewMonitor3 = new System.Windows.Forms.PictureBox();
             this.tabPageScreen1 = new System.Windows.Forms.TabPage();
+            this.panelScreen1 = new System.Windows.Forms.Panel();
+            this.labelScreen1Y = new System.Windows.Forms.Label();
+            this.labelScreen1X = new System.Windows.Forms.Label();
+            this.buttonScreen1Reset = new System.Windows.Forms.Button();
+            this.labelScreen1Height = new System.Windows.Forms.Label();
+            this.labelScreen1Width = new System.Windows.Forms.Label();
             this.pictureBoxScreen1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemOpenFileLocation = new System.Windows.Forms.ToolStripMenuItem();
@@ -149,12 +155,10 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.checkBoxEnableKeylogging = new System.Windows.Forms.CheckBox();
-            this.panelScreen1 = new System.Windows.Forms.Panel();
-            this.textBoxScreen1Width = new System.Windows.Forms.TextBox();
-            this.textBoxScreen1Height = new System.Windows.Forms.TextBox();
-            this.labelScreen1Width = new System.Windows.Forms.Label();
-            this.labelScreen1Height = new System.Windows.Forms.Label();
-            this.buttonScreen1Reset = new System.Windows.Forms.Button();
+            this.numericUpDownScreen1X = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownScreen1Y = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownScreen1Width = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownScreen1Height = new System.Windows.Forms.NumericUpDown();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -164,6 +168,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor3)).BeginInit();
             this.tabPageScreen1.SuspendLayout();
+            this.panelScreen1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).BeginInit();
             this.contextMenuStripScreenshotPreview.SuspendLayout();
             this.tabPageScreen2.SuspendLayout();
@@ -195,7 +200,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
             this.tabPageKeylogger.SuspendLayout();
             this.toolStripScreenCapture.SuspendLayout();
-            this.panelScreen1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1X)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Y)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Width)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Height)).BeginInit();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -452,15 +460,81 @@
             this.tabPageScreen1.Text = "Screen 1";
             this.tabPageScreen1.UseVisualStyleBackColor = true;
             // 
+            // panelScreen1
+            // 
+            this.panelScreen1.Controls.Add(this.numericUpDownScreen1Height);
+            this.panelScreen1.Controls.Add(this.numericUpDownScreen1Width);
+            this.panelScreen1.Controls.Add(this.numericUpDownScreen1Y);
+            this.panelScreen1.Controls.Add(this.numericUpDownScreen1X);
+            this.panelScreen1.Controls.Add(this.labelScreen1Y);
+            this.panelScreen1.Controls.Add(this.labelScreen1X);
+            this.panelScreen1.Controls.Add(this.buttonScreen1Reset);
+            this.panelScreen1.Controls.Add(this.labelScreen1Height);
+            this.panelScreen1.Controls.Add(this.labelScreen1Width);
+            this.panelScreen1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen1.Location = new System.Drawing.Point(0, 286);
+            this.panelScreen1.Name = "panelScreen1";
+            this.panelScreen1.Size = new System.Drawing.Size(493, 33);
+            this.panelScreen1.TabIndex = 3;
+            // 
+            // labelScreen1Y
+            // 
+            this.labelScreen1Y.AutoSize = true;
+            this.labelScreen1Y.Location = new System.Drawing.Point(69, 12);
+            this.labelScreen1Y.Name = "labelScreen1Y";
+            this.labelScreen1Y.Size = new System.Drawing.Size(17, 13);
+            this.labelScreen1Y.TabIndex = 8;
+            this.labelScreen1Y.Text = "Y:";
+            // 
+            // labelScreen1X
+            // 
+            this.labelScreen1X.AutoSize = true;
+            this.labelScreen1X.Location = new System.Drawing.Point(3, 12);
+            this.labelScreen1X.Name = "labelScreen1X";
+            this.labelScreen1X.Size = new System.Drawing.Size(17, 13);
+            this.labelScreen1X.TabIndex = 6;
+            this.labelScreen1X.Text = "X:";
+            // 
+            // buttonScreen1Reset
+            // 
+            this.buttonScreen1Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonScreen1Reset.Location = new System.Drawing.Point(415, 7);
+            this.buttonScreen1Reset.Name = "buttonScreen1Reset";
+            this.buttonScreen1Reset.Size = new System.Drawing.Size(75, 23);
+            this.buttonScreen1Reset.TabIndex = 5;
+            this.buttonScreen1Reset.Text = "Reset";
+            this.buttonScreen1Reset.UseVisualStyleBackColor = true;
+            this.buttonScreen1Reset.Click += new System.EventHandler(this.buttonScreen1Reset_Click);
+            // 
+            // labelScreen1Height
+            // 
+            this.labelScreen1Height.AutoSize = true;
+            this.labelScreen1Height.Location = new System.Drawing.Point(225, 12);
+            this.labelScreen1Height.Name = "labelScreen1Height";
+            this.labelScreen1Height.Size = new System.Drawing.Size(41, 13);
+            this.labelScreen1Height.TabIndex = 4;
+            this.labelScreen1Height.Text = "Height:";
+            // 
+            // labelScreen1Width
+            // 
+            this.labelScreen1Width.AutoSize = true;
+            this.labelScreen1Width.Location = new System.Drawing.Point(137, 12);
+            this.labelScreen1Width.Name = "labelScreen1Width";
+            this.labelScreen1Width.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen1Width.TabIndex = 3;
+            this.labelScreen1Width.Text = "Width:";
+            // 
             // pictureBoxScreen1
             // 
+            this.pictureBoxScreen1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen1.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen1.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxScreen1.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxScreen1.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen1.Name = "pictureBoxScreen1";
-            this.pictureBoxScreen1.Size = new System.Drawing.Size(493, 319);
+            this.pictureBoxScreen1.Size = new System.Drawing.Size(492, 288);
             this.pictureBoxScreen1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen1.TabIndex = 2;
             this.pictureBoxScreen1.TabStop = false;
@@ -504,13 +578,15 @@
             // 
             // pictureBoxScreen2
             // 
+            this.pictureBoxScreen2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen2.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen2.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxScreen2.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxScreen2.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen2.Name = "pictureBoxScreen2";
-            this.pictureBoxScreen2.Size = new System.Drawing.Size(493, 319);
+            this.pictureBoxScreen2.Size = new System.Drawing.Size(492, 288);
             this.pictureBoxScreen2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen2.TabIndex = 3;
             this.pictureBoxScreen2.TabStop = false;
@@ -527,13 +603,15 @@
             // 
             // pictureBoxScreen3
             // 
+            this.pictureBoxScreen3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen3.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen3.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxScreen3.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxScreen3.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen3.Name = "pictureBoxScreen3";
-            this.pictureBoxScreen3.Size = new System.Drawing.Size(493, 319);
+            this.pictureBoxScreen3.Size = new System.Drawing.Size(492, 288);
             this.pictureBoxScreen3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen3.TabIndex = 3;
             this.pictureBoxScreen3.TabStop = false;
@@ -550,13 +628,15 @@
             // 
             // pictureBoxScreen4
             // 
+            this.pictureBoxScreen4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen4.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen4.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxScreen4.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxScreen4.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen4.Name = "pictureBoxScreen4";
-            this.pictureBoxScreen4.Size = new System.Drawing.Size(493, 319);
+            this.pictureBoxScreen4.Size = new System.Drawing.Size(492, 288);
             this.pictureBoxScreen4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen4.TabIndex = 3;
             this.pictureBoxScreen4.TabStop = false;
@@ -1459,61 +1539,53 @@
             this.checkBoxEnableKeylogging.UseVisualStyleBackColor = true;
             this.checkBoxEnableKeylogging.Visible = false;
             // 
-            // panelScreen1
+            // numericUpDownScreen1X
             // 
-            this.panelScreen1.Controls.Add(this.buttonScreen1Reset);
-            this.panelScreen1.Controls.Add(this.labelScreen1Height);
-            this.panelScreen1.Controls.Add(this.labelScreen1Width);
-            this.panelScreen1.Controls.Add(this.textBoxScreen1Height);
-            this.panelScreen1.Controls.Add(this.textBoxScreen1Width);
-            this.panelScreen1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen1.Location = new System.Drawing.Point(0, 286);
-            this.panelScreen1.Name = "panelScreen1";
-            this.panelScreen1.Size = new System.Drawing.Size(493, 33);
-            this.panelScreen1.TabIndex = 3;
+            this.numericUpDownScreen1X.Location = new System.Drawing.Point(21, 9);
+            this.numericUpDownScreen1X.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDownScreen1X.Name = "numericUpDownScreen1X";
+            this.numericUpDownScreen1X.Size = new System.Drawing.Size(45, 20);
+            this.numericUpDownScreen1X.TabIndex = 9;
             // 
-            // textBoxScreen1Width
+            // numericUpDownScreen1Y
             // 
-            this.textBoxScreen1Width.Location = new System.Drawing.Point(40, 9);
-            this.textBoxScreen1Width.Name = "textBoxScreen1Width";
-            this.textBoxScreen1Width.Size = new System.Drawing.Size(50, 20);
-            this.textBoxScreen1Width.TabIndex = 0;
+            this.numericUpDownScreen1Y.Location = new System.Drawing.Point(88, 9);
+            this.numericUpDownScreen1Y.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDownScreen1Y.Name = "numericUpDownScreen1Y";
+            this.numericUpDownScreen1Y.Size = new System.Drawing.Size(45, 20);
+            this.numericUpDownScreen1Y.TabIndex = 10;
             // 
-            // textBoxScreen1Height
+            // numericUpDownScreen1Width
             // 
-            this.textBoxScreen1Height.Location = new System.Drawing.Point(148, 9);
-            this.textBoxScreen1Height.Name = "textBoxScreen1Height";
-            this.textBoxScreen1Height.Size = new System.Drawing.Size(50, 20);
-            this.textBoxScreen1Height.TabIndex = 1;
+            this.numericUpDownScreen1Width.Location = new System.Drawing.Point(177, 9);
+            this.numericUpDownScreen1Width.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDownScreen1Width.Name = "numericUpDownScreen1Width";
+            this.numericUpDownScreen1Width.Size = new System.Drawing.Size(45, 20);
+            this.numericUpDownScreen1Width.TabIndex = 11;
             // 
-            // labelScreen1Width
+            // numericUpDownScreen1Height
             // 
-            this.labelScreen1Width.AutoSize = true;
-            this.labelScreen1Width.Location = new System.Drawing.Point(2, 12);
-            this.labelScreen1Width.Name = "labelScreen1Width";
-            this.labelScreen1Width.Size = new System.Drawing.Size(38, 13);
-            this.labelScreen1Width.TabIndex = 3;
-            this.labelScreen1Width.Text = "Width:";
-            // 
-            // labelScreen1Height
-            // 
-            this.labelScreen1Height.AutoSize = true;
-            this.labelScreen1Height.Location = new System.Drawing.Point(106, 12);
-            this.labelScreen1Height.Name = "labelScreen1Height";
-            this.labelScreen1Height.Size = new System.Drawing.Size(41, 13);
-            this.labelScreen1Height.TabIndex = 4;
-            this.labelScreen1Height.Text = "Height:";
-            // 
-            // buttonScreen1Reset
-            // 
-            this.buttonScreen1Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonScreen1Reset.Location = new System.Drawing.Point(415, 7);
-            this.buttonScreen1Reset.Name = "buttonScreen1Reset";
-            this.buttonScreen1Reset.Size = new System.Drawing.Size(75, 23);
-            this.buttonScreen1Reset.TabIndex = 5;
-            this.buttonScreen1Reset.Text = "Reset";
-            this.buttonScreen1Reset.UseVisualStyleBackColor = true;
-            this.buttonScreen1Reset.Click += new System.EventHandler(this.buttonScreen1Reset_Click);
+            this.numericUpDownScreen1Height.Location = new System.Drawing.Point(267, 9);
+            this.numericUpDownScreen1Height.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numericUpDownScreen1Height.Name = "numericUpDownScreen1Height";
+            this.numericUpDownScreen1Height.Size = new System.Drawing.Size(45, 20);
+            this.numericUpDownScreen1Height.TabIndex = 12;
             // 
             // FormMain
             // 
@@ -1532,7 +1604,7 @@
             this.Controls.Add(this.monthCalendar);
             this.Controls.Add(this.toolStripSlideshow);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(590, 310);
+            this.MinimumSize = new System.Drawing.Size(768, 437);
             this.Name = "FormMain";
             this.Opacity = 0D;
             this.ShowInTaskbar = false;
@@ -1549,6 +1621,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor3)).EndInit();
             this.tabPageScreen1.ResumeLayout(false);
+            this.panelScreen1.ResumeLayout(false);
+            this.panelScreen1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).EndInit();
             this.contextMenuStripScreenshotPreview.ResumeLayout(false);
             this.tabPageScreen2.ResumeLayout(false);
@@ -1586,8 +1660,10 @@
             this.tabPageKeylogger.PerformLayout();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
-            this.panelScreen1.ResumeLayout(false);
-            this.panelScreen1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1X)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Y)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Width)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Height)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1715,10 +1791,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCloseWindowOnStartCapture;
         private System.Windows.Forms.Panel panelScreen1;
-        private System.Windows.Forms.TextBox textBoxScreen1Height;
-        private System.Windows.Forms.TextBox textBoxScreen1Width;
         private System.Windows.Forms.Label labelScreen1Height;
         private System.Windows.Forms.Label labelScreen1Width;
         private System.Windows.Forms.Button buttonScreen1Reset;
+        private System.Windows.Forms.Label labelScreen1X;
+        private System.Windows.Forms.Label labelScreen1Y;
+        private System.Windows.Forms.NumericUpDown numericUpDownScreen1Height;
+        private System.Windows.Forms.NumericUpDown numericUpDownScreen1Width;
+        private System.Windows.Forms.NumericUpDown numericUpDownScreen1Y;
+        private System.Windows.Forms.NumericUpDown numericUpDownScreen1X;
     }
 }

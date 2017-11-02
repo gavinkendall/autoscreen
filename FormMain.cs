@@ -209,8 +209,8 @@ namespace autoscreen
                     switch (count)
                     {
                         case 1:
-                            textBoxScreen1Width.Text = screen.Bounds.Width.ToString();
-                            textBoxScreen1Height.Text = screen.Bounds.Height.ToString();
+                            numericUpDownScreen1Width.Value = screen.Bounds.Width;
+                            numericUpDownScreen1Height.Value = screen.Bounds.Height;
                             break;
 
                         case 2:
@@ -1648,21 +1648,38 @@ namespace autoscreen
             DisplayImages(true);
         }
 
-        private void SetupScreenSize(Screen screen, int screenNumber)
+        private void SetupScreenPosition(Screen screen, int screenNumber)
         {
-            int screenWidth = screen.Bounds.Width;
-            int screenHeight = screen.Bounds.Height;
+            int x = 0;
+            int y = 0;
 
             switch (screenNumber)
             {
                 case 1:
-                    screenWidth = int.TryParse(textBoxScreen1Width.Text, out screenWidth) ? screenWidth : screen.Bounds.Width;
-                    screenHeight = int.TryParse(textBoxScreen1Height.Text, out screenHeight) ? screenHeight : screen.Bounds.Height;
+                    x = (int)numericUpDownScreen1X.Value > 0 ? (int)numericUpDownScreen1X.Value : screen.Bounds.X;
+                    y = (int)numericUpDownScreen1Y.Value > 0 ? (int)numericUpDownScreen1Y.Value : screen.Bounds.Y;
                     break;
             }
 
-            ScreenCapture.Width = screenWidth;
-            ScreenCapture.Height = screenHeight;
+            ScreenCapture.X = x;
+            ScreenCapture.Y = y;
+        }
+
+        private void SetupScreenSize(Screen screen, int screenNumber)
+        {
+            int width = 0;
+            int height = 0;
+
+            switch (screenNumber)
+            {
+                case 1:
+                    width = (int)numericUpDownScreen1Width.Value > 0 ? (int)numericUpDownScreen1Width.Value : screen.Bounds.Width;
+                    height = (int)numericUpDownScreen1Height.Value > 0 ? (int)numericUpDownScreen1Height.Value : screen.Bounds.Height;
+                    break;
+            }
+
+            ScreenCapture.Width = width;
+            ScreenCapture.Height = height;
         }
 
         /// <summary>
@@ -1709,6 +1726,7 @@ namespace autoscreen
 
                 if (count <= ScreenCapture.SCREEN_MAX)
                 {
+                    SetupScreenPosition(screen, count);
                     SetupScreenSize(screen, count);
 
                     if (demo)
@@ -2204,8 +2222,11 @@ namespace autoscreen
 
                 if (count <= ScreenCapture.SCREEN_MAX && count == 1)
                 {
-                    textBoxScreen1Width.Text = screen.Bounds.Width.ToString();
-                    textBoxScreen1Height.Text = screen.Bounds.Height.ToString();
+                    numericUpDownScreen1X.Value = screen.Bounds.X;
+                    numericUpDownScreen1Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen1Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen1Height.Value = screen.Bounds.Height;
                 }
             }
         }

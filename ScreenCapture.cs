@@ -26,8 +26,6 @@ namespace autoscreen
         [DllImport("user32.dll")]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
-        private static int m_width;
-        private static int m_height;
         private static Timer m_timer = new Timer();
 
         public static event EventHandler OnCapturing = delegate { };
@@ -71,36 +69,15 @@ namespace autoscreen
             }
         }
 
-        public static int Width
-        {
-            get
-            {
-                return m_width;
-            }
-
-            set
-            {
-                m_width = value;
-            }
-        }
-
-        public static int Height
-        {
-            get
-            {
-                return m_height;
-            }
-
-            set
-            {
-                m_height = value;
-            }
-        }
+        public static int X { get; set; }
+        public static int Y { get; set; }
+        public static int Width { get; set; }
+        public static int Height { get; set; }
 
         public static Bitmap GetScreenBitmap(Screen screen, int ratio)
         {
-            int sourceWidth = m_width <= screen.Bounds.Width ? m_width : screen.Bounds.Width;
-            int sourceHeight = m_height <= screen.Bounds.Height ? m_height : screen.Bounds.Height;
+            int sourceWidth = Width <= screen.Bounds.Width ? Width : screen.Bounds.Width;
+            int sourceHeight = Height <= screen.Bounds.Height ? Height : screen.Bounds.Height;
 
             int destinationWidth = sourceWidth;
             int destinationHeight = sourceHeight;
@@ -116,7 +93,7 @@ namespace autoscreen
 
             Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
             Graphics graphicsSource = Graphics.FromImage(bitmapSource);
-            graphicsSource.CopyFromScreen(screen.Bounds.X, screen.Bounds.Y, 0, 0, blockRegionSize);
+            graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
 
             Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
             Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
