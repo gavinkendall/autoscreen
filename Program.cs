@@ -50,8 +50,8 @@ namespace autoscreen
             }
             else
             {
-                // Make sure we're running on Windows Vista or higher.
-                if (Environment.OSVersion.Version.Major >= 6)
+                // Make sure we're running on Windows 8 or higher.
+                if (Environment.OSVersion.Version.Major >= 6 && Environment.OSVersion.Version.Minor >= 2)
                 {
                     SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
                     Application.EnableVisualStyles();
@@ -60,7 +60,7 @@ namespace autoscreen
                 }
                 else
                 {
-                    Log.Write("The version of Windows is not supported (" + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor + "). Windows Vista or higher is required.");
+                    Log.Write("The version of Windows is not supported (" + Environment.OSVersion.Version.Major + "." + Environment.OSVersion.Version.Minor + "). Windows 8 or higher is required.");
                 }
             }
         }
