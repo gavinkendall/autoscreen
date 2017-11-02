@@ -209,17 +209,75 @@ namespace autoscreen
                     switch (count)
                     {
                         case 1:
+                            labelScreen1X.Enabled = true;
+                            labelScreen1Y.Enabled = true;
+                            labelScreen1Width.Enabled = true;
+                            labelScreen1Height.Enabled = true;
+
+                            numericUpDownScreen1X.Enabled = true;
+                            numericUpDownScreen1Y.Enabled = true;
+                            numericUpDownScreen1Width.Enabled = true;
+                            numericUpDownScreen1Height.Enabled = true;
+                            buttonScreen1Reset.Enabled = true;
+
+                            numericUpDownScreen1X.Value = screen.Bounds.X;
+                            numericUpDownScreen1Y.Value = screen.Bounds.Y;
                             numericUpDownScreen1Width.Value = screen.Bounds.Width;
                             numericUpDownScreen1Height.Value = screen.Bounds.Height;
                             break;
 
                         case 2:
+                            labelScreen2X.Enabled = true;
+                            labelScreen2Y.Enabled = true;
+                            labelScreen2Width.Enabled = true;
+                            labelScreen2Height.Enabled = true;
+
+                            numericUpDownScreen2X.Enabled = true;
+                            numericUpDownScreen2Y.Enabled = true;
+                            numericUpDownScreen2Width.Enabled = true;
+                            numericUpDownScreen2Height.Enabled = true;
+                            buttonScreen2Reset.Enabled = true;
+
+                            numericUpDownScreen2X.Value = screen.Bounds.X;
+                            numericUpDownScreen2Y.Value = screen.Bounds.Y;
+                            numericUpDownScreen2Width.Value = screen.Bounds.Width;
+                            numericUpDownScreen2Height.Value = screen.Bounds.Height;
                             break;
 
                         case 3:
+                            labelScreen3X.Enabled = true;
+                            labelScreen3Y.Enabled = true;
+                            labelScreen3Width.Enabled = true;
+                            labelScreen3Height.Enabled = true;
+
+                            numericUpDownScreen3X.Enabled = true;
+                            numericUpDownScreen3Y.Enabled = true;
+                            numericUpDownScreen3Width.Enabled = true;
+                            numericUpDownScreen3Height.Enabled = true;
+                            buttonScreen3Reset.Enabled = true;
+
+                            numericUpDownScreen3X.Value = screen.Bounds.X;
+                            numericUpDownScreen3Y.Value = screen.Bounds.Y;
+                            numericUpDownScreen3Width.Value = screen.Bounds.Width;
+                            numericUpDownScreen3Height.Value = screen.Bounds.Height;
                             break;
 
                         case 4:
+                            labelScreen4X.Enabled = true;
+                            labelScreen4Y.Enabled = true;
+                            labelScreen4Width.Enabled = true;
+                            labelScreen4Height.Enabled = true;
+
+                            numericUpDownScreen4X.Enabled = true;
+                            numericUpDownScreen4Y.Enabled = true;
+                            numericUpDownScreen4Width.Enabled = true;
+                            numericUpDownScreen4Height.Enabled = true;
+                            buttonScreen4Reset.Enabled = true;
+
+                            numericUpDownScreen4X.Value = screen.Bounds.X;
+                            numericUpDownScreen4Y.Value = screen.Bounds.Y;
+                            numericUpDownScreen4Width.Value = screen.Bounds.Width;
+                            numericUpDownScreen4Height.Value = screen.Bounds.Height;
                             break;
                     }
                 }
@@ -630,6 +688,8 @@ namespace autoscreen
         /// <param name="initial">If an initial screenshot should be taken before the timer is started then this boolean needs to be set to true otherwise just set it as false.</param>
         private void StartScreenCapture(string folder, string format, int delay, int limit, int ratio, bool initial)
         {
+            SaveApplicationSettings();
+
             checkBoxDemoMode.Checked = false;
 
             if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
@@ -846,7 +906,7 @@ namespace autoscreen
                         toolStripButtonPreviousSlide.Enabled = true;
                     }
 
-                    if (Slideshow.Index == (Slideshow.Count - 1))
+                    if ((Slideshow.Count - 1) <= Slideshow.Index)
                     {
                         toolStripButtonNextSlide.Enabled = false;
                         toolStripButtonLastSlide.Enabled = false;
@@ -1659,6 +1719,21 @@ namespace autoscreen
                     x = (int)numericUpDownScreen1X.Value > 0 ? (int)numericUpDownScreen1X.Value : screen.Bounds.X;
                     y = (int)numericUpDownScreen1Y.Value > 0 ? (int)numericUpDownScreen1Y.Value : screen.Bounds.Y;
                     break;
+
+                case 2:
+                    x = (int)numericUpDownScreen2X.Value > 0 ? (int)numericUpDownScreen2X.Value : screen.Bounds.X;
+                    y = (int)numericUpDownScreen2Y.Value > 0 ? (int)numericUpDownScreen2Y.Value : screen.Bounds.Y;
+                    break;
+
+                case 3:
+                    x = (int)numericUpDownScreen3X.Value > 0 ? (int)numericUpDownScreen3X.Value : screen.Bounds.X;
+                    y = (int)numericUpDownScreen3Y.Value > 0 ? (int)numericUpDownScreen3Y.Value : screen.Bounds.Y;
+                    break;
+
+                case 4:
+                    x = (int)numericUpDownScreen4X.Value > 0 ? (int)numericUpDownScreen4X.Value : screen.Bounds.X;
+                    y = (int)numericUpDownScreen4Y.Value > 0 ? (int)numericUpDownScreen4Y.Value : screen.Bounds.Y;
+                    break;
             }
 
             ScreenCapture.X = x;
@@ -1675,6 +1750,21 @@ namespace autoscreen
                 case 1:
                     width = (int)numericUpDownScreen1Width.Value > 0 ? (int)numericUpDownScreen1Width.Value : screen.Bounds.Width;
                     height = (int)numericUpDownScreen1Height.Value > 0 ? (int)numericUpDownScreen1Height.Value : screen.Bounds.Height;
+                    break;
+
+                case 2:
+                    width = (int)numericUpDownScreen2Width.Value > 0 ? (int)numericUpDownScreen2Width.Value : screen.Bounds.Width;
+                    height = (int)numericUpDownScreen2Height.Value > 0 ? (int)numericUpDownScreen2Height.Value : screen.Bounds.Height;
+                    break;
+
+                case 3:
+                    width = (int)numericUpDownScreen3Width.Value > 0 ? (int)numericUpDownScreen3Width.Value : screen.Bounds.Width;
+                    height = (int)numericUpDownScreen3Height.Value > 0 ? (int)numericUpDownScreen3Height.Value : screen.Bounds.Height;
+                    break;
+
+                case 4:
+                    width = (int)numericUpDownScreen4Width.Value > 0 ? (int)numericUpDownScreen4Width.Value : screen.Bounds.Width;
+                    height = (int)numericUpDownScreen4Height.Value > 0 ? (int)numericUpDownScreen4Height.Value : screen.Bounds.Height;
                     break;
             }
 
@@ -2227,6 +2317,63 @@ namespace autoscreen
 
                     numericUpDownScreen1Width.Value = screen.Bounds.Width;
                     numericUpDownScreen1Height.Value = screen.Bounds.Height;
+                }
+            }
+        }
+
+        private void buttonScreen2Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 2)
+                {
+                    numericUpDownScreen2X.Value = screen.Bounds.X;
+                    numericUpDownScreen2Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen2Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen2Height.Value = screen.Bounds.Height;
+                }
+            }
+        }
+
+        private void buttonScreen3Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 3)
+                {
+                    numericUpDownScreen3X.Value = screen.Bounds.X;
+                    numericUpDownScreen3Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen3Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen3Height.Value = screen.Bounds.Height;
+                }
+            }
+        }
+
+        private void buttonScreen4Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 4)
+                {
+                    numericUpDownScreen4X.Value = screen.Bounds.X;
+                    numericUpDownScreen4Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen4Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen4Height.Value = screen.Bounds.Height;
                 }
             }
         }
