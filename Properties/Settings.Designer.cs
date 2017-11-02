@@ -481,5 +481,197 @@ namespace autoscreen.Properties {
                 this["VirtualScreenModeCheck"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen1X {
+            get {
+                return ((int)(this["Screen1X"]));
+            }
+            set {
+                this["Screen1X"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen1Y {
+            get {
+                return ((int)(this["Screen1Y"]));
+            }
+            set {
+                this["Screen1Y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen1Width {
+            get {
+                return ((int)(this["Screen1Width"]));
+            }
+            set {
+                this["Screen1Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen1Height {
+            get {
+                return ((int)(this["Screen1Height"]));
+            }
+            set {
+                this["Screen1Height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen2X {
+            get {
+                return ((int)(this["Screen2X"]));
+            }
+            set {
+                this["Screen2X"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen2Y {
+            get {
+                return ((int)(this["Screen2Y"]));
+            }
+            set {
+                this["Screen2Y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen2Width {
+            get {
+                return ((int)(this["Screen2Width"]));
+            }
+            set {
+                this["Screen2Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen2Height {
+            get {
+                return ((int)(this["Screen2Height"]));
+            }
+            set {
+                this["Screen2Height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen3X {
+            get {
+                return ((int)(this["Screen3X"]));
+            }
+            set {
+                this["Screen3X"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen3Y {
+            get {
+                return ((int)(this["Screen3Y"]));
+            }
+            set {
+                this["Screen3Y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen3Width {
+            get {
+                return ((int)(this["Screen3Width"]));
+            }
+            set {
+                this["Screen3Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen3Height {
+            get {
+                return ((int)(this["Screen3Height"]));
+            }
+            set {
+                this["Screen3Height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen4X {
+            get {
+                return ((int)(this["Screen4X"]));
+            }
+            set {
+                this["Screen4X"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen4Y {
+            get {
+                return ((int)(this["Screen4Y"]));
+            }
+            set {
+                this["Screen4Y"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen4Width {
+            get {
+                return ((int)(this["Screen4Width"]));
+            }
+            set {
+                this["Screen4Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Screen4Height {
+            get {
+                return ((int)(this["Screen4Height"]));
+            }
+            set {
+                this["Screen4Height"] = value;
+            }
+        }
     }
 }

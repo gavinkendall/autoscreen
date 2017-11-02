@@ -238,10 +238,10 @@ namespace autoscreen
                             numericUpDownScreen1Height.Enabled = true;
                             buttonScreen1Reset.Enabled = true;
 
-                            numericUpDownScreen1X.Value = screen.Bounds.X;
-                            numericUpDownScreen1Y.Value = screen.Bounds.Y;
-                            numericUpDownScreen1Width.Value = screen.Bounds.Width;
-                            numericUpDownScreen1Height.Value = screen.Bounds.Height;
+                            numericUpDownScreen1X.Value = Properties.Settings.Default.Screen1X > 0 ? Properties.Settings.Default.Screen1X : screen.Bounds.X;
+                            numericUpDownScreen1Y.Value = Properties.Settings.Default.Screen1Y > 0 ? Properties.Settings.Default.Screen1Y : screen.Bounds.Y;
+                            numericUpDownScreen1Width.Value = Properties.Settings.Default.Screen1Width > 0 ? Properties.Settings.Default.Screen1Width : screen.Bounds.Width;
+                            numericUpDownScreen1Height.Value = Properties.Settings.Default.Screen1Height > 0 ? Properties.Settings.Default.Screen1Height : screen.Bounds.Height;
                             break;
 
                         case 2:
@@ -256,10 +256,10 @@ namespace autoscreen
                             numericUpDownScreen2Height.Enabled = true;
                             buttonScreen2Reset.Enabled = true;
 
-                            numericUpDownScreen2X.Value = screen.Bounds.X;
-                            numericUpDownScreen2Y.Value = screen.Bounds.Y;
-                            numericUpDownScreen2Width.Value = screen.Bounds.Width;
-                            numericUpDownScreen2Height.Value = screen.Bounds.Height;
+                            numericUpDownScreen2X.Value = Properties.Settings.Default.Screen2X > 0 ? Properties.Settings.Default.Screen2X : screen.Bounds.X;
+                            numericUpDownScreen2Y.Value = Properties.Settings.Default.Screen2Y > 0 ? Properties.Settings.Default.Screen2Y : screen.Bounds.Y;
+                            numericUpDownScreen2Width.Value = Properties.Settings.Default.Screen2Width > 0 ? Properties.Settings.Default.Screen2Width : screen.Bounds.Width;
+                            numericUpDownScreen2Height.Value = Properties.Settings.Default.Screen2Height > 0 ? Properties.Settings.Default.Screen2Height : screen.Bounds.Height;
                             break;
 
                         case 3:
@@ -274,10 +274,10 @@ namespace autoscreen
                             numericUpDownScreen3Height.Enabled = true;
                             buttonScreen3Reset.Enabled = true;
 
-                            numericUpDownScreen3X.Value = screen.Bounds.X;
-                            numericUpDownScreen3Y.Value = screen.Bounds.Y;
-                            numericUpDownScreen3Width.Value = screen.Bounds.Width;
-                            numericUpDownScreen3Height.Value = screen.Bounds.Height;
+                            numericUpDownScreen3X.Value = Properties.Settings.Default.Screen3X > 0 ? Properties.Settings.Default.Screen3X : screen.Bounds.X;
+                            numericUpDownScreen3Y.Value = Properties.Settings.Default.Screen3Y > 0 ? Properties.Settings.Default.Screen3Y : screen.Bounds.Y;
+                            numericUpDownScreen3Width.Value = Properties.Settings.Default.Screen3Width > 0 ? Properties.Settings.Default.Screen3Width : screen.Bounds.Width;
+                            numericUpDownScreen3Height.Value = Properties.Settings.Default.Screen3Height > 0 ? Properties.Settings.Default.Screen3Height : screen.Bounds.Height;
                             break;
 
                         case 4:
@@ -292,10 +292,10 @@ namespace autoscreen
                             numericUpDownScreen4Height.Enabled = true;
                             buttonScreen4Reset.Enabled = true;
 
-                            numericUpDownScreen4X.Value = screen.Bounds.X;
-                            numericUpDownScreen4Y.Value = screen.Bounds.Y;
-                            numericUpDownScreen4Width.Value = screen.Bounds.Width;
-                            numericUpDownScreen4Height.Value = screen.Bounds.Height;
+                            numericUpDownScreen4X.Value = Properties.Settings.Default.Screen4X > 0 ? Properties.Settings.Default.Screen4X : screen.Bounds.X;
+                            numericUpDownScreen4Y.Value = Properties.Settings.Default.Screen4Y > 0 ? Properties.Settings.Default.Screen4Y : screen.Bounds.Y;
+                            numericUpDownScreen4Width.Value = Properties.Settings.Default.Screen4Width > 0 ? Properties.Settings.Default.Screen4Width : screen.Bounds.Width;
+                            numericUpDownScreen4Height.Value = Properties.Settings.Default.Screen4Height > 0 ? Properties.Settings.Default.Screen4Height : screen.Bounds.Height;
                             break;
                     }
                 }
@@ -581,6 +581,7 @@ namespace autoscreen
                 this.Show();
                 this.Visible = true;
                 this.ShowInTaskbar = true;
+                this.Focus();
             }
         }
 
@@ -1308,6 +1309,26 @@ namespace autoscreen
 
             Properties.Settings.Default.CaptureStopAtValue = dateTimePickerScheduleStopAt.Value;
             Properties.Settings.Default.CaptureStartAtValue = dateTimePickerScheduleStartAt.Value;
+
+            Properties.Settings.Default.Screen1X = (int)numericUpDownScreen1X.Value;
+            Properties.Settings.Default.Screen1Y = (int)numericUpDownScreen1Y.Value;
+            Properties.Settings.Default.Screen1Width = (int)numericUpDownScreen1Width.Value;
+            Properties.Settings.Default.Screen1Height = (int)numericUpDownScreen1Height.Value;
+
+            Properties.Settings.Default.Screen2X = (int)numericUpDownScreen2X.Value;
+            Properties.Settings.Default.Screen2Y = (int)numericUpDownScreen2Y.Value;
+            Properties.Settings.Default.Screen2Width = (int)numericUpDownScreen2Width.Value;
+            Properties.Settings.Default.Screen2Height = (int)numericUpDownScreen2Height.Value;
+
+            Properties.Settings.Default.Screen3X = (int)numericUpDownScreen3X.Value;
+            Properties.Settings.Default.Screen3Y = (int)numericUpDownScreen3Y.Value;
+            Properties.Settings.Default.Screen3Width = (int)numericUpDownScreen3Width.Value;
+            Properties.Settings.Default.Screen3Height = (int)numericUpDownScreen3Height.Value;
+
+            Properties.Settings.Default.Screen4X = (int)numericUpDownScreen4X.Value;
+            Properties.Settings.Default.Screen4Y = (int)numericUpDownScreen4Y.Value;
+            Properties.Settings.Default.Screen4Width = (int)numericUpDownScreen4Width.Value;
+            Properties.Settings.Default.Screen4Height = (int)numericUpDownScreen4Height.Value;
 
             Properties.Settings.Default.Save();
         }
