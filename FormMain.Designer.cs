@@ -1608,7 +1608,6 @@
             this.checkBoxScheduleStartOnSchedule.TabIndex = 15;
             this.checkBoxScheduleStartOnSchedule.Text = "Start capture when schedule is on";
             this.checkBoxScheduleStartOnSchedule.UseVisualStyleBackColor = true;
-            this.checkBoxScheduleStartOnSchedule.CheckedChanged += new System.EventHandler(this.checkBoxScheduleStartOnSchedule_CheckedChanged);
             // 
             // comboBoxScheduleImageFormat
             // 
@@ -1773,7 +1772,6 @@
             this.checkBoxScheduleStartAt.TabIndex = 0;
             this.checkBoxScheduleStartAt.Text = "Start capture at";
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
-            this.checkBoxScheduleStartAt.CheckedChanged += new System.EventHandler(this.checkBoxScheduleStartAt_CheckedChanged);
             // 
             // tabPageSlideshow
             // 

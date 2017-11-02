@@ -2347,40 +2347,6 @@ namespace autoscreen
             imageFormat = comboBoxScheduleImageFormat.Text;
         }
 
-        /// <summary>
-        /// Enables or disables the checkbox responsible for starting scheduled screen capture sessions whenever the checkbox's state is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBoxScheduleStartOnSchedule_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxScheduleStartOnSchedule.Checked)
-            {
-                checkBoxScheduleStartAt.Checked = false;
-            }
-            else
-            {
-                checkBoxScheduleStartAt.Checked = true;
-            }
-        }
-
-        /// <summary>
-        /// Enables or disables the checkbox responsible for stopping scheduled screen capture sessions whenever the checkbox's state is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBoxScheduleStartAt_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxScheduleStartAt.Checked)
-            {
-                checkBoxScheduleStartOnSchedule.Checked = false;
-            }
-            else
-            {
-                checkBoxScheduleStartOnSchedule.Checked = true;
-            }
-        }
-
         private void buttonScreen1Reset_Click(object sender, EventArgs e)
         {
             int count = 0;
