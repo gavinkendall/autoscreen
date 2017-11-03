@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.3
+// Auto Screen Capture 2.0.6.4
 // autoscreen.Slideshow.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)

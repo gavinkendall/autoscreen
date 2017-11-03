@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.3
+// Auto Screen Capture 2.0.6.4
 // autoscreen.EditorCollection.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -60,60 +60,57 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Loads the image editors into the application from the editors.xml file.
+        /// Loads the image editors.
         /// </summary>
         public static void Load()
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + XML_FILE))
+            XmlDocument xdoc = new XmlDocument();
+            xdoc.LoadXml(Properties.Settings.Default.Editors);
+
+            XmlNodeList xeditors = xdoc.SelectNodes(EDITOR_XPATH);
+
+            foreach (XmlNode xeditor in xeditors)
             {
-                XmlDocument xdoc = new XmlDocument();
-                xdoc.Load(AppDomain.CurrentDomain.BaseDirectory + XML_FILE);
+                Editor editor = new Editor();
+                XmlNodeReader xreader = new XmlNodeReader(xeditor);
 
-                XmlNodeList xeditors = xdoc.SelectNodes(EDITOR_XPATH);
-
-                foreach (XmlNode xeditor in xeditors)
+                while (xreader.Read())
                 {
-                    Editor editor = new Editor();
-                    XmlNodeReader xreader = new XmlNodeReader(xeditor);
-
-                    while (xreader.Read())
+                    if (xreader.IsStartElement())
                     {
-                        if (xreader.IsStartElement())
+                        switch (xreader.Name)
                         {
-                            switch (xreader.Name)
-                            {
-                                case EDITOR_NAME:
-                                    xreader.Read();
-                                    editor.Name = xreader.Value;
-                                    break;
+                            case EDITOR_NAME:
+                                xreader.Read();
+                                editor.Name = xreader.Value;
+                                break;
 
-                                case EDITOR_APPLICATION:
-                                    xreader.Read();
-                                    editor.Application = xreader.Value;
-                                    break;
+                            case EDITOR_APPLICATION:
+                                xreader.Read();
+                                editor.Application = xreader.Value;
+                                break;
 
-                                case EDITOR_ARGUMENTS:
-                                    xreader.Read();
-                                    editor.Arguments = xreader.Value;
-                                    break;
-                            }
+                            case EDITOR_ARGUMENTS:
+                                xreader.Read();
+                                editor.Arguments = xreader.Value;
+                                break;
                         }
                     }
+                }
 
-                    xreader.Close();
+                xreader.Close();
 
-                    if (!string.IsNullOrEmpty(editor.Name) &&
-                        !string.IsNullOrEmpty(editor.Application) &&
-                        !string.IsNullOrEmpty(editor.Arguments))
-                    {
-                        EditorCollection.Add(editor);
-                    }
+                if (!string.IsNullOrEmpty(editor.Name) &&
+                    !string.IsNullOrEmpty(editor.Application) &&
+                    !string.IsNullOrEmpty(editor.Arguments))
+                {
+                    Add(editor);
                 }
             }
         }
 
         /// <summary>
-        /// Saves the image editors to the editors.xml file from the application.
+        /// Saves the image editors.
         /// </summary>
         public static void Save()
         {
@@ -128,7 +125,9 @@ namespace autoscreen
             xsettings.NewLineHandling = NewLineHandling.Entitize;
             xsettings.ConformanceLevel = ConformanceLevel.Document;
 
-            using (XmlWriter xwriter = XmlWriter.Create(AppDomain.CurrentDomain.BaseDirectory + XML_FILE, xsettings))
+            StringBuilder editors = new StringBuilder();
+
+            using (XmlWriter xwriter = XmlWriter.Create(editors))
             {
                 xwriter.WriteStartDocument();
                 xwriter.WriteStartElement(XML_FILE_ROOT_NODE);
@@ -149,7 +148,13 @@ namespace autoscreen
                 xwriter.WriteEndElement();
                 xwriter.WriteEndElement();
                 xwriter.WriteEndDocument();
+
+                xwriter.Flush();
+                xwriter.Close();
             }
+
+            Properties.Settings.Default.Editors = editors.ToString();
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.3
+// Auto Screen Capture 2.0.6.4
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -59,7 +59,7 @@ namespace autoscreen
         /// </summary>
         private const int CAPTURE_LIMIT_MIN = 0;
         private const int CAPTURE_LIMIT_MAX = 9999;
-        private const int CAPTURE_DELAY_DEFAULT = 1000;
+        private const int CAPTURE_DELAY_DEFAULT = 30000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
@@ -1471,7 +1471,7 @@ namespace autoscreen
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
-                string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen);
+                string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
                 if (File.Exists(selectedFile))
                 {
@@ -1698,7 +1698,7 @@ namespace autoscreen
             if (listBoxScreenshots.SelectedIndex > -1)
             {
                 Editor editor = EditorCollection.GetByName(sender.ToString());
-                string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen);
+                string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
                 if (File.Exists(selectedFile))
                 {
@@ -1727,7 +1727,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void tabControlScreens_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= ScreenCapture.SCREEN_MAX ? tabControlScreens.SelectedIndex : 0;
+            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= ScreenCapture.SCREEN_MAX ? tabControlScreens.SelectedIndex : 1;
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.3
+// Auto Screen Capture 2.0.6.4
 // autoscreen.FileSystem.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -29,6 +29,11 @@ namespace autoscreen
         public static string GetImageFilePath(string slideName, int screenNumber)
         {
             string filePath = string.Empty;
+
+            if (screenNumber <= 0)
+            {
+                screenNumber = 1;
+            }
 
             if (!string.IsNullOrEmpty(slideName))
             {

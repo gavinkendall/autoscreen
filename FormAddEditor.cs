@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.3
+// Auto Screen Capture 2.0.6.4
 // autoscreen.FormAddEditor.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -57,7 +57,7 @@ namespace autoscreen
         {
             AddEditor(name, application, arguments);
 
-            string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen);
+            string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
             if (File.Exists(selectedFile))
             {

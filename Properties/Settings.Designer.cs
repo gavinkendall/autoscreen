@@ -25,7 +25,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("60000")]
         public int Interval {
             get {
                 return ((int)(this["Interval"]));
@@ -37,7 +37,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.0.6.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0.6.4")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));
@@ -70,7 +70,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
         public int SlideshowDelay {
             get {
                 return ((int)(this["SlideshowDelay"]));
@@ -103,7 +103,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CaptureLimitCheck {
             get {
                 return ((bool)(this["CaptureLimitCheck"]));
@@ -355,7 +355,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("PNG")]
+        [global::System.Configuration.DefaultSettingValueAttribute("JPEG")]
         public string ScheduleImageFormat {
             get {
                 return ((string)(this["ScheduleImageFormat"]));
@@ -388,7 +388,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool DemoModeCheck {
             get {
                 return ((bool)(this["DemoModeCheck"]));
@@ -412,7 +412,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool CaptureStartOnScheduleCheck {
             get {
                 return ((bool)(this["CaptureStartOnScheduleCheck"]));
@@ -443,18 +443,6 @@ namespace autoscreen.Properties {
             }
             set {
                 this["CloseWindowOnStartCaptureCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool VirtualScreenModeCheck {
-            get {
-                return ((bool)(this["VirtualScreenModeCheck"]));
-            }
-            set {
-                this["VirtualScreenModeCheck"] = value;
             }
         }
         
@@ -659,6 +647,20 @@ namespace autoscreen.Properties {
             }
             set {
                 this["DebugMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?><autoscreen><editors><editor><name>Microsof" +
+            "t Paint</name><application>C:\\Windows\\System32\\mspaint.exe</application><argumen" +
+            "ts>%screenshot%</arguments></editor></editors></autoscreen>")]
+        public string Editors {
+            get {
+                return ((string)(this["Editors"]));
+            }
+            set {
+                this["Editors"] = value;
             }
         }
     }
