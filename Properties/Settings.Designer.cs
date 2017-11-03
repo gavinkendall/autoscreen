@@ -37,7 +37,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.0.6.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0.6.5")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));
@@ -661,6 +661,18 @@ namespace autoscreen.Properties {
             }
             set {
                 this["Editors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowSystemTrayIcon {
+            get {
+                return ((bool)(this["ShowSystemTrayIcon"]));
+            }
+            set {
+                this["ShowSystemTrayIcon"] = value;
             }
         }
     }

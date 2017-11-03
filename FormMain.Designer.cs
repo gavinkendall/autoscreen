@@ -187,6 +187,8 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -273,6 +275,7 @@
             // toolStripDropDownButtonOptions
             // 
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator8,
             this.toolStripMenuItemDemoModeAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
             this.toolStripMenuItemDebugMode,
@@ -281,6 +284,7 @@
             this.toolStripMenuItemOpenOnStopScreenCapture,
             this.toolStripMenuItemCloseWindowOnStartCapture,
             this.toolStripSeparator6,
+            this.toolStripMenuItemShowSystemTrayIcon,
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture,
             this.toolStripMenuItemSearchOnStopScreenCapture,
             this.toolStripSeparator5,
@@ -1274,7 +1278,6 @@
             // 
             this.notifyIcon.ContextMenuStrip = this.contextMenuStripSystemTrayIcon;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.Visible = true;
             // 
             // contextMenuStripSystemTrayIcon
             // 
@@ -2093,6 +2096,19 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(452, 6);
+            // 
+            // toolStripMenuItemShowSystemTrayIcon
+            // 
+            this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
+            this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
+            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
+            this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowSystemTrayIcon_CheckedChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2349,5 +2365,7 @@
         private System.Windows.Forms.Panel panelScreen4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDebugMode;
         private System.Windows.Forms.Timer timerScreenCapture;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSystemTrayIcon;
     }
 }

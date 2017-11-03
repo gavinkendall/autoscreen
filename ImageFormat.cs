@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.4
+// Auto Screen Capture 2.0.6.5
 // autoscreen.ImageFormat.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)

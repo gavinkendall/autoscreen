@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.4
+// Auto Screen Capture 2.0.6.5
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
@@ -180,6 +180,7 @@ namespace autoscreen
             toolStripMenuItemDebugMode.CheckedChanged += ToolStripMenuItemDebugMode_CheckedChanged;
 
             toolStripMenuItemDemoModeAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
+            toolStripMenuItemShowSystemTrayIcon.Checked = Properties.Settings.Default.ShowSystemTrayIcon;
             toolStripMenuItemExitOnCloseWindow.Checked = Properties.Settings.Default.ExitOnCloseWindowCheck;
             toolStripMenuItemScheduleAtApplicationStartup.Checked = Properties.Settings.Default.ScheduleOnAtStartupCheck;
             toolStripMenuItemOpenOnStopScreenCapture.Checked = Properties.Settings.Default.OpenOnScreenCaptureStopCheck;
@@ -1068,7 +1069,7 @@ namespace autoscreen
         {
             if (sender.ToString().Equals(toolStripSplitButtonStartScreenCapture.Text))
             {
-                imageFormat = ImageFormatSpec.NAME_PNG;
+                imageFormat = ImageFormatSpec.NAME_JPEG;
             }
             else
             {
@@ -1272,6 +1273,7 @@ namespace autoscreen
             Properties.Settings.Default.TakeInitialScreenshotCheck = checkBoxInitialScreenshot.Checked;
 
             Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
+            Properties.Settings.Default.ShowSystemTrayIcon = toolStripMenuItemShowSystemTrayIcon.Checked;
             Properties.Settings.Default.DemoModeCheck = toolStripMenuItemDemoModeAtApplicationStartup.Checked;
             Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
             Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;
@@ -2418,6 +2420,16 @@ namespace autoscreen
                     numericUpDownScreen4Height.Value = screen.Bounds.Height;
                 }
             }
+        }
+        
+        /// <summary>
+        /// Show or hide the system tray icon depending on the option selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemShowSystemTrayIcon_CheckedChanged(object sender, EventArgs e)
+        {
+            notifyIcon.Visible = toolStripMenuItemShowSystemTrayIcon.Checked;
         }
     }
 }
