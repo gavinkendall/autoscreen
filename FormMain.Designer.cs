@@ -532,36 +532,61 @@
             this.numericUpDownScreen1Height.Enabled = false;
             this.numericUpDownScreen1Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen1Height.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen1Height.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen1Height.Name = "numericUpDownScreen1Height";
             this.numericUpDownScreen1Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1Height.TabIndex = 12;
+            this.numericUpDownScreen1Height.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericUpDownScreen1Width
             // 
             this.numericUpDownScreen1Width.Enabled = false;
             this.numericUpDownScreen1Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen1Width.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen1Width.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen1Width.Name = "numericUpDownScreen1Width";
             this.numericUpDownScreen1Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1Width.TabIndex = 11;
+            this.numericUpDownScreen1Width.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericUpDownScreen1Y
             // 
             this.numericUpDownScreen1Y.Enabled = false;
             this.numericUpDownScreen1Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen1Y.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen1Y.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen1Y.Name = "numericUpDownScreen1Y";
             this.numericUpDownScreen1Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1Y.TabIndex = 10;
@@ -571,10 +596,15 @@
             this.numericUpDownScreen1X.Enabled = false;
             this.numericUpDownScreen1X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen1X.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen1X.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen1X.Name = "numericUpDownScreen1X";
             this.numericUpDownScreen1X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1X.TabIndex = 9;
@@ -721,13 +751,23 @@
             this.numericUpDownScreen2Height.Enabled = false;
             this.numericUpDownScreen2Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen2Height.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen2Height.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen2Height.Name = "numericUpDownScreen2Height";
             this.numericUpDownScreen2Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2Height.TabIndex = 21;
+            this.numericUpDownScreen2Height.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // buttonScreen2Reset
             // 
@@ -746,13 +786,23 @@
             this.numericUpDownScreen2Width.Enabled = false;
             this.numericUpDownScreen2Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen2Width.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen2Width.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen2Width.Name = "numericUpDownScreen2Width";
             this.numericUpDownScreen2Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2Width.TabIndex = 20;
+            this.numericUpDownScreen2Width.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // labelScreen2Width
             // 
@@ -769,10 +819,15 @@
             this.numericUpDownScreen2Y.Enabled = false;
             this.numericUpDownScreen2Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen2Y.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen2Y.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen2Y.Name = "numericUpDownScreen2Y";
             this.numericUpDownScreen2Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2Y.TabIndex = 19;
@@ -792,10 +847,15 @@
             this.numericUpDownScreen2X.Enabled = false;
             this.numericUpDownScreen2X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen2X.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen2X.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen2X.Name = "numericUpDownScreen2X";
             this.numericUpDownScreen2X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2X.TabIndex = 18;
@@ -868,13 +928,23 @@
             this.numericUpDownScreen3Height.Enabled = false;
             this.numericUpDownScreen3Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen3Height.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen3Height.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen3Height.Name = "numericUpDownScreen3Height";
             this.numericUpDownScreen3Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3Height.TabIndex = 21;
+            this.numericUpDownScreen3Height.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // buttonScreen3Reset
             // 
@@ -893,13 +963,23 @@
             this.numericUpDownScreen3Width.Enabled = false;
             this.numericUpDownScreen3Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen3Width.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen3Width.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen3Width.Name = "numericUpDownScreen3Width";
             this.numericUpDownScreen3Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3Width.TabIndex = 20;
+            this.numericUpDownScreen3Width.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // labelScreen3Width
             // 
@@ -916,10 +996,15 @@
             this.numericUpDownScreen3Y.Enabled = false;
             this.numericUpDownScreen3Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen3Y.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen3Y.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen3Y.Name = "numericUpDownScreen3Y";
             this.numericUpDownScreen3Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3Y.TabIndex = 19;
@@ -939,10 +1024,15 @@
             this.numericUpDownScreen3X.Enabled = false;
             this.numericUpDownScreen3X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen3X.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen3X.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen3X.Name = "numericUpDownScreen3X";
             this.numericUpDownScreen3X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3X.TabIndex = 18;
@@ -1015,13 +1105,23 @@
             this.numericUpDownScreen4Height.Enabled = false;
             this.numericUpDownScreen4Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen4Height.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen4Height.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen4Height.Name = "numericUpDownScreen4Height";
             this.numericUpDownScreen4Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4Height.TabIndex = 21;
+            this.numericUpDownScreen4Height.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // buttonScreen4Reset
             // 
@@ -1040,13 +1140,23 @@
             this.numericUpDownScreen4Width.Enabled = false;
             this.numericUpDownScreen4Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen4Width.Maximum = new decimal(new int[] {
-            9999,
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownScreen4Width.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
             this.numericUpDownScreen4Width.Name = "numericUpDownScreen4Width";
             this.numericUpDownScreen4Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4Width.TabIndex = 20;
+            this.numericUpDownScreen4Width.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // labelScreen4Width
             // 
@@ -1063,10 +1173,15 @@
             this.numericUpDownScreen4Y.Enabled = false;
             this.numericUpDownScreen4Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen4Y.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen4Y.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen4Y.Name = "numericUpDownScreen4Y";
             this.numericUpDownScreen4Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4Y.TabIndex = 19;
@@ -1086,10 +1201,15 @@
             this.numericUpDownScreen4X.Enabled = false;
             this.numericUpDownScreen4X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen4X.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
+            -402653185,
+            -1613725636,
+            54210108,
             0});
+            this.numericUpDownScreen4X.Minimum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            -2147483648});
             this.numericUpDownScreen4X.Name = "numericUpDownScreen4X";
             this.numericUpDownScreen4X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4X.TabIndex = 18;

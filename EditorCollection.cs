@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.2
+// Auto Screen Capture 2.0.6.3
 // autoscreen.EditorCollection.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
