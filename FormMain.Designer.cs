@@ -179,9 +179,6 @@
             this.numericUpDownSlideshowDelaySeconds = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayMinutes = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayHours = new System.Windows.Forms.NumericUpDown();
-            this.tabPageKeylogger = new System.Windows.Forms.TabPage();
-            this.labelKeyloggingFile = new System.Windows.Forms.Label();
-            this.textBoxKeyloggingFile = new System.Windows.Forms.TextBox();
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
@@ -189,7 +186,6 @@
             this.timerDemoCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
-            this.checkBoxEnableKeylogging = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -248,7 +244,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelaySeconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
-            this.tabPageKeylogger.SuspendLayout();
             this.toolStripScreenCapture.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -1352,7 +1347,6 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControlModules.Controls.Add(this.tabPageScreenCapture);
             this.tabControlModules.Controls.Add(this.tabPageSlideshow);
-            this.tabControlModules.Controls.Add(this.tabPageKeylogger);
             this.tabControlModules.Location = new System.Drawing.Point(0, 164);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
@@ -1915,34 +1909,6 @@
             this.numericUpDownSlideshowDelayHours.TabIndex = 0;
             this.numericUpDownSlideshowDelayHours.ValueChanged += new System.EventHandler(this.numericUpDownSlideshowDelay_ValueChanged);
             // 
-            // tabPageKeylogger
-            // 
-            this.tabPageKeylogger.Controls.Add(this.labelKeyloggingFile);
-            this.tabPageKeylogger.Controls.Add(this.textBoxKeyloggingFile);
-            this.tabPageKeylogger.Location = new System.Drawing.Point(4, 22);
-            this.tabPageKeylogger.Name = "tabPageKeylogger";
-            this.tabPageKeylogger.Size = new System.Drawing.Size(241, 128);
-            this.tabPageKeylogger.TabIndex = 3;
-            this.tabPageKeylogger.Text = "Keylogger";
-            this.tabPageKeylogger.UseVisualStyleBackColor = true;
-            // 
-            // labelKeyloggingFile
-            // 
-            this.labelKeyloggingFile.AutoSize = true;
-            this.labelKeyloggingFile.Location = new System.Drawing.Point(1, 7);
-            this.labelKeyloggingFile.Name = "labelKeyloggingFile";
-            this.labelKeyloggingFile.Size = new System.Drawing.Size(26, 13);
-            this.labelKeyloggingFile.TabIndex = 1;
-            this.labelKeyloggingFile.Text = "File:";
-            // 
-            // textBoxKeyloggingFile
-            // 
-            this.textBoxKeyloggingFile.Location = new System.Drawing.Point(33, 4);
-            this.textBoxKeyloggingFile.Name = "textBoxKeyloggingFile";
-            this.textBoxKeyloggingFile.Size = new System.Drawing.Size(205, 20);
-            this.textBoxKeyloggingFile.TabIndex = 0;
-            this.textBoxKeyloggingFile.TextChanged += new System.EventHandler(this.textBoxKeyloggingFile_TextChanged);
-            // 
             // toolStripScreenCapture
             // 
             this.toolStripScreenCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1954,7 +1920,7 @@
             this.toolStripScreenCapture.Location = new System.Drawing.Point(20, 321);
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(207, 25);
+            this.toolStripScreenCapture.Size = new System.Drawing.Size(238, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
             // toolStripSplitButtonStartScreenCapture
@@ -2002,24 +1968,11 @@
             this.timerScheduledCaptureStop.Interval = 1000;
             this.timerScheduledCaptureStop.Tick += new System.EventHandler(this.timerScheduledCaptureStop_Tick);
             // 
-            // checkBoxEnableKeylogging
-            // 
-            this.checkBoxEnableKeylogging.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxEnableKeylogging.AutoSize = true;
-            this.checkBoxEnableKeylogging.Location = new System.Drawing.Point(4, 325);
-            this.checkBoxEnableKeylogging.Name = "checkBoxEnableKeylogging";
-            this.checkBoxEnableKeylogging.Size = new System.Drawing.Size(222, 17);
-            this.checkBoxEnableKeylogging.TabIndex = 21;
-            this.checkBoxEnableKeylogging.Text = "Enable keylogging while screen capturing";
-            this.checkBoxEnableKeylogging.UseVisualStyleBackColor = true;
-            this.checkBoxEnableKeylogging.Visible = false;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 398);
-            this.Controls.Add(this.checkBoxEnableKeylogging);
             this.Controls.Add(this.toolStripScreenCapture);
             this.Controls.Add(this.buttonOpenFolder);
             this.Controls.Add(this.tabControlModules);
@@ -2105,8 +2058,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelaySeconds)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).EndInit();
-            this.tabPageKeylogger.ResumeLayout(false);
-            this.tabPageKeylogger.PerformLayout();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
             this.ResumeLayout(false);
@@ -2193,7 +2144,6 @@
         private System.Windows.Forms.Label labelAt;
         private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.ToolStripButton toolStripButtonStopScreenCapture;
-        private System.Windows.Forms.TabPage tabPageKeylogger;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonOptions;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenOnStopScreenCapture;
@@ -2219,9 +2169,6 @@
         private System.Windows.Forms.Button buttonScheduleClear;
         private System.Windows.Forms.Button buttonScheduleSet;
         private System.Windows.Forms.ComboBox comboBoxScheduleImageFormat;
-        private System.Windows.Forms.CheckBox checkBoxEnableKeylogging;
-        private System.Windows.Forms.Label labelKeyloggingFile;
-        private System.Windows.Forms.TextBox textBoxKeyloggingFile;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelSchedule;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemScheduleAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;

@@ -82,8 +82,6 @@
     <Compile Include="ImageFormat.cs" />
     <Compile Include="ImageFormatCollection.cs" />
     <Compile Include="ImageFormatSpec.cs" />
-    <Compile Include="KeyboardListener.cs" />
-    <Compile Include="Keylogger.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

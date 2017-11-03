@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6
+// Auto Screen Capture 2.0.6.1
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Thursday, 2 November 2017
+// Thursday, 15 May 2008 - Friday, 3 November 2017
 
 using System;
 using System.IO;
@@ -39,7 +39,6 @@ namespace autoscreen
         /// <summary>
         /// Other forms.
         /// </summary>
-        private Keylogger keylogger = new Keylogger();
         private FormAddEditor formAddEditor = new FormAddEditor();
 
         /// <summary>
@@ -71,7 +70,6 @@ namespace autoscreen
         private const string REGEX_COMMAND_LINE_FOLDER = "^-folder=(?<Folder>.+)$";
         private const string REGEX_COMMAND_LINE_RATIO = @"^-ratio=(?<Ratio>\d{1,3})$";
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
-        private const string REGEX_COMMAND_LINE_KEYLOG = @"^-keylog=(?<Keylog>[0-9|a-z|A-Z]+\.[a-z|A-Z]{3})$";
         private const string REGEX_COMMAND_LINE_FORMAT = @"^-format=(?<Format>(BMP|EMF|GIF|JPEG|PNG|TIFF|WMF))$";
         private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
         private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
@@ -127,8 +125,6 @@ namespace autoscreen
             comboBoxScheduleImageFormat.Items.Clear();
             toolStripMenuItemStartScreenCapture.DropDownItems.Clear();
             toolStripSplitButtonStartScreenCapture.DropDownItems.Clear();
-
-            textBoxKeyloggingFile.Text = Properties.Settings.Default.KeyloggingFile;
 
             Log.Write("Building image format list in system tray menu.");
 
@@ -211,7 +207,6 @@ namespace autoscreen
             checkBoxThursday.Checked = Properties.Settings.Default.CaptureOnThursdayCheck;
             checkBoxFriday.Checked = Properties.Settings.Default.CaptureOnFridayCheck;
 
-            checkBoxEnableKeylogging.Checked = Properties.Settings.Default.KeyloggingEnabledCheck;
             checkBoxScheduleOnTheseDays.Checked = Properties.Settings.Default.CaptureOnTheseDaysCheck;
 
             dateTimePickerScheduleStopAt.Value = Properties.Settings.Default.CaptureStopAtValue;
@@ -629,7 +624,6 @@ namespace autoscreen
         private void StopScreenCapture()
         {
             ScreenCapture.Stop();
-            keylogger.Enabled = false;
 
             // Let the user know of the last capture that was taken and the status of the session ("Stopped").
             DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
@@ -764,8 +758,6 @@ namespace autoscreen
             ScreenCapture.Delay = delay;
             ScreenCapture.Limit = limit;
             ScreenCapture.Ratio = ratio;
-
-            keylogger.Enabled = checkBoxEnableKeylogging.Checked;
 
             if (initial)
             {
@@ -1221,9 +1213,6 @@ namespace autoscreen
         /// </summary>
         private void EnableStartScreenCapture()
         {
-            textBoxKeyloggingFile.Enabled = true;
-            checkBoxEnableKeylogging.Enabled = true;
-
             if (GetCaptureDelay() > 0)
             {
                 toolStripMenuItemStartScreenCapture.Enabled = true;
@@ -1258,9 +1247,6 @@ namespace autoscreen
         /// </summary>
         private void DisableStartScreenCapture()
         {
-            textBoxKeyloggingFile.Enabled = false;
-            checkBoxEnableKeylogging.Enabled = false;
-
             toolStripMenuItemStartScreenCapture.Enabled = false;
             toolStripSplitButtonStartScreenCapture.Enabled = false;
         }
@@ -1290,7 +1276,6 @@ namespace autoscreen
             Properties.Settings.Default.CaptureLimit = (int)numericUpDownCaptureLimit.Value;
             Properties.Settings.Default.ImageResolutionRatio = (int)numericUpDownImageResolutionRatio.Value;
 
-            Properties.Settings.Default.KeyloggingFile = textBoxKeyloggingFile.Text;
             Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
 
             Properties.Settings.Default.Interval = GetCaptureDelay();
@@ -1322,7 +1307,6 @@ namespace autoscreen
             Properties.Settings.Default.CaptureOnSaturdayCheck = checkBoxSaturday.Checked;
             Properties.Settings.Default.CaptureOnWednesdayCheck = checkBoxWednesday.Checked;
 
-            Properties.Settings.Default.KeyloggingEnabledCheck = checkBoxEnableKeylogging.Checked;
             Properties.Settings.Default.CaptureOnTheseDaysCheck = checkBoxScheduleOnTheseDays.Checked;
 
             Properties.Settings.Default.CaptureStopAtValue = dateTimePickerScheduleStopAt.Value;
@@ -1522,8 +1506,6 @@ namespace autoscreen
 
                 bool isScheduled = false;
 
-                checkBoxEnableKeylogging.Checked = false;
-
                 bool initial = false;
                 checkBoxInitialScreenshot.Checked = false;
 
@@ -1547,7 +1529,6 @@ namespace autoscreen
 
                 Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
                 Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
-                Regex rgxCommandLineKeylog = new Regex(REGEX_COMMAND_LINE_KEYLOG);
                 Regex rgxCommandLineFormat = new Regex(REGEX_COMMAND_LINE_FORMAT);
                 Regex rgxCommandLineFolder = new Regex(REGEX_COMMAND_LINE_FOLDER);
                 Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
@@ -1605,12 +1586,6 @@ namespace autoscreen
                             checkBoxCaptureLimit.Checked = true;
                             numericUpDownCaptureLimit.Value = (decimal)cmdLimit;
                         }
-                    }
-
-                    if (rgxCommandLineKeylog.IsMatch(args[i]))
-                    {
-                        textBoxKeyloggingFile.Text = rgxCommandLineKeylog.Match(args[i]).Groups["Keylog"].Value;
-                        checkBoxEnableKeylogging.Checked = true;
                     }
 
                     if (rgxCommandLineFormat.IsMatch(args[i]))
@@ -2185,7 +2160,6 @@ namespace autoscreen
         {
             toolStripSlideshow.Visible = false;
             toolStripScreenCapture.Visible = false;
-            checkBoxEnableKeylogging.Visible = false;
 
             switch (tabControlModules.SelectedTab.Text)
             {
@@ -2197,11 +2171,6 @@ namespace autoscreen
                 case "Slideshow":
                     toolStripSlideshow.Visible = true;
                     toolStripSlideshow.BringToFront();
-                    break;
-
-                case "Keylogger":
-                    checkBoxEnableKeylogging.Visible = true;
-                    checkBoxEnableKeylogging.BringToFront();
                     break;
             }
         }
@@ -2320,26 +2289,6 @@ namespace autoscreen
         private void buttonScheduleClear_Click(object sender, EventArgs e)
         {
             ScheduleClear();
-        }
-
-        /// <summary>
-        /// Makes sure that the file name of the keylogger's file is always updated when the user changes its name.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void textBoxKeyloggingFile_TextChanged(object sender, EventArgs e)
-        {
-            Regex rgxCommandLineKeylog = new Regex(REGEX_COMMAND_LINE_KEYLOG);
-
-            if (rgxCommandLineKeylog.IsMatch("-keylog=" + textBoxKeyloggingFile.Text))
-            {
-                textBoxKeyloggingFile.BackColor = Color.White;
-                keylogger.File = textBoxScreenshotsFolderSearch.Text + textBoxKeyloggingFile.Text;
-            }
-            else
-            {
-                textBoxKeyloggingFile.BackColor = Color.Red;
-            }
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.0.6")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0.6.1")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));
@@ -362,30 +362,6 @@ namespace autoscreen.Properties {
             }
             set {
                 this["ScheduleImageFormat"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool KeyloggingEnabledCheck {
-            get {
-                return ((bool)(this["KeyloggingEnabledCheck"]));
-            }
-            set {
-                this["KeyloggingEnabledCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("keylog.txt")]
-        public string KeyloggingFile {
-            get {
-                return ((string)(this["KeyloggingFile"]));
-            }
-            set {
-                this["KeyloggingFile"] = value;
             }
         }
         

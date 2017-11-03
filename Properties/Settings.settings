@@ -6,7 +6,7 @@
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="ApplicationVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2.0.6</Value>
+      <Value Profile="(Default)">2.0.6.1</Value>
     </Setting>
     <Setting Name="ImageFormatFilter" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -88,12 +88,6 @@
     </Setting>
     <Setting Name="ScheduleImageFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">PNG</Value>
-    </Setting>
-    <Setting Name="KeyloggingEnabledCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="KeyloggingFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">keylog.txt</Value>
     </Setting>
     <Setting Name="ScheduleOnAtStartupCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
