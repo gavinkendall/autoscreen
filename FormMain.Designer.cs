@@ -186,6 +186,7 @@
             this.timerDemoCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
+            this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -1920,7 +1921,7 @@
             this.toolStripScreenCapture.Location = new System.Drawing.Point(20, 321);
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(238, 25);
+            this.toolStripScreenCapture.Size = new System.Drawing.Size(207, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
             // toolStripSplitButtonStartScreenCapture
@@ -1967,6 +1968,10 @@
             // 
             this.timerScheduledCaptureStop.Interval = 1000;
             this.timerScheduledCaptureStop.Tick += new System.EventHandler(this.timerScheduledCaptureStop_Tick);
+            // 
+            // timerScreenCapture
+            // 
+            this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
             // FormMain
             // 
@@ -2223,5 +2228,6 @@
         private System.Windows.Forms.Panel panelScreen3;
         private System.Windows.Forms.Panel panelScreen4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDebugMode;
+        private System.Windows.Forms.Timer timerScreenCapture;
     }
 }

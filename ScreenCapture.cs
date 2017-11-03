@@ -25,52 +25,12 @@ namespace autoscreen
         [DllImport("user32.dll")]
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
-        private static Timer m_timer = new Timer();
-
-        public static event EventHandler OnCapturing = delegate { };
-
         public const int SCREEN_MAX = 4;
         private const int MAX_CHARS = 48000;
-        private const int CAPTURE_LIMIT_MIN = 1;
-        private const int CAPTURE_LIMIT_MAX = 9999;
+        public const int CAPTURE_LIMIT_MIN = 1;
+        public const int CAPTURE_LIMIT_MAX = 9999;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
-
-        public static void Initialize()
-        {
-            m_timer.Tick += new System.EventHandler(m_timer_Tick);
-        }
-
-        public static void Start()
-        {
-            Log.Write("Starting screen capture.");
-
-            m_timer.Interval = m_delay;
-            m_timer.Enabled = true;
-        }
-
-        public static void Stop()
-        {
-            Log.Write("Stopping screen capture.");
-
-            m_count = 0;
-            m_timer.Enabled = false;
-        }
-
-        public static bool Capturing
-        {
-            get
-            {
-                if (m_timer != null)
-                {
-                    return m_timer.Enabled;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
 
         public static int X { get; set; }
         public static int Y { get; set; }
@@ -81,8 +41,8 @@ namespace autoscreen
         {
             try
             {
-                int sourceWidth = Width <= screen.Bounds.Width ? Width : screen.Bounds.Width;
-                int sourceHeight = Height <= screen.Bounds.Height ? Height : screen.Bounds.Height;
+                int sourceWidth = Width <= screen.Bounds.Width && Width > 0 ? Width : screen.Bounds.Width;
+                int sourceHeight = Height <= screen.Bounds.Height && Height > 0 ? Height : screen.Bounds.Height;
 
                 int destinationWidth = sourceWidth;
                 int destinationHeight = sourceHeight;
@@ -98,6 +58,7 @@ namespace autoscreen
 
                 Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
                 Graphics graphicsSource = Graphics.FromImage(bitmapSource);
+
                 graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
 
                 Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
@@ -157,34 +118,20 @@ namespace autoscreen
             return null;
         }
 
-        public static void TakeScreenshot()
+        public static void TakeScreenshot(Screen screen, int screenNumber, string filename)
         {
             try
             {
-                int count = 0;
+                Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
 
-                string filename = m_folder + StringHelper.ParseTags("%CurrentDate%") + "\\%screen%\\" + StringHelper.ParseTags("%CurrentDate%_%CurrentTime%");
-
-                foreach (Screen screen in Screen.AllScreens)
+                if (bitmap != null)
                 {
-                    count++;
-
-                    if (count <= SCREEN_MAX)
-                    {
-                        Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
-
-                        if (bitmap != null)
-                        {
-                            SaveToFile(bitmap, m_format, filename.Replace("%screen%", count.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
-                        }
-                    }
-
-                    GC.Collect();
+                    SaveToFile(bitmap, m_format, filename.Replace("%screen%", screenNumber.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
                 }
 
-                SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
+                GC.Collect();
 
-                m_count++;
+                SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
             }
             catch (Exception ex)
             {
@@ -212,28 +159,6 @@ namespace autoscreen
             {
                 Log.Write("ScreenCapture::SaveToFile", ex);
             }
-        }
-
-        private static void m_timer_Tick(object sender, EventArgs e)
-        {
-            if (m_limit >= CAPTURE_LIMIT_MIN && m_limit <= CAPTURE_LIMIT_MAX)
-            {
-                if (m_count < m_limit)
-                {
-                    TakeScreenshot();
-                }
-
-                if (m_count == m_limit)
-                {
-                    Stop();
-                }
-            }
-            else
-            {
-                TakeScreenshot();
-            }
-
-            OnCapturing(null, EventArgs.Empty);
         }
 
         private static string m_folder;

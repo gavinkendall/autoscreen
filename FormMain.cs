@@ -105,11 +105,6 @@ namespace autoscreen
             Slideshow.Initialize();
             Slideshow.OnPlaying += new EventHandler(Slideshow_Playing);
 
-            Log.Write("Initializing screen capture component.");
-
-            ScreenCapture.Initialize();
-            ScreenCapture.OnCapturing += new EventHandler(Screen_Capturing);
-
             Log.Write("Loading editors and building screenshot preview context menu.");
 
             EditorCollection.Load();
@@ -623,7 +618,10 @@ namespace autoscreen
         /// </summary>
         private void StopScreenCapture()
         {
-            ScreenCapture.Stop();
+            Log.Write("Stopping screen capture.");
+
+            ScreenCapture.Count = 0;
+            timerScreenCapture.Enabled = false;
 
             // Let the user know of the last capture that was taken and the status of the session ("Stopped").
             DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
@@ -761,12 +759,15 @@ namespace autoscreen
 
             if (initial)
             {
-                ScreenCapture.TakeScreenshot();
+                TakeScreenshot();
                 DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
             }
 
             // Start taking screenshots.
-            ScreenCapture.Start();
+            Log.Write("Starting screen capture.");
+
+            timerScreenCapture.Interval = delay;
+            timerScreenCapture.Enabled = true;
         }
 
         /// <summary>
@@ -880,7 +881,7 @@ namespace autoscreen
             checkBoxCaptureLimit.Enabled = true;
             checkBoxInitialScreenshot.Enabled = true;
 
-            if (!ScreenCapture.Capturing)
+            if (!timerScreenCapture.Enabled)
             {
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
             }
@@ -1179,21 +1180,6 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Displays the screen capture status in the application's status strip and system tray icon while a screen capture session is running.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Screen_Capturing(object sender, EventArgs e)
-        {
-            DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
-
-            if (!ScreenCapture.Capturing)
-            {
-                StopScreenCapture();
-            }
-        }
-
-        /// <summary>
         /// Figures out if the "Play Slideshow" control should be enabled or disabled.
         /// </summary>
         private void EnablePlaySlideshow()
@@ -1464,7 +1450,7 @@ namespace autoscreen
         {
             toolStripMenuItemClose.Enabled = true;
 
-            if (ScreenCapture.Capturing)
+            if (timerScreenCapture.Enabled)
             {
                 toolStripMenuItemStopScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = false;
@@ -1752,6 +1738,63 @@ namespace autoscreen
         private void timerDemoCapture_Tick(object sender, EventArgs e)
         {
             TakeDemoScreenshots();            
+        }
+
+        /// <summary>
+        /// The timer for taking screenshots.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerScreenCapture_Tick(object sender, EventArgs e)
+        {
+            DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
+
+            if (!timerScreenCapture.Enabled)
+            {
+                StopScreenCapture();
+            }
+
+            if (ScreenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN && ScreenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
+            {
+                if (ScreenCapture.Count < ScreenCapture.Limit)
+                {
+                    TakeScreenshot();
+                }
+
+                if (ScreenCapture.Count == ScreenCapture.Limit)
+                {
+                    StopScreenCapture();
+                }
+            }
+            else
+            {
+                TakeScreenshot();
+            }
+        }
+
+        /// <summary>
+        /// Takes a screenshot of each available screen.
+        /// </summary>
+        private void TakeScreenshot()
+        {
+            string filename = ScreenCapture.Folder + StringHelper.ParseTags("%CurrentDate%") + "\\%screen%\\" + StringHelper.ParseTags("%CurrentDate%_%CurrentTime%");
+
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX)
+                {
+                    SetupScreenPosition(screen, count);
+                    SetupScreenSize(screen, count);
+
+                    ScreenCapture.TakeScreenshot(screen, count, filename);
+                }
+            }
+
+            ScreenCapture.Count++;
         }
 
         /// <summary>
