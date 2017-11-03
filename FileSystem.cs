@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.1
+// Auto Screen Capture 2.0.6.2
 // autoscreen.FileSystem.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)

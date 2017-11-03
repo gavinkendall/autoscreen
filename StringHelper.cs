@@ -1,5 +1,5 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.1
+// Auto Screen Capture 2.0.6.2
 // autoscreen.StringHelper.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
