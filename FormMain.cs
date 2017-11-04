@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.6.5
+// Auto Screen Capture 2.0.7
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Friday, 3 November 2017
+// Thursday, 15 May 2008 - Saturday, 4 November 2017
 
 using System;
 using System.IO;
@@ -173,6 +173,8 @@ namespace autoscreen
             checkBoxSlideSkip.Checked = Properties.Settings.Default.SlideSkipCheck;
             checkBoxCaptureLimit.Checked = Properties.Settings.Default.CaptureLimitCheck;
             checkBoxInitialScreenshot.Checked = Properties.Settings.Default.TakeInitialScreenshotCheck;
+
+            textBoxPassphrase.Text = Properties.Settings.Default.Passphrase;
 
             Log.Write("Loading user settings - option menu items.");
 
@@ -1348,6 +1350,19 @@ namespace autoscreen
         }
 
         /// <summary>
+        /// Displays the status of the locked in passphrase used to challenge the user when the running
+        /// screen capture session is stopped.
+        /// </summary>
+        /// <param name="status"></param>
+        private void DisplayLockStatus(string status)
+        {
+            if (!string.IsNullOrEmpty(status))
+            {
+                statusStrip.Items["statusStripLabelLock"].Text = "Lock: " + status;
+            }
+        }
+
+        /// <summary>
         /// Displays the screen capture status.
         /// </summary>
         /// <param name="statusApp">The status message for the application's status strip.</param>
@@ -2430,6 +2445,59 @@ namespace autoscreen
         private void toolStripMenuItemShowSystemTrayIcon_CheckedChanged(object sender, EventArgs e)
         {
             notifyIcon.Visible = toolStripMenuItemShowSystemTrayIcon.Checked;
+        }
+
+        /// <summary>
+        /// Determine if we need to show "Lock: On" or "Lock: Off".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxPassphraseLock_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxPassphraseLock.Checked)
+            {
+                DisplayLockStatus(StatusMessage.ON);
+            }
+            else
+            {
+                DisplayLockStatus(StatusMessage.OFF);
+            }
+        }
+
+        private void buttonSetPassphrase_Click(object sender, EventArgs e)
+        {
+            if (textBoxPassphrase.Text.Length > 0)
+            {
+                Properties.Settings.Default.Passphrase = textBoxPassphrase.Text;
+                Properties.Settings.Default.Save();
+
+                textBoxPassphrase.BackColor = Color.FromArgb(0, 255, 0);
+                buttonSetPassphrase.Enabled = false;
+            }
+        }
+
+        private void buttonClearPassphrase_Click(object sender, EventArgs e)
+        {
+            textBoxPassphrase.Clear();
+            Properties.Settings.Default.Passphrase = string.Empty;
+            Properties.Settings.Default.Save();
+
+            textBoxPassphrase.Focus();
+            textBoxPassphrase.BackColor = Color.FromArgb(255, 255, 255);
+        }
+
+        private void textBoxPassphrase_TextChanged(object sender, EventArgs e)
+        {
+            textBoxPassphrase.BackColor = Color.FromArgb(255, 255, 255);
+
+            if (textBoxPassphrase.Text.Length > 0)
+            {
+                buttonSetPassphrase.Enabled = true;
+            }
+            else
+            {
+                buttonSetPassphrase.Enabled = false;
+            }
         }
     }
 }

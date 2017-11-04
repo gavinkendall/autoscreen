@@ -41,12 +41,14 @@
             this.toolStripMenuItemOpenOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCloseWindowOnStartCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSearchOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripLabelDemo = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelSchedule = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripLabelLock = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelLastCapture = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
@@ -133,6 +135,12 @@
             this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreenCapture = new System.Windows.Forms.TabPage();
+            this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
+            this.checkBoxPassphraseLock = new System.Windows.Forms.CheckBox();
+            this.buttonClearPassphrase = new System.Windows.Forms.Button();
+            this.labelPasswordDescription = new System.Windows.Forms.Label();
+            this.buttonSetPassphrase = new System.Windows.Forms.Button();
+            this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
             this.checkBoxDemoMode = new System.Windows.Forms.CheckBox();
             this.labelLimit = new System.Windows.Forms.Label();
@@ -187,8 +195,6 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -232,6 +238,7 @@
             this.toolStripSlideshow.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageScreenCapture.SuspendLayout();
+            this.groupBoxSecurity.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownImageResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
@@ -266,6 +273,7 @@
             this.toolStripDropDownButtonOptions,
             this.statusStripLabelDemo,
             this.statusStripLabelSchedule,
+            this.statusStripLabelLock,
             this.statusStripLabelLastCapture});
             this.statusStrip.Location = new System.Drawing.Point(0, 374);
             this.statusStrip.Name = "statusStrip";
@@ -275,7 +283,6 @@
             // toolStripDropDownButtonOptions
             // 
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator8,
             this.toolStripMenuItemDemoModeAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
             this.toolStripMenuItemDebugMode,
@@ -347,6 +354,14 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(452, 6);
             // 
+            // toolStripMenuItemShowSystemTrayIcon
+            // 
+            this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
+            this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
+            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
+            this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowSystemTrayIcon_CheckedChanged);
+            // 
             // toolStripMenuItemShowSlideshowOnStopScreenCapture
             // 
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture.CheckOnClick = true;
@@ -394,6 +409,17 @@
             this.statusStripLabelSchedule.Name = "statusStripLabelSchedule";
             this.statusStripLabelSchedule.Size = new System.Drawing.Size(82, 19);
             this.statusStripLabelSchedule.Text = "Schedule: Off";
+            // 
+            // statusStripLabelLock
+            // 
+            this.statusStripLabelLock.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.statusStripLabelLock.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
+            this.statusStripLabelLock.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabelLock.Name = "statusStripLabelLock";
+            this.statusStripLabelLock.Size = new System.Drawing.Size(59, 19);
+            this.statusStripLabelLock.Text = "Lock: Off";
             // 
             // statusStripLabelLastCapture
             // 
@@ -1482,6 +1508,7 @@
             // tabPageScreenCapture
             // 
             this.tabPageScreenCapture.AutoScroll = true;
+            this.tabPageScreenCapture.Controls.Add(this.groupBoxSecurity);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxCaptureDelay);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxSchedule);
             this.tabPageScreenCapture.Location = new System.Drawing.Point(4, 22);
@@ -1491,6 +1518,69 @@
             this.tabPageScreenCapture.TabIndex = 0;
             this.tabPageScreenCapture.Text = "Screen Capture";
             this.tabPageScreenCapture.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxSecurity
+            // 
+            this.groupBoxSecurity.Controls.Add(this.checkBoxPassphraseLock);
+            this.groupBoxSecurity.Controls.Add(this.buttonClearPassphrase);
+            this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
+            this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
+            this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 295);
+            this.groupBoxSecurity.Name = "groupBoxSecurity";
+            this.groupBoxSecurity.Size = new System.Drawing.Size(200, 121);
+            this.groupBoxSecurity.TabIndex = 22;
+            this.groupBoxSecurity.TabStop = false;
+            this.groupBoxSecurity.Text = "Security";
+            // 
+            // checkBoxPassphraseLock
+            // 
+            this.checkBoxPassphraseLock.AutoSize = true;
+            this.checkBoxPassphraseLock.Location = new System.Drawing.Point(6, 98);
+            this.checkBoxPassphraseLock.Name = "checkBoxPassphraseLock";
+            this.checkBoxPassphraseLock.Size = new System.Drawing.Size(50, 17);
+            this.checkBoxPassphraseLock.TabIndex = 4;
+            this.checkBoxPassphraseLock.Text = "Lock";
+            this.checkBoxPassphraseLock.UseVisualStyleBackColor = true;
+            this.checkBoxPassphraseLock.CheckedChanged += new System.EventHandler(this.checkBoxPassphraseLock_CheckedChanged);
+            // 
+            // buttonClearPassphrase
+            // 
+            this.buttonClearPassphrase.Location = new System.Drawing.Point(141, 94);
+            this.buttonClearPassphrase.Name = "buttonClearPassphrase";
+            this.buttonClearPassphrase.Size = new System.Drawing.Size(52, 23);
+            this.buttonClearPassphrase.TabIndex = 3;
+            this.buttonClearPassphrase.Text = "Clear";
+            this.buttonClearPassphrase.UseVisualStyleBackColor = true;
+            this.buttonClearPassphrase.Click += new System.EventHandler(this.buttonClearPassphrase_Click);
+            // 
+            // labelPasswordDescription
+            // 
+            this.labelPasswordDescription.Location = new System.Drawing.Point(7, 21);
+            this.labelPasswordDescription.Name = "labelPasswordDescription";
+            this.labelPasswordDescription.Size = new System.Drawing.Size(186, 43);
+            this.labelPasswordDescription.TabIndex = 2;
+            this.labelPasswordDescription.Text = "This passphrase will need to be entered before the running screen capture session" +
+    " can be stopped.";
+            // 
+            // buttonSetPassphrase
+            // 
+            this.buttonSetPassphrase.Location = new System.Drawing.Point(83, 94);
+            this.buttonSetPassphrase.Name = "buttonSetPassphrase";
+            this.buttonSetPassphrase.Size = new System.Drawing.Size(52, 23);
+            this.buttonSetPassphrase.TabIndex = 1;
+            this.buttonSetPassphrase.Text = "Set";
+            this.buttonSetPassphrase.UseVisualStyleBackColor = true;
+            this.buttonSetPassphrase.Click += new System.EventHandler(this.buttonSetPassphrase_Click);
+            // 
+            // textBoxPassphrase
+            // 
+            this.textBoxPassphrase.Location = new System.Drawing.Point(6, 69);
+            this.textBoxPassphrase.MaxLength = 30;
+            this.textBoxPassphrase.Name = "textBoxPassphrase";
+            this.textBoxPassphrase.Size = new System.Drawing.Size(187, 20);
+            this.textBoxPassphrase.TabIndex = 0;
+            this.textBoxPassphrase.TextChanged += new System.EventHandler(this.textBoxPassphrase_TextChanged);
             // 
             // groupBoxCaptureDelay
             // 
@@ -2096,19 +2186,6 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(452, 6);
-            // 
-            // toolStripMenuItemShowSystemTrayIcon
-            // 
-            this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
-            this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
-            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(455, 22);
-            this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
-            this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowSystemTrayIcon_CheckedChanged);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2181,6 +2258,8 @@
             this.toolStripSlideshow.PerformLayout();
             this.tabControlModules.ResumeLayout(false);
             this.tabPageScreenCapture.ResumeLayout(false);
+            this.groupBoxSecurity.ResumeLayout(false);
+            this.groupBoxSecurity.PerformLayout();
             this.groupBoxCaptureDelay.ResumeLayout(false);
             this.groupBoxCaptureDelay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownImageResolutionRatio)).EndInit();
@@ -2365,7 +2444,13 @@
         private System.Windows.Forms.Panel panelScreen4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDebugMode;
         private System.Windows.Forms.Timer timerScreenCapture;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSystemTrayIcon;
+        private System.Windows.Forms.GroupBox groupBoxSecurity;
+        private System.Windows.Forms.Label labelPasswordDescription;
+        private System.Windows.Forms.Button buttonSetPassphrase;
+        private System.Windows.Forms.TextBox textBoxPassphrase;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLock;
+        private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
+        private System.Windows.Forms.Button buttonClearPassphrase;
     }
 }
