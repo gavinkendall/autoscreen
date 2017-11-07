@@ -183,6 +183,12 @@ namespace autoscreen
             {
                 textBoxPassphrase.ReadOnly = true;
                 buttonSetPassphrase.Enabled = false;
+                checkBoxPassphraseLock.Enabled = true;
+            }
+            else
+            {
+                checkBoxPassphraseLock.Checked = false;
+                checkBoxPassphraseLock.Enabled = false;
             }
 
             Log.Write("Loading user settings - option menu items.");
@@ -596,6 +602,8 @@ namespace autoscreen
 
                 if (!ScreenCapture.lockScreenCaptureSession)
                 {
+                    checkBoxPassphraseLock.Checked = false;
+
                     if (toolStripMenuItemOpen.Enabled)
                     {
                         this.Opacity = 100;
@@ -652,6 +660,8 @@ namespace autoscreen
 
                 if (!ScreenCapture.lockScreenCaptureSession)
                 {
+                    checkBoxPassphraseLock.Checked = false;
+
                     ScreenCapture.Count = 0;
                     timerScreenCapture.Enabled = false;
 
@@ -1182,6 +1192,8 @@ namespace autoscreen
 
                 if (!ScreenCapture.lockScreenCaptureSession)
                 {
+                    checkBoxPassphraseLock.Checked = false;
+
                     // Save the user's options.
                     SaveApplicationSettings();
 
@@ -1404,7 +1416,7 @@ namespace autoscreen
 
         /// <summary>
         /// Displays the status of the locked in passphrase used to challenge the user when the running
-        /// screen capture session is stopped.
+        /// screen capture session is stopped, the main window is opened, or the application is exiting.
         /// </summary>
         /// <param name="status"></param>
         private void DisplayLockStatus(string status)
@@ -1412,6 +1424,18 @@ namespace autoscreen
             if (!string.IsNullOrEmpty(status))
             {
                 statusStrip.Items["statusStripLabelLock"].Text = "Lock: " + status;
+            }
+        }
+
+        /// <summary>
+        /// Displays the status of the "Exit application when closing this window" option.
+        /// </summary>
+        /// <param name="status"></param>
+        private void DisplayExitStatus(string status)
+        {
+            if (!string.IsNullOrEmpty(status))
+            {
+                statusStrip.Items["statusStripLabelExit"].Text = "Exit: " + status;
             }
         }
 
@@ -2530,6 +2554,8 @@ namespace autoscreen
 
                 textBoxPassphrase.ReadOnly = true;
                 buttonSetPassphrase.Enabled = false;
+
+                checkBoxPassphraseLock.Enabled = true;
             }
         }
 
@@ -2538,6 +2564,10 @@ namespace autoscreen
             textBoxPassphrase.Clear();
             textBoxPassphrase.ReadOnly = false;
 
+            checkBoxPassphraseLock.Enabled = false;
+            checkBoxPassphraseLock.Checked = false;
+
+            Properties.Settings.Default.LockScreenCaptureSession = false;
             Properties.Settings.Default.Passphrase = string.Empty;
             Properties.Settings.Default.Save();
 
@@ -2552,6 +2582,9 @@ namespace autoscreen
             }
             else
             {
+                checkBoxPassphraseLock.Enabled = false;
+                checkBoxPassphraseLock.Checked = false;
+
                 buttonSetPassphrase.Enabled = false;
             }
         }
@@ -2587,6 +2620,23 @@ namespace autoscreen
             else
             {
                 checkBoxScheduleStartOnSchedule.Checked = true;
+            }
+        }
+
+        /// <summary>
+        /// Determines what status message to show when the checkbox for exiting the application when the window closes is turned on or off.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemExitOnCloseWindow_CheckedChanged(object sender, EventArgs e)
+        {
+            if (toolStripMenuItemExitOnCloseWindow.Checked)
+            {
+                DisplayExitStatus(StatusMessage.ON);
+            }
+            else
+            {
+                DisplayExitStatus(StatusMessage.OFF);
             }
         }
     }

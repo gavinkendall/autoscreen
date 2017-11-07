@@ -46,6 +46,7 @@
             this.toolStripMenuItemSearchOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStripLabelExit = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelDemo = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelSchedule = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelLock = new System.Windows.Forms.ToolStripStatusLabel();
@@ -271,6 +272,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButtonOptions,
+            this.statusStripLabelExit,
             this.statusStripLabelDemo,
             this.statusStripLabelSchedule,
             this.statusStripLabelLock,
@@ -387,6 +389,18 @@
             this.toolStripMenuItemExitOnCloseWindow.Name = "toolStripMenuItemExitOnCloseWindow";
             this.toolStripMenuItemExitOnCloseWindow.Size = new System.Drawing.Size(455, 22);
             this.toolStripMenuItemExitOnCloseWindow.Text = "Exit application when closing this window";
+            this.toolStripMenuItemExitOnCloseWindow.CheckedChanged += new System.EventHandler(this.toolStripMenuItemExitOnCloseWindow_CheckedChanged);
+            // 
+            // statusStripLabelExit
+            // 
+            this.statusStripLabelExit.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.statusStripLabelExit.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
+            this.statusStripLabelExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabelExit.Name = "statusStripLabelExit";
+            this.statusStripLabelExit.Size = new System.Drawing.Size(52, 19);
+            this.statusStripLabelExit.Text = "Exit: Off";
             // 
             // statusStripLabelDemo
             // 
@@ -2516,5 +2530,6 @@
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLock;
         private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
         private System.Windows.Forms.Button buttonClearPassphrase;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelExit;
     }
 }
