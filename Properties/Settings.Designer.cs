@@ -687,5 +687,17 @@ namespace autoscreen.Properties {
                 this["Passphrase"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LockScreenCaptureSession {
+            get {
+                return ((bool)(this["LockScreenCaptureSession"]));
+            }
+            set {
+                this["LockScreenCaptureSession"] = value;
+            }
+        }
     }
 }

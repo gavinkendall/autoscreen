@@ -3,7 +3,7 @@
 // autoscreen.ScreenCapture.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Saturday, 4 November 2017
+// Thursday, 15 May 2008 - Tuesday, 7 November 2017
 
 using System;
 using System.IO;
@@ -36,6 +36,9 @@ namespace autoscreen
         public static int Y { get; set; }
         public static int Width { get; set; }
         public static int Height { get; set; }
+
+        public static bool runningFromCommandLine = false;
+        public static bool lockScreenCaptureSession = false;
 
         public static Bitmap GetScreenBitmap(Screen screen, int ratio)
         {

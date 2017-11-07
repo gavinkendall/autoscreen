@@ -3,7 +3,7 @@
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Saturday, 4 November 2017
+// Thursday, 15 May 2008 - Tuesday, 7 November 2017
 
 using System;
 using System.IO;
@@ -40,6 +40,7 @@ namespace autoscreen
         /// Other forms.
         /// </summary>
         private FormAddEditor formAddEditor = new FormAddEditor();
+        private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         /// <summary>
         /// Threads for background operations.
@@ -174,7 +175,15 @@ namespace autoscreen
             checkBoxCaptureLimit.Checked = Properties.Settings.Default.CaptureLimitCheck;
             checkBoxInitialScreenshot.Checked = Properties.Settings.Default.TakeInitialScreenshotCheck;
 
+            checkBoxPassphraseLock.Checked = Properties.Settings.Default.LockScreenCaptureSession;
+
             textBoxPassphrase.Text = Properties.Settings.Default.Passphrase;
+
+            if (textBoxPassphrase.Text.Length > 0)
+            {
+                textBoxPassphrase.ReadOnly = true;
+                buttonSetPassphrase.Enabled = false;
+            }
 
             Log.Write("Loading user settings - option menu items.");
 
@@ -578,16 +587,27 @@ namespace autoscreen
         /// </summary>
         private void OpenWindow()
         {
-            if (toolStripMenuItemOpen.Enabled)
+            if (!ScreenCapture.runningFromCommandLine)
             {
-                this.Opacity = 100;
-                toolStripMenuItemOpen.Enabled = false;
-                toolStripMenuItemClose.Enabled = true;
+                if (ScreenCapture.lockScreenCaptureSession)
+                {
+                    formEnterPassphrase.ShowDialog(this);
+                }
 
-                this.Show();
-                this.Visible = true;
-                this.ShowInTaskbar = true;
-                this.Focus();
+                if (!ScreenCapture.lockScreenCaptureSession)
+                {
+                    if (toolStripMenuItemOpen.Enabled)
+                    {
+                        this.Opacity = 100;
+                        toolStripMenuItemOpen.Enabled = false;
+                        toolStripMenuItemClose.Enabled = true;
+
+                        this.Show();
+                        this.Visible = true;
+                        this.ShowInTaskbar = true;
+                        this.Focus();
+                    }
+                }
             }
         }
 
@@ -623,32 +643,43 @@ namespace autoscreen
         {
             Log.Write("Stopping screen capture.");
 
-            ScreenCapture.Count = 0;
-            timerScreenCapture.Enabled = false;
-
-            // Let the user know of the last capture that was taken and the status of the session ("Stopped").
-            DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
-
-            DisableStopScreenCapture();
-            EnableStartScreenCapture();
-
-            // Make sure to update the calendar with any folders found due to the freshly-made screenshots.
-            // We'll let the user decide what folder of screenshots they want to see after the search is done.
-            if (toolStripMenuItemSearchOnStopScreenCapture.Checked)
+            if (!ScreenCapture.runningFromCommandLine)
             {
-                SearchFolders();
-            }
+                if (ScreenCapture.lockScreenCaptureSession)
+                {
+                    formEnterPassphrase.ShowDialog(this);
+                }
 
-            // Some people want to see this window immediately after the session has stopped.
-            if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
-            {
-                OpenWindow();
-            }
+                if (!ScreenCapture.lockScreenCaptureSession)
+                {
+                    ScreenCapture.Count = 0;
+                    timerScreenCapture.Enabled = false;
 
-            // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
-            if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
-            {
-                ShowSlideshow();
+                    // Let the user know of the last capture that was taken and the status of the session ("Stopped").
+                    DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
+
+                    DisableStopScreenCapture();
+                    EnableStartScreenCapture();
+
+                    // Make sure to update the calendar with any folders found due to the freshly-made screenshots.
+                    // We'll let the user decide what folder of screenshots they want to see after the search is done.
+                    if (toolStripMenuItemSearchOnStopScreenCapture.Checked)
+                    {
+                        SearchFolders();
+                    }
+
+                    // Some people want to see this window immediately after the session has stopped.
+                    if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
+                    {
+                        OpenWindow();
+                    }
+
+                    // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
+                    if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
+                    {
+                        ShowSlideshow();
+                    }
+                }
             }
         }
 
@@ -759,6 +790,15 @@ namespace autoscreen
             ScreenCapture.Delay = delay;
             ScreenCapture.Limit = limit;
             ScreenCapture.Ratio = ratio;
+
+            if (checkBoxPassphraseLock.Checked)
+            {
+                ScreenCapture.lockScreenCaptureSession = true;
+            }
+            else
+            {
+                ScreenCapture.lockScreenCaptureSession = false;
+            }
 
             if (initial)
             {
@@ -1133,23 +1173,34 @@ namespace autoscreen
         {
             Log.Write("Exiting application.");
 
-            // Save the user's options.
-            SaveApplicationSettings();
-
-            // Close this window.
-            CloseWindow();
-
-            // Cancel the folder search if it's currently running.
-            if (runFolderSearchThread.IsBusy)
+            if (!ScreenCapture.runningFromCommandLine)
             {
-                runFolderSearchThread.CancelAsync();
+                if (ScreenCapture.lockScreenCaptureSession)
+                {
+                    formEnterPassphrase.ShowDialog(this);
+                }
+
+                if (!ScreenCapture.lockScreenCaptureSession)
+                {
+                    // Save the user's options.
+                    SaveApplicationSettings();
+
+                    // Close this window.
+                    CloseWindow();
+
+                    // Cancel the folder search if it's currently running.
+                    if (runFolderSearchThread.IsBusy)
+                    {
+                        runFolderSearchThread.CancelAsync();
+                    }
+
+                    // Hide the system tray icon.
+                    notifyIcon.Visible = false;
+
+                    // Exit.
+                    Environment.Exit(0);
+                }
             }
-
-            // Hide the system tray icon.
-            notifyIcon.Visible = false;
-
-            // Exit.
-            Environment.Exit(0);
         }
 
         /// <summary>
@@ -1321,6 +1372,8 @@ namespace autoscreen
             Properties.Settings.Default.Screen4Y = (int)numericUpDownScreen4Y.Value;
             Properties.Settings.Default.Screen4Width = (int)numericUpDownScreen4Width.Value;
             Properties.Settings.Default.Screen4Height = (int)numericUpDownScreen4Height.Value;
+
+            Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
 
             Properties.Settings.Default.Save();
         }
@@ -1638,6 +1691,8 @@ namespace autoscreen
                         checkBoxScheduleStopAt.Checked = true;
                     }
                 }
+
+                ScreenCapture.runningFromCommandLine = true;
 
                 if (isScheduled)
                 {
@@ -2448,7 +2503,7 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Determine if we need to show "Lock: On" or "Lock: Off".
+        /// Determine if we need to show "Lock: On" or "Lock: Off" and if we need to lock the screen capture session or not.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2456,10 +2511,12 @@ namespace autoscreen
         {
             if (checkBoxPassphraseLock.Checked)
             {
+                ScreenCapture.lockScreenCaptureSession = true;
                 DisplayLockStatus(StatusMessage.ON);
             }
             else
             {
+                ScreenCapture.lockScreenCaptureSession = false;
                 DisplayLockStatus(StatusMessage.OFF);
             }
         }
@@ -2471,7 +2528,7 @@ namespace autoscreen
                 Properties.Settings.Default.Passphrase = textBoxPassphrase.Text;
                 Properties.Settings.Default.Save();
 
-                textBoxPassphrase.BackColor = Color.FromArgb(0, 255, 0);
+                textBoxPassphrase.ReadOnly = true;
                 buttonSetPassphrase.Enabled = false;
             }
         }
@@ -2479,17 +2536,16 @@ namespace autoscreen
         private void buttonClearPassphrase_Click(object sender, EventArgs e)
         {
             textBoxPassphrase.Clear();
+            textBoxPassphrase.ReadOnly = false;
+
             Properties.Settings.Default.Passphrase = string.Empty;
             Properties.Settings.Default.Save();
 
             textBoxPassphrase.Focus();
-            textBoxPassphrase.BackColor = Color.FromArgb(255, 255, 255);
         }
 
         private void textBoxPassphrase_TextChanged(object sender, EventArgs e)
         {
-            textBoxPassphrase.BackColor = Color.FromArgb(255, 255, 255);
-
             if (textBoxPassphrase.Text.Length > 0)
             {
                 buttonSetPassphrase.Enabled = true;

@@ -73,6 +73,12 @@
     <Compile Include="FormAddEditor.Designer.cs">
       <DependentUpon>FormAddEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEnterPassphrase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEnterPassphrase.Designer.cs">
+      <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     <Compile Include="StringHelper.cs" />
     <EmbeddedResource Include="FormAddEditor.resx">
       <DependentUpon>FormAddEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formEnterPassphrase.resx">
+      <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

@@ -448,6 +448,7 @@
             this.tabControlScreens.SelectedIndex = 0;
             this.tabControlScreens.Size = new System.Drawing.Size(501, 345);
             this.tabControlScreens.TabIndex = 4;
+            this.tabControlScreens.TabStop = false;
             this.tabControlScreens.SelectedIndexChanged += new System.EventHandler(this.tabControlScreens_SelectedIndexChanged);
             // 
             // tabPageAllScreens
@@ -574,6 +575,7 @@
             this.numericUpDownScreen1Height.Name = "numericUpDownScreen1Height";
             this.numericUpDownScreen1Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1Height.TabIndex = 12;
+            this.numericUpDownScreen1Height.TabStop = false;
             this.numericUpDownScreen1Height.Value = new decimal(new int[] {
             1,
             0,
@@ -597,6 +599,7 @@
             this.numericUpDownScreen1Width.Name = "numericUpDownScreen1Width";
             this.numericUpDownScreen1Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1Width.TabIndex = 11;
+            this.numericUpDownScreen1Width.TabStop = false;
             this.numericUpDownScreen1Width.Value = new decimal(new int[] {
             1,
             0,
@@ -620,6 +623,7 @@
             this.numericUpDownScreen1Y.Name = "numericUpDownScreen1Y";
             this.numericUpDownScreen1Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1Y.TabIndex = 10;
+            this.numericUpDownScreen1Y.TabStop = false;
             // 
             // numericUpDownScreen1X
             // 
@@ -638,6 +642,7 @@
             this.numericUpDownScreen1X.Name = "numericUpDownScreen1X";
             this.numericUpDownScreen1X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen1X.TabIndex = 9;
+            this.numericUpDownScreen1X.TabStop = false;
             // 
             // labelScreen1Y
             // 
@@ -667,6 +672,7 @@
             this.buttonScreen1Reset.Name = "buttonScreen1Reset";
             this.buttonScreen1Reset.Size = new System.Drawing.Size(75, 23);
             this.buttonScreen1Reset.TabIndex = 5;
+            this.buttonScreen1Reset.TabStop = false;
             this.buttonScreen1Reset.Text = "Reset";
             this.buttonScreen1Reset.UseVisualStyleBackColor = true;
             this.buttonScreen1Reset.Click += new System.EventHandler(this.buttonScreen1Reset_Click);
@@ -793,6 +799,7 @@
             this.numericUpDownScreen2Height.Name = "numericUpDownScreen2Height";
             this.numericUpDownScreen2Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2Height.TabIndex = 21;
+            this.numericUpDownScreen2Height.TabStop = false;
             this.numericUpDownScreen2Height.Value = new decimal(new int[] {
             1,
             0,
@@ -807,6 +814,7 @@
             this.buttonScreen2Reset.Name = "buttonScreen2Reset";
             this.buttonScreen2Reset.Size = new System.Drawing.Size(75, 23);
             this.buttonScreen2Reset.TabIndex = 15;
+            this.buttonScreen2Reset.TabStop = false;
             this.buttonScreen2Reset.Text = "Reset";
             this.buttonScreen2Reset.UseVisualStyleBackColor = true;
             this.buttonScreen2Reset.Click += new System.EventHandler(this.buttonScreen2Reset_Click);
@@ -828,6 +836,7 @@
             this.numericUpDownScreen2Width.Name = "numericUpDownScreen2Width";
             this.numericUpDownScreen2Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2Width.TabIndex = 20;
+            this.numericUpDownScreen2Width.TabStop = false;
             this.numericUpDownScreen2Width.Value = new decimal(new int[] {
             1,
             0,
@@ -861,6 +870,7 @@
             this.numericUpDownScreen2Y.Name = "numericUpDownScreen2Y";
             this.numericUpDownScreen2Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2Y.TabIndex = 19;
+            this.numericUpDownScreen2Y.TabStop = false;
             // 
             // labelScreen2Height
             // 
@@ -889,6 +899,7 @@
             this.numericUpDownScreen2X.Name = "numericUpDownScreen2X";
             this.numericUpDownScreen2X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen2X.TabIndex = 18;
+            this.numericUpDownScreen2X.TabStop = false;
             // 
             // labelScreen2X
             // 
@@ -970,6 +981,7 @@
             this.numericUpDownScreen3Height.Name = "numericUpDownScreen3Height";
             this.numericUpDownScreen3Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3Height.TabIndex = 21;
+            this.numericUpDownScreen3Height.TabStop = false;
             this.numericUpDownScreen3Height.Value = new decimal(new int[] {
             1,
             0,
@@ -984,6 +996,7 @@
             this.buttonScreen3Reset.Name = "buttonScreen3Reset";
             this.buttonScreen3Reset.Size = new System.Drawing.Size(75, 23);
             this.buttonScreen3Reset.TabIndex = 15;
+            this.buttonScreen3Reset.TabStop = false;
             this.buttonScreen3Reset.Text = "Reset";
             this.buttonScreen3Reset.UseVisualStyleBackColor = true;
             this.buttonScreen3Reset.Click += new System.EventHandler(this.buttonScreen3Reset_Click);
@@ -1005,6 +1018,7 @@
             this.numericUpDownScreen3Width.Name = "numericUpDownScreen3Width";
             this.numericUpDownScreen3Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3Width.TabIndex = 20;
+            this.numericUpDownScreen3Width.TabStop = false;
             this.numericUpDownScreen3Width.Value = new decimal(new int[] {
             1,
             0,
@@ -1038,6 +1052,7 @@
             this.numericUpDownScreen3Y.Name = "numericUpDownScreen3Y";
             this.numericUpDownScreen3Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3Y.TabIndex = 19;
+            this.numericUpDownScreen3Y.TabStop = false;
             // 
             // labelScreen3Height
             // 
@@ -1066,6 +1081,7 @@
             this.numericUpDownScreen3X.Name = "numericUpDownScreen3X";
             this.numericUpDownScreen3X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen3X.TabIndex = 18;
+            this.numericUpDownScreen3X.TabStop = false;
             // 
             // labelScreen3X
             // 
@@ -1147,6 +1163,7 @@
             this.numericUpDownScreen4Height.Name = "numericUpDownScreen4Height";
             this.numericUpDownScreen4Height.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4Height.TabIndex = 21;
+            this.numericUpDownScreen4Height.TabStop = false;
             this.numericUpDownScreen4Height.Value = new decimal(new int[] {
             1,
             0,
@@ -1161,6 +1178,7 @@
             this.buttonScreen4Reset.Name = "buttonScreen4Reset";
             this.buttonScreen4Reset.Size = new System.Drawing.Size(75, 23);
             this.buttonScreen4Reset.TabIndex = 15;
+            this.buttonScreen4Reset.TabStop = false;
             this.buttonScreen4Reset.Text = "Reset";
             this.buttonScreen4Reset.UseVisualStyleBackColor = true;
             this.buttonScreen4Reset.Click += new System.EventHandler(this.buttonScreen4Reset_Click);
@@ -1182,6 +1200,7 @@
             this.numericUpDownScreen4Width.Name = "numericUpDownScreen4Width";
             this.numericUpDownScreen4Width.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4Width.TabIndex = 20;
+            this.numericUpDownScreen4Width.TabStop = false;
             this.numericUpDownScreen4Width.Value = new decimal(new int[] {
             1,
             0,
@@ -1215,6 +1234,7 @@
             this.numericUpDownScreen4Y.Name = "numericUpDownScreen4Y";
             this.numericUpDownScreen4Y.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4Y.TabIndex = 19;
+            this.numericUpDownScreen4Y.TabStop = false;
             // 
             // labelScreen4Height
             // 
@@ -1243,6 +1263,7 @@
             this.numericUpDownScreen4X.Name = "numericUpDownScreen4X";
             this.numericUpDownScreen4X.Size = new System.Drawing.Size(45, 20);
             this.numericUpDownScreen4X.TabIndex = 18;
+            this.numericUpDownScreen4X.TabStop = false;
             // 
             // labelScreen4X
             // 
@@ -1298,6 +1319,7 @@
             this.listBoxScreenshots.Size = new System.Drawing.Size(204, 123);
             this.listBoxScreenshots.Sorted = true;
             this.listBoxScreenshots.TabIndex = 6;
+            this.listBoxScreenshots.TabStop = false;
             this.listBoxScreenshots.SelectedIndexChanged += new System.EventHandler(this.listBoxScreenshots_SelectedIndexChanged);
             // 
             // notifyIcon
@@ -1392,6 +1414,7 @@
             this.textBoxScreenshotsFolderSearch.Name = "textBoxScreenshotsFolderSearch";
             this.textBoxScreenshotsFolderSearch.Size = new System.Drawing.Size(504, 20);
             this.textBoxScreenshotsFolderSearch.TabIndex = 7;
+            this.textBoxScreenshotsFolderSearch.TabStop = false;
             // 
             // buttonSearch
             // 
@@ -1400,6 +1423,7 @@
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(75, 23);
             this.buttonSearch.TabIndex = 8;
+            this.buttonSearch.TabStop = false;
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearchScreenshotsDirectory_Click);
@@ -1411,6 +1435,7 @@
             this.buttonBrowseFolder.Name = "buttonBrowseFolder";
             this.buttonBrowseFolder.Size = new System.Drawing.Size(75, 23);
             this.buttonBrowseFolder.TabIndex = 10;
+            this.buttonBrowseFolder.TabStop = false;
             this.buttonBrowseFolder.Text = "Browse ...";
             this.buttonBrowseFolder.UseVisualStyleBackColor = true;
             this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
@@ -1528,7 +1553,7 @@
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
             this.groupBoxSecurity.Location = new System.Drawing.Point(6, 295);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
-            this.groupBoxSecurity.Size = new System.Drawing.Size(200, 121);
+            this.groupBoxSecurity.Size = new System.Drawing.Size(200, 134);
             this.groupBoxSecurity.TabIndex = 22;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
@@ -1536,20 +1561,22 @@
             // checkBoxPassphraseLock
             // 
             this.checkBoxPassphraseLock.AutoSize = true;
-            this.checkBoxPassphraseLock.Location = new System.Drawing.Point(6, 98);
+            this.checkBoxPassphraseLock.Location = new System.Drawing.Point(6, 111);
             this.checkBoxPassphraseLock.Name = "checkBoxPassphraseLock";
             this.checkBoxPassphraseLock.Size = new System.Drawing.Size(50, 17);
             this.checkBoxPassphraseLock.TabIndex = 4;
+            this.checkBoxPassphraseLock.TabStop = false;
             this.checkBoxPassphraseLock.Text = "Lock";
             this.checkBoxPassphraseLock.UseVisualStyleBackColor = true;
             this.checkBoxPassphraseLock.CheckedChanged += new System.EventHandler(this.checkBoxPassphraseLock_CheckedChanged);
             // 
             // buttonClearPassphrase
             // 
-            this.buttonClearPassphrase.Location = new System.Drawing.Point(141, 94);
+            this.buttonClearPassphrase.Location = new System.Drawing.Point(141, 107);
             this.buttonClearPassphrase.Name = "buttonClearPassphrase";
             this.buttonClearPassphrase.Size = new System.Drawing.Size(52, 23);
             this.buttonClearPassphrase.TabIndex = 3;
+            this.buttonClearPassphrase.TabStop = false;
             this.buttonClearPassphrase.Text = "Clear";
             this.buttonClearPassphrase.UseVisualStyleBackColor = true;
             this.buttonClearPassphrase.Click += new System.EventHandler(this.buttonClearPassphrase_Click);
@@ -1558,28 +1585,31 @@
             // 
             this.labelPasswordDescription.Location = new System.Drawing.Point(7, 21);
             this.labelPasswordDescription.Name = "labelPasswordDescription";
-            this.labelPasswordDescription.Size = new System.Drawing.Size(186, 43);
+            this.labelPasswordDescription.Size = new System.Drawing.Size(186, 55);
             this.labelPasswordDescription.TabIndex = 2;
-            this.labelPasswordDescription.Text = "This passphrase will need to be entered before the running screen capture session" +
-    " can be stopped.";
+            this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this windo" +
+    "w opens, or the application is exiting. Remember it.";
             // 
             // buttonSetPassphrase
             // 
-            this.buttonSetPassphrase.Location = new System.Drawing.Point(83, 94);
+            this.buttonSetPassphrase.Enabled = false;
+            this.buttonSetPassphrase.Location = new System.Drawing.Point(83, 107);
             this.buttonSetPassphrase.Name = "buttonSetPassphrase";
             this.buttonSetPassphrase.Size = new System.Drawing.Size(52, 23);
             this.buttonSetPassphrase.TabIndex = 1;
+            this.buttonSetPassphrase.TabStop = false;
             this.buttonSetPassphrase.Text = "Set";
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
             this.buttonSetPassphrase.Click += new System.EventHandler(this.buttonSetPassphrase_Click);
             // 
             // textBoxPassphrase
             // 
-            this.textBoxPassphrase.Location = new System.Drawing.Point(6, 69);
+            this.textBoxPassphrase.Location = new System.Drawing.Point(6, 82);
             this.textBoxPassphrase.MaxLength = 30;
             this.textBoxPassphrase.Name = "textBoxPassphrase";
             this.textBoxPassphrase.Size = new System.Drawing.Size(187, 20);
             this.textBoxPassphrase.TabIndex = 0;
+            this.textBoxPassphrase.TabStop = false;
             this.textBoxPassphrase.TextChanged += new System.EventHandler(this.textBoxPassphrase_TextChanged);
             // 
             // groupBoxCaptureDelay
@@ -1614,6 +1644,7 @@
             this.checkBoxDemoMode.Name = "checkBoxDemoMode";
             this.checkBoxDemoMode.Size = new System.Drawing.Size(81, 17);
             this.checkBoxDemoMode.TabIndex = 27;
+            this.checkBoxDemoMode.TabStop = false;
             this.checkBoxDemoMode.Text = "demo mode";
             this.checkBoxDemoMode.UseVisualStyleBackColor = true;
             this.checkBoxDemoMode.CheckedChanged += new System.EventHandler(this.checkBoxDemoMode_CheckedChanged);
@@ -1634,6 +1665,7 @@
             this.checkBoxInitialScreenshot.Name = "checkBoxInitialScreenshot";
             this.checkBoxInitialScreenshot.Size = new System.Drawing.Size(88, 17);
             this.checkBoxInitialScreenshot.TabIndex = 18;
+            this.checkBoxInitialScreenshot.TabStop = false;
             this.checkBoxInitialScreenshot.Text = "initial capture";
             this.checkBoxInitialScreenshot.UseVisualStyleBackColor = true;
             // 
@@ -1648,6 +1680,7 @@
             this.numericUpDownImageResolutionRatio.Name = "numericUpDownImageResolutionRatio";
             this.numericUpDownImageResolutionRatio.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownImageResolutionRatio.TabIndex = 22;
+            this.numericUpDownImageResolutionRatio.TabStop = false;
             this.numericUpDownImageResolutionRatio.Value = new decimal(new int[] {
             1,
             0,
@@ -1665,6 +1698,7 @@
             this.numericUpDownCaptureLimit.Name = "numericUpDownCaptureLimit";
             this.numericUpDownCaptureLimit.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownCaptureLimit.TabIndex = 8;
+            this.numericUpDownCaptureLimit.TabStop = false;
             // 
             // labelPercentResolution
             // 
@@ -1691,6 +1725,7 @@
             this.checkBoxCaptureLimit.Name = "checkBoxCaptureLimit";
             this.checkBoxCaptureLimit.Size = new System.Drawing.Size(15, 14);
             this.checkBoxCaptureLimit.TabIndex = 16;
+            this.checkBoxCaptureLimit.TabStop = false;
             this.checkBoxCaptureLimit.UseVisualStyleBackColor = true;
             this.checkBoxCaptureLimit.CheckedChanged += new System.EventHandler(this.checkBoxCaptureLimit_CheckedChanged);
             // 
@@ -1714,6 +1749,7 @@
             this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
             this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMillisecondsInterval.TabIndex = 6;
+            this.numericUpDownMillisecondsInterval.TabStop = false;
             this.numericUpDownMillisecondsInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
             // 
             // labelSecondsInterval
@@ -1754,6 +1790,7 @@
             this.numericUpDownSecondsInterval.Name = "numericUpDownSecondsInterval";
             this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSecondsInterval.TabIndex = 2;
+            this.numericUpDownSecondsInterval.TabStop = false;
             this.numericUpDownSecondsInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
             // 
             // numericUpDownMinutesInterval
@@ -1767,6 +1804,7 @@
             this.numericUpDownMinutesInterval.Name = "numericUpDownMinutesInterval";
             this.numericUpDownMinutesInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMinutesInterval.TabIndex = 1;
+            this.numericUpDownMinutesInterval.TabStop = false;
             this.numericUpDownMinutesInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
             // 
             // numericUpDownHoursInterval
@@ -1780,6 +1818,7 @@
             this.numericUpDownHoursInterval.Name = "numericUpDownHoursInterval";
             this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownHoursInterval.TabIndex = 0;
+            this.numericUpDownHoursInterval.TabStop = false;
             this.numericUpDownHoursInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
             // 
             // groupBoxSchedule
@@ -1810,12 +1849,11 @@
             // checkBoxScheduleStartOnSchedule
             // 
             this.checkBoxScheduleStartOnSchedule.AutoSize = true;
-            this.checkBoxScheduleStartOnSchedule.Checked = true;
-            this.checkBoxScheduleStartOnSchedule.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxScheduleStartOnSchedule.Location = new System.Drawing.Point(6, 19);
             this.checkBoxScheduleStartOnSchedule.Name = "checkBoxScheduleStartOnSchedule";
             this.checkBoxScheduleStartOnSchedule.Size = new System.Drawing.Size(187, 17);
             this.checkBoxScheduleStartOnSchedule.TabIndex = 15;
+            this.checkBoxScheduleStartOnSchedule.TabStop = false;
             this.checkBoxScheduleStartOnSchedule.Text = "Start capture when schedule is on";
             this.checkBoxScheduleStartOnSchedule.UseVisualStyleBackColor = true;
             this.checkBoxScheduleStartOnSchedule.CheckedChanged += new System.EventHandler(this.checkBoxScheduleStartOnSchedule_CheckedChanged);
@@ -1828,6 +1866,7 @@
             this.comboBoxScheduleImageFormat.Name = "comboBoxScheduleImageFormat";
             this.comboBoxScheduleImageFormat.Size = new System.Drawing.Size(80, 21);
             this.comboBoxScheduleImageFormat.TabIndex = 14;
+            this.comboBoxScheduleImageFormat.TabStop = false;
             this.comboBoxScheduleImageFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxScheduleImageFormat_SelectedIndexChanged);
             // 
             // buttonScheduleClear
@@ -1837,6 +1876,7 @@
             this.buttonScheduleClear.Name = "buttonScheduleClear";
             this.buttonScheduleClear.Size = new System.Drawing.Size(50, 23);
             this.buttonScheduleClear.TabIndex = 13;
+            this.buttonScheduleClear.TabStop = false;
             this.buttonScheduleClear.Text = "Off";
             this.buttonScheduleClear.UseVisualStyleBackColor = true;
             this.buttonScheduleClear.Click += new System.EventHandler(this.buttonScheduleClear_Click);
@@ -1847,6 +1887,7 @@
             this.buttonScheduleSet.Name = "buttonScheduleSet";
             this.buttonScheduleSet.Size = new System.Drawing.Size(50, 23);
             this.buttonScheduleSet.TabIndex = 12;
+            this.buttonScheduleSet.TabStop = false;
             this.buttonScheduleSet.Text = "On";
             this.buttonScheduleSet.UseVisualStyleBackColor = true;
             this.buttonScheduleSet.Click += new System.EventHandler(this.buttonScheduleSet_Click);
@@ -1858,6 +1899,7 @@
             this.checkBoxScheduleOnTheseDays.Name = "checkBoxScheduleOnTheseDays";
             this.checkBoxScheduleOnTheseDays.Size = new System.Drawing.Size(119, 17);
             this.checkBoxScheduleOnTheseDays.TabIndex = 11;
+            this.checkBoxScheduleOnTheseDays.TabStop = false;
             this.checkBoxScheduleOnTheseDays.Text = "Only on these days:";
             this.checkBoxScheduleOnTheseDays.UseVisualStyleBackColor = true;
             this.checkBoxScheduleOnTheseDays.CheckedChanged += new System.EventHandler(this.checkBoxScheduleOnTheseDays_CheckedChanged);
@@ -1871,6 +1913,7 @@
             this.checkBoxFriday.Name = "checkBoxFriday";
             this.checkBoxFriday.Size = new System.Drawing.Size(33, 16);
             this.checkBoxFriday.TabIndex = 10;
+            this.checkBoxFriday.TabStop = false;
             this.checkBoxFriday.Text = "Fr";
             this.checkBoxFriday.UseVisualStyleBackColor = true;
             // 
@@ -1883,6 +1926,7 @@
             this.checkBoxThursday.Name = "checkBoxThursday";
             this.checkBoxThursday.Size = new System.Drawing.Size(34, 16);
             this.checkBoxThursday.TabIndex = 9;
+            this.checkBoxThursday.TabStop = false;
             this.checkBoxThursday.Text = "Th";
             this.checkBoxThursday.UseVisualStyleBackColor = true;
             // 
@@ -1895,6 +1939,7 @@
             this.checkBoxWednesday.Name = "checkBoxWednesday";
             this.checkBoxWednesday.Size = new System.Drawing.Size(38, 16);
             this.checkBoxWednesday.TabIndex = 8;
+            this.checkBoxWednesday.TabStop = false;
             this.checkBoxWednesday.Text = "We";
             this.checkBoxWednesday.UseVisualStyleBackColor = true;
             // 
@@ -1907,6 +1952,7 @@
             this.checkBoxTuesday.Name = "checkBoxTuesday";
             this.checkBoxTuesday.Size = new System.Drawing.Size(34, 16);
             this.checkBoxTuesday.TabIndex = 7;
+            this.checkBoxTuesday.TabStop = false;
             this.checkBoxTuesday.Text = "Tu";
             this.checkBoxTuesday.UseVisualStyleBackColor = true;
             // 
@@ -1919,6 +1965,7 @@
             this.checkBoxMonday.Name = "checkBoxMonday";
             this.checkBoxMonday.Size = new System.Drawing.Size(38, 16);
             this.checkBoxMonday.TabIndex = 6;
+            this.checkBoxMonday.TabStop = false;
             this.checkBoxMonday.Text = "Mo";
             this.checkBoxMonday.UseVisualStyleBackColor = true;
             // 
@@ -1931,6 +1978,7 @@
             this.checkBoxSunday.Name = "checkBoxSunday";
             this.checkBoxSunday.Size = new System.Drawing.Size(35, 16);
             this.checkBoxSunday.TabIndex = 5;
+            this.checkBoxSunday.TabStop = false;
             this.checkBoxSunday.Text = "Su";
             this.checkBoxSunday.UseVisualStyleBackColor = true;
             // 
@@ -1943,6 +1991,7 @@
             this.checkBoxSaturday.Name = "checkBoxSaturday";
             this.checkBoxSaturday.Size = new System.Drawing.Size(35, 16);
             this.checkBoxSaturday.TabIndex = 4;
+            this.checkBoxSaturday.TabStop = false;
             this.checkBoxSaturday.Text = "Sa";
             this.checkBoxSaturday.UseVisualStyleBackColor = true;
             // 
@@ -1954,6 +2003,7 @@
             this.dateTimePickerScheduleStopAt.ShowUpDown = true;
             this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(93, 20);
             this.dateTimePickerScheduleStopAt.TabIndex = 3;
+            this.dateTimePickerScheduleStopAt.TabStop = false;
             // 
             // dateTimePickerScheduleStartAt
             // 
@@ -1963,6 +2013,7 @@
             this.dateTimePickerScheduleStartAt.ShowUpDown = true;
             this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(93, 20);
             this.dateTimePickerScheduleStartAt.TabIndex = 2;
+            this.dateTimePickerScheduleStartAt.TabStop = false;
             // 
             // checkBoxScheduleStopAt
             // 
@@ -1971,6 +2022,7 @@
             this.checkBoxScheduleStopAt.Name = "checkBoxScheduleStopAt";
             this.checkBoxScheduleStopAt.Size = new System.Drawing.Size(99, 17);
             this.checkBoxScheduleStopAt.TabIndex = 1;
+            this.checkBoxScheduleStopAt.TabStop = false;
             this.checkBoxScheduleStopAt.Text = "Stop capture at";
             this.checkBoxScheduleStopAt.UseVisualStyleBackColor = true;
             // 
@@ -1981,6 +2033,7 @@
             this.checkBoxScheduleStartAt.Name = "checkBoxScheduleStartAt";
             this.checkBoxScheduleStartAt.Size = new System.Drawing.Size(99, 17);
             this.checkBoxScheduleStartAt.TabIndex = 0;
+            this.checkBoxScheduleStartAt.TabStop = false;
             this.checkBoxScheduleStartAt.Text = "Start capture at";
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
             this.checkBoxScheduleStartAt.CheckedChanged += new System.EventHandler(this.checkBoxScheduleStartAt_CheckedChanged);
@@ -2037,6 +2090,7 @@
             this.numericUpDownSlideshowDelayMilliseconds.Name = "numericUpDownSlideshowDelayMilliseconds";
             this.numericUpDownSlideshowDelayMilliseconds.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSlideshowDelayMilliseconds.TabIndex = 6;
+            this.numericUpDownSlideshowDelayMilliseconds.TabStop = false;
             this.numericUpDownSlideshowDelayMilliseconds.ValueChanged += new System.EventHandler(this.numericUpDownSlideshowDelay_ValueChanged);
             // 
             // numericUpDownSlideSkip
@@ -2050,6 +2104,7 @@
             this.numericUpDownSlideSkip.Name = "numericUpDownSlideSkip";
             this.numericUpDownSlideSkip.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSlideSkip.TabIndex = 8;
+            this.numericUpDownSlideSkip.TabStop = false;
             // 
             // labelSlideshowDelaySeconds
             // 
@@ -2076,6 +2131,7 @@
             this.checkBoxSlideSkip.Name = "checkBoxSlideSkip";
             this.checkBoxSlideSkip.Size = new System.Drawing.Size(47, 17);
             this.checkBoxSlideSkip.TabIndex = 13;
+            this.checkBoxSlideSkip.TabStop = false;
             this.checkBoxSlideSkip.Text = "Skip";
             this.checkBoxSlideSkip.UseVisualStyleBackColor = true;
             // 
@@ -2099,6 +2155,7 @@
             this.numericUpDownSlideshowDelaySeconds.Name = "numericUpDownSlideshowDelaySeconds";
             this.numericUpDownSlideshowDelaySeconds.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSlideshowDelaySeconds.TabIndex = 2;
+            this.numericUpDownSlideshowDelaySeconds.TabStop = false;
             this.numericUpDownSlideshowDelaySeconds.ValueChanged += new System.EventHandler(this.numericUpDownSlideshowDelay_ValueChanged);
             // 
             // numericUpDownSlideshowDelayMinutes
@@ -2112,6 +2169,7 @@
             this.numericUpDownSlideshowDelayMinutes.Name = "numericUpDownSlideshowDelayMinutes";
             this.numericUpDownSlideshowDelayMinutes.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSlideshowDelayMinutes.TabIndex = 1;
+            this.numericUpDownSlideshowDelayMinutes.TabStop = false;
             this.numericUpDownSlideshowDelayMinutes.ValueChanged += new System.EventHandler(this.numericUpDownSlideshowDelay_ValueChanged);
             // 
             // numericUpDownSlideshowDelayHours
@@ -2125,6 +2183,7 @@
             this.numericUpDownSlideshowDelayHours.Name = "numericUpDownSlideshowDelayHours";
             this.numericUpDownSlideshowDelayHours.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSlideshowDelayHours.TabIndex = 0;
+            this.numericUpDownSlideshowDelayHours.TabStop = false;
             this.numericUpDownSlideshowDelayHours.ValueChanged += new System.EventHandler(this.numericUpDownSlideshowDelay_ValueChanged);
             // 
             // toolStripScreenCapture
@@ -2168,6 +2227,7 @@
             this.buttonOpenFolder.Name = "buttonOpenFolder";
             this.buttonOpenFolder.Size = new System.Drawing.Size(75, 23);
             this.buttonOpenFolder.TabIndex = 14;
+            this.buttonOpenFolder.TabStop = false;
             this.buttonOpenFolder.Text = "Open Folder";
             this.buttonOpenFolder.UseVisualStyleBackColor = true;
             this.buttonOpenFolder.Click += new System.EventHandler(this.buttonOpenFolder_Click);

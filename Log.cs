@@ -3,7 +3,7 @@
 // autoscreen.Keylogger.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Saturday, 4 November 2017
+// Thursday, 15 May 2008 - Tuesday, 7 November 2017
 
 using System;
 using System.IO;
