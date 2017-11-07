@@ -1656,10 +1656,10 @@
             this.checkBoxDemoMode.AutoSize = true;
             this.checkBoxDemoMode.Location = new System.Drawing.Point(127, 98);
             this.checkBoxDemoMode.Name = "checkBoxDemoMode";
-            this.checkBoxDemoMode.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxDemoMode.Size = new System.Drawing.Size(54, 17);
             this.checkBoxDemoMode.TabIndex = 27;
             this.checkBoxDemoMode.TabStop = false;
-            this.checkBoxDemoMode.Text = "demo mode";
+            this.checkBoxDemoMode.Text = "Demo";
             this.checkBoxDemoMode.UseVisualStyleBackColor = true;
             this.checkBoxDemoMode.CheckedChanged += new System.EventHandler(this.checkBoxDemoMode_CheckedChanged);
             // 
@@ -1677,10 +1677,10 @@
             this.checkBoxInitialScreenshot.AutoSize = true;
             this.checkBoxInitialScreenshot.Location = new System.Drawing.Point(110, 20);
             this.checkBoxInitialScreenshot.Name = "checkBoxInitialScreenshot";
-            this.checkBoxInitialScreenshot.Size = new System.Drawing.Size(88, 17);
+            this.checkBoxInitialScreenshot.Size = new System.Drawing.Size(90, 17);
             this.checkBoxInitialScreenshot.TabIndex = 18;
             this.checkBoxInitialScreenshot.TabStop = false;
-            this.checkBoxInitialScreenshot.Text = "initial capture";
+            this.checkBoxInitialScreenshot.Text = "Initial Capture";
             this.checkBoxInitialScreenshot.UseVisualStyleBackColor = true;
             // 
             // numericUpDownImageResolutionRatio
