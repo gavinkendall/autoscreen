@@ -37,7 +37,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.0.7")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.0.8")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));
@@ -697,6 +697,54 @@ namespace autoscreen.Properties {
             }
             set {
                 this["LockScreenCaptureSession"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen1 {
+            get {
+                return ((bool)(this["CaptureScreen1"]));
+            }
+            set {
+                this["CaptureScreen1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen2 {
+            get {
+                return ((bool)(this["CaptureScreen2"]));
+            }
+            set {
+                this["CaptureScreen2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen3 {
+            get {
+                return ((bool)(this["CaptureScreen3"]));
+            }
+            set {
+                this["CaptureScreen3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen4 {
+            get {
+                return ((bool)(this["CaptureScreen4"]));
+            }
+            set {
+                this["CaptureScreen4"] = value;
             }
         }
     }

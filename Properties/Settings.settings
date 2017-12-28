@@ -6,7 +6,7 @@
       <Value Profile="(Default)">60000</Value>
     </Setting>
     <Setting Name="ApplicationVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2.0.7</Value>
+      <Value Profile="(Default)">2.0.8</Value>
     </Setting>
     <Setting Name="ImageFormatFilter" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -172,6 +172,18 @@
     </Setting>
     <Setting Name="LockScreenCaptureSession" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CaptureScreen1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CaptureScreen2" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CaptureScreen3" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CaptureScreen4" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

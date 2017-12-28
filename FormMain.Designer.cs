@@ -60,6 +60,7 @@
             this.pictureBoxScreenshotPreviewMonitor3 = new System.Windows.Forms.PictureBox();
             this.tabPageScreen1 = new System.Windows.Forms.TabPage();
             this.panelScreen1 = new System.Windows.Forms.Panel();
+            this.checkBoxScreen1Capture = new System.Windows.Forms.CheckBox();
             this.numericUpDownScreen1Height = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownScreen1Width = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownScreen1Y = new System.Windows.Forms.NumericUpDown();
@@ -77,6 +78,7 @@
             this.tabPageScreen2 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen2 = new System.Windows.Forms.PictureBox();
             this.panelScreen2 = new System.Windows.Forms.Panel();
+            this.checkBoxScreen2Capture = new System.Windows.Forms.CheckBox();
             this.numericUpDownScreen2Height = new System.Windows.Forms.NumericUpDown();
             this.buttonScreen2Reset = new System.Windows.Forms.Button();
             this.numericUpDownScreen2Width = new System.Windows.Forms.NumericUpDown();
@@ -89,6 +91,7 @@
             this.tabPageScreen3 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen3 = new System.Windows.Forms.PictureBox();
             this.panelScreen3 = new System.Windows.Forms.Panel();
+            this.checkBoxScreen3Capture = new System.Windows.Forms.CheckBox();
             this.numericUpDownScreen3Height = new System.Windows.Forms.NumericUpDown();
             this.buttonScreen3Reset = new System.Windows.Forms.Button();
             this.numericUpDownScreen3Width = new System.Windows.Forms.NumericUpDown();
@@ -101,6 +104,7 @@
             this.tabPageScreen4 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen4 = new System.Windows.Forms.PictureBox();
             this.panelScreen4 = new System.Windows.Forms.Panel();
+            this.checkBoxScreen4Capture = new System.Windows.Forms.CheckBox();
             this.numericUpDownScreen4Height = new System.Windows.Forms.NumericUpDown();
             this.buttonScreen4Reset = new System.Windows.Forms.Button();
             this.numericUpDownScreen4Width = new System.Windows.Forms.NumericUpDown();
@@ -557,6 +561,7 @@
             // 
             // panelScreen1
             // 
+            this.panelScreen1.Controls.Add(this.checkBoxScreen1Capture);
             this.panelScreen1.Controls.Add(this.numericUpDownScreen1Height);
             this.panelScreen1.Controls.Add(this.numericUpDownScreen1Width);
             this.panelScreen1.Controls.Add(this.numericUpDownScreen1Y);
@@ -571,6 +576,19 @@
             this.panelScreen1.Name = "panelScreen1";
             this.panelScreen1.Size = new System.Drawing.Size(493, 33);
             this.panelScreen1.TabIndex = 3;
+            // 
+            // checkBoxScreen1Capture
+            // 
+            this.checkBoxScreen1Capture.AutoSize = true;
+            this.checkBoxScreen1Capture.Checked = true;
+            this.checkBoxScreen1Capture.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxScreen1Capture.Enabled = false;
+            this.checkBoxScreen1Capture.Location = new System.Drawing.Point(318, 9);
+            this.checkBoxScreen1Capture.Name = "checkBoxScreen1Capture";
+            this.checkBoxScreen1Capture.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxScreen1Capture.TabIndex = 13;
+            this.checkBoxScreen1Capture.Text = "Capture";
+            this.checkBoxScreen1Capture.UseVisualStyleBackColor = true;
             // 
             // numericUpDownScreen1Height
             // 
@@ -781,6 +799,7 @@
             // 
             // panelScreen2
             // 
+            this.panelScreen2.Controls.Add(this.checkBoxScreen2Capture);
             this.panelScreen2.Controls.Add(this.numericUpDownScreen2Height);
             this.panelScreen2.Controls.Add(this.buttonScreen2Reset);
             this.panelScreen2.Controls.Add(this.numericUpDownScreen2Width);
@@ -795,6 +814,19 @@
             this.panelScreen2.Name = "panelScreen2";
             this.panelScreen2.Size = new System.Drawing.Size(493, 33);
             this.panelScreen2.TabIndex = 22;
+            // 
+            // checkBoxScreen2Capture
+            // 
+            this.checkBoxScreen2Capture.AutoSize = true;
+            this.checkBoxScreen2Capture.Checked = true;
+            this.checkBoxScreen2Capture.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxScreen2Capture.Enabled = false;
+            this.checkBoxScreen2Capture.Location = new System.Drawing.Point(318, 9);
+            this.checkBoxScreen2Capture.Name = "checkBoxScreen2Capture";
+            this.checkBoxScreen2Capture.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxScreen2Capture.TabIndex = 22;
+            this.checkBoxScreen2Capture.Text = "Capture";
+            this.checkBoxScreen2Capture.UseVisualStyleBackColor = true;
             // 
             // numericUpDownScreen2Height
             // 
@@ -963,6 +995,7 @@
             // 
             // panelScreen3
             // 
+            this.panelScreen3.Controls.Add(this.checkBoxScreen3Capture);
             this.panelScreen3.Controls.Add(this.numericUpDownScreen3Height);
             this.panelScreen3.Controls.Add(this.buttonScreen3Reset);
             this.panelScreen3.Controls.Add(this.numericUpDownScreen3Width);
@@ -977,6 +1010,19 @@
             this.panelScreen3.Name = "panelScreen3";
             this.panelScreen3.Size = new System.Drawing.Size(493, 33);
             this.panelScreen3.TabIndex = 22;
+            // 
+            // checkBoxScreen3Capture
+            // 
+            this.checkBoxScreen3Capture.AutoSize = true;
+            this.checkBoxScreen3Capture.Checked = true;
+            this.checkBoxScreen3Capture.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxScreen3Capture.Enabled = false;
+            this.checkBoxScreen3Capture.Location = new System.Drawing.Point(318, 9);
+            this.checkBoxScreen3Capture.Name = "checkBoxScreen3Capture";
+            this.checkBoxScreen3Capture.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxScreen3Capture.TabIndex = 22;
+            this.checkBoxScreen3Capture.Text = "Capture";
+            this.checkBoxScreen3Capture.UseVisualStyleBackColor = true;
             // 
             // numericUpDownScreen3Height
             // 
@@ -1145,6 +1191,7 @@
             // 
             // panelScreen4
             // 
+            this.panelScreen4.Controls.Add(this.checkBoxScreen4Capture);
             this.panelScreen4.Controls.Add(this.numericUpDownScreen4Height);
             this.panelScreen4.Controls.Add(this.buttonScreen4Reset);
             this.panelScreen4.Controls.Add(this.numericUpDownScreen4Width);
@@ -1159,6 +1206,19 @@
             this.panelScreen4.Name = "panelScreen4";
             this.panelScreen4.Size = new System.Drawing.Size(493, 33);
             this.panelScreen4.TabIndex = 22;
+            // 
+            // checkBoxScreen4Capture
+            // 
+            this.checkBoxScreen4Capture.AutoSize = true;
+            this.checkBoxScreen4Capture.Checked = true;
+            this.checkBoxScreen4Capture.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxScreen4Capture.Enabled = false;
+            this.checkBoxScreen4Capture.Location = new System.Drawing.Point(318, 9);
+            this.checkBoxScreen4Capture.Name = "checkBoxScreen4Capture";
+            this.checkBoxScreen4Capture.Size = new System.Drawing.Size(63, 17);
+            this.checkBoxScreen4Capture.TabIndex = 22;
+            this.checkBoxScreen4Capture.Text = "Capture";
+            this.checkBoxScreen4Capture.UseVisualStyleBackColor = true;
             // 
             // numericUpDownScreen4Height
             // 
@@ -1567,7 +1627,7 @@
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
             this.groupBoxSecurity.Location = new System.Drawing.Point(6, 295);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
-            this.groupBoxSecurity.Size = new System.Drawing.Size(200, 134);
+            this.groupBoxSecurity.Size = new System.Drawing.Size(205, 134);
             this.groupBoxSecurity.TabIndex = 22;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
@@ -2531,5 +2591,9 @@
         private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
         private System.Windows.Forms.Button buttonClearPassphrase;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelExit;
+        private System.Windows.Forms.CheckBox checkBoxScreen1Capture;
+        private System.Windows.Forms.CheckBox checkBoxScreen2Capture;
+        private System.Windows.Forms.CheckBox checkBoxScreen3Capture;
+        private System.Windows.Forms.CheckBox checkBoxScreen4Capture;
     }
 }

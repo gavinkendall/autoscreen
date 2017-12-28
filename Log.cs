@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.7
+// Auto Screen Capture 2.0.8
 // autoscreen.Keylogger.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Tuesday, 7 November 2017
+// Thursday, 15 May 2008 - Thursday, 28 December 2017
 
 using System;
 using System.IO;

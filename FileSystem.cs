@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.7
+// Auto Screen Capture 2.0.8
 // autoscreen.FileSystem.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Tuesday, 7 November 2017
+// Thursday, 15 May 2008 - Thursday, 28 December 2017
 
 using System.IO;
 using System.Drawing;
@@ -84,7 +84,7 @@ namespace autoscreen
         /// <param name="filePath">The file path.</param>
         /// <param name="monthCalendarFolder">The chosen calendar folder.</param>
         /// <returns></returns>
-        public static string[] GetFiles(string filePath, string monthCalendarFolder)
+        public static string[] GetFiles(string filePath, string subFolder, string monthCalendarFolder)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
@@ -99,7 +99,7 @@ namespace autoscreen
                 {
                     if (Directory.Exists(filePath + monthCalendarFolder))
                     {
-                        m_filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\1\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
+                        m_filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\" + subFolder + "\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
 
                         if (m_filePaths != null)
                         {

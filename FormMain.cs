@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.0.7
+// Auto Screen Capture 2.0.8
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Tuesday, 7 November 2017
+// Thursday, 15 May 2008 - Thursday, 28 December 2017
 
 using System;
 using System.IO;
@@ -252,12 +252,15 @@ namespace autoscreen
                             numericUpDownScreen1Y.Enabled = true;
                             numericUpDownScreen1Width.Enabled = true;
                             numericUpDownScreen1Height.Enabled = true;
+                            checkBoxScreen1Capture.Enabled = true;
                             buttonScreen1Reset.Enabled = true;
 
                             numericUpDownScreen1X.Value = Properties.Settings.Default.Screen1X > 0 ? Properties.Settings.Default.Screen1X : screen.Bounds.X;
                             numericUpDownScreen1Y.Value = Properties.Settings.Default.Screen1Y > 0 ? Properties.Settings.Default.Screen1Y : screen.Bounds.Y;
                             numericUpDownScreen1Width.Value = Properties.Settings.Default.Screen1Width > 0 ? Properties.Settings.Default.Screen1Width : screen.Bounds.Width;
                             numericUpDownScreen1Height.Value = Properties.Settings.Default.Screen1Height > 0 ? Properties.Settings.Default.Screen1Height : screen.Bounds.Height;
+
+                            checkBoxScreen1Capture.Checked = Properties.Settings.Default.CaptureScreen1;
                             break;
 
                         case 2:
@@ -270,12 +273,15 @@ namespace autoscreen
                             numericUpDownScreen2Y.Enabled = true;
                             numericUpDownScreen2Width.Enabled = true;
                             numericUpDownScreen2Height.Enabled = true;
+                            checkBoxScreen2Capture.Enabled = true;
                             buttonScreen2Reset.Enabled = true;
 
                             numericUpDownScreen2X.Value = Properties.Settings.Default.Screen2X > 0 ? Properties.Settings.Default.Screen2X : screen.Bounds.X;
                             numericUpDownScreen2Y.Value = Properties.Settings.Default.Screen2Y > 0 ? Properties.Settings.Default.Screen2Y : screen.Bounds.Y;
                             numericUpDownScreen2Width.Value = Properties.Settings.Default.Screen2Width > 0 ? Properties.Settings.Default.Screen2Width : screen.Bounds.Width;
                             numericUpDownScreen2Height.Value = Properties.Settings.Default.Screen2Height > 0 ? Properties.Settings.Default.Screen2Height : screen.Bounds.Height;
+
+                            checkBoxScreen2Capture.Checked = Properties.Settings.Default.CaptureScreen2;
                             break;
 
                         case 3:
@@ -288,12 +294,15 @@ namespace autoscreen
                             numericUpDownScreen3Y.Enabled = true;
                             numericUpDownScreen3Width.Enabled = true;
                             numericUpDownScreen3Height.Enabled = true;
+                            checkBoxScreen3Capture.Enabled = true;
                             buttonScreen3Reset.Enabled = true;
 
                             numericUpDownScreen3X.Value = Properties.Settings.Default.Screen3X > 0 ? Properties.Settings.Default.Screen3X : screen.Bounds.X;
                             numericUpDownScreen3Y.Value = Properties.Settings.Default.Screen3Y > 0 ? Properties.Settings.Default.Screen3Y : screen.Bounds.Y;
                             numericUpDownScreen3Width.Value = Properties.Settings.Default.Screen3Width > 0 ? Properties.Settings.Default.Screen3Width : screen.Bounds.Width;
                             numericUpDownScreen3Height.Value = Properties.Settings.Default.Screen3Height > 0 ? Properties.Settings.Default.Screen3Height : screen.Bounds.Height;
+
+                            checkBoxScreen3Capture.Checked = Properties.Settings.Default.CaptureScreen3;
                             break;
 
                         case 4:
@@ -306,12 +315,15 @@ namespace autoscreen
                             numericUpDownScreen4Y.Enabled = true;
                             numericUpDownScreen4Width.Enabled = true;
                             numericUpDownScreen4Height.Enabled = true;
+                            checkBoxScreen4Capture.Enabled = true;
                             buttonScreen4Reset.Enabled = true;
 
                             numericUpDownScreen4X.Value = Properties.Settings.Default.Screen4X > 0 ? Properties.Settings.Default.Screen4X : screen.Bounds.X;
                             numericUpDownScreen4Y.Value = Properties.Settings.Default.Screen4Y > 0 ? Properties.Settings.Default.Screen4Y : screen.Bounds.Y;
                             numericUpDownScreen4Width.Value = Properties.Settings.Default.Screen4Width > 0 ? Properties.Settings.Default.Screen4Width : screen.Bounds.Width;
                             numericUpDownScreen4Height.Value = Properties.Settings.Default.Screen4Height > 0 ? Properties.Settings.Default.Screen4Height : screen.Bounds.Height;
+
+                            checkBoxScreen4Capture.Checked = Properties.Settings.Default.CaptureScreen4;
                             break;
                     }
                 }
@@ -501,28 +513,37 @@ namespace autoscreen
             }
             else
             {
-                // It's very easy. Just get the files in the screenshots folder based on the calendar selection.
-                string[] files = FileSystem.GetFiles(textBoxScreenshotsFolderSearch.Text, monthCalendar.SelectionStart.ToString(StringHelper.DateFormat));
+                int count = 0;
 
-                if (files != null)
+                foreach (Screen screen in Screen.AllScreens)
                 {
-                    listBoxScreenshots.Items.AddRange(files);
-                }
+                    count++;
 
-                monthCalendar.Enabled = true;
-                toolStripComboBoxImageFormatFilter.Enabled = true;
+                    if (Directory.Exists(textBoxScreenshotsFolderSearch.Text + monthCalendar.SelectionStart.ToString(StringHelper.DateFormat) + "\\" + count.ToString()))
+                    {
+                        string[] files = FileSystem.GetFiles(textBoxScreenshotsFolderSearch.Text, count.ToString(), monthCalendar.SelectionStart.ToString(StringHelper.DateFormat));
 
-                // If we do find files then make sure the user can use the slideshow.
-                if (listBoxScreenshots.Items.Count > 0)
-                {
-                    listBoxScreenshots.SelectedIndex = 0;
+                        if (files != null)
+                        {
+                            listBoxScreenshots.Items.AddRange(files);
+                        }
 
-                    toolStripButtonNextSlide.Enabled = true;
-                    toolStripButtonLastSlide.Enabled = true;
+                        monthCalendar.Enabled = true;
+                        toolStripComboBoxImageFormatFilter.Enabled = true;
 
-                    EnablePlaySlideshow();
+                        // If we do find files then make sure the user can use the slideshow.
+                        if (listBoxScreenshots.Items.Count > 0)
+                        {
+                            listBoxScreenshots.SelectedIndex = 0;
 
-                    UpdatePreview();
+                            toolStripButtonNextSlide.Enabled = true;
+                            toolStripButtonLastSlide.Enabled = true;
+
+                            EnablePlaySlideshow();
+
+                            UpdatePreview();
+                        }
+                    }
                 }
             }
         }
@@ -543,22 +564,28 @@ namespace autoscreen
                 {
                     ArrayList selectedFolders = new ArrayList();
 
-                    // Again, this is very easy. Just find the directories within the screenshots folder.
                     string[] dirs = Directory.GetDirectories(textBoxScreenshotsFolderSearch.Text);
 
-                    // Go through each directory found and make sure that the sub-directories match
-                    // with the format yyyy-mm-dd.
-                    for (int i = 0; i < dirs.Length; i++)
-                    {
-                        Regex rgx = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+                    int count = 0;
 
-                        if (rgx.IsMatch(Path.GetFileName(dirs[i])))
+                    foreach (Screen screen in Screen.AllScreens)
+                    {
+                        count++;
+
+                        // Go through each directory found and make sure that the sub-directories match
+                        // with the format yyyy-mm-dd.
+                        for (int i = 0; i < dirs.Length; i++)
                         {
-                            if (Directory.Exists(dirs[i] + "\\1\\"))
+                            Regex rgx = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+
+                            if (rgx.IsMatch(Path.GetFileName(dirs[i])))
                             {
-                                if (!selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
+                                if (Directory.Exists(dirs[i] + "\\" + count.ToString() + "\\"))
                                 {
-                                    selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
+                                    if (!selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
+                                    {
+                                        selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
+                                    }
                                 }
                             }
                         }
@@ -1385,6 +1412,11 @@ namespace autoscreen
             Properties.Settings.Default.Screen4Width = (int)numericUpDownScreen4Width.Value;
             Properties.Settings.Default.Screen4Height = (int)numericUpDownScreen4Height.Value;
 
+            Properties.Settings.Default.CaptureScreen1 = checkBoxScreen1Capture.Checked;
+            Properties.Settings.Default.CaptureScreen2 = checkBoxScreen2Capture.Checked;
+            Properties.Settings.Default.CaptureScreen3 = checkBoxScreen3Capture.Checked;
+            Properties.Settings.Default.CaptureScreen4 = checkBoxScreen4Capture.Checked;
+
             Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
 
             Properties.Settings.Default.Save();
@@ -1881,16 +1913,45 @@ namespace autoscreen
             {
                 count++;
 
-                if (count <= ScreenCapture.SCREEN_MAX)
+                if (CaptureTheScreen(count))
                 {
-                    SetupScreenPosition(screen, count);
-                    SetupScreenSize(screen, count);
+                    if (count <= ScreenCapture.SCREEN_MAX)
+                    {
+                        SetupScreenPosition(screen, count);
+                        SetupScreenSize(screen, count);
 
-                    ScreenCapture.TakeScreenshot(screen, count, filename);
+                        ScreenCapture.TakeScreenshot(screen, count, filename);
+                    }
                 }
             }
 
             ScreenCapture.Count++;
+        }
+
+        private bool CaptureTheScreen(int screenNumber)
+        {
+            bool capture = false;
+
+            switch (screenNumber)
+            {
+                case 1:
+                    capture = checkBoxScreen1Capture.Checked;
+                    break;
+
+                case 2:
+                    capture = checkBoxScreen2Capture.Checked;
+                    break;
+
+                case 3:
+                    capture = checkBoxScreen3Capture.Checked;
+                    break;
+
+                case 4:
+                    capture = checkBoxScreen4Capture.Checked;
+                    break;
+            }
+
+            return capture;
         }
 
         /// <summary>
@@ -2031,7 +2092,15 @@ namespace autoscreen
 
             if (images.Count >= 1)
             {
-                pictureBoxScreenshotPreviewMonitor1.Image = (Image)images[0];
+                if (CaptureTheScreen(1) || !demo)
+                {
+                    pictureBoxScreenshotPreviewMonitor1.Image = (Image)images[0];
+                }
+                else
+                {
+                    pictureBoxScreenshotPreviewMonitor1.Image = null;
+                }
+
                 pictureBoxScreenshotPreviewMonitor2.Image = null;
                 pictureBoxScreenshotPreviewMonitor3.Image = null;
                 pictureBoxScreenshotPreviewMonitor4.Image = null;
@@ -2039,20 +2108,43 @@ namespace autoscreen
 
             if (images.Count >= 2)
             {
-                pictureBoxScreenshotPreviewMonitor2.Image = (Image)images[1];
+                if (CaptureTheScreen(2) || !demo)
+                {
+                    pictureBoxScreenshotPreviewMonitor2.Image = (Image)images[1];
+                }
+                else
+                {
+                    pictureBoxScreenshotPreviewMonitor2.Image = null;
+                }
+
                 pictureBoxScreenshotPreviewMonitor3.Image = null;
                 pictureBoxScreenshotPreviewMonitor4.Image = null;
             }
 
             if (images.Count >= 3)
             {
-                pictureBoxScreenshotPreviewMonitor3.Image = (Image)images[2];
+                if (CaptureTheScreen(3) || !demo)
+                {
+                    pictureBoxScreenshotPreviewMonitor3.Image = (Image)images[2];
+                }
+                else
+                {
+                    pictureBoxScreenshotPreviewMonitor3.Image = null;
+                }
+
                 pictureBoxScreenshotPreviewMonitor4.Image = null;
             }
 
             if (images.Count >= 4)
             {
-                pictureBoxScreenshotPreviewMonitor4.Image = (Image)images[3];
+                if (CaptureTheScreen(4) || !demo)
+                {
+                    pictureBoxScreenshotPreviewMonitor4.Image = (Image)images[3];
+                }
+                else
+                {
+                    pictureBoxScreenshotPreviewMonitor4.Image = null;
+                }
             }
 
             if (demo)
