@@ -60,21 +60,22 @@ namespace autoscreen
         /// </summary>
         private const int CAPTURE_LIMIT_MIN = 0;
         private const int CAPTURE_LIMIT_MAX = 9999;
-        private const int CAPTURE_DELAY_DEFAULT = 30000;
+        private const int CAPTURE_DELAY_DEFAULT = 60000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
         /// <summary>
         /// The various regular expressions used in the parsing of the command line arguments.
         /// </summary>
-        private const string REGEX_COMMAND_LINE_INITIAL = @"^-initial$";
+        private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
         private const string REGEX_COMMAND_LINE_FOLDER = "^-folder=(?<Folder>.+)$";
         private const string REGEX_COMMAND_LINE_RATIO = @"^-ratio=(?<Ratio>\d{1,3})$";
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
-        private const string REGEX_COMMAND_LINE_FORMAT = @"^-format=(?<Format>(BMP|EMF|GIF|JPEG|PNG|TIFF|WMF))$";
+        private const string REGEX_COMMAND_LINE_FORMAT = "^-format=(?<Format>(BMP|EMF|GIF|JPEG|PNG|TIFF|WMF))$";
         private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
         private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
         private const string REGEX_COMMAND_LINE_DELAY = @"^-delay=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
+        private const string REGEX_COMMAND_LINE_LOCK = "^-lock$";
 
         /// <summary>
         /// Constructor for the main form. Arugments from the command line can be passed to it.
@@ -620,28 +621,27 @@ namespace autoscreen
         /// </summary>
         private void OpenWindow()
         {
-            if (!ScreenCapture.runningFromCommandLine)
+            Log.Write("Opening application window.");
+
+            if (ScreenCapture.lockScreenCaptureSession)
             {
-                if (ScreenCapture.lockScreenCaptureSession)
+                formEnterPassphrase.ShowDialog(this);
+            }
+
+            if (!ScreenCapture.lockScreenCaptureSession)
+            {
+                checkBoxPassphraseLock.Checked = false;
+
+                if (toolStripMenuItemOpen.Enabled)
                 {
-                    formEnterPassphrase.ShowDialog(this);
-                }
+                    this.Opacity = 100;
+                    toolStripMenuItemOpen.Enabled = false;
+                    toolStripMenuItemClose.Enabled = true;
 
-                if (!ScreenCapture.lockScreenCaptureSession)
-                {
-                    checkBoxPassphraseLock.Checked = false;
-
-                    if (toolStripMenuItemOpen.Enabled)
-                    {
-                        this.Opacity = 100;
-                        toolStripMenuItemOpen.Enabled = false;
-                        toolStripMenuItemClose.Enabled = true;
-
-                        this.Show();
-                        this.Visible = true;
-                        this.ShowInTaskbar = true;
-                        this.Focus();
-                    }
+                    this.Show();
+                    this.Visible = true;
+                    this.ShowInTaskbar = true;
+                    this.Focus();
                 }
             }
         }
@@ -678,44 +678,41 @@ namespace autoscreen
         {
             Log.Write("Stopping screen capture.");
 
-            if (!ScreenCapture.runningFromCommandLine)
+            if (ScreenCapture.lockScreenCaptureSession)
             {
-                if (ScreenCapture.lockScreenCaptureSession)
+                formEnterPassphrase.ShowDialog(this);
+            }
+
+            if (!ScreenCapture.lockScreenCaptureSession)
+            {
+                checkBoxPassphraseLock.Checked = false;
+
+                ScreenCapture.Count = 0;
+                timerScreenCapture.Enabled = false;
+
+                // Let the user know of the last capture that was taken and the status of the session ("Stopped").
+                DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
+
+                DisableStopScreenCapture();
+                EnableStartScreenCapture();
+
+                // Make sure to update the calendar with any folders found due to the freshly-made screenshots.
+                // We'll let the user decide what folder of screenshots they want to see after the search is done.
+                if (toolStripMenuItemSearchOnStopScreenCapture.Checked)
                 {
-                    formEnterPassphrase.ShowDialog(this);
+                    SearchFolders();
                 }
 
-                if (!ScreenCapture.lockScreenCaptureSession)
+                // Some people want to see this window immediately after the session has stopped.
+                if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
                 {
-                    checkBoxPassphraseLock.Checked = false;
+                    OpenWindow();
+                }
 
-                    ScreenCapture.Count = 0;
-                    timerScreenCapture.Enabled = false;
-
-                    // Let the user know of the last capture that was taken and the status of the session ("Stopped").
-                    DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
-
-                    DisableStopScreenCapture();
-                    EnableStartScreenCapture();
-
-                    // Make sure to update the calendar with any folders found due to the freshly-made screenshots.
-                    // We'll let the user decide what folder of screenshots they want to see after the search is done.
-                    if (toolStripMenuItemSearchOnStopScreenCapture.Checked)
-                    {
-                        SearchFolders();
-                    }
-
-                    // Some people want to see this window immediately after the session has stopped.
-                    if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
-                    {
-                        OpenWindow();
-                    }
-
-                    // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
-                    if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
-                    {
-                        ShowSlideshow();
-                    }
+                // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
+                if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
+                {
+                    ShowSlideshow();
                 }
             }
         }
@@ -1210,35 +1207,32 @@ namespace autoscreen
         {
             Log.Write("Exiting application.");
 
-            if (!ScreenCapture.runningFromCommandLine)
+            if (ScreenCapture.lockScreenCaptureSession)
             {
-                if (ScreenCapture.lockScreenCaptureSession)
+                formEnterPassphrase.ShowDialog(this);
+            }
+
+            if (!ScreenCapture.lockScreenCaptureSession)
+            {
+                checkBoxPassphraseLock.Checked = false;
+
+                // Save the user's options.
+                SaveApplicationSettings();
+
+                // Close this window.
+                CloseWindow();
+
+                // Cancel the folder search if it's currently running.
+                if (runFolderSearchThread.IsBusy)
                 {
-                    formEnterPassphrase.ShowDialog(this);
+                    runFolderSearchThread.CancelAsync();
                 }
 
-                if (!ScreenCapture.lockScreenCaptureSession)
-                {
-                    checkBoxPassphraseLock.Checked = false;
+                // Hide the system tray icon.
+                notifyIcon.Visible = false;
 
-                    // Save the user's options.
-                    SaveApplicationSettings();
-
-                    // Close this window.
-                    CloseWindow();
-
-                    // Cancel the folder search if it's currently running.
-                    if (runFolderSearchThread.IsBusy)
-                    {
-                        runFolderSearchThread.CancelAsync();
-                    }
-
-                    // Hide the system tray icon.
-                    notifyIcon.Visible = false;
-
-                    // Exit.
-                    Environment.Exit(0);
-                }
+                // Exit.
+                Environment.Exit(0);
             }
         }
 
@@ -1627,8 +1621,8 @@ namespace autoscreen
 
                 int delay = CAPTURE_DELAY_DEFAULT;
                 numericUpDownHoursInterval.Value = 0;
-                numericUpDownMinutesInterval.Value = 0;
-                numericUpDownSecondsInterval.Value = CAPTURE_DELAY_DEFAULT / CAPTURE_DELAY_DEFAULT;
+                numericUpDownMinutesInterval.Value = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(delay)).Minutes);
+                numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
 
                 int ratio = IMAGE_RESOLUTION_RATIO_MAX;
@@ -1636,9 +1630,10 @@ namespace autoscreen
 
                 string folder = screenshotsFolder;
 
-                imageFormat = ImageFormatSpec.NAME_PNG;
-                comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_PNG;
+                imageFormat = ImageFormatSpec.NAME_JPEG;
+                comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_JPEG;
 
+                Regex rgxCommandLineLock = new Regex(REGEX_COMMAND_LINE_LOCK);
                 Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
                 Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
                 Regex rgxCommandLineFormat = new Regex(REGEX_COMMAND_LINE_FORMAT);
@@ -1745,6 +1740,11 @@ namespace autoscreen
                         dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStopAt.Checked = true;
+                    }
+
+                    if (rgxCommandLineLock.IsMatch(args[i]) && textBoxPassphrase.Text.Length > 0)
+                    {
+                        checkBoxPassphraseLock.Checked = true;
                     }
                 }
 
