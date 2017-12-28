@@ -1290,6 +1290,23 @@ namespace autoscreen
             {
                 toolStripMenuItemStartScreenCapture.Enabled = true;
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
+
+                numericUpDownHoursInterval.Enabled = true;
+                labelHoursInterval.Enabled = true;
+                checkBoxInitialScreenshot.Enabled = true;
+                numericUpDownMinutesInterval.Enabled = true;
+                labelMinutesInterval.Enabled = true;
+                checkBoxCaptureLimit.Enabled = true;
+                numericUpDownCaptureLimit.Enabled = true;
+                labelLimit.Enabled = true;
+                numericUpDownSecondsInterval.Enabled = true;
+                labelSecondsInterval.Enabled = true;
+                labelAt.Enabled = true;
+                numericUpDownImageResolutionRatio.Enabled = true;
+                labelPercentResolution.Enabled = true;
+                numericUpDownMillisecondsInterval.Enabled = true;
+                labelMillisecondsInterval.Enabled = true;
+                checkBoxDemoMode.Enabled = true;
             }
             else
             {
@@ -1304,6 +1321,23 @@ namespace autoscreen
         {
             toolStripButtonStopScreenCapture.Enabled = true;
             toolStripMenuItemStopScreenCapture.Enabled = true;
+
+            numericUpDownHoursInterval.Enabled = false;
+            labelHoursInterval.Enabled = false;
+            checkBoxInitialScreenshot.Enabled = false;
+            numericUpDownMinutesInterval.Enabled = false;
+            labelMinutesInterval.Enabled = false;
+            checkBoxCaptureLimit.Enabled = false;
+            numericUpDownCaptureLimit.Enabled = false;
+            labelLimit.Enabled = false;
+            numericUpDownSecondsInterval.Enabled = false;
+            labelSecondsInterval.Enabled = false;
+            labelAt.Enabled = false;
+            numericUpDownImageResolutionRatio.Enabled = false;
+            labelPercentResolution.Enabled = false;
+            numericUpDownMillisecondsInterval.Enabled = false;
+            labelMillisecondsInterval.Enabled = false;
+            checkBoxDemoMode.Enabled = false;
         }
 
         /// <summary>

@@ -84,7 +84,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Auto Screen Capture - Locked";
+            this.Text = "Enter Passphrase";
             this.Load += new System.EventHandler(this.FormEnterPassphrase_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
