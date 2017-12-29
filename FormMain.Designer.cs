@@ -589,6 +589,7 @@
             this.checkBoxScreen1Capture.TabIndex = 13;
             this.checkBoxScreen1Capture.Text = "Capture";
             this.checkBoxScreen1Capture.UseVisualStyleBackColor = true;
+            this.checkBoxScreen1Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen1Capture_CheckedChanged);
             // 
             // numericUpDownScreen1Height
             // 
@@ -827,6 +828,7 @@
             this.checkBoxScreen2Capture.TabIndex = 22;
             this.checkBoxScreen2Capture.Text = "Capture";
             this.checkBoxScreen2Capture.UseVisualStyleBackColor = true;
+            this.checkBoxScreen2Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen2Capture_CheckedChanged);
             // 
             // numericUpDownScreen2Height
             // 
@@ -1023,6 +1025,7 @@
             this.checkBoxScreen3Capture.TabIndex = 22;
             this.checkBoxScreen3Capture.Text = "Capture";
             this.checkBoxScreen3Capture.UseVisualStyleBackColor = true;
+            this.checkBoxScreen3Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen3Capture_CheckedChanged);
             // 
             // numericUpDownScreen3Height
             // 
@@ -1219,6 +1222,7 @@
             this.checkBoxScreen4Capture.TabIndex = 22;
             this.checkBoxScreen4Capture.Text = "Capture";
             this.checkBoxScreen4Capture.UseVisualStyleBackColor = true;
+            this.checkBoxScreen4Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen4Capture_CheckedChanged);
             // 
             // numericUpDownScreen4Height
             // 

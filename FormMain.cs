@@ -2783,5 +2783,37 @@ namespace autoscreen
                 DisplayExitStatus(StatusMessage.OFF);
             }
         }
+
+        private void checkBoxScreen1Capture_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBoxScreen1Capture.Checked)
+            {
+                DisplayImages(checkBoxDemoMode.Checked);
+            }
+        }
+
+        private void checkBoxScreen2Capture_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBoxScreen2Capture.Checked)
+            {
+                DisplayImages(checkBoxDemoMode.Checked);
+            }
+        }
+
+        private void checkBoxScreen3Capture_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBoxScreen3Capture.Checked)
+            {
+                DisplayImages(checkBoxDemoMode.Checked);
+            }
+        }
+
+        private void checkBoxScreen4Capture_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBoxScreen4Capture.Checked)
+            {
+                DisplayImages(checkBoxDemoMode.Checked);
+            }
+        }
     }
 }
