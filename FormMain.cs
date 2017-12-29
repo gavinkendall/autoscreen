@@ -85,7 +85,7 @@ namespace autoscreen
         {
             InitializeComponent();
 
-            this.Text = Properties.Settings.Default.ApplicationName;
+            Text = Properties.Settings.Default.ApplicationName;
             notifyIcon.Text = Properties.Settings.Default.ApplicationName;
 
             Log.Write("Initializing image format collection.");
@@ -640,14 +640,14 @@ namespace autoscreen
 
                 if (toolStripMenuItemOpen.Enabled)
                 {
-                    this.Opacity = 100;
+                    Opacity = 100;
                     toolStripMenuItemOpen.Enabled = false;
                     toolStripMenuItemClose.Enabled = true;
 
-                    this.Show();
-                    this.Visible = true;
-                    this.ShowInTaskbar = true;
-                    this.Focus();
+                    Show();
+                    Visible = true;
+                    ShowInTaskbar = true;
+                    Focus();
                 }
             }
         }
@@ -1006,9 +1006,9 @@ namespace autoscreen
         {
             if (!checkBoxDemoMode.Checked)
             {
-                if (this.InvokeRequired)
+                if (InvokeRequired)
                 {
-                    this.Invoke(new UpdateScreenshotPreviewDelegate(this.UpdatePreview));
+                    Invoke(new UpdateScreenshotPreviewDelegate(UpdatePreview));
                 }
                 else
                 {
