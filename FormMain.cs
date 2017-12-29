@@ -937,6 +937,11 @@ namespace autoscreen
             checkBoxInitialScreenshot.Enabled = false;
 
             toolStripSplitButtonStartScreenCapture.Enabled = false;
+
+            labelSlideshowDelayHours.Enabled = false;
+            labelSlideshowDelayMinutes.Enabled = false;
+            labelSlideshowDelaySeconds.Enabled = false;
+            labelSlideshowDelayMilliseconds.Enabled = false;
         }
 
         /// <summary>
@@ -974,6 +979,11 @@ namespace autoscreen
             {
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
             }
+
+            labelSlideshowDelayHours.Enabled = true;
+            labelSlideshowDelayMinutes.Enabled = true;
+            labelSlideshowDelaySeconds.Enabled = true;
+            labelSlideshowDelayMilliseconds.Enabled = true;
         }
 
         /// <summary>
