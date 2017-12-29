@@ -625,9 +625,15 @@ namespace autoscreen
 
             if (ScreenCapture.lockScreenCaptureSession)
             {
-                formEnterPassphrase.ShowDialog(this);
+                if (!formEnterPassphrase.Visible)
+                {
+                    formEnterPassphrase.ShowDialog(this);
+                }
             }
 
+            // This is intentional. Do not rewrite these statements as an if/else
+            // because as soon as lockScreenCaptureSession is set to false we want
+            // to continue with normal functionality.
             if (!ScreenCapture.lockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
@@ -661,13 +667,13 @@ namespace autoscreen
                     PauseSlideshow();
                 }
 
-                this.Opacity = 0;
+                Opacity = 0;
                 toolStripMenuItemOpen.Enabled = true;
                 toolStripMenuItemClose.Enabled = false;
 
-                this.Hide();
-                this.Visible = false;
-                this.ShowInTaskbar = false;
+                Hide();
+                Visible = false;
+                ShowInTaskbar = false;
             }
         }
 
@@ -680,9 +686,15 @@ namespace autoscreen
 
             if (ScreenCapture.lockScreenCaptureSession)
             {
-                formEnterPassphrase.ShowDialog(this);
+                if (!formEnterPassphrase.Visible)
+                {
+                    formEnterPassphrase.ShowDialog(this);
+                }
             }
-
+            
+            // This is intentional. Do not rewrite these statements as an if/else
+            // because as soon as lockScreenCaptureSession is set to false we want
+            // to continue with normal functionality.
             if (!ScreenCapture.lockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
@@ -1209,9 +1221,15 @@ namespace autoscreen
 
             if (ScreenCapture.lockScreenCaptureSession)
             {
-                formEnterPassphrase.ShowDialog(this);
+                if (!formEnterPassphrase.Visible)
+                {
+                    formEnterPassphrase.ShowDialog(this);
+                }
             }
 
+            // This is intentional. Do not rewrite these statements as an if/else
+            // because as soon as lockScreenCaptureSession is set to false we want
+            // to continue with normal functionality.
             if (!ScreenCapture.lockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;

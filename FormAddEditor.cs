@@ -28,19 +28,19 @@ namespace autoscreen
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             AddEditor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text);
-            this.Close();
+            Close();
         }
 
         private void buttonRun_Click(object sender, EventArgs e)
         {
             RunEditor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text);
-            this.Close();
+            Close();
         }
 
         private void AddEditor(string name, string application, string arguments)

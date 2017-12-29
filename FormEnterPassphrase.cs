@@ -6,11 +6,6 @@
 // Thursday, 15 May 2008 - Thursday, 28 December 2017
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace autoscreen
@@ -30,7 +25,7 @@ namespace autoscreen
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void buttonUnlock_Click(object sender, EventArgs e)
@@ -40,7 +35,7 @@ namespace autoscreen
                 if (textBoxPassphrase.Text.Equals(Properties.Settings.Default.Passphrase))
                 {
                     ScreenCapture.lockScreenCaptureSession = false;
-                    this.Close();
+                    Close();
                 }
                 else
                 {
