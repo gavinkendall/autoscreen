@@ -1476,7 +1476,7 @@ namespace autoscreen
         {
             if (!string.IsNullOrEmpty(status))
             {
-                statusStrip.Items["statusStripLabelDemo"].Text = "Demo: " + status;
+                statusStrip.Items["statusStripLabelDemo"].Text = "Preview: " + status;
             }
         }
 

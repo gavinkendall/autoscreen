@@ -414,8 +414,8 @@
             this.statusStripLabelDemo.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
             this.statusStripLabelDemo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabelDemo.Name = "statusStripLabelDemo";
-            this.statusStripLabelDemo.Size = new System.Drawing.Size(66, 19);
-            this.statusStripLabelDemo.Text = "Demo: Off";
+            this.statusStripLabelDemo.Size = new System.Drawing.Size(75, 19);
+            this.statusStripLabelDemo.Text = "Preview: Off";
             // 
             // statusStripLabelSchedule
             // 
@@ -1720,10 +1720,10 @@
             this.checkBoxDemoMode.AutoSize = true;
             this.checkBoxDemoMode.Location = new System.Drawing.Point(127, 98);
             this.checkBoxDemoMode.Name = "checkBoxDemoMode";
-            this.checkBoxDemoMode.Size = new System.Drawing.Size(54, 17);
+            this.checkBoxDemoMode.Size = new System.Drawing.Size(64, 17);
             this.checkBoxDemoMode.TabIndex = 27;
             this.checkBoxDemoMode.TabStop = false;
-            this.checkBoxDemoMode.Text = "Demo";
+            this.checkBoxDemoMode.Text = "Preview";
             this.checkBoxDemoMode.UseVisualStyleBackColor = true;
             this.checkBoxDemoMode.CheckedChanged += new System.EventHandler(this.checkBoxDemoMode_CheckedChanged);
             // 
