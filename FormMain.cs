@@ -3,7 +3,7 @@
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Thursday, 28 December 2017
+// Thursday, 15 May 2008 - Friday, 29 December 2017
 
 using System;
 using System.IO;
@@ -332,7 +332,7 @@ namespace autoscreen
 
             if (toolStripMenuItemDemoModeAtApplicationStartup.Checked)
             {
-                checkBoxDemoMode.Checked = true;
+                checkBoxAutoReset.Checked = true;
             }
 
             EnableStartScreenCapture();
@@ -734,7 +734,7 @@ namespace autoscreen
         /// </summary>
         private void PlaySlideshow()
         {
-            checkBoxDemoMode.Checked = false;
+            radioButtonModePreview.Checked = false;
             int slideshowDelay = GetSlideshowDelay();
 
             DisableControls();
@@ -802,7 +802,7 @@ namespace autoscreen
 
             SaveApplicationSettings();
 
-            checkBoxDemoMode.Checked = false;
+            radioButtonModePreview.Checked = false;
 
             if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
             {
@@ -866,7 +866,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void listBoxScreenshots_SelectedIndexChanged(object sender, EventArgs e)
         {
-            checkBoxDemoMode.Checked = false;
+            radioButtonModePreview.Checked = false;
 
             Slideshow.Index = listBoxScreenshots.SelectedIndex;
             Slideshow.Count = listBoxScreenshots.Items.Count;
@@ -1014,7 +1014,7 @@ namespace autoscreen
         /// </summary>
         private void UpdatePreview()
         {
-            if (!checkBoxDemoMode.Checked)
+            if (!radioButtonModePreview.Checked)
             {
                 if (InvokeRequired)
                 {
@@ -1334,7 +1334,7 @@ namespace autoscreen
                 labelPercentResolution.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
                 labelMillisecondsInterval.Enabled = true;
-                checkBoxDemoMode.Enabled = true;
+                radioButtonModePreview.Enabled = true;
             }
             else
             {
@@ -1365,7 +1365,7 @@ namespace autoscreen
             labelPercentResolution.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
             labelMillisecondsInterval.Enabled = false;
-            checkBoxDemoMode.Enabled = false;
+            radioButtonModePreview.Enabled = false;
         }
 
         /// <summary>
@@ -1479,14 +1479,14 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Displays the status of "Demo Mode".
+        /// Displays the current mode that we're in.
         /// </summary>
-        /// <param name="status">Can be "On" or "Off".</param>
-        private void DisplayDemoModeStatus(string status)
+        /// <param name="status">Can be "Preview", "Normal", or "Static".</param>
+        private void DisplayModeStatus(string status)
         {
             if (!string.IsNullOrEmpty(status))
             {
-                statusStrip.Items["statusStripLabelDemo"].Text = "Preview: " + status;
+                statusStrip.Items["statusStripLabelMode"].Text = "Mode: " + status;
             }
         }
 
@@ -2469,33 +2469,6 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Starts taking screenshots when "Demo Mode" is on otherwise the preview images will be cleared.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBoxDemoMode_CheckedChanged(object sender, EventArgs e)
-        {
-            if (GetCaptureDelay() > 0 && checkBoxDemoMode.Checked)
-            {
-                DisplayDemoModeStatus(StatusMessage.ON);
-
-                if (checkBoxInitialScreenshot.Checked)
-                {
-                    TakeDemoScreenshots();
-                }
-            }
-            else
-            {
-                DisplayDemoModeStatus(StatusMessage.OFF);
-
-                ClearImages();
-                UpdatePreview();
-            }
-
-            timerDemoCapture.Enabled = checkBoxDemoMode.Checked;
-        }
-
-        /// <summary>
         /// Takes screenshots in "Demo Mode" (or clears the preview images) depending on the value of the capture delay slider controls.
         /// </summary>
         /// <param name="sender"></param>
@@ -2510,7 +2483,7 @@ namespace autoscreen
             {
                 timerDemoCapture.Interval = demoInterval;
 
-                if (checkBoxDemoMode.Checked)
+                if (radioButtonModePreview.Checked)
                 {
                     if (checkBoxInitialScreenshot.Checked)
                     {
@@ -2798,7 +2771,7 @@ namespace autoscreen
         {
             if (!checkBoxScreen1Capture.Checked)
             {
-                DisplayImages(checkBoxDemoMode.Checked);
+                DisplayImages(radioButtonModePreview.Checked);
             }
         }
 
@@ -2806,7 +2779,7 @@ namespace autoscreen
         {
             if (!checkBoxScreen2Capture.Checked)
             {
-                DisplayImages(checkBoxDemoMode.Checked);
+                DisplayImages(radioButtonModePreview.Checked);
             }
         }
 
@@ -2814,7 +2787,7 @@ namespace autoscreen
         {
             if (!checkBoxScreen3Capture.Checked)
             {
-                DisplayImages(checkBoxDemoMode.Checked);
+                DisplayImages(radioButtonModePreview.Checked);
             }
         }
 
@@ -2822,8 +2795,43 @@ namespace autoscreen
         {
             if (!checkBoxScreen4Capture.Checked)
             {
-                DisplayImages(checkBoxDemoMode.Checked);
+                DisplayImages(radioButtonModePreview.Checked);
             }
+        }
+
+        /// <summary>
+        /// Takes screenshots when "Preview Mode" is enabled otherwise the preview images will be cleared.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radioButtonModePreview_CheckedChanged(object sender, EventArgs e)
+        {
+            if (GetCaptureDelay() > 0 && radioButtonModePreview.Checked)
+            {
+                DisplayModeStatus(StatusMessage.MODE_PREVIEW);
+
+                if (checkBoxInitialScreenshot.Checked)
+                {
+                    TakeDemoScreenshots();
+                }
+            }
+            else
+            {
+                ClearImages();
+                UpdatePreview();
+            }
+
+            timerDemoCapture.Enabled = radioButtonModePreview.Checked;
+        }
+
+        private void radioButtonModeNormal_CheckedChanged(object sender, EventArgs e)
+        {
+            DisplayModeStatus(StatusMessage.MODE_NORMAL);
+        }
+
+        private void radioButtonModeStatic_CheckedChanged(object sender, EventArgs e)
+        {
+            DisplayModeStatus(StatusMessage.MODE_STATIC);
         }
     }
 }
