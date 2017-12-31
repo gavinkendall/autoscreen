@@ -23,6 +23,9 @@ namespace autoscreen
 
         private const string SCREENSHOT_DATE = "date";
         private const string SCREENSHOT_PATH = "path";
+        private const string SCREENSHOT_SCREEN = "screen";
+        private const string SCREENSHOT_FORMAT = "format";
+        private const string SCREENSHOT_FILENAME = "filename";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
         public static void Add(Screenshot screenshot)
@@ -39,6 +42,39 @@ namespace autoscreen
         public static int Count
         {
             get { return m_screenshotList.Count; }
+        }
+
+        public static Screenshot GetByFilename(string filename)
+        {
+            for (int i = 0; i < m_screenshotList.Count; i++)
+            {
+                Screenshot screenshot = Get(i);
+
+                if (screenshot.Filename.Equals(filename))
+                {
+                    return (Screenshot)Get(i);
+                }
+            }
+
+            return null;
+        }
+
+        public static ArrayList GetDates()
+        {
+            ArrayList dates = new ArrayList();
+
+            foreach (Screenshot screenshot in m_screenshotList)
+            {
+                if (!string.IsNullOrEmpty(screenshot.Date))
+                {
+                    if (!dates.Contains(screenshot.Date))
+                    {
+                        dates.Add(screenshot.Date);
+                    }
+                }
+            }
+
+            return dates;
         }
 
         /// <summary>
@@ -71,6 +107,21 @@ namespace autoscreen
                                 xreader.Read();
                                 screenshot.Path = xreader.Value;
                                 break;
+
+                            case SCREENSHOT_SCREEN:
+                                xreader.Read();
+                                screenshot.Screen = string.IsNullOrEmpty(xreader.Value) ? 0 : Convert.ToInt32(xreader.Value);
+                                break;
+
+                            case SCREENSHOT_FORMAT:
+                                xreader.Read();
+                                screenshot.Format = xreader.Value;
+                                break;
+
+                            case SCREENSHOT_FILENAME:
+                                xreader.Read();
+                                screenshot.Filename = xreader.Value;
+                                break;
                         }
                     }
                 }
@@ -78,7 +129,10 @@ namespace autoscreen
                 xreader.Close();
 
                 if (!string.IsNullOrEmpty(screenshot.Date) &&
-                    !string.IsNullOrEmpty(screenshot.Path))
+                    !string.IsNullOrEmpty(screenshot.Path) &&
+                    screenshot.Screen > 0 &&
+                    !string.IsNullOrEmpty(screenshot.Format) &&
+                    !string.IsNullOrEmpty(screenshot.Filename))
                 {
                     Add(screenshot);
                 }
@@ -88,7 +142,7 @@ namespace autoscreen
         /// <summary>
         /// Saves the screenshots.
         /// </summary>
-        public static void Save()
+        private static void Save()
         {
             XmlWriterSettings xsettings = new XmlWriterSettings();
             xsettings.Indent = true;
@@ -116,6 +170,9 @@ namespace autoscreen
                     xwriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
                     xwriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
                     xwriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
+                    xwriter.WriteElementString(SCREENSHOT_SCREEN, screenshot.Screen.ToString());
+                    xwriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format);
+                    xwriter.WriteElementString(SCREENSHOT_FILENAME, screenshot.Filename);
 
                     xwriter.WriteEndElement();
                 }

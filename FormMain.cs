@@ -45,8 +45,8 @@ namespace autoscreen
         /// <summary>
         /// Threads for background operations.
         /// </summary>
-        private BackgroundWorker runOldFileSearchThread = null;
-        private BackgroundWorker runOldFolderSearchThread = null;
+        private BackgroundWorker runFileSearchThread = null;
+        private BackgroundWorker runFolderSearchThread = null;
 
         /// <summary>
         /// Delegates for the threads.
@@ -93,15 +93,15 @@ namespace autoscreen
 
             ImageFormatCollection.Initialize();
 
-            runOldFileSearchThread = new BackgroundWorker();
-            runOldFileSearchThread.WorkerReportsProgress = false;
-            runOldFileSearchThread.WorkerSupportsCancellation = true;
-            runOldFileSearchThread.DoWork += new DoWorkEventHandler(runOldFileSearchThread_DoWork);
+            runFileSearchThread = new BackgroundWorker();
+            runFileSearchThread.WorkerReportsProgress = false;
+            runFileSearchThread.WorkerSupportsCancellation = true;
+            runFileSearchThread.DoWork += new DoWorkEventHandler(runFileSearchThread_DoWork);
 
-            runOldFolderSearchThread = new BackgroundWorker();
-            runOldFolderSearchThread.WorkerReportsProgress = false;
-            runOldFolderSearchThread.WorkerSupportsCancellation = true;
-            runOldFolderSearchThread.DoWork += new DoWorkEventHandler(runOldFolderSearchThread_DoWork);
+            runFolderSearchThread = new BackgroundWorker();
+            runFolderSearchThread.WorkerReportsProgress = false;
+            runFolderSearchThread.WorkerSupportsCancellation = true;
+            runFolderSearchThread.DoWork += new DoWorkEventHandler(runFolderSearchThread_DoWork);
 
             Log.Write("Initializing slideshow component.");
 
@@ -465,7 +465,7 @@ namespace autoscreen
         {
             textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
 
-            Log.Write("Searching for screenshot folders using in \"" + textBoxScreenshotsFolderSearch.Text + "\"");
+            Log.Write("Searching for screenshot folders in \"" + textBoxScreenshotsFolderSearch.Text + "\"");
 
             ClearPreview();
             DisableToolStripButtons();
@@ -474,9 +474,9 @@ namespace autoscreen
 
             if (Directory.Exists(textBoxScreenshotsFolderSearch.Text))
             {
-                if (!runOldFolderSearchThread.IsBusy)
+                if (!runFolderSearchThread.IsBusy)
                 {
-                    runOldFolderSearchThread.RunWorkerAsync();
+                    runFolderSearchThread.RunWorkerAsync();
                 }
             }
         }
@@ -490,16 +490,17 @@ namespace autoscreen
 
             textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
 
-            Log.Write("Searching for screenshot files in " + textBoxScreenshotsFolderSearch.Text);
+            Log.Write("Searching for screenshot files in \"" + textBoxScreenshotsFolderSearch.Text + "\"");
+            Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
 
             ClearPreview();
             DisableToolStripButtons();
 
             if (Directory.Exists(Path.GetDirectoryName(textBoxScreenshotsFolderSearch.Text)))
             {
-                if (!runOldFileSearchThread.IsBusy)
+                if (!runFileSearchThread.IsBusy)
                 {
-                    runOldFileSearchThread.RunWorkerAsync();
+                    runFileSearchThread.RunWorkerAsync();
                 }
             }
 
@@ -518,14 +519,14 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// This thread is responsible for doing the file search.
+        /// This thread is responsible for finding the screenshots that were taken.
         /// </summary>
         /// <param name="e"></param>
-        private void RunOldFileSearch(DoWorkEventArgs e)
+        private void RunFileSearch(DoWorkEventArgs e)
         {
             if (listBoxScreenshots.InvokeRequired)
             {
-                listBoxScreenshots.Invoke(new RunFileSearchDelegate(RunOldFileSearch), new object[] { e });
+                listBoxScreenshots.Invoke(new RunFileSearchDelegate(RunFileSearch), new object[] { e });
             }
             else
             {
@@ -535,6 +536,8 @@ namespace autoscreen
                 {
                     count++;
 
+                    // The old way of finding screenshots taken.
+                    // This is to maintain backwards compatibility with older versions of Auto Screen Capture.
                     if (Directory.Exists(textBoxScreenshotsFolderSearch.Text + monthCalendar.SelectionStart.ToString(MacroParser.DateFormat) + "\\" + count.ToString()))
                     {
                         string[] files = FileSystem.GetFiles(textBoxScreenshotsFolderSearch.Text, count.ToString(), monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
@@ -543,36 +546,50 @@ namespace autoscreen
                         {
                             listBoxScreenshots.Items.AddRange(files);
                         }
+                    }
 
-                        monthCalendar.Enabled = true;
-                        toolStripComboBoxImageFormatFilter.Enabled = true;
+                    // The new way is to use the screenshot collection class.
+                    for (int i = 0; i < ScreenshotCollection.Count; i++)
+                    {
+                        Screenshot screenshot = ScreenshotCollection.Get(i);
 
-                        // If we do find files then make sure the user can use the slideshow.
-                        if (listBoxScreenshots.Items.Count > 0)
+                        if (screenshot != null)
                         {
-                            listBoxScreenshots.SelectedIndex = 0;
-
-                            toolStripButtonNextSlide.Enabled = true;
-                            toolStripButtonLastSlide.Enabled = true;
-
-                            EnablePlaySlideshow();
-
-                            UpdatePreview();
+                            if (File.Exists(screenshot.Path) && screenshot.Screen == count && screenshot.Date == monthCalendar.SelectionStart.ToString(MacroParser.DateFormat))
+                            {
+                                listBoxScreenshots.Items.Add(screenshot.Filename);
+                            }
                         }
                     }
+                }
+
+                // If we do find files then make sure the user can use the slideshow.
+                if (listBoxScreenshots.Items.Count > 0)
+                {
+                    monthCalendar.Enabled = true;
+                    toolStripComboBoxImageFormatFilter.Enabled = true;
+
+                    listBoxScreenshots.SelectedIndex = 0;
+
+                    toolStripButtonNextSlide.Enabled = true;
+                    toolStripButtonLastSlide.Enabled = true;
+
+                    EnablePlaySlideshow();
+
+                    UpdatePreview();
                 }
             }
         }
 
         /// <summary>
-        /// This thread is responsible for doing the folder search using the old search algorithm.
+        /// This thread is responsible for figuring out what days screenshots were taken.
         /// </summary>
         /// <param name="e"></param>
-        private void RunOldFolderSearch(DoWorkEventArgs e)
+        private void RunFolderSearch(DoWorkEventArgs e)
         {
             if (monthCalendar.InvokeRequired)
             {
-                monthCalendar.Invoke(new RunFolderSearchDelegate(RunOldFolderSearch), new object[] { e });
+                monthCalendar.Invoke(new RunFolderSearchDelegate(RunFolderSearch), new object[] { e });
             }
             else
             {
@@ -580,6 +597,8 @@ namespace autoscreen
                 {
                     ArrayList selectedFolders = new ArrayList();
 
+                    // The old way of obtaining the dates from screenshots taken.
+                    // This is to maintain backwards compatibility with older versions of Auto Screen Capture.
                     string[] dirs = Directory.GetDirectories(textBoxScreenshotsFolderSearch.Text);
 
                     int count = 0;
@@ -605,6 +624,12 @@ namespace autoscreen
                                 }
                             }
                         }
+                    }
+
+                    // The new way of obtaining the dates from screenshots taken.
+                    foreach (string date in ScreenshotCollection.GetDates())
+                    {
+                        selectedFolders.Add(date);
                     }
 
                     // Also make sure that the dates in the calendar are set to bold for each
@@ -831,15 +856,15 @@ namespace autoscreen
             }
 
             // Stop the folder search thread if it's busy.
-            if (runOldFolderSearchThread.IsBusy)
+            if (runFolderSearchThread.IsBusy)
             {
-                runOldFolderSearchThread.CancelAsync();
+                runFolderSearchThread.CancelAsync();
             }
 
             // Stop the file search thread if it's busy.
-            if (runOldFileSearchThread.IsBusy)
+            if (runFileSearchThread.IsBusy)
             {
-                runOldFileSearchThread.CancelAsync();
+                runFileSearchThread.CancelAsync();
             }
 
             DisableStartScreenCapture();
@@ -1256,9 +1281,9 @@ namespace autoscreen
                 CloseWindow();
 
                 // Cancel the folder search if it's currently running.
-                if (runOldFolderSearchThread.IsBusy)
+                if (runFolderSearchThread.IsBusy)
                 {
-                    runOldFolderSearchThread.CancelAsync();
+                    runFolderSearchThread.CancelAsync();
                 }
 
                 // Hide the system tray icon.
@@ -1270,23 +1295,23 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Runs the file search thread using the old search algorithm.
+        /// Runs the file search thread.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runOldFileSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void runFileSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            RunOldFileSearch(e);
+            RunFileSearch(e);
         }
         
         /// <summary>
-        /// Runs the folder search thread using the old search algorithm.
+        /// Runs the folder search thread.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runOldFolderSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void runFolderSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            RunOldFolderSearch(e);
+            RunFolderSearch(e);
         }
 
         /// <summary>
@@ -1544,7 +1569,9 @@ namespace autoscreen
             if (!string.IsNullOrEmpty(statusApp))
             {
                 notifyIcon.Text = appName;
-                statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + MacroParser.ParseTags(statusApp, imageFormat);
+
+                // This isn't entirely accurate. Need to fix.
+                //statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + MacroParser.ParseTags(statusApp, imageFormat, null);
             }
 
             if (!string.IsNullOrEmpty(statusApp) && !string.IsNullOrEmpty(statusIcon))
@@ -1972,8 +1999,8 @@ namespace autoscreen
         private void TakeScreenshot()
         {
             int count = 0;
+            string path = string.Empty;
             string screenName = string.Empty;
-            string path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format);
 
             foreach (Screen screen in Screen.AllScreens)
             {
@@ -2007,7 +2034,8 @@ namespace autoscreen
 
                         if (!string.IsNullOrEmpty(screenName))
                         {
-                            ScreenCapture.TakeScreenshot(screen, screenName, path);
+                            path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName);
+                            ScreenCapture.TakeScreenshot(screen, screenName, path, count);
                         }
                     }
                 }
@@ -2175,7 +2203,7 @@ namespace autoscreen
 
             if (!demo)
             {
-                images = FileSystem.GetImages(Slideshow.SelectedSlide);
+                images = FileSystem.GetImages(Slideshow.SelectedSlide, monthCalendar.SelectionStart);
             }
 
             if (images.Count >= 1)

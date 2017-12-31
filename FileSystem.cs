@@ -5,6 +5,7 @@
 // Written by Gavin Kendall (gavinkendall@gmail.com)
 // Thursday, 15 May 2008 - Sunday, 31 December 2017
 
+using System;
 using System.IO;
 using System.Drawing;
 using System.Collections;
@@ -57,15 +58,28 @@ namespace autoscreen
         /// </summary>
         /// <param name="slideName">The name of the slide.</param>
         /// <returns></returns>
-        public static ArrayList GetImages(string slideName)
+        public static ArrayList GetImages(string slideName, DateTime selectedDate)
         {
             ArrayList images = new ArrayList();
 
             for (int i = 1; i <= 5; i++)
             {
+                // This is the old method of obtaining the images based on a slide name.
                 string path = GetImageFilePath(slideName, i);
 
-                if (System.IO.File.Exists(path))
+                // If we can't find an image based on the old method then chances are we
+                // now need to search for the image by looking inside the screenshot collection class.
+                if (string.IsNullOrEmpty(path))
+                {
+                    Screenshot screenshot = ScreenshotCollection.GetByFilename(slideName);
+
+                    if (screenshot.Screen == i && selectedDate.ToString(MacroParser.DateFormat) == screenshot.Date)
+                    {
+                        path = ScreenshotCollection.GetByFilename(slideName).Path;
+                    }
+                }
+
+                if (File.Exists(path))
                 {
                     images.Add(Bitmap.FromFile(path));
                 }

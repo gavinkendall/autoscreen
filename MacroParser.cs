@@ -15,16 +15,16 @@ namespace autoscreen
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly string DefaultMacro = "%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%_%screen%.%format%";
 
-        public static string ParseTags(string text)
-        {
-            return ParseTags(text, null);
-        }
-
-        public static string ParseTags(string text, string imageFormat)
+        public static string ParseTags(string text, string imageFormat, string screenName)
         {
             if (!string.IsNullOrEmpty(imageFormat))
             {
                 text = text.Replace("%format%", ImageFormatCollection.GetByName(imageFormat).Extension.TrimStart('.'));
+            }
+
+            if (!string.IsNullOrEmpty(screenName))
+            {
+                text = text.Replace("%screen%", screenName);
             }
 
             text = text.Replace("%year%", DateTime.Now.ToString("yyyy"));

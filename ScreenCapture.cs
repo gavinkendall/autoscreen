@@ -121,20 +121,25 @@ namespace autoscreen
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, string screenName, string path)
+        public static void TakeScreenshot(Screen screen, string screenName, string path, int screenNumber)
         {
             try
             {
-                Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
-
-                if (bitmap != null)
+                if (!string.IsNullOrEmpty(path))
                 {
-                    SaveToFile(bitmap, m_format, path.Replace("%screen%", screenName));
+                    Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
+
+                    if (bitmap != null)
+                    {
+                        SaveToFile(bitmap, m_format, path);
+                        ScreenshotCollection.Add(new Screenshot(DateTime.Now.ToString(MacroParser.DateFormat), path, screenNumber, m_format));
+                    }
+
+                    GC.Collect();
+
+                    // This is for the Active Window capture. I'm still not sure how I'm going to implement this.
+                    //SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
                 }
-
-                GC.Collect();
-
-                //SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
             }
             catch (Exception ex)
             {

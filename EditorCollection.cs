@@ -110,7 +110,7 @@ namespace autoscreen
         /// <summary>
         /// Saves the image editors.
         /// </summary>
-        public static void Save()
+        private static void Save()
         {
             XmlWriterSettings xsettings = new XmlWriterSettings();
             xsettings.Indent = true;

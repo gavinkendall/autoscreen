@@ -189,7 +189,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Screenshots" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;autoscreen&gt;&lt;screenshots&gt;&lt;screenshot&gt;&lt;date&gt;&lt;/date&gt;&lt;path&gt;&lt;/path&gt;&lt;/screenshot&gt;&lt;/screenshots&gt;&lt;/autoscreen&gt;</Value>
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;autoscreen&gt;&lt;screenshots&gt;&lt;screenshot&gt;&lt;date&gt;&lt;/date&gt;&lt;path&gt;&lt;/path&gt;&lt;screen&gt;&lt;/screen&gt;&lt;format&gt;&lt;/format&gt;&lt;filename&gt;&lt;/filename&gt;&lt;/screenshot&gt;&lt;/screenshots&gt;&lt;/autoscreen&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
