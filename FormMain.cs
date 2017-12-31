@@ -557,7 +557,10 @@ namespace autoscreen
                         {
                             if (File.Exists(screenshot.Path) && screenshot.Screen == count && screenshot.Date == monthCalendar.SelectionStart.ToString(MacroParser.DateFormat))
                             {
-                                listBoxScreenshots.Items.Add(screenshot.Filename);
+                                if (!listBoxScreenshots.Items.Contains(screenshot.Filename))
+                                {
+                                    listBoxScreenshots.Items.Add(screenshot.Filename);
+                                }
                             }
                         }
                     }
@@ -1494,6 +1497,8 @@ namespace autoscreen
             Properties.Settings.Default.Screen4Name = textBoxScreen4Name.Text;
 
             Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
+
+            Properties.Settings.Default.Macro = textBoxMacro.Text;
 
             Properties.Settings.Default.Save();
         }
