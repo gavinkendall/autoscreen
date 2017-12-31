@@ -128,9 +128,7 @@
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBoxScreenshotsFolderSearch = new System.Windows.Forms.TextBox();
-            this.buttonSearch = new System.Windows.Forms.Button();
-            this.buttonBrowseFolder = new System.Windows.Forms.Button();
+            this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
             this.toolStripComboBoxImageFormatFilter = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButtonFirstSlide = new System.Windows.Forms.ToolStripButton();
@@ -141,7 +139,6 @@
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreenCapture = new System.Windows.Forms.TabPage();
             this.groupBoxMode = new System.Windows.Forms.GroupBox();
-            this.radioButtonModeStatic = new System.Windows.Forms.RadioButton();
             this.radioButtonModeNormal = new System.Windows.Forms.RadioButton();
             this.radioButtonModePreview = new System.Windows.Forms.RadioButton();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
@@ -199,11 +196,11 @@
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
-            this.buttonOpenFolder = new System.Windows.Forms.Button();
             this.timerDemoCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
+            this.labelMacro = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -1489,39 +1486,15 @@
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
-            // textBoxScreenshotsFolderSearch
+            // textBoxMacro
             // 
-            this.textBoxScreenshotsFolderSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxMacro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreenshotsFolderSearch.Location = new System.Drawing.Point(4, 352);
-            this.textBoxScreenshotsFolderSearch.Name = "textBoxScreenshotsFolderSearch";
-            this.textBoxScreenshotsFolderSearch.Size = new System.Drawing.Size(504, 20);
-            this.textBoxScreenshotsFolderSearch.TabIndex = 7;
-            this.textBoxScreenshotsFolderSearch.TabStop = false;
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSearch.Location = new System.Drawing.Point(676, 350);
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(75, 23);
-            this.buttonSearch.TabIndex = 8;
-            this.buttonSearch.TabStop = false;
-            this.buttonSearch.Text = "Search";
-            this.buttonSearch.UseVisualStyleBackColor = true;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearchScreenshotsDirectory_Click);
-            // 
-            // buttonBrowseFolder
-            // 
-            this.buttonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseFolder.Location = new System.Drawing.Point(514, 350);
-            this.buttonBrowseFolder.Name = "buttonBrowseFolder";
-            this.buttonBrowseFolder.Size = new System.Drawing.Size(75, 23);
-            this.buttonBrowseFolder.TabIndex = 10;
-            this.buttonBrowseFolder.TabStop = false;
-            this.buttonBrowseFolder.Text = "Browse ...";
-            this.buttonBrowseFolder.UseVisualStyleBackColor = true;
-            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
+            this.textBoxMacro.Location = new System.Drawing.Point(53, 352);
+            this.textBoxMacro.Name = "textBoxMacro";
+            this.textBoxMacro.Size = new System.Drawing.Size(695, 20);
+            this.textBoxMacro.TabIndex = 7;
+            this.textBoxMacro.TabStop = false;
             // 
             // toolStripSlideshow
             // 
@@ -1630,7 +1603,6 @@
             // 
             // groupBoxMode
             // 
-            this.groupBoxMode.Controls.Add(this.radioButtonModeStatic);
             this.groupBoxMode.Controls.Add(this.radioButtonModeNormal);
             this.groupBoxMode.Controls.Add(this.radioButtonModePreview);
             this.groupBoxMode.Location = new System.Drawing.Point(6, 131);
@@ -1640,22 +1612,11 @@
             this.groupBoxMode.TabStop = false;
             this.groupBoxMode.Text = "Mode";
             // 
-            // radioButtonModeStatic
-            // 
-            this.radioButtonModeStatic.AutoSize = true;
-            this.radioButtonModeStatic.Location = new System.Drawing.Point(6, 65);
-            this.radioButtonModeStatic.Name = "radioButtonModeStatic";
-            this.radioButtonModeStatic.Size = new System.Drawing.Size(52, 17);
-            this.radioButtonModeStatic.TabIndex = 2;
-            this.radioButtonModeStatic.Text = "Static";
-            this.radioButtonModeStatic.UseVisualStyleBackColor = true;
-            this.radioButtonModeStatic.CheckedChanged += new System.EventHandler(this.radioButtonModeStatic_CheckedChanged);
-            // 
             // radioButtonModeNormal
             // 
             this.radioButtonModeNormal.AutoSize = true;
             this.radioButtonModeNormal.Checked = true;
-            this.radioButtonModeNormal.Location = new System.Drawing.Point(6, 42);
+            this.radioButtonModeNormal.Location = new System.Drawing.Point(109, 19);
             this.radioButtonModeNormal.Name = "radioButtonModeNormal";
             this.radioButtonModeNormal.Size = new System.Drawing.Size(58, 17);
             this.radioButtonModeNormal.TabIndex = 1;
@@ -1667,7 +1628,7 @@
             // radioButtonModePreview
             // 
             this.radioButtonModePreview.AutoSize = true;
-            this.radioButtonModePreview.Location = new System.Drawing.Point(6, 19);
+            this.radioButtonModePreview.Location = new System.Drawing.Point(40, 19);
             this.radioButtonModePreview.Name = "radioButtonModePreview";
             this.radioButtonModePreview.Size = new System.Drawing.Size(63, 17);
             this.radioButtonModePreview.TabIndex = 0;
@@ -2350,18 +2311,6 @@
             this.toolStripButtonStopScreenCapture.Text = "Stop Capture";
             this.toolStripButtonStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
-            // buttonOpenFolder
-            // 
-            this.buttonOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOpenFolder.Location = new System.Drawing.Point(595, 350);
-            this.buttonOpenFolder.Name = "buttonOpenFolder";
-            this.buttonOpenFolder.Size = new System.Drawing.Size(75, 23);
-            this.buttonOpenFolder.TabIndex = 14;
-            this.buttonOpenFolder.TabStop = false;
-            this.buttonOpenFolder.Text = "Open Folder";
-            this.buttonOpenFolder.UseVisualStyleBackColor = true;
-            this.buttonOpenFolder.Click += new System.EventHandler(this.buttonOpenFolder_Click);
-            // 
             // timerDemoCapture
             // 
             this.timerDemoCapture.Tick += new System.EventHandler(this.timerDemoCapture_Tick);
@@ -2380,17 +2329,25 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
+            // labelMacro
+            // 
+            this.labelMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelMacro.AutoSize = true;
+            this.labelMacro.Location = new System.Drawing.Point(7, 355);
+            this.labelMacro.Name = "labelMacro";
+            this.labelMacro.Size = new System.Drawing.Size(40, 13);
+            this.labelMacro.TabIndex = 21;
+            this.labelMacro.Text = "Macro:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 398);
+            this.Controls.Add(this.labelMacro);
             this.Controls.Add(this.toolStripScreenCapture);
-            this.Controls.Add(this.buttonOpenFolder);
             this.Controls.Add(this.tabControlModules);
-            this.Controls.Add(this.buttonBrowseFolder);
-            this.Controls.Add(this.buttonSearch);
-            this.Controls.Add(this.textBoxScreenshotsFolderSearch);
+            this.Controls.Add(this.textBoxMacro);
             this.Controls.Add(this.tabControlScreens);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.monthCalendar);
@@ -2493,12 +2450,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
-        private System.Windows.Forms.TextBox textBoxScreenshotsFolderSearch;
-        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.TextBox textBoxMacro;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenFileLocation;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLastCapture;
-        private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.PictureBox pictureBoxScreenshotPreviewMonitor4;
@@ -2528,7 +2483,6 @@
         private System.Windows.Forms.TabControl tabControlModules;
         private System.Windows.Forms.TabPage tabPageScreenCapture;
         private System.Windows.Forms.TabPage tabPageSlideshow;
-        private System.Windows.Forms.Button buttonOpenFolder;
         private System.Windows.Forms.GroupBox groupBoxCaptureDelay;
         private System.Windows.Forms.Label labelMillisecondsInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
@@ -2656,6 +2610,6 @@
         private System.Windows.Forms.GroupBox groupBoxMode;
         private System.Windows.Forms.RadioButton radioButtonModeNormal;
         private System.Windows.Forms.RadioButton radioButtonModePreview;
-        private System.Windows.Forms.RadioButton radioButtonModeStatic;
+        private System.Windows.Forms.Label labelMacro;
     }
 }

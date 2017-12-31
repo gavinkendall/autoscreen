@@ -22,14 +22,9 @@ namespace autoscreen
     public partial class FormMain : Form
     {
         /// <summary>
-        /// The screenshots folder that will be created by default if the user doesn't specify their own folder.
+        /// The default image format is JPEG, but feel free to change this setting.
         /// </summary>
-        private static string screenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + @"screenshots\";
-
-        /// <summary>
-        /// The default image format is PNG, but feel free to change this setting.
-        /// </summary>
-        private static string imageFormat = ImageFormatSpec.NAME_PNG;
+        private static string imageFormat = ImageFormatSpec.NAME_JPEG;
 
         /// <summary>
         /// The application to execute whenever the user chooses to open their screenshots folder or edits the selected screenshot.
@@ -45,8 +40,8 @@ namespace autoscreen
         /// <summary>
         /// Threads for background operations.
         /// </summary>
-        private BackgroundWorker runFileSearchThread = null;
-        private BackgroundWorker runFolderSearchThread = null;
+        private BackgroundWorker runOldFileSearchThread = null;
+        private BackgroundWorker runOldFolderSearchThread = null;
 
         /// <summary>
         /// Delegates for the threads.
@@ -68,7 +63,7 @@ namespace autoscreen
         /// The various regular expressions used in the parsing of the command line arguments.
         /// </summary>
         private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
-        private const string REGEX_COMMAND_LINE_FOLDER = "^-folder=(?<Folder>.+)$";
+        private const string REGEX_COMMAND_LINE_MACRO = "^-macro=(?<Macro>.+)$";
         private const string REGEX_COMMAND_LINE_RATIO = @"^-ratio=(?<Ratio>\d{1,3})$";
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
         private const string REGEX_COMMAND_LINE_FORMAT = "^-format=(?<Format>(BMP|EMF|GIF|JPEG|PNG|TIFF|WMF))$";
@@ -92,15 +87,15 @@ namespace autoscreen
 
             ImageFormatCollection.Initialize();
 
-            runFileSearchThread = new BackgroundWorker();
-            runFileSearchThread.WorkerReportsProgress = false;
-            runFileSearchThread.WorkerSupportsCancellation = true;
-            runFileSearchThread.DoWork += new DoWorkEventHandler(runFileSearchThread_DoWork);
+            runOldFileSearchThread = new BackgroundWorker();
+            runOldFileSearchThread.WorkerReportsProgress = false;
+            runOldFileSearchThread.WorkerSupportsCancellation = true;
+            runOldFileSearchThread.DoWork += new DoWorkEventHandler(runOldFileSearchThread_DoWork);
 
-            runFolderSearchThread = new BackgroundWorker();
-            runFolderSearchThread.WorkerReportsProgress = false;
-            runFolderSearchThread.WorkerSupportsCancellation = true;
-            runFolderSearchThread.DoWork += new DoWorkEventHandler(runFolderSearchThread_DoWork);
+            runOldFolderSearchThread = new BackgroundWorker();
+            runOldFolderSearchThread.WorkerReportsProgress = false;
+            runOldFolderSearchThread.WorkerSupportsCancellation = true;
+            runOldFolderSearchThread.DoWork += new DoWorkEventHandler(runOldFolderSearchThread_DoWork);
 
             Log.Write("Initializing slideshow component.");
 
@@ -112,11 +107,15 @@ namespace autoscreen
             EditorCollection.Load();
             BuildScreenshotPreviewContextMenu();
 
-            Log.Write("Setting screenshots directory.");
+            Log.Write("Setting screenshots macro.");
 
-            if (Directory.Exists(Properties.Settings.Default.ScreenshotsDirectory))
+            if (string.IsNullOrEmpty(Properties.Settings.Default.ScreenshotsDirectory))
             {
-                textBoxScreenshotsFolderSearch.Text = Properties.Settings.Default.ScreenshotsDirectory;
+                textBoxMacro.Text = MacroParser.DefaultMacro;
+            }
+            else
+            {
+                textBoxMacro.Text = Properties.Settings.Default.ScreenshotsDirectory;
             }
 
             comboBoxScheduleImageFormat.Items.Clear();
@@ -229,11 +228,6 @@ namespace autoscreen
             Log.Write("Loading region capture controls for X, Y, Width, Height, and Reset on each available screen.");
 
             int count = 0;
-
-            if (Screen.AllScreens.Length == 1)
-            {
-                tabControlScreens.SelectedTab = tabPageScreen1;
-            }
 
             foreach (Screen screen in Screen.AllScreens)
             {
@@ -415,53 +409,24 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Just in case the user gives us an empty folder path or forgets to include the trailing backslash.
-        /// </summary>
-        /// <param name="folder"></param>
-        /// <returns></returns>
-        private string CorrectDirectoryPath(string folder)
-        {
-            if (folder.Length == 0)
-            {
-                folder = screenshotsFolder;
-            }
-
-            if (!folder.EndsWith(@"\"))
-            {
-                folder += @"\";
-            }
-
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-
-            Directory.SetCurrentDirectory(folder);
-
-            return folder;
-        }
-
-        /// <summary>
         /// Search for all the screenshot folders. They should be in the format yyyy-mm-dd.
         /// Any folders found matching this format are then bolded in the calendar so the user
         /// understands that these were the days when screen capture sessions had been running.
         /// </summary>
         private void SearchFolders()
         {
-            textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
-
-            Log.Write("Searching folders in " + textBoxScreenshotsFolderSearch.Text);
+            Log.Write("Searching for screenshot folders using macro \"" + textBoxMacro.Text + "\"");
 
             ClearPreview();
             DisableToolStripButtons();
 
             monthCalendar.BoldedDates = null;
 
-            if (Directory.Exists(textBoxScreenshotsFolderSearch.Text))
+            if (Directory.Exists(MacroParser.GetScreenshotsDirectory(textBoxMacro.Text)))
             {
-                if (!runFolderSearchThread.IsBusy)
+                if (!runOldFolderSearchThread.IsBusy)
                 {
-                    runFolderSearchThread.RunWorkerAsync();
+                    runOldFolderSearchThread.RunWorkerAsync();
                 }
             }
         }
@@ -473,18 +438,16 @@ namespace autoscreen
         {
             listBoxScreenshots.BeginUpdate();
 
-            textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
-
-            Log.Write("Searching files in " + textBoxScreenshotsFolderSearch.Text);
+            Log.Write("Searching for screenshot files in " + textBoxMacro.Text);
 
             ClearPreview();
             DisableToolStripButtons();
 
-            if (Directory.Exists(textBoxScreenshotsFolderSearch.Text))
+            if (Directory.Exists(Path.GetDirectoryName(MacroParser.GetScreenshotsDirectory(textBoxMacro.Text))))
             {
-                if (!runFileSearchThread.IsBusy)
+                if (!runOldFileSearchThread.IsBusy)
                 {
-                    runFileSearchThread.RunWorkerAsync();
+                    runOldFileSearchThread.RunWorkerAsync();
                 }
             }
 
@@ -506,11 +469,11 @@ namespace autoscreen
         /// This thread is responsible for doing the file search.
         /// </summary>
         /// <param name="e"></param>
-        private void RunFileSearch(DoWorkEventArgs e)
+        private void RunOldFileSearch(DoWorkEventArgs e)
         {
             if (listBoxScreenshots.InvokeRequired)
             {
-                listBoxScreenshots.Invoke(new RunFileSearchDelegate(RunFileSearch), new object[] { e });
+                listBoxScreenshots.Invoke(new RunFileSearchDelegate(RunOldFileSearch), new object[] { e });
             }
             else
             {
@@ -520,9 +483,9 @@ namespace autoscreen
                 {
                     count++;
 
-                    if (Directory.Exists(textBoxScreenshotsFolderSearch.Text + monthCalendar.SelectionStart.ToString(StringHelper.DateFormat) + "\\" + count.ToString()))
+                    if (Directory.Exists(MacroParser.GetScreenshotsDirectory(textBoxMacro.Text) + monthCalendar.SelectionStart.ToString(MacroParser.DateFormat) + "\\" + count.ToString()))
                     {
-                        string[] files = FileSystem.GetFiles(textBoxScreenshotsFolderSearch.Text, count.ToString(), monthCalendar.SelectionStart.ToString(StringHelper.DateFormat));
+                        string[] files = FileSystem.GetFiles(MacroParser.GetScreenshotsDirectory(textBoxMacro.Text), count.ToString(), monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                         if (files != null)
                         {
@@ -550,22 +513,22 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// This thread is responsible for doing the folder search.
+        /// This thread is responsible for doing the folder search using the old search algorithm.
         /// </summary>
         /// <param name="e"></param>
-        private void RunFolderSearch(DoWorkEventArgs e)
+        private void RunOldFolderSearch(DoWorkEventArgs e)
         {
             if (monthCalendar.InvokeRequired)
             {
-                monthCalendar.Invoke(new RunFolderSearchDelegate(RunFolderSearch), new object[] { e });
+                monthCalendar.Invoke(new RunFolderSearchDelegate(RunOldFolderSearch), new object[] { e });
             }
             else
             {
-                if (!string.IsNullOrEmpty(textBoxScreenshotsFolderSearch.Text))
+                if (!string.IsNullOrEmpty(textBoxMacro.Text))
                 {
                     ArrayList selectedFolders = new ArrayList();
 
-                    string[] dirs = Directory.GetDirectories(textBoxScreenshotsFolderSearch.Text);
+                    string[] dirs = Directory.GetDirectories(MacroParser.GetScreenshotsDirectory(textBoxMacro.Text));
 
                     int count = 0;
 
@@ -816,15 +779,15 @@ namespace autoscreen
             }
 
             // Stop the folder search thread if it's busy.
-            if (runFolderSearchThread.IsBusy)
+            if (runOldFolderSearchThread.IsBusy)
             {
-                runFolderSearchThread.CancelAsync();
+                runOldFolderSearchThread.CancelAsync();
             }
 
             // Stop the file search thread if it's busy.
-            if (runFileSearchThread.IsBusy)
+            if (runOldFileSearchThread.IsBusy)
             {
-                runFileSearchThread.CancelAsync();
+                runOldFileSearchThread.CancelAsync();
             }
 
             DisableStartScreenCapture();
@@ -910,11 +873,8 @@ namespace autoscreen
         /// </summary>
         private void DisableControls()
         {
-            buttonSearch.Enabled = false;
             monthCalendar.Enabled = false;
-            buttonOpenFolder.Enabled = false;
-            buttonBrowseFolder.Enabled = false;
-            textBoxScreenshotsFolderSearch.Enabled = false;
+            textBoxMacro.Enabled = false;
             toolStripComboBoxImageFormatFilter.Enabled = false;
 
             numericUpDownSlideshowDelayHours.Enabled = false;
@@ -938,10 +898,7 @@ namespace autoscreen
 
             toolStripSplitButtonStartScreenCapture.Enabled = false;
 
-            labelSlideshowDelayHours.Enabled = false;
-            labelSlideshowDelayMinutes.Enabled = false;
-            labelSlideshowDelaySeconds.Enabled = false;
-            labelSlideshowDelayMilliseconds.Enabled = false;
+            checkBoxAutoReset.Enabled = false;
         }
 
         /// <summary>
@@ -949,11 +906,8 @@ namespace autoscreen
         /// </summary>
         private void EnableControls()
         {
-            buttonSearch.Enabled = true;
             monthCalendar.Enabled = true;
-            buttonOpenFolder.Enabled = true;
-            buttonBrowseFolder.Enabled = true;
-            textBoxScreenshotsFolderSearch.Enabled = true;
+            textBoxMacro.Enabled = true;
             toolStripComboBoxImageFormatFilter.Enabled = true;
 
             numericUpDownSlideshowDelayHours.Enabled = true;
@@ -980,10 +934,7 @@ namespace autoscreen
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
             }
 
-            labelSlideshowDelayHours.Enabled = true;
-            labelSlideshowDelayMinutes.Enabled = true;
-            labelSlideshowDelaySeconds.Enabled = true;
-            labelSlideshowDelayMilliseconds.Enabled = true;
+            checkBoxAutoReset.Enabled = true;
         }
 
         /// <summary>
@@ -1177,7 +1128,7 @@ namespace autoscreen
             if (!string.IsNullOrEmpty(imageFormat))
             {
                 bool initial = false;
-                string folder = textBoxScreenshotsFolderSearch.Text;
+                string folder = MacroParser.GetScreenshotsDirectory(textBoxMacro.Text);
 
                 int delay = GetCaptureDelay();
                 int limit = (int)numericUpDownCaptureLimit.Value;
@@ -1185,8 +1136,6 @@ namespace autoscreen
 
                 if (!string.IsNullOrEmpty(folder) && delay > 0)
                 {
-                    folder = CorrectDirectoryPath(folder);
-
                     if (Directory.Exists(folder))
                     {
                         if (!checkBoxCaptureLimit.Checked) { limit = 0; }
@@ -1251,9 +1200,9 @@ namespace autoscreen
                 CloseWindow();
 
                 // Cancel the folder search if it's currently running.
-                if (runFolderSearchThread.IsBusy)
+                if (runOldFolderSearchThread.IsBusy)
                 {
-                    runFolderSearchThread.CancelAsync();
+                    runOldFolderSearchThread.CancelAsync();
                 }
 
                 // Hide the system tray icon.
@@ -1265,23 +1214,23 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Runs the file search thread.
+        /// Runs the file search thread using the old search algorithm.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runFileSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void runOldFileSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            RunFileSearch(e);
+            RunOldFileSearch(e);
         }
         
         /// <summary>
-        /// Runs the folder search thread.
+        /// Runs the folder search thread using the old search algorithm.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runFolderSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void runOldFolderSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            RunFolderSearch(e);
+            RunOldFolderSearch(e);
         }
 
         /// <summary>
@@ -1387,23 +1336,13 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Searches for the screenshots folders when the "Search" button is clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSearchScreenshotsDirectory_Click(object sender, EventArgs e)
-        {
-            SearchFolders();
-        }
-
-        /// <summary>
         /// Saves the user's current settings so we can load them at a later time when the user executes the application.
         /// </summary>
         private void SaveApplicationSettings()
         {
             Log.Write("Saving application settings.");
 
-            Properties.Settings.Default.ScreenshotsDirectory = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
+            Properties.Settings.Default.ScreenshotsDirectory = textBoxMacro.Text;
 
             Properties.Settings.Default.ScheduleImageFormat = comboBoxScheduleImageFormat.Text;
 
@@ -1549,13 +1488,13 @@ namespace autoscreen
             if (!string.IsNullOrEmpty(statusApp))
             {
                 notifyIcon.Text = appName;
-                statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + StringHelper.ParseTags(statusApp, imageFormat);
+                statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + MacroParser.ParseTags(statusApp, imageFormat);
             }
 
             if (!string.IsNullOrEmpty(statusApp) && !string.IsNullOrEmpty(statusIcon))
             {
-                notifyIcon.Text = appName + "\n" + StringHelper.ParseTags(statusIcon, imageFormat);
-                statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + StringHelper.ParseTags(statusApp, imageFormat);
+                notifyIcon.Text = appName + "\n" + MacroParser.ParseTags(statusIcon, imageFormat);
+                statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + MacroParser.ParseTags(statusApp, imageFormat);
             }
         }
 
@@ -1580,7 +1519,7 @@ namespace autoscreen
 
             if (browser.ShowDialog() == DialogResult.OK)
             {
-                textBoxScreenshotsFolderSearch.Text = browser.SelectedPath;
+                textBoxMacro.Text = browser.SelectedPath;
                 SearchFolders();
             }
         }
@@ -1690,7 +1629,7 @@ namespace autoscreen
                 int ratio = IMAGE_RESOLUTION_RATIO_MAX;
                 numericUpDownImageResolutionRatio.Value = (decimal)IMAGE_RESOLUTION_RATIO_MAX;
 
-                string folder = screenshotsFolder;
+                string macro = MacroParser.DefaultMacro;
 
                 imageFormat = ImageFormatSpec.NAME_JPEG;
                 comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_JPEG;
@@ -1699,7 +1638,7 @@ namespace autoscreen
                 Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
                 Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
                 Regex rgxCommandLineFormat = new Regex(REGEX_COMMAND_LINE_FORMAT);
-                Regex rgxCommandLineFolder = new Regex(REGEX_COMMAND_LINE_FOLDER);
+                Regex rgxCommandLineMacro = new Regex(REGEX_COMMAND_LINE_MACRO);
                 Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
                 Regex rgxCommandLineCaptureDelay = new Regex(REGEX_COMMAND_LINE_DELAY);
                 Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
@@ -1722,10 +1661,10 @@ namespace autoscreen
                         Log.Write("Parsing command line argument at index " + i + " --> " + args[i]);
                     }
 
-                    if (rgxCommandLineFolder.IsMatch(args[i]))
+                    if (rgxCommandLineMacro.IsMatch(args[i]))
                     {
-                        folder = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
-                        textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
+                        macro = rgxCommandLineMacro.Match(args[i]).Groups["Macro"].Value;
+                        textBoxMacro.Text = rgxCommandLineMacro.Match(args[i]).Groups["Macro"].Value;
                     }
 
                     if (rgxCommandLineInitial.IsMatch(args[i]))
@@ -1818,7 +1757,7 @@ namespace autoscreen
                 }
                 else
                 {
-                    StartScreenCapture(folder, imageFormat, delay, limit, ratio, initial);
+                    StartScreenCapture(macro, imageFormat, delay, limit, ratio, initial);
                 }
             }
             catch (Exception ex)
@@ -1904,9 +1843,9 @@ namespace autoscreen
         /// <param name="e"></param>
         private void buttonOpenFolder_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(textBoxScreenshotsFolderSearch.Text))
+            if (Directory.Exists(textBoxMacro.Text))
             {
-                Process.Start(windowsExplorer, textBoxScreenshotsFolderSearch.Text);
+                Process.Start(windowsExplorer, textBoxMacro.Text);
             }
         }
 
@@ -1967,7 +1906,7 @@ namespace autoscreen
         /// </summary>
         private void TakeScreenshot()
         {
-            string filename = ScreenCapture.Folder + StringHelper.ParseTags("%CurrentDate%") + "\\%screen%\\" + StringHelper.ParseTags("%CurrentDate%_%CurrentTime%");
+            string path = MacroParser.ParseTags(ScreenCapture.Folder);
 
             int count = 0;
 
@@ -1982,7 +1921,7 @@ namespace autoscreen
                         SetupScreenPosition(screen, count);
                         SetupScreenSize(screen, count);
 
-                        ScreenCapture.TakeScreenshot(screen, count, filename);
+                        ScreenCapture.TakeScreenshot(screen, count, path);
                     }
                 }
             }
@@ -2117,7 +2056,7 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Displays the preview images.
+        /// Displays the screenshot images.
         /// </summary>
         /// <param name="demo"></param>
         private void DisplayImages(bool demo)
@@ -2296,7 +2235,7 @@ namespace autoscreen
                         (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked))
                     {
                         bool initial = false;
-                        string folder = textBoxScreenshotsFolderSearch.Text;
+                        string folder = textBoxMacro.Text;
 
                         int delay = GetCaptureDelay();
                         int limit = (int)numericUpDownCaptureLimit.Value;
@@ -2317,7 +2256,7 @@ namespace autoscreen
                 else
                 {
                     bool initial = false;
-                    string folder = textBoxScreenshotsFolderSearch.Text;
+                    string folder = textBoxMacro.Text;
 
                     int delay = GetCaptureDelay();
                     int limit = (int)numericUpDownCaptureLimit.Value;
@@ -2352,7 +2291,7 @@ namespace autoscreen
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
                         {
                             bool initial = false;
-                            string folder = textBoxScreenshotsFolderSearch.Text;
+                            string folder = textBoxMacro.Text;
 
                             int delay = GetCaptureDelay();
                             int limit = (int)numericUpDownCaptureLimit.Value;
@@ -2376,7 +2315,7 @@ namespace autoscreen
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
                     {
                         bool initial = false;
-                        string folder = textBoxScreenshotsFolderSearch.Text;
+                        string folder = textBoxMacro.Text;
 
                         int delay = GetCaptureDelay();
                         int limit = (int)numericUpDownCaptureLimit.Value;
@@ -2827,11 +2766,6 @@ namespace autoscreen
         private void radioButtonModeNormal_CheckedChanged(object sender, EventArgs e)
         {
             DisplayModeStatus(StatusMessage.MODE_NORMAL);
-        }
-
-        private void radioButtonModeStatic_CheckedChanged(object sender, EventArgs e)
-        {
-            DisplayModeStatus(StatusMessage.MODE_STATIC);
         }
     }
 }

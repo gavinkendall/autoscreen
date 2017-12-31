@@ -92,7 +92,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatusMessage.cs" />
-    <Compile Include="StringHelper.cs" />
+    <Compile Include="MacroParser.cs" />
     <EmbeddedResource Include="FormAddEditor.resx">
       <DependentUpon>FormAddEditor.cs</DependentUpon>
     </EmbeddedResource>

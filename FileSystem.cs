@@ -90,11 +90,6 @@ namespace autoscreen
             {
                 m_filePath = filePath;
 
-                if (!Directory.Exists(filePath))
-                {
-                    Directory.CreateDirectory(filePath);
-                }
-
                 if (!string.IsNullOrEmpty(monthCalendarFolder))
                 {
                     if (Directory.Exists(filePath + monthCalendarFolder))

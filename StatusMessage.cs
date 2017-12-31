@@ -13,10 +13,9 @@ namespace autoscreen
         internal const string OFF = "Off";
         internal const string MODE_PREVIEW = "Preview";
         internal const string MODE_NORMAL = "Normal";
-        internal const string MODE_STATIC = "Static";
         internal const string RUNNING = "Running";
         internal const string STOPPED = "Stopped";
-        internal const string LAST_CAPTURE_APP = "%CurrentDate% %CurrentTime% (%ImageFormat%)";
-        internal const string LAST_CAPTURE_ICON = "Last capture: %CurrentTimeFriendly% (%ImageFormat%)";
+        internal const string LAST_CAPTURE_APP = "%year%-%month%-%day% %hour%:%minute%:%second%.%millisecond% (%format%)";
+        internal const string LAST_CAPTURE_ICON = "Last capture: %year%-%month%-%day% %hour%:%minute%:%second%.%millisecond% (%format%)";
     }
 }
