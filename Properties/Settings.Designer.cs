@@ -702,49 +702,74 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CaptureScreen1 {
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string Screen1Name {
             get {
-                return ((bool)(this["CaptureScreen1"]));
+                return ((string)(this["Screen1Name"]));
             }
             set {
-                this["CaptureScreen1"] = value;
+                this["Screen1Name"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CaptureScreen2 {
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public string Screen2Name {
             get {
-                return ((bool)(this["CaptureScreen2"]));
+                return ((string)(this["Screen2Name"]));
             }
             set {
-                this["CaptureScreen2"] = value;
+                this["Screen2Name"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CaptureScreen3 {
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public string Screen3Name {
             get {
-                return ((bool)(this["CaptureScreen3"]));
+                return ((string)(this["Screen3Name"]));
             }
             set {
-                this["CaptureScreen3"] = value;
+                this["Screen3Name"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CaptureScreen4 {
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public string Screen4Name {
             get {
-                return ((bool)(this["CaptureScreen4"]));
+                return ((string)(this["Screen4Name"]));
             }
             set {
-                this["CaptureScreen4"] = value;
+                this["Screen4Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Macro {
+            get {
+                return ((string)(this["Macro"]));
+            }
+            set {
+                this["Macro"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?><autoscreen><screenshots><screenshot><date>" +
+            "</date><path></path></screenshot></screenshots></autoscreen>")]
+        public string Screenshots {
+            get {
+                return ((string)(this["Screenshots"]));
+            }
+            set {
+                this["Screenshots"] = value;
             }
         }
     }

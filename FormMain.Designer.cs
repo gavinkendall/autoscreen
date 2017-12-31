@@ -60,7 +60,8 @@
             this.pictureBoxScreenshotPreviewMonitor3 = new System.Windows.Forms.PictureBox();
             this.tabPageScreen1 = new System.Windows.Forms.TabPage();
             this.panelScreen1 = new System.Windows.Forms.Panel();
-            this.checkBoxScreen1Capture = new System.Windows.Forms.CheckBox();
+            this.textBoxScreen1Name = new System.Windows.Forms.TextBox();
+            this.labelScreen1Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen1Height = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownScreen1Width = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownScreen1Y = new System.Windows.Forms.NumericUpDown();
@@ -78,7 +79,8 @@
             this.tabPageScreen2 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen2 = new System.Windows.Forms.PictureBox();
             this.panelScreen2 = new System.Windows.Forms.Panel();
-            this.checkBoxScreen2Capture = new System.Windows.Forms.CheckBox();
+            this.textBoxScreen2Name = new System.Windows.Forms.TextBox();
+            this.labelScreen2Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen2Height = new System.Windows.Forms.NumericUpDown();
             this.buttonScreen2Reset = new System.Windows.Forms.Button();
             this.numericUpDownScreen2Width = new System.Windows.Forms.NumericUpDown();
@@ -91,7 +93,8 @@
             this.tabPageScreen3 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen3 = new System.Windows.Forms.PictureBox();
             this.panelScreen3 = new System.Windows.Forms.Panel();
-            this.checkBoxScreen3Capture = new System.Windows.Forms.CheckBox();
+            this.textBoxScreen3Name = new System.Windows.Forms.TextBox();
+            this.labelScreen3Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen3Height = new System.Windows.Forms.NumericUpDown();
             this.buttonScreen3Reset = new System.Windows.Forms.Button();
             this.numericUpDownScreen3Width = new System.Windows.Forms.NumericUpDown();
@@ -104,7 +107,8 @@
             this.tabPageScreen4 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen4 = new System.Windows.Forms.PictureBox();
             this.panelScreen4 = new System.Windows.Forms.Panel();
-            this.checkBoxScreen4Capture = new System.Windows.Forms.CheckBox();
+            this.textBoxScreen4Name = new System.Windows.Forms.TextBox();
+            this.labelScreen4Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen4Height = new System.Windows.Forms.NumericUpDown();
             this.buttonScreen4Reset = new System.Windows.Forms.Button();
             this.numericUpDownScreen4Width = new System.Windows.Forms.NumericUpDown();
@@ -128,7 +132,7 @@
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBoxMacro = new System.Windows.Forms.TextBox();
+            this.textBoxScreenshotsFolderSearch = new System.Windows.Forms.TextBox();
             this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
             this.toolStripComboBoxImageFormatFilter = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButtonFirstSlide = new System.Windows.Forms.ToolStripButton();
@@ -200,7 +204,10 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
+            this.labelFolder = new System.Windows.Forms.Label();
+            this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
+            this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -563,7 +570,8 @@
             // 
             // panelScreen1
             // 
-            this.panelScreen1.Controls.Add(this.checkBoxScreen1Capture);
+            this.panelScreen1.Controls.Add(this.textBoxScreen1Name);
+            this.panelScreen1.Controls.Add(this.labelScreen1Name);
             this.panelScreen1.Controls.Add(this.numericUpDownScreen1Height);
             this.panelScreen1.Controls.Add(this.numericUpDownScreen1Width);
             this.panelScreen1.Controls.Add(this.numericUpDownScreen1Y);
@@ -579,19 +587,27 @@
             this.panelScreen1.Size = new System.Drawing.Size(493, 33);
             this.panelScreen1.TabIndex = 3;
             // 
-            // checkBoxScreen1Capture
+            // textBoxScreen1Name
             // 
-            this.checkBoxScreen1Capture.AutoSize = true;
-            this.checkBoxScreen1Capture.Checked = true;
-            this.checkBoxScreen1Capture.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxScreen1Capture.Enabled = false;
-            this.checkBoxScreen1Capture.Location = new System.Drawing.Point(318, 9);
-            this.checkBoxScreen1Capture.Name = "checkBoxScreen1Capture";
-            this.checkBoxScreen1Capture.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxScreen1Capture.TabIndex = 13;
-            this.checkBoxScreen1Capture.Text = "Capture";
-            this.checkBoxScreen1Capture.UseVisualStyleBackColor = true;
-            this.checkBoxScreen1Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen1Capture_CheckedChanged);
+            this.textBoxScreen1Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreen1Name.Enabled = false;
+            this.textBoxScreen1Name.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreen1Name.Name = "textBoxScreen1Name";
+            this.textBoxScreen1Name.Size = new System.Drawing.Size(74, 20);
+            this.textBoxScreen1Name.TabIndex = 14;
+            this.textBoxScreen1Name.TabStop = false;
+            // 
+            // labelScreen1Name
+            // 
+            this.labelScreen1Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreen1Name.AutoSize = true;
+            this.labelScreen1Name.Enabled = false;
+            this.labelScreen1Name.Location = new System.Drawing.Point(367, 11);
+            this.labelScreen1Name.Name = "labelScreen1Name";
+            this.labelScreen1Name.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen1Name.TabIndex = 13;
+            this.labelScreen1Name.Text = "Name:";
             // 
             // numericUpDownScreen1Height
             // 
@@ -701,11 +717,11 @@
             // 
             // buttonScreen1Reset
             // 
-            this.buttonScreen1Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonScreen1Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScreen1Reset.Enabled = false;
-            this.buttonScreen1Reset.Location = new System.Drawing.Point(415, 6);
+            this.buttonScreen1Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen1Reset.Name = "buttonScreen1Reset";
-            this.buttonScreen1Reset.Size = new System.Drawing.Size(75, 23);
+            this.buttonScreen1Reset.Size = new System.Drawing.Size(43, 23);
             this.buttonScreen1Reset.TabIndex = 5;
             this.buttonScreen1Reset.TabStop = false;
             this.buttonScreen1Reset.Text = "Reset";
@@ -802,7 +818,8 @@
             // 
             // panelScreen2
             // 
-            this.panelScreen2.Controls.Add(this.checkBoxScreen2Capture);
+            this.panelScreen2.Controls.Add(this.textBoxScreen2Name);
+            this.panelScreen2.Controls.Add(this.labelScreen2Name);
             this.panelScreen2.Controls.Add(this.numericUpDownScreen2Height);
             this.panelScreen2.Controls.Add(this.buttonScreen2Reset);
             this.panelScreen2.Controls.Add(this.numericUpDownScreen2Width);
@@ -818,19 +835,27 @@
             this.panelScreen2.Size = new System.Drawing.Size(493, 33);
             this.panelScreen2.TabIndex = 22;
             // 
-            // checkBoxScreen2Capture
+            // textBoxScreen2Name
             // 
-            this.checkBoxScreen2Capture.AutoSize = true;
-            this.checkBoxScreen2Capture.Checked = true;
-            this.checkBoxScreen2Capture.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxScreen2Capture.Enabled = false;
-            this.checkBoxScreen2Capture.Location = new System.Drawing.Point(318, 9);
-            this.checkBoxScreen2Capture.Name = "checkBoxScreen2Capture";
-            this.checkBoxScreen2Capture.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxScreen2Capture.TabIndex = 22;
-            this.checkBoxScreen2Capture.Text = "Capture";
-            this.checkBoxScreen2Capture.UseVisualStyleBackColor = true;
-            this.checkBoxScreen2Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen2Capture_CheckedChanged);
+            this.textBoxScreen2Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreen2Name.Enabled = false;
+            this.textBoxScreen2Name.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreen2Name.Name = "textBoxScreen2Name";
+            this.textBoxScreen2Name.Size = new System.Drawing.Size(74, 20);
+            this.textBoxScreen2Name.TabIndex = 23;
+            this.textBoxScreen2Name.TabStop = false;
+            // 
+            // labelScreen2Name
+            // 
+            this.labelScreen2Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreen2Name.AutoSize = true;
+            this.labelScreen2Name.Enabled = false;
+            this.labelScreen2Name.Location = new System.Drawing.Point(367, 11);
+            this.labelScreen2Name.Name = "labelScreen2Name";
+            this.labelScreen2Name.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen2Name.TabIndex = 22;
+            this.labelScreen2Name.Text = "Name:";
             // 
             // numericUpDownScreen2Height
             // 
@@ -858,11 +883,11 @@
             // 
             // buttonScreen2Reset
             // 
-            this.buttonScreen2Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonScreen2Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScreen2Reset.Enabled = false;
-            this.buttonScreen2Reset.Location = new System.Drawing.Point(415, 6);
+            this.buttonScreen2Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen2Reset.Name = "buttonScreen2Reset";
-            this.buttonScreen2Reset.Size = new System.Drawing.Size(75, 23);
+            this.buttonScreen2Reset.Size = new System.Drawing.Size(43, 23);
             this.buttonScreen2Reset.TabIndex = 15;
             this.buttonScreen2Reset.TabStop = false;
             this.buttonScreen2Reset.Text = "Reset";
@@ -999,7 +1024,8 @@
             // 
             // panelScreen3
             // 
-            this.panelScreen3.Controls.Add(this.checkBoxScreen3Capture);
+            this.panelScreen3.Controls.Add(this.textBoxScreen3Name);
+            this.panelScreen3.Controls.Add(this.labelScreen3Name);
             this.panelScreen3.Controls.Add(this.numericUpDownScreen3Height);
             this.panelScreen3.Controls.Add(this.buttonScreen3Reset);
             this.panelScreen3.Controls.Add(this.numericUpDownScreen3Width);
@@ -1015,19 +1041,27 @@
             this.panelScreen3.Size = new System.Drawing.Size(493, 33);
             this.panelScreen3.TabIndex = 22;
             // 
-            // checkBoxScreen3Capture
+            // textBoxScreen3Name
             // 
-            this.checkBoxScreen3Capture.AutoSize = true;
-            this.checkBoxScreen3Capture.Checked = true;
-            this.checkBoxScreen3Capture.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxScreen3Capture.Enabled = false;
-            this.checkBoxScreen3Capture.Location = new System.Drawing.Point(318, 9);
-            this.checkBoxScreen3Capture.Name = "checkBoxScreen3Capture";
-            this.checkBoxScreen3Capture.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxScreen3Capture.TabIndex = 22;
-            this.checkBoxScreen3Capture.Text = "Capture";
-            this.checkBoxScreen3Capture.UseVisualStyleBackColor = true;
-            this.checkBoxScreen3Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen3Capture_CheckedChanged);
+            this.textBoxScreen3Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreen3Name.Enabled = false;
+            this.textBoxScreen3Name.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreen3Name.Name = "textBoxScreen3Name";
+            this.textBoxScreen3Name.Size = new System.Drawing.Size(74, 20);
+            this.textBoxScreen3Name.TabIndex = 23;
+            this.textBoxScreen3Name.TabStop = false;
+            // 
+            // labelScreen3Name
+            // 
+            this.labelScreen3Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreen3Name.AutoSize = true;
+            this.labelScreen3Name.Enabled = false;
+            this.labelScreen3Name.Location = new System.Drawing.Point(367, 11);
+            this.labelScreen3Name.Name = "labelScreen3Name";
+            this.labelScreen3Name.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen3Name.TabIndex = 22;
+            this.labelScreen3Name.Text = "Name:";
             // 
             // numericUpDownScreen3Height
             // 
@@ -1055,11 +1089,11 @@
             // 
             // buttonScreen3Reset
             // 
-            this.buttonScreen3Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonScreen3Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScreen3Reset.Enabled = false;
-            this.buttonScreen3Reset.Location = new System.Drawing.Point(415, 6);
+            this.buttonScreen3Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen3Reset.Name = "buttonScreen3Reset";
-            this.buttonScreen3Reset.Size = new System.Drawing.Size(75, 23);
+            this.buttonScreen3Reset.Size = new System.Drawing.Size(43, 23);
             this.buttonScreen3Reset.TabIndex = 15;
             this.buttonScreen3Reset.TabStop = false;
             this.buttonScreen3Reset.Text = "Reset";
@@ -1196,7 +1230,8 @@
             // 
             // panelScreen4
             // 
-            this.panelScreen4.Controls.Add(this.checkBoxScreen4Capture);
+            this.panelScreen4.Controls.Add(this.textBoxScreen4Name);
+            this.panelScreen4.Controls.Add(this.labelScreen4Name);
             this.panelScreen4.Controls.Add(this.numericUpDownScreen4Height);
             this.panelScreen4.Controls.Add(this.buttonScreen4Reset);
             this.panelScreen4.Controls.Add(this.numericUpDownScreen4Width);
@@ -1212,19 +1247,27 @@
             this.panelScreen4.Size = new System.Drawing.Size(493, 33);
             this.panelScreen4.TabIndex = 22;
             // 
-            // checkBoxScreen4Capture
+            // textBoxScreen4Name
             // 
-            this.checkBoxScreen4Capture.AutoSize = true;
-            this.checkBoxScreen4Capture.Checked = true;
-            this.checkBoxScreen4Capture.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxScreen4Capture.Enabled = false;
-            this.checkBoxScreen4Capture.Location = new System.Drawing.Point(318, 9);
-            this.checkBoxScreen4Capture.Name = "checkBoxScreen4Capture";
-            this.checkBoxScreen4Capture.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxScreen4Capture.TabIndex = 22;
-            this.checkBoxScreen4Capture.Text = "Capture";
-            this.checkBoxScreen4Capture.UseVisualStyleBackColor = true;
-            this.checkBoxScreen4Capture.CheckedChanged += new System.EventHandler(this.checkBoxScreen4Capture_CheckedChanged);
+            this.textBoxScreen4Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreen4Name.Enabled = false;
+            this.textBoxScreen4Name.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreen4Name.Name = "textBoxScreen4Name";
+            this.textBoxScreen4Name.Size = new System.Drawing.Size(74, 20);
+            this.textBoxScreen4Name.TabIndex = 23;
+            this.textBoxScreen4Name.TabStop = false;
+            // 
+            // labelScreen4Name
+            // 
+            this.labelScreen4Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreen4Name.AutoSize = true;
+            this.labelScreen4Name.Enabled = false;
+            this.labelScreen4Name.Location = new System.Drawing.Point(367, 11);
+            this.labelScreen4Name.Name = "labelScreen4Name";
+            this.labelScreen4Name.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen4Name.TabIndex = 22;
+            this.labelScreen4Name.Text = "Name:";
             // 
             // numericUpDownScreen4Height
             // 
@@ -1252,11 +1295,11 @@
             // 
             // buttonScreen4Reset
             // 
-            this.buttonScreen4Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonScreen4Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonScreen4Reset.Enabled = false;
-            this.buttonScreen4Reset.Location = new System.Drawing.Point(415, 6);
+            this.buttonScreen4Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen4Reset.Name = "buttonScreen4Reset";
-            this.buttonScreen4Reset.Size = new System.Drawing.Size(75, 23);
+            this.buttonScreen4Reset.Size = new System.Drawing.Size(43, 23);
             this.buttonScreen4Reset.TabIndex = 15;
             this.buttonScreen4Reset.TabStop = false;
             this.buttonScreen4Reset.Text = "Reset";
@@ -1486,15 +1529,14 @@
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
-            // textBoxMacro
+            // textBoxScreenshotsFolderSearch
             // 
-            this.textBoxMacro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMacro.Location = new System.Drawing.Point(53, 352);
-            this.textBoxMacro.Name = "textBoxMacro";
-            this.textBoxMacro.Size = new System.Drawing.Size(695, 20);
-            this.textBoxMacro.TabIndex = 7;
-            this.textBoxMacro.TabStop = false;
+            this.textBoxScreenshotsFolderSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxScreenshotsFolderSearch.Location = new System.Drawing.Point(53, 352);
+            this.textBoxScreenshotsFolderSearch.Name = "textBoxScreenshotsFolderSearch";
+            this.textBoxScreenshotsFolderSearch.Size = new System.Drawing.Size(162, 20);
+            this.textBoxScreenshotsFolderSearch.TabIndex = 7;
+            this.textBoxScreenshotsFolderSearch.TabStop = false;
             // 
             // toolStripSlideshow
             // 
@@ -1584,6 +1626,7 @@
             this.tabControlModules.SelectedIndex = 0;
             this.tabControlModules.Size = new System.Drawing.Size(249, 154);
             this.tabControlModules.TabIndex = 12;
+            this.tabControlModules.TabStop = false;
             this.tabControlModules.SelectedIndexChanged += new System.EventHandler(this.tabControlModules_SelectedIndexChanged);
             // 
             // tabPageScreenCapture
@@ -1605,7 +1648,7 @@
             // 
             this.groupBoxMode.Controls.Add(this.radioButtonModeNormal);
             this.groupBoxMode.Controls.Add(this.radioButtonModePreview);
-            this.groupBoxMode.Location = new System.Drawing.Point(6, 131);
+            this.groupBoxMode.Location = new System.Drawing.Point(6, 4);
             this.groupBoxMode.Name = "groupBoxMode";
             this.groupBoxMode.Size = new System.Drawing.Size(205, 91);
             this.groupBoxMode.TabIndex = 23;
@@ -1722,7 +1765,7 @@
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownSecondsInterval);
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownMinutesInterval);
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownHoursInterval);
-            this.groupBoxCaptureDelay.Location = new System.Drawing.Point(6, 3);
+            this.groupBoxCaptureDelay.Location = new System.Drawing.Point(6, 102);
             this.groupBoxCaptureDelay.Name = "groupBoxCaptureDelay";
             this.groupBoxCaptureDelay.Size = new System.Drawing.Size(205, 122);
             this.groupBoxCaptureDelay.TabIndex = 14;
@@ -2329,25 +2372,60 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
+            // labelFolder
+            // 
+            this.labelFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelFolder.AutoSize = true;
+            this.labelFolder.Location = new System.Drawing.Point(7, 355);
+            this.labelFolder.Name = "labelFolder";
+            this.labelFolder.Size = new System.Drawing.Size(39, 13);
+            this.labelFolder.TabIndex = 21;
+            this.labelFolder.Text = "Folder:";
+            // 
+            // buttonBrowseFolder
+            // 
+            this.buttonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonBrowseFolder.Location = new System.Drawing.Point(222, 350);
+            this.buttonBrowseFolder.Name = "buttonBrowseFolder";
+            this.buttonBrowseFolder.Size = new System.Drawing.Size(27, 23);
+            this.buttonBrowseFolder.TabIndex = 22;
+            this.buttonBrowseFolder.TabStop = false;
+            this.buttonBrowseFolder.Text = "...";
+            this.buttonBrowseFolder.UseVisualStyleBackColor = true;
+            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
+            // 
             // labelMacro
             // 
             this.labelMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelMacro.AutoSize = true;
-            this.labelMacro.Location = new System.Drawing.Point(7, 355);
+            this.labelMacro.Location = new System.Drawing.Point(255, 355);
             this.labelMacro.Name = "labelMacro";
             this.labelMacro.Size = new System.Drawing.Size(40, 13);
-            this.labelMacro.TabIndex = 21;
+            this.labelMacro.TabIndex = 23;
             this.labelMacro.Text = "Macro:";
+            // 
+            // textBoxMacro
+            // 
+            this.textBoxMacro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMacro.Location = new System.Drawing.Point(301, 351);
+            this.textBoxMacro.Name = "textBoxMacro";
+            this.textBoxMacro.Size = new System.Drawing.Size(447, 20);
+            this.textBoxMacro.TabIndex = 24;
+            this.textBoxMacro.TabStop = false;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 398);
+            this.Controls.Add(this.textBoxMacro);
             this.Controls.Add(this.labelMacro);
+            this.Controls.Add(this.buttonBrowseFolder);
+            this.Controls.Add(this.labelFolder);
             this.Controls.Add(this.toolStripScreenCapture);
             this.Controls.Add(this.tabControlModules);
-            this.Controls.Add(this.textBoxMacro);
+            this.Controls.Add(this.textBoxScreenshotsFolderSearch);
             this.Controls.Add(this.tabControlScreens);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.monthCalendar);
@@ -2450,7 +2528,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
-        private System.Windows.Forms.TextBox textBoxMacro;
+        private System.Windows.Forms.TextBox textBoxScreenshotsFolderSearch;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenFileLocation;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLastCapture;
@@ -2603,13 +2681,20 @@
         private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
         private System.Windows.Forms.Button buttonClearPassphrase;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelExit;
-        private System.Windows.Forms.CheckBox checkBoxScreen1Capture;
-        private System.Windows.Forms.CheckBox checkBoxScreen2Capture;
-        private System.Windows.Forms.CheckBox checkBoxScreen3Capture;
-        private System.Windows.Forms.CheckBox checkBoxScreen4Capture;
         private System.Windows.Forms.GroupBox groupBoxMode;
         private System.Windows.Forms.RadioButton radioButtonModeNormal;
         private System.Windows.Forms.RadioButton radioButtonModePreview;
+        private System.Windows.Forms.Label labelFolder;
+        private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.Label labelMacro;
+        private System.Windows.Forms.TextBox textBoxMacro;
+        private System.Windows.Forms.TextBox textBoxScreen1Name;
+        private System.Windows.Forms.Label labelScreen1Name;
+        private System.Windows.Forms.TextBox textBoxScreen2Name;
+        private System.Windows.Forms.Label labelScreen2Name;
+        private System.Windows.Forms.TextBox textBoxScreen3Name;
+        private System.Windows.Forms.Label labelScreen3Name;
+        private System.Windows.Forms.TextBox textBoxScreen4Name;
+        private System.Windows.Forms.Label labelScreen4Name;
     }
 }

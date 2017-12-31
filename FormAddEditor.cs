@@ -3,7 +3,7 @@
 // autoscreen.FormAddEditor.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Friday, 29 December 2017
+// Thursday, 15 May 2008 - Sunday, 31 December 2017
 
 using System;
 using System.IO;

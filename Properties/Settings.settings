@@ -173,17 +173,23 @@
     <Setting Name="LockScreenCaptureSession" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="CaptureScreen1" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="Screen1Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="CaptureScreen2" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="Screen2Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
     </Setting>
-    <Setting Name="CaptureScreen3" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="Screen3Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3</Value>
     </Setting>
-    <Setting Name="CaptureScreen4" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="Screen4Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="Macro" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Screenshots" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;autoscreen&gt;&lt;screenshots&gt;&lt;screenshot&gt;&lt;date&gt;&lt;/date&gt;&lt;path&gt;&lt;/path&gt;&lt;/screenshot&gt;&lt;/screenshots&gt;&lt;/autoscreen&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -3,7 +3,7 @@
 // autoscreen.ScreenCapture.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Friday, 29 December 2017
+// Thursday, 15 May 2008 - Sunday, 31 December 2017
 
 using System;
 using System.IO;
@@ -121,7 +121,7 @@ namespace autoscreen
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, int screenNumber, string filename)
+        public static void TakeScreenshot(Screen screen, string screenName, string path)
         {
             try
             {
@@ -129,12 +129,12 @@ namespace autoscreen
 
                 if (bitmap != null)
                 {
-                    SaveToFile(bitmap, m_format, filename.Replace("%screen%", screenNumber.ToString()) + ImageFormatCollection.GetByName(m_format).Extension);
+                    SaveToFile(bitmap, m_format, path.Replace("%screen%", screenName));
                 }
 
                 GC.Collect();
 
-                SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
+                //SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
             }
             catch (Exception ex)
             {
@@ -169,6 +169,13 @@ namespace autoscreen
         {
             set { m_folder = value; }
             get { return m_folder; }
+        }
+
+        private static string m_macro;
+        public static string Macro
+        {
+            set { m_macro = value; }
+            get { return m_macro; }
         }
 
         private static int m_ratio;

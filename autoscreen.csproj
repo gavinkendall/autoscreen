@@ -91,6 +91,8 @@
     <Compile Include="Log.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screenshot.cs" />
+    <Compile Include="ScreenshotCollection.cs" />
     <Compile Include="StatusMessage.cs" />
     <Compile Include="MacroParser.cs" />
     <EmbeddedResource Include="FormAddEditor.resx">

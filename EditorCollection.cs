@@ -3,10 +3,9 @@
 // autoscreen.EditorCollection.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Friday, 29 December 2017
+// Thursday, 15 May 2008 - Sunday, 31 December 2017
 
 using System;
-using System.IO;
 using System.Xml;
 using System.Text;
 using System.Collections;
@@ -17,7 +16,6 @@ namespace autoscreen
     {
         private static ArrayList m_editorList = new ArrayList();
 
-        private const string XML_FILE = "editors.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";  
         private const string XML_FILE_EDITOR_NODE = "editor";
         private const string XML_FILE_EDITORS_NODE = "editors";
