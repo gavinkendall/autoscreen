@@ -217,7 +217,7 @@ namespace autoscreen
             toolStripMenuItemDebugMode.Checked = Properties.Settings.Default.DebugMode;
             toolStripMenuItemDebugMode.CheckedChanged += ToolStripMenuItemDebugMode_CheckedChanged;
 
-            toolStripMenuItemDemoModeAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
+            toolStripMenuItemPreviewAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
             toolStripMenuItemShowSystemTrayIcon.Checked = Properties.Settings.Default.ShowSystemTrayIcon;
             toolStripMenuItemExitOnCloseWindow.Checked = Properties.Settings.Default.ExitOnCloseWindowCheck;
             toolStripMenuItemScheduleAtApplicationStartup.Checked = Properties.Settings.Default.ScheduleOnAtStartupCheck;
@@ -350,9 +350,9 @@ namespace autoscreen
                 }
             }
 
-            if (toolStripMenuItemDemoModeAtApplicationStartup.Checked)
+            if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
             {
-                checkBoxAutoReset.Checked = true;
+                toolStripButtonPreview.Checked = true;
             }
 
             EnableStartScreenCapture();
@@ -777,7 +777,7 @@ namespace autoscreen
         /// </summary>
         private void PlaySlideshow()
         {
-            radioButtonModePreview.Checked = false;
+            toolStripButtonPreview.Checked = false;
             int slideshowDelay = GetSlideshowDelay();
 
             DisableControls();
@@ -845,7 +845,7 @@ namespace autoscreen
 
             SaveApplicationSettings();
 
-            radioButtonModePreview.Checked = false;
+            toolStripButtonPreview.Checked = false;
 
             if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
             {
@@ -910,7 +910,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void listBoxScreenshots_SelectedIndexChanged(object sender, EventArgs e)
         {
-            radioButtonModePreview.Checked = false;
+            toolStripButtonPreview.Checked = false;
 
             Slideshow.Index = listBoxScreenshots.SelectedIndex;
             Slideshow.Count = listBoxScreenshots.Items.Count;
@@ -978,8 +978,6 @@ namespace autoscreen
             checkBoxInitialScreenshot.Enabled = false;
 
             toolStripSplitButtonStartScreenCapture.Enabled = false;
-
-            checkBoxAutoReset.Enabled = false;
         }
 
         /// <summary>
@@ -1015,7 +1013,7 @@ namespace autoscreen
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
             }
 
-            checkBoxAutoReset.Enabled = true;
+            toolStripButtonPreview.Enabled = true;
         }
 
         /// <summary>
@@ -1046,7 +1044,7 @@ namespace autoscreen
         /// </summary>
         private void UpdatePreview()
         {
-            if (!radioButtonModePreview.Checked)
+            if (!toolStripButtonPreview.Checked)
             {
                 if (InvokeRequired)
                 {
@@ -1367,7 +1365,7 @@ namespace autoscreen
                 labelPercentResolution.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
                 labelMillisecondsInterval.Enabled = true;
-                radioButtonModePreview.Enabled = true;
+                toolStripButtonPreview.Enabled = true;
             }
             else
             {
@@ -1398,7 +1396,7 @@ namespace autoscreen
             labelPercentResolution.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
             labelMillisecondsInterval.Enabled = false;
-            radioButtonModePreview.Enabled = false;
+            toolStripButtonPreview.Enabled = false;
         }
 
         /// <summary>
@@ -1445,7 +1443,7 @@ namespace autoscreen
 
             Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
             Properties.Settings.Default.ShowSystemTrayIcon = toolStripMenuItemShowSystemTrayIcon.Checked;
-            Properties.Settings.Default.DemoModeCheck = toolStripMenuItemDemoModeAtApplicationStartup.Checked;
+            Properties.Settings.Default.DemoModeCheck = toolStripMenuItemPreviewAtApplicationStartup.Checked;
             Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
             Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;
             Properties.Settings.Default.OpenOnScreenCaptureStopCheck = toolStripMenuItemOpenOnStopScreenCapture.Checked;
@@ -1957,13 +1955,13 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// The timer for "Demo Mode".
+        /// The timer for preview.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerDemoCapture_Tick(object sender, EventArgs e)
+        private void timerPreviewCapture_Tick(object sender, EventArgs e)
         {
-            TakeDemoScreenshots();            
+            TakePreviewScreenshots();            
         }
 
         /// <summary>
@@ -2076,9 +2074,9 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Takes the screenshots in "Demo Mode".
+        /// Takes the screenshots as a preview.
         /// </summary>
-        private void TakeDemoScreenshots()
+        private void TakePreviewScreenshots()
         {
             DisplayImages(true);
         }
@@ -2178,8 +2176,8 @@ namespace autoscreen
         /// <summary>
         /// Displays the screenshot images.
         /// </summary>
-        /// <param name="demo"></param>
-        private void DisplayImages(bool demo)
+        /// <param name="preview"></param>
+        private void DisplayImages(bool preview)
         {
             ArrayList images = new ArrayList();
 
@@ -2194,7 +2192,7 @@ namespace autoscreen
                     SetupScreenPosition(screen, count);
                     SetupScreenSize(screen, count);
 
-                    if (demo)
+                    if (preview)
                     {
                         Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value);
 
@@ -2206,14 +2204,14 @@ namespace autoscreen
                 }
             }
 
-            if (!demo)
+            if (!preview)
             {
                 images = FileSystem.GetImages(Slideshow.SelectedSlide, monthCalendar.SelectionStart);
             }
 
             if (images.Count >= 1)
             {
-                if (CaptureTheScreen(1) || !demo)
+                if (CaptureTheScreen(1) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor1.Image = (Image)images[0];
                 }
@@ -2229,7 +2227,7 @@ namespace autoscreen
 
             if (images.Count >= 2)
             {
-                if (CaptureTheScreen(2) || !demo)
+                if (CaptureTheScreen(2) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor2.Image = (Image)images[1];
                 }
@@ -2244,7 +2242,7 @@ namespace autoscreen
 
             if (images.Count >= 3)
             {
-                if (CaptureTheScreen(3) || !demo)
+                if (CaptureTheScreen(3) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor3.Image = (Image)images[2];
                 }
@@ -2258,7 +2256,7 @@ namespace autoscreen
 
             if (images.Count >= 4)
             {
-                if (CaptureTheScreen(4) || !demo)
+                if (CaptureTheScreen(4) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor4.Image = (Image)images[3];
                 }
@@ -2268,7 +2266,7 @@ namespace autoscreen
                 }
             }
 
-            if (demo)
+            if (preview)
             {
                 pictureBoxActiveWindow.Image = (Image)ScreenCapture.GetActiveWindowBitmap();
             }
@@ -2532,11 +2530,11 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Takes screenshots in "Demo Mode" (or clears the preview images) depending on the value of the capture delay slider controls.
+        /// Takes screenshots as a preview (or clears the preview images) depending on the value of the capture delay slider controls.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void demoInterval_ValueChanged(object sender, EventArgs e)
+        private void previewInterval_ValueChanged(object sender, EventArgs e)
         {
             EnableStartScreenCapture();
 
@@ -2544,20 +2542,20 @@ namespace autoscreen
 
             if (demoInterval > 0)
             {
-                timerDemoCapture.Interval = demoInterval;
+                timerPreviewCapture.Interval = demoInterval;
 
-                if (radioButtonModePreview.Checked)
+                if (toolStripButtonPreview.Checked)
                 {
                     if (checkBoxInitialScreenshot.Checked)
                     {
-                        TakeDemoScreenshots();
+                        TakePreviewScreenshots();
                     }
 
-                    timerDemoCapture.Enabled = true;
+                    timerPreviewCapture.Enabled = true;
                 }
                 else
                 {
-                    timerDemoCapture.Enabled = false;
+                    timerPreviewCapture.Enabled = false;
 
                     ClearImages();
                     UpdatePreview();
@@ -2565,7 +2563,7 @@ namespace autoscreen
             }
             else
             {
-                timerDemoCapture.Enabled = false;
+                timerPreviewCapture.Enabled = false;
 
                 ClearImages();
                 UpdatePreview();
@@ -2831,19 +2829,17 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Takes screenshots when "Preview Mode" is enabled otherwise the preview images will be cleared.
+        /// Takes screenshots when preview is enabled otherwise the preview images will be cleared.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void radioButtonModePreview_CheckedChanged(object sender, EventArgs e)
+        private void toolStripButtonPreview_CheckedChanged(object sender, EventArgs e)
         {
-            if (GetCaptureDelay() > 0 && radioButtonModePreview.Checked)
+            if (GetCaptureDelay() > 0 && toolStripButtonPreview.Checked)
             {
-                DisplayModeStatus(StatusMessage.MODE_PREVIEW);
-
                 if (checkBoxInitialScreenshot.Checked)
                 {
-                    TakeDemoScreenshots();
+                    TakePreviewScreenshots();
                 }
             }
             else
@@ -2852,12 +2848,7 @@ namespace autoscreen
                 UpdatePreview();
             }
 
-            timerDemoCapture.Enabled = radioButtonModePreview.Checked;
-        }
-
-        private void radioButtonModeNormal_CheckedChanged(object sender, EventArgs e)
-        {
-            DisplayModeStatus(StatusMessage.MODE_NORMAL);
+            timerPreviewCapture.Enabled = toolStripButtonPreview.Checked;
         }
     }
 }

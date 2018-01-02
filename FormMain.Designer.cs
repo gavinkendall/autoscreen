@@ -33,7 +33,7 @@
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItemDemoModeAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemPreviewAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemScheduleAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDebugMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -47,7 +47,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripLabelExit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStripLabelMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelSchedule = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelLock = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelLastCapture = new System.Windows.Forms.ToolStripStatusLabel();
@@ -142,9 +141,6 @@
             this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreenCapture = new System.Windows.Forms.TabPage();
-            this.groupBoxMode = new System.Windows.Forms.GroupBox();
-            this.radioButtonModeNormal = new System.Windows.Forms.RadioButton();
-            this.radioButtonModePreview = new System.Windows.Forms.RadioButton();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.checkBoxPassphraseLock = new System.Windows.Forms.CheckBox();
             this.buttonClearPassphrase = new System.Windows.Forms.Button();
@@ -152,7 +148,6 @@
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
-            this.checkBoxAutoReset = new System.Windows.Forms.CheckBox();
             this.labelLimit = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
             this.numericUpDownImageResolutionRatio = new System.Windows.Forms.NumericUpDown();
@@ -200,7 +195,9 @@
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
-            this.timerDemoCapture = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonPreview = new System.Windows.Forms.ToolStripButton();
+            this.timerPreviewCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
@@ -251,7 +248,6 @@
             this.toolStripSlideshow.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageScreenCapture.SuspendLayout();
-            this.groupBoxMode.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownImageResolutionRatio)).BeginInit();
@@ -286,7 +282,6 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButtonOptions,
             this.statusStripLabelExit,
-            this.statusStripLabelMode,
             this.statusStripLabelSchedule,
             this.statusStripLabelLock,
             this.statusStripLabelLastCapture});
@@ -298,7 +293,7 @@
             // toolStripDropDownButtonOptions
             // 
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemDemoModeAtApplicationStartup,
+            this.toolStripMenuItemPreviewAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
             this.toolStripMenuItemDebugMode,
             this.toolStripSeparator7,
@@ -317,12 +312,12 @@
             this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 22);
             this.toolStripDropDownButtonOptions.Text = "Options";
             // 
-            // toolStripMenuItemDemoModeAtApplicationStartup
+            // toolStripMenuItemPreviewAtApplicationStartup
             // 
-            this.toolStripMenuItemDemoModeAtApplicationStartup.CheckOnClick = true;
-            this.toolStripMenuItemDemoModeAtApplicationStartup.Name = "toolStripMenuItemDemoModeAtApplicationStartup";
-            this.toolStripMenuItemDemoModeAtApplicationStartup.Size = new System.Drawing.Size(455, 22);
-            this.toolStripMenuItemDemoModeAtApplicationStartup.Text = "Turn on demo mode at application startup";
+            this.toolStripMenuItemPreviewAtApplicationStartup.CheckOnClick = true;
+            this.toolStripMenuItemPreviewAtApplicationStartup.Name = "toolStripMenuItemPreviewAtApplicationStartup";
+            this.toolStripMenuItemPreviewAtApplicationStartup.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemPreviewAtApplicationStartup.Text = "Turn on preview at application startup";
             // 
             // toolStripMenuItemScheduleAtApplicationStartup
             // 
@@ -414,17 +409,6 @@
             this.statusStripLabelExit.Name = "statusStripLabelExit";
             this.statusStripLabelExit.Size = new System.Drawing.Size(52, 19);
             this.statusStripLabelExit.Text = "Exit: Off";
-            // 
-            // statusStripLabelMode
-            // 
-            this.statusStripLabelMode.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.statusStripLabelMode.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            this.statusStripLabelMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelMode.Name = "statusStripLabelMode";
-            this.statusStripLabelMode.Size = new System.Drawing.Size(88, 19);
-            this.statusStripLabelMode.Text = "Mode: Normal";
             // 
             // statusStripLabelSchedule
             // 
@@ -1632,7 +1616,6 @@
             // tabPageScreenCapture
             // 
             this.tabPageScreenCapture.AutoScroll = true;
-            this.tabPageScreenCapture.Controls.Add(this.groupBoxMode);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxSecurity);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxCaptureDelay);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxSchedule);
@@ -1644,41 +1627,6 @@
             this.tabPageScreenCapture.Text = "Screen Capture";
             this.tabPageScreenCapture.UseVisualStyleBackColor = true;
             // 
-            // groupBoxMode
-            // 
-            this.groupBoxMode.Controls.Add(this.radioButtonModeNormal);
-            this.groupBoxMode.Controls.Add(this.radioButtonModePreview);
-            this.groupBoxMode.Location = new System.Drawing.Point(6, 4);
-            this.groupBoxMode.Name = "groupBoxMode";
-            this.groupBoxMode.Size = new System.Drawing.Size(205, 91);
-            this.groupBoxMode.TabIndex = 23;
-            this.groupBoxMode.TabStop = false;
-            this.groupBoxMode.Text = "Mode";
-            // 
-            // radioButtonModeNormal
-            // 
-            this.radioButtonModeNormal.AutoSize = true;
-            this.radioButtonModeNormal.Checked = true;
-            this.radioButtonModeNormal.Location = new System.Drawing.Point(109, 19);
-            this.radioButtonModeNormal.Name = "radioButtonModeNormal";
-            this.radioButtonModeNormal.Size = new System.Drawing.Size(58, 17);
-            this.radioButtonModeNormal.TabIndex = 1;
-            this.radioButtonModeNormal.TabStop = true;
-            this.radioButtonModeNormal.Text = "Normal";
-            this.radioButtonModeNormal.UseVisualStyleBackColor = true;
-            this.radioButtonModeNormal.CheckedChanged += new System.EventHandler(this.radioButtonModeNormal_CheckedChanged);
-            // 
-            // radioButtonModePreview
-            // 
-            this.radioButtonModePreview.AutoSize = true;
-            this.radioButtonModePreview.Location = new System.Drawing.Point(40, 19);
-            this.radioButtonModePreview.Name = "radioButtonModePreview";
-            this.radioButtonModePreview.Size = new System.Drawing.Size(63, 17);
-            this.radioButtonModePreview.TabIndex = 0;
-            this.radioButtonModePreview.Text = "Preview";
-            this.radioButtonModePreview.UseVisualStyleBackColor = true;
-            this.radioButtonModePreview.CheckedChanged += new System.EventHandler(this.radioButtonModePreview_CheckedChanged);
-            // 
             // groupBoxSecurity
             // 
             this.groupBoxSecurity.Controls.Add(this.checkBoxPassphraseLock);
@@ -1686,7 +1634,7 @@
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 392);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 295);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 134);
             this.groupBoxSecurity.TabIndex = 22;
@@ -1749,7 +1697,6 @@
             // 
             // groupBoxCaptureDelay
             // 
-            this.groupBoxCaptureDelay.Controls.Add(this.checkBoxAutoReset);
             this.groupBoxCaptureDelay.Controls.Add(this.labelLimit);
             this.groupBoxCaptureDelay.Controls.Add(this.checkBoxInitialScreenshot);
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownImageResolutionRatio);
@@ -1765,23 +1712,12 @@
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownSecondsInterval);
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownMinutesInterval);
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownHoursInterval);
-            this.groupBoxCaptureDelay.Location = new System.Drawing.Point(6, 102);
+            this.groupBoxCaptureDelay.Location = new System.Drawing.Point(6, 5);
             this.groupBoxCaptureDelay.Name = "groupBoxCaptureDelay";
             this.groupBoxCaptureDelay.Size = new System.Drawing.Size(205, 122);
             this.groupBoxCaptureDelay.TabIndex = 14;
             this.groupBoxCaptureDelay.TabStop = false;
             this.groupBoxCaptureDelay.Text = "Take screenshots every ...";
-            // 
-            // checkBoxAutoReset
-            // 
-            this.checkBoxAutoReset.AutoSize = true;
-            this.checkBoxAutoReset.Location = new System.Drawing.Point(127, 98);
-            this.checkBoxAutoReset.Name = "checkBoxAutoReset";
-            this.checkBoxAutoReset.Size = new System.Drawing.Size(79, 17);
-            this.checkBoxAutoReset.TabIndex = 27;
-            this.checkBoxAutoReset.TabStop = false;
-            this.checkBoxAutoReset.Text = "Auto Reset";
-            this.checkBoxAutoReset.UseVisualStyleBackColor = true;
             // 
             // labelLimit
             // 
@@ -1884,7 +1820,7 @@
             this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMillisecondsInterval.TabIndex = 6;
             this.numericUpDownMillisecondsInterval.TabStop = false;
-            this.numericUpDownMillisecondsInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
+            this.numericUpDownMillisecondsInterval.ValueChanged += new System.EventHandler(this.previewInterval_ValueChanged);
             // 
             // labelSecondsInterval
             // 
@@ -1925,7 +1861,7 @@
             this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSecondsInterval.TabIndex = 2;
             this.numericUpDownSecondsInterval.TabStop = false;
-            this.numericUpDownSecondsInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
+            this.numericUpDownSecondsInterval.ValueChanged += new System.EventHandler(this.previewInterval_ValueChanged);
             // 
             // numericUpDownMinutesInterval
             // 
@@ -1939,7 +1875,7 @@
             this.numericUpDownMinutesInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMinutesInterval.TabIndex = 1;
             this.numericUpDownMinutesInterval.TabStop = false;
-            this.numericUpDownMinutesInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
+            this.numericUpDownMinutesInterval.ValueChanged += new System.EventHandler(this.previewInterval_ValueChanged);
             // 
             // numericUpDownHoursInterval
             // 
@@ -1953,7 +1889,7 @@
             this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownHoursInterval.TabIndex = 0;
             this.numericUpDownHoursInterval.TabStop = false;
-            this.numericUpDownHoursInterval.ValueChanged += new System.EventHandler(this.demoInterval_ValueChanged);
+            this.numericUpDownHoursInterval.ValueChanged += new System.EventHandler(this.previewInterval_ValueChanged);
             // 
             // groupBoxSchedule
             // 
@@ -1973,7 +1909,7 @@
             this.groupBoxSchedule.Controls.Add(this.dateTimePickerScheduleStartAt);
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStopAt);
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStartAt);
-            this.groupBoxSchedule.Location = new System.Drawing.Point(6, 228);
+            this.groupBoxSchedule.Location = new System.Drawing.Point(6, 131);
             this.groupBoxSchedule.Name = "groupBoxSchedule";
             this.groupBoxSchedule.Size = new System.Drawing.Size(205, 158);
             this.groupBoxSchedule.TabIndex = 21;
@@ -2327,11 +2263,13 @@
             this.toolStripScreenCapture.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripScreenCapture.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButtonStartScreenCapture,
-            this.toolStripButtonStopScreenCapture});
+            this.toolStripButtonStopScreenCapture,
+            this.toolStripSeparator8,
+            this.toolStripButtonPreview});
             this.toolStripScreenCapture.Location = new System.Drawing.Point(20, 321);
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(207, 25);
+            this.toolStripScreenCapture.Size = new System.Drawing.Size(206, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
             // toolStripSplitButtonStartScreenCapture
@@ -2340,8 +2278,8 @@
             this.toolStripSplitButtonStartScreenCapture.Image = global::autoscreen.Properties.Resources.start_screen_capture;
             this.toolStripSplitButtonStartScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonStartScreenCapture.Name = "toolStripSplitButtonStartScreenCapture";
-            this.toolStripSplitButtonStartScreenCapture.Size = new System.Drawing.Size(108, 22);
-            this.toolStripSplitButtonStartScreenCapture.Text = "Start Capture";
+            this.toolStripSplitButtonStartScreenCapture.Size = new System.Drawing.Size(63, 22);
+            this.toolStripSplitButtonStartScreenCapture.Text = "Start";
             this.toolStripSplitButtonStartScreenCapture.ButtonClick += new System.EventHandler(this.toolStripMenuItemStartScreenCapture_Click);
             // 
             // toolStripButtonStopScreenCapture
@@ -2350,13 +2288,29 @@
             this.toolStripButtonStopScreenCapture.Image = global::autoscreen.Properties.Resources.stop_screen_capture;
             this.toolStripButtonStopScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonStopScreenCapture.Name = "toolStripButtonStopScreenCapture";
-            this.toolStripButtonStopScreenCapture.Size = new System.Drawing.Size(96, 22);
-            this.toolStripButtonStopScreenCapture.Text = "Stop Capture";
+            this.toolStripButtonStopScreenCapture.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonStopScreenCapture.Text = "Stop";
             this.toolStripButtonStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
-            // timerDemoCapture
+            // toolStripSeparator8
             // 
-            this.timerDemoCapture.Tick += new System.EventHandler(this.timerDemoCapture_Tick);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonPreview
+            // 
+            this.toolStripButtonPreview.CheckOnClick = true;
+            this.toolStripButtonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonPreview.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPreview.Image")));
+            this.toolStripButtonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPreview.Name = "toolStripButtonPreview";
+            this.toolStripButtonPreview.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButtonPreview.Text = "Preview";
+            this.toolStripButtonPreview.CheckedChanged += new System.EventHandler(this.toolStripButtonPreview_CheckedChanged);
+            // 
+            // timerPreviewCapture
+            // 
+            this.timerPreviewCapture.Tick += new System.EventHandler(this.timerPreviewCapture_Tick);
             // 
             // timerScheduledCaptureStart
             // 
@@ -2487,8 +2441,6 @@
             this.toolStripSlideshow.PerformLayout();
             this.tabControlModules.ResumeLayout(false);
             this.tabPageScreenCapture.ResumeLayout(false);
-            this.groupBoxMode.ResumeLayout(false);
-            this.groupBoxMode.PerformLayout();
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
             this.groupBoxCaptureDelay.ResumeLayout(false);
@@ -2587,7 +2539,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
         private System.Windows.Forms.NumericUpDown numericUpDownImageResolutionRatio;
         private System.Windows.Forms.NumericUpDown numericUpDownSlideSkip;
-        private System.Windows.Forms.Timer timerDemoCapture;
+        private System.Windows.Forms.Timer timerPreviewCapture;
         private System.Windows.Forms.Label labelPercentResolution;
         private System.Windows.Forms.Label labelAt;
         private System.Windows.Forms.Label labelLimit;
@@ -2613,7 +2565,6 @@
         private System.Windows.Forms.Timer timerScheduledCaptureStop;
         private System.Windows.Forms.TabPage tabPageActiveWindow;
         private System.Windows.Forms.PictureBox pictureBoxActiveWindow;
-        private System.Windows.Forms.CheckBox checkBoxAutoReset;
         private System.Windows.Forms.Button buttonScheduleClear;
         private System.Windows.Forms.Button buttonScheduleSet;
         private System.Windows.Forms.ComboBox comboBoxScheduleImageFormat;
@@ -2621,9 +2572,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemScheduleAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDemoModeAtApplicationStartup;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPreviewAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSlideshowOnStopScreenCapture;
-        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelMode;
         private System.Windows.Forms.CheckBox checkBoxScheduleStartOnSchedule;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSearchOnStopScreenCapture;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -2681,9 +2631,6 @@
         private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
         private System.Windows.Forms.Button buttonClearPassphrase;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelExit;
-        private System.Windows.Forms.GroupBox groupBoxMode;
-        private System.Windows.Forms.RadioButton radioButtonModeNormal;
-        private System.Windows.Forms.RadioButton radioButtonModePreview;
         private System.Windows.Forms.Label labelFolder;
         private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.Label labelMacro;
@@ -2696,5 +2643,7 @@
         private System.Windows.Forms.Label labelScreen3Name;
         private System.Windows.Forms.TextBox textBoxScreen4Name;
         private System.Windows.Forms.Label labelScreen4Name;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPreview;
     }
 }
