@@ -26,6 +26,7 @@ namespace autoscreen
         private const string SCREENSHOT_SCREEN = "screen";
         private const string SCREENSHOT_FORMAT = "format";
         private const string SCREENSHOT_FILENAME = "filename";
+        private const string SCREENSHOT_SLIDENAME = "slidename";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
         public static void Add(Screenshot screenshot)
@@ -51,6 +52,21 @@ namespace autoscreen
                 Screenshot screenshot = Get(i);
 
                 if (screenshot.Filename.Equals(filename))
+                {
+                    return (Screenshot)Get(i);
+                }
+            }
+
+            return null;
+        }
+
+        public static Screenshot GetBySlidename(string slidename)
+        {
+            for (int i = 0; i < m_screenshotList.Count; i++)
+            {
+                Screenshot screenshot = Get(i);
+
+                if (screenshot.Slidename.Equals(slidename))
                 {
                     return (Screenshot)Get(i);
                 }
@@ -122,6 +138,11 @@ namespace autoscreen
                                 xreader.Read();
                                 screenshot.Filename = xreader.Value;
                                 break;
+
+                            case SCREENSHOT_SLIDENAME:
+                                xreader.Read();
+                                screenshot.Slidename = xreader.Value;
+                                break;
                         }
                     }
                 }
@@ -132,7 +153,8 @@ namespace autoscreen
                     !string.IsNullOrEmpty(screenshot.Path) &&
                     screenshot.Screen > 0 &&
                     !string.IsNullOrEmpty(screenshot.Format) &&
-                    !string.IsNullOrEmpty(screenshot.Filename))
+                    !string.IsNullOrEmpty(screenshot.Filename) &&
+                    !string.IsNullOrEmpty(screenshot.Slidename))
                 {
                     Add(screenshot);
                 }
@@ -173,6 +195,7 @@ namespace autoscreen
                     xwriter.WriteElementString(SCREENSHOT_SCREEN, screenshot.Screen.ToString());
                     xwriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format);
                     xwriter.WriteElementString(SCREENSHOT_FILENAME, screenshot.Filename);
+                    xwriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slidename);
 
                     xwriter.WriteEndElement();
                 }

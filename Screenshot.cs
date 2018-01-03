@@ -17,11 +17,12 @@ namespace autoscreen
         public Screenshot(string date, string path, int screen, string format)
         {
             m_date = date;
-            m_path = path;
+            m_path = MacroParser.RegexPath.Match(path).Groups["PathPrefix"].Value + MacroParser.RegexPath.Match(path).Groups["Slidename"].Value + MacroParser.RegexPath.Match(path).Groups["PathSuffix"].Value;
             m_screen = screen;
             m_format = format;
 
-            m_filename = System.IO.Path.GetFileName(path);
+            m_filename = System.IO.Path.GetFileName(m_path);
+            m_slidename = MacroParser.RegexPath.Match(path).Groups["Slidename"].Value;
         }
 
         private string m_date;
@@ -57,6 +58,13 @@ namespace autoscreen
         {
             set { m_filename = value; }
             get { return m_filename; }
+        }
+
+        private string m_slidename;
+        public string Slidename
+        {
+            set { m_slidename = value; }
+            get { return m_slidename; }
         }
     }
 }

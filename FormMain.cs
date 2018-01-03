@@ -557,9 +557,9 @@ namespace autoscreen
                         {
                             if (File.Exists(screenshot.Path) && screenshot.Screen == count && screenshot.Date == monthCalendar.SelectionStart.ToString(MacroParser.DateFormat))
                             {
-                                if (!listBoxScreenshots.Items.Contains(screenshot.Filename))
+                                if (!listBoxScreenshots.Items.Contains(screenshot.Slidename))
                                 {
-                                    listBoxScreenshots.Items.Add(screenshot.Filename);
+                                    listBoxScreenshots.Items.Add(screenshot.Slidename);
                                 }
                             }
                         }
@@ -2005,6 +2005,8 @@ namespace autoscreen
             string path = string.Empty;
             string screenName = string.Empty;
 
+            DateTime dateTimeScreenshotTaken = DateTime.Now;
+
             foreach (Screen screen in Screen.AllScreens)
             {
                 count++;
@@ -2037,7 +2039,7 @@ namespace autoscreen
 
                         if (!string.IsNullOrEmpty(screenName))
                         {
-                            path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName);
+                            path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken);
                             ScreenCapture.TakeScreenshot(screen, screenName, path, count);
                         }
                     }

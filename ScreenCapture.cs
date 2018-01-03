@@ -131,8 +131,11 @@ namespace autoscreen
 
                     if (bitmap != null)
                     {
-                        SaveToFile(bitmap, m_format, path);
-                        ScreenshotCollection.Add(new Screenshot(DateTime.Now.ToString(MacroParser.DateFormat), path, screenNumber, m_format));
+                        Screenshot screenshot = new Screenshot(DateTime.Now.ToString(MacroParser.DateFormat), path, screenNumber, m_format);
+
+                        SaveToFile(bitmap, m_format, screenshot.Path);
+
+                        ScreenshotCollection.Add(screenshot);
                     }
 
                     GC.Collect();

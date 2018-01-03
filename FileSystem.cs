@@ -71,11 +71,11 @@ namespace autoscreen
                 // now need to search for the image by looking inside the screenshot collection class.
                 if (string.IsNullOrEmpty(path))
                 {
-                    Screenshot screenshot = ScreenshotCollection.GetByFilename(slideName);
+                    Screenshot screenshot = ScreenshotCollection.GetBySlidename(slideName);
 
                     if (screenshot.Screen == i && selectedDate.ToString(MacroParser.DateFormat) == screenshot.Date)
                     {
-                        path = ScreenshotCollection.GetByFilename(slideName).Path;
+                        path = ScreenshotCollection.GetBySlidename(slideName).Path;
                     }
                 }
 
