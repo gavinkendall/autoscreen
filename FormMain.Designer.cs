@@ -72,9 +72,6 @@
             this.labelScreen1Width = new System.Windows.Forms.Label();
             this.pictureBoxScreen1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemOpenFileLocation = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.editWithToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageScreen2 = new System.Windows.Forms.TabPage();
             this.pictureBoxScreen2 = new System.Windows.Forms.PictureBox();
             this.panelScreen2 = new System.Windows.Forms.Panel();
@@ -220,7 +217,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1X)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).BeginInit();
-            this.contextMenuStripScreenshotPreview.SuspendLayout();
             this.tabPageScreen2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen2)).BeginInit();
             this.panelScreen2.SuspendLayout();
@@ -749,30 +745,8 @@
             // 
             // contextMenuStripScreenshotPreview
             // 
-            this.contextMenuStripScreenshotPreview.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemOpenFileLocation,
-            this.toolStripSeparator4,
-            this.editWithToolStripMenuItem});
             this.contextMenuStripScreenshotPreview.Name = "contextMenuStripScreenshotPreview";
-            this.contextMenuStripScreenshotPreview.Size = new System.Drawing.Size(174, 54);
-            // 
-            // toolStripMenuItemOpenFileLocation
-            // 
-            this.toolStripMenuItemOpenFileLocation.Name = "toolStripMenuItemOpenFileLocation";
-            this.toolStripMenuItemOpenFileLocation.Size = new System.Drawing.Size(173, 22);
-            this.toolStripMenuItemOpenFileLocation.Text = "Open File Location";
-            this.toolStripMenuItemOpenFileLocation.Click += new System.EventHandler(this.toolStripMenuItemOpenFileLocation_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(170, 6);
-            // 
-            // editWithToolStripMenuItem
-            // 
-            this.editWithToolStripMenuItem.Name = "editWithToolStripMenuItem";
-            this.editWithToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.editWithToolStripMenuItem.Text = "Edit With";
+            this.contextMenuStripScreenshotPreview.Size = new System.Drawing.Size(153, 26);
             // 
             // tabPageScreen2
             // 
@@ -2409,7 +2383,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1X)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).EndInit();
-            this.contextMenuStripScreenshotPreview.ResumeLayout(false);
             this.tabPageScreen2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen2)).EndInit();
             this.panelScreen2.ResumeLayout(false);
@@ -2482,7 +2455,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.TextBox textBoxScreenshotsFolderSearch;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenFileLocation;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLastCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -2508,8 +2480,6 @@
         private System.Windows.Forms.PictureBox pictureBoxScreen4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClose;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem editWithToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControlModules;
         private System.Windows.Forms.TabPage tabPageScreenCapture;
         private System.Windows.Forms.TabPage tabPageSlideshow;

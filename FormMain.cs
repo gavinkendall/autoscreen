@@ -734,7 +734,7 @@ namespace autoscreen
                     formEnterPassphrase.ShowDialog(this);
                 }
             }
-            
+
             // This is intentional. Do not rewrite these statements as an if/else
             // because as soon as lockScreenCaptureSession is set to false we want
             // to continue with normal functionality.
@@ -1304,7 +1304,7 @@ namespace autoscreen
         {
             RunFileSearch(e);
         }
-        
+
         /// <summary>
         /// Runs the folder search thread.
         /// </summary>
@@ -1679,7 +1679,7 @@ namespace autoscreen
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
-                string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
+                string selectedFile = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen).Path;
 
                 if (File.Exists(selectedFile))
                 {
@@ -1866,35 +1866,31 @@ namespace autoscreen
         /// </summary>
         private void BuildScreenshotPreviewContextMenu()
         {
-            ToolStripItem[] editWithMenuItemSearch = contextMenuStripScreenshotPreview.Items.Find("editWithToolStripMenuItem", false);
+            contextMenuStripScreenshotPreview.Items.Clear();
 
-            if (editWithMenuItemSearch.Length == 1)
+            ToolStripItem openFileLocation = new ToolStripMenuItem("Open File Location");
+            openFileLocation.Click += new EventHandler(toolStripMenuItemOpenFileLocation_Click);
+
+            ToolStripItem addEditorItem = new ToolStripMenuItem("Add Editor ...");
+            addEditorItem.Click += new EventHandler(addEditorToolStripMenuItem_Click);
+
+            contextMenuStripScreenshotPreview.Items.Add(openFileLocation);
+            contextMenuStripScreenshotPreview.Items.Add(addEditorItem);
+            contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
+
+            for (int i = 0; i < EditorCollection.Count; i++)
             {
-                ToolStripMenuItem editWithMenuItem = (ToolStripMenuItem)editWithMenuItemSearch[0];
+                Editor editor = EditorCollection.Get(i);
 
-                if (editWithMenuItem != null)
+                if (editor != null)
                 {
-                    editWithMenuItem.DropDownItems.Clear();
-
-                    ToolStripItem addEditorItem = new ToolStripMenuItem("Add Editor ...");
-                    addEditorItem.Click += new EventHandler(addEditorToolStripMenuItem_Click);
-                    editWithMenuItem.DropDownItems.Add(addEditorItem);
-                    editWithMenuItem.DropDownItems.Add(new ToolStripSeparator());
-
-                    for (int i = 0; i < EditorCollection.Count; i++)
+                    if (File.Exists(editor.Application))
                     {
-                        Editor editor = EditorCollection.Get(i);
+                        ToolStripItem editorItem = new ToolStripMenuItem(editor.Name);
+                        editorItem.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
+                        editorItem.Click += new EventHandler(editorRun_Click);
 
-                        if (editor != null)
-                        {
-                            if (File.Exists(editor.Application))
-                            {
-                                ToolStripItem editorItem = new ToolStripMenuItem(editor.Name);
-                                editorItem.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
-                                editorItem.Click += new EventHandler(editorRun_Click);
-                                editWithMenuItem.DropDownItems.Add(editorItem);
-                            }
-                        }
+                        contextMenuStripScreenshotPreview.Items.Add(editorItem);
                     }
                 }
             }
@@ -1922,7 +1918,7 @@ namespace autoscreen
             if (listBoxScreenshots.SelectedIndex > -1)
             {
                 Editor editor = EditorCollection.GetByName(sender.ToString());
-                string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
+                string selectedFile = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen).Path;
 
                 if (File.Exists(selectedFile))
                 {

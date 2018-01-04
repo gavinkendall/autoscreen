@@ -652,9 +652,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?><autoscreen><editors><editor><name>Microsof" +
-            "t Paint</name><application>C:\\Windows\\System32\\mspaint.exe</application><argumen" +
-            "ts>%screenshot%</arguments></editor></editors></autoscreen>")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-8""?><autoscreen><editors><editor><name>GIMP 2.8</name><application>C:\Program Files\GIMP 2\bin\gimp-2.8.exe</application><arguments>%screenshot%</arguments></editor><editor><name>Microsoft Paint</name><application>C:\Windows\System32\mspaint.exe</application><arguments>%screenshot%</arguments></editor></editors></autoscreen>")]
         public string Editors {
             get {
                 return ((string)(this["Editors"]));

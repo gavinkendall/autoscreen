@@ -57,7 +57,7 @@ namespace autoscreen
         {
             AddEditor(name, application, arguments);
 
-            string selectedFile = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
+            string selectedFile = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen).Path;
 
             if (File.Exists(selectedFile))
             {
