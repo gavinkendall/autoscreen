@@ -29,7 +29,6 @@ namespace autoscreen
         public static void Add(Editor editor)
         {
             m_editorList.Add(editor);
-            Save();
         }
 
         public static Editor Get(int index)
@@ -110,7 +109,7 @@ namespace autoscreen
         /// <summary>
         /// Saves the image editors.
         /// </summary>
-        private static void Save()
+        public static void Save()
         {
             XmlWriterSettings xsettings = new XmlWriterSettings();
             xsettings.Indent = true;
@@ -152,7 +151,6 @@ namespace autoscreen
             }
 
             Properties.Settings.Default.Editors = editors.ToString();
-            Properties.Settings.Default.Save();
         }
     }
 }

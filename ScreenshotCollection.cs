@@ -32,7 +32,6 @@ namespace autoscreen
         public static void Add(Screenshot screenshot)
         {
             m_screenshotList.Add(screenshot);
-            Save();
         }
 
         public static Screenshot Get(int index)
@@ -149,7 +148,7 @@ namespace autoscreen
         /// <summary>
         /// Saves the screenshots.
         /// </summary>
-        private static void Save()
+        public static void Save()
         {
             XmlWriterSettings xsettings = new XmlWriterSettings();
             xsettings.Indent = true;
@@ -194,7 +193,6 @@ namespace autoscreen
             }
 
             Properties.Settings.Default.Screenshots = screenshots.ToString();
-            Properties.Settings.Default.Save();
         }
     }
 }

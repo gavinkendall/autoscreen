@@ -1492,6 +1492,9 @@ namespace autoscreen
 
             Properties.Settings.Default.Macro = textBoxMacro.Text;
 
+            EditorCollection.Save();
+            ScreenshotCollection.Save();
+
             Properties.Settings.Default.Save();
         }
 
