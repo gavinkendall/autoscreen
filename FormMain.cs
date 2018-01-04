@@ -224,7 +224,6 @@ namespace autoscreen
             toolStripMenuItemOpenOnStopScreenCapture.Checked = Properties.Settings.Default.OpenOnScreenCaptureStopCheck;
             toolStripMenuItemOpenAtApplicationStartup.Checked = Properties.Settings.Default.OpenOnApplicationStartupCheck;
             toolStripMenuItemCloseWindowOnStartCapture.Checked = Properties.Settings.Default.CloseWindowOnStartCaptureCheck;
-            toolStripMenuItemSearchOnStopScreenCapture.Checked = Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck;
             toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck;
 
             Log.Write("Loading user settings - scheduled screen capture session settings.");
@@ -572,7 +571,7 @@ namespace autoscreen
                     monthCalendar.Enabled = true;
                     toolStripComboBoxImageFormatFilter.Enabled = true;
 
-                    listBoxScreenshots.SelectedIndex = 0;
+                    listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
 
                     toolStripButtonNextSlide.Enabled = true;
                     toolStripButtonLastSlide.Enabled = true;
@@ -683,6 +682,9 @@ namespace autoscreen
 
                 if (toolStripMenuItemOpen.Enabled)
                 {
+                    SearchFolders();
+                    SearchFiles();
+
                     Opacity = 100;
                     toolStripMenuItemOpen.Enabled = false;
                     toolStripMenuItemClose.Enabled = true;
@@ -750,13 +752,6 @@ namespace autoscreen
 
                 DisableStopScreenCapture();
                 EnableStartScreenCapture();
-
-                // Make sure to update the calendar with any folders found due to the freshly-made screenshots.
-                // We'll let the user decide what folder of screenshots they want to see after the search is done.
-                if (toolStripMenuItemSearchOnStopScreenCapture.Checked)
-                {
-                    SearchFolders();
-                }
 
                 // Some people want to see this window immediately after the session has stopped.
                 if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
@@ -1449,7 +1444,6 @@ namespace autoscreen
             Properties.Settings.Default.OpenOnScreenCaptureStopCheck = toolStripMenuItemOpenOnStopScreenCapture.Checked;
             Properties.Settings.Default.OpenOnApplicationStartupCheck = toolStripMenuItemOpenAtApplicationStartup.Checked;
             Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
-            Properties.Settings.Default.SearchScreenshotsOnStopScreenCaptureCheck = toolStripMenuItemSearchOnStopScreenCapture.Checked;
             Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
 
             Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;

@@ -43,7 +43,6 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemSearchOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripLabelExit = new System.Windows.Forms.ToolStripStatusLabel();
@@ -288,6 +287,7 @@
             // 
             // toolStripDropDownButtonOptions
             // 
+            this.toolStripDropDownButtonOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemPreviewAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
@@ -299,72 +299,71 @@
             this.toolStripSeparator6,
             this.toolStripMenuItemShowSystemTrayIcon,
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture,
-            this.toolStripMenuItemSearchOnStopScreenCapture,
             this.toolStripSeparator5,
             this.toolStripMenuItemExitOnCloseWindow});
             this.toolStripDropDownButtonOptions.Image = global::autoscreen.Properties.Resources.options;
             this.toolStripDropDownButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonOptions.Name = "toolStripDropDownButtonOptions";
-            this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 22);
+            this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(29, 22);
             this.toolStripDropDownButtonOptions.Text = "Options";
             // 
             // toolStripMenuItemPreviewAtApplicationStartup
             // 
             this.toolStripMenuItemPreviewAtApplicationStartup.CheckOnClick = true;
             this.toolStripMenuItemPreviewAtApplicationStartup.Name = "toolStripMenuItemPreviewAtApplicationStartup";
-            this.toolStripMenuItemPreviewAtApplicationStartup.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemPreviewAtApplicationStartup.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemPreviewAtApplicationStartup.Text = "Turn on preview at application startup";
             // 
             // toolStripMenuItemScheduleAtApplicationStartup
             // 
             this.toolStripMenuItemScheduleAtApplicationStartup.CheckOnClick = true;
             this.toolStripMenuItemScheduleAtApplicationStartup.Name = "toolStripMenuItemScheduleAtApplicationStartup";
-            this.toolStripMenuItemScheduleAtApplicationStartup.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemScheduleAtApplicationStartup.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemScheduleAtApplicationStartup.Text = "Turn on scheduled screen capturing at application startup";
             // 
             // toolStripMenuItemDebugMode
             // 
             this.toolStripMenuItemDebugMode.CheckOnClick = true;
             this.toolStripMenuItemDebugMode.Name = "toolStripMenuItemDebugMode";
-            this.toolStripMenuItemDebugMode.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemDebugMode.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemDebugMode.Text = "Turn on debug mode and write messages to autoscreen.log";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(452, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(438, 6);
             // 
             // toolStripMenuItemOpenAtApplicationStartup
             // 
             this.toolStripMenuItemOpenAtApplicationStartup.CheckOnClick = true;
             this.toolStripMenuItemOpenAtApplicationStartup.Name = "toolStripMenuItemOpenAtApplicationStartup";
-            this.toolStripMenuItemOpenAtApplicationStartup.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemOpenAtApplicationStartup.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemOpenAtApplicationStartup.Text = "Open this window at application startup";
             // 
             // toolStripMenuItemOpenOnStopScreenCapture
             // 
             this.toolStripMenuItemOpenOnStopScreenCapture.CheckOnClick = true;
             this.toolStripMenuItemOpenOnStopScreenCapture.Name = "toolStripMenuItemOpenOnStopScreenCapture";
-            this.toolStripMenuItemOpenOnStopScreenCapture.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemOpenOnStopScreenCapture.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemOpenOnStopScreenCapture.Text = "Open this window after stopping the running screen capture session";
             // 
             // toolStripMenuItemCloseWindowOnStartCapture
             // 
             this.toolStripMenuItemCloseWindowOnStartCapture.CheckOnClick = true;
             this.toolStripMenuItemCloseWindowOnStartCapture.Name = "toolStripMenuItemCloseWindowOnStartCapture";
-            this.toolStripMenuItemCloseWindowOnStartCapture.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemCloseWindowOnStartCapture.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemCloseWindowOnStartCapture.Text = "Close this window when starting a screen capture session";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(452, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(438, 6);
             // 
             // toolStripMenuItemShowSystemTrayIcon
             // 
             this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
             this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
-            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
             this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowSystemTrayIcon_CheckedChanged);
             // 
@@ -372,26 +371,19 @@
             // 
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture.CheckOnClick = true;
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Name = "toolStripMenuItemShowSlideshowOnStopScreenCapture";
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Text = "Show the slideshow after stopping the running screen capture session";
-            // 
-            // toolStripMenuItemSearchOnStopScreenCapture
-            // 
-            this.toolStripMenuItemSearchOnStopScreenCapture.CheckOnClick = true;
-            this.toolStripMenuItemSearchOnStopScreenCapture.Name = "toolStripMenuItemSearchOnStopScreenCapture";
-            this.toolStripMenuItemSearchOnStopScreenCapture.Size = new System.Drawing.Size(455, 22);
-            this.toolStripMenuItemSearchOnStopScreenCapture.Text = "Search for screenshots after stopping the running screen capture session";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(452, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(438, 6);
             // 
             // toolStripMenuItemExitOnCloseWindow
             // 
             this.toolStripMenuItemExitOnCloseWindow.CheckOnClick = true;
             this.toolStripMenuItemExitOnCloseWindow.Name = "toolStripMenuItemExitOnCloseWindow";
-            this.toolStripMenuItemExitOnCloseWindow.Size = new System.Drawing.Size(455, 22);
+            this.toolStripMenuItemExitOnCloseWindow.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemExitOnCloseWindow.Text = "Exit application when closing this window";
             this.toolStripMenuItemExitOnCloseWindow.CheckedChanged += new System.EventHandler(this.toolStripMenuItemExitOnCloseWindow_CheckedChanged);
             // 
@@ -746,7 +738,7 @@
             // contextMenuStripScreenshotPreview
             // 
             this.contextMenuStripScreenshotPreview.Name = "contextMenuStripScreenshotPreview";
-            this.contextMenuStripScreenshotPreview.Size = new System.Drawing.Size(153, 26);
+            this.contextMenuStripScreenshotPreview.Size = new System.Drawing.Size(61, 4);
             // 
             // tabPageScreen2
             // 
@@ -2545,7 +2537,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPreviewAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSlideshowOnStopScreenCapture;
         private System.Windows.Forms.CheckBox checkBoxScheduleStartOnSchedule;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSearchOnStopScreenCapture;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;

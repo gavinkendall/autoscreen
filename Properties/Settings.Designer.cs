@@ -425,18 +425,6 @@ namespace autoscreen.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SearchScreenshotsOnStopScreenCaptureCheck {
-            get {
-                return ((bool)(this["SearchScreenshotsOnStopScreenCaptureCheck"]));
-            }
-            set {
-                this["SearchScreenshotsOnStopScreenCaptureCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool CloseWindowOnStartCaptureCheck {
             get {
                 return ((bool)(this["CloseWindowOnStartCaptureCheck"]));

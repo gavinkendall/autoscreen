@@ -104,9 +104,6 @@
     <Setting Name="CaptureStartOnScheduleCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="SearchScreenshotsOnStopScreenCaptureCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="CloseWindowOnStartCaptureCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
