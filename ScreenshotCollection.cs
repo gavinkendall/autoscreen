@@ -45,28 +45,13 @@ namespace autoscreen
             get { return m_screenshotList.Count; }
         }
 
-        public static Screenshot GetByFilename(string filename)
+        public static Screenshot GetBySlidename(string slidename, int screenNumber)
         {
             for (int i = 0; i < m_screenshotList.Count; i++)
             {
                 Screenshot screenshot = Get(i);
 
-                if (screenshot.Filename.Equals(filename))
-                {
-                    return (Screenshot)Get(i);
-                }
-            }
-
-            return null;
-        }
-
-        public static Screenshot GetBySlidename(string slidename)
-        {
-            for (int i = 0; i < m_screenshotList.Count; i++)
-            {
-                Screenshot screenshot = Get(i);
-
-                if (screenshot.Slidename.Equals(slidename))
+                if (screenshot.Slidename.Equals(slidename) && screenshot.Screen == screenNumber)
                 {
                     return (Screenshot)Get(i);
                 }

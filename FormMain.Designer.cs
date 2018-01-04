@@ -2269,7 +2269,7 @@
             this.toolStripScreenCapture.Location = new System.Drawing.Point(20, 321);
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(206, 25);
+            this.toolStripScreenCapture.Size = new System.Drawing.Size(175, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
             // toolStripSplitButtonStartScreenCapture
