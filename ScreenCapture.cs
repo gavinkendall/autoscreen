@@ -3,7 +3,7 @@
 // autoscreen.ScreenCapture.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Sunday, 31 December 2017
+// Thursday, 15 May 2008 - Friday, 5 January 2018
 
 using System;
 using System.IO;

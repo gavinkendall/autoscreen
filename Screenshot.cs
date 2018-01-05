@@ -3,7 +3,9 @@
 // autoscreen.Editor.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Sunday, 31 December 2017
+// Thursday, 15 May 2008 - Friday, 5 January 2018
+
+using System.IO;
 
 namespace autoscreen
 {
@@ -22,7 +24,16 @@ namespace autoscreen
             m_format = format;
 
             m_filename = System.IO.Path.GetFileName(m_path);
-            m_slidename = MacroParser.RegexPath.Match(path).Groups["Slidename"].Value;
+            m_slidename = MacroParser.RegexPath.Match(path).Groups["Slidename"].Value + " " + m_format;
+
+            string directory = System.IO.Path.GetDirectoryName(m_path);
+
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            Directory.SetCurrentDirectory(directory);
         }
 
         private string m_date;

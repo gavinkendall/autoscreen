@@ -3,7 +3,7 @@
 // autoscreen.StringHelper.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Sunday, 31 December 2017
+// Thursday, 15 May 2008 - Friday, 5 January 2018
 
 using System;
 using System.Text.RegularExpressions;
@@ -14,12 +14,10 @@ namespace autoscreen
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly Regex RegexPath = new Regex(@"(?<PathPrefix>.*)\[(?<Slidename>.*)\](?<PathSuffix>.*)");
-        public static readonly string DefaultMacro = "[%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%]_%screen%.%format%";
+        public static readonly string DefaultMacro = @"%year%-%month%-%day%\%screen%\[%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%].%format%";
 
         public static string ParseTags(string path, string imageFormat, string screenName, DateTime dateTimeScreenshotTaken)
         {
-            //path = RegexPath.Match(path).Groups["PathPrefix"].Value + RegexPath.Match(path).Groups["Slidename"].Value + RegexPath.Match(path).Groups["PathSuffix"].Value;
-
             if (!string.IsNullOrEmpty(imageFormat))
             {
                 path = path.Replace("%format%", ImageFormatCollection.GetByName(imageFormat).Extension.TrimStart('.'));

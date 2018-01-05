@@ -3,7 +3,7 @@
 // autoscreen.FormMain.cs
 //
 // Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Sunday, 31 December 2017
+// Thursday, 15 May 2008 - Friday, 5 January 2018
 
 using System;
 using System.IO;
@@ -448,6 +448,11 @@ namespace autoscreen
             if (!folder.EndsWith(@"\"))
             {
                 folder += @"\";
+            }
+
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
             }
 
             Directory.SetCurrentDirectory(folder);
@@ -950,7 +955,6 @@ namespace autoscreen
         private void DisableControls()
         {
             monthCalendar.Enabled = false;
-            textBoxScreenshotsFolderSearch.Enabled = false;
             toolStripComboBoxImageFormatFilter.Enabled = false;
 
             numericUpDownSlideshowDelayHours.Enabled = false;
@@ -958,19 +962,8 @@ namespace autoscreen
             numericUpDownSlideshowDelaySeconds.Enabled = false;
             numericUpDownSlideshowDelayMilliseconds.Enabled = false;
 
-            numericUpDownHoursInterval.Enabled = false;
-            numericUpDownMinutesInterval.Enabled = false;
-            numericUpDownSecondsInterval.Enabled = false;
-            numericUpDownMillisecondsInterval.Enabled = false;
-
             numericUpDownSlideSkip.Enabled = false;
             checkBoxSlideSkip.Enabled = false;
-
-            CaptureLimitCheck();
-            numericUpDownImageResolutionRatio.Enabled = false;
-
-            checkBoxCaptureLimit.Enabled = false;
-            checkBoxInitialScreenshot.Enabled = false;
 
             toolStripSplitButtonStartScreenCapture.Enabled = false;
         }
@@ -981,7 +974,6 @@ namespace autoscreen
         private void EnableControls()
         {
             monthCalendar.Enabled = true;
-            textBoxScreenshotsFolderSearch.Enabled = true;
             toolStripComboBoxImageFormatFilter.Enabled = true;
 
             numericUpDownSlideshowDelayHours.Enabled = true;
@@ -989,26 +981,13 @@ namespace autoscreen
             numericUpDownSlideshowDelaySeconds.Enabled = true;
             numericUpDownSlideshowDelayMilliseconds.Enabled = true;
 
-            numericUpDownHoursInterval.Enabled = true;
-            numericUpDownMinutesInterval.Enabled = true;
-            numericUpDownSecondsInterval.Enabled = true;
-            numericUpDownMillisecondsInterval.Enabled = true;
-
             numericUpDownSlideSkip.Enabled = true;
             checkBoxSlideSkip.Enabled = true;
-
-            CaptureLimitCheck();
-            numericUpDownImageResolutionRatio.Enabled = true;
-
-            checkBoxCaptureLimit.Enabled = true;
-            checkBoxInitialScreenshot.Enabled = true;
 
             if (!timerScreenCapture.Enabled)
             {
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
             }
-
-            toolStripButtonPreview.Enabled = true;
         }
 
         /// <summary>
@@ -1344,22 +1323,19 @@ namespace autoscreen
             {
                 toolStripMenuItemStartScreenCapture.Enabled = true;
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
+                toolStripButtonPreview.Enabled = true;
+                textBoxScreenshotsFolderSearch.Enabled = true;
+                textBoxMacro.Enabled = true;
+                buttonBrowseFolder.Enabled = true;
 
                 numericUpDownHoursInterval.Enabled = true;
-                labelHoursInterval.Enabled = true;
                 checkBoxInitialScreenshot.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
-                labelMinutesInterval.Enabled = true;
                 checkBoxCaptureLimit.Enabled = true;
                 numericUpDownCaptureLimit.Enabled = true;
-                labelLimit.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
-                labelSecondsInterval.Enabled = true;
-                labelAt.Enabled = true;
                 numericUpDownImageResolutionRatio.Enabled = true;
-                labelPercentResolution.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
-                labelMillisecondsInterval.Enabled = true;
                 toolStripButtonPreview.Enabled = true;
             }
             else
@@ -1377,20 +1353,13 @@ namespace autoscreen
             toolStripMenuItemStopScreenCapture.Enabled = true;
 
             numericUpDownHoursInterval.Enabled = false;
-            labelHoursInterval.Enabled = false;
             checkBoxInitialScreenshot.Enabled = false;
             numericUpDownMinutesInterval.Enabled = false;
-            labelMinutesInterval.Enabled = false;
             checkBoxCaptureLimit.Enabled = false;
             numericUpDownCaptureLimit.Enabled = false;
-            labelLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
-            labelSecondsInterval.Enabled = false;
-            labelAt.Enabled = false;
             numericUpDownImageResolutionRatio.Enabled = false;
-            labelPercentResolution.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
-            labelMillisecondsInterval.Enabled = false;
             toolStripButtonPreview.Enabled = false;
         }
 
@@ -1410,6 +1379,10 @@ namespace autoscreen
         {
             toolStripMenuItemStartScreenCapture.Enabled = false;
             toolStripSplitButtonStartScreenCapture.Enabled = false;
+            toolStripButtonPreview.Enabled = false;
+            textBoxScreenshotsFolderSearch.Enabled = false;
+            textBoxMacro.Enabled = false;
+            buttonBrowseFolder.Enabled = false;
         }
 
         /// <summary>
@@ -2033,6 +2006,7 @@ namespace autoscreen
                         if (!string.IsNullOrEmpty(screenName))
                         {
                             path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken);
+
                             ScreenCapture.TakeScreenshot(screen, screenName, path, count);
                         }
                     }
