@@ -748,15 +748,27 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?><autoscreen><screenshots><screenshot><date>" +
-            "</date><path></path><screen></screen><format></format><filename></filename><slid" +
-            "ename></slidename></screenshot></screenshots></autoscreen>")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?><autoscreen><screenshots><screenshot><index" +
+            "></index><date></date><path></path><screen></screen><format></format><filename><" +
+            "/filename><slidename></slidename></screenshot></screenshots></autoscreen>")]
         public string Screenshots {
             get {
                 return ((string)(this["Screenshots"]));
             }
             set {
                 this["Screenshots"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public string Screen5Name {
+            get {
+                return ((string)(this["Screen5Name"]));
+            }
+            set {
+                this["Screen5Name"] = value;
             }
         }
     }

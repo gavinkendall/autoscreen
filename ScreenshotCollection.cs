@@ -6,14 +6,15 @@
 // Thursday, 15 May 2008 - Friday, 5 January 2018
 
 using System;
-using System.Xml;
-using System.Text;
 using System.Collections;
+using System.Text;
+using System.Xml;
 
 namespace autoscreen
 {
     public static class ScreenshotCollection
     {
+        private static XmlDocument xdoc = null;
         private static ArrayList m_screenshotList = new ArrayList();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -21,6 +22,7 @@ namespace autoscreen
         private const string XML_FILE_SCREENSHOTS_NODE = "screenshots";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
+        private const string SCREENSHOT_INDEX = "index";
         private const string SCREENSHOT_DATE = "date";
         private const string SCREENSHOT_PATH = "path";
         private const string SCREENSHOT_SCREEN = "screen";
@@ -34,7 +36,7 @@ namespace autoscreen
             m_screenshotList.Add(screenshot);
         }
 
-        public static Screenshot Get(int index)
+        public static Screenshot GetByIndex(int index)
         {
             return (Screenshot)m_screenshotList[index];
         }
@@ -46,31 +48,57 @@ namespace autoscreen
 
         public static Screenshot GetBySlidename(string slidename, int screenNumber)
         {
-            for (int i = 0; i < m_screenshotList.Count; i++)
-            {
-                Screenshot screenshot = Get(i);
+            Screenshot screenshot = null;
 
-                if (screenshot.Slidename.Equals(slidename) && screenshot.Screen == screenNumber)
+            if (xdoc != null)
+            {
+                xdoc.LoadXml(Properties.Settings.Default.Screenshots);
+
+                XmlNodeList xscreenshots = xdoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_SLIDENAME + " = '" + slidename + "' and " + SCREENSHOT_SCREEN + " = '" + screenNumber + "']");
+
+                foreach (XmlNode xscreenshot in xscreenshots)
                 {
-                    return (Screenshot)Get(i);
+                    XmlNodeReader xreader = new XmlNodeReader(xscreenshot);
+
+                    while (xreader.Read())
+                    {
+                        if (xreader.IsStartElement() && xreader.Name.Equals(SCREENSHOT_INDEX))
+                        {
+                            xreader.Read();
+
+                            screenshot = GetByIndex(Convert.ToInt32(xreader.Value));
+                        }
+                    }
+
+                    xreader.Close();
                 }
             }
 
-            return null;
+            return screenshot;
         }
 
         public static ArrayList GetDates()
         {
             ArrayList dates = new ArrayList();
 
-            foreach (Screenshot screenshot in m_screenshotList)
+            if (xdoc != null)
             {
-                if (!string.IsNullOrEmpty(screenshot.Date))
+                XmlNodeList xdates = xdoc.SelectNodes(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE);
+
+                foreach (XmlNode xdate in xdates)
                 {
-                    if (!dates.Contains(screenshot.Date))
+                    XmlNodeReader xreader = new XmlNodeReader(xdate);
+
+                    while (xreader.Read())
                     {
-                        dates.Add(screenshot.Date);
+                        if (xreader.IsStartElement() && xreader.Name.Equals(SCREENSHOT_DATE))
+                        {
+                            xreader.Read();
+                            dates.Add(xreader.Value);
+                        }
                     }
+
+                    xreader.Close();
                 }
             }
 
@@ -82,7 +110,7 @@ namespace autoscreen
         /// </summary>
         public static void Load()
         {
-            XmlDocument xdoc = new XmlDocument();
+            xdoc = new XmlDocument();
             xdoc.LoadXml(Properties.Settings.Default.Screenshots);
 
             XmlNodeList xscreenshots = xdoc.SelectNodes(SCREENSHOT_XPATH);
@@ -98,6 +126,11 @@ namespace autoscreen
                     {
                         switch (xreader.Name)
                         {
+                            case SCREENSHOT_INDEX:
+                                xreader.Read();
+                                screenshot.Index = string.IsNullOrEmpty(xreader.Value) ? 0 : Convert.ToInt32(xreader.Value);
+                                break;
+
                             case SCREENSHOT_DATE:
                                 xreader.Read();
                                 screenshot.Date = xreader.Value;
@@ -174,6 +207,7 @@ namespace autoscreen
                     Screenshot screenshot = (Screenshot)obj;
 
                     xwriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
+                    xwriter.WriteElementString(SCREENSHOT_INDEX, screenshot.Index.ToString());
                     xwriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
                     xwriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
                     xwriter.WriteElementString(SCREENSHOT_SCREEN, screenshot.Screen.ToString());

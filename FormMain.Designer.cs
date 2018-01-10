@@ -201,6 +201,9 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
+            this.panelScreen5 = new System.Windows.Forms.Panel();
+            this.textBoxScreen5Name = new System.Windows.Forms.TextBox();
+            this.labelScreen5Name = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -260,6 +263,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
             this.toolStripScreenCapture.SuspendLayout();
+            this.panelScreen5.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -1360,6 +1364,7 @@
             // 
             // tabPageActiveWindow
             // 
+            this.tabPageActiveWindow.Controls.Add(this.panelScreen5);
             this.tabPageActiveWindow.Controls.Add(this.pictureBoxActiveWindow);
             this.tabPageActiveWindow.Location = new System.Drawing.Point(4, 22);
             this.tabPageActiveWindow.Name = "tabPageActiveWindow";
@@ -1370,12 +1375,14 @@
             // 
             // pictureBoxActiveWindow
             // 
+            this.pictureBoxActiveWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxActiveWindow.BackColor = System.Drawing.Color.Black;
             this.pictureBoxActiveWindow.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxActiveWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxActiveWindow.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxActiveWindow.Name = "pictureBoxActiveWindow";
-            this.pictureBoxActiveWindow.Size = new System.Drawing.Size(493, 319);
+            this.pictureBoxActiveWindow.Size = new System.Drawing.Size(492, 288);
             this.pictureBoxActiveWindow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxActiveWindow.TabIndex = 0;
             this.pictureBoxActiveWindow.TabStop = false;
@@ -2334,6 +2341,36 @@
             this.textBoxMacro.TabIndex = 24;
             this.textBoxMacro.TabStop = false;
             // 
+            // panelScreen5
+            // 
+            this.panelScreen5.Controls.Add(this.textBoxScreen5Name);
+            this.panelScreen5.Controls.Add(this.labelScreen5Name);
+            this.panelScreen5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen5.Location = new System.Drawing.Point(0, 286);
+            this.panelScreen5.Name = "panelScreen5";
+            this.panelScreen5.Size = new System.Drawing.Size(493, 33);
+            this.panelScreen5.TabIndex = 23;
+            // 
+            // textBoxScreen5Name
+            // 
+            this.textBoxScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreen5Name.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreen5Name.Name = "textBoxScreen5Name";
+            this.textBoxScreen5Name.Size = new System.Drawing.Size(74, 20);
+            this.textBoxScreen5Name.TabIndex = 23;
+            this.textBoxScreen5Name.TabStop = false;
+            // 
+            // labelScreen5Name
+            // 
+            this.labelScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreen5Name.AutoSize = true;
+            this.labelScreen5Name.Location = new System.Drawing.Point(367, 11);
+            this.labelScreen5Name.Name = "labelScreen5Name";
+            this.labelScreen5Name.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen5Name.TabIndex = 22;
+            this.labelScreen5Name.Text = "Name:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2428,6 +2465,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).EndInit();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
+            this.panelScreen5.ResumeLayout(false);
+            this.panelScreen5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2606,5 +2645,8 @@
         private System.Windows.Forms.Label labelScreen4Name;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripButton toolStripButtonPreview;
+        private System.Windows.Forms.Panel panelScreen5;
+        private System.Windows.Forms.TextBox textBoxScreen5Name;
+        private System.Windows.Forms.Label labelScreen5Name;
     }
 }

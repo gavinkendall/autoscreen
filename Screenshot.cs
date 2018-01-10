@@ -18,6 +18,7 @@ namespace autoscreen
 
         public Screenshot(string date, string path, int screen, string format)
         {
+            m_index = ScreenshotCollection.Count;
             m_date = date;
             m_path = MacroParser.RegexPath.Match(path).Groups["PathPrefix"].Value + MacroParser.RegexPath.Match(path).Groups["Slidename"].Value + MacroParser.RegexPath.Match(path).Groups["PathSuffix"].Value;
             m_screen = screen;
@@ -34,6 +35,13 @@ namespace autoscreen
             }
 
             Directory.SetCurrentDirectory(directory);
+        }
+
+        private int m_index;
+        public int Index
+        {
+            set { m_index = value; }
+            get { return m_index; }
         }
 
         private string m_date;

@@ -127,7 +127,7 @@ namespace autoscreen
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = GetScreenBitmap(screen, m_ratio);
+                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, m_ratio);
 
                     if (bitmap != null)
                     {
@@ -139,9 +139,6 @@ namespace autoscreen
                     }
 
                     GC.Collect();
-
-                    // This is for the Active Window capture. I'm still not sure how I'm going to implement this.
-                    //SaveToFile(GetActiveWindowBitmap(), m_format, filename.Replace("%screen%", "5") + ImageFormatCollection.GetByName(m_format).Extension);
                 }
             }
             catch (Exception ex)

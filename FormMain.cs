@@ -249,6 +249,7 @@ namespace autoscreen
             textBoxScreen2Name.Text = Properties.Settings.Default.Screen2Name;
             textBoxScreen3Name.Text = Properties.Settings.Default.Screen3Name;
             textBoxScreen4Name.Text = Properties.Settings.Default.Screen4Name;
+            textBoxScreen5Name.Text = Properties.Settings.Default.Screen5Name;
 
             Log.Write("Loading region capture controls for X, Y, Width, Height, and Reset on each available screen.");
 
@@ -555,7 +556,7 @@ namespace autoscreen
                     // The new way is to use the screenshot collection class.
                     for (int i = 0; i < ScreenshotCollection.Count; i++)
                     {
-                        Screenshot screenshot = ScreenshotCollection.Get(i);
+                        Screenshot screenshot = ScreenshotCollection.GetByIndex(i);
 
                         if (screenshot != null)
                         {
@@ -687,6 +688,8 @@ namespace autoscreen
 
                 if (toolStripMenuItemOpen.Enabled)
                 {
+                    SaveApplicationSettings();
+
                     SearchFolders();
                     SearchFiles();
 
@@ -1460,6 +1463,7 @@ namespace autoscreen
             Properties.Settings.Default.Screen2Name = textBoxScreen2Name.Text;
             Properties.Settings.Default.Screen3Name = textBoxScreen3Name.Text;
             Properties.Settings.Default.Screen4Name = textBoxScreen4Name.Text;
+            Properties.Settings.Default.Screen5Name = textBoxScreen5Name.Text;
 
             Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
 
@@ -1973,6 +1977,15 @@ namespace autoscreen
 
             DateTime dateTimeScreenshotTaken = DateTime.Now;
 
+            // Active Window
+            if (CaptureTheScreen(5))
+            {
+                path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken);
+
+                ScreenCapture.TakeScreenshot(null, textBoxScreen5Name.Text, path, 5);
+            }
+
+            // All screens.
             foreach (Screen screen in Screen.AllScreens)
             {
                 count++;
@@ -2036,6 +2049,10 @@ namespace autoscreen
 
                 case 4:
                     capture = string.IsNullOrEmpty(textBoxScreen4Name.Text) ? false : true;
+                    break;
+
+                case 5:
+                    capture = string.IsNullOrEmpty(textBoxScreen5Name.Text) ? false : true;
                     break;
             }
 
