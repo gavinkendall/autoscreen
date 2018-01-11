@@ -65,12 +65,12 @@ namespace autoscreen
             for (int i = 1; i <= 5; i++)
             {
                 // This is the old method of obtaining the images based on a slide name.
-                string path = GetImageFilePath(slideName, i);
-
+                //string path = GetImageFilePath(slideName, i);
+                string path = string.Empty;
                 // If we can't find an image based on the old method then chances are we
                 // now need to search for the image by looking inside the screenshot collection class.
-                if (string.IsNullOrEmpty(path))
-                {
+                //if (string.IsNullOrEmpty(path))
+                //{
                     Screenshot screenshot = ScreenshotCollection.GetBySlidename(slideName, i);
 
                     if (screenshot != null)
@@ -80,7 +80,7 @@ namespace autoscreen
                             path = screenshot.Path;
                         }
                     }
-                }
+                //}
 
                 if (File.Exists(path))
                 {

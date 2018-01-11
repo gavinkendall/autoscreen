@@ -541,6 +541,7 @@ namespace autoscreen
                 {
                     count++;
 
+                    /*
                     // The old way of finding screenshots taken.
                     // This is to maintain backwards compatibility with older versions of Auto Screen Capture.
                     if (Directory.Exists(textBoxScreenshotsFolderSearch.Text + monthCalendar.SelectionStart.ToString(MacroParser.DateFormat) + "\\" + count.ToString()))
@@ -552,6 +553,7 @@ namespace autoscreen
                             listBoxScreenshots.Items.AddRange(files);
                         }
                     }
+                    */
 
                     // The new way is to use the screenshot collection class.
                     for (int i = 0; i < ScreenshotCollection.Count; i++)
@@ -605,6 +607,7 @@ namespace autoscreen
                 {
                     ArrayList selectedFolders = new ArrayList();
 
+                    /*
                     // The old way of obtaining the dates from screenshots taken.
                     // This is to maintain backwards compatibility with older versions of Auto Screen Capture.
                     string[] dirs = Directory.GetDirectories(textBoxScreenshotsFolderSearch.Text);
@@ -633,6 +636,7 @@ namespace autoscreen
                             }
                         }
                     }
+                    */
 
                     // The new way of obtaining the dates from screenshots taken.
                     foreach (string date in ScreenshotCollection.GetDates())

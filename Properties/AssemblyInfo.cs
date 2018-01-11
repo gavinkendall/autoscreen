@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gavin Kendall")]
 [assembly: AssemblyProduct("Auto Screen Capture")]
-[assembly: AssemblyCopyright("2008 - 2017 Gavin Kendall")]
+[assembly: AssemblyCopyright("2008 - 2018 Gavin Kendall")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

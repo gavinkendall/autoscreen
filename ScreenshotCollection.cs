@@ -66,7 +66,10 @@ namespace autoscreen
                         {
                             xreader.Read();
 
-                            screenshot = GetByIndex(Convert.ToInt32(xreader.Value));
+                            if (!string.IsNullOrEmpty(xreader.Value))
+                            {
+                                screenshot = GetByIndex(Convert.ToInt32(xreader.Value));
+                            }
                         }
                     }
 
@@ -94,7 +97,11 @@ namespace autoscreen
                         if (xreader.IsStartElement() && xreader.Name.Equals(SCREENSHOT_DATE))
                         {
                             xreader.Read();
-                            dates.Add(xreader.Value);
+
+                            if (!string.IsNullOrEmpty(xreader.Value))
+                            {
+                                dates.Add(xreader.Value);
+                            }
                         }
                     }
 
