@@ -57,11 +57,14 @@ namespace autoscreen
         {
             AddEditor(name, application, arguments);
 
-            string selectedFile = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen).Path;
+            Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-            if (File.Exists(selectedFile))
+            if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path))
             {
-                Process.Start(application, arguments.Replace("%screenshot%", selectedFile));
+                if (File.Exists(selectedScreenshot.Path))
+                {
+                    Process.Start(application, arguments.Replace("%screenshot%", selectedScreenshot.Path));
+                }
             }
         }
 

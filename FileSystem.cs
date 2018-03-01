@@ -21,6 +21,8 @@ namespace autoscreen
         private const string REGEX_FILE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})_(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\.(?<Extension>[a-z]{3,4})$";
         private const string REGEX_SLIDE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})\s(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\s(?<Extension>[A-Z]{3,4})$";
 
+        public static readonly string userApplicationDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\.autoscreen\\";
+
         /// <summary>
         /// Gets the image file path based on the slide name.
         /// </summary>
@@ -64,23 +66,7 @@ namespace autoscreen
 
             for (int i = 1; i <= 5; i++)
             {
-                // This is the old method of obtaining the images based on a slide name.
-                //string path = GetImageFilePath(slideName, i);
-                string path = string.Empty;
-                // If we can't find an image based on the old method then chances are we
-                // now need to search for the image by looking inside the screenshot collection class.
-                //if (string.IsNullOrEmpty(path))
-                //{
-                    Screenshot screenshot = ScreenshotCollection.GetBySlidename(slideName, i);
-
-                    if (screenshot != null)
-                    {
-                        if (screenshot.Screen == i && selectedDate.ToString(MacroParser.DateFormat) == screenshot.Date)
-                        {
-                            path = screenshot.Path;
-                        }
-                    }
-                //}
+                string path = GetImageFilePath(slideName, i);
 
                 if (File.Exists(path))
                 {
@@ -101,17 +87,22 @@ namespace autoscreen
         /// <param name="filePath">The file path.</param>
         /// <param name="monthCalendarFolder">The chosen calendar folder.</param>
         /// <returns></returns>
-        public static string[] GetFiles(string filePath, string subFolder, string monthCalendarFolder)
+        public static string[] GetFiles(string filePath, string monthCalendarFolder)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
                 m_filePath = filePath;
 
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
                 if (!string.IsNullOrEmpty(monthCalendarFolder))
                 {
                     if (Directory.Exists(filePath + monthCalendarFolder))
                     {
-                        m_filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\" + subFolder + "\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
+                        m_filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\1\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
 
                         if (m_filePaths != null)
                         {

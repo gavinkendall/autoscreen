@@ -80,38 +80,6 @@ namespace autoscreen
             return screenshot;
         }
 
-        public static ArrayList GetDates()
-        {
-            ArrayList dates = new ArrayList();
-
-            if (xdoc != null)
-            {
-                XmlNodeList xdates = xdoc.SelectNodes(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE);
-
-                foreach (XmlNode xdate in xdates)
-                {
-                    XmlNodeReader xreader = new XmlNodeReader(xdate);
-
-                    while (xreader.Read())
-                    {
-                        if (xreader.IsStartElement() && xreader.Name.Equals(SCREENSHOT_DATE))
-                        {
-                            xreader.Read();
-
-                            if (!string.IsNullOrEmpty(xreader.Value))
-                            {
-                                dates.Add(xreader.Value);
-                            }
-                        }
-                    }
-
-                    xreader.Close();
-                }
-            }
-
-            return dates;
-        }
-
         /// <summary>
         /// Loads the screenshots.
         /// </summary>

@@ -121,7 +121,7 @@ namespace autoscreen
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, string screenName, string path, int screenNumber)
+        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber)
         {
             try
             {
@@ -131,9 +131,9 @@ namespace autoscreen
 
                     if (bitmap != null)
                     {
-                        Screenshot screenshot = new Screenshot(DateTime.Now.ToString(MacroParser.DateFormat), path, screenNumber, m_format);
+                        Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format);
 
-                        SaveToFile(bitmap, m_format, screenshot.Path);
+                        SaveToFile(bitmap, format, screenshot.Path);
 
                         ScreenshotCollection.Add(screenshot);
                     }

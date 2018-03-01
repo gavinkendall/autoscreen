@@ -114,6 +114,9 @@
             this.labelScreen4X = new System.Windows.Forms.Label();
             this.labelScreen4Y = new System.Windows.Forms.Label();
             this.tabPageActiveWindow = new System.Windows.Forms.TabPage();
+            this.panelScreen5 = new System.Windows.Forms.Panel();
+            this.textBoxScreen5Name = new System.Windows.Forms.TextBox();
+            this.labelScreen5Name = new System.Windows.Forms.Label();
             this.pictureBoxActiveWindow = new System.Windows.Forms.PictureBox();
             this.listBoxScreenshots = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -201,9 +204,6 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
-            this.panelScreen5 = new System.Windows.Forms.Panel();
-            this.textBoxScreen5Name = new System.Windows.Forms.TextBox();
-            this.labelScreen5Name = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -241,6 +241,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4X)).BeginInit();
             this.tabPageActiveWindow.SuspendLayout();
+            this.panelScreen5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxActiveWindow)).BeginInit();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.toolStripSlideshow.SuspendLayout();
@@ -263,7 +264,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
             this.toolStripScreenCapture.SuspendLayout();
-            this.panelScreen5.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -291,7 +291,6 @@
             // 
             // toolStripDropDownButtonOptions
             // 
-            this.toolStripDropDownButtonOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemPreviewAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
@@ -308,7 +307,7 @@
             this.toolStripDropDownButtonOptions.Image = global::autoscreen.Properties.Resources.options;
             this.toolStripDropDownButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonOptions.Name = "toolStripDropDownButtonOptions";
-            this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 22);
             this.toolStripDropDownButtonOptions.Text = "Options";
             // 
             // toolStripMenuItemPreviewAtApplicationStartup
@@ -1373,6 +1372,36 @@
             this.tabPageActiveWindow.Text = "Active Window";
             this.tabPageActiveWindow.UseVisualStyleBackColor = true;
             // 
+            // panelScreen5
+            // 
+            this.panelScreen5.Controls.Add(this.textBoxScreen5Name);
+            this.panelScreen5.Controls.Add(this.labelScreen5Name);
+            this.panelScreen5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen5.Location = new System.Drawing.Point(0, 286);
+            this.panelScreen5.Name = "panelScreen5";
+            this.panelScreen5.Size = new System.Drawing.Size(493, 33);
+            this.panelScreen5.TabIndex = 23;
+            // 
+            // textBoxScreen5Name
+            // 
+            this.textBoxScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreen5Name.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreen5Name.Name = "textBoxScreen5Name";
+            this.textBoxScreen5Name.Size = new System.Drawing.Size(74, 20);
+            this.textBoxScreen5Name.TabIndex = 23;
+            this.textBoxScreen5Name.TabStop = false;
+            // 
+            // labelScreen5Name
+            // 
+            this.labelScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreen5Name.AutoSize = true;
+            this.labelScreen5Name.Location = new System.Drawing.Point(367, 11);
+            this.labelScreen5Name.Name = "labelScreen5Name";
+            this.labelScreen5Name.Size = new System.Drawing.Size(38, 13);
+            this.labelScreen5Name.TabIndex = 22;
+            this.labelScreen5Name.Text = "Name:";
+            // 
             // pictureBoxActiveWindow
             // 
             this.pictureBoxActiveWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2341,36 +2370,6 @@
             this.textBoxMacro.TabIndex = 24;
             this.textBoxMacro.TabStop = false;
             // 
-            // panelScreen5
-            // 
-            this.panelScreen5.Controls.Add(this.textBoxScreen5Name);
-            this.panelScreen5.Controls.Add(this.labelScreen5Name);
-            this.panelScreen5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen5.Location = new System.Drawing.Point(0, 286);
-            this.panelScreen5.Name = "panelScreen5";
-            this.panelScreen5.Size = new System.Drawing.Size(493, 33);
-            this.panelScreen5.TabIndex = 23;
-            // 
-            // textBoxScreen5Name
-            // 
-            this.textBoxScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreen5Name.Location = new System.Drawing.Point(411, 8);
-            this.textBoxScreen5Name.Name = "textBoxScreen5Name";
-            this.textBoxScreen5Name.Size = new System.Drawing.Size(74, 20);
-            this.textBoxScreen5Name.TabIndex = 23;
-            this.textBoxScreen5Name.TabStop = false;
-            // 
-            // labelScreen5Name
-            // 
-            this.labelScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreen5Name.AutoSize = true;
-            this.labelScreen5Name.Location = new System.Drawing.Point(367, 11);
-            this.labelScreen5Name.Name = "labelScreen5Name";
-            this.labelScreen5Name.Size = new System.Drawing.Size(38, 13);
-            this.labelScreen5Name.TabIndex = 22;
-            this.labelScreen5Name.Text = "Name:";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2437,6 +2436,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4X)).EndInit();
             this.tabPageActiveWindow.ResumeLayout(false);
+            this.panelScreen5.ResumeLayout(false);
+            this.panelScreen5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxActiveWindow)).EndInit();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
             this.toolStripSlideshow.ResumeLayout(false);
@@ -2465,8 +2466,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).EndInit();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
-            this.panelScreen5.ResumeLayout(false);
-            this.panelScreen5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

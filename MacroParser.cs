@@ -13,8 +13,8 @@ namespace autoscreen
     public static class MacroParser
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
-        public static readonly Regex RegexPath = new Regex(@"(?<PathPrefix>.*)\[(?<Slidename>.*)\](?<PathSuffix>.*)");
-        public static readonly string DefaultMacro = @"%year%-%month%-%day%\%screen%\[%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%].%format%";
+        public static readonly string TimeFormat = "HH-mm-ss-fff";
+        public static readonly string DefaultMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
         public static string ParseTags(string path, string imageFormat, string screenName, DateTime dateTimeScreenshotTaken)
         {

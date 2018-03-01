@@ -5,6 +5,7 @@
 // Written by Gavin Kendall (gavinkendall@gmail.com)
 // Thursday, 15 May 2008 - Friday, 5 January 2018
 
+using System;
 using System.IO;
 
 namespace autoscreen
@@ -16,16 +17,15 @@ namespace autoscreen
 
         }
 
-        public Screenshot(string date, string path, int screen, string format)
+        public Screenshot(DateTime dateTime, string path, int screen, string format)
         {
             m_index = ScreenshotCollection.Count;
-            m_date = date;
-            m_path = MacroParser.RegexPath.Match(path).Groups["PathPrefix"].Value + MacroParser.RegexPath.Match(path).Groups["Slidename"].Value + MacroParser.RegexPath.Match(path).Groups["PathSuffix"].Value;
+            m_date = dateTime.ToString(MacroParser.DateFormat);
+            m_path = path;
             m_screen = screen;
             m_format = format;
-
             m_filename = System.IO.Path.GetFileName(m_path);
-            m_slidename = MacroParser.RegexPath.Match(path).Groups["Slidename"].Value + " " + m_format;
+            m_slidename = dateTime.ToString(MacroParser.DateFormat) + " " + dateTime.ToString(MacroParser.TimeFormat) + " " + format;
 
             string directory = System.IO.Path.GetDirectoryName(m_path);
 

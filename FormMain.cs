@@ -255,6 +255,11 @@ namespace autoscreen
 
             int count = 0;
 
+            if (Screen.AllScreens.Length == 1)
+            {
+                tabControlScreens.SelectedTab = tabPageScreen1;
+            }
+
             foreach (Screen screen in Screen.AllScreens)
             {
                 count++;
@@ -535,42 +540,11 @@ namespace autoscreen
             }
             else
             {
-                int count = 0;
+                string[] files = FileSystem.GetFiles(FileSystem.userApplicationDataDirectory, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
-                foreach (Screen screen in Screen.AllScreens)
+                if (files != null)
                 {
-                    count++;
-
-                    /*
-                    // The old way of finding screenshots taken.
-                    // This is to maintain backwards compatibility with older versions of Auto Screen Capture.
-                    if (Directory.Exists(textBoxScreenshotsFolderSearch.Text + monthCalendar.SelectionStart.ToString(MacroParser.DateFormat) + "\\" + count.ToString()))
-                    {
-                        string[] files = FileSystem.GetFiles(textBoxScreenshotsFolderSearch.Text, count.ToString(), monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
-
-                        if (files != null)
-                        {
-                            listBoxScreenshots.Items.AddRange(files);
-                        }
-                    }
-                    */
-
-                    // The new way is to use the screenshot collection class.
-                    for (int i = 0; i < ScreenshotCollection.Count; i++)
-                    {
-                        Screenshot screenshot = ScreenshotCollection.GetByIndex(i);
-
-                        if (screenshot != null)
-                        {
-                            if (File.Exists(screenshot.Path) && screenshot.Screen == count && screenshot.Date == monthCalendar.SelectionStart.ToString(MacroParser.DateFormat))
-                            {
-                                if (!listBoxScreenshots.Items.Contains(screenshot.Slidename))
-                                {
-                                    listBoxScreenshots.Items.Add(screenshot.Slidename);
-                                }
-                            }
-                        }
-                    }
+                    listBoxScreenshots.Items.AddRange(files);
                 }
 
                 // If we do find files then make sure the user can use the slideshow.
@@ -607,10 +581,7 @@ namespace autoscreen
                 {
                     ArrayList selectedFolders = new ArrayList();
 
-                    /*
-                    // The old way of obtaining the dates from screenshots taken.
-                    // This is to maintain backwards compatibility with older versions of Auto Screen Capture.
-                    string[] dirs = Directory.GetDirectories(textBoxScreenshotsFolderSearch.Text);
+                    string[] dirs = Directory.GetDirectories(FileSystem.userApplicationDataDirectory);
 
                     int count = 0;
 
@@ -618,8 +589,7 @@ namespace autoscreen
                     {
                         count++;
 
-                        // Go through each directory found and make sure that the sub-directories match
-                        // with the format yyyy-mm-dd.
+                        // Go through each directory found and make sure that the sub-directories match with the format yyyy-mm-dd.
                         for (int i = 0; i < dirs.Length; i++)
                         {
                             Regex rgx = new Regex(@"^\d{4}-\d{2}-\d{2}$");
@@ -635,13 +605,6 @@ namespace autoscreen
                                 }
                             }
                         }
-                    }
-                    */
-
-                    // The new way of obtaining the dates from screenshots taken.
-                    foreach (string date in ScreenshotCollection.GetDates())
-                    {
-                        selectedFolders.Add(date);
                     }
 
                     // Also make sure that the dates in the calendar are set to bold for each
@@ -1480,18 +1443,6 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Displays the current mode that we're in.
-        /// </summary>
-        /// <param name="status">Can be "Preview", "Normal", or "Static".</param>
-        private void DisplayModeStatus(string status)
-        {
-            if (!string.IsNullOrEmpty(status))
-            {
-                statusStrip.Items["statusStripLabelMode"].Text = "Mode: " + status;
-            }
-        }
-
-        /// <summary>
         /// Displays the status of scheduled screen capture sessions.
         /// </summary>
         /// <param name="status">Can be "On" or "Off".</param>
@@ -1657,11 +1608,14 @@ namespace autoscreen
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
-                string selectedFile = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen).Path;
+                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-                if (File.Exists(selectedFile))
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path))
                 {
-                    Process.Start(windowsExplorer, "/select,\"" + selectedFile + "\"");
+                    if (File.Exists(selectedScreenshot.Path))
+                    {
+                        Process.Start(windowsExplorer, "/select,\"" + selectedScreenshot.Path + "\"");
+                    }
                 }
             }
         }
@@ -1896,11 +1850,14 @@ namespace autoscreen
             if (listBoxScreenshots.SelectedIndex > -1)
             {
                 Editor editor = EditorCollection.GetByName(sender.ToString());
-                string selectedFile = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen).Path;
+                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-                if (File.Exists(selectedFile))
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path))
                 {
-                    Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedFile + "\""));
+                    if (File.Exists(selectedScreenshot.Path))
+                    {
+                        Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
+                    }
                 }
             }
         }
@@ -1976,7 +1933,6 @@ namespace autoscreen
         private void TakeScreenshot()
         {
             int count = 0;
-            string path = string.Empty;
             string screenName = string.Empty;
 
             DateTime dateTimeScreenshotTaken = DateTime.Now;
@@ -1984,9 +1940,8 @@ namespace autoscreen
             // Active Window
             if (CaptureTheScreen(5))
             {
-                path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken);
-
-                ScreenCapture.TakeScreenshot(null, textBoxScreen5Name.Text, path, 5);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5);
             }
 
             // All screens.
@@ -2022,9 +1977,8 @@ namespace autoscreen
 
                         if (!string.IsNullOrEmpty(screenName))
                         {
-                            path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken);
-
-                            ScreenCapture.TakeScreenshot(screen, screenName, path, count);
+                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count);
+                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count);
                         }
                     }
                 }
