@@ -1882,7 +1882,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void tabControlScreens_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= ScreenCapture.SCREEN_MAX ? tabControlScreens.SelectedIndex : 1;
+            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= (ScreenCapture.SCREEN_MAX + 1) ? tabControlScreens.SelectedIndex : 1;
         }
 
         /// <summary>
