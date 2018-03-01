@@ -14,7 +14,7 @@ namespace autoscreen
 {
     public static class ScreenshotCollection
     {
-        private static XmlDocument xdoc = null;
+        private static XmlDocument xDoc = null;
         private static ArrayList m_screenshotList = new ArrayList();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -31,9 +31,49 @@ namespace autoscreen
         private const string SCREENSHOT_SLIDENAME = "slidename";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
-        public static void Add(Screenshot screenshot)
+        public static void Add(Screenshot newScreenshot, ScreenshotType screenshotType)
         {
-            m_screenshotList.Add(screenshot);
+            // Make sure we only intend to add the new screenshot to the user's XML formatted settings.
+            if (screenshotType == ScreenshotType.User)
+            {
+                XmlNode xScreenshots = xDoc.GetElementsByTagName(XML_FILE_SCREENSHOTS_NODE).Item(0);
+
+                XmlElement xNewScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
+
+                XmlElement xNewScreenshotIndex = xDoc.CreateElement(SCREENSHOT_INDEX);
+                xNewScreenshotIndex.InnerText = newScreenshot.Index.ToString();
+
+                XmlElement xNewScreenshotDate = xDoc.CreateElement(SCREENSHOT_DATE);
+                xNewScreenshotDate.InnerText = newScreenshot.Date;
+
+                XmlElement xNewScreenshotPath = xDoc.CreateElement(SCREENSHOT_PATH);
+                xNewScreenshotPath.InnerText = newScreenshot.Path;
+
+                XmlElement xNewScreenshotScreen = xDoc.CreateElement(SCREENSHOT_SCREEN);
+                xNewScreenshotScreen.InnerText = newScreenshot.Screen.ToString();
+
+                XmlElement xNewScreenshotFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
+                xNewScreenshotFormat.InnerText = newScreenshot.Format;
+
+                XmlElement xNewScreenshotFilename = xDoc.CreateElement(SCREENSHOT_FILENAME);
+                xNewScreenshotFilename.InnerText = newScreenshot.Filename;
+
+                XmlElement xNewScreenshotSlidename = xDoc.CreateElement(SCREENSHOT_SLIDENAME);
+                xNewScreenshotSlidename.InnerText = newScreenshot.Slidename;
+
+                // Append all the nodes in the appropriate locations.
+                xNewScreenshot.AppendChild(xNewScreenshotIndex);
+                xNewScreenshot.AppendChild(xNewScreenshotDate);
+                xNewScreenshot.AppendChild(xNewScreenshotPath);
+                xNewScreenshot.AppendChild(xNewScreenshotScreen);
+                xNewScreenshot.AppendChild(xNewScreenshotFormat);
+                xNewScreenshot.AppendChild(xNewScreenshotFilename);
+                xNewScreenshot.AppendChild(xNewScreenshotSlidename);
+                xScreenshots.AppendChild(xNewScreenshot);
+
+                // Add the new screenshot to the collection of screenshots.
+                m_screenshotList.Add(newScreenshot);
+            }
         }
 
         public static Screenshot GetByIndex(int index)
@@ -50,30 +90,28 @@ namespace autoscreen
         {
             Screenshot screenshot = null;
 
-            if (xdoc != null)
+            if (xDoc != null)
             {
-                xdoc.LoadXml(Properties.Settings.Default.Screenshots);
+                XmlNodeList xScreenshots = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_SLIDENAME + " = '" + slidename + "' and " + SCREENSHOT_SCREEN + " = '" + screenNumber + "']");
 
-                XmlNodeList xscreenshots = xdoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_SLIDENAME + " = '" + slidename + "' and " + SCREENSHOT_SCREEN + " = '" + screenNumber + "']");
-
-                foreach (XmlNode xscreenshot in xscreenshots)
+                foreach (XmlNode xScreenshot in xScreenshots)
                 {
-                    XmlNodeReader xreader = new XmlNodeReader(xscreenshot);
+                    XmlNodeReader xReader = new XmlNodeReader(xScreenshot);
 
-                    while (xreader.Read())
+                    while (xReader.Read())
                     {
-                        if (xreader.IsStartElement() && xreader.Name.Equals(SCREENSHOT_INDEX))
+                        if (xReader.IsStartElement() && xReader.Name.Equals(SCREENSHOT_INDEX))
                         {
-                            xreader.Read();
+                            xReader.Read();
 
-                            if (!string.IsNullOrEmpty(xreader.Value))
+                            if (!string.IsNullOrEmpty(xReader.Value))
                             {
-                                screenshot = GetByIndex(Convert.ToInt32(xreader.Value));
+                                screenshot = GetByIndex(Convert.ToInt32(xReader.Value));
                             }
                         }
                     }
 
-                    xreader.Close();
+                    xReader.Close();
                 }
             }
 
@@ -85,61 +123,61 @@ namespace autoscreen
         /// </summary>
         public static void Load()
         {
-            xdoc = new XmlDocument();
-            xdoc.LoadXml(Properties.Settings.Default.Screenshots);
+            xDoc = new XmlDocument();
+            xDoc.LoadXml(Properties.Settings.Default.Screenshots);
 
-            XmlNodeList xscreenshots = xdoc.SelectNodes(SCREENSHOT_XPATH);
+            XmlNodeList xScreeshots = xDoc.SelectNodes(SCREENSHOT_XPATH);
 
-            foreach (XmlNode xscreenshot in xscreenshots)
+            foreach (XmlNode xScreenshot in xScreeshots)
             {
                 Screenshot screenshot = new Screenshot();
-                XmlNodeReader xreader = new XmlNodeReader(xscreenshot);
+                XmlNodeReader xReader = new XmlNodeReader(xScreenshot);
 
-                while (xreader.Read())
+                while (xReader.Read())
                 {
-                    if (xreader.IsStartElement())
+                    if (xReader.IsStartElement())
                     {
-                        switch (xreader.Name)
+                        switch (xReader.Name)
                         {
                             case SCREENSHOT_INDEX:
-                                xreader.Read();
-                                screenshot.Index = string.IsNullOrEmpty(xreader.Value) ? 0 : Convert.ToInt32(xreader.Value);
+                                xReader.Read();
+                                screenshot.Index = string.IsNullOrEmpty(xReader.Value) ? -1 : Convert.ToInt32(xReader.Value);
                                 break;
 
                             case SCREENSHOT_DATE:
-                                xreader.Read();
-                                screenshot.Date = xreader.Value;
+                                xReader.Read();
+                                screenshot.Date = xReader.Value;
                                 break;
 
                             case SCREENSHOT_PATH:
-                                xreader.Read();
-                                screenshot.Path = xreader.Value;
+                                xReader.Read();
+                                screenshot.Path = xReader.Value;
                                 break;
 
                             case SCREENSHOT_SCREEN:
-                                xreader.Read();
-                                screenshot.Screen = string.IsNullOrEmpty(xreader.Value) ? 0 : Convert.ToInt32(xreader.Value);
+                                xReader.Read();
+                                screenshot.Screen = string.IsNullOrEmpty(xReader.Value) ? 0 : Convert.ToInt32(xReader.Value);
                                 break;
 
                             case SCREENSHOT_FORMAT:
-                                xreader.Read();
-                                screenshot.Format = xreader.Value;
+                                xReader.Read();
+                                screenshot.Format = xReader.Value;
                                 break;
 
                             case SCREENSHOT_FILENAME:
-                                xreader.Read();
-                                screenshot.Filename = xreader.Value;
+                                xReader.Read();
+                                screenshot.Filename = xReader.Value;
                                 break;
 
                             case SCREENSHOT_SLIDENAME:
-                                xreader.Read();
-                                screenshot.Slidename = xreader.Value;
+                                xReader.Read();
+                                screenshot.Slidename = xReader.Value;
                                 break;
                         }
                     }
                 }
 
-                xreader.Close();
+                xReader.Close();
 
                 if (!string.IsNullOrEmpty(screenshot.Date) &&
                     !string.IsNullOrEmpty(screenshot.Path) &&
@@ -148,7 +186,7 @@ namespace autoscreen
                     !string.IsNullOrEmpty(screenshot.Filename) &&
                     !string.IsNullOrEmpty(screenshot.Slidename))
                 {
-                    Add(screenshot);
+                    m_screenshotList.Add(screenshot);
                 }
             }
         }
@@ -158,47 +196,47 @@ namespace autoscreen
         /// </summary>
         public static void Save()
         {
-            XmlWriterSettings xsettings = new XmlWriterSettings();
-            xsettings.Indent = true;
-            xsettings.CloseOutput = true;
-            xsettings.CheckCharacters = true;
-            xsettings.Encoding = Encoding.UTF8;
-            xsettings.DoNotEscapeUriAttributes = true;
-            xsettings.NewLineChars = Environment.NewLine;
-            xsettings.IndentChars = XML_FILE_INDENT_CHARS;
-            xsettings.NewLineHandling = NewLineHandling.Entitize;
-            xsettings.ConformanceLevel = ConformanceLevel.Document;
+            XmlWriterSettings xSettings = new XmlWriterSettings();
+            xSettings.Indent = true;
+            xSettings.CloseOutput = true;
+            xSettings.CheckCharacters = true;
+            xSettings.Encoding = Encoding.UTF8;
+            xSettings.DoNotEscapeUriAttributes = true;
+            xSettings.NewLineChars = Environment.NewLine;
+            xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+            xSettings.NewLineHandling = NewLineHandling.Entitize;
+            xSettings.ConformanceLevel = ConformanceLevel.Document;
 
             StringBuilder screenshots = new StringBuilder();
 
-            using (XmlWriter xwriter = XmlWriter.Create(screenshots))
+            using (XmlWriter xWriter = XmlWriter.Create(screenshots))
             {
-                xwriter.WriteStartDocument();
-                xwriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xwriter.WriteStartElement(XML_FILE_SCREENSHOTS_NODE);
+                xWriter.WriteStartDocument();
+                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                xWriter.WriteStartElement(XML_FILE_SCREENSHOTS_NODE);
 
                 foreach (object obj in m_screenshotList)
                 {
                     Screenshot screenshot = (Screenshot)obj;
 
-                    xwriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
-                    xwriter.WriteElementString(SCREENSHOT_INDEX, screenshot.Index.ToString());
-                    xwriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
-                    xwriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
-                    xwriter.WriteElementString(SCREENSHOT_SCREEN, screenshot.Screen.ToString());
-                    xwriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format);
-                    xwriter.WriteElementString(SCREENSHOT_FILENAME, screenshot.Filename);
-                    xwriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slidename);
+                    xWriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
+                    xWriter.WriteElementString(SCREENSHOT_INDEX, screenshot.Index.ToString());
+                    xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
+                    xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
+                    xWriter.WriteElementString(SCREENSHOT_SCREEN, screenshot.Screen.ToString());
+                    xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format);
+                    xWriter.WriteElementString(SCREENSHOT_FILENAME, screenshot.Filename);
+                    xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slidename);
 
-                    xwriter.WriteEndElement();
+                    xWriter.WriteEndElement();
                 }
 
-                xwriter.WriteEndElement();
-                xwriter.WriteEndElement();
-                xwriter.WriteEndDocument();
+                xWriter.WriteEndElement();
+                xWriter.WriteEndElement();
+                xWriter.WriteEndDocument();
 
-                xwriter.Flush();
-                xwriter.Close();
+                xWriter.Flush();
+                xWriter.Close();
             }
 
             Properties.Settings.Default.Screenshots = screenshots.ToString();

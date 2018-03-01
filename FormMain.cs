@@ -1940,8 +1940,8 @@ namespace autoscreen
             // Active Window
             if (CaptureTheScreen(5))
             {
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5);
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User);
             }
 
             // All screens.
@@ -1977,8 +1977,8 @@ namespace autoscreen
 
                         if (!string.IsNullOrEmpty(screenName))
                         {
-                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count);
-                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count);
+                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application);
+                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User);
                         }
                     }
                 }

@@ -121,7 +121,7 @@ namespace autoscreen
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber)
+        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType)
         {
             try
             {
@@ -131,11 +131,11 @@ namespace autoscreen
 
                     if (bitmap != null)
                     {
-                        Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format);
+                        Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
 
                         SaveToFile(bitmap, format, screenshot.Path);
 
-                        ScreenshotCollection.Add(screenshot);
+                        ScreenshotCollection.Add(screenshot, screenshotType);
                     }
 
                     GC.Collect();

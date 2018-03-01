@@ -17,9 +17,9 @@ namespace autoscreen
 
         }
 
-        public Screenshot(DateTime dateTime, string path, int screen, string format)
+        public Screenshot(DateTime dateTime, string path, int screen, string format, int index)
         {
-            m_index = ScreenshotCollection.Count;
+            m_index = index;
             m_date = dateTime.ToString(MacroParser.DateFormat);
             m_path = path;
             m_screen = screen;
