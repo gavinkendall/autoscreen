@@ -48,7 +48,6 @@
             this.statusStripLabelExit = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelSchedule = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelLock = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStripLabelLastCapture = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelScreenshotPreview = new System.Windows.Forms.TableLayoutPanel();
@@ -282,8 +281,7 @@
             this.toolStripDropDownButtonOptions,
             this.statusStripLabelExit,
             this.statusStripLabelSchedule,
-            this.statusStripLabelLock,
-            this.statusStripLabelLastCapture});
+            this.statusStripLabelLock});
             this.statusStrip.Location = new System.Drawing.Point(0, 374);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(752, 24);
@@ -422,17 +420,6 @@
             this.statusStripLabelLock.Name = "statusStripLabelLock";
             this.statusStripLabelLock.Size = new System.Drawing.Size(59, 19);
             this.statusStripLabelLock.Text = "Lock: Off";
-            // 
-            // statusStripLabelLastCapture
-            // 
-            this.statusStripLabelLastCapture.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.statusStripLabelLastCapture.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            this.statusStripLabelLastCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelLastCapture.Name = "statusStripLabelLastCapture";
-            this.statusStripLabelLastCapture.Size = new System.Drawing.Size(116, 19);
-            this.statusStripLabelLastCapture.Text = "Last capture: (none)";
             // 
             // tabControlScreens
             // 
@@ -2485,7 +2472,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.TextBox textBoxScreenshotsFolderSearch;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
-        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLastCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.PictureBox pictureBoxScreenshotPreviewMonitor4;

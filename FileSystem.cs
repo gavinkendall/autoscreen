@@ -21,7 +21,7 @@ namespace autoscreen
         private const string REGEX_FILE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})_(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\.(?<Extension>[a-z]{3,4})$";
         private const string REGEX_SLIDE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})\s(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\s(?<Extension>[A-Z]{3,4})$";
 
-        public static readonly string userApplicationDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\.autoscreen\\";
+        public static readonly string UserAppDataLocalDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\.autoscreen\\";
 
         /// <summary>
         /// Gets the image file path based on the slide name.

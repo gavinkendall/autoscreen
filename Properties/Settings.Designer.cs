@@ -688,7 +688,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Screen 1")]
         public string Screen1Name {
             get {
                 return ((string)(this["Screen1Name"]));
@@ -700,7 +700,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Screen 2")]
         public string Screen2Name {
             get {
                 return ((string)(this["Screen2Name"]));
@@ -712,7 +712,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Screen 3")]
         public string Screen3Name {
             get {
                 return ((string)(this["Screen3Name"]));
@@ -724,7 +724,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Screen 4")]
         public string Screen4Name {
             get {
                 return ((string)(this["Screen4Name"]));
@@ -762,7 +762,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Active Window")]
         public string Screen5Name {
             get {
                 return ((string)(this["Screen5Name"]));

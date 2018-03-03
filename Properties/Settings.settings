@@ -171,16 +171,16 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Screen1Name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">Screen 1</Value>
     </Setting>
     <Setting Name="Screen2Name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">Screen 2</Value>
     </Setting>
     <Setting Name="Screen3Name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">Screen 3</Value>
     </Setting>
     <Setting Name="Screen4Name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">4</Value>
+      <Value Profile="(Default)">Screen 4</Value>
     </Setting>
     <Setting Name="Macro" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -189,7 +189,7 @@
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;autoscreen&gt;&lt;screenshots&gt;&lt;screenshot&gt;&lt;index&gt;&lt;/index&gt;&lt;date&gt;&lt;/date&gt;&lt;path&gt;&lt;/path&gt;&lt;screen&gt;&lt;/screen&gt;&lt;format&gt;&lt;/format&gt;&lt;filename&gt;&lt;/filename&gt;&lt;slidename&gt;&lt;/slidename&gt;&lt;/screenshot&gt;&lt;/screenshots&gt;&lt;/autoscreen&gt;</Value>
     </Setting>
     <Setting Name="Screen5Name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">Active Window</Value>
     </Setting>
   </Settings>
 </SettingsFile>

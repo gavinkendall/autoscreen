@@ -132,7 +132,7 @@ namespace autoscreen
 
             if (string.IsNullOrEmpty(Properties.Settings.Default.Macro))
             {
-                textBoxMacro.Text = MacroParser.DefaultMacro;
+                textBoxMacro.Text = MacroParser.UserMacro;
             }
             else
             {
@@ -540,7 +540,7 @@ namespace autoscreen
             }
             else
             {
-                string[] files = FileSystem.GetFiles(FileSystem.userApplicationDataDirectory, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                string[] files = FileSystem.GetFiles(FileSystem.UserAppDataLocalDirectory, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 if (files != null)
                 {
@@ -581,7 +581,7 @@ namespace autoscreen
                 {
                     ArrayList selectedFolders = new ArrayList();
 
-                    string[] dirs = Directory.GetDirectories(FileSystem.userApplicationDataDirectory);
+                    string[] dirs = Directory.GetDirectories(FileSystem.UserAppDataLocalDirectory);
 
                     int count = 0;
 
@@ -1649,7 +1649,7 @@ namespace autoscreen
                 numericUpDownImageResolutionRatio.Value = (decimal)IMAGE_RESOLUTION_RATIO_MAX;
 
                 string folder = screenshotsFolder;
-                string macro = MacroParser.DefaultMacro;
+                string macro = MacroParser.UserMacro;
 
                 imageFormat = ImageFormatSpec.NAME_JPEG;
                 comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_JPEG;
@@ -1940,7 +1940,7 @@ namespace autoscreen
             // Active Window
             if (CaptureTheScreen(5))
             {
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application);
                 ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User);
             }
 
@@ -1977,7 +1977,7 @@ namespace autoscreen
 
                         if (!string.IsNullOrEmpty(screenName))
                         {
-                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, FileSystem.userApplicationDataDirectory + MacroParser.ParseTags(MacroParser.DefaultMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application);
+                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application);
                             ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User);
                         }
                     }

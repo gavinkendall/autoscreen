@@ -14,7 +14,8 @@ namespace autoscreen
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly string TimeFormat = "HH-mm-ss-fff";
-        public static readonly string DefaultMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+        public static readonly string UserMacro = @"%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+        public static readonly string ApplicationMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
         public static string ParseTags(string path, string imageFormat, string screenName, DateTime dateTimeScreenshotTaken)
         {
