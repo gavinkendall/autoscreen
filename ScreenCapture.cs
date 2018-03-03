@@ -133,7 +133,7 @@ namespace autoscreen
                     {
                         Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
 
-                        SaveToFile(bitmap, format, screenshot.Path);
+                        SaveToFile(bitmap, format, screenshot.Path, screenshotType);
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
                     }
@@ -147,7 +147,7 @@ namespace autoscreen
             }
         }
 
-        private static void SaveToFile(Bitmap bitmap, string imageFormat, string imagePath)
+        private static void SaveToFile(Bitmap bitmap, string imageFormat, string imagePath, ScreenshotType screenshotType)
         {
             try
             {
@@ -158,7 +158,10 @@ namespace autoscreen
                         Directory.CreateDirectory(Path.GetDirectoryName(imagePath));
                     }
 
-                    Log.Write("Screenshot saved: " + imagePath);
+                    if (screenshotType == ScreenshotType.User)
+                    {
+                        Log.Write("Screenshot saved: " + imagePath);
+                    }
 
                     bitmap.Save(imagePath, ImageFormatCollection.GetByName(imageFormat).Format);
                 }

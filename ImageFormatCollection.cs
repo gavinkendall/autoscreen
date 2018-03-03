@@ -35,6 +35,8 @@ namespace autoscreen
         public static void Add(ImageFormat imageFormat)
         {
             m_imageFormatList.Add(imageFormat);
+
+            Log.Write("Added " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
         public static ImageFormat Get(int index)

@@ -45,15 +45,15 @@ namespace autoscreen
         /// <summary>
         /// Threads for background operations.
         /// </summary>
-        private BackgroundWorker runFileSearchThread = null;
-        private BackgroundWorker runFolderSearchThread = null;
+        private BackgroundWorker runSlideSearchThread = null;
+        private BackgroundWorker runDateSearchThread = null;
 
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
         private delegate void UpdateScreenshotPreviewDelegate();
-        private delegate void RunFileSearchDelegate(DoWorkEventArgs e);
-        private delegate void RunFolderSearchDelegate(DoWorkEventArgs e);
+        private delegate void RunSlideSearchDelegate(DoWorkEventArgs e);
+        private delegate void RunDateSearchDelegate(DoWorkEventArgs e);
 
         /// <summary>
         /// Default settings used by the command line parser. 
@@ -89,21 +89,25 @@ namespace autoscreen
             Text = Properties.Settings.Default.ApplicationName;
             notifyIcon.Text = Properties.Settings.Default.ApplicationName;
 
-            Log.Write("Initializing image format collection.");
+            Log.Write("*** " + Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ") ***");
 
+            Log.Write("Initializing image format collection.");
             ImageFormatCollection.Initialize();
 
-            runFileSearchThread = new BackgroundWorker();
-            runFileSearchThread.WorkerReportsProgress = false;
-            runFileSearchThread.WorkerSupportsCancellation = true;
-            runFileSearchThread.DoWork += new DoWorkEventHandler(runFileSearchThread_DoWork);
+            Log.Write("Initializing image format filter drop down menu.");
+            LoadImageFormatFilterDropDownMenu();
 
-            runFolderSearchThread = new BackgroundWorker();
-            runFolderSearchThread.WorkerReportsProgress = false;
-            runFolderSearchThread.WorkerSupportsCancellation = true;
-            runFolderSearchThread.DoWork += new DoWorkEventHandler(runFolderSearchThread_DoWork);
+            runSlideSearchThread = new BackgroundWorker();
+            runSlideSearchThread.WorkerReportsProgress = false;
+            runSlideSearchThread.WorkerSupportsCancellation = true;
+            runSlideSearchThread.DoWork += new DoWorkEventHandler(runSlideSearchThread_DoWork);
 
-            Log.Write("Initializing slideshow component.");
+            runDateSearchThread = new BackgroundWorker();
+            runDateSearchThread.WorkerReportsProgress = false;
+            runDateSearchThread.WorkerSupportsCancellation = true;
+            runDateSearchThread.DoWork += new DoWorkEventHandler(runDateSearchThread_DoWork);
+
+            Log.Write("Initializing slideshow module.");
 
             Slideshow.Initialize();
             Slideshow.OnPlaying += new EventHandler(Slideshow_Playing);
@@ -113,7 +117,7 @@ namespace autoscreen
             EditorCollection.Load();
             BuildScreenshotPreviewContextMenu();
 
-            Log.Write("Loading screenshots to generate a history of what was captured.");
+            Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
             ScreenshotCollection.Load();
 
@@ -355,6 +359,13 @@ namespace autoscreen
                 }
             }
 
+            if (Properties.Settings.Default.ImageFormatIndex < 0)
+            {
+                Properties.Settings.Default.ImageFormatIndex = 0;
+            }
+
+            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
+
             if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
             {
                 toolStripButtonPreview.Checked = true;
@@ -388,8 +399,6 @@ namespace autoscreen
         /// <param name="e"></param>
         private void FormViewer_Load(object sender, EventArgs e)
         {
-            SearchFolders();
-
             if (toolStripMenuItemOpenAtApplicationStartup.Checked)
             {
                 OpenWindow();
@@ -416,7 +425,7 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Set the image format and search for screenshots whenever the image format filter gets changed.
+        /// Set the image format and search for slides whenever the image format filter gets changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -436,7 +445,7 @@ namespace autoscreen
 
             Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
 
-            SearchFiles();
+            SearchSlides();
         }
 
         /// <summary>
@@ -467,58 +476,43 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Search for all the screenshot folders. They should be in the format yyyy-mm-dd.
+        /// Search for all the date-stamped folders storing slides. They should be in the format yyyy-mm-dd.
         /// Any folders found matching this format are then bolded in the calendar so the user
         /// understands that these were the days when screen capture sessions had been running.
         /// </summary>
-        private void SearchFolders()
+        private void SearchDates()
         {
-            textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
-
-            Log.Write("Searching for screenshot folders in \"" + textBoxScreenshotsFolderSearch.Text + "\"");
-
             ClearPreview();
             DisableToolStripButtons();
 
             monthCalendar.BoldedDates = null;
 
-            if (Directory.Exists(textBoxScreenshotsFolderSearch.Text))
+            if (!runDateSearchThread.IsBusy)
             {
-                if (!runFolderSearchThread.IsBusy)
-                {
-                    runFolderSearchThread.RunWorkerAsync();
-                }
+                runDateSearchThread.RunWorkerAsync();
             }
         }
 
         /// <summary>
-        /// Searches for the files within the screenshots folder.
+        /// Searches for slides.
         /// </summary>
-        private void SearchFiles()
+        private void SearchSlides()
         {
-            listBoxScreenshots.BeginUpdate();
-
-            textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
-
-            Log.Write("Searching for screenshot files in \"" + textBoxScreenshotsFolderSearch.Text + "\"");
-            Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
+            listBoxSlides.BeginUpdate();
 
             ClearPreview();
             DisableToolStripButtons();
 
-            if (Directory.Exists(Path.GetDirectoryName(textBoxScreenshotsFolderSearch.Text)))
+            if (!runSlideSearchThread.IsBusy)
             {
-                if (!runFileSearchThread.IsBusy)
-                {
-                    runFileSearchThread.RunWorkerAsync();
-                }
+                runSlideSearchThread.RunWorkerAsync();
             }
 
-            listBoxScreenshots.EndUpdate();
+            listBoxSlides.EndUpdate();
 
             // It's very important here to disable all the slideshow controls if there were
             // no files found. There's no point keeping the controls enabled if there are no files.
-            if (listBoxScreenshots.Items.Count == 0)
+            if (listBoxSlides.Items.Count == 0)
             {
                 toolStripButtonFirstSlide.Enabled = false;
                 toolStripButtonPreviousSlide.Enabled = false;
@@ -529,14 +523,15 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// This thread is responsible for finding the screenshots that were taken.
+        /// This thread is responsible for finding slides (copies of screenshots that were taken on particular days)
+        /// so we can import them into the slideshow ready for the user to play through what they were doing on the computer.
         /// </summary>
         /// <param name="e"></param>
-        private void RunFileSearch(DoWorkEventArgs e)
+        private void RunSlideSearch(DoWorkEventArgs e)
         {
-            if (listBoxScreenshots.InvokeRequired)
+            if (listBoxSlides.InvokeRequired)
             {
-                listBoxScreenshots.Invoke(new RunFileSearchDelegate(RunFileSearch), new object[] { e });
+                listBoxSlides.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] { e });
             }
             else
             {
@@ -544,16 +539,16 @@ namespace autoscreen
 
                 if (files != null)
                 {
-                    listBoxScreenshots.Items.AddRange(files);
+                    listBoxSlides.Items.AddRange(files);
                 }
 
-                // If we do find files then make sure the user can use the slideshow.
-                if (listBoxScreenshots.Items.Count > 0)
+                // If we do find files representing slides then make sure the user can use the slideshow.
+                if (listBoxSlides.Items.Count > 0)
                 {
                     monthCalendar.Enabled = true;
                     toolStripComboBoxImageFormatFilter.Enabled = true;
 
-                    listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
+                    listBoxSlides.SelectedIndex = listBoxSlides.Items.Count - 1;
 
                     toolStripButtonNextSlide.Enabled = true;
                     toolStripButtonLastSlide.Enabled = true;
@@ -569,60 +564,57 @@ namespace autoscreen
         /// This thread is responsible for figuring out what days screenshots were taken.
         /// </summary>
         /// <param name="e"></param>
-        private void RunFolderSearch(DoWorkEventArgs e)
+        private void RunDateSearch(DoWorkEventArgs e)
         {
             if (monthCalendar.InvokeRequired)
             {
-                monthCalendar.Invoke(new RunFolderSearchDelegate(RunFolderSearch), new object[] { e });
+                monthCalendar.Invoke(new RunDateSearchDelegate(RunDateSearch), new object[] { e });
             }
             else
             {
-                if (!string.IsNullOrEmpty(textBoxScreenshotsFolderSearch.Text))
+                ArrayList selectedFolders = new ArrayList();
+
+                string[] dirs = Directory.GetDirectories(FileSystem.UserAppDataLocalDirectory);
+
+                int count = 0;
+
+                foreach (Screen screen in Screen.AllScreens)
                 {
-                    ArrayList selectedFolders = new ArrayList();
+                    count++;
 
-                    string[] dirs = Directory.GetDirectories(FileSystem.UserAppDataLocalDirectory);
-
-                    int count = 0;
-
-                    foreach (Screen screen in Screen.AllScreens)
+                    // Go through each directory found and make sure that the sub-directories match with the format yyyy-MM-dd.
+                    for (int i = 0; i < dirs.Length; i++)
                     {
-                        count++;
+                        Regex rgx = new Regex(@"^\d{4}-\d{2}-\d{2}$");
 
-                        // Go through each directory found and make sure that the sub-directories match with the format yyyy-mm-dd.
-                        for (int i = 0; i < dirs.Length; i++)
+                        if (rgx.IsMatch(Path.GetFileName(dirs[i])))
                         {
-                            Regex rgx = new Regex(@"^\d{4}-\d{2}-\d{2}$");
-
-                            if (rgx.IsMatch(Path.GetFileName(dirs[i])))
+                            if (Directory.Exists(dirs[i] + "\\" + count.ToString() + "\\"))
                             {
-                                if (Directory.Exists(dirs[i] + "\\" + count.ToString() + "\\"))
+                                if (!selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
                                 {
-                                    if (!selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
-                                    {
-                                        selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
-                                    }
+                                    selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
                                 }
                             }
                         }
                     }
-
-                    // Also make sure that the dates in the calendar are set to bold for each
-                    // of the folders that are found.
-                    DateTime[] boldedDates = new DateTime[selectedFolders.Count];
-
-                    for (int i = 0; i < selectedFolders.Count; i++)
-                    {
-                        boldedDates.SetValue(ConvertFilterToDateTime(selectedFolders[i].ToString()), i);
-                    }
-
-                    monthCalendar.BoldedDates = boldedDates;
                 }
+
+                // Also make sure that the dates in the calendar are set to bold for each
+                // of the folders that are found.
+                DateTime[] boldedDates = new DateTime[selectedFolders.Count];
+
+                for (int i = 0; i < selectedFolders.Count; i++)
+                {
+                    boldedDates.SetValue(ConvertFilterToDateTime(selectedFolders[i].ToString()), i);
+                }
+
+                monthCalendar.BoldedDates = boldedDates;
             }
         }
 
         /// <summary>
-        /// Converts the filter string into a DateTime object. Used by the RunFolderSearch thread so we can set bolded dates in the calendar.
+        /// Converts the filter string into a DateTime object. Used by the RunDateSearch thread so we can set bolded dates in the calendar.
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
@@ -657,8 +649,7 @@ namespace autoscreen
                 {
                     SaveApplicationSettings();
 
-                    SearchFolders();
-                    SearchFiles();
+                    SearchDates();
 
                     Opacity = 100;
                     toolStripMenuItemOpen.Enabled = false;
@@ -753,12 +744,12 @@ namespace autoscreen
             DisableControls();
             DisableSystemTrayMenus();
 
-            if (listBoxScreenshots.Items.Count > 0 && slideshowDelay > 0)
+            if (listBoxSlides.Items.Count > 0 && slideshowDelay > 0)
             {
                 if (Slideshow.Index == Slideshow.Count - 1)
                 {
                     Slideshow.First();
-                    listBoxScreenshots.SelectedIndex = Slideshow.Index;
+                    listBoxSlides.SelectedIndex = Slideshow.Index;
                 }
 
                 toolStripButtonPlaySlideshow.Image = Properties.Resources.player_pause;
@@ -779,7 +770,7 @@ namespace autoscreen
             EnableControls();
             EnableSystemTrayMenus();
 
-            if (listBoxScreenshots.Items.Count > 0)
+            if (listBoxSlides.Items.Count > 0)
             {
                 toolStripButtonPlaySlideshow.Image = Properties.Resources.player_play;
 
@@ -811,66 +802,75 @@ namespace autoscreen
         /// <param name="initial">If an initial screenshot should be taken before the timer is started then this boolean needs to be set to true otherwise just set it as false.</param>
         private void StartScreenCapture(string folder, string macro, string format, int delay, int limit, int ratio, bool initial)
         {
-            Log.Write("Starting new screen capture session.");
-
-            SaveApplicationSettings();
-
-            toolStripButtonPreview.Checked = false;
-
-            if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
+            if (Directory.Exists(textBoxScreenshotsFolderSearch.Text))
             {
-                CloseWindow();
+                Log.Write("Starting new screen capture session in \"" + textBoxScreenshotsFolderSearch.Text + "\"");
+
+                textBoxScreenshotsFolderSearch.Text = CorrectDirectoryPath(textBoxScreenshotsFolderSearch.Text);
+
+                Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
+
+                SaveApplicationSettings();
+
+                toolStripButtonPreview.Checked = false;
+
+                if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
+                {
+                    CloseWindow();
+                }
+
+                // Stop the slideshow if it's currently playing.
+                if (Slideshow.Playing)
+                {
+                    Slideshow.Stop();
+                }
+
+                // Stop the folder search thread if it's busy.
+                if (runDateSearchThread.IsBusy)
+                {
+                    runDateSearchThread.CancelAsync();
+                }
+
+                // Stop the file search thread if it's busy.
+                if (runSlideSearchThread.IsBusy)
+                {
+                    runSlideSearchThread.CancelAsync();
+                }
+
+                DisableStartScreenCapture();
+                EnableStopScreenCapture();
+
+                // Setup the properties for the screen capture class.
+                ScreenCapture.Folder = folder;
+                ScreenCapture.Macro = macro;
+                ScreenCapture.Format = format;
+                ScreenCapture.Delay = delay;
+                ScreenCapture.Limit = limit;
+                ScreenCapture.Ratio = ratio;
+
+                if (checkBoxPassphraseLock.Checked)
+                {
+                    ScreenCapture.lockScreenCaptureSession = true;
+                }
+                else
+                {
+                    ScreenCapture.lockScreenCaptureSession = false;
+                }
+
+                if (initial)
+                {
+                    Log.Write("Taking initial screenshots.");
+
+                    TakeScreenshot();
+                    DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
+                }
+
+                // Start taking screenshots.
+                Log.Write("Starting screen capture.");
+
+                timerScreenCapture.Interval = delay;
+                timerScreenCapture.Enabled = true;
             }
-
-            // Stop the slideshow if it's currently playing.
-            if (Slideshow.Playing)
-            {
-                Slideshow.Stop();
-            }
-
-            // Stop the folder search thread if it's busy.
-            if (runFolderSearchThread.IsBusy)
-            {
-                runFolderSearchThread.CancelAsync();
-            }
-
-            // Stop the file search thread if it's busy.
-            if (runFileSearchThread.IsBusy)
-            {
-                runFileSearchThread.CancelAsync();
-            }
-
-            DisableStartScreenCapture();
-            EnableStopScreenCapture();
-
-            // Setup the properties for the screen capture class.
-            ScreenCapture.Folder = folder;
-            ScreenCapture.Macro = macro;
-            ScreenCapture.Format = format;
-            ScreenCapture.Delay = delay;
-            ScreenCapture.Limit = limit;
-            ScreenCapture.Ratio = ratio;
-
-            if (checkBoxPassphraseLock.Checked)
-            {
-                ScreenCapture.lockScreenCaptureSession = true;
-            }
-            else
-            {
-                ScreenCapture.lockScreenCaptureSession = false;
-            }
-
-            if (initial)
-            {
-                TakeScreenshot();
-                DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
-            }
-
-            // Start taking screenshots.
-            Log.Write("Starting screen capture.");
-
-            timerScreenCapture.Interval = delay;
-            timerScreenCapture.Enabled = true;
         }
 
         /// <summary>
@@ -882,8 +882,8 @@ namespace autoscreen
         {
             toolStripButtonPreview.Checked = false;
 
-            Slideshow.Index = listBoxScreenshots.SelectedIndex;
-            Slideshow.Count = listBoxScreenshots.Items.Count;
+            Slideshow.Index = listBoxSlides.SelectedIndex;
+            Slideshow.Count = listBoxSlides.Items.Count;
 
             UpdatePreview();
         }
@@ -966,7 +966,7 @@ namespace autoscreen
         private void ClearPreview()
         {
             Slideshow.Clear();
-            listBoxScreenshots.Items.Clear();
+            listBoxSlides.Items.Clear();
 
             ClearImages();
         }
@@ -1025,11 +1025,25 @@ namespace autoscreen
 
                     if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
                     {
-                        Slideshow.SelectedSlide = listBoxScreenshots.Items[Slideshow.Index].ToString();
+                        Slideshow.SelectedSlide = listBoxSlides.Items[Slideshow.Index].ToString();
 
                         DisplayImages(false);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Loads the image format filter drop down menu for the Slideshow module.
+        /// </summary>
+        private void LoadImageFormatFilterDropDownMenu()
+        {
+            toolStripComboBoxImageFormatFilter.Items.Clear();
+            toolStripComboBoxImageFormatFilter.Items.Add("*.*");
+
+            for (int i = 0; i < ImageFormatCollection.Count; i++)
+            {
+                toolStripComboBoxImageFormatFilter.Items.Add("*" + ImageFormatCollection.Get(i).Extension);
             }
         }
 
@@ -1043,13 +1057,7 @@ namespace autoscreen
                 Slideshow.Stop();
             }
 
-            toolStripComboBoxImageFormatFilter.Items.Clear();
-            toolStripComboBoxImageFormatFilter.Items.Add("*.*");
-
-            for (int i = 0; i < ImageFormatCollection.Count; i++)
-            {
-                toolStripComboBoxImageFormatFilter.Items.Add("*" + ImageFormatCollection.Get(i).Extension);
-            }
+            LoadImageFormatFilterDropDownMenu();
 
             tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageSlideshow"];
 
@@ -1079,7 +1087,7 @@ namespace autoscreen
         private void toolStripButtonFirstSlide_Click(object sender, EventArgs e)
         {
             Slideshow.First();
-            listBoxScreenshots.SelectedIndex = Slideshow.Index;
+            listBoxSlides.SelectedIndex = Slideshow.Index;
         }
 
         /// <summary>
@@ -1090,7 +1098,7 @@ namespace autoscreen
         private void toolStripButtonPreviousSlide_Click(object sender, EventArgs e)
         {
             Slideshow.Previous();
-            listBoxScreenshots.SelectedIndex = Slideshow.Index;
+            listBoxSlides.SelectedIndex = Slideshow.Index;
         }
 
         /// <summary>
@@ -1118,7 +1126,7 @@ namespace autoscreen
         private void toolStripButtonNextSlide_Click(object sender, EventArgs e)
         {
             Slideshow.Next();
-            listBoxScreenshots.SelectedIndex = Slideshow.Index;
+            listBoxSlides.SelectedIndex = Slideshow.Index;
         }
 
         /// <summary>
@@ -1129,7 +1137,7 @@ namespace autoscreen
         private void toolStripButtonLastSlide_Click(object sender, EventArgs e)
         {
             Slideshow.Last();
-            listBoxScreenshots.SelectedIndex = Slideshow.Index;
+            listBoxSlides.SelectedIndex = Slideshow.Index;
         }
 
         /// <summary>
@@ -1226,9 +1234,9 @@ namespace autoscreen
                 CloseWindow();
 
                 // Cancel the folder search if it's currently running.
-                if (runFolderSearchThread.IsBusy)
+                if (runDateSearchThread.IsBusy)
                 {
-                    runFolderSearchThread.CancelAsync();
+                    runDateSearchThread.CancelAsync();
                 }
 
                 // Hide the system tray icon.
@@ -1240,23 +1248,23 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Runs the file search thread.
+        /// Runs the slide search thread.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runFileSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void runSlideSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            RunFileSearch(e);
+            RunSlideSearch(e);
         }
 
         /// <summary>
-        /// Runs the folder search thread.
+        /// Runs the date search thread.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runFolderSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void runDateSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            RunFolderSearch(e);
+            RunDateSearch(e);
         }
 
         /// <summary>
@@ -1266,7 +1274,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void Slideshow_Playing(object sender, EventArgs e)
         {
-            listBoxScreenshots.SelectedIndex = Slideshow.Index;
+            listBoxSlides.SelectedIndex = Slideshow.Index;
         }
 
         /// <summary>
@@ -1274,7 +1282,7 @@ namespace autoscreen
         /// </summary>
         private void EnablePlaySlideshow()
         {
-            if (GetSlideshowDelay() > 0 && listBoxScreenshots.Items.Count > 0)
+            if (GetSlideshowDelay() > 0 && listBoxSlides.Items.Count > 0)
             {
                 toolStripButtonPlaySlideshow.Enabled = true;
             }
@@ -1536,7 +1544,7 @@ namespace autoscreen
             if (browser.ShowDialog() == DialogResult.OK)
             {
                 textBoxScreenshotsFolderSearch.Text = browser.SelectedPath;
-                SearchFolders();
+                SearchDates();
             }
         }
 
@@ -1606,7 +1614,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void toolStripMenuItemOpenFileLocation_Click(object sender, EventArgs e)
         {
-            if (listBoxScreenshots.SelectedIndex > -1)
+            if (listBoxSlides.SelectedIndex > -1)
             {
                 Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
@@ -1847,7 +1855,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void editorRun_Click(object sender, EventArgs e)
         {
-            if (listBoxScreenshots.SelectedIndex > -1)
+            if (listBoxSlides.SelectedIndex > -1)
             {
                 Editor editor = EditorCollection.GetByName(sender.ToString());
                 Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);

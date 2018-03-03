@@ -27,7 +27,7 @@ namespace autoscreen
 
         public static void Initialize()
         {
-            m_timer.Tick += new System.EventHandler(m_timer_Tick);
+            m_timer.Tick += new EventHandler(m_timer_Tick);
         }
 
         public static void Clear()

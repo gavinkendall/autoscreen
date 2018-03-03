@@ -117,7 +117,7 @@
             this.textBoxScreen5Name = new System.Windows.Forms.TextBox();
             this.labelScreen5Name = new System.Windows.Forms.Label();
             this.pictureBoxActiveWindow = new System.Windows.Forms.PictureBox();
-            this.listBoxScreenshots = new System.Windows.Forms.ListBox();
+            this.listBoxSlides = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripSystemTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -1403,20 +1403,20 @@
             this.pictureBoxActiveWindow.TabIndex = 0;
             this.pictureBoxActiveWindow.TabStop = false;
             // 
-            // listBoxScreenshots
+            // listBoxSlides
             // 
-            this.listBoxScreenshots.FormattingEnabled = true;
-            this.listBoxScreenshots.IntegralHeight = false;
-            this.listBoxScreenshots.Location = new System.Drawing.Point(8, 3);
-            this.listBoxScreenshots.MaximumSize = new System.Drawing.Size(204, 123);
-            this.listBoxScreenshots.MinimumSize = new System.Drawing.Size(204, 123);
-            this.listBoxScreenshots.Name = "listBoxScreenshots";
-            this.listBoxScreenshots.ScrollAlwaysVisible = true;
-            this.listBoxScreenshots.Size = new System.Drawing.Size(204, 123);
-            this.listBoxScreenshots.Sorted = true;
-            this.listBoxScreenshots.TabIndex = 6;
-            this.listBoxScreenshots.TabStop = false;
-            this.listBoxScreenshots.SelectedIndexChanged += new System.EventHandler(this.listBoxScreenshots_SelectedIndexChanged);
+            this.listBoxSlides.FormattingEnabled = true;
+            this.listBoxSlides.IntegralHeight = false;
+            this.listBoxSlides.Location = new System.Drawing.Point(8, 3);
+            this.listBoxSlides.MaximumSize = new System.Drawing.Size(204, 123);
+            this.listBoxSlides.MinimumSize = new System.Drawing.Size(204, 123);
+            this.listBoxSlides.Name = "listBoxSlides";
+            this.listBoxSlides.ScrollAlwaysVisible = true;
+            this.listBoxSlides.Size = new System.Drawing.Size(204, 123);
+            this.listBoxSlides.Sorted = true;
+            this.listBoxSlides.TabIndex = 6;
+            this.listBoxSlides.TabStop = false;
+            this.listBoxSlides.SelectedIndexChanged += new System.EventHandler(this.listBoxScreenshots_SelectedIndexChanged);
             // 
             // notifyIcon
             // 
@@ -2100,7 +2100,7 @@
             // tabPageSlideshow
             // 
             this.tabPageSlideshow.AutoScroll = true;
-            this.tabPageSlideshow.Controls.Add(this.listBoxScreenshots);
+            this.tabPageSlideshow.Controls.Add(this.listBoxSlides);
             this.tabPageSlideshow.Controls.Add(this.groupBoxSlideshowDelay);
             this.tabPageSlideshow.Location = new System.Drawing.Point(4, 22);
             this.tabPageSlideshow.Name = "tabPageSlideshow";
@@ -2464,7 +2464,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.TabControl tabControlScreens;
         private System.Windows.Forms.TabPage tabPageAllScreens;
-        private System.Windows.Forms.ListBox listBoxScreenshots;
+        private System.Windows.Forms.ListBox listBoxSlides;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripSystemTrayIcon;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartScreenCapture;

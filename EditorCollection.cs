@@ -29,6 +29,8 @@ namespace autoscreen
         public static void Add(Editor editor)
         {
             m_editorList.Add(editor);
+
+            Log.Write("Added " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
         public static Editor Get(int index)
