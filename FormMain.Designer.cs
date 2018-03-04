@@ -45,9 +45,6 @@
             this.toolStripMenuItemShowSlideshowOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStripLabelExit = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStripLabelSchedule = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStripLabelLock = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelScreenshotPreview = new System.Windows.Forms.TableLayoutPanel();
@@ -284,13 +281,10 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripDropDownButtonOptions,
-            this.statusStripLabelExit,
-            this.statusStripLabelSchedule,
-            this.statusStripLabelLock});
-            this.statusStrip.Location = new System.Drawing.Point(0, 374);
+            this.toolStripDropDownButtonOptions});
+            this.statusStrip.Location = new System.Drawing.Point(0, 376);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(752, 24);
+            this.statusStrip.Size = new System.Drawing.Size(752, 22);
             this.statusStrip.TabIndex = 3;
             // 
             // toolStripDropDownButtonOptions
@@ -311,7 +305,7 @@
             this.toolStripDropDownButtonOptions.Image = global::autoscreen.Properties.Resources.options;
             this.toolStripDropDownButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonOptions.Name = "toolStripDropDownButtonOptions";
-            this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 22);
+            this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 20);
             this.toolStripDropDownButtonOptions.Text = "Options";
             // 
             // toolStripMenuItemPreviewAtApplicationStartup
@@ -392,40 +386,6 @@
             this.toolStripMenuItemExitOnCloseWindow.Name = "toolStripMenuItemExitOnCloseWindow";
             this.toolStripMenuItemExitOnCloseWindow.Size = new System.Drawing.Size(441, 22);
             this.toolStripMenuItemExitOnCloseWindow.Text = "Exit application when closing this window";
-            this.toolStripMenuItemExitOnCloseWindow.CheckedChanged += new System.EventHandler(this.toolStripMenuItemExitOnCloseWindow_CheckedChanged);
-            // 
-            // statusStripLabelExit
-            // 
-            this.statusStripLabelExit.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.statusStripLabelExit.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            this.statusStripLabelExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelExit.Name = "statusStripLabelExit";
-            this.statusStripLabelExit.Size = new System.Drawing.Size(52, 19);
-            this.statusStripLabelExit.Text = "Exit: Off";
-            // 
-            // statusStripLabelSchedule
-            // 
-            this.statusStripLabelSchedule.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.statusStripLabelSchedule.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            this.statusStripLabelSchedule.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelSchedule.Name = "statusStripLabelSchedule";
-            this.statusStripLabelSchedule.Size = new System.Drawing.Size(82, 19);
-            this.statusStripLabelSchedule.Text = "Schedule: Off";
-            // 
-            // statusStripLabelLock
-            // 
-            this.statusStripLabelLock.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
-            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.statusStripLabelLock.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
-            this.statusStripLabelLock.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelLock.Name = "statusStripLabelLock";
-            this.statusStripLabelLock.Size = new System.Drawing.Size(59, 19);
-            this.statusStripLabelLock.Text = "Lock: Off";
             // 
             // tabControlScreens
             // 
@@ -2609,7 +2569,6 @@
         private System.Windows.Forms.Button buttonScheduleClear;
         private System.Windows.Forms.Button buttonScheduleSet;
         private System.Windows.Forms.ComboBox comboBoxScheduleImageFormat;
-        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelSchedule;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemScheduleAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -2667,10 +2626,8 @@
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.TextBox textBoxPassphrase;
-        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelLock;
         private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
         private System.Windows.Forms.Button buttonClearPassphrase;
-        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelExit;
         private System.Windows.Forms.Label labelFolder;
         private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.Label labelMacro;

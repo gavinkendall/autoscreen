@@ -1316,6 +1316,7 @@ namespace autoscreen
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownImageResolutionRatio.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
+                numericUpDownJpegQualityLevel.Enabled = true;
                 toolStripButtonPreview.Enabled = true;
             }
             else
@@ -1340,6 +1341,7 @@ namespace autoscreen
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownImageResolutionRatio.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
+            numericUpDownJpegQualityLevel.Enabled = false;
             toolStripButtonPreview.Enabled = false;
         }
 
@@ -1455,43 +1457,6 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Displays the status of scheduled screen capture sessions.
-        /// </summary>
-        /// <param name="status">Can be "On" or "Off".</param>
-        private void DisplayScheduleStatus(string status)
-        {
-            if (!string.IsNullOrEmpty(status))
-            {
-                statusStrip.Items["statusStripLabelSchedule"].Text = "Schedule: " + status;
-            }
-        }
-
-        /// <summary>
-        /// Displays the status of the locked in passphrase used to challenge the user when the running
-        /// screen capture session is stopped, the main window is opened, or the application is exiting.
-        /// </summary>
-        /// <param name="status"></param>
-        private void DisplayLockStatus(string status)
-        {
-            if (!string.IsNullOrEmpty(status))
-            {
-                statusStrip.Items["statusStripLabelLock"].Text = "Lock: " + status;
-            }
-        }
-
-        /// <summary>
-        /// Displays the status of the "Exit application when closing this window" option.
-        /// </summary>
-        /// <param name="status"></param>
-        private void DisplayExitStatus(string status)
-        {
-            if (!string.IsNullOrEmpty(status))
-            {
-                statusStrip.Items["statusStripLabelExit"].Text = "Exit: " + status;
-            }
-        }
-
-        /// <summary>
         /// Displays the screen capture status.
         /// </summary>
         /// <param name="statusApp">The status message for the application's status strip.</param>
@@ -1513,16 +1478,6 @@ namespace autoscreen
             if (!string.IsNullOrEmpty(statusApp))
             {
                 notifyIcon.Text = appName;
-
-                // This isn't entirely accurate. Need to fix.
-                //statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + MacroParser.ParseTags(statusApp, imageFormat, null);
-            }
-
-            if (!string.IsNullOrEmpty(statusApp) && !string.IsNullOrEmpty(statusIcon))
-            {
-                // TODO: Fix this.
-                //notifyIcon.Text = appName + "\n" + MacroParser.ParseTags(statusIcon, imageFormat);
-                //statusStrip.Items["statusStripLabelLastCapture"].Text = "Last capture: " + MacroParser.ParseTags(statusApp, imageFormat);
             }
         }
 
@@ -2531,8 +2486,6 @@ namespace autoscreen
         /// </summary>
         private void ScheduleSet()
         {
-            DisplayScheduleStatus(StatusMessage.ON);
-
             buttonScheduleSet.Enabled = false;
             buttonScheduleClear.Enabled = true;
 
@@ -2545,8 +2498,6 @@ namespace autoscreen
         /// </summary>
         private void ScheduleClear()
         {
-            DisplayScheduleStatus(StatusMessage.OFF);
-
             buttonScheduleSet.Enabled = true;
             buttonScheduleClear.Enabled = false;
 
@@ -2680,12 +2631,10 @@ namespace autoscreen
             if (checkBoxPassphraseLock.Checked)
             {
                 ScreenCapture.lockScreenCaptureSession = true;
-                DisplayLockStatus(StatusMessage.ON);
             }
             else
             {
                 ScreenCapture.lockScreenCaptureSession = false;
-                DisplayLockStatus(StatusMessage.OFF);
             }
         }
 
@@ -2764,23 +2713,6 @@ namespace autoscreen
             else
             {
                 checkBoxScheduleStartOnSchedule.Checked = true;
-            }
-        }
-
-        /// <summary>
-        /// Determines what status message to show when the checkbox for exiting the application when the window closes is turned on or off.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void toolStripMenuItemExitOnCloseWindow_CheckedChanged(object sender, EventArgs e)
-        {
-            if (toolStripMenuItemExitOnCloseWindow.Checked)
-            {
-                DisplayExitStatus(StatusMessage.ON);
-            }
-            else
-            {
-                DisplayExitStatus(StatusMessage.OFF);
             }
         }
 
