@@ -771,5 +771,17 @@ namespace autoscreen.Properties {
                 this["Screen5Name"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public long JpegQualityLevel {
+            get {
+                return ((long)(this["JpegQualityLevel"]));
+            }
+            set {
+                this["JpegQualityLevel"] = value;
+            }
+        }
     }
 }

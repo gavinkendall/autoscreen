@@ -139,6 +139,10 @@
             this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreenCapture = new System.Windows.Forms.TabPage();
+            this.groupBoxJpegQualityLevel = new System.Windows.Forms.GroupBox();
+            this.numericUpDownJpegQualityLevel = new System.Windows.Forms.NumericUpDown();
+            this.labelJpegQualityLevelDescription = new System.Windows.Forms.Label();
+            this.labelJpegQualityLevel = new System.Windows.Forms.Label();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.checkBoxPassphraseLock = new System.Windows.Forms.CheckBox();
             this.buttonClearPassphrase = new System.Windows.Forms.Button();
@@ -246,6 +250,8 @@
             this.toolStripSlideshow.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageScreenCapture.SuspendLayout();
+            this.groupBoxJpegQualityLevel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQualityLevel)).BeginInit();
             this.groupBoxSecurity.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownImageResolutionRatio)).BeginInit();
@@ -1605,6 +1611,7 @@
             // tabPageScreenCapture
             // 
             this.tabPageScreenCapture.AutoScroll = true;
+            this.tabPageScreenCapture.Controls.Add(this.groupBoxJpegQualityLevel);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxSecurity);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxCaptureDelay);
             this.tabPageScreenCapture.Controls.Add(this.groupBoxSchedule);
@@ -1616,6 +1623,52 @@
             this.tabPageScreenCapture.Text = "Screen Capture";
             this.tabPageScreenCapture.UseVisualStyleBackColor = true;
             // 
+            // groupBoxJpegQualityLevel
+            // 
+            this.groupBoxJpegQualityLevel.Controls.Add(this.numericUpDownJpegQualityLevel);
+            this.groupBoxJpegQualityLevel.Controls.Add(this.labelJpegQualityLevelDescription);
+            this.groupBoxJpegQualityLevel.Controls.Add(this.labelJpegQualityLevel);
+            this.groupBoxJpegQualityLevel.Location = new System.Drawing.Point(6, 133);
+            this.groupBoxJpegQualityLevel.Name = "groupBoxJpegQualityLevel";
+            this.groupBoxJpegQualityLevel.Size = new System.Drawing.Size(205, 61);
+            this.groupBoxJpegQualityLevel.TabIndex = 0;
+            this.groupBoxJpegQualityLevel.TabStop = false;
+            this.groupBoxJpegQualityLevel.Text = "JPEG Quality Level";
+            // 
+            // numericUpDownJpegQualityLevel
+            // 
+            this.numericUpDownJpegQualityLevel.Location = new System.Drawing.Point(157, 35);
+            this.numericUpDownJpegQualityLevel.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownJpegQualityLevel.Name = "numericUpDownJpegQualityLevel";
+            this.numericUpDownJpegQualityLevel.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownJpegQualityLevel.TabIndex = 0;
+            this.numericUpDownJpegQualityLevel.TabStop = false;
+            this.numericUpDownJpegQualityLevel.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // labelJpegQualityLevelDescription
+            // 
+            this.labelJpegQualityLevelDescription.Location = new System.Drawing.Point(6, 16);
+            this.labelJpegQualityLevelDescription.Name = "labelJpegQualityLevelDescription";
+            this.labelJpegQualityLevelDescription.Size = new System.Drawing.Size(78, 39);
+            this.labelJpegQualityLevelDescription.TabIndex = 1;
+            this.labelJpegQualityLevelDescription.Text = "Specify the level of JPEG image quality.";
+            // 
+            // labelJpegQualityLevel
+            // 
+            this.labelJpegQualityLevel.Location = new System.Drawing.Point(90, 16);
+            this.labelJpegQualityLevel.Name = "labelJpegQualityLevel";
+            this.labelJpegQualityLevel.Size = new System.Drawing.Size(70, 39);
+            this.labelJpegQualityLevel.TabIndex = 0;
+            this.labelJpegQualityLevel.Text = "100 = Whoa\r\n50 = Nice\r\n1 = Meh";
+            // 
             // groupBoxSecurity
             // 
             this.groupBoxSecurity.Controls.Add(this.checkBoxPassphraseLock);
@@ -1623,7 +1676,7 @@
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 295);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 364);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 134);
             this.groupBoxSecurity.TabIndex = 22;
@@ -1898,7 +1951,7 @@
             this.groupBoxSchedule.Controls.Add(this.dateTimePickerScheduleStartAt);
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStopAt);
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStartAt);
-            this.groupBoxSchedule.Location = new System.Drawing.Point(6, 131);
+            this.groupBoxSchedule.Location = new System.Drawing.Point(6, 200);
             this.groupBoxSchedule.Name = "groupBoxSchedule";
             this.groupBoxSchedule.Size = new System.Drawing.Size(205, 158);
             this.groupBoxSchedule.TabIndex = 21;
@@ -2431,6 +2484,8 @@
             this.toolStripSlideshow.PerformLayout();
             this.tabControlModules.ResumeLayout(false);
             this.tabPageScreenCapture.ResumeLayout(false);
+            this.groupBoxJpegQualityLevel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQualityLevel)).EndInit();
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
             this.groupBoxCaptureDelay.ResumeLayout(false);
@@ -2633,5 +2688,9 @@
         private System.Windows.Forms.Panel panelScreen5;
         private System.Windows.Forms.TextBox textBoxScreen5Name;
         private System.Windows.Forms.Label labelScreen5Name;
+        private System.Windows.Forms.GroupBox groupBoxJpegQualityLevel;
+        private System.Windows.Forms.Label labelJpegQualityLevelDescription;
+        private System.Windows.Forms.Label labelJpegQualityLevel;
+        private System.Windows.Forms.NumericUpDown numericUpDownJpegQualityLevel;
     }
 }

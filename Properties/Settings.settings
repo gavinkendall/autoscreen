@@ -191,5 +191,8 @@
     <Setting Name="Screen5Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Active Window</Value>
     </Setting>
+    <Setting Name="JpegQualityLevel" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

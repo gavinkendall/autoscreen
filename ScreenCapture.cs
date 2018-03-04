@@ -7,8 +7,10 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -40,7 +42,7 @@ namespace autoscreen
         public static bool runningFromCommandLine = false;
         public static bool lockScreenCaptureSession = false;
 
-        public static Bitmap GetScreenBitmap(Screen screen, int ratio)
+        public static Bitmap GetScreenBitmap(Screen screen, int ratio, string format)
         {
             try
             {
@@ -65,6 +67,7 @@ namespace autoscreen
                 graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
 
                 Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
+
                 Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
                 graphicsDestination.DrawImage(bitmapSource, 0, 0, destinationWidth, destinationHeight);
 
@@ -121,19 +124,19 @@ namespace autoscreen
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType)
+        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel)
         {
             try
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, m_ratio);
+                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, m_ratio, format);
 
                     if (bitmap != null)
                     {
                         Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
 
-                        SaveToFile(bitmap, format, screenshot.Path, screenshotType);
+                        SaveToFile(bitmap, jpegQualityLevel, format, screenshot.Path, screenshotType);
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
                     }
@@ -147,7 +150,7 @@ namespace autoscreen
             }
         }
 
-        private static void SaveToFile(Bitmap bitmap, string imageFormat, string imagePath, ScreenshotType screenshotType)
+        private static void SaveToFile(Bitmap bitmap, long jpegQualityLevel, string imageFormat, string imagePath, ScreenshotType screenshotType)
         {
             try
             {
@@ -163,13 +166,29 @@ namespace autoscreen
                         Log.Write("Screenshot saved: " + imagePath);
                     }
 
-                    bitmap.Save(imagePath, ImageFormatCollection.GetByName(imageFormat).Format);
+                    if (imageFormat.Equals(ImageFormatSpec.NAME_JPEG))
+                    {
+                        var encoderParams = new EncoderParameters(1);
+                        encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQualityLevel);
+                        var encoderInfo = GetEncoderInfo("image/jpeg");
+                        bitmap.Save(imagePath, encoderInfo, encoderParams);
+                    }
+                    else
+                    {
+                        bitmap.Save(imagePath, ImageFormatCollection.GetByName(imageFormat).Format);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Log.Write("ScreenCapture::SaveToFile", ex);
             }
+        }
+
+        private static ImageCodecInfo GetEncoderInfo(string mimeType)
+        {
+            var encoders = ImageCodecInfo.GetImageEncoders();
+            return encoders.FirstOrDefault(t => t.MimeType == mimeType);
         }
 
         private static string m_folder;
