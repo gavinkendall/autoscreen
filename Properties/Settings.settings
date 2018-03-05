@@ -194,5 +194,8 @@
     <Setting Name="JpegQualityLevel" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
+    <Setting Name="DaysOldWhenRemoveSlides" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

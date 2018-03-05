@@ -368,6 +368,8 @@ namespace autoscreen
 
             numericUpDownJpegQualityLevel.Value = Properties.Settings.Default.JpegQualityLevel;
 
+            numericUpDownDaysOld.Value = Properties.Settings.Default.DaysOldWhenRemoveSlides;
+
             if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
             {
                 toolStripButtonPreview.Checked = true;
@@ -488,6 +490,8 @@ namespace autoscreen
             ClearPreview();
             DisableToolStripButtons();
 
+            /* Remove slides older than specified number of days */
+
             monthCalendar.BoldedDates = null;
 
             if (!runDateSearchThread.IsBusy)
@@ -588,10 +592,26 @@ namespace autoscreen
                     // Go through each directory found and make sure that the sub-directories match with the format yyyy-MM-dd.
                     for (int i = 0; i < dirs.Length; i++)
                     {
-                        Regex rgx = new Regex(@"^\d{4}-\d{2}-\d{2}$");
+                        Regex rgx = new Regex(@"^(?<Year>\d{4})-(?<Month>\d{2})-(?<Day>\d{2})$");
 
-                        if (rgx.IsMatch(Path.GetFileName(dirs[i])))
+                        string dirPath = Path.GetFileName(dirs[i]);
+
+                        if (rgx.IsMatch(dirPath))
                         {
+                            DateTime dateTimeOfDir = new DateTime(Convert.ToInt32(rgx.Match(dirPath).Groups["Year"].Value),
+                                Convert.ToInt32(rgx.Match(dirPath).Groups["Month"].Value),
+                                Convert.ToInt32(rgx.Match(dirPath).Groups["Day"].Value));
+
+                            int daysToSubtract = (int)numericUpDownDaysOld.Value;
+
+                            if (daysToSubtract > 0)
+                            {
+                                if (dateTimeOfDir <= DateTime.Now.Date.AddDays(-daysToSubtract))
+                                {
+                                    FileSystem.DeleteFilesInFolder(dirs[i]);
+                                }
+                            }
+
                             if (Directory.Exists(dirs[i] + "\\" + count.ToString() + "\\"))
                             {
                                 if (!selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
@@ -1454,6 +1474,8 @@ namespace autoscreen
             Properties.Settings.Default.Macro = textBoxMacro.Text;
 
             Properties.Settings.Default.JpegQualityLevel = (long)numericUpDownJpegQualityLevel.Value;
+
+            Properties.Settings.Default.DaysOldWhenRemoveSlides = (int)numericUpDownDaysOld.Value;
 
             EditorCollection.Save();
             ScreenshotCollection.Save();

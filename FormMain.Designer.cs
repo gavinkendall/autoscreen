@@ -204,6 +204,9 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
+            this.groupBoxSlideRemovalInDays = new System.Windows.Forms.GroupBox();
+            this.numericUpDownDaysOld = new System.Windows.Forms.NumericUpDown();
+            this.labelDays = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -266,6 +269,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
             this.toolStripScreenCapture.SuspendLayout();
+            this.groupBoxSlideRemovalInDays.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaysOld)).BeginInit();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -2114,6 +2119,7 @@
             // tabPageSlideshow
             // 
             this.tabPageSlideshow.AutoScroll = true;
+            this.tabPageSlideshow.Controls.Add(this.groupBoxSlideRemovalInDays);
             this.tabPageSlideshow.Controls.Add(this.listBoxSlides);
             this.tabPageSlideshow.Controls.Add(this.groupBoxSlideshowDelay);
             this.tabPageSlideshow.Location = new System.Drawing.Point(4, 22);
@@ -2371,6 +2377,39 @@
             this.textBoxMacro.TabIndex = 24;
             this.textBoxMacro.TabStop = false;
             // 
+            // groupBoxSlideRemovalInDays
+            // 
+            this.groupBoxSlideRemovalInDays.Controls.Add(this.labelDays);
+            this.groupBoxSlideRemovalInDays.Controls.Add(this.numericUpDownDaysOld);
+            this.groupBoxSlideRemovalInDays.Location = new System.Drawing.Point(8, 262);
+            this.groupBoxSlideRemovalInDays.Name = "groupBoxSlideRemovalInDays";
+            this.groupBoxSlideRemovalInDays.Size = new System.Drawing.Size(204, 47);
+            this.groupBoxSlideRemovalInDays.TabIndex = 0;
+            this.groupBoxSlideRemovalInDays.TabStop = false;
+            this.groupBoxSlideRemovalInDays.Text = "Remove slides older than ...";
+            // 
+            // numericUpDownDaysOld
+            // 
+            this.numericUpDownDaysOld.Location = new System.Drawing.Point(6, 19);
+            this.numericUpDownDaysOld.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+            this.numericUpDownDaysOld.Name = "numericUpDownDaysOld";
+            this.numericUpDownDaysOld.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownDaysOld.TabIndex = 0;
+            this.numericUpDownDaysOld.TabStop = false;
+            // 
+            // labelDays
+            // 
+            this.labelDays.AutoSize = true;
+            this.labelDays.Location = new System.Drawing.Point(54, 21);
+            this.labelDays.Name = "labelDays";
+            this.labelDays.Size = new System.Drawing.Size(29, 13);
+            this.labelDays.TabIndex = 0;
+            this.labelDays.Text = "days";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2469,6 +2508,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).EndInit();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
+            this.groupBoxSlideRemovalInDays.ResumeLayout(false);
+            this.groupBoxSlideRemovalInDays.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaysOld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2650,5 +2692,8 @@
         private System.Windows.Forms.Label labelJpegQualityLevelDescription;
         private System.Windows.Forms.Label labelJpegQualityLevel;
         private System.Windows.Forms.NumericUpDown numericUpDownJpegQualityLevel;
+        private System.Windows.Forms.GroupBox groupBoxSlideRemovalInDays;
+        private System.Windows.Forms.Label labelDays;
+        private System.Windows.Forms.NumericUpDown numericUpDownDaysOld;
     }
 }

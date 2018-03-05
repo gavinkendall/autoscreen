@@ -132,5 +132,32 @@ namespace autoscreen
 
             return null;
         }
+
+        public static void DeleteFilesInFolder(string monthCalendarFolder)
+        {
+            try
+            {
+                if (Directory.Exists(monthCalendarFolder))
+                {
+                    DirectoryInfo di = new DirectoryInfo(monthCalendarFolder);
+
+                    foreach (FileInfo file in di.EnumerateFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+
+                    Directory.Delete(monthCalendarFolder, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
     }
 }
