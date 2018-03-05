@@ -403,6 +403,7 @@ namespace autoscreen
         {
             if (toolStripMenuItemOpenAtApplicationStartup.Checked)
             {
+                SearchDates();
                 OpenWindow();
             }
         }
@@ -651,8 +652,6 @@ namespace autoscreen
                 {
                     SaveApplicationSettings();
 
-                    SearchDates();
-
                     Opacity = 100;
                     toolStripMenuItemOpen.Enabled = false;
                     toolStripMenuItemClose.Enabled = true;
@@ -724,6 +723,8 @@ namespace autoscreen
                 // Some people want to see this window immediately after the session has stopped.
                 if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
                 {
+                    SearchDates();
+                    SearchSlides();
                     OpenWindow();
                 }
 
@@ -1514,6 +1515,8 @@ namespace autoscreen
         /// <param name="e"></param>
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
+            SearchDates();
+            SearchSlides();
             OpenWindow();
         }
 
