@@ -180,6 +180,9 @@
             this.checkBoxScheduleStopAt = new System.Windows.Forms.CheckBox();
             this.checkBoxScheduleStartAt = new System.Windows.Forms.CheckBox();
             this.tabPageSlideshow = new System.Windows.Forms.TabPage();
+            this.groupBoxSlideRemovalInDays = new System.Windows.Forms.GroupBox();
+            this.labelDays = new System.Windows.Forms.Label();
+            this.numericUpDownDaysOld = new System.Windows.Forms.NumericUpDown();
             this.groupBoxSlideshowDelay = new System.Windows.Forms.GroupBox();
             this.labelSlideshowDelayMilliseconds = new System.Windows.Forms.Label();
             this.numericUpDownSlideshowDelayMilliseconds = new System.Windows.Forms.NumericUpDown();
@@ -204,9 +207,6 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
-            this.groupBoxSlideRemovalInDays = new System.Windows.Forms.GroupBox();
-            this.numericUpDownDaysOld = new System.Windows.Forms.NumericUpDown();
-            this.labelDays = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -262,6 +262,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.groupBoxSchedule.SuspendLayout();
             this.tabPageSlideshow.SuspendLayout();
+            this.groupBoxSlideRemovalInDays.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaysOld)).BeginInit();
             this.groupBoxSlideshowDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMilliseconds)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideSkip)).BeginInit();
@@ -269,8 +271,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
             this.toolStripScreenCapture.SuspendLayout();
-            this.groupBoxSlideRemovalInDays.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaysOld)).BeginInit();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -1378,7 +1378,7 @@
             // 
             this.listBoxSlides.FormattingEnabled = true;
             this.listBoxSlides.IntegralHeight = false;
-            this.listBoxSlides.Location = new System.Drawing.Point(8, 3);
+            this.listBoxSlides.Location = new System.Drawing.Point(6, 3);
             this.listBoxSlides.MaximumSize = new System.Drawing.Size(204, 123);
             this.listBoxSlides.MinimumSize = new System.Drawing.Size(204, 123);
             this.listBoxSlides.Name = "listBoxSlides";
@@ -2130,6 +2130,39 @@
             this.tabPageSlideshow.Text = "Slideshow";
             this.tabPageSlideshow.UseVisualStyleBackColor = true;
             // 
+            // groupBoxSlideRemovalInDays
+            // 
+            this.groupBoxSlideRemovalInDays.Controls.Add(this.labelDays);
+            this.groupBoxSlideRemovalInDays.Controls.Add(this.numericUpDownDaysOld);
+            this.groupBoxSlideRemovalInDays.Location = new System.Drawing.Point(6, 262);
+            this.groupBoxSlideRemovalInDays.Name = "groupBoxSlideRemovalInDays";
+            this.groupBoxSlideRemovalInDays.Size = new System.Drawing.Size(204, 47);
+            this.groupBoxSlideRemovalInDays.TabIndex = 0;
+            this.groupBoxSlideRemovalInDays.TabStop = false;
+            this.groupBoxSlideRemovalInDays.Text = "Remove slides older than ...";
+            // 
+            // labelDays
+            // 
+            this.labelDays.AutoSize = true;
+            this.labelDays.Location = new System.Drawing.Point(54, 21);
+            this.labelDays.Name = "labelDays";
+            this.labelDays.Size = new System.Drawing.Size(29, 13);
+            this.labelDays.TabIndex = 0;
+            this.labelDays.Text = "days";
+            // 
+            // numericUpDownDaysOld
+            // 
+            this.numericUpDownDaysOld.Location = new System.Drawing.Point(6, 19);
+            this.numericUpDownDaysOld.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+            this.numericUpDownDaysOld.Name = "numericUpDownDaysOld";
+            this.numericUpDownDaysOld.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownDaysOld.TabIndex = 0;
+            this.numericUpDownDaysOld.TabStop = false;
+            // 
             // groupBoxSlideshowDelay
             // 
             this.groupBoxSlideshowDelay.Controls.Add(this.labelSlideshowDelayMilliseconds);
@@ -2142,7 +2175,7 @@
             this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelaySeconds);
             this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayMinutes);
             this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayHours);
-            this.groupBoxSlideshowDelay.Location = new System.Drawing.Point(8, 132);
+            this.groupBoxSlideshowDelay.Location = new System.Drawing.Point(6, 132);
             this.groupBoxSlideshowDelay.Name = "groupBoxSlideshowDelay";
             this.groupBoxSlideshowDelay.Size = new System.Drawing.Size(204, 124);
             this.groupBoxSlideshowDelay.TabIndex = 12;
@@ -2377,39 +2410,6 @@
             this.textBoxMacro.TabIndex = 24;
             this.textBoxMacro.TabStop = false;
             // 
-            // groupBoxSlideRemovalInDays
-            // 
-            this.groupBoxSlideRemovalInDays.Controls.Add(this.labelDays);
-            this.groupBoxSlideRemovalInDays.Controls.Add(this.numericUpDownDaysOld);
-            this.groupBoxSlideRemovalInDays.Location = new System.Drawing.Point(8, 262);
-            this.groupBoxSlideRemovalInDays.Name = "groupBoxSlideRemovalInDays";
-            this.groupBoxSlideRemovalInDays.Size = new System.Drawing.Size(204, 47);
-            this.groupBoxSlideRemovalInDays.TabIndex = 0;
-            this.groupBoxSlideRemovalInDays.TabStop = false;
-            this.groupBoxSlideRemovalInDays.Text = "Remove slides older than ...";
-            // 
-            // numericUpDownDaysOld
-            // 
-            this.numericUpDownDaysOld.Location = new System.Drawing.Point(6, 19);
-            this.numericUpDownDaysOld.Maximum = new decimal(new int[] {
-            365,
-            0,
-            0,
-            0});
-            this.numericUpDownDaysOld.Name = "numericUpDownDaysOld";
-            this.numericUpDownDaysOld.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownDaysOld.TabIndex = 0;
-            this.numericUpDownDaysOld.TabStop = false;
-            // 
-            // labelDays
-            // 
-            this.labelDays.AutoSize = true;
-            this.labelDays.Location = new System.Drawing.Point(54, 21);
-            this.labelDays.Name = "labelDays";
-            this.labelDays.Size = new System.Drawing.Size(29, 13);
-            this.labelDays.TabIndex = 0;
-            this.labelDays.Text = "days";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2499,6 +2499,9 @@
             this.groupBoxSchedule.ResumeLayout(false);
             this.groupBoxSchedule.PerformLayout();
             this.tabPageSlideshow.ResumeLayout(false);
+            this.groupBoxSlideRemovalInDays.ResumeLayout(false);
+            this.groupBoxSlideRemovalInDays.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaysOld)).EndInit();
             this.groupBoxSlideshowDelay.ResumeLayout(false);
             this.groupBoxSlideshowDelay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMilliseconds)).EndInit();
@@ -2508,9 +2511,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).EndInit();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
-            this.groupBoxSlideRemovalInDays.ResumeLayout(false);
-            this.groupBoxSlideRemovalInDays.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaysOld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
