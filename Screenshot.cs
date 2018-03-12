@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
 // Auto Screen Capture 2.1.0
-// autoscreen.Editor.cs
+// autoscreen.Screenshot.cs
 //
-// Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Friday, 5 January 2018
+// Developed by Gavin Kendall
+// Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
 using System.IO;

@@ -2,8 +2,8 @@
 // Auto Screen Capture 2.1.0
 // autoscreen.FormMain.cs
 //
-// Written by Gavin Kendall (gavinkendall@gmail.com)
-// Thursday, 15 May 2008 - Friday, 5 January 2018
+// Developed by Gavin Kendall
+// Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
 using System.IO;
@@ -63,6 +63,8 @@ namespace autoscreen
         private const int CAPTURE_DELAY_DEFAULT = 60000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
+        private const int JPEG_QUALITY_LEVEL_MIN = 1;
+        private const int JPEG_QUALITY_LEVEL_MAX = 100;
 
         /// <summary>
         /// The various regular expressions used in the parsing of the command line arguments.
@@ -77,6 +79,7 @@ namespace autoscreen
         private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
         private const string REGEX_COMMAND_LINE_DELAY = @"^-delay=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
         private const string REGEX_COMMAND_LINE_LOCK = "^-lock$";
+        private const string REGEX_COMMAND_LINE_JPEG_LEVEL = @"^-jpeglevel=(?<JpegLevel>\d{1,3})$";
 
         /// <summary>
         /// Constructor for the main form. Arugments from the command line can be passed to it.
@@ -1563,7 +1566,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Properties.Settings.Default.ApplicationName + " " + Properties.Settings.Default.ApplicationVersion + "\n" + Properties.Settings.Default.ApplicationAuthor, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Properties.Settings.Default.ApplicationName + " " + Properties.Settings.Default.ApplicationVersion + " (\"Clara\")\nDeveloped by Gavin Kendall 2008 - 2018", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -1633,7 +1636,7 @@ namespace autoscreen
 
                 int limit = CAPTURE_LIMIT_MIN;
                 checkBoxCaptureLimit.Checked = false;
-                numericUpDownCaptureLimit.Value = (decimal)CAPTURE_LIMIT_MIN;
+                numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
 
                 int delay = CAPTURE_DELAY_DEFAULT;
                 numericUpDownHoursInterval.Value = 0;
@@ -1642,7 +1645,10 @@ namespace autoscreen
                 numericUpDownMillisecondsInterval.Value = 0;
 
                 int ratio = IMAGE_RESOLUTION_RATIO_MAX;
-                numericUpDownImageResolutionRatio.Value = (decimal)IMAGE_RESOLUTION_RATIO_MAX;
+                numericUpDownImageResolutionRatio.Value = IMAGE_RESOLUTION_RATIO_MAX;
+
+                int jpegLevel = JPEG_QUALITY_LEVEL_MAX;
+                numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;
 
                 string folder = screenshotsFolder;
                 string macro = MacroParser.UserMacro;
@@ -1660,6 +1666,7 @@ namespace autoscreen
                 Regex rgxCommandLineCaptureDelay = new Regex(REGEX_COMMAND_LINE_DELAY);
                 Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
                 Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
+                Regex rgxCommandLineJpegLevel = new Regex(REGEX_COMMAND_LINE_JPEG_LEVEL);
 
                 checkBoxScheduleStopAt.Checked = false;
                 checkBoxScheduleStartAt.Checked = false;
@@ -1703,7 +1710,7 @@ namespace autoscreen
                         if (cmdRatio >= IMAGE_RESOLUTION_RATIO_MIN && cmdRatio <= IMAGE_RESOLUTION_RATIO_MAX)
                         {
                             ratio = cmdRatio;
-                            numericUpDownImageResolutionRatio.Value = (decimal)cmdRatio;
+                            numericUpDownImageResolutionRatio.Value = cmdRatio;
                         }
                     }
 
@@ -1715,7 +1722,7 @@ namespace autoscreen
                         {
                             limit = cmdLimit;
                             checkBoxCaptureLimit.Checked = true;
-                            numericUpDownCaptureLimit.Value = (decimal)cmdLimit;
+                            numericUpDownCaptureLimit.Value = cmdLimit;
                         }
                     }
 
@@ -1732,10 +1739,10 @@ namespace autoscreen
                         int seconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Seconds"].Value);
                         int milliseconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Milliseconds"].Value);
 
-                        numericUpDownHoursInterval.Value = (decimal)hours;
-                        numericUpDownMinutesInterval.Value = (decimal)minutes;
-                        numericUpDownSecondsInterval.Value = (decimal)seconds;
-                        numericUpDownMillisecondsInterval.Value = (decimal)milliseconds;
+                        numericUpDownHoursInterval.Value = hours;
+                        numericUpDownMinutesInterval.Value = minutes;
+                        numericUpDownSecondsInterval.Value = seconds;
+                        numericUpDownMillisecondsInterval.Value = milliseconds;
 
                         delay = ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
                     }
@@ -1769,6 +1776,17 @@ namespace autoscreen
                     if (rgxCommandLineLock.IsMatch(args[i]) && textBoxPassphrase.Text.Length > 0)
                     {
                         checkBoxPassphraseLock.Checked = true;
+                    }
+
+                    if (rgxCommandLineJpegLevel.IsMatch(args[i]))
+                    {
+                        int cmdJpegLevel = Convert.ToInt32(rgxCommandLineJpegLevel.Match(args[i]).Groups["JpegLevel"].Value);
+
+                        if (cmdJpegLevel >= JPEG_QUALITY_LEVEL_MIN && cmdJpegLevel <= JPEG_QUALITY_LEVEL_MAX)
+                        {
+                            jpegLevel = cmdJpegLevel;
+                            numericUpDownJpegQualityLevel.Value = jpegLevel;
+                        }
                     }
                 }
 
