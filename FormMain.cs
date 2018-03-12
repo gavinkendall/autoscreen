@@ -22,21 +22,6 @@ namespace autoscreen
     public partial class FormMain : Form
     {
         /// <summary>
-        /// The screenshots folder to contain all of the screenshots taken.
-        /// </summary>
-        private static string screenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + @"screenshots\";
-
-        /// <summary>
-        /// The default image format is JPEG, but feel free to change this setting.
-        /// </summary>
-        private static string imageFormat = ImageFormatSpec.NAME_JPEG;
-
-        /// <summary>
-        /// The application to execute whenever the user chooses to open their screenshots folder or edits the selected screenshot.
-        /// </summary>
-        private static string windowsExplorer = "explorer";
-
-        /// <summary>
         /// Other forms.
         /// </summary>
         private FormAddEditor formAddEditor = new FormAddEditor();
@@ -82,7 +67,7 @@ namespace autoscreen
         private const string REGEX_COMMAND_LINE_JPEG_LEVEL = @"^-jpeglevel=(?<JpegLevel>\d{1,3})$";
 
         /// <summary>
-        /// Constructor for the main form. Arugments from the command line can be passed to it.
+        /// Constructor for the main form. Arguments from the command line can be passed to it.
         /// </summary>
         /// <param name="args">Arguments from the command line</param>
         public FormMain(string[] args)
@@ -94,6 +79,34 @@ namespace autoscreen
 
             Log.Write("*** " + Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ") ***");
 
+            LoadApplicationSettings();
+
+            if (args.Length > 0)
+            {
+                ParseCommandLineArguments(args);
+            }
+        }
+
+        /// <summary>
+        /// When this form loads we'll need to read from the application's properties
+        /// in order to prepare it with the user's last saved options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormViewer_Load(object sender, EventArgs e)
+        {
+            if (toolStripMenuItemOpenAtApplicationStartup.Checked)
+            {
+                SearchDates();
+                OpenWindow();
+            }
+        }
+
+        /// <summary>
+        /// Loads the user's saved application settings.
+        /// </summary>
+        private void LoadApplicationSettings()
+        {
             Log.Write("Initializing image format collection.");
             ImageFormatCollection.Initialize();
 
@@ -132,7 +145,7 @@ namespace autoscreen
             }
             else
             {
-                textBoxFolder.Text = screenshotsFolder;
+                textBoxFolder.Text = FileSystem.ScreenshotsFolder;
             }
 
             Log.Write("Setting screenshots macro.");
@@ -222,7 +235,7 @@ namespace autoscreen
             Log.Write("Loading user settings - option menu items.");
 
             toolStripMenuItemDebugMode.Checked = Properties.Settings.Default.DebugMode;
-            toolStripMenuItemDebugMode.CheckedChanged += ToolStripMenuItemDebugMode_CheckedChanged;
+            toolStripMenuItemDebugMode.CheckedChanged += toolStripMenuItemDebugMode_CheckedChanged;
 
             toolStripMenuItemPreviewAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
             toolStripMenuItemShowSystemTrayIcon.Checked = Properties.Settings.Default.ShowSystemTrayIcon;
@@ -380,11 +393,6 @@ namespace autoscreen
 
             EnableStartScreenCapture();
 
-            if (args.Length > 0)
-            {
-                ParseCommandLine(args);
-            }
-
             CaptureLimitCheck();
 
             if (toolStripMenuItemScheduleAtApplicationStartup.Checked)
@@ -393,24 +401,95 @@ namespace autoscreen
             }
         }
 
-        private void ToolStripMenuItemDebugMode_CheckedChanged(object sender, EventArgs e)
-        {
-            Log.Enabled = toolStripMenuItemDebugMode.Checked;
-        }
-
         /// <summary>
-        /// When this form loads we'll need to read from the application's properties
-        /// in order to prepare it with the user's last saved options.
+        /// Saves the user's current settings so we can load them at a later time when the user executes the application.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FormViewer_Load(object sender, EventArgs e)
+        private void SaveApplicationSettings()
         {
-            if (toolStripMenuItemOpenAtApplicationStartup.Checked)
-            {
-                SearchDates();
-                OpenWindow();
-            }
+            Log.Write("Saving application settings.");
+
+            Properties.Settings.Default.ScreenshotsDirectory = CorrectDirectoryPath(textBoxFolder.Text);
+
+            Properties.Settings.Default.ScheduleImageFormat = comboBoxScheduleImageFormat.Text;
+
+            Properties.Settings.Default.SlideSkip = (int)numericUpDownSlideSkip.Value;
+            Properties.Settings.Default.CaptureLimit = (int)numericUpDownCaptureLimit.Value;
+            Properties.Settings.Default.ImageResolutionRatio = (int)numericUpDownImageResolutionRatio.Value;
+
+            Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
+
+            Properties.Settings.Default.Interval = GetCaptureDelay();
+            Properties.Settings.Default.SlideshowDelay = GetSlideshowDelay();
+
+            Properties.Settings.Default.SlideSkipCheck = checkBoxSlideSkip.Checked;
+            Properties.Settings.Default.CaptureLimitCheck = checkBoxCaptureLimit.Checked;
+            Properties.Settings.Default.TakeInitialScreenshotCheck = checkBoxInitialScreenshot.Checked;
+
+            Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
+            Properties.Settings.Default.ShowSystemTrayIcon = toolStripMenuItemShowSystemTrayIcon.Checked;
+            Properties.Settings.Default.DemoModeCheck = toolStripMenuItemPreviewAtApplicationStartup.Checked;
+            Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
+            Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;
+            Properties.Settings.Default.OpenOnScreenCaptureStopCheck = toolStripMenuItemOpenOnStopScreenCapture.Checked;
+            Properties.Settings.Default.OpenOnApplicationStartupCheck = toolStripMenuItemOpenAtApplicationStartup.Checked;
+            Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
+            Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
+
+            Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;
+            Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
+            Properties.Settings.Default.CaptureStartOnScheduleCheck = checkBoxScheduleStartOnSchedule.Checked;
+
+            Properties.Settings.Default.CaptureOnSundayCheck = checkBoxSunday.Checked;
+            Properties.Settings.Default.CaptureOnMondayCheck = checkBoxMonday.Checked;
+            Properties.Settings.Default.CaptureOnFridayCheck = checkBoxFriday.Checked;
+            Properties.Settings.Default.CaptureOnTuesdayCheck = checkBoxTuesday.Checked;
+            Properties.Settings.Default.CaptureOnThursdayCheck = checkBoxThursday.Checked;
+            Properties.Settings.Default.CaptureOnSaturdayCheck = checkBoxSaturday.Checked;
+            Properties.Settings.Default.CaptureOnWednesdayCheck = checkBoxWednesday.Checked;
+
+            Properties.Settings.Default.CaptureOnTheseDaysCheck = checkBoxScheduleOnTheseDays.Checked;
+
+            Properties.Settings.Default.CaptureStopAtValue = dateTimePickerScheduleStopAt.Value;
+            Properties.Settings.Default.CaptureStartAtValue = dateTimePickerScheduleStartAt.Value;
+
+            Properties.Settings.Default.Screen1X = (int)numericUpDownScreen1X.Value;
+            Properties.Settings.Default.Screen1Y = (int)numericUpDownScreen1Y.Value;
+            Properties.Settings.Default.Screen1Width = (int)numericUpDownScreen1Width.Value;
+            Properties.Settings.Default.Screen1Height = (int)numericUpDownScreen1Height.Value;
+
+            Properties.Settings.Default.Screen2X = (int)numericUpDownScreen2X.Value;
+            Properties.Settings.Default.Screen2Y = (int)numericUpDownScreen2Y.Value;
+            Properties.Settings.Default.Screen2Width = (int)numericUpDownScreen2Width.Value;
+            Properties.Settings.Default.Screen2Height = (int)numericUpDownScreen2Height.Value;
+
+            Properties.Settings.Default.Screen3X = (int)numericUpDownScreen3X.Value;
+            Properties.Settings.Default.Screen3Y = (int)numericUpDownScreen3Y.Value;
+            Properties.Settings.Default.Screen3Width = (int)numericUpDownScreen3Width.Value;
+            Properties.Settings.Default.Screen3Height = (int)numericUpDownScreen3Height.Value;
+
+            Properties.Settings.Default.Screen4X = (int)numericUpDownScreen4X.Value;
+            Properties.Settings.Default.Screen4Y = (int)numericUpDownScreen4Y.Value;
+            Properties.Settings.Default.Screen4Width = (int)numericUpDownScreen4Width.Value;
+            Properties.Settings.Default.Screen4Height = (int)numericUpDownScreen4Height.Value;
+
+            Properties.Settings.Default.Screen1Name = textBoxScreen1Name.Text;
+            Properties.Settings.Default.Screen2Name = textBoxScreen2Name.Text;
+            Properties.Settings.Default.Screen3Name = textBoxScreen3Name.Text;
+            Properties.Settings.Default.Screen4Name = textBoxScreen4Name.Text;
+            Properties.Settings.Default.Screen5Name = textBoxScreen5Name.Text;
+
+            Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
+
+            Properties.Settings.Default.Macro = textBoxMacro.Text;
+
+            Properties.Settings.Default.JpegQualityLevel = (long)numericUpDownJpegQualityLevel.Value;
+
+            Properties.Settings.Default.DaysOldWhenRemoveSlides = (int)numericUpDownDaysOld.Value;
+
+            EditorCollection.Save();
+            ScreenshotCollection.Save();
+
+            Properties.Settings.Default.Save();
         }
 
         /// <summary>
@@ -465,7 +544,7 @@ namespace autoscreen
         {
             if (folder.Length == 0)
             {
-                folder = screenshotsFolder;
+                folder = FileSystem.ScreenshotsFolder;
             }
 
             if (!folder.EndsWith(@"\"))
@@ -1173,11 +1252,9 @@ namespace autoscreen
         /// <param name="e"></param>
         private void toolStripMenuItemStartScreenCapture_Click(object sender, EventArgs e)
         {
-            if (sender.ToString().Equals(toolStripSplitButtonStartScreenCapture.Text))
-            {
-                imageFormat = ImageFormatSpec.NAME_JPEG;
-            }
-            else
+            string imageFormat = ScreenCapture.DefaultImageFormat;
+
+            if (!sender.ToString().Equals(toolStripSplitButtonStartScreenCapture.Text))
             {
                 imageFormat = sender.ToString();
             }
@@ -1346,6 +1423,23 @@ namespace autoscreen
                 numericUpDownMillisecondsInterval.Enabled = true;
                 numericUpDownJpegQualityLevel.Enabled = true;
                 toolStripButtonPreview.Enabled = true;
+
+                checkBoxScheduleStartOnSchedule.Enabled = true;
+                checkBoxScheduleStartAt.Enabled = true;
+                checkBoxScheduleStopAt.Enabled = true;
+                checkBoxScheduleOnTheseDays.Enabled = true;
+                checkBoxSunday.Enabled = true;
+                checkBoxMonday.Enabled = true;
+                checkBoxTuesday.Enabled = true;
+                checkBoxWednesday.Enabled = true;
+                checkBoxThursday.Enabled = true;
+                checkBoxFriday.Enabled = true;
+                checkBoxSaturday.Enabled = true;
+                buttonScheduleSet.Enabled = true;
+                buttonScheduleClear.Enabled = true;
+                comboBoxScheduleImageFormat.Enabled = true;
+                dateTimePickerScheduleStartAt.Enabled = true;
+                dateTimePickerScheduleStopAt.Enabled = true;
             }
             else
             {
@@ -1371,6 +1465,23 @@ namespace autoscreen
             numericUpDownMillisecondsInterval.Enabled = false;
             numericUpDownJpegQualityLevel.Enabled = false;
             toolStripButtonPreview.Enabled = false;
+
+            checkBoxScheduleStartOnSchedule.Enabled = false;
+            checkBoxScheduleStartAt.Enabled = false;
+            checkBoxScheduleStopAt.Enabled = false;
+            checkBoxScheduleOnTheseDays.Enabled = false;
+            checkBoxSunday.Enabled = false;
+            checkBoxMonday.Enabled = false;
+            checkBoxTuesday.Enabled = false;
+            checkBoxWednesday.Enabled = false;
+            checkBoxThursday.Enabled = false;
+            checkBoxFriday.Enabled = false;
+            checkBoxSaturday.Enabled = false;
+            buttonScheduleSet.Enabled = false;
+            buttonScheduleClear.Enabled = false;
+            comboBoxScheduleImageFormat.Enabled = false;
+            dateTimePickerScheduleStartAt.Enabled = false;
+            dateTimePickerScheduleStopAt.Enabled = false;
         }
 
         /// <summary>
@@ -1393,97 +1504,6 @@ namespace autoscreen
             textBoxFolder.Enabled = false;
             textBoxMacro.Enabled = false;
             buttonBrowseFolder.Enabled = false;
-        }
-
-        /// <summary>
-        /// Saves the user's current settings so we can load them at a later time when the user executes the application.
-        /// </summary>
-        private void SaveApplicationSettings()
-        {
-            Log.Write("Saving application settings.");
-
-            Properties.Settings.Default.ScreenshotsDirectory = CorrectDirectoryPath(textBoxFolder.Text);
-
-            Properties.Settings.Default.ScheduleImageFormat = comboBoxScheduleImageFormat.Text;
-
-            Properties.Settings.Default.SlideSkip = (int)numericUpDownSlideSkip.Value;
-            Properties.Settings.Default.CaptureLimit = (int)numericUpDownCaptureLimit.Value;
-            Properties.Settings.Default.ImageResolutionRatio = (int)numericUpDownImageResolutionRatio.Value;
-
-            Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
-
-            Properties.Settings.Default.Interval = GetCaptureDelay();
-            Properties.Settings.Default.SlideshowDelay = GetSlideshowDelay();
-
-            Properties.Settings.Default.SlideSkipCheck = checkBoxSlideSkip.Checked;
-            Properties.Settings.Default.CaptureLimitCheck = checkBoxCaptureLimit.Checked;
-            Properties.Settings.Default.TakeInitialScreenshotCheck = checkBoxInitialScreenshot.Checked;
-
-            Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
-            Properties.Settings.Default.ShowSystemTrayIcon = toolStripMenuItemShowSystemTrayIcon.Checked;
-            Properties.Settings.Default.DemoModeCheck = toolStripMenuItemPreviewAtApplicationStartup.Checked;
-            Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
-            Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;
-            Properties.Settings.Default.OpenOnScreenCaptureStopCheck = toolStripMenuItemOpenOnStopScreenCapture.Checked;
-            Properties.Settings.Default.OpenOnApplicationStartupCheck = toolStripMenuItemOpenAtApplicationStartup.Checked;
-            Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
-            Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
-
-            Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;
-            Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
-            Properties.Settings.Default.CaptureStartOnScheduleCheck = checkBoxScheduleStartOnSchedule.Checked;
-
-            Properties.Settings.Default.CaptureOnSundayCheck = checkBoxSunday.Checked;
-            Properties.Settings.Default.CaptureOnMondayCheck = checkBoxMonday.Checked;
-            Properties.Settings.Default.CaptureOnFridayCheck = checkBoxFriday.Checked;
-            Properties.Settings.Default.CaptureOnTuesdayCheck = checkBoxTuesday.Checked;
-            Properties.Settings.Default.CaptureOnThursdayCheck = checkBoxThursday.Checked;
-            Properties.Settings.Default.CaptureOnSaturdayCheck = checkBoxSaturday.Checked;
-            Properties.Settings.Default.CaptureOnWednesdayCheck = checkBoxWednesday.Checked;
-
-            Properties.Settings.Default.CaptureOnTheseDaysCheck = checkBoxScheduleOnTheseDays.Checked;
-
-            Properties.Settings.Default.CaptureStopAtValue = dateTimePickerScheduleStopAt.Value;
-            Properties.Settings.Default.CaptureStartAtValue = dateTimePickerScheduleStartAt.Value;
-
-            Properties.Settings.Default.Screen1X = (int)numericUpDownScreen1X.Value;
-            Properties.Settings.Default.Screen1Y = (int)numericUpDownScreen1Y.Value;
-            Properties.Settings.Default.Screen1Width = (int)numericUpDownScreen1Width.Value;
-            Properties.Settings.Default.Screen1Height = (int)numericUpDownScreen1Height.Value;
-
-            Properties.Settings.Default.Screen2X = (int)numericUpDownScreen2X.Value;
-            Properties.Settings.Default.Screen2Y = (int)numericUpDownScreen2Y.Value;
-            Properties.Settings.Default.Screen2Width = (int)numericUpDownScreen2Width.Value;
-            Properties.Settings.Default.Screen2Height = (int)numericUpDownScreen2Height.Value;
-
-            Properties.Settings.Default.Screen3X = (int)numericUpDownScreen3X.Value;
-            Properties.Settings.Default.Screen3Y = (int)numericUpDownScreen3Y.Value;
-            Properties.Settings.Default.Screen3Width = (int)numericUpDownScreen3Width.Value;
-            Properties.Settings.Default.Screen3Height = (int)numericUpDownScreen3Height.Value;
-
-            Properties.Settings.Default.Screen4X = (int)numericUpDownScreen4X.Value;
-            Properties.Settings.Default.Screen4Y = (int)numericUpDownScreen4Y.Value;
-            Properties.Settings.Default.Screen4Width = (int)numericUpDownScreen4Width.Value;
-            Properties.Settings.Default.Screen4Height = (int)numericUpDownScreen4Height.Value;
-
-            Properties.Settings.Default.Screen1Name = textBoxScreen1Name.Text;
-            Properties.Settings.Default.Screen2Name = textBoxScreen2Name.Text;
-            Properties.Settings.Default.Screen3Name = textBoxScreen3Name.Text;
-            Properties.Settings.Default.Screen4Name = textBoxScreen4Name.Text;
-            Properties.Settings.Default.Screen5Name = textBoxScreen5Name.Text;
-
-            Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
-
-            Properties.Settings.Default.Macro = textBoxMacro.Text;
-
-            Properties.Settings.Default.JpegQualityLevel = (long)numericUpDownJpegQualityLevel.Value;
-
-            Properties.Settings.Default.DaysOldWhenRemoveSlides = (int)numericUpDownDaysOld.Value;
-
-            EditorCollection.Save();
-            ScreenshotCollection.Save();
-
-            Properties.Settings.Default.Save();
         }
 
         /// <summary>
@@ -1613,7 +1633,7 @@ namespace autoscreen
                 {
                     if (File.Exists(selectedScreenshot.Path))
                     {
-                        Process.Start(windowsExplorer, "/select,\"" + selectedScreenshot.Path + "\"");
+                        Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
                     }
                 }
             }
@@ -1623,12 +1643,13 @@ namespace autoscreen
         /// Parses the command line and processes the commands the user has chosen from the command line.
         /// </summary>
         /// <param name="args"></param>
-        private void ParseCommandLine(string[] args)
+        private void ParseCommandLineArguments(string[] args)
         {
             try
             {
                 Log.Write("Parsing command line arguments.");
 
+                #region Default Values for Command Line Arguments/Options
                 bool isScheduled = false;
 
                 bool initial = false;
@@ -1650,11 +1671,22 @@ namespace autoscreen
                 int jpegLevel = JPEG_QUALITY_LEVEL_MAX;
                 numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;
 
-                string folder = screenshotsFolder;
+                string folder = FileSystem.ScreenshotsFolder;
                 string macro = MacroParser.UserMacro;
 
-                imageFormat = ImageFormatSpec.NAME_JPEG;
-                comboBoxScheduleImageFormat.SelectedItem = ImageFormatSpec.NAME_JPEG;
+                string imageFormat = ScreenCapture.DefaultImageFormat;
+                comboBoxScheduleImageFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
+
+                checkBoxScheduleStopAt.Checked = false;
+                checkBoxScheduleStartAt.Checked = false;
+                checkBoxScheduleOnTheseDays.Checked = false;
+
+                toolStripMenuItemOpenOnStopScreenCapture.Checked = false;
+                toolStripMenuItemOpenAtApplicationStartup.Checked = false;
+                toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
+                toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
+                toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
+                #endregion
 
                 Regex rgxCommandLineLock = new Regex(REGEX_COMMAND_LINE_LOCK);
                 Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
@@ -1668,16 +1700,7 @@ namespace autoscreen
                 Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
                 Regex rgxCommandLineJpegLevel = new Regex(REGEX_COMMAND_LINE_JPEG_LEVEL);
 
-                checkBoxScheduleStopAt.Checked = false;
-                checkBoxScheduleStartAt.Checked = false;
-                checkBoxScheduleOnTheseDays.Checked = false;
-
-                toolStripMenuItemOpenOnStopScreenCapture.Checked = false;
-                toolStripMenuItemOpenAtApplicationStartup.Checked = false;
-                toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
-                toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
-                toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
-
+                #region Command Line Argument Parsing
                 for (int i = 0; i < args.Length; i++)
                 {
                     if (args[i] != null)
@@ -1688,13 +1711,11 @@ namespace autoscreen
                     if (rgxCommandLineFolder.IsMatch(args[i]))
                     {
                         folder = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
-                        textBoxFolder.Text = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
                     }
 
                     if (rgxCommandLineMacro.IsMatch(args[i]))
                     {
                         macro = rgxCommandLineMacro.Match(args[i]).Groups["Macro"].Value;
-                        textBoxFolder.Text = rgxCommandLineMacro.Match(args[i]).Groups["Macro"].Value;
                     }
 
                     if (rgxCommandLineInitial.IsMatch(args[i]))
@@ -1710,7 +1731,6 @@ namespace autoscreen
                         if (cmdRatio >= IMAGE_RESOLUTION_RATIO_MIN && cmdRatio <= IMAGE_RESOLUTION_RATIO_MAX)
                         {
                             ratio = cmdRatio;
-                            numericUpDownImageResolutionRatio.Value = cmdRatio;
                         }
                     }
 
@@ -1722,14 +1742,12 @@ namespace autoscreen
                         {
                             limit = cmdLimit;
                             checkBoxCaptureLimit.Checked = true;
-                            numericUpDownCaptureLimit.Value = cmdLimit;
                         }
                     }
 
                     if (rgxCommandLineFormat.IsMatch(args[i]))
                     {
                         imageFormat = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
-                        comboBoxScheduleImageFormat.SelectedItem = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
                     }
 
                     if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
@@ -1785,12 +1803,19 @@ namespace autoscreen
                         if (cmdJpegLevel >= JPEG_QUALITY_LEVEL_MIN && cmdJpegLevel <= JPEG_QUALITY_LEVEL_MAX)
                         {
                             jpegLevel = cmdJpegLevel;
-                            numericUpDownJpegQualityLevel.Value = jpegLevel;
                         }
                     }
                 }
+                #endregion
 
                 ScreenCapture.runningFromCommandLine = true;
+
+                textBoxMacro.Text = macro;
+                textBoxFolder.Text = folder;
+                numericUpDownCaptureLimit.Value = limit;
+                numericUpDownJpegQualityLevel.Value = jpegLevel;
+                numericUpDownImageResolutionRatio.Value = ratio;
+                comboBoxScheduleImageFormat.SelectedItem = imageFormat;
 
                 if (isScheduled)
                 {
@@ -1842,6 +1867,21 @@ namespace autoscreen
             }
         }
 
+        #region Click Event Handlers
+        /// <summary>
+        /// Opens the main screenshots folder in Windows Explorer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonOpenFolder_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(textBoxFolder.Text))
+            {
+                Process.Start(FileSystem.FileManager, textBoxFolder.Text);
+            }
+        }
+
+        #region Editor
         /// <summary>
         /// Shows the "Add Editor" window to enable the user to add a chosen image editor.
         /// </summary>
@@ -1875,22 +1915,172 @@ namespace autoscreen
                 }
             }
         }
+        #endregion
 
+        #region Schedule
         /// <summary>
-        /// Opens the main screenshots folder in Windows Explorer.
+        /// Turns on scheduled screen capturing.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonOpenFolder_Click(object sender, EventArgs e)
+        private void buttonScheduleSet_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(textBoxFolder.Text))
+            ScheduleSet();
+        }
+
+        /// <summary>
+        /// Turns off scheduled screen capturing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonScheduleClear_Click(object sender, EventArgs e)
+        {
+            ScheduleClear();
+        }
+        #endregion
+
+        #region Reset
+        /// <summary>
+        /// Resets the X, Y, Width, and Height values for Screen 1.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonScreen1Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
             {
-                Process.Start(windowsExplorer, textBoxFolder.Text);
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 1)
+                {
+                    numericUpDownScreen1X.Value = screen.Bounds.X;
+                    numericUpDownScreen1Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen1Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen1Height.Value = screen.Bounds.Height;
+                }
             }
         }
 
         /// <summary>
-        /// Makes sure that we're showing the correct tab.
+        /// Resets the X, Y, Width, and Height values for Screen 2.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonScreen2Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 2)
+                {
+                    numericUpDownScreen2X.Value = screen.Bounds.X;
+                    numericUpDownScreen2Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen2Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen2Height.Value = screen.Bounds.Height;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resets the X, Y, Width, and Height values for Screen 3.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonScreen3Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 3)
+                {
+                    numericUpDownScreen3X.Value = screen.Bounds.X;
+                    numericUpDownScreen3Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen3Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen3Height.Value = screen.Bounds.Height;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resets the X, Y, Width, and Height values for Screen 4.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonScreen4Reset_Click(object sender, EventArgs e)
+        {
+            int count = 0;
+
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                count++;
+
+                if (count <= ScreenCapture.SCREEN_MAX && count == 4)
+                {
+                    numericUpDownScreen4X.Value = screen.Bounds.X;
+                    numericUpDownScreen4Y.Value = screen.Bounds.Y;
+
+                    numericUpDownScreen4Width.Value = screen.Bounds.Width;
+                    numericUpDownScreen4Height.Value = screen.Bounds.Height;
+                }
+            }
+        }
+        #endregion
+
+        #region Passphrase
+        /// <summary>
+        /// Sets the passphrase chosen by the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSetPassphrase_Click(object sender, EventArgs e)
+        {
+            if (textBoxPassphrase.Text.Length > 0)
+            {
+                Properties.Settings.Default.Passphrase = textBoxPassphrase.Text;
+                Properties.Settings.Default.Save();
+
+                textBoxPassphrase.ReadOnly = true;
+                buttonSetPassphrase.Enabled = false;
+
+                checkBoxPassphraseLock.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Clears the passphrase chosen by the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonClearPassphrase_Click(object sender, EventArgs e)
+        {
+            textBoxPassphrase.Clear();
+            textBoxPassphrase.ReadOnly = false;
+
+            checkBoxPassphraseLock.Enabled = false;
+            checkBoxPassphraseLock.Checked = false;
+
+            Properties.Settings.Default.LockScreenCaptureSession = false;
+            Properties.Settings.Default.Passphrase = string.Empty;
+            Properties.Settings.Default.Save();
+
+            textBoxPassphrase.Focus();
+        }
+        #endregion
+        #endregion
+
+        /// <summary>
+        /// Determines which screen tab is selected (All Screens, Screen 1, Screen 2, Screen 3, Screen 4, or Active Window).
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1900,7 +2090,7 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// The timer for preview.
+        /// The timer for showing a preview of what a screen capture session would look like.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1952,7 +2142,7 @@ namespace autoscreen
             DateTime dateTimeScreenshotTaken = DateTime.Now;
 
             // Active Window
-            if (CaptureTheScreen(5))
+            if (CaptureScreenAllowed(5))
             {
                 ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
                 ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value);
@@ -1963,7 +2153,7 @@ namespace autoscreen
             {
                 count++;
 
-                if (CaptureTheScreen(count))
+                if (CaptureScreenAllowed(count))
                 {
                     if (count <= ScreenCapture.SCREEN_MAX)
                     {
@@ -2001,7 +2191,12 @@ namespace autoscreen
             ScreenCapture.Count++;
         }
 
-        private bool CaptureTheScreen(int screenNumber)
+        /// <summary>
+        /// Determines if we are allowed to capture a particular screen.
+        /// </summary>
+        /// <param name="screenNumber">The screen number.</param>
+        /// <returns></returns>
+        private bool CaptureScreenAllowed(int screenNumber)
         {
             bool capture = false;
 
@@ -2039,6 +2234,11 @@ namespace autoscreen
             DisplayImages(true);
         }
 
+        /// <summary>
+        /// Determines what values we'll set for the X and Y coordinates of a particular screen when the user wants to do a region capture.
+        /// </summary>
+        /// <param name="screen">The screen object.</param>
+        /// <param name="screenNumber">The screen number.</param>
         private void SetupScreenPosition(Screen screen, int screenNumber)
         {
             int x = 0;
@@ -2071,6 +2271,11 @@ namespace autoscreen
             ScreenCapture.Y = y;
         }
 
+        /// <summary>
+        /// Determines what values we'll set for the Width and Height dimensions of a particular screen when the user wants to do a region capture.
+        /// </summary>
+        /// <param name="screen">The screen object.</param>
+        /// <param name="screenNumber">The screen number.</param>
         private void SetupScreenSize(Screen screen, int screenNumber)
         {
             int width = 0;
@@ -2169,7 +2374,7 @@ namespace autoscreen
 
             if (images.Count >= 1)
             {
-                if (CaptureTheScreen(1) || !preview)
+                if (CaptureScreenAllowed(1) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor1.Image = (Image)images[0];
                 }
@@ -2185,7 +2390,7 @@ namespace autoscreen
 
             if (images.Count >= 2)
             {
-                if (CaptureTheScreen(2) || !preview)
+                if (CaptureScreenAllowed(2) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor2.Image = (Image)images[1];
                 }
@@ -2200,7 +2405,7 @@ namespace autoscreen
 
             if (images.Count >= 3)
             {
-                if (CaptureTheScreen(3) || !preview)
+                if (CaptureScreenAllowed(3) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor3.Image = (Image)images[2];
                 }
@@ -2214,7 +2419,7 @@ namespace autoscreen
 
             if (images.Count >= 4)
             {
-                if (CaptureTheScreen(4) || !preview)
+                if (CaptureScreenAllowed(4) || !preview)
                 {
                     pictureBoxScreenshotPreviewMonitor4.Image = (Image)images[3];
                 }
@@ -2325,7 +2530,7 @@ namespace autoscreen
                             initial = true;
                         }
 
-                        StartScreenCapture(folder, macro, imageFormat, delay, limit, ratio, initial);
+                        StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
 
                         timerScheduledCaptureStart.Enabled = false;
                     }
@@ -2347,7 +2552,7 @@ namespace autoscreen
                         initial = true;
                     }
 
-                    StartScreenCapture(folder, macro, imageFormat, delay, limit, ratio, initial);
+                    StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
 
                     timerScheduledCaptureStart.Enabled = false;
                 }
@@ -2383,7 +2588,7 @@ namespace autoscreen
                                 initial = true;
                             }
 
-                            StartScreenCapture(folder, macro, imageFormat, delay, limit, ratio, initial);
+                            StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
                         }
                     }
                 }
@@ -2408,7 +2613,7 @@ namespace autoscreen
                             initial = true;
                         }
 
-                        StartScreenCapture(folder, macro, imageFormat, delay, limit, ratio, initial);
+                        StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
                     }
                 }
             }
@@ -2553,109 +2758,13 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Turns on scheduled screen capturing.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonScheduleSet_Click(object sender, EventArgs e)
-        {
-            ScheduleSet();
-        }
-
-        /// <summary>
-        /// Turns off scheduled screen capturing.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonScheduleClear_Click(object sender, EventArgs e)
-        {
-            ScheduleClear();
-        }
-
-        /// <summary>
         /// Sets the image format that will be used based on the user's selection.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void comboBoxScheduleImageFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            imageFormat = comboBoxScheduleImageFormat.Text;
-        }
-
-        private void buttonScreen1Reset_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 1)
-                {
-                    numericUpDownScreen1X.Value = screen.Bounds.X;
-                    numericUpDownScreen1Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen1Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen1Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        private void buttonScreen2Reset_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 2)
-                {
-                    numericUpDownScreen2X.Value = screen.Bounds.X;
-                    numericUpDownScreen2Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen2Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen2Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        private void buttonScreen3Reset_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 3)
-                {
-                    numericUpDownScreen3X.Value = screen.Bounds.X;
-                    numericUpDownScreen3Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen3Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen3Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        private void buttonScreen4Reset_Click(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 4)
-                {
-                    numericUpDownScreen4X.Value = screen.Bounds.X;
-                    numericUpDownScreen4Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen4Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen4Height.Value = screen.Bounds.Height;
-                }
-            }
+            //ScreenCapture.Format = comboBoxScheduleImageFormat.Text;
         }
         
         /// <summary>
@@ -2685,35 +2794,11 @@ namespace autoscreen
             }
         }
 
-        private void buttonSetPassphrase_Click(object sender, EventArgs e)
-        {
-            if (textBoxPassphrase.Text.Length > 0)
-            {
-                Properties.Settings.Default.Passphrase = textBoxPassphrase.Text;
-                Properties.Settings.Default.Save();
-
-                textBoxPassphrase.ReadOnly = true;
-                buttonSetPassphrase.Enabled = false;
-
-                checkBoxPassphraseLock.Enabled = true;
-            }
-        }
-
-        private void buttonClearPassphrase_Click(object sender, EventArgs e)
-        {
-            textBoxPassphrase.Clear();
-            textBoxPassphrase.ReadOnly = false;
-
-            checkBoxPassphraseLock.Enabled = false;
-            checkBoxPassphraseLock.Checked = false;
-
-            Properties.Settings.Default.LockScreenCaptureSession = false;
-            Properties.Settings.Default.Passphrase = string.Empty;
-            Properties.Settings.Default.Save();
-
-            textBoxPassphrase.Focus();
-        }
-
+        /// <summary>
+        /// Determines when we enable the "Set" button or disable the "Lock" checkbox (and "Set" button) for passphrase.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxPassphrase_TextChanged(object sender, EventArgs e)
         {
             if (textBoxPassphrase.Text.Length > 0)
@@ -2784,6 +2869,16 @@ namespace autoscreen
             }
 
             timerPreviewCapture.Enabled = toolStripButtonPreview.Checked;
+        }
+
+        /// <summary>
+        /// Turns on "Debug Mode" so we can write debugging messages to "autoscreen.log".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemDebugMode_CheckedChanged(object sender, EventArgs e)
+        {
+            Log.Enabled = toolStripMenuItemDebugMode.Checked;
         }
     }
 }

@@ -21,6 +21,12 @@ namespace autoscreen
         private const string REGEX_FILE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})_(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\.(?<Extension>[a-z]{3,4})$";
         private const string REGEX_SLIDE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})\s(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\s(?<Extension>[A-Z]{3,4})$";
 
+        /// <summary>
+        /// The file manager to execute whenever the user chooses to open their screenshots folder or edits the selected screenshot.
+        /// </summary>
+        public static readonly string FileManager = "explorer";
+
+        public static readonly string ScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
         public static readonly string UserAppDataLocalDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\.autoscreen\\";
 
         /// <summary>
@@ -133,6 +139,10 @@ namespace autoscreen
             return null;
         }
 
+        /// <summary>
+        /// Deletes files recursively based on the specified folder.
+        /// </summary>
+        /// <param name="monthCalendarFolder">The starting "parent" folder (which will also be deleted after everything else inside it is deleted).</param>
         public static void DeleteFilesInFolder(string monthCalendarFolder)
         {
             try
@@ -156,7 +166,7 @@ namespace autoscreen
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Log.Write("FileSystem::DeleteFilesInFolder", ex);
             }
         }
     }

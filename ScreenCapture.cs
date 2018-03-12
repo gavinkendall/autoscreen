@@ -28,9 +28,15 @@ namespace autoscreen
         static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         public const int SCREEN_MAX = 4;
-        private const int MAX_CHARS = 48000;
         public const int CAPTURE_LIMIT_MIN = 1;
         public const int CAPTURE_LIMIT_MAX = 9999;
+
+        /// <summary>
+        /// The default image format.
+        /// </summary>
+        public const string DefaultImageFormat = ImageFormatSpec.NAME_JPEG;
+
+        private const int MAX_CHARS = 48000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
