@@ -1435,8 +1435,6 @@ namespace autoscreen
                 checkBoxThursday.Enabled = true;
                 checkBoxFriday.Enabled = true;
                 checkBoxSaturday.Enabled = true;
-                buttonScheduleSet.Enabled = true;
-                buttonScheduleClear.Enabled = true;
                 comboBoxScheduleImageFormat.Enabled = true;
                 dateTimePickerScheduleStartAt.Enabled = true;
                 dateTimePickerScheduleStopAt.Enabled = true;
@@ -1477,8 +1475,6 @@ namespace autoscreen
             checkBoxThursday.Enabled = false;
             checkBoxFriday.Enabled = false;
             checkBoxSaturday.Enabled = false;
-            buttonScheduleSet.Enabled = false;
-            buttonScheduleClear.Enabled = false;
             comboBoxScheduleImageFormat.Enabled = false;
             dateTimePickerScheduleStartAt.Enabled = false;
             dateTimePickerScheduleStopAt.Enabled = false;
@@ -2699,8 +2695,6 @@ namespace autoscreen
         /// <param name="e"></param>
         private void previewInterval_ValueChanged(object sender, EventArgs e)
         {
-            EnableStartScreenCapture();
-
             int demoInterval = GetCaptureDelay();
 
             if (demoInterval > 0)
