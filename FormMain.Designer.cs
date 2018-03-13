@@ -1945,7 +1945,6 @@
             this.comboBoxScheduleImageFormat.Size = new System.Drawing.Size(80, 21);
             this.comboBoxScheduleImageFormat.TabIndex = 14;
             this.comboBoxScheduleImageFormat.TabStop = false;
-            this.comboBoxScheduleImageFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxScheduleImageFormat_SelectedIndexChanged);
             // 
             // buttonScheduleClear
             // 

@@ -1586,7 +1586,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Properties.Settings.Default.ApplicationName + " " + Properties.Settings.Default.ApplicationVersion + " (\"Clara\")\nDeveloped by Gavin Kendall 2008 - 2018", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Properties.Settings.Default.ApplicationName + " " + Properties.Settings.Default.ApplicationVersion + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2018)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -2757,17 +2757,6 @@ namespace autoscreen
             timerScheduledCaptureStart.Enabled = false;
         }
 
-        /// <summary>
-        /// Sets the image format that will be used based on the user's selection.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void comboBoxScheduleImageFormat_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //ScreenCapture.Format = comboBoxScheduleImageFormat.Text;
-        }
-        
-        /// <summary>
         /// Show or hide the system tray icon depending on the option selected.
         /// </summary>
         /// <param name="sender"></param>
