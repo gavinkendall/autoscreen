@@ -9,6 +9,10 @@ namespace autoscreen
 {
     public class Editor
     {
+        public string Name { get; set; }
+        public string Application { get; set; }
+        public string Arguments { get; set; }
+
         public Editor()
         {
 
@@ -16,30 +20,9 @@ namespace autoscreen
 
         public Editor(string name, string application, string arguments)
         {
-            m_name = name;
-            m_arguments = arguments;
-            m_application = application;
-        }
-
-        private string m_name;
-        public string Name
-        {
-            set { m_name = value; }
-            get { return m_name; }
-        }
-
-        private string m_application;
-        public string Application
-        {
-            set { m_application = value; }
-            get { return m_application; }
-        }
-
-        private string m_arguments;
-        public string Arguments
-        {
-            set { m_arguments = value; }
-            get { return m_arguments; }
+            Name = name;
+            Arguments = arguments;
+            Application = application;
         }
     }
 }

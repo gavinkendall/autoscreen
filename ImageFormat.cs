@@ -9,61 +9,45 @@ namespace autoscreen
 {
     public class ImageFormat
     {
+        public string Name { get; set; }
+        public string Extension { get; set; }
+        public System.Drawing.Imaging.ImageFormat Format { get; }
+
         public ImageFormat(string name, string extension)
         {
-            m_name = name;
-            m_extension = extension;
+            Name = name;
+            Extension = extension;
 
             switch (name)
             {
                 case ImageFormatSpec.NAME_BMP:
-                    m_format = System.Drawing.Imaging.ImageFormat.Bmp;
+                    Format = System.Drawing.Imaging.ImageFormat.Bmp;
                     break;
 
                 case ImageFormatSpec.NAME_EMF:
-                    m_format = System.Drawing.Imaging.ImageFormat.Emf;
+                    Format = System.Drawing.Imaging.ImageFormat.Emf;
                     break;
 
                 case ImageFormatSpec.NAME_GIF:
-                    m_format = System.Drawing.Imaging.ImageFormat.Gif;
+                    Format = System.Drawing.Imaging.ImageFormat.Gif;
                     break;
 
                 case ImageFormatSpec.NAME_JPEG:
-                    m_format = System.Drawing.Imaging.ImageFormat.Jpeg;
+                    Format = System.Drawing.Imaging.ImageFormat.Jpeg;
                     break;
 
                 case ImageFormatSpec.NAME_PNG:
-                    m_format = System.Drawing.Imaging.ImageFormat.Png;
+                    Format = System.Drawing.Imaging.ImageFormat.Png;
                     break;
 
                 case ImageFormatSpec.NAME_TIFF:
-                    m_format = System.Drawing.Imaging.ImageFormat.Tiff;
+                    Format = System.Drawing.Imaging.ImageFormat.Tiff;
                     break;
 
                 case ImageFormatSpec.NAME_WMF:
-                    m_format = System.Drawing.Imaging.ImageFormat.Wmf;
+                    Format = System.Drawing.Imaging.ImageFormat.Wmf;
                     break;
             }
-        }
-
-        private string m_name;
-        public string Name
-        {
-            set { m_name = value; }
-            get { return m_name; }
-        }
-
-        private string m_extension;
-        public string Extension
-        {
-            set { m_extension = value; }
-            get { return m_extension; }
-        }
-
-        private System.Drawing.Imaging.ImageFormat m_format;
-        public System.Drawing.Imaging.ImageFormat Format
-        {
-            get { return m_format; }
         }
     }
 }

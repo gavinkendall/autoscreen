@@ -44,6 +44,13 @@ namespace autoscreen
         public static int Y { get; set; }
         public static int Width { get; set; }
         public static int Height { get; set; }
+        public static string Folder { get; set; }
+        public static string Macro { get; set; }
+        public static int Ratio { get; set; }
+        public static string Format { get; set; }
+        public static int Delay { get; set; }
+        public static int Limit { get; set; }
+        public static int Count { get; set; }
 
         public static bool runningFromCommandLine = false;
         public static bool lockScreenCaptureSession = false;
@@ -136,7 +143,7 @@ namespace autoscreen
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, m_ratio, format);
+                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, format);
 
                     if (bitmap != null)
                     {
@@ -195,55 +202,6 @@ namespace autoscreen
         {
             var encoders = ImageCodecInfo.GetImageEncoders();
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);
-        }
-
-        private static string m_folder;
-        public static string Folder
-        {
-            set { m_folder = value; }
-            get { return m_folder; }
-        }
-
-        private static string m_macro;
-        public static string Macro
-        {
-            set { m_macro = value; }
-            get { return m_macro; }
-        }
-
-        private static int m_ratio;
-        public static int Ratio
-        {
-            set { m_ratio = value; }
-            get { return m_ratio; }
-        }
-
-        private static string m_format;
-        public static string Format
-        {
-            set { m_format = value; }
-            get { return m_format; }
-        }
-
-        private static int m_delay;
-        public static int Delay
-        {
-            set { m_delay = value; }
-            get { return m_delay; }
-        }
-
-        private static int m_limit;
-        public static int Limit
-        {
-            set { m_limit = value; }
-            get { return m_limit; }
-        }
-
-        private static int m_count;
-        public static int Count
-        {
-            set { m_count = value; }
-            get { return m_count; }
         }
     }
 }

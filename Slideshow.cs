@@ -12,42 +12,40 @@ namespace autoscreen
 {
     public static class Slideshow
     {
-        private static Timer m_timer = new Timer();
+        private static Timer timer = new Timer();
 
-        private static int m_imageIndex;
-        private static int m_imageIndexCount;
-
-        private static int m_selectedScreen;
-        private static string m_selectedSlide;
-
-        private static int m_slideSkip;
-        private static bool m_slideSkipCheck;
+        public static int Index { get; set; }
+        public static int Count { get; set; }
+        public static string SelectedSlide { get; set; }
+        public static int SelectedScreen { get; set; }
+        public static bool SlideSkipCheck { get; set; }
+        public static int SlideSkip { get; set; }
 
         public static event EventHandler OnPlaying = delegate { };
 
         public static void Initialize()
         {
-            m_timer.Tick += new EventHandler(m_timer_Tick);
+            timer.Tick += new EventHandler(m_timer_Tick);
         }
 
         public static void Clear()
         {
-            m_imageIndex = 0;
-            m_imageIndexCount = 0;
+            Index = 0;
+            Count = 0;
         }
 
         public static void Play()
         {
             Log.Write("Playing slideshow.");
 
-            if (m_imageIndex == (m_imageIndexCount - 1))
+            if (Index == (Count - 1))
             {
-                m_imageIndex = 0;
+                Index = 0;
             }
 
-            if (!m_timer.Enabled)
+            if (!timer.Enabled)
             {
-                m_timer.Enabled = true;
+                timer.Enabled = true;
             }
         }
 
@@ -55,112 +53,76 @@ namespace autoscreen
         {
             Log.Write("Stopping slideshow.");
 
-            if (m_timer.Enabled)
+            if (timer.Enabled)
             {
-                m_timer.Enabled = false;
+                timer.Enabled = false;
             }
         }
 
         public static void Next()
         {
-            if (m_imageIndex < (m_imageIndexCount - 1))
+            if (Index < (Count - 1))
             {
-                m_imageIndex++;
+                Index++;
             }
         }
 
         public static void Previous()
         {
-            if (m_imageIndex > 0)
+            if (Index > 0)
             {
-                m_imageIndex--;
+                Index--;
             }
         }
 
         public static void First()
         {
-            m_imageIndex = 0;
+            Index = 0;
         }
 
         public static void Last()
         {
-            m_imageIndex = (m_imageIndexCount - 1);
+            Index = (Count - 1);
         }
 
         private static void m_timer_Tick(object sender, EventArgs e)
         {
-            if (m_imageIndex == (m_imageIndexCount - 1))
+            if (Index == (Count - 1))
             {
-                if (m_timer.Enabled)
+                if (timer.Enabled)
                 {
-                    m_timer.Enabled = false;
+                    timer.Enabled = false;
                 }
             }
 
-            if (m_imageIndex < (m_imageIndexCount - 1))
+            if (Index < (Count - 1))
             {
-                if (m_slideSkipCheck)
+                if (SlideSkipCheck)
                 {
-                    m_imageIndex++;
-                    m_imageIndex = m_imageIndex + m_slideSkip;
+                    Index++;
+                    Index = Index + SlideSkip;
                 }
                 else
                 {
-                    m_imageIndex++;
+                    Index++;
                 }
             }
 
-            if (m_imageIndex > (m_imageIndexCount - 1))
+            if (Index > (Count - 1))
             {
-                m_imageIndex = (m_imageIndexCount - 1);
+                Index = (Count - 1);
             }
 
             OnPlaying(null, EventArgs.Empty);
-        }
-
-        public static int Index
-        {
-            get { return m_imageIndex; }
-            set { m_imageIndex = value; }
-        }
-
-        public static int Count
-        {
-            get { return m_imageIndexCount; }
-            set { m_imageIndexCount = value; }
-        }
-
-        public static string SelectedSlide
-        {
-            get { return m_selectedSlide; }
-            set { m_selectedSlide = value; }
-        }
-
-        public static int SelectedScreen
-        {
-            get { return m_selectedScreen; }
-            set { m_selectedScreen = value; }
-        }
-
-        public static bool SlideSkipCheck
-        {
-            get { return m_slideSkipCheck; }
-            set { m_slideSkipCheck = value; }
-        }
-
-        public static int SlideSkip
-        {
-            get { return m_slideSkip; }
-            set { m_slideSkip = value; }
         }
 
         public static bool Playing
         {
             get
             {
-                if (m_timer != null)
+                if (timer != null)
                 {
-                    return m_timer.Enabled;
+                    return timer.Enabled;
                 }
                 else
                 {
@@ -173,9 +135,9 @@ namespace autoscreen
         {
             get
             {
-                if (m_timer != null)
+                if (timer != null)
                 {
-                    return m_timer.Interval;
+                    return timer.Interval;
                 }
                 else
                 {
@@ -183,7 +145,7 @@ namespace autoscreen
                 }
             }
 
-            set { m_timer.Interval = value; }
+            set { timer.Interval = value; }
         }
     }
 }
