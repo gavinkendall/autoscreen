@@ -2689,7 +2689,7 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// Takes screenshots as a preview (or clears the preview images) depending on the value of the capture delay slider controls.
+        /// Takes screenshots as a preview (or clears the preview images) depending on the value of capture delay.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
