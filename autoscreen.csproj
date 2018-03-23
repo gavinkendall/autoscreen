@@ -137,8 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="autoscreen.ico" />
-    <Content Include="icon\autoscreen.ico" />
-    <None Include="Resources\autoscreen.ico" />
     <None Include="images\options.png" />
     <Content Include="images\start_screen_capture.png" />
     <Content Include="images\player_end.png" />

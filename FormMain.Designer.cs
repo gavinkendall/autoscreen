@@ -1498,7 +1498,7 @@
             this.toolStripSlideshow.Location = new System.Drawing.Point(16, 411);
             this.toolStripSlideshow.Name = "toolStripSlideshow";
             this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripSlideshow.Size = new System.Drawing.Size(251, 25);
+            this.toolStripSlideshow.Size = new System.Drawing.Size(220, 25);
             this.toolStripSlideshow.TabIndex = 11;
             this.toolStripSlideshow.Visible = false;
             // 
