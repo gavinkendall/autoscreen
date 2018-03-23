@@ -1498,7 +1498,7 @@
             this.toolStripSlideshow.Location = new System.Drawing.Point(16, 411);
             this.toolStripSlideshow.Name = "toolStripSlideshow";
             this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripSlideshow.Size = new System.Drawing.Size(220, 25);
+            this.toolStripSlideshow.Size = new System.Drawing.Size(251, 25);
             this.toolStripSlideshow.TabIndex = 11;
             this.toolStripSlideshow.Visible = false;
             // 
@@ -1513,7 +1513,7 @@
             // 
             this.toolStripButtonFirstSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonFirstSlide.Enabled = false;
-            this.toolStripButtonFirstSlide.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFirstSlide.Image")));
+            this.toolStripButtonFirstSlide.Image = global::autoscreen.Properties.Resources.player_start;
             this.toolStripButtonFirstSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonFirstSlide.Name = "toolStripButtonFirstSlide";
             this.toolStripButtonFirstSlide.Size = new System.Drawing.Size(23, 22);
@@ -2342,7 +2342,6 @@
             // 
             this.toolStripButtonPreview.CheckOnClick = true;
             this.toolStripButtonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonPreview.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPreview.Image")));
             this.toolStripButtonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPreview.Name = "toolStripButtonPreview";
             this.toolStripButtonPreview.Size = new System.Drawing.Size(52, 22);
