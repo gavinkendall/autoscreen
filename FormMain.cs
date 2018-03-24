@@ -6,13 +6,13 @@
 // Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
-using System.IO;
-using System.Drawing;
 using System.Collections;
-using System.Diagnostics;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace autoscreen
 {
@@ -25,25 +25,30 @@ namespace autoscreen
         /// Other forms.
         /// </summary>
         private FormAddEditor formAddEditor = new FormAddEditor();
+
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         /// <summary>
         /// Threads for background operations.
         /// </summary>
         private BackgroundWorker runSlideSearchThread = null;
+
         private BackgroundWorker runDateSearchThread = null;
 
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
         private delegate void UpdateScreenshotPreviewDelegate();
+
         private delegate void RunSlideSearchDelegate(DoWorkEventArgs e);
+
         private delegate void RunDateSearchDelegate(DoWorkEventArgs e);
 
         /// <summary>
-        /// Default settings used by the command line parser. 
+        /// Default settings used by the command line parser.
         /// </summary>
         private const int CAPTURE_LIMIT_MIN = 0;
+
         private const int CAPTURE_LIMIT_MAX = 9999;
         private const int CAPTURE_DELAY_DEFAULT = 60000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
@@ -55,6 +60,7 @@ namespace autoscreen
         /// The various regular expressions used in the parsing of the command line arguments.
         /// </summary>
         private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
+
         private const string REGEX_COMMAND_LINE_MACRO = "^-macro=(?<Macro>.+)$";
         private const string REGEX_COMMAND_LINE_FOLDER = "^-folder=(?<Folder>.+)$";
         private const string REGEX_COMMAND_LINE_RATIO = @"^-ratio=(?<Ratio>\d{1,3})$";
@@ -626,7 +632,7 @@ namespace autoscreen
             {
                 string[] files = FileSystem.GetFiles(FileSystem.UserAppDataLocalDirectory, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
-                if (files != null)
+                if (files != null && files.Length > 0)
                 {
                     listBoxSlides.Items.AddRange(files);
                 }
@@ -686,20 +692,14 @@ namespace autoscreen
 
                             int daysToSubtract = (int)numericUpDownDaysOld.Value;
 
-                            if (daysToSubtract > 0)
+                            if (daysToSubtract > 0 && dateTimeOfDir <= DateTime.Now.Date.AddDays(-daysToSubtract))
                             {
-                                if (dateTimeOfDir <= DateTime.Now.Date.AddDays(-daysToSubtract))
-                                {
-                                    FileSystem.DeleteFilesInFolder(dirs[i]);
-                                }
+                                FileSystem.DeleteFilesInFolder(dirs[i]);
                             }
 
-                            if (Directory.Exists(dirs[i] + "\\" + count.ToString() + "\\"))
+                            if (Directory.Exists(dirs[i] + FileSystem.PathDelimiter + count.ToString() + FileSystem.PathDelimiter) && !selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
                             {
-                                if (!selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
-                                {
-                                    selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
-                                }
+                                selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
                             }
                         }
                     }
@@ -735,18 +735,15 @@ namespace autoscreen
         {
             Log.Write("Opening application window.");
 
-            if (ScreenCapture.lockScreenCaptureSession)
+            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
-                if (!formEnterPassphrase.Visible)
-                {
-                    formEnterPassphrase.ShowDialog(this);
-                }
+                formEnterPassphrase.ShowDialog(this);
             }
 
             // This is intentional. Do not rewrite these statements as an if/else
             // because as soon as lockScreenCaptureSession is set to false we want
             // to continue with normal functionality.
-            if (!ScreenCapture.lockScreenCaptureSession)
+            if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
 
@@ -798,18 +795,15 @@ namespace autoscreen
         {
             Log.Write("Stopping screen capture.");
 
-            if (ScreenCapture.lockScreenCaptureSession)
+            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
-                if (!formEnterPassphrase.Visible)
-                {
-                    formEnterPassphrase.ShowDialog(this);
-                }
+                formEnterPassphrase.ShowDialog(this);
             }
 
             // This is intentional. Do not rewrite these statements as an if/else
             // because as soon as lockScreenCaptureSession is set to false we want
             // to continue with normal functionality.
-            if (!ScreenCapture.lockScreenCaptureSession)
+            if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
 
@@ -817,7 +811,7 @@ namespace autoscreen
                 timerScreenCapture.Enabled = false;
 
                 // Let the user know of the last capture that was taken and the status of the session ("Stopped").
-                DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, false);
+                DisplayCaptureStatus(false);
 
                 DisableStopScreenCapture();
                 EnableStartScreenCapture();
@@ -955,11 +949,11 @@ namespace autoscreen
 
                 if (checkBoxPassphraseLock.Checked)
                 {
-                    ScreenCapture.lockScreenCaptureSession = true;
+                    ScreenCapture.LockScreenCaptureSession = true;
                 }
                 else
                 {
-                    ScreenCapture.lockScreenCaptureSession = false;
+                    ScreenCapture.LockScreenCaptureSession = false;
                 }
 
                 if (initial)
@@ -967,7 +961,7 @@ namespace autoscreen
                     Log.Write("Taking initial screenshots.");
 
                     TakeScreenshot();
-                    DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
+                    DisplayCaptureStatus(true);
                 }
 
                 // Start taking screenshots.
@@ -1067,7 +1061,7 @@ namespace autoscreen
 
         /// <summary>
         /// Clears the screenshots preview when searching for files and folders.
-        /// </summary> 
+        /// </summary>
         private void ClearPreview()
         {
             Slideshow.Clear();
@@ -1315,18 +1309,15 @@ namespace autoscreen
         {
             Log.Write("Exiting application.");
 
-            if (ScreenCapture.lockScreenCaptureSession)
+            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
-                if (!formEnterPassphrase.Visible)
-                {
-                    formEnterPassphrase.ShowDialog(this);
-                }
+                formEnterPassphrase.ShowDialog(this);
             }
 
             // This is intentional. Do not rewrite these statements as an if/else
             // because as soon as lockScreenCaptureSession is set to false we want
             // to continue with normal functionality.
-            if (!ScreenCapture.lockScreenCaptureSession)
+            if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
 
@@ -1505,10 +1496,8 @@ namespace autoscreen
         /// <summary>
         /// Displays the screen capture status.
         /// </summary>
-        /// <param name="statusApp">The status message for the application's status strip.</param>
-        /// <param name="statusIcon">The status message for the application's system tray icon.</param>
         /// <param name="running">Can be "true" for "Running" or "false" for "Stopped".</param>
-        private void DisplayCaptureStatus(string statusApp, string statusIcon, bool running)
+        private void DisplayCaptureStatus(bool running)
         {
             string appName = Properties.Settings.Default.ApplicationName;
 
@@ -1521,10 +1510,7 @@ namespace autoscreen
                 appName += " - " + StatusMessage.STOPPED;
             }
 
-            if (!string.IsNullOrEmpty(statusApp))
-            {
-                notifyIcon.Text = appName;
-            }
+            notifyIcon.Text = appName;
         }
 
         /// <summary>
@@ -1625,12 +1611,9 @@ namespace autoscreen
             {
                 Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path))
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
                 {
-                    if (File.Exists(selectedScreenshot.Path))
-                    {
-                        Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
-                    }
+                    Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
                 }
             }
         }
@@ -1646,6 +1629,7 @@ namespace autoscreen
                 Log.Write("Parsing command line arguments.");
 
                 #region Default Values for Command Line Arguments/Options
+
                 bool isScheduled = false;
 
                 bool initial = false;
@@ -1682,7 +1666,8 @@ namespace autoscreen
                 toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
                 toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
                 toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
-                #endregion
+
+                #endregion Default Values for Command Line Arguments/Options
 
                 Regex rgxCommandLineLock = new Regex(REGEX_COMMAND_LINE_LOCK);
                 Regex rgxCommandLineRatio = new Regex(REGEX_COMMAND_LINE_RATIO);
@@ -1697,6 +1682,7 @@ namespace autoscreen
                 Regex rgxCommandLineJpegLevel = new Regex(REGEX_COMMAND_LINE_JPEG_LEVEL);
 
                 #region Command Line Argument Parsing
+
                 for (int i = 0; i < args.Length; i++)
                 {
                     if (args[i] != null)
@@ -1802,9 +1788,10 @@ namespace autoscreen
                         }
                     }
                 }
-                #endregion
 
-                ScreenCapture.runningFromCommandLine = true;
+                #endregion Command Line Argument Parsing
+
+                ScreenCapture.RunningFromCommandLine = true;
 
                 textBoxMacro.Text = macro;
                 textBoxFolder.Text = folder;
@@ -1849,21 +1836,19 @@ namespace autoscreen
             {
                 Editor editor = EditorCollection.Get(i);
 
-                if (editor != null)
+                if (editor != null && File.Exists(editor.Application))
                 {
-                    if (File.Exists(editor.Application))
-                    {
-                        ToolStripItem editorItem = new ToolStripMenuItem(editor.Name);
-                        editorItem.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
-                        editorItem.Click += new EventHandler(editorRun_Click);
+                    ToolStripItem editorItem = new ToolStripMenuItem(editor.Name);
+                    editorItem.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
+                    editorItem.Click += new EventHandler(editorRun_Click);
 
-                        contextMenuStripScreenshotPreview.Items.Add(editorItem);
-                    }
+                    contextMenuStripScreenshotPreview.Items.Add(editorItem);
                 }
             }
         }
 
         #region Click Event Handlers
+
         /// <summary>
         /// Opens the main screenshots folder in Windows Explorer.
         /// </summary>
@@ -1878,6 +1863,7 @@ namespace autoscreen
         }
 
         #region Editor
+
         /// <summary>
         /// Shows the "Add Editor" window to enable the user to add a chosen image editor.
         /// </summary>
@@ -1902,18 +1888,17 @@ namespace autoscreen
                 Editor editor = EditorCollection.GetByName(sender.ToString());
                 Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path))
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
                 {
-                    if (File.Exists(selectedScreenshot.Path))
-                    {
-                        Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
-                    }
+                    Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
                 }
             }
         }
-        #endregion
+
+        #endregion Editor
 
         #region Schedule
+
         /// <summary>
         /// Turns on scheduled screen capturing.
         /// </summary>
@@ -1933,9 +1918,11 @@ namespace autoscreen
         {
             ScheduleClear();
         }
-        #endregion
+
+        #endregion Schedule
 
         #region Reset
+
         /// <summary>
         /// Resets the X, Y, Width, and Height values for Screen 1.
         /// </summary>
@@ -2031,9 +2018,11 @@ namespace autoscreen
                 }
             }
         }
-        #endregion
+
+        #endregion Reset
 
         #region Passphrase
+
         /// <summary>
         /// Sets the passphrase chosen by the user.
         /// </summary>
@@ -2072,8 +2061,10 @@ namespace autoscreen
 
             textBoxPassphrase.Focus();
         }
-        #endregion
-        #endregion
+
+        #endregion Passphrase
+
+        #endregion Click Event Handlers
 
         /// <summary>
         /// Determines which screen tab is selected (All Screens, Screen 1, Screen 2, Screen 3, Screen 4, or Active Window).
@@ -2092,7 +2083,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void timerPreviewCapture_Tick(object sender, EventArgs e)
         {
-            TakePreviewScreenshots();            
+            TakePreviewScreenshots();
         }
 
         /// <summary>
@@ -2102,7 +2093,7 @@ namespace autoscreen
         /// <param name="e"></param>
         private void timerScreenCapture_Tick(object sender, EventArgs e)
         {
-            DisplayCaptureStatus(StatusMessage.LAST_CAPTURE_APP, StatusMessage.LAST_CAPTURE_ICON, true);
+            DisplayCaptureStatus(true);
 
             if (!timerScreenCapture.Enabled)
             {
@@ -2140,7 +2131,7 @@ namespace autoscreen
             // Active Window
             if (CaptureScreenAllowed(5))
             {
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5",  FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
                 ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value);
             }
 
@@ -2149,37 +2140,34 @@ namespace autoscreen
             {
                 count++;
 
-                if (CaptureScreenAllowed(count))
+                if (CaptureScreenAllowed(count) && count <= ScreenCapture.SCREEN_MAX)
                 {
-                    if (count <= ScreenCapture.SCREEN_MAX)
+                    SetupScreenPosition(screen, count);
+                    SetupScreenSize(screen, count);
+
+                    switch (count)
                     {
-                        SetupScreenPosition(screen, count);
-                        SetupScreenSize(screen, count);
+                        case 1:
+                            screenName = textBoxScreen1Name.Text;
+                            break;
 
-                        switch (count)
-                        {
-                            case 1:
-                                screenName = textBoxScreen1Name.Text;
-                                break;
+                        case 2:
+                            screenName = textBoxScreen2Name.Text;
+                            break;
 
-                            case 2:
-                                screenName = textBoxScreen2Name.Text;
-                                break;
+                        case 3:
+                            screenName = textBoxScreen3Name.Text;
+                            break;
 
-                            case 3:
-                                screenName = textBoxScreen3Name.Text;
-                                break;
+                        case 4:
+                            screenName = textBoxScreen4Name.Text;
+                            break;
+                    }
 
-                            case 4:
-                                screenName = textBoxScreen4Name.Text;
-                                break;
-                        }
-
-                        if (!string.IsNullOrEmpty(screenName))
-                        {
-                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
-                            ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value);
-                        }
+                    if (!string.IsNullOrEmpty(screenName))
+                    {
+                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
+                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value);
                     }
                 }
             }
@@ -2441,8 +2429,6 @@ namespace autoscreen
             pictureBoxScreen2.Image = pictureBoxScreenshotPreviewMonitor2.Image;
             pictureBoxScreen3.Image = pictureBoxScreenshotPreviewMonitor3.Image;
             pictureBoxScreen4.Image = pictureBoxScreenshotPreviewMonitor4.Image;
-
-            GC.Collect();
         }
 
         /// <summary>
@@ -2563,29 +2549,27 @@ namespace autoscreen
                         (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked))
-                    {
-                        if ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
+                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked) &&
+                        (DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
+                    {
+                        bool initial = false;
+                        string folder = textBoxFolder.Text;
+                        string macro = textBoxMacro.Text;
+
+                        int delay = GetCaptureDelay();
+                        int limit = (int)numericUpDownCaptureLimit.Value;
+                        int ratio = (int)numericUpDownImageResolutionRatio.Value;
+
+                        if (!checkBoxCaptureLimit.Checked) { limit = 0; }
+
+                        if (checkBoxInitialScreenshot.Checked)
                         {
-                            bool initial = false;
-                            string folder = textBoxFolder.Text;
-                            string macro = textBoxMacro.Text;
-
-                            int delay = GetCaptureDelay();
-                            int limit = (int)numericUpDownCaptureLimit.Value;
-                            int ratio = (int)numericUpDownImageResolutionRatio.Value;
-
-                            if (!checkBoxCaptureLimit.Checked) { limit = 0; }
-
-                            if (checkBoxInitialScreenshot.Checked)
-                            {
-                                initial = true;
-                            }
-
-                            StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
+                            initial = true;
                         }
+
+                        StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
                     }
                 }
                 else
@@ -2632,14 +2616,12 @@ namespace autoscreen
                         (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked))
-                    {
-                        if ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
+                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked) &&
+                        (DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second))
-                        {
-                            StopScreenCapture();
-                        }
+                    {
+                        StopScreenCapture();
                     }
                 }
                 else
@@ -2769,11 +2751,11 @@ namespace autoscreen
         {
             if (checkBoxPassphraseLock.Checked)
             {
-                ScreenCapture.lockScreenCaptureSession = true;
+                ScreenCapture.LockScreenCaptureSession = true;
             }
             else
             {
-                ScreenCapture.lockScreenCaptureSession = false;
+                ScreenCapture.LockScreenCaptureSession = false;
             }
         }
 

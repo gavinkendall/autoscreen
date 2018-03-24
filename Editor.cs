@@ -15,7 +15,6 @@ namespace autoscreen
 
         public Editor()
         {
-
         }
 
         public Editor(string name, string application, string arguments)

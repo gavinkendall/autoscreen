@@ -87,12 +87,9 @@ namespace autoscreen
 
         private static void m_timer_Tick(object sender, EventArgs e)
         {
-            if (Index == (Count - 1))
+            if (Index == (Count - 1) && timer.Enabled)
             {
-                if (timer.Enabled)
-                {
-                    timer.Enabled = false;
-                }
+                timer.Enabled = false;
             }
 
             if (Index < (Count - 1))

@@ -7,13 +7,11 @@
 
 namespace autoscreen
 {
-    internal class StatusMessage
+    internal static class StatusMessage
     {
         internal const string ON = "On";
         internal const string OFF = "Off";
         internal const string RUNNING = "Running";
         internal const string STOPPED = "Stopped";
-        internal const string LAST_CAPTURE_APP = "%year%-%month%-%day% %hour%:%minute%:%second%.%millisecond% (%format%)";
-        internal const string LAST_CAPTURE_ICON = "Last capture: %year%-%month%-%day% %hour%:%minute%:%second%.%millisecond% (%format%)";
     }
 }

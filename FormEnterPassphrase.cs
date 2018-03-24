@@ -34,7 +34,7 @@ namespace autoscreen
             {
                 if (textBoxPassphrase.Text.Equals(Properties.Settings.Default.Passphrase))
                 {
-                    ScreenCapture.lockScreenCaptureSession = false;
+                    ScreenCapture.LockScreenCaptureSession = false;
                     Close();
                 }
                 else

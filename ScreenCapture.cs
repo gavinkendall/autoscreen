@@ -6,13 +6,13 @@
 // Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 
 namespace autoscreen
 {
@@ -25,7 +25,7 @@ namespace autoscreen
         private static extern void GetWindowRect(IntPtr hWnd, out Rectangle rect);
 
         [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         public const int SCREEN_MAX = 4;
         public const int CAPTURE_LIMIT_MIN = 1;
@@ -51,9 +51,8 @@ namespace autoscreen
         public static int Delay { get; set; }
         public static int Limit { get; set; }
         public static int Count { get; set; }
-
-        public static bool runningFromCommandLine = false;
-        public static bool lockScreenCaptureSession = false;
+        public static bool RunningFromCommandLine { get; set; }
+        public static bool LockScreenCaptureSession { get; set; }
 
         public static Bitmap GetScreenBitmap(Screen screen, int ratio, string format)
         {
@@ -62,17 +61,14 @@ namespace autoscreen
                 int sourceWidth = Width <= screen.Bounds.Width && Width > 0 ? Width : screen.Bounds.Width;
                 int sourceHeight = Height <= screen.Bounds.Height && Height > 0 ? Height : screen.Bounds.Height;
 
-                int destinationWidth = sourceWidth;
-                int destinationHeight = sourceHeight;
-
                 Size blockRegionSize = new Size(sourceWidth, sourceHeight);
 
                 if (ratio < IMAGE_RESOLUTION_RATIO_MIN || ratio > IMAGE_RESOLUTION_RATIO_MAX) { ratio = 100; }
 
                 float imageResolutionRatio = (float)ratio / 100;
 
-                destinationWidth = (int)(sourceWidth * imageResolutionRatio);
-                destinationHeight = (int)(sourceHeight * imageResolutionRatio);
+                int destinationWidth = (int)(sourceWidth * imageResolutionRatio);
+                int destinationHeight = (int)(sourceHeight * imageResolutionRatio);
 
                 Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
                 Graphics graphicsSource = Graphics.FromImage(bitmapSource);
@@ -98,7 +94,7 @@ namespace autoscreen
 
         public static Bitmap GetActiveWindowBitmap()
         {
-            Rectangle rect = new Rectangle();
+            Rectangle rect;
             GetWindowRect(GetForegroundWindow(), out rect);
 
             int width = rect.Width - rect.X;
@@ -122,8 +118,8 @@ namespace autoscreen
 
         public static string GetActiveWindowTitle()
         {
+            IntPtr handle;
             int chars = MAX_CHARS;
-            IntPtr handle = IntPtr.Zero;
 
             StringBuilder buffer = new StringBuilder(chars);
 
@@ -153,8 +149,6 @@ namespace autoscreen
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
                     }
-
-                    GC.Collect();
                 }
             }
             catch (Exception ex)

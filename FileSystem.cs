@@ -6,17 +6,17 @@
 // Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
-using System.IO;
-using System.Drawing;
 using System.Collections;
+using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace autoscreen
 {
     public static class FileSystem
     {
-        private static string m_filePath;
-        private static string[] m_filePaths;
+        private static string _filePath;
+        public readonly static string PathDelimiter = "\\";
 
         private const string REGEX_FILE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})_(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\.(?<Extension>[a-z]{3,4})$";
         private const string REGEX_SLIDE_NAME = @"^(?<Date>\d{4}-\d{2}-\d{2})\s(?<Time>\d{2}-\d{2}-\d{2}-\d{3})\s(?<Extension>[A-Z]{3,4})$";
@@ -54,7 +54,7 @@ namespace autoscreen
                     string time = rgxSlideName.Match(Path.GetFileName(slideName)).Groups["Time"].Value;
                     string extension = rgxSlideName.Match(Path.GetFileName(slideName)).Groups["Extension"].Value;
 
-                    filePath = m_filePath + date + "\\" + screenNumber + "\\" + date + "_" + time + "." + extension.ToLower();
+                    filePath = _filePath + date + PathDelimiter + screenNumber + PathDelimiter + date + "_" + time + "." + extension.ToLower();
                 }
             }
 
@@ -97,46 +97,43 @@ namespace autoscreen
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                m_filePath = filePath;
+                _filePath = filePath;
 
                 if (!Directory.Exists(filePath))
                 {
                     Directory.CreateDirectory(filePath);
                 }
 
-                if (!string.IsNullOrEmpty(monthCalendarFolder))
+                if (!string.IsNullOrEmpty(monthCalendarFolder) && Directory.Exists(filePath + monthCalendarFolder))
                 {
-                    if (Directory.Exists(filePath + monthCalendarFolder))
+                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\1\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
+
+                    if (filePaths != null)
                     {
-                        m_filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\1\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
+                        string[] files = new string[filePaths.Length];
 
-                        if (m_filePaths != null)
+                        for (int i = 0; i < filePaths.Length; i++)
                         {
-                            string[] files = new string[m_filePaths.Length];
+                            string localFilePath = filePaths[i];
 
-                            for (int i = 0; i < m_filePaths.Length; i++)
+                            Regex rgxFileName = new Regex(REGEX_FILE_NAME);
+
+                            if (rgxFileName.IsMatch(Path.GetFileName(localFilePath)))
                             {
-                                string localFilePath = m_filePaths[i];
+                                string date = rgxFileName.Match(Path.GetFileName(localFilePath)).Groups["Date"].Value;
+                                string time = rgxFileName.Match(Path.GetFileName(localFilePath)).Groups["Time"].Value;
+                                string extension = rgxFileName.Match(Path.GetFileName(localFilePath)).Groups["Extension"].Value;
 
-                                Regex rgxFileName = new Regex(REGEX_FILE_NAME);
-
-                                if (rgxFileName.IsMatch(Path.GetFileName(localFilePath)))
-                                {
-                                    string date = rgxFileName.Match(Path.GetFileName(localFilePath)).Groups["Date"].Value;
-                                    string time = rgxFileName.Match(Path.GetFileName(localFilePath)).Groups["Time"].Value;
-                                    string extension = rgxFileName.Match(Path.GetFileName(localFilePath)).Groups["Extension"].Value;
-
-                                    files[i] = date + " " + time + " " + extension.ToUpper();
-                                }
+                                files[i] = date + " " + time + " " + extension.ToUpper();
                             }
-
-                            return files;
                         }
+
+                        return files;
                     }
                 }
             }
 
-            return null;
+            return new string[0];
         }
 
         /// <summary>

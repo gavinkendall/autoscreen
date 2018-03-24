@@ -6,8 +6,8 @@
 // Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace autoscreen
@@ -59,12 +59,9 @@ namespace autoscreen
 
             Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-            if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path))
+            if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
             {
-                if (File.Exists(selectedScreenshot.Path))
-                {
-                    Process.Start(application, arguments.Replace("%screenshot%", selectedScreenshot.Path));
-                }
+                Process.Start(application, arguments.Replace("%screenshot%", selectedScreenshot.Path));
             }
         }
 

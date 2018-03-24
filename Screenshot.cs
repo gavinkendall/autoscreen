@@ -22,7 +22,6 @@ namespace autoscreen
 
         public Screenshot()
         {
-
         }
 
         public Screenshot(DateTime dateTime, string path, int screen, string format, int index)

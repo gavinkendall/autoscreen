@@ -12,7 +12,8 @@ namespace autoscreen
 {
     public static class Log
     {
-        public static bool Enabled = false;
+        public static bool Enabled { get; set; }
+
         private static readonly string logfile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.log";
 
         public static void Write(string message)

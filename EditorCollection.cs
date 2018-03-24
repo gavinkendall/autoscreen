@@ -6,9 +6,9 @@
 // Thursday, 15 May 2008 - Monday, 12 March 2018
 
 using System;
-using System.Xml;
-using System.Text;
 using System.Collections;
+using System.Text;
+using System.Xml;
 
 namespace autoscreen
 {
@@ -16,7 +16,7 @@ namespace autoscreen
     {
         private static ArrayList m_editorList = new ArrayList();
 
-        private const string XML_FILE_INDENT_CHARS = "   ";  
+        private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_EDITOR_NODE = "editor";
         private const string XML_FILE_EDITORS_NODE = "editors";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
