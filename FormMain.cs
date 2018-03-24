@@ -1305,17 +1305,17 @@ namespace autoscreen
         {
             Log.Write("Exiting application.");
 
-            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+            if (!Visible && ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
                 formEnterPassphrase.ShowDialog(this);
             }
 
-            // This is intentional. Do not rewrite these statements as an if/else
-            // because as soon as lockScreenCaptureSession is set to false we want
-            // to continue with normal functionality.
-            if (!ScreenCapture.LockScreenCaptureSession)
+            if (Visible)
             {
-                checkBoxPassphraseLock.Checked = false;
+                if (!ScreenCapture.LockScreenCaptureSession)
+                {
+                    checkBoxPassphraseLock.Checked = false;
+                }
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
