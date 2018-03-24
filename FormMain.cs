@@ -749,8 +749,6 @@ namespace autoscreen
 
                 if (toolStripMenuItemOpen.Enabled)
                 {
-                    SaveApplicationSettings();
-
                     Opacity = 100;
                     toolStripMenuItemOpen.Enabled = false;
                     toolStripMenuItemClose.Enabled = true;
@@ -908,8 +906,6 @@ namespace autoscreen
                 textBoxFolder.Text = CorrectDirectoryPath(textBoxFolder.Text);
 
                 Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
-
-                SaveApplicationSettings();
 
                 toolStripButtonPreview.Checked = false;
 
