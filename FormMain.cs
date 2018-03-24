@@ -103,8 +103,8 @@ namespace autoscreen
         {
             if (toolStripMenuItemOpenAtApplicationStartup.Checked)
             {
-                SearchDates();
                 OpenWindow();
+                SearchDates();
             }
         }
 
