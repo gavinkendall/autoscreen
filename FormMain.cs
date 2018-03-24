@@ -1305,37 +1305,40 @@ namespace autoscreen
         {
             Log.Write("Exiting application.");
 
-            if (!Visible && ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
                 formEnterPassphrase.ShowDialog(this);
             }
 
+            // This is intentional. Do not rewrite these statements as an if/else
+            // because as soon as lockScreenCaptureSession is set to false we want
+            // to continue with normal functionality.
             if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
+
+                // Hide the system tray icon.
+                notifyIcon.Visible = false;
+
+                // Close this window.
+                CloseWindow();
+
+                // Save the user's options.
+                SaveApplicationSettings();
+
+                if (runDateSearchThread.IsBusy)
+                {
+                    runDateSearchThread.CancelAsync();
+                }
+
+                if (runSlideSearchThread.IsBusy)
+                {
+                    runSlideSearchThread.CancelAsync();
+                }
+
+                // Exit.
+                Environment.Exit(0);
             }
-
-            // Hide the system tray icon.
-            notifyIcon.Visible = false;
-
-            // Close this window.
-            CloseWindow();
-
-            // Save the user's options.
-            SaveApplicationSettings();
-
-            if (runDateSearchThread.IsBusy)
-            {
-                runDateSearchThread.CancelAsync();
-            }
-
-            if (runSlideSearchThread.IsBusy)
-            {
-                runSlideSearchThread.CancelAsync();
-            }
-
-            // Exit.
-            Environment.Exit(0);
         }
 
         /// <summary>
