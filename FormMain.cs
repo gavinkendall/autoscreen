@@ -1321,11 +1321,14 @@ namespace autoscreen
             {
                 checkBoxPassphraseLock.Checked = false;
 
-                // Save the user's options.
-                SaveApplicationSettings();
+                // Hide the system tray icon.
+                notifyIcon.Visible = false;
 
                 // Close this window.
                 CloseWindow();
+
+                // Save the user's options.
+                SaveApplicationSettings();
 
                 if (runDateSearchThread.IsBusy)
                 {
@@ -1336,9 +1339,6 @@ namespace autoscreen
                 {
                     runSlideSearchThread.CancelAsync();
                 }
-
-                // Hide the system tray icon.
-                notifyIcon.Visible = false;
 
                 // Exit.
                 Environment.Exit(0);
