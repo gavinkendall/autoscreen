@@ -1310,35 +1310,32 @@ namespace autoscreen
                 formEnterPassphrase.ShowDialog(this);
             }
 
-            if (Visible)
+            if (!ScreenCapture.LockScreenCaptureSession)
             {
-                if (!ScreenCapture.LockScreenCaptureSession)
-                {
-                    checkBoxPassphraseLock.Checked = false;
-                }
-
-                // Hide the system tray icon.
-                notifyIcon.Visible = false;
-
-                // Close this window.
-                CloseWindow();
-
-                // Save the user's options.
-                SaveApplicationSettings();
-
-                if (runDateSearchThread.IsBusy)
-                {
-                    runDateSearchThread.CancelAsync();
-                }
-
-                if (runSlideSearchThread.IsBusy)
-                {
-                    runSlideSearchThread.CancelAsync();
-                }
-
-                // Exit.
-                Environment.Exit(0);
+                checkBoxPassphraseLock.Checked = false;
             }
+
+            // Hide the system tray icon.
+            notifyIcon.Visible = false;
+
+            // Close this window.
+            CloseWindow();
+
+            // Save the user's options.
+            SaveApplicationSettings();
+
+            if (runDateSearchThread.IsBusy)
+            {
+                runDateSearchThread.CancelAsync();
+            }
+
+            if (runSlideSearchThread.IsBusy)
+            {
+                runSlideSearchThread.CancelAsync();
+            }
+
+            // Exit.
+            Environment.Exit(0);
         }
 
         /// <summary>
