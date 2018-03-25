@@ -35,6 +35,8 @@ namespace autoscreen
 
         private BackgroundWorker runDateSearchThread = null;
 
+        private BackgroundWorker runDeleteSlidesThread = null;
+
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
@@ -128,6 +130,13 @@ namespace autoscreen
             runDateSearchThread.WorkerReportsProgress = false;
             runDateSearchThread.WorkerSupportsCancellation = true;
             runDateSearchThread.DoWork += new DoWorkEventHandler(runDateSearchThread_DoWork);
+
+            runDeleteSlidesThread = new BackgroundWorker();
+            runDeleteSlidesThread.WorkerReportsProgress = false;
+            runDeleteSlidesThread.WorkerSupportsCancellation = true;
+            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(runDeleteSlidesThread_DoWork);
+
+            DeleteSlides();
 
             Log.Write("Initializing slideshow module.");
 
@@ -594,13 +603,22 @@ namespace autoscreen
             ClearPreview();
             DisableToolStripButtons();
 
-            /* Remove slides older than specified number of days */
-
             monthCalendar.BoldedDates = null;
 
             if (!runDateSearchThread.IsBusy)
             {
                 runDateSearchThread.RunWorkerAsync();
+            }
+        }
+
+        /// <summary>
+        /// Deletes slides.
+        /// </summary>
+        private void DeleteSlides()
+        {
+            if (!runDeleteSlidesThread.IsBusy)
+            {
+                runDeleteSlidesThread.RunWorkerAsync();
             }
         }
 
@@ -700,23 +718,9 @@ namespace autoscreen
 
                         string dirPath = Path.GetFileName(dirs[i]);
 
-                        if (rgx.IsMatch(dirPath))
+                        if (rgx.IsMatch(dirPath) && Directory.Exists(dirs[i] + FileSystem.PathDelimiter + count.ToString() + FileSystem.PathDelimiter) && !selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
                         {
-                            DateTime dateTimeOfDir = new DateTime(Convert.ToInt32(rgx.Match(dirPath).Groups["Year"].Value),
-                                Convert.ToInt32(rgx.Match(dirPath).Groups["Month"].Value),
-                                Convert.ToInt32(rgx.Match(dirPath).Groups["Day"].Value));
-
-                            int daysToSubtract = (int)numericUpDownDaysOld.Value;
-
-                            if (daysToSubtract > 0 && dateTimeOfDir <= DateTime.Now.Date.AddDays(-daysToSubtract))
-                            {
-                                FileSystem.DeleteFilesInFolder(dirs[i]);
-                            }
-
-                            if (Directory.Exists(dirs[i] + FileSystem.PathDelimiter + count.ToString() + FileSystem.PathDelimiter) && !selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
-                            {
-                                selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
-                            }
+                            selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
                         }
                     }
                 }
@@ -731,6 +735,36 @@ namespace autoscreen
                 }
 
                 monthCalendar.BoldedDates = boldedDates;
+            }
+        }
+
+        /// <summary>
+        /// This thread is responsible for deleting slides older than a specified number of days.
+        /// </summary>
+        /// <param name="e"></param>
+        private void RunDeleteSlides(DoWorkEventArgs e)
+        {
+            string[] dirs = Directory.GetDirectories(FileSystem.UserAppDataLocalDirectory);
+
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                Regex rgx = new Regex(@"^(?<Year>\d{4})-(?<Month>\d{2})-(?<Day>\d{2})$");
+
+                string dirPath = Path.GetFileName(dirs[i]);
+
+                if (rgx.IsMatch(dirPath))
+                {
+                    DateTime dateTimeOfDir = new DateTime(Convert.ToInt32(rgx.Match(dirPath).Groups["Year"].Value),
+                                    Convert.ToInt32(rgx.Match(dirPath).Groups["Month"].Value),
+                                    Convert.ToInt32(rgx.Match(dirPath).Groups["Day"].Value));
+
+                    int daysToSubtract = (int)numericUpDownDaysOld.Value;
+
+                    if (daysToSubtract > 0 && dateTimeOfDir <= DateTime.Now.Date.AddDays(-daysToSubtract))
+                    {
+                        FileSystem.DeleteFilesInFolder(dirs[i]);
+                    }
+                }
             }
         }
 
@@ -1375,6 +1409,16 @@ namespace autoscreen
         private void runDateSearchThread_DoWork(object sender, DoWorkEventArgs e)
         {
             RunDateSearch(e);
+        }
+
+        /// <summary>
+        /// Runs the delete slides thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void runDeleteSlidesThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            RunDeleteSlides(e);
         }
 
         /// <summary>
@@ -2870,6 +2914,26 @@ namespace autoscreen
         private void toolStripMenuItemDebugMode_CheckedChanged(object sender, EventArgs e)
         {
             Log.Enabled = toolStripMenuItemDebugMode.Checked;
+        }
+
+        /// <summary>
+        /// Deletes old slides that we don't need anymore (to save on disk space).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerDeleteSlides_Tick(object sender, EventArgs e)
+        {
+            DeleteSlides();
+        }
+
+        /// <summary>
+        /// Searches for days when screenshots were taken.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerSearchDates_Tick(object sender, EventArgs e)
+        {
+            SearchDates();
         }
     }
 }

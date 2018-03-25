@@ -216,6 +216,8 @@
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.buttonOpenFolder = new System.Windows.Forms.Button();
+            this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
+            this.timerSearchDates = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -2519,6 +2521,18 @@
             this.buttonOpenFolder.UseVisualStyleBackColor = true;
             this.buttonOpenFolder.Click += new System.EventHandler(this.buttonOpenFolder_Click);
             // 
+            // timerDeleteSlides
+            // 
+            this.timerDeleteSlides.Enabled = true;
+            this.timerDeleteSlides.Interval = 60000;
+            this.timerDeleteSlides.Tick += new System.EventHandler(this.timerDeleteSlides_Tick);
+            // 
+            // timerSearchDates
+            // 
+            this.timerSearchDates.Enabled = true;
+            this.timerSearchDates.Interval = 30000;
+            this.timerSearchDates.Tick += new System.EventHandler(this.timerSearchDates_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2816,5 +2830,7 @@
         private System.Windows.Forms.CheckBox checkBoxCaptureScreen2;
         private System.Windows.Forms.CheckBox checkBoxCaptureScreen1;
         private System.Windows.Forms.Button buttonOpenFolder;
+        private System.Windows.Forms.Timer timerDeleteSlides;
+        private System.Windows.Forms.Timer timerSearchDates;
     }
 }
