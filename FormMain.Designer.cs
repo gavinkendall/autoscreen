@@ -2510,6 +2510,7 @@
             // buttonOpenFolder
             // 
             this.buttonOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOpenFolder.Image = global::autoscreen.Properties.Resources.openfolder;
             this.buttonOpenFolder.Location = new System.Drawing.Point(820, 413);
             this.buttonOpenFolder.Name = "buttonOpenFolder";
             this.buttonOpenFolder.Size = new System.Drawing.Size(27, 23);
