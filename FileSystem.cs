@@ -106,7 +106,7 @@ namespace autoscreen
 
                 if (!string.IsNullOrEmpty(monthCalendarFolder) && Directory.Exists(filePath + monthCalendarFolder))
                 {
-                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder + "\\1\\", monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
+                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder, monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
 
                     if (filePaths != null)
                     {

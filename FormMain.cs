@@ -392,6 +392,14 @@ namespace autoscreen
 
             numericUpDownDaysOld.Value = Properties.Settings.Default.DaysOldWhenRemoveSlides;
 
+            checkBoxCaptureScreen1.Checked = Properties.Settings.Default.CaptureScreen1;
+            checkBoxCaptureScreen2.Checked = Properties.Settings.Default.CaptureScreen2;
+            checkBoxCaptureScreen3.Checked = Properties.Settings.Default.CaptureScreen3;
+            checkBoxCaptureScreen4.Checked = Properties.Settings.Default.CaptureScreen4;
+            checkBoxCaptureActiveWindow.Checked = Properties.Settings.Default.CaptureActiveWindow;
+
+            checkBoxAutoReset.Checked = Properties.Settings.Default.AutoReset;
+
             if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
             {
                 toolStripButtonPreview.Checked = true;
@@ -491,6 +499,14 @@ namespace autoscreen
             Properties.Settings.Default.JpegQualityLevel = (long)numericUpDownJpegQualityLevel.Value;
 
             Properties.Settings.Default.DaysOldWhenRemoveSlides = (int)numericUpDownDaysOld.Value;
+
+            Properties.Settings.Default.CaptureScreen1 = checkBoxCaptureScreen1.Checked;
+            Properties.Settings.Default.CaptureScreen2 = checkBoxCaptureScreen2.Checked;
+            Properties.Settings.Default.CaptureScreen3 = checkBoxCaptureScreen3.Checked;
+            Properties.Settings.Default.CaptureScreen4 = checkBoxCaptureScreen4.Checked;
+            Properties.Settings.Default.CaptureActiveWindow = checkBoxCaptureActiveWindow.Checked;
+
+            Properties.Settings.Default.AutoReset = checkBoxAutoReset.Checked;
 
             EditorCollection.Save();
             ScreenshotCollection.Save();
@@ -2124,6 +2140,12 @@ namespace autoscreen
 
             DateTime dateTimeScreenshotTaken = DateTime.Now;
 
+            // Save a copy of an empty screenshot image file so that we can retrieve it later in the Slideshow.
+            if (CaptureScreenAllowed(1) || CaptureScreenAllowed(2) || CaptureScreenAllowed(3) || CaptureScreenAllowed(4) || CaptureScreenAllowed(5))
+            {
+                ScreenCapture.Save(FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ScreenshotListMacro, ScreenCapture.Format, null, dateTimeScreenshotTaken));
+            }
+
             // Active Window
             if (CaptureScreenAllowed(5))
             {
@@ -2183,23 +2205,23 @@ namespace autoscreen
             switch (screenNumber)
             {
                 case 1:
-                    capture = string.IsNullOrEmpty(textBoxScreen1Name.Text) ? false : true;
+                    capture = string.IsNullOrEmpty(textBoxScreen1Name.Text) || !checkBoxCaptureScreen1.Checked ? false : true;
                     break;
 
                 case 2:
-                    capture = string.IsNullOrEmpty(textBoxScreen2Name.Text) ? false : true;
+                    capture = string.IsNullOrEmpty(textBoxScreen2Name.Text) || !checkBoxCaptureScreen2.Checked ? false : true;
                     break;
 
                 case 3:
-                    capture = string.IsNullOrEmpty(textBoxScreen3Name.Text) ? false : true;
+                    capture = string.IsNullOrEmpty(textBoxScreen3Name.Text) || !checkBoxCaptureScreen3.Checked ? false : true;
                     break;
 
                 case 4:
-                    capture = string.IsNullOrEmpty(textBoxScreen4Name.Text) ? false : true;
+                    capture = string.IsNullOrEmpty(textBoxScreen4Name.Text) || !checkBoxCaptureScreen4.Checked ? false : true;
                     break;
 
                 case 5:
-                    capture = string.IsNullOrEmpty(textBoxScreen5Name.Text) ? false : true;
+                    capture = string.IsNullOrEmpty(textBoxScreen5Name.Text) || !checkBoxCaptureActiveWindow.Checked ? false : true;
                     break;
             }
 
@@ -2335,7 +2357,7 @@ namespace autoscreen
                     SetupScreenPosition(screen, count);
                     SetupScreenSize(screen, count);
 
-                    if (preview)
+                    if (preview && CaptureScreenAllowed(count))
                     {
                         Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value, ScreenCapture.Format);
 
@@ -2409,7 +2431,7 @@ namespace autoscreen
                 }
             }
 
-            if (preview)
+            if (preview && CaptureScreenAllowed(5))
             {
                 pictureBoxActiveWindow.Image = (Image)ScreenCapture.GetActiveWindowBitmap();
             }

@@ -157,6 +157,26 @@ namespace autoscreen
             }
         }
 
+        public static void Save(string imagePath)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    if (!Directory.Exists(Path.GetDirectoryName(imagePath)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(imagePath));
+                    }
+
+                    File.Create(imagePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::Save", ex);
+            }
+        }
+
         private static void SaveToFile(Bitmap bitmap, long jpegQualityLevel, string imageFormat, string imagePath, ScreenshotType screenshotType)
         {
             try

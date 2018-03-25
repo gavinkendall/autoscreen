@@ -795,5 +795,77 @@ namespace autoscreen.Properties {
                 this["DaysOldWhenRemoveSlides"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen1 {
+            get {
+                return ((bool)(this["CaptureScreen1"]));
+            }
+            set {
+                this["CaptureScreen1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen2 {
+            get {
+                return ((bool)(this["CaptureScreen2"]));
+            }
+            set {
+                this["CaptureScreen2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen3 {
+            get {
+                return ((bool)(this["CaptureScreen3"]));
+            }
+            set {
+                this["CaptureScreen3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureScreen4 {
+            get {
+                return ((bool)(this["CaptureScreen4"]));
+            }
+            set {
+                this["CaptureScreen4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CaptureActiveWindow {
+            get {
+                return ((bool)(this["CaptureActiveWindow"]));
+            }
+            set {
+                this["CaptureActiveWindow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoReset {
+            get {
+                return ((bool)(this["AutoReset"]));
+            }
+            set {
+                this["AutoReset"] = value;
+            }
+        }
     }
 }

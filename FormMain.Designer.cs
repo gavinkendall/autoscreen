@@ -47,6 +47,8 @@
             this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
+            this.panelAllScreens = new System.Windows.Forms.Panel();
+            this.checkBoxAutoReset = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelScreenshotPreview = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBoxScreenshotPreviewMonitor1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxScreenshotPreviewMonitor4 = new System.Windows.Forms.PictureBox();
@@ -207,9 +209,17 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
+            this.checkBoxCaptureScreen1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen3 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureActiveWindow = new System.Windows.Forms.CheckBox();
+            this.labelCapture = new System.Windows.Forms.Label();
+            this.buttonOpenFolder = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
+            this.panelAllScreens.SuspendLayout();
             this.tableLayoutPanelScreenshotPreview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor4)).BeginInit();
@@ -413,6 +423,7 @@
             // 
             // tabPageAllScreens
             // 
+            this.tabPageAllScreens.Controls.Add(this.panelAllScreens);
             this.tabPageAllScreens.Controls.Add(this.tableLayoutPanelScreenshotPreview);
             this.tabPageAllScreens.Location = new System.Drawing.Point(4, 22);
             this.tabPageAllScreens.Name = "tabPageAllScreens";
@@ -422,8 +433,38 @@
             this.tabPageAllScreens.Text = "All Screens";
             this.tabPageAllScreens.UseVisualStyleBackColor = true;
             // 
+            // panelAllScreens
+            // 
+            this.panelAllScreens.Controls.Add(this.labelCapture);
+            this.panelAllScreens.Controls.Add(this.checkBoxCaptureActiveWindow);
+            this.panelAllScreens.Controls.Add(this.checkBoxCaptureScreen4);
+            this.panelAllScreens.Controls.Add(this.checkBoxCaptureScreen3);
+            this.panelAllScreens.Controls.Add(this.checkBoxCaptureScreen2);
+            this.panelAllScreens.Controls.Add(this.checkBoxCaptureScreen1);
+            this.panelAllScreens.Controls.Add(this.checkBoxAutoReset);
+            this.panelAllScreens.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelAllScreens.Location = new System.Drawing.Point(3, 345);
+            this.panelAllScreens.Name = "panelAllScreens";
+            this.panelAllScreens.Size = new System.Drawing.Size(586, 33);
+            this.panelAllScreens.TabIndex = 5;
+            // 
+            // checkBoxAutoReset
+            // 
+            this.checkBoxAutoReset.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxAutoReset.AutoSize = true;
+            this.checkBoxAutoReset.Location = new System.Drawing.Point(502, 8);
+            this.checkBoxAutoReset.Name = "checkBoxAutoReset";
+            this.checkBoxAutoReset.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxAutoReset.TabIndex = 0;
+            this.checkBoxAutoReset.Text = "Auto Reset";
+            this.checkBoxAutoReset.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanelScreenshotPreview
             // 
+            this.tableLayoutPanelScreenshotPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanelScreenshotPreview.BackColor = System.Drawing.Color.Gray;
             this.tableLayoutPanelScreenshotPreview.ColumnCount = 2;
             this.tableLayoutPanelScreenshotPreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -432,14 +473,13 @@
             this.tableLayoutPanelScreenshotPreview.Controls.Add(this.pictureBoxScreenshotPreviewMonitor4, 1, 1);
             this.tableLayoutPanelScreenshotPreview.Controls.Add(this.pictureBoxScreenshotPreviewMonitor2, 1, 0);
             this.tableLayoutPanelScreenshotPreview.Controls.Add(this.pictureBoxScreenshotPreviewMonitor3, 0, 1);
-            this.tableLayoutPanelScreenshotPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelScreenshotPreview.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanelScreenshotPreview.Location = new System.Drawing.Point(4, 4);
             this.tableLayoutPanelScreenshotPreview.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanelScreenshotPreview.Name = "tableLayoutPanelScreenshotPreview";
             this.tableLayoutPanelScreenshotPreview.RowCount = 2;
             this.tableLayoutPanelScreenshotPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelScreenshotPreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelScreenshotPreview.Size = new System.Drawing.Size(586, 375);
+            this.tableLayoutPanelScreenshotPreview.Size = new System.Drawing.Size(584, 337);
             this.tableLayoutPanelScreenshotPreview.TabIndex = 4;
             // 
             // pictureBoxScreenshotPreviewMonitor1
@@ -449,7 +489,7 @@
             this.pictureBoxScreenshotPreviewMonitor1.Location = new System.Drawing.Point(1, 1);
             this.pictureBoxScreenshotPreviewMonitor1.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreenshotPreviewMonitor1.Name = "pictureBoxScreenshotPreviewMonitor1";
-            this.pictureBoxScreenshotPreviewMonitor1.Size = new System.Drawing.Size(291, 185);
+            this.pictureBoxScreenshotPreviewMonitor1.Size = new System.Drawing.Size(290, 166);
             this.pictureBoxScreenshotPreviewMonitor1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor1.TabIndex = 1;
             this.pictureBoxScreenshotPreviewMonitor1.TabStop = false;
@@ -458,10 +498,10 @@
             // 
             this.pictureBoxScreenshotPreviewMonitor4.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreenshotPreviewMonitor4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxScreenshotPreviewMonitor4.Location = new System.Drawing.Point(294, 188);
+            this.pictureBoxScreenshotPreviewMonitor4.Location = new System.Drawing.Point(293, 169);
             this.pictureBoxScreenshotPreviewMonitor4.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreenshotPreviewMonitor4.Name = "pictureBoxScreenshotPreviewMonitor4";
-            this.pictureBoxScreenshotPreviewMonitor4.Size = new System.Drawing.Size(291, 186);
+            this.pictureBoxScreenshotPreviewMonitor4.Size = new System.Drawing.Size(290, 167);
             this.pictureBoxScreenshotPreviewMonitor4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor4.TabIndex = 3;
             this.pictureBoxScreenshotPreviewMonitor4.TabStop = false;
@@ -470,10 +510,10 @@
             // 
             this.pictureBoxScreenshotPreviewMonitor2.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreenshotPreviewMonitor2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxScreenshotPreviewMonitor2.Location = new System.Drawing.Point(294, 1);
+            this.pictureBoxScreenshotPreviewMonitor2.Location = new System.Drawing.Point(293, 1);
             this.pictureBoxScreenshotPreviewMonitor2.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreenshotPreviewMonitor2.Name = "pictureBoxScreenshotPreviewMonitor2";
-            this.pictureBoxScreenshotPreviewMonitor2.Size = new System.Drawing.Size(291, 185);
+            this.pictureBoxScreenshotPreviewMonitor2.Size = new System.Drawing.Size(290, 166);
             this.pictureBoxScreenshotPreviewMonitor2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor2.TabIndex = 2;
             this.pictureBoxScreenshotPreviewMonitor2.TabStop = false;
@@ -482,10 +522,10 @@
             // 
             this.pictureBoxScreenshotPreviewMonitor3.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreenshotPreviewMonitor3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxScreenshotPreviewMonitor3.Location = new System.Drawing.Point(1, 188);
+            this.pictureBoxScreenshotPreviewMonitor3.Location = new System.Drawing.Point(1, 169);
             this.pictureBoxScreenshotPreviewMonitor3.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreenshotPreviewMonitor3.Name = "pictureBoxScreenshotPreviewMonitor3";
-            this.pictureBoxScreenshotPreviewMonitor3.Size = new System.Drawing.Size(291, 186);
+            this.pictureBoxScreenshotPreviewMonitor3.Size = new System.Drawing.Size(290, 167);
             this.pictureBoxScreenshotPreviewMonitor3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor3.TabIndex = 2;
             this.pictureBoxScreenshotPreviewMonitor3.TabStop = false;
@@ -1479,7 +1519,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxFolder.Location = new System.Drawing.Point(301, 415);
             this.textBoxFolder.Name = "textBoxFolder";
-            this.textBoxFolder.Size = new System.Drawing.Size(513, 20);
+            this.textBoxFolder.Size = new System.Drawing.Size(480, 20);
             this.textBoxFolder.TabIndex = 7;
             this.textBoxFolder.TabStop = false;
             // 
@@ -2379,7 +2419,7 @@
             // buttonBrowseFolder
             // 
             this.buttonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseFolder.Location = new System.Drawing.Point(820, 413);
+            this.buttonBrowseFolder.Location = new System.Drawing.Point(787, 413);
             this.buttonBrowseFolder.Name = "buttonBrowseFolder";
             this.buttonBrowseFolder.Size = new System.Drawing.Size(27, 23);
             this.buttonBrowseFolder.TabIndex = 22;
@@ -2408,11 +2448,81 @@
             this.textBoxMacro.TabIndex = 24;
             this.textBoxMacro.TabStop = false;
             // 
+            // checkBoxCaptureScreen1
+            // 
+            this.checkBoxCaptureScreen1.AutoSize = true;
+            this.checkBoxCaptureScreen1.Location = new System.Drawing.Point(56, 8);
+            this.checkBoxCaptureScreen1.Name = "checkBoxCaptureScreen1";
+            this.checkBoxCaptureScreen1.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen1.TabIndex = 1;
+            this.checkBoxCaptureScreen1.Text = "1";
+            this.checkBoxCaptureScreen1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen2
+            // 
+            this.checkBoxCaptureScreen2.AutoSize = true;
+            this.checkBoxCaptureScreen2.Location = new System.Drawing.Point(94, 8);
+            this.checkBoxCaptureScreen2.Name = "checkBoxCaptureScreen2";
+            this.checkBoxCaptureScreen2.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen2.TabIndex = 2;
+            this.checkBoxCaptureScreen2.Text = "2";
+            this.checkBoxCaptureScreen2.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen3
+            // 
+            this.checkBoxCaptureScreen3.AutoSize = true;
+            this.checkBoxCaptureScreen3.Location = new System.Drawing.Point(132, 8);
+            this.checkBoxCaptureScreen3.Name = "checkBoxCaptureScreen3";
+            this.checkBoxCaptureScreen3.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen3.TabIndex = 3;
+            this.checkBoxCaptureScreen3.Text = "3";
+            this.checkBoxCaptureScreen3.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen4
+            // 
+            this.checkBoxCaptureScreen4.AutoSize = true;
+            this.checkBoxCaptureScreen4.Location = new System.Drawing.Point(170, 8);
+            this.checkBoxCaptureScreen4.Name = "checkBoxCaptureScreen4";
+            this.checkBoxCaptureScreen4.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen4.TabIndex = 4;
+            this.checkBoxCaptureScreen4.Text = "4";
+            this.checkBoxCaptureScreen4.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureActiveWindow
+            // 
+            this.checkBoxCaptureActiveWindow.AutoSize = true;
+            this.checkBoxCaptureActiveWindow.Location = new System.Drawing.Point(208, 8);
+            this.checkBoxCaptureActiveWindow.Name = "checkBoxCaptureActiveWindow";
+            this.checkBoxCaptureActiveWindow.Size = new System.Drawing.Size(98, 17);
+            this.checkBoxCaptureActiveWindow.TabIndex = 5;
+            this.checkBoxCaptureActiveWindow.Text = "Active Window";
+            this.checkBoxCaptureActiveWindow.UseVisualStyleBackColor = true;
+            // 
+            // labelCapture
+            // 
+            this.labelCapture.AutoSize = true;
+            this.labelCapture.Location = new System.Drawing.Point(3, 9);
+            this.labelCapture.Name = "labelCapture";
+            this.labelCapture.Size = new System.Drawing.Size(47, 13);
+            this.labelCapture.TabIndex = 6;
+            this.labelCapture.Text = "Capture:";
+            // 
+            // buttonOpenFolder
+            // 
+            this.buttonOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOpenFolder.Location = new System.Drawing.Point(820, 413);
+            this.buttonOpenFolder.Name = "buttonOpenFolder";
+            this.buttonOpenFolder.Size = new System.Drawing.Size(27, 23);
+            this.buttonOpenFolder.TabIndex = 25;
+            this.buttonOpenFolder.TabStop = false;
+            this.buttonOpenFolder.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(851, 488);
+            this.Controls.Add(this.buttonOpenFolder);
             this.Controls.Add(this.textBoxMacro);
             this.Controls.Add(this.labelMacro);
             this.Controls.Add(this.buttonBrowseFolder);
@@ -2436,6 +2546,8 @@
             this.statusStrip.PerformLayout();
             this.tabControlScreens.ResumeLayout(false);
             this.tabPageAllScreens.ResumeLayout(false);
+            this.panelAllScreens.ResumeLayout(false);
+            this.panelAllScreens.PerformLayout();
             this.tableLayoutPanelScreenshotPreview.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor4)).EndInit();
@@ -2693,5 +2805,14 @@
         private System.Windows.Forms.GroupBox groupBoxSlideRemovalInDays;
         private System.Windows.Forms.Label labelDays;
         private System.Windows.Forms.NumericUpDown numericUpDownDaysOld;
+        private System.Windows.Forms.Panel panelAllScreens;
+        private System.Windows.Forms.CheckBox checkBoxAutoReset;
+        private System.Windows.Forms.Label labelCapture;
+        private System.Windows.Forms.CheckBox checkBoxCaptureActiveWindow;
+        private System.Windows.Forms.CheckBox checkBoxCaptureScreen4;
+        private System.Windows.Forms.CheckBox checkBoxCaptureScreen3;
+        private System.Windows.Forms.CheckBox checkBoxCaptureScreen2;
+        private System.Windows.Forms.CheckBox checkBoxCaptureScreen1;
+        private System.Windows.Forms.Button buttonOpenFolder;
     }
 }
