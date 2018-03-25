@@ -2107,6 +2107,14 @@ namespace autoscreen
         {
             DisplayCaptureStatus(true);
 
+            if (checkBoxAutoReset.Checked)
+            {
+                buttonScreen1Reset_Click(sender, e);
+                buttonScreen2Reset_Click(sender, e);
+                buttonScreen3Reset_Click(sender, e);
+                buttonScreen4Reset_Click(sender, e);
+            }
+
             if (!timerScreenCapture.Enabled)
             {
                 StopScreenCapture();
