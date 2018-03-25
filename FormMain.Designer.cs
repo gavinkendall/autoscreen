@@ -48,6 +48,12 @@
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
             this.panelAllScreens = new System.Windows.Forms.Panel();
+            this.labelCapture = new System.Windows.Forms.Label();
+            this.checkBoxCaptureActiveWindow = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen3 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxCaptureScreen1 = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoReset = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelScreenshotPreview = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBoxScreenshotPreviewMonitor1 = new System.Windows.Forms.PictureBox();
@@ -209,12 +215,6 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
-            this.checkBoxCaptureScreen1 = new System.Windows.Forms.CheckBox();
-            this.checkBoxCaptureScreen2 = new System.Windows.Forms.CheckBox();
-            this.checkBoxCaptureScreen3 = new System.Windows.Forms.CheckBox();
-            this.checkBoxCaptureScreen4 = new System.Windows.Forms.CheckBox();
-            this.checkBoxCaptureActiveWindow = new System.Windows.Forms.CheckBox();
-            this.labelCapture = new System.Windows.Forms.Label();
             this.buttonOpenFolder = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
@@ -447,6 +447,65 @@
             this.panelAllScreens.Name = "panelAllScreens";
             this.panelAllScreens.Size = new System.Drawing.Size(586, 33);
             this.panelAllScreens.TabIndex = 5;
+            // 
+            // labelCapture
+            // 
+            this.labelCapture.AutoSize = true;
+            this.labelCapture.Location = new System.Drawing.Point(3, 9);
+            this.labelCapture.Name = "labelCapture";
+            this.labelCapture.Size = new System.Drawing.Size(47, 13);
+            this.labelCapture.TabIndex = 6;
+            this.labelCapture.Text = "Capture:";
+            // 
+            // checkBoxCaptureActiveWindow
+            // 
+            this.checkBoxCaptureActiveWindow.AutoSize = true;
+            this.checkBoxCaptureActiveWindow.Location = new System.Drawing.Point(208, 8);
+            this.checkBoxCaptureActiveWindow.Name = "checkBoxCaptureActiveWindow";
+            this.checkBoxCaptureActiveWindow.Size = new System.Drawing.Size(98, 17);
+            this.checkBoxCaptureActiveWindow.TabIndex = 5;
+            this.checkBoxCaptureActiveWindow.Text = "Active Window";
+            this.checkBoxCaptureActiveWindow.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen4
+            // 
+            this.checkBoxCaptureScreen4.AutoSize = true;
+            this.checkBoxCaptureScreen4.Location = new System.Drawing.Point(170, 8);
+            this.checkBoxCaptureScreen4.Name = "checkBoxCaptureScreen4";
+            this.checkBoxCaptureScreen4.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen4.TabIndex = 4;
+            this.checkBoxCaptureScreen4.Text = "4";
+            this.checkBoxCaptureScreen4.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen3
+            // 
+            this.checkBoxCaptureScreen3.AutoSize = true;
+            this.checkBoxCaptureScreen3.Location = new System.Drawing.Point(132, 8);
+            this.checkBoxCaptureScreen3.Name = "checkBoxCaptureScreen3";
+            this.checkBoxCaptureScreen3.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen3.TabIndex = 3;
+            this.checkBoxCaptureScreen3.Text = "3";
+            this.checkBoxCaptureScreen3.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen2
+            // 
+            this.checkBoxCaptureScreen2.AutoSize = true;
+            this.checkBoxCaptureScreen2.Location = new System.Drawing.Point(94, 8);
+            this.checkBoxCaptureScreen2.Name = "checkBoxCaptureScreen2";
+            this.checkBoxCaptureScreen2.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen2.TabIndex = 2;
+            this.checkBoxCaptureScreen2.Text = "2";
+            this.checkBoxCaptureScreen2.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCaptureScreen1
+            // 
+            this.checkBoxCaptureScreen1.AutoSize = true;
+            this.checkBoxCaptureScreen1.Location = new System.Drawing.Point(56, 8);
+            this.checkBoxCaptureScreen1.Name = "checkBoxCaptureScreen1";
+            this.checkBoxCaptureScreen1.Size = new System.Drawing.Size(32, 17);
+            this.checkBoxCaptureScreen1.TabIndex = 1;
+            this.checkBoxCaptureScreen1.Text = "1";
+            this.checkBoxCaptureScreen1.UseVisualStyleBackColor = true;
             // 
             // checkBoxAutoReset
             // 
@@ -2448,65 +2507,6 @@
             this.textBoxMacro.TabIndex = 24;
             this.textBoxMacro.TabStop = false;
             // 
-            // checkBoxCaptureScreen1
-            // 
-            this.checkBoxCaptureScreen1.AutoSize = true;
-            this.checkBoxCaptureScreen1.Location = new System.Drawing.Point(56, 8);
-            this.checkBoxCaptureScreen1.Name = "checkBoxCaptureScreen1";
-            this.checkBoxCaptureScreen1.Size = new System.Drawing.Size(32, 17);
-            this.checkBoxCaptureScreen1.TabIndex = 1;
-            this.checkBoxCaptureScreen1.Text = "1";
-            this.checkBoxCaptureScreen1.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCaptureScreen2
-            // 
-            this.checkBoxCaptureScreen2.AutoSize = true;
-            this.checkBoxCaptureScreen2.Location = new System.Drawing.Point(94, 8);
-            this.checkBoxCaptureScreen2.Name = "checkBoxCaptureScreen2";
-            this.checkBoxCaptureScreen2.Size = new System.Drawing.Size(32, 17);
-            this.checkBoxCaptureScreen2.TabIndex = 2;
-            this.checkBoxCaptureScreen2.Text = "2";
-            this.checkBoxCaptureScreen2.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCaptureScreen3
-            // 
-            this.checkBoxCaptureScreen3.AutoSize = true;
-            this.checkBoxCaptureScreen3.Location = new System.Drawing.Point(132, 8);
-            this.checkBoxCaptureScreen3.Name = "checkBoxCaptureScreen3";
-            this.checkBoxCaptureScreen3.Size = new System.Drawing.Size(32, 17);
-            this.checkBoxCaptureScreen3.TabIndex = 3;
-            this.checkBoxCaptureScreen3.Text = "3";
-            this.checkBoxCaptureScreen3.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCaptureScreen4
-            // 
-            this.checkBoxCaptureScreen4.AutoSize = true;
-            this.checkBoxCaptureScreen4.Location = new System.Drawing.Point(170, 8);
-            this.checkBoxCaptureScreen4.Name = "checkBoxCaptureScreen4";
-            this.checkBoxCaptureScreen4.Size = new System.Drawing.Size(32, 17);
-            this.checkBoxCaptureScreen4.TabIndex = 4;
-            this.checkBoxCaptureScreen4.Text = "4";
-            this.checkBoxCaptureScreen4.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxCaptureActiveWindow
-            // 
-            this.checkBoxCaptureActiveWindow.AutoSize = true;
-            this.checkBoxCaptureActiveWindow.Location = new System.Drawing.Point(208, 8);
-            this.checkBoxCaptureActiveWindow.Name = "checkBoxCaptureActiveWindow";
-            this.checkBoxCaptureActiveWindow.Size = new System.Drawing.Size(98, 17);
-            this.checkBoxCaptureActiveWindow.TabIndex = 5;
-            this.checkBoxCaptureActiveWindow.Text = "Active Window";
-            this.checkBoxCaptureActiveWindow.UseVisualStyleBackColor = true;
-            // 
-            // labelCapture
-            // 
-            this.labelCapture.AutoSize = true;
-            this.labelCapture.Location = new System.Drawing.Point(3, 9);
-            this.labelCapture.Name = "labelCapture";
-            this.labelCapture.Size = new System.Drawing.Size(47, 13);
-            this.labelCapture.TabIndex = 6;
-            this.labelCapture.Text = "Capture:";
-            // 
             // buttonOpenFolder
             // 
             this.buttonOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -2516,6 +2516,7 @@
             this.buttonOpenFolder.TabIndex = 25;
             this.buttonOpenFolder.TabStop = false;
             this.buttonOpenFolder.UseVisualStyleBackColor = true;
+            this.buttonOpenFolder.Click += new System.EventHandler(this.buttonOpenFolder_Click);
             // 
             // FormMain
             // 
