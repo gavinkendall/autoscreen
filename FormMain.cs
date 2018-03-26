@@ -304,87 +304,31 @@ namespace autoscreen
                     switch (count)
                     {
                         case 1:
-                            labelScreen1X.Enabled = true;
-                            labelScreen1Y.Enabled = true;
-                            labelScreen1Width.Enabled = true;
-                            labelScreen1Height.Enabled = true;
-                            labelScreen1Name.Enabled = true;
-
-                            numericUpDownScreen1X.Enabled = true;
-                            numericUpDownScreen1Y.Enabled = true;
-                            numericUpDownScreen1Width.Enabled = true;
-                            numericUpDownScreen1Height.Enabled = true;
-                            buttonScreen1Reset.Enabled = true;
-
                             numericUpDownScreen1X.Value = Properties.Settings.Default.Screen1X > 0 ? Properties.Settings.Default.Screen1X : screen.Bounds.X;
                             numericUpDownScreen1Y.Value = Properties.Settings.Default.Screen1Y > 0 ? Properties.Settings.Default.Screen1Y : screen.Bounds.Y;
                             numericUpDownScreen1Width.Value = Properties.Settings.Default.Screen1Width > 0 ? Properties.Settings.Default.Screen1Width : screen.Bounds.Width;
                             numericUpDownScreen1Height.Value = Properties.Settings.Default.Screen1Height > 0 ? Properties.Settings.Default.Screen1Height : screen.Bounds.Height;
-
-                            textBoxScreen1Name.Enabled = true;
                             break;
 
                         case 2:
-                            labelScreen2X.Enabled = true;
-                            labelScreen2Y.Enabled = true;
-                            labelScreen2Width.Enabled = true;
-                            labelScreen2Height.Enabled = true;
-                            labelScreen2Name.Enabled = true;
-
-                            numericUpDownScreen2X.Enabled = true;
-                            numericUpDownScreen2Y.Enabled = true;
-                            numericUpDownScreen2Width.Enabled = true;
-                            numericUpDownScreen2Height.Enabled = true;
-                            buttonScreen2Reset.Enabled = true;
-
                             numericUpDownScreen2X.Value = Properties.Settings.Default.Screen2X > 0 ? Properties.Settings.Default.Screen2X : screen.Bounds.X;
                             numericUpDownScreen2Y.Value = Properties.Settings.Default.Screen2Y > 0 ? Properties.Settings.Default.Screen2Y : screen.Bounds.Y;
                             numericUpDownScreen2Width.Value = Properties.Settings.Default.Screen2Width > 0 ? Properties.Settings.Default.Screen2Width : screen.Bounds.Width;
                             numericUpDownScreen2Height.Value = Properties.Settings.Default.Screen2Height > 0 ? Properties.Settings.Default.Screen2Height : screen.Bounds.Height;
-
-                            textBoxScreen2Name.Enabled = true;
                             break;
 
                         case 3:
-                            labelScreen3X.Enabled = true;
-                            labelScreen3Y.Enabled = true;
-                            labelScreen3Width.Enabled = true;
-                            labelScreen3Height.Enabled = true;
-                            labelScreen3Name.Enabled = true;
-
-                            numericUpDownScreen3X.Enabled = true;
-                            numericUpDownScreen3Y.Enabled = true;
-                            numericUpDownScreen3Width.Enabled = true;
-                            numericUpDownScreen3Height.Enabled = true;
-                            buttonScreen3Reset.Enabled = true;
-
                             numericUpDownScreen3X.Value = Properties.Settings.Default.Screen3X > 0 ? Properties.Settings.Default.Screen3X : screen.Bounds.X;
                             numericUpDownScreen3Y.Value = Properties.Settings.Default.Screen3Y > 0 ? Properties.Settings.Default.Screen3Y : screen.Bounds.Y;
                             numericUpDownScreen3Width.Value = Properties.Settings.Default.Screen3Width > 0 ? Properties.Settings.Default.Screen3Width : screen.Bounds.Width;
                             numericUpDownScreen3Height.Value = Properties.Settings.Default.Screen3Height > 0 ? Properties.Settings.Default.Screen3Height : screen.Bounds.Height;
-
-                            textBoxScreen3Name.Enabled = true;
                             break;
 
                         case 4:
-                            labelScreen4X.Enabled = true;
-                            labelScreen4Y.Enabled = true;
-                            labelScreen4Width.Enabled = true;
-                            labelScreen4Height.Enabled = true;
-                            labelScreen4Name.Enabled = true;
-
-                            numericUpDownScreen4X.Enabled = true;
-                            numericUpDownScreen4Y.Enabled = true;
-                            numericUpDownScreen4Width.Enabled = true;
-                            numericUpDownScreen4Height.Enabled = true;
-                            buttonScreen4Reset.Enabled = true;
-
                             numericUpDownScreen4X.Value = Properties.Settings.Default.Screen4X > 0 ? Properties.Settings.Default.Screen4X : screen.Bounds.X;
                             numericUpDownScreen4Y.Value = Properties.Settings.Default.Screen4Y > 0 ? Properties.Settings.Default.Screen4Y : screen.Bounds.Y;
                             numericUpDownScreen4Width.Value = Properties.Settings.Default.Screen4Width > 0 ? Properties.Settings.Default.Screen4Width : screen.Bounds.Width;
                             numericUpDownScreen4Height.Value = Properties.Settings.Default.Screen4Height > 0 ? Properties.Settings.Default.Screen4Height : screen.Bounds.Height;
-
-                            textBoxScreen4Name.Enabled = true;
                             break;
                     }
                 }

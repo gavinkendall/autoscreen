@@ -624,7 +624,6 @@
             // 
             this.textBoxScreen1Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreen1Name.Enabled = false;
             this.textBoxScreen1Name.Location = new System.Drawing.Point(411, 8);
             this.textBoxScreen1Name.Name = "textBoxScreen1Name";
             this.textBoxScreen1Name.Size = new System.Drawing.Size(173, 20);
@@ -635,7 +634,6 @@
             // 
             this.labelScreen1Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelScreen1Name.AutoSize = true;
-            this.labelScreen1Name.Enabled = false;
             this.labelScreen1Name.Location = new System.Drawing.Point(367, 11);
             this.labelScreen1Name.Name = "labelScreen1Name";
             this.labelScreen1Name.Size = new System.Drawing.Size(38, 13);
@@ -644,7 +642,6 @@
             // 
             // numericUpDownScreen1Height
             // 
-            this.numericUpDownScreen1Height.Enabled = false;
             this.numericUpDownScreen1Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen1Height.Maximum = new decimal(new int[] {
             -402653185,
@@ -668,7 +665,6 @@
             // 
             // numericUpDownScreen1Width
             // 
-            this.numericUpDownScreen1Width.Enabled = false;
             this.numericUpDownScreen1Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen1Width.Maximum = new decimal(new int[] {
             -402653185,
@@ -692,7 +688,6 @@
             // 
             // numericUpDownScreen1Y
             // 
-            this.numericUpDownScreen1Y.Enabled = false;
             this.numericUpDownScreen1Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen1Y.Maximum = new decimal(new int[] {
             -402653185,
@@ -711,7 +706,6 @@
             // 
             // numericUpDownScreen1X
             // 
-            this.numericUpDownScreen1X.Enabled = false;
             this.numericUpDownScreen1X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen1X.Maximum = new decimal(new int[] {
             -402653185,
@@ -731,7 +725,6 @@
             // labelScreen1Y
             // 
             this.labelScreen1Y.AutoSize = true;
-            this.labelScreen1Y.Enabled = false;
             this.labelScreen1Y.Location = new System.Drawing.Point(69, 11);
             this.labelScreen1Y.Name = "labelScreen1Y";
             this.labelScreen1Y.Size = new System.Drawing.Size(17, 13);
@@ -741,7 +734,6 @@
             // labelScreen1X
             // 
             this.labelScreen1X.AutoSize = true;
-            this.labelScreen1X.Enabled = false;
             this.labelScreen1X.Location = new System.Drawing.Point(3, 11);
             this.labelScreen1X.Name = "labelScreen1X";
             this.labelScreen1X.Size = new System.Drawing.Size(17, 13);
@@ -751,7 +743,6 @@
             // buttonScreen1Reset
             // 
             this.buttonScreen1Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScreen1Reset.Enabled = false;
             this.buttonScreen1Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen1Reset.Name = "buttonScreen1Reset";
             this.buttonScreen1Reset.Size = new System.Drawing.Size(43, 23);
@@ -764,7 +755,6 @@
             // labelScreen1Height
             // 
             this.labelScreen1Height.AutoSize = true;
-            this.labelScreen1Height.Enabled = false;
             this.labelScreen1Height.Location = new System.Drawing.Point(225, 11);
             this.labelScreen1Height.Name = "labelScreen1Height";
             this.labelScreen1Height.Size = new System.Drawing.Size(41, 13);
@@ -774,7 +764,6 @@
             // labelScreen1Width
             // 
             this.labelScreen1Width.AutoSize = true;
-            this.labelScreen1Width.Enabled = false;
             this.labelScreen1Width.Location = new System.Drawing.Point(137, 11);
             this.labelScreen1Width.Name = "labelScreen1Width";
             this.labelScreen1Width.Size = new System.Drawing.Size(38, 13);
@@ -850,7 +839,6 @@
             // 
             this.textBoxScreen2Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreen2Name.Enabled = false;
             this.textBoxScreen2Name.Location = new System.Drawing.Point(411, 8);
             this.textBoxScreen2Name.Name = "textBoxScreen2Name";
             this.textBoxScreen2Name.Size = new System.Drawing.Size(173, 20);
@@ -861,7 +849,6 @@
             // 
             this.labelScreen2Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelScreen2Name.AutoSize = true;
-            this.labelScreen2Name.Enabled = false;
             this.labelScreen2Name.Location = new System.Drawing.Point(367, 11);
             this.labelScreen2Name.Name = "labelScreen2Name";
             this.labelScreen2Name.Size = new System.Drawing.Size(38, 13);
@@ -870,7 +857,6 @@
             // 
             // numericUpDownScreen2Height
             // 
-            this.numericUpDownScreen2Height.Enabled = false;
             this.numericUpDownScreen2Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen2Height.Maximum = new decimal(new int[] {
             -402653185,
@@ -895,7 +881,6 @@
             // buttonScreen2Reset
             // 
             this.buttonScreen2Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScreen2Reset.Enabled = false;
             this.buttonScreen2Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen2Reset.Name = "buttonScreen2Reset";
             this.buttonScreen2Reset.Size = new System.Drawing.Size(43, 23);
@@ -907,7 +892,6 @@
             // 
             // numericUpDownScreen2Width
             // 
-            this.numericUpDownScreen2Width.Enabled = false;
             this.numericUpDownScreen2Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen2Width.Maximum = new decimal(new int[] {
             -402653185,
@@ -932,7 +916,6 @@
             // labelScreen2Width
             // 
             this.labelScreen2Width.AutoSize = true;
-            this.labelScreen2Width.Enabled = false;
             this.labelScreen2Width.Location = new System.Drawing.Point(137, 11);
             this.labelScreen2Width.Name = "labelScreen2Width";
             this.labelScreen2Width.Size = new System.Drawing.Size(38, 13);
@@ -941,7 +924,6 @@
             // 
             // numericUpDownScreen2Y
             // 
-            this.numericUpDownScreen2Y.Enabled = false;
             this.numericUpDownScreen2Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen2Y.Maximum = new decimal(new int[] {
             -402653185,
@@ -961,7 +943,6 @@
             // labelScreen2Height
             // 
             this.labelScreen2Height.AutoSize = true;
-            this.labelScreen2Height.Enabled = false;
             this.labelScreen2Height.Location = new System.Drawing.Point(225, 11);
             this.labelScreen2Height.Name = "labelScreen2Height";
             this.labelScreen2Height.Size = new System.Drawing.Size(41, 13);
@@ -970,7 +951,6 @@
             // 
             // numericUpDownScreen2X
             // 
-            this.numericUpDownScreen2X.Enabled = false;
             this.numericUpDownScreen2X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen2X.Maximum = new decimal(new int[] {
             -402653185,
@@ -990,7 +970,6 @@
             // labelScreen2X
             // 
             this.labelScreen2X.AutoSize = true;
-            this.labelScreen2X.Enabled = false;
             this.labelScreen2X.Location = new System.Drawing.Point(3, 11);
             this.labelScreen2X.Name = "labelScreen2X";
             this.labelScreen2X.Size = new System.Drawing.Size(17, 13);
@@ -1000,7 +979,6 @@
             // labelScreen2Y
             // 
             this.labelScreen2Y.AutoSize = true;
-            this.labelScreen2Y.Enabled = false;
             this.labelScreen2Y.Location = new System.Drawing.Point(69, 11);
             this.labelScreen2Y.Name = "labelScreen2Y";
             this.labelScreen2Y.Size = new System.Drawing.Size(17, 13);
@@ -1056,7 +1034,6 @@
             // 
             this.textBoxScreen3Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreen3Name.Enabled = false;
             this.textBoxScreen3Name.Location = new System.Drawing.Point(411, 8);
             this.textBoxScreen3Name.Name = "textBoxScreen3Name";
             this.textBoxScreen3Name.Size = new System.Drawing.Size(173, 20);
@@ -1067,7 +1044,6 @@
             // 
             this.labelScreen3Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelScreen3Name.AutoSize = true;
-            this.labelScreen3Name.Enabled = false;
             this.labelScreen3Name.Location = new System.Drawing.Point(367, 11);
             this.labelScreen3Name.Name = "labelScreen3Name";
             this.labelScreen3Name.Size = new System.Drawing.Size(38, 13);
@@ -1076,7 +1052,6 @@
             // 
             // numericUpDownScreen3Height
             // 
-            this.numericUpDownScreen3Height.Enabled = false;
             this.numericUpDownScreen3Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen3Height.Maximum = new decimal(new int[] {
             -402653185,
@@ -1101,7 +1076,6 @@
             // buttonScreen3Reset
             // 
             this.buttonScreen3Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScreen3Reset.Enabled = false;
             this.buttonScreen3Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen3Reset.Name = "buttonScreen3Reset";
             this.buttonScreen3Reset.Size = new System.Drawing.Size(43, 23);
@@ -1113,7 +1087,6 @@
             // 
             // numericUpDownScreen3Width
             // 
-            this.numericUpDownScreen3Width.Enabled = false;
             this.numericUpDownScreen3Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen3Width.Maximum = new decimal(new int[] {
             -402653185,
@@ -1138,7 +1111,6 @@
             // labelScreen3Width
             // 
             this.labelScreen3Width.AutoSize = true;
-            this.labelScreen3Width.Enabled = false;
             this.labelScreen3Width.Location = new System.Drawing.Point(137, 11);
             this.labelScreen3Width.Name = "labelScreen3Width";
             this.labelScreen3Width.Size = new System.Drawing.Size(38, 13);
@@ -1147,7 +1119,6 @@
             // 
             // numericUpDownScreen3Y
             // 
-            this.numericUpDownScreen3Y.Enabled = false;
             this.numericUpDownScreen3Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen3Y.Maximum = new decimal(new int[] {
             -402653185,
@@ -1167,7 +1138,6 @@
             // labelScreen3Height
             // 
             this.labelScreen3Height.AutoSize = true;
-            this.labelScreen3Height.Enabled = false;
             this.labelScreen3Height.Location = new System.Drawing.Point(225, 11);
             this.labelScreen3Height.Name = "labelScreen3Height";
             this.labelScreen3Height.Size = new System.Drawing.Size(41, 13);
@@ -1176,7 +1146,6 @@
             // 
             // numericUpDownScreen3X
             // 
-            this.numericUpDownScreen3X.Enabled = false;
             this.numericUpDownScreen3X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen3X.Maximum = new decimal(new int[] {
             -402653185,
@@ -1196,7 +1165,6 @@
             // labelScreen3X
             // 
             this.labelScreen3X.AutoSize = true;
-            this.labelScreen3X.Enabled = false;
             this.labelScreen3X.Location = new System.Drawing.Point(3, 11);
             this.labelScreen3X.Name = "labelScreen3X";
             this.labelScreen3X.Size = new System.Drawing.Size(17, 13);
@@ -1206,7 +1174,6 @@
             // labelScreen3Y
             // 
             this.labelScreen3Y.AutoSize = true;
-            this.labelScreen3Y.Enabled = false;
             this.labelScreen3Y.Location = new System.Drawing.Point(69, 11);
             this.labelScreen3Y.Name = "labelScreen3Y";
             this.labelScreen3Y.Size = new System.Drawing.Size(17, 13);
@@ -1262,7 +1229,6 @@
             // 
             this.textBoxScreen4Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreen4Name.Enabled = false;
             this.textBoxScreen4Name.Location = new System.Drawing.Point(411, 8);
             this.textBoxScreen4Name.Name = "textBoxScreen4Name";
             this.textBoxScreen4Name.Size = new System.Drawing.Size(173, 20);
@@ -1273,7 +1239,6 @@
             // 
             this.labelScreen4Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelScreen4Name.AutoSize = true;
-            this.labelScreen4Name.Enabled = false;
             this.labelScreen4Name.Location = new System.Drawing.Point(367, 11);
             this.labelScreen4Name.Name = "labelScreen4Name";
             this.labelScreen4Name.Size = new System.Drawing.Size(38, 13);
@@ -1282,7 +1247,6 @@
             // 
             // numericUpDownScreen4Height
             // 
-            this.numericUpDownScreen4Height.Enabled = false;
             this.numericUpDownScreen4Height.Location = new System.Drawing.Point(267, 8);
             this.numericUpDownScreen4Height.Maximum = new decimal(new int[] {
             -402653185,
@@ -1307,7 +1271,6 @@
             // buttonScreen4Reset
             // 
             this.buttonScreen4Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScreen4Reset.Enabled = false;
             this.buttonScreen4Reset.Location = new System.Drawing.Point(318, 6);
             this.buttonScreen4Reset.Name = "buttonScreen4Reset";
             this.buttonScreen4Reset.Size = new System.Drawing.Size(43, 23);
@@ -1319,7 +1282,6 @@
             // 
             // numericUpDownScreen4Width
             // 
-            this.numericUpDownScreen4Width.Enabled = false;
             this.numericUpDownScreen4Width.Location = new System.Drawing.Point(177, 8);
             this.numericUpDownScreen4Width.Maximum = new decimal(new int[] {
             -402653185,
@@ -1344,7 +1306,6 @@
             // labelScreen4Width
             // 
             this.labelScreen4Width.AutoSize = true;
-            this.labelScreen4Width.Enabled = false;
             this.labelScreen4Width.Location = new System.Drawing.Point(137, 11);
             this.labelScreen4Width.Name = "labelScreen4Width";
             this.labelScreen4Width.Size = new System.Drawing.Size(38, 13);
@@ -1353,7 +1314,6 @@
             // 
             // numericUpDownScreen4Y
             // 
-            this.numericUpDownScreen4Y.Enabled = false;
             this.numericUpDownScreen4Y.Location = new System.Drawing.Point(88, 8);
             this.numericUpDownScreen4Y.Maximum = new decimal(new int[] {
             -402653185,
@@ -1373,7 +1333,6 @@
             // labelScreen4Height
             // 
             this.labelScreen4Height.AutoSize = true;
-            this.labelScreen4Height.Enabled = false;
             this.labelScreen4Height.Location = new System.Drawing.Point(225, 11);
             this.labelScreen4Height.Name = "labelScreen4Height";
             this.labelScreen4Height.Size = new System.Drawing.Size(41, 13);
@@ -1382,7 +1341,6 @@
             // 
             // numericUpDownScreen4X
             // 
-            this.numericUpDownScreen4X.Enabled = false;
             this.numericUpDownScreen4X.Location = new System.Drawing.Point(21, 8);
             this.numericUpDownScreen4X.Maximum = new decimal(new int[] {
             -402653185,
@@ -1402,7 +1360,6 @@
             // labelScreen4X
             // 
             this.labelScreen4X.AutoSize = true;
-            this.labelScreen4X.Enabled = false;
             this.labelScreen4X.Location = new System.Drawing.Point(3, 11);
             this.labelScreen4X.Name = "labelScreen4X";
             this.labelScreen4X.Size = new System.Drawing.Size(17, 13);
@@ -1412,7 +1369,6 @@
             // labelScreen4Y
             // 
             this.labelScreen4Y.AutoSize = true;
-            this.labelScreen4Y.Enabled = false;
             this.labelScreen4Y.Location = new System.Drawing.Point(69, 11);
             this.labelScreen4Y.Name = "labelScreen4Y";
             this.labelScreen4Y.Size = new System.Drawing.Size(17, 13);
