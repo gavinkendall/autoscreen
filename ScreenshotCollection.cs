@@ -201,7 +201,6 @@ namespace autoscreen
             xSettings.CloseOutput = true;
             xSettings.CheckCharacters = true;
             xSettings.Encoding = Encoding.UTF8;
-            xSettings.DoNotEscapeUriAttributes = true;
             xSettings.NewLineChars = Environment.NewLine;
             xSettings.IndentChars = XML_FILE_INDENT_CHARS;
             xSettings.NewLineHandling = NewLineHandling.Entitize;
