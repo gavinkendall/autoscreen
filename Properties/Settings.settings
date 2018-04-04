@@ -42,7 +42,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ExitOnCloseWindowCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="OpenOnApplicationStartupCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

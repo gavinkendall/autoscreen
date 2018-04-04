@@ -649,23 +649,16 @@ namespace autoscreen
 
                 string[] dirs = Directory.GetDirectories(FileSystem.UserAppDataLocalDirectory);
 
-                int count = 0;
-
-                foreach (Screen screen in Screen.AllScreens)
+                // Go through each directory found and make sure that the sub-directories match with the format yyyy-MM-dd.
+                for (int i = 0; i < dirs.Length; i++)
                 {
-                    count++;
+                    Regex rgx = new Regex(@"^(?<Year>\d{4})-(?<Month>\d{2})-(?<Day>\d{2})$");
 
-                    // Go through each directory found and make sure that the sub-directories match with the format yyyy-MM-dd.
-                    for (int i = 0; i < dirs.Length; i++)
+                    string dirPath = Path.GetFileName(dirs[i]);
+
+                    if (rgx.IsMatch(dirPath) && Directory.Exists(dirs[i]) && !selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
                     {
-                        Regex rgx = new Regex(@"^(?<Year>\d{4})-(?<Month>\d{2})-(?<Day>\d{2})$");
-
-                        string dirPath = Path.GetFileName(dirs[i]);
-
-                        if (rgx.IsMatch(dirPath) && Directory.Exists(dirs[i] + FileSystem.PathDelimiter + count.ToString() + FileSystem.PathDelimiter) && !selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
-                        {
-                            selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
-                        }
+                        selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
                     }
                 }
 
