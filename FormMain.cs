@@ -832,7 +832,6 @@ namespace autoscreen
             int slideshowDelay = GetSlideshowDelay();
 
             DisableControls();
-            DisableSystemTrayMenus();
 
             if (listBoxSlides.Items.Count > 0 && slideshowDelay > 0)
             {
@@ -858,7 +857,6 @@ namespace autoscreen
         private void PauseSlideshow()
         {
             EnableControls();
-            EnableSystemTrayMenus();
 
             if (listBoxSlides.Items.Count > 0)
             {
@@ -874,7 +872,6 @@ namespace autoscreen
         private void StopSlideshow()
         {
             EnableControls();
-            EnableSystemTrayMenus();
 
             toolStripButtonPlaySlideshow.Image = Properties.Resources.player_play;
 
@@ -1023,6 +1020,8 @@ namespace autoscreen
             numericUpDownSlideSkip.Enabled = false;
             checkBoxSlideSkip.Enabled = false;
 
+            toolStripButtonPreview.Enabled = false;
+            toolStripMenuItemStartScreenCapture.Enabled = false;
             toolStripSplitButtonStartScreenCapture.Enabled = false;
         }
 
@@ -1044,6 +1043,8 @@ namespace autoscreen
 
             if (!timerScreenCapture.Enabled)
             {
+                toolStripButtonPreview.Enabled = true;
+                toolStripMenuItemStartScreenCapture.Enabled = true;
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
             }
         }
@@ -1567,35 +1568,6 @@ namespace autoscreen
         private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Properties.Settings.Default.ApplicationName + " " + Properties.Settings.Default.ApplicationVersion + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2018)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        /// <summary>
-        /// Disables the system tray menus.
-        /// </summary>
-        private void DisableSystemTrayMenus()
-        {
-            toolStripMenuItemClose.Enabled = false;
-            toolStripMenuItemStopScreenCapture.Enabled = false;
-            toolStripMenuItemStartScreenCapture.Enabled = false;
-        }
-
-        /// <summary>
-        /// Enables the system tray menus.
-        /// </summary>
-        private void EnableSystemTrayMenus()
-        {
-            toolStripMenuItemClose.Enabled = true;
-
-            if (timerScreenCapture.Enabled)
-            {
-                toolStripMenuItemStopScreenCapture.Enabled = true;
-                toolStripMenuItemStartScreenCapture.Enabled = false;
-            }
-            else
-            {
-                toolStripMenuItemStopScreenCapture.Enabled = false;
-                toolStripMenuItemStartScreenCapture.Enabled = true;
-            }
         }
 
         /// <summary>
