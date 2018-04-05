@@ -741,8 +741,16 @@ namespace autoscreen
                     toolStripMenuItemClose.Enabled = true;
 
                     Show();
+
                     Visible = true;
                     ShowInTaskbar = true;
+
+                    // If the window is mimimized then show it when the user wants to open the window.
+                    if (WindowState == FormWindowState.Minimized)
+                    {
+                        WindowState = FormWindowState.Normal;
+                    }
+
                     Focus();
                 }
             }
