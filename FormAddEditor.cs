@@ -45,6 +45,8 @@ namespace autoscreen
 
         private void AddEditor(string name, string application, string arguments)
         {
+            DialogResult = DialogResult.OK;
+
             if (!string.IsNullOrEmpty(name) &&
                 !string.IsNullOrEmpty(application) &&
                 !string.IsNullOrEmpty(arguments))

@@ -202,6 +202,7 @@
             this.numericUpDownSlideshowDelaySeconds = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayMinutes = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayHours = new System.Windows.Forms.NumericUpDown();
+            this.tabPageEditors = new System.Windows.Forms.TabPage();
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
@@ -1463,25 +1464,25 @@
             this.toolStripSeparator3,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(153, 176);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(151, 154);
             // 
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(150, 22);
             this.toolStripMenuItemAbout.Text = "About ...";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(147, 6);
             // 
             // toolStripMenuItemOpen
             // 
             this.toolStripMenuItemOpen.Enabled = false;
             this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
-            this.toolStripMenuItemOpen.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemOpen.Size = new System.Drawing.Size(150, 22);
             this.toolStripMenuItemOpen.Text = "Open Window";
             this.toolStripMenuItemOpen.Click += new System.EventHandler(this.toolStripMenuItemOpen_Click);
             // 
@@ -1489,21 +1490,21 @@
             // 
             this.toolStripMenuItemClose.Enabled = false;
             this.toolStripMenuItemClose.Name = "toolStripMenuItemClose";
-            this.toolStripMenuItemClose.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemClose.Size = new System.Drawing.Size(150, 22);
             this.toolStripMenuItemClose.Text = "Close Window";
             this.toolStripMenuItemClose.Click += new System.EventHandler(this.toolStripMenuItemClose_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             // 
             // toolStripMenuItemStartScreenCapture
             // 
             this.toolStripMenuItemStartScreenCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemStartScreenCapture.Name = "toolStripMenuItemStartScreenCapture";
             this.toolStripMenuItemStartScreenCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(150, 22);
             this.toolStripMenuItemStartScreenCapture.Text = "Start Capture";
             // 
             // toolStripMenuItemStopScreenCapture
@@ -1512,21 +1513,21 @@
             this.toolStripMenuItemStopScreenCapture.Enabled = false;
             this.toolStripMenuItemStopScreenCapture.Name = "toolStripMenuItemStopScreenCapture";
             this.toolStripMenuItemStopScreenCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(150, 22);
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(150, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
@@ -1622,6 +1623,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControlModules.Controls.Add(this.tabPageScreenCapture);
             this.tabControlModules.Controls.Add(this.tabPageSlideshow);
+            this.tabControlModules.Controls.Add(this.tabPageEditors);
             this.tabControlModules.Location = new System.Drawing.Point(0, 164);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
@@ -2354,6 +2356,17 @@
             this.numericUpDownSlideshowDelayHours.TabStop = false;
             this.numericUpDownSlideshowDelayHours.ValueChanged += new System.EventHandler(this.numericUpDownSlideshowDelay_ValueChanged);
             // 
+            // tabPageEditors
+            // 
+            this.tabPageEditors.AutoScroll = true;
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEditors.Name = "tabPageEditors";
+            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 218);
+            this.tabPageEditors.TabIndex = 2;
+            this.tabPageEditors.Text = "Editors";
+            this.tabPageEditors.UseVisualStyleBackColor = true;
+            // 
             // toolStripScreenCapture
             // 
             this.toolStripScreenCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2781,5 +2794,6 @@
         private System.Windows.Forms.CheckBox checkBoxCaptureScreen1;
         private System.Windows.Forms.Button buttonOpenFolder;
         private System.Windows.Forms.Timer timerDeleteSlides;
+        private System.Windows.Forms.TabPage tabPageEditors;
     }
 }

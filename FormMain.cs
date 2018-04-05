@@ -143,7 +143,7 @@ namespace autoscreen
             Log.Write("Loading editors and building screenshot preview context menu.");
 
             EditorCollection.Load();
-            BuildScreenshotPreviewContextMenu();
+            BuildScreenshotPreviewContextualMenu();
 
             Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
@@ -1788,7 +1788,7 @@ namespace autoscreen
         /// <summary>
         /// Builds the sub-menus for the contextual menu that appears when the user right-clicks on the selected screenshot.
         /// </summary>
-        private void BuildScreenshotPreviewContextMenu()
+        private void BuildScreenshotPreviewContextualMenu()
         {
             contextMenuStripScreenshotPreview.Items.Clear();
 
@@ -1802,17 +1802,73 @@ namespace autoscreen
             contextMenuStripScreenshotPreview.Items.Add(addEditorItem);
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
 
+            BuildEditorsList();
+        }
+
+        private void BuildEditorsList()
+        {
+            int xPosEditor = 5;
+            int yPosEditor = 3;
+
+            const int EDITOR_HEIGHT = 20;
+            const int SMALL_IMAGE_WIDTH = 20;
+            const int SMALL_IMAGE_HEIGHT = 20;
+            const int SMALL_BUTTON_WIDTH = 27;
+            const int SMALL_BUTTON_HEIGHT = 20;
+            const int X_POS_EDITOR_TEXTBOX = 35;
+            const int X_POS_EDITOR_BUTTON = 178;
+            const int EDITOR_TEXTBOX_WIDTH = 140;
+            const int Y_POS_EDITOR_INCREMENT = 23;
+
+            const string EDIT_BUTTON_TEXT = "...";
+
+            tabPageEditors.Controls.Clear();
+
             for (int i = 0; i < EditorCollection.Count; i++)
             {
                 Editor editor = EditorCollection.Get(i);
 
                 if (editor != null && File.Exists(editor.Application))
                 {
+                    // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
+                    // Add the Editor to the screenshot preview contextual menu.
+
                     ToolStripItem editorItem = new ToolStripMenuItem(editor.Name);
                     editorItem.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
                     editorItem.Click += new EventHandler(editorRun_Click);
-
                     contextMenuStripScreenshotPreview.Items.Add(editorItem);
+                    // ****************************************************************************
+
+                    // ****************** EDITORS LIST IN EDITORS TAB PAGE ************************
+                    // Add the Editor to the list of Editors in the Editors tab page.
+
+                    // Add an image showing the application icon of the Editor.
+                    PictureBox pictureBoxEditor = new PictureBox();
+                    pictureBoxEditor.Size = new Size(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT);
+                    pictureBoxEditor.Location = new Point(xPosEditor, yPosEditor);
+                    pictureBoxEditor.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
+                    pictureBoxEditor.SizeMode = PictureBoxSizeMode.StretchImage;
+                    tabPageEditors.Controls.Add(pictureBoxEditor);
+
+                    // Add a read-only text box showing the application name of the Editor.
+                    TextBox textBoxEditor = new TextBox();
+                    textBoxEditor.Width = EDITOR_TEXTBOX_WIDTH;
+                    textBoxEditor.Height = EDITOR_HEIGHT;
+                    textBoxEditor.Location = new Point(xPosEditor + X_POS_EDITOR_TEXTBOX, yPosEditor);
+                    textBoxEditor.Text = editor.Name;
+                    textBoxEditor.ReadOnly = true;
+                    tabPageEditors.Controls.Add(textBoxEditor);
+
+                    // Add a button so that the user can change the Editor.
+                    Button buttonEditEditor = new Button();
+                    buttonEditEditor.Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT);
+                    buttonEditEditor.Location = new Point(xPosEditor + X_POS_EDITOR_BUTTON, yPosEditor);
+                    buttonEditEditor.Text = EDIT_BUTTON_TEXT;
+                    tabPageEditors.Controls.Add(buttonEditEditor);
+
+                    // Move down the Editors tab page so we're ready to loop around again and add the next editor to it.
+                    yPosEditor += Y_POS_EDITOR_INCREMENT;
+                    // ****************************************************************************
                 }
             }
         }
@@ -1843,7 +1899,10 @@ namespace autoscreen
         {
             formAddEditor.ShowDialog(this);
 
-            BuildScreenshotPreviewContextMenu();
+            if (formAddEditor.DialogResult == DialogResult.OK)
+            {
+                BuildScreenshotPreviewContextualMenu();
+            }
         }
 
         /// <summary>
