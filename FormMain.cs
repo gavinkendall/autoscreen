@@ -96,18 +96,32 @@ namespace autoscreen
         }
 
         /// <summary>
-        /// When this form loads we'll need to read from the application's properties
-        /// in order to prepare it with the user's last saved options.
+        /// When this form loads we'll need to delete slides and then search for dates and slides.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FormViewer_Load(object sender, EventArgs e)
         {
-            if (toolStripMenuItemOpenAtApplicationStartup.Checked)
-            {
-                OpenWindow();
-                SearchDates();
-            }
+            runDeleteSlidesThread = new BackgroundWorker();
+            runDeleteSlidesThread.WorkerReportsProgress = false;
+            runDeleteSlidesThread.WorkerSupportsCancellation = true;
+            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(runDeleteSlidesThread_DoWork);
+
+            runDateSearchThread = new BackgroundWorker();
+            runDateSearchThread.WorkerReportsProgress = false;
+            runDateSearchThread.WorkerSupportsCancellation = true;
+            runDateSearchThread.DoWork += new DoWorkEventHandler(runDateSearchThread_DoWork);
+
+            runSlideSearchThread = new BackgroundWorker();
+            runSlideSearchThread.WorkerReportsProgress = false;
+            runSlideSearchThread.WorkerSupportsCancellation = true;
+            runSlideSearchThread.DoWork += new DoWorkEventHandler(runSlideSearchThread_DoWork);
+
+            DeleteSlides();
+            SearchDates();
+
+            // Changing the value of this property will automatically call SearchSlides.
+            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
         }
 
         /// <summary>
@@ -120,23 +134,6 @@ namespace autoscreen
 
             Log.Write("Initializing image format filter drop down menu.");
             LoadImageFormatFilterDropDownMenu();
-
-            runSlideSearchThread = new BackgroundWorker();
-            runSlideSearchThread.WorkerReportsProgress = false;
-            runSlideSearchThread.WorkerSupportsCancellation = true;
-            runSlideSearchThread.DoWork += new DoWorkEventHandler(runSlideSearchThread_DoWork);
-
-            runDateSearchThread = new BackgroundWorker();
-            runDateSearchThread.WorkerReportsProgress = false;
-            runDateSearchThread.WorkerSupportsCancellation = true;
-            runDateSearchThread.DoWork += new DoWorkEventHandler(runDateSearchThread_DoWork);
-
-            runDeleteSlidesThread = new BackgroundWorker();
-            runDeleteSlidesThread.WorkerReportsProgress = false;
-            runDeleteSlidesThread.WorkerSupportsCancellation = true;
-            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(runDeleteSlidesThread_DoWork);
-
-            DeleteSlides();
 
             Log.Write("Initializing slideshow module.");
 
@@ -339,8 +336,6 @@ namespace autoscreen
                 Properties.Settings.Default.ImageFormatIndex = 0;
             }
 
-            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
-
             numericUpDownJpegQualityLevel.Value = Properties.Settings.Default.JpegQualityLevel;
 
             numericUpDownDaysOld.Value = Properties.Settings.Default.DaysOldWhenRemoveSlides;
@@ -365,6 +360,15 @@ namespace autoscreen
             if (toolStripMenuItemScheduleAtApplicationStartup.Checked)
             {
                 ScheduleSet();
+            }
+
+            if (toolStripMenuItemOpenAtApplicationStartup.Checked)
+            {
+                OpenWindow();
+            }
+            else
+            {
+                CloseWindow();
             }
         }
 
@@ -734,25 +738,22 @@ namespace autoscreen
             {
                 checkBoxPassphraseLock.Checked = false;
 
-                if (toolStripMenuItemOpen.Enabled)
+                Opacity = 100;
+                toolStripMenuItemOpen.Enabled = false;
+                toolStripMenuItemClose.Enabled = true;
+
+                Show();
+
+                Visible = true;
+                ShowInTaskbar = true;
+
+                // If the window is mimimized then show it when the user wants to open the window.
+                if (WindowState == FormWindowState.Minimized)
                 {
-                    Opacity = 100;
-                    toolStripMenuItemOpen.Enabled = false;
-                    toolStripMenuItemClose.Enabled = true;
-
-                    Show();
-
-                    Visible = true;
-                    ShowInTaskbar = true;
-
-                    // If the window is mimimized then show it when the user wants to open the window.
-                    if (WindowState == FormWindowState.Minimized)
-                    {
-                        WindowState = FormWindowState.Normal;
-                    }
-
-                    Focus();
+                    WindowState = FormWindowState.Normal;
                 }
+
+                Focus();
             }
         }
 
@@ -763,22 +764,19 @@ namespace autoscreen
         {
             Log.Write("Closing application window.");
 
-            if (!toolStripMenuItemOpen.Enabled)
+            // Pause the slideshow if you find it still playing.
+            if (Slideshow.Playing)
             {
-                // Pause the slideshow if you find it still playing.
-                if (Slideshow.Playing)
-                {
-                    PauseSlideshow();
-                }
-
-                Opacity = 0;
-                toolStripMenuItemOpen.Enabled = true;
-                toolStripMenuItemClose.Enabled = false;
-
-                Hide();
-                Visible = false;
-                ShowInTaskbar = false;
+                PauseSlideshow();
             }
+
+            Opacity = 0;
+            toolStripMenuItemOpen.Enabled = true;
+            toolStripMenuItemClose.Enabled = false;
+
+            Hide();
+            Visible = false;
+            ShowInTaskbar = false;
         }
 
         /// <summary>
@@ -1536,7 +1534,6 @@ namespace autoscreen
             if (browser.ShowDialog() == DialogResult.OK)
             {
                 textBoxFolder.Text = browser.SelectedPath;
-                SearchDates();
             }
         }
 
