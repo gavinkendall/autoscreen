@@ -3,7 +3,7 @@
 // autoscreen.ScreenshotCollection.cs
 //
 // Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 5 April 2018
+// Thursday, 15 May 2008 - Friday, 6 April 2018
 
 using System;
 using System.Collections;
