@@ -21,11 +21,7 @@ namespace autoscreen
     /// </summary>
     public partial class FormMain : Form
     {
-        /// <summary>
-        /// Other forms.
-        /// </summary>
-        private FormAddEditor formAddEditor = new FormAddEditor();
-
+        private FormEditor formEditor = new FormEditor();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         /// <summary>
@@ -1571,11 +1567,29 @@ namespace autoscreen
         }
 
         /// <summary>
+        /// Opens Windows Explorer to show the location of the selected slide.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemShowSlideLocation_Click(object sender, EventArgs e)
+        {
+            if (listBoxSlides.SelectedIndex > -1)
+            {
+                string selectedSlide = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
+
+                if (File.Exists(selectedSlide))
+                {
+                    Process.Start(FileSystem.FileManager, "/select,\"" + selectedSlide + "\"");
+                }
+            }
+        }
+
+        /// <summary>
         /// Opens Windows Explorer to show the location of the selected screenshot.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemOpenFileLocation_Click(object sender, EventArgs e)
+        private void toolStripMenuItemShowScreenshotLocation_Click(object sender, EventArgs e)
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
@@ -1792,15 +1806,19 @@ namespace autoscreen
         {
             contextMenuStripScreenshotPreview.Items.Clear();
 
-            ToolStripItem openFileLocation = new ToolStripMenuItem("Open File Location");
-            openFileLocation.Click += new EventHandler(toolStripMenuItemOpenFileLocation_Click);
+            ToolStripItem showSlideLocation = new ToolStripMenuItem("Show Slide Location");
+            showSlideLocation.Click += new EventHandler(toolStripMenuItemShowSlideLocation_Click);
 
-            ToolStripItem addEditorItem = new ToolStripMenuItem("Add Editor ...");
-            addEditorItem.Click += new EventHandler(addEditorToolStripMenuItem_Click);
+            ToolStripItem showScreenshotLocation = new ToolStripMenuItem("Show Screenshot Location");
+            showScreenshotLocation.Click += new EventHandler(toolStripMenuItemShowScreenshotLocation_Click);
 
-            contextMenuStripScreenshotPreview.Items.Add(openFileLocation);
-            contextMenuStripScreenshotPreview.Items.Add(addEditorItem);
+            ToolStripItem addNewEditorItem = new ToolStripMenuItem("Add New Editor ...");
+            addNewEditorItem.Click += new EventHandler(addEditorToolStripMenuItem_Click);
+
+            contextMenuStripScreenshotPreview.Items.Add(showSlideLocation);
+            contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocation);
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
+            contextMenuStripScreenshotPreview.Items.Add(addNewEditorItem);
 
             BuildEditorsList();
         }
@@ -1811,18 +1829,31 @@ namespace autoscreen
             int yPosEditor = 3;
 
             const int EDITOR_HEIGHT = 20;
+            const int BIG_BUTTON_WIDTH = 205;
+            const int BIG_BUTTON_HEIGHT = 20;
             const int SMALL_IMAGE_WIDTH = 20;
             const int SMALL_IMAGE_HEIGHT = 20;
             const int SMALL_BUTTON_WIDTH = 27;
             const int SMALL_BUTTON_HEIGHT = 20;
-            const int X_POS_EDITOR_TEXTBOX = 35;
+            const int X_POS_EDITOR_TEXTBOX = 30;
             const int X_POS_EDITOR_BUTTON = 178;
             const int EDITOR_TEXTBOX_WIDTH = 140;
             const int Y_POS_EDITOR_INCREMENT = 23;
+            const int EDITOR_TEXTBOX_MAX_LENGTH = 50;
 
             const string EDIT_BUTTON_TEXT = "...";
 
             tabPageEditors.Controls.Clear();
+
+            Button buttonAddNewEditor = new Button();
+            buttonAddNewEditor.Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT);
+            buttonAddNewEditor.Location = new Point(xPosEditor, yPosEditor);
+            buttonAddNewEditor.Text = "Add New Editor ...";
+            buttonAddNewEditor.Click += new EventHandler(addEditorToolStripMenuItem_Click);
+            tabPageEditors.Controls.Add(buttonAddNewEditor);
+
+            // Move down a bit so we can start populating the Editors tab page with a list of Editors.
+            yPosEditor += 30;
 
             for (int i = 0; i < EditorCollection.Count; i++)
             {
@@ -1854,17 +1885,20 @@ namespace autoscreen
                     TextBox textBoxEditor = new TextBox();
                     textBoxEditor.Width = EDITOR_TEXTBOX_WIDTH;
                     textBoxEditor.Height = EDITOR_HEIGHT;
+                    textBoxEditor.MaxLength = EDITOR_TEXTBOX_MAX_LENGTH;
                     textBoxEditor.Location = new Point(xPosEditor + X_POS_EDITOR_TEXTBOX, yPosEditor);
                     textBoxEditor.Text = editor.Name;
                     textBoxEditor.ReadOnly = true;
                     tabPageEditors.Controls.Add(textBoxEditor);
 
                     // Add a button so that the user can change the Editor.
-                    Button buttonEditEditor = new Button();
-                    buttonEditEditor.Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT);
-                    buttonEditEditor.Location = new Point(xPosEditor + X_POS_EDITOR_BUTTON, yPosEditor);
-                    buttonEditEditor.Text = EDIT_BUTTON_TEXT;
-                    tabPageEditors.Controls.Add(buttonEditEditor);
+                    Button buttonChangeEditor = new Button();
+                    buttonChangeEditor.Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT);
+                    buttonChangeEditor.Location = new Point(xPosEditor + X_POS_EDITOR_BUTTON, yPosEditor);
+                    buttonChangeEditor.Text = EDIT_BUTTON_TEXT;
+                    buttonChangeEditor.Tag = editor;
+                    buttonChangeEditor.Click += new EventHandler(buttonChangeEditor_Click);
+                    tabPageEditors.Controls.Add(buttonChangeEditor);
 
                     // Move down the Editors tab page so we're ready to loop around again and add the next editor to it.
                     yPosEditor += Y_POS_EDITOR_INCREMENT;
@@ -1897,9 +1931,11 @@ namespace autoscreen
         /// <param name="e"></param>
         private void addEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            formAddEditor.ShowDialog(this);
+            formEditor.EditorObject = null;
 
-            if (formAddEditor.DialogResult == DialogResult.OK)
+            formEditor.ShowDialog(this);
+
+            if (formEditor.DialogResult == DialogResult.OK)
             {
                 BuildScreenshotPreviewContextualMenu();
             }
@@ -1920,6 +1956,28 @@ namespace autoscreen
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
                 {
                     Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Change Editor" window to enable the user to edit a chosen image editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonChangeEditor_Click(object sender, EventArgs e)
+        {
+            Button buttonSelected = (Button)sender;
+
+            if (buttonSelected.Tag != null)
+            {
+                formEditor.EditorObject = (Editor)buttonSelected.Tag;
+
+                formEditor.ShowDialog(this);
+
+                if (formEditor.DialogResult == DialogResult.OK)
+                {
+                    BuildScreenshotPreviewContextualMenu();
                 }
             }
         }
@@ -1951,6 +2009,20 @@ namespace autoscreen
         #endregion Schedule
 
         #region Reset
+
+        /// <summary>
+        /// Resets the X, Y, Width, and Height values for every screen.
+        /// </summary>
+        private void AutoReset()
+        {
+            if (checkBoxAutoReset.Checked)
+            {
+                buttonScreen1Reset_Click(null, null);
+                buttonScreen2Reset_Click(null, null);
+                buttonScreen3Reset_Click(null, null);
+                buttonScreen4Reset_Click(null, null);
+            }
+        }
 
         /// <summary>
         /// Resets the X, Y, Width, and Height values for Screen 1.
@@ -2124,14 +2196,6 @@ namespace autoscreen
         {
             DisplayCaptureStatus(true);
 
-            if (checkBoxAutoReset.Checked)
-            {
-                buttonScreen1Reset_Click(sender, e);
-                buttonScreen2Reset_Click(sender, e);
-                buttonScreen3Reset_Click(sender, e);
-                buttonScreen4Reset_Click(sender, e);
-            }
-
             if (!timerScreenCapture.Enabled)
             {
                 StopScreenCapture();
@@ -2162,6 +2226,8 @@ namespace autoscreen
         {
             int count = 0;
             string screenName = string.Empty;
+
+            AutoReset();
 
             DateTime dateTimeScreenshotTaken = DateTime.Now;
 

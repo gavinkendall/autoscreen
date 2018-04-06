@@ -1,6 +1,6 @@
 ﻿namespace autoscreen
 {
-    partial class FormAddEditor
+    partial class FormEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxEditorName = new System.Windows.Forms.TextBox();
             this.labelEditorName = new System.Windows.Forms.Label();
             this.labelEditorApplication = new System.Windows.Forms.Label();
             this.textBoxEditorApplication = new System.Windows.Forms.TextBox();
-            this.buttonOpenEditor = new System.Windows.Forms.Button();
+            this.buttonChooseEditor = new System.Windows.Forms.Button();
             this.labelEditorArguments = new System.Windows.Forms.Label();
             this.textBoxEditorArguments = new System.Windows.Forms.TextBox();
-            this.buttonRun = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -52,23 +51,23 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // buttonAdd
+            // buttonOK
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(194, 84);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
-            this.buttonAdd.TabIndex = 3;
-            this.buttonAdd.TabStop = false;
-            this.buttonAdd.Text = "Add";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            this.buttonOK.Location = new System.Drawing.Point(275, 84);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 3;
+            this.buttonOK.TabStop = false;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // textBoxEditorName
             // 
             this.textBoxEditorName.Location = new System.Drawing.Point(80, 6);
             this.textBoxEditorName.MaxLength = 50;
             this.textBoxEditorName.Name = "textBoxEditorName";
-            this.textBoxEditorName.Size = new System.Drawing.Size(270, 20);
+            this.textBoxEditorName.Size = new System.Drawing.Size(318, 20);
             this.textBoxEditorName.TabIndex = 0;
             this.textBoxEditorName.TabStop = false;
             // 
@@ -94,20 +93,20 @@
             // 
             this.textBoxEditorApplication.Location = new System.Drawing.Point(80, 32);
             this.textBoxEditorApplication.Name = "textBoxEditorApplication";
-            this.textBoxEditorApplication.Size = new System.Drawing.Size(270, 20);
+            this.textBoxEditorApplication.Size = new System.Drawing.Size(318, 20);
             this.textBoxEditorApplication.TabIndex = 1;
             this.textBoxEditorApplication.TabStop = false;
             // 
-            // buttonOpenEditor
+            // buttonChooseEditor
             // 
-            this.buttonOpenEditor.Location = new System.Drawing.Point(356, 30);
-            this.buttonOpenEditor.Name = "buttonOpenEditor";
-            this.buttonOpenEditor.Size = new System.Drawing.Size(75, 23);
-            this.buttonOpenEditor.TabIndex = 2;
-            this.buttonOpenEditor.TabStop = false;
-            this.buttonOpenEditor.Text = "Open ...";
-            this.buttonOpenEditor.UseVisualStyleBackColor = true;
-            this.buttonOpenEditor.Click += new System.EventHandler(this.buttonOpenEditor_Click);
+            this.buttonChooseEditor.Location = new System.Drawing.Point(404, 32);
+            this.buttonChooseEditor.Name = "buttonChooseEditor";
+            this.buttonChooseEditor.Size = new System.Drawing.Size(27, 20);
+            this.buttonChooseEditor.TabIndex = 2;
+            this.buttonChooseEditor.TabStop = false;
+            this.buttonChooseEditor.Text = "...";
+            this.buttonChooseEditor.UseVisualStyleBackColor = true;
+            this.buttonChooseEditor.Click += new System.EventHandler(this.buttonChooseEditor_Click);
             // 
             // labelEditorArguments
             // 
@@ -126,43 +125,30 @@
             this.textBoxEditorArguments.TabIndex = 7;
             this.textBoxEditorArguments.TabStop = false;
             // 
-            // buttonRun
+            // FormEditor
             // 
-            this.buttonRun.Location = new System.Drawing.Point(275, 84);
-            this.buttonRun.Name = "buttonRun";
-            this.buttonRun.Size = new System.Drawing.Size(75, 23);
-            this.buttonRun.TabIndex = 8;
-            this.buttonRun.TabStop = false;
-            this.buttonRun.Text = "Run";
-            this.buttonRun.UseVisualStyleBackColor = true;
-            this.buttonRun.Click += new System.EventHandler(this.buttonRun_Click);
-            // 
-            // FormAddEditor
-            // 
-            this.AcceptButton = this.buttonAdd;
+            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(443, 114);
-            this.Controls.Add(this.buttonRun);
             this.Controls.Add(this.textBoxEditorArguments);
             this.Controls.Add(this.labelEditorArguments);
-            this.Controls.Add(this.buttonOpenEditor);
+            this.Controls.Add(this.buttonChooseEditor);
             this.Controls.Add(this.textBoxEditorApplication);
             this.Controls.Add(this.labelEditorApplication);
             this.Controls.Add(this.labelEditorName);
             this.Controls.Add(this.textBoxEditorName);
-            this.Controls.Add(this.buttonAdd);
+            this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormAddEditor";
+            this.Name = "FormEditor";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Add Editor";
-            this.Load += new System.EventHandler(this.FormAddEditor_Load);
+            this.Load += new System.EventHandler(this.FormEditor_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -171,14 +157,13 @@
         #endregion
 
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.TextBox textBoxEditorName;
         private System.Windows.Forms.Label labelEditorName;
         private System.Windows.Forms.Label labelEditorApplication;
         private System.Windows.Forms.TextBox textBoxEditorApplication;
-        private System.Windows.Forms.Button buttonOpenEditor;
+        private System.Windows.Forms.Button buttonChooseEditor;
         private System.Windows.Forms.Label labelEditorArguments;
         private System.Windows.Forms.TextBox textBoxEditorArguments;
-        private System.Windows.Forms.Button buttonRun;
     }
 }

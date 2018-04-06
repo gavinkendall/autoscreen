@@ -73,11 +73,11 @@
     <Compile Include="Editor.cs" />
     <Compile Include="EditorCollection.cs" />
     <Compile Include="FileSystem.cs" />
-    <Compile Include="FormAddEditor.cs">
+    <Compile Include="FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormAddEditor.Designer.cs">
-      <DependentUpon>FormAddEditor.cs</DependentUpon>
+    <Compile Include="FormEditor.Designer.cs">
+      <DependentUpon>FormEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="FormEnterPassphrase.cs">
       <SubType>Form</SubType>
@@ -102,8 +102,8 @@
     <Compile Include="ScreenshotType.cs" />
     <Compile Include="StatusMessage.cs" />
     <Compile Include="MacroParser.cs" />
-    <EmbeddedResource Include="FormAddEditor.resx">
-      <DependentUpon>FormAddEditor.cs</DependentUpon>
+    <EmbeddedResource Include="FormEditor.resx">
+      <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formEnterPassphrase.resx">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
