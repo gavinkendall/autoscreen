@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.0
+// Auto Screen Capture 2.1.2
 // autoscreen.ScreenshotType.cs
 //
 // Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Sunday, 25 March 2018
+// Thursday, 15 May 2008 - Thursday, 5 April 2018
 
 namespace autoscreen
 {
