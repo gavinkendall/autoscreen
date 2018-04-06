@@ -218,6 +218,7 @@
             this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.buttonOpenFolder = new System.Windows.Forms.Button();
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
+            this.tabPageTriggers = new System.Windows.Forms.TabPage();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -1624,6 +1625,7 @@
             this.tabControlModules.Controls.Add(this.tabPageScreenCapture);
             this.tabControlModules.Controls.Add(this.tabPageSlideshow);
             this.tabControlModules.Controls.Add(this.tabPageEditors);
+            this.tabControlModules.Controls.Add(this.tabPageTriggers);
             this.tabControlModules.Location = new System.Drawing.Point(0, 164);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
@@ -2496,6 +2498,17 @@
             this.timerDeleteSlides.Interval = 60000;
             this.timerDeleteSlides.Tick += new System.EventHandler(this.timerDeleteSlides_Tick);
             // 
+            // tabPageTriggers
+            // 
+            this.tabPageTriggers.AutoScroll = true;
+            this.tabPageTriggers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTriggers.Name = "tabPageTriggers";
+            this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 218);
+            this.tabPageTriggers.TabIndex = 3;
+            this.tabPageTriggers.Text = "Triggers";
+            this.tabPageTriggers.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2795,5 +2808,6 @@
         private System.Windows.Forms.Button buttonOpenFolder;
         private System.Windows.Forms.Timer timerDeleteSlides;
         private System.Windows.Forms.TabPage tabPageEditors;
+        private System.Windows.Forms.TabPage tabPageTriggers;
     }
 }

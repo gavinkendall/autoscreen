@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditor));
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxEditorName = new System.Windows.Forms.TextBox();
@@ -45,8 +46,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(356, 84);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 4;
-            this.buttonCancel.TabStop = false;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -56,8 +56,7 @@
             this.buttonOK.Location = new System.Drawing.Point(275, 84);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 3;
-            this.buttonOK.TabStop = false;
+            this.buttonOK.TabIndex = 5;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -68,8 +67,7 @@
             this.textBoxEditorName.MaxLength = 50;
             this.textBoxEditorName.Name = "textBoxEditorName";
             this.textBoxEditorName.Size = new System.Drawing.Size(318, 20);
-            this.textBoxEditorName.TabIndex = 0;
-            this.textBoxEditorName.TabStop = false;
+            this.textBoxEditorName.TabIndex = 1;
             // 
             // labelEditorName
             // 
@@ -94,16 +92,14 @@
             this.textBoxEditorApplication.Location = new System.Drawing.Point(80, 32);
             this.textBoxEditorApplication.Name = "textBoxEditorApplication";
             this.textBoxEditorApplication.Size = new System.Drawing.Size(318, 20);
-            this.textBoxEditorApplication.TabIndex = 1;
-            this.textBoxEditorApplication.TabStop = false;
+            this.textBoxEditorApplication.TabIndex = 2;
             // 
             // buttonChooseEditor
             // 
             this.buttonChooseEditor.Location = new System.Drawing.Point(404, 32);
             this.buttonChooseEditor.Name = "buttonChooseEditor";
             this.buttonChooseEditor.Size = new System.Drawing.Size(27, 20);
-            this.buttonChooseEditor.TabIndex = 2;
-            this.buttonChooseEditor.TabStop = false;
+            this.buttonChooseEditor.TabIndex = 3;
             this.buttonChooseEditor.Text = "...";
             this.buttonChooseEditor.UseVisualStyleBackColor = true;
             this.buttonChooseEditor.Click += new System.EventHandler(this.buttonChooseEditor_Click);
@@ -122,8 +118,7 @@
             this.textBoxEditorArguments.Location = new System.Drawing.Point(80, 58);
             this.textBoxEditorArguments.Name = "textBoxEditorArguments";
             this.textBoxEditorArguments.Size = new System.Drawing.Size(351, 20);
-            this.textBoxEditorArguments.TabIndex = 7;
-            this.textBoxEditorArguments.TabStop = false;
+            this.textBoxEditorArguments.TabIndex = 4;
             // 
             // FormEditor
             // 
@@ -142,10 +137,10 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormEditor";
-            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormEditor_Load);

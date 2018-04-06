@@ -33,9 +33,11 @@ namespace autoscreen
             Log.Write("Added " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
-        public static Editor Get(int index)
+        public static void Remove(Editor editor)
         {
-            return (Editor)m_editorList[index];
+            m_editorList.Remove(editor);
+
+            Log.Write("Removed " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
         public static int Count
@@ -43,15 +45,35 @@ namespace autoscreen
             get { return m_editorList.Count; }
         }
 
+        public static Editor Get(Editor editorToFind)
+        {
+            for (int i = 0; i < m_editorList.Count; i++)
+            {
+                Editor editor = GetByIndex(i);
+
+                if (editor.Equals(editorToFind))
+                {
+                    return GetByIndex(i);
+                }
+            }
+
+            return null;
+        }
+
+        public static Editor GetByIndex(int index)
+        {
+            return (Editor)m_editorList[index];
+        }
+
         public static Editor GetByName(string name)
         {
             for (int i = 0; i < m_editorList.Count; i++)
             {
-                Editor editor = Get(i);
+                Editor editor = GetByIndex(i);
 
                 if (editor.Name.Equals(name))
                 {
-                    return (Editor)Get(i);
+                    return GetByIndex(i);
                 }
             }
 

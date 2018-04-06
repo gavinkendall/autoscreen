@@ -1829,15 +1829,18 @@ namespace autoscreen
             int yPosEditor = 3;
 
             const int EDITOR_HEIGHT = 20;
+            const int CHECKBOX_WIDTH = 20;
+            const int CHECKBOX_HEIGHT = 20;
+            const int X_POS_EDITOR_ICON = 20;
             const int BIG_BUTTON_WIDTH = 205;
             const int BIG_BUTTON_HEIGHT = 20;
             const int SMALL_IMAGE_WIDTH = 20;
             const int SMALL_IMAGE_HEIGHT = 20;
             const int SMALL_BUTTON_WIDTH = 27;
             const int SMALL_BUTTON_HEIGHT = 20;
-            const int X_POS_EDITOR_TEXTBOX = 30;
+            const int X_POS_EDITOR_TEXTBOX = 48;
             const int X_POS_EDITOR_BUTTON = 178;
-            const int EDITOR_TEXTBOX_WIDTH = 140;
+            const int EDITOR_TEXTBOX_WIDTH = 125;
             const int Y_POS_EDITOR_INCREMENT = 23;
             const int EDITOR_TEXTBOX_MAX_LENGTH = 50;
 
@@ -1845,6 +1848,7 @@ namespace autoscreen
 
             tabPageEditors.Controls.Clear();
 
+            // The button for adding a new Editor.
             Button buttonAddNewEditor = new Button();
             buttonAddNewEditor.Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT);
             buttonAddNewEditor.Location = new Point(xPosEditor, yPosEditor);
@@ -1852,12 +1856,22 @@ namespace autoscreen
             buttonAddNewEditor.Click += new EventHandler(addEditorToolStripMenuItem_Click);
             tabPageEditors.Controls.Add(buttonAddNewEditor);
 
+            // Move down and then add the "Remove Selected Editors" button.
+            yPosEditor += 22;
+
+            Button buttonRemoveSelectedEditors = new Button();
+            buttonRemoveSelectedEditors.Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT);
+            buttonRemoveSelectedEditors.Location = new Point(xPosEditor, yPosEditor);
+            buttonRemoveSelectedEditors.Text = "Remove Selected Editors";
+            buttonRemoveSelectedEditors.Click += new EventHandler(removeSelectedEditors_Click);
+            tabPageEditors.Controls.Add(buttonRemoveSelectedEditors);
+
             // Move down a bit so we can start populating the Editors tab page with a list of Editors.
-            yPosEditor += 30;
+            yPosEditor += 27;
 
             for (int i = 0; i < EditorCollection.Count; i++)
             {
-                Editor editor = EditorCollection.Get(i);
+                Editor editor = EditorCollection.GetByIndex(i);
 
                 if (editor != null && File.Exists(editor.Application))
                 {
@@ -1873,10 +1887,17 @@ namespace autoscreen
                     // ****************** EDITORS LIST IN EDITORS TAB PAGE ************************
                     // Add the Editor to the list of Editors in the Editors tab page.
 
+                    // Add a checkbox so that the user has the ability to remove the selected Editor.
+                    CheckBox checkboxEditor = new CheckBox();
+                    checkboxEditor.Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT);
+                    checkboxEditor.Location = new Point(xPosEditor, yPosEditor);
+                    checkboxEditor.Tag = editor;
+                    tabPageEditors.Controls.Add(checkboxEditor);
+
                     // Add an image showing the application icon of the Editor.
                     PictureBox pictureBoxEditor = new PictureBox();
                     pictureBoxEditor.Size = new Size(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT);
-                    pictureBoxEditor.Location = new Point(xPosEditor, yPosEditor);
+                    pictureBoxEditor.Location = new Point(xPosEditor + X_POS_EDITOR_ICON, yPosEditor);
                     pictureBoxEditor.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
                     pictureBoxEditor.SizeMode = PictureBoxSizeMode.StretchImage;
                     tabPageEditors.Controls.Add(pictureBoxEditor);
@@ -1936,6 +1957,35 @@ namespace autoscreen
             formEditor.ShowDialog(this);
 
             if (formEditor.DialogResult == DialogResult.OK)
+            {
+                BuildScreenshotPreviewContextualMenu();
+            }
+        }
+
+        /// <summary>
+        /// Removes the selected Editors from the Editors tab page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void removeSelectedEditors_Click(object sender, EventArgs e)
+        {
+            int countBeforeRemoval = EditorCollection.Count;
+
+            foreach (Control control in tabPageEditors.Controls)
+            {
+                if (control.GetType().Equals(typeof(CheckBox)))
+                {
+                    CheckBox checkBox = (CheckBox)control;
+
+                    if (checkBox.Checked)
+                    {
+                        Editor editor = EditorCollection.Get((Editor)checkBox.Tag);
+                        EditorCollection.Remove(editor);
+                    }
+                }
+            }
+
+            if (countBeforeRemoval > EditorCollection.Count)
             {
                 BuildScreenshotPreviewContextualMenu();
             }

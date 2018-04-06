@@ -6,6 +6,8 @@
 // Thursday, 15 May 2008 - Thursday, 5 April 2018
 
 using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace autoscreen
@@ -16,6 +18,8 @@ namespace autoscreen
 
         private readonly string defaultArguments = "%screenshot%";
 
+        private ComponentResourceManager resources = new ComponentResourceManager(typeof(FormEditor));
+
         public FormEditor()
         {
             InitializeComponent();
@@ -23,9 +27,12 @@ namespace autoscreen
 
         private void FormEditor_Load(object sender, EventArgs e)
         {
+            textBoxEditorName.Focus();
+
             if (EditorObject != null)
             {
                 Text = "Change Editor";
+                Icon = Icon.ExtractAssociatedIcon(EditorObject.Application);
 
                 textBoxEditorName.Text = EditorObject.Name;
                 textBoxEditorApplication.Text = EditorObject.Application;
@@ -34,6 +41,7 @@ namespace autoscreen
             else
             {
                 Text = "Add New Editor ...";
+                Icon = (Icon)(resources.GetObject("$this.Icon"));
 
                 textBoxEditorName.Text = string.Empty;
                 textBoxEditorApplication.Text = string.Empty;
@@ -64,9 +72,16 @@ namespace autoscreen
             {
                 TrimInput();
 
-                EditorCollection.Add(new Editor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text));
+                if (EditorCollection.GetByName(textBoxEditorName.Text) == null)
+                {
+                    EditorCollection.Add(new Editor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text));
 
-                Okay();
+                    Okay();
+                }
+                else
+                {
+                    MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -76,11 +91,18 @@ namespace autoscreen
             {
                 TrimInput();
 
-                EditorCollection.GetByName(EditorObject.Name).Application = textBoxEditorApplication.Text;
-                EditorCollection.GetByName(EditorObject.Name).Arguments = textBoxEditorArguments.Text;
-                EditorCollection.GetByName(EditorObject.Name).Name = textBoxEditorName.Text;
+                if (EditorCollection.GetByName(textBoxEditorName.Text) == null)
+                {
+                    EditorCollection.Get(EditorObject).Application = textBoxEditorApplication.Text;
+                    EditorCollection.Get(EditorObject).Arguments = textBoxEditorArguments.Text;
+                    EditorCollection.Get(EditorObject).Name = textBoxEditorName.Text;
 
-                Okay();
+                    Okay();
+                }
+                else
+                {
+                    MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
@@ -147,6 +169,7 @@ namespace autoscreen
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                Icon = Icon.ExtractAssociatedIcon(openFileDialog.FileName);
                 textBoxEditorApplication.Text = openFileDialog.FileName;
             }
         }
