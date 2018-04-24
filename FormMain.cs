@@ -5,6 +5,7 @@
 // Developed by Gavin Kendall
 // Thursday, 15 May 2008 - Friday, 6 April 2018
 
+using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -260,6 +261,7 @@ namespace autoscreen
             toolStripMenuItemOpenAtApplicationStartup.Checked = Properties.Settings.Default.OpenOnApplicationStartupCheck;
             toolStripMenuItemCloseWindowOnStartCapture.Checked = Properties.Settings.Default.CloseWindowOnStartCaptureCheck;
             toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck;
+            toolStripMenuItemStartWhenWindowsStarts.Checked = Properties.Settings.Default.StartWhenWindowsStartsCheck;
 
             Log.Write("Loading user settings - scheduled screen capture session settings.");
 
@@ -654,6 +656,7 @@ namespace autoscreen
             Properties.Settings.Default.OpenOnApplicationStartupCheck = toolStripMenuItemOpenAtApplicationStartup.Checked;
             Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
             Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
+            Properties.Settings.Default.StartWhenWindowsStartsCheck = toolStripMenuItemStartWhenWindowsStarts.Checked;
 
             Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;
             Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
@@ -3035,6 +3038,27 @@ namespace autoscreen
         private void timerDeleteSlides_Tick(object sender, EventArgs e)
         {
             DeleteSlides();
+        }
+
+        private void toolStripMenuItemStartWhenWindowsStarts_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                if (toolStripMenuItemStartWhenWindowsStarts.Checked)
+                {
+                    registryKey.SetValue("AutoScreenCapture", Application.ExecutablePath);
+                }
+                else
+                {
+                    registryKey.DeleteValue("AutoScreenCapture");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("FormMain::toolStripMenuItemStartWhenWindowsStarts_CheckedChanged", ex);
+            }
         }
     }
 }

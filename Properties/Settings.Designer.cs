@@ -867,5 +867,17 @@ namespace autoscreen.Properties {
                 this["AutoReset"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StartWhenWindowsStartsCheck {
+            get {
+                return ((bool)(this["StartWhenWindowsStartsCheck"]));
+            }
+            set {
+                this["StartWhenWindowsStartsCheck"] = value;
+            }
+        }
     }
 }

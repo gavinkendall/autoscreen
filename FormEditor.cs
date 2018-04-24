@@ -40,7 +40,7 @@ namespace autoscreen
             }
             else
             {
-                Text = "Add New Editor ...";
+                Text = "Add New Editor";
                 Icon = (Icon)(resources.GetObject("$this.Icon"));
 
                 textBoxEditorName.Text = string.Empty;

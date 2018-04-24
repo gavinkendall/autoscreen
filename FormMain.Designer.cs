@@ -218,6 +218,8 @@
             this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.buttonOpenFolder = new System.Windows.Forms.Button();
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItemStartWhenWindowsStarts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -307,6 +309,8 @@
             // toolStripDropDownButtonOptions
             // 
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemStartWhenWindowsStarts,
+            this.toolStripSeparator4,
             this.toolStripMenuItemPreviewAtApplicationStartup,
             this.toolStripMenuItemScheduleAtApplicationStartup,
             this.toolStripMenuItemDebugMode,
@@ -2496,6 +2500,19 @@
             this.timerDeleteSlides.Interval = 60000;
             this.timerDeleteSlides.Tick += new System.EventHandler(this.timerDeleteSlides_Tick);
             // 
+            // toolStripMenuItemStartWhenWindowsStarts
+            // 
+            this.toolStripMenuItemStartWhenWindowsStarts.CheckOnClick = true;
+            this.toolStripMenuItemStartWhenWindowsStarts.Name = "toolStripMenuItemStartWhenWindowsStarts";
+            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(441, 22);
+            this.toolStripMenuItemStartWhenWindowsStarts.Text = "Start application when Windows starts";
+            this.toolStripMenuItemStartWhenWindowsStarts.CheckedChanged += new System.EventHandler(this.toolStripMenuItemStartWhenWindowsStarts_CheckedChanged);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(438, 6);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2795,5 +2812,7 @@
         private System.Windows.Forms.Button buttonOpenFolder;
         private System.Windows.Forms.Timer timerDeleteSlides;
         private System.Windows.Forms.TabPage tabPageEditors;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWhenWindowsStarts;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
