@@ -1,9 +1,9 @@
 ﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.2
+// Auto Screen Capture 2.1.3
 // autoscreen.ScreenshotCollection.cs
 //
 // Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Friday, 6 April 2018
+// Thursday, 15 May 2008 - Tuesday, 24 April 2018
 
 using System;
 using System.Collections;
