@@ -395,6 +395,8 @@ namespace autoscreen
         /// <param name="e"></param>
         private void FormViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            SaveApplicationSettings();
+
             e.Cancel = true;
 
             if (toolStripMenuItemExitOnCloseWindow.Checked)
