@@ -9,7 +9,7 @@
       <Value Profile="(Default)">2.1.3</Value>
     </Setting>
     <Setting Name="ImageFormatFilter" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">*.*</Value>
     </Setting>
     <Setting Name="ScreenshotsDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

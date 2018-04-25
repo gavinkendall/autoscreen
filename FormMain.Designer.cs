@@ -33,6 +33,8 @@
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItemStartWhenWindowsStarts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemPreviewAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemScheduleAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDebugMode = new System.Windows.Forms.ToolStripMenuItem();
@@ -218,8 +220,8 @@
             this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.buttonOpenFolder = new System.Windows.Forms.Button();
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItemStartWhenWindowsStarts = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonSaveSettings = new System.Windows.Forms.Button();
+            this.buttonRestoreDefaults = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -328,6 +330,19 @@
             this.toolStripDropDownButtonOptions.Name = "toolStripDropDownButtonOptions";
             this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 20);
             this.toolStripDropDownButtonOptions.Text = "Options";
+            // 
+            // toolStripMenuItemStartWhenWindowsStarts
+            // 
+            this.toolStripMenuItemStartWhenWindowsStarts.CheckOnClick = true;
+            this.toolStripMenuItemStartWhenWindowsStarts.Name = "toolStripMenuItemStartWhenWindowsStarts";
+            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(441, 22);
+            this.toolStripMenuItemStartWhenWindowsStarts.Text = "Start application when Windows starts";
+            this.toolStripMenuItemStartWhenWindowsStarts.CheckedChanged += new System.EventHandler(this.toolStripMenuItemStartWhenWindowsStarts_CheckedChanged);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(438, 6);
             // 
             // toolStripMenuItemPreviewAtApplicationStartup
             // 
@@ -2500,24 +2515,37 @@
             this.timerDeleteSlides.Interval = 60000;
             this.timerDeleteSlides.Tick += new System.EventHandler(this.timerDeleteSlides_Tick);
             // 
-            // toolStripMenuItemStartWhenWindowsStarts
+            // buttonSaveSettings
             // 
-            this.toolStripMenuItemStartWhenWindowsStarts.CheckOnClick = true;
-            this.toolStripMenuItemStartWhenWindowsStarts.Name = "toolStripMenuItemStartWhenWindowsStarts";
-            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemStartWhenWindowsStarts.Text = "Start application when Windows starts";
-            this.toolStripMenuItemStartWhenWindowsStarts.CheckedChanged += new System.EventHandler(this.toolStripMenuItemStartWhenWindowsStarts_CheckedChanged);
+            this.buttonSaveSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSaveSettings.Location = new System.Drawing.Point(4, 437);
+            this.buttonSaveSettings.Name = "buttonSaveSettings";
+            this.buttonSaveSettings.Size = new System.Drawing.Size(119, 23);
+            this.buttonSaveSettings.TabIndex = 26;
+            this.buttonSaveSettings.TabStop = false;
+            this.buttonSaveSettings.Text = "Save Settings";
+            this.buttonSaveSettings.UseVisualStyleBackColor = true;
+            this.buttonSaveSettings.Click += new System.EventHandler(this.buttonSaveSettings_Click);
             // 
-            // toolStripSeparator4
+            // buttonRestoreDefaults
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(438, 6);
+            this.buttonRestoreDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonRestoreDefaults.Location = new System.Drawing.Point(126, 437);
+            this.buttonRestoreDefaults.Name = "buttonRestoreDefaults";
+            this.buttonRestoreDefaults.Size = new System.Drawing.Size(119, 23);
+            this.buttonRestoreDefaults.TabIndex = 27;
+            this.buttonRestoreDefaults.TabStop = false;
+            this.buttonRestoreDefaults.Text = "Restore Defaults";
+            this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
+            this.buttonRestoreDefaults.Click += new System.EventHandler(this.buttonRestoreDefaults_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(851, 488);
+            this.Controls.Add(this.buttonRestoreDefaults);
+            this.Controls.Add(this.buttonSaveSettings);
             this.Controls.Add(this.buttonOpenFolder);
             this.Controls.Add(this.textBoxMacro);
             this.Controls.Add(this.labelMacro);
@@ -2814,5 +2842,7 @@
         private System.Windows.Forms.TabPage tabPageEditors;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWhenWindowsStarts;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.Button buttonSaveSettings;
+        private System.Windows.Forms.Button buttonRestoreDefaults;
     }
 }
