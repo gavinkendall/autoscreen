@@ -2757,16 +2757,16 @@ namespace autoscreen
             {
                 if (checkBoxScheduleOnTheseDays.Checked)
                 {
-                    if ((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
+                    if (((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked) &&
-                        (DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
+                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
+                        ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
-                        (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
+                        (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
                     {
                         bool initial = false;
                         string folder = textBoxFolder.Text;
@@ -2824,16 +2824,16 @@ namespace autoscreen
             {
                 if (checkBoxScheduleOnTheseDays.Checked)
                 {
-                    if ((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
+                    if (((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked) &&
-                        (DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
+                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
+                        ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
-                        (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second))
+                        (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second)))
                     {
                         StopScreenCapture();
                     }
