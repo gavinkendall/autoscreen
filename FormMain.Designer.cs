@@ -497,7 +497,7 @@
             this.checkBoxCaptureActiveWindow.TabIndex = 5;
             this.checkBoxCaptureActiveWindow.Text = "Active Window";
             this.checkBoxCaptureActiveWindow.UseVisualStyleBackColor = true;
-            this.checkBoxCaptureActiveWindow.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxCaptureActiveWindow.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxCaptureScreen4
             // 
@@ -508,7 +508,7 @@
             this.checkBoxCaptureScreen4.TabIndex = 4;
             this.checkBoxCaptureScreen4.Text = "4";
             this.checkBoxCaptureScreen4.UseVisualStyleBackColor = true;
-            this.checkBoxCaptureScreen4.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxCaptureScreen4.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxCaptureScreen3
             // 
@@ -519,7 +519,7 @@
             this.checkBoxCaptureScreen3.TabIndex = 3;
             this.checkBoxCaptureScreen3.Text = "3";
             this.checkBoxCaptureScreen3.UseVisualStyleBackColor = true;
-            this.checkBoxCaptureScreen3.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxCaptureScreen3.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxCaptureScreen2
             // 
@@ -530,7 +530,7 @@
             this.checkBoxCaptureScreen2.TabIndex = 2;
             this.checkBoxCaptureScreen2.Text = "2";
             this.checkBoxCaptureScreen2.UseVisualStyleBackColor = true;
-            this.checkBoxCaptureScreen2.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxCaptureScreen2.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxCaptureScreen1
             // 
@@ -541,7 +541,7 @@
             this.checkBoxCaptureScreen1.TabIndex = 1;
             this.checkBoxCaptureScreen1.Text = "1";
             this.checkBoxCaptureScreen1.UseVisualStyleBackColor = true;
-            this.checkBoxCaptureScreen1.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxCaptureScreen1.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxAutoReset
             // 
@@ -554,7 +554,7 @@
             this.checkBoxAutoReset.TabIndex = 0;
             this.checkBoxAutoReset.Text = "Auto Reset";
             this.checkBoxAutoReset.UseVisualStyleBackColor = true;
-            this.checkBoxAutoReset.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxAutoReset.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // tableLayoutPanelScreenshotPreview
             // 
@@ -1777,7 +1777,7 @@
             this.checkBoxPassphraseLock.Text = "Lock";
             this.checkBoxPassphraseLock.UseVisualStyleBackColor = true;
             this.checkBoxPassphraseLock.CheckedChanged += new System.EventHandler(this.checkBoxPassphraseLock_CheckedChanged);
-            this.checkBoxPassphraseLock.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxPassphraseLock.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // buttonClearPassphrase
             // 
@@ -1865,7 +1865,7 @@
             this.checkBoxInitialScreenshot.TabStop = false;
             this.checkBoxInitialScreenshot.Text = "Initial Capture";
             this.checkBoxInitialScreenshot.UseVisualStyleBackColor = true;
-            this.checkBoxInitialScreenshot.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxInitialScreenshot.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // numericUpDownImageResolutionRatio
             // 
@@ -1928,7 +1928,7 @@
             this.checkBoxCaptureLimit.TabStop = false;
             this.checkBoxCaptureLimit.UseVisualStyleBackColor = true;
             this.checkBoxCaptureLimit.CheckedChanged += new System.EventHandler(this.checkBoxCaptureLimit_CheckedChanged);
-            this.checkBoxCaptureLimit.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxCaptureLimit.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // labelMillisecondsInterval
             // 
@@ -2062,7 +2062,7 @@
             this.checkBoxScheduleStartOnSchedule.Text = "Start capture when schedule is on";
             this.checkBoxScheduleStartOnSchedule.UseVisualStyleBackColor = true;
             this.checkBoxScheduleStartOnSchedule.CheckedChanged += new System.EventHandler(this.checkBoxScheduleStartOnSchedule_CheckedChanged);
-            this.checkBoxScheduleStartOnSchedule.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxScheduleStartOnSchedule.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // comboBoxScheduleImageFormat
             // 
@@ -2108,7 +2108,7 @@
             this.checkBoxScheduleOnTheseDays.Text = "Only on these days:";
             this.checkBoxScheduleOnTheseDays.UseVisualStyleBackColor = true;
             this.checkBoxScheduleOnTheseDays.CheckedChanged += new System.EventHandler(this.checkBoxScheduleOnTheseDays_CheckedChanged);
-            this.checkBoxScheduleOnTheseDays.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxScheduleOnTheseDays.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxFriday
             // 
@@ -2122,7 +2122,7 @@
             this.checkBoxFriday.TabStop = false;
             this.checkBoxFriday.Text = "Fr";
             this.checkBoxFriday.UseVisualStyleBackColor = true;
-            this.checkBoxFriday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxFriday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxThursday
             // 
@@ -2136,7 +2136,7 @@
             this.checkBoxThursday.TabStop = false;
             this.checkBoxThursday.Text = "Th";
             this.checkBoxThursday.UseVisualStyleBackColor = true;
-            this.checkBoxThursday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxThursday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxWednesday
             // 
@@ -2150,7 +2150,7 @@
             this.checkBoxWednesday.TabStop = false;
             this.checkBoxWednesday.Text = "We";
             this.checkBoxWednesday.UseVisualStyleBackColor = true;
-            this.checkBoxWednesday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxWednesday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxTuesday
             // 
@@ -2164,7 +2164,7 @@
             this.checkBoxTuesday.TabStop = false;
             this.checkBoxTuesday.Text = "Tu";
             this.checkBoxTuesday.UseVisualStyleBackColor = true;
-            this.checkBoxTuesday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxTuesday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxMonday
             // 
@@ -2178,7 +2178,7 @@
             this.checkBoxMonday.TabStop = false;
             this.checkBoxMonday.Text = "Mo";
             this.checkBoxMonday.UseVisualStyleBackColor = true;
-            this.checkBoxMonday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxMonday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxSunday
             // 
@@ -2192,7 +2192,7 @@
             this.checkBoxSunday.TabStop = false;
             this.checkBoxSunday.Text = "Su";
             this.checkBoxSunday.UseVisualStyleBackColor = true;
-            this.checkBoxSunday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxSunday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxSaturday
             // 
@@ -2206,7 +2206,7 @@
             this.checkBoxSaturday.TabStop = false;
             this.checkBoxSaturday.Text = "Sa";
             this.checkBoxSaturday.UseVisualStyleBackColor = true;
-            this.checkBoxSaturday.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxSaturday.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // dateTimePickerScheduleStopAt
             // 
@@ -2240,7 +2240,7 @@
             this.checkBoxScheduleStopAt.TabStop = false;
             this.checkBoxScheduleStopAt.Text = "Stop capture at";
             this.checkBoxScheduleStopAt.UseVisualStyleBackColor = true;
-            this.checkBoxScheduleStopAt.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxScheduleStopAt.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // checkBoxScheduleStartAt
             // 
@@ -2253,7 +2253,7 @@
             this.checkBoxScheduleStartAt.Text = "Start capture at";
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
             this.checkBoxScheduleStartAt.CheckedChanged += new System.EventHandler(this.checkBoxScheduleStartAt_CheckedChanged);
-            this.checkBoxScheduleStartAt.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxScheduleStartAt.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // tabPageSlideshow
             // 
@@ -2388,7 +2388,7 @@
             this.checkBoxSlideSkip.TabStop = false;
             this.checkBoxSlideSkip.Text = "Skip";
             this.checkBoxSlideSkip.UseVisualStyleBackColor = true;
-            this.checkBoxSlideSkip.Leave += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
+            this.checkBoxSlideSkip.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // labelSlideshowDelayHours
             // 
@@ -2595,7 +2595,7 @@
             this.buttonSaveSettings.TabStop = false;
             this.buttonSaveSettings.Text = "Save Settings";
             this.buttonSaveSettings.UseVisualStyleBackColor = true;
-            this.buttonSaveSettings.Click += new System.EventHandler(this.buttonSaveSettings_Click);
+            this.buttonSaveSettings.Click += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // buttonRestoreDefaults
             // 

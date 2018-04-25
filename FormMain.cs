@@ -384,8 +384,6 @@ namespace autoscreen
         /// </summary>
         private void SaveApplicationSettings()
         {
-            Log.Write("Saving application settings.");
-
             if (!runSaveApplicationSettings.IsBusy)
             {
                 runSaveApplicationSettings.RunWorkerAsync();
@@ -844,41 +842,44 @@ namespace autoscreen
         /// </summary>
         private void StopScreenCapture()
         {
-            Log.Write("Stopping screen capture.");
-
-            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+            if (timerScreenCapture.Enabled)
             {
-                formEnterPassphrase.ShowDialog(this);
-            }
+                Log.Write("Stopping screen capture.");
 
-            // This is intentional. Do not rewrite these statements as an if/else
-            // because as soon as lockScreenCaptureSession is set to false we want
-            // to continue with normal functionality.
-            if (!ScreenCapture.LockScreenCaptureSession)
-            {
-                checkBoxPassphraseLock.Checked = false;
-
-                ScreenCapture.Count = 0;
-                timerScreenCapture.Enabled = false;
-
-                // Let the user know of the last capture that was taken and the status of the session ("Stopped").
-                DisplayCaptureStatus(false);
-
-                DisableStopScreenCapture();
-                EnableStartScreenCapture();
-
-                // Some people want to see this window immediately after the session has stopped.
-                if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
+                if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
-                    SearchDates();
-                    SearchSlides();
-                    OpenWindow();
+                    formEnterPassphrase.ShowDialog(this);
                 }
 
-                // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
-                if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
+                // This is intentional. Do not rewrite these statements as an if/else
+                // because as soon as lockScreenCaptureSession is set to false we want
+                // to continue with normal functionality.
+                if (!ScreenCapture.LockScreenCaptureSession)
                 {
-                    ShowSlideshow();
+                    checkBoxPassphraseLock.Checked = false;
+
+                    ScreenCapture.Count = 0;
+                    timerScreenCapture.Enabled = false;
+
+                    // Let the user know of the last capture that was taken and the status of the session ("Stopped").
+                    DisplayCaptureStatus(false);
+
+                    DisableStopScreenCapture();
+                    EnableStartScreenCapture();
+
+                    // Some people want to see this window immediately after the session has stopped.
+                    if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
+                    {
+                        SearchDates();
+                        SearchSlides();
+                        OpenWindow();
+                    }
+
+                    // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
+                    if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
+                    {
+                        ShowSlideshow();
+                    }
                 }
             }
         }
@@ -948,72 +949,75 @@ namespace autoscreen
         /// <param name="initial">If an initial screenshot should be taken before the timer is started then this boolean needs to be set to true otherwise just set it as false.</param>
         private void StartScreenCapture(string folder, string macro, string format, int delay, int limit, int ratio, bool initial)
         {
-            SaveApplicationSettings();
-
-            if (Directory.Exists(textBoxFolder.Text))
+            if (!timerScreenCapture.Enabled)
             {
-                Log.Write("Starting new screen capture session in \"" + textBoxFolder.Text + "\"");
+                SaveApplicationSettings();
 
-                textBoxFolder.Text = CorrectDirectoryPath(textBoxFolder.Text);
-
-                Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
-
-                if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
+                if (Directory.Exists(textBoxFolder.Text))
                 {
-                    CloseWindow();
+                    Log.Write("Starting new screen capture session in \"" + textBoxFolder.Text + "\"");
+
+                    textBoxFolder.Text = CorrectDirectoryPath(textBoxFolder.Text);
+
+                    Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
+
+                    if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
+                    {
+                        CloseWindow();
+                    }
+
+                    // Stop the slideshow if it's currently playing.
+                    if (Slideshow.Playing)
+                    {
+                        Slideshow.Stop();
+                    }
+
+                    // Stop the folder search thread if it's busy.
+                    if (runDateSearchThread.IsBusy)
+                    {
+                        runDateSearchThread.CancelAsync();
+                    }
+
+                    // Stop the file search thread if it's busy.
+                    if (runSlideSearchThread.IsBusy)
+                    {
+                        runSlideSearchThread.CancelAsync();
+                    }
+
+                    DisableStartScreenCapture();
+                    EnableStopScreenCapture();
+
+                    // Setup the properties for the screen capture class.
+                    ScreenCapture.Folder = folder;
+                    ScreenCapture.Macro = macro;
+                    ScreenCapture.Format = format;
+                    ScreenCapture.Delay = delay;
+                    ScreenCapture.Limit = limit;
+                    ScreenCapture.Ratio = ratio;
+
+                    if (checkBoxPassphraseLock.Checked)
+                    {
+                        ScreenCapture.LockScreenCaptureSession = true;
+                    }
+                    else
+                    {
+                        ScreenCapture.LockScreenCaptureSession = false;
+                    }
+
+                    if (initial)
+                    {
+                        Log.Write("Taking initial screenshots.");
+
+                        TakeScreenshot();
+                        DisplayCaptureStatus(true);
+                    }
+
+                    // Start taking screenshots.
+                    Log.Write("Starting screen capture.");
+
+                    timerScreenCapture.Interval = delay;
+                    timerScreenCapture.Enabled = true;
                 }
-
-                // Stop the slideshow if it's currently playing.
-                if (Slideshow.Playing)
-                {
-                    Slideshow.Stop();
-                }
-
-                // Stop the folder search thread if it's busy.
-                if (runDateSearchThread.IsBusy)
-                {
-                    runDateSearchThread.CancelAsync();
-                }
-
-                // Stop the file search thread if it's busy.
-                if (runSlideSearchThread.IsBusy)
-                {
-                    runSlideSearchThread.CancelAsync();
-                }
-
-                DisableStartScreenCapture();
-                EnableStopScreenCapture();
-
-                // Setup the properties for the screen capture class.
-                ScreenCapture.Folder = folder;
-                ScreenCapture.Macro = macro;
-                ScreenCapture.Format = format;
-                ScreenCapture.Delay = delay;
-                ScreenCapture.Limit = limit;
-                ScreenCapture.Ratio = ratio;
-
-                if (checkBoxPassphraseLock.Checked)
-                {
-                    ScreenCapture.LockScreenCaptureSession = true;
-                }
-                else
-                {
-                    ScreenCapture.LockScreenCaptureSession = false;
-                }
-
-                if (initial)
-                {
-                    Log.Write("Taking initial screenshots.");
-
-                    TakeScreenshot();
-                    DisplayCaptureStatus(true);
-                }
-
-                // Start taking screenshots.
-                Log.Write("Starting screen capture.");
-
-                timerScreenCapture.Interval = delay;
-                timerScreenCapture.Enabled = true;
             }
         }
 
@@ -2727,8 +2731,6 @@ namespace autoscreen
                         }
 
                         StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
-
-                        timerScheduledCaptureStart.Enabled = false;
                     }
                 }
                 else
@@ -2749,8 +2751,6 @@ namespace autoscreen
                     }
 
                     StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
-
-                    timerScheduledCaptureStart.Enabled = false;
                 }
             }
             else if (checkBoxScheduleStartAt.Checked)
@@ -3088,7 +3088,7 @@ namespace autoscreen
             }
         }
 
-        private void buttonSaveSettings_Click(object sender, EventArgs e)
+        private void SaveApplicationSettings_EventHandler(object sender, EventArgs e)
         {
             SaveApplicationSettings();
         }
@@ -3162,11 +3162,6 @@ namespace autoscreen
             //LoadOptionsMenu();
 
             //LoadScheduledScreenCaptureSettings();
-        }
-
-        private void SaveApplicationSettings_EventHandler(object sender, EventArgs e)
-        {
-            SaveApplicationSettings();
         }
     }
 }
