@@ -13,7 +13,7 @@ namespace autoscreen
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly string TimeFormat = "HH-mm-ss-fff";
-        public static readonly string UserMacro = @"%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+        public static readonly string UserMacro = @"%year%-%month%-%day%\%screen%\%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ScreenshotListMacro = @"%year%-%month%-%day%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ApplicationMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
