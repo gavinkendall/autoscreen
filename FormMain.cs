@@ -915,6 +915,8 @@ namespace autoscreen
             if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
+                Properties.Settings.Default.LockScreenCaptureSession = false;
+                Properties.Settings.Default.Save();
 
                 Opacity = 100;
                 toolStripMenuItemOpen.Enabled = false;
@@ -977,6 +979,8 @@ namespace autoscreen
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
                     checkBoxPassphraseLock.Checked = false;
+                    Properties.Settings.Default.LockScreenCaptureSession = false;
+                    Properties.Settings.Default.Save();
 
                     ScreenCapture.Count = 0;
                     timerScreenCapture.Enabled = false;
@@ -1489,6 +1493,8 @@ namespace autoscreen
             if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
+                Properties.Settings.Default.LockScreenCaptureSession = false;
+                Properties.Settings.Default.Save();
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
