@@ -2073,6 +2073,7 @@
             this.comboBoxScheduleImageFormat.Size = new System.Drawing.Size(80, 21);
             this.comboBoxScheduleImageFormat.TabIndex = 14;
             this.comboBoxScheduleImageFormat.TabStop = false;
+            this.comboBoxScheduleImageFormat.SelectedIndexChanged += new System.EventHandler(this.SaveApplicationSettings_EventHandler);
             // 
             // buttonScheduleClear
             // 
@@ -2635,7 +2636,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormViewer_FormClosing);
-            this.Load += new System.EventHandler(this.FormViewer_Load);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.tabControlScreens.ResumeLayout(false);

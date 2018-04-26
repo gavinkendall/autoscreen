@@ -88,11 +88,6 @@ namespace autoscreen
 
             Log.Write("*** " + Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ") ***");
 
-            runSaveApplicationSettings = new BackgroundWorker();
-            runSaveApplicationSettings.WorkerReportsProgress = false;
-            runSaveApplicationSettings.WorkerSupportsCancellation = true;
-            runSaveApplicationSettings.DoWork += new DoWorkEventHandler(runSaveApplicationSettingsThread_DoWork);
-
             LoadApplicationSettings();
 
             if (args.Length > 0)
@@ -106,7 +101,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FormViewer_Load(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
             runDeleteSlidesThread = new BackgroundWorker();
             runDeleteSlidesThread.WorkerReportsProgress = false;
@@ -384,9 +379,19 @@ namespace autoscreen
         /// </summary>
         private void SaveApplicationSettings()
         {
-            if (!runSaveApplicationSettings.IsBusy)
+            if (runSaveApplicationSettings == null)
             {
-                runSaveApplicationSettings.RunWorkerAsync();
+                runSaveApplicationSettings = new BackgroundWorker();
+                runSaveApplicationSettings.WorkerReportsProgress = false;
+                runSaveApplicationSettings.WorkerSupportsCancellation = true;
+                runSaveApplicationSettings.DoWork += new DoWorkEventHandler(runSaveApplicationSettingsThread_DoWork);
+            }
+            else
+            {
+                if (!runSaveApplicationSettings.IsBusy)
+                {
+                    runSaveApplicationSettings.RunWorkerAsync();
+                }
             }
         }
 
@@ -671,94 +676,209 @@ namespace autoscreen
                 }
                 else
                 {
+                    Log.Write("#####################  SETTINGS SAVE START  #############################");
+                    Log.Write("00 Saving application settings ... ");
+
                     Properties.Settings.Default.ScreenshotsDirectory = CorrectDirectoryPath(textBoxFolder.Text);
+                    Log.Write("01 Saving application settings ... ScreenshotsDirectory = " + CorrectDirectoryPath(textBoxFolder.Text));
 
                     Properties.Settings.Default.ScheduleImageFormat = comboBoxScheduleImageFormat.Text;
+                    Log.Write("02 Saving application settings ... ScheduleImageFormat = " + comboBoxScheduleImageFormat.Text);
 
                     Properties.Settings.Default.SlideSkip = (int)numericUpDownSlideSkip.Value;
+                    Log.Write("03 Saving application settings ... SlideSkip = " + (int)numericUpDownSlideSkip.Value);
+
                     Properties.Settings.Default.CaptureLimit = (int)numericUpDownCaptureLimit.Value;
+                    Log.Write("04 Saving application settings ... CaptureLimit = " + (int)numericUpDownCaptureLimit.Value);
+
                     Properties.Settings.Default.ImageResolutionRatio = (int)numericUpDownImageResolutionRatio.Value;
+                    Log.Write("05 Saving application settings ... ImageResolutionRatio = " + (int)numericUpDownImageResolutionRatio.Value);
 
                     Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
+                    Log.Write("06 Saving application settings ... ImageFormatIndex = " + toolStripComboBoxImageFormatFilter.SelectedIndex);
 
                     Properties.Settings.Default.Interval = GetCaptureDelay();
+                    Log.Write("07 Saving application settings ... Interval = " + GetCaptureDelay());
+
                     Properties.Settings.Default.SlideshowDelay = GetSlideshowDelay();
+                    Log.Write("08 Saving application settings ... SlideshowDelay = " + GetSlideshowDelay());
 
                     Properties.Settings.Default.SlideSkipCheck = checkBoxSlideSkip.Checked;
+                    Log.Write("09 Saving application settings ... SlideSkipCheck = " + checkBoxSlideSkip.Checked);
+
                     Properties.Settings.Default.CaptureLimitCheck = checkBoxCaptureLimit.Checked;
+                    Log.Write("10 Saving application settings ... CaptureLimitCheck = " + checkBoxCaptureLimit.Checked);
+
                     Properties.Settings.Default.TakeInitialScreenshotCheck = checkBoxInitialScreenshot.Checked;
+                    Log.Write("11 Saving application settings ... TakeInitialScreenshotCheck = " + checkBoxInitialScreenshot.Checked);
 
                     Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
+                    Log.Write("12 Saving application settings ... DebugMode = " + toolStripMenuItemDebugMode.Checked);
+
                     Properties.Settings.Default.ShowSystemTrayIcon = toolStripMenuItemShowSystemTrayIcon.Checked;
+                    Log.Write("13 Saving application settings ... ShowSystemTrayIcon = " + toolStripMenuItemShowSystemTrayIcon.Checked);
+
                     Properties.Settings.Default.DemoModeCheck = toolStripMenuItemPreviewAtApplicationStartup.Checked;
+                    Log.Write("14 Saving application settings ... DemoModeCheck = " + toolStripMenuItemPreviewAtApplicationStartup.Checked);
+
                     Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
+                    Log.Write("15 Saving application settings ... ExitOnCloseWindowCheck = " + toolStripMenuItemExitOnCloseWindow.Checked);
+
                     Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;
+                    Log.Write("16 Saving application settings ... ScheduleOnAtStartupCheck = " + toolStripMenuItemScheduleAtApplicationStartup.Checked);
+
                     Properties.Settings.Default.OpenOnScreenCaptureStopCheck = toolStripMenuItemOpenOnStopScreenCapture.Checked;
+                    Log.Write("17 Saving application settings ... OpenOnScreenCaptureStopCheck = " + toolStripMenuItemOpenOnStopScreenCapture.Checked);
+
                     Properties.Settings.Default.OpenOnApplicationStartupCheck = toolStripMenuItemOpenAtApplicationStartup.Checked;
+                    Log.Write("18 Saving application settings ... OpenOnApplicationStartupCheck = " + toolStripMenuItemOpenAtApplicationStartup.Checked);
+
                     Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
+                    Log.Write("19 Saving application settings ... CloseWindowOnStartCaptureCheck = " + toolStripMenuItemCloseWindowOnStartCapture.Checked);
+
                     Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
+                    Log.Write("20 Saving application settings ... ShowSlideshowAfterScreenCaptureStopCheck = " + toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked);
+
                     Properties.Settings.Default.StartWhenWindowsStartsCheck = toolStripMenuItemStartWhenWindowsStarts.Checked;
+                    Log.Write("21 Saving application settings ... StartWhenWindowsStartsCheck = " + toolStripMenuItemStartWhenWindowsStarts.Checked);
 
                     Properties.Settings.Default.CaptureStopAtCheck = checkBoxScheduleStopAt.Checked;
+                    Log.Write("22 Saving application settings ... CaptureStopAtCheck = " + checkBoxScheduleStopAt.Checked);
+
                     Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
+                    Log.Write("23 Saving application settings ... CaptureStartAtCheck = " + checkBoxScheduleStartAt.Checked);
+
                     Properties.Settings.Default.CaptureStartOnScheduleCheck = checkBoxScheduleStartOnSchedule.Checked;
+                    Log.Write("24 Saving application settings ... CaptureStartOnScheduleCheck = " + checkBoxScheduleStartOnSchedule.Checked);
 
                     Properties.Settings.Default.CaptureOnSundayCheck = checkBoxSunday.Checked;
+                    Log.Write("25 Saving application settings ... CaptureOnSundayCheck = " + checkBoxSunday.Checked);
+
                     Properties.Settings.Default.CaptureOnMondayCheck = checkBoxMonday.Checked;
-                    Properties.Settings.Default.CaptureOnFridayCheck = checkBoxFriday.Checked;
+                    Log.Write("26 Saving application settings ... CaptureOnMondayCheck = " + checkBoxMonday.Checked);
+
                     Properties.Settings.Default.CaptureOnTuesdayCheck = checkBoxTuesday.Checked;
-                    Properties.Settings.Default.CaptureOnThursdayCheck = checkBoxThursday.Checked;
-                    Properties.Settings.Default.CaptureOnSaturdayCheck = checkBoxSaturday.Checked;
+                    Log.Write("27 Saving application settings ... CaptureOnTuesdayCheck = " + checkBoxTuesday.Checked);
+
                     Properties.Settings.Default.CaptureOnWednesdayCheck = checkBoxWednesday.Checked;
+                    Log.Write("28 Saving application settings ... CaptureOnWednesdayCheck = " + checkBoxWednesday.Checked);
+
+                    Properties.Settings.Default.CaptureOnThursdayCheck = checkBoxThursday.Checked;
+                    Log.Write("29 Saving application settings ... CaptureOnThursdayCheck = " + checkBoxThursday.Checked);
+
+                    Properties.Settings.Default.CaptureOnFridayCheck = checkBoxFriday.Checked;
+                    Log.Write("30 Saving application settings ... CaptureOnFridayCheck = " + checkBoxFriday.Checked);
+
+                    Properties.Settings.Default.CaptureOnSaturdayCheck = checkBoxSaturday.Checked;
+                    Log.Write("31 Saving application settings ... CaptureOnSaturdayCheck = " + checkBoxSaturday.Checked);
 
                     Properties.Settings.Default.CaptureOnTheseDaysCheck = checkBoxScheduleOnTheseDays.Checked;
+                    Log.Write("32 Saving application settings ... CaptureOnTheseDaysCheck = " + checkBoxScheduleOnTheseDays.Checked);
 
                     Properties.Settings.Default.CaptureStopAtValue = dateTimePickerScheduleStopAt.Value;
+                    Log.Write("33 Saving application settings ... CaptureStopAtValue = " + dateTimePickerScheduleStopAt.Value.ToString(MacroParser.TimeFormat));
+
                     Properties.Settings.Default.CaptureStartAtValue = dateTimePickerScheduleStartAt.Value;
+                    Log.Write("34 Saving application settings ... CaptureStartAtValue = " + dateTimePickerScheduleStartAt.Value.ToString(MacroParser.TimeFormat));
 
                     Properties.Settings.Default.Screen1X = (int)numericUpDownScreen1X.Value;
+                    Log.Write("35 Saving application settings ... Screen1X = " + (int)numericUpDownScreen1X.Value);
+
                     Properties.Settings.Default.Screen1Y = (int)numericUpDownScreen1Y.Value;
+                    Log.Write("36 Saving application settings ... Screen1Y = " + (int)numericUpDownScreen1Y.Value);
+
                     Properties.Settings.Default.Screen1Width = (int)numericUpDownScreen1Width.Value;
+                    Log.Write("37 Saving application settings ... Screen1Width = " + (int)numericUpDownScreen1Width.Value);
+
                     Properties.Settings.Default.Screen1Height = (int)numericUpDownScreen1Height.Value;
+                    Log.Write("38 Saving application settings ... Screen1Height = " + (int)numericUpDownScreen1Height.Value);
 
                     Properties.Settings.Default.Screen2X = (int)numericUpDownScreen2X.Value;
+                    Log.Write("39 Saving application settings ... Screen2X = " + (int)numericUpDownScreen2X.Value);
+
                     Properties.Settings.Default.Screen2Y = (int)numericUpDownScreen2Y.Value;
+                    Log.Write("40 Saving application settings ... Screen2Y = " + (int)numericUpDownScreen2Y.Value);
+
                     Properties.Settings.Default.Screen2Width = (int)numericUpDownScreen2Width.Value;
+                    Log.Write("41 Saving application settings ... Screen2Width = " + (int)numericUpDownScreen2Width.Value);
+
                     Properties.Settings.Default.Screen2Height = (int)numericUpDownScreen2Height.Value;
+                    Log.Write("42 Saving application settings ... Screen2Height = " + (int)numericUpDownScreen2Height.Value);
 
                     Properties.Settings.Default.Screen3X = (int)numericUpDownScreen3X.Value;
+                    Log.Write("43 Saving application settings ... Screen3X = " + (int)numericUpDownScreen3X.Value);
+
                     Properties.Settings.Default.Screen3Y = (int)numericUpDownScreen3Y.Value;
+                    Log.Write("44 Saving application settings ... Screen3Y = " + (int)numericUpDownScreen3Y.Value);
+
                     Properties.Settings.Default.Screen3Width = (int)numericUpDownScreen3Width.Value;
+                    Log.Write("45 Saving application settings ... Screen3Width = " + (int)numericUpDownScreen3Width.Value);
+
                     Properties.Settings.Default.Screen3Height = (int)numericUpDownScreen3Height.Value;
+                    Log.Write("46 Saving application settings ... Screen3Height = " + (int)numericUpDownScreen3Height.Value);
 
                     Properties.Settings.Default.Screen4X = (int)numericUpDownScreen4X.Value;
+                    Log.Write("47 Saving application settings ... Screen4X = " + (int)numericUpDownScreen4X.Value);
+
                     Properties.Settings.Default.Screen4Y = (int)numericUpDownScreen4Y.Value;
+                    Log.Write("48 Saving application settings ... Screen4Y = " + (int)numericUpDownScreen4Y.Value);
+
                     Properties.Settings.Default.Screen4Width = (int)numericUpDownScreen4Width.Value;
+                    Log.Write("49 Saving application settings ... Screen4Width = " + (int)numericUpDownScreen4Width.Value);
+
                     Properties.Settings.Default.Screen4Height = (int)numericUpDownScreen4Height.Value;
+                    Log.Write("50 Saving application settings ... Screen4Height = " + (int)numericUpDownScreen4Height.Value);
 
                     Properties.Settings.Default.Screen1Name = textBoxScreen1Name.Text;
+                    Log.Write("51 Saving application settings ... Screen1Name = " + textBoxScreen1Name.Text);
+
                     Properties.Settings.Default.Screen2Name = textBoxScreen2Name.Text;
+                    Log.Write("52 Saving application settings ... Screen2Name = " + textBoxScreen2Name.Text);
+
                     Properties.Settings.Default.Screen3Name = textBoxScreen3Name.Text;
+                    Log.Write("53 Saving application settings ... Screen3Name = " + textBoxScreen3Name.Text);
+
                     Properties.Settings.Default.Screen4Name = textBoxScreen4Name.Text;
+                    Log.Write("54 Saving application settings ... Screen4Name = " + textBoxScreen4Name.Text);
+
                     Properties.Settings.Default.Screen5Name = textBoxScreen5Name.Text;
+                    Log.Write("55 Saving application settings ... Screen5Name = " + textBoxScreen5Name.Text);
 
                     Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
+                    Log.Write("56 Saving application settings ... LockScreenCaptureSession = " + checkBoxPassphraseLock.Checked);
 
                     Properties.Settings.Default.Macro = textBoxMacro.Text;
+                    Log.Write("57 Saving application settings ... Macro = " + textBoxMacro.Text);
 
                     Properties.Settings.Default.JpegQualityLevel = (long)numericUpDownJpegQualityLevel.Value;
+                    Log.Write("58 Saving application settings ... JpegQualityLevel = " + (long)numericUpDownJpegQualityLevel.Value);
 
                     Properties.Settings.Default.DaysOldWhenRemoveSlides = (int)numericUpDownDaysOld.Value;
+                    Log.Write("59 Saving application settings ... DaysOldWhenRemoveSlides = " + (int)numericUpDownDaysOld.Value);
 
                     Properties.Settings.Default.CaptureScreen1 = checkBoxCaptureScreen1.Checked;
+                    Log.Write("60 Saving application settings ... CaptureScreen1 = " + checkBoxCaptureScreen1.Checked);
+
                     Properties.Settings.Default.CaptureScreen2 = checkBoxCaptureScreen2.Checked;
+                    Log.Write("61 Saving application settings ... CaptureScreen2 = " + checkBoxCaptureScreen2.Checked);
+
                     Properties.Settings.Default.CaptureScreen3 = checkBoxCaptureScreen3.Checked;
+                    Log.Write("62 Saving application settings ... CaptureScreen3 = " + checkBoxCaptureScreen3.Checked);
+
                     Properties.Settings.Default.CaptureScreen4 = checkBoxCaptureScreen4.Checked;
+                    Log.Write("63 Saving application settings ... CaptureScreen4 = " + checkBoxCaptureScreen4.Checked);
+
                     Properties.Settings.Default.CaptureActiveWindow = checkBoxCaptureActiveWindow.Checked;
+                    Log.Write("64 Saving application settings ... CaptureActiveWindow = " + checkBoxCaptureActiveWindow.Checked);
 
                     Properties.Settings.Default.AutoReset = checkBoxAutoReset.Checked;
+                    Log.Write("65 Saving application settings ... AutoReset = " + checkBoxAutoReset.Checked);
+
+                    // Passphrase is set in its own event handler and saved appropriately so that's why you won't see a line for it here :)
 
                     Properties.Settings.Default.Save();
+
+                    Log.Write("#####################   SETTINGS SAVE END   #############################");
                 }
             }
             catch (Exception ex)
@@ -3095,73 +3215,73 @@ namespace autoscreen
 
         private void buttonRestoreDefaults_Click(object sender, EventArgs e)
         {
-            // All of these need to be set for all the controls, not the properties!
+            Log.Write("Restoring default settings.");
 
-            /*
-            Properties.Settings.Default.ImageFormatFilter = "*.*";
-            Properties.Settings.Default.SlideshowDelay = 1000;
-            Properties.Settings.Default.CaptureLimit = 30;
-            Properties.Settings.Default.CaptureLimitCheck = false;
-            Properties.Settings.Default.TakeInitialScreenshotCheck = true;
-            Properties.Settings.Default.ImageResolutionRatio = 100;
-            Properties.Settings.Default.SlideSkipCheck = false;
-            Properties.Settings.Default.SlideSkip = 0;
-            Properties.Settings.Default.OpenOnScreenCaptureStopCheck = true;
-            Properties.Settings.Default.ExitOnCloseWindowCheck = false;
-            Properties.Settings.Default.OpenOnApplicationStartupCheck = true;
-            Properties.Settings.Default.ImageFormatIndex = 0;
-            Properties.Settings.Default.CaptureStartAtCheck = false;
-            Properties.Settings.Default.CaptureStopAtCheck = false;
-            Properties.Settings.Default.CaptureStartAtValue = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0, DateTimeKind.Local);
-            Properties.Settings.Default.CaptureStopAtValue = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0, DateTimeKind.Local);
-            Properties.Settings.Default.CaptureOnSaturdayCheck = false;
-            Properties.Settings.Default.CaptureOnSundayCheck = false;
-            Properties.Settings.Default.CaptureOnMondayCheck = true;
-            Properties.Settings.Default.CaptureOnTuesdayCheck = true;
-            Properties.Settings.Default.CaptureOnWednesdayCheck = true;
-            Properties.Settings.Default.CaptureOnThursdayCheck = true;
-            Properties.Settings.Default.CaptureOnFridayCheck = true;
-            Properties.Settings.Default.CaptureOnTheseDaysCheck = false;
-            Properties.Settings.Default.ScheduleImageFormat = "JPEG";
-            Properties.Settings.Default.ScheduleOnAtStartupCheck = false;
-            Properties.Settings.Default.DemoModeCheck = false;
-            Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = true;
-            Properties.Settings.Default.CaptureStartOnScheduleCheck = false;
-            Properties.Settings.Default.CloseWindowOnStartCaptureCheck = true;
-            Properties.Settings.Default.Screen1X = 0;
-            Properties.Settings.Default.Screen1Y = 0;
-            Properties.Settings.Default.Screen1Width = 0;
-            Properties.Settings.Default.Screen1Height = 0;
-            Properties.Settings.Default.Screen2X = 0;
-            Properties.Settings.Default.Screen2Y = 0;
-            Properties.Settings.Default.Screen2Width = 0;
-            Properties.Settings.Default.Screen2Height = 0;
-            Properties.Settings.Default.Screen3X = 0;
-            Properties.Settings.Default.Screen3Y = 0;
-            Properties.Settings.Default.Screen3Width = 0;
-            Properties.Settings.Default.Screen3Height = 0;
-            Properties.Settings.Default.Screen4X = 0;
-            Properties.Settings.Default.Screen4Y = 0;
-            Properties.Settings.Default.Screen4Width = 0;
-            Properties.Settings.Default.Screen4Height = 0;
-            Properties.Settings.Default.DebugMode = false;
-            Properties.Settings.Default.ShowSystemTrayIcon = true;
-            Properties.Settings.Default.JpegQualityLevel = 100;
-            Properties.Settings.Default.DaysOldWhenRemoveSlides = 30;
-            Properties.Settings.Default.StartWhenWindowsStartsCheck = false;
+            int delay = CAPTURE_DELAY_DEFAULT;
+            numericUpDownHoursInterval.Value = 0;
+            numericUpDownMinutesInterval.Value = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(delay)).Minutes);
+            numericUpDownSecondsInterval.Value = 0;
+            numericUpDownMillisecondsInterval.Value = 0;
 
-            Properties.Settings.Default.Save();
-            */
+            numericUpDownSlideshowDelayHours.Value = 0;
+            numericUpDownSlideshowDelayMinutes.Value = 0;
+            numericUpDownSlideshowDelaySeconds.Value = 1;
+            numericUpDownSlideshowDelayMilliseconds.Value = 0;
 
-            //LoadScreenCaptureSettings();
+            numericUpDownSlideSkip.Value = 0;
+            numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
+            numericUpDownImageResolutionRatio.Value = IMAGE_RESOLUTION_RATIO_MAX;
 
-            //LoadSlideshowSettings();
+            checkBoxSlideSkip.Checked = false;
+            checkBoxCaptureLimit.Checked = false;
+            checkBoxInitialScreenshot.Checked = true;
 
-            //LoadSecuritySettings();
+            toolStripMenuItemDebugMode.Checked = false;
+            toolStripMenuItemPreviewAtApplicationStartup.Checked = false;
+            toolStripMenuItemShowSystemTrayIcon.Checked = true;
+            toolStripMenuItemExitOnCloseWindow.Checked = false;
+            toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
+            toolStripMenuItemOpenOnStopScreenCapture.Checked = true;
+            toolStripMenuItemOpenAtApplicationStartup.Checked = true;
+            toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
+            toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = true;
+            toolStripMenuItemStartWhenWindowsStarts.Checked = false;
 
-            //LoadOptionsMenu();
+            checkBoxScheduleStopAt.Checked = false;
+            checkBoxScheduleStartAt.Checked = true;
+            checkBoxScheduleStartOnSchedule.Checked = false;
+            comboBoxScheduleImageFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
 
-            //LoadScheduledScreenCaptureSettings();
+            checkBoxSaturday.Checked = false;
+            checkBoxSunday.Checked = false;
+            checkBoxMonday.Checked = true;
+            checkBoxTuesday.Checked = true;
+            checkBoxWednesday.Checked = true;
+            checkBoxThursday.Checked = true;
+            checkBoxFriday.Checked = true;
+
+            checkBoxScheduleOnTheseDays.Checked = false;
+
+            dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0 ,0);
+            dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
+
+            numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;
+
+            numericUpDownDaysOld.Value = 30;
+
+            checkBoxCaptureScreen1.Checked = true;
+            checkBoxCaptureScreen2.Checked = true;
+            checkBoxCaptureScreen3.Checked = true;
+            checkBoxCaptureScreen4.Checked = true;
+            checkBoxCaptureActiveWindow.Checked = true;
+
+            checkBoxAutoReset.Checked = true;
+
+            ScheduleClear();
+
+            Log.Write("Default settings restored.");
+
+            SaveApplicationSettings();
         }
     }
 }

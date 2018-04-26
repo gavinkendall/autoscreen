@@ -14,7 +14,7 @@ namespace autoscreen
 {
     public static class EditorCollection
     {
-        private static ArrayList m_editorList = new ArrayList();
+        private static ArrayList _editorList = new ArrayList();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_EDITOR_NODE = "editor";
@@ -28,26 +28,26 @@ namespace autoscreen
 
         public static void Add(Editor editor)
         {
-            m_editorList.Add(editor);
+            _editorList.Add(editor);
 
             Log.Write("Added " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
         public static void Remove(Editor editor)
         {
-            m_editorList.Remove(editor);
+            _editorList.Remove(editor);
 
             Log.Write("Removed " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
         public static int Count
         {
-            get { return m_editorList.Count; }
+            get { return _editorList.Count; }
         }
 
         public static Editor Get(Editor editorToFind)
         {
-            for (int i = 0; i < m_editorList.Count; i++)
+            for (int i = 0; i < _editorList.Count; i++)
             {
                 Editor editor = GetByIndex(i);
 
@@ -62,12 +62,12 @@ namespace autoscreen
 
         public static Editor GetByIndex(int index)
         {
-            return (Editor)m_editorList[index];
+            return (Editor)_editorList[index];
         }
 
         public static Editor GetByName(string name)
         {
-            for (int i = 0; i < m_editorList.Count; i++)
+            for (int i = 0; i < _editorList.Count; i++)
             {
                 Editor editor = GetByIndex(i);
 
@@ -153,7 +153,7 @@ namespace autoscreen
                 xwriter.WriteStartElement(XML_FILE_ROOT_NODE);
                 xwriter.WriteStartElement(XML_FILE_EDITORS_NODE);
 
-                foreach (object obj in m_editorList)
+                foreach (object obj in _editorList)
                 {
                     Editor editor = (Editor)obj;
 

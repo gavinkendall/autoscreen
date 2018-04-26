@@ -11,7 +11,7 @@ namespace autoscreen
 {
     public static class ImageFormatCollection
     {
-        private static ArrayList m_imageFormatList = new ArrayList();
+        private static ArrayList _imageFormatList = new ArrayList();
 
         public static void Initialize()
         {
@@ -34,19 +34,19 @@ namespace autoscreen
 
         public static void Add(ImageFormat imageFormat)
         {
-            m_imageFormatList.Add(imageFormat);
+            _imageFormatList.Add(imageFormat);
 
             Log.Write("Added " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
         public static ImageFormat Get(int index)
         {
-            return (ImageFormat)m_imageFormatList[index];
+            return (ImageFormat)_imageFormatList[index];
         }
 
         public static ImageFormat GetByName(string name)
         {
-            for (int i = 0; i < m_imageFormatList.Count; i++)
+            for (int i = 0; i < _imageFormatList.Count; i++)
             {
                 ImageFormat imageFormat = Get(i);
 
@@ -61,7 +61,7 @@ namespace autoscreen
 
         public static int Count
         {
-            get { return m_imageFormatList.Count; }
+            get { return _imageFormatList.Count; }
         }
     }
 }
