@@ -2589,7 +2589,7 @@
             // buttonSaveSettings
             // 
             this.buttonSaveSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSaveSettings.Location = new System.Drawing.Point(4, 437);
+            this.buttonSaveSettings.Location = new System.Drawing.Point(4, 440);
             this.buttonSaveSettings.Name = "buttonSaveSettings";
             this.buttonSaveSettings.Size = new System.Drawing.Size(119, 23);
             this.buttonSaveSettings.TabIndex = 26;
@@ -2601,7 +2601,7 @@
             // buttonRestoreDefaults
             // 
             this.buttonRestoreDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRestoreDefaults.Location = new System.Drawing.Point(126, 437);
+            this.buttonRestoreDefaults.Location = new System.Drawing.Point(126, 440);
             this.buttonRestoreDefaults.Name = "buttonRestoreDefaults";
             this.buttonRestoreDefaults.Size = new System.Drawing.Size(119, 23);
             this.buttonRestoreDefaults.TabIndex = 27;
