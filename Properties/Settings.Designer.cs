@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace autoscreen.Properties {
+namespace AutoScreenCapture.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -37,7 +37,7 @@ namespace autoscreen.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.1.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.1.4")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));

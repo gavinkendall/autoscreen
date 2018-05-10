@@ -1,14 +1,14 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.MacroParser.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="MacroParser.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+
     public static class MacroParser
     {
         public static readonly string DateFormat = "yyyy-MM-dd";

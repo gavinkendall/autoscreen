@@ -1,19 +1,19 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.Program.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.IO;
-using System.Reflection;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
     public static class Program
     {
         private enum DPIaware

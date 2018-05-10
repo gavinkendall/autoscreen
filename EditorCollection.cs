@@ -1,17 +1,17 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.EditorCollection.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.Collections;
-using System.Text;
-using System.Xml;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="EditorCollection.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Collections;
+    using System.Text;
+    using System.Xml;
+
     public static class EditorCollection
     {
         private static ArrayList _editorList = new ArrayList();
@@ -135,15 +135,17 @@ namespace autoscreen
         /// </summary>
         public static void Save()
         {
-            XmlWriterSettings xsettings = new XmlWriterSettings();
-            xsettings.Indent = true;
-            xsettings.CloseOutput = true;
-            xsettings.CheckCharacters = true;
-            xsettings.Encoding = Encoding.UTF8;
-            xsettings.NewLineChars = Environment.NewLine;
-            xsettings.IndentChars = XML_FILE_INDENT_CHARS;
-            xsettings.NewLineHandling = NewLineHandling.Entitize;
-            xsettings.ConformanceLevel = ConformanceLevel.Document;
+            XmlWriterSettings xsettings = new XmlWriterSettings
+            {
+                Indent = true,
+                CloseOutput = true,
+                CheckCharacters = true,
+                Encoding = Encoding.UTF8,
+                NewLineChars = Environment.NewLine,
+                IndentChars = XML_FILE_INDENT_CHARS,
+                NewLineHandling = NewLineHandling.Entitize,
+                ConformanceLevel = ConformanceLevel.Document
+            };
 
             StringBuilder editors = new StringBuilder();
 

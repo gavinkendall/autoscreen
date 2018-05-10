@@ -1,18 +1,18 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.Slideshow.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.Windows.Forms;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="Slideshow.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Windows.Forms;
+
     public static class Slideshow
     {
-        private static Timer timer = new Timer();
+        private static Timer slideshowTimer = new Timer();
 
         public static int Index { get; set; }
         public static int Count { get; set; }
@@ -25,7 +25,7 @@ namespace autoscreen
 
         public static void Initialize()
         {
-            timer.Tick += new EventHandler(m_timer_Tick);
+            slideshowTimer.Tick += new EventHandler(Tick_slideshowTimer);
         }
 
         public static void Clear()
@@ -43,9 +43,9 @@ namespace autoscreen
                 Index = 0;
             }
 
-            if (!timer.Enabled)
+            if (!slideshowTimer.Enabled)
             {
-                timer.Enabled = true;
+                slideshowTimer.Enabled = true;
             }
         }
 
@@ -53,9 +53,9 @@ namespace autoscreen
         {
             Log.Write("Stopping slideshow.");
 
-            if (timer.Enabled)
+            if (slideshowTimer.Enabled)
             {
-                timer.Enabled = false;
+                slideshowTimer.Enabled = false;
             }
         }
 
@@ -85,11 +85,11 @@ namespace autoscreen
             Index = (Count - 1);
         }
 
-        private static void m_timer_Tick(object sender, EventArgs e)
+        private static void Tick_slideshowTimer(object sender, EventArgs e)
         {
-            if (Index == (Count - 1) && timer.Enabled)
+            if (Index == (Count - 1) && slideshowTimer.Enabled)
             {
-                timer.Enabled = false;
+                slideshowTimer.Enabled = false;
             }
 
             if (Index < (Count - 1))
@@ -117,9 +117,9 @@ namespace autoscreen
         {
             get
             {
-                if (timer != null)
+                if (slideshowTimer != null)
                 {
-                    return timer.Enabled;
+                    return slideshowTimer.Enabled;
                 }
                 else
                 {
@@ -132,9 +132,9 @@ namespace autoscreen
         {
             get
             {
-                if (timer != null)
+                if (slideshowTimer != null)
                 {
-                    return timer.Interval;
+                    return slideshowTimer.Interval;
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace autoscreen
                 }
             }
 
-            set { timer.Interval = value; }
+            set { slideshowTimer.Interval = value; }
         }
     }
 }

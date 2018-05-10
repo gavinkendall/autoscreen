@@ -1,15 +1,15 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.FormEnterPassphrase.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.Windows.Forms;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormEnterPassphrase.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class FormEnterPassphrase : Form
     {
         public FormEnterPassphrase()
@@ -23,12 +23,12 @@ namespace autoscreen
             textBoxPassphrase.Focus();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void Click_buttonCancel(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void buttonUnlock_Click(object sender, EventArgs e)
+        private void Click_buttonUnlock(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBoxPassphrase.Text))
             {
@@ -45,7 +45,7 @@ namespace autoscreen
             }
         }
 
-        private void textBoxPassphrase_TextChanged(object sender, EventArgs e)
+        private void TextChanged_textBoxPassphrase(object sender, EventArgs e)
         {
             if (textBoxPassphrase.Text.Length > 0)
             {

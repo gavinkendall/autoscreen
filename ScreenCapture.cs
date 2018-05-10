@@ -1,21 +1,21 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.ScreenCapture.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScreenCapture.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Windows.Forms;
+
     public static class ScreenCapture
     {
         [DllImport("user32.dll")]
@@ -94,8 +94,7 @@ namespace autoscreen
 
         public static Bitmap GetActiveWindowBitmap()
         {
-            Rectangle rect;
-            GetWindowRect(GetForegroundWindow(), out rect);
+            GetWindowRect(GetForegroundWindow(), out Rectangle rect);
 
             int width = rect.Width - rect.X;
             int height = rect.Height - rect.Y;
@@ -148,6 +147,8 @@ namespace autoscreen
                         SaveToFile(bitmap, jpegQualityLevel, format, screenshot.Path, screenshotType);
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
+
+                        GC.Collect();
                     }
                 }
             }

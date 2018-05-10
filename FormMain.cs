@@ -1,22 +1,22 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.FormMain.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using Microsoft.Win32;
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using Microsoft.Win32;
+    using System;
+    using System.Collections;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+
     /// <summary>
     /// The application's main window.
     /// </summary>
@@ -103,20 +103,26 @@ namespace autoscreen
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            runDeleteSlidesThread = new BackgroundWorker();
-            runDeleteSlidesThread.WorkerReportsProgress = false;
-            runDeleteSlidesThread.WorkerSupportsCancellation = true;
-            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(runDeleteSlidesThread_DoWork);
+            runDeleteSlidesThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteSlidesThread);
 
-            runDateSearchThread = new BackgroundWorker();
-            runDateSearchThread.WorkerReportsProgress = false;
-            runDateSearchThread.WorkerSupportsCancellation = true;
-            runDateSearchThread.DoWork += new DoWorkEventHandler(runDateSearchThread_DoWork);
+            runDateSearchThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runDateSearchThread.DoWork += new DoWorkEventHandler(DoWork_runDateSearchThread);
 
-            runSlideSearchThread = new BackgroundWorker();
-            runSlideSearchThread.WorkerReportsProgress = false;
-            runSlideSearchThread.WorkerSupportsCancellation = true;
-            runSlideSearchThread.DoWork += new DoWorkEventHandler(runSlideSearchThread_DoWork);
+            runSlideSearchThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runSlideSearchThread.DoWork += new DoWorkEventHandler(DoWork_runSlideSearchThread);
 
             DeleteSlides();
             SearchDates();
@@ -183,10 +189,10 @@ namespace autoscreen
                 comboBoxScheduleImageFormat.Items.Add(ImageFormatCollection.Get(i).Name);
 
                 ToolStripItem startScreenCaptureMenuItemForSplitButton = new ToolStripMenuItem(ImageFormatCollection.Get(i).Name);
-                startScreenCaptureMenuItemForSplitButton.Click += new EventHandler(toolStripMenuItemStartScreenCapture_Click);
+                startScreenCaptureMenuItemForSplitButton.Click += new EventHandler(Click_toolStripMenuItemStartScreenCapture);
 
                 ToolStripItem startScreenCaptureMenuItemForSystemTrayMenu = new ToolStripMenuItem(ImageFormatCollection.Get(i).Name);
-                startScreenCaptureMenuItemForSystemTrayMenu.Click += new EventHandler(toolStripMenuItemStartScreenCapture_Click);
+                startScreenCaptureMenuItemForSystemTrayMenu.Click += new EventHandler(Click_toolStripMenuItemStartScreenCapture);
 
                 toolStripMenuItemStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSystemTrayMenu);
                 toolStripSplitButtonStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSplitButton);
@@ -248,7 +254,7 @@ namespace autoscreen
             Log.Write("Loading user settings - option menu items.");
 
             toolStripMenuItemDebugMode.Checked = Properties.Settings.Default.DebugMode;
-            toolStripMenuItemDebugMode.CheckedChanged += toolStripMenuItemDebugMode_CheckedChanged;
+            toolStripMenuItemDebugMode.CheckedChanged += CheckedChanged_toolStripMenuItemDebugMode;
 
             toolStripMenuItemPreviewAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
             toolStripMenuItemShowSystemTrayIcon.Checked = Properties.Settings.Default.ShowSystemTrayIcon;
@@ -381,10 +387,12 @@ namespace autoscreen
         {
             if (runSaveApplicationSettings == null)
             {
-                runSaveApplicationSettings = new BackgroundWorker();
-                runSaveApplicationSettings.WorkerReportsProgress = false;
-                runSaveApplicationSettings.WorkerSupportsCancellation = true;
-                runSaveApplicationSettings.DoWork += new DoWorkEventHandler(runSaveApplicationSettingsThread_DoWork);
+                runSaveApplicationSettings = new BackgroundWorker
+                {
+                    WorkerReportsProgress = false,
+                    WorkerSupportsCancellation = true
+                };
+                runSaveApplicationSettings.DoWork += new DoWorkEventHandler(DoWork_runSaveApplicationSettingsThread);
             }
             else
             {
@@ -452,7 +460,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripComboBoxImageFormatFilter_SelectedIndexChanged(object sender, EventArgs e)
+        private void SelectedIndexChanged_toolStripComboBoxImageFormatFilter(object sender, EventArgs e)
         {
             if (toolStripComboBoxImageFormatFilter.SelectedIndex == 0)
             {
@@ -1150,7 +1158,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void listBoxScreenshots_SelectedIndexChanged(object sender, EventArgs e)
+        private void SelectedIndexChangedlistBoxScreenshots(object sender, EventArgs e)
         {
             Slideshow.Index = listBoxSlides.SelectedIndex;
             Slideshow.Count = listBoxSlides.Items.Count;
@@ -1346,7 +1354,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void monthCalendar_DateSelected(object sender, DateRangeEventArgs e)
+        private void DateSelected_monthCalendar(object sender, DateRangeEventArgs e)
         {
             ShowSlideshow();
         }
@@ -1356,7 +1364,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonFirstSlide_Click(object sender, EventArgs e)
+        private void Click_toolStripButtonFirstSlide(object sender, EventArgs e)
         {
             Slideshow.First();
             listBoxSlides.SelectedIndex = Slideshow.Index;
@@ -1367,7 +1375,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonPreviousSlide_Click(object sender, EventArgs e)
+        private void Click_toolStripButtonPreviousSlide(object sender, EventArgs e)
         {
             Slideshow.Previous();
             listBoxSlides.SelectedIndex = Slideshow.Index;
@@ -1378,7 +1386,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonPlaySlideshow_Click(object sender, EventArgs e)
+        private void Click_toolStripButtonPlaySlideshow(object sender, EventArgs e)
         {
             if (Slideshow.Playing)
             {
@@ -1395,7 +1403,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonNextSlide_Click(object sender, EventArgs e)
+        private void Click_toolStripButtonNextSlide(object sender, EventArgs e)
         {
             Slideshow.Next();
             listBoxSlides.SelectedIndex = Slideshow.Index;
@@ -1406,7 +1414,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonLastSlide_Click(object sender, EventArgs e)
+        private void Click_toolStripButtonLastSlide(object sender, EventArgs e)
         {
             Slideshow.Last();
             listBoxSlides.SelectedIndex = Slideshow.Index;
@@ -1417,7 +1425,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemStartScreenCapture_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemStartScreenCapture(object sender, EventArgs e)
         {
             string imageFormat = ScreenCapture.DefaultImageFormat;
 
@@ -1460,7 +1468,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemStopScreenCapture_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemStopScreenCapture(object sender, EventArgs e)
         {
             StopScreenCapture();
         }
@@ -1470,7 +1478,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemExit_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemExit(object sender, EventArgs e)
         {
             Exit();
         }
@@ -1532,7 +1540,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runSlideSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void DoWork_runSlideSearchThread(object sender, DoWorkEventArgs e)
         {
             RunSlideSearch(e);
         }
@@ -1542,7 +1550,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runDateSearchThread_DoWork(object sender, DoWorkEventArgs e)
+        private void DoWork_runDateSearchThread(object sender, DoWorkEventArgs e)
         {
             RunDateSearch(e);
         }
@@ -1552,12 +1560,12 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runDeleteSlidesThread_DoWork(object sender, DoWorkEventArgs e)
+        private void DoWork_runDeleteSlidesThread(object sender, DoWorkEventArgs e)
         {
             RunDeleteSlides(e);
         }
 
-        private void runSaveApplicationSettingsThread_DoWork(object sender, DoWorkEventArgs e)
+        private void DoWork_runSaveApplicationSettingsThread(object sender, DoWorkEventArgs e)
         {
             RunSaveApplicationSettings(e);
         }
@@ -1715,7 +1723,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonPlaySlideshow_ButtonClick(object sender, EventArgs e)
+        private void ButtonClick_toolStripButtonPlaySlideshow(object sender, EventArgs e)
         {
             PlaySlideshow();
         }
@@ -1725,7 +1733,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonBrowseFolder_Click(object sender, EventArgs e)
+        private void Click_buttonBrowseFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
 
@@ -1740,7 +1748,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemOpen(object sender, EventArgs e)
         {
             SearchDates();
             SearchSlides();
@@ -1752,7 +1760,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemClose_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemClose(object sender, EventArgs e)
         {
             CloseWindow();
         }
@@ -1762,7 +1770,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemAbout(object sender, EventArgs e)
         {
             MessageBox.Show(Properties.Settings.Default.ApplicationName + " " + Properties.Settings.Default.ApplicationVersion + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2018)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -1772,7 +1780,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemShowSlideLocation_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemShowSlideLocation(object sender, EventArgs e)
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
@@ -1790,7 +1798,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemShowScreenshotLocation_Click(object sender, EventArgs e)
+        private void Click_toolStripMenuItemShowScreenshotLocation(object sender, EventArgs e)
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
@@ -2008,13 +2016,13 @@ namespace autoscreen
             contextMenuStripScreenshotPreview.Items.Clear();
 
             ToolStripItem showSlideLocation = new ToolStripMenuItem("Show Slide Location");
-            showSlideLocation.Click += new EventHandler(toolStripMenuItemShowSlideLocation_Click);
+            showSlideLocation.Click += new EventHandler(Click_toolStripMenuItemShowSlideLocation);
 
             ToolStripItem showScreenshotLocation = new ToolStripMenuItem("Show Screenshot Location");
-            showScreenshotLocation.Click += new EventHandler(toolStripMenuItemShowScreenshotLocation_Click);
+            showScreenshotLocation.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
             ToolStripItem addNewEditorItem = new ToolStripMenuItem("Add New Editor ...");
-            addNewEditorItem.Click += new EventHandler(addEditorToolStripMenuItem_Click);
+            addNewEditorItem.Click += new EventHandler(Click_addEditorToolStripMenuItem);
 
             contextMenuStripScreenshotPreview.Items.Add(showSlideLocation);
             contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocation);
@@ -2050,21 +2058,27 @@ namespace autoscreen
             tabPageEditors.Controls.Clear();
 
             // The button for adding a new Editor.
-            Button buttonAddNewEditor = new Button();
-            buttonAddNewEditor.Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT);
-            buttonAddNewEditor.Location = new Point(xPosEditor, yPosEditor);
-            buttonAddNewEditor.Text = "Add New Editor ...";
-            buttonAddNewEditor.Click += new EventHandler(addEditorToolStripMenuItem_Click);
+            Button buttonAddNewEditor = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosEditor, yPosEditor),
+                Text = "Add New Editor ...",
+                TabStop = false
+            };
+            buttonAddNewEditor.Click += new EventHandler(Click_addEditorToolStripMenuItem);
             tabPageEditors.Controls.Add(buttonAddNewEditor);
 
             // Move down and then add the "Remove Selected Editors" button.
             yPosEditor += 22;
 
-            Button buttonRemoveSelectedEditors = new Button();
-            buttonRemoveSelectedEditors.Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT);
-            buttonRemoveSelectedEditors.Location = new Point(xPosEditor, yPosEditor);
-            buttonRemoveSelectedEditors.Text = "Remove Selected Editors";
-            buttonRemoveSelectedEditors.Click += new EventHandler(removeSelectedEditors_Click);
+            Button buttonRemoveSelectedEditors = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosEditor, yPosEditor),
+                Text = "Remove Selected Editors",
+                TabStop = false
+            };
+            buttonRemoveSelectedEditors.Click += new EventHandler(Click_removeSelectedEditors);
             tabPageEditors.Controls.Add(buttonRemoveSelectedEditors);
 
             // Move down a bit so we can start populating the Editors tab page with a list of Editors.
@@ -2079,9 +2093,11 @@ namespace autoscreen
                     // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
                     // Add the Editor to the screenshot preview contextual menu.
 
-                    ToolStripItem editorItem = new ToolStripMenuItem(editor.Name);
-                    editorItem.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
-                    editorItem.Click += new EventHandler(editorRun_Click);
+                    ToolStripItem editorItem = new ToolStripMenuItem(editor.Name)
+                    {
+                        Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap()
+                    };
+                    editorItem.Click += new EventHandler(Click_editorRun);
                     contextMenuStripScreenshotPreview.Items.Add(editorItem);
                     // ****************************************************************************
 
@@ -2089,37 +2105,48 @@ namespace autoscreen
                     // Add the Editor to the list of Editors in the Editors tab page.
 
                     // Add a checkbox so that the user has the ability to remove the selected Editor.
-                    CheckBox checkboxEditor = new CheckBox();
-                    checkboxEditor.Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT);
-                    checkboxEditor.Location = new Point(xPosEditor, yPosEditor);
-                    checkboxEditor.Tag = editor;
+                    CheckBox checkboxEditor = new CheckBox
+                    {
+                        Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT),
+                        Location = new Point(xPosEditor, yPosEditor),
+                        Tag = editor,
+                        TabStop = false
+                    };
                     tabPageEditors.Controls.Add(checkboxEditor);
 
                     // Add an image showing the application icon of the Editor.
-                    PictureBox pictureBoxEditor = new PictureBox();
-                    pictureBoxEditor.Size = new Size(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT);
-                    pictureBoxEditor.Location = new Point(xPosEditor + X_POS_EDITOR_ICON, yPosEditor);
-                    pictureBoxEditor.Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap();
-                    pictureBoxEditor.SizeMode = PictureBoxSizeMode.StretchImage;
+                    PictureBox pictureBoxEditor = new PictureBox
+                    {
+                        Size = new Size(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT),
+                        Location = new Point(xPosEditor + X_POS_EDITOR_ICON, yPosEditor),
+                        Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(),
+                        SizeMode = PictureBoxSizeMode.StretchImage
+                    };
                     tabPageEditors.Controls.Add(pictureBoxEditor);
 
                     // Add a read-only text box showing the application name of the Editor.
-                    TextBox textBoxEditor = new TextBox();
-                    textBoxEditor.Width = EDITOR_TEXTBOX_WIDTH;
-                    textBoxEditor.Height = EDITOR_HEIGHT;
-                    textBoxEditor.MaxLength = EDITOR_TEXTBOX_MAX_LENGTH;
-                    textBoxEditor.Location = new Point(xPosEditor + X_POS_EDITOR_TEXTBOX, yPosEditor);
-                    textBoxEditor.Text = editor.Name;
-                    textBoxEditor.ReadOnly = true;
+                    TextBox textBoxEditor = new TextBox
+                    {
+                        Width = EDITOR_TEXTBOX_WIDTH,
+                        Height = EDITOR_HEIGHT,
+                        MaxLength = EDITOR_TEXTBOX_MAX_LENGTH,
+                        Location = new Point(xPosEditor + X_POS_EDITOR_TEXTBOX, yPosEditor),
+                        Text = editor.Name,
+                        ReadOnly = true,
+                        TabStop = false
+                    };
                     tabPageEditors.Controls.Add(textBoxEditor);
 
                     // Add a button so that the user can change the Editor.
-                    Button buttonChangeEditor = new Button();
-                    buttonChangeEditor.Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT);
-                    buttonChangeEditor.Location = new Point(xPosEditor + X_POS_EDITOR_BUTTON, yPosEditor);
-                    buttonChangeEditor.Text = EDIT_BUTTON_TEXT;
-                    buttonChangeEditor.Tag = editor;
-                    buttonChangeEditor.Click += new EventHandler(buttonChangeEditor_Click);
+                    Button buttonChangeEditor = new Button
+                    {
+                        Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
+                        Location = new Point(xPosEditor + X_POS_EDITOR_BUTTON, yPosEditor),
+                        Text = EDIT_BUTTON_TEXT,
+                        Tag = editor,
+                        TabStop = false
+                    };
+                    buttonChangeEditor.Click += new EventHandler(Click_buttonChangeEditor);
                     tabPageEditors.Controls.Add(buttonChangeEditor);
 
                     // Move down the Editors tab page so we're ready to loop around again and add the next editor to it.
@@ -2136,7 +2163,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonOpenFolder_Click(object sender, EventArgs e)
+        private void Click_buttonOpenFolder(object sender, EventArgs e)
         {
             if (Directory.Exists(textBoxFolder.Text))
             {
@@ -2151,7 +2178,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Click_addEditorToolStripMenuItem(object sender, EventArgs e)
         {
             formEditor.EditorObject = null;
 
@@ -2168,7 +2195,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void removeSelectedEditors_Click(object sender, EventArgs e)
+        private void Click_removeSelectedEditors(object sender, EventArgs e)
         {
             int countBeforeRemoval = EditorCollection.Count;
 
@@ -2197,7 +2224,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void editorRun_Click(object sender, EventArgs e)
+        private void Click_editorRun(object sender, EventArgs e)
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
@@ -2216,7 +2243,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonChangeEditor_Click(object sender, EventArgs e)
+        private void Click_buttonChangeEditor(object sender, EventArgs e)
         {
             Button buttonSelected = (Button)sender;
 
@@ -2242,7 +2269,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonScheduleSet_Click(object sender, EventArgs e)
+        private void Click_buttonScheduleSet(object sender, EventArgs e)
         {
             ScheduleSet();
         }
@@ -2252,7 +2279,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonScheduleClear_Click(object sender, EventArgs e)
+        private void Click_buttonScheduleClear(object sender, EventArgs e)
         {
             ScheduleClear();
         }
@@ -2268,10 +2295,10 @@ namespace autoscreen
         {
             if (checkBoxAutoReset.Checked)
             {
-                buttonScreen1Reset_Click(null, null);
-                buttonScreen2Reset_Click(null, null);
-                buttonScreen3Reset_Click(null, null);
-                buttonScreen4Reset_Click(null, null);
+                Click_buttonScreen1Reset(null, null);
+                Click_buttonScreen2Reset(null, null);
+                Click_buttonScreen3Reset(null, null);
+                Click_buttonScreen4Reset(null, null);
             }
         }
 
@@ -2280,7 +2307,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonScreen1Reset_Click(object sender, EventArgs e)
+        private void Click_buttonScreen1Reset(object sender, EventArgs e)
         {
             int count = 0;
 
@@ -2304,7 +2331,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonScreen2Reset_Click(object sender, EventArgs e)
+        private void Click_buttonScreen2Reset(object sender, EventArgs e)
         {
             int count = 0;
 
@@ -2328,7 +2355,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonScreen3Reset_Click(object sender, EventArgs e)
+        private void Click_buttonScreen3Reset(object sender, EventArgs e)
         {
             int count = 0;
 
@@ -2352,7 +2379,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonScreen4Reset_Click(object sender, EventArgs e)
+        private void Click_buttonScreen4Reset(object sender, EventArgs e)
         {
             int count = 0;
 
@@ -2380,7 +2407,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonSetPassphrase_Click(object sender, EventArgs e)
+        private void Click_buttonSetPassphrase(object sender, EventArgs e)
         {
             if (textBoxPassphrase.Text.Length > 0)
             {
@@ -2399,7 +2426,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonClearPassphrase_Click(object sender, EventArgs e)
+        private void Click_buttonClearPassphrase(object sender, EventArgs e)
         {
             textBoxPassphrase.Clear();
             textBoxPassphrase.ReadOnly = false;
@@ -2423,7 +2450,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tabControlScreens_SelectedIndexChanged(object sender, EventArgs e)
+        private void SelectedIndexChanged_tabControlScreens(object sender, EventArgs e)
         {
             Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= (ScreenCapture.SCREEN_MAX + 1) ? tabControlScreens.SelectedIndex : 1;
         }
@@ -2433,7 +2460,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerPreviewCapture_Tick(object sender, EventArgs e)
+        private void Tick_timerPreviewCapture(object sender, EventArgs e)
         {
             TakePreviewScreenshots();
         }
@@ -2443,7 +2470,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerScreenCapture_Tick(object sender, EventArgs e)
+        private void Tick_timerScreenCapture(object sender, EventArgs e)
         {
             DisplayCaptureStatus(true);
 
@@ -2659,7 +2686,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBoxCaptureLimit_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_checkBoxCaptureLimit(object sender, EventArgs e)
         {
             CaptureLimitCheck();
         }
@@ -2773,6 +2800,8 @@ namespace autoscreen
             pictureBoxScreen2.Image = pictureBoxScreenshotPreviewMonitor2.Image;
             pictureBoxScreen3.Image = pictureBoxScreenshotPreviewMonitor3.Image;
             pictureBoxScreen4.Image = pictureBoxScreenshotPreviewMonitor4.Image;
+
+            GC.Collect();
         }
 
         /// <summary>
@@ -2798,7 +2827,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBoxScheduleOnTheseDays_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_checkBoxScheduleOnTheseDays(object sender, EventArgs e)
         {
             if (checkBoxScheduleOnTheseDays.Checked)
             {
@@ -2827,7 +2856,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerScheduledCaptureStart_Tick(object sender, EventArgs e)
+        private void Tick_timerScheduledCaptureStart(object sender, EventArgs e)
         {
             if (checkBoxScheduleStartOnSchedule.Checked)
             {
@@ -2944,7 +2973,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerScheduledCaptureStop_Tick(object sender, EventArgs e)
+        private void Tick_timerScheduledCaptureStop(object sender, EventArgs e)
         {
             if (checkBoxScheduleStopAt.Checked)
             {
@@ -2981,7 +3010,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void numericUpDownSlideshowDelay_ValueChanged(object sender, EventArgs e)
+        private void ValueChanged_numericUpDownSlideshowDelay(object sender, EventArgs e)
         {
             EnablePlaySlideshow();
         }
@@ -2991,7 +3020,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void tabControlModules_SelectedIndexChanged(object sender, EventArgs e)
+        private void SelectedIndexChanged_tabControlModules(object sender, EventArgs e)
         {
             toolStripSlideshow.Visible = false;
             toolStripScreenCapture.Visible = false;
@@ -3015,7 +3044,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void previewInterval_ValueChanged(object sender, EventArgs e)
+        private void ValueChanged_previewInterval(object sender, EventArgs e)
         {
             int demoInterval = GetCaptureDelay();
 
@@ -3075,7 +3104,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemShowSystemTrayIcon_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_toolStripMenuItemShowSystemTrayIcon(object sender, EventArgs e)
         {
             notifyIcon.Visible = toolStripMenuItemShowSystemTrayIcon.Checked;
         }
@@ -3085,7 +3114,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBoxPassphraseLock_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_checkBoxPassphraseLock(object sender, EventArgs e)
         {
             if (checkBoxPassphraseLock.Checked)
             {
@@ -3102,7 +3131,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxPassphrase_TextChanged(object sender, EventArgs e)
+        private void TextChanged_textBoxPassphrase(object sender, EventArgs e)
         {
             if (textBoxPassphrase.Text.Length > 0)
             {
@@ -3122,7 +3151,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBoxScheduleStartOnSchedule_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_checkBoxScheduleStartOnSchedule(object sender, EventArgs e)
         {
             if (checkBoxScheduleStartOnSchedule.Checked)
             {
@@ -3139,7 +3168,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBoxScheduleStartAt_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_checkBoxScheduleStartAt(object sender, EventArgs e)
         {
             if (checkBoxScheduleStartAt.Checked)
             {
@@ -3156,7 +3185,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButtonPreview_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_toolStripButtonPreview(object sender, EventArgs e)
         {
             if (GetCaptureDelay() > 0 && toolStripButtonPreview.Checked)
             {
@@ -3178,7 +3207,7 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemDebugMode_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_toolStripMenuItemDebugMode(object sender, EventArgs e)
         {
             Log.Enabled = toolStripMenuItemDebugMode.Checked;
         }
@@ -3188,12 +3217,12 @@ namespace autoscreen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerDeleteSlides_Tick(object sender, EventArgs e)
+        private void Tick_timerDeleteSlides(object sender, EventArgs e)
         {
             DeleteSlides();
         }
 
-        private void toolStripMenuItemStartWhenWindowsStarts_CheckedChanged(object sender, EventArgs e)
+        private void CheckedChanged_toolStripMenuItemStartWhenWindowsStarts(object sender, EventArgs e)
         {
             try
             {
@@ -3214,12 +3243,12 @@ namespace autoscreen
             }
         }
 
-        private void SaveApplicationSettings_EventHandler(object sender, EventArgs e)
+        private void SaveApplicationSettings(object sender, EventArgs e)
         {
             SaveApplicationSettings();
         }
 
-        private void buttonRestoreDefaults_Click(object sender, EventArgs e)
+        private void Click_buttonRestoreDefaults(object sender, EventArgs e)
         {
             Log.Write("Restoring default settings.");
 
@@ -3268,7 +3297,7 @@ namespace autoscreen
 
             checkBoxScheduleOnTheseDays.Checked = false;
 
-            dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0 ,0);
+            dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
             dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
 
             numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;

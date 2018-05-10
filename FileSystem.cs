@@ -1,18 +1,18 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.FileSystem.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.Collections;
-using System.Drawing;
-using System.IO;
-using System.Text.RegularExpressions;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="FileSystem.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Collections;
+    using System.Drawing;
+    using System.IO;
+    using System.Text.RegularExpressions;
+
     public static class FileSystem
     {
         private static string _filePath;

@@ -1,25 +1,17 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.Screenshot.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.IO;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="Screenshot.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.IO;
+
     public class Screenshot
     {
-        public int Index { get; set; }
-        public string Date { get; set; }
-        public string Path { get; set; }
-        public int Screen { get; set; }
-        public string Format { get; set; }
-        public string Filename { get; set; }
-        public string Slidename { get; set; }
-
         public Screenshot()
         {
         }
@@ -43,5 +35,13 @@ namespace autoscreen
 
             Directory.SetCurrentDirectory(directory);
         }
+
+        public int Index { get; set; }
+        public string Date { get; set; }
+        public string Path { get; set; }
+        public int Screen { get; set; }
+        public string Format { get; set; }
+        public string Filename { get; set; }
+        public string Slidename { get; set; }
     }
 }

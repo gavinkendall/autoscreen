@@ -1,21 +1,21 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.ScreenshotCollection.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System;
-using System.Collections;
-using System.Text;
-using System.Xml;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScreenshotCollection.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System;
+    using System.Collections;
+    using System.Text;
+    using System.Xml;
+
     public static class ScreenshotCollection
     {
         private static XmlDocument xDoc = null;
-        private static ArrayList m_screenshotList = new ArrayList();
+        private static ArrayList _screenshotList = new ArrayList();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREENSHOT_NODE = "screenshot";
@@ -72,18 +72,18 @@ namespace autoscreen
                 xScreenshots.AppendChild(xNewScreenshot);
 
                 // Add the new screenshot to the collection of screenshots.
-                m_screenshotList.Add(newScreenshot);
+                _screenshotList.Add(newScreenshot);
             }
         }
 
         public static Screenshot GetByIndex(int index)
         {
-            return (Screenshot)m_screenshotList[index];
+            return (Screenshot)_screenshotList[index];
         }
 
         public static int Count
         {
-            get { return m_screenshotList.Count; }
+            get { return _screenshotList.Count; }
         }
 
         public static Screenshot GetBySlidename(string slidename, int screenNumber)
@@ -186,7 +186,7 @@ namespace autoscreen
                     !string.IsNullOrEmpty(screenshot.Filename) &&
                     !string.IsNullOrEmpty(screenshot.Slidename))
                 {
-                    m_screenshotList.Add(screenshot);
+                    _screenshotList.Add(screenshot);
                 }
             }
         }
@@ -196,15 +196,17 @@ namespace autoscreen
         /// </summary>
         public static void Save()
         {
-            XmlWriterSettings xSettings = new XmlWriterSettings();
-            xSettings.Indent = true;
-            xSettings.CloseOutput = true;
-            xSettings.CheckCharacters = true;
-            xSettings.Encoding = Encoding.UTF8;
-            xSettings.NewLineChars = Environment.NewLine;
-            xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-            xSettings.NewLineHandling = NewLineHandling.Entitize;
-            xSettings.ConformanceLevel = ConformanceLevel.Document;
+            XmlWriterSettings xSettings = new XmlWriterSettings
+            {
+                Indent = true,
+                CloseOutput = true,
+                CheckCharacters = true,
+                Encoding = Encoding.UTF8,
+                NewLineChars = Environment.NewLine,
+                IndentChars = XML_FILE_INDENT_CHARS,
+                NewLineHandling = NewLineHandling.Entitize,
+                ConformanceLevel = ConformanceLevel.Document
+            };
 
             StringBuilder screenshots = new StringBuilder();
 
@@ -214,7 +216,7 @@ namespace autoscreen
                 xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
                 xWriter.WriteStartElement(XML_FILE_SCREENSHOTS_NODE);
 
-                foreach (object obj in m_screenshotList)
+                foreach (object obj in _screenshotList)
                 {
                     Screenshot screenshot = (Screenshot)obj;
 

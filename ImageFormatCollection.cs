@@ -1,14 +1,14 @@
-﻿//////////////////////////////////////////////////////////
-// Auto Screen Capture 2.1.3
-// autoscreen.ImageFormatCollection.cs
-//
-// Developed by Gavin Kendall
-// Thursday, 15 May 2008 - Thursday, 26 April 2018
-
-using System.Collections;
-
-namespace autoscreen
+﻿//-----------------------------------------------------------------------
+// <copyright file="ImageFormatCollection.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
+    using System.Collections;
+
     public static class ImageFormatCollection
     {
         private static ArrayList _imageFormatList = new ArrayList();

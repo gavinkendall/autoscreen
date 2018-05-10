@@ -1,4 +1,4 @@
-﻿namespace autoscreen
+﻿namespace AutoScreenCapture
 {
     partial class FormEnterPassphrase
     {
@@ -41,7 +41,7 @@
             this.textBoxPassphrase.Size = new System.Drawing.Size(187, 20);
             this.textBoxPassphrase.TabIndex = 1;
             this.textBoxPassphrase.TabStop = false;
-            this.textBoxPassphrase.TextChanged += new System.EventHandler(this.textBoxPassphrase_TextChanged);
+            this.textBoxPassphrase.TextChanged += new System.EventHandler(this.TextChanged_textBoxPassphrase);
             // 
             // buttonCancel
             // 
@@ -53,7 +53,7 @@
             this.buttonCancel.TabStop = false;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.Click_buttonCancel);
             // 
             // buttonUnlock
             // 
@@ -65,7 +65,7 @@
             this.buttonUnlock.TabStop = false;
             this.buttonUnlock.Text = "Unlock";
             this.buttonUnlock.UseVisualStyleBackColor = true;
-            this.buttonUnlock.Click += new System.EventHandler(this.buttonUnlock_Click);
+            this.buttonUnlock.Click += new System.EventHandler(this.Click_buttonUnlock);
             // 
             // FormEnterPassphrase
             // 
