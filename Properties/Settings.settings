@@ -1,12 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="autoscreen.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AutoScreenCapture.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="Interval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60000</Value>
     </Setting>
     <Setting Name="ApplicationVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2.1.4</Value>
+      <Value Profile="(Default)">2.1.5</Value>
     </Setting>
     <Setting Name="ImageFormatFilter" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.*</Value>
@@ -54,7 +54,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CaptureStopAtCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="CaptureStartAtValue" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">11/20/2013 08:00:00</Value>
@@ -217,6 +217,9 @@
     </Setting>
     <Setting Name="StartWhenWindowsStartsCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Mouse" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

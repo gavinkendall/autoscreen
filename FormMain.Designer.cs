@@ -222,6 +222,7 @@
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.buttonRestoreDefaults = new System.Windows.Forms.Button();
+            this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -1824,6 +1825,7 @@
             // 
             // groupBoxCaptureDelay
             // 
+            this.groupBoxCaptureDelay.Controls.Add(this.checkBoxMouse);
             this.groupBoxCaptureDelay.Controls.Add(this.labelLimit);
             this.groupBoxCaptureDelay.Controls.Add(this.checkBoxInitialScreenshot);
             this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownImageResolutionRatio);
@@ -2610,6 +2612,16 @@
             this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
             this.buttonRestoreDefaults.Click += new System.EventHandler(this.Click_buttonRestoreDefaults);
             // 
+            // checkBoxMouse
+            // 
+            this.checkBoxMouse.AutoSize = true;
+            this.checkBoxMouse.Location = new System.Drawing.Point(127, 98);
+            this.checkBoxMouse.Name = "checkBoxMouse";
+            this.checkBoxMouse.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxMouse.TabIndex = 27;
+            this.checkBoxMouse.Text = "Mouse";
+            this.checkBoxMouse.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2915,5 +2927,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.Button buttonRestoreDefaults;
+        private System.Windows.Forms.CheckBox checkBoxMouse;
     }
 }

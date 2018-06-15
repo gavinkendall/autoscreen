@@ -18,6 +18,22 @@ namespace AutoScreenCapture
 
     public static class ScreenCapture
     {
+        [StructLayout(LayoutKind.Sequential)]
+        private struct CURSORINFO
+        {
+            public Int32 cbSize;
+            public Int32 flags;
+            public IntPtr hCursor;
+            public POINTAPI ptScreenPos;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct POINTAPI
+        {
+            public int x;
+            public int y;
+        }
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
@@ -26,6 +42,15 @@ namespace AutoScreenCapture
 
         [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        [DllImport("user32.dll")]
+        private static extern bool GetCursorInfo(out CURSORINFO pci);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
+
+        private const Int32 CURSOR_SHOWING = 0x0001;
+        private const Int32 DI_NORMAL = 0x0003;
 
         public const int SCREEN_MAX = 4;
         public const int CAPTURE_LIMIT_MIN = 1;
@@ -54,7 +79,7 @@ namespace AutoScreenCapture
         public static bool RunningFromCommandLine { get; set; }
         public static bool LockScreenCaptureSession { get; set; }
 
-        public static Bitmap GetScreenBitmap(Screen screen, int ratio, string format)
+        public static Bitmap GetScreenBitmap(Screen screen, int ratio, string format, bool mouse)
         {
             try
             {
@@ -74,6 +99,22 @@ namespace AutoScreenCapture
                 Graphics graphicsSource = Graphics.FromImage(bitmapSource);
 
                 graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                if (mouse)
+                {
+                    CURSORINFO pci;
+                    pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                    if (GetCursorInfo(out pci))
+                    {
+                        if (pci.flags == CURSOR_SHOWING)
+                        {
+                            var hdc = graphicsSource.GetHdc();
+                            DrawIconEx(hdc, pci.ptScreenPos.x - X, pci.ptScreenPos.y - Y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                            graphicsSource.ReleaseHdc();
+                        }
+                    }
+                }
 
                 Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
 
@@ -132,13 +173,13 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel)
+        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
         {
             try
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, format);
+                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, format, mouse);
 
                     if (bitmap != null)
                     {

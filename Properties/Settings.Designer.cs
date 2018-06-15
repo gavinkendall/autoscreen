@@ -37,7 +37,7 @@ namespace AutoScreenCapture.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.1.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.1.5")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));
@@ -223,7 +223,7 @@ namespace AutoScreenCapture.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool CaptureStopAtCheck {
             get {
                 return ((bool)(this["CaptureStopAtCheck"]));
@@ -877,6 +877,18 @@ namespace AutoScreenCapture.Properties {
             }
             set {
                 this["StartWhenWindowsStartsCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Mouse {
+            get {
+                return ((bool)(this["Mouse"]));
+            }
+            set {
+                this["Mouse"] = value;
             }
         }
     }

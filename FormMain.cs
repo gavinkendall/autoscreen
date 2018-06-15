@@ -356,6 +356,8 @@ namespace AutoScreenCapture
 
             checkBoxAutoReset.Checked = Properties.Settings.Default.AutoReset;
 
+            checkBoxMouse.Checked = Properties.Settings.Default.Mouse;
+
             if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
             {
                 toolStripButtonPreview.Checked = true;
@@ -881,6 +883,9 @@ namespace AutoScreenCapture
 
                     Properties.Settings.Default.AutoReset = checkBoxAutoReset.Checked;
                     Log.Write("65 Saving application settings ... AutoReset = " + checkBoxAutoReset.Checked);
+
+                    Properties.Settings.Default.Mouse = checkBoxMouse.Checked;
+                    Log.Write("66 Saving application settings ... Mouse = " + checkBoxMouse.Checked);
 
                     // Passphrase is set in its own event handler and saved appropriately so that's why you won't see a line for it here :)
 
@@ -2518,8 +2523,8 @@ namespace AutoScreenCapture
             // Active Window
             if (CaptureScreenAllowed(5))
             {
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
             }
 
             // All screens.
@@ -2553,8 +2558,8 @@ namespace AutoScreenCapture
 
                     if (!string.IsNullOrEmpty(screenName))
                     {
-                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value);
-                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value);
+                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
                     }
                 }
             }
@@ -2712,7 +2717,7 @@ namespace AutoScreenCapture
 
                     if (preview && CaptureScreenAllowed(count))
                     {
-                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value, ScreenCapture.Format);
+                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value, ScreenCapture.Format, checkBoxMouse.Checked);
 
                         if (bitmap != null)
                         {
@@ -3311,6 +3316,8 @@ namespace AutoScreenCapture
             checkBoxCaptureActiveWindow.Checked = true;
 
             checkBoxAutoReset.Checked = true;
+
+            checkBoxMouse.Checked = true;
 
             ScheduleClear();
 
