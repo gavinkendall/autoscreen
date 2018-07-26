@@ -52,7 +52,7 @@ namespace AutoScreenCapture
 
                 if (imageFormat.Name.Equals(name))
                 {
-                    return (ImageFormat)Get(i);
+                    return Get(i);
                 }
             }
 
