@@ -135,7 +135,8 @@ namespace AutoScreenCapture
 
         public static Bitmap GetActiveWindowBitmap()
         {
-            GetWindowRect(GetForegroundWindow(), out Rectangle rect);
+            Rectangle rect;
+            GetWindowRect(GetForegroundWindow(), out rect);
 
             int width = rect.Width - rect.X;
             int height = rect.Height - rect.Y;

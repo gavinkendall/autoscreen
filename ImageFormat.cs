@@ -11,7 +11,7 @@ namespace AutoScreenCapture
     {
         public string Name { get; set; }
         public string Extension { get; set; }
-        public System.Drawing.Imaging.ImageFormat Format { get; }
+        public System.Drawing.Imaging.ImageFormat Format { get; set; }
 
         public ImageFormat(string name, string extension)
         {

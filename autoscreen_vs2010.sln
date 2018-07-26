@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "autoscreen", "autoscreen.csproj", "{0D508AFE-3F53-4832-A051-D8B1BDE0035C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D508AFE-3F53-4832-A051-D8B1BDE0035C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D508AFE-3F53-4832-A051-D8B1BDE0035C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D508AFE-3F53-4832-A051-D8B1BDE0035C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D508AFE-3F53-4832-A051-D8B1BDE0035C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92533316-4F56-48E7-8706-9556824B30AA}
+	EndGlobalSection
+EndGlobal
