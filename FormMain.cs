@@ -74,6 +74,7 @@ namespace AutoScreenCapture
         private const string REGEX_COMMAND_LINE_DELAY = @"^-delay=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
         private const string REGEX_COMMAND_LINE_LOCK = "^-lock$";
         private const string REGEX_COMMAND_LINE_JPEG_LEVEL = @"^-jpeglevel=(?<JpegLevel>\d{1,3})$";
+        private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
 
         /// <summary>
         /// Constructor for the main form. Arguments from the command line can be passed to it.
@@ -103,6 +104,17 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
+            InitializeThreads();
+
+            DeleteSlides();
+            SearchDates();
+
+            // Changing the value of this property will automatically call SearchSlides.
+            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
+        }
+
+        private void InitializeThreads()
+        {
             runDeleteSlidesThread = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
@@ -123,12 +135,6 @@ namespace AutoScreenCapture
                 WorkerSupportsCancellation = true
             };
             runSlideSearchThread.DoWork += new DoWorkEventHandler(DoWork_runSlideSearchThread);
-
-            DeleteSlides();
-            SearchDates();
-
-            // Changing the value of this property will automatically call SearchSlides.
-            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
         }
 
         /// <summary>
@@ -420,17 +426,17 @@ namespace AutoScreenCapture
                 // Close this window.
                 CloseWindow();
 
-                if (runDateSearchThread.IsBusy)
+                if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
                     runDateSearchThread.CancelAsync();
                 }
 
-                if (runSlideSearchThread.IsBusy)
+                if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
                 {
                     runSlideSearchThread.CancelAsync();
                 }
 
-                if (runDeleteSlidesThread.IsBusy)
+                if (runDeleteSlidesThread != null && runDeleteSlidesThread.IsBusy)
                 {
                     runDeleteSlidesThread.CancelAsync();
                 }
@@ -520,7 +526,7 @@ namespace AutoScreenCapture
 
             monthCalendar.BoldedDates = null;
 
-            if (!runDateSearchThread.IsBusy)
+            if (runDateSearchThread != null && !runDateSearchThread.IsBusy)
             {
                 runDateSearchThread.RunWorkerAsync();
             }
@@ -531,7 +537,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DeleteSlides()
         {
-            if (!runDeleteSlidesThread.IsBusy)
+            if (runDeleteSlidesThread != null && !runDeleteSlidesThread.IsBusy)
             {
                 runDeleteSlidesThread.RunWorkerAsync();
             }
@@ -547,7 +553,7 @@ namespace AutoScreenCapture
             ClearPreview();
             DisableToolStripButtons();
 
-            if (!runSlideSearchThread.IsBusy)
+            if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
             {
                 runSlideSearchThread.RunWorkerAsync();
             }
@@ -1110,13 +1116,13 @@ namespace AutoScreenCapture
                     }
 
                     // Stop the folder search thread if it's busy.
-                    if (runDateSearchThread.IsBusy)
+                    if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                     {
                         runDateSearchThread.CancelAsync();
                     }
 
                     // Stop the file search thread if it's busy.
-                    if (runSlideSearchThread.IsBusy)
+                    if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
                     {
                         runSlideSearchThread.CancelAsync();
                     }
@@ -1515,17 +1521,17 @@ namespace AutoScreenCapture
                 // Close this window.
                 CloseWindow();
 
-                if (runDateSearchThread.IsBusy)
+                if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
                     runDateSearchThread.CancelAsync();
                 }
 
-                if (runSlideSearchThread.IsBusy)
+                if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
                 {
                     runSlideSearchThread.CancelAsync();
                 }
 
-                if (runDeleteSlidesThread.IsBusy)
+                if (runDeleteSlidesThread != null && runDeleteSlidesThread.IsBusy)
                 {
                     runDeleteSlidesThread.CancelAsync();
                 }
@@ -1864,6 +1870,7 @@ namespace AutoScreenCapture
                 toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
                 toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
                 toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
+                toolStripMenuItemShowSystemTrayIcon.Checked = true;
 
                 #endregion Default Values for Command Line Arguments/Options
 
@@ -1878,6 +1885,7 @@ namespace AutoScreenCapture
                 Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
                 Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
                 Regex rgxCommandLineJpegLevel = new Regex(REGEX_COMMAND_LINE_JPEG_LEVEL);
+                Regex rgxCommandLineHideSystemTrayIcon = new Regex(REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON);
 
                 #region Command Line Argument Parsing
 
@@ -1985,6 +1993,11 @@ namespace AutoScreenCapture
                             jpegLevel = cmdJpegLevel;
                         }
                     }
+
+                    if (rgxCommandLineHideSystemTrayIcon.IsMatch(args[i]))
+                    {
+                        toolStripMenuItemShowSystemTrayIcon.Checked = false;
+                    }
                 }
 
                 #endregion Command Line Argument Parsing
@@ -1997,6 +2010,8 @@ namespace AutoScreenCapture
                 numericUpDownJpegQualityLevel.Value = jpegLevel;
                 numericUpDownImageResolutionRatio.Value = ratio;
                 comboBoxScheduleImageFormat.SelectedItem = imageFormat;
+
+                InitializeThreads();
 
                 if (isScheduled)
                 {
