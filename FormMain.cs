@@ -23,6 +23,7 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         private FormEditor formEditor = new FormEditor();
+        private FormTrigger formTrigger = new FormTrigger();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         /// <summary>
@@ -2050,6 +2051,7 @@ namespace AutoScreenCapture
             contextMenuStripScreenshotPreview.Items.Add(addNewEditorItem);
 
             BuildEditorsList();
+            BuildTriggersList();
         }
 
         private void BuildEditorsList()
@@ -2062,7 +2064,7 @@ namespace AutoScreenCapture
             const int CHECKBOX_HEIGHT = 20;
             const int X_POS_EDITOR_ICON = 20;
             const int BIG_BUTTON_WIDTH = 205;
-            const int BIG_BUTTON_HEIGHT = 20;
+            const int BIG_BUTTON_HEIGHT = 25;
             const int SMALL_IMAGE_WIDTH = 20;
             const int SMALL_IMAGE_HEIGHT = 20;
             const int SMALL_BUTTON_WIDTH = 27;
@@ -2089,7 +2091,7 @@ namespace AutoScreenCapture
             tabPageEditors.Controls.Add(buttonAddNewEditor);
 
             // Move down and then add the "Remove Selected Editors" button.
-            yPosEditor += 22;
+            yPosEditor += 27;
 
             Button buttonRemoveSelectedEditors = new Button
             {
@@ -2102,7 +2104,7 @@ namespace AutoScreenCapture
             tabPageEditors.Controls.Add(buttonRemoveSelectedEditors);
 
             // Move down a bit so we can start populating the Editors tab page with a list of Editors.
-            yPosEditor += 27;
+            yPosEditor += 28;
 
             for (int i = 0; i < EditorCollection.Count; i++)
             {
@@ -2169,10 +2171,106 @@ namespace AutoScreenCapture
                     buttonChangeEditor.Click += new EventHandler(Click_buttonChangeEditor);
                     tabPageEditors.Controls.Add(buttonChangeEditor);
 
-                    // Move down the Editors tab page so we're ready to loop around again and add the next editor to it.
+                    // Move down the Editors tab page so we're ready to loop around again and add the next Editor to it.
                     yPosEditor += Y_POS_EDITOR_INCREMENT;
                     // ****************************************************************************
                 }
+            }
+        }
+
+        private void BuildTriggersList()
+        {
+            int xPosTrigger = 5;
+            int yPosTrigger = 3;
+
+            const int TRIGGER_HEIGHT = 20;
+            const int CHECKBOX_WIDTH = 20;
+            const int CHECKBOX_HEIGHT = 20;
+            const int X_POS_TRIGGER_ICON = 20;
+            const int BIG_BUTTON_WIDTH = 205;
+            const int BIG_BUTTON_HEIGHT = 25;
+            const int SMALL_IMAGE_WIDTH = 20;
+            const int SMALL_IMAGE_HEIGHT = 20;
+            const int SMALL_BUTTON_WIDTH = 27;
+            const int SMALL_BUTTON_HEIGHT = 20;
+            const int X_POS_TRIGGER_TEXTBOX = 48;
+            const int X_POS_TRIGGER_BUTTON = 178;
+            const int TRIGGER_TEXTBOX_WIDTH = 125;
+            const int Y_POS_TRIGGER_INCREMENT = 23;
+            const int TRIGGER_TEXTBOX_MAX_LENGTH = 50;
+
+            const string EDIT_BUTTON_TEXT = "...";
+
+            tabPageTriggers.Controls.Clear();
+
+            // The button for adding a new Trigger.
+            Button buttonAddNewTrigger = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosTrigger, yPosTrigger),
+                Text = "Add New Trigger ...",
+                TabStop = false
+            };
+            buttonAddNewTrigger.Click += new EventHandler(Click_addTrigger);
+            tabPageTriggers.Controls.Add(buttonAddNewTrigger);
+
+            // Move down and then add the "Remove Selected Triggers" button.
+            yPosTrigger += 27;
+
+            Button buttonRemoveSelectedTriggers = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosTrigger, yPosTrigger),
+                Text = "Remove Selected Triggers",
+                TabStop = false
+            };
+            buttonRemoveSelectedTriggers.Click += new EventHandler(Click_removeSelectedTriggers);
+            tabPageTriggers.Controls.Add(buttonRemoveSelectedTriggers);
+
+            // Move down a bit so we can start populating the Triggers tab page with a list of Triggers.
+            yPosTrigger += 28;
+
+            for (int i = 0; i < TriggerCollection.Count; i++)
+            {
+                Trigger trigger = TriggerCollection.GetByIndex(i);
+
+                // Add a checkbox so that the user has the ability to remove the selected Trigger.
+                CheckBox checkboxTrigger = new CheckBox
+                {
+                    Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT),
+                    Location = new Point(xPosTrigger, yPosTrigger),
+                    Tag = trigger,
+                    TabStop = false
+                };
+                tabPageTriggers.Controls.Add(checkboxTrigger);
+
+                // Add a read-only text box showing the name of the Trigger.
+                TextBox textBoxTrigger = new TextBox
+                {
+                    Width = TRIGGER_TEXTBOX_WIDTH,
+                    Height = TRIGGER_HEIGHT,
+                    MaxLength = TRIGGER_TEXTBOX_MAX_LENGTH,
+                    Location = new Point(xPosTrigger + X_POS_TRIGGER_TEXTBOX, yPosTrigger),
+                    Text = trigger.Name,
+                    ReadOnly = true,
+                    TabStop = false
+                };
+                tabPageTriggers.Controls.Add(textBoxTrigger);
+
+                // Add a button so that the user can change the Trigger.
+                Button buttonChangeTrigger = new Button
+                {
+                    Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
+                    Location = new Point(xPosTrigger + X_POS_TRIGGER_BUTTON, yPosTrigger),
+                    Text = EDIT_BUTTON_TEXT,
+                    Tag = trigger,
+                    TabStop = false
+                };
+                buttonChangeTrigger.Click += new EventHandler(Click_buttonChangeTrigger);
+                tabPageTriggers.Controls.Add(buttonChangeTrigger);
+
+                // Move down the Triggers tab page so we're ready to loop around again and add the next Trigger to it.
+                yPosTrigger += Y_POS_TRIGGER_INCREMENT;
             }
         }
 
@@ -2194,7 +2292,7 @@ namespace AutoScreenCapture
         #region Editor
 
         /// <summary>
-        /// Shows the "Add Editor" window to enable the user to add a chosen image editor.
+        /// Shows the "Add Editor" window to enable the user to add a chosen Editor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2259,7 +2357,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Editor" window to enable the user to edit a chosen image editor.
+        /// Shows the "Change Editor" window to enable the user to edit a chosen Editor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2281,6 +2379,78 @@ namespace AutoScreenCapture
         }
 
         #endregion Editor
+
+        #region Trigger
+
+        /// <summary>
+        /// Shows the "Add Trigger" window to enable the user to add a chosen Trigger.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_addTrigger(object sender, EventArgs e)
+        {
+            formTrigger.TriggerObject = null;
+
+            formTrigger.ShowDialog(this);
+
+            if (formTrigger.DialogResult == DialogResult.OK)
+            {
+                BuildScreenshotPreviewContextualMenu();
+            }
+        }
+
+        /// <summary>
+        /// Removes the selected Triggers from the Triggers tab page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_removeSelectedTriggers(object sender, EventArgs e)
+        {
+            int countBeforeRemoval = TriggerCollection.Count;
+
+            foreach (Control control in tabPageTriggers.Controls)
+            {
+                if (control.GetType().Equals(typeof(CheckBox)))
+                {
+                    CheckBox checkBox = (CheckBox)control;
+
+                    if (checkBox.Checked)
+                    {
+                        Trigger trigger = TriggerCollection.Get((Trigger)checkBox.Tag);
+                        TriggerCollection.Remove(trigger);
+                    }
+                }
+            }
+
+            if (countBeforeRemoval > TriggerCollection.Count)
+            {
+                BuildScreenshotPreviewContextualMenu();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Change Trigger" window to enable the user to edit a chosen Trigger.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_buttonChangeTrigger(object sender, EventArgs e)
+        {
+            Button buttonSelected = (Button)sender;
+
+            if (buttonSelected.Tag != null)
+            {
+                formTrigger.TriggerObject = (Trigger)buttonSelected.Tag;
+
+                formTrigger.ShowDialog(this);
+
+                if (formTrigger.DialogResult == DialogResult.OK)
+                {
+                    BuildScreenshotPreviewContextualMenu();
+                }
+            }
+        }
+
+        #endregion Trigger
 
         #region Schedule
 

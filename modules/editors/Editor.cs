@@ -17,6 +17,7 @@ namespace AutoScreenCapture
         /// </summary>
         public Editor()
         {
+
         }
 
         /// <summary>
@@ -27,9 +28,9 @@ namespace AutoScreenCapture
         /// <param name="arguments">The arguments that will be given to the executable.</param>
         public Editor(string name, string application, string arguments)
         {
-            this.Name = name;
-            this.Arguments = arguments;
-            this.Application = application;
+            Name = name;
+            Arguments = arguments;
+            Application = application;
         }
 
         /// <summary>

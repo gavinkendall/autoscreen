@@ -157,6 +157,7 @@
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
+            this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.labelLimit = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
             this.numericUpDownImageResolutionRatio = new System.Windows.Forms.NumericUpDown();
@@ -205,6 +206,7 @@
             this.numericUpDownSlideshowDelayMinutes = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayHours = new System.Windows.Forms.NumericUpDown();
             this.tabPageEditors = new System.Windows.Forms.TabPage();
+            this.tabPageTriggers = new System.Windows.Forms.TabPage();
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
@@ -222,7 +224,6 @@
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.buttonRestoreDefaults = new System.Windows.Forms.Button();
-            this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -1682,6 +1683,7 @@
             this.tabControlModules.Controls.Add(this.tabPageScreenCapture);
             this.tabControlModules.Controls.Add(this.tabPageSlideshow);
             this.tabControlModules.Controls.Add(this.tabPageEditors);
+            this.tabControlModules.Controls.Add(this.tabPageTriggers);
             this.tabControlModules.Location = new System.Drawing.Point(0, 164);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
@@ -1847,6 +1849,16 @@
             this.groupBoxCaptureDelay.TabIndex = 14;
             this.groupBoxCaptureDelay.TabStop = false;
             this.groupBoxCaptureDelay.Text = "Take screenshots every ...";
+            // 
+            // checkBoxMouse
+            // 
+            this.checkBoxMouse.AutoSize = true;
+            this.checkBoxMouse.Location = new System.Drawing.Point(127, 98);
+            this.checkBoxMouse.Name = "checkBoxMouse";
+            this.checkBoxMouse.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxMouse.TabIndex = 27;
+            this.checkBoxMouse.Text = "Mouse";
+            this.checkBoxMouse.UseVisualStyleBackColor = true;
             // 
             // labelLimit
             // 
@@ -2458,6 +2470,17 @@
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
             // 
+            // tabPageTriggers
+            // 
+            this.tabPageTriggers.AutoScroll = true;
+            this.tabPageTriggers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTriggers.Name = "tabPageTriggers";
+            this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 218);
+            this.tabPageTriggers.TabIndex = 3;
+            this.tabPageTriggers.Text = "Triggers";
+            this.tabPageTriggers.UseVisualStyleBackColor = true;
+            // 
             // toolStripScreenCapture
             // 
             this.toolStripScreenCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2611,16 +2634,6 @@
             this.buttonRestoreDefaults.Text = "Restore Defaults";
             this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
             this.buttonRestoreDefaults.Click += new System.EventHandler(this.Click_buttonRestoreDefaults);
-            // 
-            // checkBoxMouse
-            // 
-            this.checkBoxMouse.AutoSize = true;
-            this.checkBoxMouse.Location = new System.Drawing.Point(127, 98);
-            this.checkBoxMouse.Name = "checkBoxMouse";
-            this.checkBoxMouse.Size = new System.Drawing.Size(58, 17);
-            this.checkBoxMouse.TabIndex = 27;
-            this.checkBoxMouse.Text = "Mouse";
-            this.checkBoxMouse.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -2928,5 +2941,6 @@
         private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.Button buttonRestoreDefaults;
         private System.Windows.Forms.CheckBox checkBoxMouse;
+        private System.Windows.Forms.TabPage tabPageTriggers;
     }
 }

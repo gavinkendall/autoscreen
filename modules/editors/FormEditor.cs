@@ -8,6 +8,7 @@
 namespace AutoScreenCapture
 {
     using System;
+    using System.IO;
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
@@ -72,59 +73,80 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (EditorCollection.GetByName(textBoxEditorName.Text) == null)
+                if (ApplicationExists())
                 {
-                    EditorCollection.Add(new Editor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text));
+                    if (EditorCollection.GetByName(textBoxEditorName.Text) == null)
+                    {
+                        EditorCollection.Add(new Editor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text));
 
-                    Okay();
+                        Okay();
+                    }
+                    else
+                    {
+                        MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"Could not find \"{textBoxEditorApplication.Text}\".", "Application Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid input for each field.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ChangeEditor()
         {
-            if (InputChanged())
+            if (InputValid())
             {
-                TrimInput();
-
-                if (EditorCollection.GetByName(textBoxEditorName.Text) == null)
+                if (NameChanged() || InputChanged())
                 {
-                    EditorCollection.Get(EditorObject).Application = textBoxEditorApplication.Text;
-                    EditorCollection.Get(EditorObject).Arguments = textBoxEditorArguments.Text;
-                    EditorCollection.Get(EditorObject).Name = textBoxEditorName.Text;
+                    TrimInput();
 
-                    Okay();
+                    if (ApplicationExists())
+                    {
+                        if (EditorCollection.GetByName(textBoxEditorName.Text) != null && NameChanged())
+                        {
+                            MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            EditorCollection.Get(EditorObject).Application = textBoxEditorApplication.Text;
+                            EditorCollection.Get(EditorObject).Arguments = textBoxEditorArguments.Text;
+                            EditorCollection.Get(EditorObject).Name = textBoxEditorName.Text;
+
+                            Okay();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Could not find \"{textBoxEditorApplication.Text}\".", "Application Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Close();
                 }
             }
             else
             {
-                Close();
+                MessageBox.Show("Please enter valid input for each field.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void TrimInput()
         {
-            if (InputValid())
-            {
-                textBoxEditorName.Text = textBoxEditorName.Text.Trim();
-                textBoxEditorApplication.Text = textBoxEditorApplication.Text.Trim();
-                textBoxEditorArguments.Text = textBoxEditorArguments.Text.Trim();
-            }
+            textBoxEditorName.Text = textBoxEditorName.Text.Trim();
+            textBoxEditorApplication.Text = textBoxEditorApplication.Text.Trim();
+            textBoxEditorArguments.Text = textBoxEditorArguments.Text.Trim();
         }
 
         private bool InputValid()
         {
             if (!string.IsNullOrEmpty(textBoxEditorName.Text) &&
-                !string.IsNullOrEmpty(textBoxEditorApplication.Text) &&
-                !string.IsNullOrEmpty(textBoxEditorArguments.Text))
+                !string.IsNullOrEmpty(textBoxEditorApplication.Text))
             {
                 return true;
             }
@@ -136,10 +158,34 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
-            if ((InputValid() && EditorObject != null) &&
-                (!EditorObject.Name.Equals(textBoxEditorName.Text) ||
-                    !EditorObject.Application.Equals(textBoxEditorApplication.Text) ||
+            if (EditorObject != null &&
+                (!EditorObject.Application.Equals(textBoxEditorApplication.Text) ||
                     !EditorObject.Arguments.Equals(textBoxEditorArguments.Text)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool NameChanged()
+        {
+            if (EditorObject != null &&
+                !EditorObject.Name.Equals(textBoxEditorName.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ApplicationExists()
+        {
+            if (File.Exists(textBoxEditorApplication.Text))
             {
                 return true;
             }

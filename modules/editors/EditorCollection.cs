@@ -122,8 +122,7 @@ namespace AutoScreenCapture
                 xreader.Close();
 
                 if (!string.IsNullOrEmpty(editor.Name) &&
-                    !string.IsNullOrEmpty(editor.Application) &&
-                    !string.IsNullOrEmpty(editor.Arguments))
+                    !string.IsNullOrEmpty(editor.Application))
                 {
                     Add(editor);
                 }
