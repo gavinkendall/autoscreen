@@ -591,6 +591,7 @@
             this.pictureBoxScreenshotPreviewMonitor1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor1.TabIndex = 1;
             this.pictureBoxScreenshotPreviewMonitor1.TabStop = false;
+            this.pictureBoxScreenshotPreviewMonitor1.DoubleClick += new System.EventHandler(this.pictureBoxScreenshotPreviewMonitor1_DoubleClick);
             // 
             // pictureBoxScreenshotPreviewMonitor4
             // 
@@ -603,6 +604,7 @@
             this.pictureBoxScreenshotPreviewMonitor4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor4.TabIndex = 3;
             this.pictureBoxScreenshotPreviewMonitor4.TabStop = false;
+            this.pictureBoxScreenshotPreviewMonitor4.DoubleClick += new System.EventHandler(this.pictureBoxScreenshotPreviewMonitor4_DoubleClick);
             // 
             // pictureBoxScreenshotPreviewMonitor2
             // 
@@ -615,6 +617,7 @@
             this.pictureBoxScreenshotPreviewMonitor2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor2.TabIndex = 2;
             this.pictureBoxScreenshotPreviewMonitor2.TabStop = false;
+            this.pictureBoxScreenshotPreviewMonitor2.DoubleClick += new System.EventHandler(this.pictureBoxScreenshotPreviewMonitor2_DoubleClick);
             // 
             // pictureBoxScreenshotPreviewMonitor3
             // 
@@ -627,6 +630,7 @@
             this.pictureBoxScreenshotPreviewMonitor3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreenshotPreviewMonitor3.TabIndex = 2;
             this.pictureBoxScreenshotPreviewMonitor3.TabStop = false;
+            this.pictureBoxScreenshotPreviewMonitor3.DoubleClick += new System.EventHandler(this.pictureBoxScreenshotPreviewMonitor3_DoubleClick);
             // 
             // tabPageScreen1
             // 

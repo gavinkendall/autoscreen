@@ -154,9 +154,16 @@ namespace AutoScreenCapture
             Slideshow.Initialize();
             Slideshow.OnPlaying += new EventHandler(Slideshow_Playing);
 
-            Log.Write("Loading editors and building screenshot preview context menu.");
+            Log.Write("Loading editors.");
 
             EditorCollection.Load();
+
+            Log.Write("Loading triggers.");
+
+            TriggerCollection.Load();
+
+            Log.Write("Building screenshot preview context menu.");
+
             BuildScreenshotPreviewContextualMenu();
 
             Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
@@ -444,6 +451,7 @@ namespace AutoScreenCapture
 
                 EditorCollection.Save();
                 ScreenshotCollection.Save();
+                TriggerCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -1539,6 +1547,7 @@ namespace AutoScreenCapture
 
                 EditorCollection.Save();
                 ScreenshotCollection.Save();
+                TriggerCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -3509,6 +3518,26 @@ namespace AutoScreenCapture
             Log.Write("Default settings restored.");
 
             SaveApplicationSettings();
+        }
+
+        private void pictureBoxScreenshotPreviewMonitor1_DoubleClick(object sender, EventArgs e)
+        {
+            tabControlScreens.SelectedIndex = 1;
+        }
+
+        private void pictureBoxScreenshotPreviewMonitor2_DoubleClick(object sender, EventArgs e)
+        {
+            tabControlScreens.SelectedIndex = 2;
+        }
+
+        private void pictureBoxScreenshotPreviewMonitor3_DoubleClick(object sender, EventArgs e)
+        {
+            tabControlScreens.SelectedIndex = 3;
+        }
+
+        private void pictureBoxScreenshotPreviewMonitor4_DoubleClick(object sender, EventArgs e)
+        {
+            tabControlScreens.SelectedIndex = 4;
         }
     }
 }

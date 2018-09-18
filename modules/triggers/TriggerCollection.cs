@@ -82,33 +82,33 @@ namespace AutoScreenCapture
 
         public static void Load()
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + XML_FILE))
+            if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
             {
-                XmlDocument xdoc = new XmlDocument();
-                xdoc.Load(AppDomain.CurrentDomain.BaseDirectory + XML_FILE);
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load(FileSystem.UserAppDataLocalDirectory + XML_FILE);
 
-                XmlNodeList xtriggers = xdoc.SelectNodes(TRIGGER_XPATH);
+                XmlNodeList xTriggers = xDoc.SelectNodes(TRIGGER_XPATH);
 
-                foreach (XmlNode xtrigger in xtriggers)
+                foreach (XmlNode xTrigger in xTriggers)
                 {
                     Trigger trigger = new Trigger();
-                    XmlNodeReader xreader = new XmlNodeReader(xtrigger);
+                    XmlNodeReader xReader = new XmlNodeReader(xTrigger);
 
-                    while (xreader.Read())
+                    while (xReader.Read())
                     {
-                        if (xreader.IsStartElement())
+                        if (xReader.IsStartElement())
                         {
-                            switch (xreader.Name)
+                            switch (xReader.Name)
                             {
                                 case TRIGGER_NAME:
-                                    xreader.Read();
-                                    trigger.Name = xreader.Value;
+                                    xReader.Read();
+                                    trigger.Name = xReader.Value;
                                     break;
                             }
                         }
                     }
 
-                    xreader.Close();
+                    xReader.Close();
 
                     if (!string.IsNullOrEmpty(trigger.Name))
                     {
@@ -120,38 +120,38 @@ namespace AutoScreenCapture
 
         public static void Save()
         {
-            XmlWriterSettings xsettings = new XmlWriterSettings();
-            xsettings.Indent = true;
-            xsettings.CloseOutput = true;
-            xsettings.CheckCharacters = true;
-            xsettings.Encoding = Encoding.UTF8;
-            xsettings.NewLineChars = Environment.NewLine;
-            xsettings.IndentChars = XML_FILE_INDENT_CHARS;
-            xsettings.NewLineHandling = NewLineHandling.Entitize;
-            xsettings.ConformanceLevel = ConformanceLevel.Document;
+            XmlWriterSettings xSettings = new XmlWriterSettings();
+            xSettings.Indent = true;
+            xSettings.CloseOutput = true;
+            xSettings.CheckCharacters = true;
+            xSettings.Encoding = Encoding.UTF8;
+            xSettings.NewLineChars = Environment.NewLine;
+            xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+            xSettings.NewLineHandling = NewLineHandling.Entitize;
+            xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-            using (XmlWriter xwriter = XmlWriter.Create(AppDomain.CurrentDomain.BaseDirectory + XML_FILE, xsettings))
+            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.UserAppDataLocalDirectory + XML_FILE, xSettings))
             {
-                xwriter.WriteStartDocument();
-                xwriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xwriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
+                xWriter.WriteStartDocument();
+                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                xWriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
 
                 foreach (object obj in _triggerList)
                 {
                     Trigger trigger = (Trigger)obj;
 
-                    xwriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
-                    xwriter.WriteElementString(TRIGGER_NAME, trigger.Name);
+                    xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
+                    xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
 
-                    xwriter.WriteEndElement();
+                    xWriter.WriteEndElement();
                 }
 
-                xwriter.WriteEndElement();
-                xwriter.WriteEndElement();
-                xwriter.WriteEndDocument();
+                xWriter.WriteEndElement();
+                xWriter.WriteEndElement();
+                xWriter.WriteEndDocument();
 
-                xwriter.Flush();
-                xwriter.Close();
+                xWriter.Flush();
+                xWriter.Close();
             }
         }
     }

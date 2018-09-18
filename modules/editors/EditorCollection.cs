@@ -8,6 +8,7 @@
 namespace AutoScreenCapture
 {
     using System;
+    using System.IO;
     using System.Collections;
     using System.Text;
     using System.Xml;
@@ -16,6 +17,7 @@ namespace AutoScreenCapture
     {
         private static ArrayList _editorList = new ArrayList();
 
+        private const string XML_FILE = "editors.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_EDITOR_NODE = "editor";
         private const string XML_FILE_EDITORS_NODE = "editors";
@@ -85,46 +87,49 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Load()
         {
-            XmlDocument xdoc = new XmlDocument();
-            xdoc.LoadXml(Properties.Settings.Default.Editors);
-
-            XmlNodeList xeditors = xdoc.SelectNodes(EDITOR_XPATH);
-
-            foreach (XmlNode xeditor in xeditors)
+            if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
             {
-                Editor editor = new Editor();
-                XmlNodeReader xreader = new XmlNodeReader(xeditor);
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load(FileSystem.UserAppDataLocalDirectory + XML_FILE);
 
-                while (xreader.Read())
+                XmlNodeList xEditors = xDoc.SelectNodes(EDITOR_XPATH);
+
+                foreach (XmlNode xEditor in xEditors)
                 {
-                    if (xreader.IsStartElement())
+                    Editor editor = new Editor();
+                    XmlNodeReader xReader = new XmlNodeReader(xEditor);
+
+                    while (xReader.Read())
                     {
-                        switch (xreader.Name)
+                        if (xReader.IsStartElement())
                         {
-                            case EDITOR_NAME:
-                                xreader.Read();
-                                editor.Name = xreader.Value;
-                                break;
+                            switch (xReader.Name)
+                            {
+                                case EDITOR_NAME:
+                                    xReader.Read();
+                                    editor.Name = xReader.Value;
+                                    break;
 
-                            case EDITOR_APPLICATION:
-                                xreader.Read();
-                                editor.Application = xreader.Value;
-                                break;
+                                case EDITOR_APPLICATION:
+                                    xReader.Read();
+                                    editor.Application = xReader.Value;
+                                    break;
 
-                            case EDITOR_ARGUMENTS:
-                                xreader.Read();
-                                editor.Arguments = xreader.Value;
-                                break;
+                                case EDITOR_ARGUMENTS:
+                                    xReader.Read();
+                                    editor.Arguments = xReader.Value;
+                                    break;
+                            }
                         }
                     }
-                }
 
-                xreader.Close();
+                    xReader.Close();
 
-                if (!string.IsNullOrEmpty(editor.Name) &&
-                    !string.IsNullOrEmpty(editor.Application))
-                {
-                    Add(editor);
+                    if (!string.IsNullOrEmpty(editor.Name) &&
+                        !string.IsNullOrEmpty(editor.Application))
+                    {
+                        Add(editor);
+                    }
                 }
             }
         }
@@ -134,7 +139,7 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Save()
         {
-            XmlWriterSettings xsettings = new XmlWriterSettings
+            XmlWriterSettings xSettings = new XmlWriterSettings
             {
                 Indent = true,
                 CloseOutput = true,
@@ -146,35 +151,31 @@ namespace AutoScreenCapture
                 ConformanceLevel = ConformanceLevel.Document
             };
 
-            StringBuilder editors = new StringBuilder();
-
-            using (XmlWriter xwriter = XmlWriter.Create(editors))
+            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.UserAppDataLocalDirectory + XML_FILE, xSettings))
             {
-                xwriter.WriteStartDocument();
-                xwriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xwriter.WriteStartElement(XML_FILE_EDITORS_NODE);
+                xWriter.WriteStartDocument();
+                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
 
                 foreach (object obj in _editorList)
                 {
                     Editor editor = (Editor)obj;
 
-                    xwriter.WriteStartElement(XML_FILE_EDITOR_NODE);
-                    xwriter.WriteElementString(EDITOR_NAME, editor.Name);
-                    xwriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
-                    xwriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
+                    xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
+                    xWriter.WriteElementString(EDITOR_NAME, editor.Name);
+                    xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
+                    xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
 
-                    xwriter.WriteEndElement();
+                    xWriter.WriteEndElement();
                 }
 
-                xwriter.WriteEndElement();
-                xwriter.WriteEndElement();
-                xwriter.WriteEndDocument();
+                xWriter.WriteEndElement();
+                xWriter.WriteEndElement();
+                xWriter.WriteEndDocument();
 
-                xwriter.Flush();
-                xwriter.Close();
+                xWriter.Flush();
+                xWriter.Close();
             }
-
-            Properties.Settings.Default.Editors = editors.ToString();
         }
     }
 }

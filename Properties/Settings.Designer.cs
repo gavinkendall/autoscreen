@@ -640,18 +640,6 @@ namespace AutoScreenCapture.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-8""?><autoscreen><editors><editor><name>GIMP 2.8</name><application>C:\Program Files\GIMP 2\bin\gimp-2.8.exe</application><arguments>%screenshot%</arguments></editor><editor><name>Microsoft Paint</name><application>C:\Windows\System32\mspaint.exe</application><arguments>%screenshot%</arguments></editor></editors></autoscreen>")]
-        public string Editors {
-            get {
-                return ((string)(this["Editors"]));
-            }
-            set {
-                this["Editors"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowSystemTrayIcon {
             get {
@@ -743,20 +731,6 @@ namespace AutoScreenCapture.Properties {
             }
             set {
                 this["Macro"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-8\"?><autoscreen><screenshots><screenshot><index" +
-            "></index><date></date><path></path><screen></screen><format></format><filename><" +
-            "/filename><slidename></slidename></screenshot></screenshots></autoscreen>")]
-        public string Screenshots {
-            get {
-                return ((string)(this["Screenshots"]));
-            }
-            set {
-                this["Screenshots"] = value;
             }
         }
         
