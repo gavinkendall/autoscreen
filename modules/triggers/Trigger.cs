@@ -14,19 +14,19 @@ namespace AutoScreenCapture
 
         }
 
-        public Trigger(string name, TriggerCondition condition, TriggerAction action, string editor)
+        public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor)
         {
             Name = name;
-            Condition = condition;
-            Action = action;
+            ConditionType = conditionType;
+            ActionType = actionType;
             Editor = editor;
         }
 
         public string Name { get; set; }
 
-        public TriggerCondition Condition { get; set; }
+        public TriggerConditionType ConditionType { get; set; }
 
-        public TriggerAction Action { get; set; }
+        public TriggerActionType ActionType { get; set; }
 
         public string Editor { get; set; }
     }

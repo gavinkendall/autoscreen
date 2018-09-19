@@ -8,6 +8,7 @@
 namespace AutoScreenCapture
 {
     using System;
+    using System.IO;
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows.Forms;
@@ -23,13 +24,18 @@ namespace AutoScreenCapture
 
         private void FormTrigger_Load(object sender, EventArgs e)
         {
-            textBoxTriggerName.Focus();
+            LoadConditions();
+            LoadActions();
+            LoadEditors();
 
             if (TriggerObject != null)
             {
                 Text = "Change Trigger";
 
                 textBoxTriggerName.Text = TriggerObject.Name;
+                comboBoxCondition.SelectedIndex = (int)TriggerObject.ConditionType;
+                comboBoxAction.SelectedIndex = (int)TriggerObject.ActionType;
+                comboBoxEditor.SelectedIndex = comboBoxEditor.Items.IndexOf(TriggerObject.Editor);
             }
             else
             {
@@ -38,8 +44,7 @@ namespace AutoScreenCapture
                 textBoxTriggerName.Text = string.Empty;
             }
 
-            LoadConditions();
-            LoadActions();
+            textBoxTriggerName.Focus();
         }
 
         private void Click_buttonCancel(object sender, EventArgs e)
@@ -68,9 +73,9 @@ namespace AutoScreenCapture
                 if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
                     TriggerCollection.Add(new Trigger(textBoxTriggerName.Text,
-                        (TriggerCondition)comboBoxCondition.SelectedItem,
-                        (TriggerAction)comboBoxAction.SelectedItem,
-                        comboBoxEditor.SelectedValue.ToString()));
+                        (TriggerConditionType)comboBoxCondition.SelectedIndex,
+                        (TriggerActionType)comboBoxAction.SelectedIndex,
+                        comboBoxEditor.SelectedItem.ToString()));
 
                     Okay();
                 }
@@ -100,9 +105,9 @@ namespace AutoScreenCapture
                     else
                     {
                         TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
-                        TriggerCollection.Get(TriggerObject).Condition = (TriggerCondition)comboBoxCondition.SelectedItem;
-                        TriggerCollection.Get(TriggerObject).Action = (TriggerAction)comboBoxAction.SelectedItem;
-                        TriggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedValue.ToString();
+                        TriggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)comboBoxCondition.SelectedIndex;
+                        TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)comboBoxAction.SelectedIndex;
+                        TriggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedItem.ToString();
 
                         Okay();
                     }
@@ -138,7 +143,9 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             if (TriggerObject != null &&
-                (!TriggerObject.Name.Equals(textBoxTriggerName.Text)))
+                ((int)TriggerObject.ConditionType != comboBoxCondition.SelectedIndex ||
+                (int)TriggerObject.ActionType != comboBoxAction.SelectedIndex ||
+                !TriggerObject.Editor.Equals(comboBoxEditor.SelectedItem.ToString())))
             {
                 return true;
             }
@@ -184,6 +191,23 @@ namespace AutoScreenCapture
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.QuitApplication, "Quit Application").Description);
 
             comboBoxAction.SelectedIndex = 0;
+        }
+
+        private void LoadEditors()
+        {
+            comboBoxEditor.Items.Clear();
+
+            for (int i = 0; i < EditorCollection.Count; i++)
+            {
+                Editor editor = EditorCollection.GetByIndex(i);
+
+                if (editor != null && File.Exists(editor.Application))
+                {
+                    comboBoxEditor.Items.Add(editor.Name);
+                }
+            }
+
+            comboBoxEditor.SelectedIndex = 0;
         }
     }
 }

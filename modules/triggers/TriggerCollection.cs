@@ -24,6 +24,9 @@ namespace AutoScreenCapture
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string TRIGGER_NAME = "name";
+        private const string TRIGGER_CONDITION = "condition";
+        private const string TRIGGER_ACTION = "action";
+        private const string TRIGGER_EDITOR = "editor";
         private const string TRIGGER_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_TRIGGERS_NODE + "/" + XML_FILE_TRIGGER_NODE;
 
         public static void Add(Trigger trigger)
@@ -80,6 +83,9 @@ namespace AutoScreenCapture
             return null;
         }
 
+        /// <summary>
+        /// Loads the triggers.
+        /// </summary>
         public static void Load()
         {
             if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
@@ -104,6 +110,21 @@ namespace AutoScreenCapture
                                     xReader.Read();
                                     trigger.Name = xReader.Value;
                                     break;
+
+                                case TRIGGER_CONDITION:
+                                    xReader.Read();
+                                    trigger.ConditionType = (TriggerConditionType)Enum.Parse(typeof(TriggerConditionType), xReader.Value);
+                                    break;
+
+                                case TRIGGER_ACTION:
+                                    xReader.Read();
+                                    trigger.ActionType = (TriggerActionType)Enum.Parse(typeof(TriggerActionType), xReader.Value);
+                                    break;
+
+                                case TRIGGER_EDITOR:
+                                    xReader.Read();
+                                    trigger.Editor = xReader.Value;
+                                    break;
                             }
                         }
                     }
@@ -118,6 +139,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Saves the triggers.
+        /// </summary>
         public static void Save()
         {
             XmlWriterSettings xSettings = new XmlWriterSettings();
@@ -142,6 +166,9 @@ namespace AutoScreenCapture
 
                     xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
                     xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
+                    xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
+                    xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
+                    xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
 
                     xWriter.WriteEndElement();
                 }

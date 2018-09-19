@@ -2311,6 +2311,8 @@ namespace AutoScreenCapture
             if (formEditor.DialogResult == DialogResult.OK)
             {
                 BuildScreenshotPreviewContextualMenu();
+
+                EditorCollection.Save();
             }
         }
 
@@ -2340,6 +2342,8 @@ namespace AutoScreenCapture
             if (countBeforeRemoval > EditorCollection.Count)
             {
                 BuildScreenshotPreviewContextualMenu();
+
+                EditorCollection.Save();
             }
         }
 
@@ -2380,6 +2384,8 @@ namespace AutoScreenCapture
                 if (formEditor.DialogResult == DialogResult.OK)
                 {
                     BuildScreenshotPreviewContextualMenu();
+
+                    EditorCollection.Save();
                 }
             }
         }
@@ -2402,6 +2408,8 @@ namespace AutoScreenCapture
             if (formTrigger.DialogResult == DialogResult.OK)
             {
                 BuildScreenshotPreviewContextualMenu();
+
+                TriggerCollection.Save();
             }
         }
 
@@ -2431,6 +2439,8 @@ namespace AutoScreenCapture
             if (countBeforeRemoval > TriggerCollection.Count)
             {
                 BuildScreenshotPreviewContextualMenu();
+
+                TriggerCollection.Save();
             }
         }
 
@@ -2452,6 +2462,8 @@ namespace AutoScreenCapture
                 if (formTrigger.DialogResult == DialogResult.OK)
                 {
                     BuildScreenshotPreviewContextualMenu();
+
+                    TriggerCollection.Save();
                 }
             }
         }
