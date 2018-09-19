@@ -37,6 +37,8 @@
             this.comboBoxCondition = new System.Windows.Forms.ComboBox();
             this.labelTriggerAction = new System.Windows.Forms.Label();
             this.comboBoxAction = new System.Windows.Forms.ComboBox();
+            this.labelEditor = new System.Windows.Forms.Label();
+            this.comboBoxEditor = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -58,7 +60,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(275, 84);
+            this.buttonOK.Location = new System.Drawing.Point(275, 110);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 8;
@@ -69,7 +71,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(356, 84);
+            this.buttonCancel.Location = new System.Drawing.Point(356, 110);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 9;
@@ -113,13 +115,33 @@
             this.comboBoxAction.Size = new System.Drawing.Size(351, 21);
             this.comboBoxAction.TabIndex = 13;
             // 
+            // labelEditor
+            // 
+            this.labelEditor.AutoSize = true;
+            this.labelEditor.Location = new System.Drawing.Point(12, 85);
+            this.labelEditor.Name = "labelEditor";
+            this.labelEditor.Size = new System.Drawing.Size(37, 13);
+            this.labelEditor.TabIndex = 14;
+            this.labelEditor.Text = "Editor:";
+            // 
+            // comboBoxEditor
+            // 
+            this.comboBoxEditor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEditor.FormattingEnabled = true;
+            this.comboBoxEditor.Location = new System.Drawing.Point(80, 82);
+            this.comboBoxEditor.Name = "comboBoxEditor";
+            this.comboBoxEditor.Size = new System.Drawing.Size(351, 21);
+            this.comboBoxEditor.TabIndex = 15;
+            // 
             // FormTrigger
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(443, 114);
+            this.ClientSize = new System.Drawing.Size(443, 142);
+            this.Controls.Add(this.comboBoxEditor);
+            this.Controls.Add(this.labelEditor);
             this.Controls.Add(this.comboBoxAction);
             this.Controls.Add(this.labelTriggerAction);
             this.Controls.Add(this.comboBoxCondition);
@@ -151,5 +173,7 @@
         private System.Windows.Forms.ComboBox comboBoxCondition;
         private System.Windows.Forms.Label labelTriggerAction;
         private System.Windows.Forms.ComboBox comboBoxAction;
+        private System.Windows.Forms.Label labelEditor;
+        private System.Windows.Forms.ComboBox comboBoxEditor;
     }
 }

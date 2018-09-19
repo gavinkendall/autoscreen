@@ -37,6 +37,9 @@ namespace AutoScreenCapture
 
                 textBoxTriggerName.Text = string.Empty;
             }
+
+            LoadConditions();
+            LoadActions();
         }
 
         private void Click_buttonCancel(object sender, EventArgs e)
@@ -64,7 +67,10 @@ namespace AutoScreenCapture
 
                 if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
-                    TriggerCollection.Add(new Trigger(textBoxTriggerName.Text));
+                    TriggerCollection.Add(new Trigger(textBoxTriggerName.Text,
+                        (TriggerCondition)comboBoxCondition.SelectedItem,
+                        (TriggerAction)comboBoxAction.SelectedItem,
+                        comboBoxEditor.SelectedValue.ToString()));
 
                     Okay();
                 }
@@ -94,6 +100,9 @@ namespace AutoScreenCapture
                     else
                     {
                         TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
+                        TriggerCollection.Get(TriggerObject).Condition = (TriggerCondition)comboBoxCondition.SelectedItem;
+                        TriggerCollection.Get(TriggerObject).Action = (TriggerAction)comboBoxAction.SelectedItem;
+                        TriggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedValue.ToString();
 
                         Okay();
                     }
@@ -157,6 +166,24 @@ namespace AutoScreenCapture
             DialogResult = DialogResult.OK;
 
             Close();
+        }
+
+        private void LoadConditions()
+        {
+            comboBoxCondition.Items.Clear();
+
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.LimitReached, "Limit Reached").Description);
+
+            comboBoxCondition.SelectedIndex = 0;
+        }
+
+        private void LoadActions()
+        {
+            comboBoxAction.Items.Clear();
+
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.QuitApplication, "Quit Application").Description);
+
+            comboBoxAction.SelectedIndex = 0;
         }
     }
 }
