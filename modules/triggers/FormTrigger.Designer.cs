@@ -33,6 +33,10 @@
             this.textBoxTriggerName = new System.Windows.Forms.TextBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelTriggerCondition = new System.Windows.Forms.Label();
+            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
+            this.labelTriggerAction = new System.Windows.Forms.Label();
+            this.comboBoxAction = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -49,7 +53,7 @@
             this.textBoxTriggerName.Location = new System.Drawing.Point(80, 6);
             this.textBoxTriggerName.MaxLength = 50;
             this.textBoxTriggerName.Name = "textBoxTriggerName";
-            this.textBoxTriggerName.Size = new System.Drawing.Size(318, 20);
+            this.textBoxTriggerName.Size = new System.Drawing.Size(351, 20);
             this.textBoxTriggerName.TabIndex = 6;
             // 
             // buttonOK
@@ -73,6 +77,42 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.Click_buttonCancel);
             // 
+            // labelTriggerCondition
+            // 
+            this.labelTriggerCondition.AutoSize = true;
+            this.labelTriggerCondition.Location = new System.Drawing.Point(12, 35);
+            this.labelTriggerCondition.Name = "labelTriggerCondition";
+            this.labelTriggerCondition.Size = new System.Drawing.Size(54, 13);
+            this.labelTriggerCondition.TabIndex = 10;
+            this.labelTriggerCondition.Text = "Condition:";
+            // 
+            // comboBoxCondition
+            // 
+            this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCondition.FormattingEnabled = true;
+            this.comboBoxCondition.Location = new System.Drawing.Point(80, 32);
+            this.comboBoxCondition.Name = "comboBoxCondition";
+            this.comboBoxCondition.Size = new System.Drawing.Size(351, 21);
+            this.comboBoxCondition.TabIndex = 11;
+            // 
+            // labelTriggerAction
+            // 
+            this.labelTriggerAction.AutoSize = true;
+            this.labelTriggerAction.Location = new System.Drawing.Point(12, 60);
+            this.labelTriggerAction.Name = "labelTriggerAction";
+            this.labelTriggerAction.Size = new System.Drawing.Size(40, 13);
+            this.labelTriggerAction.TabIndex = 12;
+            this.labelTriggerAction.Text = "Action:";
+            // 
+            // comboBoxAction
+            // 
+            this.comboBoxAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAction.FormattingEnabled = true;
+            this.comboBoxAction.Location = new System.Drawing.Point(80, 57);
+            this.comboBoxAction.Name = "comboBoxAction";
+            this.comboBoxAction.Size = new System.Drawing.Size(351, 21);
+            this.comboBoxAction.TabIndex = 13;
+            // 
             // FormTrigger
             // 
             this.AcceptButton = this.buttonOK;
@@ -80,6 +120,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(443, 114);
+            this.Controls.Add(this.comboBoxAction);
+            this.Controls.Add(this.labelTriggerAction);
+            this.Controls.Add(this.comboBoxCondition);
+            this.Controls.Add(this.labelTriggerCondition);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelEditorName);
@@ -103,5 +147,9 @@
         private System.Windows.Forms.TextBox textBoxTriggerName;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label labelTriggerCondition;
+        private System.Windows.Forms.ComboBox comboBoxCondition;
+        private System.Windows.Forms.Label labelTriggerAction;
+        private System.Windows.Forms.ComboBox comboBoxAction;
     }
 }

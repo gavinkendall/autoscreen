@@ -2195,16 +2195,13 @@ namespace AutoScreenCapture
             const int TRIGGER_HEIGHT = 20;
             const int CHECKBOX_WIDTH = 20;
             const int CHECKBOX_HEIGHT = 20;
-            const int X_POS_TRIGGER_ICON = 20;
             const int BIG_BUTTON_WIDTH = 205;
             const int BIG_BUTTON_HEIGHT = 25;
-            const int SMALL_IMAGE_WIDTH = 20;
-            const int SMALL_IMAGE_HEIGHT = 20;
             const int SMALL_BUTTON_WIDTH = 27;
             const int SMALL_BUTTON_HEIGHT = 20;
-            const int X_POS_TRIGGER_TEXTBOX = 48;
+            const int X_POS_TRIGGER_TEXTBOX = 20;
             const int X_POS_TRIGGER_BUTTON = 178;
-            const int TRIGGER_TEXTBOX_WIDTH = 125;
+            const int TRIGGER_TEXTBOX_WIDTH = 153;
             const int Y_POS_TRIGGER_INCREMENT = 23;
             const int TRIGGER_TEXTBOX_MAX_LENGTH = 50;
 
