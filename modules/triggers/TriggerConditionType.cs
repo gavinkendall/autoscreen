@@ -9,6 +9,11 @@ namespace AutoScreenCapture
 {
     public enum TriggerConditionType
     {
-        LimitReached = 0
+        ApplicationStartup = 0,
+        ApplicationExit = 1,
+        LimitReached = 2,
+        ScreenCaptureSessionStarted = 3,
+        ScreenCaptureSessionStopped = 4,
+        ScreenshotTaken = 5
     }
 }

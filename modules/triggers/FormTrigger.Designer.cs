@@ -114,6 +114,7 @@
             this.comboBoxAction.Name = "comboBoxAction";
             this.comboBoxAction.Size = new System.Drawing.Size(351, 21);
             this.comboBoxAction.TabIndex = 13;
+            this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
             // 
             // labelEditor
             // 

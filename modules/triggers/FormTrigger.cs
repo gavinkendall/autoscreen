@@ -24,9 +24,9 @@ namespace AutoScreenCapture
 
         private void FormTrigger_Load(object sender, EventArgs e)
         {
-            LoadConditions();
-            LoadActions();
             LoadEditors();
+            LoadActions();
+            LoadConditions();
 
             if (TriggerObject != null)
             {
@@ -179,7 +179,12 @@ namespace AutoScreenCapture
         {
             comboBoxCondition.Items.Clear();
 
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ApplicationStartup, "Application Startup").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ApplicationExit, "Application Exit").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.LimitReached, "Limit Reached").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureSessionStarted, "Screen Capture Session Started").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureSessionStopped, "Screen Capture Session Stopped").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenshotTaken, "Screenshot Taken").Description);
 
             comboBoxCondition.SelectedIndex = 0;
         }
@@ -189,6 +194,9 @@ namespace AutoScreenCapture
             comboBoxAction.Items.Clear();
 
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.QuitApplication, "Quit Application").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.RunEditor, "Run Editor").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCaptureSession, "Start Screen Capture Session").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StopScreenCaptureSession, "Stop Screen Capture Session").Description);
 
             comboBoxAction.SelectedIndex = 0;
         }
@@ -208,6 +216,18 @@ namespace AutoScreenCapture
             }
 
             comboBoxEditor.SelectedIndex = 0;
+        }
+
+        private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor)
+            {
+                comboBoxEditor.Enabled = true;
+            }
+            else
+            {
+                comboBoxEditor.Enabled = false;
+            }
         }
     }
 }
