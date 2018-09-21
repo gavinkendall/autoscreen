@@ -9,9 +9,15 @@ namespace AutoScreenCapture
 {
     public enum TriggerActionType
     {
-        QuitApplication = 0,
-        RunEditor = 1,
-        StartScreenCaptureSession = 2,
-        StopScreenCaptureSession = 3
+        CloseWindow = 0,
+        DisablePreview = 1,
+        DisableSchedule = 2,
+        EnablePreview = 3,
+        EnableSchedule = 4,
+        ExitApplication = 5,
+        OpenWindow = 6,
+        RunEditor = 7,
+        StartScreenCapture = 8,
+        StopScreenCapture = 9
     }
 }

@@ -54,7 +54,7 @@ namespace AutoScreenCapture
         private const int CAPTURE_LIMIT_MIN = 0;
 
         private const int CAPTURE_LIMIT_MAX = 9999;
-        private const int CAPTURE_DELAY_DEFAULT = 60000;
+        private const int CAPTURE_DELAY_DEFAULT_IN_MINUTES = 1;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
         private const int JPEG_QUALITY_LEVEL_MIN = 1;
@@ -112,6 +112,8 @@ namespace AutoScreenCapture
 
             // Changing the value of this property will automatically call SearchSlides.
             toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
+
+            RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
 
         private void InitializeThreads()
@@ -160,7 +162,7 @@ namespace AutoScreenCapture
 
             Log.Write("Loading triggers.");
 
-            TriggerCollection.Load();
+            formTrigger.triggerCollection.Load();
 
             Log.Write("Building screenshot preview context menu.");
 
@@ -374,7 +376,7 @@ namespace AutoScreenCapture
 
             if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
             {
-                toolStripButtonPreview.Checked = true;
+                EnablePreview();
             }
 
             EnableStartScreenCapture();
@@ -383,7 +385,7 @@ namespace AutoScreenCapture
 
             if (toolStripMenuItemScheduleAtApplicationStartup.Checked)
             {
-                ScheduleSet();
+                EnableSchedule();
             }
 
             if (toolStripMenuItemOpenAtApplicationStartup.Checked)
@@ -451,7 +453,7 @@ namespace AutoScreenCapture
 
                 EditorCollection.Save();
                 ScreenshotCollection.Save();
-                TriggerCollection.Save();
+                formTrigger.triggerCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -462,7 +464,7 @@ namespace AutoScreenCapture
             {
                 if (toolStripMenuItemExitOnCloseWindow.Checked)
                 {
-                    Exit();
+                    ExitApplication();
                 }
                 else
                 {
@@ -1093,19 +1095,13 @@ namespace AutoScreenCapture
         /// <summary>
         /// Starts a screen capture session.
         /// </summary>
-        /// <param name="folder">The folder where the screenshots should be saved.</param>
-        /// <param name="format">The image format the screenshots should be in (such as GIF, JPEG, PNG, etc.).</param>
-        /// <param name="delay">The capture delay.</param>
-        /// <param name="limit">The number of screenshots that should be taken based on this limit.</param>
-        /// <param name="ratio">The image resolution ratio of each screenshot that is taken (can be from 1% to 100%).</param>
-        /// <param name="initial">If an initial screenshot should be taken before the timer is started then this boolean needs to be set to true otherwise just set it as false.</param>
-        private void StartScreenCapture(string folder, string macro, string format, int delay, int limit, int ratio, bool initial)
+        private void StartScreenCapture()
         {
             if (!timerScreenCapture.Enabled)
             {
                 SaveApplicationSettings();
 
-                if (Directory.Exists(textBoxFolder.Text))
+                if (!string.IsNullOrEmpty(textBoxFolder.Text) && Directory.Exists(textBoxFolder.Text))
                 {
                     Log.Write("Starting new screen capture session in \"" + textBoxFolder.Text + "\"");
 
@@ -1140,12 +1136,12 @@ namespace AutoScreenCapture
                     EnableStopScreenCapture();
 
                     // Setup the properties for the screen capture class.
-                    ScreenCapture.Folder = folder;
-                    ScreenCapture.Macro = macro;
-                    ScreenCapture.Format = format;
-                    ScreenCapture.Delay = delay;
-                    ScreenCapture.Limit = limit;
-                    ScreenCapture.Ratio = ratio;
+                    ScreenCapture.Folder = textBoxFolder.Text;
+                    ScreenCapture.Macro = textBoxMacro.Text;
+                    ScreenCapture.Format = comboBoxScheduleImageFormat.SelectedItem.ToString();
+                    ScreenCapture.Delay = GetCaptureDelay();
+                    ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
+                    ScreenCapture.Ratio = (int)numericUpDownImageResolutionRatio.Value;
 
                     if (checkBoxPassphraseLock.Checked)
                     {
@@ -1156,7 +1152,7 @@ namespace AutoScreenCapture
                         ScreenCapture.LockScreenCaptureSession = false;
                     }
 
-                    if (initial)
+                    if (checkBoxInitialScreenshot.Checked)
                     {
                         Log.Write("Taking initial screenshots.");
 
@@ -1167,7 +1163,7 @@ namespace AutoScreenCapture
                     // Start taking screenshots.
                     Log.Write("Starting screen capture.");
 
-                    timerScreenCapture.Interval = delay;
+                    timerScreenCapture.Interval = GetCaptureDelay();
                     timerScreenCapture.Enabled = true;
                 }
             }
@@ -1456,30 +1452,7 @@ namespace AutoScreenCapture
 
             if (!string.IsNullOrEmpty(imageFormat))
             {
-                bool initial = false;
-                string folder = textBoxFolder.Text;
-                string macro = textBoxMacro.Text;
-
-                int delay = GetCaptureDelay();
-                int limit = (int)numericUpDownCaptureLimit.Value;
-                int ratio = (int)numericUpDownImageResolutionRatio.Value;
-
-                if (!string.IsNullOrEmpty(folder) && delay > 0)
-                {
-                    folder = CorrectDirectoryPath(folder);
-
-                    if (Directory.Exists(folder))
-                    {
-                        if (!checkBoxCaptureLimit.Checked) { limit = 0; }
-
-                        if (checkBoxInitialScreenshot.Checked)
-                        {
-                            initial = true;
-                        }
-
-                        StartScreenCapture(folder, macro, imageFormat, delay, limit, ratio, initial);
-                    }
-                }
+                StartScreenCapture();
             }
         }
 
@@ -1500,13 +1473,13 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_toolStripMenuItemExit(object sender, EventArgs e)
         {
-            Exit();
+            ExitApplication();
         }
 
         /// <summary>
         /// Exits the application.
         /// </summary>
-        private void Exit()
+        private void ExitApplication()
         {
             Log.Write("Exiting application.");
 
@@ -1547,7 +1520,7 @@ namespace AutoScreenCapture
 
                 EditorCollection.Save();
                 ScreenshotCollection.Save();
-                TriggerCollection.Save();
+                formTrigger.triggerCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -1846,29 +1819,24 @@ namespace AutoScreenCapture
 
                 bool isScheduled = false;
 
-                bool initial = false;
                 checkBoxInitialScreenshot.Checked = false;
 
-                int limit = CAPTURE_LIMIT_MIN;
                 checkBoxCaptureLimit.Checked = false;
                 numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
 
-                int delay = CAPTURE_DELAY_DEFAULT;
                 numericUpDownHoursInterval.Value = 0;
-                numericUpDownMinutesInterval.Value = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(delay)).Minutes);
+                numericUpDownMinutesInterval.Value = CAPTURE_DELAY_DEFAULT_IN_MINUTES;
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
 
-                int ratio = IMAGE_RESOLUTION_RATIO_MAX;
                 numericUpDownImageResolutionRatio.Value = IMAGE_RESOLUTION_RATIO_MAX;
 
                 int jpegLevel = JPEG_QUALITY_LEVEL_MAX;
                 numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;
 
-                string folder = FileSystem.ScreenshotsFolder;
-                string macro = MacroParser.UserMacro;
+                textBoxFolder.Text = FileSystem.ScreenshotsFolder;
+                textBoxMacro.Text = MacroParser.UserMacro;
 
-                string imageFormat = ScreenCapture.DefaultImageFormat;
                 comboBoxScheduleImageFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
 
                 checkBoxScheduleStopAt.Checked = false;
@@ -1908,17 +1876,16 @@ namespace AutoScreenCapture
 
                     if (rgxCommandLineFolder.IsMatch(args[i]))
                     {
-                        folder = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
+                        textBoxFolder.Text = CorrectDirectoryPath(rgxCommandLineFolder.Match(args[i]).Groups["Folder"].Value.ToString());
                     }
 
                     if (rgxCommandLineMacro.IsMatch(args[i]))
                     {
-                        macro = rgxCommandLineMacro.Match(args[i]).Groups["Macro"].Value;
+                        textBoxMacro.Text = rgxCommandLineMacro.Match(args[i]).Groups["Macro"].Value;
                     }
 
                     if (rgxCommandLineInitial.IsMatch(args[i]))
                     {
-                        initial = true;
                         checkBoxInitialScreenshot.Checked = true;
                     }
 
@@ -1928,7 +1895,7 @@ namespace AutoScreenCapture
 
                         if (cmdRatio >= IMAGE_RESOLUTION_RATIO_MIN && cmdRatio <= IMAGE_RESOLUTION_RATIO_MAX)
                         {
-                            ratio = cmdRatio;
+                            numericUpDownImageResolutionRatio.Value = cmdRatio;
                         }
                     }
 
@@ -1938,14 +1905,14 @@ namespace AutoScreenCapture
 
                         if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
                         {
-                            limit = cmdLimit;
+                            numericUpDownCaptureLimit.Value = cmdLimit;
                             checkBoxCaptureLimit.Checked = true;
                         }
                     }
 
                     if (rgxCommandLineFormat.IsMatch(args[i]))
                     {
-                        imageFormat = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
+                        comboBoxScheduleImageFormat.SelectedItem = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
                     }
 
                     if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
@@ -1959,8 +1926,6 @@ namespace AutoScreenCapture
                         numericUpDownMinutesInterval.Value = minutes;
                         numericUpDownSecondsInterval.Value = seconds;
                         numericUpDownMillisecondsInterval.Value = milliseconds;
-
-                        delay = ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
                     }
 
                     if (rgxCommandLineScheduleStartAt.IsMatch(args[i]))
@@ -2014,12 +1979,7 @@ namespace AutoScreenCapture
 
                 ScreenCapture.RunningFromCommandLine = true;
 
-                textBoxMacro.Text = macro;
-                textBoxFolder.Text = folder;
-                numericUpDownCaptureLimit.Value = limit;
                 numericUpDownJpegQualityLevel.Value = jpegLevel;
-                numericUpDownImageResolutionRatio.Value = ratio;
-                comboBoxScheduleImageFormat.SelectedItem = imageFormat;
 
                 InitializeThreads();
 
@@ -2029,7 +1989,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    StartScreenCapture(folder, macro, imageFormat, delay, limit, ratio, initial);
+                    StartScreenCapture();
                 }
             }
             catch (Exception ex)
@@ -2236,10 +2196,8 @@ namespace AutoScreenCapture
             // Move down a bit so we can start populating the Triggers tab page with a list of Triggers.
             yPosTrigger += 28;
 
-            for (int i = 0; i < TriggerCollection.Count; i++)
+            foreach (Trigger trigger in formTrigger.triggerCollection)
             {
-                Trigger trigger = TriggerCollection.GetByIndex(i);
-
                 // Add a checkbox so that the user has the ability to remove the selected Trigger.
                 CheckBox checkboxTrigger = new CheckBox
                 {
@@ -2409,7 +2367,7 @@ namespace AutoScreenCapture
             {
                 BuildScreenshotPreviewContextualMenu();
 
-                TriggerCollection.Save();
+                formTrigger.triggerCollection.Save();
             }
         }
 
@@ -2420,7 +2378,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_removeSelectedTriggers(object sender, EventArgs e)
         {
-            int countBeforeRemoval = TriggerCollection.Count;
+            int countBeforeRemoval = formTrigger.triggerCollection.Count;
 
             foreach (Control control in tabPageTriggers.Controls)
             {
@@ -2430,17 +2388,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Trigger trigger = TriggerCollection.Get((Trigger)checkBox.Tag);
-                        TriggerCollection.Remove(trigger);
+                        Trigger trigger = formTrigger.triggerCollection.Get((Trigger)checkBox.Tag);
+                        formTrigger.triggerCollection.Remove(trigger);
                     }
                 }
             }
 
-            if (countBeforeRemoval > TriggerCollection.Count)
+            if (countBeforeRemoval > formTrigger.triggerCollection.Count)
             {
                 BuildScreenshotPreviewContextualMenu();
 
-                TriggerCollection.Save();
+                formTrigger.triggerCollection.Save();
             }
         }
 
@@ -2463,7 +2421,7 @@ namespace AutoScreenCapture
                 {
                     BuildScreenshotPreviewContextualMenu();
 
-                    TriggerCollection.Save();
+                    formTrigger.triggerCollection.Save();
                 }
             }
         }
@@ -2479,7 +2437,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_buttonScheduleSet(object sender, EventArgs e)
         {
-            ScheduleSet();
+            EnableSchedule();
         }
 
         /// <summary>
@@ -2489,7 +2447,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_buttonScheduleClear(object sender, EventArgs e)
         {
-            ScheduleClear();
+            DisableSchedule();
         }
 
         #endregion Schedule
@@ -3078,42 +3036,13 @@ namespace AutoScreenCapture
                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
                         (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked))
                     {
-                        bool initial = false;
-                        string folder = textBoxFolder.Text;
-                        string macro = textBoxMacro.Text;
 
-                        int delay = GetCaptureDelay();
-                        int limit = (int)numericUpDownCaptureLimit.Value;
-                        int ratio = (int)numericUpDownImageResolutionRatio.Value;
-
-                        if (!checkBoxCaptureLimit.Checked) { limit = 0; }
-
-                        if (checkBoxInitialScreenshot.Checked)
-                        {
-                            initial = true;
-                        }
-
-                        StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
+                        StartScreenCapture();
                     }
                 }
                 else
                 {
-                    bool initial = false;
-                    string folder = textBoxFolder.Text;
-                    string macro = textBoxMacro.Text;
-
-                    int delay = GetCaptureDelay();
-                    int limit = (int)numericUpDownCaptureLimit.Value;
-                    int ratio = (int)numericUpDownImageResolutionRatio.Value;
-
-                    if (!checkBoxCaptureLimit.Checked) { limit = 0; }
-
-                    if (checkBoxInitialScreenshot.Checked)
-                    {
-                        initial = true;
-                    }
-
-                    StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
+                    StartScreenCapture();
                 }
             }
             else if (checkBoxScheduleStartAt.Checked)
@@ -3131,22 +3060,7 @@ namespace AutoScreenCapture
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
                     {
-                        bool initial = false;
-                        string folder = textBoxFolder.Text;
-                        string macro = textBoxMacro.Text;
-
-                        int delay = GetCaptureDelay();
-                        int limit = (int)numericUpDownCaptureLimit.Value;
-                        int ratio = (int)numericUpDownImageResolutionRatio.Value;
-
-                        if (!checkBoxCaptureLimit.Checked) { limit = 0; }
-
-                        if (checkBoxInitialScreenshot.Checked)
-                        {
-                            initial = true;
-                        }
-
-                        StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
+                        StartScreenCapture();
                     }
                 }
                 else
@@ -3155,22 +3069,7 @@ namespace AutoScreenCapture
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
                     {
-                        bool initial = false;
-                        string folder = textBoxFolder.Text;
-                        string macro = textBoxMacro.Text;
-
-                        int delay = GetCaptureDelay();
-                        int limit = (int)numericUpDownCaptureLimit.Value;
-                        int ratio = (int)numericUpDownImageResolutionRatio.Value;
-
-                        if (!checkBoxCaptureLimit.Checked) { limit = 0; }
-
-                        if (checkBoxInitialScreenshot.Checked)
-                        {
-                            initial = true;
-                        }
-
-                        StartScreenCapture(folder, macro, comboBoxScheduleImageFormat.Text, delay, limit, ratio, initial);
+                        StartScreenCapture();
                     }
                 }
             }
@@ -3284,10 +3183,20 @@ namespace AutoScreenCapture
             }
         }
 
+        private void EnablePreview()
+        {
+            toolStripButtonPreview.Checked = true;
+        }
+
+        private void DisablePreview()
+        {
+            toolStripButtonPreview.Checked = false;
+        }
+
         /// <summary>
         /// Turns on scheduled screen capturing.
         /// </summary>
-        private void ScheduleSet()
+        private void EnableSchedule()
         {
             buttonScheduleSet.Enabled = false;
             buttonScheduleClear.Enabled = true;
@@ -3299,7 +3208,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Turns off scheduled screen capturing.
         /// </summary>
-        private void ScheduleClear()
+        private void DisableSchedule()
         {
             buttonScheduleSet.Enabled = true;
             buttonScheduleClear.Enabled = false;
@@ -3460,7 +3369,7 @@ namespace AutoScreenCapture
         {
             Log.Write("Restoring default settings.");
 
-            int delay = CAPTURE_DELAY_DEFAULT;
+            int delay = CAPTURE_DELAY_DEFAULT_IN_MINUTES;
             numericUpDownHoursInterval.Value = 0;
             numericUpDownMinutesInterval.Value = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(delay)).Minutes);
             numericUpDownSecondsInterval.Value = 0;
@@ -3522,7 +3431,7 @@ namespace AutoScreenCapture
 
             checkBoxMouse.Checked = true;
 
-            ScheduleClear();
+            DisableSchedule();
 
             Log.Write("Default settings restored.");
 
@@ -3547,6 +3456,53 @@ namespace AutoScreenCapture
         private void pictureBoxScreenshotPreviewMonitor4_DoubleClick(object sender, EventArgs e)
         {
             tabControlScreens.SelectedIndex = 4;
+        }
+
+        private void RunTriggersOfConditionType(TriggerConditionType conditionType)
+        {
+            foreach (Trigger trigger in formTrigger.triggerCollection)
+            {
+                if (trigger.ConditionType == conditionType)
+                {
+                    switch (trigger.ActionType)
+                    {
+                        case TriggerActionType.CloseWindow:
+                            CloseWindow();
+                            break;
+
+                        case TriggerActionType.DisablePreview:
+                            DisablePreview();
+                            break;
+
+                        case TriggerActionType.DisableSchedule:
+                            DisableSchedule();
+                            break;
+
+                        case TriggerActionType.EnablePreview:
+                            EnablePreview();
+                            break;
+
+                        case TriggerActionType.EnableSchedule:
+                            EnableSchedule();
+                            break;
+
+                        case TriggerActionType.ExitApplication:
+                            ExitApplication();
+                            break;
+
+                        case TriggerActionType.OpenWindow:
+                            OpenWindow();
+                            break;
+
+                        case TriggerActionType.RunEditor:
+                            break;
+
+                        case TriggerActionType.StartScreenCapture:
+                            StartScreenCapture();
+                            break;
+                    }
+                }
+            }
         }
     }
 }

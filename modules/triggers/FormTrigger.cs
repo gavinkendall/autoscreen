@@ -15,6 +15,8 @@ namespace AutoScreenCapture
 
     public partial class FormTrigger : Form
     {
+        public TriggerCollection triggerCollection = new TriggerCollection();
+
         public Trigger TriggerObject { get; set; }
 
         public FormTrigger()
@@ -70,9 +72,9 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
+                if (triggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
-                    TriggerCollection.Add(new Trigger(textBoxTriggerName.Text,
+                    triggerCollection.Add(new Trigger(textBoxTriggerName.Text,
                         (TriggerConditionType)comboBoxCondition.SelectedIndex,
                         (TriggerActionType)comboBoxAction.SelectedIndex,
                         comboBoxEditor.SelectedItem.ToString()));
@@ -98,16 +100,16 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (TriggerCollection.GetByName(textBoxTriggerName.Text) != null && NameChanged())
+                    if (triggerCollection.GetByName(textBoxTriggerName.Text) != null && NameChanged())
                     {
                         MessageBox.Show("A trigger with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
-                        TriggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)comboBoxCondition.SelectedIndex;
-                        TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)comboBoxAction.SelectedIndex;
-                        TriggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedItem.ToString();
+                        triggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
+                        triggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)comboBoxCondition.SelectedIndex;
+                        triggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)comboBoxAction.SelectedIndex;
+                        triggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedItem.ToString();
 
                         Okay();
                     }
@@ -193,10 +195,16 @@ namespace AutoScreenCapture
         {
             comboBoxAction.Items.Clear();
 
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.QuitApplication, "Quit Application").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.CloseWindow, "Close Window").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisablePreview, "Disable Preview").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableSchedule, "Disable Schedule").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnablePreview, "Enable Preview").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableSchedule, "Enable Schedule").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.ExitApplication, "Exit Application").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.OpenWindow, "Open Window").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.RunEditor, "Run Editor").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCaptureSession, "Start Screen Capture Session").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StopScreenCaptureSession, "Stop Screen Capture Session").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCapture, "Start Screen Capture").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StopScreenCapture, "Stop Screen Capture").Description);
 
             comboBoxAction.SelectedIndex = 0;
         }

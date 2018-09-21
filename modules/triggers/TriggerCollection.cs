@@ -12,10 +12,11 @@ namespace AutoScreenCapture
     using System.Collections;
     using System.Text;
     using System.Xml;
+    using System.Collections.Generic;
 
-    public static class TriggerCollection
+    public class TriggerCollection : IEnumerable<Trigger>
     {
-        private static ArrayList _triggerList = new ArrayList();
+        private List<Trigger> _triggerList = new List<Trigger>();
 
         private const string XML_FILE = "triggers.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -29,26 +30,41 @@ namespace AutoScreenCapture
         private const string TRIGGER_EDITOR = "editor";
         private const string TRIGGER_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_TRIGGERS_NODE + "/" + XML_FILE_TRIGGER_NODE;
 
-        public static void Add(Trigger trigger)
+        public List<Trigger>.Enumerator GetEnumerator()
+        {
+            return _triggerList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Trigger>)_triggerList).GetEnumerator();
+        }
+
+        IEnumerator<Trigger> IEnumerable<Trigger>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(Trigger trigger)
         {
             _triggerList.Add(trigger);
 
             Log.Write("Added " + trigger.Name);
         }
 
-        public static void Remove(Trigger trigger)
+        public void Remove(Trigger trigger)
         {
             _triggerList.Remove(trigger);
 
             Log.Write("Removed " + trigger.Name);
         }
 
-        public static int Count
+        public int Count
         {
             get { return _triggerList.Count; }
         }
 
-        public static Trigger Get(Trigger triggerToFind)
+        public Trigger Get(Trigger triggerToFind)
         {
             for (int i = 0; i < _triggerList.Count; i++)
             {
@@ -63,12 +79,12 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static Trigger GetByIndex(int index)
+        public Trigger GetByIndex(int index)
         {
             return (Trigger)_triggerList[index];
         }
 
-        public static Trigger GetByName(string name)
+        public Trigger GetByName(string name)
         {
             for (int i = 0; i < _triggerList.Count; i++)
             {
@@ -86,7 +102,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the triggers.
         /// </summary>
-        public static void Load()
+        public void Load()
         {
             if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
             {
@@ -142,7 +158,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the triggers.
         /// </summary>
-        public static void Save()
+        public void Save()
         {
             XmlWriterSettings xSettings = new XmlWriterSettings();
             xSettings.Indent = true;
