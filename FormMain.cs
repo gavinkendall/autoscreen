@@ -436,6 +436,11 @@ namespace AutoScreenCapture
             else
             {
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
+
+                // If there isn't a Trigger for "InterfaceClosing" that performs an action
+                // then make sure we cancel this event so that nothing happens. We want the user
+                // to use a Trigger, and decide what they want to do, when closing the interface window.
+                e.Cancel = true;
             }
         }
 
