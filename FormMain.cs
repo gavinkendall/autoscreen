@@ -88,7 +88,6 @@ namespace AutoScreenCapture
             InitializeComponent();
 
             Text = Properties.Settings.Default.ApplicationName;
-            notifyIcon.Text = Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ")";
 
             Log.Write("*** " + Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ") ***");
 
@@ -3388,16 +3387,23 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
         {
-            int remainingHours = ScreenCapture.TimeRemainingForNextScreenshot.Hours;
-            int remainingMinutes = ScreenCapture.TimeRemainingForNextScreenshot.Minutes;
-            int remainingSeconds = ScreenCapture.TimeRemainingForNextScreenshot.Seconds;
+            if (ScreenCapture.Running)
+            {
+                int remainingHours = ScreenCapture.TimeRemainingForNextScreenshot.Hours;
+                int remainingMinutes = ScreenCapture.TimeRemainingForNextScreenshot.Minutes;
+                int remainingSeconds = ScreenCapture.TimeRemainingForNextScreenshot.Seconds;
 
-            string remainingHoursStr = (remainingHours > 0 ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", " : string.Empty);
-            string remainingMinutesStr = (remainingMinutes > 0 ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", " : string.Empty);
+                string remainingHoursStr = (remainingHours > 0 ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", " : string.Empty);
+                string remainingMinutesStr = (remainingMinutes > 0 ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", " : string.Empty);
 
-            notifyIcon.Text = "Next screenshot in " +
-                remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
-                " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " + ScreenCapture.DateTimeNextScreenshot.ToShortTimeString();
+                notifyIcon.Text = "Next screenshot in " +
+                    remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
+                    " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " + ScreenCapture.DateTimeNextScreenshot.ToLongTimeString();
+            }
+            else
+            {
+                notifyIcon.Text = Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ")";
+            }
         }
     }
 }
