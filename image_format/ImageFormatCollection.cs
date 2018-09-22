@@ -8,12 +8,13 @@
 namespace AutoScreenCapture
 {
     using System.Collections;
+    using System.Collections.Generic;
 
-    public static class ImageFormatCollection
+    public class ImageFormatCollection : IEnumerable<ImageFormat>
     {
-        private static ArrayList _imageFormatList = new ArrayList();
+        private readonly List<ImageFormat> _imageFormatList = new List<ImageFormat>();
 
-        public static void Initialize()
+        public ImageFormatCollection()
         {
             ImageFormat bmp = new ImageFormat(ImageFormatSpec.NAME_BMP, ImageFormatSpec.EXTENSION_BMP);
             ImageFormat emf = new ImageFormat(ImageFormatSpec.NAME_EMF, ImageFormatSpec.EXTENSION_EMF);
@@ -32,36 +33,39 @@ namespace AutoScreenCapture
             Add(wmf);
         }
 
-        public static void Add(ImageFormat imageFormat)
+        public List<ImageFormat>.Enumerator GetEnumerator()
+        {
+            return _imageFormatList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<ImageFormat>)_imageFormatList).GetEnumerator();
+        }
+
+        IEnumerator<ImageFormat> IEnumerable<ImageFormat>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(ImageFormat imageFormat)
         {
             _imageFormatList.Add(imageFormat);
 
             Log.Write("Added " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
-        public static ImageFormat Get(int index)
+        public ImageFormat GetByName(string name)
         {
-            return (ImageFormat)_imageFormatList[index];
-        }
-
-        public static ImageFormat GetByName(string name)
-        {
-            for (int i = 0; i < _imageFormatList.Count; i++)
+            foreach (ImageFormat imageFormat in _imageFormatList)
             {
-                ImageFormat imageFormat = Get(i);
-
                 if (imageFormat.Name.Equals(name))
                 {
-                    return Get(i);
+                    return imageFormat;
                 }
             }
 
             return null;
-        }
-
-        public static int Count
-        {
-            get { return _imageFormatList.Count; }
         }
     }
 }

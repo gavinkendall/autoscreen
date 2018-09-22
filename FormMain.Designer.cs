@@ -1506,7 +1506,7 @@
             this.listBoxSlides.Sorted = true;
             this.listBoxSlides.TabIndex = 6;
             this.listBoxSlides.TabStop = false;
-            this.listBoxSlides.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChangedlistBoxScreenshots);
+            this.listBoxSlides.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_listBoxSlides);
             // 
             // notifyIcon
             // 

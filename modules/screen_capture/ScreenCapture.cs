@@ -78,6 +78,7 @@ namespace AutoScreenCapture
         public static int Count { get; set; }
         public static bool RunningFromCommandLine { get; set; }
         public static bool LockScreenCaptureSession { get; set; }
+        public static bool Running { get; set; }
 
         public static Bitmap GetScreenBitmap(Screen screen, int ratio, string format, bool mouse)
         {
@@ -174,7 +175,7 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static void TakeScreenshot(Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
+        public static void TakeScreenshot(ImageFormatCollection imageFormatCollection, Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
         {
             try
             {
@@ -186,7 +187,7 @@ namespace AutoScreenCapture
                     {
                         Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
 
-                        SaveToFile(bitmap, jpegQualityLevel, format, screenshot.Path, screenshotType);
+                        SaveToFile(imageFormatCollection, bitmap, jpegQualityLevel, format, screenshot.Path, screenshotType);
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
 
@@ -220,7 +221,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private static void SaveToFile(Bitmap bitmap, long jpegQualityLevel, string imageFormat, string imagePath, ScreenshotType screenshotType)
+        private static void SaveToFile(ImageFormatCollection imageFormatCollection, Bitmap bitmap, long jpegQualityLevel, string imageFormat, string imagePath, ScreenshotType screenshotType)
         {
             try
             {
@@ -245,7 +246,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        bitmap.Save(imagePath, ImageFormatCollection.GetByName(imageFormat).Format);
+                        bitmap.Save(imagePath, imageFormatCollection.GetByName(imageFormat).Format);
                     }
                 }
             }

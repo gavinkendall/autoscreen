@@ -12,8 +12,8 @@ namespace AutoScreenCapture
         ApplicationStartup = 0,
         ApplicationExit = 1,
         LimitReached = 2,
-        ScreenCaptureSessionStarted = 3,
-        ScreenCaptureSessionStopped = 4,
+        ScreenCaptureStarted = 3,
+        ScreenCaptureStopped = 4,
         ScreenshotTaken = 5
     }
 }

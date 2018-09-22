@@ -12,10 +12,11 @@ namespace AutoScreenCapture
     using System.Collections;
     using System.Text;
     using System.Xml;
+    using System.Collections.Generic;
 
-    public static class EditorCollection
+    public class EditorCollection : IEnumerable<Editor>
     {
-        private static ArrayList _editorList = new ArrayList();
+        private readonly List<Editor> _editorList = new List<Editor>();
 
         private const string XML_FILE = "editors.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -28,54 +29,60 @@ namespace AutoScreenCapture
         private const string EDITOR_APPLICATION = "application";
         private const string EDITOR_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_EDITORS_NODE + "/" + XML_FILE_EDITOR_NODE;
 
-        public static void Add(Editor editor)
+        public List<Editor>.Enumerator GetEnumerator()
+        {
+            return _editorList.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Editor>)_editorList).GetEnumerator();
+        }
+
+        IEnumerator<Editor> IEnumerable<Editor>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(Editor editor)
         {
             _editorList.Add(editor);
 
             Log.Write("Added " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
-        public static void Remove(Editor editor)
+        public void Remove(Editor editor)
         {
             _editorList.Remove(editor);
 
             Log.Write("Removed " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
-        public static int Count
+        public int Count
         {
             get { return _editorList.Count; }
         }
 
-        public static Editor Get(Editor editorToFind)
+        public Editor Get(Editor editorToFind)
         {
-            for (int i = 0; i < _editorList.Count; i++)
+            foreach (Editor editor in _editorList)
             {
-                Editor editor = GetByIndex(i);
-
                 if (editor.Equals(editorToFind))
                 {
-                    return GetByIndex(i);
+                    return editor;
                 }
             }
 
             return null;
         }
 
-        public static Editor GetByIndex(int index)
+        public Editor GetByName(string name)
         {
-            return (Editor)_editorList[index];
-        }
-
-        public static Editor GetByName(string name)
-        {
-            for (int i = 0; i < _editorList.Count; i++)
+            foreach (Editor editor in _editorList)
             {
-                Editor editor = GetByIndex(i);
-
                 if (editor.Name.Equals(name))
                 {
-                    return GetByIndex(i);
+                    return editor;
                 }
             }
 
@@ -85,7 +92,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the image editors.
         /// </summary>
-        public static void Load()
+        public void Load()
         {
             if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
             {
@@ -137,7 +144,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the image editors.
         /// </summary>
-        public static void Save()
+        public void Save()
         {
             XmlWriterSettings xSettings = new XmlWriterSettings
             {

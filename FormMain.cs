@@ -26,6 +26,8 @@ namespace AutoScreenCapture
         private FormTrigger formTrigger = new FormTrigger();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
+        private ImageFormatCollection _imageFormatCollection;
+
         /// <summary>
         /// Threads for background operations.
         /// </summary>
@@ -146,7 +148,7 @@ namespace AutoScreenCapture
         private void LoadApplicationSettings()
         {
             Log.Write("Initializing image format collection.");
-            ImageFormatCollection.Initialize();
+            _imageFormatCollection = new ImageFormatCollection();
 
             Log.Write("Initializing image format filter drop down menu.");
             LoadImageFormatFilterDropDownMenu();
@@ -158,11 +160,11 @@ namespace AutoScreenCapture
 
             Log.Write("Loading editors.");
 
-            EditorCollection.Load();
+            formEditor.EditorCollection.Load();
 
             Log.Write("Loading triggers.");
 
-            formTrigger.triggerCollection.Load();
+            formTrigger.TriggerCollection.Load();
 
             Log.Write("Building screenshot preview context menu.");
 
@@ -200,14 +202,14 @@ namespace AutoScreenCapture
 
             Log.Write("Building image format list in system tray menu.");
 
-            for (int i = 0; i < ImageFormatCollection.Count; i++)
+            foreach (ImageFormat imageFormat in _imageFormatCollection)
             {
-                comboBoxScheduleImageFormat.Items.Add(ImageFormatCollection.Get(i).Name);
+                comboBoxScheduleImageFormat.Items.Add(imageFormat.Name);
 
-                ToolStripItem startScreenCaptureMenuItemForSplitButton = new ToolStripMenuItem(ImageFormatCollection.Get(i).Name);
+                ToolStripItem startScreenCaptureMenuItemForSplitButton = new ToolStripMenuItem(imageFormat.Name);
                 startScreenCaptureMenuItemForSplitButton.Click += new EventHandler(Click_toolStripMenuItemStartScreenCapture);
 
-                ToolStripItem startScreenCaptureMenuItemForSystemTrayMenu = new ToolStripMenuItem(ImageFormatCollection.Get(i).Name);
+                ToolStripItem startScreenCaptureMenuItemForSystemTrayMenu = new ToolStripMenuItem(imageFormat.Name);
                 startScreenCaptureMenuItemForSystemTrayMenu.Click += new EventHandler(Click_toolStripMenuItemStartScreenCapture);
 
                 toolStripMenuItemStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSystemTrayMenu);
@@ -451,9 +453,11 @@ namespace AutoScreenCapture
                     runDeleteSlidesThread.CancelAsync();
                 }
 
-                EditorCollection.Save();
+                formEditor.EditorCollection.Save();
+
                 ScreenshotCollection.Save();
-                formTrigger.triggerCollection.Save();
+
+                formTrigger.TriggerCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -998,6 +1002,10 @@ namespace AutoScreenCapture
             {
                 Log.Write("Stopping screen capture.");
 
+                ScreenCapture.Running = false;
+
+                RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
+
                 if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
                     formEnterPassphrase.ShowDialog(this);
@@ -1152,6 +1160,10 @@ namespace AutoScreenCapture
                         ScreenCapture.LockScreenCaptureSession = false;
                     }
 
+                    ScreenCapture.Running = true;
+
+                    RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
+
                     if (checkBoxInitialScreenshot.Checked)
                     {
                         Log.Write("Taking initial screenshots.");
@@ -1174,7 +1186,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectedIndexChangedlistBoxScreenshots(object sender, EventArgs e)
+        private void SelectedIndexChanged_listBoxSlides(object sender, EventArgs e)
         {
             Slideshow.Index = listBoxSlides.SelectedIndex;
             Slideshow.Count = listBoxSlides.Items.Count;
@@ -1337,9 +1349,9 @@ namespace AutoScreenCapture
             toolStripComboBoxImageFormatFilter.Items.Clear();
             toolStripComboBoxImageFormatFilter.Items.Add("*.*");
 
-            for (int i = 0; i < ImageFormatCollection.Count; i++)
+            foreach (ImageFormat imageFormat in _imageFormatCollection)
             {
-                toolStripComboBoxImageFormatFilter.Items.Add("*" + ImageFormatCollection.Get(i).Extension);
+                toolStripComboBoxImageFormatFilter.Items.Add("*" + imageFormat.Extension);
             }
         }
 
@@ -1493,6 +1505,8 @@ namespace AutoScreenCapture
             // to continue with normal functionality.
             if (!ScreenCapture.LockScreenCaptureSession)
             {
+                RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
+
                 checkBoxPassphraseLock.Checked = false;
                 Properties.Settings.Default.LockScreenCaptureSession = false;
                 Properties.Settings.Default.Save();
@@ -1518,9 +1532,11 @@ namespace AutoScreenCapture
                     runDeleteSlidesThread.CancelAsync();
                 }
 
-                EditorCollection.Save();
+                formEditor.EditorCollection.Save();
+
                 ScreenshotCollection.Save();
-                formTrigger.triggerCollection.Save();
+
+                formTrigger.TriggerCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -2075,10 +2091,8 @@ namespace AutoScreenCapture
             // Move down a bit so we can start populating the Editors tab page with a list of Editors.
             yPosEditor += 28;
 
-            for (int i = 0; i < EditorCollection.Count; i++)
+            foreach (Editor editor in formEditor.EditorCollection)
             {
-                Editor editor = EditorCollection.GetByIndex(i);
-
                 if (editor != null && File.Exists(editor.Application))
                 {
                     // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
@@ -2088,7 +2102,7 @@ namespace AutoScreenCapture
                     {
                         Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap()
                     };
-                    editorItem.Click += new EventHandler(Click_editorRun);
+                    editorItem.Click += new EventHandler(Click_runEditor);
                     contextMenuStripScreenshotPreview.Items.Add(editorItem);
                     // ****************************************************************************
 
@@ -2196,7 +2210,7 @@ namespace AutoScreenCapture
             // Move down a bit so we can start populating the Triggers tab page with a list of Triggers.
             yPosTrigger += 28;
 
-            foreach (Trigger trigger in formTrigger.triggerCollection)
+            foreach (Trigger trigger in formTrigger.TriggerCollection)
             {
                 // Add a checkbox so that the user has the ability to remove the selected Trigger.
                 CheckBox checkboxTrigger = new CheckBox
@@ -2270,7 +2284,7 @@ namespace AutoScreenCapture
             {
                 BuildScreenshotPreviewContextualMenu();
 
-                EditorCollection.Save();
+                formEditor.EditorCollection.Save();
             }
         }
 
@@ -2281,7 +2295,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_removeSelectedEditors(object sender, EventArgs e)
         {
-            int countBeforeRemoval = EditorCollection.Count;
+            int countBeforeRemoval = formEditor.EditorCollection.Count;
 
             foreach (Control control in tabPageEditors.Controls)
             {
@@ -2291,17 +2305,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Editor editor = EditorCollection.Get((Editor)checkBox.Tag);
-                        EditorCollection.Remove(editor);
+                        Editor editor = formEditor.EditorCollection.Get((Editor)checkBox.Tag);
+                        formEditor.EditorCollection.Remove(editor);
                     }
                 }
             }
 
-            if (countBeforeRemoval > EditorCollection.Count)
+            if (countBeforeRemoval > formEditor.EditorCollection.Count)
             {
                 BuildScreenshotPreviewContextualMenu();
 
-                EditorCollection.Save();
+                formEditor.EditorCollection.Save();
             }
         }
 
@@ -2310,17 +2324,12 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_editorRun(object sender, EventArgs e)
+        private void Click_runEditor(object sender, EventArgs e)
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
-                Editor editor = EditorCollection.GetByName(sender.ToString());
-                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
-
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
-                {
-                    Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
-                }
+                Editor editor = formEditor.EditorCollection.GetByName(sender.ToString());
+                RunEditor(editor);
             }
         }
 
@@ -2343,7 +2352,38 @@ namespace AutoScreenCapture
                 {
                     BuildScreenshotPreviewContextualMenu();
 
-                    EditorCollection.Save();
+                    formEditor.EditorCollection.Save();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Executes a chosen image editor.
+        /// </summary>
+        /// <param name="editor">The image editor to execute.</param>
+        private void RunEditor(Editor editor)
+        {
+            if (editor != null)
+            {
+                Screenshot selectedScreenshot;
+
+                if (ScreenCapture.Running)
+                {
+                    // We want to get the very latest screenshot that was captured if we're taking screenshots.
+                    selectedScreenshot = ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1);
+                }
+                else
+                {
+                    // Otherwise we're probably not taking screenshots so therefore get the screenshot
+                    // that the user selected from the Slideshow module.
+                    selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
+                }
+
+                // Execute the chosen image editor. If the %screenshot% argument happens to be included
+                // then we'll use that argument as the screenshot file path when executing the image editor.
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
+                {
+                    Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
                 }
             }
         }
@@ -2361,13 +2401,15 @@ namespace AutoScreenCapture
         {
             formTrigger.TriggerObject = null;
 
+            formTrigger.EditorCollection = formEditor.EditorCollection;
+
             formTrigger.ShowDialog(this);
 
             if (formTrigger.DialogResult == DialogResult.OK)
             {
                 BuildScreenshotPreviewContextualMenu();
 
-                formTrigger.triggerCollection.Save();
+                formTrigger.TriggerCollection.Save();
             }
         }
 
@@ -2378,7 +2420,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_removeSelectedTriggers(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formTrigger.triggerCollection.Count;
+            int countBeforeRemoval = formTrigger.TriggerCollection.Count;
 
             foreach (Control control in tabPageTriggers.Controls)
             {
@@ -2388,17 +2430,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Trigger trigger = formTrigger.triggerCollection.Get((Trigger)checkBox.Tag);
-                        formTrigger.triggerCollection.Remove(trigger);
+                        Trigger trigger = formTrigger.TriggerCollection.Get((Trigger)checkBox.Tag);
+                        formTrigger.TriggerCollection.Remove(trigger);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formTrigger.triggerCollection.Count)
+            if (countBeforeRemoval > formTrigger.TriggerCollection.Count)
             {
                 BuildScreenshotPreviewContextualMenu();
 
-                formTrigger.triggerCollection.Save();
+                formTrigger.TriggerCollection.Save();
             }
         }
 
@@ -2415,13 +2457,15 @@ namespace AutoScreenCapture
             {
                 formTrigger.TriggerObject = (Trigger)buttonSelected.Tag;
 
+                formTrigger.EditorCollection = formEditor.EditorCollection;
+
                 formTrigger.ShowDialog(this);
 
                 if (formTrigger.DialogResult == DialogResult.OK)
                 {
                     BuildScreenshotPreviewContextualMenu();
 
-                    formTrigger.triggerCollection.Save();
+                    formTrigger.TriggerCollection.Save();
                 }
             }
         }
@@ -2654,7 +2698,7 @@ namespace AutoScreenCapture
 
                 if (ScreenCapture.Count == ScreenCapture.Limit)
                 {
-                    StopScreenCapture();
+                    RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                 }
             }
             else
@@ -2678,14 +2722,14 @@ namespace AutoScreenCapture
             // Save a copy of an empty screenshot image file so that we can retrieve it later in the Slideshow.
             if (CaptureScreenAllowed(1) || CaptureScreenAllowed(2) || CaptureScreenAllowed(3) || CaptureScreenAllowed(4) || CaptureScreenAllowed(5))
             {
-                ScreenCapture.Save(FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ScreenshotListMacro, ScreenCapture.Format, null, dateTimeScreenshotTaken));
+                ScreenCapture.Save(FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ScreenshotListMacro, ScreenCapture.Format, null, dateTimeScreenshotTaken));
             }
 
             // Active Window
             if (CaptureScreenAllowed(5))
             {
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                ScreenCapture.TakeScreenshot(null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, dateTimeScreenshotTaken, ScreenCapture.Format, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
             }
 
             // All screens.
@@ -2719,13 +2763,15 @@ namespace AutoScreenCapture
 
                     if (!string.IsNullOrEmpty(screenName))
                     {
-                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                        ScreenCapture.TakeScreenshot(screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
                     }
                 }
             }
 
             ScreenCapture.Count++;
+
+            RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
         }
 
         /// <summary>
@@ -3460,7 +3506,7 @@ namespace AutoScreenCapture
 
         private void RunTriggersOfConditionType(TriggerConditionType conditionType)
         {
-            foreach (Trigger trigger in formTrigger.triggerCollection)
+            foreach (Trigger trigger in formTrigger.TriggerCollection)
             {
                 if (trigger.ConditionType == conditionType)
                 {
@@ -3495,10 +3541,16 @@ namespace AutoScreenCapture
                             break;
 
                         case TriggerActionType.RunEditor:
+                            Editor editor = formEditor.EditorCollection.GetByName(trigger.Editor);
+                            RunEditor(editor);
                             break;
 
                         case TriggerActionType.StartScreenCapture:
                             StartScreenCapture();
+                            break;
+
+                        case TriggerActionType.StopScreenCapture:
+                            StopScreenCapture();
                             break;
                     }
                 }

@@ -15,6 +15,8 @@ namespace AutoScreenCapture
 
     public partial class FormEditor : Form
     {
+        public EditorCollection EditorCollection { get; } = new EditorCollection();
+
         public Editor EditorObject { get; set; }
 
         private readonly string defaultArguments = "%screenshot%";

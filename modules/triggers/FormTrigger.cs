@@ -9,15 +9,15 @@ namespace AutoScreenCapture
 {
     using System;
     using System.IO;
-    using System.ComponentModel;
-    using System.Drawing;
     using System.Windows.Forms;
 
     public partial class FormTrigger : Form
     {
-        public TriggerCollection triggerCollection = new TriggerCollection();
+        public TriggerCollection TriggerCollection { get; } = new TriggerCollection();
 
         public Trigger TriggerObject { get; set; }
+
+        public EditorCollection EditorCollection { get; set; }
 
         public FormTrigger()
         {
@@ -72,12 +72,12 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (triggerCollection.GetByName(textBoxTriggerName.Text) == null)
+                if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
-                    triggerCollection.Add(new Trigger(textBoxTriggerName.Text,
+                    TriggerCollection.Add(new Trigger(textBoxTriggerName.Text,
                         (TriggerConditionType)comboBoxCondition.SelectedIndex,
                         (TriggerActionType)comboBoxAction.SelectedIndex,
-                        comboBoxEditor.SelectedItem.ToString()));
+                        comboBoxEditor.Enabled ? comboBoxEditor.SelectedItem.ToString() : string.Empty));
 
                     Okay();
                 }
@@ -100,16 +100,24 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (triggerCollection.GetByName(textBoxTriggerName.Text) != null && NameChanged())
+                    if (TriggerCollection.GetByName(textBoxTriggerName.Text) != null && NameChanged())
                     {
                         MessageBox.Show("A trigger with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        triggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
-                        triggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)comboBoxCondition.SelectedIndex;
-                        triggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)comboBoxAction.SelectedIndex;
-                        triggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedItem.ToString();
+                        TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
+                        TriggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)comboBoxCondition.SelectedIndex;
+                        TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)comboBoxAction.SelectedIndex;
+
+                        if (comboBoxEditor.Enabled)
+                        {
+                            TriggerCollection.Get(TriggerObject).Editor = comboBoxEditor.SelectedItem.ToString();
+                        }
+                        else
+                        {
+                            TriggerCollection.Get(TriggerObject).Editor = string.Empty;
+                        }
 
                         Okay();
                     }
@@ -184,8 +192,8 @@ namespace AutoScreenCapture
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ApplicationStartup, "Application Startup").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ApplicationExit, "Application Exit").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.LimitReached, "Limit Reached").Description);
-            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureSessionStarted, "Screen Capture Session Started").Description);
-            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureSessionStopped, "Screen Capture Session Stopped").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureStarted, "Screen Capture Started").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureStopped, "Screen Capture Stopped").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenshotTaken, "Screenshot Taken").Description);
 
             comboBoxCondition.SelectedIndex = 0;
@@ -213,10 +221,10 @@ namespace AutoScreenCapture
         {
             comboBoxEditor.Items.Clear();
 
-            for (int i = 0; i < EditorCollection.Count; i++)
-            {
-                Editor editor = EditorCollection.GetByIndex(i);
+            comboBoxEditor.Items.Add(string.Empty);
 
+            foreach (Editor editor in EditorCollection)
+            {
                 if (editor != null && File.Exists(editor.Application))
                 {
                     comboBoxEditor.Items.Add(editor.Name);
@@ -226,14 +234,27 @@ namespace AutoScreenCapture
             comboBoxEditor.SelectedIndex = 0;
         }
 
+        private void comboBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EnableOrDisableEditors();
+        }
+
         private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor)
+            EnableOrDisableEditors();
+        }
+
+        private void EnableOrDisableEditors()
+        {
+            if (comboBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor &&
+                (comboBoxCondition.SelectedIndex == (int)TriggerConditionType.ScreenCaptureStopped ||
+                comboBoxCondition.SelectedIndex == (int)TriggerConditionType.ScreenshotTaken))
             {
                 comboBoxEditor.Enabled = true;
             }
             else
             {
+                comboBoxEditor.SelectedIndex = 0;
                 comboBoxEditor.Enabled = false;
             }
         }

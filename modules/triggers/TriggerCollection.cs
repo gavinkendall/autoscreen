@@ -16,7 +16,7 @@ namespace AutoScreenCapture
 
     public class TriggerCollection : IEnumerable<Trigger>
     {
-        private List<Trigger> _triggerList = new List<Trigger>();
+        private readonly List<Trigger> _triggerList = new List<Trigger>();
 
         private const string XML_FILE = "triggers.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -66,13 +66,11 @@ namespace AutoScreenCapture
 
         public Trigger Get(Trigger triggerToFind)
         {
-            for (int i = 0; i < _triggerList.Count; i++)
+            foreach (Trigger trigger in _triggerList)
             {
-                Trigger trigger = GetByIndex(i);
-
-                if (trigger.Equals(triggerToFind))
+               if (trigger.Equals(triggerToFind))
                 {
-                    return GetByIndex(i);
+                    return trigger;
                 }
             }
 
@@ -86,13 +84,11 @@ namespace AutoScreenCapture
 
         public Trigger GetByName(string name)
         {
-            for (int i = 0; i < _triggerList.Count; i++)
+            foreach (Trigger trigger in _triggerList)
             {
-                Trigger trigger = GetByIndex(i);
-
                 if (trigger.Name.Equals(name))
                 {
-                    return GetByIndex(i);
+                    return trigger;
                 }
             }
 

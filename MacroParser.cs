@@ -17,11 +17,11 @@ namespace AutoScreenCapture
         public static readonly string ScreenshotListMacro = @"%year%-%month%-%day%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ApplicationMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
-        public static string ParseTags(string path, string imageFormat, string screenName, DateTime dateTimeScreenshotTaken)
+        public static string ParseTags(ImageFormatCollection imageFormatCollection, string path, string imageFormat, string screenName, DateTime dateTimeScreenshotTaken)
         {
             if (!string.IsNullOrEmpty(imageFormat))
             {
-                path = path.Replace("%format%", ImageFormatCollection.GetByName(imageFormat).Extension.TrimStart('.'));
+                path = path.Replace("%format%", imageFormatCollection.GetByName(imageFormat).Extension.TrimStart('.'));
             }
 
             if (!string.IsNullOrEmpty(screenName))
