@@ -34,19 +34,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemStartWhenWindowsStarts = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemPreviewAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemScheduleAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDebugMode = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemOpenAtApplicationStartup = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemOpenOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemCloseWindowOnStartCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemExitOnCloseWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
             this.panelAllScreens = new System.Windows.Forms.Panel();
@@ -129,8 +117,8 @@
             this.contextMenuStripSystemTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemShowInterface = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemHideInterface = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,7 +162,6 @@
             this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
             this.groupBoxSchedule = new System.Windows.Forms.GroupBox();
-            this.checkBoxScheduleStartOnSchedule = new System.Windows.Forms.CheckBox();
             this.comboBoxScheduleImageFormat = new System.Windows.Forms.ComboBox();
             this.buttonScheduleClear = new System.Windows.Forms.Button();
             this.buttonScheduleSet = new System.Windows.Forms.Button();
@@ -314,19 +301,7 @@
             // 
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemStartWhenWindowsStarts,
-            this.toolStripSeparator4,
-            this.toolStripMenuItemPreviewAtApplicationStartup,
-            this.toolStripMenuItemScheduleAtApplicationStartup,
-            this.toolStripMenuItemDebugMode,
-            this.toolStripSeparator7,
-            this.toolStripMenuItemOpenAtApplicationStartup,
-            this.toolStripMenuItemOpenOnStopScreenCapture,
-            this.toolStripMenuItemCloseWindowOnStartCapture,
-            this.toolStripSeparator6,
-            this.toolStripMenuItemShowSystemTrayIcon,
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture,
-            this.toolStripSeparator5,
-            this.toolStripMenuItemExitOnCloseWindow});
+            this.toolStripMenuItemShowSystemTrayIcon});
             this.toolStripDropDownButtonOptions.Image = global::AutoScreenCapture.Properties.Resources.options;
             this.toolStripDropDownButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonOptions.Name = "toolStripDropDownButtonOptions";
@@ -337,103 +312,19 @@
             // 
             this.toolStripMenuItemStartWhenWindowsStarts.CheckOnClick = true;
             this.toolStripMenuItemStartWhenWindowsStarts.Name = "toolStripMenuItemStartWhenWindowsStarts";
-            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(441, 22);
+            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(388, 22);
             this.toolStripMenuItemStartWhenWindowsStarts.Text = "Start application when Windows starts";
             this.toolStripMenuItemStartWhenWindowsStarts.CheckedChanged += new System.EventHandler(this.CheckedChanged_toolStripMenuItemStartWhenWindowsStarts);
             this.toolStripMenuItemStartWhenWindowsStarts.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(438, 6);
-            // 
-            // toolStripMenuItemPreviewAtApplicationStartup
-            // 
-            this.toolStripMenuItemPreviewAtApplicationStartup.CheckOnClick = true;
-            this.toolStripMenuItemPreviewAtApplicationStartup.Name = "toolStripMenuItemPreviewAtApplicationStartup";
-            this.toolStripMenuItemPreviewAtApplicationStartup.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemPreviewAtApplicationStartup.Text = "Turn on preview at application startup";
-            this.toolStripMenuItemPreviewAtApplicationStartup.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripMenuItemScheduleAtApplicationStartup
-            // 
-            this.toolStripMenuItemScheduleAtApplicationStartup.CheckOnClick = true;
-            this.toolStripMenuItemScheduleAtApplicationStartup.Name = "toolStripMenuItemScheduleAtApplicationStartup";
-            this.toolStripMenuItemScheduleAtApplicationStartup.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemScheduleAtApplicationStartup.Text = "Turn on scheduled screen capturing at application startup";
-            this.toolStripMenuItemScheduleAtApplicationStartup.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripMenuItemDebugMode
-            // 
-            this.toolStripMenuItemDebugMode.CheckOnClick = true;
-            this.toolStripMenuItemDebugMode.Name = "toolStripMenuItemDebugMode";
-            this.toolStripMenuItemDebugMode.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemDebugMode.Text = "Turn on debug mode and write messages to autoscreen.log";
-            this.toolStripMenuItemDebugMode.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(438, 6);
-            // 
-            // toolStripMenuItemOpenAtApplicationStartup
-            // 
-            this.toolStripMenuItemOpenAtApplicationStartup.CheckOnClick = true;
-            this.toolStripMenuItemOpenAtApplicationStartup.Name = "toolStripMenuItemOpenAtApplicationStartup";
-            this.toolStripMenuItemOpenAtApplicationStartup.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemOpenAtApplicationStartup.Text = "Open this window at application startup";
-            this.toolStripMenuItemOpenAtApplicationStartup.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripMenuItemOpenOnStopScreenCapture
-            // 
-            this.toolStripMenuItemOpenOnStopScreenCapture.CheckOnClick = true;
-            this.toolStripMenuItemOpenOnStopScreenCapture.Name = "toolStripMenuItemOpenOnStopScreenCapture";
-            this.toolStripMenuItemOpenOnStopScreenCapture.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemOpenOnStopScreenCapture.Text = "Open this window after stopping the running screen capture session";
-            this.toolStripMenuItemOpenOnStopScreenCapture.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripMenuItemCloseWindowOnStartCapture
-            // 
-            this.toolStripMenuItemCloseWindowOnStartCapture.CheckOnClick = true;
-            this.toolStripMenuItemCloseWindowOnStartCapture.Name = "toolStripMenuItemCloseWindowOnStartCapture";
-            this.toolStripMenuItemCloseWindowOnStartCapture.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemCloseWindowOnStartCapture.Text = "Close this window when starting a screen capture session";
-            this.toolStripMenuItemCloseWindowOnStartCapture.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(438, 6);
             // 
             // toolStripMenuItemShowSystemTrayIcon
             // 
             this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
             this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
-            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(441, 22);
+            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(388, 22);
             this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
             this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.CheckedChanged_toolStripMenuItemShowSystemTrayIcon);
             this.toolStripMenuItemShowSystemTrayIcon.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripMenuItemShowSlideshowOnStopScreenCapture
-            // 
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.CheckOnClick = true;
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Name = "toolStripMenuItemShowSlideshowOnStopScreenCapture";
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Text = "Show the slideshow after stopping the running screen capture session";
-            this.toolStripMenuItemShowSlideshowOnStopScreenCapture.Click += new System.EventHandler(this.SaveApplicationSettings);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(438, 6);
-            // 
-            // toolStripMenuItemExitOnCloseWindow
-            // 
-            this.toolStripMenuItemExitOnCloseWindow.CheckOnClick = true;
-            this.toolStripMenuItemExitOnCloseWindow.Name = "toolStripMenuItemExitOnCloseWindow";
-            this.toolStripMenuItemExitOnCloseWindow.Size = new System.Drawing.Size(441, 22);
-            this.toolStripMenuItemExitOnCloseWindow.Text = "Exit application when closing this window";
-            this.toolStripMenuItemExitOnCloseWindow.Click += new System.EventHandler(this.SaveApplicationSettings);
             // 
             // tabControlScreens
             // 
@@ -1518,56 +1409,56 @@
             this.contextMenuStripSystemTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAbout,
             this.toolStripSeparator2,
-            this.toolStripMenuItemOpen,
-            this.toolStripMenuItemClose,
+            this.toolStripMenuItemShowInterface,
+            this.toolStripMenuItemHideInterface,
             this.toolStripSeparator1,
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
             this.toolStripSeparator3,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(151, 154);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(175, 154);
             // 
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(150, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemAbout.Text = "About ...";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(171, 6);
             // 
-            // toolStripMenuItemOpen
+            // toolStripMenuItemShowInterface
             // 
-            this.toolStripMenuItemOpen.Enabled = false;
-            this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
-            this.toolStripMenuItemOpen.Size = new System.Drawing.Size(150, 22);
-            this.toolStripMenuItemOpen.Text = "Open Window";
-            this.toolStripMenuItemOpen.Click += new System.EventHandler(this.Click_toolStripMenuItemOpen);
+            this.toolStripMenuItemShowInterface.Enabled = false;
+            this.toolStripMenuItemShowInterface.Name = "toolStripMenuItemShowInterface";
+            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemShowInterface.Text = "Show Interface";
+            this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemShowInterface);
             // 
-            // toolStripMenuItemClose
+            // toolStripMenuItemHideInterface
             // 
-            this.toolStripMenuItemClose.Enabled = false;
-            this.toolStripMenuItemClose.Name = "toolStripMenuItemClose";
-            this.toolStripMenuItemClose.Size = new System.Drawing.Size(150, 22);
-            this.toolStripMenuItemClose.Text = "Close Window";
-            this.toolStripMenuItemClose.Click += new System.EventHandler(this.Click_toolStripMenuItemClose);
+            this.toolStripMenuItemHideInterface.Enabled = false;
+            this.toolStripMenuItemHideInterface.Name = "toolStripMenuItemHideInterface";
+            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemHideInterface.Text = "Hide Interface";
+            this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemHideInterface);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemStartScreenCapture
             // 
             this.toolStripMenuItemStartScreenCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemStartScreenCapture.Name = "toolStripMenuItemStartScreenCapture";
             this.toolStripMenuItemStartScreenCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(150, 22);
-            this.toolStripMenuItemStartScreenCapture.Text = "Start Capture";
+            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemStartScreenCapture.Text = "Start Screen Capture";
             // 
             // toolStripMenuItemStopScreenCapture
             // 
@@ -1575,21 +1466,21 @@
             this.toolStripMenuItemStopScreenCapture.Enabled = false;
             this.toolStripMenuItemStopScreenCapture.Name = "toolStripMenuItemStopScreenCapture";
             this.toolStripMenuItemStopScreenCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(150, 22);
-            this.toolStripMenuItemStopScreenCapture.Text = "Stop Capture";
+            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(150, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.Click_toolStripMenuItemExit);
             // 
@@ -1803,8 +1694,8 @@
             this.labelPasswordDescription.Name = "labelPasswordDescription";
             this.labelPasswordDescription.Size = new System.Drawing.Size(186, 55);
             this.labelPasswordDescription.TabIndex = 2;
-            this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this windo" +
-    "w opens, or the application is exiting. Remember it.";
+            this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this inter" +
+    "face is shown, or the application is exiting.";
             // 
             // buttonSetPassphrase
             // 
@@ -2046,7 +1937,6 @@
             // 
             // groupBoxSchedule
             // 
-            this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStartOnSchedule);
             this.groupBoxSchedule.Controls.Add(this.comboBoxScheduleImageFormat);
             this.groupBoxSchedule.Controls.Add(this.buttonScheduleClear);
             this.groupBoxSchedule.Controls.Add(this.buttonScheduleSet);
@@ -2068,19 +1958,6 @@
             this.groupBoxSchedule.TabIndex = 21;
             this.groupBoxSchedule.TabStop = false;
             this.groupBoxSchedule.Text = "Schedule";
-            // 
-            // checkBoxScheduleStartOnSchedule
-            // 
-            this.checkBoxScheduleStartOnSchedule.AutoSize = true;
-            this.checkBoxScheduleStartOnSchedule.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxScheduleStartOnSchedule.Name = "checkBoxScheduleStartOnSchedule";
-            this.checkBoxScheduleStartOnSchedule.Size = new System.Drawing.Size(187, 17);
-            this.checkBoxScheduleStartOnSchedule.TabIndex = 15;
-            this.checkBoxScheduleStartOnSchedule.TabStop = false;
-            this.checkBoxScheduleStartOnSchedule.Text = "Start capture when schedule is on";
-            this.checkBoxScheduleStartOnSchedule.UseVisualStyleBackColor = true;
-            this.checkBoxScheduleStartOnSchedule.CheckedChanged += new System.EventHandler(this.CheckedChanged_checkBoxScheduleStartOnSchedule);
-            this.checkBoxScheduleStartOnSchedule.Click += new System.EventHandler(this.SaveApplicationSettings);
             // 
             // comboBoxScheduleImageFormat
             // 
@@ -2271,7 +2148,6 @@
             this.checkBoxScheduleStartAt.TabStop = false;
             this.checkBoxScheduleStartAt.Text = "Start capture at";
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
-            this.checkBoxScheduleStartAt.CheckedChanged += new System.EventHandler(this.CheckedChanged_checkBoxScheduleStartAt);
             this.checkBoxScheduleStartAt.Click += new System.EventHandler(this.SaveApplicationSettings);
             // 
             // tabPageSlideshow
@@ -2764,7 +2640,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.TextBox textBoxFolder;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.PictureBox pictureBoxScreenshotPreviewMonitor4;
         private System.Windows.Forms.PictureBox pictureBoxScreenshotPreviewMonitor3;
@@ -2786,7 +2662,7 @@
         private System.Windows.Forms.PictureBox pictureBoxScreen3;
         private System.Windows.Forms.TabPage tabPageScreen4;
         private System.Windows.Forms.PictureBox pictureBoxScreen4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClose;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TabControl tabControlModules;
         private System.Windows.Forms.TabPage tabPageScreenCapture;
@@ -2823,9 +2699,6 @@
         private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.ToolStripButton toolStripButtonStopScreenCapture;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonOptions;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenAtApplicationStartup;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenOnStopScreenCapture;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExitOnCloseWindow;
         private System.Windows.Forms.GroupBox groupBoxSchedule;
         private System.Windows.Forms.CheckBox checkBoxScheduleStopAt;
         private System.Windows.Forms.CheckBox checkBoxScheduleStartAt;
@@ -2846,16 +2719,8 @@
         private System.Windows.Forms.Button buttonScheduleClear;
         private System.Windows.Forms.Button buttonScheduleSet;
         private System.Windows.Forms.ComboBox comboBoxScheduleImageFormat;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemScheduleAtApplicationStartup;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPreviewAtApplicationStartup;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSlideshowOnStopScreenCapture;
-        private System.Windows.Forms.CheckBox checkBoxScheduleStartOnSchedule;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCloseWindowOnStartCapture;
         private System.Windows.Forms.Panel panelScreen1;
         private System.Windows.Forms.Label labelScreen1Height;
         private System.Windows.Forms.Label labelScreen1Width;
@@ -2896,7 +2761,6 @@
         private System.Windows.Forms.Panel panelScreen2;
         private System.Windows.Forms.Panel panelScreen3;
         private System.Windows.Forms.Panel panelScreen4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDebugMode;
         private System.Windows.Forms.Timer timerScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSystemTrayIcon;
         private System.Windows.Forms.GroupBox groupBoxSecurity;
@@ -2941,7 +2805,6 @@
         private System.Windows.Forms.Timer timerDeleteSlides;
         private System.Windows.Forms.TabPage tabPageEditors;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWhenWindowsStarts;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.Button buttonRestoreDefaults;
         private System.Windows.Forms.CheckBox checkBoxMouse;

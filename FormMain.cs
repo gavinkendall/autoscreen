@@ -271,24 +271,13 @@ namespace AutoScreenCapture
 
             Log.Write("Loading user settings - option menu items.");
 
-            toolStripMenuItemDebugMode.Checked = Properties.Settings.Default.DebugMode;
-            toolStripMenuItemDebugMode.CheckedChanged += CheckedChanged_toolStripMenuItemDebugMode;
-
-            toolStripMenuItemPreviewAtApplicationStartup.Checked = Properties.Settings.Default.DemoModeCheck;
             toolStripMenuItemShowSystemTrayIcon.Checked = Properties.Settings.Default.ShowSystemTrayIcon;
-            toolStripMenuItemExitOnCloseWindow.Checked = Properties.Settings.Default.ExitOnCloseWindowCheck;
-            toolStripMenuItemScheduleAtApplicationStartup.Checked = Properties.Settings.Default.ScheduleOnAtStartupCheck;
-            toolStripMenuItemOpenOnStopScreenCapture.Checked = Properties.Settings.Default.OpenOnScreenCaptureStopCheck;
-            toolStripMenuItemOpenAtApplicationStartup.Checked = Properties.Settings.Default.OpenOnApplicationStartupCheck;
-            toolStripMenuItemCloseWindowOnStartCapture.Checked = Properties.Settings.Default.CloseWindowOnStartCaptureCheck;
-            toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck;
             toolStripMenuItemStartWhenWindowsStarts.Checked = Properties.Settings.Default.StartWhenWindowsStartsCheck;
 
             Log.Write("Loading user settings - scheduled screen capture session settings.");
 
             checkBoxScheduleStopAt.Checked = Properties.Settings.Default.CaptureStopAtCheck;
             checkBoxScheduleStartAt.Checked = Properties.Settings.Default.CaptureStartAtCheck;
-            checkBoxScheduleStartOnSchedule.Checked = Properties.Settings.Default.CaptureStartOnScheduleCheck;
 
             checkBoxSaturday.Checked = Properties.Settings.Default.CaptureOnSaturdayCheck;
             checkBoxSunday.Checked = Properties.Settings.Default.CaptureOnSundayCheck;
@@ -376,28 +365,9 @@ namespace AutoScreenCapture
 
             checkBoxMouse.Checked = Properties.Settings.Default.Mouse;
 
-            if (toolStripMenuItemPreviewAtApplicationStartup.Checked)
-            {
-                EnablePreview();
-            }
-
             EnableStartScreenCapture();
 
             CaptureLimitCheck();
-
-            if (toolStripMenuItemScheduleAtApplicationStartup.Checked)
-            {
-                EnableSchedule();
-            }
-
-            if (toolStripMenuItemOpenAtApplicationStartup.Checked)
-            {
-                OpenWindow();
-            }
-            else
-            {
-                CloseWindow();
-            }
         }
 
         /// <summary>
@@ -435,8 +405,7 @@ namespace AutoScreenCapture
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
-                // Close this window.
-                CloseWindow();
+                HideInterface();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -466,15 +435,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                if (toolStripMenuItemExitOnCloseWindow.Checked)
-                {
-                    ExitApplication();
-                }
-                else
-                {
-                    e.Cancel = true;
-                    CloseWindow();
-                }
+                RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
             }
         }
 
@@ -743,32 +704,8 @@ namespace AutoScreenCapture
                     Properties.Settings.Default.TakeInitialScreenshotCheck = checkBoxInitialScreenshot.Checked;
                     Log.Write("11 Saving application settings ... TakeInitialScreenshotCheck = " + checkBoxInitialScreenshot.Checked);
 
-                    Properties.Settings.Default.DebugMode = toolStripMenuItemDebugMode.Checked;
-                    Log.Write("12 Saving application settings ... DebugMode = " + toolStripMenuItemDebugMode.Checked);
-
                     Properties.Settings.Default.ShowSystemTrayIcon = toolStripMenuItemShowSystemTrayIcon.Checked;
                     Log.Write("13 Saving application settings ... ShowSystemTrayIcon = " + toolStripMenuItemShowSystemTrayIcon.Checked);
-
-                    Properties.Settings.Default.DemoModeCheck = toolStripMenuItemPreviewAtApplicationStartup.Checked;
-                    Log.Write("14 Saving application settings ... DemoModeCheck = " + toolStripMenuItemPreviewAtApplicationStartup.Checked);
-
-                    Properties.Settings.Default.ExitOnCloseWindowCheck = toolStripMenuItemExitOnCloseWindow.Checked;
-                    Log.Write("15 Saving application settings ... ExitOnCloseWindowCheck = " + toolStripMenuItemExitOnCloseWindow.Checked);
-
-                    Properties.Settings.Default.ScheduleOnAtStartupCheck = toolStripMenuItemScheduleAtApplicationStartup.Checked;
-                    Log.Write("16 Saving application settings ... ScheduleOnAtStartupCheck = " + toolStripMenuItemScheduleAtApplicationStartup.Checked);
-
-                    Properties.Settings.Default.OpenOnScreenCaptureStopCheck = toolStripMenuItemOpenOnStopScreenCapture.Checked;
-                    Log.Write("17 Saving application settings ... OpenOnScreenCaptureStopCheck = " + toolStripMenuItemOpenOnStopScreenCapture.Checked);
-
-                    Properties.Settings.Default.OpenOnApplicationStartupCheck = toolStripMenuItemOpenAtApplicationStartup.Checked;
-                    Log.Write("18 Saving application settings ... OpenOnApplicationStartupCheck = " + toolStripMenuItemOpenAtApplicationStartup.Checked);
-
-                    Properties.Settings.Default.CloseWindowOnStartCaptureCheck = toolStripMenuItemCloseWindowOnStartCapture.Checked;
-                    Log.Write("19 Saving application settings ... CloseWindowOnStartCaptureCheck = " + toolStripMenuItemCloseWindowOnStartCapture.Checked);
-
-                    Properties.Settings.Default.ShowSlideshowAfterScreenCaptureStopCheck = toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked;
-                    Log.Write("20 Saving application settings ... ShowSlideshowAfterScreenCaptureStopCheck = " + toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked);
 
                     Properties.Settings.Default.StartWhenWindowsStartsCheck = toolStripMenuItemStartWhenWindowsStarts.Checked;
                     Log.Write("21 Saving application settings ... StartWhenWindowsStartsCheck = " + toolStripMenuItemStartWhenWindowsStarts.Checked);
@@ -778,9 +715,6 @@ namespace AutoScreenCapture
 
                     Properties.Settings.Default.CaptureStartAtCheck = checkBoxScheduleStartAt.Checked;
                     Log.Write("23 Saving application settings ... CaptureStartAtCheck = " + checkBoxScheduleStartAt.Checked);
-
-                    Properties.Settings.Default.CaptureStartOnScheduleCheck = checkBoxScheduleStartOnSchedule.Checked;
-                    Log.Write("24 Saving application settings ... CaptureStartOnScheduleCheck = " + checkBoxScheduleStartOnSchedule.Checked);
 
                     Properties.Settings.Default.CaptureOnSundayCheck = checkBoxSunday.Checked;
                     Log.Write("25 Saving application settings ... CaptureOnSundayCheck = " + checkBoxSunday.Checked);
@@ -932,11 +866,14 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows this window.
+        /// Shows the interface.
         /// </summary>
-        private void OpenWindow()
+        private void ShowInterface()
         {
-            Log.Write("Opening application window.");
+            Log.Write("Showing interface.");
+
+            SearchDates();
+            SearchSlides();
 
             if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
@@ -953,8 +890,8 @@ namespace AutoScreenCapture
                 Properties.Settings.Default.Save();
 
                 Opacity = 100;
-                toolStripMenuItemOpen.Enabled = false;
-                toolStripMenuItemClose.Enabled = true;
+                toolStripMenuItemShowInterface.Enabled = false;
+                toolStripMenuItemHideInterface.Enabled = true;
 
                 Show();
 
@@ -972,11 +909,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Hides this window.
+        /// Hides the interface.
         /// </summary>
-        private void CloseWindow()
+        private void HideInterface()
         {
-            Log.Write("Closing application window.");
+            Log.Write("Hiding interface.");
 
             // Pause the slideshow if you find it still playing.
             if (Slideshow.Playing)
@@ -985,8 +922,8 @@ namespace AutoScreenCapture
             }
 
             Opacity = 0;
-            toolStripMenuItemOpen.Enabled = true;
-            toolStripMenuItemClose.Enabled = false;
+            toolStripMenuItemShowInterface.Enabled = true;
+            toolStripMenuItemHideInterface.Enabled = false;
 
             Hide();
             Visible = false;
@@ -1001,10 +938,6 @@ namespace AutoScreenCapture
             if (timerScreenCapture.Enabled)
             {
                 Log.Write("Stopping screen capture.");
-
-                ScreenCapture.Running = false;
-
-                RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
 
                 if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
@@ -1029,19 +962,12 @@ namespace AutoScreenCapture
                     DisableStopScreenCapture();
                     EnableStartScreenCapture();
 
-                    // Some people want to see this window immediately after the session has stopped.
-                    if (toolStripMenuItemOpenOnStopScreenCapture.Checked)
-                    {
-                        SearchDates();
-                        SearchSlides();
-                        OpenWindow();
-                    }
+                    SearchDates();
+                    SearchSlides();
 
-                    // Sometimes people want to see the freshly-made screenshots immediately after the session has stopped.
-                    if (toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked)
-                    {
-                        ShowSlideshow();
-                    }
+                    ScreenCapture.Running = false;
+
+                    RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
         }
@@ -1116,11 +1042,6 @@ namespace AutoScreenCapture
                     textBoxFolder.Text = CorrectDirectoryPath(textBoxFolder.Text);
 
                     Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
-
-                    if (toolStripMenuItemCloseWindowOnStartCapture.Checked)
-                    {
-                        CloseWindow();
-                    }
 
                     // Stop the slideshow if it's currently playing.
                     if (Slideshow.Playing)
@@ -1514,8 +1435,7 @@ namespace AutoScreenCapture
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
-                // Close this window.
-                CloseWindow();
+                HideInterface();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -1630,7 +1550,6 @@ namespace AutoScreenCapture
                 numericUpDownJpegQualityLevel.Enabled = true;
                 toolStripButtonPreview.Enabled = true;
 
-                checkBoxScheduleStartOnSchedule.Enabled = true;
                 checkBoxScheduleStartAt.Enabled = true;
                 checkBoxScheduleStopAt.Enabled = true;
                 checkBoxScheduleOnTheseDays.Enabled = true;
@@ -1670,7 +1589,6 @@ namespace AutoScreenCapture
             numericUpDownJpegQualityLevel.Enabled = false;
             toolStripButtonPreview.Enabled = false;
 
-            checkBoxScheduleStartOnSchedule.Enabled = false;
             checkBoxScheduleStartAt.Enabled = false;
             checkBoxScheduleStopAt.Enabled = false;
             checkBoxScheduleOnTheseDays.Enabled = false;
@@ -1754,25 +1672,23 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Opens this window.
+        /// Shows the interface.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemOpen(object sender, EventArgs e)
+        private void Click_toolStripMenuItemShowInterface(object sender, EventArgs e)
         {
-            SearchDates();
-            SearchSlides();
-            OpenWindow();
+            ShowInterface();
         }
 
         /// <summary>
-        /// Closes this window.
+        /// Hides the interface.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemClose(object sender, EventArgs e)
+        private void Click_toolStripMenuItemHideInterface(object sender, EventArgs e)
         {
-            CloseWindow();
+            HideInterface();
         }
 
         /// <summary>
@@ -1859,11 +1775,6 @@ namespace AutoScreenCapture
                 checkBoxScheduleStartAt.Checked = false;
                 checkBoxScheduleOnTheseDays.Checked = false;
 
-                toolStripMenuItemOpenOnStopScreenCapture.Checked = false;
-                toolStripMenuItemOpenAtApplicationStartup.Checked = false;
-                toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
-                toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
-                toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = false;
                 toolStripMenuItemShowSystemTrayIcon.Checked = true;
 
                 #endregion Default Values for Command Line Arguments/Options
@@ -2001,7 +1912,7 @@ namespace AutoScreenCapture
 
                 if (isScheduled)
                 {
-                    toolStripMenuItemScheduleAtApplicationStartup.Checked = true;
+                    EnableSchedule();
                 }
                 else
                 {
@@ -3070,28 +2981,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Tick_timerScheduledCaptureStart(object sender, EventArgs e)
         {
-            if (checkBoxScheduleStartOnSchedule.Checked)
-            {
-                if (checkBoxScheduleOnTheseDays.Checked)
-                {
-                    if ((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked))
-                    {
-
-                        StartScreenCapture();
-                    }
-                }
-                else
-                {
-                    StartScreenCapture();
-                }
-            }
-            else if (checkBoxScheduleStartAt.Checked)
+            if (checkBoxScheduleStartAt.Checked)
             {
                 if (checkBoxScheduleOnTheseDays.Checked)
                 {
@@ -3310,40 +3200,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Enables or disables the checkbox responsible for starting scheduled screen capture sessions whenever the checkbox's state is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckedChanged_checkBoxScheduleStartOnSchedule(object sender, EventArgs e)
-        {
-            if (checkBoxScheduleStartOnSchedule.Checked)
-            {
-                checkBoxScheduleStartAt.Checked = false;
-            }
-            else
-            {
-                checkBoxScheduleStartAt.Checked = true;
-            }
-        }
-
-        /// <summary>
-        /// Enables or disables the checkbox responsible for stopping scheduled screen capture sessions whenever the checkbox's state is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckedChanged_checkBoxScheduleStartAt(object sender, EventArgs e)
-        {
-            if (checkBoxScheduleStartAt.Checked)
-            {
-                checkBoxScheduleStartOnSchedule.Checked = false;
-            }
-            else
-            {
-                checkBoxScheduleStartOnSchedule.Checked = true;
-            }
-        }
-
-        /// <summary>
         /// Takes screenshots when preview is enabled otherwise the preview images will be cleared.
         /// </summary>
         /// <param name="sender"></param>
@@ -3363,16 +3219,6 @@ namespace AutoScreenCapture
             }
 
             timerPreviewCapture.Enabled = toolStripButtonPreview.Checked;
-        }
-
-        /// <summary>
-        /// Turns on "Debug Mode" so we can write debugging messages to "autoscreen.log".
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckedChanged_toolStripMenuItemDebugMode(object sender, EventArgs e)
-        {
-            Log.Enabled = toolStripMenuItemDebugMode.Checked;
         }
 
         /// <summary>
@@ -3434,20 +3280,11 @@ namespace AutoScreenCapture
             checkBoxCaptureLimit.Checked = false;
             checkBoxInitialScreenshot.Checked = true;
 
-            toolStripMenuItemDebugMode.Checked = false;
-            toolStripMenuItemPreviewAtApplicationStartup.Checked = false;
             toolStripMenuItemShowSystemTrayIcon.Checked = true;
-            toolStripMenuItemExitOnCloseWindow.Checked = false;
-            toolStripMenuItemScheduleAtApplicationStartup.Checked = false;
-            toolStripMenuItemOpenOnStopScreenCapture.Checked = true;
-            toolStripMenuItemOpenAtApplicationStartup.Checked = true;
-            toolStripMenuItemCloseWindowOnStartCapture.Checked = true;
-            toolStripMenuItemShowSlideshowOnStopScreenCapture.Checked = true;
             toolStripMenuItemStartWhenWindowsStarts.Checked = false;
 
             checkBoxScheduleStopAt.Checked = false;
             checkBoxScheduleStartAt.Checked = true;
-            checkBoxScheduleStartOnSchedule.Checked = false;
             comboBoxScheduleImageFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
 
             checkBoxSaturday.Checked = false;
@@ -3510,18 +3347,19 @@ namespace AutoScreenCapture
             {
                 if (trigger.ConditionType == conditionType)
                 {
+                    // These actions need to directly correspond with the TriggerActionType class.
                     switch (trigger.ActionType)
                     {
-                        case TriggerActionType.CloseWindow:
-                            CloseWindow();
-                            break;
-
                         case TriggerActionType.DisablePreview:
                             DisablePreview();
                             break;
 
                         case TriggerActionType.DisableSchedule:
                             DisableSchedule();
+                            break;
+
+                        case TriggerActionType.EnableDebugMode:
+                            Log.Enabled = true;
                             break;
 
                         case TriggerActionType.EnablePreview:
@@ -3536,13 +3374,17 @@ namespace AutoScreenCapture
                             ExitApplication();
                             break;
 
-                        case TriggerActionType.OpenWindow:
-                            OpenWindow();
+                        case TriggerActionType.HideInterface:
+                            HideInterface();
                             break;
 
                         case TriggerActionType.RunEditor:
                             Editor editor = formEditor.EditorCollection.GetByName(trigger.Editor);
                             RunEditor(editor);
+                            break;
+
+                        case TriggerActionType.ShowInterface:
+                            ShowInterface();
                             break;
 
                         case TriggerActionType.StartScreenCapture:

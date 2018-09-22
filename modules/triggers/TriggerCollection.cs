@@ -149,6 +149,17 @@ namespace AutoScreenCapture
                     }
                 }
             }
+            else
+            {
+                // Setup a few "built in" triggers by default.
+                Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup, TriggerActionType.ShowInterface, string.Empty));
+                Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted, TriggerActionType.HideInterface, string.Empty));
+                Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped, TriggerActionType.ShowInterface, string.Empty));
+                Add(new Trigger("Interface Closing -> Exit", TriggerConditionType.InterfaceClosing, TriggerActionType.ExitApplication, string.Empty));
+                Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached, TriggerActionType.StopScreenCapture, string.Empty));
+
+                Save();
+            }
         }
 
         /// <summary>

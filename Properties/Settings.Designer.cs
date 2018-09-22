@@ -163,42 +163,6 @@ namespace AutoScreenCapture.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool OpenOnScreenCaptureStopCheck {
-            get {
-                return ((bool)(this["OpenOnScreenCaptureStopCheck"]));
-            }
-            set {
-                this["OpenOnScreenCaptureStopCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ExitOnCloseWindowCheck {
-            get {
-                return ((bool)(this["ExitOnCloseWindowCheck"]));
-            }
-            set {
-                this["ExitOnCloseWindowCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool OpenOnApplicationStartupCheck {
-            get {
-                return ((bool)(this["OpenOnApplicationStartupCheck"]));
-            }
-            set {
-                this["OpenOnApplicationStartupCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int ImageFormatIndex {
             get {
@@ -365,72 +329,12 @@ namespace AutoScreenCapture.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ScheduleOnAtStartupCheck {
-            get {
-                return ((bool)(this["ScheduleOnAtStartupCheck"]));
-            }
-            set {
-                this["ScheduleOnAtStartupCheck"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Gavin Kendall")]
         public string ApplicationAuthor {
             get {
                 return ((string)(this["ApplicationAuthor"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DemoModeCheck {
-            get {
-                return ((bool)(this["DemoModeCheck"]));
-            }
-            set {
-                this["DemoModeCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowSlideshowAfterScreenCaptureStopCheck {
-            get {
-                return ((bool)(this["ShowSlideshowAfterScreenCaptureStopCheck"]));
-            }
-            set {
-                this["ShowSlideshowAfterScreenCaptureStopCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CaptureStartOnScheduleCheck {
-            get {
-                return ((bool)(this["CaptureStartOnScheduleCheck"]));
-            }
-            set {
-                this["CaptureStartOnScheduleCheck"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CloseWindowOnStartCaptureCheck {
-            get {
-                return ((bool)(this["CloseWindowOnStartCaptureCheck"]));
-            }
-            set {
-                this["CloseWindowOnStartCaptureCheck"] = value;
             }
         }
         
@@ -623,18 +527,6 @@ namespace AutoScreenCapture.Properties {
             }
             set {
                 this["Screen4Height"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DebugMode {
-            get {
-                return ((bool)(this["DebugMode"]));
-            }
-            set {
-                this["DebugMode"] = value;
             }
         }
         

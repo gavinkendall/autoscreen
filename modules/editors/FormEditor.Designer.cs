@@ -75,7 +75,7 @@
             this.labelEditorName.Location = new System.Drawing.Point(12, 9);
             this.labelEditorName.Name = "labelEditorName";
             this.labelEditorName.Size = new System.Drawing.Size(38, 13);
-            this.labelEditorName.TabIndex = 5;
+            this.labelEditorName.TabIndex = 0;
             this.labelEditorName.Text = "Name:";
             // 
             // labelEditorApplication
@@ -84,7 +84,7 @@
             this.labelEditorApplication.Location = new System.Drawing.Point(12, 35);
             this.labelEditorApplication.Name = "labelEditorApplication";
             this.labelEditorApplication.Size = new System.Drawing.Size(62, 13);
-            this.labelEditorApplication.TabIndex = 5;
+            this.labelEditorApplication.TabIndex = 0;
             this.labelEditorApplication.Text = "Application:";
             // 
             // textBoxEditorApplication
@@ -110,7 +110,7 @@
             this.labelEditorArguments.Location = new System.Drawing.Point(12, 61);
             this.labelEditorArguments.Name = "labelEditorArguments";
             this.labelEditorArguments.Size = new System.Drawing.Size(60, 13);
-            this.labelEditorArguments.TabIndex = 6;
+            this.labelEditorArguments.TabIndex = 0;
             this.labelEditorArguments.Text = "Arguments:";
             // 
             // textBoxEditorArguments

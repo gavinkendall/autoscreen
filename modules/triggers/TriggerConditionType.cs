@@ -11,9 +11,12 @@ namespace AutoScreenCapture
     {
         ApplicationStartup = 0,
         ApplicationExit = 1,
-        LimitReached = 2,
-        ScreenCaptureStarted = 3,
-        ScreenCaptureStopped = 4,
-        ScreenshotTaken = 5
+        InterfaceClosing = 2,
+        InterfaceHiding = 3,
+        InterfaceShowing = 4,
+        LimitReached = 5,
+        ScreenCaptureStarted = 6,
+        ScreenCaptureStopped = 7,
+        ScreenshotTaken = 8
     }
 }

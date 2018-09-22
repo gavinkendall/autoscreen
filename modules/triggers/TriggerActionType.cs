@@ -9,15 +9,16 @@ namespace AutoScreenCapture
 {
     public enum TriggerActionType
     {
-        CloseWindow = 0,
-        DisablePreview = 1,
-        DisableSchedule = 2,
+        DisablePreview = 0,
+        DisableSchedule = 1,
+        EnableDebugMode = 2,
         EnablePreview = 3,
         EnableSchedule = 4,
         ExitApplication = 5,
-        OpenWindow = 6,
+        HideInterface = 6,
         RunEditor = 7,
-        StartScreenCapture = 8,
-        StopScreenCapture = 9
+        ShowInterface = 8,
+        StartScreenCapture = 9,
+        StopScreenCapture = 10
     }
 }

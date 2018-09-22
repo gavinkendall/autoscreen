@@ -30,8 +30,6 @@ namespace AutoScreenCapture
 
         private void FormEditor_Load(object sender, EventArgs e)
         {
-            textBoxEditorName.Focus();
-
             if (EditorObject != null)
             {
                 Text = "Change Editor";

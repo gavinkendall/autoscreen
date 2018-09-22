@@ -45,8 +45,6 @@ namespace AutoScreenCapture
 
                 textBoxTriggerName.Text = string.Empty;
             }
-
-            textBoxTriggerName.Focus();
         }
 
         private void Click_buttonCancel(object sender, EventArgs e)
@@ -189,8 +187,12 @@ namespace AutoScreenCapture
         {
             comboBoxCondition.Items.Clear();
 
+            // Whatever changes you make here will need to reflect the exact order in which the conditions are listed in the TriggerConditionType class.
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ApplicationStartup, "Application Startup").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ApplicationExit, "Application Exit").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.InterfaceClosing, "Interface Closing").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.InterfaceHiding, "Interface Hiding").Description);
+            comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.InterfaceShowing, "Interface Showing").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.LimitReached, "Limit Reached").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureStarted, "Screen Capture Started").Description);
             comboBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenCaptureStopped, "Screen Capture Stopped").Description);
@@ -203,14 +205,16 @@ namespace AutoScreenCapture
         {
             comboBoxAction.Items.Clear();
 
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.CloseWindow, "Close Window").Description);
+            // Whatever changes you make here will need to reflect the exact order in which the actions are listed in the TriggerActionType class.
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisablePreview, "Disable Preview").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableSchedule, "Disable Schedule").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableDebugMode, "Enable Debug Mode").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnablePreview, "Enable Preview").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableSchedule, "Enable Schedule").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.ExitApplication, "Exit Application").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.OpenWindow, "Open Window").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.HideInterface, "Hide Interface").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.RunEditor, "Run Editor").Description);
+            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowInterface, "Show Interface").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCapture, "Start Screen Capture").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StopScreenCapture, "Stop Screen Capture").Description);
 

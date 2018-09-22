@@ -18,14 +18,11 @@ namespace AutoScreenCapture
         [STAThread]
         static void Main(string[] args)
         {
-            Log.Enabled = Properties.Settings.Default.DebugMode;
-
             foreach (string arg in args)
             {
                 if (!string.IsNullOrEmpty(arg) && arg.Equals("-debug"))
                 {
                     Log.Enabled = true;
-                    Properties.Settings.Default.DebugMode = true;
 
                     break;
                 }

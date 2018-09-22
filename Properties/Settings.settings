@@ -38,15 +38,6 @@
     <Setting Name="SlideSkip" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="OpenOnScreenCaptureStopCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ExitOnCloseWindowCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="OpenOnApplicationStartupCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="ImageFormatIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
@@ -89,23 +80,8 @@
     <Setting Name="ScheduleImageFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">JPEG</Value>
     </Setting>
-    <Setting Name="ScheduleOnAtStartupCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="ApplicationAuthor" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Gavin Kendall</Value>
-    </Setting>
-    <Setting Name="DemoModeCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ShowSlideshowAfterScreenCaptureStopCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="CaptureStartOnScheduleCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="CloseWindowOnStartCaptureCheck" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Screen1X" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -154,9 +130,6 @@
     </Setting>
     <Setting Name="Screen4Height" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="DebugMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ShowSystemTrayIcon" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

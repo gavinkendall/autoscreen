@@ -47,7 +47,7 @@
             this.labelEditorName.Location = new System.Drawing.Point(12, 9);
             this.labelEditorName.Name = "labelEditorName";
             this.labelEditorName.Size = new System.Drawing.Size(38, 13);
-            this.labelEditorName.TabIndex = 7;
+            this.labelEditorName.TabIndex = 0;
             this.labelEditorName.Text = "Name:";
             // 
             // textBoxTriggerName
@@ -56,14 +56,14 @@
             this.textBoxTriggerName.MaxLength = 50;
             this.textBoxTriggerName.Name = "textBoxTriggerName";
             this.textBoxTriggerName.Size = new System.Drawing.Size(351, 20);
-            this.textBoxTriggerName.TabIndex = 6;
+            this.textBoxTriggerName.TabIndex = 1;
             // 
             // buttonOK
             // 
             this.buttonOK.Location = new System.Drawing.Point(275, 110);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 8;
+            this.buttonOK.TabIndex = 5;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.Click_buttonOK);
@@ -74,7 +74,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(356, 110);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 9;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.Click_buttonCancel);
@@ -85,7 +85,7 @@
             this.labelTriggerCondition.Location = new System.Drawing.Point(12, 35);
             this.labelTriggerCondition.Name = "labelTriggerCondition";
             this.labelTriggerCondition.Size = new System.Drawing.Size(54, 13);
-            this.labelTriggerCondition.TabIndex = 10;
+            this.labelTriggerCondition.TabIndex = 0;
             this.labelTriggerCondition.Text = "Condition:";
             // 
             // comboBoxCondition
@@ -95,7 +95,7 @@
             this.comboBoxCondition.Location = new System.Drawing.Point(80, 32);
             this.comboBoxCondition.Name = "comboBoxCondition";
             this.comboBoxCondition.Size = new System.Drawing.Size(351, 21);
-            this.comboBoxCondition.TabIndex = 11;
+            this.comboBoxCondition.TabIndex = 2;
             this.comboBoxCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxCondition_SelectedIndexChanged);
             // 
             // labelTriggerAction
@@ -104,7 +104,7 @@
             this.labelTriggerAction.Location = new System.Drawing.Point(12, 60);
             this.labelTriggerAction.Name = "labelTriggerAction";
             this.labelTriggerAction.Size = new System.Drawing.Size(40, 13);
-            this.labelTriggerAction.TabIndex = 12;
+            this.labelTriggerAction.TabIndex = 0;
             this.labelTriggerAction.Text = "Action:";
             // 
             // comboBoxAction
@@ -114,7 +114,7 @@
             this.comboBoxAction.Location = new System.Drawing.Point(80, 57);
             this.comboBoxAction.Name = "comboBoxAction";
             this.comboBoxAction.Size = new System.Drawing.Size(351, 21);
-            this.comboBoxAction.TabIndex = 13;
+            this.comboBoxAction.TabIndex = 3;
             this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
             // 
             // labelEditor
@@ -123,7 +123,7 @@
             this.labelEditor.Location = new System.Drawing.Point(12, 85);
             this.labelEditor.Name = "labelEditor";
             this.labelEditor.Size = new System.Drawing.Size(37, 13);
-            this.labelEditor.TabIndex = 14;
+            this.labelEditor.TabIndex = 0;
             this.labelEditor.Text = "Editor:";
             // 
             // comboBoxEditor
@@ -133,7 +133,7 @@
             this.comboBoxEditor.Location = new System.Drawing.Point(80, 82);
             this.comboBoxEditor.Name = "comboBoxEditor";
             this.comboBoxEditor.Size = new System.Drawing.Size(351, 21);
-            this.comboBoxEditor.TabIndex = 15;
+            this.comboBoxEditor.TabIndex = 4;
             // 
             // FormTrigger
             // 
