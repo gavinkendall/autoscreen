@@ -1403,6 +1403,7 @@
             // 
             this.notifyIcon.ContextMenuStrip = this.contextMenuStripSystemTrayIcon;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseMove);
             // 
             // contextMenuStripSystemTrayIcon
             // 

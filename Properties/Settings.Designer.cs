@@ -37,7 +37,7 @@ namespace AutoScreenCapture.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.1.6.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.1.6.3")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));

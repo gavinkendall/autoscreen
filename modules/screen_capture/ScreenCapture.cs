@@ -80,6 +80,27 @@ namespace AutoScreenCapture
         public static bool LockScreenCaptureSession { get; set; }
         public static bool Running { get; set; }
 
+        /// <summary>
+        /// The date/time when the user started a screen capture session.
+        /// </summary>
+        public static DateTime DateTimeStartCapture { get; set; }
+
+        /// <summary>
+        /// The date/time when a screenshot is taken (or when the previous screenshot was taken).
+        /// </summary>
+        public static DateTime DateTimePreviousScreenshot { get; set; }
+
+        /// <summary>
+        /// The date/time of the next screenshot. If we're still waiting for the very first screenshot to be taken then calculate from the date/time when the user started a screen capture session
+        /// otherwise calculate from the date/time when the previous screenshot was taken.
+        /// </summary>
+        public static DateTime DateTimeNextScreenshot { get { return DateTimePreviousScreenshot.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousScreenshot.AddMilliseconds(Delay); } }
+
+        /// <summary>
+        /// The time remaining between now and the next screenshot that will be taken.
+        /// </summary>
+        public static TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextScreenshot.Subtract(DateTime.Now).Duration(); } }
+
         public static Bitmap GetScreenBitmap(Screen screen, int ratio, string format, bool mouse)
         {
             try
@@ -175,19 +196,19 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static void TakeScreenshot(ImageFormatCollection imageFormatCollection, Screen screen, DateTime dateTimeScreenshotTaken, string format, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
+        public static void TakeScreenshot(ImageFormatCollection imageFormatCollection, Screen screen, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
         {
             try
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, format, mouse);
+                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, Format, mouse);
 
                     if (bitmap != null)
                     {
-                        Screenshot screenshot = new Screenshot(dateTimeScreenshotTaken, path, screenNumber, format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
+                        Screenshot screenshot = new Screenshot(DateTimePreviousScreenshot, path, screenNumber, Format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
 
-                        SaveToFile(imageFormatCollection, bitmap, jpegQualityLevel, format, screenshot.Path, screenshotType);
+                        SaveToFile(imageFormatCollection, bitmap, jpegQualityLevel, Format, screenshot.Path, screenshotType);
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
 

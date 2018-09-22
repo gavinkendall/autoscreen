@@ -88,7 +88,7 @@ namespace AutoScreenCapture
             InitializeComponent();
 
             Text = Properties.Settings.Default.ApplicationName;
-            notifyIcon.Text = Properties.Settings.Default.ApplicationName;
+            notifyIcon.Text = Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ")";
 
             Log.Write("*** " + Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ") ***");
 
@@ -961,16 +961,13 @@ namespace AutoScreenCapture
                     ScreenCapture.Count = 0;
                     timerScreenCapture.Enabled = false;
 
-                    // Let the user know of the last capture that was taken and the status of the session ("Stopped").
-                    DisplayCaptureStatus(false);
+                    ScreenCapture.Running = false;
 
                     DisableStopScreenCapture();
                     EnableStartScreenCapture();
 
                     SearchDates();
                     SearchSlides();
-
-                    ScreenCapture.Running = false;
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -1088,6 +1085,8 @@ namespace AutoScreenCapture
 
                     ScreenCapture.Running = true;
 
+                    ScreenCapture.DateTimeStartCapture = DateTime.Now;
+
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
 
                     if (checkBoxInitialScreenshot.Checked)
@@ -1095,7 +1094,6 @@ namespace AutoScreenCapture
                         Log.Write("Taking initial screenshots.");
 
                         TakeScreenshot();
-                        DisplayCaptureStatus(true);
                     }
 
                     // Start taking screenshots.
@@ -1629,26 +1627,6 @@ namespace AutoScreenCapture
             textBoxFolder.Enabled = false;
             textBoxMacro.Enabled = false;
             buttonBrowseFolder.Enabled = false;
-        }
-
-        /// <summary>
-        /// Displays the screen capture status.
-        /// </summary>
-        /// <param name="running">Can be "true" for "Running" or "false" for "Stopped".</param>
-        private void DisplayCaptureStatus(bool running)
-        {
-            string appName = Properties.Settings.Default.ApplicationName;
-
-            if (running)
-            {
-                appName += " - " + StatusMessage.RUNNING;
-            }
-            else
-            {
-                appName += " - " + StatusMessage.STOPPED;
-            }
-
-            notifyIcon.Text = appName;
         }
 
         /// <summary>
@@ -2598,8 +2576,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Tick_timerScreenCapture(object sender, EventArgs e)
         {
-            DisplayCaptureStatus(true);
-
             if (!timerScreenCapture.Enabled)
             {
                 StopScreenCapture();
@@ -2633,19 +2609,19 @@ namespace AutoScreenCapture
 
             AutoReset();
 
-            DateTime dateTimeScreenshotTaken = DateTime.Now;
+            ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
 
             // Save a copy of an empty screenshot image file so that we can retrieve it later in the Slideshow.
             if (CaptureScreenAllowed(1) || CaptureScreenAllowed(2) || CaptureScreenAllowed(3) || CaptureScreenAllowed(4) || CaptureScreenAllowed(5))
             {
-                ScreenCapture.Save(FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ScreenshotListMacro, ScreenCapture.Format, null, dateTimeScreenshotTaken));
+                ScreenCapture.Save(FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ScreenshotListMacro, null));
             }
 
             // Active Window
             if (CaptureScreenAllowed(5))
             {
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, dateTimeScreenshotTaken, ScreenCapture.Format, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, ScreenCapture.Format, "5", dateTimeScreenshotTaken), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, dateTimeScreenshotTaken, ScreenCapture.Format, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, ScreenCapture.Format, textBoxScreen5Name.Text, dateTimeScreenshotTaken), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, "5"), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, textBoxScreen5Name.Text), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
             }
 
             // All screens.
@@ -2679,8 +2655,8 @@ namespace AutoScreenCapture
 
                     if (!string.IsNullOrEmpty(screenName))
                     {
-                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, dateTimeScreenshotTaken, ScreenCapture.Format, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, ScreenCapture.Format, count.ToString(), dateTimeScreenshotTaken), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, dateTimeScreenshotTaken, ScreenCapture.Format, screenName, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, ScreenCapture.Format, screenName, dateTimeScreenshotTaken), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, count.ToString()), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, screenName, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, screenName), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
                     }
                 }
             }
@@ -3402,6 +3378,26 @@ namespace AutoScreenCapture
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Displays the remaining time for when the next screenshot will be taken
+        /// when the mouse pointer moves over the system tray icon.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
+        {
+            int remainingHours = ScreenCapture.TimeRemainingForNextScreenshot.Hours;
+            int remainingMinutes = ScreenCapture.TimeRemainingForNextScreenshot.Minutes;
+            int remainingSeconds = ScreenCapture.TimeRemainingForNextScreenshot.Seconds;
+
+            string remainingHoursStr = (remainingHours > 0 ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", " : string.Empty);
+            string remainingMinutesStr = (remainingMinutes > 0 ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", " : string.Empty);
+
+            notifyIcon.Text = "Next screenshot in " +
+                remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
+                " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " + ScreenCapture.DateTimeNextScreenshot.ToShortTimeString();
         }
     }
 }

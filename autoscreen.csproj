@@ -116,7 +116,6 @@
     <Compile Include="modules\screen_capture\Screenshot.cs" />
     <Compile Include="modules\screen_capture\ScreenshotCollection.cs" />
     <Compile Include="modules\screen_capture\ScreenshotType.cs" />
-    <Compile Include="StatusMessage.cs" />
     <Compile Include="MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />

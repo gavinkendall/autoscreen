@@ -17,11 +17,11 @@ namespace AutoScreenCapture
         public static readonly string ScreenshotListMacro = @"%year%-%month%-%day%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ApplicationMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
-        public static string ParseTags(ImageFormatCollection imageFormatCollection, string path, string imageFormat, string screenName, DateTime dateTimeScreenshotTaken)
+        public static string ParseTags(ImageFormatCollection imageFormatCollection, string path, string screenName)
         {
-            if (!string.IsNullOrEmpty(imageFormat))
+            if (!string.IsNullOrEmpty(ScreenCapture.Format))
             {
-                path = path.Replace("%format%", imageFormatCollection.GetByName(imageFormat).Extension.TrimStart('.'));
+                path = path.Replace("%format%", imageFormatCollection.GetByName(ScreenCapture.Format).Extension.TrimStart('.'));
             }
 
             if (!string.IsNullOrEmpty(screenName))
@@ -29,13 +29,13 @@ namespace AutoScreenCapture
                 path = path.Replace("%screen%", screenName);
             }
 
-            path = path.Replace("%year%", dateTimeScreenshotTaken.ToString("yyyy"));
-            path = path.Replace("%month%", dateTimeScreenshotTaken.ToString("MM"));
-            path = path.Replace("%day%", dateTimeScreenshotTaken.ToString("dd"));
-            path = path.Replace("%hour%", dateTimeScreenshotTaken.ToString("HH"));
-            path = path.Replace("%minute%", dateTimeScreenshotTaken.ToString("mm"));
-            path = path.Replace("%second%", dateTimeScreenshotTaken.ToString("ss"));
-            path = path.Replace("%millisecond%", dateTimeScreenshotTaken.ToString("fff"));
+            path = path.Replace("%year%", ScreenCapture.DateTimePreviousScreenshot.ToString("yyyy"));
+            path = path.Replace("%month%", ScreenCapture.DateTimePreviousScreenshot.ToString("MM"));
+            path = path.Replace("%day%", ScreenCapture.DateTimePreviousScreenshot.ToString("dd"));
+            path = path.Replace("%hour%", ScreenCapture.DateTimePreviousScreenshot.ToString("HH"));
+            path = path.Replace("%minute%", ScreenCapture.DateTimePreviousScreenshot.ToString("mm"));
+            path = path.Replace("%second%", ScreenCapture.DateTimePreviousScreenshot.ToString("ss"));
+            path = path.Replace("%millisecond%", ScreenCapture.DateTimePreviousScreenshot.ToString("fff"));
 
             return path;
         }
