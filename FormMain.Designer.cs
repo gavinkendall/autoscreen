@@ -312,7 +312,7 @@
             // 
             this.toolStripMenuItemStartWhenWindowsStarts.CheckOnClick = true;
             this.toolStripMenuItemStartWhenWindowsStarts.Name = "toolStripMenuItemStartWhenWindowsStarts";
-            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(388, 22);
+            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(275, 22);
             this.toolStripMenuItemStartWhenWindowsStarts.Text = "Start application when Windows starts";
             this.toolStripMenuItemStartWhenWindowsStarts.CheckedChanged += new System.EventHandler(this.CheckedChanged_toolStripMenuItemStartWhenWindowsStarts);
             this.toolStripMenuItemStartWhenWindowsStarts.Click += new System.EventHandler(this.SaveApplicationSettings);
@@ -321,7 +321,7 @@
             // 
             this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
             this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
-            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(388, 22);
+            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(275, 22);
             this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
             this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.CheckedChanged_toolStripMenuItemShowSystemTrayIcon);
             this.toolStripMenuItemShowSystemTrayIcon.Click += new System.EventHandler(this.SaveApplicationSettings);
@@ -1657,9 +1657,9 @@
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 364);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 342);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
-            this.groupBoxSecurity.Size = new System.Drawing.Size(205, 134);
+            this.groupBoxSecurity.Size = new System.Drawing.Size(205, 135);
             this.groupBoxSecurity.TabIndex = 22;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
@@ -1954,7 +1954,7 @@
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStartAt);
             this.groupBoxSchedule.Location = new System.Drawing.Point(6, 200);
             this.groupBoxSchedule.Name = "groupBoxSchedule";
-            this.groupBoxSchedule.Size = new System.Drawing.Size(205, 158);
+            this.groupBoxSchedule.Size = new System.Drawing.Size(205, 136);
             this.groupBoxSchedule.TabIndex = 21;
             this.groupBoxSchedule.TabStop = false;
             this.groupBoxSchedule.Text = "Schedule";
@@ -1963,7 +1963,7 @@
             // 
             this.comboBoxScheduleImageFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxScheduleImageFormat.FormattingEnabled = true;
-            this.comboBoxScheduleImageFormat.Location = new System.Drawing.Point(118, 132);
+            this.comboBoxScheduleImageFormat.Location = new System.Drawing.Point(118, 108);
             this.comboBoxScheduleImageFormat.Name = "comboBoxScheduleImageFormat";
             this.comboBoxScheduleImageFormat.Size = new System.Drawing.Size(80, 21);
             this.comboBoxScheduleImageFormat.TabIndex = 14;
@@ -1973,7 +1973,7 @@
             // buttonScheduleClear
             // 
             this.buttonScheduleClear.Enabled = false;
-            this.buttonScheduleClear.Location = new System.Drawing.Point(62, 131);
+            this.buttonScheduleClear.Location = new System.Drawing.Point(62, 107);
             this.buttonScheduleClear.Name = "buttonScheduleClear";
             this.buttonScheduleClear.Size = new System.Drawing.Size(50, 23);
             this.buttonScheduleClear.TabIndex = 13;
@@ -1984,7 +1984,7 @@
             // 
             // buttonScheduleSet
             // 
-            this.buttonScheduleSet.Location = new System.Drawing.Point(6, 131);
+            this.buttonScheduleSet.Location = new System.Drawing.Point(6, 107);
             this.buttonScheduleSet.Name = "buttonScheduleSet";
             this.buttonScheduleSet.Size = new System.Drawing.Size(50, 23);
             this.buttonScheduleSet.TabIndex = 12;
@@ -1996,7 +1996,7 @@
             // checkBoxScheduleOnTheseDays
             // 
             this.checkBoxScheduleOnTheseDays.AutoSize = true;
-            this.checkBoxScheduleOnTheseDays.Location = new System.Drawing.Point(6, 87);
+            this.checkBoxScheduleOnTheseDays.Location = new System.Drawing.Point(6, 63);
             this.checkBoxScheduleOnTheseDays.Name = "checkBoxScheduleOnTheseDays";
             this.checkBoxScheduleOnTheseDays.Size = new System.Drawing.Size(119, 17);
             this.checkBoxScheduleOnTheseDays.TabIndex = 11;
@@ -2011,7 +2011,7 @@
             this.checkBoxFriday.AutoSize = true;
             this.checkBoxFriday.Enabled = false;
             this.checkBoxFriday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxFriday.Location = new System.Drawing.Point(165, 110);
+            this.checkBoxFriday.Location = new System.Drawing.Point(165, 86);
             this.checkBoxFriday.Name = "checkBoxFriday";
             this.checkBoxFriday.Size = new System.Drawing.Size(33, 16);
             this.checkBoxFriday.TabIndex = 10;
@@ -2025,7 +2025,7 @@
             this.checkBoxThursday.AutoSize = true;
             this.checkBoxThursday.Enabled = false;
             this.checkBoxThursday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxThursday.Location = new System.Drawing.Point(130, 110);
+            this.checkBoxThursday.Location = new System.Drawing.Point(130, 86);
             this.checkBoxThursday.Name = "checkBoxThursday";
             this.checkBoxThursday.Size = new System.Drawing.Size(34, 16);
             this.checkBoxThursday.TabIndex = 9;
@@ -2039,7 +2039,7 @@
             this.checkBoxWednesday.AutoSize = true;
             this.checkBoxWednesday.Enabled = false;
             this.checkBoxWednesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxWednesday.Location = new System.Drawing.Point(92, 110);
+            this.checkBoxWednesday.Location = new System.Drawing.Point(92, 86);
             this.checkBoxWednesday.Name = "checkBoxWednesday";
             this.checkBoxWednesday.Size = new System.Drawing.Size(38, 16);
             this.checkBoxWednesday.TabIndex = 8;
@@ -2053,7 +2053,7 @@
             this.checkBoxTuesday.AutoSize = true;
             this.checkBoxTuesday.Enabled = false;
             this.checkBoxTuesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxTuesday.Location = new System.Drawing.Point(58, 110);
+            this.checkBoxTuesday.Location = new System.Drawing.Point(58, 86);
             this.checkBoxTuesday.Name = "checkBoxTuesday";
             this.checkBoxTuesday.Size = new System.Drawing.Size(34, 16);
             this.checkBoxTuesday.TabIndex = 7;
@@ -2067,7 +2067,7 @@
             this.checkBoxMonday.AutoSize = true;
             this.checkBoxMonday.Enabled = false;
             this.checkBoxMonday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxMonday.Location = new System.Drawing.Point(20, 110);
+            this.checkBoxMonday.Location = new System.Drawing.Point(20, 86);
             this.checkBoxMonday.Name = "checkBoxMonday";
             this.checkBoxMonday.Size = new System.Drawing.Size(38, 16);
             this.checkBoxMonday.TabIndex = 6;
@@ -2081,7 +2081,7 @@
             this.checkBoxSunday.AutoSize = true;
             this.checkBoxSunday.Enabled = false;
             this.checkBoxSunday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxSunday.Location = new System.Drawing.Point(165, 88);
+            this.checkBoxSunday.Location = new System.Drawing.Point(165, 64);
             this.checkBoxSunday.Name = "checkBoxSunday";
             this.checkBoxSunday.Size = new System.Drawing.Size(35, 16);
             this.checkBoxSunday.TabIndex = 5;
@@ -2095,7 +2095,7 @@
             this.checkBoxSaturday.AutoSize = true;
             this.checkBoxSaturday.Enabled = false;
             this.checkBoxSaturday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxSaturday.Location = new System.Drawing.Point(130, 88);
+            this.checkBoxSaturday.Location = new System.Drawing.Point(130, 64);
             this.checkBoxSaturday.Name = "checkBoxSaturday";
             this.checkBoxSaturday.Size = new System.Drawing.Size(35, 16);
             this.checkBoxSaturday.TabIndex = 4;
@@ -2107,7 +2107,7 @@
             // dateTimePickerScheduleStopAt
             // 
             this.dateTimePickerScheduleStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(105, 63);
+            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(105, 39);
             this.dateTimePickerScheduleStopAt.Name = "dateTimePickerScheduleStopAt";
             this.dateTimePickerScheduleStopAt.ShowUpDown = true;
             this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(93, 20);
@@ -2118,7 +2118,7 @@
             // dateTimePickerScheduleStartAt
             // 
             this.dateTimePickerScheduleStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(105, 40);
+            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(105, 16);
             this.dateTimePickerScheduleStartAt.Name = "dateTimePickerScheduleStartAt";
             this.dateTimePickerScheduleStartAt.ShowUpDown = true;
             this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(93, 20);
@@ -2129,7 +2129,7 @@
             // checkBoxScheduleStopAt
             // 
             this.checkBoxScheduleStopAt.AutoSize = true;
-            this.checkBoxScheduleStopAt.Location = new System.Drawing.Point(6, 65);
+            this.checkBoxScheduleStopAt.Location = new System.Drawing.Point(6, 41);
             this.checkBoxScheduleStopAt.Name = "checkBoxScheduleStopAt";
             this.checkBoxScheduleStopAt.Size = new System.Drawing.Size(99, 17);
             this.checkBoxScheduleStopAt.TabIndex = 1;
@@ -2141,7 +2141,7 @@
             // checkBoxScheduleStartAt
             // 
             this.checkBoxScheduleStartAt.AutoSize = true;
-            this.checkBoxScheduleStartAt.Location = new System.Drawing.Point(6, 42);
+            this.checkBoxScheduleStartAt.Location = new System.Drawing.Point(6, 18);
             this.checkBoxScheduleStartAt.Name = "checkBoxScheduleStartAt";
             this.checkBoxScheduleStartAt.Size = new System.Drawing.Size(99, 17);
             this.checkBoxScheduleStartAt.TabIndex = 0;
