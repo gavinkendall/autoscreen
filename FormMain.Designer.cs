@@ -51,7 +51,7 @@
             this.pictureBoxScreenshotPreviewMonitor2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxScreenshotPreviewMonitor3 = new System.Windows.Forms.PictureBox();
             this.tabPageScreen1 = new System.Windows.Forms.TabPage();
-            this.panelScreen1 = new System.Windows.Forms.Panel();
+            this.panelScreen1Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen1Name = new System.Windows.Forms.TextBox();
             this.labelScreen1Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen1Height = new System.Windows.Forms.NumericUpDown();
@@ -63,11 +63,16 @@
             this.buttonScreen1Reset = new System.Windows.Forms.Button();
             this.labelScreen1Height = new System.Windows.Forms.Label();
             this.labelScreen1Width = new System.Windows.Forms.Label();
+            this.panelScreen1ImageEditor = new System.Windows.Forms.Panel();
+            this.toolStripScreen1ImageEditor = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButtonScreen1Edit = new System.Windows.Forms.ToolStripSplitButton();
             this.pictureBoxScreen1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabPageScreen2 = new System.Windows.Forms.TabPage();
+            this.panelScreen2ImageEditor = new System.Windows.Forms.Panel();
+            this.toolStripScreen2ImageEditor = new System.Windows.Forms.ToolStrip();
             this.pictureBoxScreen2 = new System.Windows.Forms.PictureBox();
-            this.panelScreen2 = new System.Windows.Forms.Panel();
+            this.panelScreen2Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen2Name = new System.Windows.Forms.TextBox();
             this.labelScreen2Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen2Height = new System.Windows.Forms.NumericUpDown();
@@ -80,8 +85,10 @@
             this.labelScreen2X = new System.Windows.Forms.Label();
             this.labelScreen2Y = new System.Windows.Forms.Label();
             this.tabPageScreen3 = new System.Windows.Forms.TabPage();
+            this.panelScreen3ImageEditor = new System.Windows.Forms.Panel();
+            this.toolStripScreen3ImageEditor = new System.Windows.Forms.ToolStrip();
             this.pictureBoxScreen3 = new System.Windows.Forms.PictureBox();
-            this.panelScreen3 = new System.Windows.Forms.Panel();
+            this.panelScreen3Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen3Name = new System.Windows.Forms.TextBox();
             this.labelScreen3Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen3Height = new System.Windows.Forms.NumericUpDown();
@@ -94,8 +101,10 @@
             this.labelScreen3X = new System.Windows.Forms.Label();
             this.labelScreen3Y = new System.Windows.Forms.Label();
             this.tabPageScreen4 = new System.Windows.Forms.TabPage();
+            this.panelScreen4ImageEditor = new System.Windows.Forms.Panel();
+            this.toolStripScreen4ImageEditor = new System.Windows.Forms.ToolStrip();
             this.pictureBoxScreen4 = new System.Windows.Forms.PictureBox();
-            this.panelScreen4 = new System.Windows.Forms.Panel();
+            this.panelScreen4Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen4Name = new System.Windows.Forms.TextBox();
             this.labelScreen4Name = new System.Windows.Forms.Label();
             this.numericUpDownScreen4Height = new System.Windows.Forms.NumericUpDown();
@@ -108,21 +117,23 @@
             this.labelScreen4X = new System.Windows.Forms.Label();
             this.labelScreen4Y = new System.Windows.Forms.Label();
             this.tabPageActiveWindow = new System.Windows.Forms.TabPage();
-            this.panelScreen5 = new System.Windows.Forms.Panel();
-            this.textBoxScreen5Name = new System.Windows.Forms.TextBox();
-            this.labelScreen5Name = new System.Windows.Forms.Label();
+            this.panelActiveWindowImageEditor = new System.Windows.Forms.Panel();
+            this.toolStripActiveWindowImageEditor = new System.Windows.Forms.ToolStrip();
+            this.panelActiveWindowAttributes = new System.Windows.Forms.Panel();
+            this.textBoxScreenActiveWindowName = new System.Windows.Forms.TextBox();
+            this.labelScreenActiveWindowName = new System.Windows.Forms.Label();
             this.pictureBoxActiveWindow = new System.Windows.Forms.PictureBox();
             this.listBoxSlides = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripSystemTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorAbout = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemShowInterface = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHideInterface = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorInterface = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxFolder = new System.Windows.Forms.TextBox();
             this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
@@ -197,7 +208,7 @@
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorPreview = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPreview = new System.Windows.Forms.ToolStripButton();
             this.timerPreviewCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
@@ -211,6 +222,10 @@
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.buttonRestoreDefaults = new System.Windows.Forms.Button();
+            this.toolStripSplitButtonScreen2Edit = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonScreen3Edit = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonScreen4Edit = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonActiveWindowEdit = new System.Windows.Forms.ToolStripSplitButton();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -221,35 +236,45 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor3)).BeginInit();
             this.tabPageScreen1.SuspendLayout();
-            this.panelScreen1.SuspendLayout();
+            this.panelScreen1Attributes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Height)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1X)).BeginInit();
+            this.panelScreen1ImageEditor.SuspendLayout();
+            this.toolStripScreen1ImageEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).BeginInit();
             this.tabPageScreen2.SuspendLayout();
+            this.panelScreen2ImageEditor.SuspendLayout();
+            this.toolStripScreen2ImageEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen2)).BeginInit();
-            this.panelScreen2.SuspendLayout();
+            this.panelScreen2Attributes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2Height)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2Width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2X)).BeginInit();
             this.tabPageScreen3.SuspendLayout();
+            this.panelScreen3ImageEditor.SuspendLayout();
+            this.toolStripScreen3ImageEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen3)).BeginInit();
-            this.panelScreen3.SuspendLayout();
+            this.panelScreen3Attributes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3Height)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3Width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3X)).BeginInit();
             this.tabPageScreen4.SuspendLayout();
+            this.panelScreen4ImageEditor.SuspendLayout();
+            this.toolStripScreen4ImageEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen4)).BeginInit();
-            this.panelScreen4.SuspendLayout();
+            this.panelScreen4Attributes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Height)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Width)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Y)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4X)).BeginInit();
             this.tabPageActiveWindow.SuspendLayout();
-            this.panelScreen5.SuspendLayout();
+            this.panelActiveWindowImageEditor.SuspendLayout();
+            this.toolStripActiveWindowImageEditor.SuspendLayout();
+            this.panelActiveWindowAttributes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxActiveWindow)).BeginInit();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.toolStripSlideshow.SuspendLayout();
@@ -525,7 +550,8 @@
             // 
             // tabPageScreen1
             // 
-            this.tabPageScreen1.Controls.Add(this.panelScreen1);
+            this.tabPageScreen1.Controls.Add(this.panelScreen1Attributes);
+            this.tabPageScreen1.Controls.Add(this.panelScreen1ImageEditor);
             this.tabPageScreen1.Controls.Add(this.pictureBoxScreen1);
             this.tabPageScreen1.Location = new System.Drawing.Point(4, 22);
             this.tabPageScreen1.Name = "tabPageScreen1";
@@ -534,24 +560,24 @@
             this.tabPageScreen1.Text = "Screen 1";
             this.tabPageScreen1.UseVisualStyleBackColor = true;
             // 
-            // panelScreen1
+            // panelScreen1Attributes
             // 
-            this.panelScreen1.Controls.Add(this.textBoxScreen1Name);
-            this.panelScreen1.Controls.Add(this.labelScreen1Name);
-            this.panelScreen1.Controls.Add(this.numericUpDownScreen1Height);
-            this.panelScreen1.Controls.Add(this.numericUpDownScreen1Width);
-            this.panelScreen1.Controls.Add(this.numericUpDownScreen1Y);
-            this.panelScreen1.Controls.Add(this.numericUpDownScreen1X);
-            this.panelScreen1.Controls.Add(this.labelScreen1Y);
-            this.panelScreen1.Controls.Add(this.labelScreen1X);
-            this.panelScreen1.Controls.Add(this.buttonScreen1Reset);
-            this.panelScreen1.Controls.Add(this.labelScreen1Height);
-            this.panelScreen1.Controls.Add(this.labelScreen1Width);
-            this.panelScreen1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen1.Location = new System.Drawing.Point(0, 348);
-            this.panelScreen1.Name = "panelScreen1";
-            this.panelScreen1.Size = new System.Drawing.Size(592, 33);
-            this.panelScreen1.TabIndex = 3;
+            this.panelScreen1Attributes.Controls.Add(this.textBoxScreen1Name);
+            this.panelScreen1Attributes.Controls.Add(this.labelScreen1Name);
+            this.panelScreen1Attributes.Controls.Add(this.numericUpDownScreen1Height);
+            this.panelScreen1Attributes.Controls.Add(this.numericUpDownScreen1Width);
+            this.panelScreen1Attributes.Controls.Add(this.numericUpDownScreen1Y);
+            this.panelScreen1Attributes.Controls.Add(this.numericUpDownScreen1X);
+            this.panelScreen1Attributes.Controls.Add(this.labelScreen1Y);
+            this.panelScreen1Attributes.Controls.Add(this.labelScreen1X);
+            this.panelScreen1Attributes.Controls.Add(this.buttonScreen1Reset);
+            this.panelScreen1Attributes.Controls.Add(this.labelScreen1Height);
+            this.panelScreen1Attributes.Controls.Add(this.labelScreen1Width);
+            this.panelScreen1Attributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen1Attributes.Location = new System.Drawing.Point(0, 348);
+            this.panelScreen1Attributes.Name = "panelScreen1Attributes";
+            this.panelScreen1Attributes.Size = new System.Drawing.Size(592, 33);
+            this.panelScreen1Attributes.TabIndex = 3;
             // 
             // textBoxScreen1Name
             // 
@@ -708,6 +734,35 @@
             this.labelScreen1Width.TabIndex = 3;
             this.labelScreen1Width.Text = "Width:";
             // 
+            // panelScreen1ImageEditor
+            // 
+            this.panelScreen1ImageEditor.Controls.Add(this.toolStripScreen1ImageEditor);
+            this.panelScreen1ImageEditor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelScreen1ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.panelScreen1ImageEditor.Name = "panelScreen1ImageEditor";
+            this.panelScreen1ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.panelScreen1ImageEditor.TabIndex = 4;
+            // 
+            // toolStripScreen1ImageEditor
+            // 
+            this.toolStripScreen1ImageEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripScreen1ImageEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonScreen1Edit});
+            this.toolStripScreen1ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.toolStripScreen1ImageEditor.Name = "toolStripScreen1ImageEditor";
+            this.toolStripScreen1ImageEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStripScreen1ImageEditor.ShowItemToolTips = false;
+            this.toolStripScreen1ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.toolStripScreen1ImageEditor.TabIndex = 0;
+            // 
+            // toolStripSplitButtonScreen1Edit
+            // 
+            this.toolStripSplitButtonScreen1Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen1Edit.Image")));
+            this.toolStripSplitButtonScreen1Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen1Edit.Name = "toolStripSplitButtonScreen1Edit";
+            this.toolStripSplitButtonScreen1Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen1Edit.Text = "Edit";
+            // 
             // pictureBoxScreen1
             // 
             this.pictureBoxScreen1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -715,10 +770,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen1.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen1.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxScreen1.Location = new System.Drawing.Point(0, 29);
             this.pictureBoxScreen1.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen1.Name = "pictureBoxScreen1";
-            this.pictureBoxScreen1.Size = new System.Drawing.Size(591, 350);
+            this.pictureBoxScreen1.Size = new System.Drawing.Size(590, 315);
             this.pictureBoxScreen1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen1.TabIndex = 2;
             this.pictureBoxScreen1.TabStop = false;
@@ -730,14 +785,36 @@
             // 
             // tabPageScreen2
             // 
+            this.tabPageScreen2.Controls.Add(this.panelScreen2ImageEditor);
             this.tabPageScreen2.Controls.Add(this.pictureBoxScreen2);
-            this.tabPageScreen2.Controls.Add(this.panelScreen2);
+            this.tabPageScreen2.Controls.Add(this.panelScreen2Attributes);
             this.tabPageScreen2.Location = new System.Drawing.Point(4, 22);
             this.tabPageScreen2.Name = "tabPageScreen2";
             this.tabPageScreen2.Size = new System.Drawing.Size(592, 381);
             this.tabPageScreen2.TabIndex = 4;
             this.tabPageScreen2.Text = "Screen 2";
             this.tabPageScreen2.UseVisualStyleBackColor = true;
+            // 
+            // panelScreen2ImageEditor
+            // 
+            this.panelScreen2ImageEditor.Controls.Add(this.toolStripScreen2ImageEditor);
+            this.panelScreen2ImageEditor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelScreen2ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.panelScreen2ImageEditor.Name = "panelScreen2ImageEditor";
+            this.panelScreen2ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.panelScreen2ImageEditor.TabIndex = 23;
+            // 
+            // toolStripScreen2ImageEditor
+            // 
+            this.toolStripScreen2ImageEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripScreen2ImageEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonScreen2Edit});
+            this.toolStripScreen2ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.toolStripScreen2ImageEditor.Name = "toolStripScreen2ImageEditor";
+            this.toolStripScreen2ImageEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStripScreen2ImageEditor.ShowItemToolTips = false;
+            this.toolStripScreen2ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.toolStripScreen2ImageEditor.TabIndex = 0;
             // 
             // pictureBoxScreen2
             // 
@@ -746,32 +823,32 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen2.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen2.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxScreen2.Location = new System.Drawing.Point(0, 29);
             this.pictureBoxScreen2.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen2.Name = "pictureBoxScreen2";
-            this.pictureBoxScreen2.Size = new System.Drawing.Size(591, 350);
+            this.pictureBoxScreen2.Size = new System.Drawing.Size(590, 315);
             this.pictureBoxScreen2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen2.TabIndex = 3;
             this.pictureBoxScreen2.TabStop = false;
             // 
-            // panelScreen2
+            // panelScreen2Attributes
             // 
-            this.panelScreen2.Controls.Add(this.textBoxScreen2Name);
-            this.panelScreen2.Controls.Add(this.labelScreen2Name);
-            this.panelScreen2.Controls.Add(this.numericUpDownScreen2Height);
-            this.panelScreen2.Controls.Add(this.buttonScreen2Reset);
-            this.panelScreen2.Controls.Add(this.numericUpDownScreen2Width);
-            this.panelScreen2.Controls.Add(this.labelScreen2Width);
-            this.panelScreen2.Controls.Add(this.numericUpDownScreen2Y);
-            this.panelScreen2.Controls.Add(this.labelScreen2Height);
-            this.panelScreen2.Controls.Add(this.numericUpDownScreen2X);
-            this.panelScreen2.Controls.Add(this.labelScreen2X);
-            this.panelScreen2.Controls.Add(this.labelScreen2Y);
-            this.panelScreen2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen2.Location = new System.Drawing.Point(0, 348);
-            this.panelScreen2.Name = "panelScreen2";
-            this.panelScreen2.Size = new System.Drawing.Size(592, 33);
-            this.panelScreen2.TabIndex = 22;
+            this.panelScreen2Attributes.Controls.Add(this.textBoxScreen2Name);
+            this.panelScreen2Attributes.Controls.Add(this.labelScreen2Name);
+            this.panelScreen2Attributes.Controls.Add(this.numericUpDownScreen2Height);
+            this.panelScreen2Attributes.Controls.Add(this.buttonScreen2Reset);
+            this.panelScreen2Attributes.Controls.Add(this.numericUpDownScreen2Width);
+            this.panelScreen2Attributes.Controls.Add(this.labelScreen2Width);
+            this.panelScreen2Attributes.Controls.Add(this.numericUpDownScreen2Y);
+            this.panelScreen2Attributes.Controls.Add(this.labelScreen2Height);
+            this.panelScreen2Attributes.Controls.Add(this.numericUpDownScreen2X);
+            this.panelScreen2Attributes.Controls.Add(this.labelScreen2X);
+            this.panelScreen2Attributes.Controls.Add(this.labelScreen2Y);
+            this.panelScreen2Attributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen2Attributes.Location = new System.Drawing.Point(0, 348);
+            this.panelScreen2Attributes.Name = "panelScreen2Attributes";
+            this.panelScreen2Attributes.Size = new System.Drawing.Size(592, 33);
+            this.panelScreen2Attributes.TabIndex = 22;
             // 
             // textBoxScreen2Name
             // 
@@ -930,14 +1007,36 @@
             // 
             // tabPageScreen3
             // 
+            this.tabPageScreen3.Controls.Add(this.panelScreen3ImageEditor);
             this.tabPageScreen3.Controls.Add(this.pictureBoxScreen3);
-            this.tabPageScreen3.Controls.Add(this.panelScreen3);
+            this.tabPageScreen3.Controls.Add(this.panelScreen3Attributes);
             this.tabPageScreen3.Location = new System.Drawing.Point(4, 22);
             this.tabPageScreen3.Name = "tabPageScreen3";
             this.tabPageScreen3.Size = new System.Drawing.Size(592, 381);
             this.tabPageScreen3.TabIndex = 5;
             this.tabPageScreen3.Text = "Screen 3";
             this.tabPageScreen3.UseVisualStyleBackColor = true;
+            // 
+            // panelScreen3ImageEditor
+            // 
+            this.panelScreen3ImageEditor.Controls.Add(this.toolStripScreen3ImageEditor);
+            this.panelScreen3ImageEditor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelScreen3ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.panelScreen3ImageEditor.Name = "panelScreen3ImageEditor";
+            this.panelScreen3ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.panelScreen3ImageEditor.TabIndex = 23;
+            // 
+            // toolStripScreen3ImageEditor
+            // 
+            this.toolStripScreen3ImageEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripScreen3ImageEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonScreen3Edit});
+            this.toolStripScreen3ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.toolStripScreen3ImageEditor.Name = "toolStripScreen3ImageEditor";
+            this.toolStripScreen3ImageEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStripScreen3ImageEditor.ShowItemToolTips = false;
+            this.toolStripScreen3ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.toolStripScreen3ImageEditor.TabIndex = 0;
             // 
             // pictureBoxScreen3
             // 
@@ -946,32 +1045,32 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen3.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen3.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen3.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxScreen3.Location = new System.Drawing.Point(0, 29);
             this.pictureBoxScreen3.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen3.Name = "pictureBoxScreen3";
-            this.pictureBoxScreen3.Size = new System.Drawing.Size(591, 350);
+            this.pictureBoxScreen3.Size = new System.Drawing.Size(590, 315);
             this.pictureBoxScreen3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen3.TabIndex = 3;
             this.pictureBoxScreen3.TabStop = false;
             // 
-            // panelScreen3
+            // panelScreen3Attributes
             // 
-            this.panelScreen3.Controls.Add(this.textBoxScreen3Name);
-            this.panelScreen3.Controls.Add(this.labelScreen3Name);
-            this.panelScreen3.Controls.Add(this.numericUpDownScreen3Height);
-            this.panelScreen3.Controls.Add(this.buttonScreen3Reset);
-            this.panelScreen3.Controls.Add(this.numericUpDownScreen3Width);
-            this.panelScreen3.Controls.Add(this.labelScreen3Width);
-            this.panelScreen3.Controls.Add(this.numericUpDownScreen3Y);
-            this.panelScreen3.Controls.Add(this.labelScreen3Height);
-            this.panelScreen3.Controls.Add(this.numericUpDownScreen3X);
-            this.panelScreen3.Controls.Add(this.labelScreen3X);
-            this.panelScreen3.Controls.Add(this.labelScreen3Y);
-            this.panelScreen3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen3.Location = new System.Drawing.Point(0, 348);
-            this.panelScreen3.Name = "panelScreen3";
-            this.panelScreen3.Size = new System.Drawing.Size(592, 33);
-            this.panelScreen3.TabIndex = 22;
+            this.panelScreen3Attributes.Controls.Add(this.textBoxScreen3Name);
+            this.panelScreen3Attributes.Controls.Add(this.labelScreen3Name);
+            this.panelScreen3Attributes.Controls.Add(this.numericUpDownScreen3Height);
+            this.panelScreen3Attributes.Controls.Add(this.buttonScreen3Reset);
+            this.panelScreen3Attributes.Controls.Add(this.numericUpDownScreen3Width);
+            this.panelScreen3Attributes.Controls.Add(this.labelScreen3Width);
+            this.panelScreen3Attributes.Controls.Add(this.numericUpDownScreen3Y);
+            this.panelScreen3Attributes.Controls.Add(this.labelScreen3Height);
+            this.panelScreen3Attributes.Controls.Add(this.numericUpDownScreen3X);
+            this.panelScreen3Attributes.Controls.Add(this.labelScreen3X);
+            this.panelScreen3Attributes.Controls.Add(this.labelScreen3Y);
+            this.panelScreen3Attributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen3Attributes.Location = new System.Drawing.Point(0, 348);
+            this.panelScreen3Attributes.Name = "panelScreen3Attributes";
+            this.panelScreen3Attributes.Size = new System.Drawing.Size(592, 33);
+            this.panelScreen3Attributes.TabIndex = 22;
             // 
             // textBoxScreen3Name
             // 
@@ -1130,14 +1229,36 @@
             // 
             // tabPageScreen4
             // 
+            this.tabPageScreen4.Controls.Add(this.panelScreen4ImageEditor);
             this.tabPageScreen4.Controls.Add(this.pictureBoxScreen4);
-            this.tabPageScreen4.Controls.Add(this.panelScreen4);
+            this.tabPageScreen4.Controls.Add(this.panelScreen4Attributes);
             this.tabPageScreen4.Location = new System.Drawing.Point(4, 22);
             this.tabPageScreen4.Name = "tabPageScreen4";
             this.tabPageScreen4.Size = new System.Drawing.Size(592, 381);
             this.tabPageScreen4.TabIndex = 6;
             this.tabPageScreen4.Text = "Screen 4";
             this.tabPageScreen4.UseVisualStyleBackColor = true;
+            // 
+            // panelScreen4ImageEditor
+            // 
+            this.panelScreen4ImageEditor.Controls.Add(this.toolStripScreen4ImageEditor);
+            this.panelScreen4ImageEditor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelScreen4ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.panelScreen4ImageEditor.Name = "panelScreen4ImageEditor";
+            this.panelScreen4ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.panelScreen4ImageEditor.TabIndex = 23;
+            // 
+            // toolStripScreen4ImageEditor
+            // 
+            this.toolStripScreen4ImageEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripScreen4ImageEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonScreen4Edit});
+            this.toolStripScreen4ImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.toolStripScreen4ImageEditor.Name = "toolStripScreen4ImageEditor";
+            this.toolStripScreen4ImageEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStripScreen4ImageEditor.ShowItemToolTips = false;
+            this.toolStripScreen4ImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.toolStripScreen4ImageEditor.TabIndex = 0;
             // 
             // pictureBoxScreen4
             // 
@@ -1146,32 +1267,32 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxScreen4.BackColor = System.Drawing.Color.Black;
             this.pictureBoxScreen4.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen4.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxScreen4.Location = new System.Drawing.Point(0, 29);
             this.pictureBoxScreen4.Margin = new System.Windows.Forms.Padding(1);
             this.pictureBoxScreen4.Name = "pictureBoxScreen4";
-            this.pictureBoxScreen4.Size = new System.Drawing.Size(591, 350);
+            this.pictureBoxScreen4.Size = new System.Drawing.Size(590, 315);
             this.pictureBoxScreen4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxScreen4.TabIndex = 3;
             this.pictureBoxScreen4.TabStop = false;
             // 
-            // panelScreen4
+            // panelScreen4Attributes
             // 
-            this.panelScreen4.Controls.Add(this.textBoxScreen4Name);
-            this.panelScreen4.Controls.Add(this.labelScreen4Name);
-            this.panelScreen4.Controls.Add(this.numericUpDownScreen4Height);
-            this.panelScreen4.Controls.Add(this.buttonScreen4Reset);
-            this.panelScreen4.Controls.Add(this.numericUpDownScreen4Width);
-            this.panelScreen4.Controls.Add(this.labelScreen4Width);
-            this.panelScreen4.Controls.Add(this.numericUpDownScreen4Y);
-            this.panelScreen4.Controls.Add(this.labelScreen4Height);
-            this.panelScreen4.Controls.Add(this.numericUpDownScreen4X);
-            this.panelScreen4.Controls.Add(this.labelScreen4X);
-            this.panelScreen4.Controls.Add(this.labelScreen4Y);
-            this.panelScreen4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen4.Location = new System.Drawing.Point(0, 348);
-            this.panelScreen4.Name = "panelScreen4";
-            this.panelScreen4.Size = new System.Drawing.Size(592, 33);
-            this.panelScreen4.TabIndex = 22;
+            this.panelScreen4Attributes.Controls.Add(this.textBoxScreen4Name);
+            this.panelScreen4Attributes.Controls.Add(this.labelScreen4Name);
+            this.panelScreen4Attributes.Controls.Add(this.numericUpDownScreen4Height);
+            this.panelScreen4Attributes.Controls.Add(this.buttonScreen4Reset);
+            this.panelScreen4Attributes.Controls.Add(this.numericUpDownScreen4Width);
+            this.panelScreen4Attributes.Controls.Add(this.labelScreen4Width);
+            this.panelScreen4Attributes.Controls.Add(this.numericUpDownScreen4Y);
+            this.panelScreen4Attributes.Controls.Add(this.labelScreen4Height);
+            this.panelScreen4Attributes.Controls.Add(this.numericUpDownScreen4X);
+            this.panelScreen4Attributes.Controls.Add(this.labelScreen4X);
+            this.panelScreen4Attributes.Controls.Add(this.labelScreen4Y);
+            this.panelScreen4Attributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelScreen4Attributes.Location = new System.Drawing.Point(0, 348);
+            this.panelScreen4Attributes.Name = "panelScreen4Attributes";
+            this.panelScreen4Attributes.Size = new System.Drawing.Size(592, 33);
+            this.panelScreen4Attributes.TabIndex = 22;
             // 
             // textBoxScreen4Name
             // 
@@ -1330,7 +1451,8 @@
             // 
             // tabPageActiveWindow
             // 
-            this.tabPageActiveWindow.Controls.Add(this.panelScreen5);
+            this.tabPageActiveWindow.Controls.Add(this.panelActiveWindowImageEditor);
+            this.tabPageActiveWindow.Controls.Add(this.panelActiveWindowAttributes);
             this.tabPageActiveWindow.Controls.Add(this.pictureBoxActiveWindow);
             this.tabPageActiveWindow.Location = new System.Drawing.Point(4, 22);
             this.tabPageActiveWindow.Name = "tabPageActiveWindow";
@@ -1339,36 +1461,57 @@
             this.tabPageActiveWindow.Text = "Active Window";
             this.tabPageActiveWindow.UseVisualStyleBackColor = true;
             // 
-            // panelScreen5
+            // panelActiveWindowImageEditor
             // 
-            this.panelScreen5.Controls.Add(this.textBoxScreen5Name);
-            this.panelScreen5.Controls.Add(this.labelScreen5Name);
-            this.panelScreen5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelScreen5.Location = new System.Drawing.Point(0, 348);
-            this.panelScreen5.Name = "panelScreen5";
-            this.panelScreen5.Size = new System.Drawing.Size(592, 33);
-            this.panelScreen5.TabIndex = 23;
+            this.panelActiveWindowImageEditor.Controls.Add(this.toolStripActiveWindowImageEditor);
+            this.panelActiveWindowImageEditor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelActiveWindowImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.panelActiveWindowImageEditor.Name = "panelActiveWindowImageEditor";
+            this.panelActiveWindowImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.panelActiveWindowImageEditor.TabIndex = 24;
             // 
-            // textBoxScreen5Name
+            // toolStripActiveWindowImageEditor
             // 
-            this.textBoxScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.toolStripActiveWindowImageEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripActiveWindowImageEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonActiveWindowEdit});
+            this.toolStripActiveWindowImageEditor.Location = new System.Drawing.Point(0, 0);
+            this.toolStripActiveWindowImageEditor.Name = "toolStripActiveWindowImageEditor";
+            this.toolStripActiveWindowImageEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStripActiveWindowImageEditor.ShowItemToolTips = false;
+            this.toolStripActiveWindowImageEditor.Size = new System.Drawing.Size(592, 25);
+            this.toolStripActiveWindowImageEditor.TabIndex = 0;
+            // 
+            // panelActiveWindowAttributes
+            // 
+            this.panelActiveWindowAttributes.Controls.Add(this.textBoxScreenActiveWindowName);
+            this.panelActiveWindowAttributes.Controls.Add(this.labelScreenActiveWindowName);
+            this.panelActiveWindowAttributes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelActiveWindowAttributes.Location = new System.Drawing.Point(0, 348);
+            this.panelActiveWindowAttributes.Name = "panelActiveWindowAttributes";
+            this.panelActiveWindowAttributes.Size = new System.Drawing.Size(592, 33);
+            this.panelActiveWindowAttributes.TabIndex = 23;
+            // 
+            // textBoxScreenActiveWindowName
+            // 
+            this.textBoxScreenActiveWindowName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreen5Name.Location = new System.Drawing.Point(411, 8);
-            this.textBoxScreen5Name.Name = "textBoxScreen5Name";
-            this.textBoxScreen5Name.Size = new System.Drawing.Size(173, 20);
-            this.textBoxScreen5Name.TabIndex = 23;
-            this.textBoxScreen5Name.TabStop = false;
-            this.textBoxScreen5Name.Leave += new System.EventHandler(this.SaveApplicationSettings);
+            this.textBoxScreenActiveWindowName.Location = new System.Drawing.Point(411, 8);
+            this.textBoxScreenActiveWindowName.Name = "textBoxScreenActiveWindowName";
+            this.textBoxScreenActiveWindowName.Size = new System.Drawing.Size(173, 20);
+            this.textBoxScreenActiveWindowName.TabIndex = 23;
+            this.textBoxScreenActiveWindowName.TabStop = false;
+            this.textBoxScreenActiveWindowName.Leave += new System.EventHandler(this.SaveApplicationSettings);
             // 
-            // labelScreen5Name
+            // labelScreenActiveWindowName
             // 
-            this.labelScreen5Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreen5Name.AutoSize = true;
-            this.labelScreen5Name.Location = new System.Drawing.Point(367, 11);
-            this.labelScreen5Name.Name = "labelScreen5Name";
-            this.labelScreen5Name.Size = new System.Drawing.Size(38, 13);
-            this.labelScreen5Name.TabIndex = 22;
-            this.labelScreen5Name.Text = "Name:";
+            this.labelScreenActiveWindowName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreenActiveWindowName.AutoSize = true;
+            this.labelScreenActiveWindowName.Location = new System.Drawing.Point(367, 11);
+            this.labelScreenActiveWindowName.Name = "labelScreenActiveWindowName";
+            this.labelScreenActiveWindowName.Size = new System.Drawing.Size(38, 13);
+            this.labelScreenActiveWindowName.TabIndex = 22;
+            this.labelScreenActiveWindowName.Text = "Name:";
             // 
             // pictureBoxActiveWindow
             // 
@@ -1377,9 +1520,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxActiveWindow.BackColor = System.Drawing.Color.Black;
             this.pictureBoxActiveWindow.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxActiveWindow.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxActiveWindow.Location = new System.Drawing.Point(0, 29);
             this.pictureBoxActiveWindow.Name = "pictureBoxActiveWindow";
-            this.pictureBoxActiveWindow.Size = new System.Drawing.Size(591, 350);
+            this.pictureBoxActiveWindow.Size = new System.Drawing.Size(590, 315);
             this.pictureBoxActiveWindow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxActiveWindow.TabIndex = 0;
             this.pictureBoxActiveWindow.TabStop = false;
@@ -1409,13 +1552,13 @@
             // 
             this.contextMenuStripSystemTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemAbout,
-            this.toolStripSeparator2,
+            this.toolStripSeparatorAbout,
             this.toolStripMenuItemShowInterface,
             this.toolStripMenuItemHideInterface,
-            this.toolStripSeparator1,
+            this.toolStripSeparatorInterface,
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
-            this.toolStripSeparator3,
+            this.toolStripSeparatorScreenCapture,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
             this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(175, 154);
@@ -1427,10 +1570,10 @@
             this.toolStripMenuItemAbout.Text = "About ...";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
             // 
-            // toolStripSeparator2
+            // toolStripSeparatorAbout
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparatorAbout.Name = "toolStripSeparatorAbout";
+            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemShowInterface
             // 
@@ -1448,10 +1591,10 @@
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
             this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemHideInterface);
             // 
-            // toolStripSeparator1
+            // toolStripSeparatorInterface
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
+            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemStartScreenCapture
             // 
@@ -1471,10 +1614,10 @@
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
-            // toolStripSeparator3
+            // toolStripSeparatorScreenCapture
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparatorScreenCapture.Name = "toolStripSeparatorScreenCapture";
+            this.toolStripSeparatorScreenCapture.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemExit
             // 
@@ -2370,11 +2513,12 @@
             this.toolStripScreenCapture.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButtonStartScreenCapture,
             this.toolStripButtonStopScreenCapture,
-            this.toolStripSeparator8,
+            this.toolStripSeparatorPreview,
             this.toolStripButtonPreview});
             this.toolStripScreenCapture.Location = new System.Drawing.Point(20, 411);
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripScreenCapture.ShowItemToolTips = false;
             this.toolStripScreenCapture.Size = new System.Drawing.Size(175, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
@@ -2398,10 +2542,10 @@
             this.toolStripButtonStopScreenCapture.Text = "Stop";
             this.toolStripButtonStopScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
-            // toolStripSeparator8
+            // toolStripSeparatorPreview
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparatorPreview.Name = "toolStripSeparatorPreview";
+            this.toolStripSeparatorPreview.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonPreview
             // 
@@ -2516,6 +2660,38 @@
             this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
             this.buttonRestoreDefaults.Click += new System.EventHandler(this.Click_buttonRestoreDefaults);
             // 
+            // toolStripSplitButtonScreen2Edit
+            // 
+            this.toolStripSplitButtonScreen2Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen2Edit.Image")));
+            this.toolStripSplitButtonScreen2Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen2Edit.Name = "toolStripSplitButtonScreen2Edit";
+            this.toolStripSplitButtonScreen2Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen2Edit.Text = "Edit";
+            // 
+            // toolStripSplitButtonScreen3Edit
+            // 
+            this.toolStripSplitButtonScreen3Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen3Edit.Image")));
+            this.toolStripSplitButtonScreen3Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen3Edit.Name = "toolStripSplitButtonScreen3Edit";
+            this.toolStripSplitButtonScreen3Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen3Edit.Text = "Edit";
+            // 
+            // toolStripSplitButtonScreen4Edit
+            // 
+            this.toolStripSplitButtonScreen4Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen4Edit.Image")));
+            this.toolStripSplitButtonScreen4Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen4Edit.Name = "toolStripSplitButtonScreen4Edit";
+            this.toolStripSplitButtonScreen4Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen4Edit.Text = "Edit";
+            // 
+            // toolStripSplitButtonActiveWindowEdit
+            // 
+            this.toolStripSplitButtonActiveWindowEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonActiveWindowEdit.Image")));
+            this.toolStripSplitButtonActiveWindowEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonActiveWindowEdit.Name = "toolStripSplitButtonActiveWindowEdit";
+            this.toolStripSplitButtonActiveWindowEdit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonActiveWindowEdit.Text = "Edit";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2555,40 +2731,60 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshotPreviewMonitor3)).EndInit();
             this.tabPageScreen1.ResumeLayout(false);
-            this.panelScreen1.ResumeLayout(false);
-            this.panelScreen1.PerformLayout();
+            this.panelScreen1Attributes.ResumeLayout(false);
+            this.panelScreen1Attributes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Height)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Width)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen1X)).EndInit();
+            this.panelScreen1ImageEditor.ResumeLayout(false);
+            this.panelScreen1ImageEditor.PerformLayout();
+            this.toolStripScreen1ImageEditor.ResumeLayout(false);
+            this.toolStripScreen1ImageEditor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).EndInit();
             this.tabPageScreen2.ResumeLayout(false);
+            this.panelScreen2ImageEditor.ResumeLayout(false);
+            this.panelScreen2ImageEditor.PerformLayout();
+            this.toolStripScreen2ImageEditor.ResumeLayout(false);
+            this.toolStripScreen2ImageEditor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen2)).EndInit();
-            this.panelScreen2.ResumeLayout(false);
-            this.panelScreen2.PerformLayout();
+            this.panelScreen2Attributes.ResumeLayout(false);
+            this.panelScreen2Attributes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2Height)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2Width)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen2X)).EndInit();
             this.tabPageScreen3.ResumeLayout(false);
+            this.panelScreen3ImageEditor.ResumeLayout(false);
+            this.panelScreen3ImageEditor.PerformLayout();
+            this.toolStripScreen3ImageEditor.ResumeLayout(false);
+            this.toolStripScreen3ImageEditor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen3)).EndInit();
-            this.panelScreen3.ResumeLayout(false);
-            this.panelScreen3.PerformLayout();
+            this.panelScreen3Attributes.ResumeLayout(false);
+            this.panelScreen3Attributes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3Height)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3Width)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen3X)).EndInit();
             this.tabPageScreen4.ResumeLayout(false);
+            this.panelScreen4ImageEditor.ResumeLayout(false);
+            this.panelScreen4ImageEditor.PerformLayout();
+            this.toolStripScreen4ImageEditor.ResumeLayout(false);
+            this.toolStripScreen4ImageEditor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen4)).EndInit();
-            this.panelScreen4.ResumeLayout(false);
-            this.panelScreen4.PerformLayout();
+            this.panelScreen4Attributes.ResumeLayout(false);
+            this.panelScreen4Attributes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Height)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Width)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4Y)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreen4X)).EndInit();
             this.tabPageActiveWindow.ResumeLayout(false);
-            this.panelScreen5.ResumeLayout(false);
-            this.panelScreen5.PerformLayout();
+            this.panelActiveWindowImageEditor.ResumeLayout(false);
+            this.panelActiveWindowImageEditor.PerformLayout();
+            this.toolStripActiveWindowImageEditor.ResumeLayout(false);
+            this.toolStripActiveWindowImageEditor.PerformLayout();
+            this.panelActiveWindowAttributes.ResumeLayout(false);
+            this.panelActiveWindowAttributes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxActiveWindow)).EndInit();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
             this.toolStripSlideshow.ResumeLayout(false);
@@ -2642,7 +2838,7 @@
         private System.Windows.Forms.TextBox textBoxFolder;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowInterface;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorInterface;
         private System.Windows.Forms.PictureBox pictureBoxScreenshotPreviewMonitor4;
         private System.Windows.Forms.PictureBox pictureBoxScreenshotPreviewMonitor3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelScreenshotPreview;
@@ -2664,7 +2860,7 @@
         private System.Windows.Forms.TabPage tabPageScreen4;
         private System.Windows.Forms.PictureBox pictureBoxScreen4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorScreenCapture;
         private System.Windows.Forms.TabControl tabControlModules;
         private System.Windows.Forms.TabPage tabPageScreenCapture;
         private System.Windows.Forms.TabPage tabPageSlideshow;
@@ -2721,8 +2917,8 @@
         private System.Windows.Forms.Button buttonScheduleSet;
         private System.Windows.Forms.ComboBox comboBoxScheduleImageFormat;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.Panel panelScreen1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorAbout;
+        private System.Windows.Forms.Panel panelScreen1Attributes;
         private System.Windows.Forms.Label labelScreen1Height;
         private System.Windows.Forms.Label labelScreen1Width;
         private System.Windows.Forms.Button buttonScreen1Reset;
@@ -2759,9 +2955,9 @@
         private System.Windows.Forms.Button buttonScreen4Reset;
         private System.Windows.Forms.Label labelScreen4Height;
         private System.Windows.Forms.Label labelScreen4Width;
-        private System.Windows.Forms.Panel panelScreen2;
-        private System.Windows.Forms.Panel panelScreen3;
-        private System.Windows.Forms.Panel panelScreen4;
+        private System.Windows.Forms.Panel panelScreen2Attributes;
+        private System.Windows.Forms.Panel panelScreen3Attributes;
+        private System.Windows.Forms.Panel panelScreen4Attributes;
         private System.Windows.Forms.Timer timerScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSystemTrayIcon;
         private System.Windows.Forms.GroupBox groupBoxSecurity;
@@ -2782,11 +2978,11 @@
         private System.Windows.Forms.Label labelScreen3Name;
         private System.Windows.Forms.TextBox textBoxScreen4Name;
         private System.Windows.Forms.Label labelScreen4Name;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorPreview;
         private System.Windows.Forms.ToolStripButton toolStripButtonPreview;
-        private System.Windows.Forms.Panel panelScreen5;
-        private System.Windows.Forms.TextBox textBoxScreen5Name;
-        private System.Windows.Forms.Label labelScreen5Name;
+        private System.Windows.Forms.Panel panelActiveWindowAttributes;
+        private System.Windows.Forms.TextBox textBoxScreenActiveWindowName;
+        private System.Windows.Forms.Label labelScreenActiveWindowName;
         private System.Windows.Forms.GroupBox groupBoxJpegQualityLevel;
         private System.Windows.Forms.Label labelJpegQualityLevelDescription;
         private System.Windows.Forms.Label labelJpegQualityLevel;
@@ -2810,5 +3006,20 @@
         private System.Windows.Forms.Button buttonRestoreDefaults;
         private System.Windows.Forms.CheckBox checkBoxMouse;
         private System.Windows.Forms.TabPage tabPageTriggers;
+        private System.Windows.Forms.Panel panelScreen1ImageEditor;
+        private System.Windows.Forms.ToolStrip toolStripScreen1ImageEditor;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen1Edit;
+        private System.Windows.Forms.Panel panelScreen2ImageEditor;
+        private System.Windows.Forms.Panel panelScreen3ImageEditor;
+        private System.Windows.Forms.Panel panelScreen4ImageEditor;
+        private System.Windows.Forms.Panel panelActiveWindowImageEditor;
+        private System.Windows.Forms.ToolStrip toolStripScreen2ImageEditor;
+        private System.Windows.Forms.ToolStrip toolStripScreen3ImageEditor;
+        private System.Windows.Forms.ToolStrip toolStripScreen4ImageEditor;
+        private System.Windows.Forms.ToolStrip toolStripActiveWindowImageEditor;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen2Edit;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen3Edit;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen4Edit;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonActiveWindowEdit;
     }
 }

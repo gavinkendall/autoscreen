@@ -295,7 +295,7 @@ namespace AutoScreenCapture
             textBoxScreen2Name.Text = Properties.Settings.Default.Screen2Name;
             textBoxScreen3Name.Text = Properties.Settings.Default.Screen3Name;
             textBoxScreen4Name.Text = Properties.Settings.Default.Screen4Name;
-            textBoxScreen5Name.Text = Properties.Settings.Default.Screen5Name;
+            textBoxScreenActiveWindowName.Text = Properties.Settings.Default.Screen5Name;
 
             Log.Write("Loading region capture controls for X, Y, Width, Height, and Reset on each available screen.");
 
@@ -810,8 +810,8 @@ namespace AutoScreenCapture
                     Properties.Settings.Default.Screen4Name = textBoxScreen4Name.Text;
                     Log.Write("Saving application settings ... Screen4Name = " + textBoxScreen4Name.Text);
 
-                    Properties.Settings.Default.Screen5Name = textBoxScreen5Name.Text;
-                    Log.Write("Saving application settings ... Screen5Name = " + textBoxScreen5Name.Text);
+                    Properties.Settings.Default.Screen5Name = textBoxScreenActiveWindowName.Text;
+                    Log.Write("Saving application settings ... Screen5Name = " + textBoxScreenActiveWindowName.Text);
 
                     Properties.Settings.Default.LockScreenCaptureSession = checkBoxPassphraseLock.Checked;
                     Log.Write("Saving application settings ... LockScreenCaptureSession = " + checkBoxPassphraseLock.Checked);
@@ -2620,7 +2620,7 @@ namespace AutoScreenCapture
             if (CaptureScreenAllowed(5))
             {
                 ScreenCapture.TakeScreenshot(_imageFormatCollection, null, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, "5"), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, textBoxScreen5Name.Text, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, textBoxScreen5Name.Text), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, textBoxScreenActiveWindowName.Text, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, textBoxScreenActiveWindowName.Text), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
             }
 
             // All screens.
@@ -2693,7 +2693,7 @@ namespace AutoScreenCapture
                     break;
 
                 case 5:
-                    capture = string.IsNullOrEmpty(textBoxScreen5Name.Text) || !checkBoxCaptureActiveWindow.Checked ? false : true;
+                    capture = string.IsNullOrEmpty(textBoxScreenActiveWindowName.Text) || !checkBoxCaptureActiveWindow.Checked ? false : true;
                     break;
             }
 
