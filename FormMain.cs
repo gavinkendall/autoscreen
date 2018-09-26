@@ -2251,7 +2251,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Executes a chosen image editor.
+        /// Executes a chosen image editor from the interface.
         /// </summary>
         /// <param name="editor">The image editor to execute.</param>
         private void RunEditor(Editor editor)
@@ -2260,24 +2260,39 @@ namespace AutoScreenCapture
             {
                 Screenshot selectedScreenshot;
 
-                if (ScreenCapture.Running)
-                {
-                    // We want to get the very latest screenshot that was captured if we're taking screenshots.
-                    selectedScreenshot = ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1);
-                }
-                else
-                {
-                    // Otherwise we're probably not taking screenshots so therefore get the screenshot
-                    // that the user selected from the Slideshow module.
-                    selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
-                }
+                selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
 
-                // Execute the chosen image editor. If the %screenshot% argument happens to be included
-                // then we'll use that argument as the screenshot file path when executing the image editor.
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
+                RunEditor(editor, selectedScreenshot);
+            }
+        }
+
+        /// <summary>
+        /// Executes a chosen image editor from a Trigger.
+        /// </summary>
+        /// <param name="editor">The image editor to execute.</param>
+        private void RunEditor(Editor editor, TriggerActionType triggerActionType)
+        {
+            if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
+            {
+                for (int i = 0; i <= ScreenCapture.SCREEN_MAX; i++)
                 {
-                    Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + selectedScreenshot.Path + "\""));
+                    RunEditor(editor, ScreenshotCollection.GetBySlidename(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slidename, i));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Runs the editor using the specified screenshot.
+        /// </summary>
+        /// <param name="editor">The editor to use.</param>
+        /// <param name="screenshot">The screenshot to use.</param>
+        private void RunEditor(Editor editor, Screenshot screenshot)
+        {
+            // Execute the chosen image editor. If the %screenshot% argument happens to be included
+            // then we'll use that argument as the screenshot file path when executing the image editor.
+            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && File.Exists(screenshot.Path)))
+            {
+                Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
             }
         }
 
@@ -3360,7 +3375,7 @@ namespace AutoScreenCapture
 
                         case TriggerActionType.RunEditor:
                             Editor editor = formEditor.EditorCollection.GetByName(trigger.Editor);
-                            RunEditor(editor);
+                            RunEditor(editor, TriggerActionType.RunEditor);
                             break;
 
                         case TriggerActionType.ShowInterface:
