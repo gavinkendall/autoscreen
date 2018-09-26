@@ -164,6 +164,7 @@
     <Content Include="autoscreen.ico" />
     <None Include="images\options.png" />
     <None Include="images\openfolder.png" />
+    <Content Include="images\edit.png" />
     <Content Include="images\start_screen_capture.png" />
     <Content Include="images\player_end.png" />
     <Content Include="images\player_fwd.png" />

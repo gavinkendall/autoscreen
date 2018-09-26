@@ -205,10 +205,10 @@ namespace AutoScreenCapture
             {
                 comboBoxScheduleImageFormat.Items.Add(imageFormat.Name);
 
-                ToolStripItem startScreenCaptureMenuItemForSplitButton = new ToolStripMenuItem(imageFormat.Name);
+                ToolStripMenuItem startScreenCaptureMenuItemForSplitButton = new ToolStripMenuItem(imageFormat.Name);
                 startScreenCaptureMenuItemForSplitButton.Click += new EventHandler(Click_toolStripMenuItemStartScreenCapture);
 
-                ToolStripItem startScreenCaptureMenuItemForSystemTrayMenu = new ToolStripMenuItem(imageFormat.Name);
+                ToolStripMenuItem startScreenCaptureMenuItemForSystemTrayMenu = new ToolStripMenuItem(imageFormat.Name);
                 startScreenCaptureMenuItemForSystemTrayMenu.Click += new EventHandler(Click_toolStripMenuItemStartScreenCapture);
 
                 toolStripMenuItemStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSystemTrayMenu);
@@ -1914,19 +1914,31 @@ namespace AutoScreenCapture
         {
             contextMenuStripScreenshotPreview.Items.Clear();
 
-            ToolStripItem showSlideLocation = new ToolStripMenuItem("Show Slide Location");
-            showSlideLocation.Click += new EventHandler(Click_toolStripMenuItemShowSlideLocation);
+            ToolStripMenuItem showSlideLocationToolStripItem = new ToolStripMenuItem("Show Slide Location");
+            showSlideLocationToolStripItem.Click += new EventHandler(Click_toolStripMenuItemShowSlideLocation);
 
-            ToolStripItem showScreenshotLocation = new ToolStripMenuItem("Show Screenshot Location");
-            showScreenshotLocation.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+            ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
+            showScreenshotLocationToolStripItem.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
-            ToolStripItem addNewEditorItem = new ToolStripMenuItem("Add New Editor ...");
-            addNewEditorItem.Click += new EventHandler(Click_addEditorToolStripMenuItem);
+            ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
+            addNewEditorToolStripItem.Click += new EventHandler(Click_addEditorToolStripMenuItem);
 
-            contextMenuStripScreenshotPreview.Items.Add(showSlideLocation);
-            contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocation);
+            contextMenuStripScreenshotPreview.Items.Add(showSlideLocationToolStripItem);
+            contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocationToolStripItem);
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
-            contextMenuStripScreenshotPreview.Items.Add(addNewEditorItem);
+            contextMenuStripScreenshotPreview.Items.Add(addNewEditorToolStripItem);
+
+            toolStripSplitButtonScreen1Edit.DropDown.Items.Clear();
+            toolStripSplitButtonScreen2Edit.DropDown.Items.Clear();
+            toolStripSplitButtonScreen3Edit.DropDown.Items.Clear();
+            toolStripSplitButtonScreen4Edit.DropDown.Items.Clear();
+            toolStripSplitButtonActiveWindowEdit.DropDown.Items.Clear();
+
+            toolStripSplitButtonScreen1Edit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+            toolStripSplitButtonScreen2Edit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+            toolStripSplitButtonScreen3Edit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+            toolStripSplitButtonScreen4Edit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+            toolStripSplitButtonActiveWindowEdit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
 
             BuildEditorsList();
             BuildTriggersList();
@@ -1989,14 +2001,15 @@ namespace AutoScreenCapture
                 if (editor != null && File.Exists(editor.Application))
                 {
                     // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
-                    // Add the Editor to the screenshot preview contextual menu.
+                    // Add the Editor to the screenshot preview contextual menu and to each "Edit"
+                    // button at the top of the individual preview image.
 
-                    ToolStripItem editorItem = new ToolStripMenuItem(editor.Name)
-                    {
-                        Image = Icon.ExtractAssociatedIcon(editor.Application).ToBitmap()
-                    };
-                    editorItem.Click += new EventHandler(Click_runEditor);
-                    contextMenuStripScreenshotPreview.Items.Add(editorItem);
+                    contextMenuStripScreenshotPreview.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonScreen1Edit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonScreen2Edit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonScreen3Edit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonScreen4Edit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonActiveWindowEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
                     // ****************************************************************************
 
                     // ****************** EDITORS LIST IN EDITORS TAB PAGE ************************
@@ -2258,11 +2271,7 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                Screenshot selectedScreenshot;
-
-                selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
-
-                RunEditor(editor, selectedScreenshot);
+                RunEditor(editor, ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen));
             }
         }
 

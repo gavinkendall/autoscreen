@@ -71,6 +71,7 @@
             this.tabPageScreen2 = new System.Windows.Forms.TabPage();
             this.panelScreen2ImageEditor = new System.Windows.Forms.Panel();
             this.toolStripScreen2ImageEditor = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButtonScreen2Edit = new System.Windows.Forms.ToolStripSplitButton();
             this.pictureBoxScreen2 = new System.Windows.Forms.PictureBox();
             this.panelScreen2Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen2Name = new System.Windows.Forms.TextBox();
@@ -87,6 +88,7 @@
             this.tabPageScreen3 = new System.Windows.Forms.TabPage();
             this.panelScreen3ImageEditor = new System.Windows.Forms.Panel();
             this.toolStripScreen3ImageEditor = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButtonScreen3Edit = new System.Windows.Forms.ToolStripSplitButton();
             this.pictureBoxScreen3 = new System.Windows.Forms.PictureBox();
             this.panelScreen3Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen3Name = new System.Windows.Forms.TextBox();
@@ -103,6 +105,7 @@
             this.tabPageScreen4 = new System.Windows.Forms.TabPage();
             this.panelScreen4ImageEditor = new System.Windows.Forms.Panel();
             this.toolStripScreen4ImageEditor = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButtonScreen4Edit = new System.Windows.Forms.ToolStripSplitButton();
             this.pictureBoxScreen4 = new System.Windows.Forms.PictureBox();
             this.panelScreen4Attributes = new System.Windows.Forms.Panel();
             this.textBoxScreen4Name = new System.Windows.Forms.TextBox();
@@ -119,6 +122,7 @@
             this.tabPageActiveWindow = new System.Windows.Forms.TabPage();
             this.panelActiveWindowImageEditor = new System.Windows.Forms.Panel();
             this.toolStripActiveWindowImageEditor = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButtonActiveWindowEdit = new System.Windows.Forms.ToolStripSplitButton();
             this.panelActiveWindowAttributes = new System.Windows.Forms.Panel();
             this.textBoxScreenActiveWindowName = new System.Windows.Forms.TextBox();
             this.labelScreenActiveWindowName = new System.Windows.Forms.Label();
@@ -222,10 +226,6 @@
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.buttonRestoreDefaults = new System.Windows.Forms.Button();
-            this.toolStripSplitButtonScreen2Edit = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSplitButtonScreen3Edit = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSplitButtonScreen4Edit = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSplitButtonActiveWindowEdit = new System.Windows.Forms.ToolStripSplitButton();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageAllScreens.SuspendLayout();
@@ -757,7 +757,8 @@
             // 
             // toolStripSplitButtonScreen1Edit
             // 
-            this.toolStripSplitButtonScreen1Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen1Edit.Image")));
+            this.toolStripSplitButtonScreen1Edit.AutoToolTip = false;
+            this.toolStripSplitButtonScreen1Edit.Image = global::AutoScreenCapture.Properties.Resources.edit;
             this.toolStripSplitButtonScreen1Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonScreen1Edit.Name = "toolStripSplitButtonScreen1Edit";
             this.toolStripSplitButtonScreen1Edit.Size = new System.Drawing.Size(59, 22);
@@ -815,6 +816,15 @@
             this.toolStripScreen2ImageEditor.ShowItemToolTips = false;
             this.toolStripScreen2ImageEditor.Size = new System.Drawing.Size(592, 25);
             this.toolStripScreen2ImageEditor.TabIndex = 0;
+            // 
+            // toolStripSplitButtonScreen2Edit
+            // 
+            this.toolStripSplitButtonScreen2Edit.AutoToolTip = false;
+            this.toolStripSplitButtonScreen2Edit.Image = global::AutoScreenCapture.Properties.Resources.edit;
+            this.toolStripSplitButtonScreen2Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen2Edit.Name = "toolStripSplitButtonScreen2Edit";
+            this.toolStripSplitButtonScreen2Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen2Edit.Text = "Edit";
             // 
             // pictureBoxScreen2
             // 
@@ -1038,6 +1048,15 @@
             this.toolStripScreen3ImageEditor.Size = new System.Drawing.Size(592, 25);
             this.toolStripScreen3ImageEditor.TabIndex = 0;
             // 
+            // toolStripSplitButtonScreen3Edit
+            // 
+            this.toolStripSplitButtonScreen3Edit.AutoToolTip = false;
+            this.toolStripSplitButtonScreen3Edit.Image = global::AutoScreenCapture.Properties.Resources.edit;
+            this.toolStripSplitButtonScreen3Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen3Edit.Name = "toolStripSplitButtonScreen3Edit";
+            this.toolStripSplitButtonScreen3Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen3Edit.Text = "Edit";
+            // 
             // pictureBoxScreen3
             // 
             this.pictureBoxScreen3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1260,6 +1279,15 @@
             this.toolStripScreen4ImageEditor.Size = new System.Drawing.Size(592, 25);
             this.toolStripScreen4ImageEditor.TabIndex = 0;
             // 
+            // toolStripSplitButtonScreen4Edit
+            // 
+            this.toolStripSplitButtonScreen4Edit.AutoToolTip = false;
+            this.toolStripSplitButtonScreen4Edit.Image = global::AutoScreenCapture.Properties.Resources.edit;
+            this.toolStripSplitButtonScreen4Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonScreen4Edit.Name = "toolStripSplitButtonScreen4Edit";
+            this.toolStripSplitButtonScreen4Edit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonScreen4Edit.Text = "Edit";
+            // 
             // pictureBoxScreen4
             // 
             this.pictureBoxScreen4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1481,6 +1509,15 @@
             this.toolStripActiveWindowImageEditor.ShowItemToolTips = false;
             this.toolStripActiveWindowImageEditor.Size = new System.Drawing.Size(592, 25);
             this.toolStripActiveWindowImageEditor.TabIndex = 0;
+            // 
+            // toolStripSplitButtonActiveWindowEdit
+            // 
+            this.toolStripSplitButtonActiveWindowEdit.AutoToolTip = false;
+            this.toolStripSplitButtonActiveWindowEdit.Image = global::AutoScreenCapture.Properties.Resources.edit;
+            this.toolStripSplitButtonActiveWindowEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonActiveWindowEdit.Name = "toolStripSplitButtonActiveWindowEdit";
+            this.toolStripSplitButtonActiveWindowEdit.Size = new System.Drawing.Size(59, 22);
+            this.toolStripSplitButtonActiveWindowEdit.Text = "Edit";
             // 
             // panelActiveWindowAttributes
             // 
@@ -2659,38 +2696,6 @@
             this.buttonRestoreDefaults.Text = "Restore Defaults";
             this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
             this.buttonRestoreDefaults.Click += new System.EventHandler(this.Click_buttonRestoreDefaults);
-            // 
-            // toolStripSplitButtonScreen2Edit
-            // 
-            this.toolStripSplitButtonScreen2Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen2Edit.Image")));
-            this.toolStripSplitButtonScreen2Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonScreen2Edit.Name = "toolStripSplitButtonScreen2Edit";
-            this.toolStripSplitButtonScreen2Edit.Size = new System.Drawing.Size(59, 22);
-            this.toolStripSplitButtonScreen2Edit.Text = "Edit";
-            // 
-            // toolStripSplitButtonScreen3Edit
-            // 
-            this.toolStripSplitButtonScreen3Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen3Edit.Image")));
-            this.toolStripSplitButtonScreen3Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonScreen3Edit.Name = "toolStripSplitButtonScreen3Edit";
-            this.toolStripSplitButtonScreen3Edit.Size = new System.Drawing.Size(59, 22);
-            this.toolStripSplitButtonScreen3Edit.Text = "Edit";
-            // 
-            // toolStripSplitButtonScreen4Edit
-            // 
-            this.toolStripSplitButtonScreen4Edit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonScreen4Edit.Image")));
-            this.toolStripSplitButtonScreen4Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonScreen4Edit.Name = "toolStripSplitButtonScreen4Edit";
-            this.toolStripSplitButtonScreen4Edit.Size = new System.Drawing.Size(59, 22);
-            this.toolStripSplitButtonScreen4Edit.Text = "Edit";
-            // 
-            // toolStripSplitButtonActiveWindowEdit
-            // 
-            this.toolStripSplitButtonActiveWindowEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonActiveWindowEdit.Image")));
-            this.toolStripSplitButtonActiveWindowEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonActiveWindowEdit.Name = "toolStripSplitButtonActiveWindowEdit";
-            this.toolStripSplitButtonActiveWindowEdit.Size = new System.Drawing.Size(59, 22);
-            this.toolStripSplitButtonActiveWindowEdit.Text = "Edit";
             // 
             // FormMain
             // 
