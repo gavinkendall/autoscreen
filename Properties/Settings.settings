@@ -6,7 +6,7 @@
       <Value Profile="(Default)">60000</Value>
     </Setting>
     <Setting Name="ApplicationVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2.1.6.4</Value>
+      <Value Profile="(Default)">2.1.6.5</Value>
     </Setting>
     <Setting Name="ImageFormatFilter" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.*</Value>

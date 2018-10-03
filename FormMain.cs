@@ -91,6 +91,11 @@ namespace AutoScreenCapture
 
             Log.Write("*** " + Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ") ***");
 
+            if (!Directory.Exists(FileSystem.UserAppDataLocalDirectory))
+            {
+                Directory.CreateDirectory(FileSystem.UserAppDataLocalDirectory);
+            }
+
             LoadApplicationSettings();
 
             if (args.Length > 0)
