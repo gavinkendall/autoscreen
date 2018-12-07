@@ -192,6 +192,8 @@
             this.dateTimePickerScheduleStartAt = new System.Windows.Forms.DateTimePicker();
             this.checkBoxScheduleStopAt = new System.Windows.Forms.CheckBox();
             this.checkBoxScheduleStartAt = new System.Windows.Forms.CheckBox();
+            this.tabPageRegions = new System.Windows.Forms.TabPage();
+            this.tabPageEditors = new System.Windows.Forms.TabPage();
             this.tabPageSlideshow = new System.Windows.Forms.TabPage();
             this.groupBoxSlideRemovalInDays = new System.Windows.Forms.GroupBox();
             this.labelDays = new System.Windows.Forms.Label();
@@ -207,7 +209,6 @@
             this.numericUpDownSlideshowDelaySeconds = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayMinutes = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayHours = new System.Windows.Forms.NumericUpDown();
-            this.tabPageEditors = new System.Windows.Forms.TabPage();
             this.tabPageTriggers = new System.Windows.Forms.TabPage();
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
@@ -1757,11 +1758,11 @@
             this.tabControlModules.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControlModules.Controls.Add(this.tabPageScreenCapture);
-            this.tabControlModules.Controls.Add(this.tabPageSlideshow);
+            this.tabControlModules.Controls.Add(this.tabPageRegions);
             this.tabControlModules.Controls.Add(this.tabPageEditors);
+            this.tabControlModules.Controls.Add(this.tabPageSlideshow);
             this.tabControlModules.Controls.Add(this.tabPageTriggers);
             this.tabControlModules.Location = new System.Drawing.Point(0, 164);
-            this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
             this.tabControlModules.Size = new System.Drawing.Size(249, 244);
@@ -1781,7 +1782,7 @@
             this.tabPageScreenCapture.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageScreenCapture.Size = new System.Drawing.Size(241, 218);
             this.tabPageScreenCapture.TabIndex = 0;
-            this.tabPageScreenCapture.Text = "Screen Capture";
+            this.tabPageScreenCapture.Text = "Screen";
             this.tabPageScreenCapture.UseVisualStyleBackColor = true;
             // 
             // groupBoxJpegQualityLevel
@@ -2331,6 +2332,26 @@
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
             this.checkBoxScheduleStartAt.Click += new System.EventHandler(this.SaveApplicationSettings);
             // 
+            // tabPageRegions
+            // 
+            this.tabPageRegions.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRegions.Name = "tabPageRegions";
+            this.tabPageRegions.Size = new System.Drawing.Size(241, 218);
+            this.tabPageRegions.TabIndex = 4;
+            this.tabPageRegions.Text = "Region";
+            this.tabPageRegions.UseVisualStyleBackColor = true;
+            // 
+            // tabPageEditors
+            // 
+            this.tabPageEditors.AutoScroll = true;
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEditors.Name = "tabPageEditors";
+            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 218);
+            this.tabPageEditors.TabIndex = 2;
+            this.tabPageEditors.Text = "Editors";
+            this.tabPageEditors.UseVisualStyleBackColor = true;
+            // 
             // tabPageSlideshow
             // 
             this.tabPageSlideshow.AutoScroll = true;
@@ -2520,17 +2541,6 @@
             this.numericUpDownSlideshowDelayHours.ValueChanged += new System.EventHandler(this.ValueChanged_numericUpDownSlideshowDelay);
             this.numericUpDownSlideshowDelayHours.Leave += new System.EventHandler(this.SaveApplicationSettings);
             // 
-            // tabPageEditors
-            // 
-            this.tabPageEditors.AutoScroll = true;
-            this.tabPageEditors.Location = new System.Drawing.Point(4, 22);
-            this.tabPageEditors.Name = "tabPageEditors";
-            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 218);
-            this.tabPageEditors.TabIndex = 2;
-            this.tabPageEditors.Text = "Editors";
-            this.tabPageEditors.UseVisualStyleBackColor = true;
-            // 
             // tabPageTriggers
             // 
             this.tabPageTriggers.AutoScroll = true;
@@ -2556,7 +2566,7 @@
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStripScreenCapture.ShowItemToolTips = false;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(175, 25);
+            this.toolStripScreenCapture.Size = new System.Drawing.Size(206, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
             // toolStripSplitButtonStartScreenCapture
@@ -3026,5 +3036,6 @@
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen3Edit;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen4Edit;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonActiveWindowEdit;
+        private System.Windows.Forms.TabPage tabPageRegions;
     }
 }

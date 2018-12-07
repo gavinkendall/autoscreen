@@ -37,7 +37,7 @@ namespace AutoScreenCapture.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2.1.6.5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2.1.7.5")]
         public string ApplicationVersion {
             get {
                 return ((string)(this["ApplicationVersion"]));
@@ -164,12 +164,12 @@ namespace AutoScreenCapture.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int ImageFormatIndex {
+        public int ImageFormatFilterIndex {
             get {
-                return ((int)(this["ImageFormatIndex"]));
+                return ((int)(this["ImageFormatFilterIndex"]));
             }
             set {
-                this["ImageFormatIndex"] = value;
+                this["ImageFormatFilterIndex"] = value;
             }
         }
         
@@ -755,6 +755,18 @@ namespace AutoScreenCapture.Properties {
             }
             set {
                 this["Mouse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("JPEG")]
+        public string StartButtonImageFormat {
+            get {
+                return ((string)(this["StartButtonImageFormat"]));
+            }
+            set {
+                this["StartButtonImageFormat"] = value;
             }
         }
     }

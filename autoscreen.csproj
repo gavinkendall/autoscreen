@@ -97,6 +97,14 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="modules\regions\FormRegion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modules\regions\FormRegion.Designer.cs">
+      <DependentUpon>FormRegion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="modules\regions\Region.cs" />
+    <Compile Include="modules\regions\RegionCollection.cs" />
     <Compile Include="modules\triggers\FormTrigger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="modules\regions\FormRegion.resx">
+      <DependentUpon>FormRegion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="modules\triggers\FormTrigger.resx">
       <DependentUpon>FormTrigger.cs</DependentUpon>

@@ -24,6 +24,7 @@ namespace AutoScreenCapture
     {
         private FormEditor formEditor = new FormEditor();
         private FormTrigger formTrigger = new FormTrigger();
+        private FormRegion formRegion = new FormRegion();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         private ImageFormatCollection _imageFormatCollection;
@@ -117,7 +118,7 @@ namespace AutoScreenCapture
             SearchDates();
 
             // Changing the value of this property will automatically call SearchSlides.
-            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
+            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatFilterIndex;
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -170,6 +171,10 @@ namespace AutoScreenCapture
 
             formTrigger.TriggerCollection.Load();
 
+            Log.Write("Loading regions.");
+
+            formRegion.RegionCollection.Load();
+
             Log.Write("Building screenshot preview context menu.");
 
             BuildScreenshotPreviewContextualMenu();
@@ -187,6 +192,7 @@ namespace AutoScreenCapture
             else
             {
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
+                Directory.CreateDirectory(FileSystem.ScreenshotsFolder);
             }
 
             Log.Write("Setting screenshots macro.");
@@ -350,10 +356,12 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (Properties.Settings.Default.ImageFormatIndex < 0)
+            if (Properties.Settings.Default.ImageFormatFilterIndex < 0)
             {
-                Properties.Settings.Default.ImageFormatIndex = 0;
+                Properties.Settings.Default.ImageFormatFilterIndex = 0;
             }
+
+            ScreenCapture.ImageFormat = Properties.Settings.Default.StartButtonImageFormat;
 
             numericUpDownJpegQualityLevel.Value = Properties.Settings.Default.JpegQualityLevel;
 
@@ -432,6 +440,8 @@ namespace AutoScreenCapture
 
                 formTrigger.TriggerCollection.Save();
 
+                formRegion.RegionCollection.Save();
+
                 Properties.Settings.Default.Save();
 
                 // Exit.
@@ -467,7 +477,7 @@ namespace AutoScreenCapture
                 Properties.Settings.Default.ImageFormatFilter = rgx.Match(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex].ToString()).Groups["ImageFormatFilter"].Value;
             }
 
-            Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
+            Properties.Settings.Default.ImageFormatFilterIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
 
             SearchSlides();
         }
@@ -695,8 +705,8 @@ namespace AutoScreenCapture
                     Properties.Settings.Default.ImageResolutionRatio = (int)numericUpDownImageResolutionRatio.Value;
                     Log.Write("Saving application settings ... ImageResolutionRatio = " + (int)numericUpDownImageResolutionRatio.Value);
 
-                    Properties.Settings.Default.ImageFormatIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
-                    Log.Write("Saving application settings ... ImageFormatIndex = " + toolStripComboBoxImageFormatFilter.SelectedIndex);
+                    Properties.Settings.Default.ImageFormatFilterIndex = toolStripComboBoxImageFormatFilter.SelectedIndex;
+                    Log.Write("Saving application settings ... ImageFormatFilterIndex = " + toolStripComboBoxImageFormatFilter.SelectedIndex);
 
                     Properties.Settings.Default.Interval = GetCaptureDelay();
                     Log.Write("Saving application settings ... Interval = " + GetCaptureDelay());
@@ -850,6 +860,9 @@ namespace AutoScreenCapture
 
                     Properties.Settings.Default.Mouse = checkBoxMouse.Checked;
                     Log.Write("Saving application settings ... Mouse = " + checkBoxMouse.Checked);
+
+                    Properties.Settings.Default.StartButtonImageFormat = ScreenCapture.ImageFormat;
+                    Log.Write("Saving application settings ... StartButtonImageFormat = " + ScreenCapture.ImageFormat);
 
                     // Passphrase is set in its own event handler and saved appropriately so that's why you won't see a line for it here :)
 
@@ -1032,10 +1045,15 @@ namespace AutoScreenCapture
             Slideshow.Stop();
         }
 
+        private void StartScreenCapture()
+        {
+            StartScreenCapture(ScreenCapture.ImageFormat);
+        }
+
         /// <summary>
         /// Starts a screen capture session.
         /// </summary>
-        private void StartScreenCapture()
+        private void StartScreenCapture(string format)
         {
             if (!timerScreenCapture.Enabled)
             {
@@ -1073,7 +1091,7 @@ namespace AutoScreenCapture
                     // Setup the properties for the screen capture class.
                     ScreenCapture.Folder = textBoxFolder.Text;
                     ScreenCapture.Macro = textBoxMacro.Text;
-                    ScreenCapture.Format = comboBoxScheduleImageFormat.SelectedItem.ToString();
+                    ScreenCapture.ImageFormat = format;
                     ScreenCapture.Delay = GetCaptureDelay();
                     ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
                     ScreenCapture.Ratio = (int)numericUpDownImageResolutionRatio.Value;
@@ -1297,12 +1315,12 @@ namespace AutoScreenCapture
 
             tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageSlideshow"];
 
-            if (Properties.Settings.Default.ImageFormatIndex < 0)
+            if (Properties.Settings.Default.ImageFormatFilterIndex < 0)
             {
-                Properties.Settings.Default.ImageFormatIndex = 0;
+                Properties.Settings.Default.ImageFormatFilterIndex = 0;
             }
 
-            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatIndex;
+            toolStripComboBoxImageFormatFilter.SelectedIndex = Properties.Settings.Default.ImageFormatFilterIndex;
         }
 
         /// <summary>
@@ -1392,7 +1410,7 @@ namespace AutoScreenCapture
 
             if (!string.IsNullOrEmpty(imageFormat))
             {
-                StartScreenCapture();
+                StartScreenCapture(imageFormat);
             }
         }
 
@@ -1464,6 +1482,8 @@ namespace AutoScreenCapture
                 ScreenshotCollection.Save();
 
                 formTrigger.TriggerCollection.Save();
+
+                formRegion.RegionCollection.Save();
 
                 Properties.Settings.Default.Save();
 
@@ -1758,6 +1778,8 @@ namespace AutoScreenCapture
 
                 comboBoxScheduleImageFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
 
+                toolStripSplitButtonStartScreenCapture.Text = ScreenCapture.DefaultImageFormat;
+
                 checkBoxScheduleStopAt.Checked = false;
                 checkBoxScheduleStartAt.Checked = false;
                 checkBoxScheduleOnTheseDays.Checked = false;
@@ -1827,6 +1849,9 @@ namespace AutoScreenCapture
                     if (rgxCommandLineFormat.IsMatch(args[i]))
                     {
                         comboBoxScheduleImageFormat.SelectedItem = rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
+
+                        toolStripSplitButtonStartScreenCapture.Text =
+                            rgxCommandLineFormat.Match(args[i]).Groups["Format"].Value;
                     }
 
                     if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
@@ -1947,6 +1972,7 @@ namespace AutoScreenCapture
 
             BuildEditorsList();
             BuildTriggersList();
+            BuildRegionsList();
         }
 
         private void BuildEditorsList()
@@ -2160,6 +2186,97 @@ namespace AutoScreenCapture
 
                 // Move down the Triggers tab page so we're ready to loop around again and add the next Trigger to it.
                 yPosTrigger += Y_POS_TRIGGER_INCREMENT;
+            }
+        }
+
+        private void BuildRegionsList()
+        {
+            int xPosRegion = 5;
+            int yPosRegion = 3;
+
+            const int REGION_HEIGHT = 20;
+            const int CHECKBOX_WIDTH = 20;
+            const int CHECKBOX_HEIGHT = 20;
+            const int BIG_BUTTON_WIDTH = 205;
+            const int BIG_BUTTON_HEIGHT = 25;
+            const int SMALL_BUTTON_WIDTH = 27;
+            const int SMALL_BUTTON_HEIGHT = 20;
+            const int X_POS_REGION_TEXTBOX = 20;
+            const int X_POS_REGION_BUTTON = 178;
+            const int REGION_TEXTBOX_WIDTH = 153;
+            const int Y_POS_REGION_INCREMENT = 23;
+            const int REGION_TEXTBOX_MAX_LENGTH = 50;
+
+            const string EDIT_BUTTON_TEXT = "...";
+
+            tabPageRegions.Controls.Clear();
+
+            // The button for adding a new Region.
+            Button buttonAddNewRegion = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosRegion, yPosRegion),
+                Text = "Add New Region ...",
+                TabStop = false
+            };
+            buttonAddNewRegion.Click += new EventHandler(Click_addRegion);
+            tabPageRegions.Controls.Add(buttonAddNewRegion);
+
+            // Move down and then add the "Remove Selected Regions" button.
+            yPosRegion += 27;
+
+            Button buttonRemoveSelectedRegions = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosRegion, yPosRegion),
+                Text = "Remove Selected Regions",
+                TabStop = false
+            };
+            buttonRemoveSelectedRegions.Click += new EventHandler(Click_removeSelectedRegions);
+            tabPageRegions.Controls.Add(buttonRemoveSelectedRegions);
+
+            // Move down a bit so we can start populating the Regions tab page with a list of Regions.
+            yPosRegion += 28;
+
+            foreach (Region region in formRegion.RegionCollection)
+            {
+                // Add a checkbox so that the user has the ability to remove the selected Region.
+                CheckBox checkboxRegion = new CheckBox
+                {
+                    Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT),
+                    Location = new Point(xPosRegion, yPosRegion),
+                    Tag = region,
+                    TabStop = false
+                };
+                tabPageRegions.Controls.Add(checkboxRegion);
+
+                // Add a read-only text box showing the name of the Region.
+                TextBox textBoxRegion = new TextBox
+                {
+                    Width = REGION_TEXTBOX_WIDTH,
+                    Height = REGION_HEIGHT,
+                    MaxLength = REGION_TEXTBOX_MAX_LENGTH,
+                    Location = new Point(xPosRegion + X_POS_REGION_TEXTBOX, yPosRegion),
+                    Text = region.Name,
+                    ReadOnly = true,
+                    TabStop = false
+                };
+                tabPageRegions.Controls.Add(textBoxRegion);
+
+                // Add a button so that the user can change the Region.
+                Button buttonChangeRegion = new Button
+                {
+                    Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
+                    Location = new Point(xPosRegion + X_POS_REGION_BUTTON, yPosRegion),
+                    Text = EDIT_BUTTON_TEXT,
+                    Tag = region,
+                    TabStop = false
+                };
+                buttonChangeRegion.Click += new EventHandler(Click_buttonChangeRegion);
+                tabPageRegions.Controls.Add(buttonChangeRegion);
+
+                // Move down the Regions tab page so we're ready to loop around again and add the next Region to it.
+                yPosRegion += Y_POS_REGION_INCREMENT;
             }
         }
 
@@ -2393,6 +2510,84 @@ namespace AutoScreenCapture
         }
 
         #endregion Trigger
+
+        #region Region
+
+        /// <summary>
+        /// Shows the "Add Region" window to enable the user to add a chosen Region.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_addRegion(object sender, EventArgs e)
+        {
+            formRegion.RegionObject = null;
+
+            formRegion.ShowDialog(this);
+
+            if (formRegion.DialogResult == DialogResult.OK)
+            {
+                BuildScreenshotPreviewContextualMenu();
+
+                formRegion.RegionCollection.Save();
+            }
+        }
+
+        /// <summary>
+        /// Removes the selected Regions from the Regions tab page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_removeSelectedRegions(object sender, EventArgs e)
+        {
+            int countBeforeRemoval = formRegion.RegionCollection.Count;
+
+            foreach (Control control in tabPageRegions.Controls)
+            {
+                if (control.GetType().Equals(typeof(CheckBox)))
+                {
+                    CheckBox checkBox = (CheckBox)control;
+
+                    if (checkBox.Checked)
+                    {
+                        Region region = formRegion.RegionCollection.Get((Region)checkBox.Tag);
+                        formRegion.RegionCollection.Remove(region);
+                    }
+                }
+            }
+
+            if (countBeforeRemoval > formRegion.RegionCollection.Count)
+            {
+                BuildScreenshotPreviewContextualMenu();
+
+                formRegion.RegionCollection.Save();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Change Region" window to enable the user to edit a chosen Region.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_buttonChangeRegion(object sender, EventArgs e)
+        {
+            Button buttonSelected = (Button)sender;
+
+            if (buttonSelected.Tag != null)
+            {
+                formRegion.RegionObject = (Region)buttonSelected.Tag;
+
+                formRegion.ShowDialog(this);
+
+                if (formRegion.DialogResult == DialogResult.OK)
+                {
+                    BuildScreenshotPreviewContextualMenu();
+
+                    formRegion.RegionCollection.Save();
+                }
+            }
+        }
+
+        #endregion Region
 
         #region Schedule
 
@@ -2648,8 +2843,8 @@ namespace AutoScreenCapture
             // Active Window
             if (CaptureScreenAllowed(5))
             {
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, "5", FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, "5"), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, textBoxScreenActiveWindowName.Text, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, textBoxScreenActiveWindowName.Text), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, "5"), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, textBoxScreenActiveWindowName.Text), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
             }
 
             // All screens.
@@ -2683,8 +2878,8 @@ namespace AutoScreenCapture
 
                     if (!string.IsNullOrEmpty(screenName))
                     {
-                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, count.ToString(), FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, count.ToString()), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, screenName, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, screenName), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, FileSystem.UserAppDataLocalDirectory + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, count.ToString()), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, screenName), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
                     }
                 }
             }
@@ -2692,6 +2887,8 @@ namespace AutoScreenCapture
             ScreenCapture.Count++;
 
             RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
+
+            RunRegionCaptures();
         }
 
         /// <summary>
@@ -2844,7 +3041,7 @@ namespace AutoScreenCapture
 
                     if (preview && CaptureScreenAllowed(count))
                     {
-                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value, ScreenCapture.Format, checkBoxMouse.Checked);
+                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value, ScreenCapture.ImageFormat, checkBoxMouse.Checked);
 
                         if (bitmap != null)
                         {
@@ -3005,7 +3202,7 @@ namespace AutoScreenCapture
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
                     {
-                        StartScreenCapture();
+                        StartScreenCapture(comboBoxScheduleImageFormat.SelectedItem.ToString());
                     }
                 }
                 else
@@ -3014,7 +3211,7 @@ namespace AutoScreenCapture
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
                     {
-                        StartScreenCapture();
+                        StartScreenCapture(comboBoxScheduleImageFormat.SelectedItem.ToString());
                     }
                 }
             }
@@ -3079,7 +3276,7 @@ namespace AutoScreenCapture
 
             switch (tabControlModules.SelectedTab.Text)
             {
-                case "Screen Capture":
+                case "Screen":
                     toolStripScreenCapture.Visible = true;
                     toolStripScreenCapture.BringToFront();
                     break;
@@ -3325,6 +3522,8 @@ namespace AutoScreenCapture
 
             DisableSchedule();
 
+            ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
+
             Log.Write("Default settings restored.");
 
             SaveApplicationSettings();
@@ -3408,6 +3607,20 @@ namespace AutoScreenCapture
             }
         }
 
+        private void RunRegionCaptures()
+        {
+            foreach (Region region in formRegion.RegionCollection)
+            {
+                ScreenCapture.TakeScreenshot(_imageFormatCollection,
+                    region.X,
+                    region.Y,
+                    region.Width,
+                    region.Height,
+                    ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, region.Macro, region.Name),
+                    (long) numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+            }
+        }
+
         /// <summary>
         /// Displays the remaining time for when the next screenshot will be taken
         /// when the mouse pointer moves over the system tray icon.
@@ -3421,17 +3634,34 @@ namespace AutoScreenCapture
                 int remainingHours = ScreenCapture.TimeRemainingForNextScreenshot.Hours;
                 int remainingMinutes = ScreenCapture.TimeRemainingForNextScreenshot.Minutes;
                 int remainingSeconds = ScreenCapture.TimeRemainingForNextScreenshot.Seconds;
+                int remainingMilliseconds = ScreenCapture.TimeRemainingForNextScreenshot.Milliseconds;
 
-                string remainingHoursStr = (remainingHours > 0 ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", " : string.Empty);
-                string remainingMinutesStr = (remainingMinutes > 0 ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", " : string.Empty);
+                string remainingHoursStr = (remainingHours > 0
+                    ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
+                    : string.Empty);
+                string remainingMinutesStr = (remainingMinutes > 0
+                    ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
+                    : string.Empty);
 
-                notifyIcon.Text = "Next screenshot in " +
-                    remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
-                    " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " + ScreenCapture.DateTimeNextScreenshot.ToLongTimeString();
+                string remainingTimeStr = string.Empty;
+
+                if (remainingSeconds < 1)
+                {
+                    remainingTimeStr = "0." + remainingMilliseconds.ToString() + " milliseconds";
+                }
+                else
+                {
+                    remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
+                                       " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
+                                       ScreenCapture.DateTimeNextScreenshot.ToLongTimeString();
+                }
+
+                notifyIcon.Text = "Next screenshot (" + ScreenCapture.ImageFormat + ") in " + remainingTimeStr;
             }
             else
             {
-                notifyIcon.Text = Properties.Settings.Default.ApplicationName + " (" + Properties.Settings.Default.ApplicationVersion + ")";
+                notifyIcon.Text = Properties.Settings.Default.ApplicationName + " (" +
+                                  Properties.Settings.Default.ApplicationVersion + ")";
             }
         }
     }

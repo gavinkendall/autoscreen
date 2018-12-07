@@ -7,26 +7,28 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
-    using System;
-
     public static class MacroParser
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly string TimeFormat = "HH-mm-ss-fff";
-        public static readonly string UserMacro = @"%year%-%month%-%day%\%screen%\%hour%-%minute%-%second%-%millisecond%.%format%";
+
+        public static readonly string RegionMacro =   @"%region%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+        public static readonly string UserMacro = @"%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ScreenshotListMacro = @"%year%-%month%-%day%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ApplicationMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
-        public static string ParseTags(ImageFormatCollection imageFormatCollection, string path, string screenName)
+        public static string ParseTags(ImageFormatCollection imageFormatCollection, string path, string name)
         {
-            if (!string.IsNullOrEmpty(ScreenCapture.Format))
+            if (!string.IsNullOrEmpty(ScreenCapture.ImageFormat))
             {
-                path = path.Replace("%format%", imageFormatCollection.GetByName(ScreenCapture.Format).Extension.TrimStart('.'));
+                path = path.Replace("%format%",
+                    imageFormatCollection.GetByName(ScreenCapture.ImageFormat).Extension.TrimStart('.'));
             }
 
-            if (!string.IsNullOrEmpty(screenName))
+            if (!string.IsNullOrEmpty(name))
             {
-                path = path.Replace("%screen%", screenName);
+                path = path.Replace("%region%", name);
+                path = path.Replace("%screen%", name);
             }
 
             path = path.Replace("%year%", ScreenCapture.DateTimePreviousScreenshot.ToString("yyyy"));

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">60000</Value>
     </Setting>
     <Setting Name="ApplicationVersion" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2.1.6.5</Value>
+      <Value Profile="(Default)">2.1.7.5</Value>
     </Setting>
     <Setting Name="ImageFormatFilter" Type="System.String" Scope="User">
       <Value Profile="(Default)">*.*</Value>
@@ -38,7 +38,7 @@
     <Setting Name="SlideSkip" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="ImageFormatIndex" Type="System.Int32" Scope="User">
+    <Setting Name="ImageFormatFilterIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="CaptureStartAtCheck" Type="System.Boolean" Scope="User">
@@ -187,6 +187,9 @@
     </Setting>
     <Setting Name="Mouse" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="StartButtonImageFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">JPEG</Value>
     </Setting>
   </Settings>
 </SettingsFile>

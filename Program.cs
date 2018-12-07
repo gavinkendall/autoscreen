@@ -10,13 +10,13 @@ namespace AutoScreenCapture
     using System;
     using System.Reflection;
     using System.Runtime.InteropServices;
-    using System.Windows.Forms;
     using System.Threading;
+    using System.Windows.Forms;
 
-    static class Program
+    internal static class Program
     {
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             foreach (string arg in args)
             {
