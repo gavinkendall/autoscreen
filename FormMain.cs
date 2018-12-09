@@ -526,13 +526,13 @@ namespace AutoScreenCapture
 
                 formRegion.RegionCollection.Save();
 
-                SaveSettings();
-
                 // Exit.
                 Environment.Exit(0);
             }
             else
             {
+                SaveSettings();
+
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
 
                 // If there isn't a Trigger for "InterfaceClosing" that performs an action
@@ -876,7 +876,7 @@ namespace AutoScreenCapture
             {
                 checkBoxPassphraseLock.Checked = false;
                 Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
-                Settings.User.Save();
+                SaveSettings();
 
                 Opacity = 100;
                 toolStripMenuItemShowInterface.Enabled = false;
@@ -893,6 +893,8 @@ namespace AutoScreenCapture
                     WindowState = FormWindowState.Normal;
                 }
 
+                RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
+
                 Focus();
             }
         }
@@ -902,6 +904,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void HideInterface()
         {
+            SaveSettings();
+
             Log.Write("Hiding interface.");
 
             // Pause the slideshow if you find it still playing.
@@ -917,6 +921,8 @@ namespace AutoScreenCapture
             Hide();
             Visible = false;
             ShowInTaskbar = false;
+
+            RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
         }
 
         /// <summary>
@@ -940,7 +946,7 @@ namespace AutoScreenCapture
                 {
                     checkBoxPassphraseLock.Checked = false;
                     Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
-                    Settings.User.Save();
+                    SaveSettings();
 
                     ScreenCapture.Count = 0;
                     timerScreenCapture.Enabled = false;
@@ -1422,7 +1428,7 @@ namespace AutoScreenCapture
 
                 checkBoxPassphraseLock.Checked = false;
                 Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
-                Settings.User.Save();
+                SaveSettings();
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
@@ -1451,8 +1457,6 @@ namespace AutoScreenCapture
                 formTrigger.TriggerCollection.Save();
 
                 formRegion.RegionCollection.Save();
-
-                SaveSettings();
 
                 // Exit.
                 Environment.Exit(0);
@@ -2706,7 +2710,7 @@ namespace AutoScreenCapture
             if (textBoxPassphrase.Text.Length > 0)
             {
                 Settings.User.GetByKey("Passphrase").Value = textBoxPassphrase.Text;
-                Settings.User.Save();
+                SaveSettings();
 
                 textBoxPassphrase.ReadOnly = true;
                 buttonSetPassphrase.Enabled = false;
@@ -2730,7 +2734,7 @@ namespace AutoScreenCapture
 
             Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
             Settings.User.GetByKey("Passphrase").Value = string.Empty;
-            Settings.User.Save();
+            SaveSettings();
 
             textBoxPassphrase.Focus();
         }

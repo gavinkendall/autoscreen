@@ -57,6 +57,16 @@ namespace AutoScreenCapture
                             sw.Flush();
                             sw.Close();
                         }
+
+                        using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
+                        {
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
+                                         ex.Message);
+
+                            sw.Flush();
+                            sw.Close();
+                        }
                     }
                     else
                     {
