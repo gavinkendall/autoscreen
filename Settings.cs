@@ -22,7 +22,7 @@ namespace AutoScreenCapture
                 Directory.CreateDirectory(FileSystem.SettingsFolder);
 
                 Application.Add(new Setting("Name", "Auto Screen Capture"));
-                Application.Add(new Setting("Version", "2.1.7.6"));
+                Application.Add(new Setting("Version", "2.1.7.7"));
                 Application.Add(new Setting("DebugMode", true));
                 Application.Save();
 
