@@ -23,13 +23,13 @@ namespace AutoScreenCapture
 
                 Application.Add(new Setting("Name", "Auto Screen Capture"));
                 Application.Add(new Setting("Version", "2.1.7.6"));
-                Application.Add(new Setting("DebugMode", false));
+                Application.Add(new Setting("DebugMode", true));
                 Application.Save();
 
                 User.Add(new Setting("ScreenshotsDirectory", FileSystem.ScreenshotsFolder));
                 User.Add(new Setting("ScheduleImageFormat", "JPEG"));
                 User.Add(new Setting("SlideSkip", 10));
-                User.Add(new Setting("CaptureLimit", 30));
+                User.Add(new Setting("CaptureLimit", 0));
                 User.Add(new Setting("ImageResolutionRatio", 100));
                 User.Add(new Setting("ImageFormatFilter", "*.*"));
                 User.Add(new Setting("ImageFormatFilterIndex", 0));

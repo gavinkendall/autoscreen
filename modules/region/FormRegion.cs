@@ -106,6 +106,10 @@ namespace AutoScreenCapture
                     else
                     {
                         RegionCollection.Get(RegionObject).Name = textBoxRegionName.Text;
+                        RegionCollection.Get(RegionObject).X = (int)numericUpDownRegionX.Value;
+                        RegionCollection.Get(RegionObject).Y = (int)numericUpDownRegionY.Value;
+                        RegionCollection.Get(RegionObject).Width = (int)numericUpDownRegionWidth.Value;
+                        RegionCollection.Get(RegionObject).Height = (int)numericUpDownRegionHeight.Value;
 
                         Okay();
                     }

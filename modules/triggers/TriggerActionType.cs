@@ -11,11 +11,11 @@ namespace AutoScreenCapture
     {
         DisablePreview = 0,
         DisableSchedule = 1,
-        EnablePreview = 3,
-        EnableSchedule = 4,
-        ExitApplication = 5,
-        HideInterface = 6,
-        PlaySlideshow = 2, // This was previously "Enable Debug Mode", but that is now controlled by the application.xml settings file
+        EnablePreview = 2,
+        EnableSchedule = 3,
+        ExitApplication = 4,
+        HideInterface = 5,
+        PlaySlideshow = 6, // This was previously "Enable Debug Mode", but that is now controlled by the application.xml settings file
         RunEditor = 7,
         ShowInterface = 8,
         StartScreenCapture = 9,
