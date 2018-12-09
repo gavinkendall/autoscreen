@@ -97,14 +97,14 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="modules\regions\FormRegion.cs">
+    <Compile Include="modules\region\FormRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\regions\FormRegion.Designer.cs">
+    <Compile Include="modules\region\FormRegion.Designer.cs">
       <DependentUpon>FormRegion.cs</DependentUpon>
     </Compile>
-    <Compile Include="modules\regions\Region.cs" />
-    <Compile Include="modules\regions\RegionCollection.cs" />
+    <Compile Include="modules\region\Region.cs" />
+    <Compile Include="modules\region\RegionCollection.cs" />
     <Compile Include="modules\triggers\FormTrigger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,12 +121,15 @@
     <Compile Include="modules\triggers\TriggerConditionType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="modules\screen_capture\Screenshot.cs" />
-    <Compile Include="modules\screen_capture\ScreenshotCollection.cs" />
-    <Compile Include="modules\screen_capture\ScreenshotType.cs" />
+    <Compile Include="modules\screen\Screenshot.cs" />
+    <Compile Include="modules\screen\ScreenshotCollection.cs" />
+    <Compile Include="modules\screen\ScreenshotType.cs" />
     <Compile Include="MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
+    <Compile Include="Setting.cs" />
+    <Compile Include="SettingCollection.cs" />
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,7 +139,7 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\regions\FormRegion.resx">
+    <EmbeddedResource Include="modules\region\FormRegion.resx">
       <DependentUpon>FormRegion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="modules\triggers\FormTrigger.resx">
@@ -158,17 +161,7 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="modules\screen_capture\ScreenCapture.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="modules\screen\ScreenCapture.cs" />
     <Compile Include="modules\slideshow\Slideshow.cs" />
   </ItemGroup>
   <ItemGroup>

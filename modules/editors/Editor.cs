@@ -17,7 +17,6 @@ namespace AutoScreenCapture
         /// </summary>
         public Editor()
         {
-
         }
 
         /// <summary>

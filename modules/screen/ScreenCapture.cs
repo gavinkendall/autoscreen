@@ -47,7 +47,7 @@ namespace AutoScreenCapture
         private static extern bool GetCursorInfo(out CURSORINFO pci);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
+        private static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
 
         private const Int32 CURSOR_SHOWING = 0x0001;
         private const Int32 DI_NORMAL = 0x0003;
@@ -63,7 +63,7 @@ namespace AutoScreenCapture
 
         private const int MAX_CHARS = 48000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
-        private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
+        public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
         public static int X { get; set; }
         public static int Y { get; set; }
@@ -72,7 +72,7 @@ namespace AutoScreenCapture
         public static string Folder { get; set; }
         public static string Macro { get; set; }
         public static int Ratio { get; set; }
-        public static string Format { get; set; }
+        public static string ImageFormat { get; set; }
         public static int Delay { get; set; }
         public static int Limit { get; set; }
         public static int Count { get; set; }
@@ -105,52 +105,74 @@ namespace AutoScreenCapture
         {
             try
             {
-                int sourceWidth = Width <= screen.Bounds.Width && Width > 0 ? Width : screen.Bounds.Width;
-                int sourceHeight = Height <= screen.Bounds.Height && Height > 0 ? Height : screen.Bounds.Height;
+                int width = Width <= screen.Bounds.Width && Width > 0 ? Width : screen.Bounds.Width;
+                int height = Height <= screen.Bounds.Height && Height > 0 ? Height : screen.Bounds.Height;
 
-                Size blockRegionSize = new Size(sourceWidth, sourceHeight);
-
-                if (ratio < IMAGE_RESOLUTION_RATIO_MIN || ratio > IMAGE_RESOLUTION_RATIO_MAX) { ratio = 100; }
-
-                float imageResolutionRatio = (float)ratio / 100;
-
-                int destinationWidth = (int)(sourceWidth * imageResolutionRatio);
-                int destinationHeight = (int)(sourceHeight * imageResolutionRatio);
-
-                Bitmap bitmapSource = new Bitmap(sourceWidth, sourceHeight);
-                Graphics graphicsSource = Graphics.FromImage(bitmapSource);
-
-                graphicsSource.CopyFromScreen(X, Y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
-
-                if (mouse)
-                {
-                    CURSORINFO pci;
-                    pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
-
-                    if (GetCursorInfo(out pci))
-                    {
-                        if (pci.flags == CURSOR_SHOWING)
-                        {
-                            var hdc = graphicsSource.GetHdc();
-                            DrawIconEx(hdc, pci.ptScreenPos.x - X, pci.ptScreenPos.y - Y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                            graphicsSource.ReleaseHdc();
-                        }
-                    }
-                }
-
-                Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
-
-                Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
-                graphicsDestination.DrawImage(bitmapSource, 0, 0, destinationWidth, destinationHeight);
-
-                graphicsSource.Flush();
-                graphicsDestination.Flush();
-
-                return bitmapDestination;
+                return GetScreenBitmap(X, Y, width, height, ratio, format, mouse);
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCapture::GetScreenBitmap", ex);
+                Log.Write("ScreenCapture::GetScreenBitmap(screen, ratio, format, mouse)", ex);
+                return null;
+            }
+        }
+
+        public static Bitmap GetScreenBitmap(int x, int y, int width, int height, int ratio, string format, bool mouse)
+        {
+            try
+            {
+                if (width > 0 && height > 0)
+                {
+                    Size blockRegionSize = new Size(width, height);
+
+                    if (ratio < IMAGE_RESOLUTION_RATIO_MIN || ratio > IMAGE_RESOLUTION_RATIO_MAX)
+                    {
+                        ratio = 100;
+                    }
+
+                    float imageResolutionRatio = (float) ratio / 100;
+
+                    int destinationWidth = (int) (width * imageResolutionRatio);
+                    int destinationHeight = (int) (height * imageResolutionRatio);
+
+                    Bitmap bitmapSource = new Bitmap(width, height);
+                    Graphics graphicsSource = Graphics.FromImage(bitmapSource);
+
+                    graphicsSource.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                    if (mouse)
+                    {
+                        CURSORINFO pci;
+                        pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                        if (GetCursorInfo(out pci))
+                        {
+                            if (pci.flags == CURSOR_SHOWING)
+                            {
+                                var hdc = graphicsSource.GetHdc();
+                                DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0,
+                                    IntPtr.Zero, DI_NORMAL);
+                                graphicsSource.ReleaseHdc();
+                            }
+                        }
+                    }
+
+                    Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
+
+                    Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
+                    graphicsDestination.DrawImage(bitmapSource, 0, 0, destinationWidth, destinationHeight);
+
+                    graphicsSource.Flush();
+                    graphicsDestination.Flush();
+
+                    return bitmapDestination;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::GetScreenBitmap(x, y, width, height, ratio, format, mouse)", ex);
                 return null;
             }
         }
@@ -196,19 +218,19 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static void TakeScreenshot(ImageFormatCollection imageFormatCollection, Screen screen, string screenName, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
+        public static void TakeScreenshot(ImageFormatCollection imageFormatCollection, Screen screen, string path, int screenNumber, ScreenshotType screenshotType, long jpegQualityLevel, bool mouse)
         {
             try
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, Format, mouse);
+                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen, Ratio, ImageFormat, mouse);
 
                     if (bitmap != null)
                     {
-                        Screenshot screenshot = new Screenshot(DateTimePreviousScreenshot, path, screenNumber, Format, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
+                        Screenshot screenshot = new Screenshot(DateTimePreviousScreenshot, path, screenNumber, ImageFormat, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
 
-                        SaveToFile(imageFormatCollection, bitmap, jpegQualityLevel, Format, screenshot.Path, screenshotType);
+                        SaveToFile(imageFormatCollection, bitmap, jpegQualityLevel, screenshot.Path, screenshotType);
 
                         ScreenshotCollection.Add(screenshot, screenshotType);
 
@@ -218,7 +240,29 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCapture::TakeScreenshot", ex);
+                Log.Write("ScreenCapture::TakeScreenshot(imageFormatCollection, screen, path, screenNumber, screenshotType, jpegQualityLevel, mouse)", ex);
+            }
+        }
+
+        public static void TakeScreenshot(ImageFormatCollection imageFormatCollection, int x, int y, int width, int height, string path, long jpegQualityLevel, bool mouse)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(path))
+                {
+                    Bitmap bitmap = GetScreenBitmap(x, y, width, height, Ratio, ImageFormat, mouse);
+
+                    if (bitmap != null)
+                    {
+                        SaveToFile(imageFormatCollection, bitmap, jpegQualityLevel, path, ScreenshotType.User);
+
+                        GC.Collect();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::TakeScreenshot(imageFormatCollection, x, y, width, height, path, jpegQualityLevel, mouse)", ex);
             }
         }
 
@@ -242,11 +286,11 @@ namespace AutoScreenCapture
             }
         }
 
-        private static void SaveToFile(ImageFormatCollection imageFormatCollection, Bitmap bitmap, long jpegQualityLevel, string imageFormat, string imagePath, ScreenshotType screenshotType)
+        private static void SaveToFile(ImageFormatCollection imageFormatCollection, Bitmap bitmap, long jpegQualityLevel, string imagePath, ScreenshotType screenshotType)
         {
             try
             {
-                if (bitmap != null && !string.IsNullOrEmpty(imageFormat) && !string.IsNullOrEmpty(imagePath))
+                if (bitmap != null && !string.IsNullOrEmpty(ImageFormat) && !string.IsNullOrEmpty(imagePath))
                 {
                     if (!Directory.Exists(Path.GetDirectoryName(imagePath)))
                     {
@@ -258,7 +302,7 @@ namespace AutoScreenCapture
                         Log.Write("Screenshot saved: " + imagePath);
                     }
 
-                    if (imageFormat.Equals(ImageFormatSpec.NAME_JPEG))
+                    if (ImageFormat.Equals(ImageFormatSpec.NAME_JPEG))
                     {
                         var encoderParams = new EncoderParameters(1);
                         encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQualityLevel);
@@ -267,7 +311,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        bitmap.Save(imagePath, imageFormatCollection.GetByName(imageFormat).Format);
+                        bitmap.Save(imagePath, imageFormatCollection.GetByName(ImageFormat).Format);
                     }
                 }
             }

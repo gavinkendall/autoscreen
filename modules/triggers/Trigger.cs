@@ -11,7 +11,6 @@ namespace AutoScreenCapture
     {
         public Trigger()
         {
-
         }
 
         public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor)

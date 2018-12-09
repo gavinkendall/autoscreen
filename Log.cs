@@ -18,7 +18,9 @@ namespace AutoScreenCapture
 
         public static bool Enabled { get; set; }
 
-        private static readonly string logfile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.log";
+        private static readonly string extension = ".txt";
+        private static readonly string logFile = "autoscreen-log";
+        private static readonly string errorFile = "autoscreen-error";
 
         public static void Write(string message)
         {
@@ -33,19 +35,58 @@ namespace AutoScreenCapture
 
                 if (Enabled)
                 {
-                    using (StreamWriter sw = new StreamWriter(logfile, true))
+                    if (!Directory.Exists(FileSystem.DebugFolder))
                     {
-                        if (ex != null)
+                        Directory.CreateDirectory(FileSystem.DebugFolder);
+                    }
+
+                    if (!Directory.Exists(FileSystem.LogsFolder))
+                    {
+                        Directory.CreateDirectory(FileSystem.LogsFolder);
+                    }
+
+                    if (ex != null)
+                    {
+                        using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Properties.Settings.Default.ApplicationVersion + ") " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " + ex.Message);
+
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
+                                         ex.Message);
+
+                            sw.Flush();
+                            sw.Close();
                         }
-                        else
+                    }
+                    else
+                    {
+                        // Write to the main log file.
+                        using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Properties.Settings.Default.ApplicationVersion + ") " + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
+
+                            sw.Flush();
+                            sw.Close();
                         }
 
-                        sw.Flush();
-                        sw.Close();
+                        // Create a date-stamped directory if it does not already exist.
+                        if (!Directory.Exists(FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd")))
+                        {
+                            Directory.CreateDirectory(FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd"));
+                        }
+
+                        // Write to a log file within a directory representing the day when the message was logged.
+                        using (StreamWriter sw = new StreamWriter(
+                            FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd") + FileSystem.PathDelimiter +
+                            logFile + "_" + DateTime.Now.ToString("yyyy-MM-dd") + extension, true))
+                        {
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
+
+                            sw.Flush();
+                            sw.Close();
+                        }
                     }
                 }
             }

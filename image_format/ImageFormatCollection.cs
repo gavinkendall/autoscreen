@@ -52,7 +52,7 @@ namespace AutoScreenCapture
         {
             _imageFormatList.Add(imageFormat);
 
-            Log.Write("Added " + imageFormat.Name + " (" + imageFormat.Extension + ")");
+            Log.Write("Image format added: " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
         public ImageFormat GetByName(string name)

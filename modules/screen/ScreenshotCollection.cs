@@ -8,8 +8,8 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
     using System.Collections;
+    using System.IO;
     using System.Text;
     using System.Xml;
 
@@ -18,7 +18,6 @@ namespace AutoScreenCapture
         private static XmlDocument xDoc = null;
         private static ArrayList _screenshotList = new ArrayList();
 
-        private const string XML_FILE = "screenshots.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREENSHOT_NODE = "screenshot";
         private const string XML_FILE_SCREENSHOTS_NODE = "screenshots";
@@ -125,10 +124,10 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Load()
         {
-            if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
             {
                 xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.UserAppDataLocalDirectory + XML_FILE);
+                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
 
                 XmlNodeList xScreeshots = xDoc.SelectNodes(SCREENSHOT_XPATH);
 
@@ -213,7 +212,7 @@ namespace AutoScreenCapture
                 ConformanceLevel = ConformanceLevel.Document
             };
 
-            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.UserAppDataLocalDirectory + XML_FILE, xSettings))
+            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile, xSettings))
             {
                 xWriter.WriteStartDocument();
                 xWriter.WriteStartElement(XML_FILE_ROOT_NODE);

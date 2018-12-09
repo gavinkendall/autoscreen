@@ -26,8 +26,29 @@ namespace AutoScreenCapture
         /// </summary>
         public static readonly string FileManager = "explorer";
 
+        // Screenshots Folder
         public static readonly string ScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
-        public static readonly string UserAppDataLocalDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\.autoscreen\\";
+
+        // Application Folder
+        public static readonly string ApplicationFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\";
+
+        // Debug
+        public static readonly string DebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+        public static readonly string LogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\logs\\";
+
+        // Slides
+        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
+
+        // Settings
+        public static readonly string UserSettingsFile = "user.xml";
+        public static readonly string ApplicationSettingsFile = "application.xml";
+        public static readonly string SettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
+
+        // Editors, Regions, Triggers, and Screenshots
+        public static readonly string EditorsFile = "editors.xml";
+        public static readonly string RegionsFile = "regions.xml";
+        public static readonly string TriggersFile = "triggers.xml";
+        public static readonly string ScreenshotsFile = "screenshots.xml";
 
         /// <summary>
         /// Gets the image file path based on the slide name.
@@ -106,7 +127,7 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(monthCalendarFolder) && Directory.Exists(filePath + monthCalendarFolder))
                 {
-                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder, monthCalendarFolder + Properties.Settings.Default.ImageFormatFilter, SearchOption.TopDirectoryOnly);
+                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder, monthCalendarFolder + Settings.User.GetByKey("ImageFormatFilter").Value, SearchOption.TopDirectoryOnly);
 
                     if (filePaths != null)
                     {

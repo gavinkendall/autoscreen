@@ -8,17 +8,16 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Xml;
-    using System.Collections.Generic;
 
     public class TriggerCollection : IEnumerable<Trigger>
     {
         private readonly List<Trigger> _triggerList = new List<Trigger>();
 
-        private const string XML_FILE = "triggers.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_TRIGGER_NODE = "trigger";
         private const string XML_FILE_TRIGGERS_NODE = "triggers";
@@ -49,14 +48,14 @@ namespace AutoScreenCapture
         {
             _triggerList.Add(trigger);
 
-            Log.Write("Added " + trigger.Name);
+            Log.Write("Trigger added: " + trigger.Name);
         }
 
         public void Remove(Trigger trigger)
         {
             _triggerList.Remove(trigger);
 
-            Log.Write("Removed " + trigger.Name);
+            Log.Write("Trigger removed: " + trigger.Name);
         }
 
         public int Count
@@ -68,7 +67,7 @@ namespace AutoScreenCapture
         {
             foreach (Trigger trigger in _triggerList)
             {
-               if (trigger.Equals(triggerToFind))
+                if (trigger.Equals(triggerToFind))
                 {
                     return trigger;
                 }
@@ -100,10 +99,10 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
             {
                 XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.UserAppDataLocalDirectory + XML_FILE);
+                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
 
                 XmlNodeList xTriggers = xDoc.SelectNodes(TRIGGER_XPATH);
 
@@ -177,7 +176,7 @@ namespace AutoScreenCapture
             xSettings.NewLineHandling = NewLineHandling.Entitize;
             xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.UserAppDataLocalDirectory + XML_FILE, xSettings))
+            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.TriggersFile, xSettings))
             {
                 xWriter.WriteStartDocument();
                 xWriter.WriteStartElement(XML_FILE_ROOT_NODE);

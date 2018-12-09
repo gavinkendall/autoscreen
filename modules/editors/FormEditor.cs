@@ -8,9 +8,9 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
     using System.ComponentModel;
     using System.Drawing;
+    using System.IO;
     using System.Windows.Forms;
 
     public partial class FormEditor : Form

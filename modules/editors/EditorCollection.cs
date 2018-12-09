@@ -8,17 +8,16 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
     using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Xml;
-    using System.Collections.Generic;
 
     public class EditorCollection : IEnumerable<Editor>
     {
         private readonly List<Editor> _editorList = new List<Editor>();
 
-        private const string XML_FILE = "editors.xml";
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_EDITOR_NODE = "editor";
         private const string XML_FILE_EDITORS_NODE = "editors";
@@ -48,14 +47,14 @@ namespace AutoScreenCapture
         {
             _editorList.Add(editor);
 
-            Log.Write("Added " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
+            Log.Write("Editor added: " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
         public void Remove(Editor editor)
         {
             _editorList.Remove(editor);
 
-            Log.Write("Removed " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
+            Log.Write("Editor removed: " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
         public int Count
@@ -94,10 +93,10 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (File.Exists(FileSystem.UserAppDataLocalDirectory + XML_FILE))
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
             {
                 XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.UserAppDataLocalDirectory + XML_FILE);
+                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
 
                 XmlNodeList xEditors = xDoc.SelectNodes(EDITOR_XPATH);
 
@@ -158,7 +157,7 @@ namespace AutoScreenCapture
                 ConformanceLevel = ConformanceLevel.Document
             };
 
-            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.UserAppDataLocalDirectory + XML_FILE, xSettings))
+            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
             {
                 xWriter.WriteStartDocument();
                 xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
