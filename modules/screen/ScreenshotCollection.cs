@@ -41,41 +41,44 @@ namespace AutoScreenCapture
                 {
                     XmlNode xScreenshots = xDoc.GetElementsByTagName(XML_FILE_SCREENSHOTS_NODE).Item(0);
 
-                    XmlElement xNewScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
+                    if (xScreenshots != null)
+                    {
+                        XmlElement xNewScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
 
-                    XmlElement xNewScreenshotIndex = xDoc.CreateElement(SCREENSHOT_INDEX);
-                    xNewScreenshotIndex.InnerText = newScreenshot.Index.ToString();
+                        XmlElement xNewScreenshotIndex = xDoc.CreateElement(SCREENSHOT_INDEX);
+                        xNewScreenshotIndex.InnerText = newScreenshot.Index.ToString();
 
-                    XmlElement xNewScreenshotDate = xDoc.CreateElement(SCREENSHOT_DATE);
-                    xNewScreenshotDate.InnerText = newScreenshot.Date;
+                        XmlElement xNewScreenshotDate = xDoc.CreateElement(SCREENSHOT_DATE);
+                        xNewScreenshotDate.InnerText = newScreenshot.Date;
 
-                    XmlElement xNewScreenshotPath = xDoc.CreateElement(SCREENSHOT_PATH);
-                    xNewScreenshotPath.InnerText = newScreenshot.Path;
+                        XmlElement xNewScreenshotPath = xDoc.CreateElement(SCREENSHOT_PATH);
+                        xNewScreenshotPath.InnerText = newScreenshot.Path;
 
-                    XmlElement xNewScreenshotScreen = xDoc.CreateElement(SCREENSHOT_SCREEN);
-                    xNewScreenshotScreen.InnerText = newScreenshot.Screen.ToString();
+                        XmlElement xNewScreenshotScreen = xDoc.CreateElement(SCREENSHOT_SCREEN);
+                        xNewScreenshotScreen.InnerText = newScreenshot.Screen.ToString();
 
-                    XmlElement xNewScreenshotFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
-                    xNewScreenshotFormat.InnerText = newScreenshot.Format;
+                        XmlElement xNewScreenshotFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
+                        xNewScreenshotFormat.InnerText = newScreenshot.Format;
 
-                    XmlElement xNewScreenshotFilename = xDoc.CreateElement(SCREENSHOT_FILENAME);
-                    xNewScreenshotFilename.InnerText = newScreenshot.Filename;
+                        XmlElement xNewScreenshotFilename = xDoc.CreateElement(SCREENSHOT_FILENAME);
+                        xNewScreenshotFilename.InnerText = newScreenshot.Filename;
 
-                    XmlElement xNewScreenshotSlidename = xDoc.CreateElement(SCREENSHOT_SLIDENAME);
-                    xNewScreenshotSlidename.InnerText = newScreenshot.Slidename;
+                        XmlElement xNewScreenshotSlidename = xDoc.CreateElement(SCREENSHOT_SLIDENAME);
+                        xNewScreenshotSlidename.InnerText = newScreenshot.Slidename;
 
-                    // Append all the nodes in the appropriate locations.
-                    xNewScreenshot.AppendChild(xNewScreenshotIndex);
-                    xNewScreenshot.AppendChild(xNewScreenshotDate);
-                    xNewScreenshot.AppendChild(xNewScreenshotPath);
-                    xNewScreenshot.AppendChild(xNewScreenshotScreen);
-                    xNewScreenshot.AppendChild(xNewScreenshotFormat);
-                    xNewScreenshot.AppendChild(xNewScreenshotFilename);
-                    xNewScreenshot.AppendChild(xNewScreenshotSlidename);
-                    xScreenshots.AppendChild(xNewScreenshot);
+                        // Append all the nodes in the appropriate locations.
+                        xNewScreenshot.AppendChild(xNewScreenshotIndex);
+                        xNewScreenshot.AppendChild(xNewScreenshotDate);
+                        xNewScreenshot.AppendChild(xNewScreenshotPath);
+                        xNewScreenshot.AppendChild(xNewScreenshotScreen);
+                        xNewScreenshot.AppendChild(xNewScreenshotFormat);
+                        xNewScreenshot.AppendChild(xNewScreenshotFilename);
+                        xNewScreenshot.AppendChild(xNewScreenshotSlidename);
+                        xScreenshots.AppendChild(xNewScreenshot);
 
-                    // Add the new screenshot to the collection of screenshots.
-                    _screenshotList.Add(newScreenshot);
+                        // Add the new screenshot to the collection of screenshots.
+                        _screenshotList.Add(newScreenshot);
+                    }
                 }
             }
             catch (Exception ex)
