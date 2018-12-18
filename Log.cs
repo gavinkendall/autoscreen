@@ -50,7 +50,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
 
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
                                          DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
                                          ex.Message);
 
@@ -60,7 +60,7 @@ namespace AutoScreenCapture
 
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
                                          DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
                                          ex.Message);
 
@@ -73,7 +73,7 @@ namespace AutoScreenCapture
                         // Write to the main log file.
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
                                          DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
 
                             sw.Flush();
@@ -91,7 +91,7 @@ namespace AutoScreenCapture
                             FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd") + FileSystem.PathDelimiter +
                             logFile + "_" + DateTime.Now.ToString("yyyy-MM-dd") + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version").Value + ") " +
+                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
                                          DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
 
                             sw.Flush();

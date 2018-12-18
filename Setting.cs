@@ -17,17 +17,11 @@ namespace AutoScreenCapture
         public Setting(string key, object value)
         {
             Key = key;
-            _value = value;
+            Value = value;
         }
 
         public string Key { get; set; }
 
-        private object _value;
-        public object Value
-        {
-            get { return _value; }
-
-            set { _value = value; }
-        }
+        public object Value { get; set; }
     }
 }

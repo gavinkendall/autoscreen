@@ -49,7 +49,15 @@ namespace AutoScreenCapture
             _settingList.Add(setting);
         }
 
-        public Setting GetByKey(string key)
+        /// <summary>
+        /// Gets a setting by its key.
+        /// If the setting is found it will return the Setting object.
+        /// If the setting is not found a new Setting will be created with the provided key and default value.
+        /// </summary>
+        /// <param name="key">The key to use for finding an existing Setting or for creating a new Setting.</param>
+        /// <param name="defaultValue">The default value to use if the Setting cannot be found.</param>
+        /// <returns>Setting object (either existing or new).</returns>
+        public Setting GetByKey(string key, object defaultValue)
         {
             foreach (Setting setting in _settingList)
             {
@@ -59,7 +67,10 @@ namespace AutoScreenCapture
                 }
             }
 
-            return null;
+            Setting newSetting = new Setting(key, defaultValue);
+            Add(newSetting);
+
+            return newSetting;
         }
 
         /// <summary>

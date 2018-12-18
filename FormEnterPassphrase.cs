@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         {
             if (!string.IsNullOrEmpty(textBoxPassphrase.Text))
             {
-                if (textBoxPassphrase.Text.Equals(Settings.User.GetByKey("Passphrase").Value))
+                if (textBoxPassphrase.Text.Equals(Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value))
                 {
                     ScreenCapture.LockScreenCaptureSession = false;
                     Close();

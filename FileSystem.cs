@@ -127,7 +127,7 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(monthCalendarFolder) && Directory.Exists(filePath + monthCalendarFolder))
                 {
-                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder, monthCalendarFolder + Settings.User.GetByKey("ImageFormatFilter").Value, SearchOption.TopDirectoryOnly);
+                    string[] filePaths = Directory.GetFiles(filePath + monthCalendarFolder, monthCalendarFolder + Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value, SearchOption.TopDirectoryOnly);
 
                     if (filePaths != null)
                     {

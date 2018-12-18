@@ -96,13 +96,13 @@ namespace AutoScreenCapture
 
             Settings.Initialize();
 
-            Log.Enabled = Convert.ToBoolean(Settings.Application.GetByKey("DebugMode").Value);
+            Log.Enabled = Convert.ToBoolean(Settings.Application.GetByKey("DebugMode", defaultValue: true).Value);
 
             Log.Write("Starting application.");
 
             LoadSettings();
 
-            Text = (string)Settings.Application.GetByKey("Name").Value;
+            Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
 
             if (args.Length > 0)
             {
@@ -123,7 +123,7 @@ namespace AutoScreenCapture
             SearchDates();
 
             // Changing the value of this property will automatically call SearchSlides.
-            toolStripComboBoxImageFormatFilter.SelectedIndex = Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex").Value);
+            toolStripComboBoxImageFormatFilter.SelectedIndex = Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value);
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -205,9 +205,9 @@ namespace AutoScreenCapture
 
                 Log.Write("Setting screenshots directory.");
 
-                if (Directory.Exists((string) Settings.User.GetByKey("ScreenshotsDirectory").Value))
+                if (Directory.Exists((string) Settings.User.GetByKey("ScreenshotsDirectory", defaultValue: FileSystem.ScreenshotsFolder).Value))
                 {
-                    textBoxFolder.Text = (string) Settings.User.GetByKey("ScreenshotsDirectory").Value;
+                    textBoxFolder.Text = (string) Settings.User.GetByKey("ScreenshotsDirectory", defaultValue: FileSystem.ScreenshotsFolder).Value;
                 }
                 else
                 {
@@ -217,13 +217,13 @@ namespace AutoScreenCapture
 
                 Log.Write("Setting screenshots macro.");
 
-                if (string.IsNullOrEmpty((string) Settings.User.GetByKey("Macro").Value))
+                if (string.IsNullOrEmpty((string) Settings.User.GetByKey("Macro", defaultValue: MacroParser.UserMacro).Value))
                 {
                     textBoxMacro.Text = MacroParser.UserMacro;
                 }
                 else
                 {
-                    textBoxMacro.Text = (string) Settings.User.GetByKey("Macro").Value;
+                    textBoxMacro.Text = (string) Settings.User.GetByKey("Macro", defaultValue: MacroParser.UserMacro).Value;
                 }
 
                 comboBoxScheduleImageFormat.Items.Clear();
@@ -250,10 +250,10 @@ namespace AutoScreenCapture
                     toolStripSplitButtonStartScreenCapture.DropDownItems.Add(startScreenCaptureMenuItemForSplitButton);
                 }
 
-                comboBoxScheduleImageFormat.SelectedItem = Settings.User.GetByKey("ScheduleImageFormat").Value;
+                comboBoxScheduleImageFormat.SelectedItem = Settings.User.GetByKey("ScheduleImageFormat", defaultValue: "JPEG").Value;
 
-                int interval = Convert.ToInt32(Settings.User.GetByKey("Interval").Value);
-                int slideshowDelay = Convert.ToInt32(Settings.User.GetByKey("SlideshowDelay").Value);
+                int interval = Convert.ToInt32(Settings.User.GetByKey("Interval", defaultValue: 60000).Value);
+                int slideshowDelay = Convert.ToInt32(Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value);
 
                 decimal intervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(interval)).Hours);
                 decimal intervalMinutes =
@@ -282,20 +282,19 @@ namespace AutoScreenCapture
                 numericUpDownSlideshowDelaySeconds.Value = slideshowDelaySeconds;
                 numericUpDownSlideshowDelayMilliseconds.Value = slideshowDelayMilliseconds;
 
-                numericUpDownSlideSkip.Value = Convert.ToInt32(Settings.User.GetByKey("SlideSkip").Value);
-                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("CaptureLimit").Value);
-                numericUpDownImageResolutionRatio.Value =
-                    Convert.ToInt32(Settings.User.GetByKey("ImageResolutionRatio").Value);
+                numericUpDownSlideSkip.Value = Convert.ToInt32(Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value);
+                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value);
+                numericUpDownImageResolutionRatio.Value = Convert.ToInt32(Settings.User.GetByKey("ImageResolutionRatio", defaultValue: 100).Value);
 
-                checkBoxSlideSkip.Checked = Convert.ToBoolean(Settings.User.GetByKey("SlideSkipCheck").Value);
-                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck").Value);
+                checkBoxSlideSkip.Checked = Convert.ToBoolean(Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value);
+                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value);
                 checkBoxInitialScreenshot.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("TakeInitialScreenshotCheck").Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value);
 
                 checkBoxPassphraseLock.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("LockScreenCaptureSession").Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value);
 
-                textBoxPassphrase.Text = Settings.User.GetByKey("Passphrase").Value.ToString();
+                textBoxPassphrase.Text = Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value.ToString();
 
                 if (textBoxPassphrase.Text.Length > 0)
                 {
@@ -309,36 +308,30 @@ namespace AutoScreenCapture
                     checkBoxPassphraseLock.Enabled = false;
                 }
 
-                toolStripMenuItemShowSystemTrayIcon.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon").Value);
-                toolStripMenuItemStartWhenWindowsStarts.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("StartWhenWindowsStartsCheck").Value);
+                toolStripMenuItemShowSystemTrayIcon.Checked = Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value);
+                toolStripMenuItemStartWhenWindowsStarts.Checked = Convert.ToBoolean(Settings.User.GetByKey("StartWhenWindowsStartsCheck", defaultValue: true).Value);
 
-                checkBoxScheduleStopAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStopAtCheck").Value);
-                checkBoxScheduleStartAt.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureStartAtCheck").Value);
+                checkBoxScheduleStopAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value);
+                checkBoxScheduleStartAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value);
 
-                checkBoxSaturday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSaturdayCheck").Value);
-                checkBoxSunday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSundayCheck").Value);
-                checkBoxMonday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnMondayCheck").Value);
-                checkBoxTuesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTuesdayCheck").Value);
-                checkBoxWednesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnWednesdayCheck").Value);
-                checkBoxThursday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnThursdayCheck").Value);
-                checkBoxFriday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnFridayCheck").Value);
+                checkBoxSaturday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value);
+                checkBoxSunday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value);
+                checkBoxMonday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value);
+                checkBoxTuesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value);
+                checkBoxWednesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value);
+                checkBoxThursday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value);
+                checkBoxFriday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value);
 
-                checkBoxScheduleOnTheseDays.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTheseDaysCheck").Value);
+                checkBoxScheduleOnTheseDays.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value);
 
-                dateTimePickerScheduleStopAt.Value =
-                    DateTime.Parse(Settings.User.GetByKey("CaptureStopAtValue").Value.ToString());
-                dateTimePickerScheduleStartAt.Value =
-                    DateTime.Parse(Settings.User.GetByKey("CaptureStartAtValue").Value.ToString());
+                dateTimePickerScheduleStopAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStopAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value.ToString());
+                dateTimePickerScheduleStartAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStartAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value.ToString());
 
-                textBoxScreen1Name.Text = Settings.User.GetByKey("Screen1Name").Value.ToString();
-                textBoxScreen2Name.Text = Settings.User.GetByKey("Screen2Name").Value.ToString();
-                textBoxScreen3Name.Text = Settings.User.GetByKey("Screen3Name").Value.ToString();
-                textBoxScreen4Name.Text = Settings.User.GetByKey("Screen4Name").Value.ToString();
-                textBoxScreenActiveWindowName.Text = Settings.User.GetByKey("Screen5Name").Value.ToString();
+                textBoxScreen1Name.Text = Settings.User.GetByKey("Screen1Name", defaultValue: "Screen 1").Value.ToString();
+                textBoxScreen2Name.Text = Settings.User.GetByKey("Screen2Name", defaultValue: "Screen 2").Value.ToString();
+                textBoxScreen3Name.Text = Settings.User.GetByKey("Screen3Name", defaultValue: "Screen 3").Value.ToString();
+                textBoxScreen4Name.Text = Settings.User.GetByKey("Screen4Name", defaultValue: "Screen 4").Value.ToString();
+                textBoxScreenActiveWindowName.Text = Settings.User.GetByKey("Screen5Name", defaultValue: "Active Window").Value.ToString();
 
                 int count = 0;
 
@@ -357,104 +350,112 @@ namespace AutoScreenCapture
                         {
                             case 1:
                                 numericUpDownScreen1X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1X").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1X").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen1X", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1X", defaultValue: 0).Value)
                                         : screen.Bounds.X;
                                 numericUpDownScreen1Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Y").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Y").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Y", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Y", defaultValue: 0).Value)
                                         : screen.Bounds.Y;
                                 numericUpDownScreen1Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Width").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Width").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Width", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Width", defaultValue: 0).Value)
                                         : screen.Bounds.Width;
                                 numericUpDownScreen1Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Height").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Height").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Height", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Height", defaultValue: 0).Value)
                                         : screen.Bounds.Height;
                                 break;
 
                             case 2:
                                 numericUpDownScreen2X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2X").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2X").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen2X", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2X", defaultValue: 0).Value)
                                         : screen.Bounds.X;
                                 numericUpDownScreen2Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Y").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Y").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Y", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Y", defaultValue: 0).Value)
                                         : screen.Bounds.Y;
                                 numericUpDownScreen2Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Width").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Width").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Width", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Width", defaultValue: 0).Value)
                                         : screen.Bounds.Width;
                                 numericUpDownScreen2Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Height").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Height").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Height", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Height", defaultValue: 0).Value)
                                         : screen.Bounds.Height;
                                 break;
 
                             case 3:
                                 numericUpDownScreen3X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3X").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3X").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen3X", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3X", defaultValue: 0).Value)
                                         : screen.Bounds.X;
                                 numericUpDownScreen3Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Y").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Y").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Y", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Y", defaultValue: 0).Value)
                                         : screen.Bounds.Y;
                                 numericUpDownScreen3Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Width").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Width").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Width", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Width", defaultValue: 0).Value)
                                         : screen.Bounds.Width;
                                 numericUpDownScreen3Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Height").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Height").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Height", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Height", defaultValue: 0).Value)
                                         : screen.Bounds.Height;
                                 break;
 
                             case 4:
                                 numericUpDownScreen4X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4X").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4X").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen4X", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4X", defaultValue: 0).Value)
                                         : screen.Bounds.X;
                                 numericUpDownScreen4Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Y").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Y").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Y", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Y", defaultValue: 0).Value)
                                         : screen.Bounds.Y;
                                 numericUpDownScreen4Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Width").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Width").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Width", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Width", defaultValue: 0).Value)
                                         : screen.Bounds.Width;
                                 numericUpDownScreen4Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Height").Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Height").Value)
+                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Height", defaultValue: 0).Value) > 0
+                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Height", defaultValue: 0).Value)
                                         : screen.Bounds.Height;
                                 break;
                         }
                     }
                 }
 
-                if (Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex").Value) < 0)
+                if (Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value) < 0)
                 {
-                    Settings.User.GetByKey("ImageFormatFilterIndex").Value = 0;
+                    Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
                 }
 
-                ScreenCapture.ImageFormat = Settings.User.GetByKey("StartButtonImageFormat").Value.ToString();
+                ScreenCapture.ImageFormat = Settings.User.GetByKey("StartButtonImageFormat", defaultValue: "JPEG").Value.ToString();
 
-                numericUpDownJpegQualityLevel.Value = Convert.ToInt32(Settings.User.GetByKey("JpegQualityLevel").Value);
+                numericUpDownJpegQualityLevel.Value = Convert.ToInt32(Settings.User.GetByKey("JpegQualityLevel", defaultValue: 100).Value);
 
-                numericUpDownDaysOld.Value = Convert.ToInt32(Settings.User.GetByKey("DaysOldWhenRemoveSlides").Value);
+                numericUpDownDaysOld.Value = Convert.ToInt32(Settings.User.GetByKey("DaysOldWhenRemoveSlides", defaultValue: 10).Value);
 
-                checkBoxCaptureScreen1.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen1").Value);
-                checkBoxCaptureScreen2.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen2").Value);
-                checkBoxCaptureScreen3.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen3").Value);
-                checkBoxCaptureScreen4.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen4").Value);
-                checkBoxCaptureActiveWindow.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureActiveWindow").Value);
+                checkBoxCaptureScreen1.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen1", defaultValue: true).Value);
+                checkBoxCaptureScreen2.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen2", defaultValue: true).Value);
+                checkBoxCaptureScreen3.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen3", defaultValue: true).Value);
+                checkBoxCaptureScreen4.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen4", defaultValue: true).Value);
+                checkBoxCaptureActiveWindow.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureActiveWindow", defaultValue: true).Value);
 
-                checkBoxAutoReset.Checked = Convert.ToBoolean(Settings.User.GetByKey("AutoReset").Value);
+                checkBoxAutoReset.Checked = Convert.ToBoolean(Settings.User.GetByKey("AutoReset", defaultValue: true).Value);
 
-                checkBoxMouse.Checked = Convert.ToBoolean(Settings.User.GetByKey("Mouse").Value);
+                checkBoxMouse.Checked = Convert.ToBoolean(Settings.User.GetByKey("Mouse", defaultValue: true).Value);
+
+                if (Convert.ToBoolean(Settings.User.GetByKey("Schedule", defaultValue: false).Value))
+                {
+                    EnableSchedule();
+                }
+                else
+                {
+                    DisableSchedule();
+                }
 
                 EnableStartScreenCapture();
 
@@ -551,17 +552,17 @@ namespace AutoScreenCapture
         {
             if (toolStripComboBoxImageFormatFilter.SelectedIndex == 0)
             {
-                Settings.User.GetByKey("ImageFormatFilter").Value = "*.*";
+                Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value = "*.*";
             }
 
             Regex rgx = new Regex(@"^(?<ImageFormatFilter>\*\.(?<ImageFormat>([a-z]{3,4})))$");
 
             if (rgx.IsMatch(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex].ToString()))
             {
-                Settings.User.GetByKey("ImageFormatFilter").Value = rgx.Match(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex].ToString()).Groups["ImageFormatFilter"].Value;
+                Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value = rgx.Match(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex].ToString()).Groups["ImageFormatFilter"].Value;
             }
 
-            Settings.User.GetByKey("ImageFormatFilterIndex").Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
+            Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
 
             SearchSlides();
         }
@@ -773,65 +774,66 @@ namespace AutoScreenCapture
                 {
                     Log.Write("Saving settings.");
 
-                    Settings.User.GetByKey("ScreenshotsDirectory").Value = CorrectDirectoryPath(textBoxFolder.Text);
-                    Settings.User.GetByKey("ScheduleImageFormat").Value = comboBoxScheduleImageFormat.Text;
-                    Settings.User.GetByKey("SlideSkip").Value = numericUpDownSlideSkip.Value;
-                    Settings.User.GetByKey("CaptureLimit").Value = numericUpDownCaptureLimit.Value;
-                    Settings.User.GetByKey("ImageResolutionRatio").Value = numericUpDownImageResolutionRatio.Value;
-                    Settings.User.GetByKey("ImageFormatFilterIndex").Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
-                    Settings.User.GetByKey("Interval").Value = GetCaptureDelay();
-                    Settings.User.GetByKey("SlideshowDelay").Value = GetSlideshowDelay();
-                    Settings.User.GetByKey("SlideSkipCheck").Value = checkBoxSlideSkip.Checked;
-                    Settings.User.GetByKey("CaptureLimitCheck").Value = checkBoxCaptureLimit.Checked;
-                    Settings.User.GetByKey("TakeInitialScreenshotCheck").Value = checkBoxInitialScreenshot.Checked;
-                    Settings.User.GetByKey("ShowSystemTrayIcon").Value = toolStripMenuItemShowSystemTrayIcon.Checked;
-                    Settings.User.GetByKey("StartWhenWindowsStartsCheck").Value = toolStripMenuItemStartWhenWindowsStarts.Checked;
-                    Settings.User.GetByKey("CaptureStopAtCheck").Value = checkBoxScheduleStopAt.Checked;
-                    Settings.User.GetByKey("CaptureStartAtCheck").Value = checkBoxScheduleStartAt.Checked;
-                    Settings.User.GetByKey("CaptureOnSundayCheck").Value = checkBoxSunday.Checked;
-                    Settings.User.GetByKey("CaptureOnMondayCheck").Value = checkBoxMonday.Checked;
-                    Settings.User.GetByKey("CaptureOnTuesdayCheck").Value = checkBoxTuesday.Checked;
-                    Settings.User.GetByKey("CaptureOnWednesdayCheck").Value = checkBoxWednesday.Checked;
-                    Settings.User.GetByKey("CaptureOnThursdayCheck").Value = checkBoxThursday.Checked;
-                    Settings.User.GetByKey("CaptureOnFridayCheck").Value = checkBoxFriday.Checked;
-                    Settings.User.GetByKey("CaptureOnSaturdayCheck").Value = checkBoxSaturday.Checked;
-                    Settings.User.GetByKey("CaptureOnTheseDaysCheck").Value = checkBoxScheduleOnTheseDays.Checked;
-                    Settings.User.GetByKey("CaptureStopAtValue").Value = dateTimePickerScheduleStopAt.Value;
-                    Settings.User.GetByKey("CaptureStartAtValue").Value = dateTimePickerScheduleStartAt.Value;
-                    Settings.User.GetByKey("Screen1X").Value = numericUpDownScreen1X.Value;
-                    Settings.User.GetByKey("Screen1Y").Value = numericUpDownScreen1Y.Value;
-                    Settings.User.GetByKey("Screen1Width").Value = numericUpDownScreen1Width.Value;
-                    Settings.User.GetByKey("Screen1Height").Value = numericUpDownScreen1Height.Value;
-                    Settings.User.GetByKey("Screen2X").Value = numericUpDownScreen2X.Value;
-                    Settings.User.GetByKey("Screen2Y").Value = numericUpDownScreen2Y.Value;
-                    Settings.User.GetByKey("Screen2Width").Value = numericUpDownScreen2Width.Value;
-                    Settings.User.GetByKey("Screen2Height").Value = numericUpDownScreen2Height.Value;
-                    Settings.User.GetByKey("Screen3X").Value = numericUpDownScreen3X.Value;
-                    Settings.User.GetByKey("Screen3Y").Value = numericUpDownScreen3Y.Value;
-                    Settings.User.GetByKey("Screen3Width").Value = numericUpDownScreen3Width.Value;
-                    Settings.User.GetByKey("Screen3Height").Value = numericUpDownScreen3Height.Value;
-                    Settings.User.GetByKey("Screen4X").Value = numericUpDownScreen4X.Value;
-                    Settings.User.GetByKey("Screen4Y").Value = numericUpDownScreen4Y.Value;
-                    Settings.User.GetByKey("Screen4Width").Value = numericUpDownScreen4Width.Value;
-                    Settings.User.GetByKey("Screen4Height").Value = numericUpDownScreen4Height.Value;
-                    Settings.User.GetByKey("Screen1Name").Value = textBoxScreen1Name.Text;
-                    Settings.User.GetByKey("Screen2Name").Value = textBoxScreen2Name.Text;
-                    Settings.User.GetByKey("Screen3Name").Value = textBoxScreen3Name.Text;
-                    Settings.User.GetByKey("Screen4Name").Value = textBoxScreen4Name.Text;
-                    Settings.User.GetByKey("Screen5Name").Value = textBoxScreenActiveWindowName.Text;
-                    Settings.User.GetByKey("LockScreenCaptureSession").Value = checkBoxPassphraseLock.Checked;
-                    Settings.User.GetByKey("Macro").Value = textBoxMacro.Text;
-                    Settings.User.GetByKey("JpegQualityLevel").Value = numericUpDownJpegQualityLevel.Value;
-                    Settings.User.GetByKey("DaysOldWhenRemoveSlides").Value = numericUpDownDaysOld.Value;
-                    Settings.User.GetByKey("CaptureScreen1").Value = checkBoxCaptureScreen1.Checked;
-                    Settings.User.GetByKey("CaptureScreen2").Value = checkBoxCaptureScreen2.Checked;
-                    Settings.User.GetByKey("CaptureScreen3").Value = checkBoxCaptureScreen3.Checked;
-                    Settings.User.GetByKey("CaptureScreen4").Value = checkBoxCaptureScreen4.Checked;
-                    Settings.User.GetByKey("CaptureActiveWindow").Value = checkBoxCaptureActiveWindow.Checked;
-                    Settings.User.GetByKey("AutoReset").Value = checkBoxAutoReset.Checked;
-                    Settings.User.GetByKey("Mouse").Value = checkBoxMouse.Checked;
-                    Settings.User.GetByKey("StartButtonImageFormat").Value = ScreenCapture.ImageFormat;
-                    Settings.User.GetByKey("Passphrase").Value = textBoxPassphrase.Text;
+                    Settings.User.GetByKey("ScreenshotsDirectory", defaultValue: FileSystem.ScreenshotsFolder).Value = CorrectDirectoryPath(textBoxFolder.Text);
+                    Settings.User.GetByKey("ScheduleImageFormat", defaultValue: "JPEG").Value = comboBoxScheduleImageFormat.Text;
+                    Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value = numericUpDownSlideSkip.Value;
+                    Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
+                    Settings.User.GetByKey("ImageResolutionRatio", defaultValue: 100).Value = numericUpDownImageResolutionRatio.Value;
+                    Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
+                    Settings.User.GetByKey("Interval", defaultValue: 60000).Value = GetCaptureDelay();
+                    Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value = GetSlideshowDelay();
+                    Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value = checkBoxSlideSkip.Checked;
+                    Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
+                    Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
+                    Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value = toolStripMenuItemShowSystemTrayIcon.Checked;
+                    Settings.User.GetByKey("StartWhenWindowsStartsCheck", defaultValue: true).Value = toolStripMenuItemStartWhenWindowsStarts.Checked;
+                    Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value = checkBoxScheduleStopAt.Checked;
+                    Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value = checkBoxScheduleStartAt.Checked;
+                    Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value = checkBoxSunday.Checked;
+                    Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value = checkBoxMonday.Checked;
+                    Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value = checkBoxTuesday.Checked;
+                    Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value = checkBoxWednesday.Checked;
+                    Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value = checkBoxThursday.Checked;
+                    Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value = checkBoxFriday.Checked;
+                    Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value = checkBoxSaturday.Checked;
+                    Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value = checkBoxScheduleOnTheseDays.Checked;
+                    Settings.User.GetByKey("CaptureStopAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value = dateTimePickerScheduleStopAt.Value;
+                    Settings.User.GetByKey("CaptureStartAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value = dateTimePickerScheduleStartAt.Value;
+                    Settings.User.GetByKey("Screen1X", defaultValue: 0).Value = numericUpDownScreen1X.Value;
+                    Settings.User.GetByKey("Screen1Y", defaultValue: 0).Value = numericUpDownScreen1Y.Value;
+                    Settings.User.GetByKey("Screen1Width", defaultValue: 0).Value = numericUpDownScreen1Width.Value;
+                    Settings.User.GetByKey("Screen1Height", defaultValue: 0).Value = numericUpDownScreen1Height.Value;
+                    Settings.User.GetByKey("Screen2X", defaultValue: 0).Value = numericUpDownScreen2X.Value;
+                    Settings.User.GetByKey("Screen2Y", defaultValue: 0).Value = numericUpDownScreen2Y.Value;
+                    Settings.User.GetByKey("Screen2Width", defaultValue: 0).Value = numericUpDownScreen2Width.Value;
+                    Settings.User.GetByKey("Screen2Height", defaultValue: 0).Value = numericUpDownScreen2Height.Value;
+                    Settings.User.GetByKey("Screen3X", defaultValue: 0).Value = numericUpDownScreen3X.Value;
+                    Settings.User.GetByKey("Screen3Y", defaultValue: 0).Value = numericUpDownScreen3Y.Value;
+                    Settings.User.GetByKey("Screen3Width", defaultValue: 0).Value = numericUpDownScreen3Width.Value;
+                    Settings.User.GetByKey("Screen3Height", defaultValue: 0).Value = numericUpDownScreen3Height.Value;
+                    Settings.User.GetByKey("Screen4X", defaultValue: 0).Value = numericUpDownScreen4X.Value;
+                    Settings.User.GetByKey("Screen4Y", defaultValue: 0).Value = numericUpDownScreen4Y.Value;
+                    Settings.User.GetByKey("Screen4Width", defaultValue: 0).Value = numericUpDownScreen4Width.Value;
+                    Settings.User.GetByKey("Screen4Height", defaultValue: 0).Value = numericUpDownScreen4Height.Value;
+                    Settings.User.GetByKey("Screen1Name", defaultValue: "Screen 1").Value = textBoxScreen1Name.Text;
+                    Settings.User.GetByKey("Screen2Name", defaultValue: "Screen 2").Value = textBoxScreen2Name.Text;
+                    Settings.User.GetByKey("Screen3Name", defaultValue: "Screen 3").Value = textBoxScreen3Name.Text;
+                    Settings.User.GetByKey("Screen4Name", defaultValue: "Screen 4").Value = textBoxScreen4Name.Text;
+                    Settings.User.GetByKey("Screen5Name", defaultValue: "Active Window").Value = textBoxScreenActiveWindowName.Text;
+                    Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = checkBoxPassphraseLock.Checked;
+                    Settings.User.GetByKey("Macro", defaultValue: MacroParser.UserMacro).Value = textBoxMacro.Text;
+                    Settings.User.GetByKey("JpegQualityLevel", defaultValue: 100).Value = numericUpDownJpegQualityLevel.Value;
+                    Settings.User.GetByKey("DaysOldWhenRemoveSlides", defaultValue: 10).Value = numericUpDownDaysOld.Value;
+                    Settings.User.GetByKey("CaptureScreen1", defaultValue: true).Value = checkBoxCaptureScreen1.Checked;
+                    Settings.User.GetByKey("CaptureScreen2", defaultValue: true).Value = checkBoxCaptureScreen2.Checked;
+                    Settings.User.GetByKey("CaptureScreen3", defaultValue: true).Value = checkBoxCaptureScreen3.Checked;
+                    Settings.User.GetByKey("CaptureScreen4", defaultValue: true).Value = checkBoxCaptureScreen4.Checked;
+                    Settings.User.GetByKey("CaptureActiveWindow", defaultValue: true).Value = checkBoxCaptureActiveWindow.Checked;
+                    Settings.User.GetByKey("AutoReset", defaultValue: true).Value = checkBoxAutoReset.Checked;
+                    Settings.User.GetByKey("Mouse", defaultValue: true).Value = checkBoxMouse.Checked;
+                    Settings.User.GetByKey("StartButtonImageFormat", defaultValue: "JPEG").Value = ScreenCapture.ImageFormat;
+                    Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
+                    Settings.User.GetByKey("Schedule", defaultValue: false).Value = timerScheduledCaptureStart.Enabled;
 
                     Settings.User.Save();
 
@@ -875,7 +877,7 @@ namespace AutoScreenCapture
             if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
-                Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
+                Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
                 SaveSettings();
 
                 Opacity = 100;
@@ -945,7 +947,7 @@ namespace AutoScreenCapture
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
                     checkBoxPassphraseLock.Checked = false;
-                    Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
+                    Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
                     SaveSettings();
 
                     ScreenCapture.Count = 0;
@@ -1288,12 +1290,12 @@ namespace AutoScreenCapture
 
             tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageSlideshow"];
 
-            if ((int)Settings.User.GetByKey("ImageFormatFilterIndex").Value < 0)
+            if ((int)Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value < 0)
             {
-                Settings.User.GetByKey("ImageFormatFilterIndex").Value = 0;
+                Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
             }
 
-            toolStripComboBoxImageFormatFilter.SelectedIndex = (int)Settings.User.GetByKey("ImageFormatFilterIndex").Value;
+            toolStripComboBoxImageFormatFilter.SelectedIndex = (int)Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value;
         }
 
         /// <summary>
@@ -1427,7 +1429,7 @@ namespace AutoScreenCapture
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                 checkBoxPassphraseLock.Checked = false;
-                Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
+                Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
                 SaveSettings();
 
                 // Hide the system tray icon.
@@ -1676,7 +1678,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_toolStripMenuItemAbout(object sender, EventArgs e)
         {
-            MessageBox.Show(Settings.Application.GetByKey("Name").Value + " " + Settings.Application.GetByKey("Version").Value + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2018)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2018)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -2709,7 +2711,7 @@ namespace AutoScreenCapture
         {
             if (textBoxPassphrase.Text.Length > 0)
             {
-                Settings.User.GetByKey("Passphrase").Value = textBoxPassphrase.Text;
+                Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
                 SaveSettings();
 
                 textBoxPassphrase.ReadOnly = true;
@@ -2732,8 +2734,8 @@ namespace AutoScreenCapture
             checkBoxPassphraseLock.Enabled = false;
             checkBoxPassphraseLock.Checked = false;
 
-            Settings.User.GetByKey("LockScreenCaptureSession").Value = false;
-            Settings.User.GetByKey("Passphrase").Value = string.Empty;
+            Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
+            Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = string.Empty;
             SaveSettings();
 
             textBoxPassphrase.Focus();
@@ -3316,6 +3318,8 @@ namespace AutoScreenCapture
 
             timerScheduledCaptureStop.Enabled = true;
             timerScheduledCaptureStart.Enabled = true;
+
+            SaveSettings();
         }
 
         /// <summary>
@@ -3328,6 +3332,8 @@ namespace AutoScreenCapture
 
             timerScheduledCaptureStop.Enabled = false;
             timerScheduledCaptureStart.Enabled = false;
+
+            SaveSettings();
         }
 
         /// Show or hide the system tray icon depending on the option selected.
@@ -3630,7 +3636,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                notifyIcon.Text = Settings.Application.GetByKey("Name").Value + " (" + Settings.Application.GetByKey("Version").Value + ")";
+                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
             }
         }
     }
