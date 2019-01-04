@@ -33,7 +33,6 @@
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItemStartWhenWindowsStarts = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.tabPageAllScreens = new System.Windows.Forms.TabPage();
@@ -326,22 +325,12 @@
             // toolStripDropDownButtonOptions
             // 
             this.toolStripDropDownButtonOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemStartWhenWindowsStarts,
             this.toolStripMenuItemShowSystemTrayIcon});
             this.toolStripDropDownButtonOptions.Image = global::AutoScreenCapture.Properties.Resources.options;
             this.toolStripDropDownButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonOptions.Name = "toolStripDropDownButtonOptions";
             this.toolStripDropDownButtonOptions.Size = new System.Drawing.Size(78, 20);
             this.toolStripDropDownButtonOptions.Text = "Options";
-            // 
-            // toolStripMenuItemStartWhenWindowsStarts
-            // 
-            this.toolStripMenuItemStartWhenWindowsStarts.CheckOnClick = true;
-            this.toolStripMenuItemStartWhenWindowsStarts.Name = "toolStripMenuItemStartWhenWindowsStarts";
-            this.toolStripMenuItemStartWhenWindowsStarts.Size = new System.Drawing.Size(275, 22);
-            this.toolStripMenuItemStartWhenWindowsStarts.Text = "Start application when Windows starts";
-            this.toolStripMenuItemStartWhenWindowsStarts.CheckedChanged += new System.EventHandler(this.CheckedChanged_toolStripMenuItemStartWhenWindowsStarts);
-            this.toolStripMenuItemStartWhenWindowsStarts.Click += new System.EventHandler(this.SaveSettings);
             // 
             // toolStripMenuItemShowSystemTrayIcon
             // 
@@ -2566,7 +2555,7 @@
             this.toolStripScreenCapture.Name = "toolStripScreenCapture";
             this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStripScreenCapture.ShowItemToolTips = false;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(206, 25);
+            this.toolStripScreenCapture.Size = new System.Drawing.Size(175, 25);
             this.toolStripScreenCapture.TabIndex = 20;
             // 
             // toolStripSplitButtonStartScreenCapture
@@ -3016,7 +3005,6 @@
         private System.Windows.Forms.Button buttonOpenFolder;
         private System.Windows.Forms.Timer timerDeleteSlides;
         private System.Windows.Forms.TabPage tabPageEditors;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartWhenWindowsStarts;
         private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.Button buttonRestoreDefaults;
         private System.Windows.Forms.CheckBox checkBoxMouse;

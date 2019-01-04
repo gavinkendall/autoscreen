@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
-    using Microsoft.Win32;
     using System;
     using System.Collections;
     using System.ComponentModel;
@@ -309,7 +308,6 @@ namespace AutoScreenCapture
                 }
 
                 toolStripMenuItemShowSystemTrayIcon.Checked = Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value);
-                toolStripMenuItemStartWhenWindowsStarts.Checked = Convert.ToBoolean(Settings.User.GetByKey("StartWhenWindowsStartsCheck", defaultValue: true).Value);
 
                 checkBoxScheduleStopAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value);
                 checkBoxScheduleStartAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value);
@@ -786,7 +784,6 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
                     Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
                     Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value = toolStripMenuItemShowSystemTrayIcon.Checked;
-                    Settings.User.GetByKey("StartWhenWindowsStartsCheck", defaultValue: true).Value = toolStripMenuItemStartWhenWindowsStarts.Checked;
                     Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value = checkBoxScheduleStopAt.Checked;
                     Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value = checkBoxScheduleStartAt.Checked;
                     Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value = checkBoxSunday.Checked;
@@ -3414,27 +3411,6 @@ namespace AutoScreenCapture
             DeleteSlides();
         }
 
-        private void CheckedChanged_toolStripMenuItemStartWhenWindowsStarts(object sender, EventArgs e)
-        {
-            try
-            {
-                RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
-                if (toolStripMenuItemStartWhenWindowsStarts.Checked)
-                {
-                    registryKey.SetValue("AutoScreenCapture", Application.ExecutablePath);
-                }
-                else
-                {
-                    registryKey.DeleteValue("AutoScreenCapture");
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Write("FormMain::toolStripMenuItemStartWhenWindowsStarts_CheckedChanged", ex);
-            }
-        }
-
         private void SaveSettings(object sender, EventArgs e)
         {
             SaveSettings();
@@ -3463,7 +3439,6 @@ namespace AutoScreenCapture
             checkBoxInitialScreenshot.Checked = true;
 
             toolStripMenuItemShowSystemTrayIcon.Checked = true;
-            toolStripMenuItemStartWhenWindowsStarts.Checked = true;
 
             checkBoxScheduleStopAt.Checked = false;
             checkBoxScheduleStartAt.Checked = false;

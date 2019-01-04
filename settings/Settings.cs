@@ -7,7 +7,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.1.8.0";
+        public static readonly string ApplicationVersion = "2.1.8.1";
 
         public static SettingCollection Application;
         public static SettingCollection User;
@@ -67,7 +67,6 @@ namespace AutoScreenCapture
                     User.Add(new Setting("CaptureLimitCheck", false));
                     User.Add(new Setting("TakeInitialScreenshotCheck", false));
                     User.Add(new Setting("ShowSystemTrayIcon", true));
-                    User.Add(new Setting("StartWhenWindowsStartsCheck", true));
                     User.Add(new Setting("CaptureStopAtCheck", false));
                     User.Add(new Setting("CaptureStartAtCheck", false));
                     User.Add(new Setting("CaptureOnSundayCheck", false));
