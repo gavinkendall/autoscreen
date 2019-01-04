@@ -172,7 +172,12 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCapture::GetScreenBitmap(x, y, width, height, ratio, format, mouse)", ex);
+                // Don't log an error if Windows is locked at the time a screenshot was taken.
+                if (!ex.Message.Equals("The handle is invalid"))
+                {
+                    Log.Write("ScreenCapture::GetScreenBitmap(x, y, width, height, ratio, format, mouse)", ex);
+                }
+
                 return null;
             }
         }
