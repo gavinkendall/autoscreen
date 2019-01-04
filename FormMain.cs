@@ -1678,7 +1678,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_toolStripMenuItemAbout(object sender, EventArgs e)
         {
-            MessageBox.Show(Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2018)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>

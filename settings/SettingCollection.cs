@@ -18,6 +18,7 @@ namespace AutoScreenCapture
     {
         private readonly List<Setting> _settingList = new List<Setting>();
 
+        private const int MAX_FILE_SIZE = 5242880;
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SETTING_NODE = "setting";
         private const string XML_FILE_SETTINGS_NODE = "settings";
@@ -46,7 +47,11 @@ namespace AutoScreenCapture
 
         public void Add(Setting setting)
         {
-            _settingList.Add(setting);
+            // Make sure we only add the setting to the list if it doesn't exist in the list yet.
+            if (!KeyExists(setting.Key))
+            {
+                _settingList.Add(setting);
+            }
         }
 
         /// <summary>
@@ -74,12 +79,40 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Checks if the setting key exists.
+        /// </summary>
+        /// <param name="key">The setting key to check.</param>
+        /// <returns>Returns true if the key exists. Returns false if the key does not exist.</returns>
+        public bool KeyExists(string key)
+        {
+            foreach (Setting setting in _settingList)
+            {
+                if (setting.Key.Equals(key))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Loads the settings.
         /// </summary>
         public void Load()
         {
             if (File.Exists(Filepath))
             {
+                FileInfo fileInfo = new FileInfo(Filepath);
+
+                // Check the size of the settings file.
+                // Delete the file if it's too big so we don't hang.
+                if (fileInfo.Length > MAX_FILE_SIZE)
+                {
+                    File.Delete(Filepath);
+                    return;
+                }
+
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(Filepath);
 

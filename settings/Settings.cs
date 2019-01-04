@@ -7,7 +7,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.1.7.8";
+        public static readonly string ApplicationVersion = "2.1.7.9";
 
         public static SettingCollection Application;
         public static SettingCollection User;
@@ -40,7 +40,7 @@ namespace AutoScreenCapture
                 {
                     Application.Add(new Setting("Name", ApplicationName));
                     Application.Add(new Setting("Version", ApplicationVersion));
-                    Application.Add(new Setting("DebugMode", true));
+                    Application.Add(new Setting("DebugMode", false));
 
                     Application.Save();
                 }

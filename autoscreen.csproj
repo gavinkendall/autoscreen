@@ -114,7 +114,7 @@
     <Compile Include="image_format\ImageFormat.cs" />
     <Compile Include="image_format\ImageFormatCollection.cs" />
     <Compile Include="image_format\ImageFormatSpec.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="log\Log.cs" />
     <Compile Include="modules\triggers\TriggerAction.cs" />
     <Compile Include="modules\triggers\TriggerActionType.cs" />
     <Compile Include="modules\triggers\TriggerCondition.cs" />
@@ -127,9 +127,9 @@
     <Compile Include="MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
-    <Compile Include="Setting.cs" />
-    <Compile Include="SettingCollection.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="settings\Setting.cs" />
+    <Compile Include="settings\SettingCollection.cs" />
+    <Compile Include="settings\Settings.cs" />
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -155,13 +155,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="app.config">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="modules\screen\ScreenCapture.cs" />
+    <Compile Include="ScreenCapture.cs" />
     <Compile Include="modules\slideshow\Slideshow.cs" />
   </ItemGroup>
   <ItemGroup>
