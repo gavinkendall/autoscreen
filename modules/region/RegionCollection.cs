@@ -24,11 +24,16 @@ namespace AutoScreenCapture
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string REGION_NAME = "name";
+        private const string REGION_FOLDER = "folder";
+        private const string REGION_MACRO = "macro";
+        private const string REGION_FORMAT = "format";
+        private const string REGION_JPEG_QUALITY = "jpeg_quality";
+        private const string REGION_RESOLUTION_RATIO = "resolution_ratio";
+        private const string REGION_MOUSE = "mouse";
         private const string REGION_X = "x";
         private const string REGION_Y = "y";
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
-        private const string REGION_MACRO = "macro";
         private const string REGION_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_REGIONS_NODE + "/" + XML_FILE_REGION_NODE;
 
         public List<Region>.Enumerator GetEnumerator()
@@ -78,11 +83,6 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public Region GetByIndex(int index)
-        {
-            return (Region)_regionList[index];
-        }
-
         public Region GetByName(string name)
         {
             foreach (Region region in _regionList)
@@ -99,7 +99,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the regions.
         /// </summary>
-        public void Load()
+        public void Load(ImageFormatCollection imageFormatCollection)
         {
             if (File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
             {
@@ -124,6 +124,36 @@ namespace AutoScreenCapture
                                     region.Name = xReader.Value;
                                     break;
 
+                                case REGION_FOLDER:
+                                    xReader.Read();
+                                    region.Folder = xReader.Value;
+                                    break;
+
+                                case REGION_MACRO:
+                                    xReader.Read();
+                                    region.Macro = xReader.Value;
+                                    break;
+
+                                case REGION_FORMAT:
+                                    xReader.Read();
+                                    region.Format = imageFormatCollection.GetByName(xReader.Value);
+                                    break;
+
+                                case REGION_JPEG_QUALITY:
+                                    xReader.Read();
+                                    region.JpegQuality = Convert.ToInt32(xReader.Value);
+                                    break;
+
+                                case REGION_RESOLUTION_RATIO:
+                                    xReader.Read();
+                                    region.ResolutionRatio = Convert.ToInt32(xReader.Value);
+                                    break;
+
+                                case REGION_MOUSE:
+                                    xReader.Read();
+                                    region.Mouse = Convert.ToBoolean(xReader.Value);
+                                    break;
+
                                 case REGION_X:
                                     xReader.Read();
                                     region.X = Convert.ToInt32(xReader.Value);
@@ -142,11 +172,6 @@ namespace AutoScreenCapture
                                 case REGION_HEIGHT:
                                     xReader.Read();
                                     region.Height = Convert.ToInt32(xReader.Value);
-                                    break;
-
-                                case REGION_MACRO:
-                                    xReader.Read();
-                                    region.Macro = xReader.Value;
                                     break;
                             }
                         }
@@ -189,11 +214,16 @@ namespace AutoScreenCapture
 
                     xWriter.WriteStartElement(XML_FILE_REGION_NODE);
                     xWriter.WriteElementString(REGION_NAME, region.Name);
+                    xWriter.WriteElementString(REGION_FOLDER, region.Folder);
+                    xWriter.WriteElementString(REGION_MACRO, region.Macro);
+                    xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
+                    xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());
+                    xWriter.WriteElementString(REGION_RESOLUTION_RATIO, region.ResolutionRatio.ToString());
+                    xWriter.WriteElementString(REGION_MOUSE, region.Mouse.ToString());
                     xWriter.WriteElementString(REGION_X, region.X.ToString());
                     xWriter.WriteElementString(REGION_Y, region.Y.ToString());
                     xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
                     xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
-                    xWriter.WriteElementString(REGION_MACRO, region.Macro);
 
                     xWriter.WriteEndElement();
                 }

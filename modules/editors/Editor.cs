@@ -13,6 +13,24 @@ namespace AutoScreenCapture
     public class Editor
     {
         /// <summary>
+        /// Gets or sets the name of the editor.
+        /// </summary>
+        /// <value>The name of the editor.</value>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the executable associated with the editor.
+        /// </summary>
+        /// <value>The executable associated with the editor.</value>
+        public string Application { get; set; }
+
+        /// <summary>
+        /// Gets or sets the arguments that will be given to the executable.
+        /// </summary>
+        /// <value>The arguments that will be given to the executable.</value>
+        public string Arguments { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Editor"/> class.
         /// </summary>
         public Editor()
@@ -31,23 +49,5 @@ namespace AutoScreenCapture
             Arguments = arguments;
             Application = application;
         }
-
-        /// <summary>
-        /// Gets or sets the name of the editor.
-        /// </summary>
-        /// <value>The name of the editor.</value>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the executable associated with the editor.
-        /// </summary>
-        /// <value>The executable associated with the editor.</value>
-        public string Application { get; set; }
-
-        /// <summary>
-        /// Gets or sets the arguments that will be given to the executable.
-        /// </summary>
-        /// <value>The arguments that will be given to the executable.</value>
-        public string Arguments { get; set; }
     }
 }

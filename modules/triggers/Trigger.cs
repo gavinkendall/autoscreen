@@ -9,6 +9,11 @@ namespace AutoScreenCapture
 {
     public class Trigger
     {
+        public string Name { get; set; }
+        public TriggerConditionType ConditionType { get; set; }
+        public TriggerActionType ActionType { get; set; }
+        public string Editor { get; set; }
+
         public Trigger()
         {
         }
@@ -20,13 +25,5 @@ namespace AutoScreenCapture
             ActionType = actionType;
             Editor = editor;
         }
-
-        public string Name { get; set; }
-
-        public TriggerConditionType ConditionType { get; set; }
-
-        public TriggerActionType ActionType { get; set; }
-
-        public string Editor { get; set; }
     }
 }

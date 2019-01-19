@@ -76,11 +76,6 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public Trigger GetByIndex(int index)
-        {
-            return (Trigger)_triggerList[index];
-        }
-
         public Trigger GetByName(string name)
         {
             foreach (Trigger trigger in _triggerList)

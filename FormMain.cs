@@ -57,10 +57,6 @@ namespace AutoScreenCapture
 
         private const int CAPTURE_LIMIT_MAX = 9999;
         private const int CAPTURE_DELAY_DEFAULT_IN_MINUTES = 1;
-        private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
-        private const int IMAGE_RESOLUTION_RATIO_MAX = 100;
-        private const int JPEG_QUALITY_LEVEL_MIN = 1;
-        private const int JPEG_QUALITY_LEVEL_MAX = 100;
 
         /// <summary>
         /// The various regular expressions used in the parsing of the command line arguments.
@@ -189,7 +185,7 @@ namespace AutoScreenCapture
 
                 Log.Write("Initializing region collection.");
 
-                formRegion.RegionCollection.Load();
+                formRegion.RegionCollection.Load(_imageFormatCollection);
 
                 Log.Write("Loaded " + formRegion.RegionCollection.Count + " regions.");
 
@@ -197,10 +193,9 @@ namespace AutoScreenCapture
 
                 BuildScreenshotPreviewContextualMenu();
 
-                Log.Write(
-                    "Loading screenshots into the screenshot collection to generate a history of what was captured.");
+                Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
-                ScreenshotCollection.Load();
+                ScreenshotCollection.Load(_imageFormatCollection);
 
                 Log.Write("Setting screenshots directory.");
 
@@ -283,7 +278,6 @@ namespace AutoScreenCapture
 
                 numericUpDownSlideSkip.Value = Convert.ToInt32(Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value);
                 numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value);
-                numericUpDownImageResolutionRatio.Value = Convert.ToInt32(Settings.User.GetByKey("ImageResolutionRatio", defaultValue: 100).Value);
 
                 checkBoxSlideSkip.Checked = Convert.ToBoolean(Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value);
                 checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value);
@@ -338,101 +332,12 @@ namespace AutoScreenCapture
                     tabControlScreens.SelectedTab = tabPageScreen1;
                 }
 
-                foreach (Screen screen in Screen.AllScreens)
-                {
-                    count++;
-
-                    if (count <= ScreenCapture.SCREEN_MAX)
-                    {
-                        switch (count)
-                        {
-                            case 1:
-                                numericUpDownScreen1X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1X", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1X", defaultValue: 0).Value)
-                                        : screen.Bounds.X;
-                                numericUpDownScreen1Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Y", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Y", defaultValue: 0).Value)
-                                        : screen.Bounds.Y;
-                                numericUpDownScreen1Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Width", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Width", defaultValue: 0).Value)
-                                        : screen.Bounds.Width;
-                                numericUpDownScreen1Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen1Height", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen1Height", defaultValue: 0).Value)
-                                        : screen.Bounds.Height;
-                                break;
-
-                            case 2:
-                                numericUpDownScreen2X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2X", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2X", defaultValue: 0).Value)
-                                        : screen.Bounds.X;
-                                numericUpDownScreen2Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Y", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Y", defaultValue: 0).Value)
-                                        : screen.Bounds.Y;
-                                numericUpDownScreen2Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Width", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Width", defaultValue: 0).Value)
-                                        : screen.Bounds.Width;
-                                numericUpDownScreen2Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen2Height", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen2Height", defaultValue: 0).Value)
-                                        : screen.Bounds.Height;
-                                break;
-
-                            case 3:
-                                numericUpDownScreen3X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3X", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3X", defaultValue: 0).Value)
-                                        : screen.Bounds.X;
-                                numericUpDownScreen3Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Y", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Y", defaultValue: 0).Value)
-                                        : screen.Bounds.Y;
-                                numericUpDownScreen3Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Width", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Width", defaultValue: 0).Value)
-                                        : screen.Bounds.Width;
-                                numericUpDownScreen3Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen3Height", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen3Height", defaultValue: 0).Value)
-                                        : screen.Bounds.Height;
-                                break;
-
-                            case 4:
-                                numericUpDownScreen4X.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4X", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4X", defaultValue: 0).Value)
-                                        : screen.Bounds.X;
-                                numericUpDownScreen4Y.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Y", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Y", defaultValue: 0).Value)
-                                        : screen.Bounds.Y;
-                                numericUpDownScreen4Width.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Width", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Width", defaultValue: 0).Value)
-                                        : screen.Bounds.Width;
-                                numericUpDownScreen4Height.Value =
-                                    Convert.ToInt32(Settings.User.GetByKey("Screen4Height", defaultValue: 0).Value) > 0
-                                        ? Convert.ToInt32(Settings.User.GetByKey("Screen4Height", defaultValue: 0).Value)
-                                        : screen.Bounds.Height;
-                                break;
-                        }
-                    }
-                }
-
                 if (Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value) < 0)
                 {
                     Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
                 }
 
-                ScreenCapture.ImageFormat = Settings.User.GetByKey("StartButtonImageFormat", defaultValue: "JPEG").Value.ToString();
-
-                numericUpDownJpegQualityLevel.Value = Convert.ToInt32(Settings.User.GetByKey("JpegQualityLevel", defaultValue: 100).Value);
+                ScreenCapture.ImageFormat.Name = Settings.User.GetByKey("StartButtonImageFormat", defaultValue: "JPEG").Value.ToString();
 
                 numericUpDownDaysOld.Value = Convert.ToInt32(Settings.User.GetByKey("DaysOldWhenRemoveSlides", defaultValue: 10).Value);
 
@@ -441,10 +346,6 @@ namespace AutoScreenCapture
                 checkBoxCaptureScreen3.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen3", defaultValue: true).Value);
                 checkBoxCaptureScreen4.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureScreen4", defaultValue: true).Value);
                 checkBoxCaptureActiveWindow.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureActiveWindow", defaultValue: true).Value);
-
-                checkBoxAutoReset.Checked = Convert.ToBoolean(Settings.User.GetByKey("AutoReset", defaultValue: true).Value);
-
-                checkBoxMouse.Checked = Convert.ToBoolean(Settings.User.GetByKey("Mouse", defaultValue: true).Value);
 
                 if (Convert.ToBoolean(Settings.User.GetByKey("Schedule", defaultValue: false).Value))
                 {
@@ -776,7 +677,6 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("ScheduleImageFormat", defaultValue: "JPEG").Value = comboBoxScheduleImageFormat.Text;
                     Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value = numericUpDownSlideSkip.Value;
                     Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                    Settings.User.GetByKey("ImageResolutionRatio", defaultValue: 100).Value = numericUpDownImageResolutionRatio.Value;
                     Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
                     Settings.User.GetByKey("Interval", defaultValue: 60000).Value = GetCaptureDelay();
                     Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value = GetSlideshowDelay();
@@ -796,22 +696,6 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value = checkBoxScheduleOnTheseDays.Checked;
                     Settings.User.GetByKey("CaptureStopAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value = dateTimePickerScheduleStopAt.Value;
                     Settings.User.GetByKey("CaptureStartAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value = dateTimePickerScheduleStartAt.Value;
-                    Settings.User.GetByKey("Screen1X", defaultValue: 0).Value = numericUpDownScreen1X.Value;
-                    Settings.User.GetByKey("Screen1Y", defaultValue: 0).Value = numericUpDownScreen1Y.Value;
-                    Settings.User.GetByKey("Screen1Width", defaultValue: 0).Value = numericUpDownScreen1Width.Value;
-                    Settings.User.GetByKey("Screen1Height", defaultValue: 0).Value = numericUpDownScreen1Height.Value;
-                    Settings.User.GetByKey("Screen2X", defaultValue: 0).Value = numericUpDownScreen2X.Value;
-                    Settings.User.GetByKey("Screen2Y", defaultValue: 0).Value = numericUpDownScreen2Y.Value;
-                    Settings.User.GetByKey("Screen2Width", defaultValue: 0).Value = numericUpDownScreen2Width.Value;
-                    Settings.User.GetByKey("Screen2Height", defaultValue: 0).Value = numericUpDownScreen2Height.Value;
-                    Settings.User.GetByKey("Screen3X", defaultValue: 0).Value = numericUpDownScreen3X.Value;
-                    Settings.User.GetByKey("Screen3Y", defaultValue: 0).Value = numericUpDownScreen3Y.Value;
-                    Settings.User.GetByKey("Screen3Width", defaultValue: 0).Value = numericUpDownScreen3Width.Value;
-                    Settings.User.GetByKey("Screen3Height", defaultValue: 0).Value = numericUpDownScreen3Height.Value;
-                    Settings.User.GetByKey("Screen4X", defaultValue: 0).Value = numericUpDownScreen4X.Value;
-                    Settings.User.GetByKey("Screen4Y", defaultValue: 0).Value = numericUpDownScreen4Y.Value;
-                    Settings.User.GetByKey("Screen4Width", defaultValue: 0).Value = numericUpDownScreen4Width.Value;
-                    Settings.User.GetByKey("Screen4Height", defaultValue: 0).Value = numericUpDownScreen4Height.Value;
                     Settings.User.GetByKey("Screen1Name", defaultValue: "Screen 1").Value = textBoxScreen1Name.Text;
                     Settings.User.GetByKey("Screen2Name", defaultValue: "Screen 2").Value = textBoxScreen2Name.Text;
                     Settings.User.GetByKey("Screen3Name", defaultValue: "Screen 3").Value = textBoxScreen3Name.Text;
@@ -819,15 +703,12 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("Screen5Name", defaultValue: "Active Window").Value = textBoxScreenActiveWindowName.Text;
                     Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = checkBoxPassphraseLock.Checked;
                     Settings.User.GetByKey("Macro", defaultValue: MacroParser.UserMacro).Value = textBoxMacro.Text;
-                    Settings.User.GetByKey("JpegQualityLevel", defaultValue: 100).Value = numericUpDownJpegQualityLevel.Value;
                     Settings.User.GetByKey("DaysOldWhenRemoveSlides", defaultValue: 10).Value = numericUpDownDaysOld.Value;
                     Settings.User.GetByKey("CaptureScreen1", defaultValue: true).Value = checkBoxCaptureScreen1.Checked;
                     Settings.User.GetByKey("CaptureScreen2", defaultValue: true).Value = checkBoxCaptureScreen2.Checked;
                     Settings.User.GetByKey("CaptureScreen3", defaultValue: true).Value = checkBoxCaptureScreen3.Checked;
                     Settings.User.GetByKey("CaptureScreen4", defaultValue: true).Value = checkBoxCaptureScreen4.Checked;
                     Settings.User.GetByKey("CaptureActiveWindow", defaultValue: true).Value = checkBoxCaptureActiveWindow.Checked;
-                    Settings.User.GetByKey("AutoReset", defaultValue: true).Value = checkBoxAutoReset.Checked;
-                    Settings.User.GetByKey("Mouse", defaultValue: true).Value = checkBoxMouse.Checked;
                     Settings.User.GetByKey("StartButtonImageFormat", defaultValue: "JPEG").Value = ScreenCapture.ImageFormat;
                     Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
                     Settings.User.GetByKey("Schedule", defaultValue: false).Value = timerScheduledCaptureStart.Enabled;
@@ -1025,7 +906,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Starts a screen capture session.
         /// </summary>
-        private void StartScreenCapture(string format)
+        private void StartScreenCapture(ImageFormat imageFormat)
         {
             if (!timerScreenCapture.Enabled)
             {
@@ -1063,10 +944,9 @@ namespace AutoScreenCapture
                     // Setup the properties for the screen capture class.
                     ScreenCapture.Folder = textBoxFolder.Text;
                     ScreenCapture.Macro = textBoxMacro.Text;
-                    ScreenCapture.ImageFormat = format;
+                    ScreenCapture.ImageFormat = imageFormat;
                     ScreenCapture.Delay = GetCaptureDelay();
                     ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
-                    ScreenCapture.Ratio = (int)numericUpDownImageResolutionRatio.Value;
 
                     if (checkBoxPassphraseLock.Checked)
                     {
@@ -1087,7 +967,7 @@ namespace AutoScreenCapture
                     {
                         Log.Write("Taking initial screenshots.");
 
-                        TakeScreenshot();
+                        TakeScreenshot(imageFormat);
                     }
 
                     // Start taking screenshots.
@@ -1382,7 +1262,7 @@ namespace AutoScreenCapture
 
             if (!string.IsNullOrEmpty(imageFormat))
             {
-                StartScreenCapture(imageFormat);
+                StartScreenCapture(_imageFormatCollection.GetByName(imageFormat));
             }
         }
 
@@ -1542,9 +1422,7 @@ namespace AutoScreenCapture
                 checkBoxCaptureLimit.Enabled = true;
                 numericUpDownCaptureLimit.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
-                numericUpDownImageResolutionRatio.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
-                numericUpDownJpegQualityLevel.Enabled = true;
                 toolStripButtonPreview.Enabled = true;
 
                 checkBoxScheduleStartAt.Enabled = true;
@@ -1581,9 +1459,7 @@ namespace AutoScreenCapture
             checkBoxCaptureLimit.Enabled = false;
             numericUpDownCaptureLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
-            numericUpDownImageResolutionRatio.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
-            numericUpDownJpegQualityLevel.Enabled = false;
             toolStripButtonPreview.Enabled = false;
 
             checkBoxScheduleStartAt.Enabled = false;
@@ -1675,7 +1551,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_toolStripMenuItemAbout(object sender, EventArgs e)
         {
-            MessageBox.Show(Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + " (\"Clara\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + " (\"Dalek\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -1738,11 +1614,6 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
 
-                numericUpDownImageResolutionRatio.Value = IMAGE_RESOLUTION_RATIO_MAX;
-
-                int jpegLevel = JPEG_QUALITY_LEVEL_MAX;
-                numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;
-
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = MacroParser.UserMacro;
 
@@ -1793,16 +1664,6 @@ namespace AutoScreenCapture
                     if (rgxCommandLineInitial.IsMatch(args[i]))
                     {
                         checkBoxInitialScreenshot.Checked = true;
-                    }
-
-                    if (rgxCommandLineRatio.IsMatch(args[i]))
-                    {
-                        int cmdRatio = Convert.ToInt32(rgxCommandLineRatio.Match(args[i]).Groups["Ratio"].Value);
-
-                        if (cmdRatio >= IMAGE_RESOLUTION_RATIO_MIN && cmdRatio <= IMAGE_RESOLUTION_RATIO_MAX)
-                        {
-                            numericUpDownImageResolutionRatio.Value = cmdRatio;
-                        }
                     }
 
                     if (rgxCommandLineLimit.IsMatch(args[i]))
@@ -1868,16 +1729,6 @@ namespace AutoScreenCapture
                         checkBoxPassphraseLock.Checked = true;
                     }
 
-                    if (rgxCommandLineJpegLevel.IsMatch(args[i]))
-                    {
-                        int cmdJpegLevel = Convert.ToInt32(rgxCommandLineJpegLevel.Match(args[i]).Groups["JpegLevel"].Value);
-
-                        if (cmdJpegLevel >= JPEG_QUALITY_LEVEL_MIN && cmdJpegLevel <= JPEG_QUALITY_LEVEL_MAX)
-                        {
-                            jpegLevel = cmdJpegLevel;
-                        }
-                    }
-
                     if (rgxCommandLineHideSystemTrayIcon.IsMatch(args[i]))
                     {
                         toolStripMenuItemShowSystemTrayIcon.Checked = false;
@@ -1887,8 +1738,6 @@ namespace AutoScreenCapture
                 #endregion Command Line Argument Parsing
 
                 ScreenCapture.RunningFromCommandLine = true;
-
-                numericUpDownJpegQualityLevel.Value = jpegLevel;
 
                 InitializeThreads();
 
@@ -2491,6 +2340,7 @@ namespace AutoScreenCapture
         private void Click_addRegion(object sender, EventArgs e)
         {
             formRegion.RegionObject = null;
+            formRegion.ImageFormatCollection = _imageFormatCollection;
 
             formRegion.ShowDialog(this);
 
@@ -2545,6 +2395,7 @@ namespace AutoScreenCapture
             if (buttonSelected.Tag != null)
             {
                 formRegion.RegionObject = (Region)buttonSelected.Tag;
+                formRegion.ImageFormatCollection = _imageFormatCollection;
 
                 formRegion.ShowDialog(this);
 
@@ -2582,120 +2433,6 @@ namespace AutoScreenCapture
         }
 
         #endregion Schedule
-
-        #region Reset
-
-        /// <summary>
-        /// Resets the X, Y, Width, and Height values for every screen.
-        /// </summary>
-        private void AutoReset()
-        {
-            if (checkBoxAutoReset.Checked)
-            {
-                Click_buttonScreen1Reset(null, null);
-                Click_buttonScreen2Reset(null, null);
-                Click_buttonScreen3Reset(null, null);
-                Click_buttonScreen4Reset(null, null);
-            }
-        }
-
-        /// <summary>
-        /// Resets the X, Y, Width, and Height values for Screen 1.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonScreen1Reset(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 1)
-                {
-                    numericUpDownScreen1X.Value = screen.Bounds.X;
-                    numericUpDownScreen1Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen1Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen1Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Resets the X, Y, Width, and Height values for Screen 2.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonScreen2Reset(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 2)
-                {
-                    numericUpDownScreen2X.Value = screen.Bounds.X;
-                    numericUpDownScreen2Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen2Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen2Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Resets the X, Y, Width, and Height values for Screen 3.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonScreen3Reset(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 3)
-                {
-                    numericUpDownScreen3X.Value = screen.Bounds.X;
-                    numericUpDownScreen3Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen3Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen3Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Resets the X, Y, Width, and Height values for Screen 4.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonScreen4Reset(object sender, EventArgs e)
-        {
-            int count = 0;
-
-            foreach (Screen screen in Screen.AllScreens)
-            {
-                count++;
-
-                if (count <= ScreenCapture.SCREEN_MAX && count == 4)
-                {
-                    numericUpDownScreen4X.Value = screen.Bounds.X;
-                    numericUpDownScreen4Y.Value = screen.Bounds.Y;
-
-                    numericUpDownScreen4Width.Value = screen.Bounds.Width;
-                    numericUpDownScreen4Height.Value = screen.Bounds.Height;
-                }
-            }
-        }
-
-        #endregion Reset
 
         #region Passphrase
 
@@ -2792,30 +2529,45 @@ namespace AutoScreenCapture
             }
         }
 
+        private void TakeScreenshot()
+        {
+
+        }
+
         /// <summary>
         /// Takes a screenshot of each available screen.
         /// </summary>
-        private void TakeScreenshot()
+        private void TakeScreenshot(ImageFormat imageFormat)
         {
             int count = 0;
             string screenName = string.Empty;
 
-            AutoReset();
-
             ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
 
             // Save a copy of an empty screenshot image file so that we can retrieve it later in the Slideshow.
-            if (CaptureScreenAllowed(1) || CaptureScreenAllowed(2) || CaptureScreenAllowed(3) || CaptureScreenAllowed(4) || CaptureScreenAllowed(5))
-            {
-                ScreenCapture.Save(FileSystem.SlidesFolder + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ScreenshotListMacro, null));
-            }
+            //if (CaptureScreenAllowed(1) || CaptureScreenAllowed(2) || CaptureScreenAllowed(3) || CaptureScreenAllowed(4) || CaptureScreenAllowed(5))
+            //{
+            //    ScreenCapture.Save(FileSystem.SlidesFolder + MacroParser.ParseTags(MacroParser.ScreenshotListMacro, null));
+            //}
 
             // Active Window
-            if (CaptureScreenAllowed(5))
-            {
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, FileSystem.SlidesFolder + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, "5"), 5, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                ScreenCapture.TakeScreenshot(_imageFormatCollection, null, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, textBoxScreenActiveWindowName.Text), 5, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-            }
+            //if (CaptureScreenAllowed(5))
+            //{
+            //    //ScreenCapture.TakeScreenshot(imageFormat, null, FileSystem.SlidesFolder + MacroParser.ParseTags(MacroParser.ApplicationMacro, "5"), 5, ScreenshotType.Application, 100, true);
+            //    //ScreenCapture.TakeScreenshot(imageFormat, null, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, textBoxScreenActiveWindowName.Text), 5, ScreenshotType.User, 100, true);
+
+            //    // For the slides ...
+            //    string path = FileSystem.SlidesFolder + MacroParser.ParseTags(MacroParser.ApplicationMacro, "5");
+            //    int jpegQuality = 100;
+            //    bool mouse = true;
+            //    Screen screen = null;
+            //    int screenNumber = 5;
+            //    ScreenCapture.TakeScreenshot(path, imageFormat, jpegQuality, mouse, screen, screenNumber, ScreenshotType.Application);
+
+            //    // For the screenshots ...
+            //    path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, textBoxScreenActiveWindowName.Text);
+            //    ScreenCapture.TakeScreenshot(path, imageFormat, jpegQuality, mouse, screen, screenNumber, ScreenshotType.User);
+            //}
 
             // All screens.
             foreach (Screen screen in Screen.AllScreens)
@@ -2824,9 +2576,6 @@ namespace AutoScreenCapture
 
                 if (CaptureScreenAllowed(count) && count <= ScreenCapture.SCREEN_MAX)
                 {
-                    SetupScreenPosition(screen, count);
-                    SetupScreenSize(screen, count);
-
                     switch (count)
                     {
                         case 1:
@@ -2848,8 +2597,19 @@ namespace AutoScreenCapture
 
                     if (!string.IsNullOrEmpty(screenName))
                     {
-                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, FileSystem.SlidesFolder + MacroParser.ParseTags(_imageFormatCollection, MacroParser.ApplicationMacro, count.ToString()), count, ScreenshotType.Application, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
-                        ScreenCapture.TakeScreenshot(_imageFormatCollection, screen, ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, ScreenCapture.Macro, screenName), count, ScreenshotType.User, (long)numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                        //ScreenCapture.TakeScreenshot(imageFormat, screen, FileSystem.SlidesFolder + MacroParser.ParseTags(MacroParser.ApplicationMacro, count.ToString()), count, ScreenshotType.Application, 100, true);
+                        //ScreenCapture.TakeScreenshot(imageFormat, screen, ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, screenName), count, ScreenshotType.User, 100, true);
+
+                        // For the slides ...
+                        string path = FileSystem.SlidesFolder + MacroParser.ParseTags(MacroParser.ApplicationMacro, count.ToString());
+                        int jpegQuality = 100;
+                        bool mouse = true;
+                        int screenNumber = count;
+                        ScreenCapture.TakeScreenshot(path, imageFormat, jpegQuality, mouse, screen, screenNumber, ScreenshotType.Application);
+
+                        // For the screenshots ...
+                        path = ScreenCapture.Folder + MacroParser.ParseTags(ScreenCapture.Macro, screenName);
+                        ScreenCapture.TakeScreenshot(path, imageFormat, jpegQuality, mouse, screen, screenNumber, ScreenshotType.User);
                     }
                 }
             }
@@ -2901,83 +2661,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakePreviewScreenshots()
         {
-            AutoReset();
-
             DisplayImages(true);
-        }
-
-        /// <summary>
-        /// Determines what values we'll set for the X and Y coordinates of a particular screen when the user wants to do a region capture.
-        /// </summary>
-        /// <param name="screen">The screen object.</param>
-        /// <param name="screenNumber">The screen number.</param>
-        private void SetupScreenPosition(Screen screen, int screenNumber)
-        {
-            int x = 0;
-            int y = 0;
-
-            switch (screenNumber)
-            {
-                case 1:
-                    x = (int)numericUpDownScreen1X.Value > 0 ? (int)numericUpDownScreen1X.Value : screen.Bounds.X;
-                    y = (int)numericUpDownScreen1Y.Value > 0 ? (int)numericUpDownScreen1Y.Value : screen.Bounds.Y;
-                    break;
-
-                case 2:
-                    x = (int)numericUpDownScreen2X.Value > 0 ? (int)numericUpDownScreen2X.Value : screen.Bounds.X;
-                    y = (int)numericUpDownScreen2Y.Value > 0 ? (int)numericUpDownScreen2Y.Value : screen.Bounds.Y;
-                    break;
-
-                case 3:
-                    x = (int)numericUpDownScreen3X.Value > 0 ? (int)numericUpDownScreen3X.Value : screen.Bounds.X;
-                    y = (int)numericUpDownScreen3Y.Value > 0 ? (int)numericUpDownScreen3Y.Value : screen.Bounds.Y;
-                    break;
-
-                case 4:
-                    x = (int)numericUpDownScreen4X.Value > 0 ? (int)numericUpDownScreen4X.Value : screen.Bounds.X;
-                    y = (int)numericUpDownScreen4Y.Value > 0 ? (int)numericUpDownScreen4Y.Value : screen.Bounds.Y;
-                    break;
-            }
-
-            ScreenCapture.X = x;
-            ScreenCapture.Y = y;
-        }
-
-        /// <summary>
-        /// Determines what values we'll set for the Width and Height dimensions of a particular screen when the user wants to do a region capture.
-        /// </summary>
-        /// <param name="screen">The screen object.</param>
-        /// <param name="screenNumber">The screen number.</param>
-        private void SetupScreenSize(Screen screen, int screenNumber)
-        {
-            int width = 0;
-            int height = 0;
-
-            switch (screenNumber)
-            {
-                case 1:
-                    width = (int)numericUpDownScreen1Width.Value > 0 ? (int)numericUpDownScreen1Width.Value : screen.Bounds.Width;
-                    height = (int)numericUpDownScreen1Height.Value > 0 ? (int)numericUpDownScreen1Height.Value : screen.Bounds.Height;
-                    break;
-
-                case 2:
-                    width = (int)numericUpDownScreen2Width.Value > 0 ? (int)numericUpDownScreen2Width.Value : screen.Bounds.Width;
-                    height = (int)numericUpDownScreen2Height.Value > 0 ? (int)numericUpDownScreen2Height.Value : screen.Bounds.Height;
-                    break;
-
-                case 3:
-                    width = (int)numericUpDownScreen3Width.Value > 0 ? (int)numericUpDownScreen3Width.Value : screen.Bounds.Width;
-                    height = (int)numericUpDownScreen3Height.Value > 0 ? (int)numericUpDownScreen3Height.Value : screen.Bounds.Height;
-                    break;
-
-                case 4:
-                    width = (int)numericUpDownScreen4Width.Value > 0 ? (int)numericUpDownScreen4Width.Value : screen.Bounds.Width;
-                    height = (int)numericUpDownScreen4Height.Value > 0 ? (int)numericUpDownScreen4Height.Value : screen.Bounds.Height;
-                    break;
-            }
-
-            ScreenCapture.Width = width;
-            ScreenCapture.Height = height;
         }
 
         /// <summary>
@@ -3006,12 +2690,9 @@ namespace AutoScreenCapture
 
                 if (count <= ScreenCapture.SCREEN_MAX)
                 {
-                    SetupScreenPosition(screen, count);
-                    SetupScreenSize(screen, count);
-
                     if (preview && CaptureScreenAllowed(count))
                     {
-                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen, (int)numericUpDownImageResolutionRatio.Value, ScreenCapture.ImageFormat, checkBoxMouse.Checked);
+                        Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen.Bounds.X, screen.Bounds.Y, screen.Bounds.Width, screen.Bounds.Height, 100, true);
 
                         if (bitmap != null)
                         {
@@ -3172,7 +2853,7 @@ namespace AutoScreenCapture
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
                     {
-                        StartScreenCapture(comboBoxScheduleImageFormat.SelectedItem.ToString());
+                        StartScreenCapture((ImageFormat)comboBoxScheduleImageFormat.SelectedItem);
                     }
                 }
                 else
@@ -3181,7 +2862,7 @@ namespace AutoScreenCapture
                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
                     {
-                        StartScreenCapture(comboBoxScheduleImageFormat.SelectedItem.ToString());
+                        StartScreenCapture((ImageFormat)comboBoxScheduleImageFormat.SelectedItem);
                     }
                 }
             }
@@ -3432,7 +3113,6 @@ namespace AutoScreenCapture
 
             numericUpDownSlideSkip.Value = 10;
             numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
-            numericUpDownImageResolutionRatio.Value = IMAGE_RESOLUTION_RATIO_MAX;
 
             checkBoxSlideSkip.Checked = false;
             checkBoxCaptureLimit.Checked = false;
@@ -3457,8 +3137,6 @@ namespace AutoScreenCapture
             dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
             dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
 
-            numericUpDownJpegQualityLevel.Value = JPEG_QUALITY_LEVEL_MAX;
-
             numericUpDownDaysOld.Value = 10;
 
             checkBoxCaptureScreen1.Checked = true;
@@ -3467,13 +3145,9 @@ namespace AutoScreenCapture
             checkBoxCaptureScreen4.Checked = true;
             checkBoxCaptureActiveWindow.Checked = true;
 
-            checkBoxAutoReset.Checked = true;
-
-            checkBoxMouse.Checked = true;
-
             DisableSchedule();
 
-            ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
+            ScreenCapture.ImageFormat.Name = ScreenCapture.DefaultImageFormat;
 
             Log.Write("Default settings restored.");
 
@@ -3562,13 +3236,17 @@ namespace AutoScreenCapture
         {
             foreach (Region region in formRegion.RegionCollection)
             {
-                ScreenCapture.TakeScreenshot(_imageFormatCollection,
+                ScreenCapture.TakeScreenshot(
+                    region.Folder + MacroParser.ParseTags(region.Macro, region.Name),
+                    region.Format,
+                    region.JpegQuality,
+                    region.ResolutionRatio,
+                    region.Mouse,
                     region.X,
                     region.Y,
                     region.Width,
-                    region.Height,
-                    ScreenCapture.Folder + MacroParser.ParseTags(_imageFormatCollection, region.Macro, region.Name),
-                    (long) numericUpDownJpegQualityLevel.Value, checkBoxMouse.Checked);
+                    region.Height
+                    );
             }
         }
 

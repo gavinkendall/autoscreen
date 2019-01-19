@@ -12,11 +12,19 @@ namespace AutoScreenCapture
 
     public class Screenshot
     {
+        public int Index { get; set; }
+        public string Date { get; set; }
+        public string Path { get; set; }
+        public int Screen { get; set; }
+        public ImageFormat Format { get; set; }
+        public string Filename { get; set; }
+        public string Slidename { get; set; }
+
         public Screenshot()
         {
         }
 
-        public Screenshot(DateTime dateTime, string path, int screen, string format, int index)
+        public Screenshot(DateTime dateTime, string path, int screen, ImageFormat format, int index)
         {
             Index = index;
             Date = dateTime.ToString(MacroParser.DateFormat);
@@ -35,13 +43,5 @@ namespace AutoScreenCapture
 
             Directory.SetCurrentDirectory(directory);
         }
-
-        public int Index { get; set; }
-        public string Date { get; set; }
-        public string Path { get; set; }
-        public int Screen { get; set; }
-        public string Format { get; set; }
-        public string Filename { get; set; }
-        public string Slidename { get; set; }
     }
 }

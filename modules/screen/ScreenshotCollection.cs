@@ -58,7 +58,7 @@ namespace AutoScreenCapture
                         xNewScreenshotScreen.InnerText = newScreenshot.Screen.ToString();
 
                         XmlElement xNewScreenshotFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
-                        xNewScreenshotFormat.InnerText = newScreenshot.Format;
+                        xNewScreenshotFormat.InnerText = newScreenshot.Format.Name;
 
                         XmlElement xNewScreenshotFilename = xDoc.CreateElement(SCREENSHOT_FILENAME);
                         xNewScreenshotFilename.InnerText = newScreenshot.Filename;
@@ -132,7 +132,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screenshots.
         /// </summary>
-        public static void Load()
+        public static void Load(ImageFormatCollection imageFormatCollection)
         {
             if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
             {
@@ -174,7 +174,7 @@ namespace AutoScreenCapture
 
                                 case SCREENSHOT_FORMAT:
                                     xReader.Read();
-                                    screenshot.Format = xReader.Value;
+                                    screenshot.Format = imageFormatCollection.GetByName(xReader.Value);
                                     break;
 
                                 case SCREENSHOT_FILENAME:
@@ -195,7 +195,7 @@ namespace AutoScreenCapture
                     if (!string.IsNullOrEmpty(screenshot.Date) &&
                         !string.IsNullOrEmpty(screenshot.Path) &&
                         screenshot.Screen > 0 &&
-                        !string.IsNullOrEmpty(screenshot.Format) &&
+                        screenshot.Format != null &&
                         !string.IsNullOrEmpty(screenshot.Filename) &&
                         !string.IsNullOrEmpty(screenshot.Slidename))
                     {
@@ -237,7 +237,7 @@ namespace AutoScreenCapture
                     xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
                     xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
                     xWriter.WriteElementString(SCREENSHOT_SCREEN, screenshot.Screen.ToString());
-                    xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format);
+                    xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
                     xWriter.WriteElementString(SCREENSHOT_FILENAME, screenshot.Filename);
                     xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slidename);
 

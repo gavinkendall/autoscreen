@@ -9,14 +9,13 @@ namespace AutoScreenCapture
 {
     public class TriggerAction
     {
+        public TriggerActionType Type { get; set; }
+        public string Description { get; set; }
+
         public TriggerAction(TriggerActionType type, string description)
         {
             Type = type;
             Description = description;
         }
-
-        public TriggerActionType Type { get; set; }
-
-        public string Description { get; set; }
     }
 }
