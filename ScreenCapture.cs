@@ -65,8 +65,6 @@ namespace AutoScreenCapture
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
-        public static string Folder { get; set; }
-        public static string Macro { get; set; }
         public static int Ratio { get; set; }
         public static ImageFormat ImageFormat { get; set; }
         public static int Delay { get; set; }
@@ -201,32 +199,6 @@ namespace AutoScreenCapture
             }
 
             return null;
-        }
-
-        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, bool mouse, Screen screen, int screenNumber, ScreenshotType screenshotType)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(path))
-                {
-                    Bitmap bitmap = screenNumber == 5 ? GetActiveWindowBitmap() : GetScreenBitmap(screen.Bounds.X, screen.Bounds.Y, screen.Bounds.Width, screen.Bounds.Height, Ratio, mouse);
-
-                    if (bitmap != null)
-                    {
-                        Screenshot screenshot = new Screenshot(DateTimePreviousScreenshot, path, screenNumber, ImageFormat, screenshotType == ScreenshotType.User ? ScreenshotCollection.Count : -1);
-
-                        SaveToFile(screenshot.Path, format, jpegQuality, bitmap, screenshotType);
-
-                        ScreenshotCollection.Add(screenshot, screenshotType);
-
-                        GC.Collect();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Write("ScreenCapture::TakeScreenshot(imageFormat, screen, path, screenNumber, screenshotType, jpegQualityLevel, mouse)", ex);
-            }
         }
 
         public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)

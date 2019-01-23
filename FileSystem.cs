@@ -47,6 +47,7 @@ namespace AutoScreenCapture
         // Editors, Regions, Triggers, and Screenshots
         public static readonly string EditorsFile = "editors.xml";
         public static readonly string RegionsFile = "regions.xml";
+        public static readonly string ScreensFile = "screens.xml";
         public static readonly string TriggersFile = "triggers.xml";
         public static readonly string ScreenshotsFile = "screenshots.xml";
 

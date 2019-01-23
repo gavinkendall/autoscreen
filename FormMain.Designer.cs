@@ -642,7 +642,6 @@
             this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMillisecondsInterval.TabIndex = 6;
             this.numericUpDownMillisecondsInterval.TabStop = false;
-            this.numericUpDownMillisecondsInterval.ValueChanged += new System.EventHandler(this.ValueChanged_previewInterval);
             this.numericUpDownMillisecondsInterval.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // labelSecondsInterval
@@ -684,7 +683,6 @@
             this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSecondsInterval.TabIndex = 2;
             this.numericUpDownSecondsInterval.TabStop = false;
-            this.numericUpDownSecondsInterval.ValueChanged += new System.EventHandler(this.ValueChanged_previewInterval);
             this.numericUpDownSecondsInterval.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // numericUpDownMinutesInterval
@@ -699,7 +697,6 @@
             this.numericUpDownMinutesInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMinutesInterval.TabIndex = 1;
             this.numericUpDownMinutesInterval.TabStop = false;
-            this.numericUpDownMinutesInterval.ValueChanged += new System.EventHandler(this.ValueChanged_previewInterval);
             this.numericUpDownMinutesInterval.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // numericUpDownHoursInterval
@@ -714,7 +711,6 @@
             this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownHoursInterval.TabIndex = 0;
             this.numericUpDownHoursInterval.TabStop = false;
-            this.numericUpDownHoursInterval.ValueChanged += new System.EventHandler(this.ValueChanged_previewInterval);
             this.numericUpDownHoursInterval.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // groupBoxSchedule

@@ -13,7 +13,8 @@ namespace AutoScreenCapture
         public static readonly string TimeFormat = "HH-mm-ss-fff";
 
         public static readonly string RegionMacro =   @"%region%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
-        public static readonly string UserMacro = @"%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+        public static readonly string ScreenMacro = @"%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+
         public static readonly string ScreenshotListMacro = @"%year%-%month%-%day%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
         public static readonly string ApplicationMacro = @"%year%-%month%-%day%\%screen%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
