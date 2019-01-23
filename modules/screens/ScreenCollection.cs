@@ -26,6 +26,7 @@ namespace AutoScreenCapture
         private const string SCREEN_NAME = "name";
         private const string SCREEN_FOLDER = "folder";
         private const string SCREEN_MACRO = "macro";
+        private const string SCREEN_COMPONENT = "component";
         private const string SCREEN_FORMAT = "format";
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
@@ -130,6 +131,11 @@ namespace AutoScreenCapture
                                     screen.Macro = xReader.Value;
                                     break;
 
+                                case SCREEN_COMPONENT:
+                                    xReader.Read();
+                                    screen.Component = Convert.ToInt32(xReader.Value);
+                                    break;
+
                                 case SCREEN_FORMAT:
                                     xReader.Read();
                                     screen.Format = imageFormatCollection.GetByName(xReader.Value);
@@ -192,6 +198,7 @@ namespace AutoScreenCapture
                     xWriter.WriteElementString(SCREEN_NAME, screen.Name);
                     xWriter.WriteElementString(SCREEN_FOLDER, screen.Folder);
                     xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
+                    xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
                     xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
                     xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                     xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());

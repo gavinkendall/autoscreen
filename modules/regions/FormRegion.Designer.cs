@@ -252,7 +252,6 @@
             // 
             // timerRegionPreview
             // 
-            this.timerRegionPreview.Enabled = true;
             this.timerRegionPreview.Interval = 500;
             this.timerRegionPreview.Tick += new System.EventHandler(this.Tick_timerRegionPreview);
             // 
@@ -473,6 +472,7 @@
             this.Name = "FormRegion";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRegion_FormClosing);
             this.Load += new System.EventHandler(this.FormRegion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRegionPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRegionX)).EndInit();

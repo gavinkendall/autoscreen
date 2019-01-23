@@ -35,17 +35,8 @@
             this.labelScreenMacro = new System.Windows.Forms.Label();
             this.textBoxScreenMacro = new System.Windows.Forms.TextBox();
             this.pictureBoxScreenPreview = new System.Windows.Forms.PictureBox();
-            this.labelScreenX = new System.Windows.Forms.Label();
-            this.labelScreenY = new System.Windows.Forms.Label();
-            this.labelScreenWidth = new System.Windows.Forms.Label();
-            this.labelScreenHeight = new System.Windows.Forms.Label();
-            this.numericUpDownScreenX = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownScreenY = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownScreenWidth = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownScreenHeight = new System.Windows.Forms.NumericUpDown();
             this.buttonScreenOK = new System.Windows.Forms.Button();
             this.buttonScreenCancel = new System.Windows.Forms.Button();
-            this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
             this.labelScreenFolder = new System.Windows.Forms.Label();
             this.textBoxScreenFolder = new System.Windows.Forms.TextBox();
             this.buttonScreenBrowseFolder = new System.Windows.Forms.Button();
@@ -57,19 +48,15 @@
             this.labelScreenJpegQuality = new System.Windows.Forms.Label();
             this.checkBoxScreenMouse = new System.Windows.Forms.CheckBox();
             this.groupBoxScreenImage = new System.Windows.Forms.GroupBox();
-            this.groupBoxScreenPosition = new System.Windows.Forms.GroupBox();
-            this.groupBoxScreenSize = new System.Windows.Forms.GroupBox();
+            this.groupBoxScreenComponent = new System.Windows.Forms.GroupBox();
             this.groupBoxScreenPreview = new System.Windows.Forms.GroupBox();
+            this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
+            this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenPreview)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenJpegQuality)).BeginInit();
             this.groupBoxScreenImage.SuspendLayout();
-            this.groupBoxScreenPosition.SuspendLayout();
-            this.groupBoxScreenSize.SuspendLayout();
+            this.groupBoxScreenComponent.SuspendLayout();
             this.groupBoxScreenPreview.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,110 +107,6 @@
             this.pictureBoxScreenPreview.TabIndex = 5;
             this.pictureBoxScreenPreview.TabStop = false;
             // 
-            // labelScreenX
-            // 
-            this.labelScreenX.AutoSize = true;
-            this.labelScreenX.Location = new System.Drawing.Point(21, 22);
-            this.labelScreenX.Name = "labelScreenX";
-            this.labelScreenX.Size = new System.Drawing.Size(17, 13);
-            this.labelScreenX.TabIndex = 0;
-            this.labelScreenX.Text = "X:";
-            // 
-            // labelScreenY
-            // 
-            this.labelScreenY.AutoSize = true;
-            this.labelScreenY.Location = new System.Drawing.Point(125, 22);
-            this.labelScreenY.Name = "labelScreenY";
-            this.labelScreenY.Size = new System.Drawing.Size(17, 13);
-            this.labelScreenY.TabIndex = 0;
-            this.labelScreenY.Text = "Y:";
-            // 
-            // labelScreenWidth
-            // 
-            this.labelScreenWidth.AutoSize = true;
-            this.labelScreenWidth.Location = new System.Drawing.Point(6, 22);
-            this.labelScreenWidth.Name = "labelScreenWidth";
-            this.labelScreenWidth.Size = new System.Drawing.Size(38, 13);
-            this.labelScreenWidth.TabIndex = 0;
-            this.labelScreenWidth.Text = "Width:";
-            // 
-            // labelScreenHeight
-            // 
-            this.labelScreenHeight.AutoSize = true;
-            this.labelScreenHeight.Location = new System.Drawing.Point(101, 22);
-            this.labelScreenHeight.Name = "labelScreenHeight";
-            this.labelScreenHeight.Size = new System.Drawing.Size(41, 13);
-            this.labelScreenHeight.TabIndex = 0;
-            this.labelScreenHeight.Text = "Height:";
-            // 
-            // numericUpDownScreenX
-            // 
-            this.numericUpDownScreenX.Location = new System.Drawing.Point(44, 20);
-            this.numericUpDownScreenX.Maximum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            0});
-            this.numericUpDownScreenX.Minimum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            -2147483648});
-            this.numericUpDownScreenX.Name = "numericUpDownScreenX";
-            this.numericUpDownScreenX.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownScreenX.TabIndex = 3;
-            // 
-            // numericUpDownScreenY
-            // 
-            this.numericUpDownScreenY.Location = new System.Drawing.Point(148, 20);
-            this.numericUpDownScreenY.Maximum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            0});
-            this.numericUpDownScreenY.Minimum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            -2147483648});
-            this.numericUpDownScreenY.Name = "numericUpDownScreenY";
-            this.numericUpDownScreenY.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownScreenY.TabIndex = 4;
-            // 
-            // numericUpDownScreenWidth
-            // 
-            this.numericUpDownScreenWidth.Location = new System.Drawing.Point(44, 20);
-            this.numericUpDownScreenWidth.Maximum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            0});
-            this.numericUpDownScreenWidth.Minimum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            -2147483648});
-            this.numericUpDownScreenWidth.Name = "numericUpDownScreenWidth";
-            this.numericUpDownScreenWidth.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownScreenWidth.TabIndex = 6;
-            // 
-            // numericUpDownScreenHeight
-            // 
-            this.numericUpDownScreenHeight.Location = new System.Drawing.Point(148, 20);
-            this.numericUpDownScreenHeight.Maximum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            0});
-            this.numericUpDownScreenHeight.Minimum = new decimal(new int[] {
-            -402653185,
-            -1613725636,
-            54210108,
-            -2147483648});
-            this.numericUpDownScreenHeight.Name = "numericUpDownScreenHeight";
-            this.numericUpDownScreenHeight.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownScreenHeight.TabIndex = 7;
-            // 
             // buttonScreenOK
             // 
             this.buttonScreenOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -246,12 +129,6 @@
             this.buttonScreenCancel.Text = "Cancel";
             this.buttonScreenCancel.UseVisualStyleBackColor = true;
             this.buttonScreenCancel.Click += new System.EventHandler(this.Click_buttonScreenCancel);
-            // 
-            // timerScreenPreview
-            // 
-            this.timerScreenPreview.Enabled = true;
-            this.timerScreenPreview.Interval = 500;
-            this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerScreenPreview);
             // 
             // labelScreenFolder
             // 
@@ -374,38 +251,22 @@
             this.groupBoxScreenImage.Controls.Add(this.labelScreenJpegQuality);
             this.groupBoxScreenImage.Controls.Add(this.numericUpDownScreenJpegQuality);
             this.groupBoxScreenImage.Controls.Add(this.comboBoxScreenFormat);
-            this.groupBoxScreenImage.Location = new System.Drawing.Point(12, 142);
+            this.groupBoxScreenImage.Location = new System.Drawing.Point(12, 90);
             this.groupBoxScreenImage.Name = "groupBoxScreenImage";
             this.groupBoxScreenImage.Size = new System.Drawing.Size(205, 126);
             this.groupBoxScreenImage.TabIndex = 8;
             this.groupBoxScreenImage.TabStop = false;
             this.groupBoxScreenImage.Text = "Image";
             // 
-            // groupBoxScreenPosition
+            // groupBoxScreenComponent
             // 
-            this.groupBoxScreenPosition.Controls.Add(this.labelScreenX);
-            this.groupBoxScreenPosition.Controls.Add(this.labelScreenY);
-            this.groupBoxScreenPosition.Controls.Add(this.numericUpDownScreenX);
-            this.groupBoxScreenPosition.Controls.Add(this.numericUpDownScreenY);
-            this.groupBoxScreenPosition.Location = new System.Drawing.Point(12, 38);
-            this.groupBoxScreenPosition.Name = "groupBoxScreenPosition";
-            this.groupBoxScreenPosition.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxScreenPosition.TabIndex = 2;
-            this.groupBoxScreenPosition.TabStop = false;
-            this.groupBoxScreenPosition.Text = "Position";
-            // 
-            // groupBoxScreenSize
-            // 
-            this.groupBoxScreenSize.Controls.Add(this.labelScreenWidth);
-            this.groupBoxScreenSize.Controls.Add(this.numericUpDownScreenHeight);
-            this.groupBoxScreenSize.Controls.Add(this.numericUpDownScreenWidth);
-            this.groupBoxScreenSize.Controls.Add(this.labelScreenHeight);
-            this.groupBoxScreenSize.Location = new System.Drawing.Point(12, 90);
-            this.groupBoxScreenSize.Name = "groupBoxScreenSize";
-            this.groupBoxScreenSize.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxScreenSize.TabIndex = 5;
-            this.groupBoxScreenSize.TabStop = false;
-            this.groupBoxScreenSize.Text = "Size";
+            this.groupBoxScreenComponent.Controls.Add(this.comboBoxScreenComponent);
+            this.groupBoxScreenComponent.Location = new System.Drawing.Point(12, 38);
+            this.groupBoxScreenComponent.Name = "groupBoxScreenComponent";
+            this.groupBoxScreenComponent.Size = new System.Drawing.Size(205, 46);
+            this.groupBoxScreenComponent.TabIndex = 2;
+            this.groupBoxScreenComponent.TabStop = false;
+            this.groupBoxScreenComponent.Text = "Component";
             // 
             // groupBoxScreenPreview
             // 
@@ -422,6 +283,20 @@
             this.groupBoxScreenPreview.TabStop = false;
             this.groupBoxScreenPreview.Text = "Preview";
             // 
+            // comboBoxScreenComponent
+            // 
+            this.comboBoxScreenComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxScreenComponent.FormattingEnabled = true;
+            this.comboBoxScreenComponent.Location = new System.Drawing.Point(6, 19);
+            this.comboBoxScreenComponent.Name = "comboBoxScreenComponent";
+            this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxScreenComponent.TabIndex = 3;
+            // 
+            // timerScreenPreview
+            // 
+            this.timerScreenPreview.Interval = 500;
+            this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerScreenPreview);
+            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonScreenOK;
@@ -431,8 +306,7 @@
             this.CancelButton = this.buttonScreenCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.groupBoxScreenPreview);
-            this.Controls.Add(this.groupBoxScreenSize);
-            this.Controls.Add(this.groupBoxScreenPosition);
+            this.Controls.Add(this.groupBoxScreenComponent);
             this.Controls.Add(this.groupBoxScreenImage);
             this.Controls.Add(this.buttonScreenBrowseFolder);
             this.Controls.Add(this.textBoxScreenFolder);
@@ -450,20 +324,14 @@
             this.Name = "FormScreen";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreen_FormClosing);
             this.Load += new System.EventHandler(this.FormScreen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenPreview)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenResolutionRatio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenJpegQuality)).EndInit();
             this.groupBoxScreenImage.ResumeLayout(false);
             this.groupBoxScreenImage.PerformLayout();
-            this.groupBoxScreenPosition.ResumeLayout(false);
-            this.groupBoxScreenPosition.PerformLayout();
-            this.groupBoxScreenSize.ResumeLayout(false);
-            this.groupBoxScreenSize.PerformLayout();
+            this.groupBoxScreenComponent.ResumeLayout(false);
             this.groupBoxScreenPreview.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -477,17 +345,8 @@
         private System.Windows.Forms.Label labelScreenMacro;
         private System.Windows.Forms.TextBox textBoxScreenMacro;
         private System.Windows.Forms.PictureBox pictureBoxScreenPreview;
-        private System.Windows.Forms.Label labelScreenX;
-        private System.Windows.Forms.Label labelScreenY;
-        private System.Windows.Forms.Label labelScreenWidth;
-        private System.Windows.Forms.Label labelScreenHeight;
-        private System.Windows.Forms.NumericUpDown numericUpDownScreenX;
-        private System.Windows.Forms.NumericUpDown numericUpDownScreenY;
-        private System.Windows.Forms.NumericUpDown numericUpDownScreenWidth;
-        private System.Windows.Forms.NumericUpDown numericUpDownScreenHeight;
         private System.Windows.Forms.Button buttonScreenOK;
         private System.Windows.Forms.Button buttonScreenCancel;
-        private System.Windows.Forms.Timer timerScreenPreview;
         private System.Windows.Forms.Label labelScreenFolder;
         private System.Windows.Forms.TextBox textBoxScreenFolder;
         private System.Windows.Forms.Button buttonScreenBrowseFolder;
@@ -499,8 +358,9 @@
         private System.Windows.Forms.Label labelScreenJpegQuality;
         private System.Windows.Forms.CheckBox checkBoxScreenMouse;
         private System.Windows.Forms.GroupBox groupBoxScreenImage;
-        private System.Windows.Forms.GroupBox groupBoxScreenPosition;
-        private System.Windows.Forms.GroupBox groupBoxScreenSize;
+        private System.Windows.Forms.GroupBox groupBoxScreenComponent;
         private System.Windows.Forms.GroupBox groupBoxScreenPreview;
+        private System.Windows.Forms.ComboBox comboBoxScreenComponent;
+        private System.Windows.Forms.Timer timerScreenPreview;
     }
 }

@@ -61,6 +61,8 @@
             this.toolStripButtonNextSlide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.tabControlModules = new System.Windows.Forms.TabControl();
+            this.tabPageScreens = new System.Windows.Forms.TabPage();
+            this.tabPageRegions = new System.Windows.Forms.TabPage();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.checkBoxPassphraseLock = new System.Windows.Forms.CheckBox();
@@ -97,8 +99,7 @@
             this.dateTimePickerScheduleStartAt = new System.Windows.Forms.DateTimePicker();
             this.checkBoxScheduleStopAt = new System.Windows.Forms.CheckBox();
             this.checkBoxScheduleStartAt = new System.Windows.Forms.CheckBox();
-            this.tabPageRegions = new System.Windows.Forms.TabPage();
-            this.tabPageEditors = new System.Windows.Forms.TabPage();
+            this.tabPageSchedule = new System.Windows.Forms.TabPage();
             this.tabPageSlideshow = new System.Windows.Forms.TabPage();
             this.groupBoxSlideRemovalInDays = new System.Windows.Forms.GroupBox();
             this.labelDays = new System.Windows.Forms.Label();
@@ -114,7 +115,9 @@
             this.numericUpDownSlideshowDelaySeconds = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayMinutes = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownSlideshowDelayHours = new System.Windows.Forms.NumericUpDown();
+            this.tabPageEditors = new System.Windows.Forms.TabPage();
             this.tabPageTriggers = new System.Windows.Forms.TabPage();
+            this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonStopScreenCapture = new System.Windows.Forms.ToolStripButton();
@@ -125,9 +128,6 @@
             this.timerDeleteSlides = new System.Windows.Forms.Timer(this.components);
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.buttonRestoreDefaults = new System.Windows.Forms.Button();
-            this.tabPageScreens = new System.Windows.Forms.TabPage();
-            this.tabPageSchedule = new System.Windows.Forms.TabPage();
-            this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.statusStrip.SuspendLayout();
             this.tabControlScreens.SuspendLayout();
             this.tabPageScreen1.SuspendLayout();
@@ -469,16 +469,34 @@
             this.tabControlModules.TabStop = false;
             this.tabControlModules.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_tabControlModules);
             // 
+            // tabPageScreens
+            // 
+            this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
+            this.tabPageScreens.Name = "tabPageScreens";
+            this.tabPageScreens.Size = new System.Drawing.Size(241, 200);
+            this.tabPageScreens.TabIndex = 5;
+            this.tabPageScreens.Text = "Screens";
+            this.tabPageScreens.UseVisualStyleBackColor = true;
+            // 
+            // tabPageRegions
+            // 
+            this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
+            this.tabPageRegions.Name = "tabPageRegions";
+            this.tabPageRegions.Size = new System.Drawing.Size(241, 200);
+            this.tabPageRegions.TabIndex = 4;
+            this.tabPageRegions.Text = "Regions";
+            this.tabPageRegions.UseVisualStyleBackColor = true;
+            // 
             // tabPageInterval
             // 
             this.tabPageInterval.AutoScroll = true;
             this.tabPageInterval.Controls.Add(this.groupBoxSecurity);
             this.tabPageInterval.Controls.Add(this.groupBoxCaptureDelay);
             this.tabPageInterval.Controls.Add(this.groupBoxSchedule);
-            this.tabPageInterval.Location = new System.Drawing.Point(4, 22);
+            this.tabPageInterval.Location = new System.Drawing.Point(4, 40);
             this.tabPageInterval.Name = "tabPageInterval";
             this.tabPageInterval.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageInterval.Size = new System.Drawing.Size(241, 218);
+            this.tabPageInterval.Size = new System.Drawing.Size(241, 200);
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
@@ -928,25 +946,14 @@
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
             this.checkBoxScheduleStartAt.Click += new System.EventHandler(this.SaveSettings);
             // 
-            // tabPageRegions
+            // tabPageSchedule
             // 
-            this.tabPageRegions.Location = new System.Drawing.Point(4, 22);
-            this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(241, 218);
-            this.tabPageRegions.TabIndex = 4;
-            this.tabPageRegions.Text = "Regions";
-            this.tabPageRegions.UseVisualStyleBackColor = true;
-            // 
-            // tabPageEditors
-            // 
-            this.tabPageEditors.AutoScroll = true;
-            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
-            this.tabPageEditors.Name = "tabPageEditors";
-            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 200);
-            this.tabPageEditors.TabIndex = 2;
-            this.tabPageEditors.Text = "Editors";
-            this.tabPageEditors.UseVisualStyleBackColor = true;
+            this.tabPageSchedule.Location = new System.Drawing.Point(4, 40);
+            this.tabPageSchedule.Name = "tabPageSchedule";
+            this.tabPageSchedule.Size = new System.Drawing.Size(241, 200);
+            this.tabPageSchedule.TabIndex = 6;
+            this.tabPageSchedule.Text = "Schedule";
+            this.tabPageSchedule.UseVisualStyleBackColor = true;
             // 
             // tabPageSlideshow
             // 
@@ -1137,6 +1144,17 @@
             this.numericUpDownSlideshowDelayHours.ValueChanged += new System.EventHandler(this.ValueChanged_numericUpDownSlideshowDelay);
             this.numericUpDownSlideshowDelayHours.Leave += new System.EventHandler(this.SaveSettings);
             // 
+            // tabPageEditors
+            // 
+            this.tabPageEditors.AutoScroll = true;
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
+            this.tabPageEditors.Name = "tabPageEditors";
+            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 200);
+            this.tabPageEditors.TabIndex = 2;
+            this.tabPageEditors.Text = "Editors";
+            this.tabPageEditors.UseVisualStyleBackColor = true;
+            // 
             // tabPageTriggers
             // 
             this.tabPageTriggers.AutoScroll = true;
@@ -1147,6 +1165,15 @@
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
+            // 
+            // tabPageSecurity
+            // 
+            this.tabPageSecurity.Location = new System.Drawing.Point(4, 40);
+            this.tabPageSecurity.Name = "tabPageSecurity";
+            this.tabPageSecurity.Size = new System.Drawing.Size(241, 200);
+            this.tabPageSecurity.TabIndex = 7;
+            this.tabPageSecurity.Text = "Security";
+            this.tabPageSecurity.UseVisualStyleBackColor = true;
             // 
             // toolStripScreenCapture
             // 
@@ -1230,33 +1257,6 @@
             this.buttonRestoreDefaults.Text = "Restore Defaults";
             this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
             this.buttonRestoreDefaults.Click += new System.EventHandler(this.Click_buttonRestoreDefaults);
-            // 
-            // tabPageScreens
-            // 
-            this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
-            this.tabPageScreens.Name = "tabPageScreens";
-            this.tabPageScreens.Size = new System.Drawing.Size(241, 200);
-            this.tabPageScreens.TabIndex = 5;
-            this.tabPageScreens.Text = "Screens";
-            this.tabPageScreens.UseVisualStyleBackColor = true;
-            // 
-            // tabPageSchedule
-            // 
-            this.tabPageSchedule.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSchedule.Name = "tabPageSchedule";
-            this.tabPageSchedule.Size = new System.Drawing.Size(241, 218);
-            this.tabPageSchedule.TabIndex = 6;
-            this.tabPageSchedule.Text = "Schedule";
-            this.tabPageSchedule.UseVisualStyleBackColor = true;
-            // 
-            // tabPageSecurity
-            // 
-            this.tabPageSecurity.Location = new System.Drawing.Point(4, 40);
-            this.tabPageSecurity.Name = "tabPageSecurity";
-            this.tabPageSecurity.Size = new System.Drawing.Size(241, 200);
-            this.tabPageSecurity.TabIndex = 7;
-            this.tabPageSecurity.Text = "Security";
-            this.tabPageSecurity.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 

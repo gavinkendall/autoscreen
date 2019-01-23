@@ -190,6 +190,12 @@ namespace AutoScreenCapture
 
                 Log.Write("Loaded " + formRegion.RegionCollection.Count + " regions.");
 
+                Log.Write("Initializing screen collection");
+
+                formScreen.ScreenCollection.Load(_imageFormatCollection);
+
+                Log.Write("Loaded " + formScreen.ScreenCollection.Count + " screens.");
+
                 Log.Write("Building screenshot preview context menu.");
 
                 BuildScreenshotPreviewContextualMenu();
@@ -397,6 +403,8 @@ namespace AutoScreenCapture
                 formTrigger.TriggerCollection.Save();
 
                 formRegion.RegionCollection.Save();
+
+                formScreen.ScreenCollection.Save();
 
                 // Exit.
                 Environment.Exit(0);
@@ -1214,6 +1222,8 @@ namespace AutoScreenCapture
                 formTrigger.TriggerCollection.Save();
 
                 formRegion.RegionCollection.Save();
+
+                formScreen.ScreenCollection.Save();
 
                 // Exit.
                 Environment.Exit(0);
@@ -3070,10 +3080,10 @@ namespace AutoScreenCapture
                     screen.JpegQuality,
                     screen.ResolutionRatio,
                     screen.Mouse,
-                    screen.Component.Bounds.X,
-                    screen.Component.Bounds.Y,
-                    screen.Component.Bounds.Width,
-                    screen.Component.Bounds.Height
+                    formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                    formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                    formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                    formScreen.ScreenDictionary[screen.Component].Bounds.Height
                 );
             }
         }

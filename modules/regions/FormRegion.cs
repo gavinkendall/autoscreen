@@ -65,7 +65,7 @@ namespace AutoScreenCapture
                 numericUpDownRegionHeight.Value = 600;
             }
 
-            UpdatePreview();
+            timerRegionPreview.Enabled = true;
         }
 
         private void Click_buttonRegionCancel(object sender, EventArgs e)
@@ -166,11 +166,6 @@ namespace AutoScreenCapture
             textBoxRegionName.Text = textBoxRegionName.Text.Trim();
             textBoxRegionFolder.Text = textBoxRegionFolder.Text.Trim();
             textBoxRegionMacro.Text = textBoxRegionMacro.Text.Trim();
-
-            //if (!textBoxRegionFolder.Text.EndsWith(@"\"))
-            //{
-            //    textBoxRegionFolder.Text += @"\";
-            //}
         }
 
         private bool InputValid()
@@ -254,6 +249,11 @@ namespace AutoScreenCapture
                 (int)numericUpDownRegionResolutionRatio.Value,
                 checkBoxRegionMouse.Checked
             );
+        }
+
+        private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timerRegionPreview.Enabled = false;
         }
     }
 }
