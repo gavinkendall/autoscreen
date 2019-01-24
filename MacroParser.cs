@@ -20,11 +20,6 @@ namespace AutoScreenCapture
 
         public static string ParseTags(string path, string name)
         {
-            if (!string.IsNullOrEmpty(ScreenCapture.ImageFormat.Extension))
-            {
-                path = path.Replace("%format%", ScreenCapture.ImageFormat.Extension.TrimStart('.'));
-            }
-
             if (!string.IsNullOrEmpty(name))
             {
                 path = path.Replace("%region%", name);

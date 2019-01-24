@@ -66,7 +66,6 @@ namespace AutoScreenCapture
         public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
         public static int Ratio { get; set; }
-        public static ImageFormat ImageFormat { get; set; }
         public static int Delay { get; set; }
         public static int Limit { get; set; }
         public static int Count { get; set; }
