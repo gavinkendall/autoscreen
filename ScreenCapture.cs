@@ -52,7 +52,6 @@ namespace AutoScreenCapture
         private const Int32 CURSOR_SHOWING = 0x0001;
         private const Int32 DI_NORMAL = 0x0003;
 
-        public const int SCREEN_MAX = 4;
         public const int CAPTURE_LIMIT_MIN = 1;
         public const int CAPTURE_LIMIT_MAX = 9999;
 
@@ -210,7 +209,9 @@ namespace AutoScreenCapture
 
                     if (bitmap != null)
                     {
-                        SaveToFile(path, format, jpegQuality, bitmap, ScreenshotType.User);
+                        ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format));
+
+                        SaveToFile(path, format, jpegQuality, bitmap);
 
                         GC.Collect();
                     }
@@ -242,7 +243,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private static void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap, ScreenshotType screenshotType)
+        private static void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
         {
             try
             {
@@ -253,10 +254,7 @@ namespace AutoScreenCapture
                         Directory.CreateDirectory(Path.GetDirectoryName(path));
                     }
 
-                    if (screenshotType == ScreenshotType.User)
-                    {
-                        Log.Write("Screenshot saved: " + path);
-                    }
+                    Log.Write("Screenshot saved: " + path);
 
                     if (format.Name.Equals(ImageFormatSpec.EXTENSION_JPEG))
                     {

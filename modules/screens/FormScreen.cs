@@ -74,7 +74,7 @@ namespace AutoScreenCapture
 
                 textBoxScreenName.Text = string.Empty;
                 textBoxScreenFolder.Text = FileSystem.ScreenshotsFolder;
-                textBoxScreenMacro.Text = MacroParser.ScreenMacro;
+                textBoxScreenMacro.Text = MacroParser.DefaultMacro;
                 comboBoxScreenComponent.SelectedIndex = 0;
                 comboBoxScreenFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownScreenJpegQuality.Value = 100;

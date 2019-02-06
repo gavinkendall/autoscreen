@@ -35,11 +35,6 @@
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
-            this.tabPageScreen1 = new System.Windows.Forms.TabPage();
-            this.panelScreen1ImageEditor = new System.Windows.Forms.Panel();
-            this.toolStripScreen1ImageEditor = new System.Windows.Forms.ToolStrip();
-            this.toolStripSplitButtonScreen1Edit = new System.Windows.Forms.ToolStripSplitButton();
-            this.pictureBoxScreen1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.listBoxSlides = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -117,18 +112,10 @@
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonStartCapture = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonStopCapture = new System.Windows.Forms.ToolStripButton();
-            this.timerPreviewCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
-            this.buttonSaveSettings = new System.Windows.Forms.Button();
-            this.buttonRestoreDefaults = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
-            this.tabControlScreens.SuspendLayout();
-            this.tabPageScreen1.SuspendLayout();
-            this.panelScreen1ImageEditor.SuspendLayout();
-            this.toolStripScreen1ImageEditor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).BeginInit();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.toolStripSlideshow.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -196,7 +183,6 @@
             this.tabControlScreens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlScreens.Controls.Add(this.tabPageScreen1);
             this.tabControlScreens.Location = new System.Drawing.Point(251, 1);
             this.tabControlScreens.Name = "tabControlScreens";
             this.tabControlScreens.SelectedIndex = 0;
@@ -204,62 +190,6 @@
             this.tabControlScreens.TabIndex = 4;
             this.tabControlScreens.TabStop = false;
             this.tabControlScreens.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_tabControlScreens);
-            // 
-            // tabPageScreen1
-            // 
-            this.tabPageScreen1.Controls.Add(this.panelScreen1ImageEditor);
-            this.tabPageScreen1.Controls.Add(this.pictureBoxScreen1);
-            this.tabPageScreen1.Location = new System.Drawing.Point(4, 22);
-            this.tabPageScreen1.Name = "tabPageScreen1";
-            this.tabPageScreen1.Size = new System.Drawing.Size(592, 381);
-            this.tabPageScreen1.TabIndex = 3;
-            this.tabPageScreen1.Text = "Screen 1";
-            this.tabPageScreen1.UseVisualStyleBackColor = true;
-            // 
-            // panelScreen1ImageEditor
-            // 
-            this.panelScreen1ImageEditor.Controls.Add(this.toolStripScreen1ImageEditor);
-            this.panelScreen1ImageEditor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelScreen1ImageEditor.Location = new System.Drawing.Point(0, 0);
-            this.panelScreen1ImageEditor.Name = "panelScreen1ImageEditor";
-            this.panelScreen1ImageEditor.Size = new System.Drawing.Size(592, 25);
-            this.panelScreen1ImageEditor.TabIndex = 4;
-            // 
-            // toolStripScreen1ImageEditor
-            // 
-            this.toolStripScreen1ImageEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripScreen1ImageEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSplitButtonScreen1Edit});
-            this.toolStripScreen1ImageEditor.Location = new System.Drawing.Point(0, 0);
-            this.toolStripScreen1ImageEditor.Name = "toolStripScreen1ImageEditor";
-            this.toolStripScreen1ImageEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStripScreen1ImageEditor.ShowItemToolTips = false;
-            this.toolStripScreen1ImageEditor.Size = new System.Drawing.Size(592, 25);
-            this.toolStripScreen1ImageEditor.TabIndex = 0;
-            // 
-            // toolStripSplitButtonScreen1Edit
-            // 
-            this.toolStripSplitButtonScreen1Edit.AutoToolTip = false;
-            this.toolStripSplitButtonScreen1Edit.Image = global::AutoScreenCapture.Properties.Resources.edit;
-            this.toolStripSplitButtonScreen1Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonScreen1Edit.Name = "toolStripSplitButtonScreen1Edit";
-            this.toolStripSplitButtonScreen1Edit.Size = new System.Drawing.Size(59, 22);
-            this.toolStripSplitButtonScreen1Edit.Text = "Edit";
-            // 
-            // pictureBoxScreen1
-            // 
-            this.pictureBoxScreen1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxScreen1.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxScreen1.ContextMenuStrip = this.contextMenuStripScreenshotPreview;
-            this.pictureBoxScreen1.Location = new System.Drawing.Point(0, 29);
-            this.pictureBoxScreen1.Margin = new System.Windows.Forms.Padding(1);
-            this.pictureBoxScreen1.Name = "pictureBoxScreen1";
-            this.pictureBoxScreen1.Size = new System.Drawing.Size(590, 315);
-            this.pictureBoxScreen1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxScreen1.TabIndex = 2;
-            this.pictureBoxScreen1.TabStop = false;
             // 
             // contextMenuStripScreenshotPreview
             // 
@@ -379,12 +309,11 @@
             this.toolStripButtonPlaySlideshow,
             this.toolStripButtonNextSlide,
             this.toolStripButtonLastSlide});
-            this.toolStripSlideshow.Location = new System.Drawing.Point(16, 411);
+            this.toolStripSlideshow.Location = new System.Drawing.Point(4, 441);
             this.toolStripSlideshow.Name = "toolStripSlideshow";
             this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStripSlideshow.Size = new System.Drawing.Size(220, 25);
             this.toolStripSlideshow.TabIndex = 11;
-            this.toolStripSlideshow.Visible = false;
             // 
             // toolStripComboBoxImageFormatFilter
             // 
@@ -462,7 +391,6 @@
             this.tabControlModules.Size = new System.Drawing.Size(249, 244);
             this.tabControlModules.TabIndex = 12;
             this.tabControlModules.TabStop = false;
-            this.tabControlModules.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_tabControlModules);
             // 
             // tabPageScreens
             // 
@@ -1135,10 +1063,6 @@
             this.toolStripButtonStopCapture.Text = "Stop Capture";
             this.toolStripButtonStopCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
-            // timerPreviewCapture
-            // 
-            this.timerPreviewCapture.Tick += new System.EventHandler(this.Tick_timerPreviewCapture);
-            // 
             // timerScheduledCaptureStart
             // 
             this.timerScheduledCaptureStart.Interval = 1000;
@@ -1153,37 +1077,11 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.Tick_timerScreenCapture);
             // 
-            // buttonSaveSettings
-            // 
-            this.buttonSaveSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSaveSettings.Location = new System.Drawing.Point(4, 440);
-            this.buttonSaveSettings.Name = "buttonSaveSettings";
-            this.buttonSaveSettings.Size = new System.Drawing.Size(119, 23);
-            this.buttonSaveSettings.TabIndex = 26;
-            this.buttonSaveSettings.TabStop = false;
-            this.buttonSaveSettings.Text = "Save Settings";
-            this.buttonSaveSettings.UseVisualStyleBackColor = true;
-            this.buttonSaveSettings.Click += new System.EventHandler(this.SaveSettings);
-            // 
-            // buttonRestoreDefaults
-            // 
-            this.buttonRestoreDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRestoreDefaults.Location = new System.Drawing.Point(126, 440);
-            this.buttonRestoreDefaults.Name = "buttonRestoreDefaults";
-            this.buttonRestoreDefaults.Size = new System.Drawing.Size(119, 23);
-            this.buttonRestoreDefaults.TabIndex = 27;
-            this.buttonRestoreDefaults.TabStop = false;
-            this.buttonRestoreDefaults.Text = "Restore Defaults";
-            this.buttonRestoreDefaults.UseVisualStyleBackColor = true;
-            this.buttonRestoreDefaults.Click += new System.EventHandler(this.Click_buttonRestoreDefaults);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(851, 488);
-            this.Controls.Add(this.buttonRestoreDefaults);
-            this.Controls.Add(this.buttonSaveSettings);
             this.Controls.Add(this.toolStripScreenCapture);
             this.Controls.Add(this.tabControlModules);
             this.Controls.Add(this.tabControlScreens);
@@ -1200,13 +1098,6 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.tabControlScreens.ResumeLayout(false);
-            this.tabPageScreen1.ResumeLayout(false);
-            this.panelScreen1ImageEditor.ResumeLayout(false);
-            this.panelScreen1ImageEditor.PerformLayout();
-            this.toolStripScreen1ImageEditor.ResumeLayout(false);
-            this.toolStripScreen1ImageEditor.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreen1)).EndInit();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
             this.toolStripSlideshow.ResumeLayout(false);
             this.toolStripSlideshow.PerformLayout();
@@ -1261,8 +1152,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonNextSlide;
         private System.Windows.Forms.ToolStripButton toolStripButtonLastSlide;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxImageFormatFilter;
-        private System.Windows.Forms.TabPage tabPageScreen1;
-        private System.Windows.Forms.PictureBox pictureBoxScreen1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCapture;
         private System.Windows.Forms.TabControl tabControlModules;
@@ -1292,7 +1181,6 @@
         private System.Windows.Forms.ToolStrip toolStripScreenCapture;
         private System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
         private System.Windows.Forms.NumericUpDown numericUpDownSlideSkip;
-        private System.Windows.Forms.Timer timerPreviewCapture;
         private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonOptions;
         private System.Windows.Forms.Timer timerScheduledCaptureStart;
@@ -1302,12 +1190,7 @@
         private System.Windows.Forms.Timer timerScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowSystemTrayIcon;
         private System.Windows.Forms.TabPage tabPageEditors;
-        private System.Windows.Forms.Button buttonSaveSettings;
-        private System.Windows.Forms.Button buttonRestoreDefaults;
         private System.Windows.Forms.TabPage tabPageTriggers;
-        private System.Windows.Forms.Panel panelScreen1ImageEditor;
-        private System.Windows.Forms.ToolStrip toolStripScreen1ImageEditor;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonScreen1Edit;
         private System.Windows.Forms.TabPage tabPageRegions;
         private System.Windows.Forms.TabPage tabPageScreens;
         private System.Windows.Forms.TabPage tabPageSchedule;

@@ -54,7 +54,7 @@ namespace AutoScreenCapture
 
                 textBoxRegionName.Text = string.Empty;
                 textBoxRegionFolder.Text = FileSystem.ScreenshotsFolder;
-                textBoxRegionMacro.Text = MacroParser.RegionMacro;
+                textBoxRegionMacro.Text = MacroParser.DefaultMacro;
                 comboBoxRegionFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownRegionJpegQuality.Value = 100;
                 numericUpDownRegionResolutionRatio.Value = 100;

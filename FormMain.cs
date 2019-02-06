@@ -5,6 +5,9 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
+using AutoScreenCapture.Properties;
+
 namespace AutoScreenCapture
 {
     using System;
@@ -79,7 +82,6 @@ namespace AutoScreenCapture
             if (!Directory.Exists(FileSystem.ApplicationFolder))
             {
                 Directory.CreateDirectory(FileSystem.ApplicationFolder);
-                Directory.CreateDirectory(FileSystem.SlidesFolder);
             }
 
             Settings.Initialize();
@@ -430,8 +432,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// This thread is responsible for finding slides (copies of screenshots that were taken on particular days)
-        /// so we can import them into the slideshow ready for the user to play through what they were doing on the computer.
+        /// This thread is responsible for finding slides.
         /// </summary>
         /// <param name="e"></param>
         private void RunSlideSearch(DoWorkEventArgs e)
@@ -442,14 +443,16 @@ namespace AutoScreenCapture
             }
             else
             {
-                string[] files = FileSystem.GetFiles(FileSystem.SlidesFolder, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                ArrayList slides = ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
-                if (files != null && files.Length > 0)
+                if (slides != null && slides.Count > 0)
                 {
-                    listBoxSlides.Items.AddRange(files);
+                    foreach (string slide in slides)
+                    {
+                        listBoxSlides.Items.Add(slide);
+                    }
                 }
 
-                // If we do find files representing slides then make sure the user can use the slideshow.
                 if (listBoxSlides.Items.Count > 0)
                 {
                     monthCalendar.Enabled = true;
@@ -477,30 +480,13 @@ namespace AutoScreenCapture
             }
             else
             {
-                ArrayList selectedFolders = new ArrayList();
+                ArrayList dates = ScreenshotCollection.GetDates();
 
-                string[] dirs = Directory.GetDirectories(FileSystem.SlidesFolder);
+                DateTime[] boldedDates = new DateTime[dates.Count];
 
-                // Go through each directory found and make sure that the sub-directories match with the format yyyy-MM-dd.
-                for (int i = 0; i < dirs.Length; i++)
+                for (int i = 0; i < dates.Count; i++)
                 {
-                    Regex rgx = new Regex(@"^(?<Year>\d{4})-(?<Month>\d{2})-(?<Day>\d{2})$");
-
-                    string dirPath = Path.GetFileName(dirs[i]);
-
-                    if (rgx.IsMatch(dirPath) && Directory.Exists(dirs[i]) && Directory.GetFiles(dirs[i]).Length > 0 && !selectedFolders.Contains(Path.GetFileName(dirs[i]).ToString()))
-                    {
-                        selectedFolders.Add(Path.GetFileName(dirs[i]).ToString());
-                    }
-                }
-
-                // Also make sure that the dates in the calendar are set to bold for each
-                // of the folders that are found.
-                DateTime[] boldedDates = new DateTime[selectedFolders.Count];
-
-                for (int i = 0; i < selectedFolders.Count; i++)
-                {
-                    boldedDates.SetValue(ConvertFilterToDateTime(selectedFolders[i].ToString()), i);
+                    boldedDates.SetValue(ConvertDateStringToDateTime(dates[i].ToString()), i);
                 }
 
                 monthCalendar.BoldedDates = boldedDates;
@@ -557,13 +543,13 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Converts the filter string into a DateTime object. Used by the RunDateSearch thread so we can set bolded dates in the calendar.
+        /// Converts the string representation of a date into a DateTime object. Used by the RunDateSearch thread so we can set bolded dates in the calendar.
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        private DateTime ConvertFilterToDateTime(string filter)
+        /// <param name="date">A string representation of a date (such as "2019-02-06").</param>
+        /// <returns>A DateTime object based on the provided date string.</returns>
+        private DateTime ConvertDateStringToDateTime(string date)
         {
-            return new DateTime(Convert.ToInt32(filter.Substring(0, 4)), Convert.ToInt32(filter.Substring(5, 2)), Convert.ToInt32(filter.Substring(8, 2)));
+            return new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)), Convert.ToInt32(date.Substring(8, 2)));
         }
 
         /// <summary>
@@ -739,14 +725,6 @@ namespace AutoScreenCapture
             {
                 SaveSettings();
 
-                //if (!string.IsNullOrEmpty(textBoxFolder.Text) && Directory.Exists(textBoxFolder.Text))
-                //{
-                //    Log.Write("Starting new screen capture session in \"" + textBoxFolder.Text + "\"");
-
-                //    textBoxFolder.Text = CorrectDirectoryPath(textBoxFolder.Text);
-
-                //    Log.Write("Macro being used is \"" + textBoxMacro.Text + "\"");
-
                 // Stop the slideshow if it's currently playing.
                 if (Slideshow.Playing)
                 {
@@ -800,8 +778,6 @@ namespace AutoScreenCapture
                 timerScreenCapture.Interval = GetCaptureDelay();
                 timerScreenCapture.Enabled = true;
             }
-
-            //}
         }
 
         /// <summary>
@@ -1285,24 +1261,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Opens Windows Explorer to show the location of the selected slide.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_toolStripMenuItemShowSlideLocation(object sender, EventArgs e)
-        {
-            if (listBoxSlides.SelectedIndex > -1)
-            {
-                string selectedSlide = FileSystem.GetImageFilePath(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
-
-                if (File.Exists(selectedSlide))
-                {
-                    Process.Start(FileSystem.FileManager, "/select,\"" + selectedSlide + "\"");
-                }
-            }
-        }
-
-        /// <summary>
         /// Opens Windows Explorer to show the location of the selected screenshot.
         /// </summary>
         /// <param name="sender"></param>
@@ -1311,12 +1269,12 @@ namespace AutoScreenCapture
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen);
+                //Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide);
 
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
-                {
-                    Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
-                }
+                //if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
+                //{
+                //    Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
+                //}
             }
         }
 
@@ -1463,23 +1421,15 @@ namespace AutoScreenCapture
         {
             contextMenuStripScreenshotPreview.Items.Clear();
 
-            ToolStripMenuItem showSlideLocationToolStripItem = new ToolStripMenuItem("Show Slide Location");
-            showSlideLocationToolStripItem.Click += new EventHandler(Click_toolStripMenuItemShowSlideLocation);
-
             ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
             showScreenshotLocationToolStripItem.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
             ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
             addNewEditorToolStripItem.Click += new EventHandler(Click_addEditorToolStripMenuItem);
 
-            contextMenuStripScreenshotPreview.Items.Add(showSlideLocationToolStripItem);
             contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocationToolStripItem);
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
             contextMenuStripScreenshotPreview.Items.Add(addNewEditorToolStripItem);
-
-            toolStripSplitButtonScreen1Edit.DropDown.Items.Clear();
-
-            toolStripSplitButtonScreen1Edit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
 
             BuildEditorsList();
             BuildTriggersList();
@@ -1548,7 +1498,6 @@ namespace AutoScreenCapture
                     // button at the top of the individual preview image.
 
                     contextMenuStripScreenshotPreview.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
-                    toolStripSplitButtonScreen1Edit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
                     // ****************************************************************************
 
                     // ****************** EDITORS LIST IN EDITORS TAB PAGE ************************
@@ -1746,14 +1695,17 @@ namespace AutoScreenCapture
             // Move down a bit so we can start populating the Screens tab page with a list of Screens.
             yPosScreen += 28;
 
-            foreach (Screen region in formScreen.ScreenCollection)
+            // Clear out the controls of the "Screens" tab control.
+            tabControlScreens.Controls.Clear();
+
+            foreach (Screen screen in formScreen.ScreenCollection)
             {
                 // Add a checkbox so that the user has the ability to remove the selected Screen.
                 CheckBox checkboxScreen = new CheckBox
                 {
                     Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT),
                     Location = new Point(xPosScreen, yPosScreen),
-                    Tag = region,
+                    Tag = screen,
                     TabStop = false
                 };
                 tabPageScreens.Controls.Add(checkboxScreen);
@@ -1765,7 +1717,7 @@ namespace AutoScreenCapture
                     Height = SCREEN_HEIGHT,
                     MaxLength = SCREEN_TEXTBOX_MAX_LENGTH,
                     Location = new Point(xPosScreen + X_POS_SCREEN_TEXTBOX, yPosScreen),
-                    Text = region.Name,
+                    Text = screen.Name,
                     ReadOnly = true,
                     TabStop = false
                 };
@@ -1777,11 +1729,54 @@ namespace AutoScreenCapture
                     Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
                     Location = new Point(xPosScreen + X_POS_SCREEN_BUTTON, yPosScreen),
                     Text = EDIT_BUTTON_TEXT,
-                    Tag = region,
+                    Tag = screen,
                     TabStop = false
                 };
                 buttonChangeScreen.Click += new EventHandler(Click_buttonChangeScreen);
                 tabPageScreens.Controls.Add(buttonChangeScreen);
+
+                // Setup the "Screen" tab page for the current screen with all of its associated controls.
+
+                ToolStripSplitButton toolStripSplitButtonScreen = new ToolStripSplitButton
+                {
+                    Text = "Edit",
+                    Image = Resources.edit
+                };
+
+                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+                foreach (Editor editor in formEditor.EditorCollection)
+                {
+                    if (editor != null && File.Exists(editor.Application))
+                    {
+                        toolStripSplitButtonScreen.DropDown.Items.Add(editor.Name,
+                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    }
+                }
+
+                ToolStrip toolStripScreen = new ToolStrip
+                {
+                    GripStyle = ToolStripGripStyle.Hidden
+                };
+
+                toolStripScreen.Items.Add(toolStripSplitButtonScreen);
+
+                PictureBox pictureBoxScreen = new PictureBox
+                {
+                    BackColor = Color.Black,
+                    Location = new Point(4, 29),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    ContextMenuStrip = contextMenuStripScreenshotPreview
+                };
+
+                TabPage tabPageScreen = new TabPage
+                {
+                    Text = screen.Name
+                };
+
+                tabPageScreen.Controls.Add(toolStripScreen);
+                tabPageScreen.Controls.Add(pictureBoxScreen);
+
+                tabControlScreens.Controls.Add(tabPageScreen);
 
                 // Move down the Screens tab page so we're ready to loop around again and add the next Screen to it.
                 yPosScreen += Y_POS_SCREEN_INCREMENT;
@@ -1979,7 +1974,7 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                RunEditor(editor, ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide, Slideshow.SelectedScreen == 0 ? 1 : Slideshow.SelectedScreen));
+                //RunEditor(editor, ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide));
             }
         }
 
@@ -1991,10 +1986,10 @@ namespace AutoScreenCapture
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
             {
-                for (int i = 0; i <= ScreenCapture.SCREEN_MAX; i++)
-                {
-                    RunEditor(editor, ScreenshotCollection.GetBySlidename(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slidename, i));
-                }
+                //for (int i = 0; i <= ScreenCapture.SCREEN_MAX; i++)
+                //{
+                //    RunEditor(editor, ScreenshotCollection.GetBySlidename(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slidename, i));
+                //}
             }
         }
 
@@ -2333,17 +2328,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void SelectedIndexChanged_tabControlScreens(object sender, EventArgs e)
         {
-            Slideshow.SelectedScreen = tabControlScreens.SelectedIndex <= (ScreenCapture.SCREEN_MAX + 1) ? tabControlScreens.SelectedIndex : 1;
-        }
-
-        /// <summary>
-        /// The timer for showing a preview of what a screen capture session would look like.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Tick_timerPreviewCapture(object sender, EventArgs e)
-        {
-            TakePreviewScreenshots();
+            Slideshow.SelectedScreen = (tabControlScreens.SelectedIndex + 1);
         }
 
         /// <summary>
@@ -2382,11 +2367,8 @@ namespace AutoScreenCapture
         private void TakeScreenshot()
         {
             int count = 0;
-            string screenName = string.Empty;
 
             ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
-
-            
 
             ScreenCapture.Count++;
 
@@ -2398,14 +2380,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Takes the screenshots as a preview.
-        /// </summary>
-        private void TakePreviewScreenshots()
-        {
-            DisplayImages(true);
-        }
-
-        /// <summary>
         /// Checks the capture limit when the checkbox is selected.
         /// </summary>
         /// <param name="sender"></param>
@@ -2413,42 +2387,6 @@ namespace AutoScreenCapture
         private void CheckedChanged_checkBoxCaptureLimit(object sender, EventArgs e)
         {
             CaptureLimitCheck();
-        }
-
-        /// <summary>
-        /// Displays the screenshot images.
-        /// </summary>
-        /// <param name="preview"></param>
-        private void DisplayImages(bool preview)
-        {
-            ArrayList images = new ArrayList();
-
-            int count = 0;
-
-            //foreach (Screen screen in Screen.AllScreens)
-            //{
-            //    count++;
-
-            //    if (count <= ScreenCapture.SCREEN_MAX)
-            //    {
-            //        if (preview && CaptureScreenAllowed(count))
-            //        {
-            //            Bitmap bitmap = ScreenCapture.GetScreenBitmap(screen.Bounds.X, screen.Bounds.Y, screen.Bounds.Width, screen.Bounds.Height, 100, true);
-
-            //            if (bitmap != null)
-            //            {
-            //                images.Add(bitmap);
-            //            }
-            //        }
-            //    }
-            //}
-
-            if (!preview)
-            {
-                images = FileSystem.GetImages(Slideshow.SelectedSlide, monthCalendar.SelectionStart);
-            }
-
-            GC.Collect();
         }
 
         /// <summary>
@@ -2580,30 +2518,6 @@ namespace AutoScreenCapture
         private void ValueChanged_numericUpDownSlideshowDelay(object sender, EventArgs e)
         {
             EnablePlaySlideshow();
-        }
-
-        /// <summary>
-        /// Shows the appropriate set of controls for the associated module tab that's selected.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectedIndexChanged_tabControlModules(object sender, EventArgs e)
-        {
-            toolStripSlideshow.Visible = false;
-            toolStripScreenCapture.Visible = false;
-
-            switch (tabControlModules.SelectedTab.Text)
-            {
-                case "Screen":
-                    toolStripScreenCapture.Visible = true;
-                    toolStripScreenCapture.BringToFront();
-                    break;
-
-                case "Slideshow":
-                    toolStripSlideshow.Visible = true;
-                    toolStripSlideshow.BringToFront();
-                    break;
-            }
         }
 
         /// <summary>
@@ -2806,7 +2720,7 @@ namespace AutoScreenCapture
             foreach (Region region in formRegion.RegionCollection)
             {
                 ScreenCapture.TakeScreenshot(
-                    region.Folder + MacroParser.ParseTags(region.Macro, region.Name),
+                    region.Folder + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     region.Format,
                     region.JpegQuality,
                     region.ResolutionRatio,
@@ -2823,8 +2737,13 @@ namespace AutoScreenCapture
         {
             foreach (Screen screen in formScreen.ScreenCollection)
             {
+                //Screenshot screenshot = new Screenshot
+                //{
+                //    Date = ScreenCapture.DateTimePreviousScreenshot.ToString(MacroParser.DateFormat)
+                //};
+
                 ScreenCapture.TakeScreenshot(
-                    screen.Folder + MacroParser.ParseTags(screen.Macro, screen.Name),
+                    screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                     screen.Format,
                     screen.JpegQuality,
                     screen.ResolutionRatio,
@@ -2872,7 +2791,7 @@ namespace AutoScreenCapture
                                        ScreenCapture.DateTimeNextScreenshot.ToLongTimeString();
                 }
 
-                notifyIcon.Text = "Next screenshot in " + remainingTimeStr;
+                notifyIcon.Text = "Next capture in " + remainingTimeStr;
             }
             else
             {

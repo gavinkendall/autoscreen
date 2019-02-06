@@ -12,27 +12,22 @@ namespace AutoScreenCapture
 
     public class Screenshot
     {
-        public int Index { get; set; }
         public string Date { get; set; }
         public string Path { get; set; }
-        public int Screen { get; set; }
         public ImageFormat Format { get; set; }
-        public string Filename { get; set; }
-        public string Slidename { get; set; }
+        public string Slide { get; set; }
 
         public Screenshot()
         {
+
         }
 
-        public Screenshot(DateTime dateTime, string path, int screen, ImageFormat format, int index)
+        public Screenshot(DateTime dateTime, string path, ImageFormat format)
         {
-            Index = index;
             Date = dateTime.ToString(MacroParser.DateFormat);
             Path = path;
-            Screen = screen;
             Format = format;
-            Filename = System.IO.Path.GetFileName(path);
-            Slidename = dateTime.ToString(MacroParser.DateFormat) + " " + dateTime.ToString(MacroParser.TimeFormat) + " " + format;
+            Slide = dateTime.ToString(MacroParser.DateFormat) + " " + dateTime.ToString(MacroParser.TimeFormat) + " " + format.Name;
 
             string directory = System.IO.Path.GetDirectoryName(path);
 
