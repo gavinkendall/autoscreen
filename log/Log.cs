@@ -49,7 +49,6 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
-
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
                                          DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
                                          ex.Message);

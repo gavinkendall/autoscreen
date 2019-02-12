@@ -140,7 +140,7 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Macro = textBoxRegionMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxRegionFormat.Text);
                         RegionCollection.Get(RegionObject).JpegQuality = (int)numericUpDownRegionJpegQuality.Value;
-                        RegionCollection.Get(RegionObject).ResolutionRatio = (int) numericUpDownRegionResolutionRatio.Value;
+                        RegionCollection.Get(RegionObject).ResolutionRatio = (int)numericUpDownRegionResolutionRatio.Value;
                         RegionCollection.Get(RegionObject).Mouse = checkBoxRegionMouse.Checked;
                         RegionCollection.Get(RegionObject).X = (int)numericUpDownRegionX.Value;
                         RegionCollection.Get(RegionObject).Y = (int)numericUpDownRegionY.Value;

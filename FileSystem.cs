@@ -8,10 +8,7 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.Collections;
-    using System.Drawing;
     using System.IO;
-    using System.Text.RegularExpressions;
 
     public static class FileSystem
     {
@@ -30,15 +27,18 @@ namespace AutoScreenCapture
 
         // Debug
         public static readonly string DebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+
         public static readonly string LogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\logs\\";
 
         // Settings
         public static readonly string UserSettingsFile = "user.xml";
+
         public static readonly string ApplicationSettingsFile = "application.xml";
         public static readonly string SettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
 
         // Editors, Regions, Triggers, and Screenshots
         public static readonly string EditorsFile = "editors.xml";
+
         public static readonly string RegionsFile = "regions.xml";
         public static readonly string ScreensFile = "screens.xml";
         public static readonly string TriggersFile = "triggers.xml";

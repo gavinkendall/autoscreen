@@ -20,7 +20,6 @@ namespace AutoScreenCapture
 
         public Screen()
         {
-
         }
 
         public Screen(string name, string folder, string macro, int component, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse)

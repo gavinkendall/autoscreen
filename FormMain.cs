@@ -5,7 +5,6 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-
 using AutoScreenCapture.Properties;
 
 namespace AutoScreenCapture
@@ -44,8 +43,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
-        private delegate void UpdateScreenshotPreviewDelegate();
-
         private delegate void RunSlideSearchDelegate(DoWorkEventArgs e);
 
         private delegate void RunDateSearchDelegate(DoWorkEventArgs e);
@@ -64,10 +61,18 @@ namespace AutoScreenCapture
         /// The various regular expressions used in the parsing of the command line arguments.
         /// </summary>
         private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
+
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
-        private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
-        private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
-        private const string REGEX_COMMAND_LINE_DELAY = @"^-delay=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
+
+        private const string REGEX_COMMAND_LINE_STOPAT =
+            @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+
+        private const string REGEX_COMMAND_LINE_STARTAT =
+            @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+
+        private const string REGEX_COMMAND_LINE_DELAY =
+            @"^-delay=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
+
         private const string REGEX_COMMAND_LINE_LOCK = "^-lock$";
         private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
 
@@ -112,7 +117,8 @@ namespace AutoScreenCapture
             SearchDates();
 
             // Changing the value of this property will automatically call SearchSlides.
-            toolStripComboBoxImageFormatFilter.SelectedIndex = Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value);
+            toolStripComboBoxImageFormatFilter.SelectedIndex =
+                Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value);
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -186,14 +192,18 @@ namespace AutoScreenCapture
 
                 BuildScreenshotPreviewContextualMenu();
 
-                Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
+                Log.Write(
+                    "Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
                 ScreenshotCollection.Load(_imageFormatCollection);
 
-                int screenshotDelay = Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
-                int slideshowDelay = Convert.ToInt32(Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value);
+                int screenshotDelay =
+                    Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
+                int slideshowDelay =
+                    Convert.ToInt32(Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value);
 
-                decimal screenshotDelayHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Hours);
+                decimal screenshotDelayHours =
+                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Hours);
                 decimal screenshotDelayMinutes =
                     Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Minutes);
                 decimal screenshotDelaySeconds =
@@ -220,18 +230,23 @@ namespace AutoScreenCapture
                 numericUpDownSlideshowDelaySeconds.Value = slideshowDelaySeconds;
                 numericUpDownSlideshowDelayMilliseconds.Value = slideshowDelayMilliseconds;
 
-                numericUpDownSlideSkip.Value = Convert.ToInt32(Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value);
-                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value);
+                numericUpDownSlideSkip.Value =
+                    Convert.ToInt32(Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value);
+                numericUpDownCaptureLimit.Value =
+                    Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value);
 
-                checkBoxSlideSkip.Checked = Convert.ToBoolean(Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value);
-                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value);
+                checkBoxSlideSkip.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value);
+                checkBoxCaptureLimit.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value);
                 checkBoxInitialScreenshot.Checked =
                     Convert.ToBoolean(Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value);
 
                 checkBoxPassphraseLock.Checked =
                     Convert.ToBoolean(Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value);
 
-                textBoxPassphrase.Text = Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value.ToString();
+                textBoxPassphrase.Text =
+                    Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value.ToString();
 
                 if (textBoxPassphrase.Text.Length > 0)
                 {
@@ -245,23 +260,40 @@ namespace AutoScreenCapture
                     checkBoxPassphraseLock.Enabled = false;
                 }
 
-                toolStripMenuItemShowSystemTrayIcon.Checked = Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value);
+                toolStripMenuItemShowSystemTrayIcon.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value);
 
-                checkBoxScheduleStopAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value);
-                checkBoxScheduleStartAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value);
+                checkBoxScheduleStopAt.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value);
+                checkBoxScheduleStartAt.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value);
 
-                checkBoxSaturday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value);
-                checkBoxSunday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value);
-                checkBoxMonday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value);
-                checkBoxTuesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value);
-                checkBoxWednesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value);
-                checkBoxThursday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value);
-                checkBoxFriday.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value);
+                checkBoxSaturday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value);
+                checkBoxSunday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value);
+                checkBoxMonday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value);
+                checkBoxTuesday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value);
+                checkBoxWednesday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value);
+                checkBoxThursday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value);
+                checkBoxFriday.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value);
 
-                checkBoxScheduleOnTheseDays.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value);
+                checkBoxScheduleOnTheseDays.Checked =
+                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value);
 
-                dateTimePickerScheduleStopAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStopAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value.ToString());
-                dateTimePickerScheduleStartAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStartAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value.ToString());
+                dateTimePickerScheduleStopAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStopAtValue",
+                        defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0))
+                    .Value
+                    .ToString());
+                dateTimePickerScheduleStartAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStartAtValue",
+                        defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0))
+                    .Value
+                    .ToString());
 
                 if (Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value) < 0)
                 {
@@ -374,24 +406,26 @@ namespace AutoScreenCapture
 
             Regex rgx = new Regex(@"^(?<ImageFormatFilter>\*\.(?<ImageFormat>([a-z]{3,4})))$");
 
-            if (rgx.IsMatch(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex].ToString()))
+            if (rgx.IsMatch(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex]
+                .ToString()))
             {
-                Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value = rgx.Match(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex].ToString()).Groups["ImageFormatFilter"].Value;
+                Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value = rgx
+                    .Match(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex]
+                        .ToString()).Groups["ImageFormatFilter"].Value;
             }
 
-            Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
+            Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value =
+                toolStripComboBoxImageFormatFilter.SelectedIndex;
 
             SearchSlides();
         }
 
         /// <summary>
-        /// Search for all the date-stamped folders storing slides. They should be in the format yyyy-mm-dd.
-        /// Any folders found matching this format are then bolded in the calendar so the user
-        /// understands that these were the days when screen capture sessions had been running.
+        /// Searches for dates. They should be in the format yyyy-mm-dd.
         /// </summary>
         private void SearchDates()
         {
-            ClearPreview();
+            ClearScreenPreview();
             DisableToolStripButtons();
 
             monthCalendar.BoldedDates = null;
@@ -409,7 +443,7 @@ namespace AutoScreenCapture
         {
             listBoxSlides.BeginUpdate();
 
-            ClearPreview();
+            ClearScreenPreview();
             DisableToolStripButtons();
 
             if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
@@ -419,8 +453,7 @@ namespace AutoScreenCapture
 
             listBoxSlides.EndUpdate();
 
-            // It's very important here to disable all the slideshow controls if there were
-            // no files found. There's no point keeping the controls enabled if there are no files.
+            // It's very important here to disable all the slideshow controls if there were slides found.
             if (listBoxSlides.Items.Count == 0)
             {
                 toolStripButtonFirstSlide.Enabled = false;
@@ -443,7 +476,8 @@ namespace AutoScreenCapture
             }
             else
             {
-                ArrayList slides = ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                ArrayList slides =
+                    ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 if (slides != null && slides.Count > 0)
                 {
@@ -493,7 +527,10 @@ namespace AutoScreenCapture
             }
         }
 
-
+        /// <summary>
+        /// Saves the user's settings.
+        /// </summary>
+        /// <param name="e"></param>
         private void SaveSettings(DoWorkEventArgs e)
         {
             try
@@ -508,26 +545,44 @@ namespace AutoScreenCapture
 
                     Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value = numericUpDownSlideSkip.Value;
                     Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                    Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = toolStripComboBoxImageFormatFilter.SelectedIndex;
+                    Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value =
+                        toolStripComboBoxImageFormatFilter.SelectedIndex;
                     Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value = GetCaptureDelay();
                     Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value = GetSlideshowDelay();
                     Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value = checkBoxSlideSkip.Checked;
-                    Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
-                    Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
-                    Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value = toolStripMenuItemShowSystemTrayIcon.Checked;
-                    Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value = checkBoxScheduleStopAt.Checked;
-                    Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value = checkBoxScheduleStartAt.Checked;
+                    Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value =
+                        checkBoxCaptureLimit.Checked;
+                    Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value =
+                        checkBoxInitialScreenshot.Checked;
+                    Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value =
+                        toolStripMenuItemShowSystemTrayIcon.Checked;
+                    Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value =
+                        checkBoxScheduleStopAt.Checked;
+                    Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value =
+                        checkBoxScheduleStartAt.Checked;
                     Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value = checkBoxSunday.Checked;
                     Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value = checkBoxMonday.Checked;
-                    Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value = checkBoxTuesday.Checked;
-                    Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value = checkBoxWednesday.Checked;
-                    Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value = checkBoxThursday.Checked;
+                    Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value =
+                        checkBoxTuesday.Checked;
+                    Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value =
+                        checkBoxWednesday.Checked;
+                    Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value =
+                        checkBoxThursday.Checked;
                     Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value = checkBoxFriday.Checked;
-                    Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value = checkBoxSaturday.Checked;
-                    Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value = checkBoxScheduleOnTheseDays.Checked;
-                    Settings.User.GetByKey("CaptureStopAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value = dateTimePickerScheduleStopAt.Value;
-                    Settings.User.GetByKey("CaptureStartAtValue", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value = dateTimePickerScheduleStartAt.Value;
-                    Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = checkBoxPassphraseLock.Checked;
+                    Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value =
+                        checkBoxSaturday.Checked;
+                    Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value =
+                        checkBoxScheduleOnTheseDays.Checked;
+                    Settings.User.GetByKey("CaptureStopAtValue",
+                            defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0,
+                                0))
+                        .Value = dateTimePickerScheduleStopAt.Value;
+                    Settings.User.GetByKey("CaptureStartAtValue",
+                            defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0,
+                                0))
+                        .Value = dateTimePickerScheduleStartAt.Value;
+                    Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value =
+                        checkBoxPassphraseLock.Checked;
                     Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
                     Settings.User.GetByKey("Schedule", defaultValue: false).Value = timerScheduledCaptureStart.Enabled;
 
@@ -549,7 +604,8 @@ namespace AutoScreenCapture
         /// <returns>A DateTime object based on the provided date string.</returns>
         private DateTime ConvertDateStringToDateTime(string date)
         {
-            return new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)), Convert.ToInt32(date.Substring(8, 2)));
+            return new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)),
+                Convert.ToInt32(date.Substring(8, 2)));
         }
 
         /// <summary>
@@ -731,13 +787,13 @@ namespace AutoScreenCapture
                     Slideshow.Stop();
                 }
 
-                // Stop the folder search thread if it's busy.
+                // Stop the date search thread if it's busy.
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
                     runDateSearchThread.CancelAsync();
                 }
 
-                // Stop the file search thread if it's busy.
+                // Stop the slide search thread if it's busy.
                 if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
                 {
                     runSlideSearchThread.CancelAsync();
@@ -748,7 +804,7 @@ namespace AutoScreenCapture
 
                 // Setup the properties for the screen capture class.
                 ScreenCapture.Delay = GetCaptureDelay();
-                ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
+                ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
 
                 if (checkBoxPassphraseLock.Checked)
                 {
@@ -781,7 +837,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Whenever the user clicks on a screenshot in the list of screenshots then make sure to update the preview of screenshots.
+        /// Whenever the user clicks on a screenshot in the list of screenshots then make sure to update the appropriate image.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -789,6 +845,51 @@ namespace AutoScreenCapture
         {
             Slideshow.Index = listBoxSlides.SelectedIndex;
             Slideshow.Count = listBoxSlides.Items.Count;
+
+            if (Slideshow.Index == (Slideshow.Count - 1))
+            {
+                StopSlideshow();
+            }
+
+            if (Slideshow.Index == 0)
+            {
+                toolStripButtonFirstSlide.Enabled = false;
+                toolStripButtonPreviousSlide.Enabled = false;
+            }
+            else
+            {
+                toolStripButtonFirstSlide.Enabled = true;
+                toolStripButtonPreviousSlide.Enabled = true;
+            }
+
+            if ((Slideshow.Count - 1) <= Slideshow.Index)
+            {
+                toolStripButtonNextSlide.Enabled = false;
+                toolStripButtonLastSlide.Enabled = false;
+            }
+            else
+            {
+                toolStripButtonNextSlide.Enabled = true;
+                toolStripButtonLastSlide.Enabled = true;
+            }
+
+            if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
+            {
+                Slideshow.SelectedSlide = listBoxSlides.Items[Slideshow.Index].ToString();
+
+                foreach (TabPage tabPage in tabControlScreens.TabPages)
+                {
+                    Control[] controls = tabPage.Controls.Find("pictureBox", false);
+
+                    if (controls != null && controls.Length == 1)
+                    {
+                        PictureBox pictureBox = (PictureBox)controls[0];
+
+                        pictureBox.Image =
+                            ScreenCapture.GetImageByPath(ScreenshotCollection.GetBySlide(listBoxSlides.Text).Path);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -810,7 +911,9 @@ namespace AutoScreenCapture
         /// <returns></returns>
         private int GetCaptureDelay()
         {
-            return ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value, (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, (int)numericUpDownMillisecondsInterval.Value);
+            return ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                (int)numericUpDownMillisecondsInterval.Value);
         }
 
         /// <summary>
@@ -819,7 +922,9 @@ namespace AutoScreenCapture
         /// <returns></returns>
         private int GetSlideshowDelay()
         {
-            return ConvertIntoMilliseconds((int)numericUpDownSlideshowDelayHours.Value, (int)numericUpDownSlideshowDelayMinutes.Value, (int)numericUpDownSlideshowDelaySeconds.Value, (int)numericUpDownSlideshowDelayMilliseconds.Value);
+            return ConvertIntoMilliseconds((int)numericUpDownSlideshowDelayHours.Value,
+                (int)numericUpDownSlideshowDelayMinutes.Value, (int)numericUpDownSlideshowDelaySeconds.Value,
+                (int)numericUpDownSlideshowDelayMilliseconds.Value);
         }
 
         /// <summary>
@@ -864,16 +969,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Clears the screenshots preview when searching for files and folders.
+        /// Clears the screenshot images in the interface when searching for dates and slides.
         /// </summary>
-        private void ClearPreview()
+        private void ClearScreenPreview()
         {
             Slideshow.Clear();
             listBoxSlides.Items.Clear();
         }
 
         /// <summary>
-        /// Disables the tool strip buttons when searching for files and folders.
+        /// Disables the tool strip buttons when searching for dates and slides.
         /// </summary>
         private void DisableToolStripButtons()
         {
@@ -917,7 +1022,8 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
             }
 
-            toolStripComboBoxImageFormatFilter.SelectedIndex = (int)Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value;
+            toolStripComboBoxImageFormatFilter.SelectedIndex =
+                (int)Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value;
         }
 
         /// <summary>
@@ -1012,7 +1118,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Exits the application.
+        /// Exits the application from the system tray icon menu.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1094,6 +1200,11 @@ namespace AutoScreenCapture
             RunDateSearch(e);
         }
 
+        /// <summary>
+        /// Runs the save settings thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoWork_runSaveSettingsThread(object sender, DoWorkEventArgs e)
         {
             SaveSettings(e);
@@ -1125,7 +1236,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Figures out if the "Start Screen Capture" controls should be enabled or disabled.
+        /// Figures out if the "Start Capture" controls should be enabled or disabled.
         /// </summary>
         private void EnableStartScreenCapture()
         {
@@ -1161,7 +1272,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Enables the "Stop Screen Capture" controls.
+        /// Enables the "Stop Capture" controls.
         /// </summary>
         private void EnableStopScreenCapture()
         {
@@ -1215,21 +1326,6 @@ namespace AutoScreenCapture
             PlaySlideshow();
         }
 
-        ///// <summary>
-        ///// Opens the standard Windows folder browser for the user to choose a folder for containing the screenshots.
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void Click_buttonBrowseFolder(object sender, EventArgs e)
-        //{
-        //    FolderBrowserDialog browser = new FolderBrowserDialog();
-
-        //    if (browser.ShowDialog() == DialogResult.OK)
-        //    {
-        //        textBoxFolder.Text = browser.SelectedPath;
-        //    }
-        //}
-
         /// <summary>
         /// Shows the interface.
         /// </summary>
@@ -1257,7 +1353,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_toolStripMenuItemAbout(object sender, EventArgs e)
         {
-            MessageBox.Show(Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + " (\"Dalek\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
+                Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value +
+                " (\"Dalek\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -1269,12 +1369,13 @@ namespace AutoScreenCapture
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
-                //Screenshot selectedScreenshot = ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide);
+                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide);
 
-                //if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
-                //{
-                //    Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
-                //}
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
+                    File.Exists(selectedScreenshot.Path))
+                {
+                    Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
+                }
             }
         }
 
@@ -1346,9 +1447,12 @@ namespace AutoScreenCapture
                     if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
                     {
                         int hours = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Seconds"].Value);
-                        int milliseconds = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Milliseconds"].Value);
+                        int minutes =
+                            Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds =
+                            Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Seconds"].Value);
+                        int milliseconds =
+                            Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Milliseconds"].Value);
 
                         numericUpDownHoursInterval.Value = hours;
                         numericUpDownMinutesInterval.Value = minutes;
@@ -1361,10 +1465,13 @@ namespace AutoScreenCapture
                         isScheduled = true;
 
                         int hours = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
+                        int minutes =
+                            Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds =
+                            Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
 
-                        dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+                        dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
+                            DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStartAt.Checked = true;
                     }
@@ -1374,10 +1481,13 @@ namespace AutoScreenCapture
                         isScheduled = true;
 
                         int hours = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
+                        int minutes =
+                            Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds =
+                            Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
 
-                        dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+                        dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
+                            DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStopAt.Checked = true;
                     }
@@ -1422,7 +1532,8 @@ namespace AutoScreenCapture
             contextMenuStripScreenshotPreview.Items.Clear();
 
             ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
-            showScreenshotLocationToolStripItem.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+            showScreenshotLocationToolStripItem.Click +=
+                new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
             ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
             addNewEditorToolStripItem.Click += new EventHandler(Click_addEditorToolStripMenuItem);
@@ -1497,7 +1608,8 @@ namespace AutoScreenCapture
                     // Add the Editor to the screenshot preview contextual menu and to each "Edit"
                     // button at the top of the individual preview image.
 
-                    contextMenuStripScreenshotPreview.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    contextMenuStripScreenshotPreview.Items.Add(editor.Name,
+                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
                     // ****************************************************************************
 
                     // ****************** EDITORS LIST IN EDITORS TAB PAGE ************************
@@ -1743,7 +1855,8 @@ namespace AutoScreenCapture
                     Image = Resources.edit
                 };
 
-                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null,
+                    Click_addEditorToolStripMenuItem);
                 foreach (Editor editor in formEditor.EditorCollection)
                 {
                     if (editor != null && File.Exists(editor.Application))
@@ -1762,10 +1875,12 @@ namespace AutoScreenCapture
 
                 PictureBox pictureBoxScreen = new PictureBox
                 {
+                    Name = "pictureBox",
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    ContextMenuStrip = contextMenuStripScreenshotPreview
+                    ContextMenuStrip = contextMenuStripScreenshotPreview,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
                 };
 
                 TabPage tabPageScreen = new TabPage
@@ -1775,6 +1890,9 @@ namespace AutoScreenCapture
 
                 tabPageScreen.Controls.Add(toolStripScreen);
                 tabPageScreen.Controls.Add(pictureBoxScreen);
+
+                pictureBoxScreen.Width = (tabPageScreen.Width - 10);
+                pictureBoxScreen.Height = (tabPageScreen.Height - 30);
 
                 tabControlScreens.Controls.Add(tabPageScreen);
 
@@ -1974,7 +2092,7 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                //RunEditor(editor, ScreenshotCollection.GetBySlidename(Slideshow.SelectedSlide));
+                RunEditor(editor, ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide));
             }
         }
 
@@ -1986,10 +2104,9 @@ namespace AutoScreenCapture
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
             {
-                //for (int i = 0; i <= ScreenCapture.SCREEN_MAX; i++)
-                //{
-                //    RunEditor(editor, ScreenshotCollection.GetBySlidename(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slidename, i));
-                //}
+                RunEditor(editor,
+                    ScreenshotCollection.GetBySlide(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1)
+                        .Slide));
             }
         }
 
@@ -2002,9 +2119,11 @@ namespace AutoScreenCapture
         {
             // Execute the chosen image editor. If the %screenshot% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
-            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && File.Exists(screenshot.Path)))
+            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
+                                   File.Exists(screenshot.Path)))
             {
-                Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
+                Process.Start(editor.Application,
+                    editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
             }
         }
 
@@ -2343,7 +2462,8 @@ namespace AutoScreenCapture
                 StopScreenCapture();
             }
 
-            if (ScreenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN && ScreenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
+            if (ScreenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN &&
+                ScreenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
             {
                 if (ScreenCapture.Count < ScreenCapture.Limit)
                 {
@@ -2362,7 +2482,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Takes a screenshot of each available screen.
+        /// Takes a screenshot of each available region and screen.
         /// </summary>
         private void TakeScreenshot()
         {
@@ -2448,15 +2568,15 @@ namespace AutoScreenCapture
                 if (checkBoxScheduleOnTheseDays.Checked)
                 {
                     if (((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
                         ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-                        (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
-                        (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
+                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
+                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
                     {
                         StartScreenCapture();
                     }
@@ -2485,15 +2605,15 @@ namespace AutoScreenCapture
                 if (checkBoxScheduleOnTheseDays.Checked)
                 {
                     if (((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-                        (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
+                         (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
                         ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-                        (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
-                        (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second)))
+                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
+                         (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second)))
                     {
                         StopScreenCapture();
                     }
@@ -2558,7 +2678,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Determine if we need to show "Lock: On" or "Lock: Off" and if we need to lock the screen capture session or not.
+        /// Determine if we need to lock the screen capture session or not.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2594,75 +2714,14 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Saves the user's settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveSettings(object sender, EventArgs e)
         {
             SaveSettings();
-        }
-
-        private void Click_buttonRestoreDefaults(object sender, EventArgs e)
-        {
-            Log.Write("Restoring default settings.");
-
-            numericUpDownHoursInterval.Value = 0;
-            numericUpDownMinutesInterval.Value = CAPTURE_DELAY_DEFAULT_IN_MINUTES;
-            numericUpDownSecondsInterval.Value = 0;
-            numericUpDownMillisecondsInterval.Value = 0;
-
-            numericUpDownSlideshowDelayHours.Value = 0;
-            numericUpDownSlideshowDelayMinutes.Value = 0;
-            numericUpDownSlideshowDelaySeconds.Value = 1;
-            numericUpDownSlideshowDelayMilliseconds.Value = 0;
-
-            numericUpDownSlideSkip.Value = 10;
-            numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
-
-            checkBoxSlideSkip.Checked = false;
-            checkBoxCaptureLimit.Checked = false;
-            checkBoxInitialScreenshot.Checked = true;
-
-            toolStripMenuItemShowSystemTrayIcon.Checked = true;
-
-            checkBoxScheduleStopAt.Checked = false;
-            checkBoxScheduleStartAt.Checked = false;
-
-            checkBoxSaturday.Checked = false;
-            checkBoxSunday.Checked = false;
-            checkBoxMonday.Checked = false;
-            checkBoxTuesday.Checked = false;
-            checkBoxWednesday.Checked = false;
-            checkBoxThursday.Checked = false;
-            checkBoxFriday.Checked = false;
-
-            checkBoxScheduleOnTheseDays.Checked = false;
-
-            dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
-            dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0);
-
-            DisableSchedule();
-
-            Log.Write("Default settings restored.");
-
-            SaveSettings();
-        }
-
-        private void pictureBoxScreenshotPreviewMonitor1_DoubleClick(object sender, EventArgs e)
-        {
-            tabControlScreens.SelectedIndex = 1;
-        }
-
-        private void pictureBoxScreenshotPreviewMonitor2_DoubleClick(object sender, EventArgs e)
-        {
-            tabControlScreens.SelectedIndex = 2;
-        }
-
-        private void pictureBoxScreenshotPreviewMonitor3_DoubleClick(object sender, EventArgs e)
-        {
-            tabControlScreens.SelectedIndex = 3;
-        }
-
-        private void pictureBoxScreenshotPreviewMonitor4_DoubleClick(object sender, EventArgs e)
-        {
-            tabControlScreens.SelectedIndex = 4;
         }
 
         private void RunTriggersOfConditionType(TriggerConditionType conditionType)
@@ -2720,16 +2779,18 @@ namespace AutoScreenCapture
             foreach (Region region in formRegion.RegionCollection)
             {
                 ScreenCapture.TakeScreenshot(
-                    region.Folder + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
-                    region.Format,
-                    region.JpegQuality,
-                    region.ResolutionRatio,
-                    region.Mouse,
-                    region.X,
-                    region.Y,
-                    region.Width,
-                    region.Height
-                    );
+                    name: region.Name,
+                    path: region.Folder + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
+                    format: region.Format,
+                    jpegQuality: region.JpegQuality,
+                    resolutionRatio: region.ResolutionRatio,
+                    mouse: region.Mouse,
+                    x: region.X,
+                    y: region.Y,
+                    width: region.Width,
+                    height: region.Height,
+                    addToScreenshotCollection: false // Since this is a region capture we won't be including it in the slideshow so don't add it to the screenshot collection
+                );
             }
         }
 
@@ -2737,21 +2798,18 @@ namespace AutoScreenCapture
         {
             foreach (Screen screen in formScreen.ScreenCollection)
             {
-                //Screenshot screenshot = new Screenshot
-                //{
-                //    Date = ScreenCapture.DateTimePreviousScreenshot.ToString(MacroParser.DateFormat)
-                //};
-
                 ScreenCapture.TakeScreenshot(
-                    screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
-                    screen.Format,
-                    screen.JpegQuality,
-                    screen.ResolutionRatio,
-                    screen.Mouse,
-                    formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                    formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                    formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                    formScreen.ScreenDictionary[screen.Component].Bounds.Height
+                    name: screen.Name,
+                    path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                    format: screen.Format,
+                    jpegQuality: screen.JpegQuality,
+                    resolutionRatio: screen.ResolutionRatio,
+                    mouse: screen.Mouse,
+                    x: formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                    y: formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                    width: formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                    height: formScreen.ScreenDictionary[screen.Component].Bounds.Height,
+                    addToScreenshotCollection: true
                 );
             }
         }
@@ -2795,7 +2853,9 @@ namespace AutoScreenCapture
             }
             else
             {
-                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
+                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value +
+                                  " (" + Settings.Application
+                                      .GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
             }
         }
     }

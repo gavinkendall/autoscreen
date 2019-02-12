@@ -14,7 +14,6 @@ namespace AutoScreenCapture
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using System.Windows.Forms;
 
     public static class ScreenCapture
     {
@@ -93,6 +92,11 @@ namespace AutoScreenCapture
         /// </summary>
         public static TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextScreenshot.Subtract(DateTime.Now).Duration(); } }
 
+        public static Image GetImageByPath(string path)
+        {
+            return Image.FromFile(path);
+        }
+
         public static Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
         {
             try
@@ -106,10 +110,10 @@ namespace AutoScreenCapture
                         resolutionRatio = 100;
                     }
 
-                    float imageResolutionRatio = (float) resolutionRatio / 100;
+                    float imageResolutionRatio = (float)resolutionRatio / 100;
 
-                    int destinationWidth = (int) (width * imageResolutionRatio);
-                    int destinationHeight = (int) (height * imageResolutionRatio);
+                    int destinationWidth = (int)(width * imageResolutionRatio);
+                    int destinationHeight = (int)(height * imageResolutionRatio);
 
                     Bitmap bitmapSource = new Bitmap(width, height);
                     Graphics graphicsSource = Graphics.FromImage(bitmapSource);
@@ -199,7 +203,7 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
+        public static void TakeScreenshot(string name, string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, bool addToScreenshotCollection)
         {
             try
             {
@@ -209,7 +213,10 @@ namespace AutoScreenCapture
 
                     if (bitmap != null)
                     {
-                        ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format));
+                        if (addToScreenshotCollection)
+                        {
+                            ScreenshotCollection.Add(new Screenshot(name, DateTimePreviousScreenshot, path, format));
+                        }
 
                         SaveToFile(path, format, jpegQuality, bitmap);
 

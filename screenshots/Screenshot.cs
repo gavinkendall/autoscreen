@@ -12,6 +12,7 @@ namespace AutoScreenCapture
 
     public class Screenshot
     {
+        public string Name { get; set; }
         public string Date { get; set; }
         public string Path { get; set; }
         public ImageFormat Format { get; set; }
@@ -19,11 +20,11 @@ namespace AutoScreenCapture
 
         public Screenshot()
         {
-
         }
 
-        public Screenshot(DateTime dateTime, string path, ImageFormat format)
+        public Screenshot(string name, DateTime dateTime, string path, ImageFormat format)
         {
+            Name = name;
             Date = dateTime.ToString(MacroParser.DateFormat);
             Path = path;
             Format = format;

@@ -990,6 +990,7 @@
             this.checkBoxPassphraseLock.TabStop = false;
             this.checkBoxPassphraseLock.Text = "Lock";
             this.checkBoxPassphraseLock.UseVisualStyleBackColor = true;
+            this.checkBoxPassphraseLock.CheckedChanged += new System.EventHandler(this.CheckedChanged_checkBoxPassphraseLock);
             // 
             // buttonClearPassphrase
             // 
@@ -1000,6 +1001,7 @@
             this.buttonClearPassphrase.TabStop = false;
             this.buttonClearPassphrase.Text = "Clear";
             this.buttonClearPassphrase.UseVisualStyleBackColor = true;
+            this.buttonClearPassphrase.Click += new System.EventHandler(this.Click_buttonClearPassphrase);
             // 
             // labelPasswordDescription
             // 
@@ -1020,6 +1022,7 @@
             this.buttonSetPassphrase.TabStop = false;
             this.buttonSetPassphrase.Text = "Set";
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
+            this.buttonSetPassphrase.Click += new System.EventHandler(this.Click_buttonSetPassphrase);
             // 
             // textBoxPassphrase
             // 
@@ -1029,6 +1032,7 @@
             this.textBoxPassphrase.Size = new System.Drawing.Size(187, 20);
             this.textBoxPassphrase.TabIndex = 0;
             this.textBoxPassphrase.TabStop = false;
+            this.textBoxPassphrase.TextChanged += new System.EventHandler(this.TextChanged_textBoxPassphrase);
             // 
             // toolStripScreenCapture
             // 

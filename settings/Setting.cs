@@ -11,7 +11,6 @@ namespace AutoScreenCapture
     {
         public Setting()
         {
-
         }
 
         public Setting(string key, object value)

@@ -39,7 +39,6 @@ namespace AutoScreenCapture
 
         private void FormScreen_Load(object sender, EventArgs e)
         {
-            
             comboBoxScreenFormat.Items.Clear();
             comboBoxScreenComponent.Items.Clear();
 
@@ -155,7 +154,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxScreenFormat.Text);
                         ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownScreenJpegQuality.Value;
-                        ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownScreenResolutionRatio.Value;
+                        ScreenCollection.Get(ScreenObject).ResolutionRatio = (int)numericUpDownScreenResolutionRatio.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxScreenMouse.Checked;
 
                         Okay();
@@ -262,7 +261,7 @@ namespace AutoScreenCapture
                     screen.Bounds.Y,
                     screen.Bounds.Width,
                     screen.Bounds.Height,
-                    (int) numericUpDownScreenResolutionRatio.Value,
+                    (int)numericUpDownScreenResolutionRatio.Value,
                     checkBoxScreenMouse.Checked
                 );
             }
