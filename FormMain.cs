@@ -300,15 +300,6 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
                 }
 
-                if (Convert.ToBoolean(Settings.User.GetByKey("Schedule", defaultValue: false).Value))
-                {
-                    EnableSchedule();
-                }
-                else
-                {
-                    DisableSchedule();
-                }
-
                 EnableStartScreenCapture();
 
                 CaptureLimitCheck();
@@ -1391,8 +1382,6 @@ namespace AutoScreenCapture
 
                 #region Default Values for Command Line Arguments/Options
 
-                bool isScheduled = false;
-
                 checkBoxInitialScreenshot.Checked = false;
 
                 checkBoxCaptureLimit.Checked = false;
@@ -1462,8 +1451,6 @@ namespace AutoScreenCapture
 
                     if (rgxCommandLineScheduleStartAt.IsMatch(args[i]))
                     {
-                        isScheduled = true;
-
                         int hours = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Hours"].Value);
                         int minutes =
                             Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
@@ -1478,8 +1465,6 @@ namespace AutoScreenCapture
 
                     if (rgxCommandLineScheduleStopAt.IsMatch(args[i]))
                     {
-                        isScheduled = true;
-
                         int hours = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Hours"].Value);
                         int minutes =
                             Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
@@ -1509,14 +1494,7 @@ namespace AutoScreenCapture
 
                 InitializeThreads();
 
-                if (isScheduled)
-                {
-                    EnableSchedule();
-                }
-                else
-                {
-                    StartScreenCapture();
-                }
+                StartScreenCapture();
             }
             catch (Exception ex)
             {
@@ -2371,30 +2349,6 @@ namespace AutoScreenCapture
 
         #endregion Screen
 
-        #region Schedule
-
-        /// <summary>
-        /// Turns on scheduled screen capturing.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonScheduleSet(object sender, EventArgs e)
-        {
-            EnableSchedule();
-        }
-
-        /// <summary>
-        /// Turns off scheduled screen capturing.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonScheduleClear(object sender, EventArgs e)
-        {
-            DisableSchedule();
-        }
-
-        #endregion Schedule
-
         #region Passphrase
 
         /// <summary>
@@ -2575,8 +2529,7 @@ namespace AutoScreenCapture
                          (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
                          (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
                         ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
-                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
+                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute)))
                     {
                         StartScreenCapture();
                     }
@@ -2584,8 +2537,7 @@ namespace AutoScreenCapture
                 else
                 {
                     if ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-                        (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
-                        (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
+                        (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute))
                     {
                         StartScreenCapture();
                     }
@@ -2612,8 +2564,7 @@ namespace AutoScreenCapture
                          (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
                          (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
                         ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
-                         (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second)))
+                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute)))
                     {
                         StopScreenCapture();
                     }
@@ -2621,8 +2572,7 @@ namespace AutoScreenCapture
                 else
                 {
                     if ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-                        (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
-                        (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second))
+                        (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute))
                     {
                         StopScreenCapture();
                     }
@@ -2638,34 +2588,6 @@ namespace AutoScreenCapture
         private void ValueChanged_numericUpDownSlideshowDelay(object sender, EventArgs e)
         {
             EnablePlaySlideshow();
-        }
-
-        /// <summary>
-        /// Turns on scheduled screen capturing.
-        /// </summary>
-        private void EnableSchedule()
-        {
-            buttonScheduleSet.Enabled = false;
-            buttonScheduleClear.Enabled = true;
-
-            timerScheduledCaptureStop.Enabled = true;
-            timerScheduledCaptureStart.Enabled = true;
-
-            SaveSettings();
-        }
-
-        /// <summary>
-        /// Turns off scheduled screen capturing.
-        /// </summary>
-        private void DisableSchedule()
-        {
-            buttonScheduleSet.Enabled = true;
-            buttonScheduleClear.Enabled = false;
-
-            timerScheduledCaptureStop.Enabled = false;
-            timerScheduledCaptureStart.Enabled = false;
-
-            SaveSettings();
         }
 
         /// Show or hide the system tray icon depending on the option selected.
@@ -2733,14 +2655,6 @@ namespace AutoScreenCapture
                     // These actions need to directly correspond with the TriggerActionType class.
                     switch (trigger.ActionType)
                     {
-                        case TriggerActionType.DisableSchedule:
-                            DisableSchedule();
-                            break;
-
-                        case TriggerActionType.EnableSchedule:
-                            EnableSchedule();
-                            break;
-
                         case TriggerActionType.ExitApplication:
                             ExitApplication();
                             break;

@@ -94,7 +94,7 @@ namespace AutoScreenCapture
 
         public static Image GetImageByPath(string path)
         {
-            return Image.FromFile(path);
+            return File.Exists(path) ? Image.FromFile(path) : null;
         }
 
         public static Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)

@@ -82,7 +82,6 @@ namespace AutoScreenCapture
                     User.Add(new Setting("DaysOldWhenRemoveSlides", 10));
                     User.Add(new Setting("StartButtonImageFormat", "JPEG"));
                     User.Add(new Setting("Passphrase", string.Empty));
-                    User.Add(new Setting("Schedule", false));
 
                     User.Save();
                 }

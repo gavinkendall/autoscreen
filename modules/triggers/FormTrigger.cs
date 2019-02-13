@@ -206,10 +206,6 @@ namespace AutoScreenCapture
             comboBoxAction.Items.Clear();
 
             // Whatever changes you make here will need to reflect the exact order in which the actions are listed in the TriggerActionType class.
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisablePreview, "Disable Preview").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableSchedule, "Disable Schedule").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnablePreview, "Enable Preview").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableSchedule, "Enable Schedule").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.ExitApplication, "Exit Application").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.HideInterface, "Hide Interface").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.PlaySlideshow, "Play Slideshow").Description);

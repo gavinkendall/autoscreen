@@ -74,8 +74,6 @@
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
             this.tabPageSchedule = new System.Windows.Forms.TabPage();
             this.groupBoxSchedule = new System.Windows.Forms.GroupBox();
-            this.buttonScheduleClear = new System.Windows.Forms.Button();
-            this.buttonScheduleSet = new System.Windows.Forms.Button();
             this.checkBoxScheduleOnTheseDays = new System.Windows.Forms.CheckBox();
             this.checkBoxFriday = new System.Windows.Forms.CheckBox();
             this.checkBoxThursday = new System.Windows.Forms.CheckBox();
@@ -594,8 +592,6 @@
             // 
             // groupBoxSchedule
             // 
-            this.groupBoxSchedule.Controls.Add(this.buttonScheduleClear);
-            this.groupBoxSchedule.Controls.Add(this.buttonScheduleSet);
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleOnTheseDays);
             this.groupBoxSchedule.Controls.Add(this.checkBoxFriday);
             this.groupBoxSchedule.Controls.Add(this.checkBoxThursday);
@@ -610,31 +606,10 @@
             this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStartAt);
             this.groupBoxSchedule.Location = new System.Drawing.Point(7, 6);
             this.groupBoxSchedule.Name = "groupBoxSchedule";
-            this.groupBoxSchedule.Size = new System.Drawing.Size(205, 136);
+            this.groupBoxSchedule.Size = new System.Drawing.Size(205, 108);
             this.groupBoxSchedule.TabIndex = 22;
             this.groupBoxSchedule.TabStop = false;
             this.groupBoxSchedule.Text = "Schedule";
-            // 
-            // buttonScheduleClear
-            // 
-            this.buttonScheduleClear.Enabled = false;
-            this.buttonScheduleClear.Location = new System.Drawing.Point(62, 107);
-            this.buttonScheduleClear.Name = "buttonScheduleClear";
-            this.buttonScheduleClear.Size = new System.Drawing.Size(50, 23);
-            this.buttonScheduleClear.TabIndex = 13;
-            this.buttonScheduleClear.TabStop = false;
-            this.buttonScheduleClear.Text = "Off";
-            this.buttonScheduleClear.UseVisualStyleBackColor = true;
-            // 
-            // buttonScheduleSet
-            // 
-            this.buttonScheduleSet.Location = new System.Drawing.Point(6, 107);
-            this.buttonScheduleSet.Name = "buttonScheduleSet";
-            this.buttonScheduleSet.Size = new System.Drawing.Size(50, 23);
-            this.buttonScheduleSet.TabIndex = 12;
-            this.buttonScheduleSet.TabStop = false;
-            this.buttonScheduleSet.Text = "On";
-            this.buttonScheduleSet.UseVisualStyleBackColor = true;
             // 
             // checkBoxScheduleOnTheseDays
             // 
@@ -740,21 +715,23 @@
             // 
             // dateTimePickerScheduleStopAt
             // 
-            this.dateTimePickerScheduleStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(105, 39);
+            this.dateTimePickerScheduleStopAt.CustomFormat = "HH:mm";
+            this.dateTimePickerScheduleStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(142, 39);
             this.dateTimePickerScheduleStopAt.Name = "dateTimePickerScheduleStopAt";
             this.dateTimePickerScheduleStopAt.ShowUpDown = true;
-            this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(93, 20);
+            this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(56, 20);
             this.dateTimePickerScheduleStopAt.TabIndex = 3;
             this.dateTimePickerScheduleStopAt.TabStop = false;
             // 
             // dateTimePickerScheduleStartAt
             // 
-            this.dateTimePickerScheduleStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(105, 16);
+            this.dateTimePickerScheduleStartAt.CustomFormat = "HH:mm";
+            this.dateTimePickerScheduleStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(142, 16);
             this.dateTimePickerScheduleStartAt.Name = "dateTimePickerScheduleStartAt";
             this.dateTimePickerScheduleStartAt.ShowUpDown = true;
-            this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(93, 20);
+            this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(56, 20);
             this.dateTimePickerScheduleStartAt.TabIndex = 2;
             this.dateTimePickerScheduleStartAt.TabStop = false;
             // 
@@ -1069,12 +1046,14 @@
             // 
             // timerScheduledCaptureStart
             // 
-            this.timerScheduledCaptureStart.Interval = 1000;
+            this.timerScheduledCaptureStart.Enabled = true;
+            this.timerScheduledCaptureStart.Interval = 60000;
             this.timerScheduledCaptureStart.Tick += new System.EventHandler(this.Tick_timerScheduledCaptureStart);
             // 
             // timerScheduledCaptureStop
             // 
-            this.timerScheduledCaptureStop.Interval = 1000;
+            this.timerScheduledCaptureStop.Enabled = true;
+            this.timerScheduledCaptureStop.Interval = 60000;
             this.timerScheduledCaptureStop.Tick += new System.EventHandler(this.Tick_timerScheduledCaptureStop);
             // 
             // timerScreenCapture
@@ -1202,8 +1181,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonStartCapture;
         private System.Windows.Forms.ToolStripButton toolStripButtonStopCapture;
         private System.Windows.Forms.GroupBox groupBoxSchedule;
-        private System.Windows.Forms.Button buttonScheduleClear;
-        private System.Windows.Forms.Button buttonScheduleSet;
         private System.Windows.Forms.CheckBox checkBoxScheduleOnTheseDays;
         private System.Windows.Forms.CheckBox checkBoxFriday;
         private System.Windows.Forms.CheckBox checkBoxThursday;
