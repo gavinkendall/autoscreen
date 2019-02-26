@@ -116,10 +116,6 @@ namespace AutoScreenCapture
 
             SearchDates();
 
-            // Changing the value of this property will automatically call SearchSlides.
-            toolStripComboBoxImageFormatFilter.SelectedIndex =
-                Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value);
-
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
 
@@ -155,9 +151,6 @@ namespace AutoScreenCapture
 
                 Log.Write("Initializing image format collection.");
                 _imageFormatCollection = new ImageFormatCollection();
-
-                Log.Write("Initializing image format filter drop down menu.");
-                LoadImageFormatFilterDropDownMenu();
 
                 Log.Write("Initializing slideshow module.");
 
@@ -295,12 +288,7 @@ namespace AutoScreenCapture
                     .Value
                     .ToString());
 
-                if (Convert.ToInt32(Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value) < 0)
-                {
-                    Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
-                }
-
-                EnableStartScreenCapture();
+                EnableStartCapture();
 
                 CaptureLimitCheck();
             }
@@ -384,34 +372,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Set the image format and search for slides whenever the image format filter gets changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectedIndexChanged_toolStripComboBoxImageFormatFilter(object sender, EventArgs e)
-        {
-            if (toolStripComboBoxImageFormatFilter.SelectedIndex == 0)
-            {
-                Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value = "*.*";
-            }
-
-            Regex rgx = new Regex(@"^(?<ImageFormatFilter>\*\.(?<ImageFormat>([a-z]{3,4})))$");
-
-            if (rgx.IsMatch(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex]
-                .ToString()))
-            {
-                Settings.User.GetByKey("ImageFormatFilter", defaultValue: "*.*").Value = rgx
-                    .Match(toolStripComboBoxImageFormatFilter.Items[toolStripComboBoxImageFormatFilter.SelectedIndex]
-                        .ToString()).Groups["ImageFormatFilter"].Value;
-            }
-
-            Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value =
-                toolStripComboBoxImageFormatFilter.SelectedIndex;
-
-            SearchSlides();
-        }
-
-        /// <summary>
         /// Searches for dates. They should be in the format yyyy-mm-dd.
         /// </summary>
         private void SearchDates()
@@ -481,7 +441,6 @@ namespace AutoScreenCapture
                 if (listBoxSlides.Items.Count > 0)
                 {
                     monthCalendar.Enabled = true;
-                    toolStripComboBoxImageFormatFilter.Enabled = true;
 
                     listBoxSlides.SelectedIndex = listBoxSlides.Items.Count - 1;
 
@@ -536,8 +495,6 @@ namespace AutoScreenCapture
 
                     Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value = numericUpDownSlideSkip.Value;
                     Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                    Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value =
-                        toolStripComboBoxImageFormatFilter.SelectedIndex;
                     Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value = GetCaptureDelay();
                     Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value = GetSlideshowDelay();
                     Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value = checkBoxSlideSkip.Checked;
@@ -699,7 +656,7 @@ namespace AutoScreenCapture
                     ScreenCapture.Running = false;
 
                     DisableStopCapture();
-                    EnableStartScreenCapture();
+                    EnableStartCapture();
 
                     SearchDates();
                     SearchSlides();
@@ -870,14 +827,14 @@ namespace AutoScreenCapture
 
                 foreach (TabPage tabPage in tabControlScreens.TabPages)
                 {
-                    Control[] controls = tabPage.Controls.Find("pictureBox", false);
+                    Control[] controls = tabPage.Controls.Find(tabPage.Name, false);
 
                     if (controls != null && controls.Length == 1)
                     {
                         PictureBox pictureBox = (PictureBox)controls[0];
 
-                        pictureBox.Image =
-                            ScreenCapture.GetImageByPath(ScreenshotCollection.GetBySlide(listBoxSlides.Text).Path);
+                        Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(tabPage.Name, listBoxSlides.Text);
+                        pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
                     }
                 }
             }
@@ -924,7 +881,6 @@ namespace AutoScreenCapture
         private void DisableControls()
         {
             monthCalendar.Enabled = false;
-            toolStripComboBoxImageFormatFilter.Enabled = false;
 
             numericUpDownSlideshowDelayHours.Enabled = false;
             numericUpDownSlideshowDelayMinutes.Enabled = false;
@@ -934,6 +890,7 @@ namespace AutoScreenCapture
             numericUpDownSlideSkip.Enabled = false;
             checkBoxSlideSkip.Enabled = false;
 
+            toolStripButtonStartCapture.Enabled = false;
             toolStripMenuItemStartCapture.Enabled = false;
         }
 
@@ -943,7 +900,6 @@ namespace AutoScreenCapture
         private void EnableControls()
         {
             monthCalendar.Enabled = true;
-            toolStripComboBoxImageFormatFilter.Enabled = true;
 
             numericUpDownSlideshowDelayHours.Enabled = true;
             numericUpDownSlideshowDelayMinutes.Enabled = true;
@@ -955,6 +911,7 @@ namespace AutoScreenCapture
 
             if (!timerScreenCapture.Enabled)
             {
+                toolStripButtonStartCapture.Enabled = true;
                 toolStripMenuItemStartCapture.Enabled = true;
             }
         }
@@ -981,20 +938,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Loads the image format filter drop down menu for the Slideshow module.
-        /// </summary>
-        private void LoadImageFormatFilterDropDownMenu()
-        {
-            toolStripComboBoxImageFormatFilter.Items.Clear();
-            toolStripComboBoxImageFormatFilter.Items.Add("*.*");
-
-            foreach (ImageFormat imageFormat in _imageFormatCollection)
-            {
-                toolStripComboBoxImageFormatFilter.Items.Add("*" + imageFormat.Extension);
-            }
-        }
-
-        /// <summary>
         /// Shows the slideshow.
         /// </summary>
         private void ShowSlideshow()
@@ -1004,17 +947,7 @@ namespace AutoScreenCapture
                 Slideshow.Stop();
             }
 
-            LoadImageFormatFilterDropDownMenu();
-
             tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageSlideshow"];
-
-            if ((int)Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value < 0)
-            {
-                Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value = 0;
-            }
-
-            toolStripComboBoxImageFormatFilter.SelectedIndex =
-                (int)Settings.User.GetByKey("ImageFormatFilterIndex", defaultValue: 0).Value;
         }
 
         /// <summary>
@@ -1229,10 +1162,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Figures out if the "Start Capture" controls should be enabled or disabled.
         /// </summary>
-        private void EnableStartScreenCapture()
+        private void EnableStartCapture()
         {
             if (GetCaptureDelay() > 0)
             {
+                toolStripButtonStartCapture.Enabled = true;
                 toolStripMenuItemStartCapture.Enabled = true;
 
                 numericUpDownHoursInterval.Enabled = true;
@@ -1267,6 +1201,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void EnableStopScreenCapture()
         {
+            toolStripButtonStopCapture.Enabled = true;
             toolStripMenuItemStopCapture.Enabled = true;
 
             numericUpDownHoursInterval.Enabled = false;
@@ -1296,6 +1231,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStopCapture()
         {
+            toolStripButtonStopCapture.Enabled = false;
             toolStripMenuItemStopCapture.Enabled = false;
         }
 
@@ -1304,6 +1240,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStartCapture()
         {
+            toolStripButtonStartCapture.Enabled = false;
             toolStripMenuItemStartCapture.Enabled = false;
         }
 
@@ -1360,7 +1297,7 @@ namespace AutoScreenCapture
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide);
+                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(tabControlScreens.SelectedTab.Name, Slideshow.SelectedSlide);
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
                     File.Exists(selectedScreenshot.Path))
@@ -1853,7 +1790,7 @@ namespace AutoScreenCapture
 
                 PictureBox pictureBoxScreen = new PictureBox
                 {
-                    Name = "pictureBox",
+                    Name = screen.Name,
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
@@ -1863,6 +1800,7 @@ namespace AutoScreenCapture
 
                 TabPage tabPageScreen = new TabPage
                 {
+                    Name = screen.Name,
                     Text = screen.Name
                 };
 
@@ -2070,7 +2008,7 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                RunEditor(editor, ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide));
+                RunEditor(editor, ScreenshotCollection.GetBySlide(tabControlScreens.SelectedTab.Name, Slideshow.SelectedSlide));
             }
         }
 
@@ -2083,7 +2021,7 @@ namespace AutoScreenCapture
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
             {
                 RunEditor(editor,
-                    ScreenshotCollection.GetBySlide(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1)
+                    ScreenshotCollection.GetBySlide(tabControlScreens.SelectedTab.Name, ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1)
                         .Slide));
             }
         }

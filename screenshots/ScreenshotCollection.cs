@@ -75,13 +75,13 @@ namespace AutoScreenCapture
             return slides;
         }
 
-        public static Screenshot GetBySlide(string slide)
+        public static Screenshot GetBySlide(string name, string slide)
         {
             Screenshot foundScreenshot = new Screenshot();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Slide.Equals(slide))
+                if (screenshot.Name.Equals(name) && screenshot.Slide.Equals(slide))
                 {
                     foundScreenshot = screenshot;
                 }

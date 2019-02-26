@@ -49,7 +49,6 @@
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
-            this.toolStripComboBoxImageFormatFilter = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButtonFirstSlide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPreviousSlide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPlaySlideshow = new System.Windows.Forms.ToolStripButton();
@@ -301,7 +300,6 @@
             this.toolStripSlideshow.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStripSlideshow.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripSlideshow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBoxImageFormatFilter,
             this.toolStripButtonFirstSlide,
             this.toolStripButtonPreviousSlide,
             this.toolStripButtonPlaySlideshow,
@@ -310,15 +308,8 @@
             this.toolStripSlideshow.Location = new System.Drawing.Point(4, 441);
             this.toolStripSlideshow.Name = "toolStripSlideshow";
             this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripSlideshow.Size = new System.Drawing.Size(220, 25);
+            this.toolStripSlideshow.Size = new System.Drawing.Size(118, 25);
             this.toolStripSlideshow.TabIndex = 11;
-            // 
-            // toolStripComboBoxImageFormatFilter
-            // 
-            this.toolStripComboBoxImageFormatFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolStripComboBoxImageFormatFilter.Name = "toolStripComboBoxImageFormatFilter";
-            this.toolStripComboBoxImageFormatFilter.Size = new System.Drawing.Size(100, 25);
-            this.toolStripComboBoxImageFormatFilter.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_toolStripComboBoxImageFormatFilter);
             // 
             // toolStripButtonFirstSlide
             // 
@@ -1028,6 +1019,7 @@
             // 
             // toolStripButtonStartCapture
             // 
+            this.toolStripButtonStartCapture.Enabled = false;
             this.toolStripButtonStartCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
             this.toolStripButtonStartCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonStartCapture.Name = "toolStripButtonStartCapture";
@@ -1037,6 +1029,7 @@
             // 
             // toolStripButtonStopCapture
             // 
+            this.toolStripButtonStopCapture.Enabled = false;
             this.toolStripButtonStopCapture.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
             this.toolStripButtonStopCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonStopCapture.Name = "toolStripButtonStopCapture";
@@ -1134,7 +1127,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonPlaySlideshow;
         private System.Windows.Forms.ToolStripButton toolStripButtonNextSlide;
         private System.Windows.Forms.ToolStripButton toolStripButtonLastSlide;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxImageFormatFilter;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCapture;
         private System.Windows.Forms.TabControl tabControlModules;

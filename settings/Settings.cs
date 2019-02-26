@@ -58,8 +58,6 @@ namespace AutoScreenCapture
                     User.Add(new Setting("SlideSkip", 10));
                     User.Add(new Setting("CaptureLimit", 0));
                     User.Add(new Setting("ImageResolutionRatio", 100));
-                    User.Add(new Setting("ImageFormatFilter", "*.*"));
-                    User.Add(new Setting("ImageFormatFilterIndex", 0));
                     User.Add(new Setting("Interval", 60000));
                     User.Add(new Setting("SlideshowDelay", 1000));
                     User.Add(new Setting("SlideSkipCheck", false));
@@ -79,7 +77,6 @@ namespace AutoScreenCapture
                     User.Add(new Setting("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)));
                     User.Add(new Setting("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)));
                     User.Add(new Setting("LockScreenCaptureSession", false));
-                    User.Add(new Setting("DaysOldWhenRemoveSlides", 10));
                     User.Add(new Setting("StartButtonImageFormat", "JPEG"));
                     User.Add(new Setting("Passphrase", string.Empty));
 

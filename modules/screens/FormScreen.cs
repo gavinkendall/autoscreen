@@ -29,11 +29,12 @@ namespace AutoScreenCapture
 
             ScreenDictionary.Clear();
 
-            int index = 1;
+            int component = 1;
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenDictionary.Add(index, screen);
+                ScreenDictionary.Add(component, screen);
+                component++;
             }
         }
 
