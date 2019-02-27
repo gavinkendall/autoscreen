@@ -16,3 +16,7 @@ particular days of the week or every day.
 A calendar is included to help you keep track of what days
 screenshots were taken and a slideshow module can play through
 that day's list of screenshots.
+
+For pre-compiled binaries and more info, please visit:
+https://sourceforge.net/projects/autoscreen/
+
