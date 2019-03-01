@@ -957,6 +957,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void DateSelected_monthCalendar(object sender, DateRangeEventArgs e)
         {
+            SearchSlides();
             ShowSlideshow();
         }
 
