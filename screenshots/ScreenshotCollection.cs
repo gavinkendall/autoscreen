@@ -23,10 +23,10 @@ namespace AutoScreenCapture
         private const string XML_FILE_SCREENSHOTS_NODE = "screenshots";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
-        private const string SCREENSHOT_NAME = "name";
         private const string SCREENSHOT_DATE = "date";
         private const string SCREENSHOT_PATH = "path";
         private const string SCREENSHOT_FORMAT = "format";
+        private const string SCREENSHOT_COMPONENT = "component";
         private const string SCREENSHOT_SLIDE = "slide";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
@@ -75,13 +75,13 @@ namespace AutoScreenCapture
             return slides;
         }
 
-        public static Screenshot GetBySlide(string name, string slide)
+        public static Screenshot GetBySlide(string slide, Screen screen)
         {
             Screenshot foundScreenshot = new Screenshot();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Name.Equals(name) && screenshot.Slide.Equals(slide))
+                if (screenshot.Slide.Equals(slide) && screenshot.Component == screen.Component)
                 {
                     foundScreenshot = screenshot;
                 }
@@ -113,11 +113,6 @@ namespace AutoScreenCapture
                         {
                             switch (xReader.Name)
                             {
-                                case SCREENSHOT_NAME:
-                                    xReader.Read();
-                                    screenshot.Name = xReader.Value;
-                                    break;
-
                                 case SCREENSHOT_DATE:
                                     xReader.Read();
                                     screenshot.Date = xReader.Value;
@@ -133,6 +128,11 @@ namespace AutoScreenCapture
                                     screenshot.Format = imageFormatCollection.GetByName(xReader.Value);
                                     break;
 
+                                case SCREENSHOT_COMPONENT:
+                                    xReader.Read();
+                                    screenshot.Component = Convert.ToInt32(xReader.Value);
+                                    break;
+
                                 case SCREENSHOT_SLIDE:
                                     xReader.Read();
                                     screenshot.Slide = xReader.Value;
@@ -143,10 +143,10 @@ namespace AutoScreenCapture
 
                     xReader.Close();
 
-                    if (!string.IsNullOrEmpty(screenshot.Name) &&
-                        !string.IsNullOrEmpty(screenshot.Date) &&
+                    if (!string.IsNullOrEmpty(screenshot.Date) &&
                         !string.IsNullOrEmpty(screenshot.Path) &&
                         screenshot.Format != null &&
+                        screenshot.Component > 0 &&
                         !string.IsNullOrEmpty(screenshot.Slide))
                     {
                         _screenshotList.Add(screenshot);
@@ -183,10 +183,10 @@ namespace AutoScreenCapture
                     Screenshot screenshot = (Screenshot)obj;
 
                     xWriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
-                    xWriter.WriteElementString(SCREENSHOT_NAME, screenshot.Name);
                     xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
                     xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
                     xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
+                    xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());
                     xWriter.WriteElementString(SCREENSHOT_SLIDE, screenshot.Slide);
 
                     xWriter.WriteEndElement();

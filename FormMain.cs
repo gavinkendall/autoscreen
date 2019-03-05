@@ -833,7 +833,7 @@ namespace AutoScreenCapture
                     {
                         PictureBox pictureBox = (PictureBox)controls[0];
 
-                        Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(tabPage.Name, listBoxSlides.Text);
+                        Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(listBoxSlides.Text, (Screen)tabPage.Tag);
                         pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
                     }
                 }
@@ -1298,7 +1298,7 @@ namespace AutoScreenCapture
         {
             if (listBoxSlides.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(tabControlScreens.SelectedTab.Name, Slideshow.SelectedSlide);
+                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide, (Screen)tabControlModules.SelectedTab.Tag);
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
                     File.Exists(selectedScreenshot.Path))
@@ -1802,7 +1802,8 @@ namespace AutoScreenCapture
                 TabPage tabPageScreen = new TabPage
                 {
                     Name = screen.Name,
-                    Text = screen.Name
+                    Text = screen.Name,
+                    Tag = screen
                 };
 
                 tabPageScreen.Controls.Add(toolStripScreen);
@@ -2009,7 +2010,7 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                RunEditor(editor, ScreenshotCollection.GetBySlide(tabControlScreens.SelectedTab.Name, Slideshow.SelectedSlide));
+                RunEditor(editor, ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide, (Screen)tabControlScreens.SelectedTab.Tag));
             }
         }
 
@@ -2021,9 +2022,7 @@ namespace AutoScreenCapture
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
             {
-                RunEditor(editor,
-                    ScreenshotCollection.GetBySlide(tabControlScreens.SelectedTab.Name, ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1)
-                        .Slide));
+                RunEditor(editor, ScreenshotCollection.GetBySlide(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide, (Screen)tabControlScreens.SelectedTab.Tag));
             }
         }
 
@@ -2632,17 +2631,16 @@ namespace AutoScreenCapture
             foreach (Region region in formRegion.RegionCollection)
             {
                 ScreenCapture.TakeScreenshot(
-                    name: region.Name,
                     path: region.Folder + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     format: region.Format,
+                    component: 0,
                     jpegQuality: region.JpegQuality,
                     resolutionRatio: region.ResolutionRatio,
                     mouse: region.Mouse,
                     x: region.X,
                     y: region.Y,
                     width: region.Width,
-                    height: region.Height,
-                    addToScreenshotCollection: false // Since this is a region capture we won't be including it in the slideshow so don't add it to the screenshot collection
+                    height: region.Height
                 );
             }
         }
@@ -2651,19 +2649,21 @@ namespace AutoScreenCapture
         {
             foreach (Screen screen in formScreen.ScreenCollection)
             {
-                ScreenCapture.TakeScreenshot(
-                    name: screen.Name,
-                    path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
-                    format: screen.Format,
-                    jpegQuality: screen.JpegQuality,
-                    resolutionRatio: screen.ResolutionRatio,
-                    mouse: screen.Mouse,
-                    x: formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                    y: formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                    width: formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                    height: formScreen.ScreenDictionary[screen.Component].Bounds.Height,
-                    addToScreenshotCollection: true
-                );
+                if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                {
+                    ScreenCapture.TakeScreenshot(
+                        path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                        format: screen.Format,
+                        component: screen.Component,
+                        jpegQuality: screen.JpegQuality,
+                        resolutionRatio: screen.ResolutionRatio,
+                        mouse: screen.Mouse,
+                        x: formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                        y: formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                        width: formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                        height: formScreen.ScreenDictionary[screen.Component].Bounds.Height
+                    );
+                }
             }
         }
 

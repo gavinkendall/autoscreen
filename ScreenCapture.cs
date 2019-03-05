@@ -203,7 +203,7 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static void TakeScreenshot(string name, string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, bool addToScreenshotCollection)
+        public static void TakeScreenshot(string path, ImageFormat format, int component, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
         {
             try
             {
@@ -213,9 +213,9 @@ namespace AutoScreenCapture
 
                     if (bitmap != null)
                     {
-                        if (addToScreenshotCollection)
+                        if (component > 0)
                         {
-                            ScreenshotCollection.Add(new Screenshot(name, DateTimePreviousScreenshot, path, format));
+                            ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component));
                         }
 
                         SaveToFile(path, format, jpegQuality, bitmap);

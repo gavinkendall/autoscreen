@@ -48,16 +48,10 @@
             this.toolStripMenuItemStopCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonFirstSlide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPreviousSlide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPlaySlideshow = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonNextSlide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreens = new System.Windows.Forms.TabPage();
             this.tabPageRegions = new System.Windows.Forms.TabPage();
-            this.tabPageDelay = new System.Windows.Forms.TabPage();
+            this.tabPageInterval = new System.Windows.Forms.TabPage();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
             this.labelLimit = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
@@ -112,11 +106,16 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonFirstSlide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPreviousSlide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPlaySlideshow = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonNextSlide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
-            this.toolStripSlideshow.SuspendLayout();
             this.tabControlModules.SuspendLayout();
-            this.tabPageDelay.SuspendLayout();
+            this.tabPageInterval.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
@@ -135,6 +134,7 @@
             this.tabPageSecurity.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.toolStripScreenCapture.SuspendLayout();
+            this.toolStripSlideshow.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -197,7 +197,7 @@
             // 
             this.listBoxSlides.FormattingEnabled = true;
             this.listBoxSlides.IntegralHeight = false;
-            this.listBoxSlides.Location = new System.Drawing.Point(6, 3);
+            this.listBoxSlides.Location = new System.Drawing.Point(6, 166);
             this.listBoxSlides.MaximumSize = new System.Drawing.Size(204, 123);
             this.listBoxSlides.MinimumSize = new System.Drawing.Size(204, 123);
             this.listBoxSlides.Name = "listBoxSlides";
@@ -294,85 +294,18 @@
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.Click_toolStripMenuItemExit);
             // 
-            // toolStripSlideshow
-            // 
-            this.toolStripSlideshow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.toolStripSlideshow.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStripSlideshow.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripSlideshow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonFirstSlide,
-            this.toolStripButtonPreviousSlide,
-            this.toolStripButtonPlaySlideshow,
-            this.toolStripButtonNextSlide,
-            this.toolStripButtonLastSlide});
-            this.toolStripSlideshow.Location = new System.Drawing.Point(4, 441);
-            this.toolStripSlideshow.Name = "toolStripSlideshow";
-            this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripSlideshow.Size = new System.Drawing.Size(118, 25);
-            this.toolStripSlideshow.TabIndex = 11;
-            // 
-            // toolStripButtonFirstSlide
-            // 
-            this.toolStripButtonFirstSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonFirstSlide.Enabled = false;
-            this.toolStripButtonFirstSlide.Image = global::AutoScreenCapture.Properties.Resources.player_start;
-            this.toolStripButtonFirstSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonFirstSlide.Name = "toolStripButtonFirstSlide";
-            this.toolStripButtonFirstSlide.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonFirstSlide.Click += new System.EventHandler(this.Click_toolStripButtonFirstSlide);
-            // 
-            // toolStripButtonPreviousSlide
-            // 
-            this.toolStripButtonPreviousSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPreviousSlide.Enabled = false;
-            this.toolStripButtonPreviousSlide.Image = global::AutoScreenCapture.Properties.Resources.player_rew;
-            this.toolStripButtonPreviousSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPreviousSlide.Name = "toolStripButtonPreviousSlide";
-            this.toolStripButtonPreviousSlide.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonPreviousSlide.Click += new System.EventHandler(this.Click_toolStripButtonPreviousSlide);
-            // 
-            // toolStripButtonPlaySlideshow
-            // 
-            this.toolStripButtonPlaySlideshow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPlaySlideshow.Enabled = false;
-            this.toolStripButtonPlaySlideshow.Image = global::AutoScreenCapture.Properties.Resources.player_play;
-            this.toolStripButtonPlaySlideshow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPlaySlideshow.Name = "toolStripButtonPlaySlideshow";
-            this.toolStripButtonPlaySlideshow.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonPlaySlideshow.Click += new System.EventHandler(this.Click_toolStripButtonPlaySlideshow);
-            // 
-            // toolStripButtonNextSlide
-            // 
-            this.toolStripButtonNextSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonNextSlide.Enabled = false;
-            this.toolStripButtonNextSlide.Image = global::AutoScreenCapture.Properties.Resources.player_fwd;
-            this.toolStripButtonNextSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonNextSlide.Name = "toolStripButtonNextSlide";
-            this.toolStripButtonNextSlide.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonNextSlide.Click += new System.EventHandler(this.Click_toolStripButtonNextSlide);
-            // 
-            // toolStripButtonLastSlide
-            // 
-            this.toolStripButtonLastSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonLastSlide.Enabled = false;
-            this.toolStripButtonLastSlide.Image = global::AutoScreenCapture.Properties.Resources.player_end;
-            this.toolStripButtonLastSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonLastSlide.Name = "toolStripButtonLastSlide";
-            this.toolStripButtonLastSlide.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonLastSlide.Click += new System.EventHandler(this.Click_toolStripButtonLastSlide);
-            // 
             // tabControlModules
             // 
             this.tabControlModules.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.tabControlModules.Controls.Add(this.tabPageScreens);
-            this.tabControlModules.Controls.Add(this.tabPageRegions);
-            this.tabControlModules.Controls.Add(this.tabPageDelay);
+            this.tabControlModules.Controls.Add(this.tabPageInterval);
             this.tabControlModules.Controls.Add(this.tabPageSchedule);
             this.tabControlModules.Controls.Add(this.tabPageSlideshow);
+            this.tabControlModules.Controls.Add(this.tabPageSecurity);
+            this.tabControlModules.Controls.Add(this.tabPageScreens);
+            this.tabControlModules.Controls.Add(this.tabPageRegions);
             this.tabControlModules.Controls.Add(this.tabPageEditors);
             this.tabControlModules.Controls.Add(this.tabPageTriggers);
-            this.tabControlModules.Controls.Add(this.tabPageSecurity);
             this.tabControlModules.Location = new System.Drawing.Point(0, 164);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
@@ -399,17 +332,17 @@
             this.tabPageRegions.Text = "Regions";
             this.tabPageRegions.UseVisualStyleBackColor = true;
             // 
-            // tabPageDelay
+            // tabPageInterval
             // 
-            this.tabPageDelay.AutoScroll = true;
-            this.tabPageDelay.Controls.Add(this.groupBoxCaptureDelay);
-            this.tabPageDelay.Location = new System.Drawing.Point(4, 40);
-            this.tabPageDelay.Name = "tabPageDelay";
-            this.tabPageDelay.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDelay.Size = new System.Drawing.Size(241, 200);
-            this.tabPageDelay.TabIndex = 0;
-            this.tabPageDelay.Text = "Delay";
-            this.tabPageDelay.UseVisualStyleBackColor = true;
+            this.tabPageInterval.AutoScroll = true;
+            this.tabPageInterval.Controls.Add(this.groupBoxCaptureDelay);
+            this.tabPageInterval.Location = new System.Drawing.Point(4, 40);
+            this.tabPageInterval.Name = "tabPageInterval";
+            this.tabPageInterval.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageInterval.Size = new System.Drawing.Size(241, 200);
+            this.tabPageInterval.TabIndex = 0;
+            this.tabPageInterval.Text = "Interval";
+            this.tabPageInterval.UseVisualStyleBackColor = true;
             // 
             // groupBoxCaptureDelay
             // 
@@ -751,6 +684,7 @@
             // tabPageSlideshow
             // 
             this.tabPageSlideshow.AutoScroll = true;
+            this.tabPageSlideshow.Controls.Add(this.toolStripSlideshow);
             this.tabPageSlideshow.Controls.Add(this.listBoxSlides);
             this.tabPageSlideshow.Controls.Add(this.groupBoxSlideshowDelay);
             this.tabPageSlideshow.Location = new System.Drawing.Point(4, 40);
@@ -773,7 +707,7 @@
             this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelaySeconds);
             this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayMinutes);
             this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayHours);
-            this.groupBoxSlideshowDelay.Location = new System.Drawing.Point(6, 132);
+            this.groupBoxSlideshowDelay.Location = new System.Drawing.Point(6, 37);
             this.groupBoxSlideshowDelay.Name = "groupBoxSlideshowDelay";
             this.groupBoxSlideshowDelay.Size = new System.Drawing.Size(204, 124);
             this.groupBoxSlideshowDelay.TabIndex = 12;
@@ -927,9 +861,9 @@
             // tabPageSecurity
             // 
             this.tabPageSecurity.Controls.Add(this.groupBoxSecurity);
-            this.tabPageSecurity.Location = new System.Drawing.Point(4, 40);
+            this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
-            this.tabPageSecurity.Size = new System.Drawing.Size(241, 200);
+            this.tabPageSecurity.Size = new System.Drawing.Size(241, 218);
             this.tabPageSecurity.TabIndex = 7;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
@@ -1053,6 +987,67 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.Tick_timerScreenCapture);
             // 
+            // toolStripSlideshow
+            // 
+            this.toolStripSlideshow.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripSlideshow.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripSlideshow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonFirstSlide,
+            this.toolStripButtonPreviousSlide,
+            this.toolStripButtonPlaySlideshow,
+            this.toolStripButtonNextSlide,
+            this.toolStripButtonLastSlide});
+            this.toolStripSlideshow.Location = new System.Drawing.Point(6, 7);
+            this.toolStripSlideshow.Name = "toolStripSlideshow";
+            this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripSlideshow.Size = new System.Drawing.Size(118, 25);
+            this.toolStripSlideshow.TabIndex = 24;
+            // 
+            // toolStripButtonFirstSlide
+            // 
+            this.toolStripButtonFirstSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFirstSlide.Enabled = false;
+            this.toolStripButtonFirstSlide.Image = global::AutoScreenCapture.Properties.Resources.player_start;
+            this.toolStripButtonFirstSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFirstSlide.Name = "toolStripButtonFirstSlide";
+            this.toolStripButtonFirstSlide.Size = new System.Drawing.Size(23, 22);
+            // 
+            // toolStripButtonPreviousSlide
+            // 
+            this.toolStripButtonPreviousSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPreviousSlide.Enabled = false;
+            this.toolStripButtonPreviousSlide.Image = global::AutoScreenCapture.Properties.Resources.player_rew;
+            this.toolStripButtonPreviousSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPreviousSlide.Name = "toolStripButtonPreviousSlide";
+            this.toolStripButtonPreviousSlide.Size = new System.Drawing.Size(23, 22);
+            // 
+            // toolStripButtonPlaySlideshow
+            // 
+            this.toolStripButtonPlaySlideshow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPlaySlideshow.Enabled = false;
+            this.toolStripButtonPlaySlideshow.Image = global::AutoScreenCapture.Properties.Resources.player_play;
+            this.toolStripButtonPlaySlideshow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPlaySlideshow.Name = "toolStripButtonPlaySlideshow";
+            this.toolStripButtonPlaySlideshow.Size = new System.Drawing.Size(23, 22);
+            // 
+            // toolStripButtonNextSlide
+            // 
+            this.toolStripButtonNextSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonNextSlide.Enabled = false;
+            this.toolStripButtonNextSlide.Image = global::AutoScreenCapture.Properties.Resources.player_fwd;
+            this.toolStripButtonNextSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonNextSlide.Name = "toolStripButtonNextSlide";
+            this.toolStripButtonNextSlide.Size = new System.Drawing.Size(23, 22);
+            // 
+            // toolStripButtonLastSlide
+            // 
+            this.toolStripButtonLastSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLastSlide.Enabled = false;
+            this.toolStripButtonLastSlide.Image = global::AutoScreenCapture.Properties.Resources.player_end;
+            this.toolStripButtonLastSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLastSlide.Name = "toolStripButtonLastSlide";
+            this.toolStripButtonLastSlide.Size = new System.Drawing.Size(23, 22);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1063,7 +1058,6 @@
             this.Controls.Add(this.tabControlScreens);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.monthCalendar);
-            this.Controls.Add(this.toolStripSlideshow);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(768, 437);
             this.Name = "FormMain";
@@ -1075,10 +1069,8 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
-            this.toolStripSlideshow.ResumeLayout(false);
-            this.toolStripSlideshow.PerformLayout();
             this.tabControlModules.ResumeLayout(false);
-            this.tabPageDelay.ResumeLayout(false);
+            this.tabPageInterval.ResumeLayout(false);
             this.groupBoxCaptureDelay.ResumeLayout(false);
             this.groupBoxCaptureDelay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
@@ -1090,6 +1082,7 @@
             this.groupBoxSchedule.ResumeLayout(false);
             this.groupBoxSchedule.PerformLayout();
             this.tabPageSlideshow.ResumeLayout(false);
+            this.tabPageSlideshow.PerformLayout();
             this.groupBoxSlideshowDelay.ResumeLayout(false);
             this.groupBoxSlideshowDelay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMilliseconds)).EndInit();
@@ -1102,6 +1095,8 @@
             this.groupBoxSecurity.PerformLayout();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
+            this.toolStripSlideshow.ResumeLayout(false);
+            this.toolStripSlideshow.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1121,16 +1116,10 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorInterface;
-        private System.Windows.Forms.ToolStrip toolStripSlideshow;
-        private System.Windows.Forms.ToolStripButton toolStripButtonFirstSlide;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPreviousSlide;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPlaySlideshow;
-        private System.Windows.Forms.ToolStripButton toolStripButtonNextSlide;
-        private System.Windows.Forms.ToolStripButton toolStripButtonLastSlide;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCapture;
         private System.Windows.Forms.TabControl tabControlModules;
-        private System.Windows.Forms.TabPage tabPageDelay;
+        private System.Windows.Forms.TabPage tabPageInterval;
         private System.Windows.Forms.TabPage tabPageSlideshow;
         private System.Windows.Forms.GroupBox groupBoxCaptureDelay;
         private System.Windows.Forms.Label labelMillisecondsInterval;
@@ -1191,5 +1180,11 @@
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.TextBox textBoxPassphrase;
+        private System.Windows.Forms.ToolStrip toolStripSlideshow;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFirstSlide;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPreviousSlide;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPlaySlideshow;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNextSlide;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLastSlide;
     }
 }

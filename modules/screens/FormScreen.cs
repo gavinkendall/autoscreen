@@ -48,8 +48,6 @@ namespace AutoScreenCapture
                 comboBoxScreenFormat.Items.Add(imageFormat.Name);
             }
 
-            comboBoxScreenComponent.Items.Add("Active Window");
-
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
                 comboBoxScreenComponent.Items.Add("Screen " + i);
@@ -249,23 +247,16 @@ namespace AutoScreenCapture
 
         private void UpdatePreview()
         {
-            if (comboBoxScreenComponent.SelectedIndex == 0) // Active Window
-            {
-                pictureBoxScreenPreview.Image = ScreenCapture.GetActiveWindowBitmap();
-            }
-            else // Screen 1, 2, 3, etc.
-            {
-                System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxScreenComponent.SelectedIndex];
+            System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxScreenComponent.SelectedIndex];
 
-                pictureBoxScreenPreview.Image = ScreenCapture.GetScreenBitmap(
-                    screen.Bounds.X,
-                    screen.Bounds.Y,
-                    screen.Bounds.Width,
-                    screen.Bounds.Height,
-                    (int)numericUpDownScreenResolutionRatio.Value,
-                    checkBoxScreenMouse.Checked
-                );
-            }
+            pictureBoxScreenPreview.Image = ScreenCapture.GetScreenBitmap(
+                screen.Bounds.X,
+                screen.Bounds.Y,
+                screen.Bounds.Width,
+                screen.Bounds.Height,
+                (int) numericUpDownScreenResolutionRatio.Value,
+                checkBoxScreenMouse.Checked
+            );
         }
 
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)
