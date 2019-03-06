@@ -36,7 +36,7 @@
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlScreens = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.listBoxSlides = new System.Windows.Forms.ListBox();
+            this.listBoxScreenshots = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripSystemTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +49,6 @@
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
-            this.tabPageScreens = new System.Windows.Forms.TabPage();
-            this.tabPageRegions = new System.Windows.Forms.TabPage();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
             this.labelLimit = new System.Windows.Forms.Label();
@@ -79,20 +77,7 @@
             this.dateTimePickerScheduleStartAt = new System.Windows.Forms.DateTimePicker();
             this.checkBoxScheduleStopAt = new System.Windows.Forms.CheckBox();
             this.checkBoxScheduleStartAt = new System.Windows.Forms.CheckBox();
-            this.tabPageSlideshow = new System.Windows.Forms.TabPage();
-            this.groupBoxSlideshowDelay = new System.Windows.Forms.GroupBox();
-            this.labelSlideshowDelayMilliseconds = new System.Windows.Forms.Label();
-            this.numericUpDownSlideshowDelayMilliseconds = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownSlideSkip = new System.Windows.Forms.NumericUpDown();
-            this.labelSlideshowDelaySeconds = new System.Windows.Forms.Label();
-            this.labelSlideshowDelayMinutes = new System.Windows.Forms.Label();
-            this.checkBoxSlideSkip = new System.Windows.Forms.CheckBox();
-            this.labelSlideshowDelayHours = new System.Windows.Forms.Label();
-            this.numericUpDownSlideshowDelaySeconds = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownSlideshowDelayMinutes = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownSlideshowDelayHours = new System.Windows.Forms.NumericUpDown();
-            this.tabPageEditors = new System.Windows.Forms.TabPage();
-            this.tabPageTriggers = new System.Windows.Forms.TabPage();
+            this.tabPageScreenshots = new System.Windows.Forms.TabPage();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.checkBoxPassphraseLock = new System.Windows.Forms.CheckBox();
@@ -100,18 +85,16 @@
             this.labelPasswordDescription = new System.Windows.Forms.Label();
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
+            this.tabPageScreens = new System.Windows.Forms.TabPage();
+            this.tabPageRegions = new System.Windows.Forms.TabPage();
+            this.tabPageEditors = new System.Windows.Forms.TabPage();
+            this.tabPageTriggers = new System.Windows.Forms.TabPage();
             this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonStartCapture = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonStopCapture = new System.Windows.Forms.ToolStripButton();
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSlideshow = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonFirstSlide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPreviousSlide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPlaySlideshow = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonNextSlide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLastSlide = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -124,17 +107,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.tabPageSchedule.SuspendLayout();
             this.groupBoxSchedule.SuspendLayout();
-            this.tabPageSlideshow.SuspendLayout();
-            this.groupBoxSlideshowDelay.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMilliseconds)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideSkip)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelaySeconds)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).BeginInit();
+            this.tabPageScreenshots.SuspendLayout();
             this.tabPageSecurity.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.toolStripScreenCapture.SuspendLayout();
-            this.toolStripSlideshow.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -193,20 +169,19 @@
             this.contextMenuStripScreenshotPreview.Name = "contextMenuStripScreenshotPreview";
             this.contextMenuStripScreenshotPreview.Size = new System.Drawing.Size(61, 4);
             // 
-            // listBoxSlides
+            // listBoxScreenshots
             // 
-            this.listBoxSlides.FormattingEnabled = true;
-            this.listBoxSlides.IntegralHeight = false;
-            this.listBoxSlides.Location = new System.Drawing.Point(6, 166);
-            this.listBoxSlides.MaximumSize = new System.Drawing.Size(204, 123);
-            this.listBoxSlides.MinimumSize = new System.Drawing.Size(204, 123);
-            this.listBoxSlides.Name = "listBoxSlides";
-            this.listBoxSlides.ScrollAlwaysVisible = true;
-            this.listBoxSlides.Size = new System.Drawing.Size(204, 123);
-            this.listBoxSlides.Sorted = true;
-            this.listBoxSlides.TabIndex = 6;
-            this.listBoxSlides.TabStop = false;
-            this.listBoxSlides.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_listBoxSlides);
+            this.listBoxScreenshots.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxScreenshots.FormattingEnabled = true;
+            this.listBoxScreenshots.IntegralHeight = false;
+            this.listBoxScreenshots.Location = new System.Drawing.Point(3, 3);
+            this.listBoxScreenshots.Name = "listBoxScreenshots";
+            this.listBoxScreenshots.ScrollAlwaysVisible = true;
+            this.listBoxScreenshots.Size = new System.Drawing.Size(235, 194);
+            this.listBoxScreenshots.Sorted = true;
+            this.listBoxScreenshots.TabIndex = 6;
+            this.listBoxScreenshots.TabStop = false;
+            this.listBoxScreenshots.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_listBoxScreenshots);
             // 
             // notifyIcon
             // 
@@ -300,7 +275,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tabControlModules.Controls.Add(this.tabPageInterval);
             this.tabControlModules.Controls.Add(this.tabPageSchedule);
-            this.tabControlModules.Controls.Add(this.tabPageSlideshow);
+            this.tabControlModules.Controls.Add(this.tabPageScreenshots);
             this.tabControlModules.Controls.Add(this.tabPageSecurity);
             this.tabControlModules.Controls.Add(this.tabPageScreens);
             this.tabControlModules.Controls.Add(this.tabPageRegions);
@@ -313,24 +288,7 @@
             this.tabControlModules.Size = new System.Drawing.Size(249, 244);
             this.tabControlModules.TabIndex = 12;
             this.tabControlModules.TabStop = false;
-            // 
-            // tabPageScreens
-            // 
-            this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
-            this.tabPageScreens.Name = "tabPageScreens";
-            this.tabPageScreens.Size = new System.Drawing.Size(241, 200);
-            this.tabPageScreens.TabIndex = 5;
-            this.tabPageScreens.Text = "Screens";
-            this.tabPageScreens.UseVisualStyleBackColor = true;
-            // 
-            // tabPageRegions
-            // 
-            this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
-            this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(241, 200);
-            this.tabPageRegions.TabIndex = 4;
-            this.tabPageRegions.Text = "Regions";
-            this.tabPageRegions.UseVisualStyleBackColor = true;
+            this.tabControlModules.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlModules_Selected);
             // 
             // tabPageInterval
             // 
@@ -681,189 +639,24 @@
             this.checkBoxScheduleStartAt.Text = "Start capture at";
             this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
             // 
-            // tabPageSlideshow
+            // tabPageScreenshots
             // 
-            this.tabPageSlideshow.AutoScroll = true;
-            this.tabPageSlideshow.Controls.Add(this.toolStripSlideshow);
-            this.tabPageSlideshow.Controls.Add(this.listBoxSlides);
-            this.tabPageSlideshow.Controls.Add(this.groupBoxSlideshowDelay);
-            this.tabPageSlideshow.Location = new System.Drawing.Point(4, 40);
-            this.tabPageSlideshow.Name = "tabPageSlideshow";
-            this.tabPageSlideshow.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSlideshow.Size = new System.Drawing.Size(241, 200);
-            this.tabPageSlideshow.TabIndex = 1;
-            this.tabPageSlideshow.Text = "Slideshow";
-            this.tabPageSlideshow.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxSlideshowDelay
-            // 
-            this.groupBoxSlideshowDelay.Controls.Add(this.labelSlideshowDelayMilliseconds);
-            this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayMilliseconds);
-            this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideSkip);
-            this.groupBoxSlideshowDelay.Controls.Add(this.labelSlideshowDelaySeconds);
-            this.groupBoxSlideshowDelay.Controls.Add(this.labelSlideshowDelayMinutes);
-            this.groupBoxSlideshowDelay.Controls.Add(this.checkBoxSlideSkip);
-            this.groupBoxSlideshowDelay.Controls.Add(this.labelSlideshowDelayHours);
-            this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelaySeconds);
-            this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayMinutes);
-            this.groupBoxSlideshowDelay.Controls.Add(this.numericUpDownSlideshowDelayHours);
-            this.groupBoxSlideshowDelay.Location = new System.Drawing.Point(6, 37);
-            this.groupBoxSlideshowDelay.Name = "groupBoxSlideshowDelay";
-            this.groupBoxSlideshowDelay.Size = new System.Drawing.Size(204, 124);
-            this.groupBoxSlideshowDelay.TabIndex = 12;
-            this.groupBoxSlideshowDelay.TabStop = false;
-            this.groupBoxSlideshowDelay.Text = "Show the next slide in ...";
-            // 
-            // labelSlideshowDelayMilliseconds
-            // 
-            this.labelSlideshowDelayMilliseconds.AutoSize = true;
-            this.labelSlideshowDelayMilliseconds.Location = new System.Drawing.Point(54, 99);
-            this.labelSlideshowDelayMilliseconds.Name = "labelSlideshowDelayMilliseconds";
-            this.labelSlideshowDelayMilliseconds.Size = new System.Drawing.Size(63, 13);
-            this.labelSlideshowDelayMilliseconds.TabIndex = 7;
-            this.labelSlideshowDelayMilliseconds.Text = "milliseconds";
-            // 
-            // numericUpDownSlideshowDelayMilliseconds
-            // 
-            this.numericUpDownSlideshowDelayMilliseconds.Location = new System.Drawing.Point(6, 97);
-            this.numericUpDownSlideshowDelayMilliseconds.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numericUpDownSlideshowDelayMilliseconds.Name = "numericUpDownSlideshowDelayMilliseconds";
-            this.numericUpDownSlideshowDelayMilliseconds.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSlideshowDelayMilliseconds.TabIndex = 6;
-            this.numericUpDownSlideshowDelayMilliseconds.TabStop = false;
-            this.numericUpDownSlideshowDelayMilliseconds.ValueChanged += new System.EventHandler(this.ValueChanged_numericUpDownSlideshowDelay);
-            this.numericUpDownSlideshowDelayMilliseconds.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // numericUpDownSlideSkip
-            // 
-            this.numericUpDownSlideSkip.Location = new System.Drawing.Point(156, 19);
-            this.numericUpDownSlideSkip.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.numericUpDownSlideSkip.Name = "numericUpDownSlideSkip";
-            this.numericUpDownSlideSkip.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSlideSkip.TabIndex = 8;
-            this.numericUpDownSlideSkip.TabStop = false;
-            this.numericUpDownSlideSkip.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // labelSlideshowDelaySeconds
-            // 
-            this.labelSlideshowDelaySeconds.AutoSize = true;
-            this.labelSlideshowDelaySeconds.Location = new System.Drawing.Point(54, 73);
-            this.labelSlideshowDelaySeconds.Name = "labelSlideshowDelaySeconds";
-            this.labelSlideshowDelaySeconds.Size = new System.Drawing.Size(47, 13);
-            this.labelSlideshowDelaySeconds.TabIndex = 5;
-            this.labelSlideshowDelaySeconds.Text = "seconds";
-            // 
-            // labelSlideshowDelayMinutes
-            // 
-            this.labelSlideshowDelayMinutes.AutoSize = true;
-            this.labelSlideshowDelayMinutes.Location = new System.Drawing.Point(54, 47);
-            this.labelSlideshowDelayMinutes.Name = "labelSlideshowDelayMinutes";
-            this.labelSlideshowDelayMinutes.Size = new System.Drawing.Size(43, 13);
-            this.labelSlideshowDelayMinutes.TabIndex = 4;
-            this.labelSlideshowDelayMinutes.Text = "minutes";
-            // 
-            // checkBoxSlideSkip
-            // 
-            this.checkBoxSlideSkip.AutoSize = true;
-            this.checkBoxSlideSkip.Location = new System.Drawing.Point(113, 20);
-            this.checkBoxSlideSkip.Name = "checkBoxSlideSkip";
-            this.checkBoxSlideSkip.Size = new System.Drawing.Size(47, 17);
-            this.checkBoxSlideSkip.TabIndex = 13;
-            this.checkBoxSlideSkip.TabStop = false;
-            this.checkBoxSlideSkip.Text = "Skip";
-            this.checkBoxSlideSkip.UseVisualStyleBackColor = true;
-            this.checkBoxSlideSkip.Click += new System.EventHandler(this.SaveSettings);
-            // 
-            // labelSlideshowDelayHours
-            // 
-            this.labelSlideshowDelayHours.AutoSize = true;
-            this.labelSlideshowDelayHours.Location = new System.Drawing.Point(54, 21);
-            this.labelSlideshowDelayHours.Name = "labelSlideshowDelayHours";
-            this.labelSlideshowDelayHours.Size = new System.Drawing.Size(33, 13);
-            this.labelSlideshowDelayHours.TabIndex = 3;
-            this.labelSlideshowDelayHours.Text = "hours";
-            // 
-            // numericUpDownSlideshowDelaySeconds
-            // 
-            this.numericUpDownSlideshowDelaySeconds.Location = new System.Drawing.Point(6, 71);
-            this.numericUpDownSlideshowDelaySeconds.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.numericUpDownSlideshowDelaySeconds.Name = "numericUpDownSlideshowDelaySeconds";
-            this.numericUpDownSlideshowDelaySeconds.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSlideshowDelaySeconds.TabIndex = 2;
-            this.numericUpDownSlideshowDelaySeconds.TabStop = false;
-            this.numericUpDownSlideshowDelaySeconds.ValueChanged += new System.EventHandler(this.ValueChanged_numericUpDownSlideshowDelay);
-            this.numericUpDownSlideshowDelaySeconds.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // numericUpDownSlideshowDelayMinutes
-            // 
-            this.numericUpDownSlideshowDelayMinutes.Location = new System.Drawing.Point(6, 45);
-            this.numericUpDownSlideshowDelayMinutes.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.numericUpDownSlideshowDelayMinutes.Name = "numericUpDownSlideshowDelayMinutes";
-            this.numericUpDownSlideshowDelayMinutes.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSlideshowDelayMinutes.TabIndex = 1;
-            this.numericUpDownSlideshowDelayMinutes.TabStop = false;
-            this.numericUpDownSlideshowDelayMinutes.ValueChanged += new System.EventHandler(this.ValueChanged_numericUpDownSlideshowDelay);
-            this.numericUpDownSlideshowDelayMinutes.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // numericUpDownSlideshowDelayHours
-            // 
-            this.numericUpDownSlideshowDelayHours.Location = new System.Drawing.Point(6, 19);
-            this.numericUpDownSlideshowDelayHours.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.numericUpDownSlideshowDelayHours.Name = "numericUpDownSlideshowDelayHours";
-            this.numericUpDownSlideshowDelayHours.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSlideshowDelayHours.TabIndex = 0;
-            this.numericUpDownSlideshowDelayHours.TabStop = false;
-            this.numericUpDownSlideshowDelayHours.ValueChanged += new System.EventHandler(this.ValueChanged_numericUpDownSlideshowDelay);
-            this.numericUpDownSlideshowDelayHours.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // tabPageEditors
-            // 
-            this.tabPageEditors.AutoScroll = true;
-            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
-            this.tabPageEditors.Name = "tabPageEditors";
-            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 200);
-            this.tabPageEditors.TabIndex = 2;
-            this.tabPageEditors.Text = "Editors";
-            this.tabPageEditors.UseVisualStyleBackColor = true;
-            // 
-            // tabPageTriggers
-            // 
-            this.tabPageTriggers.AutoScroll = true;
-            this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
-            this.tabPageTriggers.Name = "tabPageTriggers";
-            this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 200);
-            this.tabPageTriggers.TabIndex = 3;
-            this.tabPageTriggers.Text = "Triggers";
-            this.tabPageTriggers.UseVisualStyleBackColor = true;
+            this.tabPageScreenshots.AutoScroll = true;
+            this.tabPageScreenshots.Controls.Add(this.listBoxScreenshots);
+            this.tabPageScreenshots.Location = new System.Drawing.Point(4, 40);
+            this.tabPageScreenshots.Name = "tabPageScreenshots";
+            this.tabPageScreenshots.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageScreenshots.Size = new System.Drawing.Size(241, 200);
+            this.tabPageScreenshots.TabIndex = 1;
+            this.tabPageScreenshots.Text = "Screenshots";
+            this.tabPageScreenshots.UseVisualStyleBackColor = true;
             // 
             // tabPageSecurity
             // 
             this.tabPageSecurity.Controls.Add(this.groupBoxSecurity);
-            this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSecurity.Location = new System.Drawing.Point(4, 40);
             this.tabPageSecurity.Name = "tabPageSecurity";
-            this.tabPageSecurity.Size = new System.Drawing.Size(241, 218);
+            this.tabPageSecurity.Size = new System.Drawing.Size(241, 200);
             this.tabPageSecurity.TabIndex = 7;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
@@ -936,6 +729,46 @@
             this.textBoxPassphrase.TabStop = false;
             this.textBoxPassphrase.TextChanged += new System.EventHandler(this.TextChanged_textBoxPassphrase);
             // 
+            // tabPageScreens
+            // 
+            this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
+            this.tabPageScreens.Name = "tabPageScreens";
+            this.tabPageScreens.Size = new System.Drawing.Size(241, 200);
+            this.tabPageScreens.TabIndex = 5;
+            this.tabPageScreens.Text = "Screens";
+            this.tabPageScreens.UseVisualStyleBackColor = true;
+            // 
+            // tabPageRegions
+            // 
+            this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
+            this.tabPageRegions.Name = "tabPageRegions";
+            this.tabPageRegions.Size = new System.Drawing.Size(241, 200);
+            this.tabPageRegions.TabIndex = 4;
+            this.tabPageRegions.Text = "Regions";
+            this.tabPageRegions.UseVisualStyleBackColor = true;
+            // 
+            // tabPageEditors
+            // 
+            this.tabPageEditors.AutoScroll = true;
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
+            this.tabPageEditors.Name = "tabPageEditors";
+            this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 200);
+            this.tabPageEditors.TabIndex = 2;
+            this.tabPageEditors.Text = "Editors";
+            this.tabPageEditors.UseVisualStyleBackColor = true;
+            // 
+            // tabPageTriggers
+            // 
+            this.tabPageTriggers.AutoScroll = true;
+            this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
+            this.tabPageTriggers.Name = "tabPageTriggers";
+            this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 200);
+            this.tabPageTriggers.TabIndex = 3;
+            this.tabPageTriggers.Text = "Triggers";
+            this.tabPageTriggers.UseVisualStyleBackColor = true;
+            // 
             // toolStripScreenCapture
             // 
             this.toolStripScreenCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -987,67 +820,6 @@
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.Tick_timerScreenCapture);
             // 
-            // toolStripSlideshow
-            // 
-            this.toolStripSlideshow.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStripSlideshow.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripSlideshow.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonFirstSlide,
-            this.toolStripButtonPreviousSlide,
-            this.toolStripButtonPlaySlideshow,
-            this.toolStripButtonNextSlide,
-            this.toolStripButtonLastSlide});
-            this.toolStripSlideshow.Location = new System.Drawing.Point(6, 7);
-            this.toolStripSlideshow.Name = "toolStripSlideshow";
-            this.toolStripSlideshow.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripSlideshow.Size = new System.Drawing.Size(118, 25);
-            this.toolStripSlideshow.TabIndex = 24;
-            // 
-            // toolStripButtonFirstSlide
-            // 
-            this.toolStripButtonFirstSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonFirstSlide.Enabled = false;
-            this.toolStripButtonFirstSlide.Image = global::AutoScreenCapture.Properties.Resources.player_start;
-            this.toolStripButtonFirstSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonFirstSlide.Name = "toolStripButtonFirstSlide";
-            this.toolStripButtonFirstSlide.Size = new System.Drawing.Size(23, 22);
-            // 
-            // toolStripButtonPreviousSlide
-            // 
-            this.toolStripButtonPreviousSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPreviousSlide.Enabled = false;
-            this.toolStripButtonPreviousSlide.Image = global::AutoScreenCapture.Properties.Resources.player_rew;
-            this.toolStripButtonPreviousSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPreviousSlide.Name = "toolStripButtonPreviousSlide";
-            this.toolStripButtonPreviousSlide.Size = new System.Drawing.Size(23, 22);
-            // 
-            // toolStripButtonPlaySlideshow
-            // 
-            this.toolStripButtonPlaySlideshow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPlaySlideshow.Enabled = false;
-            this.toolStripButtonPlaySlideshow.Image = global::AutoScreenCapture.Properties.Resources.player_play;
-            this.toolStripButtonPlaySlideshow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPlaySlideshow.Name = "toolStripButtonPlaySlideshow";
-            this.toolStripButtonPlaySlideshow.Size = new System.Drawing.Size(23, 22);
-            // 
-            // toolStripButtonNextSlide
-            // 
-            this.toolStripButtonNextSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonNextSlide.Enabled = false;
-            this.toolStripButtonNextSlide.Image = global::AutoScreenCapture.Properties.Resources.player_fwd;
-            this.toolStripButtonNextSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonNextSlide.Name = "toolStripButtonNextSlide";
-            this.toolStripButtonNextSlide.Size = new System.Drawing.Size(23, 22);
-            // 
-            // toolStripButtonLastSlide
-            // 
-            this.toolStripButtonLastSlide.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonLastSlide.Enabled = false;
-            this.toolStripButtonLastSlide.Image = global::AutoScreenCapture.Properties.Resources.player_end;
-            this.toolStripButtonLastSlide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonLastSlide.Name = "toolStripButtonLastSlide";
-            this.toolStripButtonLastSlide.Size = new System.Drawing.Size(23, 22);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1081,22 +853,12 @@
             this.tabPageSchedule.ResumeLayout(false);
             this.groupBoxSchedule.ResumeLayout(false);
             this.groupBoxSchedule.PerformLayout();
-            this.tabPageSlideshow.ResumeLayout(false);
-            this.tabPageSlideshow.PerformLayout();
-            this.groupBoxSlideshowDelay.ResumeLayout(false);
-            this.groupBoxSlideshowDelay.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMilliseconds)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideSkip)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelaySeconds)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayMinutes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSlideshowDelayHours)).EndInit();
+            this.tabPageScreenshots.ResumeLayout(false);
             this.tabPageSecurity.ResumeLayout(false);
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
             this.toolStripScreenCapture.ResumeLayout(false);
             this.toolStripScreenCapture.PerformLayout();
-            this.toolStripSlideshow.ResumeLayout(false);
-            this.toolStripSlideshow.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1107,7 +869,7 @@
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.TabControl tabControlScreens;
-        private System.Windows.Forms.ListBox listBoxSlides;
+        private System.Windows.Forms.ListBox listBoxScreenshots;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripSystemTrayIcon;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartCapture;
@@ -1120,7 +882,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCapture;
         private System.Windows.Forms.TabControl tabControlModules;
         private System.Windows.Forms.TabPage tabPageInterval;
-        private System.Windows.Forms.TabPage tabPageSlideshow;
+        private System.Windows.Forms.TabPage tabPageScreenshots;
         private System.Windows.Forms.GroupBox groupBoxCaptureDelay;
         private System.Windows.Forms.Label labelMillisecondsInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
@@ -1132,19 +894,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
         private System.Windows.Forms.CheckBox checkBoxCaptureLimit;
         private System.Windows.Forms.CheckBox checkBoxInitialScreenshot;
-        private System.Windows.Forms.GroupBox groupBoxSlideshowDelay;
-        private System.Windows.Forms.Label labelSlideshowDelayMilliseconds;
-        private System.Windows.Forms.NumericUpDown numericUpDownSlideshowDelayMilliseconds;
-        private System.Windows.Forms.Label labelSlideshowDelaySeconds;
-        private System.Windows.Forms.Label labelSlideshowDelayMinutes;
-        private System.Windows.Forms.Label labelSlideshowDelayHours;
-        private System.Windows.Forms.NumericUpDown numericUpDownSlideshowDelaySeconds;
-        private System.Windows.Forms.NumericUpDown numericUpDownSlideshowDelayMinutes;
-        private System.Windows.Forms.NumericUpDown numericUpDownSlideshowDelayHours;
-        private System.Windows.Forms.CheckBox checkBoxSlideSkip;
         private System.Windows.Forms.ToolStrip toolStripScreenCapture;
         private System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
-        private System.Windows.Forms.NumericUpDown numericUpDownSlideSkip;
         private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonOptions;
         private System.Windows.Forms.Timer timerScheduledCaptureStart;
@@ -1180,11 +931,5 @@
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.TextBox textBoxPassphrase;
-        private System.Windows.Forms.ToolStrip toolStripSlideshow;
-        private System.Windows.Forms.ToolStripButton toolStripButtonFirstSlide;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPreviousSlide;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPlaySlideshow;
-        private System.Windows.Forms.ToolStripButton toolStripButtonNextSlide;
-        private System.Windows.Forms.ToolStripButton toolStripButtonLastSlide;
     }
 }

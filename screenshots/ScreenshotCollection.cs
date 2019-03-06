@@ -12,6 +12,7 @@ namespace AutoScreenCapture
     using System.IO;
     using System.Text;
     using System.Xml;
+    using System.Collections.Generic;
 
     public static class ScreenshotCollection
     {
@@ -27,7 +28,8 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_PATH = "path";
         private const string SCREENSHOT_FORMAT = "format";
         private const string SCREENSHOT_COMPONENT = "component";
-        private const string SCREENSHOT_SLIDE = "slide";
+        private const string SCREENSHOT_SLIDENAME = "slidename";
+        private const string SCREENSHOT_SLIDEVALUE = "slidevalue";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
         public static void Add(Screenshot newScreenshot)
@@ -53,16 +55,16 @@ namespace AutoScreenCapture
             {
                 if (!dates.Contains(screenshot.Date))
                 {
-                    dates.Add(screenshot.Slide);
+                    dates.Add(screenshot.Date);
                 }
             }
 
             return dates;
         }
 
-        public static ArrayList GetSlidesByDate(string date)
+        public static List<Slide> GetSlidesByDate(string date)
         {
-            ArrayList slides = new ArrayList();
+            List<Slide> slides = new List<Slide>();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
@@ -75,13 +77,13 @@ namespace AutoScreenCapture
             return slides;
         }
 
-        public static Screenshot GetBySlide(string slide, Screen screen)
+        public static Screenshot GetScreenshotBySlideName(string slideName, Screen screen)
         {
             Screenshot foundScreenshot = new Screenshot();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Slide.Equals(slide) && screenshot.Component == screen.Component)
+                if (screenshot.Slide.Name.Equals(slideName) && screenshot.Component == screen.Component)
                 {
                     foundScreenshot = screenshot;
                 }
@@ -105,6 +107,8 @@ namespace AutoScreenCapture
                 foreach (XmlNode xScreenshot in xScreeshots)
                 {
                     Screenshot screenshot = new Screenshot();
+                    screenshot.Slide = new Slide();
+
                     XmlNodeReader xReader = new XmlNodeReader(xScreenshot);
 
                     while (xReader.Read())
@@ -133,9 +137,14 @@ namespace AutoScreenCapture
                                     screenshot.Component = Convert.ToInt32(xReader.Value);
                                     break;
 
-                                case SCREENSHOT_SLIDE:
+                                case SCREENSHOT_SLIDENAME:
                                     xReader.Read();
-                                    screenshot.Slide = xReader.Value;
+                                    screenshot.Slide.Name = xReader.Value;
+                                    break;
+
+                                case SCREENSHOT_SLIDEVALUE:
+                                    xReader.Read();
+                                    screenshot.Slide.Value = xReader.Value;
                                     break;
                             }
                         }
@@ -147,7 +156,8 @@ namespace AutoScreenCapture
                         !string.IsNullOrEmpty(screenshot.Path) &&
                         screenshot.Format != null &&
                         screenshot.Component > 0 &&
-                        !string.IsNullOrEmpty(screenshot.Slide))
+                        !string.IsNullOrEmpty(screenshot.Slide.Name) &&
+                        !string.IsNullOrEmpty(screenshot.Slide.Value))
                     {
                         _screenshotList.Add(screenshot);
                     }
@@ -187,7 +197,8 @@ namespace AutoScreenCapture
                     xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
                     xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
                     xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());
-                    xWriter.WriteElementString(SCREENSHOT_SLIDE, screenshot.Slide);
+                    xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slide.Name);
+                    xWriter.WriteElementString(SCREENSHOT_SLIDEVALUE, screenshot.Slide.Value);
 
                     xWriter.WriteEndElement();
                 }

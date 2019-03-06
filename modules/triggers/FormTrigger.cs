@@ -208,7 +208,6 @@ namespace AutoScreenCapture
             // Whatever changes you make here will need to reflect the exact order in which the actions are listed in the TriggerActionType class.
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.ExitApplication, "Exit Application").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.HideInterface, "Hide Interface").Description);
-            comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.PlaySlideshow, "Play Slideshow").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.RunEditor, "Run Editor").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowInterface, "Show Interface").Description);
             comboBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCapture, "Start Screen Capture").Description);

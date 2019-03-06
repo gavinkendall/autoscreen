@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="modules\screens\Screen.cs" />
     <Compile Include="modules\screens\ScreenCollection.cs" />
+    <Compile Include="modules\slideshow\Slide.cs" />
     <Compile Include="modules\triggers\FormTrigger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,12 +179,6 @@
     <None Include="images\openfolder.png" />
     <Content Include="images\edit.png" />
     <Content Include="images\start_screen_capture.png" />
-    <Content Include="images\player_end.png" />
-    <Content Include="images\player_fwd.png" />
-    <Content Include="images\player_pause.png" />
-    <Content Include="images\player_play.png" />
-    <Content Include="images\player_rew.png" />
-    <Content Include="images\player_start.png" />
     <Content Include="images\stop_screen_capture.png" />
   </ItemGroup>
   <ItemGroup>

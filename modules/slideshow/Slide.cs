@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TriggerActionType.cs" company="Gavin Kendall">
+// <copyright file="Slide.cs" company="Gavin Kendall">
 //     Copyright (c) Gavin Kendall. All rights reserved.
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -7,13 +7,9 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
-    public enum TriggerActionType
+    public class Slide
     {
-        ExitApplication = 0,
-        HideInterface = 1,
-        RunEditor = 2,
-        ShowInterface = 3,
-        StartScreenCapture = 4,
-        StopScreenCapture = 5
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

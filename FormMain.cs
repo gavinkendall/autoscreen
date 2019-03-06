@@ -5,8 +5,6 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-using AutoScreenCapture.Properties;
-
 namespace AutoScreenCapture
 {
     using System;
@@ -17,6 +15,8 @@ namespace AutoScreenCapture
     using System.IO;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
+    using System.Collections.Generic;
+    using AutoScreenCapture.Properties;
 
     /// <summary>
     /// The application's main window.
@@ -152,11 +152,6 @@ namespace AutoScreenCapture
                 Log.Write("Initializing image format collection.");
                 _imageFormatCollection = new ImageFormatCollection();
 
-                Log.Write("Initializing slideshow module.");
-
-                Slideshow.Initialize();
-                Slideshow.OnPlaying += new EventHandler(Slideshow_Playing);
-
                 Log.Write("Initializing editor collection.");
 
                 formEditor.EditorCollection.Load();
@@ -192,8 +187,6 @@ namespace AutoScreenCapture
 
                 int screenshotDelay =
                     Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
-                int slideshowDelay =
-                    Convert.ToInt32(Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value);
 
                 decimal screenshotDelayHours =
                     Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Hours);
@@ -204,34 +197,17 @@ namespace AutoScreenCapture
                 decimal screenshotDelayMilliseconds =
                     Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Milliseconds);
 
-                decimal slideshowDelayHours =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(slideshowDelay)).Hours);
-                decimal slideshowDelayMinutes =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(slideshowDelay)).Minutes);
-                decimal slideshowDelaySeconds =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(slideshowDelay)).Seconds);
-                decimal slideshowDelayMilliseconds =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(slideshowDelay)).Milliseconds);
-
                 numericUpDownHoursInterval.Value = screenshotDelayHours;
                 numericUpDownMinutesInterval.Value = screenshotDelayMinutes;
                 numericUpDownSecondsInterval.Value = screenshotDelaySeconds;
                 numericUpDownMillisecondsInterval.Value = screenshotDelayMilliseconds;
 
-                numericUpDownSlideshowDelayHours.Value = slideshowDelayHours;
-                numericUpDownSlideshowDelayMinutes.Value = slideshowDelayMinutes;
-                numericUpDownSlideshowDelaySeconds.Value = slideshowDelaySeconds;
-                numericUpDownSlideshowDelayMilliseconds.Value = slideshowDelayMilliseconds;
-
-                numericUpDownSlideSkip.Value =
-                    Convert.ToInt32(Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value);
                 numericUpDownCaptureLimit.Value =
                     Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value);
 
-                checkBoxSlideSkip.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value);
                 checkBoxCaptureLimit.Checked =
                     Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value);
+
                 checkBoxInitialScreenshot.Checked =
                     Convert.ToBoolean(Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value);
 
@@ -377,7 +353,6 @@ namespace AutoScreenCapture
         private void SearchDates()
         {
             ClearScreenPreview();
-            DisableToolStripButtons();
 
             monthCalendar.BoldedDates = null;
 
@@ -392,27 +367,16 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchSlides()
         {
-            listBoxSlides.BeginUpdate();
+            listBoxScreenshots.BeginUpdate();
 
             ClearScreenPreview();
-            DisableToolStripButtons();
 
             if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
             {
                 runSlideSearchThread.RunWorkerAsync();
             }
 
-            listBoxSlides.EndUpdate();
-
-            // It's very important here to disable all the slideshow controls if there were slides found.
-            if (listBoxSlides.Items.Count == 0)
-            {
-                toolStripButtonFirstSlide.Enabled = false;
-                toolStripButtonPreviousSlide.Enabled = false;
-                toolStripButtonPlaySlideshow.Enabled = false;
-                toolStripButtonNextSlide.Enabled = false;
-                toolStripButtonLastSlide.Enabled = false;
-            }
+            listBoxScreenshots.EndUpdate();
         }
 
         /// <summary>
@@ -421,33 +385,24 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void RunSlideSearch(DoWorkEventArgs e)
         {
-            if (listBoxSlides.InvokeRequired)
+            if (listBoxScreenshots.InvokeRequired)
             {
-                listBoxSlides.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] { e });
+                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] { e });
             }
             else
             {
-                ArrayList slides =
-                    ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                List<Slide> slides = ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
-                if (slides != null && slides.Count > 0)
-                {
-                    foreach (string slide in slides)
-                    {
-                        listBoxSlides.Items.Add(slide);
-                    }
-                }
 
-                if (listBoxSlides.Items.Count > 0)
+                listBoxScreenshots.DisplayMember = "Value";
+                listBoxScreenshots.ValueMember = "Name";
+                listBoxScreenshots.DataSource = slides;
+
+                if (listBoxScreenshots.Items.Count > 0)
                 {
                     monthCalendar.Enabled = true;
 
-                    listBoxSlides.SelectedIndex = listBoxSlides.Items.Count - 1;
-
-                    toolStripButtonNextSlide.Enabled = true;
-                    toolStripButtonLastSlide.Enabled = true;
-
-                    EnablePlaySlideshow();
+                    listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
                 }
             }
         }
@@ -485,19 +440,16 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (listBoxSlides.InvokeRequired)
+                if (listBoxScreenshots.InvokeRequired)
                 {
-                    listBoxSlides.Invoke(new SaveSettingsDelegate(SaveSettings), new object[] { e });
+                    listBoxScreenshots.Invoke(new SaveSettingsDelegate(SaveSettings), new object[] { e });
                 }
                 else
                 {
                     Log.Write("Saving settings.");
 
-                    Settings.User.GetByKey("SlideSkip", defaultValue: 10).Value = numericUpDownSlideSkip.Value;
                     Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
                     Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value = GetCaptureDelay();
-                    Settings.User.GetByKey("SlideshowDelay", defaultValue: 1000).Value = GetSlideshowDelay();
-                    Settings.User.GetByKey("SlideSkipCheck", defaultValue: false).Value = checkBoxSlideSkip.Checked;
                     Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value =
                         checkBoxCaptureLimit.Checked;
                     Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value =
@@ -610,12 +562,6 @@ namespace AutoScreenCapture
 
             Log.Write("Hiding interface.");
 
-            // Pause the slideshow if you find it still playing.
-            if (Slideshow.Playing)
-            {
-                PauseSlideshow();
-            }
-
             Opacity = 0;
             toolStripMenuItemShowInterface.Enabled = true;
             toolStripMenuItemHideInterface.Enabled = false;
@@ -659,65 +605,10 @@ namespace AutoScreenCapture
                     EnableStartCapture();
 
                     SearchDates();
-                    SearchSlides();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
-        }
-
-        /// <summary>
-        /// Plays the slideshow.
-        /// </summary>
-        private void PlaySlideshow()
-        {
-            int slideshowDelay = GetSlideshowDelay();
-
-            DisableControls();
-
-            if (listBoxSlides.Items.Count > 0 && slideshowDelay > 0)
-            {
-                if (Slideshow.Index == Slideshow.Count - 1)
-                {
-                    Slideshow.First();
-                    listBoxSlides.SelectedIndex = Slideshow.Index;
-                }
-
-                toolStripButtonPlaySlideshow.Image = Properties.Resources.player_pause;
-
-                Slideshow.Interval = slideshowDelay;
-                Slideshow.SlideSkipCheck = checkBoxSlideSkip.Checked;
-                Slideshow.SlideSkip = (int)numericUpDownSlideSkip.Value;
-
-                Slideshow.Play();
-            }
-        }
-
-        /// <summary>
-        /// Pauses the slideshow.
-        /// </summary>
-        private void PauseSlideshow()
-        {
-            EnableControls();
-
-            if (listBoxSlides.Items.Count > 0)
-            {
-                toolStripButtonPlaySlideshow.Image = Properties.Resources.player_play;
-
-                Slideshow.Stop();
-            }
-        }
-
-        /// <summary>
-        /// Stops the slideshow.
-        /// </summary>
-        private void StopSlideshow()
-        {
-            EnableControls();
-
-            toolStripButtonPlaySlideshow.Image = Properties.Resources.player_play;
-
-            Slideshow.Stop();
         }
 
         /// <summary>
@@ -728,12 +619,6 @@ namespace AutoScreenCapture
             if (!timerScreenCapture.Enabled)
             {
                 SaveSettings();
-
-                // Stop the slideshow if it's currently playing.
-                if (Slideshow.Playing)
-                {
-                    Slideshow.Stop();
-                }
 
                 // Stop the date search thread if it's busy.
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
@@ -789,41 +674,14 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectedIndexChanged_listBoxSlides(object sender, EventArgs e)
+        private void SelectedIndexChanged_listBoxScreenshots(object sender, EventArgs e)
         {
-            Slideshow.Index = listBoxSlides.SelectedIndex;
-            Slideshow.Count = listBoxSlides.Items.Count;
-
-            if (Slideshow.Index == (Slideshow.Count - 1))
-            {
-                StopSlideshow();
-            }
-
-            if (Slideshow.Index == 0)
-            {
-                toolStripButtonFirstSlide.Enabled = false;
-                toolStripButtonPreviousSlide.Enabled = false;
-            }
-            else
-            {
-                toolStripButtonFirstSlide.Enabled = true;
-                toolStripButtonPreviousSlide.Enabled = true;
-            }
-
-            if ((Slideshow.Count - 1) <= Slideshow.Index)
-            {
-                toolStripButtonNextSlide.Enabled = false;
-                toolStripButtonLastSlide.Enabled = false;
-            }
-            else
-            {
-                toolStripButtonNextSlide.Enabled = true;
-                toolStripButtonLastSlide.Enabled = true;
-            }
+            Slideshow.Index = listBoxScreenshots.SelectedIndex;
+            Slideshow.Count = listBoxScreenshots.Items.Count;
 
             if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
             {
-                Slideshow.SelectedSlide = listBoxSlides.Items[Slideshow.Index].ToString();
+                Slideshow.SelectedSlide = (Slide)listBoxScreenshots.Items[Slideshow.Index];
 
                 foreach (TabPage tabPage in tabControlScreens.TabPages)
                 {
@@ -833,7 +691,7 @@ namespace AutoScreenCapture
                     {
                         PictureBox pictureBox = (PictureBox)controls[0];
 
-                        Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(listBoxSlides.Text, (Screen)tabPage.Tag);
+                        Screenshot selectedScreenshot = ScreenshotCollection.GetScreenshotBySlideName(Slideshow.SelectedSlide.Name, (Screen)tabPage.Tag);
                         pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
                     }
                 }
@@ -865,30 +723,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Returns the slideshow delay. This value will be used as the slideshow timer's interval property.
-        /// </summary>
-        /// <returns></returns>
-        private int GetSlideshowDelay()
-        {
-            return ConvertIntoMilliseconds((int)numericUpDownSlideshowDelayHours.Value,
-                (int)numericUpDownSlideshowDelayMinutes.Value, (int)numericUpDownSlideshowDelaySeconds.Value,
-                (int)numericUpDownSlideshowDelayMilliseconds.Value);
-        }
-
-        /// <summary>
         /// Disables the appropriate controls when playing the slideshow.
         /// </summary>
         private void DisableControls()
         {
             monthCalendar.Enabled = false;
-
-            numericUpDownSlideshowDelayHours.Enabled = false;
-            numericUpDownSlideshowDelayMinutes.Enabled = false;
-            numericUpDownSlideshowDelaySeconds.Enabled = false;
-            numericUpDownSlideshowDelayMilliseconds.Enabled = false;
-
-            numericUpDownSlideSkip.Enabled = false;
-            checkBoxSlideSkip.Enabled = false;
 
             toolStripButtonStartCapture.Enabled = false;
             toolStripMenuItemStartCapture.Enabled = false;
@@ -900,14 +739,6 @@ namespace AutoScreenCapture
         private void EnableControls()
         {
             monthCalendar.Enabled = true;
-
-            numericUpDownSlideshowDelayHours.Enabled = true;
-            numericUpDownSlideshowDelayMinutes.Enabled = true;
-            numericUpDownSlideshowDelaySeconds.Enabled = true;
-            numericUpDownSlideshowDelayMilliseconds.Enabled = true;
-
-            numericUpDownSlideSkip.Enabled = true;
-            checkBoxSlideSkip.Enabled = true;
 
             if (!timerScreenCapture.Enabled)
             {
@@ -922,104 +753,43 @@ namespace AutoScreenCapture
         private void ClearScreenPreview()
         {
             Slideshow.Clear();
-            listBoxSlides.Items.Clear();
+            listBoxScreenshots.DataSource = null;
         }
 
         /// <summary>
-        /// Disables the tool strip buttons when searching for dates and slides.
-        /// </summary>
-        private void DisableToolStripButtons()
-        {
-            toolStripButtonFirstSlide.Enabled = false;
-            toolStripButtonPreviousSlide.Enabled = false;
-            toolStripButtonPlaySlideshow.Enabled = false;
-            toolStripButtonNextSlide.Enabled = false;
-            toolStripButtonLastSlide.Enabled = false;
-        }
-
-        /// <summary>
-        /// Shows the slideshow.
-        /// </summary>
-        private void ShowSlideshow()
-        {
-            if (Slideshow.Playing)
-            {
-                Slideshow.Stop();
-            }
-
-            tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageSlideshow"];
-        }
-
-        /// <summary>
-        /// Shows the slideshow when a date on the calendar has been selected.
+        /// Shows the list of screenshots when a date on the calendar has been selected.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DateSelected_monthCalendar(object sender, DateRangeEventArgs e)
         {
+            ShowScreenshots();
+        }
+
+        /// <summary>
+        /// Determines what to do when a particular module is selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabControlModules_Selected(object sender, TabControlEventArgs e)
+        {
+            if (tabControlModules.SelectedTab.Name.Equals("tabPageScreenshots"))
+            {
+                ShowScreenshots();
+            }
+        }
+
+        /// <summary>
+        /// Shows the list of screenshots.
+        /// </summary>
+        private void ShowScreenshots()
+        {
             SearchSlides();
-            ShowSlideshow();
-        }
 
-        /// <summary>
-        /// Shows the first slide in the slideshow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_toolStripButtonFirstSlide(object sender, EventArgs e)
-        {
-            Slideshow.First();
-            listBoxSlides.SelectedIndex = Slideshow.Index;
-        }
-
-        /// <summary>
-        /// Shows the previous slide in the slideshow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_toolStripButtonPreviousSlide(object sender, EventArgs e)
-        {
-            Slideshow.Previous();
-            listBoxSlides.SelectedIndex = Slideshow.Index;
-        }
-
-        /// <summary>
-        /// Plays the slideshow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_toolStripButtonPlaySlideshow(object sender, EventArgs e)
-        {
-            if (Slideshow.Playing)
+            if (!tabControlModules.SelectedTab.Name.Equals("tabPageScreenshots"))
             {
-                PauseSlideshow();
+                tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageScreenshots"];
             }
-            else
-            {
-                PlaySlideshow();
-            }
-        }
-
-        /// <summary>
-        /// Shows the next slide in the slideshow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_toolStripButtonNextSlide(object sender, EventArgs e)
-        {
-            Slideshow.Next();
-            listBoxSlides.SelectedIndex = Slideshow.Index;
-        }
-
-        /// <summary>
-        /// Shows the last slide in the slideshow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_toolStripButtonLastSlide(object sender, EventArgs e)
-        {
-            Slideshow.Last();
-            listBoxSlides.SelectedIndex = Slideshow.Index;
         }
 
         /// <summary>
@@ -1136,31 +906,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Updates the list of screenshots with the current slideshow index when the slideshow is playing.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Slideshow_Playing(object sender, EventArgs e)
-        {
-            listBoxSlides.SelectedIndex = Slideshow.Index;
-        }
-
-        /// <summary>
-        /// Figures out if the "Play Slideshow" control should be enabled or disabled.
-        /// </summary>
-        private void EnablePlaySlideshow()
-        {
-            if (GetSlideshowDelay() > 0 && listBoxSlides.Items.Count > 0)
-            {
-                toolStripButtonPlaySlideshow.Enabled = true;
-            }
-            else
-            {
-                toolStripButtonPlaySlideshow.Enabled = false;
-            }
-        }
-
-        /// <summary>
         /// Figures out if the "Start Capture" controls should be enabled or disabled.
         /// </summary>
         private void EnableStartCapture()
@@ -1246,16 +991,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Plays the slideshow.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonClick_toolStripButtonPlaySlideshow(object sender, EventArgs e)
-        {
-            PlaySlideshow();
-        }
-
-        /// <summary>
         /// Shows the interface.
         /// </summary>
         /// <param name="sender"></param>
@@ -1296,9 +1031,9 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_toolStripMenuItemShowScreenshotLocation(object sender, EventArgs e)
         {
-            if (listBoxSlides.SelectedIndex > -1)
+            if (listBoxScreenshots.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide, (Screen)tabControlModules.SelectedTab.Tag);
+                Screenshot selectedScreenshot = ScreenshotCollection.GetScreenshotBySlideName(Slideshow.SelectedSlide.Name, (Screen)tabControlModules.SelectedTab.Tag);
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
                     File.Exists(selectedScreenshot.Path))
@@ -1971,7 +1706,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_runEditor(object sender, EventArgs e)
         {
-            if (listBoxSlides.SelectedIndex > -1)
+            if (listBoxScreenshots.SelectedIndex > -1)
             {
                 Editor editor = formEditor.EditorCollection.GetByName(sender.ToString());
                 RunEditor(editor);
@@ -2010,7 +1745,7 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                RunEditor(editor, ScreenshotCollection.GetBySlide(Slideshow.SelectedSlide, (Screen)tabControlScreens.SelectedTab.Tag));
+                RunEditor(editor, ScreenshotCollection.GetScreenshotBySlideName(Slideshow.SelectedSlide.Name, (Screen)tabControlScreens.SelectedTab.Tag));
             }
         }
 
@@ -2022,7 +1757,7 @@ namespace AutoScreenCapture
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
             {
-                RunEditor(editor, ScreenshotCollection.GetBySlide(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide, (Screen)tabControlScreens.SelectedTab.Tag));
+                RunEditor(editor, ScreenshotCollection.GetScreenshotBySlideName(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, (Screen)tabControlScreens.SelectedTab.Tag));
             }
         }
 
@@ -2518,16 +2253,6 @@ namespace AutoScreenCapture
             }
         }
 
-        /// <summary>
-        /// Enables the "Play Slideshow" control if it should be enabled.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ValueChanged_numericUpDownSlideshowDelay(object sender, EventArgs e)
-        {
-            EnablePlaySlideshow();
-        }
-
         /// Show or hide the system tray icon depending on the option selected.
         /// </summary>
         /// <param name="sender"></param>
@@ -2599,10 +2324,6 @@ namespace AutoScreenCapture
 
                         case TriggerActionType.HideInterface:
                             HideInterface();
-                            break;
-
-                        case TriggerActionType.PlaySlideshow:
-                            PlaySlideshow();
                             break;
 
                         case TriggerActionType.RunEditor:

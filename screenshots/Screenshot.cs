@@ -16,7 +16,7 @@ namespace AutoScreenCapture
         public string Path { get; set; }
         public ImageFormat Format { get; set; }
         public int Component { get; set; }
-        public string Slide { get; set; }
+        public Slide Slide { get; set; }
 
         public Screenshot()
         {
@@ -28,7 +28,12 @@ namespace AutoScreenCapture
             Path = path;
             Format = format;
             Component = component;
-            Slide = dateTime.ToString(MacroParser.DateFormat) + " " + dateTime.ToString(MacroParser.TimeFormat) + " " + format.Name;
+
+            Slide = new Slide()
+            {
+                Name = "{date=" + dateTime.ToString(MacroParser.DateFormat) + "}{time=" + dateTime.ToString(MacroParser.TimeFormat) + "}",
+                Value = dateTime.ToString(MacroParser.FriendlyTimeFormat)
+            };
 
             string directory = System.IO.Path.GetDirectoryName(path);
 

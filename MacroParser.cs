@@ -11,6 +11,7 @@ namespace AutoScreenCapture
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly string TimeFormat = "HH-mm-ss-fff";
+        public static readonly string FriendlyTimeFormat = "hh:mm:ss.fff tt";
         public static readonly string DefaultMacro = @"%name%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
 
         /// <summary>
