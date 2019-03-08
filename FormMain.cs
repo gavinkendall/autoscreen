@@ -483,7 +483,6 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value =
                         checkBoxPassphraseLock.Checked;
                     Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
-                    Settings.User.GetByKey("Schedule", defaultValue: false).Value = timerScheduledCaptureStart.Enabled;
 
                     Settings.User.Save();
 
