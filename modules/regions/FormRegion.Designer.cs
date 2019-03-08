@@ -432,7 +432,7 @@
             this.groupBoxRegionScreenTemplate.Size = new System.Drawing.Size(205, 47);
             this.groupBoxRegionScreenTemplate.TabIndex = 13;
             this.groupBoxRegionScreenTemplate.TabStop = false;
-            this.groupBoxRegionScreenTemplate.Text = "Screen Template";
+            this.groupBoxRegionScreenTemplate.Text = "Import Screen Dimensions";
             // 
             // comboBoxRegionScreenTemplate
             // 
@@ -442,6 +442,7 @@
             this.comboBoxRegionScreenTemplate.Name = "comboBoxRegionScreenTemplate";
             this.comboBoxRegionScreenTemplate.Size = new System.Drawing.Size(193, 21);
             this.comboBoxRegionScreenTemplate.TabIndex = 14;
+            this.comboBoxRegionScreenTemplate.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionScreenTemplate_SelectedIndexChanged);
             // 
             // FormRegion
             // 

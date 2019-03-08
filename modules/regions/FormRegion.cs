@@ -9,6 +9,7 @@ namespace AutoScreenCapture
 {
     using System;
     using System.Windows.Forms;
+    using System.Collections.Generic;
 
     public partial class FormRegion : Form
     {
@@ -18,6 +19,8 @@ namespace AutoScreenCapture
 
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
+        private Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
+
         public FormRegion()
         {
             InitializeComponent();
@@ -25,6 +28,27 @@ namespace AutoScreenCapture
 
         private void FormRegion_Load(object sender, EventArgs e)
         {
+            ScreenDictionary.Clear();
+            comboBoxRegionScreenTemplate.Items.Clear();
+
+            int component = 1;
+
+            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                ScreenDictionary.Add(component, screen);
+                component++;
+            }
+
+            comboBoxRegionScreenTemplate.Items.Add(string.Empty);
+
+            for (int i = 1; i <= ScreenDictionary.Count; i++)
+            {
+                System.Windows.Forms.Screen screen = ScreenDictionary[i];
+                comboBoxRegionScreenTemplate.Items.Add("Screen " + i + " (" + screen.Bounds.Width + " x " + screen.Bounds.Height + ")");
+            }
+
+            comboBoxRegionScreenTemplate.SelectedIndex = 0;
+
             comboBoxRegionFormat.Items.Clear();
 
             foreach (ImageFormat imageFormat in ImageFormatCollection)
@@ -254,6 +278,21 @@ namespace AutoScreenCapture
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
         {
             timerRegionPreview.Enabled = false;
+        }
+
+        private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ScreenDictionary.ContainsKey(comboBoxRegionScreenTemplate.SelectedIndex))
+            {
+                System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxRegionScreenTemplate.SelectedIndex];
+
+                numericUpDownRegionX.Value = screen.Bounds.X;
+                numericUpDownRegionY.Value = screen.Bounds.Y;
+                numericUpDownRegionWidth.Value = screen.Bounds.Width;
+                numericUpDownRegionHeight.Value = screen.Bounds.Height;
+
+                comboBoxRegionScreenTemplate.SelectedIndex = 0;
+            }
         }
     }
 }

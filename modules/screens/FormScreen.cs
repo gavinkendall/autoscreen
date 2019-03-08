@@ -5,13 +5,11 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-
-using System.Collections.Generic;
-
 namespace AutoScreenCapture
 {
     using System;
     using System.Windows.Forms;
+    using System.Collections.Generic;
 
     public partial class FormScreen : Form
     {
@@ -46,7 +44,8 @@ namespace AutoScreenCapture
 
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
-                comboBoxScreenComponent.Items.Add("Screen " + i);
+                System.Windows.Forms.Screen screen = ScreenDictionary[i];
+                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + screen.Bounds.Width + " x " + screen.Bounds.Height + ")");
             }
 
             if (ScreenObject != null)
