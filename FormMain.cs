@@ -393,7 +393,6 @@ namespace AutoScreenCapture
             {
                 List<Slide> slides = ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
-
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
                 listBoxScreenshots.DataSource = slides;
@@ -604,7 +603,7 @@ namespace AutoScreenCapture
                     DisableStopCapture();
                     EnableStartCapture();
 
-                    SearchDates();
+                    ShowScreenshots();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -2113,7 +2112,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot()
         {
-            int count = 0;
+            formScreen.RefreshScreenDictionary();
 
             ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
 

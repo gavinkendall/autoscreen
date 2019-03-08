@@ -213,7 +213,7 @@ namespace AutoScreenCapture
 
                     if (bitmap != null)
                     {
-                        if (component > 0)
+                        if (component >= 0)
                         {
                             ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component));
                         }

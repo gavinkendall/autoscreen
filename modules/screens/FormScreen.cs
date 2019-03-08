@@ -27,15 +27,7 @@ namespace AutoScreenCapture
         {
             InitializeComponent();
 
-            ScreenDictionary.Clear();
-
-            int component = 1;
-
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
-            {
-                ScreenDictionary.Add(component, screen);
-                component++;
-            }
+            RefreshScreenDictionary();
         }
 
         private void FormScreen_Load(object sender, EventArgs e)
@@ -43,14 +35,16 @@ namespace AutoScreenCapture
             comboBoxScreenFormat.Items.Clear();
             comboBoxScreenComponent.Items.Clear();
 
+            pictureBoxScreenPreview.Image = null;
+
             foreach (ImageFormat imageFormat in ImageFormatCollection)
             {
                 comboBoxScreenFormat.Items.Add(imageFormat.Name);
             }
 
-            for (int i = 1; i <= ScreenDictionary.Count; i++)
+            for (int i = 0; i <= ScreenDictionary.Count; i++)
             {
-                comboBoxScreenComponent.Items.Add("Screen " + i);
+                comboBoxScreenComponent.Items.Add("Screen " + (i + 1));
             }
 
             if (ScreenObject != null)
@@ -60,7 +54,17 @@ namespace AutoScreenCapture
                 textBoxScreenName.Text = ScreenObject.Name;
                 textBoxScreenFolder.Text = ScreenObject.Folder;
                 textBoxScreenMacro.Text = ScreenObject.Macro;
-                comboBoxScreenComponent.SelectedIndex = ScreenObject.Component;
+
+                if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
+                {
+                    SetControls(enabled: true);
+                    comboBoxScreenComponent.SelectedIndex = ScreenObject.Component;
+                }
+                else
+                {
+                    SetControls(enabled: false);
+                }
+
                 comboBoxScreenFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownScreenJpegQuality.Value = ScreenObject.JpegQuality;
                 numericUpDownScreenResolutionRatio.Value = ScreenObject.ResolutionRatio;
@@ -97,6 +101,19 @@ namespace AutoScreenCapture
             else
             {
                 AddNewScreen();
+            }
+        }
+
+        public void RefreshScreenDictionary()
+        {
+            ScreenDictionary.Clear();
+
+            int component = 0;
+
+            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                ScreenDictionary.Add(component, screen);
+                component++;
             }
         }
 
@@ -247,21 +264,49 @@ namespace AutoScreenCapture
 
         private void UpdatePreview()
         {
-            System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxScreenComponent.SelectedIndex];
+            System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
 
-            pictureBoxScreenPreview.Image = ScreenCapture.GetScreenBitmap(
-                screen.Bounds.X,
-                screen.Bounds.Y,
-                screen.Bounds.Width,
-                screen.Bounds.Height,
-                (int) numericUpDownScreenResolutionRatio.Value,
-                checkBoxScreenMouse.Checked
-            );
+            pictureBoxScreenPreview.Image = screen != null
+                ? ScreenCapture.GetScreenBitmap(
+                    screen.Bounds.X,
+                    screen.Bounds.Y,
+                    screen.Bounds.Width,
+                    screen.Bounds.Height,
+                    (int) numericUpDownScreenResolutionRatio.Value,
+                    checkBoxScreenMouse.Checked
+                )
+                : null;
         }
 
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             timerScreenPreview.Enabled = false;
+        }
+
+        private System.Windows.Forms.Screen GetScreenByIndex(int index)
+        {
+            try
+            {
+                System.Windows.Forms.Screen screen = ScreenDictionary[index];
+                return screen;
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                return null;
+            }
+        }
+
+        private void SetControls(bool enabled)
+        {
+            buttonScreenOK.Enabled = enabled;
+            textBoxScreenName.Enabled = enabled;
+            textBoxScreenMacro.Enabled = enabled;
+            checkBoxScreenMouse.Enabled = enabled;
+            textBoxScreenFolder.Enabled = enabled;
+            comboBoxScreenFormat.Enabled = enabled;
+            comboBoxScreenComponent.Enabled = enabled;
+            numericUpDownScreenJpegQuality.Enabled = enabled;
+            numericUpDownScreenResolutionRatio.Enabled = enabled;
         }
     }
 }
