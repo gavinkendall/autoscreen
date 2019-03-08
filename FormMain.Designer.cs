@@ -600,23 +600,23 @@
             // 
             // dateTimePickerScheduleStopAt
             // 
-            this.dateTimePickerScheduleStopAt.CustomFormat = "HH:mm";
+            this.dateTimePickerScheduleStopAt.CustomFormat = "HH:mm:ss";
             this.dateTimePickerScheduleStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(142, 39);
+            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(130, 39);
             this.dateTimePickerScheduleStopAt.Name = "dateTimePickerScheduleStopAt";
             this.dateTimePickerScheduleStopAt.ShowUpDown = true;
-            this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(56, 20);
+            this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerScheduleStopAt.TabIndex = 3;
             this.dateTimePickerScheduleStopAt.TabStop = false;
             // 
             // dateTimePickerScheduleStartAt
             // 
-            this.dateTimePickerScheduleStartAt.CustomFormat = "HH:mm";
+            this.dateTimePickerScheduleStartAt.CustomFormat = "HH:mm:ss";
             this.dateTimePickerScheduleStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(142, 16);
+            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(130, 16);
             this.dateTimePickerScheduleStartAt.Name = "dateTimePickerScheduleStartAt";
             this.dateTimePickerScheduleStartAt.ShowUpDown = true;
-            this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(56, 20);
+            this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerScheduleStartAt.TabIndex = 2;
             this.dateTimePickerScheduleStartAt.TabStop = false;
             // 
@@ -810,13 +810,13 @@
             // timerScheduledCaptureStart
             // 
             this.timerScheduledCaptureStart.Enabled = true;
-            this.timerScheduledCaptureStart.Interval = 60000;
+            this.timerScheduledCaptureStart.Interval = 1000;
             this.timerScheduledCaptureStart.Tick += new System.EventHandler(this.Tick_timerScheduledCaptureStart);
             // 
             // timerScheduledCaptureStop
             // 
             this.timerScheduledCaptureStop.Enabled = true;
-            this.timerScheduledCaptureStop.Interval = 60000;
+            this.timerScheduledCaptureStop.Interval = 1000;
             this.timerScheduledCaptureStop.Tick += new System.EventHandler(this.Tick_timerScheduledCaptureStop);
             // 
             // timerScreenCapture

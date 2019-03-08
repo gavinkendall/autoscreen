@@ -416,7 +416,7 @@
     <value>586, 22</value>
   </metadata>
   <metadata name="timerScheduledCaptureStop.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>513, 54</value>
+    <value>592, 52</value>
   </metadata>
   <metadata name="timerScreenCapture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>332, 19</value>

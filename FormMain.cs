@@ -2200,7 +2200,8 @@ namespace AutoScreenCapture
                          (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
                          (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
                         ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute)))
+                         (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
+                         (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
                     {
                         StartScreenCapture();
                     }
@@ -2208,7 +2209,8 @@ namespace AutoScreenCapture
                 else
                 {
                     if ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-                        (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute))
+                        (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
+                        (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
                     {
                         StartScreenCapture();
                     }
@@ -2235,7 +2237,8 @@ namespace AutoScreenCapture
                          (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
                          (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
                         ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute)))
+                         (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
+                         (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second)))
                     {
                         StopScreenCapture();
                     }
@@ -2243,7 +2246,8 @@ namespace AutoScreenCapture
                 else
                 {
                     if ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-                        (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute))
+                        (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
+                        (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second))
                     {
                         StopScreenCapture();
                     }
