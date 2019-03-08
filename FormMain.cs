@@ -2368,20 +2368,34 @@ namespace AutoScreenCapture
         {
             foreach (Screen screen in formScreen.ScreenCollection)
             {
-                if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                if (screen.Component == 0)
                 {
+                    // Active Window
                     ScreenCapture.TakeScreenshot(
                         path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                         format: screen.Format,
-                        component: screen.Component,
                         jpegQuality: screen.JpegQuality,
-                        resolutionRatio: screen.ResolutionRatio,
-                        mouse: screen.Mouse,
-                        x: formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                        y: formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                        width: formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                        height: formScreen.ScreenDictionary[screen.Component].Bounds.Height
+                        resolutionRatio: screen.ResolutionRatio
                     );
+                }
+                else
+                {
+                    if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                    {
+                        // Screen X
+                        ScreenCapture.TakeScreenshot(
+                            path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                            format: screen.Format,
+                            component: screen.Component,
+                            jpegQuality: screen.JpegQuality,
+                            resolutionRatio: screen.ResolutionRatio,
+                            mouse: screen.Mouse,
+                            x: formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                            y: formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                            width: formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                            height: formScreen.ScreenDictionary[screen.Component].Bounds.Height
+                        );
+                    }
                 }
             }
         }

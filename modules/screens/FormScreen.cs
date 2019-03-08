@@ -42,9 +42,11 @@ namespace AutoScreenCapture
                 comboBoxScreenFormat.Items.Add(imageFormat.Name);
             }
 
-            for (int i = 0; i <= ScreenDictionary.Count; i++)
+            comboBoxScreenComponent.Items.Add("Active Window");
+
+            for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
-                comboBoxScreenComponent.Items.Add("Screen " + (i + 1));
+                comboBoxScreenComponent.Items.Add("Screen " + i);
             }
 
             if (ScreenObject != null)
@@ -108,7 +110,7 @@ namespace AutoScreenCapture
         {
             ScreenDictionary.Clear();
 
-            int component = 0;
+            int component = 1;
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
@@ -264,18 +266,25 @@ namespace AutoScreenCapture
 
         private void UpdatePreview()
         {
-            System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
+            if (comboBoxScreenComponent.SelectedIndex == 0)
+            {
+                pictureBoxScreenPreview.Image = ScreenCapture.GetActiveWindowBitmap();
+            }
+            else
+            {
+                System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
 
-            pictureBoxScreenPreview.Image = screen != null
-                ? ScreenCapture.GetScreenBitmap(
-                    screen.Bounds.X,
-                    screen.Bounds.Y,
-                    screen.Bounds.Width,
-                    screen.Bounds.Height,
-                    (int) numericUpDownScreenResolutionRatio.Value,
-                    checkBoxScreenMouse.Checked
-                )
-                : null;
+                pictureBoxScreenPreview.Image = screen != null
+                    ? ScreenCapture.GetScreenBitmap(
+                        screen.Bounds.X,
+                        screen.Bounds.Y,
+                        screen.Bounds.Width,
+                        screen.Bounds.Height,
+                        (int) numericUpDownScreenResolutionRatio.Value,
+                        checkBoxScreenMouse.Checked
+                    )
+                    : null;
+            }
         }
 
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)

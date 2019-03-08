@@ -30,6 +30,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_COMPONENT = "component";
         private const string SCREENSHOT_SLIDENAME = "slidename";
         private const string SCREENSHOT_SLIDEVALUE = "slidevalue";
+        private const string SCREENSHOT_ACTIVE_WINDOW_TITLE = "activewindowtitle";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
         public static void Add(Screenshot newScreenshot)
@@ -146,6 +147,11 @@ namespace AutoScreenCapture
                                     xReader.Read();
                                     screenshot.Slide.Value = xReader.Value;
                                     break;
+
+                                case SCREENSHOT_ACTIVE_WINDOW_TITLE:
+                                    xReader.Read();
+                                    screenshot.ActiveWindowTitle = xReader.Value;
+                                    break;
                             }
                         }
                     }
@@ -157,7 +163,8 @@ namespace AutoScreenCapture
                         screenshot.Format != null &&
                         screenshot.Component >= 0 &&
                         !string.IsNullOrEmpty(screenshot.Slide.Name) &&
-                        !string.IsNullOrEmpty(screenshot.Slide.Value))
+                        !string.IsNullOrEmpty(screenshot.Slide.Value) &&
+                        !string.IsNullOrEmpty(screenshot.ActiveWindowTitle))
                     {
                         _screenshotList.Add(screenshot);
                     }
@@ -199,6 +206,7 @@ namespace AutoScreenCapture
                     xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());
                     xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slide.Name);
                     xWriter.WriteElementString(SCREENSHOT_SLIDEVALUE, screenshot.Slide.Value);
+                    xWriter.WriteElementString(SCREENSHOT_ACTIVE_WINDOW_TITLE, screenshot.ActiveWindowTitle);
 
                     xWriter.WriteEndElement();
                 }

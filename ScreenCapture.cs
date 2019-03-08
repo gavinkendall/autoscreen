@@ -203,19 +203,24 @@ namespace AutoScreenCapture
             return null;
         }
 
+        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio)
+        {
+            TakeScreenshot(path, format, 0, jpegQuality, resolutionRatio, true, 0, 0, 0, 0);
+        }
+
         public static void TakeScreenshot(string path, ImageFormat format, int component, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
         {
             try
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = GetScreenBitmap(x, y, width, height, Ratio, mouse);
+                    Bitmap bitmap = component == 0 ? GetActiveWindowBitmap() : GetScreenBitmap(x, y, width, height, Ratio, mouse);
 
                     if (bitmap != null)
                     {
                         if (component >= 0)
                         {
-                            ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component));
+                            ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle()));
                         }
 
                         SaveToFile(path, format, jpegQuality, bitmap);

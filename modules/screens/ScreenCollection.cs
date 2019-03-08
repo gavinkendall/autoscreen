@@ -169,10 +169,13 @@ namespace AutoScreenCapture
             }
             else
             {
+                Add(new Screen($"Active Window", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, 0,
+                    imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
+
                 // Setup some screens based on what we can find.
-                for (int screenNumber = 0; screenNumber < System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
+                for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
                 {
-                    Add(new Screen($"Screen {(screenNumber + 1)}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
+                    Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
                         imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
                 }
 
