@@ -50,7 +50,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
+                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message + " - Error: " +
                                          ex.Message);
 
                             sw.Flush();
@@ -60,7 +60,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message + " - Error: " +
+                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message + " - Error: " +
                                          ex.Message);
 
                             sw.Flush();
@@ -73,25 +73,25 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
+                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message);
 
                             sw.Flush();
                             sw.Close();
                         }
 
                         // Create a date-stamped directory if it does not already exist.
-                        if (!Directory.Exists(FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd")))
+                        if (!Directory.Exists(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat)))
                         {
-                            Directory.CreateDirectory(FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd"));
+                            Directory.CreateDirectory(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat));
                         }
 
                         // Write to a log file within a directory representing the day when the message was logged.
                         using (StreamWriter sw = new StreamWriter(
-                            FileSystem.LogsFolder + DateTime.Now.ToString("yyyy-MM-dd") + FileSystem.PathDelimiter +
-                            logFile + "_" + DateTime.Now.ToString("yyyy-MM-dd") + extension, true))
+                            FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat) + FileSystem.PathDelimiter +
+                            logFile + "_" + DateTime.Now.ToString(MacroParser.DateFormat) + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "] " + message);
+                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message);
 
                             sw.Flush();
                             sw.Close();
