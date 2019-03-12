@@ -50,7 +50,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message + " - Error: " +
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error: " +
                                          ex.Message);
 
                             sw.Flush();
@@ -60,7 +60,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message + " - Error: " +
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error: " +
                                          ex.Message);
 
                             sw.Flush();
@@ -73,7 +73,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message);
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
 
                             sw.Flush();
                             sw.Close();
@@ -91,7 +91,7 @@ namespace AutoScreenCapture
                             logFile + "_" + DateTime.Now.ToString(MacroParser.DateFormat) + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + MacroParser.TimeFormat) + "] " + message);
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
 
                             sw.Flush();
                             sw.Close();
