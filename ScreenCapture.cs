@@ -200,7 +200,7 @@ namespace AutoScreenCapture
                 return buffer.ToString();
             }
 
-            return null;
+            return string.Empty;
         }
 
         public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio)
@@ -218,10 +218,7 @@ namespace AutoScreenCapture
 
                     if (bitmap != null)
                     {
-                        if (component >= 0)
-                        {
-                            ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle()));
-                        }
+                        ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle()));
 
                         SaveToFile(path, format, jpegQuality, bitmap);
 
@@ -231,27 +228,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCapture::TakeScreenshot(imageFormatCollection, x, y, width, height, path, jpegQualityLevel, mouse)", ex);
-            }
-        }
-
-        public static void Save(string imagePath)
-        {
-            try
-            {
-                if (!string.IsNullOrEmpty(imagePath))
-                {
-                    if (!Directory.Exists(Path.GetDirectoryName(imagePath)))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(imagePath));
-                    }
-
-                    File.Create(imagePath);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Write("ScreenCapture::Save", ex);
+                Log.Write("ScreenCapture::TakeScreenshot(path, format, component, jpegQuality, resolutionRatio, mouse, x, y, width, height)", ex);
             }
         }
 

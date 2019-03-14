@@ -34,7 +34,7 @@ namespace AutoScreenCapture
             Slide = new Slide()
             {
                 Name = "{date=" + dateTime.ToString(MacroParser.DateFormat) + "}{time=" + dateTime.ToString(MacroParser.TimeFormat) + "}",
-                Value = dateTime.ToString(MacroParser.TimeFormat) + " [" + activeWindowTitle + "]"
+                Value = dateTime.ToString(MacroParser.TimeFormat) + (!string.IsNullOrEmpty(activeWindowTitle) ? " [" + activeWindowTitle + "]" : string.Empty)
             };
 
             string directory = System.IO.Path.GetDirectoryName(path);

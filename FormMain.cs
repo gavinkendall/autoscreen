@@ -721,31 +721,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Disables the appropriate controls when playing the slideshow.
-        /// </summary>
-        private void DisableControls()
-        {
-            monthCalendar.Enabled = false;
-
-            toolStripButtonStartCapture.Enabled = false;
-            toolStripMenuItemStartCapture.Enabled = false;
-        }
-
-        /// <summary>
-        /// Enables the appropriate controls when the slideshow is paused or stopped.
-        /// </summary>
-        private void EnableControls()
-        {
-            monthCalendar.Enabled = true;
-
-            if (!timerScreenCapture.Enabled)
-            {
-                toolStripButtonStartCapture.Enabled = true;
-                toolStripMenuItemStartCapture.Enabled = true;
-            }
-        }
-
-        /// <summary>
         /// Clears the screenshot images in the interface when searching for dates and slides.
         /// </summary>
         private void ClearScreenPreview()
@@ -1751,6 +1726,7 @@ namespace AutoScreenCapture
         /// Executes a chosen image editor from a Trigger.
         /// </summary>
         /// <param name="editor">The image editor to execute.</param>
+        /// <param name="triggerActionType">The trigger's action type.</param>
         private void RunEditor(Editor editor, TriggerActionType triggerActionType)
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
@@ -2255,6 +2231,7 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
         /// Show or hide the system tray icon depending on the option selected.
         /// </summary>
         /// <param name="sender"></param>

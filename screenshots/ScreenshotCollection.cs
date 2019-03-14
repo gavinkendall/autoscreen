@@ -66,12 +66,14 @@ namespace AutoScreenCapture
         public static List<Slide> GetSlidesByDate(string date)
         {
             List<Slide> slides = new List<Slide>();
+            List<string> slideNames = new List<string>();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Date.Equals(date) && !slides.Contains(screenshot.Slide))
+                if (screenshot.Date.Equals(date) && !slideNames.Contains(screenshot.Slide.Name))
                 {
                     slides.Add(screenshot.Slide);
+                    slideNames.Add(screenshot.Slide.Name);
                 }
             }
 
