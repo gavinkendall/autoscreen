@@ -163,7 +163,6 @@ namespace AutoScreenCapture
                     if (!string.IsNullOrEmpty(screenshot.Date) &&
                         !string.IsNullOrEmpty(screenshot.Path) &&
                         screenshot.Format != null &&
-                        screenshot.Component >= 0 &&
                         !string.IsNullOrEmpty(screenshot.Slide.Name) &&
                         !string.IsNullOrEmpty(screenshot.Slide.Value) &&
                         !string.IsNullOrEmpty(screenshot.ActiveWindowTitle))

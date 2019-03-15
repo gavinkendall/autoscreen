@@ -1166,13 +1166,14 @@ namespace AutoScreenCapture
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
             contextMenuStripScreenshotPreview.Items.Add(addNewEditorToolStripItem);
 
-            BuildEditorsList();
-            BuildTriggersList();
-            BuildRegionsList();
-            BuildScreensList();
+            BuildEditorsModule();
+            BuildTriggersModule();
+            BuildRegionsModule();
+            BuildScreensModule();
+            BuildScreenTabPages();
         }
 
-        private void BuildEditorsList()
+        private void BuildEditorsModule()
         {
             int xPosEditor = 5;
             int yPosEditor = 3;
@@ -1291,7 +1292,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void BuildTriggersList()
+        private void BuildTriggersModule()
         {
             int xPosTrigger = 5;
             int yPosTrigger = 3;
@@ -1382,7 +1383,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void BuildScreensList()
+        private void BuildScreensModule()
         {
             int xPosScreen = 5;
             int yPosScreen = 3;
@@ -1431,9 +1432,6 @@ namespace AutoScreenCapture
             // Move down a bit so we can start populating the Screens tab page with a list of Screens.
             yPosScreen += 28;
 
-            // Clear out the controls of the "Screens" tab control.
-            tabControlScreens.Controls.Clear();
-
             foreach (Screen screen in formScreen.ScreenCollection)
             {
                 // Add a checkbox so that the user has the ability to remove the selected Screen.
@@ -1471,63 +1469,12 @@ namespace AutoScreenCapture
                 buttonChangeScreen.Click += new EventHandler(Click_buttonChangeScreen);
                 tabPageScreens.Controls.Add(buttonChangeScreen);
 
-                // Setup the "Screen" tab page for the current screen with all of its associated controls.
-
-                ToolStripSplitButton toolStripSplitButtonScreen = new ToolStripSplitButton
-                {
-                    Text = "Edit",
-                    Image = Resources.edit
-                };
-
-                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null,
-                    Click_addEditorToolStripMenuItem);
-                foreach (Editor editor in formEditor.EditorCollection)
-                {
-                    if (editor != null && File.Exists(editor.Application))
-                    {
-                        toolStripSplitButtonScreen.DropDown.Items.Add(editor.Name,
-                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
-                    }
-                }
-
-                ToolStrip toolStripScreen = new ToolStrip
-                {
-                    GripStyle = ToolStripGripStyle.Hidden
-                };
-
-                toolStripScreen.Items.Add(toolStripSplitButtonScreen);
-
-                PictureBox pictureBoxScreen = new PictureBox
-                {
-                    Name = screen.Name,
-                    BackColor = Color.Black,
-                    Location = new Point(4, 29),
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    ContextMenuStrip = contextMenuStripScreenshotPreview,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
-                };
-
-                TabPage tabPageScreen = new TabPage
-                {
-                    Name = screen.Name,
-                    Text = screen.Name,
-                    Tag = screen
-                };
-
-                tabPageScreen.Controls.Add(toolStripScreen);
-                tabPageScreen.Controls.Add(pictureBoxScreen);
-
-                pictureBoxScreen.Width = (tabPageScreen.Width - 10);
-                pictureBoxScreen.Height = (tabPageScreen.Height - 30);
-
-                tabControlScreens.Controls.Add(tabPageScreen);
-
                 // Move down the Screens tab page so we're ready to loop around again and add the next Screen to it.
                 yPosScreen += Y_POS_SCREEN_INCREMENT;
             }
         }
 
-        private void BuildRegionsList()
+        private void BuildRegionsModule()
         {
             int xPosRegion = 5;
             int yPosRegion = 3;
@@ -1615,6 +1562,66 @@ namespace AutoScreenCapture
 
                 // Move down the Regions tab page so we're ready to loop around again and add the next Region to it.
                 yPosRegion += Y_POS_REGION_INCREMENT;
+            }
+        }
+
+        private void BuildScreenTabPages()
+        {
+            // Clear out the controls of the "Screens" tab control.
+            tabControlScreens.Controls.Clear();
+
+            foreach (Screen screen in formScreen.ScreenCollection)
+            {
+                // Setup the "Screen" tab page for the current screen with all of its associated controls.
+
+                ToolStripSplitButton toolStripSplitButtonScreen = new ToolStripSplitButton
+                {
+                    Text = "Edit",
+                    Image = Resources.edit
+                };
+
+                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null,
+                    Click_addEditorToolStripMenuItem);
+                foreach (Editor editor in formEditor.EditorCollection)
+                {
+                    if (editor != null && File.Exists(editor.Application))
+                    {
+                        toolStripSplitButtonScreen.DropDown.Items.Add(editor.Name,
+                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    }
+                }
+
+                ToolStrip toolStripScreen = new ToolStrip
+                {
+                    GripStyle = ToolStripGripStyle.Hidden
+                };
+
+                toolStripScreen.Items.Add(toolStripSplitButtonScreen);
+
+                PictureBox pictureBoxScreen = new PictureBox
+                {
+                    Name = screen.Name,
+                    BackColor = Color.Black,
+                    Location = new Point(4, 29),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    ContextMenuStrip = contextMenuStripScreenshotPreview,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
+                };
+
+                TabPage tabPageScreen = new TabPage
+                {
+                    Name = screen.Name,
+                    Text = screen.Name,
+                    Tag = screen
+                };
+
+                tabPageScreen.Controls.Add(toolStripScreen);
+                tabPageScreen.Controls.Add(pictureBoxScreen);
+
+                pictureBoxScreen.Width = (tabPageScreen.Width - 10);
+                pictureBoxScreen.Height = (tabPageScreen.Height - 30);
+
+                tabControlScreens.Controls.Add(tabPageScreen);
             }
         }
 
@@ -2091,13 +2098,13 @@ namespace AutoScreenCapture
 
             ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
 
-            ScreenCapture.Count++;
-
             RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
 
             RunRegionCaptures();
 
             RunScreenCaptures();
+
+            ScreenCapture.Count++;
         }
 
         /// <summary>
@@ -2333,7 +2340,6 @@ namespace AutoScreenCapture
                 ScreenCapture.TakeScreenshot(
                     path: region.Folder + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     format: region.Format,
-                    component: 0,
                     jpegQuality: region.JpegQuality,
                     resolutionRatio: region.ResolutionRatio,
                     mouse: region.Mouse,

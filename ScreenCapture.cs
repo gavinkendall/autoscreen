@@ -208,6 +208,11 @@ namespace AutoScreenCapture
             TakeScreenshot(path, format, 0, jpegQuality, resolutionRatio, true, 0, 0, 0, 0);
         }
 
+        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
+        {
+            TakeScreenshot(path, format, -1, jpegQuality, resolutionRatio, mouse, x, y, width, height);
+        }
+
         public static void TakeScreenshot(string path, ImageFormat format, int component, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
         {
             try
