@@ -194,6 +194,8 @@ namespace AutoScreenCapture
             {
                 xWriter.WriteStartDocument();
                 xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                 xWriter.WriteStartElement(XML_FILE_SCREENSHOTS_NODE);
 
                 foreach (object obj in _screenshotList)

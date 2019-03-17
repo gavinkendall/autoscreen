@@ -16,6 +16,9 @@ namespace AutoScreenCapture
 
     public class RegionCollection : IEnumerable<Region>
     {
+        private string _appVersion;
+        private string _appCodename;
+
         private readonly List<Region> _regionList = new List<Region>();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -179,6 +182,16 @@ namespace AutoScreenCapture
 
                     xReader.Close();
 
+                    if (Settings.IsOldAppVersion(xDoc, out _appVersion, out _appCodename))
+                    {
+                        region.Folder = FileSystem.ScreenshotsFolder;
+                        region.Macro = region.Macro.Replace("%region%", "%name%");
+                        region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
+                        region.JpegQuality = 100;
+                        region.ResolutionRatio = 100;
+                        region.Mouse = true;
+                    }
+
                     if (!string.IsNullOrEmpty(region.Name))
                     {
                         Add(region);
@@ -206,6 +219,8 @@ namespace AutoScreenCapture
             {
                 xWriter.WriteStartDocument();
                 xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                 xWriter.WriteStartElement(XML_FILE_REGIONS_NODE);
 
                 foreach (object obj in _regionList)

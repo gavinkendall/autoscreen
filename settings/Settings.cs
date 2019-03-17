@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 
 namespace AutoScreenCapture
 {
@@ -8,6 +9,7 @@ namespace AutoScreenCapture
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
         public static readonly string ApplicationVersion = "2.2.0.0";
+        public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
         public static SettingCollection User;
@@ -77,6 +79,24 @@ namespace AutoScreenCapture
                     User.Save();
                 }
             }
+        }
+
+        public static bool IsOldAppVersion(XmlDocument xDoc, out string appVersion, out string appCodename)
+        {
+            appVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+            appCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+            if (string.IsNullOrEmpty(appVersion) && string.IsNullOrEmpty(appCodename))
+            {
+                // This is likely to be version 2.1 "Clara" before the concept of an "app:version"
+                // or the management of application versions even existed in Auto Screen Capture.
+                appVersion = "2.1.8.2";
+                appCodename = "Clara";
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
