@@ -321,15 +321,8 @@ namespace AutoScreenCapture
                     runSlideSearchThread.CancelAsync();
                 }
 
-                formEditor.EditorCollection.Save();
-
+                SaveSettings();
                 ScreenshotCollection.Save();
-
-                formTrigger.TriggerCollection.Save();
-
-                formRegion.RegionCollection.Save();
-
-                formScreen.ScreenCollection.Save();
 
                 // Exit.
                 Environment.Exit(0);
@@ -337,6 +330,7 @@ namespace AutoScreenCapture
             else
             {
                 SaveSettings();
+                ScreenshotCollection.Save();
 
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
 
@@ -833,15 +827,7 @@ namespace AutoScreenCapture
                     runSlideSearchThread.CancelAsync();
                 }
 
-                formEditor.EditorCollection.Save();
-
                 ScreenshotCollection.Save();
-
-                formTrigger.TriggerCollection.Save();
-
-                formRegion.RegionCollection.Save();
-
-                formScreen.ScreenCollection.Save();
 
                 // Exit.
                 Environment.Exit(0);
