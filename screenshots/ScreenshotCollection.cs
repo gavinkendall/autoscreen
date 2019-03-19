@@ -89,6 +89,7 @@ namespace AutoScreenCapture
                 if (screenshot.Slide.Name.Equals(slideName) && screenshot.Component == screen.Component)
                 {
                     foundScreenshot = screenshot;
+                    break;
                 }
             }
 

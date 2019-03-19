@@ -1006,7 +1006,7 @@ namespace AutoScreenCapture
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = ScreenshotCollection.GetScreenshotBySlideName(Slideshow.SelectedSlide.Name, (Screen)tabControlModules.SelectedTab.Tag);
+                Screenshot selectedScreenshot = ScreenshotCollection.GetScreenshotBySlideName(Slideshow.SelectedSlide.Name, (Screen)tabControlScreens.SelectedTab.Tag);
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
                     File.Exists(selectedScreenshot.Path))

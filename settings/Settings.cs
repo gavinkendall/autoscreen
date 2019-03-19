@@ -8,7 +8,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.1";
+        public static readonly string ApplicationVersion = "2.2.0.0";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -19,7 +19,11 @@ namespace AutoScreenCapture
         public static void Initialize()
         {
             _versionCollection = new VersionCollection();
+
+            // This version.
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion));
+
+            // Older versions.
             _versionCollection.Add(new Version("Clara", "2.1.8.2"));
 
             Application = new SettingCollection();

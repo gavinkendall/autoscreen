@@ -45,6 +45,33 @@ namespace AutoScreenCapture
         public static readonly string ScreenshotsFile = "screenshots.xml";
 
         /// <summary>
+        /// Just in case the user gives us an empty folder path or forgets to include the trailing backslash.
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        public static string CorrectDirectoryPath(string folder)
+        {
+            if (folder.Length == 0)
+            {
+                folder = FileSystem.ScreenshotsFolder;
+            }
+
+            if (!folder.EndsWith(@"\"))
+            {
+                folder += @"\";
+            }
+
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            Directory.SetCurrentDirectory(folder);
+
+            return folder;
+        }
+
+        /// <summary>
         /// Deletes files recursively based on the specified folder.
         /// </summary>
         /// <param name="monthCalendarFolder">The starting "parent" folder (which will also be deleted after everything else inside it is deleted).</param>
