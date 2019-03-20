@@ -734,19 +734,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Determines what to do when a particular module is selected.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tabControlModules_Selected(object sender, TabControlEventArgs e)
-        {
-            if (tabControlModules.SelectedTab.Name.Equals("tabPageScreenshots"))
-            {
-                ShowScreenshots();
-            }
-        }
-
-        /// <summary>
         /// Shows the list of screenshots.
         /// </summary>
         private void ShowScreenshots()

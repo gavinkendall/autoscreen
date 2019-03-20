@@ -291,7 +291,6 @@
             this.tabControlModules.Size = new System.Drawing.Size(249, 244);
             this.tabControlModules.TabIndex = 12;
             this.tabControlModules.TabStop = false;
-            this.tabControlModules.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlModules_Selected);
             // 
             // tabPageInterval
             // 
