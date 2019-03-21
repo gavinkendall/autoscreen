@@ -7,8 +7,11 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    using System;
+
     public class Screen
     {
+        public Guid ViewId { get; set; }
         public string Name { get; set; }
         public string Folder { get; set; }
         public string Macro { get; set; }
@@ -24,6 +27,7 @@ namespace AutoScreenCapture
 
         public Screen(string name, string folder, string macro, int component, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse)
         {
+            ViewId = Guid.NewGuid();
             Name = name;
             Folder = folder;
             Macro = macro;

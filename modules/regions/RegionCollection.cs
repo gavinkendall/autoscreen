@@ -26,6 +26,7 @@ namespace AutoScreenCapture
         private const string XML_FILE_REGIONS_NODE = "regions";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
+        private const string REGION_VIEWID = "viewid";
         private const string REGION_NAME = "name";
         private const string REGION_FOLDER = "folder";
         private const string REGION_MACRO = "macro";
@@ -122,6 +123,11 @@ namespace AutoScreenCapture
                         {
                             switch (xReader.Name)
                             {
+                                case REGION_VIEWID:
+                                    xReader.Read();
+                                    region.ViewId = Guid.Parse(xReader.Value);
+                                    break;
+
                                 case REGION_NAME:
                                     xReader.Read();
                                     region.Name = xReader.Value;
@@ -184,6 +190,7 @@ namespace AutoScreenCapture
 
                     if (Settings.IsOldAppVersion(xDoc, out _appVersion, out _appCodename))
                     {
+                        region.ViewId = Guid.NewGuid();
                         region.Folder = string.Empty; //Settings.GetOldScreenshotsFolder();
                         region.Macro = region.Macro.Replace("%region%", "%name%");
                         region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
@@ -228,6 +235,7 @@ namespace AutoScreenCapture
                     Region region = (Region)obj;
 
                     xWriter.WriteStartElement(XML_FILE_REGION_NODE);
+                    xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                     xWriter.WriteElementString(REGION_NAME, region.Name);
                     xWriter.WriteElementString(REGION_FOLDER, region.Folder);
                     xWriter.WriteElementString(REGION_MACRO, region.Macro);

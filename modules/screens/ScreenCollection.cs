@@ -23,6 +23,7 @@ namespace AutoScreenCapture
         private const string XML_FILE_SCREENS_NODE = "screens";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
+        private const string SCREEN_VIEWID = "viewid";
         private const string SCREEN_NAME = "name";
         private const string SCREEN_FOLDER = "folder";
         private const string SCREEN_MACRO = "macro";
@@ -116,6 +117,11 @@ namespace AutoScreenCapture
                         {
                             switch (xReader.Name)
                             {
+                                case SCREEN_VIEWID:
+                                    xReader.Read();
+                                    screen.ViewId = Guid.Parse(xReader.Value);
+                                    break;
+
                                 case SCREEN_NAME:
                                     xReader.Read();
                                     screen.Name = xReader.Value;
@@ -211,6 +217,7 @@ namespace AutoScreenCapture
                     Screen screen = (Screen)obj;
 
                     xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
+                    xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                     xWriter.WriteElementString(SCREEN_NAME, screen.Name);
                     xWriter.WriteElementString(SCREEN_FOLDER, screen.Folder);
                     xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);

@@ -94,7 +94,7 @@ namespace AutoScreenCapture
 
         public static Image GetImageByPath(string path)
         {
-            return File.Exists(path) ? Image.FromFile(path) : null;
+            return !string.IsNullOrEmpty(path) && File.Exists(path) ? Image.FromFile(path) : null;
         }
 
         public static Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
@@ -203,17 +203,18 @@ namespace AutoScreenCapture
             return string.Empty;
         }
 
-        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio)
+        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, Guid viewId)
         {
-            TakeScreenshot(path, format, 0, jpegQuality, resolutionRatio, true, 0, 0, 0, 0);
+            TakeScreenshot(path, format, 0, jpegQuality, resolutionRatio, true, 0, 0, 0, 0, viewId);
         }
 
-        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
+        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId)
         {
-            TakeScreenshot(path, format, -1, jpegQuality, resolutionRatio, mouse, x, y, width, height);
+            // Pass in -1 for component to represent a region because it doesn't have a component associated with it.
+            TakeScreenshot(path, format, -1, jpegQuality, resolutionRatio, mouse, x, y, width, height, viewId);
         }
 
-        public static void TakeScreenshot(string path, ImageFormat format, int component, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
+        public static void TakeScreenshot( string path, ImageFormat format, int component, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId)
         {
             try
             {
@@ -223,7 +224,7 @@ namespace AutoScreenCapture
 
                     if (bitmap != null)
                     {
-                        ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle()));
+                        ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle(), viewId));
 
                         SaveToFile(path, format, jpegQuality, bitmap);
 

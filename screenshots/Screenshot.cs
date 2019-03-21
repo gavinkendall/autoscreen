@@ -12,6 +12,7 @@ namespace AutoScreenCapture
 
     public class Screenshot
     {
+        public Guid ViewId { get; set; }
         public string Date { get; set; }
         public string Path { get; set; }
         public ImageFormat Format { get; set; }
@@ -23,8 +24,9 @@ namespace AutoScreenCapture
         {
         }
 
-        public Screenshot(DateTime dateTime, string path, ImageFormat format, int component, string activeWindowTitle)
+        public Screenshot(DateTime dateTime, string path, ImageFormat format, int component, string activeWindowTitle, Guid viewId)
         {
+            ViewId = viewId;
             Date = dateTime.ToString(MacroParser.DateFormat);
             Path = path;
             Format = format;

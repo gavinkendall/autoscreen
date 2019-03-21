@@ -24,6 +24,7 @@ namespace AutoScreenCapture
         private const string XML_FILE_SCREENSHOTS_NODE = "screenshots";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
+        private const string SCREENSHOT_VIEWID = "viewid";
         private const string SCREENSHOT_DATE = "date";
         private const string SCREENSHOT_PATH = "path";
         private const string SCREENSHOT_FORMAT = "format";
@@ -80,13 +81,13 @@ namespace AutoScreenCapture
             return slides;
         }
 
-        public static Screenshot GetScreenshotBySlideName(string slideName, Screen screen)
+        public static Screenshot GetScreenshot(string slideName, Guid viewId)
         {
             Screenshot foundScreenshot = new Screenshot();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Slide.Name.Equals(slideName) && screenshot.Component == screen.Component)
+                if (screenshot.Slide.Name.Equals(slideName) && screenshot.ViewId.Equals(viewId))
                 {
                     foundScreenshot = screenshot;
                     break;
@@ -121,6 +122,11 @@ namespace AutoScreenCapture
                         {
                             switch (xReader.Name)
                             {
+                                case SCREENSHOT_VIEWID:
+                                    xReader.Read();
+                                    screenshot.ViewId = Guid.Parse(xReader.Value);
+                                    break;
+
                                 case SCREENSHOT_DATE:
                                     xReader.Read();
                                     screenshot.Date = xReader.Value;
@@ -204,6 +210,7 @@ namespace AutoScreenCapture
                     Screenshot screenshot = (Screenshot)obj;
 
                     xWriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
+                    xWriter.WriteElementString(SCREENSHOT_VIEWID, screenshot.ViewId.ToString());
                     xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
                     xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
                     xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
