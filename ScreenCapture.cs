@@ -94,7 +94,17 @@ namespace AutoScreenCapture
 
         public static Image GetImageByPath(string path)
         {
-            return !string.IsNullOrEmpty(path) && File.Exists(path) ? Image.FromFile(path) : null;
+            Image image = null;
+
+            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            {
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    image = Image.FromStream(stream);
+                }
+            }
+
+            return image;
         }
 
         public static Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
