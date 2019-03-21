@@ -49,8 +49,8 @@
             this.checkBoxScreenMouse = new System.Windows.Forms.CheckBox();
             this.groupBoxScreenImage = new System.Windows.Forms.GroupBox();
             this.groupBoxScreenComponent = new System.Windows.Forms.GroupBox();
-            this.groupBoxScreenPreview = new System.Windows.Forms.GroupBox();
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
+            this.groupBoxScreenPreview = new System.Windows.Forms.GroupBox();
             this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenResolutionRatio)).BeginInit();
@@ -169,6 +169,7 @@
             this.comboBoxScreenFormat.Name = "comboBoxScreenFormat";
             this.comboBoxScreenFormat.Size = new System.Drawing.Size(51, 21);
             this.comboBoxScreenFormat.TabIndex = 9;
+            this.comboBoxScreenFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxScreenFormat_SelectedIndexChanged);
             // 
             // labelScreenFormat
             // 
@@ -268,6 +269,15 @@
             this.groupBoxScreenComponent.TabStop = false;
             this.groupBoxScreenComponent.Text = "Component";
             // 
+            // comboBoxScreenComponent
+            // 
+            this.comboBoxScreenComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxScreenComponent.FormattingEnabled = true;
+            this.comboBoxScreenComponent.Location = new System.Drawing.Point(6, 19);
+            this.comboBoxScreenComponent.Name = "comboBoxScreenComponent";
+            this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxScreenComponent.TabIndex = 3;
+            // 
             // groupBoxScreenPreview
             // 
             this.groupBoxScreenPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -282,15 +292,6 @@
             this.groupBoxScreenPreview.TabIndex = 0;
             this.groupBoxScreenPreview.TabStop = false;
             this.groupBoxScreenPreview.Text = "Preview";
-            // 
-            // comboBoxScreenComponent
-            // 
-            this.comboBoxScreenComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxScreenComponent.FormattingEnabled = true;
-            this.comboBoxScreenComponent.Location = new System.Drawing.Point(6, 19);
-            this.comboBoxScreenComponent.Name = "comboBoxScreenComponent";
-            this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxScreenComponent.TabIndex = 3;
             // 
             // timerScreenPreview
             // 

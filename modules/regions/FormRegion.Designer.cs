@@ -294,6 +294,7 @@
             this.comboBoxRegionFormat.Name = "comboBoxRegionFormat";
             this.comboBoxRegionFormat.Size = new System.Drawing.Size(51, 21);
             this.comboBoxRegionFormat.TabIndex = 9;
+            this.comboBoxRegionFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionFormat_SelectedIndexChanged);
             // 
             // labelRegionFormat
             // 

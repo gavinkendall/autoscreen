@@ -294,5 +294,17 @@ namespace AutoScreenCapture
                 comboBoxRegionScreenTemplate.SelectedIndex = 0;
             }
         }
+
+        private void comboBoxRegionFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxRegionFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
+            {
+                numericUpDownRegionJpegQuality.Enabled = true;
+            }
+            else
+            {
+                numericUpDownRegionJpegQuality.Enabled = false;
+            }
+        }
     }
 }

@@ -316,5 +316,17 @@ namespace AutoScreenCapture
             numericUpDownScreenJpegQuality.Enabled = enabled;
             numericUpDownScreenResolutionRatio.Enabled = enabled;
         }
+
+        private void comboBoxScreenFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxScreenFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
+            {
+                numericUpDownScreenJpegQuality.Enabled = true;
+            }
+            else
+            {
+                numericUpDownScreenJpegQuality.Enabled = false;
+            }
+        }
     }
 }
