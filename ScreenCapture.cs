@@ -236,7 +236,10 @@ namespace AutoScreenCapture
                     {
                         ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle(), viewId));
 
-                        SaveToFile(path, format, jpegQuality, bitmap);
+                        if (Directory.Exists(Path.GetDirectoryName(path)))
+                        {
+                            SaveToFile(path, format, jpegQuality, bitmap);
+                        }
 
                         GC.Collect();
                     }

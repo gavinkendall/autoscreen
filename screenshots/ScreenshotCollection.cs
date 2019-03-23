@@ -17,7 +17,7 @@ namespace AutoScreenCapture
     public static class ScreenshotCollection
     {
         private static XmlDocument xDoc = null;
-        private static ArrayList _screenshotList = new ArrayList();
+        private static List<Screenshot> _screenshotList = new List<Screenshot>();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREENSHOT_NODE = "screenshot";
@@ -26,6 +26,7 @@ namespace AutoScreenCapture
 
         private const string SCREENSHOT_VIEWID = "viewid";
         private const string SCREENSHOT_DATE = "date";
+        private const string SCREENSHOT_TIME = "time";
         private const string SCREENSHOT_PATH = "path";
         private const string SCREENSHOT_FORMAT = "format";
         private const string SCREENSHOT_COMPONENT = "component";
@@ -37,6 +38,30 @@ namespace AutoScreenCapture
         public static void Add(Screenshot newScreenshot)
         {
             _screenshotList.Add(newScreenshot);
+        }
+
+        public static void DeleteScreenshotsOlderThanDays(int daysOld)
+        {
+            if (daysOld > 0)
+            {
+                List<Screenshot> screenshotDeletedList = new List<Screenshot>();
+
+                foreach (Screenshot screenshot in _screenshotList)
+                {
+                    if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-daysOld) &&
+                        File.Exists(screenshot.Path) && !screenshotDeletedList.Contains(screenshot))
+                    {
+                        File.Delete(screenshot.Path);
+
+                        screenshotDeletedList.Add(screenshot);
+                    }
+                }
+
+                foreach (Screenshot screenshot in screenshotDeletedList)
+                {
+                    _screenshotList.Remove(screenshot);
+                }
+            }
         }
 
         public static Screenshot GetByIndex(int index)
@@ -132,6 +157,11 @@ namespace AutoScreenCapture
                                     screenshot.Date = xReader.Value;
                                     break;
 
+                                case SCREENSHOT_TIME:
+                                    xReader.Read();
+                                    screenshot.Time = xReader.Value;
+                                    break;
+
                                 case SCREENSHOT_PATH:
                                     xReader.Read();
                                     screenshot.Path = xReader.Value;
@@ -168,6 +198,7 @@ namespace AutoScreenCapture
                     xReader.Close();
 
                     if (!string.IsNullOrEmpty(screenshot.Date) &&
+                        !string.IsNullOrEmpty(screenshot.Time) &&
                         !string.IsNullOrEmpty(screenshot.Path) &&
                         screenshot.Format != null &&
                         !string.IsNullOrEmpty(screenshot.Slide.Name) &&
@@ -212,6 +243,7 @@ namespace AutoScreenCapture
                     xWriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
                     xWriter.WriteElementString(SCREENSHOT_VIEWID, screenshot.ViewId.ToString());
                     xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
+                    xWriter.WriteElementString(SCREENSHOT_TIME, screenshot.Time);
                     xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
                     xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
                     xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());

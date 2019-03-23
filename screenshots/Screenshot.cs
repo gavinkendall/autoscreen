@@ -14,6 +14,7 @@ namespace AutoScreenCapture
     {
         public Guid ViewId { get; set; }
         public string Date { get; set; }
+        public string Time { get; set; }
         public string Path { get; set; }
         public ImageFormat Format { get; set; }
         public int Component { get; set; }
@@ -28,6 +29,7 @@ namespace AutoScreenCapture
         {
             ViewId = viewId;
             Date = dateTime.ToString(MacroParser.DateFormat);
+            Time = dateTime.ToString(MacroParser.TimeFormat);
             Path = path;
             Format = format;
             Component = component;
@@ -35,8 +37,8 @@ namespace AutoScreenCapture
 
             Slide = new Slide()
             {
-                Name = "{date=" + dateTime.ToString(MacroParser.DateFormat) + "}{time=" + dateTime.ToString(MacroParser.TimeFormat) + "}",
-                Value = dateTime.ToString(MacroParser.TimeFormat) + (!string.IsNullOrEmpty(activeWindowTitle) ? " [" + activeWindowTitle + "]" : string.Empty)
+                Name = "{date=" + Date + "}{time=" + Time + "}",
+                Value = Time + (!string.IsNullOrEmpty(activeWindowTitle) ? " [" + activeWindowTitle + "]" : string.Empty)
             };
 
             string directory = System.IO.Path.GetDirectoryName(path);

@@ -72,16 +72,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Deletes files recursively based on the specified folder.
+        /// Deletes files recursively based on the specified directory.
         /// </summary>
-        /// <param name="monthCalendarFolder">The starting "parent" folder (which will also be deleted after everything else inside it is deleted).</param>
-        public static void DeleteFilesInFolder(string monthCalendarFolder)
+        /// <param name="dirName">The starting "parent" directory (which will also be deleted after everything else inside it is deleted).</param>
+        public static void DeleteFilesInDirectory(string dirName)
         {
             try
             {
-                if (Directory.Exists(monthCalendarFolder))
+                if (Directory.Exists(dirName))
                 {
-                    DirectoryInfo di = new DirectoryInfo(monthCalendarFolder);
+                    DirectoryInfo di = new DirectoryInfo(dirName);
 
                     foreach (FileInfo file in di.EnumerateFiles())
                     {
@@ -93,12 +93,12 @@ namespace AutoScreenCapture
                         dir.Delete(true);
                     }
 
-                    Directory.Delete(monthCalendarFolder, true);
+                    Directory.Delete(dirName, true);
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("FileSystem::DeleteFilesInFolder", ex);
+                Log.Write("FileSystem::DeleteFilesInDirectory", ex);
             }
         }
     }

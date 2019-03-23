@@ -85,6 +85,7 @@ namespace AutoScreenCapture
                     User.Add(new Setting("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)));
                     User.Add(new Setting("LockScreenCaptureSession", false));
                     User.Add(new Setting("Passphrase", string.Empty));
+                    User.Add(new Setting("DeleteScreenshotsOlderThanDays", 0));
 
                     User.Save();
                 }

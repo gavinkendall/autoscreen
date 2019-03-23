@@ -38,6 +38,8 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runDateSearchThread = null;
 
+        private BackgroundWorker runDeleteOldScreenshotsThread = null;
+
         private BackgroundWorker runSaveSettings = null;
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace AutoScreenCapture
 
             LoadSettings();
 
-            Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
+            Text = (string) Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
 
             if (args.Length > 0)
             {
@@ -114,6 +116,8 @@ namespace AutoScreenCapture
         {
             InitializeThreads();
 
+            DeleteOldScreenshots();
+
             SearchDates();
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
@@ -121,6 +125,13 @@ namespace AutoScreenCapture
 
         private void InitializeThreads()
         {
+            runDeleteOldScreenshotsThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runDeleteOldScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteOldScreenshotsThread);
+
             runDateSearchThread = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
@@ -264,6 +275,9 @@ namespace AutoScreenCapture
                     .Value
                     .ToString());
 
+                numericUpDownDeleteOldScreenshots.Value = Convert.ToDecimal(
+                    Settings.User.GetByKey("DeleteScreenshotsOlderThanDays", defaultValue: 0).Value);
+
                 EnableStartCapture();
 
                 CaptureLimitCheck();
@@ -321,6 +335,11 @@ namespace AutoScreenCapture
                     runSlideSearchThread.CancelAsync();
                 }
 
+                if (runDeleteOldScreenshotsThread != null && runDeleteOldScreenshotsThread.IsBusy)
+                {
+                    runDeleteOldScreenshotsThread.CancelAsync();
+                }
+
                 // Exit.
                 Environment.Exit(0);
             }
@@ -371,6 +390,17 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Deletes old screenshots.
+        /// </summary>
+        private void DeleteOldScreenshots()
+        {
+            if (runDeleteOldScreenshotsThread != null && !runDeleteOldScreenshotsThread.IsBusy)
+            {
+                runDeleteOldScreenshotsThread.RunWorkerAsync();
+            }
+        }
+
+        /// <summary>
         /// This thread is responsible for finding slides.
         /// </summary>
         /// <param name="e"></param>
@@ -378,11 +408,12 @@ namespace AutoScreenCapture
         {
             if (listBoxScreenshots.InvokeRequired)
             {
-                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] { e });
+                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] {e});
             }
             else
             {
-                List<Slide> slides = ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                List<Slide> slides =
+                    ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
@@ -405,7 +436,7 @@ namespace AutoScreenCapture
         {
             if (monthCalendar.InvokeRequired)
             {
-                monthCalendar.Invoke(new RunDateSearchDelegate(RunDateSearch), new object[] { e });
+                monthCalendar.Invoke(new RunDateSearchDelegate(RunDateSearch), new object[] {e});
             }
             else
             {
@@ -423,6 +454,15 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// This thread is responsible for deleting screenshots older than a specified number of days.
+        /// </summary>
+        /// <param name="e"></param>
+        private void RunDeleteOldScreenshots(DoWorkEventArgs e)
+        {
+            ScreenshotCollection.DeleteScreenshotsOlderThanDays((int)numericUpDownDeleteOldScreenshots.Value);
+        }
+
+        /// <summary>
         /// Saves the user's settings.
         /// </summary>
         /// <param name="e"></param>
@@ -432,7 +472,7 @@ namespace AutoScreenCapture
             {
                 if (listBoxScreenshots.InvokeRequired)
                 {
-                    listBoxScreenshots.Invoke(new SaveSettingsDelegate(SaveSettings), new object[] { e });
+                    listBoxScreenshots.Invoke(new SaveSettingsDelegate(SaveSettings), new object[] {e});
                 }
                 else
                 {
@@ -474,6 +514,8 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value =
                         checkBoxPassphraseLock.Checked;
                     Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
+                    Settings.User.GetByKey("DeleteScreenshotsOlderThanDays", defaultValue: 0).Value =
+                        numericUpDownDeleteOldScreenshots.Value;
 
                     Settings.User.Save();
 
@@ -568,7 +610,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void StopScreenCapture()
         {
-            if (timerScreenCapture.Enabled)
+            if (ScreenCapture.Running)
             {
                 Log.Write("Stopping screen capture.");
 
@@ -586,13 +628,11 @@ namespace AutoScreenCapture
                     Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
                     SaveSettings();
 
-                    ScreenCapture.Count = 0;
-                    timerScreenCapture.Enabled = false;
-
-                    ScreenCapture.Running = false;
-
                     DisableStopCapture();
                     EnableStartCapture();
+
+                    ScreenCapture.Count = 0;
+                    ScreenCapture.Running = false;
 
                     ShowScreenshots();
 
@@ -606,9 +646,11 @@ namespace AutoScreenCapture
         /// </summary>
         private void StartScreenCapture()
         {
-            if (!timerScreenCapture.Enabled)
+            if (!ScreenCapture.Running)
             {
                 SaveSettings();
+
+                DeleteOldScreenshots();
 
                 // Stop the date search thread if it's busy.
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
@@ -627,7 +669,7 @@ namespace AutoScreenCapture
 
                 // Setup the properties for the screen capture class.
                 ScreenCapture.Delay = GetCaptureDelay();
-                ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
+                ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
 
                 if (checkBoxPassphraseLock.Checked)
                 {
@@ -655,7 +697,6 @@ namespace AutoScreenCapture
                 Log.Write("Starting screen capture.");
 
                 timerScreenCapture.Interval = GetCaptureDelay();
-                timerScreenCapture.Enabled = true;
             }
         }
 
@@ -671,7 +712,7 @@ namespace AutoScreenCapture
 
             if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
             {
-                Slideshow.SelectedSlide = (Slide)listBoxScreenshots.Items[Slideshow.Index];
+                Slideshow.SelectedSlide = (Slide) listBoxScreenshots.Items[Slideshow.Index];
 
                 foreach (TabPage tabPage in tabControlScreens.TabPages)
                 {
@@ -679,20 +720,22 @@ namespace AutoScreenCapture
 
                     if (controls != null && controls.Length == 1)
                     {
-                        PictureBox pictureBox = (PictureBox)controls[0];
+                        PictureBox pictureBox = (PictureBox) controls[0];
 
                         Screenshot selectedScreenshot = new Screenshot();
 
                         if (tabPage.Tag.GetType() == typeof(Screen))
                         {
-                            Screen screen = (Screen)tabPage.Tag;
-                            selectedScreenshot = ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                            Screen screen = (Screen) tabPage.Tag;
+                            selectedScreenshot =
+                                ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                         }
 
                         if (tabPage.Tag.GetType() == typeof(Region))
                         {
-                            Region region = (Region)tabPage.Tag;
-                            selectedScreenshot = ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                            Region region = (Region) tabPage.Tag;
+                            selectedScreenshot =
+                                ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                         }
 
                         pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
@@ -720,9 +763,9 @@ namespace AutoScreenCapture
         /// <returns></returns>
         private int GetCaptureDelay()
         {
-            return ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                (int)numericUpDownMillisecondsInterval.Value);
+            return ConvertIntoMilliseconds((int) numericUpDownHoursInterval.Value,
+                (int) numericUpDownMinutesInterval.Value, (int) numericUpDownSecondsInterval.Value,
+                (int) numericUpDownMillisecondsInterval.Value);
         }
 
         /// <summary>
@@ -825,6 +868,11 @@ namespace AutoScreenCapture
                     runSlideSearchThread.CancelAsync();
                 }
 
+                if (runDeleteOldScreenshotsThread != null && runDeleteOldScreenshotsThread.IsBusy)
+                {
+                    runDeleteOldScreenshotsThread.CancelAsync();
+                }
+
                 // Exit.
                 Environment.Exit(0);
             }
@@ -848,6 +896,16 @@ namespace AutoScreenCapture
         private void DoWork_runDateSearchThread(object sender, DoWorkEventArgs e)
         {
             RunDateSearch(e);
+        }
+
+        /// <summary>
+        /// Runs the "delete old screenshots" thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoWork_runDeleteOldScreenshotsThread(object sender, DoWorkEventArgs e)
+        {
+            RunDeleteOldScreenshots(e);
         }
 
         /// <summary>
@@ -877,6 +935,7 @@ namespace AutoScreenCapture
                 numericUpDownCaptureLimit.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
+                numericUpDownDeleteOldScreenshots.Enabled = true;
 
                 checkBoxScheduleStartAt.Enabled = true;
                 checkBoxScheduleStopAt.Enabled = true;
@@ -912,6 +971,7 @@ namespace AutoScreenCapture
             numericUpDownCaptureLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
+            numericUpDownDeleteOldScreenshots.Enabled = false;
 
             checkBoxScheduleStartAt.Enabled = false;
             checkBoxScheduleStopAt.Enabled = false;
@@ -975,7 +1035,8 @@ namespace AutoScreenCapture
             MessageBox.Show(
                 Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
                 Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value +
-                " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About", MessageBoxButtons.OK,
+                " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
@@ -992,17 +1053,20 @@ namespace AutoScreenCapture
 
                 if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
-                    Screen screen = (Screen)tabControlScreens.SelectedTab.Tag;
-                    selectedScreenshot = ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                    Screen screen = (Screen) tabControlScreens.SelectedTab.Tag;
+                    selectedScreenshot =
+                        ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                 }
 
                 if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Region))
                 {
-                    Region region = (Region)tabControlScreens.SelectedTab.Tag;
-                    selectedScreenshot = ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                    Region region = (Region) tabControlScreens.SelectedTab.Tag;
+                    selectedScreenshot =
+                        ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                 }
 
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) && File.Exists(selectedScreenshot.Path))
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
+                    File.Exists(selectedScreenshot.Path))
                 {
                     Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
                 }
@@ -1571,13 +1635,15 @@ namespace AutoScreenCapture
                     Image = Resources.edit
                 };
 
-                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null,
+                    Click_addEditorToolStripMenuItem);
 
                 foreach (Editor editor in formEditor.EditorCollection)
                 {
                     if (editor != null && File.Exists(editor.Application))
                     {
-                        toolStripSplitButtonScreen.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                        toolStripSplitButtonScreen.DropDown.Items.Add(editor.Name,
+                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
                     }
                 }
 
@@ -1622,13 +1688,15 @@ namespace AutoScreenCapture
                     Image = Resources.edit
                 };
 
-                toolStripSplitButtonRegion.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+                toolStripSplitButtonRegion.DropDown.Items.Add("Add New Editor ...", null,
+                    Click_addEditorToolStripMenuItem);
 
                 foreach (Editor editor in formEditor.EditorCollection)
                 {
                     if (editor != null && File.Exists(editor.Application))
                     {
-                        toolStripSplitButtonRegion.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                        toolStripSplitButtonRegion.DropDown.Items.Add(editor.Name,
+                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
                     }
                 }
 
@@ -1702,11 +1770,11 @@ namespace AutoScreenCapture
             {
                 if (control.GetType().Equals(typeof(CheckBox)))
                 {
-                    CheckBox checkBox = (CheckBox)control;
+                    CheckBox checkBox = (CheckBox) control;
 
                     if (checkBox.Checked)
                     {
-                        Editor editor = formEditor.EditorCollection.Get((Editor)checkBox.Tag);
+                        Editor editor = formEditor.EditorCollection.Get((Editor) checkBox.Tag);
                         formEditor.EditorCollection.Remove(editor);
                     }
                 }
@@ -1741,11 +1809,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_buttonChangeEditor(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            Button buttonSelected = (Button) sender;
 
             if (buttonSelected.Tag != null)
             {
-                formEditor.EditorObject = (Editor)buttonSelected.Tag;
+                formEditor.EditorObject = (Editor) buttonSelected.Tag;
 
                 formEditor.ShowDialog(this);
 
@@ -1768,13 +1836,13 @@ namespace AutoScreenCapture
             {
                 if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
-                    Screen screen = (Screen)tabControlScreens.SelectedTab.Tag;
+                    Screen screen = (Screen) tabControlScreens.SelectedTab.Tag;
                     RunEditor(editor, ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
                 }
 
                 if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Region))
                 {
-                    Region region = (Region)tabControlScreens.SelectedTab.Tag;
+                    Region region = (Region) tabControlScreens.SelectedTab.Tag;
                     RunEditor(editor, ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
                 }
             }
@@ -1791,14 +1859,18 @@ namespace AutoScreenCapture
             {
                 if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
-                    Screen screen = (Screen)tabControlScreens.SelectedTab.Tag;
-                    RunEditor(editor, ScreenshotCollection.GetScreenshot(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, screen.ViewId));
+                    Screen screen = (Screen) tabControlScreens.SelectedTab.Tag;
+                    RunEditor(editor,
+                        ScreenshotCollection.GetScreenshot(
+                            ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, screen.ViewId));
                 }
 
                 if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Region))
                 {
-                    Region region = (Region)tabControlScreens.SelectedTab.Tag;
-                    RunEditor(editor, ScreenshotCollection.GetScreenshot(ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, region.ViewId));
+                    Region region = (Region) tabControlScreens.SelectedTab.Tag;
+                    RunEditor(editor,
+                        ScreenshotCollection.GetScreenshot(
+                            ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, region.ViewId));
                 }
             }
         }
@@ -1858,11 +1930,11 @@ namespace AutoScreenCapture
             {
                 if (control.GetType().Equals(typeof(CheckBox)))
                 {
-                    CheckBox checkBox = (CheckBox)control;
+                    CheckBox checkBox = (CheckBox) control;
 
                     if (checkBox.Checked)
                     {
-                        Trigger trigger = formTrigger.TriggerCollection.Get((Trigger)checkBox.Tag);
+                        Trigger trigger = formTrigger.TriggerCollection.Get((Trigger) checkBox.Tag);
                         formTrigger.TriggerCollection.Remove(trigger);
                     }
                 }
@@ -1883,11 +1955,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_buttonChangeTrigger(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            Button buttonSelected = (Button) sender;
 
             if (buttonSelected.Tag != null)
             {
-                formTrigger.TriggerObject = (Trigger)buttonSelected.Tag;
+                formTrigger.TriggerObject = (Trigger) buttonSelected.Tag;
 
                 formTrigger.EditorCollection = formEditor.EditorCollection;
 
@@ -1939,11 +2011,11 @@ namespace AutoScreenCapture
             {
                 if (control.GetType().Equals(typeof(CheckBox)))
                 {
-                    CheckBox checkBox = (CheckBox)control;
+                    CheckBox checkBox = (CheckBox) control;
 
                     if (checkBox.Checked)
                     {
-                        Region region = formRegion.RegionCollection.Get((Region)checkBox.Tag);
+                        Region region = formRegion.RegionCollection.Get((Region) checkBox.Tag);
                         formRegion.RegionCollection.Remove(region);
                     }
                 }
@@ -1964,11 +2036,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_buttonChangeRegion(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            Button buttonSelected = (Button) sender;
 
             if (buttonSelected.Tag != null)
             {
-                formRegion.RegionObject = (Region)buttonSelected.Tag;
+                formRegion.RegionObject = (Region) buttonSelected.Tag;
                 formRegion.ImageFormatCollection = _imageFormatCollection;
 
                 formRegion.ShowDialog(this);
@@ -2019,11 +2091,11 @@ namespace AutoScreenCapture
             {
                 if (control.GetType().Equals(typeof(CheckBox)))
                 {
-                    CheckBox checkBox = (CheckBox)control;
+                    CheckBox checkBox = (CheckBox) control;
 
                     if (checkBox.Checked)
                     {
-                        Screen screen = formScreen.ScreenCollection.Get((Screen)checkBox.Tag);
+                        Screen screen = formScreen.ScreenCollection.Get((Screen) checkBox.Tag);
                         formScreen.ScreenCollection.Remove(screen);
                     }
                 }
@@ -2044,11 +2116,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Click_buttonChangeScreen(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            Button buttonSelected = (Button) sender;
 
             if (buttonSelected.Tag != null)
             {
-                formScreen.ScreenObject = (Screen)buttonSelected.Tag;
+                formScreen.ScreenObject = (Screen) buttonSelected.Tag;
                 formScreen.ImageFormatCollection = _imageFormatCollection;
 
                 formScreen.ShowDialog(this);
@@ -2126,27 +2198,29 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Tick_timerScreenCapture(object sender, EventArgs e)
         {
-            if (!timerScreenCapture.Enabled)
+            if (ScreenCapture.Running)
             {
-                StopScreenCapture();
-            }
+                if (ScreenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN &&
+                    ScreenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
+                {
+                    if (ScreenCapture.Count < ScreenCapture.Limit)
+                    {
+                        TakeScreenshot();
+                    }
 
-            if (ScreenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN &&
-                ScreenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
-            {
-                if (ScreenCapture.Count < ScreenCapture.Limit)
+                    if (ScreenCapture.Count == ScreenCapture.Limit)
+                    {
+                        RunTriggersOfConditionType(TriggerConditionType.LimitReached);
+                    }
+                }
+                else
                 {
                     TakeScreenshot();
-                }
-
-                if (ScreenCapture.Count == ScreenCapture.Limit)
-                {
-                    RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                 }
             }
             else
             {
-                TakeScreenshot();
+                StopScreenCapture();
             }
         }
 
@@ -2188,7 +2262,7 @@ namespace AutoScreenCapture
                 numericUpDownCaptureLimit.Enabled = true;
 
                 ScreenCapture.Count = 0;
-                ScreenCapture.Limit = (int)numericUpDownCaptureLimit.Value;
+                ScreenCapture.Limit = (int) numericUpDownCaptureLimit.Value;
             }
             else
             {
@@ -2494,6 +2568,26 @@ namespace AutoScreenCapture
                                   " (" + Settings.Application
                                       .GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
             }
+        }
+
+        /// <summary>
+        /// Saves the screenshots to the "screenshots.xml" file every 10 minutes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerSaveScreenshots_Tick(object sender, EventArgs e)
+        {
+            ScreenshotCollection.Save();
+        }
+
+        /// <summary>
+        /// Deletes old screenshots every minute.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerDeleteOldScreenshots_Tick(object sender, EventArgs e)
+        {
+            DeleteOldScreenshots();
         }
     }
 }

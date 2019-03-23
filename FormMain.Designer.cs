@@ -50,6 +50,9 @@
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
+            this.labelDays = new System.Windows.Forms.Label();
+            this.numericUpDownDeleteOldScreenshots = new System.Windows.Forms.NumericUpDown();
+            this.labelDeleteOldScreenshots = new System.Windows.Forms.Label();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
             this.labelLimit = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
@@ -95,10 +98,14 @@
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
+            this.timerSaveScreenshots = new System.Windows.Forms.Timer(this.components);
+            this.timerDeleteOldScreenshots = new System.Windows.Forms.Timer(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeleteOldScreenshots)).BeginInit();
             this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
@@ -203,26 +210,25 @@
             this.toolStripSeparatorCapture,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(153, 154);
-            this.contextMenuStripSystemTrayIcon.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(181, 176);
             // 
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemAbout.Text = "About ...";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
             // 
             // toolStripSeparatorAbout
             // 
             this.toolStripSeparatorAbout.Name = "toolStripSeparatorAbout";
-            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItemShowInterface
             // 
             this.toolStripMenuItemShowInterface.Enabled = false;
             this.toolStripMenuItemShowInterface.Name = "toolStripMenuItemShowInterface";
-            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemShowInterface.Text = "Show Interface";
             this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemShowInterface);
             // 
@@ -230,21 +236,21 @@
             // 
             this.toolStripMenuItemHideInterface.Enabled = false;
             this.toolStripMenuItemHideInterface.Name = "toolStripMenuItemHideInterface";
-            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
             this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemHideInterface);
             // 
             // toolStripSeparatorInterface
             // 
             this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
-            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItemStartCapture
             // 
             this.toolStripMenuItemStartCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemStartCapture.Name = "toolStripMenuItemStartCapture";
             this.toolStripMenuItemStartCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStartCapture.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemStartCapture.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemStartCapture.Text = "Start Capture";
             this.toolStripMenuItemStartCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
             // 
@@ -254,21 +260,21 @@
             this.toolStripMenuItemStopCapture.Enabled = false;
             this.toolStripMenuItemStopCapture.Name = "toolStripMenuItemStopCapture";
             this.toolStripMenuItemStopCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStopCapture.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemStopCapture.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemStopCapture.Text = "Stop Capture";
             this.toolStripMenuItemStopCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // toolStripSeparatorCapture
             // 
             this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
-            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.Click_toolStripMenuItemExit);
             // 
@@ -295,6 +301,9 @@
             // tabPageInterval
             // 
             this.tabPageInterval.AutoScroll = true;
+            this.tabPageInterval.Controls.Add(this.labelDays);
+            this.tabPageInterval.Controls.Add(this.numericUpDownDeleteOldScreenshots);
+            this.tabPageInterval.Controls.Add(this.labelDeleteOldScreenshots);
             this.tabPageInterval.Controls.Add(this.groupBoxCaptureDelay);
             this.tabPageInterval.Location = new System.Drawing.Point(4, 40);
             this.tabPageInterval.Name = "tabPageInterval";
@@ -303,6 +312,37 @@
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
+            // 
+            // labelDays
+            // 
+            this.labelDays.AutoSize = true;
+            this.labelDays.Location = new System.Drawing.Point(161, 133);
+            this.labelDays.Name = "labelDays";
+            this.labelDays.Size = new System.Drawing.Size(29, 13);
+            this.labelDays.TabIndex = 17;
+            this.labelDays.Text = "days";
+            // 
+            // numericUpDownDeleteOldScreenshots
+            // 
+            this.numericUpDownDeleteOldScreenshots.Location = new System.Drawing.Point(118, 131);
+            this.numericUpDownDeleteOldScreenshots.Maximum = new decimal(new int[] {
+            365,
+            0,
+            0,
+            0});
+            this.numericUpDownDeleteOldScreenshots.Name = "numericUpDownDeleteOldScreenshots";
+            this.numericUpDownDeleteOldScreenshots.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownDeleteOldScreenshots.TabIndex = 16;
+            this.numericUpDownDeleteOldScreenshots.TabStop = false;
+            // 
+            // labelDeleteOldScreenshots
+            // 
+            this.labelDeleteOldScreenshots.AutoSize = true;
+            this.labelDeleteOldScreenshots.Location = new System.Drawing.Point(9, 133);
+            this.labelDeleteOldScreenshots.Name = "labelDeleteOldScreenshots";
+            this.labelDeleteOldScreenshots.Size = new System.Drawing.Size(109, 13);
+            this.labelDeleteOldScreenshots.TabIndex = 15;
+            this.labelDeleteOldScreenshots.Text = "Delete files older than";
             // 
             // groupBoxCaptureDelay
             // 
@@ -820,7 +860,24 @@
             // 
             // timerScreenCapture
             // 
+            this.timerScreenCapture.Enabled = true;
             this.timerScreenCapture.Tick += new System.EventHandler(this.Tick_timerScreenCapture);
+            // 
+            // timerSaveScreenshots
+            // 
+            this.timerSaveScreenshots.Enabled = true;
+            this.timerSaveScreenshots.Interval = 600000;
+            this.timerSaveScreenshots.Tick += new System.EventHandler(this.timerSaveScreenshots_Tick);
+            // 
+            // timerDeleteOldScreenshots
+            // 
+            this.timerDeleteOldScreenshots.Enabled = true;
+            this.timerDeleteOldScreenshots.Interval = 60000;
+            this.timerDeleteOldScreenshots.Tick += new System.EventHandler(this.timerDeleteOldScreenshots_Tick);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // FormMain
             // 
@@ -845,6 +902,8 @@
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
             this.tabControlModules.ResumeLayout(false);
             this.tabPageInterval.ResumeLayout(false);
+            this.tabPageInterval.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeleteOldScreenshots)).EndInit();
             this.groupBoxCaptureDelay.ResumeLayout(false);
             this.groupBoxCaptureDelay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
@@ -933,5 +992,11 @@
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.TextBox textBoxPassphrase;
+        private System.Windows.Forms.Timer timerSaveScreenshots;
+        private System.Windows.Forms.Timer timerDeleteOldScreenshots;
+        private System.Windows.Forms.Label labelDays;
+        private System.Windows.Forms.NumericUpDown numericUpDownDeleteOldScreenshots;
+        private System.Windows.Forms.Label labelDeleteOldScreenshots;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

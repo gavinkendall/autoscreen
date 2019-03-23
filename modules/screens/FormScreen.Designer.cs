@@ -244,7 +244,7 @@
             // 
             // groupBoxScreenImage
             // 
-            this.groupBoxScreenImage.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBoxScreenImage.BackColor = System.Drawing.SystemColors.Control;
             this.groupBoxScreenImage.Controls.Add(this.labelScreenResolutionRatio);
             this.groupBoxScreenImage.Controls.Add(this.numericUpDownScreenResolutionRatio);
             this.groupBoxScreenImage.Controls.Add(this.labelScreenFormat);
@@ -283,7 +283,7 @@
             this.groupBoxScreenPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxScreenPreview.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBoxScreenPreview.BackColor = System.Drawing.SystemColors.Control;
             this.groupBoxScreenPreview.Controls.Add(this.pictureBoxScreenPreview);
             this.groupBoxScreenPreview.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxScreenPreview.Location = new System.Drawing.Point(223, 38);
@@ -303,7 +303,7 @@
             this.AcceptButton = this.buttonScreenOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonScreenCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.groupBoxScreenPreview);

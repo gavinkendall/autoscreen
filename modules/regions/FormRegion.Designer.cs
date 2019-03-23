@@ -369,7 +369,7 @@
             // 
             // groupBoxRegionImage
             // 
-            this.groupBoxRegionImage.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBoxRegionImage.BackColor = System.Drawing.SystemColors.Control;
             this.groupBoxRegionImage.Controls.Add(this.labelRegionResolutionRatio);
             this.groupBoxRegionImage.Controls.Add(this.numericUpDownRegionResolutionRatio);
             this.groupBoxRegionImage.Controls.Add(this.labelRegionFormat);
@@ -415,7 +415,7 @@
             this.groupBoxRegionPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxRegionPreview.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBoxRegionPreview.BackColor = System.Drawing.SystemColors.Control;
             this.groupBoxRegionPreview.Controls.Add(this.pictureBoxRegionPreview);
             this.groupBoxRegionPreview.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxRegionPreview.Location = new System.Drawing.Point(223, 38);
@@ -450,7 +450,7 @@
             this.AcceptButton = this.buttonRegionOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonRegionCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.groupBoxRegionScreenTemplate);
