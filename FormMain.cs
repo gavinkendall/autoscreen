@@ -733,7 +733,7 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
-            textBoxScreenshotLocation.Text = string.Empty;
+            textBoxScreenshotTitle.Text = string.Empty;
             textBoxScreenshotFormat.Text = string.Empty;
             textBoxScreenshotWidth.Text = string.Empty;
             textBoxScreenshotHeight.Text = string.Empty;
@@ -748,41 +748,43 @@ namespace AutoScreenCapture
 
                 if (selectedTabPage != null)
                 {
-                    Control[] controls = selectedTabPage.Controls.Find(selectedTabPage.Name, false);
+                    ToolStrip toolStrip = (ToolStrip) selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
 
-                    if (controls != null && controls.Length == 1)
+                    ToolStripTextBox toolStripTextBox =
+                        (ToolStripTextBox) toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
+
+                    PictureBox pictureBox = (PictureBox) selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
+
+                    Screenshot selectedScreenshot = new Screenshot();
+
+                    if (selectedTabPage.Tag.GetType() == typeof(Screen))
                     {
-                        PictureBox pictureBox = (PictureBox) controls[0];
+                        Screen screen = (Screen) selectedTabPage.Tag;
+                        selectedScreenshot =
+                            ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                    }
 
-                        Screenshot selectedScreenshot = new Screenshot();
+                    if (selectedTabPage.Tag.GetType() == typeof(Region))
+                    {
+                        Region region = (Region) selectedTabPage.Tag;
+                        selectedScreenshot =
+                            ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                    }
 
-                        if (selectedTabPage.Tag.GetType() == typeof(Screen))
-                        {
-                            Screen screen = (Screen) selectedTabPage.Tag;
-                            selectedScreenshot =
-                                ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
-                        }
+                    pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
 
-                        if (selectedTabPage.Tag.GetType() == typeof(Region))
-                        {
-                            Region region = (Region) selectedTabPage.Tag;
-                            selectedScreenshot =
-                                ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
-                        }
+                    if (pictureBox.Image != null)
+                    {
+                        toolStripTextBox.Text = Path.GetFileName(selectedScreenshot.Path);
 
-                        pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
+                        textBoxScreenshotTitle.Text = selectedScreenshot.ActiveWindowTitle;
+                        textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
-                        if (pictureBox.Image != null)
-                        {
-                            textBoxScreenshotLocation.Text = selectedScreenshot.Path;
-                            textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+                        textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                        textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
 
-                            textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                            textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
-
-                            textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                            textBoxScreenshotTime.Text = selectedScreenshot.Time;
-                        }
+                        textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                        textBoxScreenshotTime.Text = selectedScreenshot.Time;
                     }
                 }
             }
@@ -1675,6 +1677,8 @@ namespace AutoScreenCapture
                 ToolStripSplitButton toolStripSplitButtonScreen = new ToolStripSplitButton
                 {
                     Text = "Edit",
+                    Alignment = ToolStripItemAlignment.Left,
+                    AutoToolTip = false,
                     Image = Resources.edit
                 };
 
@@ -1690,16 +1694,51 @@ namespace AutoScreenCapture
                     }
                 }
 
+                ToolStripItem toolStripLabelFilename = new ToolStripLabel
+                {
+                    Text = "Filename:",
+                    Alignment = ToolStripItemAlignment.Right,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left
+                };
+
+                ToolStripItem toolstripTextBoxFilename = new ToolStripTextBox
+                {
+                    Name = screen.Name + "toolStripTextBoxFilename",
+                    Alignment = ToolStripItemAlignment.Right,
+                    AutoSize = false,
+                    ReadOnly = true,
+                    Width = 200,
+                    BackColor = Color.LightYellow,
+                    Text = string.Empty
+                };
+
+                ToolStripItem toolstripButtonOpenFolder = new ToolStripButton
+                {
+                    Image = Resources.openfolder,
+                    Alignment = ToolStripItemAlignment.Right,
+                    AutoToolTip = false,
+                    ToolTipText = "Show Screenshot Location",
+                    DisplayStyle = ToolStripItemDisplayStyle.Image
+                };
+
+                toolstripButtonOpenFolder.Click +=
+                    new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+
                 ToolStrip toolStripScreen = new ToolStrip
                 {
+                    Name = screen.Name + "toolStrip",
                     GripStyle = ToolStripGripStyle.Hidden
                 };
 
                 toolStripScreen.Items.Add(toolStripSplitButtonScreen);
+                toolStripScreen.Items.Add(toolstripButtonOpenFolder);
+                toolStripScreen.Items.Add(toolstripTextBoxFilename);
+                toolStripScreen.Items.Add(toolStripLabelFilename);
+
 
                 PictureBox pictureBoxScreen = new PictureBox
                 {
-                    Name = screen.Name,
+                    Name = screen.Name + "pictureBox",
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
