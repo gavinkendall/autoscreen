@@ -187,9 +187,27 @@ namespace AutoScreenCapture
 
                 Log.Write("Loaded " + formScreen.ScreenCollection.Count + " screens.");
 
+                Log.Write("Building modules.");
+
+                Log.Write("Building screens module.");
+
+                BuildScreensModule();
+
+                Log.Write("Building editors module.");
+                BuildEditorsModule();
+
+                Log.Write("Building triggers module.");
+                BuildTriggersModule();
+
+                Log.Write("Building regions module.");
+                BuildRegionsModule();
+
                 Log.Write("Building screenshot preview context menu.");
 
                 BuildScreenshotPreviewContextualMenu();
+
+                Log.Write("Building view tab pages.");
+                BuildViewTabPages();
 
                 Log.Write(
                     "Loading screenshots into the screenshot collection to generate a history of what was captured.");
@@ -710,13 +728,27 @@ namespace AutoScreenCapture
             Slideshow.Index = listBoxScreenshots.SelectedIndex;
             Slideshow.Count = listBoxScreenshots.Items.Count;
 
+            ShowScreenshotBySlideIndex();
+        }
+
+        private void ShowScreenshotBySlideIndex()
+        {
+            textBoxScreenshotLocation.Text = string.Empty;
+            textBoxScreenshotFormat.Text = string.Empty;
+            textBoxScreenshotWidth.Text = string.Empty;
+            textBoxScreenshotHeight.Text = string.Empty;
+            textBoxScreenshotDate.Text = string.Empty;
+            textBoxScreenshotTime.Text = string.Empty;
+
             if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
             {
                 Slideshow.SelectedSlide = (Slide) listBoxScreenshots.Items[Slideshow.Index];
 
-                foreach (TabPage tabPage in tabControlScreens.TabPages)
+                TabPage selectedTabPage = tabControlViews.SelectedTab;
+
+                if (selectedTabPage != null)
                 {
-                    Control[] controls = tabPage.Controls.Find(tabPage.Name, false);
+                    Control[] controls = selectedTabPage.Controls.Find(selectedTabPage.Name, false);
 
                     if (controls != null && controls.Length == 1)
                     {
@@ -724,21 +756,33 @@ namespace AutoScreenCapture
 
                         Screenshot selectedScreenshot = new Screenshot();
 
-                        if (tabPage.Tag.GetType() == typeof(Screen))
+                        if (selectedTabPage.Tag.GetType() == typeof(Screen))
                         {
-                            Screen screen = (Screen) tabPage.Tag;
+                            Screen screen = (Screen) selectedTabPage.Tag;
                             selectedScreenshot =
                                 ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                         }
 
-                        if (tabPage.Tag.GetType() == typeof(Region))
+                        if (selectedTabPage.Tag.GetType() == typeof(Region))
                         {
-                            Region region = (Region) tabPage.Tag;
+                            Region region = (Region) selectedTabPage.Tag;
                             selectedScreenshot =
                                 ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                         }
 
                         pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
+
+                        if (pictureBox.Image != null)
+                        {
+                            textBoxScreenshotLocation.Text = selectedScreenshot.Path;
+                            textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+
+                            textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                            textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
+
+                            textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                            textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                        }
                     }
                 }
             }
@@ -925,7 +969,7 @@ namespace AutoScreenCapture
         {
             if (GetCaptureDelay() > 0)
             {
-                toolStripButtonStartCapture.Enabled = true;
+                toolStripSplitButtonStart.Enabled = true;
                 toolStripMenuItemStartCapture.Enabled = true;
 
                 numericUpDownHoursInterval.Enabled = true;
@@ -961,7 +1005,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void EnableStopScreenCapture()
         {
-            toolStripButtonStopCapture.Enabled = true;
+            toolStripSplitButtonStop.Enabled = true;
             toolStripMenuItemStopCapture.Enabled = true;
 
             numericUpDownHoursInterval.Enabled = false;
@@ -992,7 +1036,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStopCapture()
         {
-            toolStripButtonStopCapture.Enabled = false;
+            toolStripSplitButtonStop.Enabled = false;
             toolStripMenuItemStopCapture.Enabled = false;
         }
 
@@ -1001,7 +1045,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStartCapture()
         {
-            toolStripButtonStartCapture.Enabled = false;
+            toolStripSplitButtonStart.Enabled = false;
             toolStripMenuItemStartCapture.Enabled = false;
         }
 
@@ -1051,16 +1095,16 @@ namespace AutoScreenCapture
             {
                 Screenshot selectedScreenshot = new Screenshot();
 
-                if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Screen))
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
-                    Screen screen = (Screen) tabControlScreens.SelectedTab.Tag;
+                    Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
                     selectedScreenshot =
                         ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                 }
 
-                if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Region))
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
-                    Region region = (Region) tabControlScreens.SelectedTab.Tag;
+                    Region region = (Region) tabControlViews.SelectedTab.Tag;
                     selectedScreenshot =
                         ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                 }
@@ -1223,11 +1267,18 @@ namespace AutoScreenCapture
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
             contextMenuStripScreenshotPreview.Items.Add(addNewEditorToolStripItem);
 
-            BuildEditorsModule();
-            BuildTriggersModule();
-            BuildRegionsModule();
-            BuildScreensModule();
-            BuildScreenTabPages();
+            foreach (Editor editor in formEditor.EditorCollection)
+            {
+                if (editor != null && File.Exists(editor.Application))
+                {
+                    // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
+                    // Add the Editor to the screenshot preview contextual menu.
+
+                    contextMenuStripScreenshotPreview.Items.Add(editor.Name,
+                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    // ****************************************************************************
+                }
+            }
         }
 
         private void BuildEditorsModule()
@@ -1286,14 +1337,6 @@ namespace AutoScreenCapture
             {
                 if (editor != null && File.Exists(editor.Application))
                 {
-                    // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
-                    // Add the Editor to the screenshot preview contextual menu and to each "Edit"
-                    // button at the top of the individual preview image.
-
-                    contextMenuStripScreenshotPreview.Items.Add(editor.Name,
-                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
-                    // ****************************************************************************
-
                     // ****************** EDITORS LIST IN EDITORS TAB PAGE ************************
                     // Add the Editor to the list of Editors in the Editors tab page.
 
@@ -1622,10 +1665,10 @@ namespace AutoScreenCapture
             }
         }
 
-        private void BuildScreenTabPages()
+        private void BuildViewTabPages()
         {
             // Clear out the controls of the "Screens" tab control.
-            tabControlScreens.Controls.Clear();
+            tabControlViews.Controls.Clear();
 
             foreach (Screen screen in formScreen.ScreenCollection)
             {
@@ -1677,7 +1720,7 @@ namespace AutoScreenCapture
                 pictureBoxScreen.Width = (tabPageScreen.Width - 10);
                 pictureBoxScreen.Height = (tabPageScreen.Height - 30);
 
-                tabControlScreens.Controls.Add(tabPageScreen);
+                tabControlViews.Controls.Add(tabPageScreen);
             }
 
             foreach (Region region in formRegion.RegionCollection)
@@ -1730,8 +1773,10 @@ namespace AutoScreenCapture
                 pictureBoxRegion.Width = (tabPageRegion.Width - 10);
                 pictureBoxRegion.Height = (tabPageRegion.Height - 30);
 
-                tabControlScreens.Controls.Add(tabPageRegion);
+                tabControlViews.Controls.Add(tabPageRegion);
             }
+
+            ShowScreenshotBySlideIndex();
         }
 
         #region Click Event Handlers
@@ -1751,6 +1796,8 @@ namespace AutoScreenCapture
 
             if (formEditor.DialogResult == DialogResult.OK)
             {
+                BuildEditorsModule();
+                BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
                 formEditor.EditorCollection.Save();
@@ -1782,6 +1829,8 @@ namespace AutoScreenCapture
 
             if (countBeforeRemoval > formEditor.EditorCollection.Count)
             {
+                BuildEditorsModule();
+                BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
                 formEditor.EditorCollection.Save();
@@ -1819,6 +1868,8 @@ namespace AutoScreenCapture
 
                 if (formEditor.DialogResult == DialogResult.OK)
                 {
+                    BuildEditorsModule();
+                    BuildViewTabPages();
                     BuildScreenshotPreviewContextualMenu();
 
                     formEditor.EditorCollection.Save();
@@ -1834,15 +1885,15 @@ namespace AutoScreenCapture
         {
             if (editor != null)
             {
-                if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Screen))
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
-                    Screen screen = (Screen) tabControlScreens.SelectedTab.Tag;
+                    Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor, ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
                 }
 
-                if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Region))
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
-                    Region region = (Region) tabControlScreens.SelectedTab.Tag;
+                    Region region = (Region) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor, ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
                 }
             }
@@ -1857,17 +1908,17 @@ namespace AutoScreenCapture
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
             {
-                if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Screen))
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
-                    Screen screen = (Screen) tabControlScreens.SelectedTab.Tag;
+                    Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor,
                         ScreenshotCollection.GetScreenshot(
                             ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, screen.ViewId));
                 }
 
-                if (tabControlScreens.SelectedTab.Tag.GetType() == typeof(Region))
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
-                    Region region = (Region) tabControlScreens.SelectedTab.Tag;
+                    Region region = (Region) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor,
                         ScreenshotCollection.GetScreenshot(
                             ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, region.ViewId));
@@ -1911,7 +1962,7 @@ namespace AutoScreenCapture
 
             if (formTrigger.DialogResult == DialogResult.OK)
             {
-                BuildScreenshotPreviewContextualMenu();
+                BuildTriggersModule();
 
                 formTrigger.TriggerCollection.Save();
             }
@@ -1942,7 +1993,7 @@ namespace AutoScreenCapture
 
             if (countBeforeRemoval > formTrigger.TriggerCollection.Count)
             {
-                BuildScreenshotPreviewContextualMenu();
+                BuildTriggersModule();
 
                 formTrigger.TriggerCollection.Save();
             }
@@ -1967,7 +2018,7 @@ namespace AutoScreenCapture
 
                 if (formTrigger.DialogResult == DialogResult.OK)
                 {
-                    BuildScreenshotPreviewContextualMenu();
+                    BuildTriggersModule();
 
                     formTrigger.TriggerCollection.Save();
                 }
@@ -1992,7 +2043,8 @@ namespace AutoScreenCapture
 
             if (formRegion.DialogResult == DialogResult.OK)
             {
-                BuildScreenshotPreviewContextualMenu();
+                BuildRegionsModule();
+                BuildViewTabPages();
 
                 formRegion.RegionCollection.Save();
             }
@@ -2023,7 +2075,8 @@ namespace AutoScreenCapture
 
             if (countBeforeRemoval > formRegion.RegionCollection.Count)
             {
-                BuildScreenshotPreviewContextualMenu();
+                BuildRegionsModule();
+                BuildViewTabPages();
 
                 formRegion.RegionCollection.Save();
             }
@@ -2047,7 +2100,8 @@ namespace AutoScreenCapture
 
                 if (formRegion.DialogResult == DialogResult.OK)
                 {
-                    BuildScreenshotPreviewContextualMenu();
+                    BuildRegionsModule();
+                    BuildViewTabPages();
 
                     formRegion.RegionCollection.Save();
                 }
@@ -2072,7 +2126,8 @@ namespace AutoScreenCapture
 
             if (formScreen.DialogResult == DialogResult.OK)
             {
-                BuildScreenshotPreviewContextualMenu();
+                BuildScreensModule();
+                BuildViewTabPages();
 
                 formScreen.ScreenCollection.Save();
             }
@@ -2103,7 +2158,8 @@ namespace AutoScreenCapture
 
             if (countBeforeRemoval > formScreen.ScreenCollection.Count)
             {
-                BuildScreenshotPreviewContextualMenu();
+                BuildScreensModule();
+                BuildViewTabPages();
 
                 formScreen.ScreenCollection.Save();
             }
@@ -2127,7 +2183,8 @@ namespace AutoScreenCapture
 
                 if (formScreen.DialogResult == DialogResult.OK)
                 {
-                    BuildScreenshotPreviewContextualMenu();
+                    BuildScreensModule();
+                    BuildViewTabPages();
 
                     formScreen.ScreenCollection.Save();
                 }
@@ -2180,16 +2237,6 @@ namespace AutoScreenCapture
         #endregion Passphrase
 
         #endregion Click Event Handlers
-
-        /// <summary>
-        /// Determines which screen tab is selected (All Screens, Screen 1, Screen 2, Screen 3, Screen 4, or Active Window).
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectedIndexChanged_tabControlScreens(object sender, EventArgs e)
-        {
-            Slideshow.SelectedScreen = (tabControlScreens.SelectedIndex + 1);
-        }
 
         /// <summary>
         /// The timer for taking screenshots.
@@ -2588,6 +2635,11 @@ namespace AutoScreenCapture
         private void timerDeleteOldScreenshots_Tick(object sender, EventArgs e)
         {
             DeleteOldScreenshots();
+        }
+
+        private void tabControlViews_Selected(object sender, TabControlEventArgs e)
+        {
+            ShowScreenshotBySlideIndex();
         }
     }
 }

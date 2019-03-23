@@ -32,9 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripSplitButtonStart = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonStop = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControlScreens = new System.Windows.Forms.TabControl();
+            this.tabControlViews = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.listBoxScreenshots = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -92,15 +94,24 @@
             this.tabPageRegions = new System.Windows.Forms.TabPage();
             this.tabPageEditors = new System.Windows.Forms.TabPage();
             this.tabPageTriggers = new System.Windows.Forms.TabPage();
-            this.toolStripScreenCapture = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonStartCapture = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonStopCapture = new System.Windows.Forms.ToolStripButton();
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
             this.timerSaveScreenshots = new System.Windows.Forms.Timer(this.components);
             this.timerDeleteOldScreenshots = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.labelScreenshotLocation = new System.Windows.Forms.Label();
+            this.textBoxScreenshotLocation = new System.Windows.Forms.TextBox();
+            this.labelScreenshotFormat = new System.Windows.Forms.Label();
+            this.textBoxScreenshotFormat = new System.Windows.Forms.TextBox();
+            this.labelScreenshotWidth = new System.Windows.Forms.Label();
+            this.textBoxScreenshotWidth = new System.Windows.Forms.TextBox();
+            this.labelScreenshotHeight = new System.Windows.Forms.Label();
+            this.textBoxScreenshotHeight = new System.Windows.Forms.TextBox();
+            this.labelScreenshotDate = new System.Windows.Forms.Label();
+            this.textBoxScreenshotDate = new System.Windows.Forms.TextBox();
+            this.labelScreenshotTime = new System.Windows.Forms.Label();
+            this.textBoxScreenshotTime = new System.Windows.Forms.TextBox();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -117,7 +128,6 @@
             this.tabPageScreenshots.SuspendLayout();
             this.tabPageSecurity.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
-            this.toolStripScreenCapture.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -133,11 +143,37 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonStart,
+            this.toolStripSplitButtonStop,
             this.toolStripDropDownButtonOptions});
-            this.statusStrip.Location = new System.Drawing.Point(0, 466);
+            this.statusStrip.Location = new System.Drawing.Point(0, 436);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(851, 22);
+            this.statusStrip.Size = new System.Drawing.Size(833, 22);
             this.statusStrip.TabIndex = 3;
+            // 
+            // toolStripSplitButtonStart
+            // 
+            this.toolStripSplitButtonStart.AutoToolTip = false;
+            this.toolStripSplitButtonStart.DropDownButtonWidth = 0;
+            this.toolStripSplitButtonStart.Enabled = false;
+            this.toolStripSplitButtonStart.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
+            this.toolStripSplitButtonStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonStart.Name = "toolStripSplitButtonStart";
+            this.toolStripSplitButtonStart.Size = new System.Drawing.Size(52, 20);
+            this.toolStripSplitButtonStart.Text = "Start";
+            this.toolStripSplitButtonStart.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
+            // 
+            // toolStripSplitButtonStop
+            // 
+            this.toolStripSplitButtonStop.AutoToolTip = false;
+            this.toolStripSplitButtonStop.DropDownButtonWidth = 0;
+            this.toolStripSplitButtonStop.Enabled = false;
+            this.toolStripSplitButtonStop.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
+            this.toolStripSplitButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonStop.Name = "toolStripSplitButtonStop";
+            this.toolStripSplitButtonStop.Size = new System.Drawing.Size(52, 20);
+            this.toolStripSplitButtonStop.Text = "Stop";
+            this.toolStripSplitButtonStop.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // toolStripDropDownButtonOptions
             // 
@@ -153,23 +189,23 @@
             // 
             this.toolStripMenuItemShowSystemTrayIcon.CheckOnClick = true;
             this.toolStripMenuItemShowSystemTrayIcon.Name = "toolStripMenuItemShowSystemTrayIcon";
-            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(212, 22);
-            this.toolStripMenuItemShowSystemTrayIcon.Text = "Show the system tray icon";
+            this.toolStripMenuItemShowSystemTrayIcon.Size = new System.Drawing.Size(192, 22);
+            this.toolStripMenuItemShowSystemTrayIcon.Text = "Show system tray icon";
             this.toolStripMenuItemShowSystemTrayIcon.CheckedChanged += new System.EventHandler(this.CheckedChanged_toolStripMenuItemShowSystemTrayIcon);
             this.toolStripMenuItemShowSystemTrayIcon.Click += new System.EventHandler(this.SaveSettings);
             // 
-            // tabControlScreens
+            // tabControlViews
             // 
-            this.tabControlScreens.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControlViews.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlScreens.Location = new System.Drawing.Point(251, 1);
-            this.tabControlScreens.Name = "tabControlScreens";
-            this.tabControlScreens.SelectedIndex = 0;
-            this.tabControlScreens.Size = new System.Drawing.Size(600, 407);
-            this.tabControlScreens.TabIndex = 4;
-            this.tabControlScreens.TabStop = false;
-            this.tabControlScreens.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_tabControlScreens);
+            this.tabControlViews.Location = new System.Drawing.Point(251, 1);
+            this.tabControlViews.Name = "tabControlViews";
+            this.tabControlViews.SelectedIndex = 0;
+            this.tabControlViews.Size = new System.Drawing.Size(582, 377);
+            this.tabControlViews.TabIndex = 4;
+            this.tabControlViews.TabStop = false;
+            this.tabControlViews.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlViews_Selected);
             // 
             // contextMenuStripScreenshotPreview
             // 
@@ -185,7 +221,7 @@
             this.listBoxScreenshots.Location = new System.Drawing.Point(3, 3);
             this.listBoxScreenshots.Name = "listBoxScreenshots";
             this.listBoxScreenshots.ScrollAlwaysVisible = true;
-            this.listBoxScreenshots.Size = new System.Drawing.Size(235, 194);
+            this.listBoxScreenshots.Size = new System.Drawing.Size(235, 164);
             this.listBoxScreenshots.Sorted = true;
             this.listBoxScreenshots.TabIndex = 6;
             this.listBoxScreenshots.TabStop = false;
@@ -210,25 +246,25 @@
             this.toolStripSeparatorCapture,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(181, 176);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(153, 154);
             // 
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemAbout.Text = "About ...";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
             // 
             // toolStripSeparatorAbout
             // 
             this.toolStripSeparatorAbout.Name = "toolStripSeparatorAbout";
-            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(149, 6);
             // 
             // toolStripMenuItemShowInterface
             // 
             this.toolStripMenuItemShowInterface.Enabled = false;
             this.toolStripMenuItemShowInterface.Name = "toolStripMenuItemShowInterface";
-            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemShowInterface.Text = "Show Interface";
             this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemShowInterface);
             // 
@@ -236,21 +272,21 @@
             // 
             this.toolStripMenuItemHideInterface.Enabled = false;
             this.toolStripMenuItemHideInterface.Name = "toolStripMenuItemHideInterface";
-            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
             this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemHideInterface);
             // 
             // toolStripSeparatorInterface
             // 
             this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
-            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(149, 6);
             // 
             // toolStripMenuItemStartCapture
             // 
             this.toolStripMenuItemStartCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemStartCapture.Name = "toolStripMenuItemStartCapture";
             this.toolStripMenuItemStartCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStartCapture.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemStartCapture.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemStartCapture.Text = "Start Capture";
             this.toolStripMenuItemStartCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
             // 
@@ -260,21 +296,21 @@
             this.toolStripMenuItemStopCapture.Enabled = false;
             this.toolStripMenuItemStopCapture.Name = "toolStripMenuItemStopCapture";
             this.toolStripMenuItemStopCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStopCapture.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemStopCapture.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemStopCapture.Text = "Stop Capture";
             this.toolStripMenuItemStopCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // toolStripSeparatorCapture
             // 
             this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
-            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(149, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.Click_toolStripMenuItemExit);
             // 
@@ -294,7 +330,7 @@
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
-            this.tabControlModules.Size = new System.Drawing.Size(249, 244);
+            this.tabControlModules.Size = new System.Drawing.Size(249, 214);
             this.tabControlModules.TabIndex = 12;
             this.tabControlModules.TabStop = false;
             // 
@@ -308,7 +344,7 @@
             this.tabPageInterval.Location = new System.Drawing.Point(4, 40);
             this.tabPageInterval.Name = "tabPageInterval";
             this.tabPageInterval.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageInterval.Size = new System.Drawing.Size(241, 200);
+            this.tabPageInterval.Size = new System.Drawing.Size(241, 170);
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
@@ -509,7 +545,7 @@
             this.tabPageSchedule.Controls.Add(this.groupBoxSchedule);
             this.tabPageSchedule.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedule.Name = "tabPageSchedule";
-            this.tabPageSchedule.Size = new System.Drawing.Size(241, 200);
+            this.tabPageSchedule.Size = new System.Drawing.Size(241, 170);
             this.tabPageSchedule.TabIndex = 6;
             this.tabPageSchedule.Text = "Schedule";
             this.tabPageSchedule.UseVisualStyleBackColor = true;
@@ -688,7 +724,7 @@
             this.tabPageScreenshots.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreenshots.Name = "tabPageScreenshots";
             this.tabPageScreenshots.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageScreenshots.Size = new System.Drawing.Size(241, 200);
+            this.tabPageScreenshots.Size = new System.Drawing.Size(241, 170);
             this.tabPageScreenshots.TabIndex = 1;
             this.tabPageScreenshots.Text = "Screenshots";
             this.tabPageScreenshots.UseVisualStyleBackColor = true;
@@ -698,7 +734,7 @@
             this.tabPageSecurity.Controls.Add(this.groupBoxSecurity);
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 40);
             this.tabPageSecurity.Name = "tabPageSecurity";
-            this.tabPageSecurity.Size = new System.Drawing.Size(241, 200);
+            this.tabPageSecurity.Size = new System.Drawing.Size(241, 170);
             this.tabPageSecurity.TabIndex = 7;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
@@ -775,7 +811,7 @@
             // 
             this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreens.Name = "tabPageScreens";
-            this.tabPageScreens.Size = new System.Drawing.Size(241, 200);
+            this.tabPageScreens.Size = new System.Drawing.Size(241, 170);
             this.tabPageScreens.TabIndex = 5;
             this.tabPageScreens.Text = "Screens";
             this.tabPageScreens.UseVisualStyleBackColor = true;
@@ -784,7 +820,7 @@
             // 
             this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
             this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(241, 200);
+            this.tabPageRegions.Size = new System.Drawing.Size(241, 170);
             this.tabPageRegions.TabIndex = 4;
             this.tabPageRegions.Text = "Regions";
             this.tabPageRegions.UseVisualStyleBackColor = true;
@@ -795,7 +831,7 @@
             this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 200);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 170);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
@@ -806,45 +842,10 @@
             this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 200);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 170);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
-            // 
-            // toolStripScreenCapture
-            // 
-            this.toolStripScreenCapture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.toolStripScreenCapture.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStripScreenCapture.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripScreenCapture.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonStartCapture,
-            this.toolStripButtonStopCapture});
-            this.toolStripScreenCapture.Location = new System.Drawing.Point(20, 411);
-            this.toolStripScreenCapture.Name = "toolStripScreenCapture";
-            this.toolStripScreenCapture.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripScreenCapture.ShowItemToolTips = false;
-            this.toolStripScreenCapture.Size = new System.Drawing.Size(195, 25);
-            this.toolStripScreenCapture.TabIndex = 20;
-            // 
-            // toolStripButtonStartCapture
-            // 
-            this.toolStripButtonStartCapture.Enabled = false;
-            this.toolStripButtonStartCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
-            this.toolStripButtonStartCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonStartCapture.Name = "toolStripButtonStartCapture";
-            this.toolStripButtonStartCapture.Size = new System.Drawing.Size(96, 22);
-            this.toolStripButtonStartCapture.Text = "Start Capture";
-            this.toolStripButtonStartCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
-            // 
-            // toolStripButtonStopCapture
-            // 
-            this.toolStripButtonStopCapture.Enabled = false;
-            this.toolStripButtonStopCapture.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
-            this.toolStripButtonStopCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonStopCapture.Name = "toolStripButtonStopCapture";
-            this.toolStripButtonStopCapture.Size = new System.Drawing.Size(96, 22);
-            this.toolStripButtonStopCapture.Text = "Stop Capture";
-            this.toolStripButtonStopCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // timerScheduledCaptureStart
             // 
@@ -879,18 +880,155 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // labelScreenshotLocation
+            // 
+            this.labelScreenshotLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelScreenshotLocation.AutoSize = true;
+            this.labelScreenshotLocation.Location = new System.Drawing.Point(258, 413);
+            this.labelScreenshotLocation.Name = "labelScreenshotLocation";
+            this.labelScreenshotLocation.Size = new System.Drawing.Size(51, 13);
+            this.labelScreenshotLocation.TabIndex = 21;
+            this.labelScreenshotLocation.Text = "Location:";
+            // 
+            // textBoxScreenshotLocation
+            // 
+            this.textBoxScreenshotLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxScreenshotLocation.Location = new System.Drawing.Point(315, 410);
+            this.textBoxScreenshotLocation.Name = "textBoxScreenshotLocation";
+            this.textBoxScreenshotLocation.ReadOnly = true;
+            this.textBoxScreenshotLocation.Size = new System.Drawing.Size(506, 20);
+            this.textBoxScreenshotLocation.TabIndex = 22;
+            this.textBoxScreenshotLocation.TabStop = false;
+            // 
+            // labelScreenshotFormat
+            // 
+            this.labelScreenshotFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelScreenshotFormat.AutoSize = true;
+            this.labelScreenshotFormat.Location = new System.Drawing.Point(258, 387);
+            this.labelScreenshotFormat.Name = "labelScreenshotFormat";
+            this.labelScreenshotFormat.Size = new System.Drawing.Size(42, 13);
+            this.labelScreenshotFormat.TabIndex = 23;
+            this.labelScreenshotFormat.Text = "Format:";
+            // 
+            // textBoxScreenshotFormat
+            // 
+            this.textBoxScreenshotFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxScreenshotFormat.Location = new System.Drawing.Point(315, 384);
+            this.textBoxScreenshotFormat.MinimumSize = new System.Drawing.Size(73, 20);
+            this.textBoxScreenshotFormat.Name = "textBoxScreenshotFormat";
+            this.textBoxScreenshotFormat.ReadOnly = true;
+            this.textBoxScreenshotFormat.Size = new System.Drawing.Size(73, 20);
+            this.textBoxScreenshotFormat.TabIndex = 24;
+            this.textBoxScreenshotFormat.TabStop = false;
+            // 
+            // labelScreenshotWidth
+            // 
+            this.labelScreenshotWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreenshotWidth.AutoSize = true;
+            this.labelScreenshotWidth.Location = new System.Drawing.Point(394, 387);
+            this.labelScreenshotWidth.Name = "labelScreenshotWidth";
+            this.labelScreenshotWidth.Size = new System.Drawing.Size(38, 13);
+            this.labelScreenshotWidth.TabIndex = 29;
+            this.labelScreenshotWidth.Text = "Width:";
+            // 
+            // textBoxScreenshotWidth
+            // 
+            this.textBoxScreenshotWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxScreenshotWidth.Location = new System.Drawing.Point(438, 384);
+            this.textBoxScreenshotWidth.MaximumSize = new System.Drawing.Size(47, 20);
+            this.textBoxScreenshotWidth.Name = "textBoxScreenshotWidth";
+            this.textBoxScreenshotWidth.ReadOnly = true;
+            this.textBoxScreenshotWidth.Size = new System.Drawing.Size(47, 20);
+            this.textBoxScreenshotWidth.TabIndex = 30;
+            this.textBoxScreenshotWidth.TabStop = false;
+            // 
+            // labelScreenshotHeight
+            // 
+            this.labelScreenshotHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreenshotHeight.AutoSize = true;
+            this.labelScreenshotHeight.Location = new System.Drawing.Point(491, 387);
+            this.labelScreenshotHeight.Name = "labelScreenshotHeight";
+            this.labelScreenshotHeight.Size = new System.Drawing.Size(41, 13);
+            this.labelScreenshotHeight.TabIndex = 31;
+            this.labelScreenshotHeight.Text = "Height:";
+            // 
+            // textBoxScreenshotHeight
+            // 
+            this.textBoxScreenshotHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxScreenshotHeight.Location = new System.Drawing.Point(538, 384);
+            this.textBoxScreenshotHeight.MaximumSize = new System.Drawing.Size(47, 20);
+            this.textBoxScreenshotHeight.Name = "textBoxScreenshotHeight";
+            this.textBoxScreenshotHeight.ReadOnly = true;
+            this.textBoxScreenshotHeight.Size = new System.Drawing.Size(47, 20);
+            this.textBoxScreenshotHeight.TabIndex = 32;
+            this.textBoxScreenshotHeight.TabStop = false;
+            // 
+            // labelScreenshotDate
+            // 
+            this.labelScreenshotDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreenshotDate.AutoSize = true;
+            this.labelScreenshotDate.Location = new System.Drawing.Point(591, 387);
+            this.labelScreenshotDate.Name = "labelScreenshotDate";
+            this.labelScreenshotDate.Size = new System.Drawing.Size(33, 13);
+            this.labelScreenshotDate.TabIndex = 33;
+            this.labelScreenshotDate.Text = "Date:";
+            // 
+            // textBoxScreenshotDate
+            // 
+            this.textBoxScreenshotDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxScreenshotDate.Location = new System.Drawing.Point(630, 384);
+            this.textBoxScreenshotDate.Name = "textBoxScreenshotDate";
+            this.textBoxScreenshotDate.ReadOnly = true;
+            this.textBoxScreenshotDate.Size = new System.Drawing.Size(73, 20);
+            this.textBoxScreenshotDate.TabIndex = 34;
+            this.textBoxScreenshotDate.TabStop = false;
+            // 
+            // labelScreenshotTime
+            // 
+            this.labelScreenshotTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelScreenshotTime.AutoSize = true;
+            this.labelScreenshotTime.Location = new System.Drawing.Point(709, 387);
+            this.labelScreenshotTime.Name = "labelScreenshotTime";
+            this.labelScreenshotTime.Size = new System.Drawing.Size(33, 13);
+            this.labelScreenshotTime.TabIndex = 35;
+            this.labelScreenshotTime.Text = "Time:";
+            // 
+            // textBoxScreenshotTime
+            // 
+            this.textBoxScreenshotTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxScreenshotTime.Location = new System.Drawing.Point(748, 384);
+            this.textBoxScreenshotTime.Name = "textBoxScreenshotTime";
+            this.textBoxScreenshotTime.ReadOnly = true;
+            this.textBoxScreenshotTime.Size = new System.Drawing.Size(73, 20);
+            this.textBoxScreenshotTime.TabIndex = 36;
+            this.textBoxScreenshotTime.TabStop = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(851, 488);
-            this.Controls.Add(this.toolStripScreenCapture);
+            this.ClientSize = new System.Drawing.Size(833, 458);
+            this.Controls.Add(this.textBoxScreenshotTime);
+            this.Controls.Add(this.labelScreenshotTime);
+            this.Controls.Add(this.textBoxScreenshotDate);
+            this.Controls.Add(this.labelScreenshotDate);
+            this.Controls.Add(this.textBoxScreenshotHeight);
+            this.Controls.Add(this.labelScreenshotHeight);
+            this.Controls.Add(this.textBoxScreenshotWidth);
+            this.Controls.Add(this.labelScreenshotWidth);
+            this.Controls.Add(this.textBoxScreenshotFormat);
+            this.Controls.Add(this.labelScreenshotFormat);
+            this.Controls.Add(this.textBoxScreenshotLocation);
+            this.Controls.Add(this.labelScreenshotLocation);
             this.Controls.Add(this.tabControlModules);
-            this.Controls.Add(this.tabControlScreens);
+            this.Controls.Add(this.tabControlViews);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.monthCalendar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(768, 437);
+            this.MinimumSize = new System.Drawing.Size(849, 497);
             this.Name = "FormMain";
             this.Opacity = 0D;
             this.ShowInTaskbar = false;
@@ -918,8 +1056,6 @@
             this.tabPageSecurity.ResumeLayout(false);
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
-            this.toolStripScreenCapture.ResumeLayout(false);
-            this.toolStripScreenCapture.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -929,7 +1065,7 @@
 
         private System.Windows.Forms.MonthCalendar monthCalendar;
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.TabControl tabControlScreens;
+        private System.Windows.Forms.TabControl tabControlViews;
         private System.Windows.Forms.ListBox listBoxScreenshots;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripSystemTrayIcon;
@@ -955,7 +1091,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
         private System.Windows.Forms.CheckBox checkBoxCaptureLimit;
         private System.Windows.Forms.CheckBox checkBoxInitialScreenshot;
-        private System.Windows.Forms.ToolStrip toolStripScreenCapture;
         private System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
         private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonOptions;
@@ -971,8 +1106,6 @@
         private System.Windows.Forms.TabPage tabPageScreens;
         private System.Windows.Forms.TabPage tabPageSchedule;
         private System.Windows.Forms.TabPage tabPageSecurity;
-        private System.Windows.Forms.ToolStripButton toolStripButtonStartCapture;
-        private System.Windows.Forms.ToolStripButton toolStripButtonStopCapture;
         private System.Windows.Forms.GroupBox groupBoxSchedule;
         private System.Windows.Forms.CheckBox checkBoxScheduleOnTheseDays;
         private System.Windows.Forms.CheckBox checkBoxFriday;
@@ -998,5 +1131,19 @@
         private System.Windows.Forms.NumericUpDown numericUpDownDeleteOldScreenshots;
         private System.Windows.Forms.Label labelDeleteOldScreenshots;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label labelScreenshotLocation;
+        private System.Windows.Forms.TextBox textBoxScreenshotLocation;
+        private System.Windows.Forms.Label labelScreenshotFormat;
+        private System.Windows.Forms.TextBox textBoxScreenshotFormat;
+        private System.Windows.Forms.Label labelScreenshotWidth;
+        private System.Windows.Forms.TextBox textBoxScreenshotWidth;
+        private System.Windows.Forms.Label labelScreenshotHeight;
+        private System.Windows.Forms.TextBox textBoxScreenshotHeight;
+        private System.Windows.Forms.Label labelScreenshotDate;
+        private System.Windows.Forms.TextBox textBoxScreenshotDate;
+        private System.Windows.Forms.Label labelScreenshotTime;
+        private System.Windows.Forms.TextBox textBoxScreenshotTime;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStart;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStop;
     }
 }
