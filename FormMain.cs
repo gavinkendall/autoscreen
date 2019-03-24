@@ -402,6 +402,9 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchSlides()
         {
+            Slideshow.Index = 0;
+            Slideshow.Count = 0;
+
             listBoxScreenshots.BeginUpdate();
 
             if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
@@ -447,9 +450,6 @@ namespace AutoScreenCapture
             }
             else
             {
-                Slideshow.Index = 0;
-                Slideshow.Count = 0;
-
                 List<Slide> slides =
                     ScreenshotCollection.GetSlides(comboBoxTitles.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
@@ -769,22 +769,22 @@ namespace AutoScreenCapture
             textBoxScreenshotDate.Text = string.Empty;
             textBoxScreenshotTime.Text = string.Empty;
 
-            if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
+            TabPage selectedTabPage = tabControlViews.SelectedTab;
+
+            if (selectedTabPage != null)
             {
-                Slideshow.SelectedSlide = (Slide) listBoxScreenshots.Items[Slideshow.Index];
+                ToolStrip toolStrip = (ToolStrip) selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
 
-                TabPage selectedTabPage = tabControlViews.SelectedTab;
+                ToolStripTextBox toolStripTextBox =
+                    (ToolStripTextBox) toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
 
-                if (selectedTabPage != null)
+                PictureBox pictureBox = (PictureBox) selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
+
+                Screenshot selectedScreenshot = new Screenshot();
+
+                if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
                 {
-                    ToolStrip toolStrip = (ToolStrip) selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
-
-                    ToolStripTextBox toolStripTextBox =
-                        (ToolStripTextBox) toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
-
-                    PictureBox pictureBox = (PictureBox) selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
-
-                    Screenshot selectedScreenshot = new Screenshot();
+                    Slideshow.SelectedSlide = (Slide) listBoxScreenshots.Items[Slideshow.Index];
 
                     if (selectedTabPage.Tag.GetType() == typeof(Screen))
                     {
@@ -799,23 +799,23 @@ namespace AutoScreenCapture
                         selectedScreenshot =
                             ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                     }
+                }
 
-                    pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
+                toolStripTextBox.Text = Path.GetFileName(selectedScreenshot.Path);
+                toolStripTextBox.ToolTipText = selectedScreenshot.Path;
 
-                    if (pictureBox.Image != null)
-                    {
-                        toolStripTextBox.Text = Path.GetFileName(selectedScreenshot.Path);
-                        toolStripTextBox.ToolTipText = selectedScreenshot.Path;
+                pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
 
-                        textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
-                        textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+                if (pictureBox.Image != null)
+                {
+                    textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
+                    textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
-                        textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                        textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
+                    textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                    textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
 
-                        textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                        textBoxScreenshotTime.Text = selectedScreenshot.Time;
-                    }
+                    textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                    textBoxScreenshotTime.Text = selectedScreenshot.Time;
                 }
             }
         }
@@ -865,6 +865,8 @@ namespace AutoScreenCapture
             {
                 tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageScreenshots"];
             }
+
+            ShowScreenshotBySlideIndex();
         }
 
         /// <summary>
