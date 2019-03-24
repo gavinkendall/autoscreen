@@ -40,6 +40,8 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runDeleteOldScreenshotsThread = null;
 
+        private BackgroundWorker runTitleSearchThread = null;
+
         private BackgroundWorker runSaveSettings = null;
 
         /// <summary>
@@ -48,6 +50,8 @@ namespace AutoScreenCapture
         private delegate void RunSlideSearchDelegate(DoWorkEventArgs e);
 
         private delegate void RunDateSearchDelegate(DoWorkEventArgs e);
+
+        private delegate void RunTitleSearchDelegate(DoWorkEventArgs e);
 
         private delegate void SaveSettingsDelegate(DoWorkEventArgs e);
 
@@ -119,6 +123,7 @@ namespace AutoScreenCapture
             DeleteOldScreenshots();
 
             SearchDates();
+            SearchTitles();
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -145,6 +150,13 @@ namespace AutoScreenCapture
                 WorkerSupportsCancellation = true
             };
             runSlideSearchThread.DoWork += new DoWorkEventHandler(DoWork_runSlideSearchThread);
+
+            runTitleSearchThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runTitleSearchThread.DoWork += new DoWorkEventHandler(DoWork_runTitleSearchThread);
         }
 
         /// <summary>
@@ -407,6 +419,18 @@ namespace AutoScreenCapture
             listBoxScreenshots.EndUpdate();
         }
 
+        private void SearchTitles()
+        {
+            comboBoxTitles.BeginUpdate();
+
+            if (runTitleSearchThread != null && !runTitleSearchThread.IsBusy)
+            {
+                runTitleSearchThread.RunWorkerAsync();
+            }
+
+            comboBoxTitles.EndUpdate();
+        }
+
         /// <summary>
         /// Deletes old screenshots.
         /// </summary>
@@ -431,7 +455,7 @@ namespace AutoScreenCapture
             else
             {
                 List<Slide> slides =
-                    ScreenshotCollection.GetSlidesByDate(monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                    ScreenshotCollection.GetSlides(comboBoxTitles.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
@@ -458,7 +482,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                ArrayList dates = ScreenshotCollection.GetDates();
+                List<string> dates = ScreenshotCollection.GetDates(comboBoxTitles.Text);
 
                 DateTime[] boldedDates = new DateTime[dates.Count];
 
@@ -468,6 +492,20 @@ namespace AutoScreenCapture
                 }
 
                 monthCalendar.BoldedDates = boldedDates;
+            }
+        }
+
+        private void RunTitleSearch(DoWorkEventArgs e)
+        {
+            if (comboBoxTitles.InvokeRequired)
+            {
+                comboBoxTitles.Invoke(new RunTitleSearchDelegate(RunTitleSearch), new object[] {e});
+            }
+            else
+            {
+                List<string> titles = ScreenshotCollection.GetTitles();
+
+                comboBoxTitles.DataSource = titles;
             }
         }
 
@@ -565,6 +603,7 @@ namespace AutoScreenCapture
             Log.Write("Showing interface.");
 
             SearchDates();
+            SearchTitles();
             SearchSlides();
 
             if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
@@ -776,8 +815,9 @@ namespace AutoScreenCapture
                     if (pictureBox.Image != null)
                     {
                         toolStripTextBox.Text = Path.GetFileName(selectedScreenshot.Path);
+                        toolStripTextBox.ToolTipText = selectedScreenshot.Path;
 
-                        textBoxScreenshotTitle.Text = selectedScreenshot.ActiveWindowTitle;
+                        textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
                         textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
                         textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
@@ -952,6 +992,11 @@ namespace AutoScreenCapture
         private void DoWork_runDeleteOldScreenshotsThread(object sender, DoWorkEventArgs e)
         {
             RunDeleteOldScreenshots(e);
+        }
+
+        private void DoWork_runTitleSearchThread(object sender, DoWorkEventArgs e)
+        {
+            RunTitleSearch(e);
         }
 
         /// <summary>
@@ -1952,7 +1997,7 @@ namespace AutoScreenCapture
                     Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor,
                         ScreenshotCollection.GetScreenshot(
-                            ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, screen.ViewId));
+                            ScreenshotCollection.Get(ScreenshotCollection.Count - 1).Slide.Name, screen.ViewId));
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
@@ -1960,7 +2005,7 @@ namespace AutoScreenCapture
                     Region region = (Region) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor,
                         ScreenshotCollection.GetScreenshot(
-                            ScreenshotCollection.GetByIndex(ScreenshotCollection.Count - 1).Slide.Name, region.ViewId));
+                            ScreenshotCollection.Get(ScreenshotCollection.Count - 1).Slide.Name, region.ViewId));
                 }
             }
         }
@@ -2679,6 +2724,12 @@ namespace AutoScreenCapture
         private void tabControlViews_Selected(object sender, TabControlEventArgs e)
         {
             ShowScreenshotBySlideIndex();
+        }
+
+        private void comboBoxTitles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SearchDates();
+            ShowScreenshots();
         }
     }
 }

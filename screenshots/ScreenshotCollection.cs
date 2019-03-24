@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_COMPONENT = "component";
         private const string SCREENSHOT_SLIDENAME = "slidename";
         private const string SCREENSHOT_SLIDEVALUE = "slidevalue";
-        private const string SCREENSHOT_ACTIVE_WINDOW_TITLE = "activewindowtitle";
+        private const string SCREENSHOT_WINDOW_TITLE = "windowtitle";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
         public static void Add(Screenshot newScreenshot)
@@ -64,7 +64,7 @@ namespace AutoScreenCapture
             }
         }
 
-        public static Screenshot GetByIndex(int index)
+        public static Screenshot Get(int index)
         {
             return (Screenshot)_screenshotList[index];
         }
@@ -74,13 +74,13 @@ namespace AutoScreenCapture
             get { return _screenshotList.Count; }
         }
 
-        public static ArrayList GetDates()
+        public static List<string> GetDates(string title)
         {
-            ArrayList dates = new ArrayList();
+            List<string> dates = new List<string>();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (!dates.Contains(screenshot.Date))
+                if (!dates.Contains(screenshot.Date) && (screenshot.WindowTitle.Equals(title) || string.IsNullOrEmpty(title)))
                 {
                     dates.Add(screenshot.Date);
                 }
@@ -89,14 +89,31 @@ namespace AutoScreenCapture
             return dates;
         }
 
-        public static List<Slide> GetSlidesByDate(string date)
+        public static List<string> GetTitles()
+        {
+            List<string> titles = new List<string>();
+            titles.Add(string.Empty);
+
+            foreach (Screenshot screenshot in _screenshotList)
+            {
+                if (!titles.Contains(screenshot.WindowTitle))
+                {
+                    titles.Add(screenshot.WindowTitle);
+                }
+            }
+
+            return titles;
+        }
+
+        public static List<Slide> GetSlides(string title, string date)
         {
             List<Slide> slides = new List<Slide>();
             List<string> slideNames = new List<string>();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Date.Equals(date) && !slideNames.Contains(screenshot.Slide.Name))
+                if (screenshot.Date.Equals(date) && !slideNames.Contains(screenshot.Slide.Name) &&
+                    (screenshot.WindowTitle.Equals(title) || string.IsNullOrEmpty(title)))
                 {
                     slides.Add(screenshot.Slide);
                     slideNames.Add(screenshot.Slide.Name);
@@ -187,9 +204,9 @@ namespace AutoScreenCapture
                                     screenshot.Slide.Value = xReader.Value;
                                     break;
 
-                                case SCREENSHOT_ACTIVE_WINDOW_TITLE:
+                                case SCREENSHOT_WINDOW_TITLE:
                                     xReader.Read();
-                                    screenshot.ActiveWindowTitle = xReader.Value;
+                                    screenshot.WindowTitle = xReader.Value;
                                     break;
                             }
                         }
@@ -203,7 +220,7 @@ namespace AutoScreenCapture
                         screenshot.Format != null &&
                         !string.IsNullOrEmpty(screenshot.Slide.Name) &&
                         !string.IsNullOrEmpty(screenshot.Slide.Value) &&
-                        !string.IsNullOrEmpty(screenshot.ActiveWindowTitle))
+                        !string.IsNullOrEmpty(screenshot.WindowTitle))
                     {
                         _screenshotList.Add(screenshot);
                     }
@@ -249,7 +266,7 @@ namespace AutoScreenCapture
                     xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());
                     xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slide.Name);
                     xWriter.WriteElementString(SCREENSHOT_SLIDEVALUE, screenshot.Slide.Value);
-                    xWriter.WriteElementString(SCREENSHOT_ACTIVE_WINDOW_TITLE, screenshot.ActiveWindowTitle);
+                    xWriter.WriteElementString(SCREENSHOT_WINDOW_TITLE, screenshot.WindowTitle);
 
                     xWriter.WriteEndElement();
                 }

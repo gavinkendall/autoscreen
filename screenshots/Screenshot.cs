@@ -19,13 +19,13 @@ namespace AutoScreenCapture
         public ImageFormat Format { get; set; }
         public int Component { get; set; }
         public Slide Slide { get; set; }
-        public string ActiveWindowTitle { get; set; }
+        public string WindowTitle { get; set; }
 
         public Screenshot()
         {
         }
 
-        public Screenshot(DateTime dateTime, string path, ImageFormat format, int component, string activeWindowTitle, Guid viewId)
+        public Screenshot(DateTime dateTime, string path, ImageFormat format, int component, string windowTitle, Guid viewId)
         {
             ViewId = viewId;
             Date = dateTime.ToString(MacroParser.DateFormat);
@@ -33,12 +33,12 @@ namespace AutoScreenCapture
             Path = path;
             Format = format;
             Component = component;
-            ActiveWindowTitle = activeWindowTitle;
+            WindowTitle = windowTitle;
 
             Slide = new Slide()
             {
                 Name = "{date=" + Date + "}{time=" + Time + "}",
-                Value = Time + (!string.IsNullOrEmpty(activeWindowTitle) ? " [" + activeWindowTitle + "]" : string.Empty)
+                Value = Time + (!string.IsNullOrEmpty(windowTitle) ? " [" + windowTitle + "]" : string.Empty)
             };
 
             string directory = System.IO.Path.GetDirectoryName(path);
