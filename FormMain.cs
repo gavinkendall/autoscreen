@@ -105,6 +105,10 @@ namespace AutoScreenCapture
 
             Text = (string) Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
 
+            InitializeThreads();
+
+            DeleteOldScreenshots();
+
             if (args.Length > 0)
             {
                 ParseCommandLineArguments(args);
@@ -118,10 +122,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            InitializeThreads();
-
-            DeleteOldScreenshots();
-
             SearchTitles();
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
@@ -391,8 +391,6 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchDates()
         {
-            monthCalendar.BoldedDates = null;
-
             if (runDateSearchThread != null && !runDateSearchThread.IsBusy)
             {
                 runDateSearchThread.RunWorkerAsync();
@@ -683,7 +681,7 @@ namespace AutoScreenCapture
                     ScreenCapture.Count = 0;
                     ScreenCapture.Running = false;
 
-                    ShowScreenshots();
+                    SearchTitles();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -1697,72 +1695,17 @@ namespace AutoScreenCapture
 
         private void BuildViewTabPages()
         {
-            // Clear out the controls of the "Screens" tab control.
             tabControlViews.Controls.Clear();
 
             foreach (Screen screen in formScreen.ScreenCollection)
             {
-                ToolStripSplitButton toolStripSplitButtonScreen = new ToolStripSplitButton
-                {
-                    Text = "Edit",
-                    Alignment = ToolStripItemAlignment.Left,
-                    AutoToolTip = false,
-                    Image = Resources.edit
-                };
-
-                toolStripSplitButtonScreen.DropDown.Items.Add("Add New Editor ...", null,
-                    Click_addEditorToolStripMenuItem);
-
-                foreach (Editor editor in formEditor.EditorCollection)
-                {
-                    if (editor != null && File.Exists(editor.Application))
-                    {
-                        toolStripSplitButtonScreen.DropDown.Items.Add(editor.Name,
-                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
-                    }
-                }
-
-                ToolStripItem toolStripLabelFilename = new ToolStripLabel
-                {
-                    Text = "Filename:",
-                    Alignment = ToolStripItemAlignment.Right,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left
-                };
-
-                ToolStripItem toolstripTextBoxFilename = new ToolStripTextBox
-                {
-                    Name = screen.Name + "toolStripTextBoxFilename",
-                    Alignment = ToolStripItemAlignment.Right,
-                    AutoSize = false,
-                    ReadOnly = true,
-                    Width = 200,
-                    BackColor = Color.LightYellow,
-                    Text = string.Empty
-                };
-
-                ToolStripItem toolstripButtonOpenFolder = new ToolStripButton
-                {
-                    Image = Resources.openfolder,
-                    Alignment = ToolStripItemAlignment.Right,
-                    AutoToolTip = false,
-                    ToolTipText = "Show Screenshot Location",
-                    DisplayStyle = ToolStripItemDisplayStyle.Image
-                };
-
-                toolstripButtonOpenFolder.Click +=
-                    new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
-
                 ToolStrip toolStripScreen = new ToolStrip
                 {
                     Name = screen.Name + "toolStrip",
                     GripStyle = ToolStripGripStyle.Hidden
                 };
 
-                toolStripScreen.Items.Add(toolStripSplitButtonScreen);
-                toolStripScreen.Items.Add(toolstripButtonOpenFolder);
-                toolStripScreen.Items.Add(toolstripTextBoxFilename);
-                toolStripScreen.Items.Add(toolStripLabelFilename);
-
+                toolStripScreen = BuildViewTabPageToolStripItems(toolStripScreen, screen.Name);
 
                 PictureBox pictureBoxScreen = new PictureBox
                 {
@@ -1792,34 +1735,17 @@ namespace AutoScreenCapture
 
             foreach (Region region in formRegion.RegionCollection)
             {
-                ToolStripSplitButton toolStripSplitButtonRegion = new ToolStripSplitButton
-                {
-                    Text = "Edit",
-                    Image = Resources.edit
-                };
-
-                toolStripSplitButtonRegion.DropDown.Items.Add("Add New Editor ...", null,
-                    Click_addEditorToolStripMenuItem);
-
-                foreach (Editor editor in formEditor.EditorCollection)
-                {
-                    if (editor != null && File.Exists(editor.Application))
-                    {
-                        toolStripSplitButtonRegion.DropDown.Items.Add(editor.Name,
-                            Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
-                    }
-                }
-
                 ToolStrip toolStripRegion = new ToolStrip
                 {
+                    Name = region.Name + "toolStrip",
                     GripStyle = ToolStripGripStyle.Hidden
                 };
 
-                toolStripRegion.Items.Add(toolStripSplitButtonRegion);
+                toolStripRegion = BuildViewTabPageToolStripItems(toolStripRegion, region.Name);
 
                 PictureBox pictureBoxRegion = new PictureBox
                 {
-                    Name = region.Name,
+                    Name = region.Name + "pictureBox",
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
@@ -1844,6 +1770,66 @@ namespace AutoScreenCapture
             }
 
             ShowScreenshotBySlideIndex();
+        }
+
+        private ToolStrip BuildViewTabPageToolStripItems(ToolStrip toolStrip, string name)
+        {
+            ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
+            {
+                Text = "Edit",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.edit
+            };
+
+            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null,
+                Click_addEditorToolStripMenuItem);
+
+            foreach (Editor editor in formEditor.EditorCollection)
+            {
+                if (editor != null && File.Exists(editor.Application))
+                {
+                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name,
+                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                }
+            }
+
+            ToolStripItem toolStripLabelFilename = new ToolStripLabel
+            {
+                Text = "Filename:",
+                Alignment = ToolStripItemAlignment.Right,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left
+            };
+
+            ToolStripItem toolstripTextBoxFilename = new ToolStripTextBox
+            {
+                Name = name + "toolStripTextBoxFilename",
+                Alignment = ToolStripItemAlignment.Right,
+                AutoSize = false,
+                ReadOnly = true,
+                Width = 200,
+                BackColor = Color.LightYellow,
+                Text = string.Empty
+            };
+
+            ToolStripItem toolstripButtonOpenFolder = new ToolStripButton
+            {
+                Image = Resources.openfolder,
+                Alignment = ToolStripItemAlignment.Right,
+                AutoToolTip = false,
+                ToolTipText = "Show Screenshot Location",
+                DisplayStyle = ToolStripItemDisplayStyle.Image
+            };
+
+            toolstripButtonOpenFolder.Click +=
+                new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+
+            toolStrip.Items.Add(toolStripSplitButtonEdit);
+            toolStrip.Items.Add(toolstripButtonOpenFolder);
+            toolStrip.Items.Add(toolstripTextBoxFilename);
+            toolStrip.Items.Add(toolStripLabelFilename);
+
+            return toolStrip;
         }
 
         #region Click Event Handlers
