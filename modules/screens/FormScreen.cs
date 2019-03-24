@@ -53,7 +53,7 @@ namespace AutoScreenCapture
                 Text = "Change Screen";
 
                 textBoxScreenName.Text = ScreenObject.Name;
-                textBoxScreenFolder.Text = FileSystem.CorrectDirectoryPath(ScreenObject.Folder);
+                textBoxScreenFolder.Text = ScreenObject.Folder;
                 textBoxScreenMacro.Text = ScreenObject.Macro;
 
                 if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
