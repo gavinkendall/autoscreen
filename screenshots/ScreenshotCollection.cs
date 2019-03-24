@@ -102,6 +102,8 @@ namespace AutoScreenCapture
                 }
             }
 
+            titles.Sort();
+
             return titles;
         }
 

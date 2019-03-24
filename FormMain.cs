@@ -122,7 +122,6 @@ namespace AutoScreenCapture
 
             DeleteOldScreenshots();
 
-            SearchDates();
             SearchTitles();
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
@@ -392,8 +391,6 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchDates()
         {
-            ClearScreenPreview();
-
             monthCalendar.BoldedDates = null;
 
             if (runDateSearchThread != null && !runDateSearchThread.IsBusy)
@@ -408,8 +405,6 @@ namespace AutoScreenCapture
         private void SearchSlides()
         {
             listBoxScreenshots.BeginUpdate();
-
-            ClearScreenPreview();
 
             if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
             {
@@ -454,6 +449,9 @@ namespace AutoScreenCapture
             }
             else
             {
+                Slideshow.Index = 0;
+                Slideshow.Count = 0;
+
                 List<Slide> slides =
                     ScreenshotCollection.GetSlides(comboBoxTitles.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
@@ -463,8 +461,6 @@ namespace AutoScreenCapture
 
                 if (listBoxScreenshots.Items.Count > 0)
                 {
-                    monthCalendar.Enabled = true;
-
                     listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
                 }
             }
@@ -601,10 +597,6 @@ namespace AutoScreenCapture
         private void ShowInterface()
         {
             Log.Write("Showing interface.");
-
-            SearchDates();
-            SearchTitles();
-            SearchSlides();
 
             if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
@@ -852,15 +844,6 @@ namespace AutoScreenCapture
             return ConvertIntoMilliseconds((int) numericUpDownHoursInterval.Value,
                 (int) numericUpDownMinutesInterval.Value, (int) numericUpDownSecondsInterval.Value,
                 (int) numericUpDownMillisecondsInterval.Value);
-        }
-
-        /// <summary>
-        /// Clears the screenshot images in the interface when searching for dates and slides.
-        /// </summary>
-        private void ClearScreenPreview()
-        {
-            Slideshow.Clear();
-            listBoxScreenshots.DataSource = null;
         }
 
         /// <summary>

@@ -115,6 +115,7 @@ namespace AutoScreenCapture
             this.labelScreenshotTime = new System.Windows.Forms.Label();
             this.textBoxScreenshotTime = new System.Windows.Forms.TextBox();
             this.comboBoxTitles = new System.Windows.Forms.ComboBox();
+            this.labelFilter = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1011,19 +1012,32 @@ namespace AutoScreenCapture
             // 
             // comboBoxTitles
             // 
+            this.comboBoxTitles.DropDownHeight = 300;
             this.comboBoxTitles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTitles.DropDownWidth = 700;
             this.comboBoxTitles.FormattingEnabled = true;
-            this.comboBoxTitles.Location = new System.Drawing.Point(4, 6);
+            this.comboBoxTitles.Location = new System.Drawing.Point(39, 6);
             this.comboBoxTitles.Name = "comboBoxTitles";
-            this.comboBoxTitles.Size = new System.Drawing.Size(241, 21);
+            this.comboBoxTitles.Size = new System.Drawing.Size(206, 21);
             this.comboBoxTitles.TabIndex = 37;
+            this.comboBoxTitles.TabStop = false;
             this.comboBoxTitles.SelectedIndexChanged += new System.EventHandler(this.comboBoxTitles_SelectedIndexChanged);
+            // 
+            // labelFilter
+            // 
+            this.labelFilter.AutoSize = true;
+            this.labelFilter.Location = new System.Drawing.Point(1, 9);
+            this.labelFilter.Name = "labelFilter";
+            this.labelFilter.Size = new System.Drawing.Size(32, 13);
+            this.labelFilter.TabIndex = 38;
+            this.labelFilter.Text = "Filter:";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(833, 458);
+            this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.comboBoxTitles);
             this.Controls.Add(this.textBoxScreenshotTime);
             this.Controls.Add(this.labelScreenshotTime);
@@ -1160,5 +1174,6 @@ namespace AutoScreenCapture
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStart;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStop;
         private ComboBox comboBoxTitles;
+        private Label labelFilter;
     }
 }
