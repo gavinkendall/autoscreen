@@ -20,6 +20,9 @@ namespace AutoScreenCapture
     {
         private static XmlDocument xDoc = null;
 
+        private static string _date;
+        private static string _title;
+
         private static List<string> _slideNames = new List<string>();
         private static BindingList<Slide> _slides = new BindingList<Slide>();
         private static BindingList<string> _titles = new BindingList<string>();
@@ -45,7 +48,8 @@ namespace AutoScreenCapture
         {
             _screenshotList.Add(newScreenshot);
 
-            if (!_slideNames.Contains(newScreenshot.Slide.Name))
+            if (newScreenshot.Date.Equals(_date) && !_slideNames.Contains(newScreenshot.Slide.Name) &&
+                (newScreenshot.WindowTitle.Equals(_title) || string.IsNullOrEmpty(_title)))
             {
                 _slides.Add(newScreenshot.Slide);
                 _slideNames.Add(newScreenshot.Slide.Name);
@@ -123,6 +127,9 @@ namespace AutoScreenCapture
 
         public static BindingList<Slide> GetSlides(string title, string date)
         {
+            _date = date;
+            _title = title;
+
             _slides.Clear();
             _slideNames.Clear();
 
