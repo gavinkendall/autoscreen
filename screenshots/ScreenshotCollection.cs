@@ -13,10 +13,16 @@ namespace AutoScreenCapture
     using System.Text;
     using System.Xml;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Windows.Forms;
 
     public static class ScreenshotCollection
     {
         private static XmlDocument xDoc = null;
+
+        private static List<string> _slideNames = new List<string>();
+        private static BindingList<Slide> _slides = new BindingList<Slide>();
+        private static BindingList<string> _titles = new BindingList<string>();
         private static List<Screenshot> _screenshotList = new List<Screenshot>();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -38,6 +44,17 @@ namespace AutoScreenCapture
         public static void Add(Screenshot newScreenshot)
         {
             _screenshotList.Add(newScreenshot);
+
+            if (!_slideNames.Contains(newScreenshot.Slide.Name))
+            {
+                _slides.Add(newScreenshot.Slide);
+                _slideNames.Add(newScreenshot.Slide.Name);
+            }
+
+            if (!_titles.Contains(newScreenshot.WindowTitle))
+            {
+                _titles.Add(newScreenshot.WindowTitle);
+            }
         }
 
         public static void DeleteScreenshotsOlderThanDays(int daysOld)
@@ -89,40 +106,37 @@ namespace AutoScreenCapture
             return dates;
         }
 
-        public static List<string> GetTitles()
+        public static BindingList<string> GetTitles()
         {
-            List<string> titles = new List<string>();
-            titles.Add(string.Empty);
+            _titles.Add(string.Empty);
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (!titles.Contains(screenshot.WindowTitle))
+                if (!_titles.Contains(screenshot.WindowTitle))
                 {
-                    titles.Add(screenshot.WindowTitle);
+                    _titles.Add(screenshot.WindowTitle);
                 }
             }
 
-            titles.Sort();
-
-            return titles;
+            return _titles;
         }
 
-        public static List<Slide> GetSlides(string title, string date)
+        public static BindingList<Slide> GetSlides(string title, string date)
         {
-            List<Slide> slides = new List<Slide>();
-            List<string> slideNames = new List<string>();
+            _slides.Clear();
+            _slideNames.Clear();
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (screenshot.Date.Equals(date) && !slideNames.Contains(screenshot.Slide.Name) &&
+                if (screenshot.Date.Equals(date) && !_slideNames.Contains(screenshot.Slide.Name) &&
                     (screenshot.WindowTitle.Equals(title) || string.IsNullOrEmpty(title)))
                 {
-                    slides.Add(screenshot.Slide);
-                    slideNames.Add(screenshot.Slide.Name);
+                    _slides.Add(screenshot.Slide);
+                    _slideNames.Add(screenshot.Slide.Name);
                 }
             }
 
-            return slides;
+            return _slides;
         }
 
         public static Screenshot GetScreenshot(string slideName, Guid viewId)

@@ -123,6 +123,8 @@ namespace AutoScreenCapture
         private void FormMain_Load(object sender, EventArgs e)
         {
             SearchTitles();
+            SearchDates();
+            SearchSlides();
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -407,6 +409,8 @@ namespace AutoScreenCapture
 
             listBoxScreenshots.BeginUpdate();
 
+            listBoxScreenshots.DataSource = null;
+
             if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
             {
                 runSlideSearchThread.RunWorkerAsync();
@@ -450,8 +454,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<Slide> slides =
-                    ScreenshotCollection.GetSlides(comboBoxTitles.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                BindingList<Slide> slides = ScreenshotCollection.GetSlides(comboBoxTitles.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
@@ -497,7 +500,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> titles = ScreenshotCollection.GetTitles();
+                BindingList<string> titles = ScreenshotCollection.GetTitles();
 
                 comboBoxTitles.DataSource = titles;
             }
@@ -626,8 +629,6 @@ namespace AutoScreenCapture
                 }
 
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
-
-                Focus();
             }
         }
 
@@ -680,8 +681,6 @@ namespace AutoScreenCapture
 
                     ScreenCapture.Count = 0;
                     ScreenCapture.Running = false;
-
-                    SearchTitles();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -2699,7 +2698,6 @@ namespace AutoScreenCapture
 
         private void comboBoxTitles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SearchDates();
             ShowScreenshots();
         }
     }
