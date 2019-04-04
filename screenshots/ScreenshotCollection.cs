@@ -23,9 +23,9 @@ namespace AutoScreenCapture
         private static string _date;
         private static string _title;
 
+        private static List<string> _titles = new List<string>();
         private static List<string> _slideNames = new List<string>();
         private static BindingList<Slide> _slides = new BindingList<Slide>();
-        private static BindingList<string> _titles = new BindingList<string>();
         private static List<Screenshot> _screenshotList = new List<Screenshot>();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -58,6 +58,7 @@ namespace AutoScreenCapture
             if (!_titles.Contains(newScreenshot.WindowTitle))
             {
                 _titles.Add(newScreenshot.WindowTitle);
+                _titles.Sort();
             }
         }
 
@@ -110,8 +111,9 @@ namespace AutoScreenCapture
             return dates;
         }
 
-        public static BindingList<string> GetTitles()
+        public static List<string> GetTitles()
         {
+            _titles.Clear();
             _titles.Add(string.Empty);
 
             foreach (Screenshot screenshot in _screenshotList)
@@ -121,6 +123,8 @@ namespace AutoScreenCapture
                     _titles.Add(screenshot.WindowTitle);
                 }
             }
+
+            _titles.Sort();
 
             return _titles;
         }

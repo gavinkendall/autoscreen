@@ -423,6 +423,8 @@ namespace AutoScreenCapture
         {
             comboBoxTitles.BeginUpdate();
 
+            comboBoxTitles.DataSource = null;
+
             if (runTitleSearchThread != null && !runTitleSearchThread.IsBusy)
             {
                 runTitleSearchThread.RunWorkerAsync();
@@ -500,9 +502,14 @@ namespace AutoScreenCapture
             }
             else
             {
-                BindingList<string> titles = ScreenshotCollection.GetTitles();
+                List<string> titles = ScreenshotCollection.GetTitles();
 
                 comboBoxTitles.DataSource = titles;
+
+                if (comboBoxTitles.Items.Count > 0)
+                {
+                    comboBoxTitles.SelectedIndex = 0;
+                }
             }
         }
 
@@ -2698,6 +2705,14 @@ namespace AutoScreenCapture
 
         private void comboBoxTitles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SearchDates();
+            ShowScreenshots();
+        }
+
+        private void buttonRefreshTitles_Click(object sender, EventArgs e)
+        {
+            SearchTitles();
+            SearchDates();
             ShowScreenshots();
         }
     }

@@ -180,6 +180,7 @@
     <None Include="images\options.png" />
     <None Include="images\openfolder.png" />
     <Content Include="images\edit.png" />
+    <None Include="images\refresh.png" />
     <Content Include="images\start_screen_capture.png" />
     <Content Include="images\stop_screen_capture.png" />
   </ItemGroup>

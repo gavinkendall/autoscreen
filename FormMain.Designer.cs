@@ -116,6 +116,7 @@ namespace AutoScreenCapture
             this.textBoxScreenshotTime = new System.Windows.Forms.TextBox();
             this.comboBoxTitles = new System.Windows.Forms.ComboBox();
             this.labelFilter = new System.Windows.Forms.Label();
+            this.buttonRefreshTitles = new System.Windows.Forms.Button();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1016,9 +1017,10 @@ namespace AutoScreenCapture
             this.comboBoxTitles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTitles.DropDownWidth = 700;
             this.comboBoxTitles.FormattingEnabled = true;
+            this.comboBoxTitles.IntegralHeight = false;
             this.comboBoxTitles.Location = new System.Drawing.Point(39, 6);
             this.comboBoxTitles.Name = "comboBoxTitles";
-            this.comboBoxTitles.Size = new System.Drawing.Size(206, 21);
+            this.comboBoxTitles.Size = new System.Drawing.Size(182, 21);
             this.comboBoxTitles.TabIndex = 37;
             this.comboBoxTitles.TabStop = false;
             this.comboBoxTitles.SelectedIndexChanged += new System.EventHandler(this.comboBoxTitles_SelectedIndexChanged);
@@ -1032,11 +1034,25 @@ namespace AutoScreenCapture
             this.labelFilter.TabIndex = 38;
             this.labelFilter.Text = "Filter:";
             // 
+            // buttonRefreshTitles
+            // 
+            this.buttonRefreshTitles.BackColor = System.Drawing.Color.White;
+            this.buttonRefreshTitles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonRefreshTitles.Image = global::AutoScreenCapture.Properties.Resources.refresh;
+            this.buttonRefreshTitles.Location = new System.Drawing.Point(227, 6);
+            this.buttonRefreshTitles.Name = "buttonRefreshTitles";
+            this.buttonRefreshTitles.Size = new System.Drawing.Size(21, 21);
+            this.buttonRefreshTitles.TabIndex = 39;
+            this.buttonRefreshTitles.TabStop = false;
+            this.buttonRefreshTitles.UseVisualStyleBackColor = false;
+            this.buttonRefreshTitles.Click += new System.EventHandler(this.buttonRefreshTitles_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(833, 458);
+            this.Controls.Add(this.buttonRefreshTitles);
             this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.comboBoxTitles);
             this.Controls.Add(this.textBoxScreenshotTime);
@@ -1175,5 +1191,6 @@ namespace AutoScreenCapture
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStop;
         private ComboBox comboBoxTitles;
         private Label labelFilter;
+        private Button buttonRefreshTitles;
     }
 }
