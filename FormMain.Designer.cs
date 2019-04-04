@@ -34,8 +34,8 @@ namespace AutoScreenCapture
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripSplitButtonStart = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSplitButtonStop = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonStopScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripDropDownButtonOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemShowSystemTrayIcon = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlViews = new System.Windows.Forms.TabControl();
@@ -48,8 +48,8 @@ namespace AutoScreenCapture
             this.toolStripMenuItemShowInterface = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHideInterface = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorInterface = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemStartCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemStopCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
@@ -148,8 +148,8 @@ namespace AutoScreenCapture
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSplitButtonStart,
-            this.toolStripSplitButtonStop,
+            this.toolStripSplitButtonStartScreenCapture,
+            this.toolStripSplitButtonStopScreenCapture,
             this.toolStripDropDownButtonOptions});
             this.statusStrip.Location = new System.Drawing.Point(0, 436);
             this.statusStrip.Name = "statusStrip";
@@ -157,29 +157,29 @@ namespace AutoScreenCapture
             this.statusStrip.Size = new System.Drawing.Size(833, 22);
             this.statusStrip.TabIndex = 3;
             // 
-            // toolStripSplitButtonStart
+            // toolStripSplitButtonStartScreenCapture
             // 
-            this.toolStripSplitButtonStart.AutoToolTip = false;
-            this.toolStripSplitButtonStart.DropDownButtonWidth = 0;
-            this.toolStripSplitButtonStart.Enabled = false;
-            this.toolStripSplitButtonStart.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
-            this.toolStripSplitButtonStart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonStart.Name = "toolStripSplitButtonStart";
-            this.toolStripSplitButtonStart.Size = new System.Drawing.Size(52, 20);
-            this.toolStripSplitButtonStart.Text = "Start";
-            this.toolStripSplitButtonStart.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
+            this.toolStripSplitButtonStartScreenCapture.AutoToolTip = false;
+            this.toolStripSplitButtonStartScreenCapture.DropDownButtonWidth = 0;
+            this.toolStripSplitButtonStartScreenCapture.Enabled = false;
+            this.toolStripSplitButtonStartScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
+            this.toolStripSplitButtonStartScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonStartScreenCapture.Name = "toolStripSplitButtonStartScreenCapture";
+            this.toolStripSplitButtonStartScreenCapture.Size = new System.Drawing.Size(135, 20);
+            this.toolStripSplitButtonStartScreenCapture.Text = "Start Screen Capture";
+            this.toolStripSplitButtonStartScreenCapture.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
             // 
-            // toolStripSplitButtonStop
+            // toolStripSplitButtonStopScreenCapture
             // 
-            this.toolStripSplitButtonStop.AutoToolTip = false;
-            this.toolStripSplitButtonStop.DropDownButtonWidth = 0;
-            this.toolStripSplitButtonStop.Enabled = false;
-            this.toolStripSplitButtonStop.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
-            this.toolStripSplitButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonStop.Name = "toolStripSplitButtonStop";
-            this.toolStripSplitButtonStop.Size = new System.Drawing.Size(52, 20);
-            this.toolStripSplitButtonStop.Text = "Stop";
-            this.toolStripSplitButtonStop.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
+            this.toolStripSplitButtonStopScreenCapture.AutoToolTip = false;
+            this.toolStripSplitButtonStopScreenCapture.DropDownButtonWidth = 0;
+            this.toolStripSplitButtonStopScreenCapture.Enabled = false;
+            this.toolStripSplitButtonStopScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
+            this.toolStripSplitButtonStopScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonStopScreenCapture.Name = "toolStripSplitButtonStopScreenCapture";
+            this.toolStripSplitButtonStopScreenCapture.Size = new System.Drawing.Size(135, 20);
+            this.toolStripSplitButtonStopScreenCapture.Text = "Stop Screen Capture";
+            this.toolStripSplitButtonStopScreenCapture.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // toolStripDropDownButtonOptions
             // 
@@ -247,30 +247,30 @@ namespace AutoScreenCapture
             this.toolStripMenuItemShowInterface,
             this.toolStripMenuItemHideInterface,
             this.toolStripSeparatorInterface,
-            this.toolStripMenuItemStartCapture,
-            this.toolStripMenuItemStopCapture,
+            this.toolStripMenuItemStartScreenCapture,
+            this.toolStripMenuItemStopScreenCapture,
             this.toolStripSeparatorCapture,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(153, 154);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(175, 154);
             // 
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemAbout.Text = "About ...";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
             // 
             // toolStripSeparatorAbout
             // 
             this.toolStripSeparatorAbout.Name = "toolStripSeparatorAbout";
-            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemShowInterface
             // 
             this.toolStripMenuItemShowInterface.Enabled = false;
             this.toolStripMenuItemShowInterface.Name = "toolStripMenuItemShowInterface";
-            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemShowInterface.Text = "Show Interface";
             this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemShowInterface);
             // 
@@ -278,45 +278,45 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemHideInterface.Enabled = false;
             this.toolStripMenuItemHideInterface.Name = "toolStripMenuItemHideInterface";
-            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
             this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemHideInterface);
             // 
             // toolStripSeparatorInterface
             // 
             this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
-            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(171, 6);
             // 
-            // toolStripMenuItemStartCapture
+            // toolStripMenuItemStartScreenCapture
             // 
-            this.toolStripMenuItemStartCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMenuItemStartCapture.Name = "toolStripMenuItemStartCapture";
-            this.toolStripMenuItemStartCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStartCapture.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItemStartCapture.Text = "Start Capture";
-            this.toolStripMenuItemStartCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
+            this.toolStripMenuItemStartScreenCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMenuItemStartScreenCapture.Name = "toolStripMenuItemStartScreenCapture";
+            this.toolStripMenuItemStartScreenCapture.ShowShortcutKeys = false;
+            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemStartScreenCapture.Text = "Start Screen Capture";
+            this.toolStripMenuItemStartScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
             // 
-            // toolStripMenuItemStopCapture
+            // toolStripMenuItemStopScreenCapture
             // 
-            this.toolStripMenuItemStopCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMenuItemStopCapture.Enabled = false;
-            this.toolStripMenuItemStopCapture.Name = "toolStripMenuItemStopCapture";
-            this.toolStripMenuItemStopCapture.ShowShortcutKeys = false;
-            this.toolStripMenuItemStopCapture.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItemStopCapture.Text = "Stop Capture";
-            this.toolStripMenuItemStopCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
+            this.toolStripMenuItemStopScreenCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMenuItemStopScreenCapture.Enabled = false;
+            this.toolStripMenuItemStopScreenCapture.Name = "toolStripMenuItemStopScreenCapture";
+            this.toolStripMenuItemStopScreenCapture.ShowShortcutKeys = false;
+            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
+            this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
             // toolStripSeparatorCapture
             // 
             this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
-            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.Click_toolStripMenuItemExit);
             // 
@@ -1113,8 +1113,8 @@ namespace AutoScreenCapture
         private System.Windows.Forms.ListBox listBoxScreenshots;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripSystemTrayIcon;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartCapture;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopCapture;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartScreenCapture;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowInterface;
@@ -1187,8 +1187,8 @@ namespace AutoScreenCapture
         private System.Windows.Forms.TextBox textBoxScreenshotDate;
         private System.Windows.Forms.Label labelScreenshotTime;
         private System.Windows.Forms.TextBox textBoxScreenshotTime;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStart;
-        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStop;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStartScreenCapture;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStopScreenCapture;
         private ComboBox comboBoxTitles;
         private Label labelFilter;
         private Button buttonRefreshTitles;

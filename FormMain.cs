@@ -1005,8 +1005,8 @@ namespace AutoScreenCapture
         {
             if (GetCaptureDelay() > 0)
             {
-                toolStripSplitButtonStart.Enabled = true;
-                toolStripMenuItemStartCapture.Enabled = true;
+                toolStripSplitButtonStartScreenCapture.Enabled = true;
+                toolStripMenuItemStartScreenCapture.Enabled = true;
 
                 numericUpDownHoursInterval.Enabled = true;
                 checkBoxInitialScreenshot.Enabled = true;
@@ -1041,8 +1041,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void EnableStopScreenCapture()
         {
-            toolStripSplitButtonStop.Enabled = true;
-            toolStripMenuItemStopCapture.Enabled = true;
+            toolStripSplitButtonStopScreenCapture.Enabled = true;
+            toolStripMenuItemStopScreenCapture.Enabled = true;
 
             numericUpDownHoursInterval.Enabled = false;
             checkBoxInitialScreenshot.Enabled = false;
@@ -1072,8 +1072,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStopCapture()
         {
-            toolStripSplitButtonStop.Enabled = false;
-            toolStripMenuItemStopCapture.Enabled = false;
+            toolStripSplitButtonStopScreenCapture.Enabled = false;
+            toolStripMenuItemStopScreenCapture.Enabled = false;
         }
 
         /// <summary>
@@ -1081,8 +1081,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStartCapture()
         {
-            toolStripSplitButtonStart.Enabled = false;
-            toolStripMenuItemStartCapture.Enabled = false;
+            toolStripSplitButtonStartScreenCapture.Enabled = false;
+            toolStripMenuItemStartScreenCapture.Enabled = false;
         }
 
         /// <summary>
