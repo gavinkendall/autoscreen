@@ -223,12 +223,10 @@ namespace AutoScreenCapture
             this.listBoxScreenshots.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxScreenshots.FormattingEnabled = true;
             this.listBoxScreenshots.HorizontalScrollbar = true;
-            this.listBoxScreenshots.IntegralHeight = false;
             this.listBoxScreenshots.Location = new System.Drawing.Point(3, 3);
             this.listBoxScreenshots.Name = "listBoxScreenshots";
             this.listBoxScreenshots.ScrollAlwaysVisible = true;
             this.listBoxScreenshots.Size = new System.Drawing.Size(235, 184);
-            this.listBoxScreenshots.Sorted = true;
             this.listBoxScreenshots.TabIndex = 6;
             this.listBoxScreenshots.TabStop = false;
             this.listBoxScreenshots.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_listBoxScreenshots);
