@@ -230,6 +230,11 @@ namespace AutoScreenCapture
                 int screenshotDelay =
                     Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
 
+                if (screenshotDelay == 0)
+                {
+                    screenshotDelay = 60000;
+                }
+
                 decimal screenshotDelayHours =
                     Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Hours);
                 decimal screenshotDelayMinutes =
