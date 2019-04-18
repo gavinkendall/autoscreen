@@ -1,9 +1,15 @@
-﻿using System;
-using System.Xml;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Settings.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    using System;
     using System.IO;
+    using System.Xml;
 
     public static class Settings
     {

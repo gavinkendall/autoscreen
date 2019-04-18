@@ -2711,14 +2711,17 @@ namespace AutoScreenCapture
         private void comboBoxTitles_SelectedIndexChanged(object sender, EventArgs e)
         {
             SearchDates();
-            ShowScreenshots();
         }
 
         private void buttonRefreshTitles_Click(object sender, EventArgs e)
         {
             SearchTitles();
             SearchDates();
-            ShowScreenshots();
+        }
+
+        private void toolStripSplitButtonSaveSettings_ButtonClick(object sender, EventArgs e)
+        {
+            SaveSettings();
         }
     }
 }
