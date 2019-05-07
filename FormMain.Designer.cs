@@ -185,7 +185,7 @@ namespace AutoScreenCapture
             // toolStripSplitButtonSaveSettings
             // 
             this.toolStripSplitButtonSaveSettings.DropDownButtonWidth = 0;
-            this.toolStripSplitButtonSaveSettings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonSaveSettings.Image")));
+            this.toolStripSplitButtonSaveSettings.Image = global::AutoScreenCapture.Properties.Resources.save;
             this.toolStripSplitButtonSaveSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonSaveSettings.Name = "toolStripSplitButtonSaveSettings";
             this.toolStripSplitButtonSaveSettings.Size = new System.Drawing.Size(97, 20);
@@ -265,6 +265,7 @@ namespace AutoScreenCapture
             // 
             // toolStripMenuItemAbout
             // 
+            this.toolStripMenuItemAbout.Image = global::AutoScreenCapture.Properties.Resources.about;
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
             this.toolStripMenuItemAbout.Size = new System.Drawing.Size(174, 22);
             this.toolStripMenuItemAbout.Text = "About ...";
@@ -298,7 +299,7 @@ namespace AutoScreenCapture
             // 
             // toolStripMenuItemStartScreenCapture
             // 
-            this.toolStripMenuItemStartScreenCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMenuItemStartScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
             this.toolStripMenuItemStartScreenCapture.Name = "toolStripMenuItemStartScreenCapture";
             this.toolStripMenuItemStartScreenCapture.ShowShortcutKeys = false;
             this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(174, 22);
@@ -307,8 +308,8 @@ namespace AutoScreenCapture
             // 
             // toolStripMenuItemStopScreenCapture
             // 
-            this.toolStripMenuItemStopScreenCapture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemStopScreenCapture.Enabled = false;
+            this.toolStripMenuItemStopScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
             this.toolStripMenuItemStopScreenCapture.Name = "toolStripMenuItemStopScreenCapture";
             this.toolStripMenuItemStopScreenCapture.ShowShortcutKeys = false;
             this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(174, 22);
@@ -322,7 +323,6 @@ namespace AutoScreenCapture
             // 
             // toolStripMenuItemExit
             // 
-            this.toolStripMenuItemExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(174, 22);
