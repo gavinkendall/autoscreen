@@ -31,6 +31,7 @@ namespace AutoScreenCapture
             macro = macro.Replace("%second%", ScreenCapture.DateTimePreviousScreenshot.ToString("ss"));
             macro = macro.Replace("%millisecond%", ScreenCapture.DateTimePreviousScreenshot.ToString("fff"));
             macro = macro.Replace("%format%", format.Extension.TrimStart('.'));
+            macro = macro.Replace("%count%", ScreenCapture.Count.ToString());
 
             return macro;
         }

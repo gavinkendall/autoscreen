@@ -8,6 +8,7 @@
 namespace AutoScreenCapture
 {
     using System;
+    using System.IO;
     using System.Windows.Forms;
     using System.Collections.Generic;
 
@@ -199,14 +200,13 @@ namespace AutoScreenCapture
         {
             if (!string.IsNullOrEmpty(textBoxScreenName.Text) &&
                 !string.IsNullOrEmpty(textBoxScreenFolder.Text) &&
-                !string.IsNullOrEmpty(textBoxScreenMacro.Text))
+                !string.IsNullOrEmpty(textBoxScreenMacro.Text) &&
+                Directory.Exists(textBoxScreenFolder.Text))
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool InputChanged()
@@ -222,10 +222,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool NameChanged()
@@ -235,10 +233,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void Okay()
@@ -298,7 +294,7 @@ namespace AutoScreenCapture
                 System.Windows.Forms.Screen screen = ScreenDictionary[index];
                 return screen;
             }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            catch (KeyNotFoundException)
             {
                 return null;
             }

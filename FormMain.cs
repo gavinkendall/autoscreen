@@ -623,7 +623,6 @@ namespace AutoScreenCapture
             {
                 checkBoxPassphraseLock.Checked = false;
                 Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
-                SaveSettings();
 
                 Opacity = 100;
                 toolStripMenuItemShowInterface.Enabled = false;
@@ -659,9 +658,6 @@ namespace AutoScreenCapture
             Visible = false;
             ShowInTaskbar = false;
 
-            SaveSettings();
-            ScreenshotCollection.Save();
-
             RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
         }
 
@@ -686,7 +682,6 @@ namespace AutoScreenCapture
                 {
                     checkBoxPassphraseLock.Checked = false;
                     Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
-                    SaveSettings();
 
                     DisableStopCapture();
                     EnableStartCapture();
@@ -2342,6 +2337,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot()
         {
+            ScreenCapture.Count++;
+
             formScreen.RefreshScreenDictionary();
 
             ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
@@ -2351,8 +2348,6 @@ namespace AutoScreenCapture
             RunRegionCaptures();
 
             RunScreenCaptures();
-
-            ScreenCapture.Count++;
         }
 
         /// <summary>
@@ -2684,17 +2679,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Saves the screenshots to the "screenshots.xml" file every 10 minutes.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timerSaveScreenshots_Tick(object sender, EventArgs e)
-        {
-            ScreenshotCollection.Save();
-        }
-
-        /// <summary>
-        /// Deletes old screenshots every minute.
+        /// Deletes old screenshots (and also writes to the screenshots.xml file) every minute.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -70,12 +70,17 @@ namespace AutoScreenCapture
 
                 foreach (Screenshot screenshot in _screenshotList)
                 {
-                    if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-daysOld) &&
-                        File.Exists(screenshot.Path) && !screenshotDeletedList.Contains(screenshot))
+                    if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-daysOld))
                     {
-                        File.Delete(screenshot.Path);
+                        if (File.Exists(screenshot.Path))
+                        {
+                            File.Delete(screenshot.Path);
+                        }
 
-                        screenshotDeletedList.Add(screenshot);
+                        if (!screenshotDeletedList.Contains(screenshot))
+                        {
+                            screenshotDeletedList.Add(screenshot);
+                        }
                     }
                 }
 
@@ -83,6 +88,8 @@ namespace AutoScreenCapture
                 {
                     _screenshotList.Remove(screenshot);
                 }
+
+                Save();
             }
         }
 

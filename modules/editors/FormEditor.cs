@@ -150,10 +150,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool InputChanged()
@@ -164,10 +162,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool NameChanged()
@@ -177,10 +173,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool ApplicationExists()
@@ -189,10 +183,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void Okay()

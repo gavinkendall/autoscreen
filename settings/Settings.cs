@@ -131,5 +131,19 @@ namespace AutoScreenCapture
 
             return true;
         }
+
+        /// <summary>
+        /// We need to use the old screenshots folder path in order to maintain backwards compatibility with older versions of Auto Screen Capture.
+        /// </summary>
+        /// <returns>The old screenshots folder path (if it exists)</returns>
+        public static string GetOldScreenshotsFolder()
+        {
+            if (User.KeyExists("ScreenshotsFolder"))
+            {
+                return User.GetByKey("ScreenshotsFolder", FileSystem.ScreenshotsFolder).Value.ToString();
+            }
+
+            return FileSystem.ScreenshotsFolder;
+        }
     }
 }

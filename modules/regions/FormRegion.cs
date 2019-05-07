@@ -8,6 +8,7 @@
 namespace AutoScreenCapture
 {
     using System;
+    using System.IO;
     using System.Windows.Forms;
     using System.Collections.Generic;
 
@@ -196,14 +197,13 @@ namespace AutoScreenCapture
         {
             if (!string.IsNullOrEmpty(textBoxRegionName.Text) &&
                 !string.IsNullOrEmpty(textBoxRegionFolder.Text) &&
-                !string.IsNullOrEmpty(textBoxRegionMacro.Text))
+                !string.IsNullOrEmpty(textBoxRegionMacro.Text) &&
+                Directory.Exists(textBoxRegionFolder.Text))
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool InputChanged()
@@ -222,10 +222,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private bool NameChanged()
@@ -235,10 +233,8 @@ namespace AutoScreenCapture
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private void Okay()

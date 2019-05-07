@@ -191,7 +191,7 @@ namespace AutoScreenCapture
                     if (Settings.IsOldAppVersion(xDoc, out _appVersion, out _appCodename))
                     {
                         region.ViewId = Guid.NewGuid();
-                        region.Folder = string.Empty; //Settings.GetOldScreenshotsFolder();
+                        region.Folder = Settings.GetOldScreenshotsFolder();
                         region.Macro = region.Macro.Replace("%region%", "%name%");
                         region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
                         region.JpegQuality = 100;
