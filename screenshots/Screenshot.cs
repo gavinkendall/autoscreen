@@ -41,14 +41,14 @@ namespace AutoScreenCapture
                 Value = Time + (!string.IsNullOrEmpty(windowTitle) ? " [" + windowTitle + "]" : string.Empty)
             };
 
-            string directory = System.IO.Path.GetDirectoryName(path);
+            //string directory = System.IO.Path.GetDirectoryName(path);
 
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
+            //if (!Directory.Exists(directory))
+            //{
+            //    Directory.CreateDirectory(directory);
+            //}
 
-            Directory.SetCurrentDirectory(directory);
+            //Directory.SetCurrentDirectory(directory);
         }
     }
 }

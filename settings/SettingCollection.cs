@@ -30,6 +30,13 @@ namespace AutoScreenCapture
 
         public string Filepath { get; set; }
 
+        public SettingCollectionType CollectionType { get; }
+
+        public SettingCollection(SettingCollectionType collectionType)
+        {
+            CollectionType = collectionType;
+        }
+
         public List<Setting>.Enumerator GetEnumerator()
         {
             return _settingList.GetEnumerator();
@@ -54,6 +61,22 @@ namespace AutoScreenCapture
             }
         }
 
+        private void Remove(Setting setting)
+        {
+            if (KeyExists(setting.Key))
+            {
+                _settingList.Remove(setting);
+            }
+        }
+
+        public void SetValueByKey(string key, object value)
+        {
+            Setting setting = new Setting(key, value);
+
+            Remove(setting);
+            Add(setting);
+        }
+
         /// <summary>
         /// Gets a setting by its key.
         /// If the setting is found it will return the Setting object.
@@ -61,8 +84,9 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="key">The key to use for finding an existing Setting or for creating a new Setting.</param>
         /// <param name="defaultValue">The default value to use if the Setting cannot be found.</param>
+        /// <param name="createKeyIfNotFound">Create a new Setting based on the key name if it does not exist.</param>
         /// <returns>Setting object (either existing or new).</returns>
-        public Setting GetByKey(string key, object defaultValue)
+        public Setting GetByKey(string key, object defaultValue, bool createKeyIfNotFound)
         {
             foreach (Setting setting in _settingList)
             {
@@ -72,10 +96,26 @@ namespace AutoScreenCapture
                 }
             }
 
-            Setting newSetting = new Setting(key, defaultValue);
-            Add(newSetting);
+            if (createKeyIfNotFound)
+            {
+                Setting newSetting = new Setting(key, defaultValue);
+                Add(newSetting);
 
-            return newSetting;
+                return newSetting;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        public Setting GetByKey(string key, object defaultValue)
+        {
+            return GetByKey(key, defaultValue, true);
         }
 
         /// <summary>
@@ -147,6 +187,14 @@ namespace AutoScreenCapture
                     if (!string.IsNullOrEmpty(setting.Key))
                     {
                         Add(setting);
+                    }
+                }
+
+                if (CollectionType == SettingCollectionType.User && Settings.IsOldAppVersion(xDoc, out string appVersion, out string appCodename))
+                {
+                    if (KeyExists("DaysOldWhenRemoveSlides"))
+                    {
+                        SetValueByKey("DeleteScreenshotsOlderThanDays", Settings.GetOldScreenshotsRemovalByDayValue());
                     }
                 }
             }

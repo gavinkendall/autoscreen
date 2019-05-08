@@ -32,10 +32,10 @@ namespace AutoScreenCapture
             // Older versions.
             _versionCollection.Add(new Version("Clara", "2.1.8.2"));
 
-            Application = new SettingCollection();
+            Application = new SettingCollection(SettingCollectionType.Application);
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
 
-            User = new SettingCollection();
+            User = new SettingCollection(SettingCollectionType.User);
             User.Filepath = FileSystem.SettingsFolder + FileSystem.UserSettingsFile;
 
             if (!Directory.Exists(FileSystem.SettingsFolder))
@@ -64,37 +64,30 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (User != null)
+            if (User != null && !File.Exists(User.Filepath))
             {
-                if (File.Exists(User.Filepath))
-                {
-                    User.Load();
-                }
-                else
-                {
-                    User.Add(new Setting("CaptureLimit", 0));
-                    User.Add(new Setting("ScreenshotDelay", 60000));
-                    User.Add(new Setting("CaptureLimitCheck", false));
-                    User.Add(new Setting("TakeInitialScreenshotCheck", false));
-                    User.Add(new Setting("ShowSystemTrayIcon", true));
-                    User.Add(new Setting("CaptureStopAtCheck", false));
-                    User.Add(new Setting("CaptureStartAtCheck", false));
-                    User.Add(new Setting("CaptureOnSundayCheck", false));
-                    User.Add(new Setting("CaptureOnMondayCheck", false));
-                    User.Add(new Setting("CaptureOnTuesdayCheck", false));
-                    User.Add(new Setting("CaptureOnWednesdayCheck", false));
-                    User.Add(new Setting("CaptureOnThursdayCheck", false));
-                    User.Add(new Setting("CaptureOnFridayCheck", false));
-                    User.Add(new Setting("CaptureOnSaturdayCheck", false));
-                    User.Add(new Setting("CaptureOnTheseDaysCheck", false));
-                    User.Add(new Setting("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)));
-                    User.Add(new Setting("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)));
-                    User.Add(new Setting("LockScreenCaptureSession", false));
-                    User.Add(new Setting("Passphrase", string.Empty));
-                    User.Add(new Setting("DeleteScreenshotsOlderThanDays", 0));
+                User.Add(new Setting("CaptureLimit", 0));
+                User.Add(new Setting("ScreenshotDelay", 60000));
+                User.Add(new Setting("CaptureLimitCheck", false));
+                User.Add(new Setting("TakeInitialScreenshotCheck", false));
+                User.Add(new Setting("ShowSystemTrayIcon", true));
+                User.Add(new Setting("CaptureStopAtCheck", false));
+                User.Add(new Setting("CaptureStartAtCheck", false));
+                User.Add(new Setting("CaptureOnSundayCheck", false));
+                User.Add(new Setting("CaptureOnMondayCheck", false));
+                User.Add(new Setting("CaptureOnTuesdayCheck", false));
+                User.Add(new Setting("CaptureOnWednesdayCheck", false));
+                User.Add(new Setting("CaptureOnThursdayCheck", false));
+                User.Add(new Setting("CaptureOnFridayCheck", false));
+                User.Add(new Setting("CaptureOnSaturdayCheck", false));
+                User.Add(new Setting("CaptureOnTheseDaysCheck", false));
+                User.Add(new Setting("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)));
+                User.Add(new Setting("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)));
+                User.Add(new Setting("LockScreenCaptureSession", false));
+                User.Add(new Setting("Passphrase", string.Empty));
+                User.Add(new Setting("DeleteScreenshotsOlderThanDays", 0));
 
-                    User.Save();
-                }
+                User.Save();
             }
         }
 
@@ -138,12 +131,22 @@ namespace AutoScreenCapture
         /// <returns>The old screenshots folder path (if it exists)</returns>
         public static string GetOldScreenshotsFolder()
         {
-            if (User.KeyExists("ScreenshotsFolder"))
+            if (User.KeyExists("ScreenshotsDirectory"))
             {
-                return User.GetByKey("ScreenshotsFolder", FileSystem.ScreenshotsFolder).Value.ToString();
+                return User.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
             }
 
             return FileSystem.ScreenshotsFolder;
+        }
+
+        public static int GetOldScreenshotsRemovalByDayValue()
+        {
+            if (User.KeyExists("DaysOldWhenRemoveSlides"))
+            {
+                return Convert.ToInt32(User.GetByKey("DaysOldWhenRemoveSlides", 0, createKeyIfNotFound: false).Value);
+            }
+
+            return 0;
         }
     }
 }

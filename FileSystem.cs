@@ -47,28 +47,38 @@ namespace AutoScreenCapture
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets to include the trailing backslash.
         /// </summary>
-        /// <param name="folder"></param>
+        /// <param name="folderPath"></param>
         /// <returns></returns>
-        public static string CorrectDirectoryPath(string folder)
+        public static string CorrectDirectoryPath(string folderPath)
         {
-            if (folder.Length == 0)
+            if (folderPath.Length == 0)
             {
-                folder = FileSystem.ScreenshotsFolder;
+                folderPath = FileSystem.ScreenshotsFolder;
             }
 
-            if (!folder.EndsWith(@"\"))
+            //if (!folderPath.EndsWith(@"\"))
+            //{
+            //    folderPath += @"\";
+            //}
+
+            FileInfo fileInfo = new FileInfo(folderPath);
+
+            if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
             {
-                folder += @"\";
+                DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+                if (driveInfo.IsReady)
+                {
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    //Directory.SetCurrentDirectory(folderPath);
+                }
             }
 
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-
-            Directory.SetCurrentDirectory(folder);
-
-            return folder;
+            return folderPath;
         }
 
         /// <summary>

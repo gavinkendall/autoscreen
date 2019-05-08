@@ -156,32 +156,40 @@ namespace AutoScreenCapture
         {
             if (InputValid())
             {
-                if (NameChanged() || InputChanged())
-                {
-                    TrimInput();
-
-                    if (ScreenCollection.GetByName(textBoxScreenName.Text) != null && NameChanged())
+                //if (Directory.Exists(textBoxScreenFolder.Text))
+                //{
+                    if (NameChanged() || InputChanged())
                     {
-                        MessageBox.Show("A screen with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TrimInput();
+
+                        if (ScreenCollection.GetByName(textBoxScreenName.Text) != null && NameChanged())
+                        {
+                            MessageBox.Show("A screen with this name already exists.", "Duplicate Name Conflict",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            ScreenCollection.Get(ScreenObject).Name = textBoxScreenName.Text;
+                            ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxScreenFolder.Text);
+                            ScreenCollection.Get(ScreenObject).Macro = textBoxScreenMacro.Text;
+                            ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
+                            ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxScreenFormat.Text);
+                            ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownScreenJpegQuality.Value;
+                            ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownScreenResolutionRatio.Value;
+                            ScreenCollection.Get(ScreenObject).Mouse = checkBoxScreenMouse.Checked;
+
+                            Okay();
+                        }
                     }
                     else
                     {
-                        ScreenCollection.Get(ScreenObject).Name = textBoxScreenName.Text;
-                        ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxScreenFolder.Text);
-                        ScreenCollection.Get(ScreenObject).Macro = textBoxScreenMacro.Text;
-                        ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
-                        ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxScreenFormat.Text);
-                        ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownScreenJpegQuality.Value;
-                        ScreenCollection.Get(ScreenObject).ResolutionRatio = (int)numericUpDownScreenResolutionRatio.Value;
-                        ScreenCollection.Get(ScreenObject).Mouse = checkBoxScreenMouse.Checked;
-
-                        Okay();
+                        Close();
                     }
-                }
-                else
-                {
-                    Close();
-                }
+                //}
+                //else
+                //{
+
+                //}
             }
             else
             {
@@ -200,8 +208,7 @@ namespace AutoScreenCapture
         {
             if (!string.IsNullOrEmpty(textBoxScreenName.Text) &&
                 !string.IsNullOrEmpty(textBoxScreenFolder.Text) &&
-                !string.IsNullOrEmpty(textBoxScreenMacro.Text) &&
-                Directory.Exists(textBoxScreenFolder.Text))
+                !string.IsNullOrEmpty(textBoxScreenMacro.Text))
             {
                 return true;
             }

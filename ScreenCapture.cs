@@ -54,6 +54,8 @@ namespace AutoScreenCapture
         public const int CAPTURE_LIMIT_MIN = 1;
         public const int CAPTURE_LIMIT_MAX = 9999;
 
+        private const double MIN_FREE_DISK_SPACE_PERCENTAGE = 3;
+
         /// <summary>
         /// The default image format.
         /// </summary>
@@ -236,9 +238,24 @@ namespace AutoScreenCapture
                     {
                         ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle(), viewId));
 
-                        if (Directory.Exists(Path.GetDirectoryName(path)))
+                        FileInfo fileInfo = new FileInfo(path);
+
+                        if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                         {
-                            SaveToFile(path, format, jpegQuality, bitmap);
+                            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+                            if (driveInfo.IsReady)
+                            {
+                                double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float)driveInfo.TotalSize) * 100;
+
+                                if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
+                                {
+                                    if (Directory.Exists(Path.GetDirectoryName(path)))
+                                    {
+                                        SaveToFile(path, format, jpegQuality, bitmap);
+                                    }
+                                }
+                            }
                         }
 
                         GC.Collect();

@@ -150,35 +150,43 @@ namespace AutoScreenCapture
         {
             if (InputValid())
             {
-                if (NameChanged() || InputChanged())
-                {
-                    TrimInput();
-
-                    if (RegionCollection.GetByName(textBoxRegionName.Text) != null && NameChanged())
+                //if (Directory.Exists(textBoxRegionFolder.Text))
+                //{
+                    if (NameChanged() || InputChanged())
                     {
-                        MessageBox.Show("A region with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TrimInput();
+
+                        if (RegionCollection.GetByName(textBoxRegionName.Text) != null && NameChanged())
+                        {
+                            MessageBox.Show("A region with this name already exists.", "Duplicate Name Conflict",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            RegionCollection.Get(RegionObject).Name = textBoxRegionName.Text;
+                            RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectDirectoryPath(textBoxRegionFolder.Text);
+                            RegionCollection.Get(RegionObject).Macro = textBoxRegionMacro.Text;
+                            RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxRegionFormat.Text);
+                            RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownRegionJpegQuality.Value;
+                            RegionCollection.Get(RegionObject).ResolutionRatio = (int) numericUpDownRegionResolutionRatio.Value;
+                            RegionCollection.Get(RegionObject).Mouse = checkBoxRegionMouse.Checked;
+                            RegionCollection.Get(RegionObject).X = (int) numericUpDownRegionX.Value;
+                            RegionCollection.Get(RegionObject).Y = (int) numericUpDownRegionY.Value;
+                            RegionCollection.Get(RegionObject).Width = (int) numericUpDownRegionWidth.Value;
+                            RegionCollection.Get(RegionObject).Height = (int) numericUpDownRegionHeight.Value;
+
+                            Okay();
+                        }
                     }
                     else
                     {
-                        RegionCollection.Get(RegionObject).Name = textBoxRegionName.Text;
-                        RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectDirectoryPath(textBoxRegionFolder.Text);
-                        RegionCollection.Get(RegionObject).Macro = textBoxRegionMacro.Text;
-                        RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxRegionFormat.Text);
-                        RegionCollection.Get(RegionObject).JpegQuality = (int)numericUpDownRegionJpegQuality.Value;
-                        RegionCollection.Get(RegionObject).ResolutionRatio = (int)numericUpDownRegionResolutionRatio.Value;
-                        RegionCollection.Get(RegionObject).Mouse = checkBoxRegionMouse.Checked;
-                        RegionCollection.Get(RegionObject).X = (int)numericUpDownRegionX.Value;
-                        RegionCollection.Get(RegionObject).Y = (int)numericUpDownRegionY.Value;
-                        RegionCollection.Get(RegionObject).Width = (int)numericUpDownRegionWidth.Value;
-                        RegionCollection.Get(RegionObject).Height = (int)numericUpDownRegionHeight.Value;
-
-                        Okay();
+                        Close();
                     }
-                }
-                else
-                {
-                    Close();
-                }
+                //}
+                //else
+                //{
+                //    MessageBox.Show("The specified folder does not exist.", "Folder Does Not Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
             }
             else
             {
@@ -197,8 +205,7 @@ namespace AutoScreenCapture
         {
             if (!string.IsNullOrEmpty(textBoxRegionName.Text) &&
                 !string.IsNullOrEmpty(textBoxRegionFolder.Text) &&
-                !string.IsNullOrEmpty(textBoxRegionMacro.Text) &&
-                Directory.Exists(textBoxRegionFolder.Text))
+                !string.IsNullOrEmpty(textBoxRegionMacro.Text))
             {
                 return true;
             }

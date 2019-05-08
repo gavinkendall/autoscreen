@@ -42,8 +42,6 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runTitleSearchThread = null;
 
-        private BackgroundWorker runSaveSettings = null;
-
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
@@ -52,8 +50,6 @@ namespace AutoScreenCapture
         private delegate void RunDateSearchDelegate(DoWorkEventArgs e);
 
         private delegate void RunTitleSearchDelegate(DoWorkEventArgs e);
-
-        private delegate void SaveSettingsDelegate(DoWorkEventArgs e);
 
         /// <summary>
         /// Default settings used by the command line parser.
@@ -167,11 +163,11 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.Write("Loading settings.");
+                Log.Write("Loading user settings.");
 
                 Settings.User.Load();
 
-                Log.Write("Settings loaded.");
+                Log.Write("User settings loaded.");
 
                 Log.Write("Initializing image format collection.");
                 _imageFormatCollection = new ImageFormatCollection();
@@ -222,13 +218,7 @@ namespace AutoScreenCapture
                 Log.Write("Building view tab pages.");
                 BuildViewTabPages();
 
-                Log.Write(
-                    "Loading screenshots into the screenshot collection to generate a history of what was captured.");
-
-                ScreenshotCollection.Load(_imageFormatCollection);
-
-                int screenshotDelay =
-                    Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
+                int screenshotDelay = Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
 
                 if (screenshotDelay == 0)
                 {
@@ -325,35 +315,14 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Saves the user's current settings so we can load them at a later time when the user executes the application.
-        /// </summary>
-        private void SaveSettings()
-        {
-            if (runSaveSettings == null)
-            {
-                runSaveSettings = new BackgroundWorker
-                {
-                    WorkerReportsProgress = false,
-                    WorkerSupportsCancellation = true
-                };
-                runSaveSettings.DoWork += new DoWorkEventHandler(DoWork_runSaveSettingsThread);
-            }
-            else
-            {
-                if (!runSaveSettings.IsBusy)
-                {
-                    runSaveSettings.RunWorkerAsync();
-                }
-            }
-        }
-
-        /// <summary>
         /// When this form is closing we can either exit the application or just close this window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FormViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            ScreenshotCollection.Save();
+
             if (e.CloseReason == CloseReason.WindowsShutDown)
             {
                 // Hide the system tray icon.
@@ -381,9 +350,6 @@ namespace AutoScreenCapture
             }
             else
             {
-                SaveSettings();
-                ScreenshotCollection.Save();
-
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
 
                 // If there isn't a Trigger for "InterfaceClosing" that performs an action
@@ -531,65 +497,58 @@ namespace AutoScreenCapture
         /// Saves the user's settings.
         /// </summary>
         /// <param name="e"></param>
-        private void SaveSettings(DoWorkEventArgs e)
+        private void SaveSettings()
         {
             try
             {
-                if (listBoxScreenshots.InvokeRequired)
-                {
-                    listBoxScreenshots.Invoke(new SaveSettingsDelegate(SaveSettings), new object[] {e});
-                }
-                else
-                {
-                    Log.Write("Saving settings.");
+                Log.Write("Saving settings.");
 
-                    Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                    Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value = GetCaptureDelay();
-                    Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value =
-                        checkBoxCaptureLimit.Checked;
-                    Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value =
-                        checkBoxInitialScreenshot.Checked;
-                    Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value =
-                        toolStripMenuItemShowSystemTrayIcon.Checked;
-                    Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value =
-                        checkBoxScheduleStopAt.Checked;
-                    Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value =
-                        checkBoxScheduleStartAt.Checked;
-                    Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value = checkBoxSunday.Checked;
-                    Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value = checkBoxMonday.Checked;
-                    Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value =
-                        checkBoxTuesday.Checked;
-                    Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value =
-                        checkBoxWednesday.Checked;
-                    Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value =
-                        checkBoxThursday.Checked;
-                    Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value = checkBoxFriday.Checked;
-                    Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value =
-                        checkBoxSaturday.Checked;
-                    Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value =
-                        checkBoxScheduleOnTheseDays.Checked;
-                    Settings.User.GetByKey("CaptureStopAtValue",
-                            defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0,
-                                0))
-                        .Value = dateTimePickerScheduleStopAt.Value;
-                    Settings.User.GetByKey("CaptureStartAtValue",
-                            defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0,
-                                0))
-                        .Value = dateTimePickerScheduleStartAt.Value;
-                    Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value =
-                        checkBoxPassphraseLock.Checked;
-                    Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
-                    Settings.User.GetByKey("DeleteScreenshotsOlderThanDays", defaultValue: 0).Value =
-                        numericUpDownDeleteOldScreenshots.Value;
+                Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
+                Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value = GetCaptureDelay();
+                Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value =
+                    checkBoxCaptureLimit.Checked;
+                Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value =
+                    checkBoxInitialScreenshot.Checked;
+                Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value =
+                    toolStripMenuItemShowSystemTrayIcon.Checked;
+                Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value =
+                    checkBoxScheduleStopAt.Checked;
+                Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value =
+                    checkBoxScheduleStartAt.Checked;
+                Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value = checkBoxSunday.Checked;
+                Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value = checkBoxMonday.Checked;
+                Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value =
+                    checkBoxTuesday.Checked;
+                Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value =
+                    checkBoxWednesday.Checked;
+                Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value =
+                    checkBoxThursday.Checked;
+                Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value = checkBoxFriday.Checked;
+                Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value =
+                    checkBoxSaturday.Checked;
+                Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value =
+                    checkBoxScheduleOnTheseDays.Checked;
+                Settings.User.GetByKey("CaptureStopAtValue",
+                        defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0,
+                            0))
+                    .Value = dateTimePickerScheduleStopAt.Value;
+                Settings.User.GetByKey("CaptureStartAtValue",
+                        defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0,
+                            0))
+                    .Value = dateTimePickerScheduleStartAt.Value;
+                Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value =
+                    checkBoxPassphraseLock.Checked;
+                Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
+                Settings.User.GetByKey("DeleteScreenshotsOlderThanDays", defaultValue: 0).Value =
+                    numericUpDownDeleteOldScreenshots.Value;
 
-                    Settings.User.Save();
+                Settings.User.Save();
 
-                    Log.Write("Settings saved.");
-                }
+                Log.Write("Settings saved.");
             }
             catch (Exception ex)
             {
-                Log.Write("FormMain::RunSaveApplicationSettings", ex);
+                Log.Write("FormMain::SaveSettings", ex);
             }
         }
 
@@ -986,16 +945,6 @@ namespace AutoScreenCapture
         private void DoWork_runTitleSearchThread(object sender, DoWorkEventArgs e)
         {
             RunTitleSearch(e);
-        }
-
-        /// <summary>
-        /// Runs the save settings thread.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DoWork_runSaveSettingsThread(object sender, DoWorkEventArgs e)
-        {
-            SaveSettings(e);
         }
 
         /// <summary>
@@ -2672,9 +2621,8 @@ namespace AutoScreenCapture
             }
             else
             {
-                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value +
-                                  " (" + Settings.Application
-                                      .GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
+                ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
+                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
             }
         }
 
@@ -2706,7 +2654,11 @@ namespace AutoScreenCapture
 
         private void toolStripSplitButtonSaveSettings_ButtonClick(object sender, EventArgs e)
         {
+            toolStripSplitButtonSaveSettings.Enabled = false;
+
             SaveSettings();
+
+            toolStripSplitButtonSaveSettings.Enabled = true;
         }
     }
 }

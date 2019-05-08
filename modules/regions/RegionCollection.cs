@@ -16,9 +16,6 @@ namespace AutoScreenCapture
 
     public class RegionCollection : IEnumerable<Region>
     {
-        private string _appVersion;
-        private string _appCodename;
-
         private readonly List<Region> _regionList = new List<Region>();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -105,6 +102,9 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(ImageFormatCollection imageFormatCollection)
         {
+            string appVersion;
+            string appCodename;
+
             if (File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
             {
                 XmlDocument xDoc = new XmlDocument();
@@ -188,7 +188,7 @@ namespace AutoScreenCapture
 
                     xReader.Close();
 
-                    if (Settings.IsOldAppVersion(xDoc, out _appVersion, out _appCodename))
+                    if (Settings.IsOldAppVersion(xDoc, out appVersion, out appCodename))
                     {
                         region.ViewId = Guid.NewGuid();
                         region.Folder = Settings.GetOldScreenshotsFolder();
