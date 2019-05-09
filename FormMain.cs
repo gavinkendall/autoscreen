@@ -219,6 +219,10 @@ namespace AutoScreenCapture
                 Log.Write("Building view tab pages.");
                 BuildViewTabPages();
 
+                Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
+
+                ScreenshotCollection.Load(_imageFormatCollection);
+
                 int screenshotDelay = Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
 
                 if (screenshotDelay == 0)
@@ -887,6 +891,8 @@ namespace AutoScreenCapture
                 checkBoxPassphraseLock.Checked = false;
                 Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
                 SaveSettings();
+
+                ScreenshotCollection.Save();
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;

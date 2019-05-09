@@ -44,6 +44,9 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_WINDOW_TITLE = "windowtitle";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
+        public static string AppCodename { get; set; }
+        public static string AppVersion { get; set; }
+
         public static void Add(Screenshot newScreenshot)
         {
             _screenshotList.Add(newScreenshot);
@@ -183,6 +186,9 @@ namespace AutoScreenCapture
                 xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
 
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
                 XmlNodeList xScreeshots = xDoc.SelectNodes(SCREENSHOT_XPATH);
 
                 foreach (XmlNode xScreenshot in xScreeshots)
@@ -247,6 +253,16 @@ namespace AutoScreenCapture
                     }
 
                     xReader.Close();
+
+                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                    {
+                        if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                        {
+                            //screenshot.ViewId = Guid.NewGuid();
+                            //screenshot.Time = "00:00:00.000";
+                            //screenshot.Component
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(screenshot.Date) &&
                         !string.IsNullOrEmpty(screenshot.Time) &&

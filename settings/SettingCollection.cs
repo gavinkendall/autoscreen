@@ -16,7 +16,7 @@ namespace AutoScreenCapture
 
     public class SettingCollection : IEnumerable<Setting>
     {
-        private readonly List<Setting> _settingList = new List<Setting>();
+        private List<Setting> _settingList = new List<Setting>();
 
         private const int MAX_FILE_SIZE = 5242880;
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -250,7 +250,10 @@ namespace AutoScreenCapture
         {
             if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
             {
-                Settings.VersionManager.OldUserSettings = this;
+                SettingCollection oldUserSettings = (SettingCollection)this.MemberwiseClone();
+                oldUserSettings._settingList = new List<Setting>(_settingList);
+
+                Settings.VersionManager.OldUserSettings = oldUserSettings;
 
                 if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null) // Is this version 2.1.8.2 (or older)?
                 {

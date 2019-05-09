@@ -105,9 +105,6 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(ImageFormatCollection imageFormatCollection)
         {
-            string appVersion;
-            string appCodename;
-
             if (File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
             {
                 XmlDocument xDoc = new XmlDocument();
@@ -194,24 +191,39 @@ namespace AutoScreenCapture
 
                     xReader.Close();
 
+                    // Change the data for each region that's being loaded if we've detected that
+                    // the XML file is from an older version of the application.
                     if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
-                        region.ViewId = Guid.NewGuid();
+                        if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                        {
+                            region.ViewId = Guid.NewGuid();
 
-                        region.Folder = Settings.VersionManager.OldUserSettings
-                            .GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+                            // Get the screenshots folder path from the old user settings to be used for the region's folder property.
+                            region.Folder = Settings.VersionManager.OldUserSettings
+                                .GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
 
-                        region.Macro = region.Macro.Replace("%region%", "%name%");
-                        region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
-                        region.JpegQuality = 100;
-                        region.ResolutionRatio = 100;
-                        region.Mouse = true;
+                            // 2.1 used "%region%", but 2.2 uses "%name%" for a region's Macro value.
+                            region.Macro = region.Macro.Replace("%region%", "%name%");
+
+                            region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
+                            region.JpegQuality = 100;
+                            region.ResolutionRatio = 100;
+                            region.Mouse = false;
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(region.Name))
                     {
                         Add(region);
                     }
+                }
+
+                // Write out the regions to the XML file now that we've updated the region objects
+                // with their appropriate property values if it was an old version of the application.
+                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                {
+                    Save();
                 }
             }
         }
