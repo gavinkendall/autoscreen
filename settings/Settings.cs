@@ -20,6 +20,7 @@ namespace AutoScreenCapture
         public static SettingCollection Application;
         public static SettingCollection User;
 
+        public static VersionManager VersionManager;
         private static VersionCollection _versionCollection;
 
         public static void Initialize()
@@ -27,16 +28,19 @@ namespace AutoScreenCapture
             _versionCollection = new VersionCollection();
 
             // This version.
-            _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion));
+            _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
 
-            // Older versions.
+            // Older versions should be listed here.
             _versionCollection.Add(new Version("Clara", "2.1.8.2"));
 
-            Application = new SettingCollection(SettingCollectionType.Application);
+            Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
 
-            User = new SettingCollection(SettingCollectionType.User);
+            User = new SettingCollection();
             User.Filepath = FileSystem.SettingsFolder + FileSystem.UserSettingsFile;
+
+            // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
+            VersionManager = new VersionManager(_versionCollection, User);
 
             if (!Directory.Exists(FileSystem.SettingsFolder))
             {
@@ -91,6 +95,11 @@ namespace AutoScreenCapture
             }
         }
 
+        public static void RunUpgradePath()
+        {
+
+        }
+
         /// <summary>
         /// Determines if we're handling data for an old version of the application.
         /// </summary>
@@ -98,46 +107,46 @@ namespace AutoScreenCapture
         /// <param name="appVersion">The application version to check.</param>
         /// <param name="appCodename">The application codename to check.</param>
         /// <returns></returns>
-        public static bool IsOldAppVersion(XmlDocument xDoc, out string appVersion, out string appCodename)
-        {
-            appVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-            appCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+        //public static bool IsOldAppVersion(XmlDocument xDoc, out string appVersion, out string appCodename)
+        //{
+        //    appVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+        //    appCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
-            if (!string.IsNullOrEmpty(appVersion) && !string.IsNullOrEmpty(appCodename))
-            {
-                Version versionInConfigDocument = _versionCollection.Get(appCodename, appVersion);
-                Version versionHere = _versionCollection.Get(ApplicationCodename, ApplicationVersion);
+        //    if (!string.IsNullOrEmpty(appVersion) && !string.IsNullOrEmpty(appCodename))
+        //    {
+        //        Version versionInConfigDocument = _versionCollection.Get(appCodename, appVersion);
+        //        Version versionHere = _versionCollection.Get(ApplicationCodename, ApplicationVersion);
 
-                if (versionInConfigDocument != null &&
-                    (versionInConfigDocument.VersionNumber < versionHere.VersionNumber))
-                {
-                    return true;
-                }
+        //        if (versionInConfigDocument != null &&
+        //            (versionInConfigDocument.VersionNumber < versionHere.VersionNumber))
+        //        {
+        //            return true;
+        //        }
 
-                return false;
-            }
+        //        return false;
+        //    }
 
-            // This is likely to be version 2.1 "Clara" before the concept of an "app:version"
-            // or the management of application versions even existed in Auto Screen Capture.
-            appCodename = "Clara";
-            appVersion = "2.1.8.2";
+        //    // This is likely to be version 2.1 "Clara" before the concept of an "app:version"
+        //    // or the management of application versions even existed in Auto Screen Capture.
+        //    appCodename = "Clara";
+        //    appVersion = "2.1.8.2";
 
-            return true;
-        }
+        //    return true;
+        //}
 
         /// <summary>
         /// We need to use the old screenshots folder path in order to maintain backwards compatibility with older versions of Auto Screen Capture.
         /// </summary>
         /// <returns>The old screenshots folder path (if it exists)</returns>
-        public static string GetOldScreenshotsFolder()
-        {
-            if (User.KeyExists("ScreenshotsDirectory"))
-            {
-                return User.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
-            }
+        //public static string GetOldScreenshotsFolder()
+        //{
+        //    if (User.KeyExists("ScreenshotsDirectory"))
+        //    {
+        //        return User.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+        //    }
 
-            return FileSystem.ScreenshotsFolder;
-        }
+        //    return FileSystem.ScreenshotsFolder;
+        //}
 
         public static int GetOldScreenshotsRemovalByDayValue()
         {

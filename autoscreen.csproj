@@ -141,6 +141,7 @@
     <Compile Include="settings\Settings.cs" />
     <Compile Include="versions\VersionCollection.cs" />
     <Compile Include="versions\Version.cs" />
+    <Compile Include="versions\VersionManager.cs" />
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>

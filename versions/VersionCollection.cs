@@ -1,4 +1,11 @@
-﻿namespace AutoScreenCapture
+﻿//-----------------------------------------------------------------------
+// <copyright file="VersionCollection.cs" company="Gavin Kendall">
+//     Copyright (c) Gavin Kendall. All rights reserved.
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+namespace AutoScreenCapture
 {
     using System.Collections;
     using System.Collections.Generic;

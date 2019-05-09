@@ -37,6 +37,9 @@ namespace AutoScreenCapture
         private const string REGION_HEIGHT = "height";
         private const string REGION_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_REGIONS_NODE + "/" + XML_FILE_REGION_NODE;
 
+        public string AppCodename { get; set; }
+        public string AppVersion { get; set; }
+
         public List<Region>.Enumerator GetEnumerator()
         {
             return _regionList.GetEnumerator();
@@ -109,6 +112,9 @@ namespace AutoScreenCapture
             {
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
+
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
                 XmlNodeList xRegions = xDoc.SelectNodes(REGION_XPATH);
 
@@ -188,10 +194,13 @@ namespace AutoScreenCapture
 
                     xReader.Close();
 
-                    if (Settings.IsOldAppVersion(xDoc, out appVersion, out appCodename))
+                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
                         region.ViewId = Guid.NewGuid();
-                        region.Folder = Settings.GetOldScreenshotsFolder();
+
+                        region.Folder = Settings.VersionManager.OldUserSettings
+                            .GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+
                         region.Macro = region.Macro.Replace("%region%", "%name%");
                         region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
                         region.JpegQuality = 100;

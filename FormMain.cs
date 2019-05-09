@@ -166,6 +166,7 @@ namespace AutoScreenCapture
                 Log.Write("Loading user settings.");
 
                 Settings.User.Load();
+                Settings.User.Upgrade();
 
                 Log.Write("User settings loaded.");
 

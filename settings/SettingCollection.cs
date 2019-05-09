@@ -28,14 +28,9 @@ namespace AutoScreenCapture
         private const string SETTING_VALUE = "value";
         private const string SETTING_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SETTINGS_NODE + "/" + XML_FILE_SETTING_NODE;
 
+        public string AppCodename { get; set; }
+        public string AppVersion { get; set; }
         public string Filepath { get; set; }
-
-        public SettingCollectionType CollectionType { get; }
-
-        public SettingCollection(SettingCollectionType collectionType)
-        {
-            CollectionType = collectionType;
-        }
 
         public List<Setting>.Enumerator GetEnumerator()
         {
@@ -69,12 +64,20 @@ namespace AutoScreenCapture
             }
         }
 
+        private void RemoveByKey(string key)
+        {
+            if (KeyExists(key))
+            {
+                Setting setting = GetByKey(key, null, false);
+
+                Remove(setting);
+            }
+        }
+
         public void SetValueByKey(string key, object value)
         {
-            Setting setting = new Setting(key, value);
-
-            Remove(setting);
-            Add(setting);
+            RemoveByKey(key);
+            Add(new Setting(key, value));
         }
 
         /// <summary>
@@ -156,6 +159,9 @@ namespace AutoScreenCapture
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(Filepath);
 
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
                 XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
 
                 foreach (XmlNode xSetting in xSettings)
@@ -189,14 +195,6 @@ namespace AutoScreenCapture
                         Add(setting);
                     }
                 }
-
-                if (CollectionType == SettingCollectionType.User && Settings.IsOldAppVersion(xDoc, out string appVersion, out string appCodename))
-                {
-                    if (KeyExists("DaysOldWhenRemoveSlides"))
-                    {
-                        SetValueByKey("DeleteScreenshotsOlderThanDays", Settings.GetOldScreenshotsRemovalByDayValue());
-                    }
-                }
             }
         }
 
@@ -214,6 +212,11 @@ namespace AutoScreenCapture
             xSettings.IndentChars = XML_FILE_INDENT_CHARS;
             xSettings.NewLineHandling = NewLineHandling.Entitize;
             xSettings.ConformanceLevel = ConformanceLevel.Document;
+
+            if (File.Exists(Filepath))
+            {
+                File.Delete(Filepath);
+            }
 
             using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
             {
@@ -240,6 +243,84 @@ namespace AutoScreenCapture
 
                 xWriter.Flush();
                 xWriter.Close();
+            }
+        }
+
+        public void Upgrade()
+        {
+            if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+            {
+                Settings.VersionManager.OldUserSettings = this;
+
+                if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null) // Is this version 2.1.8.2 (or older)?
+                {
+                    // Go through the old settings and get the old values from them to be used for the new settings.
+
+                    // 2.1 used a setting named "DaysOldWhenRemoveSlides", but 2.2 uses "DeleteScreenshotsOlderThanDays".
+                    if (KeyExists("DaysOldWhenRemoveSlides"))
+                    {
+                        SetValueByKey("DeleteScreenshotsOlderThanDays",
+                            Convert.ToInt32(
+                                GetByKey("DaysOldWhenRemoveSlides", 0, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "Interval", but 2.2 uses "ScreenshotDelay".
+                    if (KeyExists("Interval"))
+                    {
+                        SetValueByKey("ScreenshotDelay",
+                            Convert.ToInt32(GetByKey("Interval", 60000, createKeyIfNotFound: false).Value));
+                    }
+
+                    // Remove the old settings.
+                    // When upgrading from 2.1 to 2.2 we should end up with about 20 settings instead of 60
+                    // because 2.1 was limited to using Screen 1, Screen 2, Screen 3, Screen 4, and Active Window
+                    // so there were settings dedicated to all the properties associated with them (such as Name, X, Y, Width, and Height).
+                    RemoveByKey("ScreenshotsDirectory");
+                    RemoveByKey("ScheduleImageFormat");
+                    RemoveByKey("SlideSkip");
+                    RemoveByKey("ImageResolutionRatio");
+                    RemoveByKey("ImageFormatFilter");
+                    RemoveByKey("ImageFormatFilterIndex");
+                    RemoveByKey("Interval");
+                    RemoveByKey("SlideshowDelay");
+                    RemoveByKey("SlideSkipCheck");
+                    RemoveByKey("Screen1X");
+                    RemoveByKey("Screen1Y");
+                    RemoveByKey("Screen1Width");
+                    RemoveByKey("Screen1Height");
+                    RemoveByKey("Screen2X");
+                    RemoveByKey("Screen2Y");
+                    RemoveByKey("Screen2Width");
+                    RemoveByKey("Screen2Height");
+                    RemoveByKey("Screen3X");
+                    RemoveByKey("Screen3Y");
+                    RemoveByKey("Screen3Width");
+                    RemoveByKey("Screen3Height");
+                    RemoveByKey("Screen4X");
+                    RemoveByKey("Screen4Y");
+                    RemoveByKey("Screen4Width");
+                    RemoveByKey("Screen4Height");
+                    RemoveByKey("Screen1Name");
+                    RemoveByKey("Screen2Name");
+                    RemoveByKey("Screen3Name");
+                    RemoveByKey("Screen4Name");
+                    RemoveByKey("Screen5Name");
+                    RemoveByKey("Macro");
+                    RemoveByKey("JpegQualityLevel");
+                    RemoveByKey("DaysOldWhenRemoveSlides");
+                    RemoveByKey("CaptureScreen1");
+                    RemoveByKey("CaptureScreen2");
+                    RemoveByKey("CaptureScreen3");
+                    RemoveByKey("CaptureScreen4");
+                    RemoveByKey("CaptureActiveWindow");
+                    RemoveByKey("AutoReset");
+                    RemoveByKey("Mouse");
+                    RemoveByKey("StartButtonImageFormat");
+                    RemoveByKey("Schedule");
+                }
+
+                // Now that we've upgraded all the settings we should save them to disk.
+                Save();
             }
         }
     }
