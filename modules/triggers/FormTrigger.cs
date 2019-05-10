@@ -11,10 +11,19 @@ namespace AutoScreenCapture
     using System.IO;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormTrigger : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public TriggerCollection TriggerCollection { get; } = new TriggerCollection();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Trigger TriggerObject { get; set; }
 
         public EditorCollection EditorCollection { get; set; }

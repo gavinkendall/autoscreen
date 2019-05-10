@@ -13,16 +13,28 @@ namespace AutoScreenCapture
     using System.IO;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormEditor : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public EditorCollection EditorCollection { get; } = new EditorCollection();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Editor EditorObject { get; set; }
 
         private readonly string defaultArguments = "%screenshot%";
 
         private ComponentResourceManager resources = new ComponentResourceManager(typeof(FormEditor));
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FormEditor()
         {
             InitializeComponent();

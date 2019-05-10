@@ -12,16 +12,31 @@ namespace AutoScreenCapture
     using System.Windows.Forms;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormRegion : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public RegionCollection RegionCollection { get; } = new RegionCollection();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Region RegionObject { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
         private Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FormRegion()
         {
             InitializeComponent();

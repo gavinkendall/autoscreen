@@ -7,20 +7,43 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
-    using System.Xml;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public class VersionManager
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public VersionCollection Versions { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public SettingCollection CurrentUserSettings { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public SettingCollection OldUserSettings { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="versions"></param>
+        /// <param name="currentUserSettings"></param>
         public VersionManager(VersionCollection versions, SettingCollection currentUserSettings)
         {
             Versions = versions;
             CurrentUserSettings = currentUserSettings;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="appCodenameToCheck"></param>
+        /// <param name="appVersionToCheck"></param>
+        /// <returns></returns>
         public bool IsOldAppVersion(string appCodenameToCheck, string appVersionToCheck)
         {
             if (string.IsNullOrEmpty(appCodenameToCheck) && string.IsNullOrEmpty(appVersionToCheck))
@@ -46,10 +69,5 @@ namespace AutoScreenCapture
             // If we're not sure then just say it isn't an old app version to prevent screwing up data.
             return false;
         }
-
-        //public void PrepareUpgradePath(SettingCollection oldUserSettings)
-        //{
-        //    OldUserSettings = oldUserSettings;
-        //}
     }
 }

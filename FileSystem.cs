@@ -10,8 +10,14 @@ namespace AutoScreenCapture
     using System;
     using System.IO;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class FileSystem
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public readonly static string PathDelimiter = "\\";
 
         /// <summary>
@@ -19,29 +25,69 @@ namespace AutoScreenCapture
         /// </summary>
         public static readonly string FileManager = "explorer";
 
-        // Screenshots Folder
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
 
-        // Application Folder
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ApplicationFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\";
 
-        // Debug
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string DebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string LogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\logs\\";
 
-        // Settings
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string UserSettingsFile = "user.xml";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ApplicationSettingsFile = "application.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string SettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
 
-        // Editors, Regions, Triggers, and Screenshots
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string EditorsFile = "editors.xml";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string RegionsFile = "regions.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ScreensFile = "screens.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string TriggersFile = "triggers.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ScreenshotsFile = "screenshots.xml";
 
         /// <summary>
@@ -61,22 +107,20 @@ namespace AutoScreenCapture
             //    folderPath += @"\";
             //}
 
-            FileInfo fileInfo = new FileInfo(folderPath);
+            //FileInfo fileInfo = new FileInfo(folderPath);
 
-            if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
-            {
-                DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+            //if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
+            //{
+            //    DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
 
-                if (driveInfo.IsReady)
-                {
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-
-                    //Directory.SetCurrentDirectory(folderPath);
-                }
-            }
+            //    if (driveInfo.IsReady)
+            //    {
+            //        if (!Directory.Exists(folderPath))
+            //        {
+            //            Directory.CreateDirectory(folderPath);
+            //        }
+            //    }
+            //}
 
             return folderPath;
         }

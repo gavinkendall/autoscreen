@@ -15,6 +15,7 @@ namespace AutoScreenCapture
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows.Forms;
+    using System.Text.RegularExpressions;
 
     public static class ScreenshotCollection
     {
@@ -38,6 +39,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_TIME = "time";
         private const string SCREENSHOT_PATH = "path";
         private const string SCREENSHOT_FORMAT = "format";
+        private const string SCREENSHOT_SCREEN = "screen";
         private const string SCREENSHOT_COMPONENT = "component";
         private const string SCREENSHOT_SLIDENAME = "slidename";
         private const string SCREENSHOT_SLIDEVALUE = "slidevalue";
@@ -179,7 +181,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screenshots.
         /// </summary>
-        public static void Load(ImageFormatCollection imageFormatCollection)
+        public static void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection)
         {
             if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
             {
@@ -229,6 +231,21 @@ namespace AutoScreenCapture
                                     screenshot.Format = imageFormatCollection.GetByName(xReader.Value);
                                     break;
 
+                                // 2.1 used "screen" for its definition of each display/monitor whereas 2.2 uses "component".
+                                // Active Window is now represented by 0 rather than 5.
+                                case SCREENSHOT_SCREEN:
+                                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename) &&
+                                        Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                                    {
+                                        xReader.Read();
+
+                                        screenshot.Screen = Convert.ToInt32(xReader.Value);
+
+                                        screenshot.Component = screenshot.Screen == 5 ? 0 : screenshot.Screen;
+                                    }
+                                    break;
+                                
+                                // We still want to support "component" since this was introduced in version 2.2 as the new representation for "screen".
                                 case SCREENSHOT_COMPONENT:
                                     xReader.Read();
                                     screenshot.Component = Convert.ToInt32(xReader.Value);
@@ -258,9 +275,55 @@ namespace AutoScreenCapture
                     {
                         if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
                         {
-                            //screenshot.ViewId = Guid.NewGuid();
-                            //screenshot.Time = "00:00:00.000";
-                            //screenshot.Component
+                            // We need to associate the screenshot's view ID with the component's view ID
+                            // because this special ID value is used for figuring out what screenshot image to display.
+                            screenshot.ViewId = screenCollection.GetByComponent(screenshot.Component).ViewId;
+
+                            string windowTitle = "*Screenshot imported from an old version of Auto Screen Capture*";
+
+                            Regex rgxOldSlidename =
+                                new Regex(
+                                    @"^(?<Date>\d{4}-\d{2}-\d{2}) (?<Time>(?<Hour>\d{2})-(?<Minute>\d{2})-(?<Second>\d{2})-(?<Millisecond>\d{3}))");
+
+                            string hour = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Hour"].Value;
+                            string minute = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Minute"].Value;
+                            string second = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Second"].Value;
+                            string millisecond = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Millisecond"]
+                                .Value;
+
+                            screenshot.Date = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Date"].Value;
+                            screenshot.Time = hour + ":" + minute + ":" + second + "." + millisecond;
+
+                            string oldSlideFilename = screenshot.Date + "_" +
+                                                      hour + "-" + minute + "-" + second + "-" + millisecond +
+                                                      screenshot.Format.Extension;
+
+                            string oldSlideFolderPath =
+                                FileSystem.SlidesFolder + screenshot.Date + FileSystem.PathDelimiter;
+
+                            if (Directory.Exists(oldSlideFolderPath))
+                            {
+                                string oldSlideZeroSizeFilepath = oldSlideFolderPath + oldSlideFilename;
+
+                                // Delete the 0 size placeholder file that was used for the Slideshow module.
+                                if (File.Exists(oldSlideZeroSizeFilepath))
+                                {
+                                    File.Delete(oldSlideZeroSizeFilepath);
+                                }
+
+                                string oldSlideFilepath =
+                                    oldSlideFolderPath + screenshot.Screen + FileSystem.PathDelimiter +
+                                    oldSlideFilename;
+                                
+                                // The path for the screenshot is going to be the path of the image that was
+                                // used as a "slide" for the Slideshow module in the old version.
+                                screenshot.Path = oldSlideFilepath;
+
+                                screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
+                                screenshot.Slide.Value = screenshot.Time + " [" + windowTitle + "]";
+
+                                screenshot.WindowTitle = windowTitle;
+                            }
                         }
                     }
 
@@ -274,6 +337,12 @@ namespace AutoScreenCapture
                     {
                         _screenshotList.Add(screenshot);
                     }
+                }
+
+                // Write out the upgraded screenshots (if any were found).
+                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                {
+                    Save();
                 }
             }
         }
@@ -294,6 +363,11 @@ namespace AutoScreenCapture
                 NewLineHandling = NewLineHandling.Entitize,
                 ConformanceLevel = ConformanceLevel.Document
             };
+
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
+            {
+                File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+            }
 
             using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile, xSettings))
             {

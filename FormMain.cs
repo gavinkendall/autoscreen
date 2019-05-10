@@ -221,7 +221,7 @@ namespace AutoScreenCapture
 
                 Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
-                ScreenshotCollection.Load(_imageFormatCollection);
+                ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection);
 
                 int screenshotDelay = Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
 

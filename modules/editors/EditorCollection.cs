@@ -14,6 +14,9 @@ namespace AutoScreenCapture
     using System.Text;
     using System.Xml;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class EditorCollection : IEnumerable<Editor>
     {
         private readonly List<Editor> _editorList = new List<Editor>();
@@ -28,6 +31,10 @@ namespace AutoScreenCapture
         private const string EDITOR_APPLICATION = "application";
         private const string EDITOR_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_EDITORS_NODE + "/" + XML_FILE_EDITOR_NODE;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Editor>.Enumerator GetEnumerator()
         {
             return _editorList.GetEnumerator();
@@ -43,6 +50,10 @@ namespace AutoScreenCapture
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editor"></param>
         public void Add(Editor editor)
         {
             _editorList.Add(editor);
@@ -50,6 +61,10 @@ namespace AutoScreenCapture
             Log.Write("Editor added: " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editor"></param>
         public void Remove(Editor editor)
         {
             _editorList.Remove(editor);
@@ -57,11 +72,19 @@ namespace AutoScreenCapture
             Log.Write("Editor removed: " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Count
         {
             get { return _editorList.Count; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editorToFind"></param>
+        /// <returns></returns>
         public Editor Get(Editor editorToFind)
         {
             foreach (Editor editor in _editorList)
@@ -75,6 +98,11 @@ namespace AutoScreenCapture
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Editor GetByName(string name)
         {
             foreach (Editor editor in _editorList)
@@ -156,6 +184,11 @@ namespace AutoScreenCapture
                 NewLineHandling = NewLineHandling.Entitize,
                 ConformanceLevel = ConformanceLevel.Document
             };
+
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+            {
+                File.Delete(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
+            }
 
             using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
             {

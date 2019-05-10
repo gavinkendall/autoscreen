@@ -94,6 +94,19 @@ namespace AutoScreenCapture
             return null;
         }
 
+        public Screen GetByComponent(int component)
+        {
+            foreach (Screen screen in _screenList)
+            {
+                if (screen.Component == component)
+                {
+                    return screen;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Loads the screens.
         /// </summary>
@@ -203,6 +216,11 @@ namespace AutoScreenCapture
             xSettings.IndentChars = XML_FILE_INDENT_CHARS;
             xSettings.NewLineHandling = NewLineHandling.Entitize;
             xSettings.ConformanceLevel = ConformanceLevel.Document;
+
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
+            {
+                File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
+            }
 
             using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreensFile, xSettings))
             {

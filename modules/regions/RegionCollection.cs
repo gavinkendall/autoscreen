@@ -243,6 +243,11 @@ namespace AutoScreenCapture
             xSettings.NewLineHandling = NewLineHandling.Entitize;
             xSettings.ConformanceLevel = ConformanceLevel.Document;
 
+            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
+            {
+                File.Delete(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
+            }
+
             using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.RegionsFile, xSettings))
             {
                 xWriter.WriteStartDocument();

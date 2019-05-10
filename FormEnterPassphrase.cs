@@ -10,8 +10,14 @@ namespace AutoScreenCapture
     using System;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormEnterPassphrase : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public FormEnterPassphrase()
         {
             InitializeComponent();

@@ -12,16 +12,34 @@ namespace AutoScreenCapture
     using System.Windows.Forms;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormScreen : Form
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ScreenCollection ScreenCollection { get; } = new ScreenCollection();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Screen ScreenObject { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FormScreen()
         {
             InitializeComponent();
@@ -106,6 +124,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void RefreshScreenDictionary()
         {
             ScreenDictionary.Clear();

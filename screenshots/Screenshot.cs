@@ -17,6 +17,7 @@ namespace AutoScreenCapture
         public string Time { get; set; }
         public string Path { get; set; }
         public ImageFormat Format { get; set; }
+        public int Screen { get; set; }
         public int Component { get; set; }
         public Slide Slide { get; set; }
         public string WindowTitle { get; set; }
@@ -40,15 +41,6 @@ namespace AutoScreenCapture
                 Name = "{date=" + Date + "}{time=" + Time + "}",
                 Value = Time + (!string.IsNullOrEmpty(windowTitle) ? " [" + windowTitle + "]" : string.Empty)
             };
-
-            //string directory = System.IO.Path.GetDirectoryName(path);
-
-            //if (!Directory.Exists(directory))
-            //{
-            //    Directory.CreateDirectory(directory);
-            //}
-
-            //Directory.SetCurrentDirectory(directory);
         }
     }
 }
