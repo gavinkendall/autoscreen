@@ -294,36 +294,10 @@ namespace AutoScreenCapture
                             screenshot.Date = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Date"].Value;
                             screenshot.Time = hour + ":" + minute + ":" + second + "." + millisecond;
 
-                            string oldSlideFilename = screenshot.Date + "_" +
-                                                      hour + "-" + minute + "-" + second + "-" + millisecond +
-                                                      screenshot.Format.Extension;
+                            screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
+                            screenshot.Slide.Value = screenshot.Time + " [" + windowTitle + "]";
 
-                            string oldSlideFolderPath =
-                                FileSystem.SlidesFolder + screenshot.Date + FileSystem.PathDelimiter;
-
-                            if (Directory.Exists(oldSlideFolderPath))
-                            {
-                                string oldSlideZeroSizeFilepath = oldSlideFolderPath + oldSlideFilename;
-
-                                // Delete the 0 size placeholder file that was used for the Slideshow module.
-                                if (File.Exists(oldSlideZeroSizeFilepath))
-                                {
-                                    File.Delete(oldSlideZeroSizeFilepath);
-                                }
-
-                                string oldSlideFilepath =
-                                    oldSlideFolderPath + screenshot.Screen + FileSystem.PathDelimiter +
-                                    oldSlideFilename;
-                                
-                                // The path for the screenshot is going to be the path of the image that was
-                                // used as a "slide" for the Slideshow module in the old version.
-                                screenshot.Path = oldSlideFilepath;
-
-                                screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
-                                screenshot.Slide.Value = screenshot.Time + " [" + windowTitle + "]";
-
-                                screenshot.WindowTitle = windowTitle;
-                            }
+                            screenshot.WindowTitle = windowTitle;
                         }
                     }
 
