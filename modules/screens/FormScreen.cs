@@ -32,6 +32,8 @@ namespace AutoScreenCapture
         /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
+        public MacroTagCollection MacroTagCollection { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -49,14 +51,21 @@ namespace AutoScreenCapture
 
         private void FormScreen_Load(object sender, EventArgs e)
         {
-            comboBoxScreenFormat.Items.Clear();
+            comboBoxFormat.Items.Clear();
             comboBoxScreenComponent.Items.Clear();
+            comboBoxTags.DataSource = null;
 
-            pictureBoxScreenPreview.Image = null;
+            pictureBoxPreview.Image = null;
+
+            // *** Macro Tags ***
+            comboBoxTags.DisplayMember = "Description";
+            comboBoxTags.ValueMember = "Name";
+            comboBoxTags.DataSource = MacroTagCollection.GetList();
+            // ******************
 
             foreach (ImageFormat imageFormat in ImageFormatCollection)
             {
-                comboBoxScreenFormat.Items.Add(imageFormat.Name);
+                comboBoxFormat.Items.Add(imageFormat.Name);
             }
 
             comboBoxScreenComponent.Items.Add("Active Window");
@@ -71,9 +80,9 @@ namespace AutoScreenCapture
             {
                 Text = "Change Screen";
 
-                textBoxScreenName.Text = ScreenObject.Name;
-                textBoxScreenFolder.Text = FileSystem.CorrectDirectoryPath(ScreenObject.Folder);
-                textBoxScreenMacro.Text = ScreenObject.Macro;
+                textBoxName.Text = ScreenObject.Name;
+                textBoxFolder.Text = FileSystem.CorrectDirectoryPath(ScreenObject.Folder);
+                textBoxMacro.Text = ScreenObject.Macro;
 
                 if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
                 {
@@ -85,34 +94,34 @@ namespace AutoScreenCapture
                     SetControls(enabled: false);
                 }
 
-                comboBoxScreenFormat.SelectedItem = ScreenObject.Format.Name;
-                numericUpDownScreenJpegQuality.Value = ScreenObject.JpegQuality;
-                numericUpDownScreenResolutionRatio.Value = ScreenObject.ResolutionRatio;
-                checkBoxScreenMouse.Checked = ScreenObject.Mouse;
+                comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
+                numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
+                numericUpDownResolutionRatio.Value = ScreenObject.ResolutionRatio;
+                checkBoxMouse.Checked = ScreenObject.Mouse;
             }
             else
             {
                 Text = "Add New Screen";
 
-                textBoxScreenName.Text = string.Empty;
-                textBoxScreenFolder.Text = FileSystem.ScreenshotsFolder;
-                textBoxScreenMacro.Text = MacroParser.DefaultMacro;
+                textBoxName.Text = string.Empty;
+                textBoxFolder.Text = FileSystem.ScreenshotsFolder;
+                textBoxMacro.Text = MacroParser.DefaultMacro;
                 comboBoxScreenComponent.SelectedIndex = 0;
-                comboBoxScreenFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
-                numericUpDownScreenJpegQuality.Value = 100;
-                numericUpDownScreenResolutionRatio.Value = 100;
-                checkBoxScreenMouse.Checked = true;
+                comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
+                numericUpDownJpegQuality.Value = 100;
+                numericUpDownResolutionRatio.Value = 100;
+                checkBoxMouse.Checked = true;
             }
 
             timerScreenPreview.Enabled = true;
         }
 
-        private void Click_buttonScreenCancel(object sender, EventArgs e)
+        private void Click_buttonCancel(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void Click_buttonScreenOK(object sender, EventArgs e)
+        private void Click_buttonOK(object sender, EventArgs e)
         {
             if (ScreenObject != null)
             {
@@ -146,17 +155,17 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (ScreenCollection.GetByName(textBoxScreenName.Text) == null)
+                if (ScreenCollection.GetByName(textBoxName.Text) == null)
                 {
                     ScreenCollection.Add(new Screen(
-                        textBoxScreenName.Text,
-                        FileSystem.CorrectDirectoryPath(textBoxScreenFolder.Text),
-                        textBoxScreenMacro.Text,
+                        textBoxName.Text,
+                        FileSystem.CorrectDirectoryPath(textBoxFolder.Text),
+                        textBoxMacro.Text,
                         comboBoxScreenComponent.SelectedIndex,
-                        ImageFormatCollection.GetByName(comboBoxScreenFormat.Text),
-                        (int)numericUpDownScreenJpegQuality.Value,
-                        (int)numericUpDownScreenResolutionRatio.Value,
-                        checkBoxScreenMouse.Checked));
+                        ImageFormatCollection.GetByName(comboBoxFormat.Text),
+                        (int)numericUpDownJpegQuality.Value,
+                        (int)numericUpDownResolutionRatio.Value,
+                        checkBoxMouse.Checked));
 
                     Okay();
                 }
@@ -183,21 +192,21 @@ namespace AutoScreenCapture
                     {
                         TrimInput();
 
-                        if (ScreenCollection.GetByName(textBoxScreenName.Text) != null && NameChanged())
+                        if (ScreenCollection.GetByName(textBoxName.Text) != null && NameChanged())
                         {
                             MessageBox.Show("A screen with this name already exists.", "Duplicate Name Conflict",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
-                            ScreenCollection.Get(ScreenObject).Name = textBoxScreenName.Text;
-                            ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxScreenFolder.Text);
-                            ScreenCollection.Get(ScreenObject).Macro = textBoxScreenMacro.Text;
+                            ScreenCollection.Get(ScreenObject).Name = textBoxName.Text;
+                            ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxFolder.Text);
+                            ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                             ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
-                            ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxScreenFormat.Text);
-                            ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownScreenJpegQuality.Value;
-                            ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownScreenResolutionRatio.Value;
-                            ScreenCollection.Get(ScreenObject).Mouse = checkBoxScreenMouse.Checked;
+                            ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
+                            ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
+                            ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
+                            ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
 
                             Okay();
                         }
@@ -220,16 +229,16 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxScreenName.Text = textBoxScreenName.Text.Trim();
-            textBoxScreenFolder.Text = textBoxScreenFolder.Text.Trim();
-            textBoxScreenMacro.Text = textBoxScreenMacro.Text.Trim();
+            textBoxName.Text = textBoxName.Text.Trim();
+            textBoxFolder.Text = textBoxFolder.Text.Trim();
+            textBoxMacro.Text = textBoxMacro.Text.Trim();
         }
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxScreenName.Text) &&
-                !string.IsNullOrEmpty(textBoxScreenFolder.Text) &&
-                !string.IsNullOrEmpty(textBoxScreenMacro.Text))
+            if (!string.IsNullOrEmpty(textBoxName.Text) &&
+                !string.IsNullOrEmpty(textBoxFolder.Text) &&
+                !string.IsNullOrEmpty(textBoxMacro.Text))
             {
                 return true;
             }
@@ -240,13 +249,13 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             if (ScreenObject != null &&
-                (!ScreenObject.Folder.Equals(textBoxScreenFolder.Text) ||
-                 !ScreenObject.Macro.Equals(textBoxScreenMacro.Text) ||
+                (!ScreenObject.Folder.Equals(textBoxFolder.Text) ||
+                 !ScreenObject.Macro.Equals(textBoxMacro.Text) ||
                  ScreenObject.Component != comboBoxScreenComponent.SelectedIndex ||
-                 !ScreenObject.Format.Equals(comboBoxScreenFormat.SelectedItem) ||
-                 ScreenObject.JpegQuality != (int)numericUpDownScreenJpegQuality.Value ||
-                 ScreenObject.ResolutionRatio != (int)numericUpDownScreenResolutionRatio.Value ||
-                 !ScreenObject.Mouse.Equals(checkBoxScreenMouse.Checked)))
+                 !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
+                 ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
+                 ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
+                 !ScreenObject.Mouse.Equals(checkBoxMouse.Checked)))
             {
                 return true;
             }
@@ -257,7 +266,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (ScreenObject != null &&
-                !ScreenObject.Name.Equals(textBoxScreenName.Text))
+                !ScreenObject.Name.Equals(textBoxName.Text))
             {
                 return true;
             }
@@ -272,18 +281,18 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void Tick_timerScreenPreview(object sender, EventArgs e)
+        private void Tick_timerPreview(object sender, EventArgs e)
         {
             UpdatePreview();
         }
 
-        private void buttonScreenBrowseFolder_Click(object sender, EventArgs e)
+        private void buttonBrowseFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
 
             if (browser.ShowDialog() == DialogResult.OK)
             {
-                textBoxScreenFolder.Text = browser.SelectedPath;
+                textBoxFolder.Text = browser.SelectedPath;
             }
         }
 
@@ -291,20 +300,20 @@ namespace AutoScreenCapture
         {
             if (comboBoxScreenComponent.SelectedIndex == 0)
             {
-                pictureBoxScreenPreview.Image = ScreenCapture.GetActiveWindowBitmap();
+                pictureBoxPreview.Image = ScreenCapture.GetActiveWindowBitmap();
             }
             else
             {
                 System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
 
-                pictureBoxScreenPreview.Image = screen != null
+                pictureBoxPreview.Image = screen != null
                     ? ScreenCapture.GetScreenBitmap(
                         screen.Bounds.X,
                         screen.Bounds.Y,
                         screen.Bounds.Width,
                         screen.Bounds.Height,
-                        (int) numericUpDownScreenResolutionRatio.Value,
-                        checkBoxScreenMouse.Checked
+                        (int) numericUpDownResolutionRatio.Value,
+                        checkBoxMouse.Checked
                     )
                     : null;
             }
@@ -330,26 +339,37 @@ namespace AutoScreenCapture
 
         private void SetControls(bool enabled)
         {
-            buttonScreenOK.Enabled = enabled;
-            textBoxScreenName.Enabled = enabled;
-            textBoxScreenMacro.Enabled = enabled;
-            checkBoxScreenMouse.Enabled = enabled;
-            textBoxScreenFolder.Enabled = enabled;
-            comboBoxScreenFormat.Enabled = enabled;
+            buttonOK.Enabled = enabled;
+            textBoxName.Enabled = enabled;
+            textBoxMacro.Enabled = enabled;
+            checkBoxMouse.Enabled = enabled;
+            textBoxFolder.Enabled = enabled;
+            comboBoxFormat.Enabled = enabled;
             comboBoxScreenComponent.Enabled = enabled;
-            numericUpDownScreenJpegQuality.Enabled = enabled;
-            numericUpDownScreenResolutionRatio.Enabled = enabled;
+            numericUpDownJpegQuality.Enabled = enabled;
+            numericUpDownResolutionRatio.Enabled = enabled;
         }
 
-        private void comboBoxScreenFormat_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxScreenFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
+            if (comboBoxFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
             {
-                numericUpDownScreenJpegQuality.Enabled = true;
+                numericUpDownJpegQuality.Enabled = true;
             }
             else
             {
-                numericUpDownScreenJpegQuality.Enabled = false;
+                numericUpDownJpegQuality.Enabled = false;
+            }
+        }
+
+        private void comboBoxTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MacroTag macroTag = (MacroTag)comboBoxTags.SelectedItem;
+
+            if (macroTag != null && !string.IsNullOrEmpty(macroTag.Name))
+            {
+                textBoxMacro.Text += macroTag.Name;
+                comboBoxTags.SelectedIndex = 0;
             }
         }
     }

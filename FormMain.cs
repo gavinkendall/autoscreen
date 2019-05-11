@@ -30,6 +30,7 @@ namespace AutoScreenCapture
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         private ImageFormatCollection _imageFormatCollection;
+        private MacroTagCollection _macroTagCollection;
 
         /// <summary>
         /// Threads for background operations.
@@ -184,6 +185,9 @@ namespace AutoScreenCapture
 
                 Log.Write("Initializing image format collection.");
                 _imageFormatCollection = new ImageFormatCollection();
+
+                Log.Write("Initializing macro tag collection.");
+                _macroTagCollection = new MacroTagCollection();
 
                 Log.Write("Initializing editor collection.");
 
@@ -2097,6 +2101,7 @@ namespace AutoScreenCapture
         {
             formRegion.RegionObject = null;
             formRegion.ImageFormatCollection = _imageFormatCollection;
+            formRegion.MacroTagCollection = _macroTagCollection;
 
             formRegion.ShowDialog(this);
 
@@ -2154,6 +2159,7 @@ namespace AutoScreenCapture
             {
                 formRegion.RegionObject = (Region) buttonSelected.Tag;
                 formRegion.ImageFormatCollection = _imageFormatCollection;
+                formRegion.MacroTagCollection = _macroTagCollection;
 
                 formRegion.ShowDialog(this);
 
@@ -2180,6 +2186,7 @@ namespace AutoScreenCapture
         {
             formScreen.ScreenObject = null;
             formScreen.ImageFormatCollection = _imageFormatCollection;
+            formScreen.MacroTagCollection = _macroTagCollection;
 
             formScreen.ShowDialog(this);
 
@@ -2237,6 +2244,7 @@ namespace AutoScreenCapture
             {
                 formScreen.ScreenObject = (Screen) buttonSelected.Tag;
                 formScreen.ImageFormatCollection = _imageFormatCollection;
+                formScreen.MacroTagCollection = _macroTagCollection;
 
                 formScreen.ShowDialog(this);
 

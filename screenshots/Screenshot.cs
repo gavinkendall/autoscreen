@@ -8,7 +8,6 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
 
     public class Screenshot
     {

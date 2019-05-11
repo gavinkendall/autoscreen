@@ -30,124 +30,126 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreen));
-            this.labelScreenName = new System.Windows.Forms.Label();
-            this.textBoxScreenName = new System.Windows.Forms.TextBox();
-            this.labelScreenMacro = new System.Windows.Forms.Label();
-            this.textBoxScreenMacro = new System.Windows.Forms.TextBox();
-            this.pictureBoxScreenPreview = new System.Windows.Forms.PictureBox();
-            this.buttonScreenOK = new System.Windows.Forms.Button();
-            this.buttonScreenCancel = new System.Windows.Forms.Button();
-            this.labelScreenFolder = new System.Windows.Forms.Label();
-            this.textBoxScreenFolder = new System.Windows.Forms.TextBox();
+            this.labelName = new System.Windows.Forms.Label();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.labelMacro = new System.Windows.Forms.Label();
+            this.textBoxMacro = new System.Windows.Forms.TextBox();
+            this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelFolder = new System.Windows.Forms.Label();
+            this.textBoxFolder = new System.Windows.Forms.TextBox();
             this.buttonScreenBrowseFolder = new System.Windows.Forms.Button();
-            this.comboBoxScreenFormat = new System.Windows.Forms.ComboBox();
-            this.labelScreenFormat = new System.Windows.Forms.Label();
-            this.numericUpDownScreenResolutionRatio = new System.Windows.Forms.NumericUpDown();
-            this.labelScreenResolutionRatio = new System.Windows.Forms.Label();
-            this.numericUpDownScreenJpegQuality = new System.Windows.Forms.NumericUpDown();
-            this.labelScreenJpegQuality = new System.Windows.Forms.Label();
-            this.checkBoxScreenMouse = new System.Windows.Forms.CheckBox();
-            this.groupBoxScreenImage = new System.Windows.Forms.GroupBox();
-            this.groupBoxScreenComponent = new System.Windows.Forms.GroupBox();
+            this.comboBoxFormat = new System.Windows.Forms.ComboBox();
+            this.labelFormat = new System.Windows.Forms.Label();
+            this.numericUpDownResolutionRatio = new System.Windows.Forms.NumericUpDown();
+            this.labelResolutionRatio = new System.Windows.Forms.Label();
+            this.numericUpDownJpegQuality = new System.Windows.Forms.NumericUpDown();
+            this.labelJpegQuality = new System.Windows.Forms.Label();
+            this.checkBoxMouse = new System.Windows.Forms.CheckBox();
+            this.groupBoxImage = new System.Windows.Forms.GroupBox();
+            this.groupBoxComponent = new System.Windows.Forms.GroupBox();
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
-            this.groupBoxScreenPreview = new System.Windows.Forms.GroupBox();
+            this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenPreview)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenResolutionRatio)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenJpegQuality)).BeginInit();
-            this.groupBoxScreenImage.SuspendLayout();
-            this.groupBoxScreenComponent.SuspendLayout();
-            this.groupBoxScreenPreview.SuspendLayout();
+            this.labelTags = new System.Windows.Forms.Label();
+            this.comboBoxTags = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
+            this.groupBoxImage.SuspendLayout();
+            this.groupBoxComponent.SuspendLayout();
+            this.groupBoxPreview.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelScreenName
+            // labelName
             // 
-            this.labelScreenName.AutoSize = true;
-            this.labelScreenName.Location = new System.Drawing.Point(9, 9);
-            this.labelScreenName.Name = "labelScreenName";
-            this.labelScreenName.Size = new System.Drawing.Size(38, 13);
-            this.labelScreenName.TabIndex = 0;
-            this.labelScreenName.Text = "Name:";
+            this.labelName.AutoSize = true;
+            this.labelName.Location = new System.Drawing.Point(9, 9);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(38, 13);
+            this.labelName.TabIndex = 0;
+            this.labelName.Text = "Name:";
             // 
-            // textBoxScreenName
+            // textBoxName
             // 
-            this.textBoxScreenName.Location = new System.Drawing.Point(53, 6);
-            this.textBoxScreenName.MaxLength = 50;
-            this.textBoxScreenName.Name = "textBoxScreenName";
-            this.textBoxScreenName.Size = new System.Drawing.Size(318, 20);
-            this.textBoxScreenName.TabIndex = 1;
+            this.textBoxName.Location = new System.Drawing.Point(53, 6);
+            this.textBoxName.MaxLength = 50;
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(318, 20);
+            this.textBoxName.TabIndex = 1;
             // 
-            // labelScreenMacro
+            // labelMacro
             // 
-            this.labelScreenMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreenMacro.AutoSize = true;
-            this.labelScreenMacro.Location = new System.Drawing.Point(223, 516);
-            this.labelScreenMacro.Name = "labelScreenMacro";
-            this.labelScreenMacro.Size = new System.Drawing.Size(40, 13);
-            this.labelScreenMacro.TabIndex = 0;
-            this.labelScreenMacro.Text = "Macro:";
+            this.labelMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelMacro.AutoSize = true;
+            this.labelMacro.Location = new System.Drawing.Point(223, 516);
+            this.labelMacro.Name = "labelMacro";
+            this.labelMacro.Size = new System.Drawing.Size(40, 13);
+            this.labelMacro.TabIndex = 0;
+            this.labelMacro.Text = "Macro:";
             // 
-            // textBoxScreenMacro
+            // textBoxMacro
             // 
-            this.textBoxScreenMacro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxMacro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreenMacro.Location = new System.Drawing.Point(267, 513);
-            this.textBoxScreenMacro.Name = "textBoxScreenMacro";
-            this.textBoxScreenMacro.Size = new System.Drawing.Size(505, 20);
-            this.textBoxScreenMacro.TabIndex = 17;
+            this.textBoxMacro.Location = new System.Drawing.Point(267, 513);
+            this.textBoxMacro.Name = "textBoxMacro";
+            this.textBoxMacro.Size = new System.Drawing.Size(382, 20);
+            this.textBoxMacro.TabIndex = 17;
             // 
-            // pictureBoxScreenPreview
+            // pictureBoxPreview
             // 
-            this.pictureBoxScreenPreview.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxScreenPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxScreenPreview.Location = new System.Drawing.Point(3, 16);
-            this.pictureBoxScreenPreview.Name = "pictureBoxScreenPreview";
-            this.pictureBoxScreenPreview.Size = new System.Drawing.Size(552, 424);
-            this.pictureBoxScreenPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxScreenPreview.TabIndex = 5;
-            this.pictureBoxScreenPreview.TabStop = false;
+            this.pictureBoxPreview.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxPreview.Location = new System.Drawing.Point(3, 16);
+            this.pictureBoxPreview.Name = "pictureBoxPreview";
+            this.pictureBoxPreview.Size = new System.Drawing.Size(552, 424);
+            this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPreview.TabIndex = 5;
+            this.pictureBoxPreview.TabStop = false;
             // 
-            // buttonScreenOK
+            // buttonOK
             // 
-            this.buttonScreenOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScreenOK.Location = new System.Drawing.Point(12, 534);
-            this.buttonScreenOK.Name = "buttonScreenOK";
-            this.buttonScreenOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonScreenOK.TabIndex = 18;
-            this.buttonScreenOK.Text = "OK";
-            this.buttonScreenOK.UseVisualStyleBackColor = true;
-            this.buttonScreenOK.Click += new System.EventHandler(this.Click_buttonScreenOK);
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonOK.Location = new System.Drawing.Point(12, 534);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(99, 23);
+            this.buttonOK.TabIndex = 18;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.Click_buttonOK);
             // 
-            // buttonScreenCancel
+            // buttonCancel
             // 
-            this.buttonScreenCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonScreenCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonScreenCancel.Location = new System.Drawing.Point(118, 534);
-            this.buttonScreenCancel.Name = "buttonScreenCancel";
-            this.buttonScreenCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonScreenCancel.TabIndex = 19;
-            this.buttonScreenCancel.Text = "Cancel";
-            this.buttonScreenCancel.UseVisualStyleBackColor = true;
-            this.buttonScreenCancel.Click += new System.EventHandler(this.Click_buttonScreenCancel);
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(118, 534);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(99, 23);
+            this.buttonCancel.TabIndex = 19;
+            this.buttonCancel.Text = "Cancel";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.Click_buttonCancel);
             // 
-            // labelScreenFolder
+            // labelFolder
             // 
-            this.labelScreenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreenFolder.AutoSize = true;
-            this.labelScreenFolder.Location = new System.Drawing.Point(223, 490);
-            this.labelScreenFolder.Name = "labelScreenFolder";
-            this.labelScreenFolder.Size = new System.Drawing.Size(39, 13);
-            this.labelScreenFolder.TabIndex = 0;
-            this.labelScreenFolder.Text = "Folder:";
+            this.labelFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelFolder.AutoSize = true;
+            this.labelFolder.Location = new System.Drawing.Point(223, 490);
+            this.labelFolder.Name = "labelFolder";
+            this.labelFolder.Size = new System.Drawing.Size(39, 13);
+            this.labelFolder.TabIndex = 0;
+            this.labelFolder.Text = "Folder:";
             // 
-            // textBoxScreenFolder
+            // textBoxFolder
             // 
-            this.textBoxScreenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreenFolder.Location = new System.Drawing.Point(267, 487);
-            this.textBoxScreenFolder.Name = "textBoxScreenFolder";
-            this.textBoxScreenFolder.Size = new System.Drawing.Size(472, 20);
-            this.textBoxScreenFolder.TabIndex = 15;
+            this.textBoxFolder.Location = new System.Drawing.Point(267, 487);
+            this.textBoxFolder.Name = "textBoxFolder";
+            this.textBoxFolder.Size = new System.Drawing.Size(472, 20);
+            this.textBoxFolder.TabIndex = 15;
             // 
             // buttonScreenBrowseFolder
             // 
@@ -158,116 +160,116 @@
             this.buttonScreenBrowseFolder.TabIndex = 16;
             this.buttonScreenBrowseFolder.Text = "...";
             this.buttonScreenBrowseFolder.UseVisualStyleBackColor = true;
-            this.buttonScreenBrowseFolder.Click += new System.EventHandler(this.buttonScreenBrowseFolder_Click);
+            this.buttonScreenBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
             // 
-            // comboBoxScreenFormat
+            // comboBoxFormat
             // 
-            this.comboBoxScreenFormat.BackColor = System.Drawing.SystemColors.Window;
-            this.comboBoxScreenFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxScreenFormat.FormattingEnabled = true;
-            this.comboBoxScreenFormat.Location = new System.Drawing.Point(148, 22);
-            this.comboBoxScreenFormat.Name = "comboBoxScreenFormat";
-            this.comboBoxScreenFormat.Size = new System.Drawing.Size(51, 21);
-            this.comboBoxScreenFormat.TabIndex = 9;
-            this.comboBoxScreenFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxScreenFormat_SelectedIndexChanged);
+            this.comboBoxFormat.BackColor = System.Drawing.SystemColors.Window;
+            this.comboBoxFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFormat.FormattingEnabled = true;
+            this.comboBoxFormat.Location = new System.Drawing.Point(148, 22);
+            this.comboBoxFormat.Name = "comboBoxFormat";
+            this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
+            this.comboBoxFormat.TabIndex = 9;
+            this.comboBoxFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxFormat_SelectedIndexChanged);
             // 
-            // labelScreenFormat
+            // labelFormat
             // 
-            this.labelScreenFormat.AutoSize = true;
-            this.labelScreenFormat.Location = new System.Drawing.Point(6, 25);
-            this.labelScreenFormat.Name = "labelScreenFormat";
-            this.labelScreenFormat.Size = new System.Drawing.Size(42, 13);
-            this.labelScreenFormat.TabIndex = 0;
-            this.labelScreenFormat.Text = "Format:";
+            this.labelFormat.AutoSize = true;
+            this.labelFormat.Location = new System.Drawing.Point(6, 25);
+            this.labelFormat.Name = "labelFormat";
+            this.labelFormat.Size = new System.Drawing.Size(42, 13);
+            this.labelFormat.TabIndex = 0;
+            this.labelFormat.Text = "Format:";
             // 
-            // numericUpDownScreenResolutionRatio
+            // numericUpDownResolutionRatio
             // 
-            this.numericUpDownScreenResolutionRatio.Location = new System.Drawing.Point(148, 75);
-            this.numericUpDownScreenResolutionRatio.Minimum = new decimal(new int[] {
+            this.numericUpDownResolutionRatio.Location = new System.Drawing.Point(148, 75);
+            this.numericUpDownResolutionRatio.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDownScreenResolutionRatio.Name = "numericUpDownScreenResolutionRatio";
-            this.numericUpDownScreenResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownScreenResolutionRatio.TabIndex = 11;
-            this.numericUpDownScreenResolutionRatio.Value = new decimal(new int[] {
+            this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
+            this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownResolutionRatio.TabIndex = 11;
+            this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
             // 
-            // labelScreenResolutionRatio
+            // labelResolutionRatio
             // 
-            this.labelScreenResolutionRatio.AutoSize = true;
-            this.labelScreenResolutionRatio.Location = new System.Drawing.Point(6, 77);
-            this.labelScreenResolutionRatio.Name = "labelScreenResolutionRatio";
-            this.labelScreenResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelScreenResolutionRatio.TabIndex = 0;
-            this.labelScreenResolutionRatio.Text = "Resolution Ratio:";
+            this.labelResolutionRatio.AutoSize = true;
+            this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
+            this.labelResolutionRatio.Name = "labelResolutionRatio";
+            this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
+            this.labelResolutionRatio.TabIndex = 0;
+            this.labelResolutionRatio.Text = "Resolution Ratio:";
             // 
-            // numericUpDownScreenJpegQuality
+            // numericUpDownJpegQuality
             // 
-            this.numericUpDownScreenJpegQuality.Location = new System.Drawing.Point(148, 49);
-            this.numericUpDownScreenJpegQuality.Minimum = new decimal(new int[] {
+            this.numericUpDownJpegQuality.Location = new System.Drawing.Point(148, 49);
+            this.numericUpDownJpegQuality.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDownScreenJpegQuality.Name = "numericUpDownScreenJpegQuality";
-            this.numericUpDownScreenJpegQuality.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownScreenJpegQuality.TabIndex = 10;
-            this.numericUpDownScreenJpegQuality.Value = new decimal(new int[] {
+            this.numericUpDownJpegQuality.Name = "numericUpDownJpegQuality";
+            this.numericUpDownJpegQuality.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownJpegQuality.TabIndex = 10;
+            this.numericUpDownJpegQuality.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
             // 
-            // labelScreenJpegQuality
+            // labelJpegQuality
             // 
-            this.labelScreenJpegQuality.AutoSize = true;
-            this.labelScreenJpegQuality.Location = new System.Drawing.Point(6, 51);
-            this.labelScreenJpegQuality.Name = "labelScreenJpegQuality";
-            this.labelScreenJpegQuality.Size = new System.Drawing.Size(72, 13);
-            this.labelScreenJpegQuality.TabIndex = 0;
-            this.labelScreenJpegQuality.Text = "JPEG Quality:";
+            this.labelJpegQuality.AutoSize = true;
+            this.labelJpegQuality.Location = new System.Drawing.Point(6, 51);
+            this.labelJpegQuality.Name = "labelJpegQuality";
+            this.labelJpegQuality.Size = new System.Drawing.Size(72, 13);
+            this.labelJpegQuality.TabIndex = 0;
+            this.labelJpegQuality.Text = "JPEG Quality:";
             // 
-            // checkBoxScreenMouse
+            // checkBoxMouse
             // 
-            this.checkBoxScreenMouse.AutoSize = true;
-            this.checkBoxScreenMouse.Location = new System.Drawing.Point(9, 102);
-            this.checkBoxScreenMouse.Name = "checkBoxScreenMouse";
-            this.checkBoxScreenMouse.Size = new System.Drawing.Size(130, 17);
-            this.checkBoxScreenMouse.TabIndex = 12;
-            this.checkBoxScreenMouse.Text = "Include mouse pointer";
-            this.checkBoxScreenMouse.UseVisualStyleBackColor = true;
+            this.checkBoxMouse.AutoSize = true;
+            this.checkBoxMouse.Location = new System.Drawing.Point(9, 102);
+            this.checkBoxMouse.Name = "checkBoxMouse";
+            this.checkBoxMouse.Size = new System.Drawing.Size(130, 17);
+            this.checkBoxMouse.TabIndex = 12;
+            this.checkBoxMouse.Text = "Include mouse pointer";
+            this.checkBoxMouse.UseVisualStyleBackColor = true;
             // 
-            // groupBoxScreenImage
+            // groupBoxImage
             // 
-            this.groupBoxScreenImage.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxScreenImage.Controls.Add(this.labelScreenResolutionRatio);
-            this.groupBoxScreenImage.Controls.Add(this.numericUpDownScreenResolutionRatio);
-            this.groupBoxScreenImage.Controls.Add(this.labelScreenFormat);
-            this.groupBoxScreenImage.Controls.Add(this.checkBoxScreenMouse);
-            this.groupBoxScreenImage.Controls.Add(this.labelScreenJpegQuality);
-            this.groupBoxScreenImage.Controls.Add(this.numericUpDownScreenJpegQuality);
-            this.groupBoxScreenImage.Controls.Add(this.comboBoxScreenFormat);
-            this.groupBoxScreenImage.Location = new System.Drawing.Point(12, 90);
-            this.groupBoxScreenImage.Name = "groupBoxScreenImage";
-            this.groupBoxScreenImage.Size = new System.Drawing.Size(205, 126);
-            this.groupBoxScreenImage.TabIndex = 8;
-            this.groupBoxScreenImage.TabStop = false;
-            this.groupBoxScreenImage.Text = "Image";
+            this.groupBoxImage.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxImage.Controls.Add(this.labelResolutionRatio);
+            this.groupBoxImage.Controls.Add(this.numericUpDownResolutionRatio);
+            this.groupBoxImage.Controls.Add(this.labelFormat);
+            this.groupBoxImage.Controls.Add(this.checkBoxMouse);
+            this.groupBoxImage.Controls.Add(this.labelJpegQuality);
+            this.groupBoxImage.Controls.Add(this.numericUpDownJpegQuality);
+            this.groupBoxImage.Controls.Add(this.comboBoxFormat);
+            this.groupBoxImage.Location = new System.Drawing.Point(12, 90);
+            this.groupBoxImage.Name = "groupBoxImage";
+            this.groupBoxImage.Size = new System.Drawing.Size(205, 126);
+            this.groupBoxImage.TabIndex = 8;
+            this.groupBoxImage.TabStop = false;
+            this.groupBoxImage.Text = "Image";
             // 
-            // groupBoxScreenComponent
+            // groupBoxComponent
             // 
-            this.groupBoxScreenComponent.Controls.Add(this.comboBoxScreenComponent);
-            this.groupBoxScreenComponent.Location = new System.Drawing.Point(12, 38);
-            this.groupBoxScreenComponent.Name = "groupBoxScreenComponent";
-            this.groupBoxScreenComponent.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxScreenComponent.TabIndex = 2;
-            this.groupBoxScreenComponent.TabStop = false;
-            this.groupBoxScreenComponent.Text = "Component";
+            this.groupBoxComponent.Controls.Add(this.comboBoxScreenComponent);
+            this.groupBoxComponent.Location = new System.Drawing.Point(12, 38);
+            this.groupBoxComponent.Name = "groupBoxComponent";
+            this.groupBoxComponent.Size = new System.Drawing.Size(205, 46);
+            this.groupBoxComponent.TabIndex = 2;
+            this.groupBoxComponent.TabStop = false;
+            this.groupBoxComponent.Text = "Component";
             // 
             // comboBoxScreenComponent
             // 
@@ -278,46 +280,72 @@
             this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
             this.comboBoxScreenComponent.TabIndex = 3;
             // 
-            // groupBoxScreenPreview
+            // groupBoxPreview
             // 
-            this.groupBoxScreenPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.groupBoxPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxScreenPreview.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxScreenPreview.Controls.Add(this.pictureBoxScreenPreview);
-            this.groupBoxScreenPreview.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBoxScreenPreview.Location = new System.Drawing.Point(223, 38);
-            this.groupBoxScreenPreview.Name = "groupBoxScreenPreview";
-            this.groupBoxScreenPreview.Size = new System.Drawing.Size(558, 443);
-            this.groupBoxScreenPreview.TabIndex = 0;
-            this.groupBoxScreenPreview.TabStop = false;
-            this.groupBoxScreenPreview.Text = "Preview";
+            this.groupBoxPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxPreview.Controls.Add(this.pictureBoxPreview);
+            this.groupBoxPreview.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.groupBoxPreview.Location = new System.Drawing.Point(223, 38);
+            this.groupBoxPreview.Name = "groupBoxPreview";
+            this.groupBoxPreview.Size = new System.Drawing.Size(558, 443);
+            this.groupBoxPreview.TabIndex = 0;
+            this.groupBoxPreview.TabStop = false;
+            this.groupBoxPreview.Text = "Preview";
             // 
             // timerScreenPreview
             // 
             this.timerScreenPreview.Interval = 500;
-            this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerScreenPreview);
+            this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerPreview);
+            // 
+            // labelTags
+            // 
+            this.labelTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTags.AutoSize = true;
+            this.labelTags.Location = new System.Drawing.Point(655, 516);
+            this.labelTags.Name = "labelTags";
+            this.labelTags.Size = new System.Drawing.Size(34, 13);
+            this.labelTags.TabIndex = 23;
+            this.labelTags.Text = "Tags:";
+            // 
+            // comboBoxTags
+            // 
+            this.comboBoxTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxTags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTags.DropDownWidth = 450;
+            this.comboBoxTags.FormattingEnabled = true;
+            this.comboBoxTags.Location = new System.Drawing.Point(695, 512);
+            this.comboBoxTags.MaxDropDownItems = 20;
+            this.comboBoxTags.Name = "comboBoxTags";
+            this.comboBoxTags.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.comboBoxTags.Size = new System.Drawing.Size(77, 21);
+            this.comboBoxTags.TabIndex = 22;
+            this.comboBoxTags.SelectedIndexChanged += new System.EventHandler(this.comboBoxTags_SelectedIndexChanged);
             // 
             // FormScreen
             // 
-            this.AcceptButton = this.buttonScreenOK;
+            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.CancelButton = this.buttonScreenCancel;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.groupBoxScreenPreview);
-            this.Controls.Add(this.groupBoxScreenComponent);
-            this.Controls.Add(this.groupBoxScreenImage);
+            this.Controls.Add(this.labelTags);
+            this.Controls.Add(this.comboBoxTags);
+            this.Controls.Add(this.groupBoxPreview);
+            this.Controls.Add(this.groupBoxComponent);
+            this.Controls.Add(this.groupBoxImage);
             this.Controls.Add(this.buttonScreenBrowseFolder);
-            this.Controls.Add(this.textBoxScreenFolder);
-            this.Controls.Add(this.labelScreenFolder);
-            this.Controls.Add(this.buttonScreenCancel);
-            this.Controls.Add(this.buttonScreenOK);
-            this.Controls.Add(this.textBoxScreenMacro);
-            this.Controls.Add(this.labelScreenMacro);
-            this.Controls.Add(this.textBoxScreenName);
-            this.Controls.Add(this.labelScreenName);
+            this.Controls.Add(this.textBoxFolder);
+            this.Controls.Add(this.labelFolder);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.textBoxMacro);
+            this.Controls.Add(this.labelMacro);
+            this.Controls.Add(this.textBoxName);
+            this.Controls.Add(this.labelName);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
@@ -327,13 +355,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreen_FormClosing);
             this.Load += new System.EventHandler(this.FormScreen_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenPreview)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenResolutionRatio)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownScreenJpegQuality)).EndInit();
-            this.groupBoxScreenImage.ResumeLayout(false);
-            this.groupBoxScreenImage.PerformLayout();
-            this.groupBoxScreenComponent.ResumeLayout(false);
-            this.groupBoxScreenPreview.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).EndInit();
+            this.groupBoxImage.ResumeLayout(false);
+            this.groupBoxImage.PerformLayout();
+            this.groupBoxComponent.ResumeLayout(false);
+            this.groupBoxPreview.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,27 +369,29 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelScreenName;
-        private System.Windows.Forms.TextBox textBoxScreenName;
-        private System.Windows.Forms.Label labelScreenMacro;
-        private System.Windows.Forms.TextBox textBoxScreenMacro;
-        private System.Windows.Forms.PictureBox pictureBoxScreenPreview;
-        private System.Windows.Forms.Button buttonScreenOK;
-        private System.Windows.Forms.Button buttonScreenCancel;
-        private System.Windows.Forms.Label labelScreenFolder;
-        private System.Windows.Forms.TextBox textBoxScreenFolder;
+        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.Label labelMacro;
+        private System.Windows.Forms.TextBox textBoxMacro;
+        private System.Windows.Forms.PictureBox pictureBoxPreview;
+        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label labelFolder;
+        private System.Windows.Forms.TextBox textBoxFolder;
         private System.Windows.Forms.Button buttonScreenBrowseFolder;
-        private System.Windows.Forms.ComboBox comboBoxScreenFormat;
-        private System.Windows.Forms.Label labelScreenFormat;
-        private System.Windows.Forms.NumericUpDown numericUpDownScreenResolutionRatio;
-        private System.Windows.Forms.Label labelScreenResolutionRatio;
-        private System.Windows.Forms.NumericUpDown numericUpDownScreenJpegQuality;
-        private System.Windows.Forms.Label labelScreenJpegQuality;
-        private System.Windows.Forms.CheckBox checkBoxScreenMouse;
-        private System.Windows.Forms.GroupBox groupBoxScreenImage;
-        private System.Windows.Forms.GroupBox groupBoxScreenComponent;
-        private System.Windows.Forms.GroupBox groupBoxScreenPreview;
+        private System.Windows.Forms.ComboBox comboBoxFormat;
+        private System.Windows.Forms.Label labelFormat;
+        private System.Windows.Forms.NumericUpDown numericUpDownResolutionRatio;
+        private System.Windows.Forms.Label labelResolutionRatio;
+        private System.Windows.Forms.NumericUpDown numericUpDownJpegQuality;
+        private System.Windows.Forms.Label labelJpegQuality;
+        private System.Windows.Forms.CheckBox checkBoxMouse;
+        private System.Windows.Forms.GroupBox groupBoxImage;
+        private System.Windows.Forms.GroupBox groupBoxComponent;
+        private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;
         private System.Windows.Forms.Timer timerScreenPreview;
+        private System.Windows.Forms.Label labelTags;
+        private System.Windows.Forms.ComboBox comboBoxTags;
     }
 }

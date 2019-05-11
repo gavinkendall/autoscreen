@@ -32,6 +32,8 @@ namespace AutoScreenCapture
         /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
+        public MacroTagCollection MacroTagCollection { get; set; }
+
         private Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
 
         /// <summary>
@@ -45,7 +47,8 @@ namespace AutoScreenCapture
         private void FormRegion_Load(object sender, EventArgs e)
         {
             ScreenDictionary.Clear();
-            comboBoxRegionScreenTemplate.Items.Clear();
+            comboBoxScreenTemplate.Items.Clear();
+            comboBoxTags.DataSource = null;
 
             int component = 1;
 
@@ -55,57 +58,65 @@ namespace AutoScreenCapture
                 component++;
             }
 
-            comboBoxRegionScreenTemplate.Items.Add(string.Empty);
+            // *** Screen Template ***
+            comboBoxScreenTemplate.Items.Add(string.Empty);
 
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
                 System.Windows.Forms.Screen screen = ScreenDictionary[i];
-                comboBoxRegionScreenTemplate.Items.Add("Screen " + i + " (" + screen.Bounds.Width + " x " + screen.Bounds.Height + ")");
+                comboBoxScreenTemplate.Items.Add("Screen " + i + " (" + screen.Bounds.Width + " x " + screen.Bounds.Height + ")");
             }
 
-            comboBoxRegionScreenTemplate.SelectedIndex = 0;
+            comboBoxScreenTemplate.SelectedIndex = 0;
+            // ***********************
 
-            comboBoxRegionFormat.Items.Clear();
+            // *** Macro Tags ***
+            comboBoxTags.DisplayMember = "Description";
+            comboBoxTags.ValueMember = "Name";
+            comboBoxTags.DataSource = MacroTagCollection.GetList();
+            // ******************
+
+            comboBoxFormat.Items.Clear();
 
             foreach (ImageFormat imageFormat in ImageFormatCollection)
             {
-                comboBoxRegionFormat.Items.Add(imageFormat.Name);
+                comboBoxFormat.Items.Add(imageFormat.Name);
             }
 
             if (RegionObject != null)
             {
                 Text = "Change Region";
 
-                textBoxRegionName.Text = RegionObject.Name;
-                textBoxRegionFolder.Text = FileSystem.CorrectDirectoryPath(RegionObject.Folder);
-                textBoxRegionMacro.Text = RegionObject.Macro;
-                comboBoxRegionFormat.SelectedItem = RegionObject.Format.Name;
-                numericUpDownRegionJpegQuality.Value = RegionObject.JpegQuality;
-                numericUpDownRegionResolutionRatio.Value = RegionObject.ResolutionRatio;
-                checkBoxRegionMouse.Checked = RegionObject.Mouse;
-                numericUpDownRegionX.Value = RegionObject.X;
-                numericUpDownRegionY.Value = RegionObject.Y;
-                numericUpDownRegionWidth.Value = RegionObject.Width;
-                numericUpDownRegionHeight.Value = RegionObject.Height;
+                textBoxName.Text = RegionObject.Name;
+                textBoxFolder.Text = FileSystem.CorrectDirectoryPath(RegionObject.Folder);
+                textBoxMacro.Text = RegionObject.Macro;
+                comboBoxFormat.SelectedItem = RegionObject.Format.Name;
+                numericUpDownJpegQuality.Value = RegionObject.JpegQuality;
+                numericUpDownResolutionRatio.Value = RegionObject.ResolutionRatio;
+                checkBoxMouse.Checked = RegionObject.Mouse;
+                numericUpDownX.Value = RegionObject.X;
+                numericUpDownY.Value = RegionObject.Y;
+                numericUpDownWidth.Value = RegionObject.Width;
+                numericUpDownHeight.Value = RegionObject.Height;
             }
             else
             {
                 Text = "Add New Region";
 
-                textBoxRegionName.Text = string.Empty;
-                textBoxRegionFolder.Text = FileSystem.ScreenshotsFolder;
-                textBoxRegionMacro.Text = MacroParser.DefaultMacro;
-                comboBoxRegionFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
-                numericUpDownRegionJpegQuality.Value = 100;
-                numericUpDownRegionResolutionRatio.Value = 100;
-                checkBoxRegionMouse.Checked = true;
-                numericUpDownRegionX.Value = 0;
-                numericUpDownRegionY.Value = 0;
-                numericUpDownRegionWidth.Value = 800;
-                numericUpDownRegionHeight.Value = 600;
+                textBoxName.Text = string.Empty;
+                textBoxFolder.Text = FileSystem.ScreenshotsFolder;
+                textBoxMacro.Text = MacroParser.DefaultMacro;
+                comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
+                numericUpDownJpegQuality.Value = 100;
+                numericUpDownResolutionRatio.Value = 100;
+                checkBoxMouse.Checked = true;
+                numericUpDownX.Value = 0;
+                numericUpDownY.Value = 0;
+                numericUpDownWidth.Value = 800;
+                numericUpDownHeight.Value = 600;
             }
 
-            timerRegionPreview.Enabled = true;
+            timerPreview.Enabled = true;
         }
 
         private void Click_buttonRegionCancel(object sender, EventArgs e)
@@ -131,20 +142,20 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (RegionCollection.GetByName(textBoxRegionName.Text) == null)
+                if (RegionCollection.GetByName(textBoxName.Text) == null)
                 {
                     RegionCollection.Add(new Region(
-                        textBoxRegionName.Text,
-                        FileSystem.CorrectDirectoryPath(textBoxRegionFolder.Text),
-                        textBoxRegionMacro.Text,
-                        ImageFormatCollection.GetByName(comboBoxRegionFormat.Text),
-                        (int)numericUpDownRegionJpegQuality.Value,
-                        (int)numericUpDownRegionResolutionRatio.Value,
-                        checkBoxRegionMouse.Checked,
-                        (int)numericUpDownRegionX.Value,
-                        (int)numericUpDownRegionY.Value,
-                        (int)numericUpDownRegionWidth.Value,
-                        (int)numericUpDownRegionHeight.Value));
+                        textBoxName.Text,
+                        FileSystem.CorrectDirectoryPath(textBoxFolder.Text),
+                        textBoxMacro.Text,
+                        ImageFormatCollection.GetByName(comboBoxFormat.Text),
+                        (int)numericUpDownJpegQuality.Value,
+                        (int)numericUpDownResolutionRatio.Value,
+                        checkBoxMouse.Checked,
+                        (int)numericUpDownX.Value,
+                        (int)numericUpDownY.Value,
+                        (int)numericUpDownWidth.Value,
+                        (int)numericUpDownHeight.Value));
 
                     Okay();
                 }
@@ -171,24 +182,24 @@ namespace AutoScreenCapture
                     {
                         TrimInput();
 
-                        if (RegionCollection.GetByName(textBoxRegionName.Text) != null && NameChanged())
+                        if (RegionCollection.GetByName(textBoxName.Text) != null && NameChanged())
                         {
                             MessageBox.Show("A region with this name already exists.", "Duplicate Name Conflict",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
-                            RegionCollection.Get(RegionObject).Name = textBoxRegionName.Text;
-                            RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectDirectoryPath(textBoxRegionFolder.Text);
-                            RegionCollection.Get(RegionObject).Macro = textBoxRegionMacro.Text;
-                            RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxRegionFormat.Text);
-                            RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownRegionJpegQuality.Value;
-                            RegionCollection.Get(RegionObject).ResolutionRatio = (int) numericUpDownRegionResolutionRatio.Value;
-                            RegionCollection.Get(RegionObject).Mouse = checkBoxRegionMouse.Checked;
-                            RegionCollection.Get(RegionObject).X = (int) numericUpDownRegionX.Value;
-                            RegionCollection.Get(RegionObject).Y = (int) numericUpDownRegionY.Value;
-                            RegionCollection.Get(RegionObject).Width = (int) numericUpDownRegionWidth.Value;
-                            RegionCollection.Get(RegionObject).Height = (int) numericUpDownRegionHeight.Value;
+                            RegionCollection.Get(RegionObject).Name = textBoxName.Text;
+                            RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectDirectoryPath(textBoxFolder.Text);
+                            RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
+                            RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
+                            RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
+                            RegionCollection.Get(RegionObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
+                            RegionCollection.Get(RegionObject).Mouse = checkBoxMouse.Checked;
+                            RegionCollection.Get(RegionObject).X = (int) numericUpDownX.Value;
+                            RegionCollection.Get(RegionObject).Y = (int) numericUpDownY.Value;
+                            RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
+                            RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
 
                             Okay();
                         }
@@ -211,16 +222,16 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxRegionName.Text = textBoxRegionName.Text.Trim();
-            textBoxRegionFolder.Text = textBoxRegionFolder.Text.Trim();
-            textBoxRegionMacro.Text = textBoxRegionMacro.Text.Trim();
+            textBoxName.Text = textBoxName.Text.Trim();
+            textBoxFolder.Text = textBoxFolder.Text.Trim();
+            textBoxMacro.Text = textBoxMacro.Text.Trim();
         }
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxRegionName.Text) &&
-                !string.IsNullOrEmpty(textBoxRegionFolder.Text) &&
-                !string.IsNullOrEmpty(textBoxRegionMacro.Text))
+            if (!string.IsNullOrEmpty(textBoxName.Text) &&
+                !string.IsNullOrEmpty(textBoxFolder.Text) &&
+                !string.IsNullOrEmpty(textBoxMacro.Text))
             {
                 return true;
             }
@@ -231,16 +242,16 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             if (RegionObject != null &&
-                (!RegionObject.Folder.Equals(textBoxRegionFolder.Text) ||
-                 !RegionObject.Macro.Equals(textBoxRegionMacro.Text) ||
-                 !RegionObject.Format.Equals(comboBoxRegionFormat.SelectedItem) ||
-                 RegionObject.JpegQuality != (int)numericUpDownRegionJpegQuality.Value ||
-                 RegionObject.ResolutionRatio != (int)numericUpDownRegionResolutionRatio.Value ||
-                 !RegionObject.Mouse.Equals(checkBoxRegionMouse.Checked) ||
-                 RegionObject.X != (int)numericUpDownRegionX.Value ||
-                 RegionObject.Y != (int)numericUpDownRegionY.Value ||
-                 RegionObject.Width != (int)numericUpDownRegionWidth.Value ||
-                 RegionObject.Height != (int)numericUpDownRegionHeight.Value))
+                (!RegionObject.Folder.Equals(textBoxFolder.Text) ||
+                 !RegionObject.Macro.Equals(textBoxMacro.Text) ||
+                 !RegionObject.Format.Equals(comboBoxFormat.SelectedItem) ||
+                 RegionObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
+                 RegionObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
+                 !RegionObject.Mouse.Equals(checkBoxMouse.Checked) ||
+                 RegionObject.X != (int)numericUpDownX.Value ||
+                 RegionObject.Y != (int)numericUpDownY.Value ||
+                 RegionObject.Width != (int)numericUpDownWidth.Value ||
+                 RegionObject.Height != (int)numericUpDownHeight.Value))
             {
                 return true;
             }
@@ -251,7 +262,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (RegionObject != null &&
-                !RegionObject.Name.Equals(textBoxRegionName.Text))
+                !RegionObject.Name.Equals(textBoxName.Text))
             {
                 return true;
             }
@@ -277,51 +288,62 @@ namespace AutoScreenCapture
 
             if (browser.ShowDialog() == DialogResult.OK)
             {
-                textBoxRegionFolder.Text = browser.SelectedPath;
+                textBoxFolder.Text = browser.SelectedPath;
             }
         }
 
         private void UpdatePreview()
         {
-            pictureBoxRegionPreview.Image = ScreenCapture.GetScreenBitmap(
-                (int)numericUpDownRegionX.Value,
-                (int)numericUpDownRegionY.Value,
-                (int)numericUpDownRegionWidth.Value,
-                (int)numericUpDownRegionHeight.Value,
-                (int)numericUpDownRegionResolutionRatio.Value,
-                checkBoxRegionMouse.Checked
+            pictureBoxPreview.Image = ScreenCapture.GetScreenBitmap(
+                (int)numericUpDownX.Value,
+                (int)numericUpDownY.Value,
+                (int)numericUpDownWidth.Value,
+                (int)numericUpDownHeight.Value,
+                (int)numericUpDownResolutionRatio.Value,
+                checkBoxMouse.Checked
             );
         }
 
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timerRegionPreview.Enabled = false;
+            timerPreview.Enabled = false;
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ScreenDictionary.ContainsKey(comboBoxRegionScreenTemplate.SelectedIndex))
+            if (ScreenDictionary.ContainsKey(comboBoxScreenTemplate.SelectedIndex))
             {
-                System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxRegionScreenTemplate.SelectedIndex];
+                System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxScreenTemplate.SelectedIndex];
 
-                numericUpDownRegionX.Value = screen.Bounds.X;
-                numericUpDownRegionY.Value = screen.Bounds.Y;
-                numericUpDownRegionWidth.Value = screen.Bounds.Width;
-                numericUpDownRegionHeight.Value = screen.Bounds.Height;
+                numericUpDownX.Value = screen.Bounds.X;
+                numericUpDownY.Value = screen.Bounds.Y;
+                numericUpDownWidth.Value = screen.Bounds.Width;
+                numericUpDownHeight.Value = screen.Bounds.Height;
 
-                comboBoxRegionScreenTemplate.SelectedIndex = 0;
+                comboBoxScreenTemplate.SelectedIndex = 0;
             }
         }
 
         private void comboBoxRegionFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxRegionFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
+            if (comboBoxFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
             {
-                numericUpDownRegionJpegQuality.Enabled = true;
+                numericUpDownJpegQuality.Enabled = true;
             }
             else
             {
-                numericUpDownRegionJpegQuality.Enabled = false;
+                numericUpDownJpegQuality.Enabled = false;
+            }
+        }
+
+        private void comboBoxTags_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MacroTag macroTag = (MacroTag)comboBoxTags.SelectedItem;
+
+            if (macroTag != null && !string.IsNullOrEmpty(macroTag.Name))
+            {
+                textBoxMacro.Text += macroTag.Name;
+                comboBoxTags.SelectedIndex = 0;
             }
         }
     }
