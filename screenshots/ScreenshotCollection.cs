@@ -183,7 +183,8 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection)
         {
-            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
+            if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
             {
                 xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
@@ -244,7 +245,7 @@ namespace AutoScreenCapture
                                         screenshot.Component = screenshot.Screen == 5 ? 0 : screenshot.Screen;
                                     }
                                     break;
-                                
+
                                 // We still want to support "component" since this was introduced in version 2.2 as the new representation for "screen".
                                 case SCREENSHOT_COMPONENT:
                                     xReader.Read();
@@ -326,55 +327,59 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Save()
         {
-            XmlWriterSettings xSettings = new XmlWriterSettings
+            if (Directory.Exists(FileSystem.ApplicationFolder))
             {
-                Indent = true,
-                CloseOutput = true,
-                CheckCharacters = true,
-                Encoding = Encoding.UTF8,
-                NewLineChars = Environment.NewLine,
-                IndentChars = XML_FILE_INDENT_CHARS,
-                NewLineHandling = NewLineHandling.Entitize,
-                ConformanceLevel = ConformanceLevel.Document
-            };
-
-            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
-            {
-                File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
-            }
-
-            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile, xSettings))
-            {
-                xWriter.WriteStartDocument();
-                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                xWriter.WriteStartElement(XML_FILE_SCREENSHOTS_NODE);
-
-                foreach (object obj in _screenshotList)
+                XmlWriterSettings xSettings = new XmlWriterSettings
                 {
-                    Screenshot screenshot = (Screenshot)obj;
+                    Indent = true,
+                    CloseOutput = true,
+                    CheckCharacters = true,
+                    Encoding = Encoding.UTF8,
+                    NewLineChars = Environment.NewLine,
+                    IndentChars = XML_FILE_INDENT_CHARS,
+                    NewLineHandling = NewLineHandling.Entitize,
+                    ConformanceLevel = ConformanceLevel.Document
+                };
 
-                    xWriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
-                    xWriter.WriteElementString(SCREENSHOT_VIEWID, screenshot.ViewId.ToString());
-                    xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
-                    xWriter.WriteElementString(SCREENSHOT_TIME, screenshot.Time);
-                    xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
-                    xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
-                    xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());
-                    xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slide.Name);
-                    xWriter.WriteElementString(SCREENSHOT_SLIDEVALUE, screenshot.Slide.Value);
-                    xWriter.WriteElementString(SCREENSHOT_WINDOW_TITLE, screenshot.WindowTitle);
-
-                    xWriter.WriteEndElement();
+                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
+                {
+                    File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
                 }
 
-                xWriter.WriteEndElement();
-                xWriter.WriteEndElement();
-                xWriter.WriteEndDocument();
+                using (XmlWriter xWriter =
+                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile, xSettings))
+                {
+                    xWriter.WriteStartDocument();
+                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteStartElement(XML_FILE_SCREENSHOTS_NODE);
 
-                xWriter.Flush();
-                xWriter.Close();
+                    foreach (object obj in _screenshotList)
+                    {
+                        Screenshot screenshot = (Screenshot) obj;
+
+                        xWriter.WriteStartElement(XML_FILE_SCREENSHOT_NODE);
+                        xWriter.WriteElementString(SCREENSHOT_VIEWID, screenshot.ViewId.ToString());
+                        xWriter.WriteElementString(SCREENSHOT_DATE, screenshot.Date);
+                        xWriter.WriteElementString(SCREENSHOT_TIME, screenshot.Time);
+                        xWriter.WriteElementString(SCREENSHOT_PATH, screenshot.Path);
+                        xWriter.WriteElementString(SCREENSHOT_FORMAT, screenshot.Format.Name);
+                        xWriter.WriteElementString(SCREENSHOT_COMPONENT, screenshot.Component.ToString());
+                        xWriter.WriteElementString(SCREENSHOT_SLIDENAME, screenshot.Slide.Name);
+                        xWriter.WriteElementString(SCREENSHOT_SLIDEVALUE, screenshot.Slide.Value);
+                        xWriter.WriteElementString(SCREENSHOT_WINDOW_TITLE, screenshot.WindowTitle);
+
+                        xWriter.WriteEndElement();
+                    }
+
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndDocument();
+
+                    xWriter.Flush();
+                    xWriter.Close();
+                }
             }
         }
     }

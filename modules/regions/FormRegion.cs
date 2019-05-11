@@ -77,7 +77,7 @@ namespace AutoScreenCapture
                 Text = "Change Region";
 
                 textBoxRegionName.Text = RegionObject.Name;
-                textBoxRegionFolder.Text = RegionObject.Folder;
+                textBoxRegionFolder.Text = FileSystem.CorrectDirectoryPath(RegionObject.Folder);
                 textBoxRegionMacro.Text = RegionObject.Macro;
                 comboBoxRegionFormat.SelectedItem = RegionObject.Format.Name;
                 numericUpDownRegionJpegQuality.Value = RegionObject.JpegQuality;

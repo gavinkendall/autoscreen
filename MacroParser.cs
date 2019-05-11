@@ -11,7 +11,7 @@ namespace AutoScreenCapture
     {
         public static readonly string DateFormat = "yyyy-MM-dd";
         public static readonly string TimeFormat = "HH:mm:ss.fff";
-        public static readonly string DefaultMacro = @"%name%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%.%format%";
+        public static readonly string DefaultMacro = @"%name%\%year%-%month%-%day%_%hour%-%minute%-%second%-%millisecond%_%count%.%format%";
 
         /// <summary>
         /// Replaces tags (such as "%year%") with an appropriate value (such as "2019").

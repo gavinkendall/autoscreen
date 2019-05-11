@@ -102,25 +102,10 @@ namespace AutoScreenCapture
                 folderPath = FileSystem.ScreenshotsFolder;
             }
 
-            //if (!folderPath.EndsWith(@"\"))
-            //{
-            //    folderPath += @"\";
-            //}
-
-            //FileInfo fileInfo = new FileInfo(folderPath);
-
-            //if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
-            //{
-            //    DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
-
-            //    if (driveInfo.IsReady)
-            //    {
-            //        if (!Directory.Exists(folderPath))
-            //        {
-            //            Directory.CreateDirectory(folderPath);
-            //        }
-            //    }
-            //}
+            if (!folderPath.EndsWith(@"\"))
+            {
+                folderPath += @"\";
+            }
 
             return folderPath;
         }

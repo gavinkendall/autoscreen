@@ -121,7 +121,8 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+            if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
             {
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
@@ -173,49 +174,53 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            XmlWriterSettings xSettings = new XmlWriterSettings
+            if (Directory.Exists(FileSystem.ApplicationFolder))
             {
-                Indent = true,
-                CloseOutput = true,
-                CheckCharacters = true,
-                Encoding = Encoding.UTF8,
-                NewLineChars = Environment.NewLine,
-                IndentChars = XML_FILE_INDENT_CHARS,
-                NewLineHandling = NewLineHandling.Entitize,
-                ConformanceLevel = ConformanceLevel.Document
-            };
-
-            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
-            {
-                File.Delete(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
-            }
-
-            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
-            {
-                xWriter.WriteStartDocument();
-                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
-
-                foreach (object obj in _editorList)
+                XmlWriterSettings xSettings = new XmlWriterSettings
                 {
-                    Editor editor = (Editor)obj;
+                    Indent = true,
+                    CloseOutput = true,
+                    CheckCharacters = true,
+                    Encoding = Encoding.UTF8,
+                    NewLineChars = Environment.NewLine,
+                    IndentChars = XML_FILE_INDENT_CHARS,
+                    NewLineHandling = NewLineHandling.Entitize,
+                    ConformanceLevel = ConformanceLevel.Document
+                };
 
-                    xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
-                    xWriter.WriteElementString(EDITOR_NAME, editor.Name);
-                    xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
-                    xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
-
-                    xWriter.WriteEndElement();
+                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+                {
+                    File.Delete(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
                 }
 
-                xWriter.WriteEndElement();
-                xWriter.WriteEndElement();
-                xWriter.WriteEndDocument();
+                using (XmlWriter xWriter =
+                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
+                {
+                    xWriter.WriteStartDocument();
+                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
 
-                xWriter.Flush();
-                xWriter.Close();
+                    foreach (object obj in _editorList)
+                    {
+                        Editor editor = (Editor) obj;
+
+                        xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
+                        xWriter.WriteElementString(EDITOR_NAME, editor.Name);
+                        xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
+                        xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
+
+                        xWriter.WriteEndElement();
+                    }
+
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndDocument();
+
+                    xWriter.Flush();
+                    xWriter.Close();
+                }
             }
         }
     }

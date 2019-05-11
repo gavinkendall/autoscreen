@@ -34,9 +34,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Threads for background operations.
         /// </summary>
-        private BackgroundWorker runSlideSearchThread = null;
+        private BackgroundWorker runScreenshotSearchThread = null;
 
         private BackgroundWorker runDateSearchThread = null;
+
+        private BackgroundWorker runDeleteSlidesThread = null;
 
         private BackgroundWorker runDeleteOldScreenshotsThread = null;
 
@@ -103,6 +105,9 @@ namespace AutoScreenCapture
 
             InitializeThreads();
 
+            // Get rid of the old "slides" directory that may still remain from an old version of the application.
+            DeleteSlides();
+
             DeleteOldScreenshots();
 
             if (args.Length > 0)
@@ -120,7 +125,7 @@ namespace AutoScreenCapture
         {
             SearchTitles();
             SearchDates();
-            SearchSlides();
+            SearchScreenshots();
 
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -134,6 +139,13 @@ namespace AutoScreenCapture
             };
             runDeleteOldScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteOldScreenshotsThread);
 
+            runDeleteSlidesThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteSlidesThread);
+
             runDateSearchThread = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
@@ -141,12 +153,12 @@ namespace AutoScreenCapture
             };
             runDateSearchThread.DoWork += new DoWorkEventHandler(DoWork_runDateSearchThread);
 
-            runSlideSearchThread = new BackgroundWorker
+            runScreenshotSearchThread = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
                 WorkerSupportsCancellation = true
             };
-            runSlideSearchThread.DoWork += new DoWorkEventHandler(DoWork_runSlideSearchThread);
+            runScreenshotSearchThread.DoWork += new DoWorkEventHandler(DoWork_runScreenshotSearchThread);
 
             runTitleSearchThread = new BackgroundWorker
             {
@@ -340,9 +352,9 @@ namespace AutoScreenCapture
                     runDateSearchThread.CancelAsync();
                 }
 
-                if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
+                if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
                 {
-                    runSlideSearchThread.CancelAsync();
+                    runScreenshotSearchThread.CancelAsync();
                 }
 
                 if (runDeleteOldScreenshotsThread != null && runDeleteOldScreenshotsThread.IsBusy)
@@ -375,10 +387,18 @@ namespace AutoScreenCapture
             }
         }
 
+        private void DeleteSlides()
+        {
+            if (runDeleteSlidesThread != null && !runDeleteSlidesThread.IsBusy)
+            {
+                runDeleteSlidesThread.RunWorkerAsync();
+            }
+        }
+
         /// <summary>
-        /// Searches for slides.
+        /// Searches for screenshots.
         /// </summary>
-        private void SearchSlides()
+        private void SearchScreenshots()
         {
             Slideshow.Index = 0;
             Slideshow.Count = 0;
@@ -387,9 +407,9 @@ namespace AutoScreenCapture
 
             listBoxScreenshots.DataSource = null;
 
-            if (runSlideSearchThread != null && !runSlideSearchThread.IsBusy)
+            if (runScreenshotSearchThread != null && !runScreenshotSearchThread.IsBusy)
             {
-                runSlideSearchThread.RunWorkerAsync();
+                runScreenshotSearchThread.RunWorkerAsync();
             }
 
             listBoxScreenshots.EndUpdate();
@@ -424,11 +444,11 @@ namespace AutoScreenCapture
         /// This thread is responsible for finding slides.
         /// </summary>
         /// <param name="e"></param>
-        private void RunSlideSearch(DoWorkEventArgs e)
+        private void RunScreenshotSearch(DoWorkEventArgs e)
         {
             if (listBoxScreenshots.InvokeRequired)
             {
-                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] {e});
+                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunScreenshotSearch), new object[] {e});
             }
             else
             {
@@ -468,6 +488,16 @@ namespace AutoScreenCapture
 
                 monthCalendar.BoldedDates = boldedDates;
             }
+        }
+
+        /// <summary>
+        /// This thread is responsible for deleting all the slides remaining from an old version of the application
+        /// since we no longer use slides or support the Slideshow module going forward.
+        /// </summary>
+        /// <param name="e"></param>
+        private void RunDeleteSlides(DoWorkEventArgs e)
+        {
+            FileSystem.DeleteFilesInDirectory(FileSystem.SlidesFolder);
         }
 
         private void RunTitleSearch(DoWorkEventArgs e)
@@ -676,9 +706,9 @@ namespace AutoScreenCapture
                 }
 
                 // Stop the slide search thread if it's busy.
-                if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
+                if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
                 {
-                    runSlideSearchThread.CancelAsync();
+                    runScreenshotSearchThread.CancelAsync();
                 }
 
                 DisableStartCapture();
@@ -829,7 +859,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void ShowScreenshots()
         {
-            SearchSlides();
+            SearchScreenshots();
 
             if (!tabControlModules.SelectedTab.Name.Equals("tabPageScreenshots"))
             {
@@ -904,9 +934,9 @@ namespace AutoScreenCapture
                     runDateSearchThread.CancelAsync();
                 }
 
-                if (runSlideSearchThread != null && runSlideSearchThread.IsBusy)
+                if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
                 {
-                    runSlideSearchThread.CancelAsync();
+                    runScreenshotSearchThread.CancelAsync();
                 }
 
                 if (runDeleteOldScreenshotsThread != null && runDeleteOldScreenshotsThread.IsBusy)
@@ -924,9 +954,9 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DoWork_runSlideSearchThread(object sender, DoWorkEventArgs e)
+        private void DoWork_runScreenshotSearchThread(object sender, DoWorkEventArgs e)
         {
-            RunSlideSearch(e);
+            RunScreenshotSearch(e);
         }
 
         /// <summary>
@@ -937,6 +967,16 @@ namespace AutoScreenCapture
         private void DoWork_runDateSearchThread(object sender, DoWorkEventArgs e)
         {
             RunDateSearch(e);
+        }
+
+        /// <summary>
+        /// Runs the delete slides thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoWork_runDeleteSlidesThread(object sender, DoWorkEventArgs e)
+        {
+            RunDeleteSlides(e);
         }
 
         /// <summary>
@@ -2537,7 +2577,7 @@ namespace AutoScreenCapture
             foreach (Region region in formRegion.RegionCollection)
             {
                 ScreenCapture.TakeScreenshot(
-                    path: region.Folder + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
+                    path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     format: region.Format,
                     jpegQuality: region.JpegQuality,
                     resolutionRatio: region.ResolutionRatio,
@@ -2559,7 +2599,7 @@ namespace AutoScreenCapture
                 {
                     // Active Window
                     ScreenCapture.TakeScreenshot(
-                        path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                        path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                         format: screen.Format,
                         jpegQuality: screen.JpegQuality,
                         resolutionRatio: screen.ResolutionRatio,
@@ -2572,7 +2612,7 @@ namespace AutoScreenCapture
                     {
                         // Screen X
                         ScreenCapture.TakeScreenshot(
-                            path: screen.Folder + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                            path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                             format: screen.Format,
                             component: screen.Component,
                             jpegQuality: screen.JpegQuality,

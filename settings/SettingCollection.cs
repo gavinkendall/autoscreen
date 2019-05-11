@@ -144,7 +144,7 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (File.Exists(Filepath))
+            if (Directory.Exists(FileSystem.SettingsFolder) && File.Exists(Filepath))
             {
                 FileInfo fileInfo = new FileInfo(Filepath);
 
@@ -203,46 +203,49 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            XmlWriterSettings xSettings = new XmlWriterSettings();
-            xSettings.Indent = true;
-            xSettings.CloseOutput = true;
-            xSettings.CheckCharacters = true;
-            xSettings.Encoding = Encoding.UTF8;
-            xSettings.NewLineChars = Environment.NewLine;
-            xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-            xSettings.NewLineHandling = NewLineHandling.Entitize;
-            xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-            if (File.Exists(Filepath))
+            if (Directory.Exists(FileSystem.SettingsFolder))
             {
-                File.Delete(Filepath);
-            }
+                XmlWriterSettings xSettings = new XmlWriterSettings();
+                xSettings.Indent = true;
+                xSettings.CloseOutput = true;
+                xSettings.CheckCharacters = true;
+                xSettings.Encoding = Encoding.UTF8;
+                xSettings.NewLineChars = Environment.NewLine;
+                xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+                xSettings.NewLineHandling = NewLineHandling.Entitize;
+                xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-            using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
-            {
-                xWriter.WriteStartDocument();
-                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                xWriter.WriteStartElement(XML_FILE_SETTINGS_NODE);
-
-                foreach (object obj in _settingList)
+                if (File.Exists(Filepath))
                 {
-                    Setting setting = (Setting)obj;
-
-                    xWriter.WriteStartElement(XML_FILE_SETTING_NODE);
-                    xWriter.WriteElementString(SETTING_KEY, setting.Key);
-                    xWriter.WriteElementString(SETTING_VALUE, setting.Value.ToString());
-
-                    xWriter.WriteEndElement();
+                    File.Delete(Filepath);
                 }
 
-                xWriter.WriteEndElement();
-                xWriter.WriteEndElement();
-                xWriter.WriteEndDocument();
+                using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
+                {
+                    xWriter.WriteStartDocument();
+                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteStartElement(XML_FILE_SETTINGS_NODE);
 
-                xWriter.Flush();
-                xWriter.Close();
+                    foreach (object obj in _settingList)
+                    {
+                        Setting setting = (Setting) obj;
+
+                        xWriter.WriteStartElement(XML_FILE_SETTING_NODE);
+                        xWriter.WriteElementString(SETTING_KEY, setting.Key);
+                        xWriter.WriteElementString(SETTING_VALUE, setting.Value.ToString());
+
+                        xWriter.WriteEndElement();
+                    }
+
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndDocument();
+
+                    xWriter.Flush();
+                    xWriter.Close();
+                }
             }
         }
 

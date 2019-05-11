@@ -112,7 +112,8 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(ImageFormatCollection imageFormatCollection)
         {
-            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
+            if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
             {
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
@@ -207,53 +208,57 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            XmlWriterSettings xSettings = new XmlWriterSettings();
-            xSettings.Indent = true;
-            xSettings.CloseOutput = true;
-            xSettings.CheckCharacters = true;
-            xSettings.Encoding = Encoding.UTF8;
-            xSettings.NewLineChars = Environment.NewLine;
-            xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-            xSettings.NewLineHandling = NewLineHandling.Entitize;
-            xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-            if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
+            if (Directory.Exists(FileSystem.ApplicationFolder))
             {
-                File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
-            }
+                XmlWriterSettings xSettings = new XmlWriterSettings();
+                xSettings.Indent = true;
+                xSettings.CloseOutput = true;
+                xSettings.CheckCharacters = true;
+                xSettings.Encoding = Encoding.UTF8;
+                xSettings.NewLineChars = Environment.NewLine;
+                xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+                xSettings.NewLineHandling = NewLineHandling.Entitize;
+                xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-            using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreensFile, xSettings))
-            {
-                xWriter.WriteStartDocument();
-                xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
-
-                foreach (object obj in _screenList)
+                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
                 {
-                    Screen screen = (Screen)obj;
-
-                    xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
-                    xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
-                    xWriter.WriteElementString(SCREEN_NAME, screen.Name);
-                    xWriter.WriteElementString(SCREEN_FOLDER, screen.Folder);
-                    xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
-                    xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
-                    xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
-                    xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
-                    xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
-                    xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
-
-                    xWriter.WriteEndElement();
+                    File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
                 }
 
-                xWriter.WriteEndElement();
-                xWriter.WriteEndElement();
-                xWriter.WriteEndDocument();
+                using (XmlWriter xWriter =
+                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreensFile, xSettings))
+                {
+                    xWriter.WriteStartDocument();
+                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
 
-                xWriter.Flush();
-                xWriter.Close();
+                    foreach (object obj in _screenList)
+                    {
+                        Screen screen = (Screen) obj;
+
+                        xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
+                        xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
+                        xWriter.WriteElementString(SCREEN_NAME, screen.Name);
+                        xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectDirectoryPath(screen.Folder));
+                        xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
+                        xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
+                        xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
+                        xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
+                        xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
+                        xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
+
+                        xWriter.WriteEndElement();
+                    }
+
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndDocument();
+
+                    xWriter.Flush();
+                    xWriter.Close();
+                }
             }
         }
     }
