@@ -230,41 +230,51 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!string.IsNullOrEmpty(path))
+                Bitmap bitmap = component == 0
+                    ? GetActiveWindowBitmap()
+                    : GetScreenBitmap(x, y, width, height, Ratio, mouse);
+
+                if (bitmap != null && !string.IsNullOrEmpty(path))
                 {
-                    Bitmap bitmap = component == 0 ? GetActiveWindowBitmap() : GetScreenBitmap(x, y, width, height, Ratio, mouse);
+                    FileInfo fileInfo = new FileInfo(path);
 
-                    if (bitmap != null)
+                    if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                     {
-                        ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, GetActiveWindowTitle(), viewId));
+                        DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
 
-                        FileInfo fileInfo = new FileInfo(path);
-
-                        if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
+                        if (driveInfo.IsReady)
                         {
-                            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+                            double freeDiskSpacePercentage =
+                                (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
-                            if (driveInfo.IsReady)
+                            if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                             {
-                                double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float)driveInfo.TotalSize) * 100;
+                                string dirName = Path.GetDirectoryName(path);
 
-                                if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
+                                if (!string.IsNullOrEmpty(dirName))
                                 {
-                                    if (Directory.Exists(Path.GetDirectoryName(path)))
+                                    if (!Directory.Exists(dirName))
                                     {
-                                        SaveToFile(path, format, jpegQuality, bitmap);
+                                        Directory.CreateDirectory(dirName);
                                     }
+
+                                    SaveToFile(path, format, jpegQuality, bitmap);
+
+                                    ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format,
+                                        component, GetActiveWindowTitle(), viewId));
                                 }
                             }
                         }
-
-                        GC.Collect();
                     }
+
+                    GC.Collect();
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCapture::TakeScreenshot(path, format, component, jpegQuality, resolutionRatio, mouse, x, y, width, height)", ex);
+                Log.Write(
+                    "ScreenCapture::TakeScreenshot(path, format, component, jpegQuality, resolutionRatio, mouse, x, y, width, height)",
+                    ex);
             }
         }
 

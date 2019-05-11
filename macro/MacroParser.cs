@@ -19,7 +19,7 @@ namespace AutoScreenCapture
         public static readonly string DateFormat = YearFormat + "-" + MonthFormat + "-" + DayFormat;
         public static readonly string TimeFormat = HourFormat + ":" + MinuteFormat + ":" + SecondFormat + "." + MillisecondFormat;
         public static readonly string TimeFormatForWindows = HourFormat + "-" + MinuteFormat + "-" + SecondFormat + "-" + MillisecondFormat;
-        public static readonly string DefaultMacro = @"%name%\screenshot %count% on %date% at %time%.%format%";
+        public static readonly string DefaultMacro = @"%date%\%name%\screenshot %count%.%format%";
 
         /// <summary>
         /// Replaces tags (such as "%year%") with an appropriate value (such as "2019").
