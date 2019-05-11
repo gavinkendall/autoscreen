@@ -633,6 +633,8 @@ namespace AutoScreenCapture
                     WindowState = FormWindowState.Normal;
                 }
 
+                Focus();
+
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
             }
         }
