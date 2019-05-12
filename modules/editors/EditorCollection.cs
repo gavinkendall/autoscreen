@@ -31,6 +31,9 @@ namespace AutoScreenCapture
         private const string EDITOR_APPLICATION = "application";
         private const string EDITOR_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_EDITORS_NODE + "/" + XML_FILE_EDITOR_NODE;
 
+        public static string AppCodename { get; set; }
+        public static string AppVersion { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -127,6 +130,9 @@ namespace AutoScreenCapture
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
 
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
                 XmlNodeList xEditors = xDoc.SelectNodes(EDITOR_XPATH);
 
                 foreach (XmlNode xEditor in xEditors)
@@ -165,6 +171,11 @@ namespace AutoScreenCapture
                     {
                         Add(editor);
                     }
+                }
+
+                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                {
+                    Save();
                 }
             }
         }

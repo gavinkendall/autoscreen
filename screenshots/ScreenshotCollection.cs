@@ -24,7 +24,7 @@ namespace AutoScreenCapture
         private static string _date;
         private static string _title;
 
-        private static List<string> _titles = new List<string>();
+        private static List<string> _windowTitles = new List<string>();
         private static List<string> _slideNames = new List<string>();
         private static BindingList<Slide> _slides = new BindingList<Slide>();
         private static List<Screenshot> _screenshotList = new List<Screenshot>();
@@ -60,22 +60,22 @@ namespace AutoScreenCapture
                 _slideNames.Add(newScreenshot.Slide.Name);
             }
 
-            if (!_titles.Contains(newScreenshot.WindowTitle))
+            if (!_windowTitles.Contains(newScreenshot.WindowTitle))
             {
-                _titles.Add(newScreenshot.WindowTitle);
-                _titles.Sort();
+                _windowTitles.Add(newScreenshot.WindowTitle);
+                _windowTitles.Sort();
             }
         }
 
-        public static void DeleteScreenshotsOlderThanDays(int daysOld)
+        public static void KeepScreenshotsForDays(int days)
         {
-            if (daysOld > 0)
+            if (days > 0)
             {
                 List<Screenshot> screenshotDeletedList = new List<Screenshot>();
 
                 foreach (Screenshot screenshot in _screenshotList)
                 {
-                    if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-daysOld))
+                    if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-days))
                     {
                         if (File.Exists(screenshot.Path))
                         {
@@ -123,22 +123,22 @@ namespace AutoScreenCapture
             return dates;
         }
 
-        public static List<string> GetTitles()
+        public static List<string> GetWindowTitles()
         {
-            _titles.Clear();
-            _titles.Add(string.Empty);
+            _windowTitles.Clear();
+            _windowTitles.Add(string.Empty);
 
             foreach (Screenshot screenshot in _screenshotList)
             {
-                if (!_titles.Contains(screenshot.WindowTitle))
+                if (!_windowTitles.Contains(screenshot.WindowTitle))
                 {
-                    _titles.Add(screenshot.WindowTitle);
+                    _windowTitles.Add(screenshot.WindowTitle);
                 }
             }
 
-            _titles.Sort();
+            _windowTitles.Sort();
 
-            return _titles;
+            return _windowTitles;
         }
 
         public static BindingList<Slide> GetSlides(string title, string date)

@@ -31,6 +31,9 @@ namespace AutoScreenCapture
         private const string TRIGGER_XPATH =
             "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_TRIGGERS_NODE + "/" + XML_FILE_TRIGGER_NODE;
 
+        public static string AppCodename { get; set; }
+        public static string AppVersion { get; set; }
+
         public List<Trigger>.Enumerator GetEnumerator()
         {
             return _triggerList.GetEnumerator();
@@ -102,6 +105,9 @@ namespace AutoScreenCapture
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
 
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
                 XmlNodeList xTriggers = xDoc.SelectNodes(TRIGGER_XPATH);
 
                 foreach (XmlNode xTrigger in xTriggers)
@@ -146,6 +152,11 @@ namespace AutoScreenCapture
                     {
                         Add(trigger);
                     }
+                }
+
+                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                {
+                    Save();
                 }
             }
             else

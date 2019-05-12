@@ -43,7 +43,7 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runDeleteOldScreenshotsThread = null;
 
-        private BackgroundWorker runTitleSearchThread = null;
+        private BackgroundWorker runFilterSearchThread = null;
 
         /// <summary>
         /// Delegates for the threads.
@@ -124,7 +124,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            SearchTitles();
+            SearchFilterValues();
             SearchDates();
             SearchScreenshots();
 
@@ -161,12 +161,12 @@ namespace AutoScreenCapture
             };
             runScreenshotSearchThread.DoWork += new DoWorkEventHandler(DoWork_runScreenshotSearchThread);
 
-            runTitleSearchThread = new BackgroundWorker
+            runFilterSearchThread = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
                 WorkerSupportsCancellation = true
             };
-            runTitleSearchThread.DoWork += new DoWorkEventHandler(DoWork_runTitleSearchThread);
+            runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
         }
 
         /// <summary>
@@ -239,41 +239,41 @@ namespace AutoScreenCapture
 
                 ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection);
 
-                int screenshotDelay = Convert.ToInt32(Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value);
+                int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
 
-                if (screenshotDelay == 0)
+                if (screenCaptureInterval == 0)
                 {
-                    screenshotDelay = 60000;
+                    screenCaptureInterval = 60000;
                 }
 
-                decimal screenshotDelayHours =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Hours);
-                decimal screenshotDelayMinutes =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Minutes);
-                decimal screenshotDelaySeconds =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Seconds);
-                decimal screenshotDelayMilliseconds =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenshotDelay)).Milliseconds);
+                decimal screenCaptureIntervalHours =
+                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Hours);
+                decimal screenCaptureIntervalMinutes =
+                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Minutes);
+                decimal screenCaptureIntervalSeconds =
+                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds =
+                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
 
-                numericUpDownHoursInterval.Value = screenshotDelayHours;
-                numericUpDownMinutesInterval.Value = screenshotDelayMinutes;
-                numericUpDownSecondsInterval.Value = screenshotDelaySeconds;
-                numericUpDownMillisecondsInterval.Value = screenshotDelayMilliseconds;
+                numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 numericUpDownCaptureLimit.Value =
-                    Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value);
+                    Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value);
 
                 checkBoxCaptureLimit.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value);
 
                 checkBoxInitialScreenshot.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
 
                 checkBoxPassphraseLock.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value);
 
                 textBoxPassphrase.Text =
-                    Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value.ToString();
+                    Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString();
 
                 if (textBoxPassphrase.Text.Length > 0)
                 {
@@ -288,42 +288,42 @@ namespace AutoScreenCapture
                 }
 
                 toolStripMenuItemShowSystemTrayIcon.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
 
                 checkBoxScheduleStopAt.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value);
                 checkBoxScheduleStartAt.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value);
 
                 checkBoxSaturday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value);
                 checkBoxSunday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value);
                 checkBoxMonday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value);
                 checkBoxTuesday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value);
                 checkBoxWednesday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value);
                 checkBoxThursday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value);
                 checkBoxFriday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BollCaptureOnFriday", defaultValue: false).Value);
 
                 checkBoxScheduleOnTheseDays.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value);
 
-                dateTimePickerScheduleStopAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStopAtValue",
+                dateTimePickerScheduleStopAt.Value = DateTime.Parse(Settings.User.GetByKey("DateTimeCaptureStopAt",
                         defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0))
                     .Value
                     .ToString());
-                dateTimePickerScheduleStartAt.Value = DateTime.Parse(Settings.User.GetByKey("CaptureStartAtValue",
+                dateTimePickerScheduleStartAt.Value = DateTime.Parse(Settings.User.GetByKey("DateTimeCaptureStartAt",
                         defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0))
                     .Value
                     .ToString());
 
                 numericUpDownDeleteOldScreenshots.Value = Convert.ToDecimal(
-                    Settings.User.GetByKey("DeleteScreenshotsOlderThanDays", defaultValue: 0).Value);
+                    Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value);
 
                 EnableStartCapture();
 
@@ -419,18 +419,18 @@ namespace AutoScreenCapture
             listBoxScreenshots.EndUpdate();
         }
 
-        private void SearchTitles()
+        private void SearchFilterValues()
         {
-            comboBoxTitles.BeginUpdate();
+            comboBoxFilterValue.BeginUpdate();
 
-            comboBoxTitles.DataSource = null;
+            comboBoxFilterValue.DataSource = null;
 
-            if (runTitleSearchThread != null && !runTitleSearchThread.IsBusy)
+            if (runFilterSearchThread != null && !runFilterSearchThread.IsBusy)
             {
-                runTitleSearchThread.RunWorkerAsync();
+                runFilterSearchThread.RunWorkerAsync();
             }
 
-            comboBoxTitles.EndUpdate();
+            comboBoxFilterValue.EndUpdate();
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                BindingList<Slide> slides = ScreenshotCollection.GetSlides(comboBoxTitles.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                BindingList<Slide> slides = ScreenshotCollection.GetSlides(comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
@@ -481,7 +481,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> dates = ScreenshotCollection.GetDates(comboBoxTitles.Text);
+                List<string> dates = ScreenshotCollection.GetDates(comboBoxFilterValue.Text);
 
                 DateTime[] boldedDates = new DateTime[dates.Count];
 
@@ -504,21 +504,27 @@ namespace AutoScreenCapture
             FileSystem.DeleteFilesInDirectory(FileSystem.SlidesFolder);
         }
 
-        private void RunTitleSearch(DoWorkEventArgs e)
+        private void RunFilterSearch(DoWorkEventArgs e)
         {
-            if (comboBoxTitles.InvokeRequired)
+            if (comboBoxFilterValue.InvokeRequired)
             {
-                comboBoxTitles.Invoke(new RunTitleSearchDelegate(RunTitleSearch), new object[] {e});
+                comboBoxFilterValue.Invoke(new RunTitleSearchDelegate(RunFilterSearch), new object[] {e});
             }
             else
             {
-                List<string> titles = ScreenshotCollection.GetTitles();
-
-                comboBoxTitles.DataSource = titles;
-
-                if (comboBoxTitles.Items.Count > 0)
+                if (comboBoxFilterType.SelectedItem != null)
                 {
-                    comboBoxTitles.SelectedIndex = 0;
+                    switch (comboBoxFilterType.SelectedItem.ToString())
+                    {
+                        case "Window Title":
+                            comboBoxFilterValue.DataSource = ScreenshotCollection.GetWindowTitles();
+                            break;
+                    }
+
+                    if (comboBoxFilterValue.Items.Count > 0)
+                    {
+                        comboBoxFilterValue.SelectedIndex = 0;
+                    }
                 }
             }
         }
@@ -529,7 +535,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void RunDeleteOldScreenshots(DoWorkEventArgs e)
         {
-            ScreenshotCollection.DeleteScreenshotsOlderThanDays((int)numericUpDownDeleteOldScreenshots.Value);
+            ScreenshotCollection.KeepScreenshotsForDays((int)numericUpDownDeleteOldScreenshots.Value);
         }
 
         /// <summary>
@@ -542,43 +548,43 @@ namespace AutoScreenCapture
             {
                 Log.Write("Saving settings.");
 
-                Settings.User.GetByKey("CaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                Settings.User.GetByKey("ScreenshotDelay", defaultValue: 60000).Value = GetCaptureDelay();
-                Settings.User.GetByKey("CaptureLimitCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = GetScreenCaptureInterval();
+                Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
+                Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value =
                     checkBoxCaptureLimit.Checked;
-                Settings.User.GetByKey("TakeInitialScreenshotCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value =
                     checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("ShowSystemTrayIcon", defaultValue: true).Value =
+                Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value =
                     toolStripMenuItemShowSystemTrayIcon.Checked;
-                Settings.User.GetByKey("CaptureStopAtCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value =
                     checkBoxScheduleStopAt.Checked;
-                Settings.User.GetByKey("CaptureStartAtCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value =
                     checkBoxScheduleStartAt.Checked;
-                Settings.User.GetByKey("CaptureOnSundayCheck", defaultValue: false).Value = checkBoxSunday.Checked;
-                Settings.User.GetByKey("CaptureOnMondayCheck", defaultValue: false).Value = checkBoxMonday.Checked;
-                Settings.User.GetByKey("CaptureOnTuesdayCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value = checkBoxSunday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value = checkBoxMonday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value =
                     checkBoxTuesday.Checked;
-                Settings.User.GetByKey("CaptureOnWednesdayCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value =
                     checkBoxWednesday.Checked;
-                Settings.User.GetByKey("CaptureOnThursdayCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value =
                     checkBoxThursday.Checked;
-                Settings.User.GetByKey("CaptureOnFridayCheck", defaultValue: false).Value = checkBoxFriday.Checked;
-                Settings.User.GetByKey("CaptureOnSaturdayCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BollCaptureOnFriday", defaultValue: false).Value = checkBoxFriday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value =
                     checkBoxSaturday.Checked;
-                Settings.User.GetByKey("CaptureOnTheseDaysCheck", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value =
                     checkBoxScheduleOnTheseDays.Checked;
-                Settings.User.GetByKey("CaptureStopAtValue",
+                Settings.User.GetByKey("DateTimeCaptureStopAt",
                         defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0,
                             0))
                     .Value = dateTimePickerScheduleStopAt.Value;
-                Settings.User.GetByKey("CaptureStartAtValue",
+                Settings.User.GetByKey("DateTimeCaptureStartAt",
                         defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0,
                             0))
                     .Value = dateTimePickerScheduleStartAt.Value;
-                Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value =
+                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value =
                     checkBoxPassphraseLock.Checked;
-                Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
-                Settings.User.GetByKey("DeleteScreenshotsOlderThanDays", defaultValue: 0).Value =
+                Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
+                Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value =
                     numericUpDownDeleteOldScreenshots.Value;
 
                 Settings.User.Save();
@@ -721,7 +727,7 @@ namespace AutoScreenCapture
                 EnableStopScreenCapture();
 
                 // Setup the properties for the screen capture class.
-                ScreenCapture.Delay = GetCaptureDelay();
+                ScreenCapture.Delay = GetScreenCaptureInterval();
                 ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
 
                 if (checkBoxPassphraseLock.Checked)
@@ -749,7 +755,7 @@ namespace AutoScreenCapture
                 // Start taking screenshots.
                 Log.Write("Starting screen capture.");
 
-                timerScreenCapture.Interval = GetCaptureDelay();
+                timerScreenCapture.Interval = GetScreenCaptureInterval();
             }
         }
 
@@ -840,10 +846,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Returns the screen capture delay. This value will be used as the screen capture timer's interval property.
+        /// Returns the screen capture interval. This value will be used as the screen capture timer's interval property.
         /// </summary>
         /// <returns></returns>
-        private int GetCaptureDelay()
+        private int GetScreenCaptureInterval()
         {
             return ConvertIntoMilliseconds((int) numericUpDownHoursInterval.Value,
                 (int) numericUpDownMinutesInterval.Value, (int) numericUpDownSecondsInterval.Value,
@@ -995,9 +1001,9 @@ namespace AutoScreenCapture
             RunDeleteOldScreenshots(e);
         }
 
-        private void DoWork_runTitleSearchThread(object sender, DoWorkEventArgs e)
+        private void DoWork_runFilterSearchThread(object sender, DoWorkEventArgs e)
         {
-            RunTitleSearch(e);
+            RunFilterSearch(e);
         }
 
         /// <summary>
@@ -1005,7 +1011,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void EnableStartCapture()
         {
-            if (GetCaptureDelay() > 0)
+            if (GetScreenCaptureInterval() > 0)
             {
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = true;
@@ -2698,14 +2704,14 @@ namespace AutoScreenCapture
             ShowScreenshotBySlideIndex();
         }
 
-        private void comboBoxTitles_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
         {
             SearchDates();
         }
 
-        private void buttonRefreshTitles_Click(object sender, EventArgs e)
+        private void buttonRefreshFilterValues_Click(object sender, EventArgs e)
         {
-            SearchTitles();
+            SearchFilterValues();
             SearchDates();
         }
 
@@ -2716,6 +2722,11 @@ namespace AutoScreenCapture
             SaveSettings();
 
             toolStripSplitButtonSaveSettings.Enabled = true;
+        }
+
+        private void comboBoxFilterType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SearchFilterValues();
         }
     }
 }

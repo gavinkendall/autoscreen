@@ -262,19 +262,145 @@ namespace AutoScreenCapture
                 {
                     // Go through the old settings and get the old values from them to be used for the new settings.
 
-                    // 2.1 used a setting named "DaysOldWhenRemoveSlides", but 2.2 uses "DeleteScreenshotsOlderThanDays".
-                    if (KeyExists("DaysOldWhenRemoveSlides"))
-                    {
-                        SetValueByKey("DeleteScreenshotsOlderThanDays",
-                            Convert.ToInt32(
-                                GetByKey("DaysOldWhenRemoveSlides", 0, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "Interval", but 2.2 uses "ScreenshotDelay".
+                    // 2.1 used a setting named "Interval", but 2.2 uses "IntScreenCaptureInterval".
                     if (KeyExists("Interval"))
                     {
-                        SetValueByKey("ScreenshotDelay",
+                        SetValueByKey("IntScreenCaptureInterval",
                             Convert.ToInt32(GetByKey("Interval", 60000, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureLimit", but 2.2 uses "IntCaptureLimit".
+                    if (KeyExists("CaptureLimit"))
+                    {
+                        SetValueByKey("IntCaptureLimit",
+                            Convert.ToInt32(GetByKey("CaptureLimit", 0, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureLimitCheck", but 2.2 uses "BoolCaptureLimit".
+                    if (KeyExists("CaptureLimitCheck"))
+                    {
+                        SetValueByKey("BoolCaptureLimit",
+                            Convert.ToBoolean(GetByKey("CaptureLimitCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "TakeInitialScreenshotCheck", but 2.2 uses "BoolTakeInitialScreenshot".
+                    if (KeyExists("TakeInitialScreenshotCheck"))
+                    {
+                        SetValueByKey("BoolTakeInitialScreenshot",
+                            Convert.ToBoolean(GetByKey("TakeInitialScreenshotCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "ShowSystemTrayIcon", but 2.2 uses "BoolShowSystemTrayIcon".
+                    if (KeyExists("ShowSystemTrayIcon"))
+                    {
+                        SetValueByKey("BoolShowSystemTrayIcon",
+                            Convert.ToBoolean(GetByKey("ShowSystemTrayIcon", true, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureStopAtCheck", but 2.2 uses "BoolCaptureStopAt".
+                    if (KeyExists("CaptureStopAtCheck"))
+                    {
+                        SetValueByKey("BoolCaptureStopAt",
+                            Convert.ToBoolean(GetByKey("CaptureStopAtCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureStartAtCheck", but 2.2 uses "BoolCaptureStartAt".
+                    if (KeyExists("CaptureStartAtCheck"))
+                    {
+                        SetValueByKey("BoolCaptureStartAt",
+                            Convert.ToBoolean(GetByKey("CaptureStartAtCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnSundayCheck", but 2.2 uses "BoolCaptureOnSunday".
+                    if (KeyExists("CaptureOnSundayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnSunday",
+                            Convert.ToBoolean(GetByKey("CaptureOnSundayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnMondayCheck", but 2.2 uses "BoolCaptureOnMonday".
+                    if (KeyExists("CaptureOnMondayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnMonday",
+                            Convert.ToBoolean(GetByKey("CaptureOnMondayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnTuesdayCheck", but 2.2 uses "BoolCaptureOnTuesday".
+                    if (KeyExists("CaptureOnTuesdayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnTuesday",
+                            Convert.ToBoolean(GetByKey("CaptureOnTuesdayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnWednesdayCheck", but 2.2 uses "BoolCaptureOnWednesday".
+                    if (KeyExists("CaptureOnWednesdayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnWednesday",
+                            Convert.ToBoolean(GetByKey("CaptureOnWednesdayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnThursdayCheck", but 2.2 uses "BoolCaptureOnThursday".
+                    if (KeyExists("CaptureOnThursdayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnThursday",
+                            Convert.ToBoolean(GetByKey("CaptureOnThursdayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnFridayCheck", but 2.2 uses "BoolCaptureOnFriday".
+                    if (KeyExists("CaptureOnFridayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnFriday",
+                            Convert.ToBoolean(GetByKey("CaptureOnFridayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnSaturdayCheck", but 2.2 uses "BoolCaptureOnSaturday".
+                    if (KeyExists("CaptureOnSaturdayCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnSaturday",
+                            Convert.ToBoolean(GetByKey("CaptureOnSaturdayCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureOnTheseDaysCheck", but 2.2 uses "BoolCaptureOnTheseDays".
+                    if (KeyExists("CaptureOnTheseDaysCheck"))
+                    {
+                        SetValueByKey("BoolCaptureOnTheseDays",
+                            Convert.ToBoolean(GetByKey("CaptureOnTheseDaysCheck", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureStopAtValue", but 2.2 uses "DateTimeCaptureStopAt".
+                    if (KeyExists("CaptureStopAtValue"))
+                    {
+                        SetValueByKey("DateTimeCaptureStopAt",
+                            Convert.ToDateTime(GetByKey("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0), createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "CaptureStartAtValue", but 2.2 uses "DateTimeCaptureStartAt".
+                    if (KeyExists("CaptureStartAtValue"))
+                    {
+                        SetValueByKey("DateTimeCaptureStartAt",
+                            Convert.ToDateTime(GetByKey("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0), createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "LockScreenCaptureSession", but 2.2 uses "BoolLockScreenCaptureSession".
+                    if (KeyExists("LockScreenCaptureSession"))
+                    {
+                        SetValueByKey("BoolLockScreenCaptureSession",
+                            Convert.ToBoolean(GetByKey("LockScreenCaptureSession", false, createKeyIfNotFound: false).Value));
+                    }
+
+                    // 2.1 used a setting named "Passphrase", but 2.2 uses "StringPassphrase".
+                    if (KeyExists("Passphrase"))
+                    {
+                        SetValueByKey("StringPassphrase",
+                            GetByKey("Passphrase", string.Empty, createKeyIfNotFound: false).Value.ToString());
+                    }
+
+                    // 2.1 used a setting named "DaysOldWhenRemoveSlides", but 2.2 uses "IntKeepScreenshotsForDays".
+                    if (KeyExists("DaysOldWhenRemoveSlides"))
+                    {
+                        SetValueByKey("IntKeepScreenshotsForDays",
+                            Convert.ToInt32(
+                                GetByKey("DaysOldWhenRemoveSlides", 30, createKeyIfNotFound: false).Value));
                     }
 
                     // Remove the old settings.

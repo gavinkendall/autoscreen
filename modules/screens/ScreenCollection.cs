@@ -34,6 +34,9 @@ namespace AutoScreenCapture
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENS_NODE + "/" + XML_FILE_SCREEN_NODE;
 
+        public static string AppCodename { get; set; }
+        public static string AppVersion { get; set; }
+
         public List<Screen>.Enumerator GetEnumerator()
         {
             return _screenList.GetEnumerator();
@@ -118,6 +121,9 @@ namespace AutoScreenCapture
                 XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
 
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
                 XmlNodeList xScreens = xDoc.SelectNodes(SCREEN_XPATH);
 
                 foreach (XmlNode xScreen in xScreens)
@@ -185,6 +191,11 @@ namespace AutoScreenCapture
                     {
                         Add(screen);
                     }
+                }
+
+                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                {
+                    Save();
                 }
             }
             else
