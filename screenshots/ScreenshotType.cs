@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SettingCollectionType.cs" company="Gavin Kendall">
+// <copyright file="ScreenshotType.cs" company="Gavin Kendall">
 //     Copyright (c) Gavin Kendall. All rights reserved.
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -7,9 +7,10 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
-    public enum SettingCollectionType
+    public enum ScreenshotType
     {
-        Application = 0,
-        User = 1
+        ActiveWindow = 0,
+        Region = 1,
+        Screen = 2
     }
 }

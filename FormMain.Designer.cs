@@ -84,7 +84,7 @@ namespace AutoScreenCapture
             this.checkBoxScheduleStartAt = new System.Windows.Forms.CheckBox();
             this.tabPageScreenshots = new System.Windows.Forms.TabPage();
             this.labelDays = new System.Windows.Forms.Label();
-            this.numericUpDownDeleteOldScreenshots = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownKeepScreenshotsForDays = new System.Windows.Forms.NumericUpDown();
             this.labelKeepScreenshots = new System.Windows.Forms.Label();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
@@ -118,6 +118,8 @@ namespace AutoScreenCapture
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
+            this.textBoxScreenshotLabel = new System.Windows.Forms.TextBox();
+            this.labelScreenshotLabel = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -131,7 +133,7 @@ namespace AutoScreenCapture
             this.tabPageSchedule.SuspendLayout();
             this.groupBoxSchedule.SuspendLayout();
             this.tabPageScreenshots.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeleteOldScreenshots)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.SuspendLayout();
@@ -354,6 +356,8 @@ namespace AutoScreenCapture
             // tabPageInterval
             // 
             this.tabPageInterval.AutoScroll = true;
+            this.tabPageInterval.Controls.Add(this.labelScreenshotLabel);
+            this.tabPageInterval.Controls.Add(this.textBoxScreenshotLabel);
             this.tabPageInterval.Controls.Add(this.groupBoxCaptureDelay);
             this.tabPageInterval.Location = new System.Drawing.Point(4, 40);
             this.tabPageInterval.Name = "tabPageInterval";
@@ -718,7 +722,7 @@ namespace AutoScreenCapture
             // 
             this.tabPageScreenshots.AutoScroll = true;
             this.tabPageScreenshots.Controls.Add(this.labelDays);
-            this.tabPageScreenshots.Controls.Add(this.numericUpDownDeleteOldScreenshots);
+            this.tabPageScreenshots.Controls.Add(this.numericUpDownKeepScreenshotsForDays);
             this.tabPageScreenshots.Controls.Add(this.labelKeepScreenshots);
             this.tabPageScreenshots.Controls.Add(this.listBoxScreenshots);
             this.tabPageScreenshots.Location = new System.Drawing.Point(4, 40);
@@ -738,19 +742,19 @@ namespace AutoScreenCapture
             this.labelDays.TabIndex = 20;
             this.labelDays.Text = "days";
             // 
-            // numericUpDownDeleteOldScreenshots
+            // numericUpDownKeepScreenshotsForDays
             // 
-            this.numericUpDownDeleteOldScreenshots.Location = new System.Drawing.Point(110, 4);
-            this.numericUpDownDeleteOldScreenshots.Maximum = new decimal(new int[] {
+            this.numericUpDownKeepScreenshotsForDays.Location = new System.Drawing.Point(110, 4);
+            this.numericUpDownKeepScreenshotsForDays.Maximum = new decimal(new int[] {
             365,
             0,
             0,
             0});
-            this.numericUpDownDeleteOldScreenshots.Name = "numericUpDownDeleteOldScreenshots";
-            this.numericUpDownDeleteOldScreenshots.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownDeleteOldScreenshots.TabIndex = 19;
-            this.numericUpDownDeleteOldScreenshots.TabStop = false;
-            this.numericUpDownDeleteOldScreenshots.Leave += new System.EventHandler(this.SaveSettings);
+            this.numericUpDownKeepScreenshotsForDays.Name = "numericUpDownKeepScreenshotsForDays";
+            this.numericUpDownKeepScreenshotsForDays.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownKeepScreenshotsForDays.TabIndex = 19;
+            this.numericUpDownKeepScreenshotsForDays.TabStop = false;
+            this.numericUpDownKeepScreenshotsForDays.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // labelKeepScreenshots
             // 
@@ -1080,8 +1084,10 @@ namespace AutoScreenCapture
             this.comboBoxFilterType.IntegralHeight = false;
             this.comboBoxFilterType.Items.AddRange(new object[] {
             "",
-            "Component",
+            "Image Format",
             "Label",
+            "Region",
+            "Screen",
             "Window Title"});
             this.comboBoxFilterType.Location = new System.Drawing.Point(39, 6);
             this.comboBoxFilterType.Name = "comboBoxFilterType";
@@ -1089,6 +1095,24 @@ namespace AutoScreenCapture
             this.comboBoxFilterType.TabIndex = 40;
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);
+            // 
+            // textBoxScreenshotLabel
+            // 
+            this.textBoxScreenshotLabel.Location = new System.Drawing.Point(6, 150);
+            this.textBoxScreenshotLabel.MaxLength = 500;
+            this.textBoxScreenshotLabel.Name = "textBoxScreenshotLabel";
+            this.textBoxScreenshotLabel.Size = new System.Drawing.Size(205, 20);
+            this.textBoxScreenshotLabel.TabIndex = 15;
+            this.textBoxScreenshotLabel.TabStop = false;
+            // 
+            // labelScreenshotLabel
+            // 
+            this.labelScreenshotLabel.AutoSize = true;
+            this.labelScreenshotLabel.Location = new System.Drawing.Point(6, 134);
+            this.labelScreenshotLabel.Name = "labelScreenshotLabel";
+            this.labelScreenshotLabel.Size = new System.Drawing.Size(174, 13);
+            this.labelScreenshotLabel.TabIndex = 16;
+            this.labelScreenshotLabel.Text = "Apply this label to each screenshot:";
             // 
             // FormMain
             // 
@@ -1128,6 +1152,7 @@ namespace AutoScreenCapture
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
             this.tabControlModules.ResumeLayout(false);
             this.tabPageInterval.ResumeLayout(false);
+            this.tabPageInterval.PerformLayout();
             this.groupBoxCaptureDelay.ResumeLayout(false);
             this.groupBoxCaptureDelay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
@@ -1140,7 +1165,7 @@ namespace AutoScreenCapture
             this.groupBoxSchedule.PerformLayout();
             this.tabPageScreenshots.ResumeLayout(false);
             this.tabPageScreenshots.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeleteOldScreenshots)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).EndInit();
             this.tabPageSecurity.ResumeLayout(false);
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
@@ -1235,7 +1260,9 @@ namespace AutoScreenCapture
         private ToolStripSplitButton toolStripSplitButtonSaveSettings;
         private ComboBox comboBoxFilterType;
         private Label labelDays;
-        private NumericUpDown numericUpDownDeleteOldScreenshots;
+        private NumericUpDown numericUpDownKeepScreenshotsForDays;
         private Label labelKeepScreenshots;
+        private TextBox textBoxScreenshotLabel;
+        private Label labelScreenshotLabel;
     }
 }

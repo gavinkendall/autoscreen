@@ -87,6 +87,19 @@ namespace AutoScreenCapture
             return null;
         }
 
+        public Region GetByViewId(Guid viewId)
+        {
+            foreach (Region region in _regionList)
+            {
+                if (region.ViewId.Equals(viewId))
+                {
+                    return region;
+                }
+            }
+
+            return null;
+        }
+
         public Region GetByName(string name)
         {
             foreach (Region region in _regionList)

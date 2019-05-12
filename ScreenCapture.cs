@@ -215,18 +215,9 @@ namespace AutoScreenCapture
             return string.Empty;
         }
 
-        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, Guid viewId)
-        {
-            TakeScreenshot(path, format, 0, jpegQuality, resolutionRatio, true, 0, 0, 0, 0, viewId);
-        }
-
-        public static void TakeScreenshot(string path, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId)
-        {
-            // Pass in -1 for component to represent a region because it doesn't have a component associated with it.
-            TakeScreenshot(path, format, -1, jpegQuality, resolutionRatio, mouse, x, y, width, height, viewId);
-        }
-
-        public static void TakeScreenshot( string path, ImageFormat format, int component, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId)
+        public static void TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
+            int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId,
+            string label, ScreenCollection screenCollection, RegionCollection regionCollection)
         {
             try
             {
@@ -261,7 +252,8 @@ namespace AutoScreenCapture
                                     SaveToFile(path, format, jpegQuality, bitmap);
 
                                     ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format,
-                                        component, GetActiveWindowTitle(), viewId));
+                                            component, screenshotType, GetActiveWindowTitle(), viewId, label),
+                                        screenCollection, regionCollection);
                                 }
                             }
                         }

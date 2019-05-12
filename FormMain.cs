@@ -60,7 +60,7 @@ namespace AutoScreenCapture
         private const int CAPTURE_LIMIT_MIN = 0;
 
         private const int CAPTURE_LIMIT_MAX = 9999;
-        private const int CAPTURE_DELAY_DEFAULT_IN_MINUTES = 1;
+        private const int CAPTURE_INTERVAL_DEFAULT_IN_MINUTES = 1;
 
         /// <summary>
         /// The various regular expressions used in the parsing of the command line arguments.
@@ -75,8 +75,8 @@ namespace AutoScreenCapture
         private const string REGEX_COMMAND_LINE_STARTAT =
             @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
 
-        private const string REGEX_COMMAND_LINE_DELAY =
-            @"^-delay=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
+        private const string REGEX_COMMAND_LINE_INTERVAL =
+            @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
 
         private const string REGEX_COMMAND_LINE_LOCK = "^-lock$";
         private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
@@ -237,7 +237,7 @@ namespace AutoScreenCapture
 
                 Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
-                ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection);
+                ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection);
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
 
@@ -308,7 +308,7 @@ namespace AutoScreenCapture
                 checkBoxThursday.Checked =
                     Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value);
                 checkBoxFriday.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("BollCaptureOnFriday", defaultValue: false).Value);
+                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value);
 
                 checkBoxScheduleOnTheseDays.Checked =
                     Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value);
@@ -322,8 +322,11 @@ namespace AutoScreenCapture
                     .Value
                     .ToString());
 
-                numericUpDownDeleteOldScreenshots.Value = Convert.ToDecimal(
+                numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(
                     Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value);
+
+                textBoxScreenshotLabel.Text = Settings.User
+                    .GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
 
                 EnableStartCapture();
 
@@ -456,7 +459,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                BindingList<Slide> slides = ScreenshotCollection.GetSlides(comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                BindingList<Slide> slides = ScreenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
@@ -481,7 +484,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> dates = ScreenshotCollection.GetDates(comboBoxFilterValue.Text);
+                List<string> dates = ScreenshotCollection.GetDates(comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
                 DateTime[] boldedDates = new DateTime[dates.Count];
 
@@ -514,12 +517,9 @@ namespace AutoScreenCapture
             {
                 if (comboBoxFilterType.SelectedItem != null)
                 {
-                    switch (comboBoxFilterType.SelectedItem.ToString())
-                    {
-                        case "Window Title":
-                            comboBoxFilterValue.DataSource = ScreenshotCollection.GetWindowTitles();
-                            break;
-                    }
+                    comboBoxFilterValue.DataSource =
+                        ScreenshotCollection.GetFilterValueList(comboBoxFilterType.Text,
+                            comboBoxFilterValue.Text);
 
                     if (comboBoxFilterValue.Items.Count > 0)
                     {
@@ -535,7 +535,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void RunDeleteOldScreenshots(DoWorkEventArgs e)
         {
-            ScreenshotCollection.KeepScreenshotsForDays((int)numericUpDownDeleteOldScreenshots.Value);
+            ScreenshotCollection.KeepScreenshotsForDays((int)numericUpDownKeepScreenshotsForDays.Value);
         }
 
         /// <summary>
@@ -568,7 +568,7 @@ namespace AutoScreenCapture
                     checkBoxWednesday.Checked;
                 Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value =
                     checkBoxThursday.Checked;
-                Settings.User.GetByKey("BollCaptureOnFriday", defaultValue: false).Value = checkBoxFriday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value = checkBoxFriday.Checked;
                 Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value =
                     checkBoxSaturday.Checked;
                 Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value =
@@ -585,7 +585,9 @@ namespace AutoScreenCapture
                     checkBoxPassphraseLock.Checked;
                 Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value =
-                    numericUpDownDeleteOldScreenshots.Value;
+                    numericUpDownKeepScreenshotsForDays.Value;
+                Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value =
+                    textBoxScreenshotLabel.Text;
 
                 Settings.User.Save();
 
@@ -1023,7 +1025,7 @@ namespace AutoScreenCapture
                 numericUpDownCaptureLimit.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
-                numericUpDownDeleteOldScreenshots.Enabled = true;
+                numericUpDownKeepScreenshotsForDays.Enabled = true;
 
                 checkBoxScheduleStartAt.Enabled = true;
                 checkBoxScheduleStopAt.Enabled = true;
@@ -1037,6 +1039,8 @@ namespace AutoScreenCapture
                 checkBoxSaturday.Enabled = true;
                 dateTimePickerScheduleStartAt.Enabled = true;
                 dateTimePickerScheduleStopAt.Enabled = true;
+
+                textBoxScreenshotLabel.Enabled = true;
             }
             else
             {
@@ -1059,7 +1063,7 @@ namespace AutoScreenCapture
             numericUpDownCaptureLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
-            numericUpDownDeleteOldScreenshots.Enabled = false;
+            numericUpDownKeepScreenshotsForDays.Enabled = false;
 
             checkBoxScheduleStartAt.Enabled = false;
             checkBoxScheduleStopAt.Enabled = false;
@@ -1073,6 +1077,8 @@ namespace AutoScreenCapture
             checkBoxSaturday.Enabled = false;
             dateTimePickerScheduleStartAt.Enabled = false;
             dateTimePickerScheduleStopAt.Enabled = false;
+
+            textBoxScreenshotLabel.Enabled = false;
         }
 
         /// <summary>
@@ -1179,7 +1185,7 @@ namespace AutoScreenCapture
                 numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
 
                 numericUpDownHoursInterval.Value = 0;
-                numericUpDownMinutesInterval.Value = CAPTURE_DELAY_DEFAULT_IN_MINUTES;
+                numericUpDownMinutesInterval.Value = CAPTURE_INTERVAL_DEFAULT_IN_MINUTES;
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
 
@@ -1194,7 +1200,7 @@ namespace AutoScreenCapture
                 Regex rgxCommandLineLock = new Regex(REGEX_COMMAND_LINE_LOCK);
                 Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
                 Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
-                Regex rgxCommandLineCaptureDelay = new Regex(REGEX_COMMAND_LINE_DELAY);
+                Regex rgxCommandLineCaptureInterval = new Regex(REGEX_COMMAND_LINE_INTERVAL);
                 Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
                 Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
                 Regex rgxCommandLineHideSystemTrayIcon = new Regex(REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON);
@@ -1224,15 +1230,15 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (rgxCommandLineCaptureDelay.IsMatch(args[i]))
+                    if (rgxCommandLineCaptureInterval.IsMatch(args[i]))
                     {
-                        int hours = Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Hours"].Value);
+                        int hours = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Hours"].Value);
                         int minutes =
-                            Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Minutes"].Value);
+                            Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Minutes"].Value);
                         int seconds =
-                            Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Seconds"].Value);
+                            Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Seconds"].Value);
                         int milliseconds =
-                            Convert.ToInt32(rgxCommandLineCaptureDelay.Match(args[i]).Groups["Milliseconds"].Value);
+                            Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Milliseconds"].Value);
 
                         numericUpDownHoursInterval.Value = hours;
                         numericUpDownMinutesInterval.Value = minutes;
@@ -2595,6 +2601,8 @@ namespace AutoScreenCapture
                 ScreenCapture.TakeScreenshot(
                     path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     format: region.Format,
+                    component: -1,
+                    screenshotType: ScreenshotType.Region,
                     jpegQuality: region.JpegQuality,
                     resolutionRatio: region.ResolutionRatio,
                     mouse: region.Mouse,
@@ -2602,7 +2610,10 @@ namespace AutoScreenCapture
                     y: region.Y,
                     width: region.Width,
                     height: region.Height,
-                    viewId: region.ViewId
+                    viewId: region.ViewId,
+                    label: textBoxScreenshotLabel.Text,
+                    screenCollection: formScreen.ScreenCollection,
+                    regionCollection: formRegion.RegionCollection
                 );
             }
         }
@@ -2617,9 +2628,19 @@ namespace AutoScreenCapture
                     ScreenCapture.TakeScreenshot(
                         path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                         format: screen.Format,
+                        component: screen.Component,
+                        screenshotType: ScreenshotType.ActiveWindow,
                         jpegQuality: screen.JpegQuality,
                         resolutionRatio: screen.ResolutionRatio,
-                        viewId: screen.ViewId
+                        mouse: false,
+                        x: 0,
+                        y: 0,
+                        width: 0,
+                        height: 0,
+                        viewId: screen.ViewId,
+                        label: textBoxScreenshotLabel.Text,
+                        screenCollection: formScreen.ScreenCollection,
+                        regionCollection: formRegion.RegionCollection
                     );
                 }
                 else
@@ -2631,6 +2652,7 @@ namespace AutoScreenCapture
                             path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                             format: screen.Format,
                             component: screen.Component,
+                            screenshotType: ScreenshotType.Screen,
                             jpegQuality: screen.JpegQuality,
                             resolutionRatio: screen.ResolutionRatio,
                             mouse: screen.Mouse,
@@ -2638,7 +2660,10 @@ namespace AutoScreenCapture
                             y: formScreen.ScreenDictionary[screen.Component].Bounds.Y,
                             width: formScreen.ScreenDictionary[screen.Component].Bounds.Width,
                             height: formScreen.ScreenDictionary[screen.Component].Bounds.Height,
-                            viewId: screen.ViewId
+                            viewId: screen.ViewId,
+                            label: textBoxScreenshotLabel.Text,
+                            screenCollection: formScreen.ScreenCollection,
+                            regionCollection: formRegion.RegionCollection
                         );
                     }
                 }

@@ -10,6 +10,7 @@ namespace AutoScreenCapture
     public class Slide
     {
         public string Name { get; set; }
+        public string Date { get; set; }
         public string Value { get; set; }
     }
 }

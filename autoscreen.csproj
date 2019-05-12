@@ -138,9 +138,9 @@
     <Compile Include="macro\MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
+    <Compile Include="screenshots\ScreenshotType.cs" />
     <Compile Include="settings\Setting.cs" />
     <Compile Include="settings\SettingCollection.cs" />
-    <Compile Include="settings\SettingCollectionType.cs" />
     <Compile Include="settings\Settings.cs" />
     <Compile Include="versions\VersionCollection.cs" />
     <Compile Include="versions\Version.cs" />
