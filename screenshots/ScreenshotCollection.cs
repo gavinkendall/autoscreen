@@ -95,12 +95,12 @@ namespace AutoScreenCapture
         {
             if (filterType.Equals("Image Format"))
             {
-                return _screenshotList.Select(x => x.Format.Name).Distinct().ToList();
+                return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name)).Select(x => x.Format.Name).Distinct().ToList();
             }
 
             if (filterType.Equals("Label"))
             {
-                return _screenshotList.Select(x => x.Label).Distinct().ToList();
+                return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
             }
 
             if (filterType.Equals("Region"))
@@ -115,7 +115,7 @@ namespace AutoScreenCapture
 
             if (filterType.Equals("Window Title"))
             {
-                return _screenshotList.Select(x => x.WindowTitle).Distinct().ToList();
+                return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle)).Select(x => x.WindowTitle).Distinct().ToList();
             }
 
             return new List<string>();
@@ -127,12 +127,12 @@ namespace AutoScreenCapture
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    return _screenshotList.Where(x => x.Format.Name.Equals(filterValue)).Select(x => x.Date).ToList();
+                    return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue)).Select(x => x.Date).ToList();
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    return _screenshotList.Where(x => x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
+                    return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
                 }
 
                 if (filterType.Equals("Region"))
@@ -147,7 +147,7 @@ namespace AutoScreenCapture
 
                 if (filterType.Equals("Window Title"))
                 {
-                    return _screenshotList.Where(x => x.WindowTitle.Equals(filterValue)).Select(x => x.Date).ToList();
+                    return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue)).Select(x => x.Date).ToList();
                 }
             }
 
@@ -160,12 +160,12 @@ namespace AutoScreenCapture
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    return _screenshotList.Where(x => x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
+                    return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    return _screenshotList.Where(x => x.Label.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
+                    return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
                 }
 
                 if (filterType.Equals("Region"))
@@ -180,7 +180,7 @@ namespace AutoScreenCapture
 
                 if (filterType.Equals("Window Title"))
                 {
-                    return _screenshotList.Where(x => x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
+                    return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
                 }
             }
 
