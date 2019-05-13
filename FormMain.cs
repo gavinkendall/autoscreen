@@ -457,11 +457,9 @@ namespace AutoScreenCapture
             }
             else
             {
-                BindingList<Slide> slides = ScreenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
-
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
-                listBoxScreenshots.DataSource = slides;
+                listBoxScreenshots.DataSource = ScreenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat)); ;
 
                 if (listBoxScreenshots.Items.Count > 0)
                 {
