@@ -22,17 +22,7 @@ namespace AutoScreenCapture
     {
         private static XmlDocument xDoc = null;
 
-        private static string _date;
-
         private static List<Screenshot> _screenshotList = new List<Screenshot>();
-
-        // Each list contains the necessary values for the Filter. They're populated via the Add method.
-        //private static List<string> _filterValueListDates = new List<string>();
-        //private static List<string> _filterValueListImageFormats = new List<string>();
-        //private static List<string> _filterValueListLabels = new List<string>();
-        //private static List<string> _filterValueListRegions = new List<string>();
-        //private static List<string> _filterValueListScreens = new List<string>();
-        //private static List<string> _filterValueListWindowTitles = new List<string>();
 
         private static List<string> _slideNames = new List<string>();
         private static BindingList<Slide> _slides = new BindingList<Slide>();
@@ -67,52 +57,6 @@ namespace AutoScreenCapture
                 _slides.Add(newScreenshot.Slide);
                 _slideNames.Add(newScreenshot.Slide.Name);
             }
-
-            //if (!_filterValueListDates.Contains(newScreenshot.Date))
-            //{
-            //    _filterValueListDates.Add(newScreenshot.Date);
-            //    _filterValueListDates.Sort();
-            //}
-
-            //if (!_filterValueListImageFormats.Contains(newScreenshot.Format.Name))
-            //{
-            //    _filterValueListImageFormats.Add(newScreenshot.Format.Name);
-            //    _filterValueListImageFormats.Sort();
-            //}
-
-            //if (!_filterValueListLabels.Contains(newScreenshot.Label))
-            //{
-            //    _filterValueListLabels.Add(newScreenshot.Label);
-            //    _filterValueListLabels.Sort();
-            //}
-
-            //if (newScreenshot.ScreenshotType == ScreenshotType.Region)
-            //{
-            //    Region region = regionCollection.GetByViewId(newScreenshot.ViewId);
-
-            //    if (!_filterValueListRegions.Contains(region.Name))
-            //    {
-            //        _filterValueListRegions.Add(region.Name);
-            //        _filterValueListRegions.Sort();
-            //    }
-            //}
-
-            //if (newScreenshot.ScreenshotType == ScreenshotType.Screen)
-            //{
-            //    Screen screen = screenCollection.GetByComponent(newScreenshot.Component);
-
-            //    if (!_filterValueListScreens.Contains(screen.Name))
-            //    {
-            //        _filterValueListScreens.Add(screen.Name);
-            //        _filterValueListScreens.Sort();
-            //    }
-            //}
-
-            //if (!_filterValueListWindowTitles.Contains(newScreenshot.WindowTitle))
-            //{
-            //    _filterValueListWindowTitles.Add(newScreenshot.WindowTitle);
-            //    _filterValueListWindowTitles.Sort();
-            //}
         }
 
         public static void KeepScreenshotsForDays(int days)
@@ -188,62 +132,68 @@ namespace AutoScreenCapture
 
         public static List<string> GetDates(string filterType, string filterValue)
         {
-            if (filterType.Equals("Image Format"))
+            if (!string.IsNullOrEmpty(filterValue))
             {
-                return _screenshotList.Where(x => x.Format.Name.Equals(filterValue)).Select(x => x.Date).ToList();
+                if (filterType.Equals("Image Format"))
+                {
+                    return _screenshotList.Where(x => x.Format.Name.Equals(filterValue)).Select(x => x.Date).ToList();
+                }
+
+                if (filterType.Equals("Label"))
+                {
+                    return _screenshotList.Where(x => x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
+                }
+
+                if (filterType.Equals("Region"))
+                {
+
+                }
+
+                if (filterType.Equals("Screen"))
+                {
+
+                }
+
+                if (filterType.Equals("Window Title"))
+                {
+                    return _screenshotList.Where(x => x.WindowTitle.Equals(filterValue)).Select(x => x.Date).ToList();
+                }
             }
 
-            if (filterType.Equals("Label"))
-            {
-                return _screenshotList.Where(x => x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
-            }
-
-            if (filterType.Equals("Region"))
-            {
-                
-            }
-
-            if (filterType.Equals("Screen"))
-            {
-                
-            }
-
-            if (filterType.Equals("Window Title"))
-            {
-                return _screenshotList.Where(x => x.WindowTitle.Equals(filterValue)).Select(x => x.Date).ToList();
-            }
-
-            return new List<string>();
+            return _screenshotList.Select(x => x.Date).ToList();
         }
 
         public static BindingList<Slide> GetSlides(string filterType, string filterValue, string date)
         {
-            if (filterType.Equals("Image Format"))
+            if (!string.IsNullOrEmpty(filterValue))
             {
-                return new BindingList<Slide>(_screenshotList.Where(x => x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList());
+                if (filterType.Equals("Image Format"))
+                {
+                    return new BindingList<Slide>(_screenshotList.Where(x => x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList());
+                }
+
+                if (filterType.Equals("Label"))
+                {
+                    return new BindingList<Slide>(_screenshotList.Where(x => x.Label.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList());
+                }
+
+                if (filterType.Equals("Region"))
+                {
+
+                }
+
+                if (filterType.Equals("Screen"))
+                {
+
+                }
+
+                if (filterType.Equals("Window Title"))
+                {
+                    return new BindingList<Slide>(_screenshotList.Where(x => x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList());
+                }
             }
 
-            if (filterType.Equals("Label"))
-            {
-                return new BindingList<Slide>(_screenshotList.Where(x => x.Label.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList());
-            }
-
-            if (filterType.Equals("Region"))
-            {
-                
-            }
-
-            if (filterType.Equals("Screen"))
-            {
-                
-            }
-
-            if (filterType.Equals("Window Title"))
-            {
-                return new BindingList<Slide>(_screenshotList.Where(x => x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList());
-            }
-
-            return new BindingList<Slide>();
+            return new BindingList<Slide>(_screenshotList.Where(x => x.Date.Equals(date)).Select(x => x.Slide).ToList());
         }
 
         public static Screenshot GetScreenshot(string slideName, Guid viewId)
