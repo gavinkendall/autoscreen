@@ -426,8 +426,6 @@ namespace AutoScreenCapture
         {
             comboBoxFilterValue.BeginUpdate();
 
-            comboBoxFilterValue.DataSource = null;
-
             if (runFilterSearchThread != null && !runFilterSearchThread.IsBusy)
             {
                 runFilterSearchThread.RunWorkerAsync();
@@ -515,16 +513,12 @@ namespace AutoScreenCapture
             }
             else
             {
-                if (comboBoxFilterType.SelectedItem != null)
+                if (comboBoxFilterType.SelectedItem != null && !string.IsNullOrEmpty(comboBoxFilterType.Text))
                 {
-                    comboBoxFilterValue.DataSource =
-                        ScreenshotCollection.GetFilterValueList(comboBoxFilterType.Text,
-                            comboBoxFilterValue.Text);
+                    List<string> filterValueList = ScreenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
+                    filterValueList.Sort();
 
-                    if (comboBoxFilterValue.Items.Count > 0)
-                    {
-                        comboBoxFilterValue.SelectedIndex = 0;
-                    }
+                    comboBoxFilterValue.DataSource = filterValueList;
                 }
             }
         }
@@ -2732,12 +2726,14 @@ namespace AutoScreenCapture
         private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
         {
             SearchDates();
+            ShowScreenshots();
         }
 
         private void buttonRefreshFilterValues_Click(object sender, EventArgs e)
         {
             SearchFilterValues();
             SearchDates();
+            ShowScreenshots();
         }
 
         private void toolStripSplitButtonSaveSettings_ButtonClick(object sender, EventArgs e)

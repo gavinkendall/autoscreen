@@ -156,31 +156,31 @@ namespace AutoScreenCapture
             get { return _screenshotList.Count; }
         }
 
-        public static List<string> GetFilterValueList(string filterType, string filterValue)
+        public static List<string> GetFilterValueList(string filterType)
         {
             if (filterType.Equals("Image Format"))
             {
-                return !string.IsNullOrEmpty(filterValue) ? _screenshotList.Where(x => x.Format.Name.Equals(filterValue)).Select(x => x.Format.Name).ToList() : _screenshotList.Select(x => x.Format.Name).ToList();
+                return _screenshotList.Select(x => x.Format.Name).Distinct().ToList();
             }
 
             if (filterType.Equals("Label"))
             {
-                return !string.IsNullOrEmpty(filterValue) ? _screenshotList.Where(x => x.Label.Equals(filterValue)).Select(x => x.Label).ToList() : _screenshotList.Select(x => x.Label).ToList();
+                return _screenshotList.Select(x => x.Label).Distinct().ToList();
             }
 
             if (filterType.Equals("Region"))
             {
-                //return _filterValueListRegions.Where(x => x.Equals(filterValue)).ToList();
+
             }
 
             if (filterType.Equals("Screen"))
             {
-                //return _filterValueListScreens.Where(x => x.Equals(filterValue)).ToList();
+
             }
 
             if (filterType.Equals("Window Title"))
             {
-                return !string.IsNullOrEmpty(filterValue) ? _screenshotList.Where(x => x.WindowTitle.Equals(filterValue)).Select(x => x.WindowTitle).ToList() : _screenshotList.Select(x => x.WindowTitle).ToList();
+                return _screenshotList.Select(x => x.WindowTitle).Distinct().ToList();
             }
 
             return new List<string>();
@@ -200,13 +200,12 @@ namespace AutoScreenCapture
 
             if (filterType.Equals("Region"))
             {
-                //Region region = regionCollection.GetByViewId(newScreenshot.ViewId);
-                //return _screenshotList.Where(x => ScreenshotCollection.regionCollection.GetByViewId(.Equals(filterValue)).Select(x => x.Date).ToList();
+                
             }
 
             if (filterType.Equals("Screen"))
             {
-                //return _filterValueListScreens.Where(x => x.Equals(filterValue)).ToList();
+                
             }
 
             if (filterType.Equals("Window Title"))
@@ -231,13 +230,12 @@ namespace AutoScreenCapture
 
             if (filterType.Equals("Region"))
             {
-                //Region region = regionCollection.GetByViewId(newScreenshot.ViewId);
-                //return _screenshotList.Where(x => ScreenshotCollection.regionCollection.GetByViewId(.Equals(filterValue)).Select(x => x.Date).ToList();
+                
             }
 
             if (filterType.Equals("Screen"))
             {
-                //return _filterValueListScreens.Where(x => x.Equals(filterValue)).ToList();
+                
             }
 
             if (filterType.Equals("Window Title"))
