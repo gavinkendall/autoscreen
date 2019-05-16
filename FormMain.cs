@@ -698,6 +698,8 @@ namespace AutoScreenCapture
                     ScreenCapture.Count = 0;
                     ScreenCapture.Running = false;
 
+                    ScreenshotCollection.Save();
+
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
@@ -937,7 +939,11 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
                 SaveSettings();
 
-                StopScreenCapture();
+                DisableStopCapture();
+                EnableStartCapture();
+
+                ScreenCapture.Count = 0;
+                ScreenCapture.Running = false;
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
