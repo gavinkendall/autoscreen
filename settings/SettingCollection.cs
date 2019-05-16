@@ -39,7 +39,7 @@ namespace AutoScreenCapture
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<Setting>)_settingList).GetEnumerator();
+            return ((IEnumerable<Setting>) _settingList).GetEnumerator();
         }
 
         IEnumerator<Setting> IEnumerable<Setting>.GetEnumerator()
@@ -144,57 +144,64 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (Directory.Exists(FileSystem.SettingsFolder) && File.Exists(Filepath))
+            try
             {
-                FileInfo fileInfo = new FileInfo(Filepath);
-
-                // Check the size of the settings file.
-                // Delete the file if it's too big so we don't hang.
-                if (fileInfo.Length > MAX_FILE_SIZE)
+                if (Directory.Exists(FileSystem.SettingsFolder) && File.Exists(Filepath))
                 {
-                    File.Delete(Filepath);
-                    return;
-                }
+                    FileInfo fileInfo = new FileInfo(Filepath);
 
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(Filepath);
-
-                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
-
-                foreach (XmlNode xSetting in xSettings)
-                {
-                    Setting setting = new Setting();
-                    XmlNodeReader xReader = new XmlNodeReader(xSetting);
-
-                    while (xReader.Read())
+                    // Check the size of the settings file.
+                    // Delete the file if it's too big so we don't hang.
+                    if (fileInfo.Length > MAX_FILE_SIZE)
                     {
-                        if (xReader.IsStartElement())
-                        {
-                            switch (xReader.Name)
-                            {
-                                case SETTING_KEY:
-                                    xReader.Read();
-                                    setting.Key = xReader.Value;
-                                    break;
+                        File.Delete(Filepath);
+                        return;
+                    }
 
-                                case SETTING_VALUE:
-                                    xReader.Read();
-                                    setting.Value = xReader.Value;
-                                    break;
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.Load(Filepath);
+
+                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                    XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
+
+                    foreach (XmlNode xSetting in xSettings)
+                    {
+                        Setting setting = new Setting();
+                        XmlNodeReader xReader = new XmlNodeReader(xSetting);
+
+                        while (xReader.Read())
+                        {
+                            if (xReader.IsStartElement())
+                            {
+                                switch (xReader.Name)
+                                {
+                                    case SETTING_KEY:
+                                        xReader.Read();
+                                        setting.Key = xReader.Value;
+                                        break;
+
+                                    case SETTING_VALUE:
+                                        xReader.Read();
+                                        setting.Value = xReader.Value;
+                                        break;
+                                }
                             }
                         }
-                    }
 
-                    xReader.Close();
+                        xReader.Close();
 
-                    if (!string.IsNullOrEmpty(setting.Key))
-                    {
-                        Add(setting);
+                        if (!string.IsNullOrEmpty(setting.Key))
+                        {
+                            Add(setting);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("SettingCollection::Load", ex);
             }
         }
 
@@ -203,256 +210,270 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            if (Directory.Exists(FileSystem.SettingsFolder))
+            try
             {
-                XmlWriterSettings xSettings = new XmlWriterSettings();
-                xSettings.Indent = true;
-                xSettings.CloseOutput = true;
-                xSettings.CheckCharacters = true;
-                xSettings.Encoding = Encoding.UTF8;
-                xSettings.NewLineChars = Environment.NewLine;
-                xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-                xSettings.NewLineHandling = NewLineHandling.Entitize;
-                xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-                if (File.Exists(Filepath))
+                if (Directory.Exists(FileSystem.SettingsFolder))
                 {
-                    File.Delete(Filepath);
-                }
+                    XmlWriterSettings xSettings = new XmlWriterSettings();
+                    xSettings.Indent = true;
+                    xSettings.CloseOutput = true;
+                    xSettings.CheckCharacters = true;
+                    xSettings.Encoding = Encoding.UTF8;
+                    xSettings.NewLineChars = Environment.NewLine;
+                    xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+                    xSettings.NewLineHandling = NewLineHandling.Entitize;
+                    xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
-                {
-                    xWriter.WriteStartDocument();
-                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                    xWriter.WriteStartElement(XML_FILE_SETTINGS_NODE);
-
-                    foreach (object obj in _settingList)
+                    if (File.Exists(Filepath))
                     {
-                        Setting setting = (Setting) obj;
-
-                        xWriter.WriteStartElement(XML_FILE_SETTING_NODE);
-                        xWriter.WriteElementString(SETTING_KEY, setting.Key);
-                        xWriter.WriteElementString(SETTING_VALUE, setting.Value.ToString());
-
-                        xWriter.WriteEndElement();
+                        File.Delete(Filepath);
                     }
 
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndDocument();
+                    using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
+                    {
+                        xWriter.WriteStartDocument();
+                        xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                        xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                        xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                        xWriter.WriteStartElement(XML_FILE_SETTINGS_NODE);
 
-                    xWriter.Flush();
-                    xWriter.Close();
+                        foreach (object obj in _settingList)
+                        {
+                            Setting setting = (Setting) obj;
+
+                            xWriter.WriteStartElement(XML_FILE_SETTING_NODE);
+                            xWriter.WriteElementString(SETTING_KEY, setting.Key);
+                            xWriter.WriteElementString(SETTING_VALUE, setting.Value.ToString());
+
+                            xWriter.WriteEndElement();
+                        }
+
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndDocument();
+
+                        xWriter.Flush();
+                        xWriter.Close();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("SettingCollection::Save", ex);
             }
         }
 
         public void Upgrade()
         {
-            if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+            try
             {
-                SettingCollection oldUserSettings = (SettingCollection)this.MemberwiseClone();
-                oldUserSettings._settingList = new List<Setting>(_settingList);
-
-                Settings.VersionManager.OldUserSettings = oldUserSettings;
-
-                if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null) // Is this version 2.1.8.2 (or older)?
+                if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                 {
-                    // Go through the old settings and get the old values from them to be used for the new settings.
+                    SettingCollection oldUserSettings = (SettingCollection) this.MemberwiseClone();
+                    oldUserSettings._settingList = new List<Setting>(_settingList);
 
-                    // 2.1 used a setting named "Interval", but 2.2 uses "IntScreenCaptureInterval".
-                    if (KeyExists("Interval"))
+                    Settings.VersionManager.OldUserSettings = oldUserSettings;
+
+                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null) // Is this version 2.1.8.2 (or older)?
                     {
-                        SetValueByKey("IntScreenCaptureInterval",
-                            Convert.ToInt32(GetByKey("Interval", 60000, createKeyIfNotFound: false).Value));
+                        // Go through the old settings and get the old values from them to be used for the new settings.
+
+                        // 2.1 used a setting named "Interval", but 2.2 uses "IntScreenCaptureInterval".
+                        if (KeyExists("Interval"))
+                        {
+                            SetValueByKey("IntScreenCaptureInterval",
+                                Convert.ToInt32(GetByKey("Interval", 60000, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureLimit", but 2.2 uses "IntCaptureLimit".
+                        if (KeyExists("CaptureLimit"))
+                        {
+                            SetValueByKey("IntCaptureLimit",
+                                Convert.ToInt32(GetByKey("CaptureLimit", 0, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureLimitCheck", but 2.2 uses "BoolCaptureLimit".
+                        if (KeyExists("CaptureLimitCheck"))
+                        {
+                            SetValueByKey("BoolCaptureLimit",
+                                Convert.ToBoolean(GetByKey("CaptureLimitCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "TakeInitialScreenshotCheck", but 2.2 uses "BoolTakeInitialScreenshot".
+                        if (KeyExists("TakeInitialScreenshotCheck"))
+                        {
+                            SetValueByKey("BoolTakeInitialScreenshot",
+                                Convert.ToBoolean(GetByKey("TakeInitialScreenshotCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "ShowSystemTrayIcon", but 2.2 uses "BoolShowSystemTrayIcon".
+                        if (KeyExists("ShowSystemTrayIcon"))
+                        {
+                            SetValueByKey("BoolShowSystemTrayIcon",
+                                Convert.ToBoolean(GetByKey("ShowSystemTrayIcon", true, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureStopAtCheck", but 2.2 uses "BoolCaptureStopAt".
+                        if (KeyExists("CaptureStopAtCheck"))
+                        {
+                            SetValueByKey("BoolCaptureStopAt",
+                                Convert.ToBoolean(GetByKey("CaptureStopAtCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureStartAtCheck", but 2.2 uses "BoolCaptureStartAt".
+                        if (KeyExists("CaptureStartAtCheck"))
+                        {
+                            SetValueByKey("BoolCaptureStartAt",
+                                Convert.ToBoolean(GetByKey("CaptureStartAtCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnSundayCheck", but 2.2 uses "BoolCaptureOnSunday".
+                        if (KeyExists("CaptureOnSundayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnSunday",
+                                Convert.ToBoolean(GetByKey("CaptureOnSundayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnMondayCheck", but 2.2 uses "BoolCaptureOnMonday".
+                        if (KeyExists("CaptureOnMondayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnMonday",
+                                Convert.ToBoolean(GetByKey("CaptureOnMondayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnTuesdayCheck", but 2.2 uses "BoolCaptureOnTuesday".
+                        if (KeyExists("CaptureOnTuesdayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnTuesday",
+                                Convert.ToBoolean(GetByKey("CaptureOnTuesdayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnWednesdayCheck", but 2.2 uses "BoolCaptureOnWednesday".
+                        if (KeyExists("CaptureOnWednesdayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnWednesday",
+                                Convert.ToBoolean(GetByKey("CaptureOnWednesdayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnThursdayCheck", but 2.2 uses "BoolCaptureOnThursday".
+                        if (KeyExists("CaptureOnThursdayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnThursday",
+                                Convert.ToBoolean(GetByKey("CaptureOnThursdayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnFridayCheck", but 2.2 uses "BoolCaptureOnFriday".
+                        if (KeyExists("CaptureOnFridayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnFriday",
+                                Convert.ToBoolean(GetByKey("CaptureOnFridayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnSaturdayCheck", but 2.2 uses "BoolCaptureOnSaturday".
+                        if (KeyExists("CaptureOnSaturdayCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnSaturday",
+                                Convert.ToBoolean(GetByKey("CaptureOnSaturdayCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureOnTheseDaysCheck", but 2.2 uses "BoolCaptureOnTheseDays".
+                        if (KeyExists("CaptureOnTheseDaysCheck"))
+                        {
+                            SetValueByKey("BoolCaptureOnTheseDays",
+                                Convert.ToBoolean(GetByKey("CaptureOnTheseDaysCheck", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureStopAtValue", but 2.2 uses "DateTimeCaptureStopAt".
+                        if (KeyExists("CaptureStopAtValue"))
+                        {
+                            SetValueByKey("DateTimeCaptureStopAt",
+                                Convert.ToDateTime(GetByKey("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0), createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "CaptureStartAtValue", but 2.2 uses "DateTimeCaptureStartAt".
+                        if (KeyExists("CaptureStartAtValue"))
+                        {
+                            SetValueByKey("DateTimeCaptureStartAt",
+                                Convert.ToDateTime(GetByKey("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0), createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "LockScreenCaptureSession", but 2.2 uses "BoolLockScreenCaptureSession".
+                        if (KeyExists("LockScreenCaptureSession"))
+                        {
+                            SetValueByKey("BoolLockScreenCaptureSession",
+                                Convert.ToBoolean(GetByKey("LockScreenCaptureSession", false, createKeyIfNotFound: false).Value));
+                        }
+
+                        // 2.1 used a setting named "Passphrase", but 2.2 uses "StringPassphrase".
+                        if (KeyExists("Passphrase"))
+                        {
+                            SetValueByKey("StringPassphrase",
+                                GetByKey("Passphrase", string.Empty, createKeyIfNotFound: false).Value.ToString());
+                        }
+
+                        // 2.1 used a setting named "DaysOldWhenRemoveSlides", but 2.2 uses "IntKeepScreenshotsForDays".
+                        if (KeyExists("DaysOldWhenRemoveSlides"))
+                        {
+                            SetValueByKey("IntKeepScreenshotsForDays",
+                                Convert.ToInt32(
+                                    GetByKey("DaysOldWhenRemoveSlides", 30, createKeyIfNotFound: false).Value));
+                        }
+
+                        // Remove the old settings.
+                        // When upgrading from 2.1 to 2.2 we should end up with about 20 settings instead of 60
+                        // because 2.1 was limited to using Screen 1, Screen 2, Screen 3, Screen 4, and Active Window
+                        // so there were settings dedicated to all the properties associated with them (such as Name, X, Y, Width, and Height).
+                        RemoveByKey("ScreenshotsDirectory");
+                        RemoveByKey("ScheduleImageFormat");
+                        RemoveByKey("SlideSkip");
+                        RemoveByKey("ImageResolutionRatio");
+                        RemoveByKey("ImageFormatFilter");
+                        RemoveByKey("ImageFormatFilterIndex");
+                        RemoveByKey("Interval");
+                        RemoveByKey("SlideshowDelay");
+                        RemoveByKey("SlideSkipCheck");
+                        RemoveByKey("Screen1X");
+                        RemoveByKey("Screen1Y");
+                        RemoveByKey("Screen1Width");
+                        RemoveByKey("Screen1Height");
+                        RemoveByKey("Screen2X");
+                        RemoveByKey("Screen2Y");
+                        RemoveByKey("Screen2Width");
+                        RemoveByKey("Screen2Height");
+                        RemoveByKey("Screen3X");
+                        RemoveByKey("Screen3Y");
+                        RemoveByKey("Screen3Width");
+                        RemoveByKey("Screen3Height");
+                        RemoveByKey("Screen4X");
+                        RemoveByKey("Screen4Y");
+                        RemoveByKey("Screen4Width");
+                        RemoveByKey("Screen4Height");
+                        RemoveByKey("Screen1Name");
+                        RemoveByKey("Screen2Name");
+                        RemoveByKey("Screen3Name");
+                        RemoveByKey("Screen4Name");
+                        RemoveByKey("Screen5Name");
+                        RemoveByKey("Macro");
+                        RemoveByKey("JpegQualityLevel");
+                        RemoveByKey("DaysOldWhenRemoveSlides");
+                        RemoveByKey("CaptureScreen1");
+                        RemoveByKey("CaptureScreen2");
+                        RemoveByKey("CaptureScreen3");
+                        RemoveByKey("CaptureScreen4");
+                        RemoveByKey("CaptureActiveWindow");
+                        RemoveByKey("AutoReset");
+                        RemoveByKey("Mouse");
+                        RemoveByKey("StartButtonImageFormat");
+                        RemoveByKey("Schedule");
                     }
 
-                    // 2.1 used a setting named "CaptureLimit", but 2.2 uses "IntCaptureLimit".
-                    if (KeyExists("CaptureLimit"))
-                    {
-                        SetValueByKey("IntCaptureLimit",
-                            Convert.ToInt32(GetByKey("CaptureLimit", 0, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureLimitCheck", but 2.2 uses "BoolCaptureLimit".
-                    if (KeyExists("CaptureLimitCheck"))
-                    {
-                        SetValueByKey("BoolCaptureLimit",
-                            Convert.ToBoolean(GetByKey("CaptureLimitCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "TakeInitialScreenshotCheck", but 2.2 uses "BoolTakeInitialScreenshot".
-                    if (KeyExists("TakeInitialScreenshotCheck"))
-                    {
-                        SetValueByKey("BoolTakeInitialScreenshot",
-                            Convert.ToBoolean(GetByKey("TakeInitialScreenshotCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "ShowSystemTrayIcon", but 2.2 uses "BoolShowSystemTrayIcon".
-                    if (KeyExists("ShowSystemTrayIcon"))
-                    {
-                        SetValueByKey("BoolShowSystemTrayIcon",
-                            Convert.ToBoolean(GetByKey("ShowSystemTrayIcon", true, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStopAtCheck", but 2.2 uses "BoolCaptureStopAt".
-                    if (KeyExists("CaptureStopAtCheck"))
-                    {
-                        SetValueByKey("BoolCaptureStopAt",
-                            Convert.ToBoolean(GetByKey("CaptureStopAtCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStartAtCheck", but 2.2 uses "BoolCaptureStartAt".
-                    if (KeyExists("CaptureStartAtCheck"))
-                    {
-                        SetValueByKey("BoolCaptureStartAt",
-                            Convert.ToBoolean(GetByKey("CaptureStartAtCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnSundayCheck", but 2.2 uses "BoolCaptureOnSunday".
-                    if (KeyExists("CaptureOnSundayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnSunday",
-                            Convert.ToBoolean(GetByKey("CaptureOnSundayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnMondayCheck", but 2.2 uses "BoolCaptureOnMonday".
-                    if (KeyExists("CaptureOnMondayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnMonday",
-                            Convert.ToBoolean(GetByKey("CaptureOnMondayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnTuesdayCheck", but 2.2 uses "BoolCaptureOnTuesday".
-                    if (KeyExists("CaptureOnTuesdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnTuesday",
-                            Convert.ToBoolean(GetByKey("CaptureOnTuesdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnWednesdayCheck", but 2.2 uses "BoolCaptureOnWednesday".
-                    if (KeyExists("CaptureOnWednesdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnWednesday",
-                            Convert.ToBoolean(GetByKey("CaptureOnWednesdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnThursdayCheck", but 2.2 uses "BoolCaptureOnThursday".
-                    if (KeyExists("CaptureOnThursdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnThursday",
-                            Convert.ToBoolean(GetByKey("CaptureOnThursdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnFridayCheck", but 2.2 uses "BoolCaptureOnFriday".
-                    if (KeyExists("CaptureOnFridayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnFriday",
-                            Convert.ToBoolean(GetByKey("CaptureOnFridayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnSaturdayCheck", but 2.2 uses "BoolCaptureOnSaturday".
-                    if (KeyExists("CaptureOnSaturdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnSaturday",
-                            Convert.ToBoolean(GetByKey("CaptureOnSaturdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnTheseDaysCheck", but 2.2 uses "BoolCaptureOnTheseDays".
-                    if (KeyExists("CaptureOnTheseDaysCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnTheseDays",
-                            Convert.ToBoolean(GetByKey("CaptureOnTheseDaysCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStopAtValue", but 2.2 uses "DateTimeCaptureStopAt".
-                    if (KeyExists("CaptureStopAtValue"))
-                    {
-                        SetValueByKey("DateTimeCaptureStopAt",
-                            Convert.ToDateTime(GetByKey("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0), createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStartAtValue", but 2.2 uses "DateTimeCaptureStartAt".
-                    if (KeyExists("CaptureStartAtValue"))
-                    {
-                        SetValueByKey("DateTimeCaptureStartAt",
-                            Convert.ToDateTime(GetByKey("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0), createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "LockScreenCaptureSession", but 2.2 uses "BoolLockScreenCaptureSession".
-                    if (KeyExists("LockScreenCaptureSession"))
-                    {
-                        SetValueByKey("BoolLockScreenCaptureSession",
-                            Convert.ToBoolean(GetByKey("LockScreenCaptureSession", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "Passphrase", but 2.2 uses "StringPassphrase".
-                    if (KeyExists("Passphrase"))
-                    {
-                        SetValueByKey("StringPassphrase",
-                            GetByKey("Passphrase", string.Empty, createKeyIfNotFound: false).Value.ToString());
-                    }
-
-                    // 2.1 used a setting named "DaysOldWhenRemoveSlides", but 2.2 uses "IntKeepScreenshotsForDays".
-                    if (KeyExists("DaysOldWhenRemoveSlides"))
-                    {
-                        SetValueByKey("IntKeepScreenshotsForDays",
-                            Convert.ToInt32(
-                                GetByKey("DaysOldWhenRemoveSlides", 30, createKeyIfNotFound: false).Value));
-                    }
-
-                    // Remove the old settings.
-                    // When upgrading from 2.1 to 2.2 we should end up with about 20 settings instead of 60
-                    // because 2.1 was limited to using Screen 1, Screen 2, Screen 3, Screen 4, and Active Window
-                    // so there were settings dedicated to all the properties associated with them (such as Name, X, Y, Width, and Height).
-                    RemoveByKey("ScreenshotsDirectory");
-                    RemoveByKey("ScheduleImageFormat");
-                    RemoveByKey("SlideSkip");
-                    RemoveByKey("ImageResolutionRatio");
-                    RemoveByKey("ImageFormatFilter");
-                    RemoveByKey("ImageFormatFilterIndex");
-                    RemoveByKey("Interval");
-                    RemoveByKey("SlideshowDelay");
-                    RemoveByKey("SlideSkipCheck");
-                    RemoveByKey("Screen1X");
-                    RemoveByKey("Screen1Y");
-                    RemoveByKey("Screen1Width");
-                    RemoveByKey("Screen1Height");
-                    RemoveByKey("Screen2X");
-                    RemoveByKey("Screen2Y");
-                    RemoveByKey("Screen2Width");
-                    RemoveByKey("Screen2Height");
-                    RemoveByKey("Screen3X");
-                    RemoveByKey("Screen3Y");
-                    RemoveByKey("Screen3Width");
-                    RemoveByKey("Screen3Height");
-                    RemoveByKey("Screen4X");
-                    RemoveByKey("Screen4Y");
-                    RemoveByKey("Screen4Width");
-                    RemoveByKey("Screen4Height");
-                    RemoveByKey("Screen1Name");
-                    RemoveByKey("Screen2Name");
-                    RemoveByKey("Screen3Name");
-                    RemoveByKey("Screen4Name");
-                    RemoveByKey("Screen5Name");
-                    RemoveByKey("Macro");
-                    RemoveByKey("JpegQualityLevel");
-                    RemoveByKey("DaysOldWhenRemoveSlides");
-                    RemoveByKey("CaptureScreen1");
-                    RemoveByKey("CaptureScreen2");
-                    RemoveByKey("CaptureScreen3");
-                    RemoveByKey("CaptureScreen4");
-                    RemoveByKey("CaptureActiveWindow");
-                    RemoveByKey("AutoReset");
-                    RemoveByKey("Mouse");
-                    RemoveByKey("StartButtonImageFormat");
-                    RemoveByKey("Schedule");
+                    // Now that we've upgraded all the settings we should save them to disk.
+                    Save();
                 }
-
-                // Now that we've upgraded all the settings we should save them to disk.
-                Save();
+            }
+            catch (Exception ex)
+            {
+                Log.Write("SettingCollection::Upgrade", ex);
             }
         }
     }

@@ -99,81 +99,88 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
+            try
             {
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
-
-                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                XmlNodeList xTriggers = xDoc.SelectNodes(TRIGGER_XPATH);
-
-                foreach (XmlNode xTrigger in xTriggers)
+                if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                    File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
                 {
-                    Trigger trigger = new Trigger();
-                    XmlNodeReader xReader = new XmlNodeReader(xTrigger);
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
 
-                    while (xReader.Read())
+                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                    XmlNodeList xTriggers = xDoc.SelectNodes(TRIGGER_XPATH);
+
+                    foreach (XmlNode xTrigger in xTriggers)
                     {
-                        if (xReader.IsStartElement())
+                        Trigger trigger = new Trigger();
+                        XmlNodeReader xReader = new XmlNodeReader(xTrigger);
+
+                        while (xReader.Read())
                         {
-                            switch (xReader.Name)
+                            if (xReader.IsStartElement())
                             {
-                                case TRIGGER_NAME:
-                                    xReader.Read();
-                                    trigger.Name = xReader.Value;
-                                    break;
+                                switch (xReader.Name)
+                                {
+                                    case TRIGGER_NAME:
+                                        xReader.Read();
+                                        trigger.Name = xReader.Value;
+                                        break;
 
-                                case TRIGGER_CONDITION:
-                                    xReader.Read();
-                                    trigger.ConditionType =
-                                        (TriggerConditionType) Enum.Parse(typeof(TriggerConditionType), xReader.Value);
-                                    break;
+                                    case TRIGGER_CONDITION:
+                                        xReader.Read();
+                                        trigger.ConditionType =
+                                            (TriggerConditionType) Enum.Parse(typeof(TriggerConditionType), xReader.Value);
+                                        break;
 
-                                case TRIGGER_ACTION:
-                                    xReader.Read();
-                                    trigger.ActionType =
-                                        (TriggerActionType) Enum.Parse(typeof(TriggerActionType), xReader.Value);
-                                    break;
+                                    case TRIGGER_ACTION:
+                                        xReader.Read();
+                                        trigger.ActionType =
+                                            (TriggerActionType) Enum.Parse(typeof(TriggerActionType), xReader.Value);
+                                        break;
 
-                                case TRIGGER_EDITOR:
-                                    xReader.Read();
-                                    trigger.Editor = xReader.Value;
-                                    break;
+                                    case TRIGGER_EDITOR:
+                                        xReader.Read();
+                                        trigger.Editor = xReader.Value;
+                                        break;
+                                }
                             }
+                        }
+
+                        xReader.Close();
+
+                        if (!string.IsNullOrEmpty(trigger.Name))
+                        {
+                            Add(trigger);
                         }
                     }
 
-                    xReader.Close();
-
-                    if (!string.IsNullOrEmpty(trigger.Name))
+                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
-                        Add(trigger);
+                        Save();
                     }
                 }
-
-                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                else
                 {
+                    // Setup a few "built in" triggers by default.
+                    Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
+                        TriggerActionType.ShowInterface, string.Empty));
+                    Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted,
+                        TriggerActionType.HideInterface, string.Empty));
+                    Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
+                        TriggerActionType.ShowInterface, string.Empty));
+                    Add(new Trigger("Interface Closing -> Exit", TriggerConditionType.InterfaceClosing,
+                        TriggerActionType.ExitApplication, string.Empty));
+                    Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
+                        TriggerActionType.StopScreenCapture, string.Empty));
+
                     Save();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                // Setup a few "built in" triggers by default.
-                Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
-                    TriggerActionType.ShowInterface, string.Empty));
-                Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted,
-                    TriggerActionType.HideInterface, string.Empty));
-                Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
-                    TriggerActionType.ShowInterface, string.Empty));
-                Add(new Trigger("Interface Closing -> Exit", TriggerConditionType.InterfaceClosing,
-                    TriggerActionType.ExitApplication, string.Empty));
-                Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
-                    TriggerActionType.StopScreenCapture, string.Empty));
-
-                Save();
+                Log.Write("TriggerCollection::Load", ex);
             }
         }
 
@@ -182,52 +189,59 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder))
+            try
             {
-                XmlWriterSettings xSettings = new XmlWriterSettings();
-                xSettings.Indent = true;
-                xSettings.CloseOutput = true;
-                xSettings.CheckCharacters = true;
-                xSettings.Encoding = Encoding.UTF8;
-                xSettings.NewLineChars = Environment.NewLine;
-                xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-                xSettings.NewLineHandling = NewLineHandling.Entitize;
-                xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder))
                 {
-                    File.Delete(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
-                }
+                    XmlWriterSettings xSettings = new XmlWriterSettings();
+                    xSettings.Indent = true;
+                    xSettings.CloseOutput = true;
+                    xSettings.CheckCharacters = true;
+                    xSettings.Encoding = Encoding.UTF8;
+                    xSettings.NewLineChars = Environment.NewLine;
+                    xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+                    xSettings.NewLineHandling = NewLineHandling.Entitize;
+                    xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.TriggersFile, xSettings))
-                {
-                    xWriter.WriteStartDocument();
-                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                    xWriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
-
-                    foreach (object obj in _triggerList)
+                    if (File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
                     {
-                        Trigger trigger = (Trigger) obj;
-
-                        xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
-                        xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
-                        xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
-                        xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
-                        xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
-
-                        xWriter.WriteEndElement();
+                        File.Delete(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
                     }
 
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndDocument();
+                    using (XmlWriter xWriter =
+                        XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.TriggersFile, xSettings))
+                    {
+                        xWriter.WriteStartDocument();
+                        xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                        xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                        xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                        xWriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
 
-                    xWriter.Flush();
-                    xWriter.Close();
+                        foreach (object obj in _triggerList)
+                        {
+                            Trigger trigger = (Trigger) obj;
+
+                            xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
+                            xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
+                            xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
+                            xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
+                            xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
+
+                            xWriter.WriteEndElement();
+                        }
+
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndDocument();
+
+                        xWriter.Flush();
+                        xWriter.Close();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("TriggerCollection::Save", ex);
             }
         }
     }

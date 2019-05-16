@@ -115,102 +115,109 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(ImageFormatCollection imageFormatCollection)
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
+            try
             {
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
-
-                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                XmlNodeList xScreens = xDoc.SelectNodes(SCREEN_XPATH);
-
-                foreach (XmlNode xScreen in xScreens)
+                if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                    File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
                 {
-                    Screen screen = new Screen();
-                    XmlNodeReader xReader = new XmlNodeReader(xScreen);
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
 
-                    while (xReader.Read())
+                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                    XmlNodeList xScreens = xDoc.SelectNodes(SCREEN_XPATH);
+
+                    foreach (XmlNode xScreen in xScreens)
                     {
-                        if (xReader.IsStartElement())
+                        Screen screen = new Screen();
+                        XmlNodeReader xReader = new XmlNodeReader(xScreen);
+
+                        while (xReader.Read())
                         {
-                            switch (xReader.Name)
+                            if (xReader.IsStartElement())
                             {
-                                case SCREEN_VIEWID:
-                                    xReader.Read();
-                                    screen.ViewId = Guid.Parse(xReader.Value);
-                                    break;
+                                switch (xReader.Name)
+                                {
+                                    case SCREEN_VIEWID:
+                                        xReader.Read();
+                                        screen.ViewId = Guid.Parse(xReader.Value);
+                                        break;
 
-                                case SCREEN_NAME:
-                                    xReader.Read();
-                                    screen.Name = xReader.Value;
-                                    break;
+                                    case SCREEN_NAME:
+                                        xReader.Read();
+                                        screen.Name = xReader.Value;
+                                        break;
 
-                                case SCREEN_FOLDER:
-                                    xReader.Read();
-                                    screen.Folder = xReader.Value;
-                                    break;
+                                    case SCREEN_FOLDER:
+                                        xReader.Read();
+                                        screen.Folder = xReader.Value;
+                                        break;
 
-                                case SCREEN_MACRO:
-                                    xReader.Read();
-                                    screen.Macro = xReader.Value;
-                                    break;
+                                    case SCREEN_MACRO:
+                                        xReader.Read();
+                                        screen.Macro = xReader.Value;
+                                        break;
 
-                                case SCREEN_COMPONENT:
-                                    xReader.Read();
-                                    screen.Component = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case SCREEN_COMPONENT:
+                                        xReader.Read();
+                                        screen.Component = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case SCREEN_FORMAT:
-                                    xReader.Read();
-                                    screen.Format = imageFormatCollection.GetByName(xReader.Value);
-                                    break;
+                                    case SCREEN_FORMAT:
+                                        xReader.Read();
+                                        screen.Format = imageFormatCollection.GetByName(xReader.Value);
+                                        break;
 
-                                case SCREEN_JPEG_QUALITY:
-                                    xReader.Read();
-                                    screen.JpegQuality = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case SCREEN_JPEG_QUALITY:
+                                        xReader.Read();
+                                        screen.JpegQuality = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case SCREEN_RESOLUTION_RATIO:
-                                    xReader.Read();
-                                    screen.ResolutionRatio = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case SCREEN_RESOLUTION_RATIO:
+                                        xReader.Read();
+                                        screen.ResolutionRatio = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case SCREEN_MOUSE:
-                                    xReader.Read();
-                                    screen.Mouse = Convert.ToBoolean(xReader.Value);
-                                    break;
+                                    case SCREEN_MOUSE:
+                                        xReader.Read();
+                                        screen.Mouse = Convert.ToBoolean(xReader.Value);
+                                        break;
+                                }
                             }
+                        }
+
+                        xReader.Close();
+
+                        if (!string.IsNullOrEmpty(screen.Name))
+                        {
+                            Add(screen);
                         }
                     }
 
-                    xReader.Close();
-
-                    if (!string.IsNullOrEmpty(screen.Name))
+                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
-                        Add(screen);
+                        Save();
                     }
                 }
-
-                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                else
                 {
+                    Add(new Screen($"Active Window", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, 0,
+                        imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
+
+                    // Setup some screens based on what we can find.
+                    for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
+                    {
+                        Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
+                            imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
+                    }
+
                     Save();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Add(new Screen($"Active Window", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, 0,
-                    imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
-
-                // Setup some screens based on what we can find.
-                for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
-                {
-                    Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
-                        imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
-                }
-
-                Save();
+                Log.Write("ScreenCollection::Load", ex);
             }
         }
 
@@ -219,57 +226,64 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder))
+            try
             {
-                XmlWriterSettings xSettings = new XmlWriterSettings();
-                xSettings.Indent = true;
-                xSettings.CloseOutput = true;
-                xSettings.CheckCharacters = true;
-                xSettings.Encoding = Encoding.UTF8;
-                xSettings.NewLineChars = Environment.NewLine;
-                xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-                xSettings.NewLineHandling = NewLineHandling.Entitize;
-                xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder))
                 {
-                    File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
-                }
+                    XmlWriterSettings xSettings = new XmlWriterSettings();
+                    xSettings.Indent = true;
+                    xSettings.CloseOutput = true;
+                    xSettings.CheckCharacters = true;
+                    xSettings.Encoding = Encoding.UTF8;
+                    xSettings.NewLineChars = Environment.NewLine;
+                    xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+                    xSettings.NewLineHandling = NewLineHandling.Entitize;
+                    xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreensFile, xSettings))
-                {
-                    xWriter.WriteStartDocument();
-                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                    xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
-
-                    foreach (object obj in _screenList)
+                    if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
                     {
-                        Screen screen = (Screen) obj;
-
-                        xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
-                        xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
-                        xWriter.WriteElementString(SCREEN_NAME, screen.Name);
-                        xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectDirectoryPath(screen.Folder));
-                        xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
-                        xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
-                        xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
-                        xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
-                        xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
-                        xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
-
-                        xWriter.WriteEndElement();
+                        File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
                     }
 
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndDocument();
+                    using (XmlWriter xWriter =
+                        XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreensFile, xSettings))
+                    {
+                        xWriter.WriteStartDocument();
+                        xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                        xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                        xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                        xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
 
-                    xWriter.Flush();
-                    xWriter.Close();
+                        foreach (object obj in _screenList)
+                        {
+                            Screen screen = (Screen) obj;
+
+                            xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
+                            xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
+                            xWriter.WriteElementString(SCREEN_NAME, screen.Name);
+                            xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectDirectoryPath(screen.Folder));
+                            xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
+                            xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
+                            xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
+                            xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
+                            xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
+                            xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
+
+                            xWriter.WriteEndElement();
+                        }
+
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndDocument();
+
+                        xWriter.Flush();
+                        xWriter.Close();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCollection::Save", ex);
             }
         }
     }

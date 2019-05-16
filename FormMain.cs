@@ -345,14 +345,20 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ScreenshotCollection.Save();
-
             if (e.CloseReason == CloseReason.WindowsShutDown)
             {
+                DisableStopCapture();
+                EnableStartCapture();
+
+                ScreenCapture.Count = 0;
+                ScreenCapture.Running = false;
+
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
                 HideInterface();
+
+                ScreenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -621,7 +627,8 @@ namespace AutoScreenCapture
             if (!ScreenCapture.LockScreenCaptureSession)
             {
                 checkBoxPassphraseLock.Checked = false;
-                Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
+                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
+                SaveSettings();
 
                 Opacity = 100;
                 toolStripMenuItemShowInterface.Enabled = false;
@@ -682,7 +689,8 @@ namespace AutoScreenCapture
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
                     checkBoxPassphraseLock.Checked = false;
-                    Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
+                    Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
+                    SaveSettings();
 
                     DisableStopCapture();
                     EnableStartCapture();
@@ -926,15 +934,17 @@ namespace AutoScreenCapture
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                 checkBoxPassphraseLock.Checked = false;
-                Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
+                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
                 SaveSettings();
 
-                ScreenshotCollection.Save();
+                StopScreenCapture();
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
                 HideInterface();
+
+                ScreenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -2299,8 +2309,8 @@ namespace AutoScreenCapture
             checkBoxPassphraseLock.Enabled = false;
             checkBoxPassphraseLock.Checked = false;
 
-            Settings.User.GetByKey("LockScreenCaptureSession", defaultValue: false).Value = false;
-            Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = string.Empty;
+            Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
+            Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = string.Empty;
             SaveSettings();
 
             textBoxPassphrase.Focus();

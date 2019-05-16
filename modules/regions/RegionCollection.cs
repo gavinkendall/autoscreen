@@ -118,129 +118,136 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(ImageFormatCollection imageFormatCollection)
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
+            try
             {
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
-
-                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                XmlNodeList xRegions = xDoc.SelectNodes(REGION_XPATH);
-
-                foreach (XmlNode xRegion in xRegions)
+                if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                    File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
                 {
-                    Region region = new Region();
-                    XmlNodeReader xReader = new XmlNodeReader(xRegion);
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
 
-                    while (xReader.Read())
+                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                    XmlNodeList xRegions = xDoc.SelectNodes(REGION_XPATH);
+
+                    foreach (XmlNode xRegion in xRegions)
                     {
-                        if (xReader.IsStartElement())
+                        Region region = new Region();
+                        XmlNodeReader xReader = new XmlNodeReader(xRegion);
+
+                        while (xReader.Read())
                         {
-                            switch (xReader.Name)
+                            if (xReader.IsStartElement())
                             {
-                                case REGION_VIEWID:
-                                    xReader.Read();
-                                    region.ViewId = Guid.Parse(xReader.Value);
-                                    break;
+                                switch (xReader.Name)
+                                {
+                                    case REGION_VIEWID:
+                                        xReader.Read();
+                                        region.ViewId = Guid.Parse(xReader.Value);
+                                        break;
 
-                                case REGION_NAME:
-                                    xReader.Read();
-                                    region.Name = xReader.Value;
-                                    break;
+                                    case REGION_NAME:
+                                        xReader.Read();
+                                        region.Name = xReader.Value;
+                                        break;
 
-                                case REGION_FOLDER:
-                                    xReader.Read();
-                                    region.Folder = xReader.Value;
-                                    break;
+                                    case REGION_FOLDER:
+                                        xReader.Read();
+                                        region.Folder = xReader.Value;
+                                        break;
 
-                                case REGION_MACRO:
-                                    xReader.Read();
-                                    region.Macro = xReader.Value;
-                                    break;
+                                    case REGION_MACRO:
+                                        xReader.Read();
+                                        region.Macro = xReader.Value;
+                                        break;
 
-                                case REGION_FORMAT:
-                                    xReader.Read();
-                                    region.Format = imageFormatCollection.GetByName(xReader.Value);
-                                    break;
+                                    case REGION_FORMAT:
+                                        xReader.Read();
+                                        region.Format = imageFormatCollection.GetByName(xReader.Value);
+                                        break;
 
-                                case REGION_JPEG_QUALITY:
-                                    xReader.Read();
-                                    region.JpegQuality = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case REGION_JPEG_QUALITY:
+                                        xReader.Read();
+                                        region.JpegQuality = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case REGION_RESOLUTION_RATIO:
-                                    xReader.Read();
-                                    region.ResolutionRatio = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case REGION_RESOLUTION_RATIO:
+                                        xReader.Read();
+                                        region.ResolutionRatio = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case REGION_MOUSE:
-                                    xReader.Read();
-                                    region.Mouse = Convert.ToBoolean(xReader.Value);
-                                    break;
+                                    case REGION_MOUSE:
+                                        xReader.Read();
+                                        region.Mouse = Convert.ToBoolean(xReader.Value);
+                                        break;
 
-                                case REGION_X:
-                                    xReader.Read();
-                                    region.X = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case REGION_X:
+                                        xReader.Read();
+                                        region.X = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case REGION_Y:
-                                    xReader.Read();
-                                    region.Y = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case REGION_Y:
+                                        xReader.Read();
+                                        region.Y = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case REGION_WIDTH:
-                                    xReader.Read();
-                                    region.Width = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case REGION_WIDTH:
+                                        xReader.Read();
+                                        region.Width = Convert.ToInt32(xReader.Value);
+                                        break;
 
-                                case REGION_HEIGHT:
-                                    xReader.Read();
-                                    region.Height = Convert.ToInt32(xReader.Value);
-                                    break;
+                                    case REGION_HEIGHT:
+                                        xReader.Read();
+                                        region.Height = Convert.ToInt32(xReader.Value);
+                                        break;
+                                }
                             }
                         }
-                    }
 
-                    xReader.Close();
+                        xReader.Close();
 
-                    // Change the data for each region that's being loaded if we've detected that
-                    // the XML file is from an older version of the application.
-                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
-                    {
-                        if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                        // Change the data for each region that's being loaded if we've detected that
+                        // the XML file is from an older version of the application.
+                        if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                         {
-                            region.ViewId = Guid.NewGuid();
+                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                            {
+                                region.ViewId = Guid.NewGuid();
 
-                            // Get the screenshots folder path from the old user settings to be used for the region's folder property.
-                            region.Folder = Settings.VersionManager.OldUserSettings
-                                .GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+                                // Get the screenshots folder path from the old user settings to be used for the region's folder property.
+                                region.Folder = Settings.VersionManager.OldUserSettings
+                                    .GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
 
-                            region.Folder = FileSystem.CorrectDirectoryPath(region.Folder);
+                                region.Folder = FileSystem.CorrectDirectoryPath(region.Folder);
 
-                            // 2.1 used "%region%", but 2.2 uses "%name%" for a region's Macro value.
-                            region.Macro = region.Macro.Replace("%region%", "%name%");
+                                // 2.1 used "%region%", but 2.2 uses "%name%" for a region's Macro value.
+                                region.Macro = region.Macro.Replace("%region%", "%name%");
 
-                            region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
-                            region.JpegQuality = 100;
-                            region.ResolutionRatio = 100;
-                            region.Mouse = false;
+                                region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
+                                region.JpegQuality = 100;
+                                region.ResolutionRatio = 100;
+                                region.Mouse = false;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(region.Name))
+                        {
+                            Add(region);
                         }
                     }
 
-                    if (!string.IsNullOrEmpty(region.Name))
+                    // Write out the regions to the XML file now that we've updated the region objects
+                    // with their appropriate property values if it was an old version of the application.
+                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
-                        Add(region);
+                        Save();
                     }
                 }
-
-                // Write out the regions to the XML file now that we've updated the region objects
-                // with their appropriate property values if it was an old version of the application.
-                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
-                {
-                    Save();
-                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("RegionCollection::Load", ex);
             }
         }
 
@@ -249,60 +256,67 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder))
+            try
             {
-                XmlWriterSettings xSettings = new XmlWriterSettings();
-                xSettings.Indent = true;
-                xSettings.CloseOutput = true;
-                xSettings.CheckCharacters = true;
-                xSettings.Encoding = Encoding.UTF8;
-                xSettings.NewLineChars = Environment.NewLine;
-                xSettings.IndentChars = XML_FILE_INDENT_CHARS;
-                xSettings.NewLineHandling = NewLineHandling.Entitize;
-                xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder))
                 {
-                    File.Delete(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
-                }
+                    XmlWriterSettings xSettings = new XmlWriterSettings();
+                    xSettings.Indent = true;
+                    xSettings.CloseOutput = true;
+                    xSettings.CheckCharacters = true;
+                    xSettings.Encoding = Encoding.UTF8;
+                    xSettings.NewLineChars = Environment.NewLine;
+                    xSettings.IndentChars = XML_FILE_INDENT_CHARS;
+                    xSettings.NewLineHandling = NewLineHandling.Entitize;
+                    xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.RegionsFile, xSettings))
-                {
-                    xWriter.WriteStartDocument();
-                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                    xWriter.WriteStartElement(XML_FILE_REGIONS_NODE);
-
-                    foreach (object obj in _regionList)
+                    if (File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
                     {
-                        Region region = (Region) obj;
-
-                        xWriter.WriteStartElement(XML_FILE_REGION_NODE);
-                        xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
-                        xWriter.WriteElementString(REGION_NAME, region.Name);
-                        xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectDirectoryPath(region.Folder));
-                        xWriter.WriteElementString(REGION_MACRO, region.Macro);
-                        xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
-                        xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());
-                        xWriter.WriteElementString(REGION_RESOLUTION_RATIO, region.ResolutionRatio.ToString());
-                        xWriter.WriteElementString(REGION_MOUSE, region.Mouse.ToString());
-                        xWriter.WriteElementString(REGION_X, region.X.ToString());
-                        xWriter.WriteElementString(REGION_Y, region.Y.ToString());
-                        xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
-                        xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
-
-                        xWriter.WriteEndElement();
+                        File.Delete(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
                     }
 
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndDocument();
+                    using (XmlWriter xWriter =
+                        XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.RegionsFile, xSettings))
+                    {
+                        xWriter.WriteStartDocument();
+                        xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                        xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                        xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                        xWriter.WriteStartElement(XML_FILE_REGIONS_NODE);
 
-                    xWriter.Flush();
-                    xWriter.Close();
+                        foreach (object obj in _regionList)
+                        {
+                            Region region = (Region) obj;
+
+                            xWriter.WriteStartElement(XML_FILE_REGION_NODE);
+                            xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
+                            xWriter.WriteElementString(REGION_NAME, region.Name);
+                            xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectDirectoryPath(region.Folder));
+                            xWriter.WriteElementString(REGION_MACRO, region.Macro);
+                            xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
+                            xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());
+                            xWriter.WriteElementString(REGION_RESOLUTION_RATIO, region.ResolutionRatio.ToString());
+                            xWriter.WriteElementString(REGION_MOUSE, region.Mouse.ToString());
+                            xWriter.WriteElementString(REGION_X, region.X.ToString());
+                            xWriter.WriteElementString(REGION_Y, region.Y.ToString());
+                            xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
+                            xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
+
+                            xWriter.WriteEndElement();
+                        }
+
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndDocument();
+
+                        xWriter.Flush();
+                        xWriter.Close();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("RegionCollection::Save", ex);
             }
         }
     }

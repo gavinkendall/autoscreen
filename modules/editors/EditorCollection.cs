@@ -124,59 +124,66 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+            try
             {
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
-
-                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                XmlNodeList xEditors = xDoc.SelectNodes(EDITOR_XPATH);
-
-                foreach (XmlNode xEditor in xEditors)
+                if (Directory.Exists(FileSystem.ApplicationFolder) &&
+                    File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
                 {
-                    Editor editor = new Editor();
-                    XmlNodeReader xReader = new XmlNodeReader(xEditor);
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
 
-                    while (xReader.Read())
+                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                    XmlNodeList xEditors = xDoc.SelectNodes(EDITOR_XPATH);
+
+                    foreach (XmlNode xEditor in xEditors)
                     {
-                        if (xReader.IsStartElement())
+                        Editor editor = new Editor();
+                        XmlNodeReader xReader = new XmlNodeReader(xEditor);
+
+                        while (xReader.Read())
                         {
-                            switch (xReader.Name)
+                            if (xReader.IsStartElement())
                             {
-                                case EDITOR_NAME:
-                                    xReader.Read();
-                                    editor.Name = xReader.Value;
-                                    break;
+                                switch (xReader.Name)
+                                {
+                                    case EDITOR_NAME:
+                                        xReader.Read();
+                                        editor.Name = xReader.Value;
+                                        break;
 
-                                case EDITOR_APPLICATION:
-                                    xReader.Read();
-                                    editor.Application = xReader.Value;
-                                    break;
+                                    case EDITOR_APPLICATION:
+                                        xReader.Read();
+                                        editor.Application = xReader.Value;
+                                        break;
 
-                                case EDITOR_ARGUMENTS:
-                                    xReader.Read();
-                                    editor.Arguments = xReader.Value;
-                                    break;
+                                    case EDITOR_ARGUMENTS:
+                                        xReader.Read();
+                                        editor.Arguments = xReader.Value;
+                                        break;
+                                }
                             }
+                        }
+
+                        xReader.Close();
+
+                        if (!string.IsNullOrEmpty(editor.Name) &&
+                            !string.IsNullOrEmpty(editor.Application))
+                        {
+                            Add(editor);
                         }
                     }
 
-                    xReader.Close();
-
-                    if (!string.IsNullOrEmpty(editor.Name) &&
-                        !string.IsNullOrEmpty(editor.Application))
+                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
-                        Add(editor);
+                        Save();
                     }
                 }
-
-                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
-                {
-                    Save();
-                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("EditorCollection::Load", ex);
             }
         }
 
@@ -185,53 +192,60 @@ namespace AutoScreenCapture
         /// </summary>
         public void Save()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder))
+            try
             {
-                XmlWriterSettings xSettings = new XmlWriterSettings
+                if (Directory.Exists(FileSystem.ApplicationFolder))
                 {
-                    Indent = true,
-                    CloseOutput = true,
-                    CheckCharacters = true,
-                    Encoding = Encoding.UTF8,
-                    NewLineChars = Environment.NewLine,
-                    IndentChars = XML_FILE_INDENT_CHARS,
-                    NewLineHandling = NewLineHandling.Entitize,
-                    ConformanceLevel = ConformanceLevel.Document
-                };
-
-                if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
-                {
-                    File.Delete(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
-                }
-
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
-                {
-                    xWriter.WriteStartDocument();
-                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                    xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
-
-                    foreach (object obj in _editorList)
+                    XmlWriterSettings xSettings = new XmlWriterSettings
                     {
-                        Editor editor = (Editor) obj;
+                        Indent = true,
+                        CloseOutput = true,
+                        CheckCharacters = true,
+                        Encoding = Encoding.UTF8,
+                        NewLineChars = Environment.NewLine,
+                        IndentChars = XML_FILE_INDENT_CHARS,
+                        NewLineHandling = NewLineHandling.Entitize,
+                        ConformanceLevel = ConformanceLevel.Document
+                    };
 
-                        xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
-                        xWriter.WriteElementString(EDITOR_NAME, editor.Name);
-                        xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
-                        xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
-
-                        xWriter.WriteEndElement();
+                    if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+                    {
+                        File.Delete(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
                     }
 
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndElement();
-                    xWriter.WriteEndDocument();
+                    using (XmlWriter xWriter =
+                        XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
+                    {
+                        xWriter.WriteStartDocument();
+                        xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                        xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                        xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                        xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
 
-                    xWriter.Flush();
-                    xWriter.Close();
+                        foreach (object obj in _editorList)
+                        {
+                            Editor editor = (Editor) obj;
+
+                            xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
+                            xWriter.WriteElementString(EDITOR_NAME, editor.Name);
+                            xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
+                            xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
+
+                            xWriter.WriteEndElement();
+                        }
+
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndElement();
+                        xWriter.WriteEndDocument();
+
+                        xWriter.Flush();
+                        xWriter.Close();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("EditorCollection::Save", ex);
             }
         }
     }
