@@ -50,8 +50,8 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error: " +
-                                         ex.Message);
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error Message: " +
+                                         ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
 
                             sw.Flush();
                             sw.Close();
@@ -60,8 +60,8 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
                             sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error: " +
-                                         ex.Message);
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error Message: " +
+                                         ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
 
                             sw.Flush();
                             sw.Close();

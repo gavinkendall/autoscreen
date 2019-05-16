@@ -29,22 +29,25 @@ namespace AutoScreenCapture
 
         public Screenshot(DateTime dateTime, string path, ImageFormat format, int component, ScreenshotType screenshotType, string windowTitle, Guid viewId, string label)
         {
-            ViewId = viewId;
-            Date = dateTime.ToString(MacroParser.DateFormat);
-            Time = dateTime.ToString(MacroParser.TimeFormat);
-            Path = path;
-            Format = format;
-            Component = component;
-            ScreenshotType = screenshotType;
-            WindowTitle = windowTitle;
-            Label = label;
-
-            Slide = new Slide()
+            if (!string.IsNullOrEmpty(windowTitle))
             {
-                Name = "{date=" + Date + "}{time=" + Time + "}",
-                Date = Date,
-                Value = Time + (!string.IsNullOrEmpty(windowTitle) ? " [" + windowTitle + "]" : string.Empty)
-            };
+                ViewId = viewId;
+                Date = dateTime.ToString(MacroParser.DateFormat);
+                Time = dateTime.ToString(MacroParser.TimeFormat);
+                Path = path;
+                Format = format;
+                Component = component;
+                ScreenshotType = screenshotType;
+                WindowTitle = windowTitle;
+                Label = label;
+
+                Slide = new Slide()
+                {
+                    Name = "{date=" + Date + "}{time=" + Time + "}",
+                    Date = Date,
+                    Value = Time + " [" + windowTitle + "]"
+                };
+            }
         }
     }
 }

@@ -5,24 +5,19 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-
-using System.Linq;
-
 namespace AutoScreenCapture
 {
     using System;
     using System.IO;
     using System.Text;
     using System.Xml;
+    using System.Linq;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Text.RegularExpressions;
 
     public static class ScreenshotCollection
     {
-        private static XmlDocument xDoc = null;
-
-        private static List<Screenshot> _screenshotList = new List<Screenshot>();
+        private static List<Screenshot> _screenshotList;
 
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREENSHOT_NODE = "screenshot";
@@ -52,7 +47,7 @@ namespace AutoScreenCapture
 
         public static void KeepScreenshotsForDays(int days)
         {
-            if (days > 0)
+            if (_screenshotList != null && _screenshotList.Count > 0 && days > 0)
             {
                 List<Screenshot> screenshotDeletedList = new List<Screenshot>();
 
@@ -191,12 +186,15 @@ namespace AutoScreenCapture
         {
             Screenshot foundScreenshot = new Screenshot();
 
-            foreach (Screenshot screenshot in _screenshotList)
+            if (_screenshotList != null)
             {
-                if (screenshot.Slide.Name.Equals(slideName) && screenshot.ViewId.Equals(viewId))
+                foreach (Screenshot screenshot in _screenshotList)
                 {
-                    foundScreenshot = screenshot;
-                    break;
+                    if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName) && screenshot.ViewId.Equals(viewId))
+                    {
+                        foundScreenshot = screenshot;
+                        break;
+                    }
                 }
             }
 
@@ -208,10 +206,15 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, RegionCollection regionCollection)
         {
+            if (_screenshotList == null)
+            {
+                _screenshotList = new List<Screenshot>();
+            }
+
             if (Directory.Exists(FileSystem.ApplicationFolder) &&
                 File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
             {
-                xDoc = new XmlDocument();
+                XmlDocument xDoc = new XmlDocument();
                 xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
 
                 AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
@@ -350,7 +353,8 @@ namespace AutoScreenCapture
                         !string.IsNullOrEmpty(screenshot.Path) &&
                         screenshot.Format != null &&
                         !string.IsNullOrEmpty(screenshot.Slide.Name) &&
-                        !string.IsNullOrEmpty(screenshot.Slide.Value))
+                        !string.IsNullOrEmpty(screenshot.Slide.Value) &&
+                        !string.IsNullOrEmpty(screenshot.WindowTitle))
                     {
                         Add(screenshot, screenCollection, regionCollection);
                     }
@@ -369,7 +373,7 @@ namespace AutoScreenCapture
         /// </summary>
         public static void Save()
         {
-            if (Directory.Exists(FileSystem.ApplicationFolder))
+            if (_screenshotList != null && Directory.Exists(FileSystem.ApplicationFolder))
             {
                 XmlWriterSettings xSettings = new XmlWriterSettings
                 {

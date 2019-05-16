@@ -106,6 +106,8 @@ namespace AutoScreenCapture
                 }
             }
 
+            GC.Collect();
+
             return image;
         }
 
@@ -157,6 +159,8 @@ namespace AutoScreenCapture
                     graphicsSource.Flush();
                     graphicsDestination.Flush();
 
+                    GC.Collect();
+
                     return bitmapDestination;
                 }
 
@@ -190,12 +194,12 @@ namespace AutoScreenCapture
 
                 graphics.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
 
+                GC.Collect();
+
                 return bitmap;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public static string GetActiveWindowTitle()

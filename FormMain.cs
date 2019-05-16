@@ -514,6 +514,7 @@ namespace AutoScreenCapture
                 if (comboBoxFilterType.SelectedItem != null && !string.IsNullOrEmpty(comboBoxFilterType.Text))
                 {
                     List<string> filterValueList = ScreenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
+                    filterValueList.Add(string.Empty);
                     filterValueList.Sort();
 
                     comboBoxFilterValue.DataSource = filterValueList;
@@ -2745,7 +2746,22 @@ namespace AutoScreenCapture
 
         private void comboBoxFilterType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SearchFilterValues();
+            if (!string.IsNullOrEmpty(comboBoxFilterType.Text))
+            {
+                comboBoxFilterValue.Enabled = true;
+                buttonRefreshFilterValues.Enabled = true;
+                SearchFilterValues();
+            }
+            else
+            {
+                if (comboBoxFilterValue.Items.Count > 1)
+                {
+                    comboBoxFilterValue.SelectedIndex = 0;
+                }
+
+                comboBoxFilterValue.Enabled = false;
+                buttonRefreshFilterValues.Enabled = false;
+            }
         }
     }
 }

@@ -55,6 +55,8 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
+            this.labelScreenshotLabel = new System.Windows.Forms.Label();
+            this.textBoxScreenshotLabel = new System.Windows.Forms.TextBox();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
             this.labelLimit = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
@@ -118,8 +120,6 @@ namespace AutoScreenCapture
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
-            this.textBoxScreenshotLabel = new System.Windows.Forms.TextBox();
-            this.labelScreenshotLabel = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -238,6 +238,7 @@ namespace AutoScreenCapture
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listBoxScreenshots.FormattingEnabled = true;
             this.listBoxScreenshots.HorizontalScrollbar = true;
+            this.listBoxScreenshots.IntegralHeight = false;
             this.listBoxScreenshots.Location = new System.Drawing.Point(3, 27);
             this.listBoxScreenshots.Name = "listBoxScreenshots";
             this.listBoxScreenshots.ScrollAlwaysVisible = true;
@@ -366,6 +367,24 @@ namespace AutoScreenCapture
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
+            // 
+            // labelScreenshotLabel
+            // 
+            this.labelScreenshotLabel.AutoSize = true;
+            this.labelScreenshotLabel.Location = new System.Drawing.Point(6, 134);
+            this.labelScreenshotLabel.Name = "labelScreenshotLabel";
+            this.labelScreenshotLabel.Size = new System.Drawing.Size(174, 13);
+            this.labelScreenshotLabel.TabIndex = 16;
+            this.labelScreenshotLabel.Text = "Apply this label to each screenshot:";
+            // 
+            // textBoxScreenshotLabel
+            // 
+            this.textBoxScreenshotLabel.Location = new System.Drawing.Point(6, 150);
+            this.textBoxScreenshotLabel.MaxLength = 500;
+            this.textBoxScreenshotLabel.Name = "textBoxScreenshotLabel";
+            this.textBoxScreenshotLabel.Size = new System.Drawing.Size(205, 20);
+            this.textBoxScreenshotLabel.TabIndex = 15;
+            this.textBoxScreenshotLabel.TabStop = false;
             // 
             // groupBoxCaptureDelay
             // 
@@ -1044,6 +1063,7 @@ namespace AutoScreenCapture
             this.comboBoxFilterValue.DropDownHeight = 300;
             this.comboBoxFilterValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFilterValue.DropDownWidth = 700;
+            this.comboBoxFilterValue.Enabled = false;
             this.comboBoxFilterValue.FormattingEnabled = true;
             this.comboBoxFilterValue.IntegralHeight = false;
             this.comboBoxFilterValue.Location = new System.Drawing.Point(133, 6);
@@ -1065,6 +1085,7 @@ namespace AutoScreenCapture
             // buttonRefreshFilterValues
             // 
             this.buttonRefreshFilterValues.BackColor = System.Drawing.Color.White;
+            this.buttonRefreshFilterValues.Enabled = false;
             this.buttonRefreshFilterValues.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefreshFilterValues.Image = global::AutoScreenCapture.Properties.Resources.refresh;
             this.buttonRefreshFilterValues.Location = new System.Drawing.Point(227, 6);
@@ -1095,24 +1116,6 @@ namespace AutoScreenCapture
             this.comboBoxFilterType.TabIndex = 40;
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);
-            // 
-            // textBoxScreenshotLabel
-            // 
-            this.textBoxScreenshotLabel.Location = new System.Drawing.Point(6, 150);
-            this.textBoxScreenshotLabel.MaxLength = 500;
-            this.textBoxScreenshotLabel.Name = "textBoxScreenshotLabel";
-            this.textBoxScreenshotLabel.Size = new System.Drawing.Size(205, 20);
-            this.textBoxScreenshotLabel.TabIndex = 15;
-            this.textBoxScreenshotLabel.TabStop = false;
-            // 
-            // labelScreenshotLabel
-            // 
-            this.labelScreenshotLabel.AutoSize = true;
-            this.labelScreenshotLabel.Location = new System.Drawing.Point(6, 134);
-            this.labelScreenshotLabel.Name = "labelScreenshotLabel";
-            this.labelScreenshotLabel.Size = new System.Drawing.Size(174, 13);
-            this.labelScreenshotLabel.TabIndex = 16;
-            this.labelScreenshotLabel.Text = "Apply this label to each screenshot:";
             // 
             // FormMain
             // 
