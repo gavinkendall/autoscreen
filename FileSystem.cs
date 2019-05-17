@@ -88,7 +88,9 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ScreenshotsFile = "screenshots.xml";
+        public static readonly string ScreenshotsFile = "screenshots_%date%.xml";
+
+        public static readonly string OldScreenshotsFile = "screenshots.xml";
 
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets to include the trailing backslash.

@@ -5,6 +5,9 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
+using System.Xml.Serialization;
+
 namespace AutoScreenCapture
 {
     using System;
@@ -17,6 +20,7 @@ namespace AutoScreenCapture
 
     public static class ScreenshotCollection
     {
+        private static XmlDocument xDoc;
         private static List<Screenshot> _screenshotList;
 
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -43,6 +47,61 @@ namespace AutoScreenCapture
         public static void Add(Screenshot newScreenshot, ScreenCollection screenCollection, RegionCollection regionCollection)
         {
             _screenshotList.Add(newScreenshot);
+
+            if (xDoc != null)
+            {
+                XmlElement screenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
+
+                XmlElement viewid = xDoc.CreateElement("viewid");
+                viewid.InnerText = newScreenshot.ViewId.ToString();
+
+                XmlElement date = xDoc.CreateElement("date");
+                date.InnerText = newScreenshot.Date;
+
+                XmlElement time = xDoc.CreateElement("time");
+                time.InnerText = newScreenshot.Time;
+
+                XmlElement path = xDoc.CreateElement("path");
+                path.InnerText = newScreenshot.Path;
+
+                XmlElement format = xDoc.CreateElement("format");
+                format.InnerText = newScreenshot.Format.Name;
+
+                XmlElement component = xDoc.CreateElement("component");
+                component.InnerText = newScreenshot.Component.ToString();
+
+                XmlElement slidename = xDoc.CreateElement("slidename");
+                slidename.InnerText = newScreenshot.Slide.Name;
+
+                XmlElement slidevalue = xDoc.CreateElement("slidevalue");
+                slidevalue.InnerText = newScreenshot.Slide.Value;
+
+                XmlElement windowtitle = xDoc.CreateElement("windowtitle");
+                windowtitle.InnerText = newScreenshot.WindowTitle;
+
+                XmlElement label = xDoc.CreateElement("label");
+                label.InnerText = newScreenshot.Label;
+
+                screenshot.AppendChild(viewid);
+                screenshot.AppendChild(date);
+                screenshot.AppendChild(time);
+                screenshot.AppendChild(path);
+                screenshot.AppendChild(format);
+                screenshot.AppendChild(component);
+                screenshot.AppendChild(slidename);
+                screenshot.AppendChild(slidevalue);
+                screenshot.AppendChild(windowtitle);
+                screenshot.AppendChild(label);
+
+                XmlNode screenshots = xDoc.SelectSingleNode("/autoscreen/screenshots");
+
+                if (screenshots != null)
+                {
+                    screenshots.InsertAfter(screenshot, screenshots.LastChild);
+
+                    xDoc.Save(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile);
+                }
+            }
         }
 
         public static void KeepScreenshotsForDays(int days)
@@ -103,16 +162,6 @@ namespace AutoScreenCapture
                 return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
             }
 
-            if (filterType.Equals("Region"))
-            {
-
-            }
-
-            if (filterType.Equals("Screen"))
-            {
-
-            }
-
             if (filterType.Equals("Window Title"))
             {
                 return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle)).Select(x => x.WindowTitle).Distinct().ToList();
@@ -133,16 +182,6 @@ namespace AutoScreenCapture
                 if (filterType.Equals("Label"))
                 {
                     return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
-                }
-
-                if (filterType.Equals("Region"))
-                {
-
-                }
-
-                if (filterType.Equals("Screen"))
-                {
-
                 }
 
                 if (filterType.Equals("Window Title"))
@@ -166,16 +205,6 @@ namespace AutoScreenCapture
                 if (filterType.Equals("Label"))
                 {
                     return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
-                }
-
-                if (filterType.Equals("Region"))
-                {
-
-                }
-
-                if (filterType.Equals("Screen"))
-                {
-
                 }
 
                 if (filterType.Equals("Window Title"))
@@ -209,7 +238,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screenshots.
         /// </summary>
-        public static void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, RegionCollection regionCollection)
+        public static void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, RegionCollection regionCollection, string date)
         {
             try
             {
@@ -219,15 +248,16 @@ namespace AutoScreenCapture
                 }
 
                 if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                    File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
+                    File.Exists(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile))
                 {
-                    XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                    xDoc = new XmlDocument();
+                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile);
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
-                    XmlNodeList xScreeshots = xDoc.SelectNodes(SCREENSHOT_XPATH);
+                    //XmlNodeList xScreeshots = xDoc.SelectNodes("/autoscreen/screenshots/screenshot[date='" + date + "']");
+                    XmlNodeList xScreeshots = xDoc.SelectNodes("/autoscreen/screenshots/screenshot");
 
                     foreach (XmlNode xScreenshot in xScreeshots)
                     {
@@ -365,14 +395,15 @@ namespace AutoScreenCapture
                             !string.IsNullOrEmpty(screenshot.Slide.Value) &&
                             !string.IsNullOrEmpty(screenshot.WindowTitle))
                         {
-                            Add(screenshot, screenCollection, regionCollection);
+                            //Add(screenshot, screenCollection, regionCollection);
+                            _screenshotList.Add(screenshot);
                         }
                     }
 
                     // Write out the upgraded screenshots (if any were found).
                     if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
                     {
-                        Save();
+                        //Save();
                     }
                 }
             }
@@ -403,13 +434,8 @@ namespace AutoScreenCapture
                         ConformanceLevel = ConformanceLevel.Document
                     };
 
-                    if (File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
-                    {
-                        File.Delete(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
-                    }
-
                     using (XmlWriter xWriter =
-                        XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile, xSettings))
+                        XmlWriter.Create(FileSystem.ApplicationFolder + MacroParser.ParseTags(FileSystem.ScreenshotsFile), xSettings))
                     {
                         xWriter.WriteStartDocument();
                         xWriter.WriteStartElement(XML_FILE_ROOT_NODE);

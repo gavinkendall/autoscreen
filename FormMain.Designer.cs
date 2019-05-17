@@ -1107,8 +1107,6 @@ namespace AutoScreenCapture
             "",
             "Image Format",
             "Label",
-            "Region",
-            "Screen",
             "Window Title"});
             this.comboBoxFilterType.Location = new System.Drawing.Point(39, 6);
             this.comboBoxFilterType.Name = "comboBoxFilterType";

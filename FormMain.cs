@@ -237,7 +237,7 @@ namespace AutoScreenCapture
 
                 Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
-                ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection);
+                ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection, "2019-05-17");
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
 
@@ -358,7 +358,7 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
-                ScreenshotCollection.Save();
+                //ScreenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -698,7 +698,7 @@ namespace AutoScreenCapture
                     ScreenCapture.Count = 0;
                     ScreenCapture.Running = false;
 
-                    ScreenshotCollection.Save();
+                    //ScreenshotCollection.Save();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -950,7 +950,7 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
-                ScreenshotCollection.Save();
+                //ScreenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {

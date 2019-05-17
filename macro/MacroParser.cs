@@ -21,6 +21,11 @@ namespace AutoScreenCapture
         public static readonly string TimeFormatForWindows = HourFormat + "-" + MinuteFormat + "-" + SecondFormat + "-" + MillisecondFormat;
         public static readonly string DefaultMacro = @"%date%\%name%\screenshot %count%.%format%";
 
+        public static string ParseTags(string macro)
+        {
+            return ParseTags(string.Empty, macro, null);
+        }
+
         /// <summary>
         /// Replaces tags (such as "%year%") with an appropriate value (such as "2019").
         /// </summary>
@@ -30,8 +35,8 @@ namespace AutoScreenCapture
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
         public static string ParseTags(string name, string macro, ImageFormat format)
         {
-            macro = macro.Replace(MacroTagSpec.Name, name);
-            macro = macro.Replace(MacroTagSpec.Format, format.Name.ToLower());
+            macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
+            macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(MacroTagSpec.Format, format.Name.ToLower()) : macro;
             macro = macro.Replace(MacroTagSpec.Date, ScreenCapture.DateTimePreviousScreenshot.ToString(DateFormat));
             macro = macro.Replace(MacroTagSpec.Time, ScreenCapture.DateTimePreviousScreenshot.ToString(TimeFormatForWindows));
             macro = macro.Replace(MacroTagSpec.Year, ScreenCapture.DateTimePreviousScreenshot.ToString(YearFormat));
