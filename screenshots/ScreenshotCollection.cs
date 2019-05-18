@@ -102,6 +102,8 @@ namespace AutoScreenCapture
                     xDoc.Save(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile);
                 }
             }
+
+            System.GC.Collect();
         }
 
         public static void KeepScreenshotsForDays(int days)
