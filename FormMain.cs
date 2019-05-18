@@ -549,44 +549,25 @@ namespace AutoScreenCapture
 
                 Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = GetScreenCaptureInterval();
                 Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value =
-                    checkBoxCaptureLimit.Checked;
-                Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value =
-                    checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value =
-                    toolStripMenuItemShowSystemTrayIcon.Checked;
-                Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value =
-                    checkBoxScheduleStopAt.Checked;
-                Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value =
-                    checkBoxScheduleStartAt.Checked;
+                Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
+                Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
+                Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = toolStripMenuItemShowSystemTrayIcon.Checked;
+                Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value = checkBoxScheduleStopAt.Checked;
+                Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value = checkBoxScheduleStartAt.Checked;
                 Settings.User.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value = checkBoxSunday.Checked;
                 Settings.User.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value = checkBoxMonday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value =
-                    checkBoxTuesday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value =
-                    checkBoxWednesday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value =
-                    checkBoxThursday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value = checkBoxTuesday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value = checkBoxWednesday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value = checkBoxThursday.Checked;
                 Settings.User.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value = checkBoxFriday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value =
-                    checkBoxSaturday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value =
-                    checkBoxScheduleOnTheseDays.Checked;
-                Settings.User.GetByKey("DateTimeCaptureStopAt",
-                        defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0,
-                            0))
-                    .Value = dateTimePickerScheduleStopAt.Value;
-                Settings.User.GetByKey("DateTimeCaptureStartAt",
-                        defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0,
-                            0))
-                    .Value = dateTimePickerScheduleStartAt.Value;
-                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value =
-                    checkBoxPassphraseLock.Checked;
+                Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value = checkBoxSaturday.Checked;
+                Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value = checkBoxScheduleOnTheseDays.Checked;
+                Settings.User.GetByKey("DateTimeCaptureStopAt",  defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value = dateTimePickerScheduleStopAt.Value;
+                Settings.User.GetByKey("DateTimeCaptureStartAt", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value = dateTimePickerScheduleStartAt.Value;
+                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = checkBoxPassphraseLock.Checked;
                 Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
-                Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value =
-                    numericUpDownKeepScreenshotsForDays.Value;
-                Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value =
-                    textBoxScreenshotLabel.Text;
+                Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
+                Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = textBoxScreenshotLabel.Text;
 
                 Settings.User.Save();
 

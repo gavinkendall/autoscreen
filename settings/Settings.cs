@@ -90,6 +90,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("BoolLockScreenCaptureSession", false));
                 User.Add(new Setting("StringPassphrase", string.Empty));
                 User.Add(new Setting("IntKeepScreenshotsForDays", 30));
+                User.Add(new Setting("StringScreenshotLabel", string.Empty));
 
                 User.Save();
             }

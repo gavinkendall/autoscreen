@@ -48,7 +48,7 @@ namespace AutoScreenCapture
         {
             _screenshotList.Add(newScreenshot);
 
-            if (xDoc != null)
+            if (xDoc != null && newScreenshot != null && newScreenshot.Format != null && !string.IsNullOrEmpty(newScreenshot.Format.Name))
             {
                 XmlElement screenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
 
@@ -65,7 +65,7 @@ namespace AutoScreenCapture
                 path.InnerText = newScreenshot.Path;
 
                 XmlElement format = xDoc.CreateElement("format");
-                format.InnerText = newScreenshot.Format.Name;
+                format.InnerText = newScreenshot.Format.Name; // This keeps being null for some reason ... (??)
 
                 XmlElement component = xDoc.CreateElement("component");
                 component.InnerText = newScreenshot.Component.ToString();
