@@ -8,7 +8,6 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
     using System.Windows.Forms;
     using System.Collections.Generic;
 
@@ -33,6 +32,8 @@ namespace AutoScreenCapture
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
         public MacroTagCollection MacroTagCollection { get; set; }
+
+        public ScreenCapture screenCapture { get; set; }
 
         /// <summary>
         /// 
@@ -103,7 +104,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Screen";
 
-                textBoxName.Text = string.Empty;
+                textBoxName.Text = "Screen " + (ScreenCollection.Count + 1);
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = MacroParser.DefaultMacro;
                 comboBoxScreenComponent.SelectedIndex = 0;
@@ -186,40 +187,33 @@ namespace AutoScreenCapture
         {
             if (InputValid())
             {
-                //if (Directory.Exists(textBoxScreenFolder.Text))
-                //{
-                    if (NameChanged() || InputChanged())
+                if (NameChanged() || InputChanged())
+                {
+                    TrimInput();
+
+                    if (ScreenCollection.GetByName(textBoxName.Text) != null && NameChanged())
                     {
-                        TrimInput();
-
-                        if (ScreenCollection.GetByName(textBoxName.Text) != null && NameChanged())
-                        {
-                            MessageBox.Show("A screen with this name already exists.", "Duplicate Name Conflict",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                        else
-                        {
-                            ScreenCollection.Get(ScreenObject).Name = textBoxName.Text;
-                            ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxFolder.Text);
-                            ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
-                            ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
-                            ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
-                            ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
-                            ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
-                            ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
-
-                            Okay();
-                        }
+                        MessageBox.Show("A screen with this name already exists.", "Duplicate Name Conflict",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        Close();
-                    }
-                //}
-                //else
-                //{
+                        ScreenCollection.Get(ScreenObject).Name = textBoxName.Text;
+                        ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxFolder.Text);
+                        ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
+                        ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
+                        ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
+                        ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
+                        ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
+                        ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
 
-                //}
+                        Okay();
+                    }
+                }
+                else
+                {
+                    Close();
+                }
             }
             else
             {
@@ -283,7 +277,7 @@ namespace AutoScreenCapture
 
         private void Tick_timerPreview(object sender, EventArgs e)
         {
-            UpdatePreview();
+            UpdatePreview(screenCapture);
         }
 
         private void buttonBrowseFolder_Click(object sender, EventArgs e)
@@ -296,18 +290,18 @@ namespace AutoScreenCapture
             }
         }
 
-        private void UpdatePreview()
+        private void UpdatePreview(ScreenCapture screenCapture)
         {
             if (comboBoxScreenComponent.SelectedIndex == 0)
             {
-                pictureBoxPreview.Image = ScreenCapture.GetActiveWindowBitmap();
+                pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
             }
             else
             {
                 System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
 
                 pictureBoxPreview.Image = screen != null
-                    ? ScreenCapture.GetScreenBitmap(
+                    ? screenCapture.GetScreenBitmap(
                         screen.Bounds.X,
                         screen.Bounds.Y,
                         screen.Bounds.Width,
@@ -317,6 +311,8 @@ namespace AutoScreenCapture
                     )
                     : null;
             }
+
+            System.GC.Collect();
         }
 
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)

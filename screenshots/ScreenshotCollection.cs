@@ -5,9 +5,6 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-
-using System.Xml.Serialization;
-
 namespace AutoScreenCapture
 {
     using System;
@@ -18,10 +15,10 @@ namespace AutoScreenCapture
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
-    public static class ScreenshotCollection
+    public class ScreenshotCollection
     {
-        private static XmlDocument xDoc;
-        private static List<Screenshot> _screenshotList;
+        private  XmlDocument xDoc;
+        private  List<Screenshot> _screenshotList;
 
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREENSHOT_NODE = "screenshot";
@@ -41,10 +38,10 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_LABEL = "label";
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
-        public static string AppCodename { get; set; }
-        public static string AppVersion { get; set; }
+        public  string AppCodename { get; set; }
+        public  string AppVersion { get; set; }
 
-        public static void Add(Screenshot newScreenshot, ScreenCollection screenCollection, RegionCollection regionCollection)
+        public  void Add(Screenshot newScreenshot, ScreenCollection screenCollection, RegionCollection regionCollection)
         {
             _screenshotList.Add(newScreenshot);
 
@@ -106,7 +103,7 @@ namespace AutoScreenCapture
             System.GC.Collect();
         }
 
-        public static void KeepScreenshotsForDays(int days)
+        public  void KeepScreenshotsForDays(int days)
         {
             try
             {
@@ -142,17 +139,17 @@ namespace AutoScreenCapture
             }
         }
 
-        public static Screenshot Get(int index)
+        public  Screenshot Get(int index)
         {
             return (Screenshot)_screenshotList[index];
         }
 
-        public static int Count
+        public  int Count
         {
             get { return _screenshotList.Count; }
         }
 
-        public static List<string> GetFilterValueList(string filterType)
+        public  List<string> GetFilterValueList(string filterType)
         {
             if (filterType.Equals("Image Format"))
             {
@@ -172,7 +169,7 @@ namespace AutoScreenCapture
             return new List<string>();
         }
 
-        public static List<string> GetDates(string filterType, string filterValue)
+        public  List<string> GetDates(string filterType, string filterValue)
         {
             if (!string.IsNullOrEmpty(filterValue))
             {
@@ -195,7 +192,7 @@ namespace AutoScreenCapture
             return _screenshotList.Select(x => x.Date).ToList();
         }
 
-        public static List<Slide> GetSlides(string filterType, string filterValue, string date)
+        public  List<Slide> GetSlides(string filterType, string filterValue, string date)
         {
             if (!string.IsNullOrEmpty(filterValue))
             {
@@ -218,7 +215,7 @@ namespace AutoScreenCapture
             return _screenshotList.Where(x => x.Date.Equals(date)).Select(x => x.Slide).ToList();
         }
 
-        public static Screenshot GetScreenshot(string slideName, Guid viewId)
+        public  Screenshot GetScreenshot(string slideName, Guid viewId)
         {
             Screenshot foundScreenshot = new Screenshot();
 
@@ -240,7 +237,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screenshots.
         /// </summary>
-        public static void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, RegionCollection regionCollection, string date)
+        public  void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, RegionCollection regionCollection, string date)
         {
             try
             {
@@ -418,7 +415,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the screenshots.
         /// </summary>
-        public static void Save()
+        public  void Save()
         {
             try
             {

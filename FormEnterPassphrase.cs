@@ -15,6 +15,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEnterPassphrase : Form
     {
+        public ScreenCapture screenCapture { get; set; }
+
         /// <summary>
         /// 
         /// </summary>

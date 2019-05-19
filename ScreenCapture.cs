@@ -15,7 +15,7 @@ namespace AutoScreenCapture
     using System.Runtime.InteropServices;
     using System.Text;
 
-    public static class ScreenCapture
+    public  class ScreenCapture
     {
         [StructLayout(LayoutKind.Sequential)]
         private struct CURSORINFO
@@ -65,36 +65,36 @@ namespace AutoScreenCapture
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
-        public static int Ratio { get; set; }
-        public static int Delay { get; set; }
-        public static int Limit { get; set; }
-        public static int Count { get; set; }
-        public static bool RunningFromCommandLine { get; set; }
+        public  int Ratio { get; set; }
+        public  int Delay { get; set; }
+        public  int Limit { get; set; }
+        public  int Count { get; set; }
+        public  bool RunningFromCommandLine { get; set; }
         public static bool LockScreenCaptureSession { get; set; }
-        public static bool Running { get; set; }
+        public bool Running { get; set; }
 
         /// <summary>
         /// The date/time when the user started a screen capture session.
         /// </summary>
-        public static DateTime DateTimeStartCapture { get; set; }
+        public  DateTime DateTimeStartCapture { get; set; }
 
         /// <summary>
         /// The date/time when a screenshot is taken (or when the previous screenshot was taken).
         /// </summary>
-        public static DateTime DateTimePreviousScreenshot { get; set; }
+        public  DateTime DateTimePreviousScreenshot { get; set; }
 
         /// <summary>
         /// The date/time of the next screenshot. If we're still waiting for the very first screenshot to be taken then calculate from the date/time when the user started a screen capture session
         /// otherwise calculate from the date/time when the previous screenshot was taken.
         /// </summary>
-        public static DateTime DateTimeNextScreenshot { get { return DateTimePreviousScreenshot.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousScreenshot.AddMilliseconds(Delay); } }
+        public  DateTime DateTimeNextScreenshot { get { return DateTimePreviousScreenshot.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousScreenshot.AddMilliseconds(Delay); } }
 
         /// <summary>
         /// The time remaining between now and the next screenshot that will be taken.
         /// </summary>
-        public static TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextScreenshot.Subtract(DateTime.Now).Duration(); } }
+        public  TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextScreenshot.Subtract(DateTime.Now).Duration(); } }
 
-        public static Image GetImageByPath(string path)
+        public  Image GetImageByPath(string path)
         {
             Image image = null;
 
@@ -111,7 +111,7 @@ namespace AutoScreenCapture
             return image;
         }
 
-        public static Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
+        public  Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace AutoScreenCapture
             }
         }
 
-        public static Bitmap GetActiveWindowBitmap()
+        public  Bitmap GetActiveWindowBitmap()
         {
             Rectangle rect;
             GetWindowRect(GetForegroundWindow(), out rect);
@@ -202,7 +202,7 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public static string GetActiveWindowTitle()
+        public  string GetActiveWindowTitle()
         {
             IntPtr handle;
             int chars = MAX_CHARS;
@@ -219,9 +219,9 @@ namespace AutoScreenCapture
             return string.Empty;
         }
 
-        public static void TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
+        public  void TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
             int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId,
-            string label, ScreenCollection screenCollection, RegionCollection regionCollection)
+            string label, ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace AutoScreenCapture
 
                                     SaveToFile(path, format, jpegQuality, bitmap);
 
-                                    ScreenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format,
+                                    screenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format,
                                             component, screenshotType, GetActiveWindowTitle(), viewId, label),
                                         screenCollection, regionCollection);
                                 }
@@ -274,7 +274,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private static void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
+        private  void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
         {
             try
             {
@@ -306,7 +306,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private static ImageCodecInfo GetEncoderInfo(string mimeType)
+        private  ImageCodecInfo GetEncoderInfo(string mimeType)
         {
             var encoders = ImageCodecInfo.GetImageEncoders();
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);

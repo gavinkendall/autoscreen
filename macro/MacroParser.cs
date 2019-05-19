@@ -9,6 +9,7 @@ namespace AutoScreenCapture
 {
     public static class MacroParser
     {
+        public static ScreenCapture screenCapture;
         public static readonly string YearFormat = "yyyy";
         public static readonly string MonthFormat = "MM";
         public static readonly string DayFormat = "dd";
@@ -37,16 +38,16 @@ namespace AutoScreenCapture
         {
             macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
             macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(MacroTagSpec.Format, format.Name.ToLower()) : macro;
-            macro = macro.Replace(MacroTagSpec.Date, ScreenCapture.DateTimePreviousScreenshot.ToString(DateFormat));
-            macro = macro.Replace(MacroTagSpec.Time, ScreenCapture.DateTimePreviousScreenshot.ToString(TimeFormatForWindows));
-            macro = macro.Replace(MacroTagSpec.Year, ScreenCapture.DateTimePreviousScreenshot.ToString(YearFormat));
-            macro = macro.Replace(MacroTagSpec.Month, ScreenCapture.DateTimePreviousScreenshot.ToString(MonthFormat));
-            macro = macro.Replace(MacroTagSpec.Day, ScreenCapture.DateTimePreviousScreenshot.ToString(DayFormat));
-            macro = macro.Replace(MacroTagSpec.Hour, ScreenCapture.DateTimePreviousScreenshot.ToString(HourFormat));
-            macro = macro.Replace(MacroTagSpec.Minute, ScreenCapture.DateTimePreviousScreenshot.ToString(MinuteFormat));
-            macro = macro.Replace(MacroTagSpec.Second, ScreenCapture.DateTimePreviousScreenshot.ToString(SecondFormat));
-            macro = macro.Replace(MacroTagSpec.Millisecond, ScreenCapture.DateTimePreviousScreenshot.ToString(MillisecondFormat));
-            macro = macro.Replace(MacroTagSpec.Count, ScreenCapture.Count.ToString());
+            macro = macro.Replace(MacroTagSpec.Date, screenCapture.DateTimePreviousScreenshot.ToString(DateFormat));
+            macro = macro.Replace(MacroTagSpec.Time, screenCapture.DateTimePreviousScreenshot.ToString(TimeFormatForWindows));
+            macro = macro.Replace(MacroTagSpec.Year, screenCapture.DateTimePreviousScreenshot.ToString(YearFormat));
+            macro = macro.Replace(MacroTagSpec.Month, screenCapture.DateTimePreviousScreenshot.ToString(MonthFormat));
+            macro = macro.Replace(MacroTagSpec.Day, screenCapture.DateTimePreviousScreenshot.ToString(DayFormat));
+            macro = macro.Replace(MacroTagSpec.Hour, screenCapture.DateTimePreviousScreenshot.ToString(HourFormat));
+            macro = macro.Replace(MacroTagSpec.Minute, screenCapture.DateTimePreviousScreenshot.ToString(MinuteFormat));
+            macro = macro.Replace(MacroTagSpec.Second, screenCapture.DateTimePreviousScreenshot.ToString(SecondFormat));
+            macro = macro.Replace(MacroTagSpec.Millisecond, screenCapture.DateTimePreviousScreenshot.ToString(MillisecondFormat));
+            macro = macro.Replace(MacroTagSpec.Count, screenCapture.Count.ToString());
 
             return macro;
         }

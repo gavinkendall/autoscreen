@@ -29,8 +29,10 @@ namespace AutoScreenCapture
         private FormScreen formScreen = new FormScreen();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
+        private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
         private MacroTagCollection _macroTagCollection;
+        private ScreenshotCollection _screenshotCollection;
 
         /// <summary>
         /// Threads for background operations.
@@ -183,6 +185,9 @@ namespace AutoScreenCapture
 
                 Log.Write("User settings loaded.");
 
+                Log.Write("Initializing screen capture");
+                _screenCapture = new ScreenCapture();
+
                 Log.Write("Initializing image format collection.");
                 _imageFormatCollection = new ImageFormatCollection();
 
@@ -235,9 +240,12 @@ namespace AutoScreenCapture
                 Log.Write("Building view tab pages.");
                 BuildViewTabPages();
 
+                Log.Write("Initializing screenshot collection");
+                _screenshotCollection = new ScreenshotCollection();
+
                 Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
-                ScreenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection, "2019-05-17");
+                _screenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection, "2019-05-17");
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
 
@@ -350,15 +358,15 @@ namespace AutoScreenCapture
                 DisableStopCapture();
                 EnableStartCapture();
 
-                ScreenCapture.Count = 0;
-                ScreenCapture.Running = false;
+                _screenCapture.Count = 0;
+                _screenCapture.Running = false;
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
                 HideInterface();
 
-                //ScreenshotCollection.Save();
+                //_screenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -465,7 +473,7 @@ namespace AutoScreenCapture
             {
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
-                listBoxScreenshots.DataSource = ScreenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat)); ;
+                listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat)); ;
 
                 if (listBoxScreenshots.Items.Count > 0)
                 {
@@ -486,7 +494,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> dates = ScreenshotCollection.GetDates(comboBoxFilterType.Text, comboBoxFilterValue.Text);
+                List<string> dates = _screenshotCollection.GetDates(comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
                 DateTime[] boldedDates = new DateTime[dates.Count];
 
@@ -519,7 +527,7 @@ namespace AutoScreenCapture
             {
                 if (comboBoxFilterType.SelectedItem != null && !string.IsNullOrEmpty(comboBoxFilterType.Text))
                 {
-                    List<string> filterValueList = ScreenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
+                    List<string> filterValueList = _screenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
                     filterValueList.Add(string.Empty);
                     filterValueList.Sort();
 
@@ -534,7 +542,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void RunDeleteOldScreenshots(DoWorkEventArgs e)
         {
-            ScreenshotCollection.KeepScreenshotsForDays((int)numericUpDownKeepScreenshotsForDays.Value);
+            _screenshotCollection.KeepScreenshotsForDays((int)numericUpDownKeepScreenshotsForDays.Value);
         }
 
         /// <summary>
@@ -655,7 +663,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void StopScreenCapture()
         {
-            if (ScreenCapture.Running)
+            if (_screenCapture.Running)
             {
                 Log.Write("Stopping screen capture.");
 
@@ -676,10 +684,10 @@ namespace AutoScreenCapture
                     DisableStopCapture();
                     EnableStartCapture();
 
-                    ScreenCapture.Count = 0;
-                    ScreenCapture.Running = false;
+                    _screenCapture.Count = 0;
+                    _screenCapture.Running = false;
 
-                    //ScreenshotCollection.Save();
+                    //_screenshotCollection.Save();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -691,7 +699,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void StartScreenCapture()
         {
-            if (!ScreenCapture.Running)
+            if (!_screenCapture.Running)
             {
                 SaveSettings();
 
@@ -713,8 +721,8 @@ namespace AutoScreenCapture
                 EnableStopScreenCapture();
 
                 // Setup the properties for the screen capture class.
-                ScreenCapture.Delay = GetScreenCaptureInterval();
-                ScreenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
+                _screenCapture.Delay = GetScreenCaptureInterval();
+                _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
 
                 if (checkBoxPassphraseLock.Checked)
                 {
@@ -725,9 +733,9 @@ namespace AutoScreenCapture
                     ScreenCapture.LockScreenCaptureSession = false;
                 }
 
-                ScreenCapture.Running = true;
+                _screenCapture.Running = true;
 
-                ScreenCapture.DateTimeStartCapture = DateTime.Now;
+                _screenCapture.DateTimeStartCapture = DateTime.Now;
 
                 RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
 
@@ -788,21 +796,21 @@ namespace AutoScreenCapture
                     {
                         Screen screen = (Screen) selectedTabPage.Tag;
                         selectedScreenshot =
-                            ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                            _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                     }
 
                     if (selectedTabPage.Tag.GetType() == typeof(Region))
                     {
                         Region region = (Region) selectedTabPage.Tag;
                         selectedScreenshot =
-                            ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                            _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                     }
                 }
 
                 toolStripTextBox.Text = Path.GetFileName(selectedScreenshot.Path);
                 toolStripTextBox.ToolTipText = selectedScreenshot.Path;
 
-                pictureBox.Image = ScreenCapture.GetImageByPath(selectedScreenshot.Path);
+                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
 
                 if (pictureBox.Image != null)
                 {
@@ -923,15 +931,15 @@ namespace AutoScreenCapture
                 DisableStopCapture();
                 EnableStartCapture();
 
-                ScreenCapture.Count = 0;
-                ScreenCapture.Running = false;
+                _screenCapture.Count = 0;
+                _screenCapture.Running = false;
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
                 HideInterface();
 
-                //ScreenshotCollection.Save();
+                //_screenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -1139,14 +1147,14 @@ namespace AutoScreenCapture
                 {
                     Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
                     selectedScreenshot =
-                        ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                        _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region) tabControlViews.SelectedTab.Tag;
                     selectedScreenshot =
-                        ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                        _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                 }
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
@@ -1277,7 +1285,7 @@ namespace AutoScreenCapture
 
                 #endregion Command Line Argument Parsing
 
-                ScreenCapture.RunningFromCommandLine = true;
+                _screenCapture.RunningFromCommandLine = true;
 
                 InitializeThreads();
 
@@ -1953,13 +1961,13 @@ namespace AutoScreenCapture
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
-                    RunEditor(editor, ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
+                    RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region) tabControlViews.SelectedTab.Tag;
-                    RunEditor(editor, ScreenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
+                    RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
                 }
             }
         }
@@ -1971,22 +1979,22 @@ namespace AutoScreenCapture
         /// <param name="triggerActionType">The trigger's action type.</param>
         private void RunEditor(Editor editor, TriggerActionType triggerActionType)
         {
-            if (editor != null && triggerActionType == TriggerActionType.RunEditor && ScreenCapture.Running)
+            if (editor != null && triggerActionType == TriggerActionType.RunEditor && _screenCapture.Running)
             {
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor,
-                        ScreenshotCollection.GetScreenshot(
-                            ScreenshotCollection.Get(ScreenshotCollection.Count - 1).Slide.Name, screen.ViewId));
+                        _screenshotCollection.GetScreenshot(
+                            _screenshotCollection.Get(_screenshotCollection.Count - 1).Slide.Name, screen.ViewId));
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region) tabControlViews.SelectedTab.Tag;
                     RunEditor(editor,
-                        ScreenshotCollection.GetScreenshot(
-                            ScreenshotCollection.Get(ScreenshotCollection.Count - 1).Slide.Name, region.ViewId));
+                        _screenshotCollection.GetScreenshot(
+                            _screenshotCollection.Get(_screenshotCollection.Count - 1).Slide.Name, region.ViewId));
                 }
             }
         }
@@ -2104,6 +2112,7 @@ namespace AutoScreenCapture
             formRegion.RegionObject = null;
             formRegion.ImageFormatCollection = _imageFormatCollection;
             formRegion.MacroTagCollection = _macroTagCollection;
+            formRegion.screenCapture = _screenCapture;
 
             formRegion.ShowDialog(this);
 
@@ -2162,6 +2171,7 @@ namespace AutoScreenCapture
                 formRegion.RegionObject = (Region) buttonSelected.Tag;
                 formRegion.ImageFormatCollection = _imageFormatCollection;
                 formRegion.MacroTagCollection = _macroTagCollection;
+                formRegion.screenCapture = _screenCapture;
 
                 formRegion.ShowDialog(this);
 
@@ -2189,6 +2199,7 @@ namespace AutoScreenCapture
             formScreen.ScreenObject = null;
             formScreen.ImageFormatCollection = _imageFormatCollection;
             formScreen.MacroTagCollection = _macroTagCollection;
+            formScreen.screenCapture = _screenCapture;
 
             formScreen.ShowDialog(this);
 
@@ -2247,6 +2258,7 @@ namespace AutoScreenCapture
                 formScreen.ScreenObject = (Screen) buttonSelected.Tag;
                 formScreen.ImageFormatCollection = _imageFormatCollection;
                 formScreen.MacroTagCollection = _macroTagCollection;
+                formScreen.screenCapture = _screenCapture;
 
                 formScreen.ShowDialog(this);
 
@@ -2314,17 +2326,17 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void Tick_timerScreenCapture(object sender, EventArgs e)
         {
-            if (ScreenCapture.Running)
+            if (_screenCapture.Running)
             {
-                if (ScreenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN &&
-                    ScreenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
+                if (_screenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN &&
+                    _screenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
                 {
-                    if (ScreenCapture.Count < ScreenCapture.Limit)
+                    if (_screenCapture.Count < _screenCapture.Limit)
                     {
                         TakeScreenshot();
                     }
 
-                    if (ScreenCapture.Count == ScreenCapture.Limit)
+                    if (_screenCapture.Count == _screenCapture.Limit)
                     {
                         RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                     }
@@ -2345,11 +2357,11 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot()
         {
-            ScreenCapture.Count++;
+            _screenCapture.Count++;
 
             formScreen.RefreshScreenDictionary();
 
-            ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
+            _screenCapture.DateTimePreviousScreenshot = DateTime.Now;
 
             RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
 
@@ -2377,8 +2389,8 @@ namespace AutoScreenCapture
             {
                 numericUpDownCaptureLimit.Enabled = true;
 
-                ScreenCapture.Count = 0;
-                ScreenCapture.Limit = (int) numericUpDownCaptureLimit.Value;
+                _screenCapture.Count = 0;
+                _screenCapture.Limit = (int) numericUpDownCaptureLimit.Value;
             }
             else
             {
@@ -2588,7 +2600,9 @@ namespace AutoScreenCapture
         {
             foreach (Region region in formRegion.RegionCollection)
             {
-                ScreenCapture.TakeScreenshot(
+                MacroParser.screenCapture = _screenCapture;
+
+                _screenCapture.TakeScreenshot(
                     path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     format: region.Format,
                     component: -1,
@@ -2603,7 +2617,8 @@ namespace AutoScreenCapture
                     viewId: region.ViewId,
                     label: textBoxScreenshotLabel.Text,
                     screenCollection: formScreen.ScreenCollection,
-                    regionCollection: formRegion.RegionCollection
+                    regionCollection: formRegion.RegionCollection,
+                    screenshotCollection: _screenshotCollection
                 );
             }
         }
@@ -2614,8 +2629,10 @@ namespace AutoScreenCapture
             {
                 if (screen.Component == 0)
                 {
+                    MacroParser.screenCapture = _screenCapture;
+
                     // Active Window
-                    ScreenCapture.TakeScreenshot(
+                    _screenCapture.TakeScreenshot(
                         path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                         format: screen.Format,
                         component: screen.Component,
@@ -2630,15 +2647,18 @@ namespace AutoScreenCapture
                         viewId: screen.ViewId,
                         label: textBoxScreenshotLabel.Text,
                         screenCollection: formScreen.ScreenCollection,
-                        regionCollection: formRegion.RegionCollection
+                        regionCollection: formRegion.RegionCollection,
+                        screenshotCollection: _screenshotCollection
                     );
                 }
                 else
                 {
                     if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
                     {
+                        MacroParser.screenCapture = _screenCapture;
+
                         // Screen X
-                        ScreenCapture.TakeScreenshot(
+                        _screenCapture.TakeScreenshot(
                             path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                             format: screen.Format,
                             component: screen.Component,
@@ -2653,7 +2673,8 @@ namespace AutoScreenCapture
                             viewId: screen.ViewId,
                             label: textBoxScreenshotLabel.Text,
                             screenCollection: formScreen.ScreenCollection,
-                            regionCollection: formRegion.RegionCollection
+                            regionCollection: formRegion.RegionCollection,
+                            screenshotCollection: _screenshotCollection
                         );
                     }
                 }
@@ -2668,12 +2689,12 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
         {
-            if (ScreenCapture.Running)
+            if (_screenCapture.Running)
             {
-                int remainingHours = ScreenCapture.TimeRemainingForNextScreenshot.Hours;
-                int remainingMinutes = ScreenCapture.TimeRemainingForNextScreenshot.Minutes;
-                int remainingSeconds = ScreenCapture.TimeRemainingForNextScreenshot.Seconds;
-                int remainingMilliseconds = ScreenCapture.TimeRemainingForNextScreenshot.Milliseconds;
+                int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
+                int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
+                int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
+                int remainingMilliseconds = _screenCapture.TimeRemainingForNextScreenshot.Milliseconds;
 
                 string remainingHoursStr = (remainingHours > 0
                     ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
@@ -2692,14 +2713,14 @@ namespace AutoScreenCapture
                 {
                     remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
                                        " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
-                                       ScreenCapture.DateTimeNextScreenshot.ToLongTimeString();
+                                       _screenCapture.DateTimeNextScreenshot.ToLongTimeString();
                 }
 
                 notifyIcon.Text = "Next capture in " + remainingTimeStr;
             }
             else
             {
-                ScreenCapture.DateTimePreviousScreenshot = DateTime.Now;
+                _screenCapture.DateTimePreviousScreenshot = DateTime.Now;
                 notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
             }
         }
@@ -2721,8 +2742,11 @@ namespace AutoScreenCapture
 
         private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SearchDates();
-            ShowScreenshots();
+            if (comboBoxFilterValue.SelectedIndex > 0)
+            {
+                SearchDates();
+                ShowScreenshots();
+            }
         }
 
         private void buttonRefreshFilterValues_Click(object sender, EventArgs e)
@@ -2751,6 +2775,9 @@ namespace AutoScreenCapture
             }
             else
             {
+                SearchDates();
+                ShowScreenshots();
+
                 if (comboBoxFilterValue.Items.Count > 1)
                 {
                     comboBoxFilterValue.SelectedIndex = 0;
