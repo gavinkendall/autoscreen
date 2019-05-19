@@ -96,7 +96,7 @@ namespace AutoScreenCapture
                 {
                     screenshots.InsertAfter(screenshot, screenshots.LastChild);
 
-                    xDoc.Save(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile);
+                    xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
                 }
             }
 
@@ -113,16 +113,28 @@ namespace AutoScreenCapture
 
                     foreach (Screenshot screenshot in _screenshotList)
                     {
-                        if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-days))
+                        if (!string.IsNullOrEmpty(screenshot.Date))
                         {
-                            if (File.Exists(screenshot.Path))
+                            if (Convert.ToDateTime(screenshot.Date) <= DateTime.Now.Date.AddDays(-days))
                             {
-                                File.Delete(screenshot.Path);
-                            }
+                                XmlNodeList nodesToDelete = xDoc.SelectNodes("/autoscreen/screenshots/screenshot[date='" + screenshot.Date + "']");
 
-                            if (!screenshotDeletedList.Contains(screenshot))
-                            {
-                                screenshotDeletedList.Add(screenshot);
+                                foreach (XmlNode node in nodesToDelete)
+                                {
+                                    node.ParentNode.RemoveChild(node);
+                                }
+
+                                xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+
+                                if (File.Exists(screenshot.Path))
+                                {
+                                    File.Delete(screenshot.Path);
+                                }
+
+                                if (!screenshotDeletedList.Contains(screenshot))
+                                {
+                                    screenshotDeletedList.Add(screenshot);
+                                }
                             }
                         }
                     }
@@ -247,10 +259,10 @@ namespace AutoScreenCapture
                 }
 
                 if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                    File.Exists(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile))
+                    File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
                 {
                     xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.OldScreenshotsFile);
+                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
