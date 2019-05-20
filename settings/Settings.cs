@@ -55,6 +55,7 @@ namespace AutoScreenCapture
 
                     Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
                     Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
+                    Application.GetByKey("DebugMode", defaultValue: false).Value = Log.Enabled;
 
                     Application.Save();
                 }
@@ -63,6 +64,9 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("Name", ApplicationName));
                     Application.Add(new Setting("Version", ApplicationVersion));
                     Application.Add(new Setting("DebugMode", false));
+
+                    // Just in case we're using the -debug switch from the command line.
+                    Application.GetByKey("DebugMode", defaultValue: false).Value = Log.Enabled;
 
                     Application.Save();
                 }
