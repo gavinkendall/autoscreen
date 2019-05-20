@@ -5,9 +5,6 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-
-using System.ComponentModel;
-
 namespace AutoScreenCapture
 {
     using System;
