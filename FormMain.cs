@@ -98,7 +98,7 @@ namespace AutoScreenCapture
 
             Settings.Initialize();
 
-            Log.Enabled = Convert.ToBoolean(Settings.Application.GetByKey("DebugMode", defaultValue: true).Value);
+            Log.Enabled = Convert.ToBoolean(Settings.Application.GetByKey("DebugMode", defaultValue: false).Value);
 
             Log.Write("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " ***");
             Log.Write("Starting application.");
