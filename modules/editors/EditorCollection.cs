@@ -126,8 +126,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                    File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder) && File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
@@ -179,6 +178,10 @@ namespace AutoScreenCapture
                     {
                         Save();
                     }
+                }
+                else
+                {
+                    Log.Write($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors.");
                 }
             }
             catch (Exception ex)

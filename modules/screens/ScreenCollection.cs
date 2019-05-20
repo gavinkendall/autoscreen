@@ -5,6 +5,9 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
+using System.ComponentModel;
+
 namespace AutoScreenCapture
 {
     using System;
@@ -117,8 +120,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                    File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder) && File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreensFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreensFile);
@@ -202,14 +204,20 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    Log.Write($"WARNING: {FileSystem.ScreensFile} not found. Detecting available screens and creating them.");
+
                     Add(new Screen($"Active Window", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, 0,
                         imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
+
+                    Log.Write($"Active Window created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
 
                     // Setup some screens based on what we can find.
                     for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
                     {
                         Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
                             imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
+
+                        Log.Write($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
                     }
 
                     Save();

@@ -101,8 +101,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                    File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder) && File.Exists(FileSystem.ApplicationFolder + FileSystem.TriggersFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.ApplicationFolder + FileSystem.TriggersFile);
@@ -163,6 +162,8 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    Log.Write($"WARNING: {FileSystem.TriggersFile} not found. Creating default triggers.");
+
                     // Setup a few "built in" triggers by default.
                     Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
                         TriggerActionType.ShowInterface, string.Empty));

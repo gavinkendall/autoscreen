@@ -144,8 +144,7 @@ namespace AutoScreenCapture
                             if (pci.flags == CURSOR_SHOWING)
                             {
                                 var hdc = graphicsSource.GetHdc();
-                                DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0,
-                                    IntPtr.Zero, DI_NORMAL);
+                                DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
                                 graphicsSource.ReleaseHdc();
                             }
                         }
@@ -239,8 +238,7 @@ namespace AutoScreenCapture
 
                         if (driveInfo.IsReady)
                         {
-                            double freeDiskSpacePercentage =
-                                (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
+                            double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
                             if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                             {
@@ -255,9 +253,7 @@ namespace AutoScreenCapture
 
                                     SaveToFile(path, format, jpegQuality, bitmap);
 
-                                    screenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format,
-                                            component, screenshotType, GetActiveWindowTitle(), viewId, label),
-                                        screenCollection, regionCollection);
+                                    screenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, screenshotType, GetActiveWindowTitle(), viewId, label), screenCollection, regionCollection);
                                 }
                             }
                         }

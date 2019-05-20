@@ -120,8 +120,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(FileSystem.ApplicationFolder) &&
-                    File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
+                if (Directory.Exists(FileSystem.ApplicationFolder) && File.Exists(FileSystem.ApplicationFolder + FileSystem.RegionsFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.ApplicationFolder + FileSystem.RegionsFile);
@@ -213,11 +212,12 @@ namespace AutoScreenCapture
                         {
                             if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
                             {
+                                Log.Write("An old version of the regions file was detected. Attempting upgrade to new region format.");
+
                                 region.ViewId = Guid.NewGuid();
 
                                 // Get the screenshots folder path from the old user settings to be used for the region's folder property.
-                                region.Folder = Settings.VersionManager.OldUserSettings
-                                    .GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+                                region.Folder = Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
 
                                 region.Folder = FileSystem.CorrectDirectoryPath(region.Folder);
 
@@ -243,6 +243,10 @@ namespace AutoScreenCapture
                     {
                         Save();
                     }
+                }
+                else
+                {
+                    Log.Write($"WARNING: {FileSystem.RegionsFile} not found. Unable to load regions.");
                 }
             }
             catch (Exception ex)

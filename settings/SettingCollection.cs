@@ -155,6 +155,8 @@ namespace AutoScreenCapture
                     if (fileInfo.Length > MAX_FILE_SIZE)
                     {
                         File.Delete(Filepath);
+
+                        Log.Write("WARNING: User settings file was too big and needed to be deleted.");
                         return;
                     }
 
@@ -197,6 +199,10 @@ namespace AutoScreenCapture
                             Add(setting);
                         }
                     }
+                }
+                else
+                {
+                    Log.Write($"WARNING: {FileSystem.SettingsFolder} and \"{Filepath}\" not found. Unable to load settings.");
                 }
             }
             catch (Exception ex)
@@ -256,6 +262,10 @@ namespace AutoScreenCapture
                         xWriter.Close();
                     }
                 }
+                else
+                {
+                    Log.Write($"WARNING: {FileSystem.SettingsFolder} not found. Unable to save settings.");
+                }
             }
             catch (Exception ex)
             {
@@ -269,6 +279,8 @@ namespace AutoScreenCapture
             {
                 if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                 {
+                    Log.Write("An old version of Auto Screen Capture was detected. Attempting upgrade.");
+
                     SettingCollection oldUserSettings = (SettingCollection) this.MemberwiseClone();
                     oldUserSettings._settingList = new List<Setting>(_settingList);
 
@@ -276,6 +288,8 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null) // Is this version 2.1.8.2 (or older)?
                     {
+                        Log.Write("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
+
                         // Go through the old settings and get the old values from them to be used for the new settings.
 
                         // 2.1 used a setting named "Interval", but 2.2 uses "IntScreenCaptureInterval".
@@ -466,6 +480,8 @@ namespace AutoScreenCapture
                         RemoveByKey("StartButtonImageFormat");
                         RemoveByKey("Schedule");
                     }
+
+                    Log.Write("Upgrade completed.");
 
                     // Now that we've upgraded all the settings we should save them to disk.
                     Save();

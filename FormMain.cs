@@ -100,6 +100,7 @@ namespace AutoScreenCapture
 
             Log.Enabled = Convert.ToBoolean(Settings.Application.GetByKey("DebugMode", defaultValue: true).Value);
 
+            Log.Write("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " ***");
             Log.Write("Starting application.");
 
             LoadSettings();
@@ -135,6 +136,8 @@ namespace AutoScreenCapture
 
         private void InitializeThreads()
         {
+            Log.Write("Initializing threads.");
+
             runDeleteOldScreenshotsThread = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
@@ -181,9 +184,10 @@ namespace AutoScreenCapture
                 Log.Write("Loading user settings.");
 
                 Settings.User.Load();
-                Settings.User.Upgrade();
 
                 Log.Write("User settings loaded.");
+
+                Settings.User.Upgrade();
 
                 Log.Write("Initializing screen capture");
                 _screenCapture = new ScreenCapture();
@@ -212,7 +216,7 @@ namespace AutoScreenCapture
 
                 Log.Write("Loaded " + formRegion.RegionCollection.Count + " regions.");
 
-                Log.Write("Initializing screen collection");
+                Log.Write("Initializing screen collection.");
 
                 formScreen.ScreenCollection.Load(_imageFormatCollection);
 
@@ -240,48 +244,40 @@ namespace AutoScreenCapture
                 Log.Write("Building view tab pages.");
                 BuildViewTabPages();
 
-                Log.Write("Initializing screenshot collection");
+                Log.Write("Initializing screenshot collection.");
                 _screenshotCollection = new ScreenshotCollection();
 
                 Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured.");
 
-                _screenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection, "2019-05-17");
+                _screenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection);
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
 
                 if (screenCaptureInterval == 0)
                 {
                     screenCaptureInterval = 60000;
+                    Log.Write("WARNING: Screen capture interval was found to be 0 so 60,000 milliseconds (or 1 minute) is being used as the default value.");
                 }
 
-                decimal screenCaptureIntervalHours =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Hours);
-                decimal screenCaptureIntervalMinutes =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Minutes);
-                decimal screenCaptureIntervalSeconds =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Seconds);
-                decimal screenCaptureIntervalMilliseconds =
-                    Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
+                decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Hours);
+                decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Minutes);
+                decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
 
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                 numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
-                numericUpDownCaptureLimit.Value =
-                    Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value);
+                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value);
 
-                checkBoxCaptureLimit.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value);
+                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value);
 
-                checkBoxInitialScreenshot.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
+                checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
 
-                checkBoxPassphraseLock.Checked =
-                    Convert.ToBoolean(Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value);
+                checkBoxPassphraseLock.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value);
 
-                textBoxPassphrase.Text =
-                    Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString();
+                textBoxPassphrase.Text = Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString();
 
                 if (textBoxPassphrase.Text.Length > 0)
                 {
@@ -366,8 +362,6 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
-                //_screenshotCollection.Save();
-
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
                     runDateSearchThread.CancelAsync();
@@ -402,6 +396,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchDates()
         {
+            Log.Write("Searching for dates.");
+
             if (runDateSearchThread != null && !runDateSearchThread.IsBusy)
             {
                 runDateSearchThread.RunWorkerAsync();
@@ -421,6 +417,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchScreenshots()
         {
+            Log.Write("Searching for screenshots.");
+
             Slideshow.Index = 0;
             Slideshow.Count = 0;
 
@@ -594,8 +592,7 @@ namespace AutoScreenCapture
         /// <returns>A DateTime object based on the provided date string.</returns>
         private DateTime ConvertDateStringToDateTime(string date)
         {
-            return new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)),
-                Convert.ToInt32(date.Substring(8, 2)));
+            return new DateTime(Convert.ToInt32(date.Substring(0, 4)), Convert.ToInt32(date.Substring(5, 2)), Convert.ToInt32(date.Substring(8, 2)));
         }
 
         /// <summary>
@@ -687,7 +684,9 @@ namespace AutoScreenCapture
                     _screenCapture.Count = 0;
                     _screenCapture.Running = false;
 
-                    //_screenshotCollection.Save();
+                    SearchFilterValues();
+                    SearchDates();
+                    ShowScreenshots();
 
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
@@ -699,7 +698,9 @@ namespace AutoScreenCapture
         /// </summary>
         private void StartScreenCapture()
         {
-            if (!_screenCapture.Running)
+            int screenCaptureInterval = GetScreenCaptureInterval();
+            
+            if (!_screenCapture.Running && screenCaptureInterval > 0)
             {
                 SaveSettings();
 
@@ -721,7 +722,7 @@ namespace AutoScreenCapture
                 EnableStopScreenCapture();
 
                 // Setup the properties for the screen capture class.
-                _screenCapture.Delay = GetScreenCaptureInterval();
+                _screenCapture.Delay = screenCaptureInterval;
                 _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
 
                 if (checkBoxPassphraseLock.Checked)
@@ -733,11 +734,11 @@ namespace AutoScreenCapture
                     ScreenCapture.LockScreenCaptureSession = false;
                 }
 
+                Log.Write("Starting screen capture.");
+
                 _screenCapture.Running = true;
 
                 _screenCapture.DateTimeStartCapture = DateTime.Now;
-
-                RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
 
                 if (checkBoxInitialScreenshot.Checked)
                 {
@@ -747,9 +748,10 @@ namespace AutoScreenCapture
                 }
 
                 // Start taking screenshots.
-                Log.Write("Starting screen capture.");
 
-                timerScreenCapture.Interval = GetScreenCaptureInterval();
+                timerScreenCapture.Interval = screenCaptureInterval;
+
+                RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
             }
         }
 
@@ -781,8 +783,7 @@ namespace AutoScreenCapture
             {
                 ToolStrip toolStrip = (ToolStrip) selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
 
-                ToolStripTextBox toolStripTextBox =
-                    (ToolStripTextBox) toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
+                ToolStripTextBox toolStripTextBox = (ToolStripTextBox) toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
 
                 PictureBox pictureBox = (PictureBox) selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
@@ -795,22 +796,50 @@ namespace AutoScreenCapture
                     if (selectedTabPage.Tag.GetType() == typeof(Screen))
                     {
                         Screen screen = (Screen) selectedTabPage.Tag;
-                        selectedScreenshot =
-                            _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
                     }
 
                     if (selectedTabPage.Tag.GetType() == typeof(Region))
                     {
                         Region region = (Region) selectedTabPage.Tag;
-                        selectedScreenshot =
-                            _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                     }
                 }
 
-                toolStripTextBox.Text = Path.GetFileName(selectedScreenshot.Path);
-                toolStripTextBox.ToolTipText = selectedScreenshot.Path;
+                string path = selectedScreenshot.Path;
 
-                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    toolStripTextBox.Text = Path.GetFileName(path);
+                    toolStripTextBox.ToolTipText = path;
+
+                    FileInfo fileInfo = new FileInfo(path);
+
+                    if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
+                    {
+                        DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+                        if (driveInfo.IsReady)
+                        {
+                            string dirName = Path.GetDirectoryName(path);
+
+                            if (!string.IsNullOrEmpty(dirName))
+                            {
+                                if (Directory.Exists(dirName) && File.Exists(path))
+                                {
+                                    toolStripTextBox.BackColor = Color.PaleGreen;
+                                }
+                                else
+                                {
+                                    toolStripTextBox.BackColor = Color.PaleVioletRed;
+                                    toolStripTextBox.ToolTipText = $"Could not find or access \"{path}\"";
+                                }
+                            }
+                        }
+                    }
+                }
+
+                pictureBox.Image = _screenCapture.GetImageByPath(path);
 
                 if (pictureBox.Image != null)
                 {
@@ -1802,15 +1831,13 @@ namespace AutoScreenCapture
                 Image = Resources.edit
             };
 
-            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null,
-                Click_addEditorToolStripMenuItem);
+            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
 
             foreach (Editor editor in formEditor.EditorCollection)
             {
                 if (editor != null && File.Exists(editor.Application))
                 {
-                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name,
-                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
                 }
             }
 
@@ -1841,8 +1868,7 @@ namespace AutoScreenCapture
                 DisplayStyle = ToolStripItemDisplayStyle.Image
             };
 
-            toolstripButtonOpenFolder.Click +=
-                new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+            toolstripButtonOpenFolder.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolstripButtonOpenFolder);
