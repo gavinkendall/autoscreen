@@ -251,9 +251,9 @@ namespace AutoScreenCapture
                                         Directory.CreateDirectory(dirName);
                                     }
 
-                                    SaveToFile(path, format, jpegQuality, bitmap);
+                                    screenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, screenshotType, GetActiveWindowTitle(), viewId, label));
 
-                                    screenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, screenshotType, GetActiveWindowTitle(), viewId, label), screenCollection, regionCollection);
+                                    SaveToFile(path, format, jpegQuality, bitmap);
                                 }
                             }
                         }

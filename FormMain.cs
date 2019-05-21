@@ -47,6 +47,8 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runFilterSearchThread = null;
 
+        private BackgroundWorker runSaveScreenshotsThread = null;
+
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
@@ -172,6 +174,13 @@ namespace AutoScreenCapture
                 WorkerSupportsCancellation = true
             };
             runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
+
+            runSaveScreenshotsThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runSaveScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runSaveScreenshotsThread);
         }
 
         /// <summary>
@@ -362,6 +371,8 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
+                SaveScreenshots();
+
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
                     runDateSearchThread.CancelAsync();
@@ -409,6 +420,14 @@ namespace AutoScreenCapture
             if (runDeleteSlidesThread != null && !runDeleteSlidesThread.IsBusy)
             {
                 runDeleteSlidesThread.RunWorkerAsync();
+            }
+        }
+
+        private void SaveScreenshots()
+        {
+            if (runSaveScreenshotsThread != null && !runSaveScreenshotsThread.IsBusy)
+            {
+                runSaveScreenshotsThread.RunWorkerAsync();
             }
         }
 
@@ -513,6 +532,11 @@ namespace AutoScreenCapture
         private void RunDeleteSlides(DoWorkEventArgs e)
         {
             FileSystem.DeleteFilesInDirectory(FileSystem.SlidesFolder);
+        }
+
+        private void RunSaveScreenshots(DoWorkEventArgs e)
+        {
+            _screenshotCollection.Save();
         }
 
         private void RunFilterSearch(DoWorkEventArgs e)
@@ -688,6 +712,8 @@ namespace AutoScreenCapture
                     SearchDates();
                     ShowScreenshots();
 
+                    SaveScreenshots();
+
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
@@ -832,25 +858,33 @@ namespace AutoScreenCapture
                                 else
                                 {
                                     toolStripTextBox.BackColor = Color.PaleVioletRed;
-                                    toolStripTextBox.ToolTipText = $"Could not find or access \"{path}\"";
+                                    toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
                                 }
                             }
                         }
                     }
+
+                    pictureBox.Image = _screenCapture.GetImageByPath(path);
+
+                    if (pictureBox.Image != null)
+                    {
+                        textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
+                        textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+
+                        textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                        textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
+
+                        textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                        textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                    }
                 }
-
-                pictureBox.Image = _screenCapture.GetImageByPath(path);
-
-                if (pictureBox.Image != null)
+                else
                 {
-                    textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
-                    textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+                    toolStripTextBox.Text = string.Empty;
+                    toolStripTextBox.BackColor = Color.PaleVioletRed;
+                    toolStripTextBox.ToolTipText = "Could not find or access image file";
 
-                    textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                    textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
-
-                    textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                    textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                    pictureBox.Image = null;
                 }
             }
         }
@@ -968,7 +1002,7 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
-                //_screenshotCollection.Save();
+                SaveScreenshots();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -1018,6 +1052,11 @@ namespace AutoScreenCapture
         private void DoWork_runDeleteSlidesThread(object sender, DoWorkEventArgs e)
         {
             RunDeleteSlides(e);
+        }
+
+        private void DoWork_runSaveScreenshotsThread(object sender, DoWorkEventArgs e)
+        {
+            RunSaveScreenshots(e);
         }
 
         /// <summary>

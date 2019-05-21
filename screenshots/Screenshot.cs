@@ -22,6 +22,7 @@ namespace AutoScreenCapture
         public string WindowTitle { get; set; }
         public string Label { get; set; }
         public ScreenshotType ScreenshotType { get; set; }
+        public bool Saved { get; set; }
 
         public Screenshot()
         {
@@ -40,6 +41,7 @@ namespace AutoScreenCapture
                 ScreenshotType = screenshotType;
                 WindowTitle = windowTitle;
                 Label = label;
+                Saved = false;
 
                 Slide = new Slide()
                 {
