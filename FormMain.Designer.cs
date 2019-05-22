@@ -1085,7 +1085,6 @@ namespace AutoScreenCapture
             // buttonRefreshFilterValues
             // 
             this.buttonRefreshFilterValues.BackColor = System.Drawing.Color.White;
-            this.buttonRefreshFilterValues.Enabled = false;
             this.buttonRefreshFilterValues.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefreshFilterValues.Image = global::AutoScreenCapture.Properties.Resources.refresh;
             this.buttonRefreshFilterValues.Location = new System.Drawing.Point(227, 6);

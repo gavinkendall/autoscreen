@@ -371,7 +371,7 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
-                SaveScreenshots();
+                _screenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -644,6 +644,9 @@ namespace AutoScreenCapture
                 toolStripMenuItemShowInterface.Enabled = false;
                 toolStripMenuItemHideInterface.Enabled = true;
 
+                SearchDates();
+                SearchScreenshots();
+
                 Show();
 
                 Visible = true;
@@ -710,7 +713,6 @@ namespace AutoScreenCapture
 
                     SearchFilterValues();
                     SearchDates();
-                    ShowScreenshots();
 
                     SaveScreenshots();
 
@@ -1002,7 +1004,7 @@ namespace AutoScreenCapture
 
                 HideInterface();
 
-                SaveScreenshots();
+                _screenshotCollection.Save();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -2843,11 +2845,11 @@ namespace AutoScreenCapture
             if (!string.IsNullOrEmpty(comboBoxFilterType.Text))
             {
                 comboBoxFilterValue.Enabled = true;
-                buttonRefreshFilterValues.Enabled = true;
                 SearchFilterValues();
             }
             else
             {
+                SearchFilterValues();
                 SearchDates();
                 ShowScreenshots();
 
@@ -2857,7 +2859,6 @@ namespace AutoScreenCapture
                 }
 
                 comboBoxFilterValue.Enabled = false;
-                buttonRefreshFilterValues.Enabled = false;
             }
         }
     }

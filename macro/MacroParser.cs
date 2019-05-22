@@ -20,7 +20,7 @@ namespace AutoScreenCapture
         public static readonly string DateFormat = YearFormat + "-" + MonthFormat + "-" + DayFormat;
         public static readonly string TimeFormat = HourFormat + ":" + MinuteFormat + ":" + SecondFormat + "." + MillisecondFormat;
         public static readonly string TimeFormatForWindows = HourFormat + "-" + MinuteFormat + "-" + SecondFormat + "-" + MillisecondFormat;
-        public static readonly string DefaultMacro = @"%date%\%name%\screenshot %count%.%format%";
+        public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
         public static string ParseTags(string macro)
         {

@@ -66,6 +66,9 @@ namespace AutoScreenCapture
                             sw.Flush();
                             sw.Close();
                         }
+
+                        // If we encounter an exception error it's probably better to just error out on exit.
+                        Environment.Exit(1);
                     }
                     else
                     {
