@@ -154,21 +154,21 @@ namespace AutoScreenCapture
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
+                    return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
+                    return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
-                    return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).Select(x => x.Slide).ToList();
+                    return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
             }
 
-            return _screenshotList.Where(x => x.Date.Equals(date)).Select(x => x.Slide).ToList();
+            return _screenshotList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
         }
 
         public  Screenshot GetScreenshot(string slideName, Guid viewId)

@@ -490,7 +490,7 @@ namespace AutoScreenCapture
             {
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
-                listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat)); ;
+                listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 if (listBoxScreenshots.Items.Count > 0)
                 {
