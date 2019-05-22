@@ -2677,7 +2677,7 @@ namespace AutoScreenCapture
             {
                 MacroParser.screenCapture = _screenCapture;
 
-                _screenCapture.TakeScreenshot(
+                if (!_screenCapture.TakeScreenshot(
                     path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
                     format: region.Format,
                     component: -1,
@@ -2694,7 +2694,12 @@ namespace AutoScreenCapture
                     screenCollection: formScreen.ScreenCollection,
                     regionCollection: formRegion.RegionCollection,
                     screenshotCollection: _screenshotCollection
-                );
+                ))
+                {
+                    Log.Write("Application encountered error while taking a screenshot. Stopping screen capture.");
+                    StopScreenCapture();
+                    break;
+                }
             }
         }
 
@@ -2707,7 +2712,7 @@ namespace AutoScreenCapture
                     MacroParser.screenCapture = _screenCapture;
 
                     // Active Window
-                    _screenCapture.TakeScreenshot(
+                    if (!_screenCapture.TakeScreenshot(
                         path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                         format: screen.Format,
                         component: screen.Component,
@@ -2724,7 +2729,12 @@ namespace AutoScreenCapture
                         screenCollection: formScreen.ScreenCollection,
                         regionCollection: formRegion.RegionCollection,
                         screenshotCollection: _screenshotCollection
-                    );
+                    ))
+                    {
+                        Log.Write("Application encountered error while taking a screenshot. Stopping screen capture.");
+                        StopScreenCapture();
+                        break;
+                    }
                 }
                 else
                 {
@@ -2733,7 +2743,7 @@ namespace AutoScreenCapture
                         MacroParser.screenCapture = _screenCapture;
 
                         // Screen X
-                        _screenCapture.TakeScreenshot(
+                        if (!_screenCapture.TakeScreenshot(
                             path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                             format: screen.Format,
                             component: screen.Component,
@@ -2750,7 +2760,12 @@ namespace AutoScreenCapture
                             screenCollection: formScreen.ScreenCollection,
                             regionCollection: formRegion.RegionCollection,
                             screenshotCollection: _screenshotCollection
-                        );
+                        ))
+                        {
+                            Log.Write("Application encountered error while taking a screenshot. Stopping screen capture.");
+                            StopScreenCapture();
+                            break;
+                        }
                     }
                 }
             }

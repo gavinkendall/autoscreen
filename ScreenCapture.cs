@@ -218,7 +218,7 @@ namespace AutoScreenCapture
             return string.Empty;
         }
 
-        public  void TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
+        public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
             int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId,
             string label, ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
         {
@@ -227,6 +227,8 @@ namespace AutoScreenCapture
                 Bitmap bitmap = component == 0
                     ? GetActiveWindowBitmap()
                     : GetScreenBitmap(x, y, width, height, Ratio, mouse);
+
+                GC.Collect();
 
                 if (bitmap != null && !string.IsNullOrEmpty(path))
                 {
@@ -256,17 +258,21 @@ namespace AutoScreenCapture
                                     SaveToFile(path, format, jpegQuality, bitmap);
                                 }
                             }
+                            else
+                            {
+                                Log.Write($"WARNING: Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName}");
+                                return false;
+                            }
                         }
                     }
-
-                    GC.Collect();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
-                Log.Write(
-                    "ScreenCapture::TakeScreenshot(path, format, component, jpegQuality, resolutionRatio, mouse, x, y, width, height)",
-                    ex);
+                Log.Write("ScreenCapture::TakeScreenshot(path, format, component, jpegQuality, resolutionRatio, mouse, x, y, width, height)", ex);
+                return false;
             }
         }
 
