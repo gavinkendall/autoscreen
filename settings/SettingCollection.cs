@@ -437,6 +437,24 @@ namespace AutoScreenCapture
                         // When upgrading from 2.1 to 2.2 we should end up with about 20 settings instead of 60
                         // because 2.1 was limited to using Screen 1, Screen 2, Screen 3, Screen 4, and Active Window
                         // so there were settings dedicated to all the properties associated with them (such as Name, X, Y, Width, and Height).
+                        RemoveByKey("CaptureLimit");
+                        RemoveByKey("CaptureLimitCheck");
+                        RemoveByKey("TakeInitialScreenshotCheck");
+                        RemoveByKey("ShowSystemTrayIcon");
+                        RemoveByKey("CaptureStopAtCheck");
+                        RemoveByKey("CaptureStartAtCheck");
+                        RemoveByKey("CaptureOnSundayCheck");
+                        RemoveByKey("CaptureOnMondayCheck");
+                        RemoveByKey("CaptureOnTuesdayCheck");
+                        RemoveByKey("CaptureOnWednesdayCheck");
+                        RemoveByKey("CaptureOnThursdayCheck");
+                        RemoveByKey("CaptureOnFridayCheck");
+                        RemoveByKey("CaptureOnSaturdayCheck");
+                        RemoveByKey("CaptureOnTheseDaysCheck");
+                        RemoveByKey("CaptureStopAtValue");
+                        RemoveByKey("CaptureStartAtValue");
+                        RemoveByKey("LockScreenCaptureSession");
+                        RemoveByKey("Passphrase");
                         RemoveByKey("ScreenshotsDirectory");
                         RemoveByKey("ScheduleImageFormat");
                         RemoveByKey("SlideSkip");
@@ -479,6 +497,8 @@ namespace AutoScreenCapture
                         RemoveByKey("Mouse");
                         RemoveByKey("StartButtonImageFormat");
                         RemoveByKey("Schedule");
+                        RemoveByKey("DeleteScreenshotsOlderThanDays");
+                        RemoveByKey("ScreenshotDelay");
                     }
 
                     Log.Write("Upgrade completed.");
