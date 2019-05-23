@@ -18,8 +18,9 @@ namespace AutoScreenCapture
 
     public class ScreenshotCollection
     {
-        private  XmlDocument xDoc;
-        private  List<Screenshot> _screenshotList;
+        private XmlDocument xDoc;
+        private List<Slide> _slideList;
+        private List<Screenshot> _screenshotList;
 
         // Required when multiple threads are writing to the same log file.
         private Mutex _mutexWriteFile = new Mutex();
@@ -49,7 +50,15 @@ namespace AutoScreenCapture
 
         public  void Add(Screenshot screenshot)
         {
-            _screenshotList.Add(screenshot);
+            if (!_screenshotList.Contains(screenshot))
+            {
+                _screenshotList.Add(screenshot);
+            }
+
+            if (!_slideList.Contains(screenshot.Slide))
+            {
+                _slideList.Add(screenshot.Slide);
+            }
         }
 
         public  void KeepScreenshotsForDays(int days)
@@ -168,7 +177,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            return _screenshotList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
+            return _slideList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
         }
 
         public  Screenshot GetScreenshot(string slideName, Guid viewId)
@@ -219,6 +228,11 @@ namespace AutoScreenCapture
                 if (_screenshotList == null)
                 {
                     _screenshotList = new List<Screenshot>();
+                }
+
+                if (_slideList == null)
+                {
+                    _slideList = new List<Slide>();
                 }
 
                 if (_screenshotList != null && Directory.Exists(FileSystem.ApplicationFolder) && !File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
@@ -283,6 +297,7 @@ namespace AutoScreenCapture
                                     case SCREENSHOT_DATE:
                                         xReader.Read();
                                         screenshot.Date = xReader.Value;
+                                        screenshot.Slide.Date = xReader.Value;
                                         break;
 
                                     case SCREENSHOT_TIME:
