@@ -24,28 +24,14 @@ namespace AutoScreenCapture
             Add(new MacroTag(MacroTagSpec.Format, "Image format of screen or region"));
             Add(new MacroTag(MacroTagSpec.Date, "Date (" + DateTime.Now.ToString(MacroParser.DateFormat) + ")"));
             Add(new MacroTag(MacroTagSpec.Time, "Time (" + DateTime.Now.ToString(MacroParser.TimeFormatForWindows) + ")"));
-            Add(new MacroTag(MacroTagSpec.Year,
-                "Year of " + DateTime.Now.ToString(MacroParser.DateFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.YearFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Month,
-                "Month of " + DateTime.Now.ToString(MacroParser.DateFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.MonthFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Day,
-                "Day of " + DateTime.Now.ToString(MacroParser.DateFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.DayFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Hour,
-                "Hour of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.HourFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Minute,
-                "Minute of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.MinuteFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Second,
-                "Second of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.SecondFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Millisecond,
-                "Millisecond of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" +
-                DateTime.Now.ToString(MacroParser.MillisecondFormat) + ")"));
-            Add(new MacroTag(MacroTagSpec.Count, "Number of screenshots taken during the current screen capture session"));
+            Add(new MacroTag(MacroTagSpec.Year, "Year of " + DateTime.Now.ToString(MacroParser.DateFormat) + " (" + DateTime.Now.ToString(MacroParser.YearFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Month, "Month of " + DateTime.Now.ToString(MacroParser.DateFormat) + " (" + DateTime.Now.ToString(MacroParser.MonthFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Day, "Day of " + DateTime.Now.ToString(MacroParser.DateFormat) + " (" + DateTime.Now.ToString(MacroParser.DayFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Hour, "Hour of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" + DateTime.Now.ToString(MacroParser.HourFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Minute, "Minute of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" + DateTime.Now.ToString(MacroParser.MinuteFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Second, "Second of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" + DateTime.Now.ToString(MacroParser.SecondFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Millisecond, "Millisecond of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" + DateTime.Now.ToString(MacroParser.MillisecondFormat) + ")"));
+            Add(new MacroTag(MacroTagSpec.Count, "Number of screen capture cycles during the current screen capture session"));
         }
 
         public List<MacroTag>.Enumerator GetEnumerator()

@@ -162,7 +162,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.TriggersFile} not found. Creating default triggers.");
+                    Log.Write($"WARNING: {FileSystem.TriggersFile} not found. Creating default triggers");
 
                     // Setup a few "built in" triggers by default.
                     Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,

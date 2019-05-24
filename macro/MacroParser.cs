@@ -38,15 +38,15 @@ namespace AutoScreenCapture
         {
             macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
             macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(MacroTagSpec.Format, format.Name.ToLower()) : macro;
-            macro = macro.Replace(MacroTagSpec.Date, screenCapture.DateTimePreviousScreenshot.ToString(DateFormat));
-            macro = macro.Replace(MacroTagSpec.Time, screenCapture.DateTimePreviousScreenshot.ToString(TimeFormatForWindows));
-            macro = macro.Replace(MacroTagSpec.Year, screenCapture.DateTimePreviousScreenshot.ToString(YearFormat));
-            macro = macro.Replace(MacroTagSpec.Month, screenCapture.DateTimePreviousScreenshot.ToString(MonthFormat));
-            macro = macro.Replace(MacroTagSpec.Day, screenCapture.DateTimePreviousScreenshot.ToString(DayFormat));
-            macro = macro.Replace(MacroTagSpec.Hour, screenCapture.DateTimePreviousScreenshot.ToString(HourFormat));
-            macro = macro.Replace(MacroTagSpec.Minute, screenCapture.DateTimePreviousScreenshot.ToString(MinuteFormat));
-            macro = macro.Replace(MacroTagSpec.Second, screenCapture.DateTimePreviousScreenshot.ToString(SecondFormat));
-            macro = macro.Replace(MacroTagSpec.Millisecond, screenCapture.DateTimePreviousScreenshot.ToString(MillisecondFormat));
+            macro = macro.Replace(MacroTagSpec.Date, screenCapture.DateTimePreviousCycle.ToString(DateFormat));
+            macro = macro.Replace(MacroTagSpec.Time, screenCapture.DateTimePreviousCycle.ToString(TimeFormatForWindows));
+            macro = macro.Replace(MacroTagSpec.Year, screenCapture.DateTimePreviousCycle.ToString(YearFormat));
+            macro = macro.Replace(MacroTagSpec.Month, screenCapture.DateTimePreviousCycle.ToString(MonthFormat));
+            macro = macro.Replace(MacroTagSpec.Day, screenCapture.DateTimePreviousCycle.ToString(DayFormat));
+            macro = macro.Replace(MacroTagSpec.Hour, screenCapture.DateTimePreviousCycle.ToString(HourFormat));
+            macro = macro.Replace(MacroTagSpec.Minute, screenCapture.DateTimePreviousCycle.ToString(MinuteFormat));
+            macro = macro.Replace(MacroTagSpec.Second, screenCapture.DateTimePreviousCycle.ToString(SecondFormat));
+            macro = macro.Replace(MacroTagSpec.Millisecond, screenCapture.DateTimePreviousCycle.ToString(MillisecondFormat));
             macro = macro.Replace(MacroTagSpec.Count, screenCapture.Count.ToString());
 
             return macro;

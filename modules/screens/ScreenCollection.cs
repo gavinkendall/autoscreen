@@ -201,12 +201,12 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.ScreensFile} not found. Detecting available screens and creating them.");
+                    Log.Write($"WARNING: {FileSystem.ScreensFile} not found. Detecting available screens and creating them");
 
                     Add(new Screen($"Active Window", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, 0,
                         imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
 
-                    Log.Write($"Active Window created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
+                    Log.Write($"Active Window created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro");
 
                     // Setup some screens based on what we can find.
                     for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)

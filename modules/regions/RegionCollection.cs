@@ -212,7 +212,7 @@ namespace AutoScreenCapture
                         {
                             if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
                             {
-                                Log.Write("An old version of the regions file was detected. Attempting upgrade to new region format.");
+                                Log.Write("An old version of the regions file was detected. Attempting upgrade to new region format");
 
                                 region.ViewId = Guid.NewGuid();
 

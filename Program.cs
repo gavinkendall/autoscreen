@@ -39,7 +39,7 @@ namespace AutoScreenCapture
                 // Exit this application's duplicate process in case the user executes a second instance since we want to keep a single instance.
                 else
                 {
-                    Log.Write("A duplicate instance of the application was found running. Exiting.");
+                    Log.Write("A duplicate instance of the application was found running. Exiting");
                 }
             }
         }

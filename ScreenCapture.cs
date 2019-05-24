@@ -79,20 +79,21 @@ namespace AutoScreenCapture
         public  DateTime DateTimeStartCapture { get; set; }
 
         /// <summary>
-        /// The date/time when a screenshot is taken (or when the previous screenshot was taken).
+        /// The date/time when screenshots are taken (or when the previous screenshots were taken).
         /// </summary>
-        public  DateTime DateTimePreviousScreenshot { get; set; }
+        public  DateTime DateTimePreviousCycle { get; set; }
 
         /// <summary>
-        /// The date/time of the next screenshot. If we're still waiting for the very first screenshot to be taken then calculate from the date/time when the user started a screen capture session
-        /// otherwise calculate from the date/time when the previous screenshot was taken.
+        /// The date/time of the next screen capture cycle.
+        /// If we're still waiting for the very first screenshots to be taken then calculate from the date/time when the user started a screen capture session
+        /// otherwise calculate from the date/time when the previous screenshots were taken.
         /// </summary>
-        public  DateTime DateTimeNextScreenshot { get { return DateTimePreviousScreenshot.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousScreenshot.AddMilliseconds(Delay); } }
+        public  DateTime DateTimeNextCycle { get { return DateTimePreviousCycle.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousCycle.AddMilliseconds(Delay); } }
 
         /// <summary>
         /// The time remaining between now and the next screenshot that will be taken.
         /// </summary>
-        public  TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextScreenshot.Subtract(DateTime.Now).Duration(); } }
+        public  TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextCycle.Subtract(DateTime.Now).Duration(); } }
 
         public  Image GetImageByPath(string path)
         {
@@ -170,7 +171,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    Log.Write("ScreenCapture::GetScreenBitmap(x, y, width, height, ratio, format, mouse)", ex);
+                    Log.Write("ScreenCapture::GetScreenBitmap", ex);
                 }
 
                 return null;
@@ -218,20 +219,35 @@ namespace AutoScreenCapture
             return string.Empty;
         }
 
+        public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
+        {
+            bitmap = component == 0
+                ? GetActiveWindowBitmap()
+                : GetScreenBitmap(x, y, width, height, Ratio, mouse);
+
+            GC.Collect();
+
+            if (bitmap != null)
+            {
+                Log.Write("Images of screens retrieved");
+                return true;
+            }
+
+            Log.Write("No screen images available. User may not be logged in");
+
+            return false;
+        }
+
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
-            int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, Guid viewId,
+            int jpegQuality, int resolutionRatio, Guid viewId, Bitmap bitmap,
             string label, ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
         {
             try
             {
-                Bitmap bitmap = component == 0
-                    ? GetActiveWindowBitmap()
-                    : GetScreenBitmap(x, y, width, height, Ratio, mouse);
-
-                GC.Collect();
-
-                if (bitmap != null && !string.IsNullOrEmpty(path))
+                if (!string.IsNullOrEmpty(path))
                 {
+                    Log.Write("Attempting to write image to file at path \"" + path + "\"");
+
                     FileInfo fileInfo = new FileInfo(path);
 
                     if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
@@ -242,6 +258,8 @@ namespace AutoScreenCapture
                         {
                             double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
+                            Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int)freeDiskSpacePercentage + "% and must exceed the " + MIN_FREE_DISK_SPACE_PERCENTAGE + "% limit imposed by the application");
+
                             if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                             {
                                 string dirName = Path.GetDirectoryName(path);
@@ -251,9 +269,20 @@ namespace AutoScreenCapture
                                     if (!Directory.Exists(dirName))
                                     {
                                         Directory.CreateDirectory(dirName);
+
+                                        Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
                                     }
 
-                                    screenshotCollection.Add(new Screenshot(DateTimePreviousScreenshot, path, format, component, screenshotType, GetActiveWindowTitle(), viewId, label));
+                                    screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, GetActiveWindowTitle(), viewId, label));
+                                    Log.Write("Screenshot added to collection as a new and unsaved screenshot");
+                                    Log.Write("View ID = " + viewId);
+                                    Log.Write("Date and time of screenshot = " + DateTimePreviousCycle);
+                                    Log.Write("Path = " + path);
+                                    Log.Write("Image Format = " + format.Name);
+                                    Log.Write("Component = " + component);
+                                    Log.Write("Screenshot Type = " + screenshotType);
+                                    Log.Write("Window Title = " + GetActiveWindowTitle());
+                                    Log.Write("Label = " + label);
 
                                     SaveToFile(path, format, jpegQuality, bitmap);
                                 }
@@ -264,14 +293,29 @@ namespace AutoScreenCapture
                                 return false;
                             }
                         }
+                        else
+                        {
+                            Log.Write("WARNING: Drive not ready");
+                            return false;
+                        }
                     }
+                    else
+                    {
+                        Log.Write("WARNING: Directory root does not exist");
+                        return false;
+                    }
+                }
+                else
+                {
+                    Log.Write("No path available");
+                    return false;
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCapture::TakeScreenshot(path, format, component, jpegQuality, resolutionRatio, mouse, x, y, width, height)", ex);
+                Log.Write("ScreenCapture::TakeScreenshot", ex);
                 return false;
             }
         }
@@ -282,13 +326,6 @@ namespace AutoScreenCapture
             {
                 if (bitmap != null && format != null && !string.IsNullOrEmpty(path))
                 {
-                    if (!Directory.Exists(Path.GetDirectoryName(path)))
-                    {
-                        Directory.CreateDirectory(Path.GetDirectoryName(path));
-                    }
-
-                    Log.Write("Screenshot saved: " + path);
-
                     if (format.Name.Equals(ImageFormatSpec.EXTENSION_JPEG))
                     {
                         var encoderParams = new EncoderParameters(1);
@@ -300,6 +337,8 @@ namespace AutoScreenCapture
                     {
                         bitmap.Save(path, format.Format);
                     }
+
+                    Log.Write("Screenshot saved to file at path \"" + path + "\"");
                 }
             }
             catch (Exception ex)

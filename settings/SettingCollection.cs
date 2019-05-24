@@ -156,7 +156,7 @@ namespace AutoScreenCapture
                     {
                         File.Delete(Filepath);
 
-                        Log.Write("WARNING: User settings file was too big and needed to be deleted.");
+                        Log.Write("WARNING: User settings file was too big and needed to be deleted");
                         return;
                     }
 
@@ -264,7 +264,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.SettingsFolder} not found. Unable to save settings.");
+                    Log.Write($"WARNING: {FileSystem.SettingsFolder} not found. Unable to save settings");
                 }
             }
             catch (Exception ex)
@@ -279,7 +279,7 @@ namespace AutoScreenCapture
             {
                 if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                 {
-                    Log.Write("An old version of Auto Screen Capture was detected. Attempting upgrade.");
+                    Log.Write("An old version of Auto Screen Capture was detected. Attempting upgrade");
 
                     SettingCollection oldUserSettings = (SettingCollection) this.MemberwiseClone();
                     oldUserSettings._settingList = new List<Setting>(_settingList);
