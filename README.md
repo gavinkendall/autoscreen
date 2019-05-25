@@ -4,8 +4,7 @@ Auto Screen Capture
 Small and portable automated screen capture utility.
 
 This C# application enables you to automatically take
-screenshots of up to a maximum of four displays at
-a chosen interval. For example, you may want to capture
+screenshots at a chosen interval. For example, you may want to capture
 the progress of playing through a game's level or perhaps
 just use the application as a digital diary.
 
