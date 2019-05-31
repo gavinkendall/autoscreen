@@ -14,7 +14,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.0";
+        public static readonly string ApplicationVersion = "2.2.0.1";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;

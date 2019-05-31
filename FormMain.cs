@@ -2707,28 +2707,34 @@ namespace AutoScreenCapture
             {
                 MacroParser.screenCapture = _screenCapture;
 
-                if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, out Bitmap bitmap))
+                string activeWindowTitle = _screenCapture.GetActiveWindowTitle();
+
+                if (!string.IsNullOrEmpty(activeWindowTitle))
                 {
-                    if (_screenCapture.TakeScreenshot(
-                        path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
-                        format: region.Format,
-                        component: -1,
-                        screenshotType: ScreenshotType.Region,
-                        jpegQuality: region.JpegQuality,
-                        resolutionRatio: region.ResolutionRatio,
-                        viewId: region.ViewId,
-                        bitmap: bitmap,
-                        label: textBoxScreenshotLabel.Text,
-                        screenCollection: formScreen.ScreenCollection,
-                        regionCollection: formRegion.RegionCollection,
-                        screenshotCollection: _screenshotCollection
-                    ))
+                    if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, out Bitmap bitmap))
                     {
-                        ScreenshotTakenWithSuccess();
-                    }
-                    else
-                    {
-                        ScreenshotTakenWithFailure();
+                        if (_screenCapture.TakeScreenshot(
+                            path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
+                            format: region.Format,
+                            component: -1,
+                            screenshotType: ScreenshotType.Region,
+                            jpegQuality: region.JpegQuality,
+                            resolutionRatio: region.ResolutionRatio,
+                            viewId: region.ViewId,
+                            bitmap: bitmap,
+                            label: textBoxScreenshotLabel.Text,
+                            windowTitle: activeWindowTitle,
+                            screenCollection: formScreen.ScreenCollection,
+                            regionCollection: formRegion.RegionCollection,
+                            screenshotCollection: _screenshotCollection
+                        ))
+                        {
+                            ScreenshotTakenWithSuccess();
+                        }
+                        else
+                        {
+                            ScreenshotTakenWithFailure();
+                        }
                     }
                 }
             }
@@ -2744,56 +2750,24 @@ namespace AutoScreenCapture
                 {
                     MacroParser.screenCapture = _screenCapture;
 
-                    // Active Window
-                    if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
-                    {
-                        if (_screenCapture.TakeScreenshot(
-                            path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
-                            format: screen.Format,
-                            component: screen.Component,
-                            screenshotType: ScreenshotType.ActiveWindow,
-                            jpegQuality: screen.JpegQuality,
-                            resolutionRatio: screen.ResolutionRatio,
-                            viewId: screen.ViewId,
-                            bitmap: bitmap,
-                            label: textBoxScreenshotLabel.Text,
-                            screenCollection: formScreen.ScreenCollection,
-                            regionCollection: formRegion.RegionCollection,
-                            screenshotCollection: _screenshotCollection
-                        ))
-                        {
-                            ScreenshotTakenWithSuccess();
-                        }
-                        else
-                        {
-                            ScreenshotTakenWithFailure();
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
-                    {
-                        MacroParser.screenCapture = _screenCapture;
+                    string activeWindowTitle = _screenCapture.GetActiveWindowTitle();
 
-                        // Screen X
-                        if (_screenCapture.GetScreenImages(screen.Component,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, out Bitmap bitmap))
+                    // Active Window
+                    if (!string.IsNullOrEmpty(activeWindowTitle))
+                    {
+                        if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
                         {
                             if (_screenCapture.TakeScreenshot(
                                 path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
                                 format: screen.Format,
                                 component: screen.Component,
-                                screenshotType: ScreenshotType.Screen,
+                                screenshotType: ScreenshotType.ActiveWindow,
                                 jpegQuality: screen.JpegQuality,
                                 resolutionRatio: screen.ResolutionRatio,
                                 viewId: screen.ViewId,
                                 bitmap: bitmap,
                                 label: textBoxScreenshotLabel.Text,
+                                windowTitle: activeWindowTitle,
                                 screenCollection: formScreen.ScreenCollection,
                                 regionCollection: formRegion.RegionCollection,
                                 screenshotCollection: _screenshotCollection
@@ -2805,6 +2779,50 @@ namespace AutoScreenCapture
                             {
                                 ScreenshotTakenWithFailure();
                                 break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                    {
+                        MacroParser.screenCapture = _screenCapture;
+
+                        string activeWindowTitle = _screenCapture.GetActiveWindowTitle();
+
+                        if (!string.IsNullOrEmpty(activeWindowTitle))
+                        {
+                            // Screen X
+                            if (_screenCapture.GetScreenImages(screen.Component,
+                            formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                            formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                            formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                            formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, out Bitmap bitmap))
+                            {
+                                if (_screenCapture.TakeScreenshot(
+                                    path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                                    format: screen.Format,
+                                    component: screen.Component,
+                                    screenshotType: ScreenshotType.Screen,
+                                    jpegQuality: screen.JpegQuality,
+                                    resolutionRatio: screen.ResolutionRatio,
+                                    viewId: screen.ViewId,
+                                    bitmap: bitmap,
+                                    label: textBoxScreenshotLabel.Text,
+                                    windowTitle: activeWindowTitle,
+                                    screenCollection: formScreen.ScreenCollection,
+                                    regionCollection: formRegion.RegionCollection,
+                                    screenshotCollection: _screenshotCollection
+                                ))
+                                {
+                                    ScreenshotTakenWithSuccess();
+                                }
+                                else
+                                {
+                                    ScreenshotTakenWithFailure();
+                                    break;
+                                }
                             }
                         }
                     }

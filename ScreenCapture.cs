@@ -202,7 +202,7 @@ namespace AutoScreenCapture
             return null;
         }
 
-        public  string GetActiveWindowTitle()
+        public string GetActiveWindowTitle()
         {
             IntPtr handle;
             int chars = MAX_CHARS;
@@ -240,7 +240,7 @@ namespace AutoScreenCapture
 
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
             int jpegQuality, int resolutionRatio, Guid viewId, Bitmap bitmap,
-            string label, ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
+            string label, string windowTitle, ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -273,7 +273,7 @@ namespace AutoScreenCapture
                                         Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
                                     }
 
-                                    screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, GetActiveWindowTitle(), viewId, label));
+                                    screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, viewId, label));
                                     Log.Write("Screenshot added to collection as a new and unsaved screenshot");
                                     Log.Write("View ID = " + viewId);
                                     Log.Write("Date and time of screenshot = " + DateTimePreviousCycle);
@@ -281,7 +281,7 @@ namespace AutoScreenCapture
                                     Log.Write("Image Format = " + format.Name);
                                     Log.Write("Component = " + component);
                                     Log.Write("Screenshot Type = " + screenshotType);
-                                    Log.Write("Window Title = " + GetActiveWindowTitle());
+                                    Log.Write("Window Title = " + windowTitle);
                                     Log.Write("Label = " + label);
 
                                     SaveToFile(path, format, jpegQuality, bitmap);
