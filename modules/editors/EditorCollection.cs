@@ -181,7 +181,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors.");
+                    Log.Write($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors");
                 }
             }
             catch (Exception ex)

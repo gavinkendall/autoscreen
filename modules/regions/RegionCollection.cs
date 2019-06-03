@@ -246,7 +246,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.RegionsFile} not found. Unable to load regions.");
+                    Log.Write($"WARNING: {FileSystem.RegionsFile} not found. Unable to load regions");
                 }
             }
             catch (Exception ex)

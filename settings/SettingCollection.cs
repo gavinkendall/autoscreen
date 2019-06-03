@@ -202,7 +202,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.SettingsFolder} and \"{Filepath}\" not found. Unable to load settings.");
+                    Log.Write($"WARNING: {FileSystem.SettingsFolder} and \"{Filepath}\" not found. Unable to load settings");
                 }
             }
             catch (Exception ex)

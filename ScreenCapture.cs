@@ -289,20 +289,18 @@ namespace AutoScreenCapture
                             }
                             else
                             {
-                                Log.Write($"WARNING: Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName}");
+                                Log.Write($"ERROR: Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} so screen capture session is being stopped");
                                 return false;
                             }
                         }
                         else
                         {
-                            Log.Write("WARNING: Drive not ready");
-                            return false;
+                            Log.Write("WARNING: Unable to save screenshot. Drive not ready");
                         }
                     }
                     else
                     {
-                        Log.Write("WARNING: Directory root does not exist");
-                        return false;
+                        Log.Write("WARNING: Unable to save screenshot. Directory root does not exist");
                     }
                 }
                 else
