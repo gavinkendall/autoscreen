@@ -8,7 +8,6 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.Collections;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Drawing;
@@ -46,8 +45,6 @@ namespace AutoScreenCapture
         private BackgroundWorker runDeleteOldScreenshotsThread = null;
 
         private BackgroundWorker runFilterSearchThread = null;
-
-        private BackgroundWorker runSaveScreenshotsThread = null;
 
         /// <summary>
         /// Delegates for the threads.
@@ -175,13 +172,6 @@ namespace AutoScreenCapture
                 WorkerSupportsCancellation = true
             };
             runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
-
-            runSaveScreenshotsThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runSaveScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runSaveScreenshotsThread);
         }
 
         /// <summary>
@@ -435,14 +425,6 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SaveScreenshots()
-        {
-            if (runSaveScreenshotsThread != null && !runSaveScreenshotsThread.IsBusy)
-            {
-                runSaveScreenshotsThread.RunWorkerAsync();
-            }
-        }
-
         /// <summary>
         /// Searches for screenshots.
         /// </summary>
@@ -544,11 +526,6 @@ namespace AutoScreenCapture
         private void RunDeleteSlides(DoWorkEventArgs e)
         {
             FileSystem.DeleteFilesInDirectory(FileSystem.SlidesFolder);
-        }
-
-        private void RunSaveScreenshots(DoWorkEventArgs e)
-        {
-            _screenshotCollection.Save();
         }
 
         private void RunFilterSearch(DoWorkEventArgs e)
@@ -738,7 +715,7 @@ namespace AutoScreenCapture
                     SearchFilterValues();
                     SearchDates();
 
-                    SaveScreenshots();
+                    _screenshotCollection.Save();
 
                     Log.Write("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
@@ -1084,11 +1061,6 @@ namespace AutoScreenCapture
         private void DoWork_runDeleteSlidesThread(object sender, DoWorkEventArgs e)
         {
             RunDeleteSlides(e);
-        }
-
-        private void DoWork_runSaveScreenshotsThread(object sender, DoWorkEventArgs e)
-        {
-            RunSaveScreenshots(e);
         }
 
         /// <summary>
@@ -2946,6 +2918,16 @@ namespace AutoScreenCapture
 
                 comboBoxFilterValue.Enabled = false;
             }
+        }
+
+        /// <summary>
+        /// Saves screenshots every hour.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerSaveScreenshots_Tick(object sender, EventArgs e)
+        {
+            _screenshotCollection.Save();
         }
     }
 }

@@ -120,6 +120,7 @@ namespace AutoScreenCapture
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
+            this.timerSaveScreenshots = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -1114,6 +1115,12 @@ namespace AutoScreenCapture
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);
             // 
+            // timerSaveScreenshots
+            // 
+            this.timerSaveScreenshots.Enabled = true;
+            this.timerSaveScreenshots.Interval = 3600000;
+            this.timerSaveScreenshots.Tick += new System.EventHandler(this.timerSaveScreenshots_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1264,5 +1271,6 @@ namespace AutoScreenCapture
         private Label labelKeepScreenshots;
         private TextBox textBoxScreenshotLabel;
         private Label labelScreenshotLabel;
+        private Timer timerSaveScreenshots;
     }
 }
