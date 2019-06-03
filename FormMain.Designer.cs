@@ -1118,7 +1118,7 @@ namespace AutoScreenCapture
             // timerSaveScreenshots
             // 
             this.timerSaveScreenshots.Enabled = true;
-            this.timerSaveScreenshots.Interval = 3600000;
+            this.timerSaveScreenshots.Interval = 60000;
             this.timerSaveScreenshots.Tick += new System.EventHandler(this.timerSaveScreenshots_Tick);
             // 
             // FormMain
