@@ -46,6 +46,8 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runFilterSearchThread = null;
 
+        private BackgroundWorker runSaveScreenshotsThread = null;
+
         /// <summary>
         /// Delegates for the threads.
         /// </summary>
@@ -172,6 +174,13 @@ namespace AutoScreenCapture
                 WorkerSupportsCancellation = true
             };
             runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
+
+            runSaveScreenshotsThread = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+            runSaveScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runSaveScreenshotsThread);
         }
 
         /// <summary>
@@ -425,6 +434,14 @@ namespace AutoScreenCapture
             }
         }
 
+        private void SaveScreenshots()
+        {
+            if (runSaveScreenshotsThread != null && !runSaveScreenshotsThread.IsBusy)
+            {
+                runSaveScreenshotsThread.RunWorkerAsync();
+            }
+        }
+
         /// <summary>
         /// Searches for screenshots.
         /// </summary>
@@ -526,6 +543,11 @@ namespace AutoScreenCapture
         private void RunDeleteSlides(DoWorkEventArgs e)
         {
             FileSystem.DeleteFilesInDirectory(FileSystem.SlidesFolder);
+        }
+
+        private void RunSaveScreenshots(DoWorkEventArgs e)
+        {
+            _screenshotCollection.Save();
         }
 
         private void RunFilterSearch(DoWorkEventArgs e)
@@ -715,7 +737,7 @@ namespace AutoScreenCapture
                     SearchFilterValues();
                     SearchDates();
 
-                    _screenshotCollection.Save();
+                    SaveScreenshots();
 
                     Log.Write("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
@@ -1061,6 +1083,11 @@ namespace AutoScreenCapture
         private void DoWork_runDeleteSlidesThread(object sender, DoWorkEventArgs e)
         {
             RunDeleteSlides(e);
+        }
+
+        private void DoWork_runSaveScreenshotsThread(object sender, DoWorkEventArgs e)
+        {
+            RunSaveScreenshots(e);
         }
 
         /// <summary>
@@ -2927,7 +2954,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerSaveScreenshots_Tick(object sender, EventArgs e)
         {
-            _screenshotCollection.Save();
+            SaveScreenshots();
         }
     }
 }
