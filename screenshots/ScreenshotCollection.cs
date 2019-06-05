@@ -73,35 +73,35 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
-                if (_screenshotList != null && _screenshotList.Count > 0 && days > 0)
+                lock (_screenshotList)
                 {
-                    List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
-
-                    if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
+                    if (_screenshotList != null && _screenshotList.Count > 0 && days > 0)
                     {
-                        foreach (Screenshot screenshot in screenshotsToDelete)
+                        List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
+
+                        if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
                         {
-                            XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
-
-                            foreach (XmlNode node in nodesToDelete)
+                            foreach (Screenshot screenshot in screenshotsToDelete)
                             {
-                                node.ParentNode.RemoveChild(node);
-                            }
+                                XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
 
-                            if (File.Exists(screenshot.Path))
-                            {
-                                File.Delete(screenshot.Path);
-                            }
+                                foreach (XmlNode node in nodesToDelete)
+                                {
+                                    node.ParentNode.RemoveChild(node);
+                                }
 
-                            lock (_screenshotList)
-                            {
+                                if (File.Exists(screenshot.Path))
+                                {
+                                    File.Delete(screenshot.Path);
+                                }
+
                                 _screenshotList.Remove(screenshot);
                             }
-                        }
 
-                        lock (xDoc)
-                        {
-                            xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                            lock (xDoc)
+                            {
+                                xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                            }
                         }
                     }
                 }
@@ -558,12 +558,14 @@ namespace AutoScreenCapture
 
                 Log.Write("Saving screenshots to screenshots.xml");
 
-                for (int i = 0; i < _screenshotList.Count; i++)
+                lock (_screenshotList)
                 {
-                    Screenshot screenshot = _screenshotList[i];
-
-                    if (!screenshot.Saved && xDoc != null && screenshot?.Format != null && !string.IsNullOrEmpty(screenshot.Format.Name))
+                    for (int i = 0; i < _screenshotList.Count; i++)
                     {
+                        Screenshot screenshot = _screenshotList[i];
+
+                        if (!screenshot.Saved && xDoc != null && screenshot?.Format != null && !string.IsNullOrEmpty(screenshot.Format.Name))
+                        {
                             XmlElement xScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
 
                             XmlElement xViedId = xDoc.CreateElement(SCREENSHOT_VIEWID);
@@ -627,11 +629,9 @@ namespace AutoScreenCapture
 
                                 screenshot.Saved = true;
 
-                                lock (_screenshotList)
-                                {
-                                    _screenshotList[i] = screenshot;
-                                }
+                                _screenshotList[i] = screenshot;
                             }
+                        }
                     }
                 }
 
