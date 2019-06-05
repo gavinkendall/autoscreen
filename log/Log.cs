@@ -11,22 +11,36 @@ namespace AutoScreenCapture
     using System.IO;
     using System.Threading;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Log
     {
-        // Required when multiple threads are writing to the same log file.
         private static Mutex _mutexWriteFile = new Mutex();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool Enabled { get; set; }
 
         private static readonly string extension = ".txt";
         private static readonly string logFile = "autoscreen-log";
         private static readonly string errorFile = "autoscreen-error";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         public static void Write(string message)
         {
             Write(message, null);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="ex"></param>
         public static void Write(string message, Exception ex)
         {
             try

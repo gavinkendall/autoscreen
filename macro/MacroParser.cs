@@ -7,25 +7,70 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class MacroParser
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public static ScreenCapture screenCapture;
-        public static readonly string YearFormat = "yyyy";
-        public static readonly string MonthFormat = "MM";
-        public static readonly string DayFormat = "dd";
-        public static readonly string HourFormat = "HH";
-        public static readonly string MinuteFormat = "mm";
-        public static readonly string SecondFormat = "ss";
-        public static readonly string MillisecondFormat = "fff";
-        public static readonly string DateFormat = YearFormat + "-" + MonthFormat + "-" + DayFormat;
-        public static readonly string TimeFormat = HourFormat + ":" + MinuteFormat + ":" + SecondFormat + "." + MillisecondFormat;
-        public static readonly string TimeFormatForWindows = HourFormat + "-" + MinuteFormat + "-" + SecondFormat + "-" + MillisecondFormat;
-        public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
-        public static string ParseTags(string macro)
-        {
-            return ParseTags(string.Empty, macro, null);
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string YearFormat = "yyyy";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string MonthFormat = "MM";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DayFormat = "dd";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string HourFormat = "HH";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string MinuteFormat = "mm";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string SecondFormat = "ss";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string MillisecondFormat = "fff";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DateFormat = YearFormat + "-" + MonthFormat + "-" + DayFormat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string TimeFormat = HourFormat + ":" + MinuteFormat + ":" + SecondFormat + "." + MillisecondFormat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string TimeFormatForWindows = HourFormat + "-" + MinuteFormat + "-" + SecondFormat + "-" + MillisecondFormat;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
         /// <summary>
         /// Replaces tags (such as "%year%") with an appropriate value (such as "2019").

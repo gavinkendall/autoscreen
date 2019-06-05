@@ -7,11 +7,26 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MacroTag
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
         public MacroTag(string name, string description)
         {
             Name = name;

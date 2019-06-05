@@ -2459,6 +2459,9 @@ namespace AutoScreenCapture
             _screenCapture.DateTimePreviousCycle = DateTime.Now;
             Log.Write("Date and time of screen capture cycle set to " + _screenCapture.DateTimePreviousCycle);
 
+            _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
+            Log.Write("Active window title of screen capture set to " + _screenCapture.ActiveWindowTitle);
+
             RunRegionCaptures();
 
             RunScreenCaptures();
@@ -2706,9 +2709,7 @@ namespace AutoScreenCapture
             {
                 MacroParser.screenCapture = _screenCapture;
 
-                string activeWindowTitle = _screenCapture.GetActiveWindowTitle();
-
-                if (!string.IsNullOrEmpty(activeWindowTitle))
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                 {
                     if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, out Bitmap bitmap))
                     {
@@ -2722,7 +2723,7 @@ namespace AutoScreenCapture
                             viewId: region.ViewId,
                             bitmap: bitmap,
                             label: textBoxScreenshotLabel.Text,
-                            windowTitle: activeWindowTitle,
+                            windowTitle: _screenCapture.ActiveWindowTitle,
                             screenCollection: formScreen.ScreenCollection,
                             regionCollection: formRegion.RegionCollection,
                             screenshotCollection: _screenshotCollection
@@ -2749,10 +2750,8 @@ namespace AutoScreenCapture
                 {
                     MacroParser.screenCapture = _screenCapture;
 
-                    string activeWindowTitle = _screenCapture.GetActiveWindowTitle();
-
                     // Active Window
-                    if (!string.IsNullOrEmpty(activeWindowTitle))
+                    if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                     {
                         if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
                         {
@@ -2766,7 +2765,7 @@ namespace AutoScreenCapture
                                 viewId: screen.ViewId,
                                 bitmap: bitmap,
                                 label: textBoxScreenshotLabel.Text,
-                                windowTitle: activeWindowTitle,
+                                windowTitle: _screenCapture.ActiveWindowTitle,
                                 screenCollection: formScreen.ScreenCollection,
                                 regionCollection: formRegion.RegionCollection,
                                 screenshotCollection: _screenshotCollection
@@ -2788,9 +2787,7 @@ namespace AutoScreenCapture
                     {
                         MacroParser.screenCapture = _screenCapture;
 
-                        string activeWindowTitle = _screenCapture.GetActiveWindowTitle();
-
-                        if (!string.IsNullOrEmpty(activeWindowTitle))
+                        if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                         {
                             // Screen X
                             if (_screenCapture.GetScreenImages(screen.Component,
@@ -2809,7 +2806,7 @@ namespace AutoScreenCapture
                                     viewId: screen.ViewId,
                                     bitmap: bitmap,
                                     label: textBoxScreenshotLabel.Text,
-                                    windowTitle: activeWindowTitle,
+                                    windowTitle: _screenCapture.ActiveWindowTitle,
                                     screenCollection: formScreen.ScreenCollection,
                                     regionCollection: formRegion.RegionCollection,
                                     screenshotCollection: _screenshotCollection

@@ -7,12 +7,31 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ImageFormat
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Extension { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Drawing.Imaging.ImageFormat Format { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="extension"></param>
         public ImageFormat(string name, string extension)
         {
             Name = name;

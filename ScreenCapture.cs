@@ -95,6 +95,11 @@ namespace AutoScreenCapture
         /// </summary>
         public  TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextCycle.Subtract(DateTime.Now).Duration(); } }
 
+        /// <summary>
+        /// The title of the active window.
+        /// </summary>
+        public string ActiveWindowTitle { get; set; }
+
         public  Image GetImageByPath(string path)
         {
             Image image = null;

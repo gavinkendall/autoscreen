@@ -73,31 +73,34 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
-                lock (xDoc)
+                if (_screenshotList != null && _screenshotList.Count > 0 && days > 0)
                 {
-                    if (_screenshotList != null && _screenshotList.Count > 0 && days > 0)
+                    List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
+
+                    if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
                     {
-                        List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
-
-                        if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
+                        foreach (Screenshot screenshot in screenshotsToDelete)
                         {
-                            foreach (Screenshot screenshot in screenshotsToDelete)
+                            XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
+
+                            foreach (XmlNode node in nodesToDelete)
                             {
-                                XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
-
-                                foreach (XmlNode node in nodesToDelete)
-                                {
-                                    node.ParentNode.RemoveChild(node);
-                                }
-
-                                if (File.Exists(screenshot.Path))
-                                {
-                                    File.Delete(screenshot.Path);
-                                }
-
-                                _screenshotList.Remove(screenshot);
+                                node.ParentNode.RemoveChild(node);
                             }
 
+                            if (File.Exists(screenshot.Path))
+                            {
+                                File.Delete(screenshot.Path);
+                            }
+
+                            lock (_screenshotList)
+                            {
+                                _screenshotList.Remove(screenshot);
+                            }
+                        }
+
+                        lock (xDoc)
+                        {
                             xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
                         }
                     }
@@ -561,8 +564,6 @@ namespace AutoScreenCapture
 
                     if (!screenshot.Saved && xDoc != null && screenshot?.Format != null && !string.IsNullOrEmpty(screenshot.Format.Name))
                     {
-                        lock (xDoc)
-                        {
                             XmlElement xScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
 
                             XmlElement xViedId = xDoc.CreateElement(SCREENSHOT_VIEWID);
@@ -619,13 +620,18 @@ namespace AutoScreenCapture
                                     xScreenshots.AppendChild(xScreenshot);
                                 }
 
-                                xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                                lock (xDoc)
+                                {
+                                    xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                                }
 
                                 screenshot.Saved = true;
 
-                                _screenshotList[i] = screenshot;
+                                lock (_screenshotList)
+                                {
+                                    _screenshotList[i] = screenshot;
+                                }
                             }
-                        }
                     }
                 }
 

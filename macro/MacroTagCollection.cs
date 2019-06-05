@@ -13,10 +13,16 @@ namespace AutoScreenCapture
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class MacroTagCollection : IEnumerable<MacroTag>
     {
         private readonly List<MacroTag> _macroTagList = new List<MacroTag>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MacroTagCollection()
         {
             Add(new MacroTag(string.Empty, string.Empty));
@@ -34,6 +40,10 @@ namespace AutoScreenCapture
             Add(new MacroTag(MacroTagSpec.Count, "Number of screen capture cycles during the current screen capture session"));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<MacroTag>.Enumerator GetEnumerator()
         {
             return _macroTagList.GetEnumerator();
@@ -49,27 +59,22 @@ namespace AutoScreenCapture
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="macroTag"></param>
         public void Add(MacroTag macroTag)
         {
             _macroTagList.Add(macroTag);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<MacroTag> GetList()
         {
             return _macroTagList;
-        }
-
-        public MacroTag GetByName(string name)
-        {
-            foreach (MacroTag macroTag in _macroTagList)
-            {
-                if (macroTag.Name.Equals(name))
-                {
-                    return macroTag;
-                }
-            }
-
-            return null;
         }
     }
 }

@@ -10,10 +10,16 @@ namespace AutoScreenCapture
     using System.Collections;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ImageFormatCollection : IEnumerable<ImageFormat>
     {
         private readonly List<ImageFormat> _imageFormatList = new List<ImageFormat>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ImageFormatCollection()
         {
             Add(new ImageFormat(ImageFormatSpec.NAME_BMP, ImageFormatSpec.EXTENSION_BMP));
@@ -25,6 +31,10 @@ namespace AutoScreenCapture
             Add(new ImageFormat(ImageFormatSpec.NAME_WMF, ImageFormatSpec.EXTENSION_WMF));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<ImageFormat>.Enumerator GetEnumerator()
         {
             return _imageFormatList.GetEnumerator();
@@ -40,6 +50,10 @@ namespace AutoScreenCapture
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="imageFormat"></param>
         public void Add(ImageFormat imageFormat)
         {
             _imageFormatList.Add(imageFormat);
@@ -47,6 +61,11 @@ namespace AutoScreenCapture
             Log.Write("Image format added: " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public ImageFormat GetByName(string name)
         {
             foreach (ImageFormat imageFormat in _imageFormatList)
