@@ -102,7 +102,6 @@ namespace AutoScreenCapture
             this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
             this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
-            this.timerDeleteOldScreenshots = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.labelScreenshotTitle = new System.Windows.Forms.Label();
             this.textBoxScreenshotTitle = new System.Windows.Forms.TextBox();
@@ -120,7 +119,7 @@ namespace AutoScreenCapture
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
-            this.timerSaveScreenshots = new System.Windows.Forms.Timer(this.components);
+            this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -924,12 +923,6 @@ namespace AutoScreenCapture
             this.timerScreenCapture.Enabled = true;
             this.timerScreenCapture.Tick += new System.EventHandler(this.Tick_timerScreenCapture);
             // 
-            // timerDeleteOldScreenshots
-            // 
-            this.timerDeleteOldScreenshots.Enabled = true;
-            this.timerDeleteOldScreenshots.Interval = 60000;
-            this.timerDeleteOldScreenshots.Tick += new System.EventHandler(this.timerDeleteOldScreenshots_Tick);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -1115,11 +1108,11 @@ namespace AutoScreenCapture
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);
             // 
-            // timerSaveScreenshots
+            // timerPerformMaintenance
             // 
-            this.timerSaveScreenshots.Enabled = true;
-            this.timerSaveScreenshots.Interval = 60000;
-            this.timerSaveScreenshots.Tick += new System.EventHandler(this.timerSaveScreenshots_Tick);
+            this.timerPerformMaintenance.Enabled = true;
+            this.timerPerformMaintenance.Interval = 60000;
+            this.timerPerformMaintenance.Tick += new System.EventHandler(this.timerPerformMaintenance_Tick);
             // 
             // FormMain
             // 
@@ -1245,7 +1238,6 @@ namespace AutoScreenCapture
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.TextBox textBoxPassphrase;
-        private System.Windows.Forms.Timer timerDeleteOldScreenshots;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label labelScreenshotTitle;
         private System.Windows.Forms.TextBox textBoxScreenshotTitle;
@@ -1271,6 +1263,6 @@ namespace AutoScreenCapture
         private Label labelKeepScreenshots;
         private TextBox textBoxScreenshotLabel;
         private Label labelScreenshotLabel;
-        private Timer timerSaveScreenshots;
+        private Timer timerPerformMaintenance;
     }
 }

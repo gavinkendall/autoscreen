@@ -42,8 +42,6 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runDeleteSlidesThread = null;
 
-        private BackgroundWorker runDeleteOldScreenshotsThread = null;
-
         private BackgroundWorker runFilterSearchThread = null;
 
         private BackgroundWorker runSaveScreenshotsThread = null;
@@ -113,8 +111,6 @@ namespace AutoScreenCapture
             // Get rid of the old "slides" directory that may still remain from an old version of the application.
             DeleteSlides();
 
-            DeleteOldScreenshots();
-
             if (args.Length > 0)
             {
                 ParseCommandLineArguments(args);
@@ -139,13 +135,6 @@ namespace AutoScreenCapture
         private void InitializeThreads()
         {
             Log.Write("Initializing threads");
-
-            runDeleteOldScreenshotsThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runDeleteOldScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteOldScreenshotsThread);
 
             runDeleteSlidesThread = new BackgroundWorker
             {
@@ -379,7 +368,7 @@ namespace AutoScreenCapture
                 HideInterface();
 
                 Log.Write("Saving screenshots on forced application exit because Windows is shutting down");
-                _screenshotCollection.Save();
+                _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -389,11 +378,6 @@ namespace AutoScreenCapture
                 if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
                 {
                     runScreenshotSearchThread.CancelAsync();
-                }
-
-                if (runDeleteOldScreenshotsThread != null && runDeleteOldScreenshotsThread.IsBusy)
-                {
-                    runDeleteOldScreenshotsThread.CancelAsync();
                 }
 
                 // Exit.
@@ -477,17 +461,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Deletes old screenshots.
-        /// </summary>
-        private void DeleteOldScreenshots()
-        {
-            if (runDeleteOldScreenshotsThread != null && !runDeleteOldScreenshotsThread.IsBusy)
-            {
-                runDeleteOldScreenshotsThread.RunWorkerAsync();
-            }
-        }
-
-        /// <summary>
         /// This thread is responsible for finding slides.
         /// </summary>
         /// <param name="e"></param>
@@ -547,7 +520,7 @@ namespace AutoScreenCapture
 
         private void RunSaveScreenshots(DoWorkEventArgs e)
         {
-            _screenshotCollection.Save();
+            _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
         }
 
         private void RunFilterSearch(DoWorkEventArgs e)
@@ -567,15 +540,6 @@ namespace AutoScreenCapture
                     comboBoxFilterValue.DataSource = filterValueList;
                 }
             }
-        }
-
-        /// <summary>
-        /// This thread is responsible for deleting screenshots older than a specified number of days.
-        /// </summary>
-        /// <param name="e"></param>
-        private void RunDeleteOldScreenshots(DoWorkEventArgs e)
-        {
-            _screenshotCollection.KeepScreenshotsForDays((int)numericUpDownKeepScreenshotsForDays.Value);
         }
 
         /// <summary>
@@ -755,8 +719,6 @@ namespace AutoScreenCapture
             if (!_screenCapture.Running && screenCaptureInterval > 0)
             {
                 SaveSettings();
-
-                DeleteOldScreenshots();
 
                 // Stop the date search thread if it's busy.
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
@@ -1033,7 +995,7 @@ namespace AutoScreenCapture
                 HideInterface();
 
                 Log.Write("Saving screenshots on clean application exit");
-                _screenshotCollection.Save();
+                _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -1043,11 +1005,6 @@ namespace AutoScreenCapture
                 if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
                 {
                     runScreenshotSearchThread.CancelAsync();
-                }
-
-                if (runDeleteOldScreenshotsThread != null && runDeleteOldScreenshotsThread.IsBusy)
-                {
-                    runDeleteOldScreenshotsThread.CancelAsync();
                 }
 
                 // Exit.
@@ -1088,16 +1045,6 @@ namespace AutoScreenCapture
         private void DoWork_runSaveScreenshotsThread(object sender, DoWorkEventArgs e)
         {
             RunSaveScreenshots(e);
-        }
-
-        /// <summary>
-        /// Runs the "delete old screenshots" thread.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DoWork_runDeleteOldScreenshotsThread(object sender, DoWorkEventArgs e)
-        {
-            RunDeleteOldScreenshots(e);
         }
 
         private void DoWork_runFilterSearchThread(object sender, DoWorkEventArgs e)
@@ -2882,16 +2829,6 @@ namespace AutoScreenCapture
             }
         }
 
-        /// <summary>
-        /// Deletes old screenshots (and also writes to the screenshots.xml file) every minute.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timerDeleteOldScreenshots_Tick(object sender, EventArgs e)
-        {
-            DeleteOldScreenshots();
-        }
-
         private void tabControlViews_Selected(object sender, TabControlEventArgs e)
         {
             ShowScreenshotBySlideIndex();
@@ -2945,11 +2882,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Saves screenshots every hour.
+        /// Saves screenshots every minute.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void timerSaveScreenshots_Tick(object sender, EventArgs e)
+        private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
             SaveScreenshots();
         }

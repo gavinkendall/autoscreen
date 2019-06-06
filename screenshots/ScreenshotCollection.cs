@@ -50,69 +50,23 @@ namespace AutoScreenCapture
         public  string AppCodename { get; set; }
         public  string AppVersion { get; set; }
 
-        public  void Add(Screenshot screenshot)
+        public void Add(Screenshot screenshot)
         {
-            if (!_screenshotList.Contains(screenshot))
+            lock (_screenshotList)
             {
-                _screenshotList.Add(screenshot);
-            }
-
-            if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
-            {
-                if (!_slideNameList.Contains(screenshot.Slide.Name))
+                if (!_screenshotList.Contains(screenshot))
                 {
-                    _slideNameList.Add(screenshot.Slide.Name);
-                    _slideList.Add(screenshot.Slide);
+                    _screenshotList.Add(screenshot);
                 }
-            }
-        }
 
-        public  void KeepScreenshotsForDays(int days)
-        {
-            try
-            {
-                _mutexWriteFile.WaitOne();
-
-                lock (_screenshotList)
+                if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
                 {
-                    if (_screenshotList != null && _screenshotList.Count > 0 && days > 0)
+                    if (!_slideNameList.Contains(screenshot.Slide.Name))
                     {
-                        List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
-
-                        if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
-                        {
-                            foreach (Screenshot screenshot in screenshotsToDelete)
-                            {
-                                XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
-
-                                foreach (XmlNode node in nodesToDelete)
-                                {
-                                    node.ParentNode.RemoveChild(node);
-                                }
-
-                                if (File.Exists(screenshot.Path))
-                                {
-                                    File.Delete(screenshot.Path);
-                                }
-
-                                _screenshotList.Remove(screenshot);
-                            }
-
-                            lock (xDoc)
-                            {
-                                xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
-                            }
-                        }
+                        _slideNameList.Add(screenshot.Slide.Name);
+                        _slideList.Add(screenshot.Slide);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.Write("ScreenshotCollection::KeepScreenshotsForDays", ex);
-            }
-            finally
-            {
-                _mutexWriteFile.ReleaseMutex();
             }
         }
 
@@ -546,7 +500,11 @@ namespace AutoScreenCapture
             }
         }
 
-        public void Save()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keepScreenshotsForDays"></param>
+        public void Save(int keepScreenshotsForDays)
         {
             try
             {
@@ -560,6 +518,36 @@ namespace AutoScreenCapture
 
                 lock (_screenshotList)
                 {
+                    if (_screenshotList != null && _screenshotList.Count > 0 && keepScreenshotsForDays > 0)
+                    {
+                        List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-keepScreenshotsForDays)).ToList();
+
+                        if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
+                        {
+                            foreach (Screenshot screenshot in screenshotsToDelete)
+                            {
+                                XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
+
+                                foreach (XmlNode node in nodesToDelete)
+                                {
+                                    node.ParentNode.RemoveChild(node);
+                                }
+
+                                if (File.Exists(screenshot.Path))
+                                {
+                                    File.Delete(screenshot.Path);
+                                }
+
+                                _screenshotList.Remove(screenshot);
+                            }
+
+                            lock (xDoc)
+                            {
+                                xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                            }
+                        }
+                    }
+
                     for (int i = 0; i < _screenshotList.Count; i++)
                     {
                         Screenshot screenshot = _screenshotList[i];
