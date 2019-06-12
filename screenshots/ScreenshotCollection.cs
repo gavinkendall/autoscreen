@@ -161,6 +161,11 @@ namespace AutoScreenCapture
             return slides;
         }
 
+        public List<string> GetLabels()
+        {
+            return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
+        }
+
         public  Screenshot GetScreenshot(string slideName, Guid viewId)
         {
             Screenshot foundScreenshot = new Screenshot();

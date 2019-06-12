@@ -333,8 +333,10 @@ namespace AutoScreenCapture
                 numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value);
                 Log.Write("IntKeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
 
-                textBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
-                Log.Write("StringScreenshotLabel = " + textBoxScreenshotLabel.Text);
+                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
+                Log.Write("StringScreenshotLabel = " + comboBoxScreenshotLabel.Text);
+
+                checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value);
 
                 EnableStartCapture();
 
@@ -576,7 +578,8 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = checkBoxPassphraseLock.Checked;
                 Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
-                Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = textBoxScreenshotLabel.Text;
+                Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = comboBoxScreenshotLabel.Text;
+                Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
 
                 Settings.User.Save();
 
@@ -630,6 +633,12 @@ namespace AutoScreenCapture
 
                 SearchDates();
                 SearchScreenshots();
+
+                List<string> labels = _screenshotCollection.GetLabels();
+                labels.Sort();
+
+                comboBoxScreenshotLabel.DataSource = labels;
+                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
 
                 Show();
 
@@ -1084,7 +1093,8 @@ namespace AutoScreenCapture
                 dateTimePickerScheduleStartAt.Enabled = true;
                 dateTimePickerScheduleStopAt.Enabled = true;
 
-                textBoxScreenshotLabel.Enabled = true;
+                checkBoxScreenshotLabel.Enabled = true;
+                comboBoxScreenshotLabel.Enabled = true;
             }
             else
             {
@@ -1122,7 +1132,8 @@ namespace AutoScreenCapture
             dateTimePickerScheduleStartAt.Enabled = false;
             dateTimePickerScheduleStopAt.Enabled = false;
 
-            textBoxScreenshotLabel.Enabled = false;
+            checkBoxScreenshotLabel.Enabled = false;
+            comboBoxScreenshotLabel.Enabled = false;
         }
 
         /// <summary>
@@ -2669,7 +2680,7 @@ namespace AutoScreenCapture
                             resolutionRatio: region.ResolutionRatio,
                             viewId: region.ViewId,
                             bitmap: bitmap,
-                            label: textBoxScreenshotLabel.Text,
+                            label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                             windowTitle: _screenCapture.ActiveWindowTitle,
                             screenCollection: formScreen.ScreenCollection,
                             regionCollection: formRegion.RegionCollection,
@@ -2711,7 +2722,7 @@ namespace AutoScreenCapture
                                 resolutionRatio: screen.ResolutionRatio,
                                 viewId: screen.ViewId,
                                 bitmap: bitmap,
-                                label: textBoxScreenshotLabel.Text,
+                                label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                 windowTitle: _screenCapture.ActiveWindowTitle,
                                 screenCollection: formScreen.ScreenCollection,
                                 regionCollection: formRegion.RegionCollection,
@@ -2752,7 +2763,7 @@ namespace AutoScreenCapture
                                     resolutionRatio: screen.ResolutionRatio,
                                     viewId: screen.ViewId,
                                     bitmap: bitmap,
-                                    label: textBoxScreenshotLabel.Text,
+                                    label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                     windowTitle: _screenCapture.ActiveWindowTitle,
                                     screenCollection: formScreen.ScreenCollection,
                                     regionCollection: formRegion.RegionCollection,

@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.5";
+        public static readonly string ApplicationVersion = "2.2.0.6";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -90,6 +90,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("StringPassphrase", string.Empty));
                 User.Add(new Setting("IntKeepScreenshotsForDays", 30));
                 User.Add(new Setting("StringScreenshotLabel", string.Empty));
+                User.Add(new Setting("BoolApplyScreenshotLabel", false));
 
                 User.Save();
             }
