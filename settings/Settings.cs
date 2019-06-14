@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.8";
+        public static readonly string ApplicationVersion = "2.2.0.9";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -29,9 +29,17 @@ namespace AutoScreenCapture
             // This version.
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
 
-            // Older versions should be listed here only if you need to check for a specific version
-            // in order to upgrade a particular area of the application.
-            _versionCollection.Add(new Version("Clara", "2.1.8.2"));
+            // Older versions should be listed here.
+            _versionCollection.Add(new Version("Clara", "2.1.8.2")); // Last version that introduced the Macro concept
+            _versionCollection.Add(new Version("Dalek", "2.2.0.0")); // Support for unlimited number of screens
+            _versionCollection.Add(new Version("Dalek", "2.2.0.1")); // Fixed empty window title bug
+            _versionCollection.Add(new Version("Dalek", "2.2.0.2")); // Continue screen capture session when drive not available
+            _versionCollection.Add(new Version("Dalek", "2.2.0.3")); // Changes to how we save screenshots
+            _versionCollection.Add(new Version("Dalek", "2.2.0.4")); // More changes to how we save screenshots
+            _versionCollection.Add(new Version("Dalek", "2.2.0.5")); // Fixes the changes to how we save screenshots
+            _versionCollection.Add(new Version("Dalek", "2.2.0.6")); // Can now select an existing label when applying a label
+            _versionCollection.Add(new Version("Dalek", "2.2.0.7")); // Fixed upgrade path from old versions. Can now filter by Process Name
+            _versionCollection.Add(new Version("Dalek", "2.2.0.8")); // Introduced %user% and %machine% macro tags
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
