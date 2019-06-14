@@ -21,5 +21,7 @@ namespace AutoScreenCapture
         public static readonly string Second = "%second%";
         public static readonly string Millisecond = "%millisecond%";
         public static readonly string Count = "%count%";
+        public static readonly string User = "%user%";
+        public static readonly string Machine = "%machine%";
     }
 }

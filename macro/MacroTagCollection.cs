@@ -38,6 +38,8 @@ namespace AutoScreenCapture
             Add(new MacroTag(MacroTagSpec.Second, "Second of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" + DateTime.Now.ToString(MacroParser.SecondFormat) + ")"));
             Add(new MacroTag(MacroTagSpec.Millisecond, "Millisecond of " + DateTime.Now.ToString(MacroParser.TimeFormat) + " (" + DateTime.Now.ToString(MacroParser.MillisecondFormat) + ")"));
             Add(new MacroTag(MacroTagSpec.Count, "Number of screen capture cycles during the current screen capture session"));
+            Add(new MacroTag(MacroTagSpec.User, "Name of logged in user (" + Environment.UserName + ")"));
+            Add(new MacroTag(MacroTagSpec.Machine, "Name of machine being used (" + Environment.MachineName + ")"));
         }
 
         /// <summary>

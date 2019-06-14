@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.7";
+        public static readonly string ApplicationVersion = "2.2.0.8";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -29,15 +29,9 @@ namespace AutoScreenCapture
             // This version.
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
 
-            // Older versions should be listed here.
+            // Older versions should be listed here only if you need to check for a specific version
+            // in order to upgrade a particular area of the application.
             _versionCollection.Add(new Version("Clara", "2.1.8.2"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.0"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.1"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.2"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.3"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.4"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.5"));
-            _versionCollection.Add(new Version("Dalek", "2.2.0.6"));
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
@@ -58,6 +52,11 @@ namespace AutoScreenCapture
                 if (File.Exists(Application.Filepath))
                 {
                     Application.Load();
+
+                    Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
+                    Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
+
+                    Application.Save();
                 }
                 else
                 {

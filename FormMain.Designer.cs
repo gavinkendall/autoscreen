@@ -387,6 +387,7 @@ namespace AutoScreenCapture
             this.comboBoxScreenshotLabel.Name = "comboBoxScreenshotLabel";
             this.comboBoxScreenshotLabel.Size = new System.Drawing.Size(205, 21);
             this.comboBoxScreenshotLabel.TabIndex = 17;
+            this.comboBoxScreenshotLabel.TabStop = false;
             // 
             // groupBoxCaptureDelay
             // 
