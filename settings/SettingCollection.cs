@@ -286,7 +286,7 @@ namespace AutoScreenCapture
 
                     Settings.VersionManager.OldUserSettings = oldUserSettings;
 
-                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null) // Is this version 2.1.8.2 (or older)?
+                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                     {
                         Log.Write("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
 

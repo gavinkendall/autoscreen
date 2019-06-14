@@ -208,9 +208,9 @@ namespace AutoScreenCapture
 
                         // Change the data for each region that's being loaded if we've detected that
                         // the XML file is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                             {
                                 Log.Write("An old version of the regions file was detected. Attempting upgrade to new region format");
 
@@ -239,7 +239,7 @@ namespace AutoScreenCapture
 
                     // Write out the regions to the XML file now that we've updated the region objects
                     // with their appropriate property values if it was an old version of the application.
-                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
                         Save();
                     }

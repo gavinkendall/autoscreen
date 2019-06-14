@@ -2409,16 +2409,14 @@ namespace AutoScreenCapture
         private void TakeScreenshot()
         {
             formScreen.RefreshScreenDictionary();
-            Log.Write("Screen dictionary refreshed");
 
             _screenCapture.Count++;
-            Log.Write("Number of screen capture cycles so far = " + _screenCapture.Count);
 
             _screenCapture.DateTimePreviousCycle = DateTime.Now;
-            Log.Write("Date and time of screen capture cycle set to " + _screenCapture.DateTimePreviousCycle);
 
             _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
-            Log.Write("Active window title of screen capture set to " + _screenCapture.ActiveWindowTitle);
+
+            _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
             RunRegionCaptures();
 
@@ -2682,6 +2680,7 @@ namespace AutoScreenCapture
                             bitmap: bitmap,
                             label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                             windowTitle: _screenCapture.ActiveWindowTitle,
+                            processName: _screenCapture.ActiveWindowProcessName,
                             screenCollection: formScreen.ScreenCollection,
                             regionCollection: formRegion.RegionCollection,
                             screenshotCollection: _screenshotCollection
@@ -2691,9 +2690,18 @@ namespace AutoScreenCapture
                         }
                         else
                         {
+                            _screenCapture.Count--;
                             ScreenshotTakenWithFailure();
                         }
                     }
+                    else
+                    {
+                        _screenCapture.Count--;
+                    }
+                }
+                else
+                {
+                    _screenCapture.Count--;
                 }
             }
         }
@@ -2724,6 +2732,7 @@ namespace AutoScreenCapture
                                 bitmap: bitmap,
                                 label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                 windowTitle: _screenCapture.ActiveWindowTitle,
+                                processName: _screenCapture.ActiveWindowProcessName,
                                 screenCollection: formScreen.ScreenCollection,
                                 regionCollection: formRegion.RegionCollection,
                                 screenshotCollection: _screenshotCollection
@@ -2733,10 +2742,19 @@ namespace AutoScreenCapture
                             }
                             else
                             {
+                                _screenCapture.Count--;
                                 ScreenshotTakenWithFailure();
                                 break;
                             }
                         }
+                        else
+                        {
+                            _screenCapture.Count--;
+                        }
+                    }
+                    else
+                    {
+                        _screenCapture.Count--;
                     }
                 }
                 else
@@ -2765,6 +2783,7 @@ namespace AutoScreenCapture
                                     bitmap: bitmap,
                                     label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                     windowTitle: _screenCapture.ActiveWindowTitle,
+                                    processName: _screenCapture.ActiveWindowProcessName,
                                     screenCollection: formScreen.ScreenCollection,
                                     regionCollection: formRegion.RegionCollection,
                                     screenshotCollection: _screenshotCollection
@@ -2774,10 +2793,19 @@ namespace AutoScreenCapture
                                 }
                                 else
                                 {
+                                    _screenCapture.Count--;
                                     ScreenshotTakenWithFailure();
                                     break;
                                 }
                             }
+                            else
+                            {
+                                _screenCapture.Count--;
+                            }
+                        }
+                        else
+                        {
+                            _screenCapture.Count--;
                         }
                     }
                 }

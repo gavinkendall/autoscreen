@@ -18,17 +18,8 @@ namespace AutoScreenCapture
         [STAThread]
         private static void Main(string[] args)
         {
-            foreach (string arg in args)
-            {
-                if (!string.IsNullOrEmpty(arg) && arg.Equals("-debug"))
-                {
-                    Log.Enabled = true;
-
-                    break;
-                }
-            }
-
             bool createdNew;
+
             using (new Mutex(false, ((GuidAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(GuidAttribute), false)).Value, out createdNew))
             {
                 if (createdNew)
@@ -39,6 +30,7 @@ namespace AutoScreenCapture
                 // Exit this application's duplicate process in case the user executes a second instance since we want to keep a single instance.
                 else
                 {
+                    Log.Enabled = true;
                     Log.Write("A duplicate instance of the application was found running. Exiting");
                 }
             }

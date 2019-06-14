@@ -55,6 +55,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
+            this.checkBoxScreenshotLabel = new System.Windows.Forms.CheckBox();
             this.comboBoxScreenshotLabel = new System.Windows.Forms.ComboBox();
             this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
             this.labelLimit = new System.Windows.Forms.Label();
@@ -119,7 +120,6 @@ namespace AutoScreenCapture
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
-            this.checkBoxScreenshotLabel = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -367,6 +367,16 @@ namespace AutoScreenCapture
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxScreenshotLabel
+            // 
+            this.checkBoxScreenshotLabel.AutoSize = true;
+            this.checkBoxScreenshotLabel.Location = new System.Drawing.Point(6, 133);
+            this.checkBoxScreenshotLabel.Name = "checkBoxScreenshotLabel";
+            this.checkBoxScreenshotLabel.Size = new System.Drawing.Size(193, 17);
+            this.checkBoxScreenshotLabel.TabIndex = 18;
+            this.checkBoxScreenshotLabel.Text = "Apply this label to each screenshot:";
+            this.checkBoxScreenshotLabel.UseVisualStyleBackColor = true;
             // 
             // comboBoxScreenshotLabel
             // 
@@ -1092,6 +1102,7 @@ namespace AutoScreenCapture
             "",
             "Image Format",
             "Label",
+            "Process Name",
             "Window Title"});
             this.comboBoxFilterType.Location = new System.Drawing.Point(39, 6);
             this.comboBoxFilterType.Name = "comboBoxFilterType";
@@ -1105,16 +1116,6 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance.Enabled = true;
             this.timerPerformMaintenance.Interval = 60000;
             this.timerPerformMaintenance.Tick += new System.EventHandler(this.timerPerformMaintenance_Tick);
-            // 
-            // checkBoxScreenshotLabel
-            // 
-            this.checkBoxScreenshotLabel.AutoSize = true;
-            this.checkBoxScreenshotLabel.Location = new System.Drawing.Point(6, 133);
-            this.checkBoxScreenshotLabel.Name = "checkBoxScreenshotLabel";
-            this.checkBoxScreenshotLabel.Size = new System.Drawing.Size(193, 17);
-            this.checkBoxScreenshotLabel.TabIndex = 18;
-            this.checkBoxScreenshotLabel.Text = "Apply this label to each screenshot:";
-            this.checkBoxScreenshotLabel.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 

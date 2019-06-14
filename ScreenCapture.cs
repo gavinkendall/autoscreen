@@ -12,6 +12,7 @@ namespace AutoScreenCapture
     using System.Drawing.Imaging;
     using System.IO;
     using System.Linq;
+    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using System.Text;
 
@@ -41,6 +42,9 @@ namespace AutoScreenCapture
 
         [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
 
         [DllImport("user32.dll")]
         private static extern bool GetCursorInfo(out CURSORINFO pci);
@@ -99,6 +103,8 @@ namespace AutoScreenCapture
         /// The title of the active window.
         /// </summary>
         public string ActiveWindowTitle { get; set; }
+
+        public string ActiveWindowProcessName { get; set; }
 
         public  Image GetImageByPath(string path)
         {
@@ -224,6 +230,15 @@ namespace AutoScreenCapture
             return string.Empty;
         }
 
+        public string GetActiveWindowProcessName()
+        {
+            IntPtr hwnd = GetForegroundWindow();
+            uint pid;
+            GetWindowThreadProcessId(hwnd, out pid);
+            Process p = Process.GetProcessById((int)pid);
+            return p.ProcessName;
+        }
+
         public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
         {
             bitmap = component == 0
@@ -245,7 +260,8 @@ namespace AutoScreenCapture
 
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
             int jpegQuality, int resolutionRatio, Guid viewId, Bitmap bitmap,
-            string label, string windowTitle, ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
+            string label, string windowTitle, string processName,
+            ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -278,7 +294,7 @@ namespace AutoScreenCapture
                                         Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
                                     }
 
-                                    screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, viewId, label));
+                                    screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
                                     Log.Write("Screenshot added to collection as a new and unsaved screenshot");
                                     Log.Write("View ID = " + viewId);
                                     Log.Write("Date and time of screenshot = " + DateTimePreviousCycle);
@@ -287,6 +303,7 @@ namespace AutoScreenCapture
                                     Log.Write("Component = " + component);
                                     Log.Write("Screenshot Type = " + screenshotType);
                                     Log.Write("Window Title = " + windowTitle);
+                                    Log.Write("Process Name = " + processName);
                                     Log.Write("Label = " + label);
 
                                     SaveToFile(path, format, jpegQuality, bitmap);

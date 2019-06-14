@@ -42,6 +42,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_SLIDENAME = "slidename";
         private const string SCREENSHOT_SLIDEVALUE = "slidevalue";
         private const string SCREENSHOT_WINDOW_TITLE = "windowtitle";
+        private const string SCREENSHOT_PROCESS_NAME = "processname";
         private const string SCREENSHOT_LABEL = "label";
 
         private const string SCREENSHOTS_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE;
@@ -92,6 +93,11 @@ namespace AutoScreenCapture
                 return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
             }
 
+            if (filterType.Equals("Process Name"))
+            {
+                return _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName)).Select(x => x.ProcessName).Distinct().ToList();
+            }
+
             if (filterType.Equals("Window Title"))
             {
                 return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle)).Select(x => x.WindowTitle).Distinct().ToList();
@@ -112,6 +118,11 @@ namespace AutoScreenCapture
                 if (filterType.Equals("Label"))
                 {
                     return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
+                }
+
+                if (filterType.Equals("Process Name"))
+                {
+                    return _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue)).Select(x => x.Date).ToList();
                 }
 
                 if (filterType.Equals("Window Title"))
@@ -141,6 +152,12 @@ namespace AutoScreenCapture
                 {
                     Log.Write("Getting slides from screenshot list based on Label filter");
                     return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
+                }
+
+                if (filterType.Equals("Process Name"))
+                {
+                    Log.Write("Getting slides from screenshot list based on Process Name filter");
+                    return _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Window Title"))
@@ -314,8 +331,8 @@ namespace AutoScreenCapture
                                             // 2.1 used "screen" for its definition of each display/monitor whereas 2.2 uses "component".
                                             // Active Window is now represented by 0 rather than 5.
                                             case SCREENSHOT_SCREEN:
-                                                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename) &&
-                                                    Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                                                if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion) &&
+                                                    Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                                                 {
                                                     xReader.Read();
 
@@ -361,6 +378,11 @@ namespace AutoScreenCapture
                                                 screenshot.WindowTitle = xReader.Value;
                                                 break;
 
+                                            case SCREENSHOT_PROCESS_NAME:
+                                                xReader.Read();
+                                                screenshot.ProcessName = xReader.Value;
+                                                break;
+
                                             case SCREENSHOT_LABEL:
                                                 xReader.Read();
                                                 screenshot.Label = xReader.Value;
@@ -371,9 +393,9 @@ namespace AutoScreenCapture
 
                                 xReader.Close();
 
-                                if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                                if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                                 {
-                                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                                     {
                                         // We need to associate the screenshot's view ID with the component's view ID
                                         // because this special ID value is used for figuring out what screenshot image to display.
@@ -395,54 +417,58 @@ namespace AutoScreenCapture
                                         screenshot.Slide.Value = screenshot.Time + " [" + windowTitle + "]";
 
                                         screenshot.WindowTitle = windowTitle;
-
-                                        // Remove all the existing XML child nodes from the old XML screenshot.
-                                        xScreenshot.RemoveAll();
-
-                                        // Prepare the new XML child nodes for the old XML screenshot ...
-
-                                        XmlElement xViewId = xDoc.CreateElement(SCREENSHOT_VIEWID);
-                                        xViewId.InnerText = screenshot.ViewId.ToString();
-
-                                        XmlElement xDate = xDoc.CreateElement(SCREENSHOT_DATE);
-                                        xDate.InnerText = screenshot.Date;
-
-                                        XmlElement xTime = xDoc.CreateElement(SCREENSHOT_TIME);
-                                        xTime.InnerText = screenshot.Time;
-
-                                        XmlElement xPath = xDoc.CreateElement(SCREENSHOT_PATH);
-                                        xPath.InnerText = screenshot.Path;
-
-                                        XmlElement xFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
-                                        xFormat.InnerText = screenshot.Format.Name;
-
-                                        XmlElement xComponent = xDoc.CreateElement(SCREENSHOT_COMPONENT);
-                                        xComponent.InnerText = screenshot.Component.ToString();
-
-                                        XmlElement xSlidename = xDoc.CreateElement(SCREENSHOT_SLIDENAME);
-                                        xSlidename.InnerText = screenshot.Slide.Name;
-
-                                        XmlElement xSlidevalue = xDoc.CreateElement(SCREENSHOT_SLIDEVALUE);
-                                        xSlidevalue.InnerText = screenshot.Slide.Value;
-
-                                        XmlElement xWindowTitle = xDoc.CreateElement(SCREENSHOT_WINDOW_TITLE);
-                                        xWindowTitle.InnerText = screenshot.WindowTitle;
-
-                                        XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
-                                        xLabel.InnerText = screenshot.Label;
-
-                                        // Create the new XML child nodes for the old XML screenshot so that it's now in the format of the new XML screenshot.
-                                        xScreenshot.AppendChild(xViewId);
-                                        xScreenshot.AppendChild(xDate);
-                                        xScreenshot.AppendChild(xTime);
-                                        xScreenshot.AppendChild(xPath);
-                                        xScreenshot.AppendChild(xFormat);
-                                        xScreenshot.AppendChild(xComponent);
-                                        xScreenshot.AppendChild(xSlidename);
-                                        xScreenshot.AppendChild(xSlidevalue);
-                                        xScreenshot.AppendChild(xWindowTitle);
-                                        xScreenshot.AppendChild(xLabel);
                                     }
+
+                                    // Remove all the existing XML child nodes from the old XML screenshot.
+                                    xScreenshot.RemoveAll();
+
+                                    // Prepare the new XML child nodes for the old XML screenshot ...
+
+                                    XmlElement xViewId = xDoc.CreateElement(SCREENSHOT_VIEWID);
+                                    xViewId.InnerText = screenshot.ViewId.ToString();
+
+                                    XmlElement xDate = xDoc.CreateElement(SCREENSHOT_DATE);
+                                    xDate.InnerText = screenshot.Date;
+
+                                    XmlElement xTime = xDoc.CreateElement(SCREENSHOT_TIME);
+                                    xTime.InnerText = screenshot.Time;
+
+                                    XmlElement xPath = xDoc.CreateElement(SCREENSHOT_PATH);
+                                    xPath.InnerText = screenshot.Path;
+
+                                    XmlElement xFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
+                                    xFormat.InnerText = screenshot.Format.Name;
+
+                                    XmlElement xComponent = xDoc.CreateElement(SCREENSHOT_COMPONENT);
+                                    xComponent.InnerText = screenshot.Component.ToString();
+
+                                    XmlElement xSlidename = xDoc.CreateElement(SCREENSHOT_SLIDENAME);
+                                    xSlidename.InnerText = screenshot.Slide.Name;
+
+                                    XmlElement xSlidevalue = xDoc.CreateElement(SCREENSHOT_SLIDEVALUE);
+                                    xSlidevalue.InnerText = screenshot.Slide.Value;
+
+                                    XmlElement xWindowTitle = xDoc.CreateElement(SCREENSHOT_WINDOW_TITLE);
+                                    xWindowTitle.InnerText = screenshot.WindowTitle;
+
+                                    XmlElement xProcessName = xDoc.CreateElement(SCREENSHOT_PROCESS_NAME);
+                                    xProcessName.InnerText = screenshot.ProcessName;
+
+                                    XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
+                                    xLabel.InnerText = screenshot.Label;
+
+                                    // Create the new XML child nodes for the old XML screenshot so that it's now in the format of the new XML screenshot.
+                                    xScreenshot.AppendChild(xViewId);
+                                    xScreenshot.AppendChild(xDate);
+                                    xScreenshot.AppendChild(xTime);
+                                    xScreenshot.AppendChild(xPath);
+                                    xScreenshot.AppendChild(xFormat);
+                                    xScreenshot.AppendChild(xComponent);
+                                    xScreenshot.AppendChild(xSlidename);
+                                    xScreenshot.AppendChild(xSlidevalue);
+                                    xScreenshot.AppendChild(xWindowTitle);
+                                    xScreenshot.AppendChild(xProcessName);
+                                    xScreenshot.AppendChild(xLabel);
                                 }
 
                                 if (!string.IsNullOrEmpty(screenshot.Date) &&
@@ -463,12 +489,12 @@ namespace AutoScreenCapture
                             Log.Write("WARNING: Unable to load screenshots from screenshots.xml");
                         }
 
-                        if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
                             Log.Write("Old application version discovered when loading screenshots.xml");
 
                             // We'll have to create the app:version and app:codename attributes for screenshots.xml if we're upgrading from "Clara".
-                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null)
+                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                             {
                                 XmlAttribute attributeVersion = xDoc.CreateAttribute("app", "version", "autoscreen");
                                 XmlAttribute attributeCodename = xDoc.CreateAttribute("app", "codename", "autoscreen");
@@ -514,12 +540,6 @@ namespace AutoScreenCapture
             try
             {
                 _mutexWriteFile.WaitOne();
-
-                Stopwatch stopwatch = new Stopwatch();
-
-                stopwatch.Start();
-
-                Log.Write("Saving screenshots to screenshots.xml");
 
                 lock (_screenshotList)
                 {
@@ -588,6 +608,9 @@ namespace AutoScreenCapture
                             XmlElement xWindowTitle = xDoc.CreateElement(SCREENSHOT_WINDOW_TITLE);
                             xWindowTitle.InnerText = screenshot.WindowTitle;
 
+                            XmlElement xProcessName = xDoc.CreateElement(SCREENSHOT_PROCESS_NAME);
+                            xProcessName.InnerText = screenshot.ProcessName;
+
                             XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
                             xLabel.InnerText = screenshot.Label;
 
@@ -600,6 +623,7 @@ namespace AutoScreenCapture
                             xScreenshot.AppendChild(xSlidename);
                             xScreenshot.AppendChild(xSlidevalue);
                             xScreenshot.AppendChild(xWindowTitle);
+                            xScreenshot.AppendChild(xProcessName);
                             xScreenshot.AppendChild(xLabel);
 
                             XmlNode xScreenshots = xDoc.SelectSingleNode(SCREENSHOTS_XPATH);
@@ -627,10 +651,6 @@ namespace AutoScreenCapture
                         }
                     }
                 }
-
-                stopwatch.Stop();
-
-                Log.Write("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to save screenshots to screenshots.xml");
             }
             finally
             {

@@ -155,7 +155,7 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppVersion, AppCodename))
+                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
                         Save();
                     }
