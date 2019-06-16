@@ -249,11 +249,8 @@ namespace AutoScreenCapture
 
             if (bitmap != null)
             {
-                Log.Write("Images of screens retrieved");
                 return true;
             }
-
-            Log.Write("No screen images available. User may not be logged in");
 
             return false;
         }

@@ -2410,17 +2410,20 @@ namespace AutoScreenCapture
         {
             formScreen.RefreshScreenDictionary();
 
-            _screenCapture.Count++;
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, out Bitmap bitmap))
+            {
+                _screenCapture.Count++;
 
-            _screenCapture.DateTimePreviousCycle = DateTime.Now;
+                _screenCapture.DateTimePreviousCycle = DateTime.Now;
 
-            _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
+                _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
 
-            _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
+                _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
-            RunRegionCaptures();
+                RunRegionCaptures();
 
-            RunScreenCaptures();
+                RunScreenCaptures();
+            }
         }
 
         /// <summary>
@@ -2690,18 +2693,9 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            _screenCapture.Count--;
                             ScreenshotTakenWithFailure();
                         }
                     }
-                    else
-                    {
-                        _screenCapture.Count--;
-                    }
-                }
-                else
-                {
-                    _screenCapture.Count--;
                 }
             }
         }
@@ -2742,19 +2736,10 @@ namespace AutoScreenCapture
                             }
                             else
                             {
-                                _screenCapture.Count--;
                                 ScreenshotTakenWithFailure();
                                 break;
                             }
                         }
-                        else
-                        {
-                            _screenCapture.Count--;
-                        }
-                    }
-                    else
-                    {
-                        _screenCapture.Count--;
                     }
                 }
                 else
@@ -2793,19 +2778,10 @@ namespace AutoScreenCapture
                                 }
                                 else
                                 {
-                                    _screenCapture.Count--;
                                     ScreenshotTakenWithFailure();
                                     break;
                                 }
                             }
-                            else
-                            {
-                                _screenCapture.Count--;
-                            }
-                        }
-                        else
-                        {
-                            _screenCapture.Count--;
                         }
                     }
                 }
