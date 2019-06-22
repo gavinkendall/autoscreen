@@ -27,6 +27,7 @@ namespace AutoScreenCapture
         {
             Add(new MacroTag(string.Empty, string.Empty));
             Add(new MacroTag(MacroTagSpec.Name, "Name of screen or region"));
+            Add(new MacroTag(MacroTagSpec.ScreenNumber, "Screen number (1, 2, 3, 4 ...)"));
             Add(new MacroTag(MacroTagSpec.Format, "Image format of screen or region"));
             Add(new MacroTag(MacroTagSpec.Date, "Date (" + DateTime.Now.ToString(MacroParser.DateFormat) + ")"));
             Add(new MacroTag(MacroTagSpec.Time, "Time (" + DateTime.Now.ToString(MacroParser.TimeFormatForWindows) + ")"));

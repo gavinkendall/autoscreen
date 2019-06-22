@@ -81,9 +81,10 @@ namespace AutoScreenCapture
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(string name, string macro, ImageFormat format)
+        public static string ParseTags(string name, string macro, int screenNumber, ImageFormat format)
         {
             macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
+            macro = macro.Replace(MacroTagSpec.ScreenNumber, screenNumber.ToString());
             macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(MacroTagSpec.Format, format.Name.ToLower()) : macro;
             macro = macro.Replace(MacroTagSpec.Date, screenCapture.DateTimePreviousCycle.ToString(DateFormat));
             macro = macro.Replace(MacroTagSpec.Time, screenCapture.DateTimePreviousCycle.ToString(TimeFormatForWindows));

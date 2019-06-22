@@ -2410,7 +2410,7 @@ namespace AutoScreenCapture
         {
             formScreen.RefreshScreenDictionary();
 
-            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out Bitmap bitmap))
             {
                 _screenCapture.Count++;
 
@@ -2670,15 +2670,14 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                 {
-                    if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, out Bitmap bitmap))
+                    if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                     {
                         if (_screenCapture.TakeScreenshot(
-                            path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, region.Format),
+                            path: FileSystem.CorrectDirectoryPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, -1, region.Format),
                             format: region.Format,
                             component: -1,
                             screenshotType: ScreenshotType.Region,
                             jpegQuality: region.JpegQuality,
-                            resolutionRatio: region.ResolutionRatio,
                             viewId: region.ViewId,
                             bitmap: bitmap,
                             label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
@@ -2713,15 +2712,14 @@ namespace AutoScreenCapture
                     // Active Window
                     if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                     {
-                        if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
+                        if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                         {
                             if (_screenCapture.TakeScreenshot(
-                                path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                                path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format),
                                 format: screen.Format,
                                 component: screen.Component,
                                 screenshotType: ScreenshotType.ActiveWindow,
                                 jpegQuality: screen.JpegQuality,
-                                resolutionRatio: screen.ResolutionRatio,
                                 viewId: screen.ViewId,
                                 bitmap: bitmap,
                                 label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
@@ -2755,15 +2753,14 @@ namespace AutoScreenCapture
                             formScreen.ScreenDictionary[screen.Component].Bounds.X,
                             formScreen.ScreenDictionary[screen.Component].Bounds.Y,
                             formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, out Bitmap bitmap))
+                            formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.TakeScreenshot(
-                                    path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Format),
+                                    path: FileSystem.CorrectDirectoryPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format),
                                     format: screen.Format,
                                     component: screen.Component,
                                     screenshotType: ScreenshotType.Screen,
                                     jpegQuality: screen.JpegQuality,
-                                    resolutionRatio: screen.ResolutionRatio,
                                     viewId: screen.ViewId,
                                     bitmap: bitmap,
                                     label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,

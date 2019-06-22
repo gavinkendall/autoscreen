@@ -10,6 +10,7 @@ namespace AutoScreenCapture
     public static class MacroTagSpec
     {
         public static readonly string Name = "%name%";
+        public static readonly string ScreenNumber = "%screen%";
         public static readonly string Format = "%format%";
         public static readonly string Date = "%date%";
         public static readonly string Time = "%time%";

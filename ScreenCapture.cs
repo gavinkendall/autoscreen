@@ -69,7 +69,6 @@ namespace AutoScreenCapture
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
         public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
-        public  int Ratio { get; set; }
         public  int Delay { get; set; }
         public  int Limit { get; set; }
         public  int Count { get; set; }
@@ -191,26 +190,39 @@ namespace AutoScreenCapture
 
         public  Bitmap GetActiveWindowBitmap()
         {
-            Rectangle rect;
-            GetWindowRect(GetForegroundWindow(), out rect);
-
-            int width = rect.Width - rect.X;
-            int height = rect.Height - rect.Y;
-
-            if (width > 0 && height > 0)
+            try
             {
-                Bitmap bitmap = new Bitmap(width, height);
+                Rectangle rect;
+                GetWindowRect(GetForegroundWindow(), out rect);
 
-                Graphics graphics = Graphics.FromImage(bitmap);
+                int width = rect.Width - rect.X;
+                int height = rect.Height - rect.Y;
 
-                graphics.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
+                if (width > 0 && height > 0)
+                {
+                    Bitmap bitmap = new Bitmap(width, height);
 
-                GC.Collect();
+                    Graphics graphics = Graphics.FromImage(bitmap);
 
-                return bitmap;
+                    graphics.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
+
+                    GC.Collect();
+
+                    return bitmap;
+                }
+
+                return null;
             }
+            catch (Exception ex)
+            {
+                // Don't log an error if Windows is locked at the time a screenshot was taken.
+                if (!ex.Message.Equals("The handle is invalid"))
+                {
+                    Log.Write("ScreenCapture::GetScreenBitmap", ex);
+                }
 
-            return null;
+                return null;
+            }
         }
 
         public string GetActiveWindowTitle()
@@ -227,7 +239,7 @@ namespace AutoScreenCapture
                 return buffer.ToString();
             }
 
-            return string.Empty;
+            return "(system)";
         }
 
         public string GetActiveWindowProcessName()
@@ -239,11 +251,11 @@ namespace AutoScreenCapture
             return p.ProcessName;
         }
 
-        public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
+        public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, int resolutionRatio, out Bitmap bitmap)
         {
             bitmap = component == 0
                 ? GetActiveWindowBitmap()
-                : GetScreenBitmap(x, y, width, height, Ratio, mouse);
+                : GetScreenBitmap(x, y, width, height, resolutionRatio, mouse);
 
             GC.Collect();
 
@@ -256,8 +268,7 @@ namespace AutoScreenCapture
         }
 
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
-            int jpegQuality, int resolutionRatio, Guid viewId, Bitmap bitmap,
-            string label, string windowTitle, string processName,
+            int jpegQuality, Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName,
             ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
         {
             try
@@ -276,7 +287,7 @@ namespace AutoScreenCapture
                         {
                             double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
-                            Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int)freeDiskSpacePercentage + "% and must exceed the " + MIN_FREE_DISK_SPACE_PERCENTAGE + "% limit imposed by the application");
+                            Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int)freeDiskSpacePercentage + "%");
 
                             if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                             {
@@ -292,16 +303,6 @@ namespace AutoScreenCapture
                                     }
 
                                     screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
-                                    Log.Write("Screenshot added to collection as a new and unsaved screenshot");
-                                    Log.Write("View ID = " + viewId);
-                                    Log.Write("Date and time of screenshot = " + DateTimePreviousCycle);
-                                    Log.Write("Path = " + path);
-                                    Log.Write("Image Format = " + format.Name);
-                                    Log.Write("Component = " + component);
-                                    Log.Write("Screenshot Type = " + screenshotType);
-                                    Log.Write("Window Title = " + windowTitle);
-                                    Log.Write("Process Name = " + processName);
-                                    Log.Write("Label = " + label);
 
                                     SaveToFile(path, format, jpegQuality, bitmap);
                                 }
