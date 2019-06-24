@@ -27,12 +27,6 @@ namespace AutoScreenCapture
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new FormMain(args));
                 }
-                // Exit this application's duplicate process in case the user executes a second instance since we want to keep a single instance.
-                else
-                {
-                    Log.Enabled = true;
-                    Log.Write("A duplicate instance of the application was found running. Exiting");
-                }
             }
         }
     }
