@@ -344,7 +344,7 @@ namespace AutoScreenCapture
             {
                 if (bitmap != null && format != null && !string.IsNullOrEmpty(path))
                 {
-                    if (format.Name.Equals(ImageFormatSpec.EXTENSION_JPEG))
+                    if (format.Name.Equals(ImageFormatSpec.NAME_JPEG))
                     {
                         var encoderParams = new EncoderParameters(1);
                         encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuality);
