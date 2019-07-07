@@ -80,8 +80,9 @@ namespace AutoScreenCapture
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
+        /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(string name, string macro, int screenNumber, ImageFormat format)
+        public static string ParseTags(string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle)
         {
             macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
             macro = macro.Replace(MacroTagSpec.ScreenNumber, screenNumber.ToString());
@@ -98,8 +99,28 @@ namespace AutoScreenCapture
             macro = macro.Replace(MacroTagSpec.Count, screenCapture.Count.ToString());
             macro = macro.Replace(MacroTagSpec.User, Environment.UserName);
             macro = macro.Replace(MacroTagSpec.Machine, Environment.MachineName);
+            macro = macro.Replace(MacroTagSpec.Title, activeWindowTitle);
 
-            return macro;
+            return StripInvalidWindowsCharacters(macro);
+        }
+
+        /// <summary>
+        /// Removes characters from a given string that are invalid to Windows.
+        /// </summary>
+        /// <param name="text">The string to parse.</param>
+        /// <returns>A string that no longer contains invalid Windows characters.</returns>
+        private static string StripInvalidWindowsCharacters(string text)
+        {
+            text = text.Replace("/", string.Empty);
+            text = text.Replace(":", string.Empty);
+            text = text.Replace("*", string.Empty);
+            text = text.Replace("?", string.Empty);
+            text = text.Replace("\"", string.Empty);
+            text = text.Replace("<", string.Empty);
+            text = text.Replace(">", string.Empty);
+            text = text.Replace("|", string.Empty);
+
+            return text;
         }
     }
 }

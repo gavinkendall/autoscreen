@@ -41,6 +41,7 @@ namespace AutoScreenCapture
             Add(new MacroTag(MacroTagSpec.Count, "Number of screen capture cycles during the current screen capture session"));
             Add(new MacroTag(MacroTagSpec.User, "Name of logged in user (" + Environment.UserName + ")"));
             Add(new MacroTag(MacroTagSpec.Machine, "Name of machine being used (" + Environment.MachineName + ")"));
+            Add(new MacroTag(MacroTagSpec.Title, "Title of the active window"));
         }
 
         /// <summary>
