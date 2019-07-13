@@ -236,7 +236,8 @@ namespace AutoScreenCapture
 
             if (GetWindowText(handle, buffer, chars) > 0)
             {
-                return buffer.ToString();
+                // Make sure to strip out the backslash if it's in the window title.
+                return buffer.ToString().Replace(@"\", string.Empty);
             }
 
             return "(system)";
