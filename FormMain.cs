@@ -630,6 +630,10 @@ namespace AutoScreenCapture
                 Opacity = 100;
                 toolStripMenuItemShowInterface.Enabled = false;
                 toolStripMenuItemHideInterface.Enabled = true;
+                
+                // Turn off this timer while the window is visible so we can have a nicer user experience
+                // and hopefully avoid any weird enumeration errors because the collection was changed.
+                timerPerformMaintenance.Enabled = false;
 
                 SearchDates();
                 SearchScreenshots();
@@ -668,6 +672,9 @@ namespace AutoScreenCapture
             Opacity = 0;
             toolStripMenuItemShowInterface.Enabled = true;
             toolStripMenuItemHideInterface.Enabled = false;
+
+            // Turn on this timer when the interface is hidden because we might have turned it off during ShowInterface.
+            timerPerformMaintenance.Enabled = true;
 
             Hide();
             Visible = false;

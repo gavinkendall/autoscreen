@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.15";
+        public static readonly string ApplicationVersion = "2.2.0.16";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -46,6 +46,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version("Dalek", "2.2.0.12")); // Fixed bug with JPEG quality
             _versionCollection.Add(new Version("Dalek", "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
             _versionCollection.Add(new Version("Dalek", "2.2.0.14")); // Introduced %title% tag
+            _versionCollection.Add(new Version("Daley", "2.2.0.15")); // Strip out backslash if it's in the active window title
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
