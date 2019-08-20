@@ -272,25 +272,6 @@ namespace AutoScreenCapture
                 checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
                 Log.Write("BoolTakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
 
-                checkBoxPassphraseLock.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value);
-                Log.Write("BoolLockScreenCaptureSession = " + checkBoxPassphraseLock.Checked);
-
-                // Yes, I know. We'll need to hash this at a later time, but for now I hope no one really cares about the security behind the passphrase.
-                textBoxPassphrase.Text = Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString();
-                Log.Write("StringPassphrase = " + textBoxPassphrase.Text);
-
-                if (textBoxPassphrase.Text.Length > 0)
-                {
-                    textBoxPassphrase.ReadOnly = true;
-                    buttonSetPassphrase.Enabled = false;
-                    checkBoxPassphraseLock.Enabled = true;
-                }
-                else
-                {
-                    checkBoxPassphraseLock.Checked = false;
-                    checkBoxPassphraseLock.Enabled = false;
-                }
-
                 toolStripMenuItemShowSystemTrayIcon.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
                 Log.Write("BoolShowSystemTrayIcon = " + toolStripMenuItemShowSystemTrayIcon.Checked);
 
@@ -575,8 +556,6 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value = checkBoxScheduleOnTheseDays.Checked;
                 Settings.User.GetByKey("DateTimeCaptureStopAt",  defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value = dateTimePickerScheduleStopAt.Value;
                 Settings.User.GetByKey("DateTimeCaptureStartAt", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value = dateTimePickerScheduleStartAt.Value;
-                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = checkBoxPassphraseLock.Checked;
-                Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
                 Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = comboBoxScreenshotLabel.Text;
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
@@ -623,17 +602,12 @@ namespace AutoScreenCapture
             // to continue with normal functionality.
             if (!ScreenCapture.LockScreenCaptureSession)
             {
-                checkBoxPassphraseLock.Checked = false;
-                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
+                Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
                 SaveSettings();
 
                 Opacity = 100;
                 toolStripMenuItemShowInterface.Enabled = false;
                 toolStripMenuItemHideInterface.Enabled = true;
-                
-                // Turn off this timer while the window is visible so we can have a nicer user experience
-                // and hopefully avoid any weird enumeration errors because the collection was changed.
-                timerPerformMaintenance.Enabled = false;
 
                 SearchDates();
                 SearchScreenshots();
@@ -673,9 +647,6 @@ namespace AutoScreenCapture
             toolStripMenuItemShowInterface.Enabled = true;
             toolStripMenuItemHideInterface.Enabled = false;
 
-            // Turn on this timer when the interface is hidden because we might have turned it off during ShowInterface.
-            timerPerformMaintenance.Enabled = true;
-
             Hide();
             Visible = false;
             ShowInTaskbar = false;
@@ -704,8 +675,7 @@ namespace AutoScreenCapture
                 // to continue with normal functionality.
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
-                    checkBoxPassphraseLock.Checked = false;
-                    Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
+                    Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
                     SaveSettings();
 
                     DisableStopCapture();
@@ -716,8 +686,6 @@ namespace AutoScreenCapture
 
                     SearchFilterValues();
                     SearchDates();
-
-                    SaveScreenshots();
 
                     Log.Write("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
@@ -755,7 +723,7 @@ namespace AutoScreenCapture
                 _screenCapture.Delay = screenCaptureInterval;
                 _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int) numericUpDownCaptureLimit.Value : 0;
 
-                if (checkBoxPassphraseLock.Checked)
+                if (Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString().Length > 0)
                 {
                     ScreenCapture.LockScreenCaptureSession = true;
                 }
@@ -994,8 +962,7 @@ namespace AutoScreenCapture
                 Log.Write("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
-                checkBoxPassphraseLock.Checked = false;
-                Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
+                Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
                 SaveSettings();
 
                 DisableStopCapture();
@@ -1336,9 +1303,11 @@ namespace AutoScreenCapture
                         checkBoxScheduleStopAt.Checked = true;
                     }
 
-                    if (rgxCommandLineLock.IsMatch(args[i]) && textBoxPassphrase.Text.Length > 0)
+                    string passphrase = Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString();
+
+                    if (rgxCommandLineLock.IsMatch(args[i]) && passphrase.Length > 0)
                     {
-                        checkBoxPassphraseLock.Checked = true;
+                        ScreenCapture.LockScreenCaptureSession = true;
                     }
 
                     if (rgxCommandLineHideSystemTrayIcon.IsMatch(args[i]))
@@ -2342,34 +2311,15 @@ namespace AutoScreenCapture
         {
             if (textBoxPassphrase.Text.Length > 0)
             {
-                Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value = textBoxPassphrase.Text;
+                Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = Security.Hash(textBoxPassphrase.Text);
                 SaveSettings();
 
-                textBoxPassphrase.ReadOnly = true;
-                buttonSetPassphrase.Enabled = false;
+                textBoxPassphrase.Clear();
 
-                checkBoxPassphraseLock.Enabled = true;
+                ScreenCapture.LockScreenCaptureSession = true;
+
+                MessageBox.Show("The passphrase you entered has been securely stored as a SHA-512 hash and your session has been locked.", "Passphrase Set", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        /// <summary>
-        /// Clears the passphrase chosen by the user.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_buttonClearPassphrase(object sender, EventArgs e)
-        {
-            textBoxPassphrase.Clear();
-            textBoxPassphrase.ReadOnly = false;
-
-            checkBoxPassphraseLock.Enabled = false;
-            checkBoxPassphraseLock.Checked = false;
-
-            Settings.User.GetByKey("BoolLockScreenCaptureSession", defaultValue: false).Value = false;
-            Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = string.Empty;
-            SaveSettings();
-
-            textBoxPassphrase.Focus();
         }
 
         #endregion Passphrase
@@ -2575,24 +2525,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Determine if we need to lock the screen capture session or not.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckedChanged_checkBoxPassphraseLock(object sender, EventArgs e)
-        {
-            if (checkBoxPassphraseLock.Checked)
-            {
-                ScreenCapture.LockScreenCaptureSession = true;
-            }
-            else
-            {
-                ScreenCapture.LockScreenCaptureSession = false;
-            }
-        }
-
-        /// <summary>
-        /// Determines when we enable the "Set" button or disable the "Lock" checkbox (and "Set" button) for passphrase.
+        /// Determines when we enable the "Set" button for passphrase.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2604,9 +2537,6 @@ namespace AutoScreenCapture
             }
             else
             {
-                checkBoxPassphraseLock.Enabled = false;
-                checkBoxPassphraseLock.Checked = false;
-
                 buttonSetPassphrase.Enabled = false;
             }
         }

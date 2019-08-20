@@ -90,8 +90,6 @@ namespace AutoScreenCapture
             this.labelKeepScreenshots = new System.Windows.Forms.Label();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
-            this.checkBoxPassphraseLock = new System.Windows.Forms.CheckBox();
-            this.buttonClearPassphrase = new System.Windows.Forms.Button();
             this.labelPasswordDescription = new System.Windows.Forms.Label();
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
@@ -799,42 +797,15 @@ namespace AutoScreenCapture
             // 
             // groupBoxSecurity
             // 
-            this.groupBoxSecurity.Controls.Add(this.checkBoxPassphraseLock);
-            this.groupBoxSecurity.Controls.Add(this.buttonClearPassphrase);
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
             this.groupBoxSecurity.Location = new System.Drawing.Point(6, 6);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
-            this.groupBoxSecurity.Size = new System.Drawing.Size(205, 135);
+            this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 23;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
-            // 
-            // checkBoxPassphraseLock
-            // 
-            this.checkBoxPassphraseLock.AutoSize = true;
-            this.checkBoxPassphraseLock.Location = new System.Drawing.Point(6, 111);
-            this.checkBoxPassphraseLock.Name = "checkBoxPassphraseLock";
-            this.checkBoxPassphraseLock.Size = new System.Drawing.Size(50, 17);
-            this.checkBoxPassphraseLock.TabIndex = 4;
-            this.checkBoxPassphraseLock.TabStop = false;
-            this.checkBoxPassphraseLock.Text = "Lock";
-            this.checkBoxPassphraseLock.UseVisualStyleBackColor = true;
-            this.checkBoxPassphraseLock.CheckedChanged += new System.EventHandler(this.CheckedChanged_checkBoxPassphraseLock);
-            this.checkBoxPassphraseLock.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // buttonClearPassphrase
-            // 
-            this.buttonClearPassphrase.Location = new System.Drawing.Point(141, 107);
-            this.buttonClearPassphrase.Name = "buttonClearPassphrase";
-            this.buttonClearPassphrase.Size = new System.Drawing.Size(52, 23);
-            this.buttonClearPassphrase.TabIndex = 3;
-            this.buttonClearPassphrase.TabStop = false;
-            this.buttonClearPassphrase.Text = "Clear";
-            this.buttonClearPassphrase.UseVisualStyleBackColor = true;
-            this.buttonClearPassphrase.Click += new System.EventHandler(this.Click_buttonClearPassphrase);
-            this.buttonClearPassphrase.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // labelPasswordDescription
             // 
@@ -843,17 +814,17 @@ namespace AutoScreenCapture
             this.labelPasswordDescription.Size = new System.Drawing.Size(186, 55);
             this.labelPasswordDescription.TabIndex = 2;
             this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this inter" +
-    "face is shown, or the application is exiting.";
+    "face is shown, or the application is exiting:";
             // 
             // buttonSetPassphrase
             // 
             this.buttonSetPassphrase.Enabled = false;
-            this.buttonSetPassphrase.Location = new System.Drawing.Point(83, 107);
+            this.buttonSetPassphrase.Location = new System.Drawing.Point(147, 80);
             this.buttonSetPassphrase.Name = "buttonSetPassphrase";
             this.buttonSetPassphrase.Size = new System.Drawing.Size(52, 23);
             this.buttonSetPassphrase.TabIndex = 1;
             this.buttonSetPassphrase.TabStop = false;
-            this.buttonSetPassphrase.Text = "Set";
+            this.buttonSetPassphrase.Text = "Lock";
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
             this.buttonSetPassphrase.Click += new System.EventHandler(this.Click_buttonSetPassphrase);
             this.buttonSetPassphrase.Leave += new System.EventHandler(this.SaveSettings);
@@ -863,7 +834,7 @@ namespace AutoScreenCapture
             this.textBoxPassphrase.Location = new System.Drawing.Point(6, 82);
             this.textBoxPassphrase.MaxLength = 30;
             this.textBoxPassphrase.Name = "textBoxPassphrase";
-            this.textBoxPassphrase.Size = new System.Drawing.Size(187, 20);
+            this.textBoxPassphrase.Size = new System.Drawing.Size(135, 20);
             this.textBoxPassphrase.TabIndex = 0;
             this.textBoxPassphrase.TabStop = false;
             this.textBoxPassphrase.TextChanged += new System.EventHandler(this.TextChanged_textBoxPassphrase);
@@ -1115,7 +1086,7 @@ namespace AutoScreenCapture
             // timerPerformMaintenance
             // 
             this.timerPerformMaintenance.Enabled = true;
-            this.timerPerformMaintenance.Interval = 60000;
+            this.timerPerformMaintenance.Interval = 300000;
             this.timerPerformMaintenance.Tick += new System.EventHandler(this.timerPerformMaintenance_Tick);
             // 
             // FormMain
@@ -1237,8 +1208,6 @@ namespace AutoScreenCapture
         private System.Windows.Forms.CheckBox checkBoxScheduleStopAt;
         private System.Windows.Forms.CheckBox checkBoxScheduleStartAt;
         private System.Windows.Forms.GroupBox groupBoxSecurity;
-        private System.Windows.Forms.CheckBox checkBoxPassphraseLock;
-        private System.Windows.Forms.Button buttonClearPassphrase;
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.TextBox textBoxPassphrase;

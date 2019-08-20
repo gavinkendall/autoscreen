@@ -40,7 +40,7 @@ namespace AutoScreenCapture
         {
             if (!string.IsNullOrEmpty(textBoxPassphrase.Text))
             {
-                if (textBoxPassphrase.Text.Equals(Settings.User.GetByKey("Passphrase", defaultValue: string.Empty).Value))
+                if (Security.Hash(textBoxPassphrase.Text).Equals(Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value))
                 {
                     ScreenCapture.LockScreenCaptureSession = false;
                     Close();

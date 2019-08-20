@@ -286,6 +286,10 @@ namespace AutoScreenCapture
 
                     Settings.VersionManager.OldUserSettings = oldUserSettings;
 
+                    // These settings are no longer used starting with version 2.2.0.17
+                    RemoveByKey("BoolLockScreenCaptureSession");
+                    RemoveByKey("Passphrase");
+
                     if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                     {
                         Log.Write("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
@@ -409,13 +413,6 @@ namespace AutoScreenCapture
                         {
                             SetValueByKey("DateTimeCaptureStartAt",
                                 Convert.ToDateTime(GetByKey("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0), createKeyIfNotFound: false).Value));
-                        }
-
-                        // 2.1 used a setting named "LockScreenCaptureSession", but 2.2 uses "BoolLockScreenCaptureSession".
-                        if (KeyExists("LockScreenCaptureSession"))
-                        {
-                            SetValueByKey("BoolLockScreenCaptureSession",
-                                Convert.ToBoolean(GetByKey("LockScreenCaptureSession", false, createKeyIfNotFound: false).Value));
                         }
 
                         // 2.1 used a setting named "Passphrase", but 2.2 uses "StringPassphrase".

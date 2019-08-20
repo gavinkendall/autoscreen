@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.16";
+        public static readonly string ApplicationVersion = "2.2.0.17";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -47,6 +47,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version("Dalek", "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
             _versionCollection.Add(new Version("Dalek", "2.2.0.14")); // Introduced %title% tag
             _versionCollection.Add(new Version("Daley", "2.2.0.15")); // Strip out backslash if it's in the active window title
+            _versionCollection.Add(new Version("Daley", "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
@@ -102,7 +103,6 @@ namespace AutoScreenCapture
                 User.Add(new Setting("BoolCaptureOnTheseDays", false));
                 User.Add(new Setting("DateTimeCaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)));
                 User.Add(new Setting("DateTimeCaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)));
-                User.Add(new Setting("BoolLockScreenCaptureSession", false));
                 User.Add(new Setting("StringPassphrase", string.Empty));
                 User.Add(new Setting("IntKeepScreenshotsForDays", 30));
                 User.Add(new Setting("StringScreenshotLabel", string.Empty));
