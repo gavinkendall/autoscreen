@@ -22,6 +22,9 @@ namespace AutoScreenCapture
         public static VersionManager VersionManager;
         private static VersionCollection _versionCollection;
 
+        private const string CODENAME_CLARA = "Clara";
+        private const string CODENAME_DALEK = "Dalek";
+
         public static void Initialize()
         {
             _versionCollection = new VersionCollection();
@@ -30,24 +33,24 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
 
             // Older versions should be listed here.
-            _versionCollection.Add(new Version("Clara", "2.1.8.2")); // Last version that introduced the Macro concept
-            _versionCollection.Add(new Version("Dalek", "2.2.0.0")); // Support for unlimited number of screens
-            _versionCollection.Add(new Version("Dalek", "2.2.0.1")); // Fixed empty window title bug
-            _versionCollection.Add(new Version("Dalek", "2.2.0.2")); // Continue screen capture session when drive not available
-            _versionCollection.Add(new Version("Dalek", "2.2.0.3")); // Changes to how we save screenshots
-            _versionCollection.Add(new Version("Dalek", "2.2.0.4")); // More changes to how we save screenshots
-            _versionCollection.Add(new Version("Dalek", "2.2.0.5")); // Fixes the changes to how we save screenshots
-            _versionCollection.Add(new Version("Dalek", "2.2.0.6")); // Can now select an existing label when applying a label
-            _versionCollection.Add(new Version("Dalek", "2.2.0.7")); // Fixed upgrade path from old versions. Can now filter by Process Name
-            _versionCollection.Add(new Version("Dalek", "2.2.0.8")); // Introduced %user% and %machine% macro tags
-            _versionCollection.Add(new Version("Dalek", "2.2.0.9")); // Fixed upgrade path from older versions
-            _versionCollection.Add(new Version("Dalek", "2.2.0.10")); // Fixed bug with %count% tag value when display is not available
-            _versionCollection.Add(new Version("Dalek", "2.2.0.11")); // %screen% tag re-introduced
-            _versionCollection.Add(new Version("Dalek", "2.2.0.12")); // Fixed bug with JPEG quality
-            _versionCollection.Add(new Version("Dalek", "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
-            _versionCollection.Add(new Version("Dalek", "2.2.0.14")); // Introduced %title% tag
-            _versionCollection.Add(new Version("Dalek", "2.2.0.15")); // Strip out backslash if it's in the active window title
-            _versionCollection.Add(new Version("Dalek", "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
+            _versionCollection.Add(new Version(CODENAME_CLARA, "2.1.8.2")); // Last version that introduced the Macro concept
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.0")); // Support for unlimited number of screens
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.1")); // Fixed empty window title bug
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.2")); // Continue screen capture session when drive not available
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.3")); // Changes to how we save screenshots
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.4")); // More changes to how we save screenshots
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.5")); // Fixes the changes to how we save screenshots
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.6")); // Can now select an existing label when applying a label
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.7")); // Fixed upgrade path from old versions. Can now filter by Process Name
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.8")); // Introduced %user% and %machine% macro tags
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.9")); // Fixed upgrade path from older versions
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.10")); // Fixed bug with %count% tag value when display is not available
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.11")); // %screen% tag re-introduced
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.12")); // Fixed bug with JPEG quality
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.14")); // Introduced %title% tag
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.15")); // Strip out backslash if it's in the active window title
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;

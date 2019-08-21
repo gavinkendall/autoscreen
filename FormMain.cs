@@ -70,16 +70,14 @@ namespace AutoScreenCapture
 
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
 
-        private const string REGEX_COMMAND_LINE_STOPAT =
-            @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+        private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
 
-        private const string REGEX_COMMAND_LINE_STARTAT =
-            @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+        private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
 
-        private const string REGEX_COMMAND_LINE_INTERVAL =
-            @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
+        private const string REGEX_COMMAND_LINE_INTERVAL = @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
 
-        private const string REGEX_COMMAND_LINE_LOCK = "^-lock$";
+        private const string REGEX_COMMAND_LINE_PASSPHRASE = "^-passphrase=(?<Passphrase>.+)$";
+
         private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
 
         /// <summary>
@@ -1226,7 +1224,7 @@ namespace AutoScreenCapture
 
                 #endregion Default Values for Command Line Arguments/Options
 
-                Regex rgxCommandLineLock = new Regex(REGEX_COMMAND_LINE_LOCK);
+                Regex rgxCommandLinePassphrase = new Regex(REGEX_COMMAND_LINE_PASSPHRASE);
                 Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
                 Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
                 Regex rgxCommandLineCaptureInterval = new Regex(REGEX_COMMAND_LINE_INTERVAL);
@@ -1262,12 +1260,9 @@ namespace AutoScreenCapture
                     if (rgxCommandLineCaptureInterval.IsMatch(args[i]))
                     {
                         int hours = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Hours"].Value);
-                        int minutes =
-                            Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds =
-                            Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Seconds"].Value);
-                        int milliseconds =
-                            Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Milliseconds"].Value);
+                        int minutes = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Seconds"].Value);
+                        int milliseconds = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Milliseconds"].Value);
 
                         numericUpDownHoursInterval.Value = hours;
                         numericUpDownMinutesInterval.Value = minutes;
@@ -1278,13 +1273,10 @@ namespace AutoScreenCapture
                     if (rgxCommandLineScheduleStartAt.IsMatch(args[i]))
                     {
                         int hours = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Hours"].Value);
-                        int minutes =
-                            Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds =
-                            Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
+                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
 
-                        dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
-                            DateTime.Now.Day, hours, minutes, seconds);
+                        dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStartAt.Checked = true;
                     }
@@ -1292,22 +1284,25 @@ namespace AutoScreenCapture
                     if (rgxCommandLineScheduleStopAt.IsMatch(args[i]))
                     {
                         int hours = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Hours"].Value);
-                        int minutes =
-                            Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds =
-                            Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
+                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
 
-                        dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month,
-                            DateTime.Now.Day, hours, minutes, seconds);
+                        dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStopAt.Checked = true;
                     }
 
-                    string passphrase = Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString();
-
-                    if (rgxCommandLineLock.IsMatch(args[i]) && passphrase.Length > 0)
+                    if (rgxCommandLinePassphrase.IsMatch(args[i]))
                     {
-                        ScreenCapture.LockScreenCaptureSession = true;
+                        string passphrase = rgxCommandLinePassphrase.Match(args[i]).Groups["Passphrase"].Value;
+
+                        if (passphrase.Length > 0)
+                        {
+                            Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = Security.Hash(passphrase);
+                            SaveSettings();
+
+                            ScreenCapture.LockScreenCaptureSession = true;
+                        }
                     }
 
                     if (rgxCommandLineHideSystemTrayIcon.IsMatch(args[i]))
