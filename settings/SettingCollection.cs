@@ -286,6 +286,24 @@ namespace AutoScreenCapture
 
                     Settings.VersionManager.OldUserSettings = oldUserSettings;
 
+                    Version versionInConfig = new Version(AppCodename, AppVersion, false);
+
+                    if (versionInConfig.VersionNumber >= 2200 && versionInConfig.VersionNumber < 22017)
+                    {
+                        if (KeyExists("StringPassphrase"))
+                        {
+                            string passphrase = GetByKey("StringPassphrase", string.Empty, createKeyIfNotFound: false).Value.ToString();
+
+                            if (passphrase.Length > 0)
+                            {
+                                // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
+                                // in an older version of the application then make sure to hash it and lock the session before we continue.
+                                SetValueByKey("StringPassphrase", Security.Hash(passphrase));
+                                ScreenCapture.LockScreenCaptureSession = true;
+                            }
+                        }
+                    }
+
                     // These settings are no longer used starting with version 2.2.0.17
                     RemoveByKey("BoolLockScreenCaptureSession");
                     RemoveByKey("Passphrase");

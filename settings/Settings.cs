@@ -46,8 +46,8 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version("Dalek", "2.2.0.12")); // Fixed bug with JPEG quality
             _versionCollection.Add(new Version("Dalek", "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
             _versionCollection.Add(new Version("Dalek", "2.2.0.14")); // Introduced %title% tag
-            _versionCollection.Add(new Version("Daley", "2.2.0.15")); // Strip out backslash if it's in the active window title
-            _versionCollection.Add(new Version("Daley", "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
+            _versionCollection.Add(new Version("Dalek", "2.2.0.15")); // Strip out backslash if it's in the active window title
+            _versionCollection.Add(new Version("Dalek", "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
