@@ -183,18 +183,21 @@ namespace AutoScreenCapture
             return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
         }
 
-        public  Screenshot GetScreenshot(string slideName, Guid viewId)
+        public Screenshot GetScreenshot(string slideName, Guid viewId)
         {
             Screenshot foundScreenshot = new Screenshot();
 
             if (_screenshotList != null)
             {
-                foreach (Screenshot screenshot in _screenshotList)
+                lock (_screenshotList)
                 {
-                    if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName) && screenshot.ViewId.Equals(viewId))
+                    foreach (Screenshot screenshot in _screenshotList)
                     {
-                        foundScreenshot = screenshot;
-                        break;
+                        if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName) && screenshot.ViewId.Equals(viewId))
+                        {
+                            foundScreenshot = screenshot;
+                            break;
+                        }
                     }
                 }
             }

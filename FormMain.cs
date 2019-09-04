@@ -2737,7 +2737,14 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_screenCapture.Running)
+            notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
+
+            if (_screenCapture.PerformingMaintenance)
+            {
+                notifyIcon.Text = "Performing maintenance ...";
+            }
+
+            if (_screenCapture.Running && !_screenCapture.PerformingMaintenance)
             {
                 int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
                 int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
@@ -2765,11 +2772,6 @@ namespace AutoScreenCapture
                 }
 
                 notifyIcon.Text = "Next capture in " + remainingTimeStr;
-            }
-            else
-            {
-                _screenCapture.DateTimePreviousCycle = DateTime.Now;
-                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
             }
         }
 
@@ -2832,7 +2834,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
+            _screenCapture.PerformingMaintenance = true;
+
             SaveScreenshots();
+
+            _screenCapture.PerformingMaintenance = false;
         }
     }
 }
