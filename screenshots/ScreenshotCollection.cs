@@ -565,11 +565,6 @@ namespace AutoScreenCapture
 
                                 _screenshotList.Remove(screenshot);
                             }
-
-                            lock (xDoc)
-                            {
-                                xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
-                            }
                         }
                     }
 
@@ -639,15 +634,18 @@ namespace AutoScreenCapture
                                     xScreenshots.AppendChild(xScreenshot);
                                 }
 
-                                lock (xDoc)
-                                {
-                                    xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
-                                }
-
                                 screenshot.Saved = true;
 
                                 _screenshotList[i] = screenshot;
                             }
+                        }
+                    }
+
+                    if (xDoc != null)
+                    {
+                        lock (xDoc)
+                        {
+                            xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
                         }
                     }
                 }

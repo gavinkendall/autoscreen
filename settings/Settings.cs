@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.17";
+        public static readonly string ApplicationVersion = "2.2.0.18";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -51,6 +51,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.14")); // Introduced %title% tag
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.15")); // Strip out backslash if it's in the active window title
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.17")); // Passphrase is now hashed
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
