@@ -551,6 +551,7 @@ namespace AutoScreenCapture
             // 
             // tabPageSchedule
             // 
+            this.tabPageSchedule.AutoScroll = true;
             this.tabPageSchedule.Controls.Add(this.groupBoxSchedule);
             this.tabPageSchedule.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedule.Name = "tabPageSchedule";
@@ -787,6 +788,7 @@ namespace AutoScreenCapture
             // 
             // tabPageSecurity
             // 
+            this.tabPageSecurity.AutoScroll = true;
             this.tabPageSecurity.Controls.Add(this.groupBoxSecurity);
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 40);
             this.tabPageSecurity.Name = "tabPageSecurity";
@@ -842,6 +844,7 @@ namespace AutoScreenCapture
             // 
             // tabPageScreens
             // 
+            this.tabPageScreens.AutoScroll = true;
             this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreens.Name = "tabPageScreens";
             this.tabPageScreens.Size = new System.Drawing.Size(241, 190);
@@ -851,6 +854,7 @@ namespace AutoScreenCapture
             // 
             // tabPageRegions
             // 
+            this.tabPageRegions.AutoScroll = true;
             this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
             this.tabPageRegions.Name = "tabPageRegions";
             this.tabPageRegions.Size = new System.Drawing.Size(241, 190);

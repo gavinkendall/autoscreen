@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.19";
+        public static readonly string ApplicationVersion = "2.2.0.20";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -53,6 +53,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.17")); // Passphrase is now hashed
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.18")); // Performance improvement with writing screenshot references to screenshots.xml
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.19")); // Fixing system tray icon messages when mouse hovers over icon during maintenance
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
