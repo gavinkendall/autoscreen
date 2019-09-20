@@ -526,7 +526,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the user's settings.
         /// </summary>
-        /// <param name="e"></param>
         private void SaveSettings()
         {
             try
@@ -1840,6 +1839,17 @@ namespace AutoScreenCapture
                 }
             }
 
+            ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
+            {
+                Text = "Configure",
+                Alignment = ToolStripItemAlignment.Right,
+                AutoToolTip = false,
+                Image = Resources.options
+            };
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen ...");
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Region ...");
+
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
                 Text = "Filename:",
@@ -1870,9 +1880,12 @@ namespace AutoScreenCapture
             toolstripButtonOpenFolder.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
             toolStrip.Items.Add(toolStripSplitButtonEdit);
+            toolStrip.Items.Add(toolStripSplitButtonConfigure);
+            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
             toolStrip.Items.Add(toolstripButtonOpenFolder);
             toolStrip.Items.Add(toolstripTextBoxFilename);
             toolStrip.Items.Add(toolStripLabelFilename);
+            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
 
             return toolStrip;
         }
@@ -2737,41 +2750,45 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
         {
-            notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ")";
-
-            if (_screenCapture.PerformingMaintenance)
+            if (_screenCapture.Running)
             {
-                notifyIcon.Text = "Performing maintenance ...";
-            }
-
-            if (_screenCapture.Running && !_screenCapture.PerformingMaintenance)
-            {
-                int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
-                int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
-                int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
-                int remainingMilliseconds = _screenCapture.TimeRemainingForNextScreenshot.Milliseconds;
-
-                string remainingHoursStr = (remainingHours > 0
-                    ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
-                    : string.Empty);
-                string remainingMinutesStr = (remainingMinutes > 0
-                    ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
-                    : string.Empty);
-
-                string remainingTimeStr = string.Empty;
-
-                if (remainingSeconds < 1)
+                if (_screenCapture.PerformingMaintenance)
                 {
-                    remainingTimeStr = "0." + remainingMilliseconds.ToString() + " milliseconds";
+                    notifyIcon.Text = "Performing maintenance ...";
                 }
                 else
                 {
-                    remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
-                                       " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
-                                       _screenCapture.DateTimeNextCycle.ToLongTimeString();
-                }
+                    int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
+                    int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
+                    int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
+                    int remainingMilliseconds = _screenCapture.TimeRemainingForNextScreenshot.Milliseconds;
 
-                notifyIcon.Text = "Next capture in " + remainingTimeStr;
+                    string remainingHoursStr = (remainingHours > 0
+                        ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
+                        : string.Empty);
+                    string remainingMinutesStr = (remainingMinutes > 0
+                        ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
+                        : string.Empty);
+
+                    string remainingTimeStr = string.Empty;
+
+                    if (remainingSeconds < 1)
+                    {
+                        remainingTimeStr = "0." + remainingMilliseconds.ToString() + " milliseconds";
+                    }
+                    else
+                    {
+                        remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
+                                           " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
+                                           _screenCapture.DateTimeNextCycle.ToLongTimeString();
+                    }
+
+                    notifyIcon.Text = "Next capture in " + remainingTimeStr;
+                }
+            }
+            else
+            {
+                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value.ToString();
             }
         }
 
