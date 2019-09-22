@@ -1641,7 +1641,7 @@ namespace AutoScreenCapture
                     Tag = screen,
                     TabStop = false
                 };
-                buttonChangeScreen.Click += new EventHandler(Click_buttonChangeScreen);
+                buttonChangeScreen.Click += new EventHandler(Click_changeScreen);
                 tabPageScreens.Controls.Add(buttonChangeScreen);
 
                 // Move down the Screens tab page so we're ready to loop around again and add the next Screen to it.
@@ -1732,7 +1732,7 @@ namespace AutoScreenCapture
                     Tag = region,
                     TabStop = false
                 };
-                buttonChangeRegion.Click += new EventHandler(Click_buttonChangeRegion);
+                buttonChangeRegion.Click += new EventHandler(Click_changeRegion);
                 tabPageRegions.Controls.Add(buttonChangeRegion);
 
                 // Move down the Regions tab page so we're ready to loop around again and add the next Region to it.
@@ -1749,7 +1749,8 @@ namespace AutoScreenCapture
                 ToolStrip toolStripScreen = new ToolStrip
                 {
                     Name = screen.Name + "toolStrip",
-                    GripStyle = ToolStripGripStyle.Hidden
+                    GripStyle = ToolStripGripStyle.Hidden,
+                    Tag = screen
                 };
 
                 toolStripScreen = BuildViewTabPageToolStripItems(toolStripScreen, screen.Name);
@@ -1785,7 +1786,8 @@ namespace AutoScreenCapture
                 ToolStrip toolStripRegion = new ToolStrip
                 {
                     Name = region.Name + "toolStrip",
-                    GripStyle = ToolStripGripStyle.Hidden
+                    GripStyle = ToolStripGripStyle.Hidden,
+                    Tag = region
                 };
 
                 toolStripRegion = BuildViewTabPageToolStripItems(toolStripRegion, region.Name);
@@ -1847,8 +1849,56 @@ namespace AutoScreenCapture
                 Image = Resources.options
             };
 
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen ...");
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Region ...");
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen", null, Click_addScreen);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Region", null, Click_addRegion);
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
+
+            if (toolStrip.Tag is Screen)
+            {
+                ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
+                {
+                    Text = "Change Screen",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemChangeScreen.Click += new EventHandler(Click_changeScreen);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemChangeScreen);
+
+                ToolStripMenuItem toolStripMenuItemRemoveScreen = new ToolStripMenuItem
+                {
+                    Text = "Remove Screen",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemRemoveScreen.Click += new EventHandler(Click_removeScreen);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveScreen);
+            }
+
+            if (toolStrip.Tag is Region)
+            {
+                ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
+                {
+                    Text = "Change Region",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemRegion.Click += new EventHandler(Click_changeRegion);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRegion);
+
+                ToolStripMenuItem toolStripMenuItemRemoveRegion = new ToolStripMenuItem
+                {
+                    Text = "Remove Region",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemRemoveRegion.Click += new EventHandler(Click_removeRegion);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
+            }
 
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
@@ -2196,26 +2246,52 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_buttonChangeRegion(object sender, EventArgs e)
+        private void Click_changeRegion(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button) sender;
+            Region region = new Region();
 
-            if (buttonSelected.Tag != null)
+            if (sender is Button)
             {
-                formRegion.RegionObject = (Region) buttonSelected.Tag;
-                formRegion.ImageFormatCollection = _imageFormatCollection;
-                formRegion.MacroTagCollection = _macroTagCollection;
-                formRegion.screenCapture = _screenCapture;
+                Button buttonSelected = (Button)sender;
+                region = (Region)buttonSelected.Tag;
+            }
 
-                formRegion.ShowDialog(this);
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                region = (Region)toolStripMenuItemSelected.Tag;
+            }
 
-                if (formRegion.DialogResult == DialogResult.OK)
-                {
-                    BuildRegionsModule();
-                    BuildViewTabPages();
+            formRegion.RegionObject = region;
+            formRegion.ImageFormatCollection = _imageFormatCollection;
+            formRegion.MacroTagCollection = _macroTagCollection;
+            formRegion.screenCapture = _screenCapture;
 
-                    formRegion.RegionCollection.Save();
-                }
+            formRegion.ShowDialog(this);
+
+            if (formRegion.DialogResult == DialogResult.OK)
+            {
+                BuildRegionsModule();
+                BuildViewTabPages();
+
+                formRegion.RegionCollection.Save();
+            }
+        }
+
+        private void Click_removeRegion(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                Region regionSelected = (Region)toolStripMenuItemSelected.Tag;
+
+                Region region = formRegion.RegionCollection.Get(regionSelected);
+                formRegion.RegionCollection.Remove(region);
+
+                BuildRegionsModule();
+                BuildViewTabPages();
+
+                formRegion.RegionCollection.Save();
             }
         }
 
@@ -2283,26 +2359,52 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_buttonChangeScreen(object sender, EventArgs e)
+        private void Click_changeScreen(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button) sender;
+            Screen screen = new Screen();
 
-            if (buttonSelected.Tag != null)
+            if (sender is Button)
             {
-                formScreen.ScreenObject = (Screen) buttonSelected.Tag;
-                formScreen.ImageFormatCollection = _imageFormatCollection;
-                formScreen.MacroTagCollection = _macroTagCollection;
-                formScreen.screenCapture = _screenCapture;
+                Button buttonSelected = (Button)sender;
+                screen = (Screen)buttonSelected.Tag;
+            }
 
-                formScreen.ShowDialog(this);
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                screen = (Screen)toolStripMenuItemSelected.Tag;
+            }
 
-                if (formScreen.DialogResult == DialogResult.OK)
-                {
-                    BuildScreensModule();
-                    BuildViewTabPages();
+            formScreen.ScreenObject = screen;
+            formScreen.ImageFormatCollection = _imageFormatCollection;
+            formScreen.MacroTagCollection = _macroTagCollection;
+            formScreen.screenCapture = _screenCapture;
 
-                    formScreen.ScreenCollection.Save();
-                }
+            formScreen.ShowDialog(this);
+
+            if (formScreen.DialogResult == DialogResult.OK)
+            {
+                BuildScreensModule();
+                BuildViewTabPages();
+
+                formScreen.ScreenCollection.Save();
+            }
+        }
+
+        private void Click_removeScreen(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                Screen screenSelected = (Screen)toolStripMenuItemSelected.Tag;
+
+                Screen screen = formScreen.ScreenCollection.Get(screenSelected);
+                formScreen.ScreenCollection.Remove(screen);
+
+                BuildScreensModule();
+                BuildViewTabPages();
+
+                formScreen.ScreenCollection.Save();
             }
         }
 
