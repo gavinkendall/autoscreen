@@ -13,7 +13,7 @@ namespace AutoScreenCapture
     public static class Settings
     {
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.21";
+        public static readonly string ApplicationVersion = "2.2.0.22";
         public static readonly string ApplicationCodename = "Dalek";
 
         public static SettingCollection Application;
@@ -55,6 +55,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.18")); // Performance improvement with writing screenshot references to screenshots.xml
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.19")); // Fixing system tray icon messages when mouse hovers over icon during maintenance
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.20")); // Tab pages auto scroll
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.21")); // Introduced Configure menu for each Screen and Region
 
             Application = new SettingCollection();
             Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;

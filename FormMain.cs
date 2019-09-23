@@ -603,8 +603,6 @@ namespace AutoScreenCapture
                 SaveSettings();
 
                 Opacity = 100;
-                toolStripMenuItemShowInterface.Enabled = false;
-                toolStripMenuItemHideInterface.Enabled = true;
 
                 SearchDates();
                 SearchScreenshots();
@@ -641,8 +639,6 @@ namespace AutoScreenCapture
             Log.Write("Hiding interface");
 
             Opacity = 0;
-            toolStripMenuItemShowInterface.Enabled = true;
-            toolStripMenuItemHideInterface.Enabled = false;
 
             Hide();
             Visible = false;
@@ -1316,7 +1312,10 @@ namespace AutoScreenCapture
 
                 InitializeThreads();
 
-                StartScreenCapture();
+                if (!checkBoxScheduleStartAt.Checked)
+                {
+                    StartScreenCapture();
+                }
             }
             catch (Exception ex)
             {
