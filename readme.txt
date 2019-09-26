@@ -70,4 +70,4 @@ autoscreen.exe -interval=00:01:00.000 -initial -hideSystemTrayIcon
 Starts the application, takes initial screenshots, waits for 1 minute, takes the next set of screenshots, waits for 1 minute, takes screenshots, etc. until the application is stopped. Also hides the system tray icon.
 
 autoscreen.exe -interval=00:01:00.000 -initial -startat=13:30:00 -stopat=21:30:00
-Starts the application at 1:30pm, takes initial screenshots, waits for 1 minute, takes the next set of screenshots, waits for 1 minute, etc. until the application stops at 9:30pm or the application is stopped by the user.
+Starts the application's timer at 1:30pm, takes initial screenshots, waits for 1 minute, takes the next set of screenshots, waits for 1 minute, etc. until the application's timer stops at 9:30pm or the application is stopped by the user.
