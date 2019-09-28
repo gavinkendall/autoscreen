@@ -31,8 +31,8 @@ namespace AutoScreenCapture
         private const string EDITOR_APPLICATION = "application";
         private const string EDITOR_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_EDITORS_NODE + "/" + XML_FILE_EDITOR_NODE;
 
-        public static string AppCodename { get; set; }
-        public static string AppVersion { get; set; }
+        private static string AppCodename { get; set; }
+        private static string AppVersion { get; set; }
 
         /// <summary>
         /// 
@@ -126,10 +126,10 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(FileSystem.ApplicationFolder) && File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
+                if (File.Exists(FileSystem.EditorsFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
+                    xDoc.Load(FileSystem.EditorsFile);
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -197,53 +197,50 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(FileSystem.ApplicationFolder))
+                XmlWriterSettings xSettings = new XmlWriterSettings
                 {
-                    XmlWriterSettings xSettings = new XmlWriterSettings
+                    Indent = true,
+                    CloseOutput = true,
+                    CheckCharacters = true,
+                    Encoding = Encoding.UTF8,
+                    NewLineChars = Environment.NewLine,
+                    IndentChars = XML_FILE_INDENT_CHARS,
+                    NewLineHandling = NewLineHandling.Entitize,
+                    ConformanceLevel = ConformanceLevel.Document
+                };
+
+                if (File.Exists(FileSystem.EditorsFile))
+                {
+                    File.Delete(FileSystem.EditorsFile);
+                }
+
+                using (XmlWriter xWriter =
+                    XmlWriter.Create(FileSystem.EditorsFile, xSettings))
+                {
+                    xWriter.WriteStartDocument();
+                    xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
+
+                    foreach (object obj in _editorList)
                     {
-                        Indent = true,
-                        CloseOutput = true,
-                        CheckCharacters = true,
-                        Encoding = Encoding.UTF8,
-                        NewLineChars = Environment.NewLine,
-                        IndentChars = XML_FILE_INDENT_CHARS,
-                        NewLineHandling = NewLineHandling.Entitize,
-                        ConformanceLevel = ConformanceLevel.Document
-                    };
+                        Editor editor = (Editor) obj;
 
-                    if (File.Exists(FileSystem.ApplicationFolder + FileSystem.EditorsFile))
-                    {
-                        File.Delete(FileSystem.ApplicationFolder + FileSystem.EditorsFile);
-                    }
-
-                    using (XmlWriter xWriter =
-                        XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.EditorsFile, xSettings))
-                    {
-                        xWriter.WriteStartDocument();
-                        xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                        xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                        xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
-                        xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
-
-                        foreach (object obj in _editorList)
-                        {
-                            Editor editor = (Editor) obj;
-
-                            xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
-                            xWriter.WriteElementString(EDITOR_NAME, editor.Name);
-                            xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
-                            xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
-
-                            xWriter.WriteEndElement();
-                        }
+                        xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
+                        xWriter.WriteElementString(EDITOR_NAME, editor.Name);
+                        xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
+                        xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
 
                         xWriter.WriteEndElement();
-                        xWriter.WriteEndElement();
-                        xWriter.WriteEndDocument();
-
-                        xWriter.Flush();
-                        xWriter.Close();
                     }
+
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndElement();
+                    xWriter.WriteEndDocument();
+
+                    xWriter.Flush();
+                    xWriter.Close();
                 }
             }
             catch (Exception ex)

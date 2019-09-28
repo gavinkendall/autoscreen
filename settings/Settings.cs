@@ -10,21 +10,52 @@ namespace AutoScreenCapture
     using System;
     using System.IO;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Settings
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ApplicationName = "Auto Screen Capture";
-        public static readonly string ApplicationVersion = "2.2.0.22";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string ApplicationVersion = "2.2.1.0";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly string ApplicationCodename = "Dalek";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static SettingCollection Application;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static SettingCollection User;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static VersionManager VersionManager;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static VersionCollection _versionCollection;
 
         private const string CODENAME_CLARA = "Clara";
         private const string CODENAME_DALEK = "Dalek";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void Initialize()
         {
             _versionCollection = new VersionCollection();
@@ -56,20 +87,20 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.19")); // Fixing system tray icon messages when mouse hovers over icon during maintenance
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.20")); // Tab pages auto scroll
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.21")); // Introduced Configure menu for each Screen and Region
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.22")); // Fixed scheduled start time with -startat command line argument
 
-            Application = new SettingCollection();
-            Application.Filepath = FileSystem.SettingsFolder + FileSystem.ApplicationSettingsFile;
+            Application = new SettingCollection
+            {
+                Filepath = FileSystem.ApplicationSettingsFile
+            };
 
-            User = new SettingCollection();
-            User.Filepath = FileSystem.SettingsFolder + FileSystem.UserSettingsFile;
+            User = new SettingCollection
+            {
+                Filepath = FileSystem.UserSettingsFile
+            };
 
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
             VersionManager = new VersionManager(_versionCollection, User);
-
-            if (!Directory.Exists(FileSystem.SettingsFolder))
-            {
-                Directory.CreateDirectory(FileSystem.SettingsFolder);
-            }
 
             if (Application != null)
             {
@@ -118,6 +149,11 @@ namespace AutoScreenCapture
 
                 User.Save();
             }
+
+            Log.Enabled = Convert.ToBoolean(Application.GetByKey("DebugMode", defaultValue: false).Value);
+
+            Log.Write("*** Welcome to " + ApplicationName + " " + ApplicationVersion + " ***");
+            Log.Write("Starting application");
         }
     }
 }

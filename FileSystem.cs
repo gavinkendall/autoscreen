@@ -28,67 +28,62 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
+        public static string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\autoscreen.conf";
+
+        /// <summary>
+        /// This is to be backwards compatible with an old version of the application that used the "slides" folder.
+        /// </summary>
+        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides";
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ApplicationFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\";
+        public static string ScreenshotsFolder;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string DebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+        public static string DebugFolder;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string LogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\logs\\";
+        public static string LogsFolder;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
+        public static string ApplicationSettingsFile;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string UserSettingsFile = "user.xml";
+        public static string UserSettingsFile;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ApplicationSettingsFile = "application.xml";
+        public static string EditorsFile;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string SettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
+        public static string RegionsFile;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string EditorsFile = "editors.xml";
+        public static string ScreensFile;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string RegionsFile = "regions.xml";
+        public static string TriggersFile;
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ScreensFile = "screens.xml";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly string TriggersFile = "triggers.xml";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static readonly string ScreenshotsFile = "screenshots.xml";
+        public static string ScreenshotsFile;
 
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets to include the trailing backslash.
@@ -97,9 +92,9 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public static string CorrectDirectoryPath(string folderPath)
         {
-            if (folderPath.Length == 0)
+            if (string.IsNullOrEmpty(folderPath) || folderPath.Length <= 0)
             {
-                folderPath = FileSystem.ScreenshotsFolder;
+                folderPath = ScreenshotsFolder;
             }
 
             if (!folderPath.EndsWith(@"\"))

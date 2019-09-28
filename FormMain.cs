@@ -66,6 +66,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// The various regular expressions used in the parsing of the command line arguments.
         /// </summary>
+        private const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
+
         private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
 
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
@@ -88,31 +90,25 @@ namespace AutoScreenCapture
         {
             InitializeComponent();
 
-            if (!Directory.Exists(FileSystem.ApplicationFolder))
-            {
-                Directory.CreateDirectory(FileSystem.ApplicationFolder);
-            }
-
-            Settings.Initialize();
-
-            Log.Enabled = Convert.ToBoolean(Settings.Application.GetByKey("DebugMode", defaultValue: false).Value);
-
-            Log.Write("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " ***");
-            Log.Write("Starting application");
-
-            LoadSettings();
-
-            Text = (string) Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
-
-            InitializeThreads();
-
-            // Get rid of the old "slides" directory that may still remain from an old version of the application.
-            DeleteSlides();
-
             if (args.Length > 0)
             {
                 ParseCommandLineArguments(args);
             }
+            else
+            {
+                Config.Load();
+
+                Settings.Initialize();
+
+                LoadSettings();
+
+                Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
+
+                InitializeThreads();
+            }
+
+            // Get rid of the old "slides" directory that may still remain from an old version of the application.
+            DeleteSlides();
         }
 
         /// <summary>
@@ -1199,7 +1195,7 @@ namespace AutoScreenCapture
             {
                 Log.Write("Parsing command line arguments.");
 
-                #region Default Values for Command Line Arguments/Options
+                #region Default Values for Command Line Arguments
 
                 checkBoxInitialScreenshot.Checked = false;
 
@@ -1217,15 +1213,7 @@ namespace AutoScreenCapture
 
                 toolStripMenuItemShowSystemTrayIcon.Checked = true;
 
-                #endregion Default Values for Command Line Arguments/Options
-
-                Regex rgxCommandLinePassphrase = new Regex(REGEX_COMMAND_LINE_PASSPHRASE);
-                Regex rgxCommandLineLimit = new Regex(REGEX_COMMAND_LINE_LIMIT);
-                Regex rgxCommandLineInitial = new Regex(REGEX_COMMAND_LINE_INITIAL);
-                Regex rgxCommandLineCaptureInterval = new Regex(REGEX_COMMAND_LINE_INTERVAL);
-                Regex rgxCommandLineScheduleStopAt = new Regex(REGEX_COMMAND_LINE_STOPAT);
-                Regex rgxCommandLineScheduleStartAt = new Regex(REGEX_COMMAND_LINE_STARTAT);
-                Regex rgxCommandLineHideSystemTrayIcon = new Regex(REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON);
+                #endregion Default Values for Command Line Arguments
 
                 #region Command Line Argument Parsing
 
@@ -1236,14 +1224,30 @@ namespace AutoScreenCapture
                         Log.Write("Parsing command line argument at index " + i + " --> " + args[i]);
                     }
 
-                    if (rgxCommandLineInitial.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_CONFIG))
+                    {
+                        string configFile = Regex.Match(args[i], REGEX_COMMAND_LINE_CONFIG).Groups["ConfigFile"].Value;
+
+                        if (configFile.Length > 0)
+                        {
+                            FileSystem.ConfigFile = configFile;
+
+                            Config.Load();
+
+                            Settings.Initialize();
+
+                            LoadSettings();
+                        }
+                    }
+
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_INITIAL))
                     {
                         checkBoxInitialScreenshot.Checked = true;
                     }
 
-                    if (rgxCommandLineLimit.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_LIMIT))
                     {
-                        int cmdLimit = Convert.ToInt32(rgxCommandLineLimit.Match(args[i]).Groups["Limit"].Value);
+                        int cmdLimit = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_LIMIT).Groups["Limit"].Value);
 
                         if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
                         {
@@ -1252,12 +1256,12 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (rgxCommandLineCaptureInterval.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_INTERVAL))
                     {
-                        int hours = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Seconds"].Value);
-                        int milliseconds = Convert.ToInt32(rgxCommandLineCaptureInterval.Match(args[i]).Groups["Milliseconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
+                        int milliseconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
 
                         numericUpDownHoursInterval.Value = hours;
                         numericUpDownMinutesInterval.Value = minutes;
@@ -1265,31 +1269,31 @@ namespace AutoScreenCapture
                         numericUpDownMillisecondsInterval.Value = milliseconds;
                     }
 
-                    if (rgxCommandLineScheduleStartAt.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_STARTAT))
                     {
-                        int hours = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStartAt.Match(args[i]).Groups["Seconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
 
                         dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStartAt.Checked = true;
                     }
 
-                    if (rgxCommandLineScheduleStopAt.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_STOPAT))
                     {
-                        int hours = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(rgxCommandLineScheduleStopAt.Match(args[i]).Groups["Seconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
 
                         dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStopAt.Checked = true;
                     }
 
-                    if (rgxCommandLinePassphrase.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_PASSPHRASE))
                     {
-                        string passphrase = rgxCommandLinePassphrase.Match(args[i]).Groups["Passphrase"].Value;
+                        string passphrase = Regex.Match(args[i], REGEX_COMMAND_LINE_PASSPHRASE).Groups["Passphrase"].Value;
 
                         if (passphrase.Length > 0)
                         {
@@ -1300,7 +1304,7 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (rgxCommandLineHideSystemTrayIcon.IsMatch(args[i]))
+                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
                         toolStripMenuItemShowSystemTrayIcon.Checked = false;
                     }

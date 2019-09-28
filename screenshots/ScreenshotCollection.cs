@@ -17,6 +17,9 @@ namespace AutoScreenCapture
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class ScreenshotCollection
     {
         private XmlDocument xDoc;
@@ -48,9 +51,13 @@ namespace AutoScreenCapture
         private const string SCREENSHOTS_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE;
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
-        public  string AppCodename { get; set; }
-        public  string AppVersion { get; set; }
+        private  string AppCodename { get; set; }
+        private  string AppVersion { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="screenshot"></param>
         public void Add(Screenshot screenshot)
         {
             lock (_screenshotList)
@@ -71,16 +78,29 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public  Screenshot Get(int index)
         {
             return (Screenshot)_screenshotList[index];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public  int Count
         {
             get { return _screenshotList.Count; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filterType"></param>
+        /// <returns></returns>
         public  List<string> GetFilterValueList(string filterType)
         {
             if (filterType.Equals("Image Format"))
@@ -106,6 +126,12 @@ namespace AutoScreenCapture
             return new List<string>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filterType"></param>
+        /// <param name="filterValue"></param>
+        /// <returns></returns>
         public  List<string> GetDates(string filterType, string filterValue)
         {
             if (!string.IsNullOrEmpty(filterValue))
@@ -134,6 +160,13 @@ namespace AutoScreenCapture
             return _screenshotList.Select(x => x.Date).ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filterType"></param>
+        /// <param name="filterValue"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public  List<Slide> GetSlides(string filterType, string filterValue, string date)
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -178,11 +211,21 @@ namespace AutoScreenCapture
             return slides;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetLabels()
         {
             return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slideName"></param>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
         public Screenshot GetScreenshot(string slideName, Guid viewId)
         {
             Screenshot foundScreenshot = new Screenshot();
@@ -238,9 +281,9 @@ namespace AutoScreenCapture
                     Log.Write("Initialized slide name list");
                 }
 
-                if (_screenshotList != null && Directory.Exists(FileSystem.ApplicationFolder) && !File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
+                if (_screenshotList != null && !File.Exists(FileSystem.ScreenshotsFile))
                 {
-                    Log.Write("Could not find \"" + FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile + "\" so creating it");
+                    Log.Write("Could not find \"" + FileSystem.ScreenshotsFile + "\" so creating it");
 
                     XmlWriterSettings xSettings = new XmlWriterSettings
                     {
@@ -254,7 +297,7 @@ namespace AutoScreenCapture
                         ConformanceLevel = ConformanceLevel.Document
                     };
 
-                    using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile, xSettings))
+                    using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ScreenshotsFile, xSettings))
                     {
                         xWriter.WriteStartDocument();
                         xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
@@ -270,16 +313,16 @@ namespace AutoScreenCapture
                         xWriter.Close();
                     }
 
-                    Log.Write("Created \"" + FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile + "\"");
+                    Log.Write("Created \"" + FileSystem.ScreenshotsFile + "\"");
                 }
 
-                if (_screenshotList != null && Directory.Exists(FileSystem.ApplicationFolder) && File.Exists(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile))
+                if (_screenshotList != null && File.Exists(FileSystem.ScreenshotsFile))
                 {
                     xDoc = new XmlDocument();
 
                     lock (xDoc)
                     {
-                        xDoc.Load(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                        xDoc.Load(FileSystem.ScreenshotsFile);
 
                         AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                         AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -513,7 +556,7 @@ namespace AutoScreenCapture
                             xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes["app:version"].Value = Settings.ApplicationVersion;
                             xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes["app:codename"].Value = Settings.ApplicationCodename;
 
-                            xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                            xDoc.Save(FileSystem.ScreenshotsFile);
 
                             Log.Write("Upgraded screenshots.xml");
                         }
@@ -648,7 +691,7 @@ namespace AutoScreenCapture
                     {
                         lock (xDoc)
                         {
-                            xDoc.Save(FileSystem.ApplicationFolder + FileSystem.ScreenshotsFile);
+                            xDoc.Save(FileSystem.ScreenshotsFile);
                         }
                     }
                 }
