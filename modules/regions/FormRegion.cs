@@ -89,7 +89,7 @@ namespace AutoScreenCapture
                 Text = "Change Region";
 
                 textBoxName.Text = RegionObject.Name;
-                textBoxFolder.Text = FileSystem.CorrectDirectoryPath(RegionObject.Folder);
+                textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(RegionObject.Folder);
                 textBoxMacro.Text = RegionObject.Macro;
                 comboBoxFormat.SelectedItem = RegionObject.Format.Name;
                 numericUpDownJpegQuality.Value = RegionObject.JpegQuality;
@@ -147,7 +147,7 @@ namespace AutoScreenCapture
                 {
                     RegionCollection.Add(new Region(
                         textBoxName.Text,
-                        FileSystem.CorrectDirectoryPath(textBoxFolder.Text),
+                        FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         textBoxMacro.Text,
                         ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         (int)numericUpDownJpegQuality.Value,
@@ -189,7 +189,7 @@ namespace AutoScreenCapture
                     else
                     {
                         RegionCollection.Get(RegionObject).Name = textBoxName.Text;
-                        RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectDirectoryPath(textBoxFolder.Text);
+                        RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownJpegQuality.Value;

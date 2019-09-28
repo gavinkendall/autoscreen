@@ -234,7 +234,7 @@ namespace AutoScreenCapture
                                 // Get the screenshots folder path from the old user settings to be used for the region's folder property.
                                 region.Folder = Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
 
-                                region.Folder = FileSystem.CorrectDirectoryPath(region.Folder);
+                                region.Folder = FileSystem.CorrectScreenshotsFolderPath(region.Folder);
 
                                 // 2.1 used "%region%", but 2.2 uses "%name%" for a region's Macro value.
                                 region.Macro = region.Macro.Replace("%region%", "%name%");
@@ -308,7 +308,7 @@ namespace AutoScreenCapture
                         xWriter.WriteStartElement(XML_FILE_REGION_NODE);
                         xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                         xWriter.WriteElementString(REGION_NAME, region.Name);
-                        xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectDirectoryPath(region.Folder));
+                        xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectScreenshotsFolderPath(region.Folder));
                         xWriter.WriteElementString(REGION_MACRO, region.Macro);
                         xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
                         xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());

@@ -102,28 +102,25 @@ namespace AutoScreenCapture
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
             VersionManager = new VersionManager(_versionCollection, User);
 
-            if (Application != null)
+            if (Application != null && !string.IsNullOrEmpty(Application.Filepath) && File.Exists(Application.Filepath))
             {
-                if (File.Exists(Application.Filepath))
-                {
-                    Application.Load();
+                Application.Load();
 
-                    Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
-                    Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
+                Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
+                Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
 
-                    Application.Save();
-                }
-                else
-                {
-                    Application.Add(new Setting("Name", ApplicationName));
-                    Application.Add(new Setting("Version", ApplicationVersion));
-                    Application.Add(new Setting("DebugMode", false));
+                Application.Save();
+            }
+            else
+            {
+                Application.Add(new Setting("Name", ApplicationName));
+                Application.Add(new Setting("Version", ApplicationVersion));
+                Application.Add(new Setting("DebugMode", false));
 
-                    Application.Save();
-                }
+                Application.Save();
             }
 
-            if (User != null && !File.Exists(User.Filepath))
+            if (User != null && !string.IsNullOrEmpty(User.Filepath) && !File.Exists(User.Filepath))
             {
                 User.Add(new Setting("IntScreenCaptureInterval", 60000));
                 User.Add(new Setting("IntCaptureLimit", 0));

@@ -29,7 +29,7 @@ namespace AutoScreenCapture
         {
             ViewId = Guid.NewGuid();
             Name = name;
-            Folder = FileSystem.CorrectDirectoryPath(folder);
+            Folder = FileSystem.CorrectScreenshotsFolderPath(folder);
             Macro = macro;
             Component = component;
             Format = format;

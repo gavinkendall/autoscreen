@@ -18,7 +18,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public readonly static string PathDelimiter = "\\";
+        public readonly static string PathDelimiter = Path.DirectorySeparatorChar.ToString();
 
         /// <summary>
         /// The file manager to execute whenever the user chooses to open their screenshots folder or edits the selected screenshot.
@@ -86,23 +86,24 @@ namespace AutoScreenCapture
         public static string ScreenshotsFile;
 
         /// <summary>
-        /// Just in case the user gives us an empty folder path or forgets to include the trailing backslash.
+        /// Just in case the user gives us an empty folder path or forgets
+        /// to include the trailing backslash for the screenshots folder.
         /// </summary>
-        /// <param name="folderPath"></param>
+        /// <param name="screenshotsFolderPath"></param>
         /// <returns></returns>
-        public static string CorrectDirectoryPath(string folderPath)
+        public static string CorrectScreenshotsFolderPath(string screenshotsFolderPath)
         {
-            if (string.IsNullOrEmpty(folderPath) || folderPath.Length <= 0)
+            if (string.IsNullOrEmpty(screenshotsFolderPath) || screenshotsFolderPath.Length <= 0)
             {
-                folderPath = ScreenshotsFolder;
+                screenshotsFolderPath = ScreenshotsFolder;
             }
 
-            if (!folderPath.EndsWith(@"\"))
+            if (!screenshotsFolderPath.EndsWith(PathDelimiter))
             {
-                folderPath += @"\";
+                screenshotsFolderPath += PathDelimiter;
             }
 
-            return folderPath;
+            return screenshotsFolderPath;
         }
 
         /// <summary>

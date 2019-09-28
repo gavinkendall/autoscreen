@@ -297,7 +297,7 @@ namespace AutoScreenCapture
                         xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
                         xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                         xWriter.WriteElementString(SCREEN_NAME, screen.Name);
-                        xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectDirectoryPath(screen.Folder));
+                        xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectScreenshotsFolderPath(screen.Folder));
                         xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
                         xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
                         xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);

@@ -82,7 +82,7 @@ namespace AutoScreenCapture
                 Text = "Change Screen";
 
                 textBoxName.Text = ScreenObject.Name;
-                textBoxFolder.Text = FileSystem.CorrectDirectoryPath(ScreenObject.Folder);
+                textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
                 textBoxMacro.Text = ScreenObject.Macro;
 
                 if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
@@ -160,7 +160,7 @@ namespace AutoScreenCapture
                 {
                     ScreenCollection.Add(new Screen(
                         textBoxName.Text,
-                        FileSystem.CorrectDirectoryPath(textBoxFolder.Text),
+                        FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         textBoxMacro.Text,
                         comboBoxScreenComponent.SelectedIndex,
                         ImageFormatCollection.GetByName(comboBoxFormat.Text),
@@ -199,7 +199,7 @@ namespace AutoScreenCapture
                     else
                     {
                         ScreenCollection.Get(ScreenObject).Name = textBoxName.Text;
-                        ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectDirectoryPath(textBoxFolder.Text);
+                        ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);

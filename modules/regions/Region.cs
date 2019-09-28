@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         {
             ViewId = Guid.NewGuid();
             Name = name;
-            Folder = FileSystem.CorrectDirectoryPath(folder);
+            Folder = FileSystem.CorrectScreenshotsFolderPath(folder);
             Macro = macro;
             Format = format;
             JpegQuality = jpegQuality;
