@@ -47,8 +47,23 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
+                if (ex != null)
+                {
+                    Enabled = true;
+                }
+
                 if (Enabled)
                 {
+                    if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+                    {
+                        FileSystem.DebugFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + FileSystem.PathDelimiter + "debug" + FileSystem.PathDelimiter;
+                    }
+
+                    if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+                    {
+                        FileSystem.LogsFolder = FileSystem.DebugFolder + "logs" + FileSystem.PathDelimiter;
+                    }
+
                     if (!Directory.Exists(FileSystem.DebugFolder))
                     {
                         Directory.CreateDirectory(FileSystem.DebugFolder);

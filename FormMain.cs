@@ -582,48 +582,55 @@ namespace AutoScreenCapture
         /// </summary>
         private void ShowInterface()
         {
-            Log.Write("Showing interface");
-
-            if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+            try
             {
-                Log.Write("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                formEnterPassphrase.ShowDialog(this);
-            }
+                Log.Write("Showing interface");
 
-            // This is intentional. Do not rewrite these statements as an if/else
-            // because as soon as lockScreenCaptureSession is set to false we want
-            // to continue with normal functionality.
-            if (!ScreenCapture.LockScreenCaptureSession)
-            {
-                Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
-                SaveSettings();
-
-                Opacity = 100;
-
-                SearchDates();
-                SearchScreenshots();
-
-                List<string> labels = _screenshotCollection.GetLabels();
-                labels.Sort();
-
-                comboBoxScreenshotLabel.DataSource = labels;
-                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
-
-                Show();
-
-                Visible = true;
-                ShowInTaskbar = true;
-
-                // If the window is mimimized then show it when the user wants to open the window.
-                if (WindowState == FormWindowState.Minimized)
+                if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
-                    WindowState = FormWindowState.Normal;
+                    Log.Write("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    formEnterPassphrase.ShowDialog(this);
                 }
 
-                Focus();
+                // This is intentional. Do not rewrite these statements as an if/else
+                // because as soon as lockScreenCaptureSession is set to false we want
+                // to continue with normal functionality.
+                if (!ScreenCapture.LockScreenCaptureSession)
+                {
+                    Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
+                    SaveSettings();
 
-                Log.Write("Running triggers of condition type InterfaceShowing");
-                RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
+                    Opacity = 100;
+
+                    SearchDates();
+                    SearchScreenshots();
+
+                    List<string> labels = _screenshotCollection.GetLabels();
+                    labels.Sort();
+
+                    comboBoxScreenshotLabel.DataSource = labels;
+                    comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
+
+                    Show();
+
+                    Visible = true;
+                    ShowInTaskbar = true;
+
+                    // If the window is mimimized then show it when the user wants to open the window.
+                    if (WindowState == FormWindowState.Minimized)
+                    {
+                        WindowState = FormWindowState.Normal;
+                    }
+
+                    Focus();
+
+                    Log.Write("Running triggers of condition type InterfaceShowing");
+                    RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("FormMain::ShowInterface", ex);
             }
         }
 

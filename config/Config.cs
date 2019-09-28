@@ -64,64 +64,34 @@ namespace AutoScreenCapture
                     string path;
 
                     if (GetPath(line, REGEX_SCREENSHOTS_FOLDER, out path))
-                    {
                         FileSystem.ScreenshotsFolder = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_DEBUG_FOLDER, out path))
-                    {
                         FileSystem.DebugFolder = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_LOGS_FOLDER, out path))
-                    {
                         FileSystem.LogsFolder = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
-                    {
                         FileSystem.ApplicationSettingsFile = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_USER_SETTINGS_FILE, out path))
-                    {
                         FileSystem.UserSettingsFile = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_EDITORS_FILE, out path))
-                    {
                         FileSystem.EditorsFile = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_REGIONS_FILE, out path))
-                    {
                         FileSystem.RegionsFile = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_SCREENS_FILE, out path))
-                    {
                         FileSystem.ScreensFile = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_TRIGGERS_FILE, out path))
-                    {
                         FileSystem.TriggersFile = path;
-                        continue;
-                    }
 
                     if (GetPath(line, REGEX_SCREENSHOTS_FILE, out path))
-                    {
                         FileSystem.ScreenshotsFile = path;
-                        continue;
-                    }
                 }
             }
             catch (Exception ex)

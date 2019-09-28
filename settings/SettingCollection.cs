@@ -163,6 +163,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (string.IsNullOrEmpty(Filepath)) return;
+
                 if (File.Exists(Filepath))
                 {
                     FileInfo fileInfo = new FileInfo(Filepath);
@@ -231,6 +233,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (string.IsNullOrEmpty(Filepath)) return;
+
                 XmlWriterSettings xSettings = new XmlWriterSettings();
                 xSettings.Indent = true;
                 xSettings.CloseOutput = true;
