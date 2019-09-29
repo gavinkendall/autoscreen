@@ -34,6 +34,18 @@ Please feel free to fork from the project and create pull requests.
 
 Command Line Arguments
 ----------------------
+-log
+Enables logging. All log files, by default, are stored in the "!autoscreen\debug\logs" folder (and this folder path is configurable as of version 2.2.1.0).
+In fact, this command line argument is new for 2.2.1.0 so please don't expect it to work with older versions.
+It will not set DebugMode to True because it's intended as a temporary logging mechanism.
+
+-debug
+This is similar to the -log command line argument. Logging will be turned on and log files will be stored in the logs folder. It will also set DebugMode to True.
+I introduced this command line argument in 2.0.6, removed it in 2.2.0.7, and re-introduced it in 2.2.1.0 :)
+
+-hideSystemTrayIcon
+The application's system tray icon will be hidden while the application is running.
+
 -interval=hh:mm:ss.nnn
 Sets the timer's interval to take a screenshot of each screen and region every hour (hh), minute (mm), second (ss), and millisecond (nnn).
 For example, "-interval=02:30:10.000" sets the timer's interval to take screenshots every 2 hours, 30 minutes, and 10 seconds.
@@ -55,9 +67,6 @@ Each cycle represents taking screenshots of every screen and region for a single
 -passphrase=x
 Sets a word or a series of words to be used as the passphrase for challenging the user when the application is going to show its interface, stop taking screenshots, or exit ensuring that the application continues taking screenshots until the passphrase is entered.
 This locks the screen capture session until the passphrase is successfully entered to unlock the session. The passphrase is stored as a SHA-512 hash.
-
--hideSystemTrayIcon
-The application's system tray icon will be hidden while the application is running.
 
 -config=filename_to_use
 Sets up various paths of the application's folders and files using a specified configuration file.

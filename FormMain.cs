@@ -1258,11 +1258,26 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_LOG) ||
-                        Regex.IsMatch(arg, REGEX_COMMAND_LINE_DEBUG))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_LOG))
                     {
-                        if (string.IsNullOrEmpty(FileSystem.LogsFolder) ||
-                            string.IsNullOrEmpty(FileSystem.DebugFolder))
+                        if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+                        {
+                            Config.Load();
+
+                            Settings.Initialize();
+
+                            LoadSettings();
+                        }
+
+                        Log.Enabled = true;
+
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
+                        Settings.Application.Save();
+                    }
+
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_DEBUG))
+                    {
+                        if (string.IsNullOrEmpty(FileSystem.DebugFolder))
                         {
                             Config.Load();
 
