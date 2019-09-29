@@ -19,7 +19,7 @@ namespace AutoScreenCapture
     /// <summary>
     /// 
     /// </summary>
-    public  class ScreenCapture
+    public class ScreenCapture
     {
         [StructLayout(LayoutKind.Sequential)]
         private struct CURSORINFO
@@ -107,12 +107,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public  bool RunningFromCommandLine { get; set; }
+        public static bool LockScreenCaptureSession { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public static bool LockScreenCaptureSession { get; set; }
+        public static bool RunningFromCommandLine { get; set; }
 
         /// <summary>
         /// 
@@ -383,7 +383,8 @@ namespace AutoScreenCapture
             {
                 if (!string.IsNullOrEmpty(path))
                 {
-                    Log.Write("Attempting to write image to file at path \"" + path + "\"");
+                    if (Log.DebugMode)
+                        Log.Write("Attempting to write image to file at path \"" + path + "\"");
 
                     FileInfo fileInfo = new FileInfo(path);
 
@@ -395,7 +396,8 @@ namespace AutoScreenCapture
                         {
                             double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
-                            Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int)freeDiskSpacePercentage + "%");
+                            if (Log.DebugMode)
+                                Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int)freeDiskSpacePercentage + "%");
 
                             if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                             {

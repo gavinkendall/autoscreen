@@ -36,11 +36,12 @@ Command Line Arguments
 ----------------------
 -log
 Enables logging. All log files, by default, are stored in the "!autoscreen\debug\logs" folder (and this folder path is configurable as of version 2.2.1.0).
-In fact, this command line argument is new for 2.2.1.0 so please don't expect it to work with older versions.
-It will not set DebugMode to True because it's intended as a temporary logging mechanism.
+This command line argument is new for 2.2.1.0 so please don't expect it to work with older versions.
 
 -debug
-This is similar to the -log command line argument. Logging will be turned on and log files will be stored in the logs folder. It will also set DebugMode to True.
+This is similar to the -log command line argument. Logging will be turned on and log files will be stored in the logs folder. DebugMode will be set to True.
+Be very careful when enabling DebugMode (either by turning it on in the application settings file or by using this argument) because it's basically verbose logging.
+In other words, if you have a lot of screenshots to load, then DebugMode is going to log every detail about each individual screenshot reference it finds.
 I introduced this command line argument in 2.0.6, removed it in 2.2.0.7, and re-introduced it in 2.2.1.0 :)
 
 -hideSystemTrayIcon

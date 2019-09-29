@@ -351,27 +351,42 @@ namespace AutoScreenCapture
                                             case SCREENSHOT_VIEWID:
                                                 xReader.Read();
                                                 screenshot.ViewId = Guid.Parse(xReader.Value);
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] View Id = " + screenshot.ViewId);
                                                 break;
 
                                             case SCREENSHOT_DATE:
                                                 xReader.Read();
                                                 screenshot.Date = xReader.Value;
                                                 screenshot.Slide.Date = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Date = " + screenshot.Date);
                                                 break;
 
                                             case SCREENSHOT_TIME:
                                                 xReader.Read();
                                                 screenshot.Time = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Time = " + screenshot.Time);
                                                 break;
 
                                             case SCREENSHOT_PATH:
                                                 xReader.Read();
                                                 screenshot.Path = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Path = " + screenshot.Path);
                                                 break;
 
                                             case SCREENSHOT_FORMAT:
                                                 xReader.Read();
                                                 screenshot.Format = imageFormatCollection.GetByName(xReader.Value);
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Format = " + screenshot.Format);
                                                 break;
 
                                             // 2.1 used "screen" for its definition of each display/monitor whereas 2.2 uses "component".
@@ -387,6 +402,8 @@ namespace AutoScreenCapture
                                                     screenshot.Component = screenshot.Screen == 5 ? 0 : screenshot.Screen;
                                                 }
 
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Component = " + screenshot.Component);
                                                 break;
 
                                             // We still want to support "component" since this was introduced in version 2.2 as the new representation for "screen".
@@ -407,31 +424,48 @@ namespace AutoScreenCapture
                                                     screenshot.ScreenshotType = ScreenshotType.Screen;
                                                 }
 
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Component = " + screenshot.Component);
                                                 break;
 
                                             case SCREENSHOT_SLIDENAME:
                                                 xReader.Read();
                                                 screenshot.Slide.Name = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Slide Name = " + screenshot.Slide.Name);
                                                 break;
 
                                             case SCREENSHOT_SLIDEVALUE:
                                                 xReader.Read();
                                                 screenshot.Slide.Value = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Slide Value = " + screenshot.Slide.Value);
                                                 break;
 
                                             case SCREENSHOT_WINDOW_TITLE:
                                                 xReader.Read();
                                                 screenshot.WindowTitle = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Window Title = " + screenshot.WindowTitle);
                                                 break;
 
                                             case SCREENSHOT_PROCESS_NAME:
                                                 xReader.Read();
                                                 screenshot.ProcessName = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Process Name = " + screenshot.ProcessName);
                                                 break;
 
                                             case SCREENSHOT_LABEL:
                                                 xReader.Read();
                                                 screenshot.Label = xReader.Value;
+
+                                                if (Log.DebugMode)
+                                                    Log.Write("[" + screenshot.ViewId + "] Label = " + screenshot.Label);
                                                 break;
                                         }
                                     }

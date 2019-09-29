@@ -106,10 +106,10 @@ namespace AutoScreenCapture
 
                 LoadSettings();
 
-                Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
-
                 InitializeThreads();
             }
+
+            Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
 
             // Get rid of the old "slides" directory that may still remain from an old version of the application.
             DeleteSlides();
@@ -177,6 +177,25 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.Write("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " ***");
+                Log.Write("Starting application");
+                Log.Write("At this point the application should be able to run normally");
+                Log.Write("but it would be a good idea to check what we found in your autoscreen.conf file");
+                Log.Write("Your autoscreen.conf file is \"" + FileSystem.ConfigFile + "\"");
+                Log.Write("The name and location of it can be changed with the -config command line argument:");
+                Log.Write("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
+                Log.Write("Checking what we loaded from your autoscreen.conf file ...");
+                Log.Write("ApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
+                Log.Write("UserSettingsFile=" + FileSystem.UserSettingsFile);
+                Log.Write("DebugFolder=" + FileSystem.DebugFolder);
+                Log.Write("LogsFolder=" + FileSystem.LogsFolder);
+                Log.Write("ScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
+                Log.Write("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
+                Log.Write("TriggersFile=" + FileSystem.TriggersFile);
+                Log.Write("ScreensFile=" + FileSystem.ScreensFile);
+                Log.Write("RegionsFile=" + FileSystem.RegionsFile);
+                Log.Write("EditorsFile=" + FileSystem.EditorsFile);
+
                 Log.Write("It looks like I successfully parsed your \"" + FileSystem.ConfigFile + "\" file.");
                 Log.Write("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
 
@@ -1211,8 +1230,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.Write("Parsing command line arguments.");
-
                 #region Default Values for Command Line Arguments
 
                 checkBoxInitialScreenshot.Checked = false;
@@ -1235,13 +1252,13 @@ namespace AutoScreenCapture
 
                 #region Command Line Argument Parsing
 
-                foreach(string arg in args)
-                {
-                    if (arg != null)
-                    {
-                        Log.Write("Parsing command line argument --> " + arg);
-                    }
+                ScreenCapture.RunningFromCommandLine = true;
 
+                // Because ordering is important I want to make sure that we pick up the configuration file first.
+                // This will avoid scenarios like "autoscreen.exe -debug -config" creating all the default folders
+                // and files (thanks to -debug being the first argument) before -config is parsed.
+                foreach (string arg in args)
+                {
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CONFIG))
                     {
                         string configFile = Regex.Match(arg, REGEX_COMMAND_LINE_CONFIG).Groups["ConfigFile"].Value;
@@ -1253,37 +1270,46 @@ namespace AutoScreenCapture
                             Config.Load();
 
                             Settings.Initialize();
-
-                            LoadSettings();
                         }
                     }
+                }
 
+                // We didn't get a -config command line argument so just load the default config.
+                if (Settings.Application == null)
+                {
+                    Config.Load();
+
+                    Settings.Initialize();
+                }
+
+                // Now that everything is configured according to the config file we can go ahead and run normally.
+                foreach (string arg in args)
+                {
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_LOG))
                     {
-                        if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+                        Log.Enabled = true;
+
+                        if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
                         {
                             Config.Load();
 
                             Settings.Initialize();
-
-                            LoadSettings();
                         }
 
-                        Log.Enabled = true;
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = true;
+                        Settings.Application.Save();
                     }
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_DEBUG))
                     {
-                        if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+                        Log.DebugMode = true;
+
+                        if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
                         {
                             Config.Load();
 
                             Settings.Initialize();
-
-                            LoadSettings();
                         }
-
-                        Log.Enabled = true;
 
                         Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
                         Settings.Application.Save();
@@ -1346,8 +1372,14 @@ namespace AutoScreenCapture
 
                         if (passphrase.Length > 0)
                         {
+                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                            {
+                                Config.Load();
+
+                                Settings.Initialize();
+                            }
+
                             Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = Security.Hash(passphrase);
-                            SaveSettings();
 
                             ScreenCapture.LockScreenCaptureSession = true;
                         }
@@ -1361,7 +1393,14 @@ namespace AutoScreenCapture
 
                 #endregion Command Line Argument Parsing
 
-                _screenCapture.RunningFromCommandLine = true;
+                if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                {
+                    Config.Load();
+
+                    Settings.Initialize();
+                }
+
+                LoadSettings();
 
                 InitializeThreads();
 
@@ -2718,7 +2757,7 @@ namespace AutoScreenCapture
             foreach (Trigger trigger in formTrigger.TriggerCollection)
             {
                 // Don't show the interface on startup if we're running from the command line.
-                if (_screenCapture.RunningFromCommandLine &&
+                if (ScreenCapture.RunningFromCommandLine &&
                     trigger.ConditionType == TriggerConditionType.ApplicationStartup &&
                     trigger.ActionType == TriggerActionType.ShowInterface)
                 {

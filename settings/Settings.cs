@@ -115,6 +115,7 @@ namespace AutoScreenCapture
             {
                 Application.Add(new Setting("Name", ApplicationName));
                 Application.Add(new Setting("Version", ApplicationVersion));
+                Application.Add(new Setting("Logging", false));
                 Application.Add(new Setting("DebugMode", false));
 
                 Application.Save();
@@ -147,26 +148,8 @@ namespace AutoScreenCapture
                 User.Save();
             }
 
-            Log.Enabled = Convert.ToBoolean(Application.GetByKey("DebugMode", defaultValue: false).Value);
-
-            Log.Write("*** Welcome to " + ApplicationName + " " + ApplicationVersion + " ***");
-            Log.Write("Starting application");
-            Log.Write("At this point the application should be able to run normally");
-            Log.Write("but it would be a good idea to check what we found in your autoscreen.conf file");
-            Log.Write("Your autoscreen.conf file is \"" + FileSystem.ConfigFile + "\"");
-            Log.Write("The name and location of it can be changed with the -config command line argument:");
-            Log.Write("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
-            Log.Write("Checking what we loaded from your autoscreen.conf file ...");
-            Log.Write("ApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
-            Log.Write("UserSettingsFile=" + FileSystem.UserSettingsFile);
-            Log.Write("DebugFolder=" + FileSystem.DebugFolder);
-            Log.Write("LogsFolder=" + FileSystem.LogsFolder);
-            Log.Write("ScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
-            Log.Write("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
-            Log.Write("TriggersFile=" + FileSystem.TriggersFile);
-            Log.Write("ScreensFile=" + FileSystem.ScreensFile);
-            Log.Write("RegionsFile=" + FileSystem.RegionsFile);
-            Log.Write("EditorsFile=" + FileSystem.EditorsFile);
+            Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", defaultValue: false).Value);
+            Log.Enabled = Convert.ToBoolean(Application.GetByKey("Logging", defaultValue: false).Value);
         }
     }
 }

@@ -21,6 +21,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public static bool DebugMode { get; set;}
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool Enabled { get; set; }
 
         private static readonly string extension = ".txt";
@@ -52,8 +57,10 @@ namespace AutoScreenCapture
                     Enabled = true;
                 }
 
-                if (Enabled)
+                if (DebugMode || Enabled)
                 {
+                    string appVersion = "[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") ";
+
                     if (string.IsNullOrEmpty(FileSystem.DebugFolder))
                     {
                         FileSystem.DebugFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + FileSystem.PathDelimiter + "debug" + FileSystem.PathDelimiter;
@@ -78,7 +85,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
+                            sw.WriteLine(appVersion +
                                          DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error Message: " +
                                          ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
 
@@ -88,7 +95,7 @@ namespace AutoScreenCapture
 
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
+                            sw.WriteLine(appVersion +
                                          DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error Message: " +
                                          ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
 
@@ -104,7 +111,7 @@ namespace AutoScreenCapture
                         // Write to the main log file.
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
+                            sw.WriteLine(appVersion +
                                          DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
 
                             sw.Flush();
@@ -122,7 +129,7 @@ namespace AutoScreenCapture
                             FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat) + FileSystem.PathDelimiter +
                             logFile + "_" + DateTime.Now.ToString(MacroParser.DateFormat) + extension, true))
                         {
-                            sw.WriteLine("[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") " +
+                            sw.WriteLine(appVersion +
                                          DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
 
                             sw.Flush();
