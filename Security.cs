@@ -12,12 +12,20 @@ using System.Security.Cryptography;
 
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Security
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static string Hash(string text)
         {
-            SHA512Managed sha512 = new SHA512Managed();
-            return Regex.Replace(BitConverter.ToString(sha512.ComputeHash(ASCIIEncoding.Default.GetBytes(text))), "-", "").ToLower();
+            var sha512 = new SHA512Managed();
+            return Regex.Replace(BitConverter.ToString(sha512.ComputeHash(Encoding.Default.GetBytes(text))), "-", "").ToLower();
         }
     }
 }

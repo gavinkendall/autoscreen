@@ -31,8 +31,14 @@ namespace AutoScreenCapture
         /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MacroTagCollection MacroTagCollection { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ScreenCapture screenCapture { get; set; }
 
         private Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();

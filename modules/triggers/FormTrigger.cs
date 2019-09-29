@@ -26,8 +26,14 @@ namespace AutoScreenCapture
         /// </summary>
         public Trigger TriggerObject { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public EditorCollection EditorCollection { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FormTrigger()
         {
             InitializeComponent();

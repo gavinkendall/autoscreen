@@ -79,6 +79,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
+        /// <param name="screenNumber"></param>
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>

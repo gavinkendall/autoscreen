@@ -7,10 +7,24 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public enum ScreenshotType
     {
+        /// <summary>
+        /// 
+        /// </summary>
         ActiveWindow = 0,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Region = 1,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Screen = 2
     }
 }

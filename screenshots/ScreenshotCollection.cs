@@ -257,7 +257,7 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
-                Log.Write("Loading screenshots from screenshots.xml");
+                Log.Write("Loading screenshots from \"" + FileSystem.ScreenshotsFile + "\" (if this is a large file then it might take a while)");
 
                 Stopwatch stopwatch = new Stopwatch();
 
@@ -283,7 +283,7 @@ namespace AutoScreenCapture
 
                 if (_screenshotList != null && !File.Exists(FileSystem.ScreenshotsFile))
                 {
-                    Log.Write("Could not find \"" + FileSystem.ScreenshotsFile + "\" so creating it");
+                    Log.Write("Could not find \"" + FileSystem.ScreenshotsFile + "\" so creating default version");
 
                     XmlWriterSettings xSettings = new XmlWriterSettings
                     {
@@ -327,13 +327,13 @@ namespace AutoScreenCapture
                         AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                         AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
-                        Log.Write("Getting screenshots from screenshots.xml using XPath query \"" + SCREENSHOT_XPATH + "\"");
+                        Log.Write("Getting screenshots from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "\"");
 
                         XmlNodeList xScreeshots = xDoc.SelectNodes(SCREENSHOT_XPATH);
 
                         if (xScreeshots != null)
                         {
-                            Log.Write("Loading each screenshot from screenshots.xml");
+                            Log.Write("Loading " + xScreeshots.Count + " screenshots from \"" + FileSystem.ScreenshotsFile + "\" ...");
 
                             foreach (XmlNode xScreenshot in xScreeshots)
                             {
@@ -532,12 +532,12 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            Log.Write("WARNING: Unable to load screenshots from screenshots.xml");
+                            Log.Write("WARNING: Unable to load screenshots from \"" + FileSystem.ScreenshotsFile + "\"");
                         }
 
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            Log.Write("Old application version discovered when loading screenshots.xml");
+                            Log.Write("Old application version discovered when loading \"" + FileSystem.ScreenshotsFile + "\"");
 
                             // We'll have to create the app:version and app:codename attributes for screenshots.xml if we're upgrading from "Clara".
                             if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
@@ -558,7 +558,7 @@ namespace AutoScreenCapture
 
                             xDoc.Save(FileSystem.ScreenshotsFile);
 
-                            Log.Write("Upgraded screenshots.xml");
+                            Log.Write("Upgraded \"" + FileSystem.ScreenshotsFile + "\"");
                         }
                     }
                 }

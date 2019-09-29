@@ -7,17 +7,45 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Trigger
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public TriggerConditionType ConditionType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public TriggerActionType ActionType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Editor { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Trigger()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="conditionType"></param>
+        /// <param name="actionType"></param>
+        /// <param name="editor"></param>
         public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor)
         {
             Name = name;

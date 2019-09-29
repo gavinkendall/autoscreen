@@ -173,6 +173,9 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.Write("It looks like I successfully parsed your \"" + FileSystem.ConfigFile + "\" file.");
+                Log.Write("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
+
                 Log.Write("Loading user settings");
                 Settings.User.Load();
                 Log.Write("User settings loaded");
@@ -2319,7 +2322,7 @@ namespace AutoScreenCapture
             formScreen.ScreenObject = null;
             formScreen.ImageFormatCollection = _imageFormatCollection;
             formScreen.MacroTagCollection = _macroTagCollection;
-            formScreen.screenCapture = _screenCapture;
+            formScreen.ScreenCapture = _screenCapture;
 
             formScreen.ShowDialog(this);
 
@@ -2388,7 +2391,7 @@ namespace AutoScreenCapture
             formScreen.ScreenObject = screen;
             formScreen.ImageFormatCollection = _imageFormatCollection;
             formScreen.MacroTagCollection = _macroTagCollection;
-            formScreen.screenCapture = _screenCapture;
+            formScreen.ScreenCapture = _screenCapture;
 
             formScreen.ShowDialog(this);
 

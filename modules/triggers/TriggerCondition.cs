@@ -7,16 +7,30 @@
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TriggerCondition
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="description"></param>
         public TriggerCondition(TriggerConditionType type, string description)
         {
             Type = type;
             Description = description;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public TriggerConditionType Type { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Description { get; set; }
     }
 }

@@ -31,9 +31,15 @@ namespace AutoScreenCapture
         /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MacroTagCollection MacroTagCollection { get; set; }
 
-        public ScreenCapture screenCapture { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public ScreenCapture ScreenCapture { get; set; }
 
         /// <summary>
         /// 
@@ -277,7 +283,7 @@ namespace AutoScreenCapture
 
         private void Tick_timerPreview(object sender, EventArgs e)
         {
-            UpdatePreview(screenCapture);
+            UpdatePreview(ScreenCapture);
         }
 
         private void buttonBrowseFolder_Click(object sender, EventArgs e)

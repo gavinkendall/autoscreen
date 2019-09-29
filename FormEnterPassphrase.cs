@@ -15,8 +15,6 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEnterPassphrase : Form
     {
-        public ScreenCapture screenCapture { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -38,31 +36,27 @@ namespace AutoScreenCapture
 
         private void Click_buttonUnlock(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(textBoxPassphrase.Text))
+            if (string.IsNullOrEmpty(textBoxPassphrase.Text)) return;
+
+            if (Security.Hash(textBoxPassphrase.Text).Equals(Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value))
             {
-                if (Security.Hash(textBoxPassphrase.Text).Equals(Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value))
-                {
-                    ScreenCapture.LockScreenCaptureSession = false;
-                    Close();
-                }
-                else
-                {
-                    textBoxPassphrase.Clear();
-                    textBoxPassphrase.Focus();
-                }
+                Log.Write("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
+
+                ScreenCapture.LockScreenCaptureSession = false;
+                Close();
+            }
+            else
+            {
+                Log.Write("WARNING: There was an attempt to unlock the running screen capture session! The user was " + Environment.UserName + " on " + Environment.MachineName);
+
+                textBoxPassphrase.Clear();
+                textBoxPassphrase.Focus();
             }
         }
 
         private void TextChanged_textBoxPassphrase(object sender, EventArgs e)
         {
-            if (textBoxPassphrase.Text.Length > 0)
-            {
-                buttonUnlock.Enabled = true;
-            }
-            else
-            {
-                buttonUnlock.Enabled = false;
-            }
+            buttonUnlock.Enabled = textBoxPassphrase.Text.Length > 0;
         }
     }
 }

@@ -16,6 +16,9 @@ namespace AutoScreenCapture
     using System.Runtime.InteropServices;
     using System.Text;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public  class ScreenCapture
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -43,6 +46,12 @@ namespace AutoScreenCapture
         [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="ProcessId"></param>
+        /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
 
@@ -55,7 +64,14 @@ namespace AutoScreenCapture
         private const Int32 CURSOR_SHOWING = 0x0001;
         private const Int32 DI_NORMAL = 0x0003;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public const int CAPTURE_LIMIT_MIN = 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const int CAPTURE_LIMIT_MAX = 9999;
 
         private const double MIN_FREE_DISK_SPACE_PERCENTAGE = 3;
@@ -67,14 +83,45 @@ namespace AutoScreenCapture
 
         private const int MAX_CHARS = 48000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public  int Delay { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public  int Limit { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public  int Count { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public  bool RunningFromCommandLine { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool LockScreenCaptureSession { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Running { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool PerformingMaintenance { get; set; }
 
         /// <summary>
@@ -104,8 +151,16 @@ namespace AutoScreenCapture
         /// </summary>
         public string ActiveWindowTitle { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string ActiveWindowProcessName { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public  Image GetImageByPath(string path)
         {
             Image image = null;
@@ -123,6 +178,16 @@ namespace AutoScreenCapture
             return image;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="resolutionRatio"></param>
+        /// <param name="mouse"></param>
+        /// <returns></returns>
         public  Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
         {
             try
@@ -189,6 +254,10 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public  Bitmap GetActiveWindowBitmap()
         {
             try
@@ -226,6 +295,10 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetActiveWindowTitle()
         {
             IntPtr handle;
@@ -244,6 +317,10 @@ namespace AutoScreenCapture
             return "(system)";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetActiveWindowProcessName()
         {
             IntPtr hwnd = GetForegroundWindow();
@@ -253,6 +330,18 @@ namespace AutoScreenCapture
             return p.ProcessName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="component"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="mouse"></param>
+        /// <param name="resolutionRatio"></param>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
         public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, int resolutionRatio, out Bitmap bitmap)
         {
             bitmap = component == 0
@@ -269,6 +358,23 @@ namespace AutoScreenCapture
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="format"></param>
+        /// <param name="component"></param>
+        /// <param name="screenshotType"></param>
+        /// <param name="jpegQuality"></param>
+        /// <param name="viewId"></param>
+        /// <param name="bitmap"></param>
+        /// <param name="label"></param>
+        /// <param name="windowTitle"></param>
+        /// <param name="processName"></param>
+        /// <param name="screenCollection"></param>
+        /// <param name="regionCollection"></param>
+        /// <param name="screenshotCollection"></param>
+        /// <returns></returns>
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
             int jpegQuality, Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName,
             ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
