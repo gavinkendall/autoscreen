@@ -1270,9 +1270,6 @@ namespace AutoScreenCapture
                         }
 
                         Log.Enabled = true;
-
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
-                        Settings.Application.Save();
                     }
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_DEBUG))
@@ -1287,6 +1284,9 @@ namespace AutoScreenCapture
                         }
 
                         Log.Enabled = true;
+
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
+                        Settings.Application.Save();
                     }
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL))

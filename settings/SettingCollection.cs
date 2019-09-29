@@ -86,12 +86,7 @@ namespace AutoScreenCapture
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        public void SetValueByKey(string key, object value)
+        private void SetValueByKey(string key, object value)
         {
             RemoveByKey(key);
             Add(new Setting(key, value));
