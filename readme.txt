@@ -59,6 +59,28 @@ This locks the screen capture session until the passphrase is successfully enter
 -hideSystemTrayIcon
 The application's system tray icon will be hidden while the application is running.
 
+-config=filename_to_use
+Sets up various paths of the application's folders and files using a specified configuration file.
+(where filename_to_use is the path and name of the configuration file to use)
+For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the config file
+named "MyAutoScreenCapture.conf" on the C:\ drive.
+
+A configuration file that can be used by Auto Screen Capture should, at a minimum, contain the following lines:
+ScreenshotsFolder=screenshots
+DebugFolder=!autoscreen\debug
+LogsFolder=!autoscreen\debug\logs
+ApplicationSettingsFile=application.xml
+UserSettingsFile=user.xml
+EditorsFile=!autoscreen\editors.xml
+RegionsFile=!autoscreen\regions.xml
+ScreensFile=!autoscreen\screens.xml
+TriggersFile=!autoscreen\triggers.xml
+ScreenshotsFile=!autoscreen\screenshots.xml
+
+By default (as of version 2.2.1.0), if the -config command line argument is not provided and
+a configuration file named "autoscreen.conf" is not found in the "!autoscreen" folder then the
+application will attempt to write out its "autoscreen.conf" file in the "!autoscreen" folder.
+
 Examples:
 autoscreen.exe -interval=00:01:00.000
 Starts the application, waits for 1 minute, and then starts taking screenshots for every minute until the application is stopped.
