@@ -44,15 +44,30 @@ namespace AutoScreenCapture
                 {
                     string[] linesToWrite =
                     {
-                        "ScreenshotsFolder=screenshots",
-                        "DebugFolder=!autoscreen\\debug",
-                        "LogsFolder=!autoscreen\\debug\\logs",
-                        "ApplicationSettingsFile=!autoscreen\\settings\\application.xml",
-                        "UserSettingsFile=!autoscreen\\settings\\user.xml",
-                        "EditorsFile=!autoscreen\\editors.xml",
-                        "RegionsFile=!autoscreen\\regions.xml",
-                        "ScreensFile=!autoscreen\\screens.xml",
-                        "TriggersFile=!autoscreen\\triggers.xml",
+                        "# Auto Screen Capture Configuration File",
+                        "# Use this file to tell the application what folders and files it should utilize.",
+                        "# Each key-value pair can be the name of a folder or file or a path to a folder or file.",
+                        "# If only the folder name is given then it will be parsed as the sub-folder of the folder",
+                        "# where the executed autoscreen.exe binary is located.", "\n",
+                        "# This is the folder where screenshots will be stored by default.",
+                        "ScreenshotsFolder=screenshots", "\n",
+                        "# If any errors are encountered then you will find them in this folder.",
+                        "DebugFolder=!autoscreen\\debug", "\n",
+                        "# Logs are stored in this folder. You can turn on logging by ensuring that the application setting named DebugMode has its value set to True before running Auto Screen Capture or by executing the autoscreen.exe binary from the command line with either the -debug or -log command line arguments.",
+                        "LogsFolder=!autoscreen\\debug\\logs", "\n",
+                        "# The application settings (such as DebugMode).",
+                        "ApplicationSettingsFile=!autoscreen\\settings\\application.xml", "\n",
+                        "# Your personal settings.",
+                        "UserSettingsFile=!autoscreen\\settings\\user.xml", "\n",
+                        "# References to image editors.",
+                        "EditorsFile=!autoscreen\\editors.xml", "\n",
+                        "# References to regions.",
+                        "RegionsFile=!autoscreen\\regions.xml", "\n",
+                        "# References to screens.",
+                        "ScreensFile=!autoscreen\\screens.xml", "\n",
+                        "# References to triggers.",
+                        "TriggersFile=!autoscreen\\triggers.xml", "\n",
+                        "# References to screenshots.",
                         "ScreenshotsFile=!autoscreen\\screenshots.xml"
                     };
 
@@ -102,7 +117,7 @@ namespace AutoScreenCapture
 
         private static bool GetPath(string line, string regex, out string path)
         {
-            if (!Regex.IsMatch(line, regex))
+            if (line.StartsWith("#") || !Regex.IsMatch(line, regex))
             {
                 path = null;
                 return false;

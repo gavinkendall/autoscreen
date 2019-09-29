@@ -65,7 +65,8 @@ Sets up various paths of the application's folders and files using a specified c
 For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the config file
 named "MyAutoScreenCapture.conf" on the C:\ drive.
 
-A configuration file that can be used by Auto Screen Capture should, at a minimum, contain the following lines:
+A configuration file that can be used by Auto Screen Capture should, at a minimum, contain the following 10 lines
+representing key-value pairs that will be parsed by the application upon execution:
 ScreenshotsFolder=screenshots
 DebugFolder=!autoscreen\debug
 LogsFolder=!autoscreen\debug\logs
@@ -77,9 +78,16 @@ ScreensFile=!autoscreen\screens.xml
 TriggersFile=!autoscreen\triggers.xml
 ScreenshotsFile=!autoscreen\screenshots.xml
 
+As you can see, each line specifies either the name of a folder or a file. If only the folder name is given
+(such as "screenshots") then Auto Screen Capture will parse it as the "screenshots" folder in the same folder
+where the executed autoscreen.exe binary is found. You can also specify a folder name with a trailing backslash but
+this isn't necessary. If a file extension is found then Auto Screen Capture will parse the filename as an XML file.
+You can tell Auto Screen Capture where to find each XML file by specifying absolute or relative (sub)folder paths.
+
 By default (as of version 2.2.1.0), if the -config command line argument is not provided and
 a configuration file named "autoscreen.conf" is not found in the "!autoscreen" folder then the
 application will attempt to write out its "autoscreen.conf" file in the "!autoscreen" folder.
+The "autoscreen.conf" file explains what each key-value pair represents.
 
 Examples:
 autoscreen.exe -interval=00:01:00.000

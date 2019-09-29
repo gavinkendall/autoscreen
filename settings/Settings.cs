@@ -155,7 +155,7 @@ namespace AutoScreenCapture
             Log.Write("but it would be a good idea to check what we found in your autoscreen.conf file");
             Log.Write("Your autoscreen.conf file is \"" + FileSystem.ConfigFile + "\"");
             Log.Write("The name and location of it can be changed with the -config command line argument:");
-            Log.Write("autoscreen.exe -interval=00:01:00.000 -config=C:\\MyAutoScreenCapture.conf");
+            Log.Write("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
             Log.Write("Checking what we loaded from your autoscreen.conf file ...");
             Log.Write("ApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
             Log.Write("UserSettingsFile=" + FileSystem.UserSettingsFile);

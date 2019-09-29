@@ -82,6 +82,10 @@ namespace AutoScreenCapture
 
         private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
 
+        private const string REGEX_COMMAND_LINE_LOG = "^-log";
+
+        private const string REGEX_COMMAND_LINE_DEBUG = "^-debug";
+
         /// <summary>
         /// Constructor for the main form. Arguments from the command line can be passed to it.
         /// </summary>
@@ -359,6 +363,8 @@ namespace AutoScreenCapture
                 {
                     runScreenshotSearchThread.CancelAsync();
                 }
+
+                Log.Write("Bye!");
 
                 // Exit.
                 Environment.Exit(0);
@@ -989,6 +995,8 @@ namespace AutoScreenCapture
                     runScreenshotSearchThread.CancelAsync();
                 }
 
+                Log.Write("Bye!");
+
                 // Exit.
                 Environment.Exit(0);
             }
@@ -1227,16 +1235,16 @@ namespace AutoScreenCapture
 
                 #region Command Line Argument Parsing
 
-                for (int i = 0; i < args.Length; i++)
+                foreach(string arg in args)
                 {
-                    if (args[i] != null)
+                    if (arg != null)
                     {
-                        Log.Write("Parsing command line argument at index " + i + " --> " + args[i]);
+                        Log.Write("Parsing command line argument --> " + arg);
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_CONFIG))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CONFIG))
                     {
-                        string configFile = Regex.Match(args[i], REGEX_COMMAND_LINE_CONFIG).Groups["ConfigFile"].Value;
+                        string configFile = Regex.Match(arg, REGEX_COMMAND_LINE_CONFIG).Groups["ConfigFile"].Value;
 
                         if (configFile.Length > 0)
                         {
@@ -1250,14 +1258,30 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_INITIAL))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_LOG) ||
+                        Regex.IsMatch(arg, REGEX_COMMAND_LINE_DEBUG))
+                    {
+                        if (string.IsNullOrEmpty(FileSystem.LogsFolder) ||
+                            string.IsNullOrEmpty(FileSystem.DebugFolder))
+                        {
+                            Config.Load();
+
+                            Settings.Initialize();
+
+                            LoadSettings();
+                        }
+
+                        Log.Enabled = true;
+                    }
+
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL))
                     {
                         checkBoxInitialScreenshot.Checked = true;
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_LIMIT))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_LIMIT))
                     {
-                        int cmdLimit = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_LIMIT).Groups["Limit"].Value);
+                        int cmdLimit = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_LIMIT).Groups["Limit"].Value);
 
                         if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
                         {
@@ -1266,12 +1290,12 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_INTERVAL))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INTERVAL))
                     {
-                        int hours = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
-                        int milliseconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
+                        int milliseconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
 
                         numericUpDownHoursInterval.Value = hours;
                         numericUpDownMinutesInterval.Value = minutes;
@@ -1279,31 +1303,31 @@ namespace AutoScreenCapture
                         numericUpDownMillisecondsInterval.Value = milliseconds;
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_STARTAT))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STARTAT))
                     {
-                        int hours = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
 
                         dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStartAt.Checked = true;
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_STOPAT))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOPAT))
                     {
-                        int hours = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(args[i], REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
 
                         dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
 
                         checkBoxScheduleStopAt.Checked = true;
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_PASSPHRASE))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_PASSPHRASE))
                     {
-                        string passphrase = Regex.Match(args[i], REGEX_COMMAND_LINE_PASSPHRASE).Groups["Passphrase"].Value;
+                        string passphrase = Regex.Match(arg, REGEX_COMMAND_LINE_PASSPHRASE).Groups["Passphrase"].Value;
 
                         if (passphrase.Length > 0)
                         {
@@ -1314,7 +1338,7 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Regex.IsMatch(args[i], REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
                         toolStripMenuItemShowSystemTrayIcon.Checked = false;
                     }
