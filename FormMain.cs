@@ -292,9 +292,8 @@ namespace AutoScreenCapture
                 checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
                 Log.Write("BoolTakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
 
-                toolStripMenuItemShowSystemTrayIcon.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
-                Log.Write("BoolShowSystemTrayIcon = " + toolStripMenuItemShowSystemTrayIcon.Checked);
-
+                notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
+                Log.Write("BoolShowSystemTrayIcon = " + notifyIcon.Visible);
                 checkBoxScheduleStopAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value);
                 Log.Write("BoolCaptureStopAt = " + checkBoxScheduleStopAt.Checked);
 
@@ -564,7 +563,6 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
                 Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
                 Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = toolStripMenuItemShowSystemTrayIcon.Checked;
                 Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value = checkBoxScheduleStopAt.Checked;
                 Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value = checkBoxScheduleStartAt.Checked;
                 Settings.User.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value = checkBoxSunday.Checked;
@@ -1246,8 +1244,6 @@ namespace AutoScreenCapture
                 checkBoxScheduleStartAt.Checked = false;
                 checkBoxScheduleOnTheseDays.Checked = false;
 
-                toolStripMenuItemShowSystemTrayIcon.Checked = true;
-
                 #endregion Default Values for Command Line Arguments
 
                 #region Command Line Argument Parsing
@@ -1387,7 +1383,7 @@ namespace AutoScreenCapture
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
-                        toolStripMenuItemShowSystemTrayIcon.Checked = false;
+                        notifyIcon.Visible = false;
                     }
                 }
 
@@ -2713,16 +2709,6 @@ namespace AutoScreenCapture
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Show or hide the system tray icon depending on the option selected.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckedChanged_toolStripMenuItemShowSystemTrayIcon(object sender, EventArgs e)
-        {
-            notifyIcon.Visible = toolStripMenuItemShowSystemTrayIcon.Checked;
         }
 
         /// <summary>

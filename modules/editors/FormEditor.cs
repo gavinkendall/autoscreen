@@ -215,7 +215,7 @@ namespace AutoScreenCapture
                 AddExtension = false,
                 CheckFileExists = true,
                 CheckPathExists = true,
-                Filter = "Applications (*.exe)|*.exe"
+                Filter = "Applications (*.exe)|*.exe|Batch Scripts (*.bat)|*.bat|PowerShell Scripts (*.ps1)|*.ps1|All Files (*.*)|*.*"
             };
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
