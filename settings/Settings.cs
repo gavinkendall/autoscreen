@@ -23,7 +23,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ApplicationVersion = "2.2.1.2";
+        public static readonly string ApplicationVersion = "2.2.2.0";
 
         /// <summary>
         /// 
@@ -90,6 +90,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.22")); // Fixed scheduled start time with -startat command line argument
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.0")); // Introduced autoscreen.conf file and -log, -debug, and -config command line arguments
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // Can now add an Editor with any extension (not just limited to *.exe)
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.2")); // Fixed -passphrase command line argument so it saves when run from the command line
 
             Application = new SettingCollection
             {
@@ -104,21 +105,103 @@ namespace AutoScreenCapture
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
             VersionManager = new VersionManager(_versionCollection, User);
 
-            if (Application != null && !string.IsNullOrEmpty(Application.Filepath) && File.Exists(Application.Filepath))
+            if (Application != null && !string.IsNullOrEmpty(Application.Filepath))
             {
-                Application.Load();
+                if (File.Exists(Application.Filepath))
+                {
+                    Application.Load();
 
-                Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
-                Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
+                    Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
+                    Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
 
-                Application.Save();
-            }
-            else
-            {
-                Application.Add(new Setting("Name", ApplicationName));
-                Application.Add(new Setting("Version", ApplicationVersion));
-                Application.Add(new Setting("Logging", false));
-                Application.Add(new Setting("DebugMode", false));
+                    if (!Application.KeyExists("DebugMode"))
+                    {
+                        Application.Add(new Setting("DebugMode", false));
+                    }
+
+                    if (!Application.KeyExists("ExitOnError"))
+                    {
+                        Application.Add(new Setting("ExitOnError", false));
+                    }
+
+                    if (!Application.KeyExists("Logging"))
+                    {
+                        Application.Add(new Setting("Logging", false));
+                    }
+
+                    if (!Application.KeyExists("EmailServerHost"))
+                    {
+                        Application.Add(new Setting("EmailServerHost", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailServerPort"))
+                    {
+                        Application.Add(new Setting("EmailServerPort", 587));
+                    }
+
+                    if (!Application.KeyExists("EmailServerEnableSSL"))
+                    {
+                        Application.Add(new Setting("EmailServerEnableSSL", true));
+                    }
+
+                    if (!Application.KeyExists("EmailClientUsername"))
+                    {
+                        Application.Add(new Setting("EmailClientUsername", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailClientPassword"))
+                    {
+                        Application.Add(new Setting("EmailClientPassword", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailMessageFrom"))
+                    {
+                        Application.Add(new Setting("EmailMessageFrom", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailMessageTo"))
+                    {
+                        Application.Add(new Setting("EmailMessageTo", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailMessageCC"))
+                    {
+                        Application.Add(new Setting("EmailMessageCC", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailMessageBCC"))
+                    {
+                        Application.Add(new Setting("EmailMessageBCC", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailMessageSubject"))
+                    {
+                        Application.Add(new Setting("EmailMessageSubject", string.Empty));
+                    }
+
+                    if (!Application.KeyExists("EmailMessageBody"))
+                    {
+                        Application.Add(new Setting("EmailMessageBody", string.Empty));
+                    }
+                }
+                else
+                {
+                    Application.Add(new Setting("Name", ApplicationName));
+                    Application.Add(new Setting("Version", ApplicationVersion));
+                    Application.Add(new Setting("DebugMode", false));
+                    Application.Add(new Setting("Logging", false));
+                    Application.Add(new Setting("EmailServerHost", string.Empty));
+                    Application.Add(new Setting("EmailServerPort", 587));
+                    Application.Add(new Setting("EmailServerEnableSSL", true));
+                    Application.Add(new Setting("EmailClientUsername", string.Empty));
+                    Application.Add(new Setting("EmailClientPassword", string.Empty));
+                    Application.Add(new Setting("EmailMessageFrom", string.Empty));
+                    Application.Add(new Setting("EmailMessageTo", string.Empty));
+                    Application.Add(new Setting("EmailMessageCC", string.Empty));
+                    Application.Add(new Setting("EmailMessageBCC", string.Empty));
+                    Application.Add(new Setting("EmailMessageSubject", string.Empty));
+                    Application.Add(new Setting("EmailMessageBody", string.Empty));
+                }
 
                 Application.Save();
             }

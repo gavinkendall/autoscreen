@@ -103,8 +103,12 @@ namespace AutoScreenCapture
                             sw.Close();
                         }
 
-                        // If we encounter an exception error it's probably better to just error out on exit.
-                        Environment.Exit(1);
+                        // If we encounter an exception error it's probably better to just error out on exit
+                        // but we'll let the user decide if that's what they really want to do.
+                        if (Convert.ToBoolean(Settings.Application.GetByKey("ExitOnError", string.Empty).Value))
+                        {
+                            Environment.Exit(1);
+                        }
                     }
                     else
                     {

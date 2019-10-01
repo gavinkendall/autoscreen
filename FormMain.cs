@@ -12,6 +12,8 @@ namespace AutoScreenCapture
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
+    using System.Net;
+    using System.Net.Mail;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
     using System.Collections.Generic;
@@ -1922,6 +1924,15 @@ namespace AutoScreenCapture
                 Image = Resources.edit
             };
 
+            ToolStripButton toolStripButtonEmail = new ToolStripButton
+            {
+                Text = "Email",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+            };
+
+            toolStripButtonEmail.Click += new EventHandler(Click_emailScreenshot);
+
             toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
 
             foreach (Editor editor in formEditor.EditorCollection)
@@ -2021,6 +2032,7 @@ namespace AutoScreenCapture
             toolstripButtonOpenFolder.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
             toolStrip.Items.Add(toolStripSplitButtonEdit);
+            toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripSplitButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
             toolStrip.Items.Add(toolstripButtonOpenFolder);
@@ -2033,14 +2045,101 @@ namespace AutoScreenCapture
 
         #region Click Event Handlers
 
-        #region Editor
+        #region Email
 
         /// <summary>
-        /// Shows the "Add Editor" window to enable the user to add a chosen Editor.
+        /// Emails screenshots using the EmailSever and EmailMessage settings in application settings.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_addEditorToolStripMenuItem(object sender, EventArgs e)
+        private void Click_emailScreenshot(object sender, EventArgs e)
+        {
+            try
+            {
+                string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
+                string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
+                string cc = Settings.Application.GetByKey("EmailMessageCC", string.Empty).Value.ToString();
+                string bcc = Settings.Application.GetByKey("EmailMessageBCC", string.Empty).Value.ToString();
+                string subject = Settings.Application.GetByKey("EmailMessageSubject", string.Empty).Value.ToString();
+                string body = Settings.Application.GetByKey("EmailMessageBody", string.Empty).Value.ToString();
+
+                if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to)) return;
+
+                var mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress(from);
+                mailMessage.To.Add(to);
+
+                if (!string.IsNullOrEmpty(cc))
+                    mailMessage.CC.Add(cc);
+
+                if (!string.IsNullOrEmpty(bcc))
+                    mailMessage.Bcc.Add(bcc);
+
+                if (!string.IsNullOrEmpty(subject))
+                    mailMessage.Subject = subject;
+
+                if (!string.IsNullOrEmpty(body))
+                    mailMessage.Body = body;
+
+                mailMessage.IsBodyHtml = false;
+
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+                {
+                    Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
+
+                    Screenshot screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+
+                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
+                    {
+                        mailMessage.Attachments.Add(new Attachment(screenshot.Path));
+                    }
+                }
+
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+                {
+                    Region region = (Region) tabControlViews.SelectedTab.Tag;
+
+                    Screenshot screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+
+                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
+                    {
+                        mailMessage.Attachments.Add(new Attachment(screenshot.Path));
+                    }
+                }
+
+                if (mailMessage.Attachments != null && mailMessage.Attachments.Count > 0)
+                {
+                    string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
+                    int port = Convert.ToInt32(Settings.Application.GetByKey("EmailServerPort", string.Empty).Value);
+
+                    string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
+                    string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
+
+                    if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return;
+
+                    var smtpClient = new SmtpClient(host, port);
+                    smtpClient.EnableSsl = Convert.ToBoolean(Settings.Application.GetByKey("EmailServerEnableSSL", string.Empty).Value);
+                    smtpClient.Credentials = new NetworkCredential(username, password);
+
+                    smtpClient.Send(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("FormMain::Click_emailScreenshot", ex);
+            }
+        }
+
+        #endregion
+
+            #region Editor
+
+            /// <summary>
+            /// Shows the "Add Editor" window to enable the user to add a chosen Editor.
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void Click_addEditorToolStripMenuItem(object sender, EventArgs e)
         {
             formEditor.EditorObject = null;
 

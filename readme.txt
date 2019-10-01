@@ -35,11 +35,13 @@ Please feel free to fork from the project and create pull requests.
 Command Line Arguments
 ----------------------
 -log
-Enables logging. All log files, by default, are stored in the "!autoscreen\debug\logs" folder (and this folder path is configurable as of version 2.2.1.0).
+Enables logging.
+All log files, by default, are stored in the "!autoscreen\debug\logs" folder (and this folder path is configurable as of version 2.2.1.0).
 This command line argument is new for 2.2.1.0 so please don't expect it to work with older versions.
 
 -debug
-This is similar to the -log command line argument. Logging will be turned on and log files will be stored in the logs folder. DebugMode will be set to True.
+This is similar to the -log command line argument.
+Logging will be turned on and log files will be stored in the logs folder. DebugMode will also be set to True.
 Be very careful when enabling DebugMode (either by turning it on in the application settings file or by using this argument) because it's basically verbose logging.
 In other words, if you have a lot of screenshots to load, then DebugMode is going to log every detail about each individual screenshot reference it finds.
 I introduced this command line argument in 2.0.6, removed it in 2.2.0.7, and re-introduced it in 2.2.1.0 :)
@@ -72,8 +74,7 @@ This locks the screen capture session until the passphrase is successfully enter
 -config=filename_to_use
 Sets up various paths of the application's folders and files using a specified configuration file.
 (where filename_to_use is the path and name of the configuration file to use)
-For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the config file
-named "MyAutoScreenCapture.conf" on the C:\ drive.
+For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the config file named "MyAutoScreenCapture.conf" on the C:\ drive.
 
 A configuration file that can be used by Auto Screen Capture should, at a minimum, contain the following 10 lines
 representing key-value pairs that will be parsed by the application upon execution:
@@ -88,15 +89,13 @@ ScreensFile=!autoscreen\screens.xml
 TriggersFile=!autoscreen\triggers.xml
 ScreenshotsFile=!autoscreen\screenshots.xml
 
-As you can see, each line specifies either the name of a folder or a file. If only the folder name is given
-(such as "screenshots") then Auto Screen Capture will parse it as the "screenshots" folder in the same folder
-where the executed autoscreen.exe binary is found. You can also specify a folder name with a trailing backslash but
-this isn't necessary. If a file extension is found then Auto Screen Capture will parse the filename as an XML file.
+As you can see, each line specifies either the name of a folder or a file.
+If only the folder name is given (such as "screenshots") then Auto Screen Capture will parse it as the "screenshots" folder in the same folder where the executed autoscreen.exe binary is found.
+You can also specify a folder name with a trailing backslash but this isn't necessary.
+If a file extension is found then Auto Screen Capture will parse the filename as an XML file.
 You can tell Auto Screen Capture where to find each XML file by specifying absolute or relative (sub)folder paths.
 
-By default (as of version 2.2.1.0), if the -config command line argument is not provided and
-a configuration file named "autoscreen.conf" is not found in the "!autoscreen" folder then the
-application will attempt to write out its "autoscreen.conf" file in the "!autoscreen" folder.
+By default (as of version 2.2.1.0), if the -config command line argument is not provided and a configuration file named "autoscreen.conf" is not found in the "!autoscreen" folder then the application will attempt to write out its "autoscreen.conf" file in the "!autoscreen" folder.
 The "autoscreen.conf" file explains what each key-value pair represents.
 
 Examples:
