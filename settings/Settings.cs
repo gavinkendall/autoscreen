@@ -23,7 +23,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ApplicationVersion = "2.2.1.1";
+        public static readonly string ApplicationVersion = "2.2.1.2";
 
         /// <summary>
         /// 
@@ -89,6 +89,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.21")); // Introduced Configure menu for each Screen and Region
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.22")); // Fixed scheduled start time with -startat command line argument
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.0")); // Introduced autoscreen.conf file and -log, -debug, and -config command line arguments
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // Can now add an Editor with any extension (not just limited to *.exe)
 
             Application = new SettingCollection
             {

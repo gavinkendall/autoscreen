@@ -1376,6 +1376,7 @@ namespace AutoScreenCapture
                             }
 
                             Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = Security.Hash(passphrase);
+                            Settings.User.Save();
 
                             ScreenCapture.LockScreenCaptureSession = true;
                         }
@@ -1383,6 +1384,9 @@ namespace AutoScreenCapture
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
+                        Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = false;
+                        Settings.User.Save();
+
                         notifyIcon.Visible = false;
                     }
                 }
