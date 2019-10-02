@@ -71,9 +71,9 @@ Each cycle represents taking screenshots of every screen and region for a single
 Sets a word or a series of words to be used as the passphrase for challenging the user when the application is going to show its interface, stop taking screenshots, or exit ensuring that the application continues taking screenshots until the passphrase is entered.
 This locks the screen capture session until the passphrase is successfully entered to unlock the session. The passphrase is stored as a SHA-512 hash.
 
--config=filename_to_use
+-config=filepath
 Sets up various paths of the application's folders and files using a specified configuration file.
-(where filename_to_use is the path and name of the configuration file to use)
+(where filepath is the path and name of the configuration file to use)
 For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the config file named "MyAutoScreenCapture.conf" on the C:\ drive.
 
 A configuration file that can be used by Auto Screen Capture should, at a minimum, contain the following 10 lines
@@ -95,7 +95,7 @@ You can also specify a folder name with a trailing backslash but this isn't nece
 If a file extension is found then Auto Screen Capture will parse the filename as an XML file.
 You can tell Auto Screen Capture where to find each XML file by specifying absolute or relative (sub)folder paths.
 
-By default (as of version 2.2.1.0), if the -config command line argument is not provided and a configuration file named "autoscreen.conf" is not found in the "!autoscreen" folder then the application will attempt to write out its "autoscreen.conf" file in the "!autoscreen" folder.
+As of version 2.2.2.3, if the -config command line argument is not provided and a configuration file named "autoscreen.conf" is not found in the same folder as autoscreen.exe then the application will attempt to write out its default "autoscreen.conf" file.
 The "autoscreen.conf" file explains what each key-value pair represents.
 
 Examples:

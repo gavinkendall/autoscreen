@@ -28,7 +28,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\autoscreen.conf";
+        public static string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.conf";
 
         /// <summary>
         /// This is to be backwards compatible with an old version of the application that used the "slides" folder.
