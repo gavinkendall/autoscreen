@@ -1929,6 +1929,7 @@ namespace AutoScreenCapture
                 Text = "Email",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                Image = Resources.email
             };
 
             toolStripButtonEmail.Click += new EventHandler(Click_emailScreenshot);
@@ -2031,8 +2032,8 @@ namespace AutoScreenCapture
 
             toolstripButtonOpenFolder.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
 
-            toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEmail);
+            toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripSplitButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
             toolStrip.Items.Add(toolstripButtonOpenFolder);
@@ -2043,19 +2044,16 @@ namespace AutoScreenCapture
             return toolStrip;
         }
 
-        #region Click Event Handlers
-
-        #region Email
-
         /// <summary>
-        /// Emails screenshots using the EmailSever and EmailMessage settings in application settings.
+        /// 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Click_emailScreenshot(object sender, EventArgs e)
+        /// <param name="screenshot"></param>
+        private void EmailScreenshot(Screenshot screenshot, bool prompt)
         {
             try
             {
+                if (screenshot == null || string.IsNullOrEmpty(screenshot.Path)) return;
+
                 string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
                 string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
                 string cc = Settings.Application.GetByKey("EmailMessageCC", string.Empty).Value.ToString();
@@ -2063,10 +2061,10 @@ namespace AutoScreenCapture
                 string subject = Settings.Application.GetByKey("EmailMessageSubject", string.Empty).Value.ToString();
                 string body = Settings.Application.GetByKey("EmailMessageBody", string.Empty).Value.ToString();
 
-                if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to)) return;
+                if (string.IsNullOrEmpty(@from) || string.IsNullOrEmpty(to)) return;
 
                 var mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(from);
+                mailMessage.From = new MailAddress(@from);
                 mailMessage.To.Add(to);
 
                 if (!string.IsNullOrEmpty(cc))
@@ -2083,51 +2081,88 @@ namespace AutoScreenCapture
 
                 mailMessage.IsBodyHtml = false;
 
-                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+                mailMessage.Attachments.Add(new Attachment(screenshot.Path));
+
+                if (mailMessage.Attachments == null || mailMessage.Attachments.Count <= 0) return;
+
+                string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
+                int port = Convert.ToInt32(Settings.Application.GetByKey("EmailServerPort", string.Empty).Value);
+
+                string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
+                string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
+
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return;
+
+                var smtpClient = new SmtpClient(host, port);
+
+                smtpClient.EnableSsl = Convert.ToBoolean(Settings.Application.GetByKey("EmailServerEnableSSL", string.Empty).Value);
+                smtpClient.Credentials = new NetworkCredential(username, password);
+
+                if (prompt)
                 {
-                    Screen screen = (Screen) tabControlViews.SelectedTab.Tag;
+                    DialogResult dialogResult = MessageBox.Show("Do you want to email this screenshot?", "Email Screenshot", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    Screenshot screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
-
-                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        mailMessage.Attachments.Add(new Attachment(screenshot.Path));
+                        smtpClient.Send(mailMessage);
                     }
                 }
-
-                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+                else
                 {
-                    Region region = (Region) tabControlViews.SelectedTab.Tag;
-
-                    Screenshot screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
-
-                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
-                    {
-                        mailMessage.Attachments.Add(new Attachment(screenshot.Path));
-                    }
-                }
-
-                if (mailMessage.Attachments != null && mailMessage.Attachments.Count > 0)
-                {
-                    string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
-                    int port = Convert.ToInt32(Settings.Application.GetByKey("EmailServerPort", string.Empty).Value);
-
-                    string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
-                    string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
-
-                    if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return;
-
-                    var smtpClient = new SmtpClient(host, port);
-                    smtpClient.EnableSsl = Convert.ToBoolean(Settings.Application.GetByKey("EmailServerEnableSSL", string.Empty).Value);
-                    smtpClient.Credentials = new NetworkCredential(username, password);
-
                     smtpClient.Send(mailMessage);
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("FormMain::Click_emailScreenshot", ex);
+                Log.Write("FormMain::EmailScreenshot", ex);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="triggerActionType"></param>
+        private void EmailScreenshot(TriggerActionType triggerActionType)
+        {
+            if (triggerActionType == TriggerActionType.EmailScreenshot && _screenCapture.Running)
+            {
+                Screenshot screenshot = _screenshotCollection.Get(_screenshotCollection.Count - 1);
+
+                if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
+                {
+                    EmailScreenshot(screenshot, prompt: false);
+                }
+            }
+        }
+
+        #region Click Event Handlers
+
+        #region Email
+
+        /// <summary>
+        /// Emails screenshots using the EmailSever and EmailMessage settings in application settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_emailScreenshot(object sender, EventArgs e)
+        {
+            Screenshot screenshot = null;
+
+            if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+            {
+                var screen = (Screen)tabControlViews.SelectedTab.Tag;
+
+                screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+            }
+
+            if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+            {
+                var region = (Region)tabControlViews.SelectedTab.Tag;
+
+                screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+            }
+
+            EmailScreenshot(screenshot, prompt: true);
         }
 
         #endregion
@@ -2475,13 +2510,18 @@ namespace AutoScreenCapture
                 ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
                 Region regionSelected = (Region)toolStripMenuItemSelected.Tag;
 
-                Region region = formRegion.RegionCollection.Get(regionSelected);
-                formRegion.RegionCollection.Remove(region);
+                DialogResult dialogResult = MessageBox.Show("Do you want to remove the region named \"" + regionSelected.Name + "\"?", "Remove Region", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                BuildRegionsModule();
-                BuildViewTabPages();
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Region region = formRegion.RegionCollection.Get(regionSelected);
+                    formRegion.RegionCollection.Remove(region);
 
-                formRegion.RegionCollection.Save();
+                    BuildRegionsModule();
+                    BuildViewTabPages();
+
+                    formRegion.RegionCollection.Save();
+                }
             }
         }
 
@@ -2588,13 +2628,18 @@ namespace AutoScreenCapture
                 ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
                 Screen screenSelected = (Screen)toolStripMenuItemSelected.Tag;
 
-                Screen screen = formScreen.ScreenCollection.Get(screenSelected);
-                formScreen.ScreenCollection.Remove(screen);
+                DialogResult dialogResult = MessageBox.Show("Do you want to remove the screen named \"" + screenSelected.Name + "\"?", "Remove Screen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                BuildScreensModule();
-                BuildViewTabPages();
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Screen screen = formScreen.ScreenCollection.Get(screenSelected);
+                    formScreen.ScreenCollection.Remove(screen);
 
-                formScreen.ScreenCollection.Save();
+                    BuildScreensModule();
+                    BuildViewTabPages();
+
+                    formScreen.ScreenCollection.Save();
+                }
             }
         }
 
@@ -2881,6 +2926,10 @@ namespace AutoScreenCapture
 
                         case TriggerActionType.StopScreenCapture:
                             StopScreenCapture();
+                            break;
+
+                        case TriggerActionType.EmailScreenshot:
+                            EmailScreenshot(TriggerActionType.EmailScreenshot);
                             break;
                     }
                 }

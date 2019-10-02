@@ -40,6 +40,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        StopScreenCapture = 5
+        StopScreenCapture = 5,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        EmailScreenshot = 6
     }
 }
