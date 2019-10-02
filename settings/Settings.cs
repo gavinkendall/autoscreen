@@ -93,6 +93,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // Can now add an Editor with any extension (not just limited to *.exe)
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.2")); // Fixed -passphrase command line argument so it saves when run from the command line
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.0")); // Emailing screenshots is now a feature
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.1")); // Fixed bugs with autoscreen.conf and ExitOnError
 
             Application = new SettingCollection
             {

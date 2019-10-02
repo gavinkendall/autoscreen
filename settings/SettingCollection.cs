@@ -296,7 +296,23 @@ namespace AutoScreenCapture
 
                 var versionInConfig = new Version(AppCodename, AppVersion, false);
 
-                if (versionInConfig.VersionNumber >= 2200 && versionInConfig.VersionNumber < 22017)
+                if (versionInConfig.VersionString.Equals("2.2.0.0") ||
+                    versionInConfig.VersionString.Equals("2.2.0.1") ||
+                    versionInConfig.VersionString.Equals("2.2.0.2") ||
+                    versionInConfig.VersionString.Equals("2.2.0.3") ||
+                    versionInConfig.VersionString.Equals("2.2.0.4") ||
+                    versionInConfig.VersionString.Equals("2.2.0.5") ||
+                    versionInConfig.VersionString.Equals("2.2.0.6") ||
+                    versionInConfig.VersionString.Equals("2.2.0.7") ||
+                    versionInConfig.VersionString.Equals("2.2.0.8") ||
+                    versionInConfig.VersionString.Equals("2.2.0.9") ||
+                    versionInConfig.VersionString.Equals("2.2.0.10") ||
+                    versionInConfig.VersionString.Equals("2.2.0.11") ||
+                    versionInConfig.VersionString.Equals("2.2.0.12") ||
+                    versionInConfig.VersionString.Equals("2.2.0.13") ||
+                    versionInConfig.VersionString.Equals("2.2.0.14") ||
+                    versionInConfig.VersionString.Equals("2.2.0.15") ||
+                    versionInConfig.VersionString.Equals("2.2.0.16"))
                 {
                     if (KeyExists("StringPassphrase"))
                     {
