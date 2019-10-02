@@ -9,6 +9,7 @@ namespace AutoScreenCapture
 {
     using System;
     using System.IO;
+    using System.Reflection;
 
     /// <summary>
     /// 
@@ -23,7 +24,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ApplicationVersion = "2.2.2.0";
+        public static readonly string ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         /// <summary>
         /// 
@@ -91,6 +92,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.0")); // Introduced autoscreen.conf file and -log, -debug, and -config command line arguments
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // Can now add an Editor with any extension (not just limited to *.exe)
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.2")); // Fixed -passphrase command line argument so it saves when run from the command line
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.0")); // Emailing screenshots is now a feature
 
             Application = new SettingCollection
             {

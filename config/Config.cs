@@ -125,24 +125,26 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            // This is probably a folder.
-            if (!Path.HasExtension(path))
+            if (Path.HasExtension(path))
+            {
+                string dir = Path.GetDirectoryName(path);
+
+                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+            }
+            else
             {
                 if (!path.EndsWith(Path.DirectorySeparatorChar.ToString()))
                 {
-                    // And it probably doesn't have a backslash at the end.
                     path += Path.DirectorySeparatorChar;
                 }
-            }
 
-            // This might be a folder?
-            string dir = Path.GetDirectoryName(path);
-
-            // Create the folder if it really is a folder otherwise
-            // it's most likely a file instead (in which case just ignore this part).
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
+                if (!string.IsNullOrEmpty(path) && !Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
             }
 
             return true;
