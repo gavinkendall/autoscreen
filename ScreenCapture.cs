@@ -390,42 +390,63 @@ namespace AutoScreenCapture
 
                     if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                     {
-                        DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
-
-                        if (driveInfo.IsReady)
+                        if (!path.StartsWith(FileSystem.PathDelimiter))
                         {
-                            double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
+                            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
 
-                            if (Log.DebugMode)
-                                Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int)freeDiskSpacePercentage + "%");
-
-                            if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
+                            if (driveInfo.IsReady)
                             {
-                                string dirName = Path.GetDirectoryName(path);
+                                double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
-                                if (!string.IsNullOrEmpty(dirName))
+                                if (Log.DebugMode)
+                                    Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "%");
+
+                                if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                                 {
-                                    if (!Directory.Exists(dirName))
+                                    string dirName = Path.GetDirectoryName(path);
+
+                                    if (!string.IsNullOrEmpty(dirName))
                                     {
-                                        Directory.CreateDirectory(dirName);
+                                        if (!Directory.Exists(dirName))
+                                        {
+                                            Directory.CreateDirectory(dirName);
 
-                                        Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
+                                            Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
+                                        }
+
+                                        screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+
+                                        SaveToFile(path, format, jpegQuality, bitmap);
                                     }
-
-                                    screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
-
-                                    SaveToFile(path, format, jpegQuality, bitmap);
+                                }
+                                else
+                                {
+                                    Log.Write($"ERROR: Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} so screen capture session is being stopped");
+                                    return false;
                                 }
                             }
                             else
                             {
-                                Log.Write($"ERROR: Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} so screen capture session is being stopped");
-                                return false;
+                                Log.Write("WARNING: Unable to save screenshot. Drive not ready");
                             }
                         }
                         else
                         {
-                            Log.Write("WARNING: Unable to save screenshot. Drive not ready");
+                            string dirName = Path.GetDirectoryName(path);
+
+                            if (!string.IsNullOrEmpty(dirName))
+                            {
+                                if (!Directory.Exists(dirName))
+                                {
+                                    Directory.CreateDirectory(dirName);
+
+                                    Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
+                                }
+
+                                screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+
+                                SaveToFile(path, format, jpegQuality, bitmap);
+                            }
                         }
                     }
                     else

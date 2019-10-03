@@ -99,6 +99,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.3")); // Changed default location of autoscreen.conf to be at the root level of autoscreen.exe
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.4")); // Macro tags %user% and %machine% can now be used in folder paths and the paths used by the autoscreen.conf file
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.5")); // There was an attempt at fixing the upgrade system
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.6")); // Fixed upgrade system. For real this time
 
             Application = new SettingCollection
             {
