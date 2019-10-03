@@ -840,23 +840,18 @@ namespace AutoScreenCapture
 
                     if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                     {
-                        DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+                        string dirName = Path.GetDirectoryName(path);
 
-                        if (driveInfo.IsReady)
+                        if (!string.IsNullOrEmpty(dirName))
                         {
-                            string dirName = Path.GetDirectoryName(path);
-
-                            if (!string.IsNullOrEmpty(dirName))
+                            if (Directory.Exists(dirName) && File.Exists(path))
                             {
-                                if (Directory.Exists(dirName) && File.Exists(path))
-                                {
-                                    toolStripTextBox.BackColor = Color.PaleGreen;
-                                }
-                                else
-                                {
-                                    toolStripTextBox.BackColor = Color.PaleVioletRed;
-                                    toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
-                                }
+                                toolStripTextBox.BackColor = Color.PaleGreen;
+                            }
+                            else
+                            {
+                                toolStripTextBox.BackColor = Color.PaleVioletRed;
+                                toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
                             }
                         }
                     }
