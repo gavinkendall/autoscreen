@@ -98,9 +98,21 @@ namespace AutoScreenCapture
             macro = macro.Replace(MacroTagSpec.Second, screenCapture.DateTimePreviousCycle.ToString(SecondFormat));
             macro = macro.Replace(MacroTagSpec.Millisecond, screenCapture.DateTimePreviousCycle.ToString(MillisecondFormat));
             macro = macro.Replace(MacroTagSpec.Count, screenCapture.Count.ToString());
+            macro = macro.Replace(MacroTagSpec.Title, activeWindowTitle);
+            macro = ParseTagsForUserAndMachine(macro);
+
+            return StripInvalidWindowsCharacters(macro);
+        }
+
+        /// <summary>
+        /// Replaces %user% and %machine% with the name of the user and the name of the machine respectively.
+        /// </summary>
+        /// <param name="macro"></param>
+        /// <returns></returns>
+        public static string ParseTagsForUserAndMachine(string macro)
+        {
             macro = macro.Replace(MacroTagSpec.User, Environment.UserName);
             macro = macro.Replace(MacroTagSpec.Machine, Environment.MachineName);
-            macro = macro.Replace(MacroTagSpec.Title, activeWindowTitle);
 
             return StripInvalidWindowsCharacters(macro);
         }

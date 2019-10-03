@@ -2949,7 +2949,7 @@ namespace AutoScreenCapture
                     if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                     {
                         if (_screenCapture.TakeScreenshot(
-                            path: FileSystem.CorrectScreenshotsFolderPath(region.Folder) + MacroParser.ParseTags(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle),
+                            path: MacroParser.ParseTagsForUserAndMachine(FileSystem.CorrectScreenshotsFolderPath(region.Folder)) + MacroParser.ParseTags(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle),
                             format: region.Format,
                             component: -1,
                             screenshotType: ScreenshotType.Region,
@@ -2991,7 +2991,7 @@ namespace AutoScreenCapture
                         if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                         {
                             if (_screenCapture.TakeScreenshot(
-                                path: FileSystem.CorrectScreenshotsFolderPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle),
+                                path: MacroParser.ParseTagsForUserAndMachine(FileSystem.CorrectScreenshotsFolderPath(screen.Folder)) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle),
                                 format: screen.Format,
                                 component: screen.Component,
                                 screenshotType: ScreenshotType.ActiveWindow,
@@ -3032,7 +3032,7 @@ namespace AutoScreenCapture
                             formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.TakeScreenshot(
-                                    path: FileSystem.CorrectScreenshotsFolderPath(screen.Folder) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle),
+                                    path: MacroParser.ParseTagsForUserAndMachine(FileSystem.CorrectScreenshotsFolderPath(screen.Folder)) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle),
                                     format: screen.Format,
                                     component: screen.Component,
                                     screenshotType: ScreenshotType.Screen,

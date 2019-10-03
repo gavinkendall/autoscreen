@@ -95,6 +95,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.0")); // Emailing screenshots is now a feature
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.1")); // Fixed bugs with autoscreen.conf and ExitOnError
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.2")); // Fixed issue with passphrase being accidentally hashed during upgrade
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.3")); // Changed default location of autoscreen.conf to be at the root level of autoscreen.exe
 
             Application = new SettingCollection
             {

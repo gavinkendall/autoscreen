@@ -125,6 +125,8 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
+            path = MacroParser.ParseTagsForUserAndMachine(path);
+
             if (Path.HasExtension(path))
             {
                 string dir = Path.GetDirectoryName(path);
