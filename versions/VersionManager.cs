@@ -59,6 +59,28 @@ namespace AutoScreenCapture
                 Version versionInConfig = Versions.Get(appCodenameToCheck, appVersionToCheck);
                 Version versionHere = Versions.Get(Settings.ApplicationCodename, Settings.ApplicationVersion);
 
+                // All of these were a mistake. They should never have had their revision numbers go beyond 9.
+                // So if we find any of these versions then treat them as old versions of the application.
+                if (versionInConfig != null &&
+                    (versionInConfig.VersionString.Equals("2.2.0.10") ||
+                     versionInConfig.VersionString.Equals("2.2.0.11") ||
+                     versionInConfig.VersionString.Equals("2.2.0.12") ||
+                     versionInConfig.VersionString.Equals("2.2.0.13") ||
+                     versionInConfig.VersionString.Equals("2.2.0.14") ||
+                     versionInConfig.VersionString.Equals("2.2.0.15") ||
+                     versionInConfig.VersionString.Equals("2.2.0.16") ||
+                     versionInConfig.VersionString.Equals("2.2.0.17") ||
+                     versionInConfig.VersionString.Equals("2.2.0.18") ||
+                     versionInConfig.VersionString.Equals("2.2.0.19") ||
+                     versionInConfig.VersionString.Equals("2.2.0.20") ||
+                     versionInConfig.VersionString.Equals("2.2.0.21") ||
+                     versionInConfig.VersionString.Equals("2.2.0.22")))
+                {
+                    return true;
+                }
+
+                // Compare the version number in the config file with the version number of this version.
+                // It's a basic numerical comparison so 2203 is going to be less than 2224.
                 if (versionInConfig != null && (versionInConfig.VersionNumber < versionHere.VersionNumber))
                 {
                     return true;
