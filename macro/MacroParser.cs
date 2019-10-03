@@ -125,7 +125,6 @@ namespace AutoScreenCapture
         private static string StripInvalidWindowsCharacters(string text)
         {
             text = text.Replace("/", string.Empty);
-            text = text.Replace(":", string.Empty);
             text = text.Replace("*", string.Empty);
             text = text.Replace("?", string.Empty);
             text = text.Replace("\"", string.Empty);

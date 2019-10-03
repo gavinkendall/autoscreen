@@ -65,6 +65,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
 
             // Older versions should be listed here.
+            // Never have any of the individual numbers go beyond 9 into double digits unless you want to break the upgrade system!
             _versionCollection.Add(new Version(CODENAME_CLARA, "2.1.8.2")); // Last version that introduced the Macro concept
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.0")); // Support for unlimited number of screens
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.1")); // Fixed empty window title bug
@@ -76,19 +77,6 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.7")); // Fixed upgrade path from old versions. Can now filter by Process Name
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.8")); // Introduced %user% and %machine% macro tags
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.9")); // Fixed upgrade path from older versions
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.10")); // Fixed bug with %count% tag value when display is not available
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.11")); // %screen% tag re-introduced
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.12")); // Fixed bug with JPEG quality
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.14")); // Introduced %title% tag
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.15")); // Strip out backslash if it's in the active window title
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.17")); // Passphrase is now hashed
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.18")); // Performance improvement with writing screenshot references to screenshots.xml
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.19")); // Fixing system tray icon messages when mouse hovers over icon during maintenance
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.20")); // Tab pages auto scroll
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.21")); // Introduced Configure menu for each Screen and Region
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.22")); // Fixed scheduled start time with -startat command line argument
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.0")); // Introduced autoscreen.conf file and -log, -debug, and -config command line arguments
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // Can now add an Editor with any extension (not just limited to *.exe)
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.2")); // Fixed -passphrase command line argument so it saves when run from the command line
@@ -96,6 +84,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.1")); // Fixed bugs with autoscreen.conf and ExitOnError
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.2")); // Fixed issue with passphrase being accidentally hashed during upgrade
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.3")); // Changed default location of autoscreen.conf to be at the root level of autoscreen.exe
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.4")); // Macro tags %user% and %machine% can now be used in folder paths and the paths used by the autoscreen.conf file
 
             Application = new SettingCollection
             {

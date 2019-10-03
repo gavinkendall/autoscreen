@@ -59,8 +59,7 @@ namespace AutoScreenCapture
                 Version versionInConfig = Versions.Get(appCodenameToCheck, appVersionToCheck);
                 Version versionHere = Versions.Get(Settings.ApplicationCodename, Settings.ApplicationVersion);
 
-                if (versionInConfig != null &&
-                    (versionInConfig.VersionNumber < versionHere.VersionNumber))
+                if (versionInConfig != null && (versionInConfig.VersionNumber < versionHere.VersionNumber))
                 {
                     return true;
                 }
