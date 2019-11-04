@@ -5,6 +5,9 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
+using System.Text.RegularExpressions;
+
 namespace AutoScreenCapture
 {
     using System;
@@ -14,6 +17,8 @@ namespace AutoScreenCapture
     /// </summary>
     public static class MacroParser
     {
+        private static readonly string WindowsPathRegexPattern = "^(?<DriveOrUNCPrefix>[A-Z]:\\\\{1}|\\\\{1})(?<Path>.+)$";
+
         /// <summary>
         /// 
         /// </summary>
@@ -85,6 +90,9 @@ namespace AutoScreenCapture
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
         public static string ParseTags(string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle)
         {
+            // Strip out any backslash characters from the name so we avoid creating unnecessary directories based on the name.
+            name = name.Replace("\\", string.Empty);
+
             macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
             macro = macro.Replace(MacroTagSpec.ScreenNumber, screenNumber.ToString());
             macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(MacroTagSpec.Format, format.Name.ToLower()) : macro;
@@ -124,7 +132,16 @@ namespace AutoScreenCapture
         /// <returns>A string that no longer contains invalid Windows characters.</returns>
         private static string StripInvalidWindowsCharacters(string text)
         {
+            string prefix = string.Empty;
+
+            if (Regex.IsMatch(text, WindowsPathRegexPattern))
+            {
+                prefix = Regex.Match(text, WindowsPathRegexPattern).Groups["DriveOrUNCPrefix"].Value;
+                text = Regex.Match(text, WindowsPathRegexPattern).Groups["Path"].Value;
+            }
+
             text = text.Replace("/", string.Empty);
+            text = text.Replace(":", string.Empty);
             text = text.Replace("*", string.Empty);
             text = text.Replace("?", string.Empty);
             text = text.Replace("\"", string.Empty);
@@ -132,7 +149,7 @@ namespace AutoScreenCapture
             text = text.Replace(">", string.Empty);
             text = text.Replace("|", string.Empty);
 
-            return text;
+            return prefix + text;
         }
     }
 }

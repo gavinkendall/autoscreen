@@ -390,6 +390,7 @@ namespace AutoScreenCapture
 
                     if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                     {
+                        // This is a normal path used in Windows such as "C:\screenshots\".
                         if (!path.StartsWith(FileSystem.PathDelimiter))
                         {
                             DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
@@ -399,7 +400,9 @@ namespace AutoScreenCapture
                                 double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
                                 if (Log.DebugMode)
+                                {
                                     Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "%");
+                                }
 
                                 if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
                                 {
@@ -432,6 +435,7 @@ namespace AutoScreenCapture
                         }
                         else
                         {
+                            // This is network share path (UNC) such as "\\SERVER\screenshots\".
                             string dirName = Path.GetDirectoryName(path);
 
                             if (!string.IsNullOrEmpty(dirName))
