@@ -128,6 +128,8 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
+            PopulateLabelList();
+
             Log.Write("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -633,11 +635,7 @@ namespace AutoScreenCapture
                     SearchDates();
                     SearchScreenshots();
 
-                    List<string> labels = _screenshotCollection.GetLabels();
-                    labels.Sort();
-
-                    comboBoxScreenshotLabel.DataSource = labels;
-                    comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
+                    PopulateLabelList();
 
                     Show();
 
@@ -667,16 +665,23 @@ namespace AutoScreenCapture
         /// </summary>
         private void HideInterface()
         {
-            Log.Write("Hiding interface");
+            try
+            {
+                Log.Write("Hiding interface");
 
-            Opacity = 0;
+                Opacity = 0;
 
-            Hide();
-            Visible = false;
-            ShowInTaskbar = false;
+                Hide();
+                Visible = false;
+                ShowInTaskbar = false;
 
-            Log.Write("Running triggers of condition type InterfaceHiding");
-            RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
+                Log.Write("Running triggers of condition type InterfaceHiding");
+                RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
+            }
+            catch (Exception ex)
+            {
+                Log.Write("FormMain::HideInterface", ex);
+            }
         }
 
         /// <summary>
@@ -701,6 +706,8 @@ namespace AutoScreenCapture
                 {
                     Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
                     SaveSettings();
+
+                    PopulateLabelList();
 
                     DisableStopCapture();
                     EnableStartCapture();
@@ -2162,14 +2169,14 @@ namespace AutoScreenCapture
 
         #endregion
 
-            #region Editor
+        #region Editor
 
-            /// <summary>
-            /// Shows the "Add Editor" window to enable the user to add a chosen Editor.
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void Click_addEditorToolStripMenuItem(object sender, EventArgs e)
+        /// <summary>
+        /// Shows the "Add Editor" window to enable the user to add a chosen Editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_addEditorToolStripMenuItem(object sender, EventArgs e)
         {
             formEditor.EditorObject = null;
 
@@ -2664,6 +2671,24 @@ namespace AutoScreenCapture
 
         #endregion Passphrase
 
+        #region Apply Label
+
+        private void Click_applyLabel(object sender, EventArgs e)
+        {
+            if (sender != null && sender is ToolStripDropDownItem)
+            {
+                ToolStripDropDownItem toolStripDropDownItem = (ToolStripDropDownItem)sender;
+
+                if (!string.IsNullOrEmpty(toolStripDropDownItem.Text))
+                {
+                    checkBoxScreenshotLabel.Checked = true;
+                    comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
+                }
+            }
+        }
+
+        #endregion
+
         #endregion Click Event Handlers
 
         /// <summary>
@@ -2954,8 +2979,6 @@ namespace AutoScreenCapture
                             label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                             windowTitle: _screenCapture.ActiveWindowTitle,
                             processName: _screenCapture.ActiveWindowProcessName,
-                            screenCollection: formScreen.ScreenCollection,
-                            regionCollection: formRegion.RegionCollection,
                             screenshotCollection: _screenshotCollection
                         ))
                         {
@@ -2996,8 +3019,6 @@ namespace AutoScreenCapture
                                 label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                 windowTitle: _screenCapture.ActiveWindowTitle,
                                 processName: _screenCapture.ActiveWindowProcessName,
-                                screenCollection: formScreen.ScreenCollection,
-                                regionCollection: formRegion.RegionCollection,
                                 screenshotCollection: _screenshotCollection
                             ))
                             {
@@ -3037,8 +3058,6 @@ namespace AutoScreenCapture
                                     label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                     windowTitle: _screenCapture.ActiveWindowTitle,
                                     processName: _screenCapture.ActiveWindowProcessName,
-                                    screenCollection: formScreen.ScreenCollection,
-                                    regionCollection: formRegion.RegionCollection,
                                     screenshotCollection: _screenshotCollection
                                 ))
                                 {
@@ -3193,6 +3212,39 @@ namespace AutoScreenCapture
             else
             {
                 ShowInterface();
+            }
+        }
+
+        private void ComboBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach(ToolStripMenuItem label in toolStripMenuItemApplyLabel.DropDownItems)
+            {
+                label.Checked = label.Text.Equals(comboBoxScreenshotLabel.Text);
+            }
+        }
+
+        private void PopulateLabelList()
+        {
+            List<string> labels = _screenshotCollection.GetLabels();
+            labels.Sort();
+
+            comboBoxScreenshotLabel.DataSource = labels;
+            comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
+
+            toolStripMenuItemApplyLabel.DropDownItems.Clear();
+
+            foreach (string label in labels)
+            {
+                ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
+                {
+                    Text = label,
+                    Checked = label.Equals(comboBoxScreenshotLabel.Text),
+                    CheckOnClick = true
+                };
+
+                toolStripMenuItem.Click += new EventHandler(Click_applyLabel);
+
+                toolStripMenuItemApplyLabel.DropDownItems.Add(toolStripMenuItem);
             }
         }
     }

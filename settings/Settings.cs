@@ -65,45 +65,46 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
 
             // Older versions should be listed here.
-            // Never have any of the individual numbers go beyond 9 into double digits unless you want to break the upgrade system!
-            _versionCollection.Add(new Version(CODENAME_CLARA, "2.1.8.2")); // Last version that introduced the Macro concept
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.0")); // Support for unlimited number of screens
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.1")); // Fixed empty window title bug
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.2")); // Continue screen capture session when drive not available
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.3")); // Changes to how we save screenshots
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.4")); // More changes to how we save screenshots
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.5")); // Fixes the changes to how we save screenshots
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.6")); // Can now select an existing label when applying a label
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.7")); // Fixed upgrade path from old versions. Can now filter by Process Name
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.8")); // Introduced %user% and %machine% macro tags
+            // WARNING: Never have any of the individual numbers go beyond 9 unless you want to break the upgrade system! This was an issue introduced in 2.2.0.10.
+            _versionCollection.Add(new Version(CODENAME_CLARA, "2.1.8.2")); // "Clara"; the last version in the 2.1 "macro" series. This includes the large user.xml file fix (2.1.7.9), "the handle is invalid" fix when Windows is locked (2.1.8.0), and the removal of the "start when Windows starts" feature (2.1.8.1); because anti-virus software falsely flags the application as a virus if we do that.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.0")); // "Dalek"; support for unlimited number of screens. This was a huge release with the most commits ever in the application's history.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.1")); // Fixed bug with empty window title which resulted in image files remaining after cleanup.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.2")); // Application no longer stops current screen capture session if the directory root does not exist or the drive is not ready. This ensures that the current screen capture session will continue even if the drive being referenced is not available for some reason. Useful if you usually save screen images to an external drive but then disconnect from it and want to continue using the laptop's internal drive. Reintroduced the thread for saving screenshots and the lock on xDoc
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.3")); // Active window title is retrieved earlier for less chance in having different titles in different screenshot objects despite being in the same screen capture cycle. Some code cleanup. Documentation being added. Fixed a racing condition issue with KeepScreenshotsForDays and Save in ScreenshotCollection
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.4")); // Expanded scope of lock around screenshot list
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.5")); // Old screenshots are deleted and unsaved screenshots are saved within the same timer
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.6")); // An existing label can now be selected from a drop down list of available labels and applying a label to each screenshot is now determined by a checkbox value
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.7")); // Process Name introduced. Can now filter by an application's process name. Fixed upgrade path from old versions. Removed -debug command line argument. ScreenCapture Count is now reduced whenever there is no image available to capture or active window title is empty to hopefully make the count more accurate when using the count tag. Logging removed in TakeScreenshot and ScreenCapture Save methods to save on disk space when DebugMode enabled
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.8")); // New macro tags for getting the name of the currently logged in user and the name of the machine being used
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.9")); // Fixed upgrade path from older versions
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.10")); // Fixed bug with %count% tag value when display is not available
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.11")); // %screen% tag re-introduced
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.10")); // Fixed bug with count value when display is not available
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.11")); // The %screen% tag has been re-introduced to represent the screen number. Fixed bug with taskbar not being captured. Fixed bug with JPEG quality and resolution ratio
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.12")); // Fixed bug with JPEG quality
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.13")); // Fixed null reference when application starts at startup from Windows Startup folder
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.14")); // Introduced %title% tag
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.15")); // Strip out backslash if it's in the active window title
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.16")); // Stop timerPerformMaintenance when window is open and start it again when window is closed
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.17")); // Passphrase is now hashed
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.18")); // Performance improvement with writing screenshot references to screenshots.xml
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.19")); // Fixing system tray icon messages when mouse hovers over icon during maintenance
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.20")); // Tab pages auto scroll
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.21")); // Introduced Configure menu for each Screen and Region
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.22")); // Fixed scheduled start time with -startat command line argument
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.0")); // Introduced autoscreen.conf file and -log, -debug, and -config command line arguments
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // Can now add an Editor with any extension (not just limited to *.exe)
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.2")); // Fixed -passphrase command line argument so it saves when run from the command line
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.0")); // Emailing screenshots is now a feature
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.1")); // Fixed bugs with autoscreen.conf and ExitOnError
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.2")); // Fixed issue with passphrase being accidentally hashed during upgrade
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.3")); // Changed default location of autoscreen.conf to be at the root level of autoscreen.exe
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.4")); // Macro tags %user% and %machine% can now be used in folder paths and the paths used by the autoscreen.conf file
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.5")); // There was an attempt at fixing the upgrade system
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.6")); // Fixed upgrade system. For real this time
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.7")); // Making sure we can save screenshots to a shared network drive (UNC path)
-            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.8")); // Fixed an issue with displaying a screenshot preview
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.13")); // Fixed null reference error when multiple application instances are started.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.14")); // Introduced a new tag that gets the title of the active window. Also added a new method method in MacroParser that strips away characters that are invalid in Windows filenames (except for the backslash character since we use that for the directory path).
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.15")); // Strip out backslash if it's in the active window title.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.16")); // Maintenance timer is turned on when interface is hidden and turned on when interface is shown.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.17")); // Replaced -lock command line argument with -passphrase and added logic around hashing the passphrase given from the command line.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.18")); // Performance improvements when saving screenshot references to screenshots.xml file.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.19")); // Fixing system tray icon messages when mouse hovers over icon during maintenance. Also attempting to fix bug with collection being modified when browsing screenshots.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.20")); // Tab pages now auto-scroll.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.21")); // Configure drop down menu finished.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.0.22")); // Fixed scheduled start time when running from command line.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.0")); // Logging is now an application setting and DebugMode has become verbose logging. I've also fixed a few issues when running -config from the command line.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.1")); // You can now add Batch Scripts, PowerShell Scripts, and any type of file for an Editor. Also removed the "Show system tray icon" option.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.1.2")); // Fixed a bug with saving passphrase and hiding system tray icon during command line execution.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.0")); // Completed work on Email Screenshot. Also included EmailScreenshot action for Triggers and added confirmation dialog boxes when emailing a screenshot from the interface and removing a screen or region. Email icon image added to Email button.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.1")); // Fixed a few bugs.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.2")); // Fixed bug with passphrase hash that was being hashed through old version detection by accident.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.3")); // Moved default location of autoscreen.conf file.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.4")); // Macro tags %machine% and %user% can now be used in folder paths and all paths of the autoscreen.conf file.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.5")); // Fixed bug with upgrade system.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.6")); // Fixed upgrade system. For real this time.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.7")); // Make sure we do not check the drive information if the path is a shared network path.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.8")); // Fixed an issue with displaying a screenshot preview.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.9")); // Double click system tray icon to show or hide interface. Fixed issue with having backslash characters in name and any invalid Windows characters in path.
 
-            Application = new SettingCollection
+              Application = new SettingCollection
             {
                 Filepath = FileSystem.ApplicationSettingsFile
             };

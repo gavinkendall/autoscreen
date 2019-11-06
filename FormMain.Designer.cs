@@ -50,6 +50,8 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
@@ -241,9 +243,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
             this.toolStripSeparatorCapture,
+            this.toolStripMenuItemApplyLabel,
+            this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(175, 154);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(175, 182);
             // 
             // toolStripMenuItemAbout
             // 
@@ -300,6 +304,17 @@ namespace AutoScreenCapture
             // 
             this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
             this.toolStripSeparatorCapture.Size = new System.Drawing.Size(171, 6);
+            // 
+            // toolStripMenuItemApplyLabel
+            // 
+            this.toolStripMenuItemApplyLabel.Name = "toolStripMenuItemApplyLabel";
+            this.toolStripMenuItemApplyLabel.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItemApplyLabel.Text = "Apply Label";
+            // 
+            // toolStripSeparatorApplyLabel
+            // 
+            this.toolStripSeparatorApplyLabel.Name = "toolStripSeparatorApplyLabel";
+            this.toolStripSeparatorApplyLabel.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripMenuItemExit
             // 
@@ -363,6 +378,7 @@ namespace AutoScreenCapture
             this.comboBoxScreenshotLabel.Size = new System.Drawing.Size(205, 21);
             this.comboBoxScreenshotLabel.TabIndex = 17;
             this.comboBoxScreenshotLabel.TabStop = false;
+            this.comboBoxScreenshotLabel.SelectedIndexChanged += new System.EventHandler(this.ComboBoxScreenshotLabel_SelectedIndexChanged);
             // 
             // groupBoxCaptureDelay
             // 
@@ -1216,5 +1232,7 @@ namespace AutoScreenCapture
         private Timer timerPerformMaintenance;
         private ComboBox comboBoxScreenshotLabel;
         private CheckBox checkBoxScreenshotLabel;
+        private ToolStripMenuItem toolStripMenuItemApplyLabel;
+        private ToolStripSeparator toolStripSeparatorApplyLabel;
     }
 }

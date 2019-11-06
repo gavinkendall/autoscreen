@@ -298,27 +298,34 @@ namespace AutoScreenCapture
 
         private void UpdatePreview(ScreenCapture screenCapture)
         {
-            if (comboBoxScreenComponent.SelectedIndex == 0)
+            try
             {
-                pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
+                if (comboBoxScreenComponent.SelectedIndex == 0)
+                {
+                    pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
+                }
+                else
+                {
+                    System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
+
+                    pictureBoxPreview.Image = screen != null
+                        ? screenCapture.GetScreenBitmap(
+                            screen.Bounds.X,
+                            screen.Bounds.Y,
+                            screen.Bounds.Width,
+                            screen.Bounds.Height,
+                            (int)numericUpDownResolutionRatio.Value,
+                            checkBoxMouse.Checked
+                        )
+                        : null;
+                }
+
+                System.GC.Collect();
             }
-            else
+            catch (Exception ex)
             {
-                System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
-
-                pictureBoxPreview.Image = screen != null
-                    ? screenCapture.GetScreenBitmap(
-                        screen.Bounds.X,
-                        screen.Bounds.Y,
-                        screen.Bounds.Width,
-                        screen.Bounds.Height,
-                        (int) numericUpDownResolutionRatio.Value,
-                        checkBoxMouse.Checked
-                    )
-                    : null;
+                Log.Write("FormScreen::UpdatePreview", ex);
             }
-
-            System.GC.Collect();
         }
 
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)

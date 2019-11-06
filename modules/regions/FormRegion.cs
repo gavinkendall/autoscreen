@@ -294,16 +294,23 @@ namespace AutoScreenCapture
 
         private void UpdatePreview(ScreenCapture screenCapture)
         {
-            pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
-                (int)numericUpDownX.Value,
-                (int)numericUpDownY.Value,
-                (int)numericUpDownWidth.Value,
-                (int)numericUpDownHeight.Value,
-                (int)numericUpDownResolutionRatio.Value,
-                checkBoxMouse.Checked
-            );
+            try
+            {
+                pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
+                    (int)numericUpDownX.Value,
+                    (int)numericUpDownY.Value,
+                    (int)numericUpDownWidth.Value,
+                    (int)numericUpDownHeight.Value,
+                    (int)numericUpDownResolutionRatio.Value,
+                    checkBoxMouse.Checked
+                );
 
-            System.GC.Collect();
+                System.GC.Collect();
+            }
+            catch (Exception ex)
+            {
+                Log.Write("FormRegion::UpdatePreview", ex);
+            }
         }
 
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)

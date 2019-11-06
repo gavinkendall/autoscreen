@@ -76,6 +76,8 @@ namespace AutoScreenCapture
 
         private const double MIN_FREE_DISK_SPACE_PERCENTAGE = 3;
 
+        private const int MAX_WINDOWS_PATH_LENGTH = 248;
+
         /// <summary>
         /// The default image format.
         /// </summary>
@@ -161,21 +163,30 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public  Image GetImageByPath(string path)
+        public Image GetImageByPath(string path)
         {
-            Image image = null;
-
-            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            try
             {
-                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                Image image = null;
+
+                if (!string.IsNullOrEmpty(path) && File.Exists(path))
                 {
-                    image = Image.FromStream(stream);
+                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    {
+                        image = Image.FromStream(stream);
+                    }
                 }
+
+                GC.Collect();
+
+                return image;
             }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::GetImageByPath", ex);
 
-            GC.Collect();
-
-            return image;
+                return null;
+            }
         }
 
         /// <summary>
@@ -188,7 +199,7 @@ namespace AutoScreenCapture
         /// <param name="resolutionRatio"></param>
         /// <param name="mouse"></param>
         /// <returns></returns>
-        public  Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
+        public Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
         {
             try
             {
@@ -258,7 +269,7 @@ namespace AutoScreenCapture
         /// 
         /// </summary>
         /// <returns></returns>
-        public  Bitmap GetActiveWindowBitmap()
+        public Bitmap GetActiveWindowBitmap()
         {
             try
             {
@@ -301,20 +312,29 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public string GetActiveWindowTitle()
         {
-            IntPtr handle;
-            int chars = MAX_CHARS;
-
-            StringBuilder buffer = new StringBuilder(chars);
-
-            handle = GetForegroundWindow();
-
-            if (GetWindowText(handle, buffer, chars) > 0)
+            try
             {
-                // Make sure to strip out the backslash if it's in the window title.
-                return buffer.ToString().Replace(@"\", string.Empty);
-            }
+                IntPtr handle;
+                int chars = MAX_CHARS;
 
-            return "(system)";
+                StringBuilder buffer = new StringBuilder(chars);
+
+                handle = GetForegroundWindow();
+
+                if (GetWindowText(handle, buffer, chars) > 0)
+                {
+                    // Make sure to strip out the backslash if it's in the window title.
+                    return buffer.ToString().Replace(@"\", string.Empty);
+                }
+
+                return "(system)";
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::GetActiveWindowTitle", ex);
+
+                return null;
+            }
         }
 
         /// <summary>
@@ -323,11 +343,20 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public string GetActiveWindowProcessName()
         {
-            IntPtr hwnd = GetForegroundWindow();
-            uint pid;
-            GetWindowThreadProcessId(hwnd, out pid);
-            Process p = Process.GetProcessById((int)pid);
-            return p.ProcessName;
+            try
+            {
+                IntPtr hwnd = GetForegroundWindow();
+                uint pid;
+                GetWindowThreadProcessId(hwnd, out pid);
+                Process p = Process.GetProcessById((int)pid);
+                return p.ProcessName;
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::GetActiveWindowProcessName", ex);
+
+                return null;
+            }
         }
 
         /// <summary>
@@ -344,18 +373,29 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, int resolutionRatio, out Bitmap bitmap)
         {
-            bitmap = component == 0
-                ? GetActiveWindowBitmap()
-                : GetScreenBitmap(x, y, width, height, resolutionRatio, mouse);
-
-            GC.Collect();
-
-            if (bitmap != null)
+            try
             {
-                return true;
-            }
+                bitmap = component == 0
+                    ? GetActiveWindowBitmap()
+                    : GetScreenBitmap(x, y, width, height, resolutionRatio, mouse);
 
-            return false;
+                GC.Collect();
+
+                if (bitmap != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenCapture::GetScreenImages", ex);
+
+                bitmap = null;
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -371,26 +411,25 @@ namespace AutoScreenCapture
         /// <param name="label"></param>
         /// <param name="windowTitle"></param>
         /// <param name="processName"></param>
-        /// <param name="screenCollection"></param>
-        /// <param name="regionCollection"></param>
         /// <param name="screenshotCollection"></param>
         /// <returns></returns>
-        public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType,
-            int jpegQuality, Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName,
-            ScreenCollection screenCollection, RegionCollection regionCollection, ScreenshotCollection screenshotCollection)
+        public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
+            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
         {
             try
             {
-                if (!string.IsNullOrEmpty(path))
+                if (!string.IsNullOrEmpty(path) && path.Length < MAX_WINDOWS_PATH_LENGTH)
                 {
                     if (Log.DebugMode)
+                    {
                         Log.Write("Attempting to write image to file at path \"" + path + "\"");
+                    }
 
                     FileInfo fileInfo = new FileInfo(path);
 
                     if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                     {
-                        // This is a normal path used in Windows such as "C:\screenshots\".
+                        // This is a normal path used in Windows (such as "C:\screenshots\").
                         if (!path.StartsWith(FileSystem.PathDelimiter))
                         {
                             DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
@@ -435,7 +474,7 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            // This is network share path (UNC) such as "\\SERVER\screenshots\".
+                            // This is UNC network share path (such as "\\SERVER\screenshots\").
                             string dirName = Path.GetDirectoryName(path);
 
                             if (!string.IsNullOrEmpty(dirName))
@@ -460,7 +499,8 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write("No path available");
+                    Log.Write($"No path available or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
+
                     return false;
                 }
 
@@ -469,11 +509,12 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 Log.Write("ScreenCapture::TakeScreenshot", ex);
+
                 return false;
             }
         }
 
-        private  void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
+        private void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
         {
             try
             {
@@ -483,7 +524,9 @@ namespace AutoScreenCapture
                     {
                         var encoderParams = new EncoderParameters(1);
                         encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuality);
+
                         var encoderInfo = GetEncoderInfo("image/jpeg");
+
                         bitmap.Save(path, encoderInfo, encoderParams);
                     }
                     else
