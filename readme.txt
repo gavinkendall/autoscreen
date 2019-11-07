@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2019-10-23 (October 23, 2019)
-[The information presented here refers to the latest version of the application (which is currently 2.2.2.8)]
+Last updated on 2019-11-06 (November 6, 2019)
+[The information presented here refers to the latest version of the application (which is currently 2.2.3.1)]
 =============================================================================================================
 
 
@@ -94,6 +94,9 @@ a particular label. A label can represent whatever you feel is necessary and imp
 you could use a label to represent the name of a project you're currently working on. When you start working
 on a new project you then change the label to represent the name of the new project.
 Auto Screen Capture will keep track of what screenshots were taken during the time a label was applied.
+
+As of version 2.2.3.1 a label can be selected from the "Apply Label" system tray icon menu.
+This menu will not be available if the session is locked.
 
 
 
@@ -274,7 +277,7 @@ relative (sub)folder paths.
 As of version 2.2.2.3, if the -config command line argument is not provided and a configuration
 file named "autoscreen.conf" is not found in the same folder as autoscreen.exe then the application
 will attempt to write out its default "autoscreen.conf" file.
-The "autoscreen.conf" file explains what each key-value pair represents.
+The "autoscreen.conf" file explains what each key-value pair represents. 
 
 Examples:
 autoscreen.exe -interval=00:01:00.000
@@ -295,3 +298,8 @@ autoscreen.exe -interval=00:01:00.000 -initial -startat=13:30:00 -stopat=21:30:0
 Starts the application's timer at 1:30pm, takes initial screenshots, waits for 1 minute,
 takes the next set of screenshots, waits for 1 minute, etc. until the application's timer
 stops at 9:30pm or the application is stopped by the user.
+
+Known Bug
+An issue with parsing command line arguments was accidentally introduced in version 2.2.1.0
+whereby user settings were loaded *after* they were set by command line arguments. This bug was
+fixed in version 2.2.3.1 which loads user settings *before* being set by command line arguments.
