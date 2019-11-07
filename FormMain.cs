@@ -1282,7 +1282,17 @@ namespace AutoScreenCapture
                     Settings.Initialize();
                 }
 
-                // Now that everything is configured according to the config file we can go ahead and run normally.
+                // Load user settings.
+                if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                {
+                    Config.Load();
+
+                    Settings.Initialize();
+                }
+
+                LoadSettings();
+
+                // Now that everything is configured according to the config files we can go ahead and run normally.
                 foreach (string arg in args)
                 {
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_LOG))
@@ -1396,15 +1406,6 @@ namespace AutoScreenCapture
                 }
 
                 #endregion Command Line Argument Parsing
-
-                if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
-                {
-                    Config.Load();
-
-                    Settings.Initialize();
-                }
-
-                LoadSettings();
 
                 InitializeThreads();
 
@@ -2665,6 +2666,8 @@ namespace AutoScreenCapture
 
                 ScreenCapture.LockScreenCaptureSession = true;
 
+                PopulateLabelList();
+
                 MessageBox.Show("The passphrase you entered has been securely stored as a SHA-512 hash and your session has been locked.", "Passphrase Set", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -3225,26 +3228,44 @@ namespace AutoScreenCapture
 
         private void PopulateLabelList()
         {
-            List<string> labels = _screenshotCollection.GetLabels();
-            labels.Sort();
-
-            comboBoxScreenshotLabel.DataSource = labels;
-            comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
-
-            toolStripMenuItemApplyLabel.DropDownItems.Clear();
-
-            foreach (string label in labels)
+            try
             {
-                ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
+                if (ScreenCapture.LockScreenCaptureSession)
                 {
-                    Text = label,
-                    Checked = label.Equals(comboBoxScreenshotLabel.Text),
-                    CheckOnClick = true
-                };
+                    toolStripSeparatorApplyLabel.Visible = false;
+                    toolStripMenuItemApplyLabel.Visible = false;
 
-                toolStripMenuItem.Click += new EventHandler(Click_applyLabel);
+                    return;
+                }
 
-                toolStripMenuItemApplyLabel.DropDownItems.Add(toolStripMenuItem);
+                toolStripSeparatorApplyLabel.Visible = true;
+                toolStripMenuItemApplyLabel.Visible = true;
+
+                List<string> labels = _screenshotCollection.GetLabels();
+                labels.Sort();
+
+                comboBoxScreenshotLabel.DataSource = labels;
+                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
+
+                toolStripMenuItemApplyLabel.DropDownItems.Clear();
+
+                foreach (string label in labels)
+                {
+                    ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
+                    {
+                        Text = label,
+                        Checked = label.Equals(comboBoxScreenshotLabel.Text),
+                        CheckOnClick = true
+                    };
+
+                    toolStripMenuItem.Click += new EventHandler(Click_applyLabel);
+
+                    toolStripMenuItemApplyLabel.DropDownItems.Add(toolStripMenuItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("FormMain::PopulateLabelList", ex);
             }
         }
     }
