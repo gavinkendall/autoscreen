@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2019-11-06 (November 6, 2019)
+Last updated on 2019-11-26 (November 26, 2019)
 [The information presented here refers to the latest version of the application (which is currently 2.2.3.1)]
 =============================================================================================================
 
@@ -197,6 +197,39 @@ WMF
 
 The "Include mouse pointer" option, when enabled, will include the mouse pointer in the image of the
 screenshot that will be taken for that particular screen.
+
+The "Folder" text box refers to the directory in which screenshots will be written to.
+
+The "Macro" text box refers to the macro used that defines how each individual file is named.
+
+The "Tags" drop-down control gives you a list of macro tags that can be used for your macro:
+%name%           Name of screen or region                The "Name" of the screen
+%screen%         Screen number (1, 2, 3, 4 ...)          The screen's associated number
+%format%         Image format of screen or region        The format of the image used for the screen
+%date%           Date                                    The current date as yyyy-MM-dd
+%time%           Time                                    The current time as HH-mm-ss-fff
+%year%           Year                                    The current year as yyyy
+%month%          Month                                   The current month as MM
+
+
+
+Modules - Regions
+-----------------
+This module enables you to setup as many regions as you prefer.
+
+The "Add New Region ..." button will show you, by default, a preview of a region at position 0,0
+with the width set to 800 and the height set to 600.
+
+Change the X and Y values in the "Position" section to adjust the region's position.
+X = 0 and Y = 0 usually represents the corner of the primary display. You can also use negative
+values to adjust the position of the region beyond the boundaries of the available screens.
+
+Change the Width and Height values in the "Size" section to adjust the region's size.
+
+The "Image" section defines the image format, JPEG quality, and resolution ratio.
+
+You can import the X, Y, Width, and Height values from an available screen by selecting a
+screen from the "Import Screen Dimensions" drop-down control.
 
 
 
