@@ -128,8 +128,6 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
-            PopulateLabelList();
-
             Log.Write("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
@@ -706,8 +704,6 @@ namespace AutoScreenCapture
                 {
                     Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
                     SaveSettings();
-
-                    PopulateLabelList();
 
                     DisableStopCapture();
                     EnableStartCapture();
@@ -2666,8 +2662,6 @@ namespace AutoScreenCapture
 
                 ScreenCapture.LockScreenCaptureSession = true;
 
-                PopulateLabelList();
-
                 MessageBox.Show("The passphrase you entered has been securely stored as a SHA-512 hash and your session has been locked.", "Passphrase Set", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -2686,6 +2680,7 @@ namespace AutoScreenCapture
                 {
                     checkBoxScreenshotLabel.Checked = true;
                     comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
+                    SaveSettings();
                 }
             }
         }
@@ -3267,6 +3262,11 @@ namespace AutoScreenCapture
             {
                 Log.Write("FormMain::PopulateLabelList", ex);
             }
+        }
+
+        private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
+        {
+            PopulateLabelList();
         }
     }
 }
