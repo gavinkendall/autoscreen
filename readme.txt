@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2019-11-26 (November 26, 2019)
-[The information presented here refers to the latest version of the application (which is currently 2.2.3.1)]
+Last updated on 2019-12-03 (December 3, 2019)
+[The information presented here refers to the latest version of the application (which is currently 2.2.3.2)]
 =============================================================================================================
 
 
@@ -9,11 +9,11 @@ Summary
 -------
 Auto Screen Capture is a small and portable screen capture utility for gamers, designers, and testers.
 
-This application enables you to automatically take screenshots at a chosen interval. For example, you may
+The application enables you to automatically take screenshots at a chosen interval. For example, you may
 want to capture the progress of playing through a game's level or just use the application as a diary.
 
 You can also schedule your automated screen capture sessions by specifying when a session starts and
-when a session ends on particular days of the week or every day.
+when a session stops on particular days of the week or every day.
 
 A calendar is included to help you keep track of what days screenshots were taken.
 
@@ -22,8 +22,8 @@ A calendar is included to help you keep track of what days screenshots were take
 Project Website
 ---------------
 https://sourceforge.net/projects/autoscreen/
-This is where to download the latest version of the autoscreen.exe binary, read blog posts
-on Auto Screen Capture, submit a review for the application, and create a support ticket for any bugs
+This is where to download the latest version of the autoscreen.exe binary,
+submit a review for the application, and create a support ticket for any bugs
 encountered while using the application.
 
 
@@ -38,7 +38,7 @@ Please feel free to fork from the project and create pull requests.
 Introduction to Modules
 -----------------------
 When you open Auto Screen Capture's interface you're going to see a number of tabs on the left side
-which I like to call "modules":
+which are called Modules:
 Interval
 Schedule
 Screenshots
@@ -173,6 +173,13 @@ This module enables you to setup as many screens as you prefer.
 The "Add New Screen ..." button will show you a preview of the currently selected Component
 (whether it be the Active Window or an available screen/display/monitor).
 
+The "Name" text box contains the name of the screen. For a new screen the Name field will
+auto-populate with a default name based on the next available screen name that can be used.
+
+The value of the Name field can be retrieved with the %name% macro tag so it could be used
+as part of the screenshot's filename. Therefore any characters that are invalid to Windows
+will be stripped out of the name (such as /, :, *, ?, \, <, >, and |).
+
 The Component drop down list shows you the Active Window and the available screens with their
 associated dimensions.
 
@@ -198,9 +205,16 @@ WMF
 The "Include mouse pointer" option, when enabled, will include the mouse pointer in the image of the
 screenshot that will be taken for that particular screen.
 
+The "Preview" image area shows you a preview of the selected Component. The preview refreshes
+every 500 milliseconds.
+
 The "Folder" text box refers to the directory in which screenshots will be written to.
+You can use the backslash character (\) as part of your folder structure to define sub-folders.
+An ending backslash character is recommended, but it will be included automatically upon save.
 
 The "Macro" text box refers to the macro used that defines how each individual file is named.
+Any characters invalid to Windows will be stripped out (such as /, :, *, ?, \, <, >, and |).
+You cannot use the backslash character (\) as part of your macro.
 
 The "Tags" drop-down control gives you a list of macro tags that can be used for your macro:
 %name%           Name of screen or region                The "Name" of the screen
@@ -210,6 +224,21 @@ The "Tags" drop-down control gives you a list of macro tags that can be used for
 %time%           Time                                    The current time as HH-mm-ss-fff
 %year%           Year                                    The current year as yyyy
 %month%          Month                                   The current month as MM
+%day%            Day                                     The current day as dd
+%hour%           Hour                                    The current hour as HH
+%minute%         Minute                                  The current minute as mm
+%second%         Second                                  The current second as ss
+%millisecond%    Millisecond                             The current millisecond as fff
+%count%          Number of screen capture cycles during the current screen capture session
+%user%           User                                    The name of the logged in user
+%machine%        Machine                                 The name of the machine being used
+%title%          Title                                   The title of the active window
+
+The "Remove Selected Screens" button is used to remove a selected number of screens in the list.
+Select the screens you want to remove and then click the button to remove the selected screens.
+
+The "..." button to the right of a screen name in the list of screens will open the Change Screen
+window enabling you to change the settings of that screen.
 
 
 
@@ -220,6 +249,13 @@ This module enables you to setup as many regions as you prefer.
 The "Add New Region ..." button will show you, by default, a preview of a region at position 0,0
 with the width set to 800 and the height set to 600.
 
+The "Name" text box contains the name of the region. For a new region the Name field will
+auto-populate with a default name based on the next available region name that can be used.
+
+The value of the Name field can be retrieved with the %name% macro tag so it could be used
+as part of the screenshot's filename. Therefore any characters that are invalid to Windows
+will be stripped out of the name (such as /, :, *, ?, \, <, >, and |).
+
 Change the X and Y values in the "Position" section to adjust the region's position.
 X = 0 and Y = 0 usually represents the corner of the primary display. You can also use negative
 values to adjust the position of the region beyond the boundaries of the available screens.
@@ -228,8 +264,113 @@ Change the Width and Height values in the "Size" section to adjust the region's 
 
 The "Image" section defines the image format, JPEG quality, and resolution ratio.
 
+The "Include mouse pointer" option, when enabled, will include the mouse pointer in the image of the
+screenshot that will be taken for that particular region.
+
 You can import the X, Y, Width, and Height values from an available screen by selecting a
 screen from the "Import Screen Dimensions" drop-down control.
+
+The "Preview" image area shows you a preview of the specified region using the given X, Y, Width,
+and Height values. The preview refreshes every 500 milliseconds.
+
+The "Folder" text box refers to the directory in which screenshots will be written to.
+You can use the backslash character (\) as part of your folder structure to define sub-folders.
+An ending backslash character is recommended, but it will be included automatically upon save.
+
+The "Macro" text box refers to the macro used that defines how each individual file is named.
+Any characters invalid to Windows will be stripped out (such as /, :, *, ?, \, <, >, and |).
+You cannot use the backslash character (\) as part of your macro.
+
+The "Tags" drop-down control gives you a list of macro tags that can be used for your macro:
+%name%           Name of screen or region                The "Name" of the screen
+%screen%         Screen number (1, 2, 3, 4 ...)          The screen's associated number
+%format%         Image format of screen or region        The format of the image used for the screen
+%date%           Date                                    The current date as yyyy-MM-dd
+%time%           Time                                    The current time as HH-mm-ss-fff
+%year%           Year                                    The current year as yyyy
+%month%          Month                                   The current month as MM
+%day%            Day                                     The current day as dd
+%hour%           Hour                                    The current hour as HH
+%minute%         Minute                                  The current minute as mm
+%second%         Second                                  The current second as ss
+%millisecond%    Millisecond                             The current millisecond as fff
+%count%          Number of screen capture cycles during the current screen capture session
+%user%           User                                    The name of the logged in user
+%machine%        Machine                                 The name of the machine being used
+%title%          Title                                   The title of the active window
+
+The "Remove Selected Regions" button is used to remove a selected number of regions in the list.
+Select the regions you want to remove and then click the button to remove the selected regions.
+
+The "..." button to the right of a region name in the list of regions will open the Change Region
+window enabling you to change the settings of that region.
+
+
+
+Modules - Editors
+-----------------
+This module enables you to setup your favourite image editors.
+
+The "Add New Editor ..." button will show a window where you can specify the name, application,
+and application arguments for the new image editor that you're adding to the list of editors.
+
+The "Name" text box contains the name of the editor. You can name it however you want.
+
+The "Application" text box contains the path where the application binary is located.
+For example, "C:\Windows\System32\mspaint.exe" is the path to Microsoft Paint.
+
+(Since version 2.2.1.1 you can also use batch scripts (*.bat) and PowerShell scripts (*.ps1)
+as the editor. In fact, you can use any type of file for an editor.)
+
+The "Arguments" text box contains the application's command line arguments that will be used
+during the execution of the application. The %screenshot% tag represents the filepath of the
+screenshot's image file. This could be the filepath of the screenshot that you're wanting to
+edit via the "Edit" menu of the screenshot you're viewing from the Screenshots module or
+the filepath of the last screenshot that was taken when a Trigger uses a specified Editor
+to open the screenshot in the editor.
+
+The "Remove Selected Editors" button is used to remove a selected number of editors in the list.
+Select the editors you want to remove and then click the button to remove the selected editors.
+
+The "..." button to the right of an editor name in the list of editors will open the Change Editor
+window enabling you to change the settings of that editor.
+
+
+
+Modules - Triggers
+------------------
+This module enables you to setup triggers.
+
+A trigger performs a specified Action based on a specified Condition to control the behaviour
+and workflow of Auto Screen Capture. For example, you could setup a trigger to open your
+favourite image editor whenever a screenshot is taken.
+
+The following conditions are available:
+ApplicationStartup                    Perform an action when Auto Screen Capture starts
+ApplicationExit                       Perform an action when Auto Screen Capture exits
+InterfaceClosing                      Perform an action when the interface is closing
+InterfaceHiding                       Perform an action when the interface is hiding
+InterfaceShowing                      Perform an action when the interface is showing
+LimitReached                          Perform an action when the Limit has been reached
+ScreenCaptureStarted                  Perform an action when a screen capture session starts
+ScreenCaptureStopped                  Perform an action when the running session is stopped
+ScreenshotTaken                       Perform an action when a screenshot is taken
+
+The following actions are available:
+ExitApplication                       Quits Auto Screen Capture
+HideInterface                         Hides the interface
+RunEditor                             Runs (executes) a specified Editor
+ShowInterface                         Shows the interface
+StartScreenCapture                    Starts a screen capture session
+StopScreenCapture                     Stops the currently running screen capture session
+EmailScreenshot                       Uses the email settings in "application.xml" to email
+                                      the last screenshot image that was captured
+
+The following triggers are created by default on the first run of Auto Screen Capture:
+Condition = ApplicationStartup -> Action = ShowInterface
+Condition = ScreenCaptureStarted -> Action = HideInterface
+Condition = InterfaceClosing -> Action = ExitApplication
+Condition = LimitReached -> Action = StopScreenCapture
 
 
 
