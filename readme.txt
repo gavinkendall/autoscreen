@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2019-12-03 (December 3, 2019)
+Last updated on 2019-12-09 (December 9, 2019)
 [The information presented here refers to the latest version of the application (which is currently 2.2.3.2)]
 =============================================================================================================
 
@@ -13,7 +13,7 @@ The application enables you to automatically take screenshots at a chosen interv
 want to capture the progress of playing through a game's level or just use the application as a diary.
 
 You can also schedule your automated screen capture sessions by specifying when a session starts and
-when a session stops on particular days of the week or every day.
+when a session stops on particular days of the week.
 
 A calendar is included to help you keep track of what days screenshots were taken.
 
@@ -22,16 +22,15 @@ A calendar is included to help you keep track of what days screenshots were take
 Project Website
 ---------------
 https://sourceforge.net/projects/autoscreen/
-This is where to download the latest version of the autoscreen.exe binary,
-submit a review for the application, and create a support ticket for any bugs
-encountered while using the application.
+This is where to download the latest version of the autoscreen.exe binary
+and create support tickets for any bugs encountered with the application.
 
 
 
 Source Code
 -----------
 https://github.com/gavinkendall/autoscreen
-Please feel free to fork from the project and create pull requests.
+This is where to view the source code, fork from the project, and submit pull requests.
 
 
 
@@ -73,26 +72,36 @@ until the application is told to stop or the application quits.
 Setting "limit" tells Auto Screen Capture to keep taking screenshots until a specified number of "cycles"
 has been reached. For example, a limit of 3 will be three cycles.
 
+(You can also use the "-limit" command line argument.)
+
 This means that screenshots will continue to be taken until Auto Screen Capture reaches the 3rd cycle.
+
+With an interval set for 30 seconds the application will ...
+1) Wait for 30 seconds (which completes the 1st cycle)
+2) Take screenshots
+3) Wait for another 30 seconds (to complete the 2nd cycle)
+4) Take screenshots
+5) Wait for another 30 seconds (to complete the 3rd cycle)
+6) Stop taking screenshots
+
 With an interval set for 30 seconds and Initial Capture enabled the application will ...
-1) Take the first round of screenshots
+1) Take screenshots
 2) Wait for 30 seconds (which completes the 1st cycle)
-3) Take the next round of screenshots
-4) Wait for 30 seconds (to complete the 2nd cycle)
-5) Take the next round of screenshots
-6) Wait for 30 seconds (to complete the 3rd cycle)
+3) Take screenshots
+4) Wait for another 30 seconds (to complete the 2nd cycle)
+5) Take screenshots
+6) Wait for another 30 seconds (to complete the 3rd cycle)
 7) Stop taking screenshots
 
 This gives you three cycles. When you look at the Screenshots module you will see three sets of screenshots
 taken with a 30 second interval in between each set.
-
-(You can also use the "-limit" command line argument.)
 
 Enabling the "Apply this label to each screenshot" option and entering a label in the text field will assign
 the provided text to each screenshot taken. This is useful for when you want to filter your screenshots by
 a particular label. A label can represent whatever you feel is necessary and important. For example, 
 you could use a label to represent the name of a project you're currently working on. When you start working
 on a new project you then change the label to represent the name of the new project.
+
 Auto Screen Capture will keep track of what screenshots were taken during the time a label was applied.
 
 As of version 2.2.3.1 a label can be selected from the "Apply Label" system tray icon menu.
@@ -138,6 +147,7 @@ knows about for a specified number of days.
 
 For example, "Keep screenshots for 30 days" will keep the image files on disk for 30 days.
 If any image files are found to be older than 30 days then those files will be automatically deleted.
+(Folders containing image files will not be deleted. This is intentional.)
 
 
 
@@ -473,7 +483,131 @@ Starts the application's timer at 1:30pm, takes initial screenshots, waits for 1
 takes the next set of screenshots, waits for 1 minute, etc. until the application's timer
 stops at 9:30pm or the application is stopped by the user.
 
-Known Bug
+** Known Bug **
 An issue with parsing command line arguments was accidentally introduced in version 2.2.1.0
-whereby user settings were loaded *after* they were set by command line arguments. This bug was
-fixed in version 2.2.3.1 which loads user settings *before* being set by command line arguments.
+whereby user settings were loaded after they were set by command line arguments. This bug was
+fixed in version 2.2.3.1 which loads user settings before being set by command line arguments.
+
+
+
+Configuration
+-------------
+Auto Screen Capture's configuration options are varied and very powerful. You can configure the
+application to run in a single-user environment or in a multi-user environment.
+
+By default, on the first run, Auto Screen Capture will create its own configuration file named
+"autoscreen.conf" in the same directory as where the "autoscreen.exe" binary is executed from.
+
+The default configuration file looks like this ...
+=========================================== autoscreen.conf ===========================================
+# Auto Screen Capture Configuration File
+# Use this file to tell the application what folders and files it should utilize.
+# Each key-value pair can be the name of a folder or file or a path to a folder or file.
+# If only the folder name is given then it will be parsed as the sub-folder of the folder
+# where the executed autoscreen.exe binary is located.
+
+
+# This is the folder where screenshots will be stored by default.
+ScreenshotsFolder=screenshots
+
+
+# If any errors are encountered then you will find them in this folder when DebugMode is enabled.
+DebugFolder=!autoscreen\debug
+
+
+# Logs are stored in this folder when either Logging or DebugMode is enabled.
+LogsFolder=!autoscreen\debug\logs
+
+
+# The application settings (such as DebugMode).
+ApplicationSettingsFile=!autoscreen\settings\application.xml
+
+
+# Your personal settings.
+UserSettingsFile=!autoscreen\settings\user.xml
+
+
+# References to image editors.
+EditorsFile=!autoscreen\editors.xml
+
+
+# References to regions.
+RegionsFile=!autoscreen\regions.xml
+
+
+# References to screens.
+ScreensFile=!autoscreen\screens.xml
+
+
+# References to triggers.
+TriggersFile=!autoscreen\triggers.xml
+
+
+# References to screenshots.
+ScreenshotsFile=!autoscreen\screenshots.xml
+=======================================================================================================
+
+As you can see the configuration file defines the folders and XML files the application should use.
+
+You can create your own configuration file as long as it has, at a minimum, the following lines ...
+ScreenshotsFolder=screenshots
+DebugFolder=!autoscreen\debug
+LogsFolder=!autoscreen\logs
+ApplicationSettingsFile=!autoscreen\settings\application.xml
+UserSettingsFile=!autoscreen\settings\user.xml
+EditorsFile=!autoscreen\editors.xml
+RegionsFile=!autoscreen\regions.xml
+ScreensFile=!autoscreen\screens.xml
+TriggersFile=!autoscreen\triggers.xml
+ScreenshotsFile=!autoscreen\screenshots.xml
+
+All of these values represent local paths for the computer that Auto Screen Capture is running on, but
+it's also possible to use network paths instead.
+
+By default the "!autoscreen" directory is created, and used, for storing XML files ...
+application.xml               Setup settings for the application (such as Debug Mode and Email)
+user.xml                      Setup settings for the user (such as Interval and Schedule)
+editors.xml                   Setup the user's image editors to use when editing screenshots
+regions.xml                   Setup regions to capture on the user's computer
+screens.xml                   Setup screens to capture on the user's computer
+triggers.xml                  Setup triggers to control the application's behavior
+screenshots.xml               List the screenshots that have been captured by the application
+
+You can use a network path (rather than a local system path). For example, if you have a server
+named "SKYWALKER" and it's accessible by Auto Screen Capture running from a user's computer you
+could have that user's settings file be stored on the server ...
+UserSettingsFile=\\SKYWALKER\shared\autoscreen\gkendall-zim\gavin\user_settings.xml
+
+You can use the %machine% and %user% tags for the value of a configuration key. For example, you could
+specify the path for the user settings file to be used by any user on any machine on your network and
+have each user configured to use the same settings stored on a server named "SKYWALKER" ...
+UserSettingsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\user_settings.xml
+
+Comments can be made in the configuration file with the # symbol.
+For example, you could write a comment for explaining the value of the "UserSettingsFile" key ...
+# Each user can have their own settings file for the computer they're using
+UserSettingsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\user_settings.xml
+
+You could have an "autoscreen.conf" file on each user's machine and it will read the XML files
+from the server and store the user's screenshots on the server.
+
+For example, each user's "autoscreen.conf" file could look like this ...
+=========================================== autoscreen.conf ===========================================
+ScreenshotsFolder=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screenshots
+DebugFolder=\\SKYWALKER\shared\autoscreen\%machine%\%user%\debug
+LogsFolder=\\SKYWALKER\shared\autoscreen\%machine%\%user%\logs
+ApplicationSettingsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\settings\application.xml
+UserSettingsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\settings\user.xml
+EditorsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\editors.xml
+RegionsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\regions.xml
+ScreensFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screens.xml
+TriggersFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\triggers.xml
+ScreenshotsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screenshots.xml
+=======================================================================================================
+
+You don't need to use "autoscreen.conf" as the name for your configuration file.
+
+If you have a configuration file that you want Auto Screen Capture to use when the application starts
+you can specify the path and name of the configuration file with the "-config" command line argument.
+For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
+config file named "MyAutoScreenCapture.conf" on the C:\ drive.
