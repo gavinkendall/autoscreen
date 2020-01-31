@@ -105,6 +105,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.2.9")); // Double click system tray icon to show or hide interface. Fixed issue with having backslash characters in name and any invalid Windows characters in path.
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.3.0")); // Apply Label system tray icon menu lists available labels.
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.3.1")); // Apply Label is made invisible when screen capture session is locked. Fixed bug with parsing command line arguments.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.3.2")); // Apply Label fixed to show labels whenever the system tray icon menu is opened.
 
             Application = new SettingCollection
             {
@@ -145,7 +146,7 @@ namespace AutoScreenCapture
 
                     if (!Application.KeyExists("EmailServerHost"))
                     {
-                        Application.Add(new Setting("EmailServerHost", string.Empty));
+                        Application.Add(new Setting("EmailServerHost", "smtp.office365.com"));
                     }
 
                     if (!Application.KeyExists("EmailServerPort"))
@@ -197,6 +198,11 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("EmailMessageBody", string.Empty));
                     }
+
+                    if (!Application.KeyExists("LowDiskPercentageThreshold"))
+                    {
+                        Application.Add(new Setting("LowDiskPercentageThreshold", 3));
+                    }
                 }
                 else
                 {
@@ -204,7 +210,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("Version", ApplicationVersion));
                     Application.Add(new Setting("DebugMode", false));
                     Application.Add(new Setting("Logging", false));
-                    Application.Add(new Setting("EmailServerHost", string.Empty));
+                    Application.Add(new Setting("EmailServerHost", "smtp.office365.com"));
                     Application.Add(new Setting("EmailServerPort", 587));
                     Application.Add(new Setting("EmailServerEnableSSL", true));
                     Application.Add(new Setting("EmailClientUsername", string.Empty));
@@ -215,6 +221,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("EmailMessageBCC", string.Empty));
                     Application.Add(new Setting("EmailMessageSubject", string.Empty));
                     Application.Add(new Setting("EmailMessageBody", string.Empty));
+                    Application.Add(new Setting("LowDiskPercentageThreshold", 3));
                 }
 
                 Application.Save();

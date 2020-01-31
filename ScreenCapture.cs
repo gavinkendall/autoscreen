@@ -74,8 +74,6 @@ namespace AutoScreenCapture
         /// </summary>
         public const int CAPTURE_LIMIT_MAX = 9999;
 
-        private const double MIN_FREE_DISK_SPACE_PERCENTAGE = 3;
-
         private const int MAX_WINDOWS_PATH_LENGTH = 248;
 
         /// <summary>
@@ -440,10 +438,10 @@ namespace AutoScreenCapture
 
                                 if (Log.DebugMode)
                                 {
-                                    Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "%");
+                                    Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 3).Value) + "%");
                                 }
 
-                                if (freeDiskSpacePercentage > MIN_FREE_DISK_SPACE_PERCENTAGE)
+                                if (freeDiskSpacePercentage > Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 3).Value))
                                 {
                                     string dirName = Path.GetDirectoryName(path);
 
