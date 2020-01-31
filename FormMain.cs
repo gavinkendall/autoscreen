@@ -1190,7 +1190,7 @@ namespace AutoScreenCapture
             MessageBox.Show(
                 Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
                 Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value +
-                " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2019)", "About",
+                " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2020)", "About",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }

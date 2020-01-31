@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gavin Kendall")]
 [assembly: AssemblyProduct("Auto Screen Capture")]
-[assembly: AssemblyCopyright("2008 - 2019 Gavin Kendall")]
+[assembly: AssemblyCopyright("2008 - 2020 Gavin Kendall")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

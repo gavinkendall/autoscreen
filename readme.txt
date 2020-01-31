@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2019-12-11 (December 11, 2019)
+Last updated on 2020-01-31 (January 31, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.2.3.3)]
 =============================================================================================================
 
