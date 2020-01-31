@@ -365,6 +365,8 @@ namespace AutoScreenCapture
                 _screenCapture.Count = 0;
                 _screenCapture.Running = false;
 
+                notifyIcon.Icon = Resources.autoscreen;
+
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
 
@@ -711,6 +713,8 @@ namespace AutoScreenCapture
                     _screenCapture.Count = 0;
                     _screenCapture.Running = false;
 
+                    notifyIcon.Icon = Resources.autoscreen;
+
                     SearchFilterValues();
                     SearchDates();
 
@@ -762,6 +766,8 @@ namespace AutoScreenCapture
                 Log.Write("Starting screen capture");
 
                 _screenCapture.Running = true;
+
+                notifyIcon.Icon = Resources.autoscreen_running;
 
                 _screenCapture.DateTimeStartCapture = DateTime.Now;
 
@@ -992,6 +998,8 @@ namespace AutoScreenCapture
 
                 _screenCapture.Count = 0;
                 _screenCapture.Running = false;
+
+                notifyIcon.Icon = Resources.autoscreen;
 
                 // Hide the system tray icon.
                 notifyIcon.Visible = false;
