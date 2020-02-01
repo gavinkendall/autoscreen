@@ -198,7 +198,6 @@
     <Content Include="images\save.png" />
     <Content Include="images\start_screen_capture.png" />
     <Content Include="images\stop_screen_capture.png" />
-    <None Include="Resources\Running.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
