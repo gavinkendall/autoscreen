@@ -27,6 +27,7 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENS_FILE = "^ScreensFile=(?<Path>.+)$";
         private const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
         private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
+        private const string REGEX_TAGS_FILE = "^TagsFile=(?<Path>.+)$";
 
         /// <summary>
         /// 
@@ -54,7 +55,7 @@ namespace AutoScreenCapture
                         "# If any errors are encountered then you will find them in this folder when DebugMode is enabled.",
                         "DebugFolder=!autoscreen\\debug", "\n",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
-                        "LogsFolder=!autoscreen\\debug\\logs", "\n",
+                        "LogsFolder=!autoscreen\\logs", "\n",
                         "# The application settings (such as DebugMode).",
                         "ApplicationSettingsFile=!autoscreen\\settings\\application.xml", "\n",
                         "# Your personal settings.",
@@ -68,7 +69,9 @@ namespace AutoScreenCapture
                         "# References to triggers.",
                         "TriggersFile=!autoscreen\\triggers.xml", "\n",
                         "# References to screenshots.",
-                        "ScreenshotsFile=!autoscreen\\screenshots.xml"
+                        "ScreenshotsFile=!autoscreen\\screenshots.xml", "\n",
+                        "# References to tags.",
+                        "TagsFile=!autoscreen\\tags.xml"
                     };
 
                     File.WriteAllLines(FileSystem.ConfigFile, linesToWrite);
@@ -107,6 +110,9 @@ namespace AutoScreenCapture
 
                     if (GetPath(line, REGEX_SCREENSHOTS_FILE, out path))
                         FileSystem.ScreenshotsFile = path;
+
+                    if (GetPath(line, REGEX_TAGS_FILE, out path))
+                        FileSystem.TagsFile = path;
                 }
             }
             catch (Exception ex)

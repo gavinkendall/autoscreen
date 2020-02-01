@@ -86,6 +86,11 @@ namespace AutoScreenCapture
         public static string ScreenshotsFile;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static string TagsFile;
+
+        /// <summary>
         /// Just in case the user gives us an empty folder path or forgets
         /// to include the trailing backslash for the screenshots folder.
         /// </summary>

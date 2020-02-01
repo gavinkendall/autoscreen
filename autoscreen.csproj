@@ -118,6 +118,15 @@
     <Compile Include="modules\screens\Screen.cs" />
     <Compile Include="modules\screens\ScreenCollection.cs" />
     <Compile Include="modules\slideshow\Slide.cs" />
+    <Compile Include="modules\tags\FormTag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modules\tags\FormTag.Designer.cs">
+      <DependentUpon>FormTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="modules\tags\Tag.cs" />
+    <Compile Include="modules\tags\TagCollection.cs" />
+    <Compile Include="modules\tags\TagType.cs" />
     <Compile Include="modules\triggers\FormTrigger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="modules\screens\FormScreen.resx">
       <DependentUpon>FormScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="modules\tags\FormTag.resx">
+      <DependentUpon>FormTag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="modules\triggers\FormTrigger.resx">
       <DependentUpon>FormTrigger.cs</DependentUpon>

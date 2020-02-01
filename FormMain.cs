@@ -28,6 +28,7 @@ namespace AutoScreenCapture
         private FormTrigger formTrigger = new FormTrigger();
         private FormRegion formRegion = new FormRegion();
         private FormScreen formScreen = new FormScreen();
+        private FormTag formTag = new FormTag();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
 
         private ScreenCapture _screenCapture;
@@ -197,6 +198,7 @@ namespace AutoScreenCapture
                 Log.Write("ScreensFile=" + FileSystem.ScreensFile);
                 Log.Write("RegionsFile=" + FileSystem.RegionsFile);
                 Log.Write("EditorsFile=" + FileSystem.EditorsFile);
+                Log.Write("TagsFile = " + FileSystem.TagsFile);
 
                 Log.Write("It looks like I successfully parsed your \"" + FileSystem.ConfigFile + "\" file.");
                 Log.Write("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
@@ -232,6 +234,10 @@ namespace AutoScreenCapture
                 Log.Write("Initializing screen collection");
                 formScreen.ScreenCollection.Load(_imageFormatCollection);
                 Log.Write("Number of screens loaded = " + formScreen.ScreenCollection.Count);
+
+                Log.Write("Initializing tag collection");
+                formTag.TagCollection.Load();
+                Log.Write("Number of tags loaded = " + formTag.TagCollection.Count);
 
                 Log.Write("Building screens module");
                 BuildScreensModule();
