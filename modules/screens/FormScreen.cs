@@ -34,7 +34,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public MacroTagCollection MacroTagCollection { get; set; }
+        public TagCollection MacroTagCollection { get; set; }
 
         /// <summary>
         /// 
@@ -60,14 +60,20 @@ namespace AutoScreenCapture
         {
             comboBoxFormat.Items.Clear();
             comboBoxScreenComponent.Items.Clear();
-            comboBoxTags.DataSource = null;
+            comboBoxTags.Items.Clear();
 
             pictureBoxPreview.Image = null;
 
             // *** Macro Tags ***
-            comboBoxTags.DisplayMember = "Description";
-            comboBoxTags.ValueMember = "Name";
-            comboBoxTags.DataSource = MacroTagCollection.GetList();
+            comboBoxTags.DisplayMember = "Name";
+            comboBoxTags.Items.Add(string.Empty);
+
+            foreach (Tag tag in MacroTagCollection)
+            {
+                comboBoxTags.Items.Add(tag);
+            }
+
+            comboBoxTags.SelectedIndex = 0;
             // ******************
 
             foreach (ImageFormat imageFormat in ImageFormatCollection)
@@ -373,7 +379,9 @@ namespace AutoScreenCapture
 
         private void comboBoxTags_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MacroTag macroTag = (MacroTag)comboBoxTags.SelectedItem;
+            if (comboBoxTags.SelectedIndex == 0) return;
+
+            Tag macroTag = (Tag) comboBoxTags.SelectedItem;
 
             if (macroTag != null && !string.IsNullOrEmpty(macroTag.Name))
             {

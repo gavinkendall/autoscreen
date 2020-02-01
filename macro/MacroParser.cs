@@ -80,6 +80,35 @@ namespace AutoScreenCapture
         public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="macro"></param>
+        /// <param name="tagCollection"></param>
+        /// <returns></returns>
+        public static string ParseTagsForFolderPath(string macro, TagCollection tagCollection)
+        {
+            foreach (Tag tag in tagCollection)
+            {
+                switch (tag.Type)
+                {
+                    case TagType.DateTimeFormat:
+                        macro = macro.Replace(tag.Name, screenCapture.DateTimePreviousCycle.ToString(tag.DateTimeFormatValue));
+                        break;
+
+                    case TagType.User:
+                        macro = macro.Replace(tag.Name, Environment.UserName);
+                        break;
+
+                    case TagType.Machine:
+                        macro = macro.Replace(tag.Name, Environment.MachineName);
+                        break;
+                }
+            }
+
+            return macro;
+        }
+
+        /// <summary>
         /// Replaces tags (such as "%year%") with an appropriate value (such as "2019").
         /// </summary>
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
@@ -87,40 +116,70 @@ namespace AutoScreenCapture
         /// <param name="screenNumber"></param>
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
+        /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle)
+        public static string ParseTagsForFilePath(string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, TagCollection tagCollection)
         {
             // Strip out any backslash characters from the name so we avoid creating unnecessary directories based on the name.
             name = name.Replace("\\", string.Empty);
 
-            macro = !string.IsNullOrEmpty(name) ? macro.Replace(MacroTagSpec.Name, name) : macro;
-            macro = macro.Replace(MacroTagSpec.ScreenNumber, screenNumber.ToString());
-            macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(MacroTagSpec.Format, format.Name.ToLower()) : macro;
-            macro = macro.Replace(MacroTagSpec.Date, screenCapture.DateTimePreviousCycle.ToString(DateFormat));
-            macro = macro.Replace(MacroTagSpec.Time, screenCapture.DateTimePreviousCycle.ToString(TimeFormatForWindows));
-            macro = macro.Replace(MacroTagSpec.Year, screenCapture.DateTimePreviousCycle.ToString(YearFormat));
-            macro = macro.Replace(MacroTagSpec.Month, screenCapture.DateTimePreviousCycle.ToString(MonthFormat));
-            macro = macro.Replace(MacroTagSpec.Day, screenCapture.DateTimePreviousCycle.ToString(DayFormat));
-            macro = macro.Replace(MacroTagSpec.Hour, screenCapture.DateTimePreviousCycle.ToString(HourFormat));
-            macro = macro.Replace(MacroTagSpec.Minute, screenCapture.DateTimePreviousCycle.ToString(MinuteFormat));
-            macro = macro.Replace(MacroTagSpec.Second, screenCapture.DateTimePreviousCycle.ToString(SecondFormat));
-            macro = macro.Replace(MacroTagSpec.Millisecond, screenCapture.DateTimePreviousCycle.ToString(MillisecondFormat));
-            macro = macro.Replace(MacroTagSpec.Count, screenCapture.Count.ToString());
-            macro = macro.Replace(MacroTagSpec.Title, activeWindowTitle);
-            macro = ParseTagsForUserAndMachine(macro);
+            foreach (Tag tag in tagCollection)
+            {
+                switch (tag.Type)
+                {
+                    case TagType.ActiveWindowTitle:
+                        macro = macro.Replace(tag.Name, activeWindowTitle);
+                        break;
 
-            return StripInvalidWindowsCharacters(macro);
-        }
+                    case TagType.DateTimeFormat:
+                        macro = macro.Replace(tag.Name, screenCapture.DateTimePreviousCycle.ToString(tag.DateTimeFormatValue));
+                        break;
 
-        /// <summary>
-        /// Replaces %user% and %machine% with the name of the user and the name of the machine respectively.
-        /// </summary>
-        /// <param name="macro"></param>
-        /// <returns></returns>
-        public static string ParseTagsForUserAndMachine(string macro)
-        {
-            macro = macro.Replace(MacroTagSpec.User, Environment.UserName);
-            macro = macro.Replace(MacroTagSpec.Machine, Environment.MachineName);
+                    case TagType.ImageFormat:
+                        macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(tag.Name, format.Name.ToLower()) : macro;
+                        break;
+
+                    case TagType.ScreenCaptureCycleCount:
+                        macro = macro.Replace(tag.Name, screenCapture.Count.ToString());
+                        break;
+
+                    case TagType.ScreenName:
+                        macro = !string.IsNullOrEmpty(name) ? macro.Replace(tag.Name, name) : macro;
+                        break;
+
+                    case TagType.ScreenNumber:
+                        macro = macro.Replace(tag.Name, screenNumber.ToString());
+                        break;
+
+                    case TagType.User:
+                        macro = macro.Replace(tag.Name, Environment.UserName);
+                        break;
+
+                    case TagType.Machine:
+                        macro = macro.Replace(tag.Name, Environment.MachineName);
+                        break;
+
+                    case TagType.TimeOfDay:
+                        if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
+                            screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
+                        {
+                            macro = macro.Replace(tag.Name, tag.TimeOfDayMorningValue);
+                        }
+
+                        if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
+                            screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
+                        {
+                            macro = macro.Replace(tag.Name, tag.TimeOfDayAfternoonValue);
+                        }
+
+                        if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
+                            screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                        {
+                            macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
+                        }
+                        break;
+                }
+            }
 
             return StripInvalidWindowsCharacters(macro);
         }

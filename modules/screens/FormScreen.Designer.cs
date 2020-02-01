@@ -314,7 +314,7 @@
             // 
             this.comboBoxTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxTags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxTags.DropDownWidth = 450;
+            this.comboBoxTags.DropDownWidth = 100;
             this.comboBoxTags.FormattingEnabled = true;
             this.comboBoxTags.Location = new System.Drawing.Point(695, 512);
             this.comboBoxTags.MaxDropDownItems = 20;

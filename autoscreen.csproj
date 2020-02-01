@@ -77,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="config\Config.cs" />
-    <Compile Include="macro\MacroTag.cs" />
-    <Compile Include="macro\MacroTagCollection.cs" />
-    <Compile Include="macro\MacroTagSpec.cs" />
     <Compile Include="modules\editors\Editor.cs" />
     <Compile Include="modules\editors\EditorCollection.cs" />
     <Compile Include="FileSystem.cs" />

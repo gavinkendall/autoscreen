@@ -74,6 +74,14 @@ namespace AutoScreenCapture
         /// <param name="tag"></param>
         public void Add(Tag tag)
         {
+            if (string.IsNullOrEmpty(tag.Name)) return;
+
+            if (!tag.Name.StartsWith("%"))
+                tag.Name = "%" + tag.Name;
+
+            if (!tag.Name.EndsWith("%"))
+                tag.Name += "%";
+
             _tagList.Add(tag);
 
             Log.Write("Tag added: " + tag.Name);

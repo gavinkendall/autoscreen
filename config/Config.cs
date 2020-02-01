@@ -131,7 +131,11 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            path = MacroParser.ParseTagsForUserAndMachine(path);
+            TagCollection tagCollection = new TagCollection();
+            tagCollection.Add(new Tag("user", TagType.User));
+            tagCollection.Add(new Tag("machine", TagType.Machine));
+
+            path = MacroParser.ParseTagsForFolderPath(path, tagCollection);
 
             if (Path.HasExtension(path))
             {

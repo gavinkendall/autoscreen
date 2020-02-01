@@ -8,7 +8,6 @@
 namespace AutoScreenCapture
 {
     using System;
-    using System.IO;
     using System.Windows.Forms;
 
     /// <summary>
@@ -29,11 +28,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public EditorCollection EditorCollection { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public FormTag()
         {
             InitializeComponent();
@@ -41,6 +35,7 @@ namespace AutoScreenCapture
 
         private void FormTag_Load(object sender, EventArgs e)
         {
+            comboBoxType.Items.Clear();
             comboBoxType.Items.Add("Screen Name");
             comboBoxType.Items.Add("Screen Number");
             comboBoxType.Items.Add("Image Format");

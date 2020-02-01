@@ -33,7 +33,7 @@ namespace AutoScreenCapture
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
-        private MacroTagCollection _macroTagCollection;
+        private TagCollection _macroTagCollection;
         private ScreenshotCollection _screenshotCollection;
 
         /// <summary>
@@ -216,9 +216,6 @@ namespace AutoScreenCapture
                 Log.Write("Initializing image format collection");
                 _imageFormatCollection = new ImageFormatCollection();
 
-                Log.Write("Initializing macro tag collection");
-                _macroTagCollection = new MacroTagCollection();
-
                 Log.Write("Initializing editor collection");
                 formEditor.EditorCollection.Load();
                 Log.Write("Number of editors loaded = " + formEditor.EditorCollection.Count);
@@ -239,6 +236,9 @@ namespace AutoScreenCapture
                 formTag.TagCollection.Load();
                 Log.Write("Number of tags loaded = " + formTag.TagCollection.Count);
 
+                Log.Write("Initializing macro tag collection");
+                _macroTagCollection = formTag.TagCollection;
+
                 Log.Write("Building screens module");
                 BuildScreensModule();
 
@@ -250,6 +250,9 @@ namespace AutoScreenCapture
 
                 Log.Write("Building regions module");
                 BuildRegionsModule();
+
+                Log.Write("Building tags module");
+                BuildTagsModule();
 
                 Log.Write("Building screenshot preview context menu");
                 BuildScreenshotPreviewContextualMenu();
@@ -1846,6 +1849,97 @@ namespace AutoScreenCapture
             }
         }
 
+        private void BuildTagsModule()
+        {
+            int xPosTag = 5;
+            int yPosTag = 3;
+
+            const int TRIGGER_HEIGHT = 20;
+            const int CHECKBOX_WIDTH = 20;
+            const int CHECKBOX_HEIGHT = 20;
+            const int BIG_BUTTON_WIDTH = 205;
+            const int BIG_BUTTON_HEIGHT = 25;
+            const int SMALL_BUTTON_WIDTH = 27;
+            const int SMALL_BUTTON_HEIGHT = 20;
+            const int X_POS_TRIGGER_TEXTBOX = 20;
+            const int X_POS_TRIGGER_BUTTON = 178;
+            const int TRIGGER_TEXTBOX_WIDTH = 153;
+            const int Y_POS_TRIGGER_INCREMENT = 23;
+            const int TRIGGER_TEXTBOX_MAX_LENGTH = 50;
+
+            const string EDIT_BUTTON_TEXT = "...";
+
+            tabPageTags.Controls.Clear();
+
+            // The button for adding a new Tag.
+            Button buttonAddNewTag = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosTag, yPosTag),
+                Text = "Add New Tag ...",
+                TabStop = false
+            };
+            buttonAddNewTag.Click += new EventHandler(Click_addTag);
+            tabPageTags.Controls.Add(buttonAddNewTag);
+
+            // Move down and then add the "Remove Selected Tags" button.
+            yPosTag += 27;
+
+            Button buttonRemoveSelectedTags = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosTag, yPosTag),
+                Text = "Remove Selected Tags",
+                TabStop = false
+            };
+            buttonRemoveSelectedTags.Click += new EventHandler(Click_removeSelectedTags);
+            tabPageTags.Controls.Add(buttonRemoveSelectedTags);
+
+            // Move down a bit so we can start populating the Tags tab page with a list of Tags.
+            yPosTag += 28;
+
+            foreach (Tag trigger in formTag.TagCollection)
+            {
+                // Add a checkbox so that the user has the ability to remove the selected Tag.
+                CheckBox checkboxTag = new CheckBox
+                {
+                    Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT),
+                    Location = new Point(xPosTag, yPosTag),
+                    Tag = trigger,
+                    TabStop = false
+                };
+                tabPageTags.Controls.Add(checkboxTag);
+
+                // Add a read-only text box showing the name of the Tag.
+                TextBox textBoxTag = new TextBox
+                {
+                    Width = TRIGGER_TEXTBOX_WIDTH,
+                    Height = TRIGGER_HEIGHT,
+                    MaxLength = TRIGGER_TEXTBOX_MAX_LENGTH,
+                    Location = new Point(xPosTag + X_POS_TRIGGER_TEXTBOX, yPosTag),
+                    Text = trigger.Name,
+                    ReadOnly = true,
+                    TabStop = false
+                };
+                tabPageTags.Controls.Add(textBoxTag);
+
+                // Add a button so that the user can change the Tag.
+                Button buttonChangeTag = new Button
+                {
+                    Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
+                    Location = new Point(xPosTag + X_POS_TRIGGER_BUTTON, yPosTag),
+                    Text = EDIT_BUTTON_TEXT,
+                    Tag = trigger,
+                    TabStop = false
+                };
+                buttonChangeTag.Click += new EventHandler(Click_buttonChangeTag);
+                tabPageTags.Controls.Add(buttonChangeTag);
+
+                // Move down the Tags tab page so we're ready to loop around again and add the next Tag to it.
+                yPosTag += Y_POS_TRIGGER_INCREMENT;
+            }
+        }
+
         private void BuildViewTabPages()
         {
             tabControlViews.Controls.Clear();
@@ -2061,6 +2155,7 @@ namespace AutoScreenCapture
         /// 
         /// </summary>
         /// <param name="screenshot"></param>
+        /// <param name="prompt"></param>
         private void EmailScreenshot(Screenshot screenshot, bool prompt)
         {
             try
@@ -2658,6 +2753,84 @@ namespace AutoScreenCapture
 
         #endregion Screen
 
+        #region Tag
+
+        /// <summary>
+        /// Shows the "Add Tag" window to enable the user to add a chosen Tag.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_addTag(object sender, EventArgs e)
+        {
+            formTag.TagObject = null;
+
+            formTag.ShowDialog(this);
+
+            if (formTag.DialogResult == DialogResult.OK)
+            {
+                BuildTagsModule();
+
+                formTag.TagCollection.Save();
+            }
+        }
+
+        /// <summary>
+        /// Removes the selected Tags from the Tags tab page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_removeSelectedTags(object sender, EventArgs e)
+        {
+            int countBeforeRemoval = formTag.TagCollection.Count;
+
+            foreach (Control control in tabPageTags.Controls)
+            {
+                if (control.GetType().Equals(typeof(CheckBox)))
+                {
+                    CheckBox checkBox = (CheckBox)control;
+
+                    if (checkBox.Checked)
+                    {
+                        Tag trigger = formTag.TagCollection.Get((Tag)checkBox.Tag);
+                        formTag.TagCollection.Remove(trigger);
+                    }
+                }
+            }
+
+            if (countBeforeRemoval > formTag.TagCollection.Count)
+            {
+                BuildTagsModule();
+
+                formTag.TagCollection.Save();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Change Tag" window to enable the user to edit a chosen Tag.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_buttonChangeTag(object sender, EventArgs e)
+        {
+            Button buttonSelected = (Button)sender;
+
+            if (buttonSelected.Tag != null)
+            {
+                formTag.TagObject = (Tag)buttonSelected.Tag;
+
+                formTag.ShowDialog(this);
+
+                if (formTag.DialogResult == DialogResult.OK)
+                {
+                    BuildTagsModule();
+
+                    formTag.TagCollection.Save();
+                }
+            }
+        }
+
+        #endregion Tag
+
         #region Passphrase
 
         /// <summary>
@@ -2981,7 +3154,7 @@ namespace AutoScreenCapture
                     if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                     {
                         if (_screenCapture.TakeScreenshot(
-                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForUserAndMachine(region.Folder)) + MacroParser.ParseTags(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle),
+                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                             format: region.Format,
                             component: -1,
                             screenshotType: ScreenshotType.Region,
@@ -3021,7 +3194,7 @@ namespace AutoScreenCapture
                         if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                         {
                             if (_screenCapture.TakeScreenshot(
-                                path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForUserAndMachine(screen.Folder)) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle),
+                                path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                 format: screen.Format,
                                 component: screen.Component,
                                 screenshotType: ScreenshotType.ActiveWindow,
@@ -3060,7 +3233,7 @@ namespace AutoScreenCapture
                             formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.TakeScreenshot(
-                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForUserAndMachine(screen.Folder)) + MacroParser.ParseTags(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle),
+                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                     format: screen.Format,
                                     component: screen.Component,
                                     screenshotType: ScreenshotType.Screen,
