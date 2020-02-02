@@ -307,6 +307,11 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
+                if (string.IsNullOrEmpty(FileSystem.TagsFile))
+                {
+                    FileSystem.TagsFile = FileSystem.DefaultTagsFile;
+                }
+
                 if (File.Exists(FileSystem.TagsFile))
                 {
                     File.Delete(FileSystem.TagsFile);

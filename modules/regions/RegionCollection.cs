@@ -287,6 +287,11 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
+                if (string.IsNullOrEmpty(FileSystem.RegionsFile))
+                {
+                    FileSystem.RegionsFile = FileSystem.DefaultRegionsFile;
+                }
+
                 if (File.Exists(FileSystem.RegionsFile))
                 {
                     File.Delete(FileSystem.RegionsFile);

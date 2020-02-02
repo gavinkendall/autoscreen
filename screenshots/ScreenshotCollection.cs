@@ -621,6 +621,25 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
+                if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
+                {
+                    FileSystem.ScreenshotsFile = FileSystem.DefaultScreenshotsFile;
+
+                    if (xDoc == null)
+                    {
+                        xDoc = new XmlDocument();
+
+                        XmlElement rootElement = xDoc.CreateElement(XML_FILE_ROOT_NODE);
+                        XmlElement xScreenshots = xDoc.CreateElement(XML_FILE_SCREENSHOTS_NODE);
+
+                        rootElement.AppendChild(xScreenshots);
+
+                        xDoc.AppendChild(rootElement);
+
+                        xDoc.Save(FileSystem.ScreenshotsFile);
+                    }
+                }
+
                 lock (_screenshotList)
                 {
                     if (_screenshotList != null && _screenshotList.Count > 0 && keepScreenshotsForDays > 0)

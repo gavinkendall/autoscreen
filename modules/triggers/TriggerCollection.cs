@@ -229,6 +229,11 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
+                if (string.IsNullOrEmpty(FileSystem.TriggersFile))
+                {
+                    FileSystem.TriggersFile = FileSystem.DefaultTriggersFile;
+                }
+
                 if (File.Exists(FileSystem.TriggersFile))
                 {
                     File.Delete(FileSystem.TriggersFile);

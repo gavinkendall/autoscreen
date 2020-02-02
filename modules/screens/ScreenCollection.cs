@@ -271,6 +271,11 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
+                if (string.IsNullOrEmpty(FileSystem.ScreensFile))
+                {
+                    FileSystem.ScreensFile = FileSystem.DefaultScreensFile;
+                }
+
                 if (File.Exists(FileSystem.ScreensFile))
                 {
                     File.Delete(FileSystem.ScreensFile);

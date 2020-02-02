@@ -38,6 +38,36 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public static readonly string DefaultEditorsFile = "!autoscreen\\editors.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DefaultRegionsFile = "!autoscreen\\regions.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DefaultScreensFile = "!autoscreen\\screens.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DefaultTriggersFile = "!autoscreen\\triggers.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DefaultScreenshotsFile = "!autoscreen\\screenshots.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string DefaultTagsFile = "!autoscreen\\tags.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ScreenshotsFolder;
 
         /// <summary>
