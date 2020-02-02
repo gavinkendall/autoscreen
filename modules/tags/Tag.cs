@@ -74,56 +74,25 @@ namespace AutoScreenCapture
         /// </summary>
         public string TimeOfDayEveningValue { get; set; }
 
-        private void SetupDefaultTimeOfDayValues()
-        {
-            // Morning
-            TimeOfDayMorningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
-            TimeOfDayMorningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
-
-            // Afternoon
-            TimeOfDayAfternoonStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0); // 12pm
-            TimeOfDayAfternoonEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 59, 59); // 5:59:59pm
-
-            // Evening
-            TimeOfDayEveningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
-            TimeOfDayEveningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
-        }
-
         /// <summary>
         /// 
         /// </summary>
         public Tag()
         {
-            SetupDefaultTimeOfDayValues();
-        }
+            // Morning
+            TimeOfDayMorningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
+            TimeOfDayMorningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
+            TimeOfDayEveningValue = "evening";
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="tagType"></param>
-        public Tag(string name, TagType tagType)
-        {
-            Name = name;
-            Type = tagType;
-            DateTimeFormatValue = MacroParser.DateFormat;
+            // Afternoon
+            TimeOfDayAfternoonStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0); // 12pm
+            TimeOfDayAfternoonEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 59, 59); // 5:59:59pm
+            TimeOfDayAfternoonValue = "afternoon";
 
-            SetupDefaultTimeOfDayValues();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="tagType"></param>
-        /// <param name="dateTimeFormatValue"></param>
-        public Tag(string name, TagType tagType, string dateTimeFormatValue)
-        {
-            Name = name;
-            Type = tagType;
-            DateTimeFormatValue = dateTimeFormatValue;
-
-            SetupDefaultTimeOfDayValues();
+            // Evening
+            TimeOfDayEveningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
+            TimeOfDayEveningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
+            TimeOfDayMorningValue = "morning";
         }
 
         /// <summary>
@@ -169,29 +138,6 @@ namespace AutoScreenCapture
             TimeOfDayMorningValue = timeOfDayMorningValue;
             TimeOfDayAfternoonValue = timeOfDayAfternoonValue;
             TimeOfDayEveningValue = timeOfDayEveningValue;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="tagType"></param>
-        /// <param name="timeOfDayMorningValue"></param>
-        /// <param name="timeOfDayAfternoonValue"></param>
-        /// <param name="timeOfDayEveningValue"></param>
-        public Tag(string name, TagType tagType,
-            string timeOfDayMorningValue,
-            string timeOfDayAfternoonValue,
-            string timeOfDayEveningValue)
-        {
-            Name = name;
-            Type = tagType;
-
-            TimeOfDayMorningValue = timeOfDayMorningValue;
-            TimeOfDayAfternoonValue = timeOfDayAfternoonValue;
-            TimeOfDayEveningValue = timeOfDayEveningValue;
-
-            SetupDefaultTimeOfDayValues();
         }
     }
 }

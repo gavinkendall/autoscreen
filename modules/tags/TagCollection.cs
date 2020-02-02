@@ -251,27 +251,34 @@ namespace AutoScreenCapture
                     Log.Write($"WARNING: {FileSystem.TagsFile} not found. Creating default tags");
 
                     // Setup a few "built in" tags by default.
-                    Add(new Tag("name", TagType.ScreenName));
-                    Add(new Tag("screen", TagType.ScreenNumber));
-                    Add(new Tag("format", TagType.ImageFormat));
-                    Add(new Tag("date", TagType.DateTimeFormat, MacroParser.DateFormat));
-                    Add(new Tag("time", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows));
-                    Add(new Tag("year", TagType.DateTimeFormat, MacroParser.YearFormat));
-                    Add(new Tag("month", TagType.DateTimeFormat, MacroParser.MonthFormat));
-                    Add(new Tag("day", TagType.DateTimeFormat, MacroParser.DayFormat));
-                    Add(new Tag("hour", TagType.DateTimeFormat, MacroParser.HourFormat));
-                    Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat));
-                    Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat));
-                    Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat));
-                    Add(new Tag("count", TagType.ScreenCaptureCycleCount));
-                    Add(new Tag("user", TagType.User));
-                    Add(new Tag("machine", TagType.Machine));
-                    Add(new Tag("title", TagType.ActiveWindowTitle));
+                    Add(new Tag("name", TagType.ScreenName, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("screen", TagType.ScreenNumber, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("format", TagType.ImageFormat, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("date", TagType.DateTimeFormat, MacroParser.DateFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("time", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("year", TagType.DateTimeFormat, MacroParser.YearFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("month", TagType.DateTimeFormat, MacroParser.MonthFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("day", TagType.DateTimeFormat, MacroParser.DayFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("hour", TagType.DateTimeFormat, MacroParser.HourFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("count", TagType.ScreenCaptureCycleCount, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("user", TagType.User, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("machine", TagType.Machine, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
+                    Add(new Tag("title", TagType.ActiveWindowTitle, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty, DateTime.Now, DateTime.Now, string.Empty));
 
                     // The time of the day split out into morning, afternoon, and evening using default DateTime values.
                     Add(new Tag("timeofday", TagType.TimeOfDay,
+                        dateTimeFormatValue: string.Empty,
+                        timeOfDayMorningStart: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0),
+                        new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59),
                         timeOfDayMorningValue: "morning",
+                        new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0),
+                        new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 59, 59),
                         timeOfDayAfternoonValue: "afternoon",
+                        new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0),
+                        new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59),
                         timeOfDayEveningValue: "evening"));
 
                     Save();

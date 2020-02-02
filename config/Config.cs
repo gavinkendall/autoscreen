@@ -132,8 +132,8 @@ namespace AutoScreenCapture
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
             TagCollection tagCollection = new TagCollection();
-            tagCollection.Add(new Tag("user", TagType.User));
-            tagCollection.Add(new Tag("machine", TagType.Machine));
+            tagCollection.Add(new Tag("user", TagType.User, string.Empty, DateTime.MinValue, DateTime.MinValue, string.Empty, DateTime.MinValue, DateTime.MinValue, string.Empty, DateTime.MinValue, DateTime.MinValue, string.Empty));
+            tagCollection.Add(new Tag("machine", TagType.Machine, string.Empty, DateTime.MinValue, DateTime.MinValue, string.Empty, DateTime.MinValue, DateTime.MinValue, string.Empty, DateTime.MinValue, DateTime.MinValue, string.Empty));
 
             path = MacroParser.ParseTagsForFolderPath(path, tagCollection);
 

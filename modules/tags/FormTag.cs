@@ -204,24 +204,37 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
-            if (TagObject != null &&
-                ((int)TagObject.Type != comboBoxType.SelectedIndex) ||
-                !TagObject.TimeOfDayMorningStart.Equals(dateTimePickerMorningStart.Value) ||
-                !TagObject.TimeOfDayMorningEnd.Equals(dateTimePickerMorningEnd.Value) ||
-                !TagObject.TimeOfDayMorningValue.Equals(textBoxMorningValue.Text) ||
-                !TagObject.TimeOfDayAfternoonStart.Equals(dateTimePickerAfternoonStart.Value) ||
-                !TagObject.TimeOfDayAfternoonEnd.Equals(dateTimePickerAfternoonEnd.Value) ||
-                !TagObject.TimeOfDayAfternoonValue.Equals(textBoxAfternoonValue.Text) ||
-                !TagObject.TimeOfDayEveningStart.Equals(dateTimePickerEveningStart.Value) ||
-                !TagObject.TimeOfDayEveningEnd.Equals(dateTimePickerEveningEnd.Value) ||
-                !TagObject.TimeOfDayEveningValue.Equals(textBoxEveningValue.Text))
+            bool changed = false;
+
+            if (TagObject != null)
             {
-                return true;
+                if (((int) TagObject.Type != comboBoxType.SelectedIndex))
+                {
+                    changed = true;
+                }
+
+                if (!string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text) &&
+                    !TagObject.DateTimeFormatValue.Equals(textBoxDateTimeFormatValue.Text))
+                {
+                    changed = true;
+                }
+
+                if (groupBoxTimeOfDay.Enabled &&
+                    !TagObject.TimeOfDayMorningStart.Equals(dateTimePickerMorningStart.Value) ||
+                    !TagObject.TimeOfDayMorningEnd.Equals(dateTimePickerMorningEnd.Value) ||
+                    !TagObject.TimeOfDayMorningValue.Equals(textBoxMorningValue.Text) ||
+                    !TagObject.TimeOfDayAfternoonStart.Equals(dateTimePickerAfternoonStart.Value) ||
+                    !TagObject.TimeOfDayAfternoonEnd.Equals(dateTimePickerAfternoonEnd.Value) ||
+                    !TagObject.TimeOfDayAfternoonValue.Equals(textBoxAfternoonValue.Text) ||
+                    !TagObject.TimeOfDayEveningStart.Equals(dateTimePickerEveningStart.Value) ||
+                    !TagObject.TimeOfDayEveningEnd.Equals(dateTimePickerEveningEnd.Value) ||
+                    !TagObject.TimeOfDayEveningValue.Equals(textBoxEveningValue.Text))
+                {
+                    changed = true;
+                }
             }
-            else
-            {
-                return false;
-            }
+
+            return changed;
         }
 
         private bool NameChanged()
