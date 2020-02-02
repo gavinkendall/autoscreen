@@ -192,10 +192,7 @@ namespace AutoScreenCapture
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
-                !string.IsNullOrEmpty(textBoxMorningValue.Text) &&
-                !string.IsNullOrEmpty(textBoxAfternoonValue.Text) &&
-                !string.IsNullOrEmpty(textBoxEveningValue.Text))
+            if (!string.IsNullOrEmpty(textBoxTagName.Text))
             {
                 return true;
             }
