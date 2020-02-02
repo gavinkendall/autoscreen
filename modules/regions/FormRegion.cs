@@ -34,11 +34,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public TagCollection MacroTagCollection { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public ScreenCapture screenCapture { get; set; }
 
         private Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
@@ -55,7 +50,6 @@ namespace AutoScreenCapture
         {
             ScreenDictionary.Clear();
             comboBoxScreenTemplate.Items.Clear();
-            comboBoxTags.Items.Clear();
 
             int component = 1;
 
@@ -76,18 +70,6 @@ namespace AutoScreenCapture
 
             comboBoxScreenTemplate.SelectedIndex = 0;
             // ***********************
-
-            // *** Macro Tags ***
-            comboBoxTags.DisplayMember = "Name";
-            comboBoxTags.Items.Add(string.Empty);
-
-            foreach (Tag tag in MacroTagCollection)
-            {
-                comboBoxTags.Items.Add(tag);
-            }
-
-            comboBoxTags.SelectedIndex = 0;
-            // ******************
 
             comboBoxFormat.Items.Clear();
 
@@ -348,19 +330,6 @@ namespace AutoScreenCapture
             else
             {
                 numericUpDownJpegQuality.Enabled = false;
-            }
-        }
-
-        private void comboBoxTags_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxTags.SelectedIndex == 0) return;
-
-            Tag macroTag = (Tag)comboBoxTags.SelectedItem;
-
-            if (macroTag != null && !string.IsNullOrEmpty(macroTag.Name))
-            {
-                textBoxMacro.Text += macroTag.Name;
-                comboBoxTags.SelectedIndex = 0;
             }
         }
     }

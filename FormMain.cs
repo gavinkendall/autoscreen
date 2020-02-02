@@ -33,7 +33,6 @@ namespace AutoScreenCapture
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
-        private TagCollection _macroTagCollection;
         private ScreenshotCollection _screenshotCollection;
 
         /// <summary>
@@ -235,9 +234,6 @@ namespace AutoScreenCapture
                 Log.Write("Initializing tag collection");
                 formTag.TagCollection.Load();
                 Log.Write("Number of tags loaded = " + formTag.TagCollection.Count);
-
-                Log.Write("Initializing macro tag collection");
-                _macroTagCollection = formTag.TagCollection;
 
                 Log.Write("Building screens module");
                 BuildScreensModule();
@@ -1086,6 +1082,7 @@ namespace AutoScreenCapture
                 toolStripSplitButtonStartScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = true;
 
+                groupBoxCaptureDelay.Enabled = true;
                 numericUpDownHoursInterval.Enabled = true;
                 checkBoxInitialScreenshot.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
@@ -1093,8 +1090,12 @@ namespace AutoScreenCapture
                 numericUpDownCaptureLimit.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
+
+                labelKeepScreenshots.Enabled = true;
+                labelDays.Enabled = true;
                 numericUpDownKeepScreenshotsForDays.Enabled = true;
 
+                groupBoxSchedule.Enabled = true;
                 checkBoxScheduleStartAt.Enabled = true;
                 checkBoxScheduleStopAt.Enabled = true;
                 checkBoxScheduleOnTheseDays.Enabled = true;
@@ -1125,6 +1126,7 @@ namespace AutoScreenCapture
             toolStripSplitButtonStopScreenCapture.Enabled = true;
             toolStripMenuItemStopScreenCapture.Enabled = true;
 
+            groupBoxCaptureDelay.Enabled = false;
             numericUpDownHoursInterval.Enabled = false;
             checkBoxInitialScreenshot.Enabled = false;
             numericUpDownMinutesInterval.Enabled = false;
@@ -1132,8 +1134,12 @@ namespace AutoScreenCapture
             numericUpDownCaptureLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
+
+            labelKeepScreenshots.Enabled = false;
+            labelDays.Enabled = false;
             numericUpDownKeepScreenshotsForDays.Enabled = false;
 
+            groupBoxSchedule.Enabled = false;
             checkBoxScheduleStartAt.Enabled = false;
             checkBoxScheduleStopAt.Enabled = false;
             checkBoxScheduleOnTheseDays.Enabled = false;
@@ -2528,7 +2534,6 @@ namespace AutoScreenCapture
         {
             formRegion.RegionObject = null;
             formRegion.ImageFormatCollection = _imageFormatCollection;
-            formRegion.MacroTagCollection = _macroTagCollection;
             formRegion.screenCapture = _screenCapture;
 
             formRegion.ShowDialog(this);
@@ -2597,7 +2602,6 @@ namespace AutoScreenCapture
 
             formRegion.RegionObject = region;
             formRegion.ImageFormatCollection = _imageFormatCollection;
-            formRegion.MacroTagCollection = _macroTagCollection;
             formRegion.screenCapture = _screenCapture;
 
             formRegion.ShowDialog(this);
@@ -2646,7 +2650,6 @@ namespace AutoScreenCapture
         {
             formScreen.ScreenObject = null;
             formScreen.ImageFormatCollection = _imageFormatCollection;
-            formScreen.MacroTagCollection = _macroTagCollection;
             formScreen.ScreenCapture = _screenCapture;
 
             formScreen.ShowDialog(this);
@@ -2715,7 +2718,6 @@ namespace AutoScreenCapture
 
             formScreen.ScreenObject = screen;
             formScreen.ImageFormatCollection = _imageFormatCollection;
-            formScreen.MacroTagCollection = _macroTagCollection;
             formScreen.ScreenCapture = _screenCapture;
 
             formScreen.ShowDialog(this);

@@ -52,8 +52,6 @@
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
-            this.labelTags = new System.Windows.Forms.Label();
-            this.comboBoxTags = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
@@ -95,7 +93,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxMacro.Location = new System.Drawing.Point(267, 513);
             this.textBoxMacro.Name = "textBoxMacro";
-            this.textBoxMacro.Size = new System.Drawing.Size(382, 20);
+            this.textBoxMacro.Size = new System.Drawing.Size(505, 20);
             this.textBoxMacro.TabIndex = 17;
             // 
             // pictureBoxPreview
@@ -300,30 +298,6 @@
             this.timerScreenPreview.Interval = 500;
             this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerPreview);
             // 
-            // labelTags
-            // 
-            this.labelTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelTags.AutoSize = true;
-            this.labelTags.Location = new System.Drawing.Point(655, 516);
-            this.labelTags.Name = "labelTags";
-            this.labelTags.Size = new System.Drawing.Size(34, 13);
-            this.labelTags.TabIndex = 23;
-            this.labelTags.Text = "Tags:";
-            // 
-            // comboBoxTags
-            // 
-            this.comboBoxTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxTags.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxTags.DropDownWidth = 100;
-            this.comboBoxTags.FormattingEnabled = true;
-            this.comboBoxTags.Location = new System.Drawing.Point(695, 512);
-            this.comboBoxTags.MaxDropDownItems = 20;
-            this.comboBoxTags.Name = "comboBoxTags";
-            this.comboBoxTags.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.comboBoxTags.Size = new System.Drawing.Size(77, 21);
-            this.comboBoxTags.TabIndex = 22;
-            this.comboBoxTags.SelectedIndexChanged += new System.EventHandler(this.comboBoxTags_SelectedIndexChanged);
-            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonOK;
@@ -332,8 +306,6 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.labelTags);
-            this.Controls.Add(this.comboBoxTags);
             this.Controls.Add(this.groupBoxPreview);
             this.Controls.Add(this.groupBoxComponent);
             this.Controls.Add(this.groupBoxImage);
@@ -391,7 +363,5 @@
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;
         private System.Windows.Forms.Timer timerScreenPreview;
-        private System.Windows.Forms.Label labelTags;
-        private System.Windows.Forms.ComboBox comboBoxTags;
     }
 }

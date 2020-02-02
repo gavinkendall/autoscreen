@@ -52,12 +52,43 @@ namespace AutoScreenCapture
 
                 textBoxTagName.Text = TagObject.Name;
                 comboBoxType.SelectedIndex = (int)TagObject.Type;
+                textBoxDateTimeFormatValue.Text = TagObject.DateTimeFormatValue;
+
+                dateTimePickerMorningStart.Value = TagObject.TimeOfDayMorningStart;
+                dateTimePickerMorningEnd.Value = TagObject.TimeOfDayMorningEnd;
+
+                dateTimePickerAfternoonStart.Value = TagObject.TimeOfDayAfternoonStart;
+                dateTimePickerAfternoonEnd.Value = TagObject.TimeOfDayAfternoonEnd;
+
+                dateTimePickerEveningStart.Value = TagObject.TimeOfDayEveningStart;
+                dateTimePickerEveningEnd.Value = TagObject.TimeOfDayEveningEnd;
+
+                textBoxMorningValue.Text = TagObject.TimeOfDayMorningValue;
+                textBoxAfternoonValue.Text = TagObject.TimeOfDayAfternoonValue;
+                textBoxEveningValue.Text = TagObject.TimeOfDayEveningValue;
             }
             else
             {
                 Text = "Add New Tag";
 
                 textBoxTagName.Text = string.Empty;
+                comboBoxType.SelectedIndex = 0;
+                textBoxDateTimeFormatValue.Text = string.Empty;
+
+                Tag tag = new Tag();
+
+                dateTimePickerMorningStart.Value = tag.TimeOfDayMorningStart;
+                dateTimePickerMorningEnd.Value = tag.TimeOfDayMorningEnd;
+
+                dateTimePickerAfternoonStart.Value = tag.TimeOfDayAfternoonStart;
+                dateTimePickerAfternoonEnd.Value = tag.TimeOfDayAfternoonEnd;
+
+                dateTimePickerEveningStart.Value = tag.TimeOfDayEveningStart;
+                dateTimePickerEveningEnd.Value = tag.TimeOfDayEveningEnd;
+
+                textBoxMorningValue.Text = tag.TimeOfDayMorningValue;
+                textBoxAfternoonValue.Text = tag.TimeOfDayAfternoonValue;
+                textBoxEveningValue.Text = tag.TimeOfDayEveningValue;
             }
         }
 
@@ -180,6 +211,57 @@ namespace AutoScreenCapture
             DialogResult = DialogResult.OK;
 
             Close();
+        }
+
+        private void ComboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            labelDateTimeFormatValue.Enabled = false;
+            textBoxDateTimeFormatValue.Enabled = false;
+
+            groupBoxTimeOfDay.Enabled = false;
+
+            labelMorning.Enabled = false;
+            dateTimePickerMorningStart.Enabled = false;
+            dateTimePickerMorningEnd.Enabled = false;
+            textBoxMorningValue.Enabled = false;
+
+            labelAfternoon.Enabled = false;
+            dateTimePickerAfternoonStart.Enabled = false;
+            dateTimePickerAfternoonEnd.Enabled = false;
+            textBoxAfternoonValue.Enabled = false;
+
+            labelEvening.Enabled = false;
+            dateTimePickerEveningStart.Enabled = false;
+            dateTimePickerEveningEnd.Enabled = false;
+            textBoxEveningValue.Enabled = false;
+
+            TagType tagType = (TagType) comboBoxType.SelectedIndex;
+
+            if (tagType.Equals(TagType.DateTimeFormat))
+            {
+                labelDateTimeFormatValue.Enabled = true;
+                textBoxDateTimeFormatValue.Enabled = true;
+            }
+
+            if (tagType.Equals(TagType.TimeOfDay))
+            {
+                groupBoxTimeOfDay.Enabled = true;
+
+                labelMorning.Enabled = true;
+                dateTimePickerMorningStart.Enabled = true;
+                dateTimePickerMorningEnd.Enabled = true;
+                textBoxMorningValue.Enabled = true;
+
+                labelAfternoon.Enabled = true;
+                dateTimePickerAfternoonStart.Enabled = true;
+                dateTimePickerAfternoonEnd.Enabled = true;
+                textBoxAfternoonValue.Enabled = true;
+
+                labelEvening.Enabled = true;
+                dateTimePickerEveningStart.Enabled = true;
+                dateTimePickerEveningEnd.Enabled = true;
+                textBoxEveningValue.Enabled = true;
+            }
         }
     }
 }
