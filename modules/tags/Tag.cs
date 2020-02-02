@@ -141,6 +141,7 @@ namespace AutoScreenCapture
         /// <param name="timeOfDayEveningEnd"></param>
         /// <param name="timeOfDayEveningValue"></param>
         public Tag(string name, TagType tagType,
+            string dateTimeFormatValue,
             DateTime timeOfDayMorningStart,
             DateTime timeOfDayMorningEnd,
             string timeOfDayMorningValue,
@@ -153,6 +154,8 @@ namespace AutoScreenCapture
         {
             Name = name;
             Type = tagType;
+
+            DateTimeFormatValue = dateTimeFormatValue;
 
             TimeOfDayMorningStart = timeOfDayMorningStart;
             TimeOfDayMorningEnd = timeOfDayMorningEnd;

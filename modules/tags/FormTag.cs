@@ -118,7 +118,18 @@ namespace AutoScreenCapture
                 if (TagCollection.GetByName(textBoxTagName.Text) == null)
                 {
                     TagCollection.Add(new Tag(textBoxTagName.Text,
-                        (TagType)comboBoxType.SelectedIndex));
+                        (TagType)comboBoxType.SelectedIndex,
+                        textBoxDateTimeFormatValue.Text,
+                        dateTimePickerMorningStart.Value,
+                        dateTimePickerMorningEnd.Value,
+                        textBoxMorningValue.Text,
+                        dateTimePickerAfternoonStart.Value,
+                        dateTimePickerAfternoonEnd.Value,
+                        textBoxAfternoonValue.Text,
+                        dateTimePickerEveningStart.Value,
+                        dateTimePickerEveningEnd.Value,
+                        textBoxEveningValue.Text
+                        ));
 
                     Okay();
                 }
@@ -149,6 +160,16 @@ namespace AutoScreenCapture
                     {
                         TagCollection.Get(TagObject).Name = textBoxTagName.Text;
                         TagCollection.Get(TagObject).Type = (TagType)comboBoxType.SelectedIndex;
+                        TagCollection.Get(TagObject).DateTimeFormatValue = textBoxDateTimeFormatValue.Text;
+                        TagCollection.Get(TagObject).TimeOfDayMorningStart = dateTimePickerMorningStart.Value;
+                        TagCollection.Get(TagObject).TimeOfDayMorningEnd = dateTimePickerMorningEnd.Value;
+                        TagCollection.Get(TagObject).TimeOfDayMorningValue = textBoxMorningValue.Text;
+                        TagCollection.Get(TagObject).TimeOfDayAfternoonStart = dateTimePickerAfternoonStart.Value;
+                        TagCollection.Get(TagObject).TimeOfDayAfternoonEnd = dateTimePickerAfternoonEnd.Value;
+                        TagCollection.Get(TagObject).TimeOfDayAfternoonValue = textBoxAfternoonValue.Text;
+                        TagCollection.Get(TagObject).TimeOfDayEveningStart = dateTimePickerEveningStart.Value;
+                        TagCollection.Get(TagObject).TimeOfDayEveningEnd = dateTimePickerEveningEnd.Value;
+                        TagCollection.Get(TagObject).TimeOfDayEveningValue = textBoxEveningValue.Text;
 
                         Okay();
                     }
@@ -171,7 +192,10 @@ namespace AutoScreenCapture
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxTagName.Text))
+            if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                !string.IsNullOrEmpty(textBoxMorningValue.Text) &&
+                !string.IsNullOrEmpty(textBoxAfternoonValue.Text) &&
+                !string.IsNullOrEmpty(textBoxEveningValue.Text))
             {
                 return true;
             }
@@ -183,7 +207,17 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
-            if (TagObject != null && ((int)TagObject.Type != comboBoxType.SelectedIndex))
+            if (TagObject != null &&
+                ((int)TagObject.Type != comboBoxType.SelectedIndex) ||
+                !TagObject.TimeOfDayMorningStart.Equals(dateTimePickerMorningStart.Value) ||
+                !TagObject.TimeOfDayMorningEnd.Equals(dateTimePickerMorningEnd.Value) ||
+                !TagObject.TimeOfDayMorningValue.Equals(textBoxMorningValue.Text) ||
+                !TagObject.TimeOfDayAfternoonStart.Equals(dateTimePickerAfternoonStart.Value) ||
+                !TagObject.TimeOfDayAfternoonEnd.Equals(dateTimePickerAfternoonEnd.Value) ||
+                !TagObject.TimeOfDayAfternoonValue.Equals(textBoxAfternoonValue.Text) ||
+                !TagObject.TimeOfDayEveningStart.Equals(dateTimePickerEveningStart.Value) ||
+                !TagObject.TimeOfDayEveningEnd.Equals(dateTimePickerEveningEnd.Value) ||
+                !TagObject.TimeOfDayEveningValue.Equals(textBoxEveningValue.Text))
             {
                 return true;
             }
