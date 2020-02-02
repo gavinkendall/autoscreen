@@ -632,6 +632,15 @@ namespace AutoScreenCapture
                         XmlElement rootElement = xDoc.CreateElement(XML_FILE_ROOT_NODE);
                         XmlElement xScreenshots = xDoc.CreateElement(XML_FILE_SCREENSHOTS_NODE);
 
+                        XmlAttribute attributeVersion = xDoc.CreateAttribute("app", "version", "autoscreen");
+                        XmlAttribute attributeCodename = xDoc.CreateAttribute("app", "codename", "autoscreen");
+
+                        attributeVersion.Value = Settings.ApplicationVersion;
+                        attributeCodename.Value = Settings.ApplicationCodename;
+
+                        rootElement.Attributes.Append(attributeVersion);
+                        rootElement.Attributes.Append(attributeCodename);
+
                         rootElement.AppendChild(xScreenshots);
 
                         xDoc.AppendChild(rootElement);

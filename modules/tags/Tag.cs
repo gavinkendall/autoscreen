@@ -74,15 +74,14 @@ namespace AutoScreenCapture
         /// </summary>
         public string TimeOfDayEveningValue { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Tag()
+        private void SetDefaultValues()
         {
+            DateTimeFormatValue = string.Empty;
+
             // Morning
             TimeOfDayMorningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
             TimeOfDayMorningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
-            TimeOfDayEveningValue = "evening";
+            TimeOfDayMorningValue = "morning";
 
             // Afternoon
             TimeOfDayAfternoonStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0); // 12pm
@@ -92,7 +91,33 @@ namespace AutoScreenCapture
             // Evening
             TimeOfDayEveningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
             TimeOfDayEveningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
-            TimeOfDayMorningValue = "morning";
+            TimeOfDayEveningValue = "evening";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Tag()
+        {
+            SetDefaultValues();
+        }
+
+        public Tag(string name, TagType tagType)
+        {
+            SetDefaultValues();
+
+            Name = name;
+            Type = tagType;
+        }
+
+        public Tag(string name, TagType tagType, string dateTimeFormatValue)
+        {
+            SetDefaultValues();
+
+            Name = name;
+            Type = tagType;
+
+            DateTimeFormatValue = dateTimeFormatValue;
         }
 
         /// <summary>

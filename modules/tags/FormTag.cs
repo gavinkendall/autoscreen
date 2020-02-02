@@ -71,11 +71,11 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Tag";
 
+                Tag tag = new Tag();
+
                 textBoxTagName.Text = string.Empty;
                 comboBoxType.SelectedIndex = 0;
-                textBoxDateTimeFormatValue.Text = string.Empty;
-
-                Tag tag = new Tag();
+                textBoxDateTimeFormatValue.Text = tag.DateTimeFormatValue;
 
                 dateTimePickerMorningStart.Value = tag.TimeOfDayMorningStart;
                 dateTimePickerMorningEnd.Value = tag.TimeOfDayMorningEnd;
