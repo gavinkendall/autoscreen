@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-01-31 (January 31, 2020)
+Last updated on 2020-02-02 (February 2, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.2.4.6)]
 =============================================================================================================
 
@@ -38,20 +38,22 @@ Introduction to Modules
 -----------------------
 When you open Auto Screen Capture's interface you're going to see a number of tabs on the left side
 which are called Modules:
-Interval
-Schedule
+Setup
 Screenshots
-Security
 Screens
 Regions
 Editors
+Tags
 Triggers
 
 
 
-Modules - Interval
-------------------
-The Interval module sets the interval value for the timer that will be used when screenshots are being
+Modules - Setup
+---------------
+The Setup module is divided into a few sections.
+
+*"Take screenshots every ..."*
+This section sets the interval value for the timer that will be used when screenshots are being
 taken during a screen capture session. You can set the number of hours, minutes, seconds, and milliseconds
 that Auto Screen Capture should wait until it takes screenshots of your displays.
 
@@ -107,10 +109,9 @@ Auto Screen Capture will keep track of what screenshots were taken during the ti
 As of version 2.2.3.1 a label can be selected from the "Apply Label" system tray icon menu.
 This menu will not be available if the session is locked.
 
+*Schedule*
+This section handles the scheduling of screen capture sessions.
 
-
-Modules - Schedule
-------------------
 You can tell Auto Screen Capture when to start and stop taking screenshots at particular times and on
 defined days of the week by using the Schedule module.
 
@@ -129,30 +130,7 @@ Fr (Friday)
 Sa (Saturday)
 Su (Sunday)
 
-
-
-Modules - Screenshots
----------------------
-This module is a list of the screenshots that were taken on a particular day. You use the calendar to
-choose a day and the list will be refreshed based on the chosen day.
-
-Each entry in this list represents a set of screenshots that were taken for
-each screen and/or region at the time the screenshots were taken.
-
-Each entry in this list also displays the title of the active window at the time screenshots were taken.
-Clicking on an entry will show you the screenshots for each screen and/or region.
-
-The "Keep screenshots for X days" option tells Auto Screen Capture to keep all the image files it
-knows about for a specified number of days.
-
-For example, "Keep screenshots for 30 days" will keep the image files on disk for 30 days.
-If any image files are found to be older than 30 days then those files will be automatically deleted.
-(Folders containing image files will not be deleted. This is intentional.)
-
-
-
-Modules - Security
-------------------
+*Security*
 You can set a passphrase in order to lock the running screen capture session once the application starts
 taking screenshots.
 
@@ -173,6 +151,26 @@ If the user incorrectly enters the passphrase and attempts to unlock the session
 continue to prompt for the passphrase until the prompt window is closed.
 
 (You can also use the "-passphrase" command line argument.)
+
+
+
+Modules - Screenshots
+---------------------
+This module is a list of the screenshots that were taken on a particular day. You use the calendar to
+choose a day and the list will be refreshed based on the chosen day.
+
+Each entry in this list represents a set of screenshots that were taken for
+each screen and/or region at the time the screenshots were taken.
+
+Each entry in this list also displays the title of the active window at the time screenshots were taken.
+Clicking on an entry will show you the screenshots for each screen and/or region.
+
+The "Keep screenshots for X days" option tells Auto Screen Capture to keep all the image files it
+knows about for a specified number of days.
+
+For example, "Keep screenshots for 30 days" will keep the image files on disk for 30 days.
+If any image files are found to be older than 30 days then those files will be automatically deleted.
+(Folders containing image files will not be deleted. This is intentional.)
 
 
 
@@ -226,24 +224,6 @@ The "Macro" text box refers to the macro used that defines how each individual f
 Any characters invalid to Windows will be stripped out (such as /, :, *, ?, \, <, >, and |).
 You cannot use the backslash character (\) as part of your macro.
 
-The "Tags" drop-down control gives you a list of macro tags that can be used for your macro:
-%name%           Name of screen or region                The "Name" of the screen
-%screen%         Screen number (1, 2, 3, 4 ...)          The screen's associated number
-%format%         Image format of screen or region        The format of the image used for the screen
-%date%           Date                                    The current date as yyyy-MM-dd
-%time%           Time                                    The current time as HH-mm-ss-fff
-%year%           Year                                    The current year as yyyy
-%month%          Month                                   The current month as MM
-%day%            Day                                     The current day as dd
-%hour%           Hour                                    The current hour as HH
-%minute%         Minute                                  The current minute as mm
-%second%         Second                                  The current second as ss
-%millisecond%    Millisecond                             The current millisecond as fff
-%count%          Number of screen capture cycles during the current screen capture session
-%user%           User                                    The name of the logged in user
-%machine%        Machine                                 The name of the machine being used
-%title%          Title                                   The title of the active window
-
 The "Remove Selected Screens" button is used to remove a selected number of screens in the list.
 Select the screens you want to remove and then click the button to remove the selected screens.
 
@@ -291,24 +271,6 @@ The "Macro" text box refers to the macro used that defines how each individual f
 Any characters invalid to Windows will be stripped out (such as /, :, *, ?, \, <, >, and |).
 You cannot use the backslash character (\) as part of your macro.
 
-The "Tags" drop-down control gives you a list of macro tags that can be used for your macro:
-%name%           Name of screen or region                The "Name" of the screen
-%screen%         Screen number (1, 2, 3, 4 ...)          The screen's associated number
-%format%         Image format of screen or region        The format of the image used for the screen
-%date%           Date                                    The current date as yyyy-MM-dd
-%time%           Time                                    The current time as HH-mm-ss-fff
-%year%           Year                                    The current year as yyyy
-%month%          Month                                   The current month as MM
-%day%            Day                                     The current day as dd
-%hour%           Hour                                    The current hour as HH
-%minute%         Minute                                  The current minute as mm
-%second%         Second                                  The current second as ss
-%millisecond%    Millisecond                             The current millisecond as fff
-%count%          Number of screen capture cycles during the current screen capture session
-%user%           User                                    The name of the logged in user
-%machine%        Machine                                 The name of the machine being used
-%title%          Title                                   The title of the active window
-
 The "Remove Selected Regions" button is used to remove a selected number of regions in the list.
 Select the regions you want to remove and then click the button to remove the selected regions.
 
@@ -344,6 +306,65 @@ Select the editors you want to remove and then click the button to remove the se
 
 The "..." button to the right of an editor name in the list of editors will open the Change Editor
 window enabling you to change the settings of that editor.
+
+
+
+Modules - Tags
+--------------
+A tag is a special value, surrounded by the percentage character, which gives you the ability
+to acquire certain information that can be used in your macro.
+
+The following tags are available by default:
+%name%           Name of screen or region                The "Name" of the screen
+%screen%         Screen number (1, 2, 3, 4 ...)          The screen's associated number
+%format%         Image format of screen or region        The format of the image used for the screen
+%date%           Date                                    The current date as yyyy-MM-dd
+%time%           Time                                    The current time as HH-mm-ss-fff
+%year%           Year                                    The current year as yyyy
+%month%          Month                                   The current month as MM
+%day%            Day                                     The current day as dd
+%hour%           Hour                                    The current hour as HH
+%minute%         Minute                                  The current minute as mm
+%second%         Second                                  The current second as ss
+%millisecond%    Millisecond                             The current millisecond as fff
+%count%          Number of screen capture cycles during the current screen capture session
+%user%           User                                    The name of the logged in user
+%machine%        Machine                                 The name of the machine being used
+%title%          Title                                   The title of the active window
+%timeofday%      Time of Day                             A specified value based on the time of day
+
+You can add, edit, or remove tags. Each tag needs a tag name and a tag type.
+
+You may also need to specify the date/time format value and/or the time of day values
+based on the chosen tag type. There are nine tag types:
+Screen Name
+Screen Number
+Image Format
+Screen Capture Cycle Count
+Active Window Title
+Date/Time Format
+User
+Machine
+Time of Day
+
+So, typically, any date/time value would be associated with the Date/Time Format type.
+This means that you would need to specify a date/time format value which can include ...
+fff            for milliseconds
+ss             for seconds
+mm             for minutes
+HH             for hours
+dd             for days
+MM             for months
+yyyy           for years
+For example, a date/time format value of "yyyy-MM-dd HH-mm-ss" would be translated
+by your Date/Time Format tag as the current year, month, day, hour, minute, and second.
+
+A tag using the "Time of Day" tag type would need to have ...
+- Morning start time, morning end time, and morning value
+- Afternoon start time, afternoon end time, and afternoon value
+- Evening start time, evening end time, and evening value
+... so that (depending on the time of day) your tag's value would be replaced by
+the value defined for morning, afternoon, or evening given the associated time range.
 
 
 
