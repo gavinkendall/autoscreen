@@ -310,6 +310,14 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(FileSystem.TagsFile))
                 {
                     FileSystem.TagsFile = FileSystem.DefaultTagsFile;
+
+                    if (File.Exists(FileSystem.ConfigFile))
+                    {
+                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                        {
+                            sw.WriteLine("TagsFile=" + FileSystem.TagsFile);
+                        }
+                    }
                 }
 
                 if (File.Exists(FileSystem.TagsFile))

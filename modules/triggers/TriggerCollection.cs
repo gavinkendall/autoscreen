@@ -232,6 +232,14 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(FileSystem.TriggersFile))
                 {
                     FileSystem.TriggersFile = FileSystem.DefaultTriggersFile;
+
+                    if (File.Exists(FileSystem.ConfigFile))
+                    {
+                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                        {
+                            sw.WriteLine("TriggersFile=" + FileSystem.TriggersFile);
+                        }
+                    }
                 }
 
                 if (File.Exists(FileSystem.TriggersFile))

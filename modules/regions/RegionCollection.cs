@@ -290,6 +290,14 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(FileSystem.RegionsFile))
                 {
                     FileSystem.RegionsFile = FileSystem.DefaultRegionsFile;
+
+                    if (File.Exists(FileSystem.ConfigFile))
+                    {
+                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                        {
+                            sw.WriteLine("RegionsFile=" + FileSystem.RegionsFile);
+                        }
+                    }
                 }
 
                 if (File.Exists(FileSystem.RegionsFile))

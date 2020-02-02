@@ -274,6 +274,14 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(FileSystem.ScreensFile))
                 {
                     FileSystem.ScreensFile = FileSystem.DefaultScreensFile;
+
+                    if (File.Exists(FileSystem.ConfigFile))
+                    {
+                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                        {
+                            sw.WriteLine("ScreensFile=" + FileSystem.ScreensFile);
+                        }
+                    }
                 }
 
                 if (File.Exists(FileSystem.ScreensFile))

@@ -638,6 +638,14 @@ namespace AutoScreenCapture
 
                         xDoc.Save(FileSystem.ScreenshotsFile);
                     }
+
+                    if (File.Exists(FileSystem.ConfigFile))
+                    {
+                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                        {
+                            sw.WriteLine("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
+                        }
+                    }
                 }
 
                 lock (_screenshotList)

@@ -212,6 +212,14 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(FileSystem.EditorsFile))
                 {
                     FileSystem.EditorsFile = FileSystem.DefaultEditorsFile;
+
+                    if (File.Exists(FileSystem.ConfigFile))
+                    {
+                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                        {
+                            sw.WriteLine("EditorsFile=" + FileSystem.EditorsFile);
+                        }
+                    }
                 }
 
                 if (File.Exists(FileSystem.EditorsFile))
