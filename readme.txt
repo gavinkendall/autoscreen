@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-02-02 (February 2, 2020)
+Last updated on 2020-02-03 (February 3, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.2.4.6)]
 =============================================================================================================
 
@@ -113,7 +113,7 @@ This menu will not be available if the session is locked.
 This section handles the scheduling of screen capture sessions.
 
 You can tell Auto Screen Capture when to start and stop taking screenshots at particular times and on
-defined days of the week by using the Schedule module.
+defined days of the week.
 
 "Start capture at" tells the application to start taking screenshots at a specified time.
 (You can also use the "-startat" command line argument.)
@@ -458,11 +458,11 @@ For example, "-config=C:\MyAutoScreenCapture.conf" will start the application us
 config file named "MyAutoScreenCapture.conf" on the C:\ drive.
 
 A configuration file that can be used by Auto Screen Capture should, at a minimum,
-contain the following 10 lines representing key-value pairs that will be parsed by the
+contain the following 11 lines representing key-value pairs that will be parsed by the
 application upon execution:
 ScreenshotsFolder=screenshots
 DebugFolder=!autoscreen\debug
-LogsFolder=!autoscreen\debug\logs
+LogsFolder=!autoscreen\logs
 ApplicationSettingsFile=application.xml
 UserSettingsFile=user.xml
 EditorsFile=!autoscreen\editors.xml
@@ -470,6 +470,7 @@ RegionsFile=!autoscreen\regions.xml
 ScreensFile=!autoscreen\screens.xml
 TriggersFile=!autoscreen\triggers.xml
 ScreenshotsFile=!autoscreen\screenshots.xml
+TagsFile=!autoscreen\tags.xml
 
 As you can see, each line specifies either the name of a folder or a file.
 If only the folder name is given (such as "screenshots") then Auto Screen Capture will parse it
@@ -519,6 +520,10 @@ application to run in a single-user environment or in a multi-user environment.
 By default, on the first run, Auto Screen Capture will create its own configuration file named
 "autoscreen.conf" in the same directory as where the "autoscreen.exe" binary is executed from.
 
+If you run into any issues with the application you can safely delete the "autoscreen.conf" file
+and try again. However, some issues may require you to remove the "!autoscreen" directory which is
+usually used to store the application's various XML files for its internal data system.
+
 The default configuration file looks like this ...
 =========================================== autoscreen.conf ===========================================
 # Auto Screen Capture Configuration File
@@ -527,45 +532,38 @@ The default configuration file looks like this ...
 # If only the folder name is given then it will be parsed as the sub-folder of the folder
 # where the executed autoscreen.exe binary is located.
 
-
 # This is the folder where screenshots will be stored by default.
 ScreenshotsFolder=screenshots
-
 
 # If any errors are encountered then you will find them in this folder when DebugMode is enabled.
 DebugFolder=!autoscreen\debug
 
-
 # Logs are stored in this folder when either Logging or DebugMode is enabled.
-LogsFolder=!autoscreen\debug\logs
-
+LogsFolder=!autoscreen\logs
 
 # The application settings (such as DebugMode).
 ApplicationSettingsFile=!autoscreen\settings\application.xml
 
-
 # Your personal settings.
 UserSettingsFile=!autoscreen\settings\user.xml
-
 
 # References to image editors.
 EditorsFile=!autoscreen\editors.xml
 
-
 # References to regions.
 RegionsFile=!autoscreen\regions.xml
-
 
 # References to screens.
 ScreensFile=!autoscreen\screens.xml
 
-
 # References to triggers.
 TriggersFile=!autoscreen\triggers.xml
 
-
 # References to screenshots.
 ScreenshotsFile=!autoscreen\screenshots.xml
+
+# References to tags.
+TagsFile=!autoscreen\tags.xml
 =======================================================================================================
 
 As you can see the configuration file defines the folders and XML files the application should use.
@@ -581,6 +579,7 @@ RegionsFile=!autoscreen\regions.xml
 ScreensFile=!autoscreen\screens.xml
 TriggersFile=!autoscreen\triggers.xml
 ScreenshotsFile=!autoscreen\screenshots.xml
+TagsFile=!autoscreen\tags.xml
 
 All of these values represent local paths for the computer that Auto Screen Capture is running on, but
 it's also possible to use network paths instead.
@@ -593,6 +592,7 @@ regions.xml                   Setup regions to capture on the user's computer
 screens.xml                   Setup screens to capture on the user's computer
 triggers.xml                  Setup triggers to control the application's behavior
 screenshots.xml               List the screenshots that have been captured by the application
+tags.xml                      Setup tags to use in a macro for customizing filenames
 
 You can use a network path (rather than a local system path). For example, if you have a server
 named "SKYWALKER" and it's accessible by Auto Screen Capture running from a user's computer you
@@ -624,6 +624,7 @@ RegionsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\regions.xml
 ScreensFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screens.xml
 TriggersFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\triggers.xml
 ScreenshotsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screenshots.xml
+TagsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\tags.xml
 =======================================================================================================
 
 You don't need to use "autoscreen.conf" as the name for your configuration file.
