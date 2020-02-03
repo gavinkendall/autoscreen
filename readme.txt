@@ -657,13 +657,12 @@ It was uploaded to SourceForge in 2008 and then picked up, and distributed, by B
 A calendar was introduced and, by version 2.0.5, you could capture up to four displays. The interval
 was also updated in order for the user to specify hours, minutes, seconds, and milliseconds.
 
-2.1 Series
+2.1 Series ("Clara")
 You were now able to define how your files would be named by using a macro and macro tags instead
 of relying on the application's default filename pattern. The series was codenamed "Clara" because
 I would be watching Doctor Who (featuring Clara Oswald) while working on Auto Screen Capture :)
 
-
-2.2 Series
+2.2 Series ("Dalek")
 The application took a major step into defining what Auto Screen Capture is today with the ability to
 capture screenshots from multiple displays, filter screenshots, and automatically remove old screenshots.
 You can control the application's behaviour with Triggers and customize filenames with your own Tags.
