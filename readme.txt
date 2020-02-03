@@ -407,6 +407,8 @@ Condition = LimitReached -> Action = StopScreenCapture
 
 Command Line Arguments
 ----------------------
+You can run the Auto Screen Capture "autoscreen.exe" binary with command line arguments.
+
 -log
 Enables logging.
 All log files, by default, are stored in the "!autoscreen\debug\logs" folder
@@ -633,3 +635,37 @@ If you have a configuration file that you want Auto Screen Capture to use when t
 you can specify the path and name of the configuration file with the "-config" command line argument.
 For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
 config file named "MyAutoScreenCapture.conf" on the C:\ drive.
+
+The "autoscreen.conf" files are also available for particular versions of Auto Screen Capture:
+https://sourceforge.net/projects/autoscreen/files/2.2.3.2/
+https://sourceforge.net/projects/autoscreen/files/2.2.4.6/ (which introduced "TagsFile")
+
+
+
+Version History
+---------------
+Auto Screen Capture has a long history (10+ years) and it's advanced a lot since the first version.
+I started writing the code for the application in 2008 after being frustrated that no screen capture
+program, at the time, could take screenshots at a chosen interval while I was playing a game.
+
+1.0
+The very first version was a simple desktop application that took screenshots at an interval which
+could only be specified in milliseconds. It also had a small list of screenshots called "Time Slices".
+It was uploaded to SourceForge in 2008 and then picked up, and distributed, by Brothersoft.
+
+2.0 Series
+A calendar was introduced and, by version 2.0.5, you could capture up to four displays. The interval
+was also updated in order for the user to specify hours, minutes, seconds, and milliseconds.
+
+2.1 Series
+You were now able to define how your files would be named by using a macro and macro tags instead
+of relying on the application's default filename pattern. The series was codenamed "Clara" because
+I would be watching Doctor Who (featuring Clara Oswald) while working on Auto Screen Capture :)
+
+
+2.2 Series
+The application took a major step into defining what Auto Screen Capture is today with the ability to
+capture screenshots from multiple displays, filter screenshots, and automatically remove old screenshots.
+You can control the application's behaviour with Triggers and customize filenames with your own Tags.
+You can also replace an old "autoscreen.exe" binary with any 2.2 binary and it will upgrade its
+data system so that old screenshot references are updated with the newest reference schema.
