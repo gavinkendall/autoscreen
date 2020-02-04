@@ -642,6 +642,117 @@ https://sourceforge.net/projects/autoscreen/files/2.2.4.6/ (which introduced "Ta
 
 
 
+Data System
+-----------
+Auto Screen Capture stores its data in various XML files and the location of these XML files are
+usually defined by the "autoscreen.conf" configuration file. Each XML data file will likely have
+a root node that shows the version number and codename of the application such as ...
+<autoscreen app:version="2.2.4.6" app:codename="Dalek" xmlns:app="autoscreen">
+
+Auto Screen Capture's data system isn't very complex, but it's helpful to learn how it works.
+
+application.xml
+This file is for application settings that controls how the application is going
+to perform when it's started. Should logging be enabled? What percentage of disk space
+is acceptable until the application stops taking screenshots? Should the application
+exit when it encounters an error or continues to run regardless of any errors?
+A few examples of application setting nodes in application.xml:
+<setting>
+    <key>DebugMode</key>
+    <value>False</value>
+</setting>
+<setting>
+    <key>Logging</key>
+    <value>False</value>
+</setting>
+<setting>
+    <key>LowDiskPercentageThreshold</key>
+    <value>3</value>
+</setting>
+<setting>
+    <key>ExitOnError</key>
+    <value>False</value>
+</setting>
+
+user.xml
+This file is for user settings such as screen capture interval, setting a limit on how
+many screenshots should be taken, and how many days old screenshots should be kept for.
+A few examples of user setting nodes in user.xml:
+<setting>
+    <key>IntScreenCaptureInterval</key>
+    <value>60000</value>
+</setting>
+<setting>
+    <key>IntCaptureLimit</key>
+    <value>100</value>
+</setting>
+<setting>
+    <key>IntKeepScreenshotsForDays</key>
+    <value>30</value>
+</setting>
+
+screens.xml
+This file defines the screens (monitors or displays) the application should consider
+and the properties of each screen, where screenshots should be written, and what
+macro should be used when writing screenshot files in a particular image format.
+The "component" indicates if it's the active window, a region, or a screen.
+An example of a screen node in screens.xml:
+<screen>
+    <viewid>32e576b6-6ca4-4159-9256-11e8a2248d4c</viewid>
+    <name>Screen 1</name>
+    <folder>screenshots\</folder>
+    <macro>%date%\%name%\%date%_%time%.%format%</macro>
+    <component>1</component>
+    <format>JPEG</format>
+    <jpeg_quality>100</jpeg_quality>
+    <resolution_ratio>100</resolution_ratio>
+    <mouse>True</mouse>
+</screen>
+
+screenshots.xml
+This file stores the references to screenshots that have been taken. These references
+are useful for the application to know which screen a screenshot is associated with,
+where each screenshot is located on the file system, when a screenshot was taken,
+the format of the screenshot, the active window title, process name, and label.
+The "viewid" identifies the screen or region which the screenshot is associated with.
+An example of a screenshot node in screenshots.xml:
+<screenshot>
+    <viewid>32e576b6-6ca4-4159-9256-11e8a2248d4c</viewid>
+    <date>2020-02-03</date>
+    <time>18:43:21.391</time>
+    <path>screenshots\2020-02-03\Screen 1\2020-02-03_18-43-21-391.jpeg</path>
+    <format>JPEG</format>
+    <component>1</component>
+    <slidename>{date=2020-02-03}{time=18:43:21.391}</slidename>
+    <slidevalue>18:43:21.391 [Auto Screen Capture]</slidevalue>
+    <windowtitle>Auto Screen Capture</windowtitle>
+    <processname>autoscreen.exe</processname>
+    <label>
+    </label>
+</screenshot>
+
+tags.xml
+This file determines what tags should be used in a macro when a screenshot is written
+to an image file. Tags like %date% and %time% dynamically change value depending
+on the date and time a macro is parsed and an image file is processed.
+An example of a tag node in tags.xml:
+<tag>
+    <name>%time%</name>
+    <type>DateTimeFormat</type>
+    <datetime_format_value>HH-mm-ss-fff</datetime_format_value>
+    <time_of_day_morning_start>2/3/2020 12:00:00 AM</time_of_day_morning_start>
+    <time_of_day_morning_end>2/3/2020 11:59:59 AM</time_of_day_morning_end>
+    <time_of_day_afternoon_start>2/3/2020 12:00:00 PM</time_of_day_afternoon_start>
+    <time_of_day_afternoon_end>2/3/2020 5:59:59 PM</time_of_day_afternoon_end>
+    <time_of_day_evening_start>2/3/2020 6:00:00 PM</time_of_day_evening_start>
+    <time_of_day_evening_end>2/3/2020 11:59:59 PM</time_of_day_evening_end>
+    <time_of_day_morning_value>morning</time_of_day_morning_value>
+    <time_of_day_afternoon_value>afternoon</time_of_day_afternoon_value>
+    <time_of_day_evening_value>evening</time_of_day_evening_value>
+</tag>
+
+
+
 Version History
 ---------------
 Auto Screen Capture has a long history (10+ years) and it's advanced a lot since the first version.
