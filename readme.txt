@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-02-03 (February 3, 2020)
+Last updated on 2020-02-04 (February 4, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.2.4.6)]
 =============================================================================================================
 
@@ -695,7 +695,9 @@ screens.xml
 This file defines the screens (monitors or displays) the application should consider
 and the properties of each screen, where screenshots should be written, and what
 macro should be used when writing screenshot files in a particular image format.
-The "component" indicates if it's the active window, a region, or a screen.
+The "component" indicates if it's the active window or a screen. If the component
+value is 0 then the application will capture the active window otherwise it will
+capture an available screen based on its number; 1, 2, 3, 4, 5, 6, etc.
 An example of a screen node in screens.xml:
 <screen>
     <viewid>32e576b6-6ca4-4159-9256-11e8a2248d4c</viewid>
@@ -708,6 +710,27 @@ An example of a screen node in screens.xml:
     <resolution_ratio>100</resolution_ratio>
     <mouse>True</mouse>
 </screen>
+
+regions.xml
+This file defines the regions you have setup. Like a screen, a region includes a
+folder path, macro, image format, resolution ratio, JPEG quality, and if the mouse
+should be included in the image. A region also includes the X, Y, Width, and Height
+values to determine the area of the screen it should capture.
+An example of a region node in regions.xml:
+<region>
+    <viewid>c0a75b62-70af-4b4e-bba0-74a937cba83e</viewid>
+    <name>Region 1</name>
+    <folder>screenshots\</folder>
+    <macro>%date%\%name%\%date%_%time%.%format%</macro>
+    <format>JPEG</format>
+    <jpeg_quality>100</jpeg_quality>
+    <resolution_ratio>100</resolution_ratio>
+    <mouse>True</mouse>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+</region>
 
 screenshots.xml
 This file stores the references to screenshots that have been taken. These references
@@ -749,6 +772,7 @@ An example of a tag node in tags.xml:
     <time_of_day_morning_value>morning</time_of_day_morning_value>
     <time_of_day_afternoon_value>afternoon</time_of_day_afternoon_value>
     <time_of_day_evening_value>evening</time_of_day_evening_value>
+    <evening_extends_to_next_morning>False</evening_extends_to_next_morning>
 </tag>
 
 triggers.xml
