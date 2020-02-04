@@ -751,6 +751,17 @@ An example of a tag node in tags.xml:
     <time_of_day_evening_value>evening</time_of_day_evening_value>
 </tag>
 
+triggers.xml
+This file contains the various triggers that control the behaviour of the application.
+Each trigger is based on a condition to consider and an action to take if the condition is met.
+An example of a trigger node in triggers.xml:
+<trigger>
+    <name>Interface Closing -&gt; Exit</name>
+    <condition>InterfaceClosing</condition>
+    <action>ExitApplication</action>
+    <editor />
+</trigger>
+
 
 
 Version History
