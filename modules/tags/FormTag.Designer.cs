@@ -50,6 +50,7 @@
             this.dateTimePickerMorningEnd = new System.Windows.Forms.DateTimePicker();
             this.labelMorning = new System.Windows.Forms.Label();
             this.dateTimePickerMorningStart = new System.Windows.Forms.DateTimePicker();
+            this.checkBoxEveningExtendsToNextMorning = new System.Windows.Forms.CheckBox();
             this.groupBoxTimeOfDay.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,7 +75,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(395, 193);
+            this.buttonOK.Location = new System.Drawing.Point(395, 201);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -87,7 +88,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(476, 193);
+            this.buttonCancel.Location = new System.Drawing.Point(476, 201);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 0;
@@ -142,6 +143,7 @@
             // 
             this.groupBoxTimeOfDay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxTimeOfDay.Controls.Add(this.checkBoxEveningExtendsToNextMorning);
             this.groupBoxTimeOfDay.Controls.Add(this.labelEvening);
             this.groupBoxTimeOfDay.Controls.Add(this.labelAfternoon);
             this.groupBoxTimeOfDay.Controls.Add(this.textBoxEveningValue);
@@ -156,7 +158,7 @@
             this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerMorningStart);
             this.groupBoxTimeOfDay.Location = new System.Drawing.Point(16, 70);
             this.groupBoxTimeOfDay.Name = "groupBoxTimeOfDay";
-            this.groupBoxTimeOfDay.Size = new System.Drawing.Size(535, 104);
+            this.groupBoxTimeOfDay.Size = new System.Drawing.Size(535, 125);
             this.groupBoxTimeOfDay.TabIndex = 0;
             this.groupBoxTimeOfDay.TabStop = false;
             this.groupBoxTimeOfDay.Text = "Time of Day";
@@ -287,13 +289,23 @@
             this.dateTimePickerMorningStart.TabIndex = 0;
             this.dateTimePickerMorningStart.TabStop = false;
             // 
+            // checkBoxEveningExtendsToNextMorning
+            // 
+            this.checkBoxEveningExtendsToNextMorning.AutoSize = true;
+            this.checkBoxEveningExtendsToNextMorning.Location = new System.Drawing.Point(74, 101);
+            this.checkBoxEveningExtendsToNextMorning.Name = "checkBoxEveningExtendsToNextMorning";
+            this.checkBoxEveningExtendsToNextMorning.Size = new System.Drawing.Size(180, 17);
+            this.checkBoxEveningExtendsToNextMorning.TabIndex = 1;
+            this.checkBoxEveningExtendsToNextMorning.Text = "Evening extends to next morning";
+            this.checkBoxEveningExtendsToNextMorning.UseVisualStyleBackColor = true;
+            // 
             // FormTag
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(563, 228);
+            this.ClientSize = new System.Drawing.Size(563, 236);
             this.Controls.Add(this.groupBoxTimeOfDay);
             this.Controls.Add(this.textBoxDateTimeFormatValue);
             this.Controls.Add(this.labelDateTimeFormatValue);
@@ -341,5 +353,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerMorningEnd;
         private System.Windows.Forms.Label labelMorning;
         private System.Windows.Forms.DateTimePicker dateTimePickerMorningStart;
+        private System.Windows.Forms.CheckBox checkBoxEveningExtendsToNextMorning;
     }
 }

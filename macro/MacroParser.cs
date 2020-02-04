@@ -177,6 +177,26 @@ namespace AutoScreenCapture
                         {
                             macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
                         }
+
+                        // Split the evening start time and evening end time into separate checks if the user wants to extend
+                        // the time of what they consider "evening" to also include the next morning.
+                        if (tag.EveningExtendsToNextMorning)
+                        {
+                            DateTime dayStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                            DateTime dayEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+
+                            if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
+                                screenCapture.DateTimePreviousCycle.TimeOfDay <= dayEnd.TimeOfDay)
+                            {
+                                macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
+                            }
+
+                            if (screenCapture.DateTimePreviousCycle.TimeOfDay >= dayStart.TimeOfDay &&
+                                screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                            {
+                                macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
+                            }
+                        }
                         break;
                 }
             }

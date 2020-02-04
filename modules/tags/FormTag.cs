@@ -66,6 +66,8 @@ namespace AutoScreenCapture
                 textBoxMorningValue.Text = TagObject.TimeOfDayMorningValue;
                 textBoxAfternoonValue.Text = TagObject.TimeOfDayAfternoonValue;
                 textBoxEveningValue.Text = TagObject.TimeOfDayEveningValue;
+
+                checkBoxEveningExtendsToNextMorning.Checked = TagObject.EveningExtendsToNextMorning;
             }
             else
             {
@@ -89,6 +91,8 @@ namespace AutoScreenCapture
                 textBoxMorningValue.Text = tag.TimeOfDayMorningValue;
                 textBoxAfternoonValue.Text = tag.TimeOfDayAfternoonValue;
                 textBoxEveningValue.Text = tag.TimeOfDayEveningValue;
+
+                checkBoxEveningExtendsToNextMorning.Checked = tag.EveningExtendsToNextMorning;
             }
         }
 
@@ -128,7 +132,8 @@ namespace AutoScreenCapture
                         textBoxAfternoonValue.Text,
                         dateTimePickerEveningStart.Value,
                         dateTimePickerEveningEnd.Value,
-                        textBoxEveningValue.Text
+                        textBoxEveningValue.Text,
+                        checkBoxEveningExtendsToNextMorning.Checked
                         ));
 
                     Okay();
@@ -170,6 +175,7 @@ namespace AutoScreenCapture
                         TagCollection.Get(TagObject).TimeOfDayEveningStart = dateTimePickerEveningStart.Value;
                         TagCollection.Get(TagObject).TimeOfDayEveningEnd = dateTimePickerEveningEnd.Value;
                         TagCollection.Get(TagObject).TimeOfDayEveningValue = textBoxEveningValue.Text;
+                        TagCollection.Get(TagObject).EveningExtendsToNextMorning = checkBoxEveningExtendsToNextMorning.Checked;
 
                         Okay();
                     }
@@ -188,18 +194,43 @@ namespace AutoScreenCapture
         private void TrimInput()
         {
             textBoxTagName.Text = textBoxTagName.Text.Trim();
+
+            if (!textBoxTagName.Text.StartsWith("%"))
+                textBoxTagName.Text = "%" + textBoxTagName.Text;
+
+            if (!textBoxTagName.Text.EndsWith("%"))
+                textBoxTagName.Text += "%";
         }
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxTagName.Text))
+            if (textBoxDateTimeFormatValue.Enabled || groupBoxTimeOfDay.Enabled)
             {
-                return true;
+                if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                    textBoxDateTimeFormatValue.Enabled &&
+                    !string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text))
+                {
+                    return true;
+                }
+
+                if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                    groupBoxTimeOfDay.Enabled &&
+                    !string.IsNullOrEmpty(textBoxMorningValue.Text) &&
+                    !string.IsNullOrEmpty(textBoxAfternoonValue.Text) &&
+                    !string.IsNullOrEmpty(textBoxEveningValue.Text))
+                {
+                    return true;
+                }
             }
             else
             {
-                return false;
+                if (!string.IsNullOrEmpty(textBoxTagName.Text))
+                {
+                    return true;
+                }
             }
+
+            return false;
         }
 
         private bool InputChanged()
@@ -213,7 +244,8 @@ namespace AutoScreenCapture
                     changed = true;
                 }
 
-                if (!string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text) &&
+                if (textBoxDateTimeFormatValue.Enabled &&
+                    !string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text) &&
                     !TagObject.DateTimeFormatValue.Equals(textBoxDateTimeFormatValue.Text))
                 {
                     changed = true;
@@ -228,7 +260,8 @@ namespace AutoScreenCapture
                     !TagObject.TimeOfDayAfternoonValue.Equals(textBoxAfternoonValue.Text) ||
                     !TagObject.TimeOfDayEveningStart.Equals(dateTimePickerEveningStart.Value) ||
                     !TagObject.TimeOfDayEveningEnd.Equals(dateTimePickerEveningEnd.Value) ||
-                    !TagObject.TimeOfDayEveningValue.Equals(textBoxEveningValue.Text))
+                    !TagObject.TimeOfDayEveningValue.Equals(textBoxEveningValue.Text) ||
+                    !TagObject.EveningExtendsToNextMorning.Equals(checkBoxEveningExtendsToNextMorning.Checked))
                 {
                     changed = true;
                 }
@@ -279,6 +312,8 @@ namespace AutoScreenCapture
             dateTimePickerEveningEnd.Enabled = false;
             textBoxEveningValue.Enabled = false;
 
+            checkBoxEveningExtendsToNextMorning.Enabled = false;
+
             TagType tagType = (TagType) comboBoxType.SelectedIndex;
 
             if (tagType.Equals(TagType.DateTimeFormat))
@@ -305,6 +340,8 @@ namespace AutoScreenCapture
                 dateTimePickerEveningStart.Enabled = true;
                 dateTimePickerEveningEnd.Enabled = true;
                 textBoxEveningValue.Enabled = true;
+
+                checkBoxEveningExtendsToNextMorning.Enabled = true;
             }
         }
     }

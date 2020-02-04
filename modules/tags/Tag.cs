@@ -74,9 +74,14 @@ namespace AutoScreenCapture
         /// </summary>
         public string TimeOfDayEveningValue { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool EveningExtendsToNextMorning { get; set; }
+
         private void SetDefaultValues()
         {
-            DateTimeFormatValue = string.Empty;
+            DateTimeFormatValue = MacroParser.DateFormat + "_" + MacroParser.TimeFormatForWindows;
 
             // Morning
             TimeOfDayMorningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
@@ -92,6 +97,8 @@ namespace AutoScreenCapture
             TimeOfDayEveningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
             TimeOfDayEveningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
             TimeOfDayEveningValue = "evening";
+
+            EveningExtendsToNextMorning = false;
         }
 
         /// <summary>
@@ -134,6 +141,7 @@ namespace AutoScreenCapture
         /// <param name="timeOfDayEveningStart"></param>
         /// <param name="timeOfDayEveningEnd"></param>
         /// <param name="timeOfDayEveningValue"></param>
+        /// <param name="eveningExtendsToNextMorning</param>
         public Tag(string name, TagType tagType,
             string dateTimeFormatValue,
             DateTime timeOfDayMorningStart,
@@ -144,7 +152,8 @@ namespace AutoScreenCapture
             string timeOfDayAfternoonValue,
             DateTime timeOfDayEveningStart,
             DateTime timeOfDayEveningEnd,
-            string timeOfDayEveningValue)
+            string timeOfDayEveningValue,
+            bool eveningExtendsToNextMorning)
         {
             Name = name;
             Type = tagType;
@@ -163,6 +172,8 @@ namespace AutoScreenCapture
             TimeOfDayMorningValue = timeOfDayMorningValue;
             TimeOfDayAfternoonValue = timeOfDayAfternoonValue;
             TimeOfDayEveningValue = timeOfDayEveningValue;
+
+            EveningExtendsToNextMorning = eveningExtendsToNextMorning;
         }
     }
 }

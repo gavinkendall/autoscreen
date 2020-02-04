@@ -44,6 +44,8 @@ namespace AutoScreenCapture
         private const string TAG_TIME_OF_DAY_AFTERNOON_VALUE = "time_of_day_afternoon_value";
         private const string TAG_TIME_OF_DAY_EVENING_VALUE = "time_of_day_evening_value";
 
+        private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
+
         private const string TAG_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_TAGS_NODE + "/" + XML_FILE_TAG_NODE;
 
         private static string AppCodename { get; set; }
@@ -229,6 +231,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         tag.TimeOfDayEveningValue = xReader.Value;
                                         break;
+
+                                    case TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING:
+                                        xReader.Read();
+                                        tag.EveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -339,6 +346,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_MORNING_VALUE, tag.TimeOfDayMorningValue);
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_AFTERNOON_VALUE, tag.TimeOfDayAfternoonValue);
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_VALUE, tag.TimeOfDayEveningValue);
+                        xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING, tag.EveningExtendsToNextMorning.ToString());
 
                         xWriter.WriteEndElement();
                     }
