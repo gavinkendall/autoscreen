@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-02-04 (February 4, 2020)
+Last updated on 2020-02-05 (February 5, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.2.4.6)]
 =============================================================================================================
 
@@ -336,7 +336,7 @@ The following tags are available by default:
 You can add, edit, or remove tags. Each tag needs a tag name and a tag type.
 
 You may also need to specify the date/time format value and/or the time of day values
-based on the chosen tag type. There are nine tag types:
+based on the chosen tag type. There are 10 tag types:
 Screen Name
 Screen Number
 Image Format
@@ -346,6 +346,7 @@ Date/Time Format
 User
 Machine
 Time of Day
+Date/Time Format Function
 
 So, typically, any date/time value would be associated with the Date/Time Format type.
 This means that you would need to specify a date/time format value which can include ...
@@ -365,6 +366,24 @@ A tag using the "Time of Day" tag type would need to have ...
 - Evening start time, evening end time, and evening value
 ... so that (depending on the time of day) your tag's value would be replaced by
 the value defined for morning, afternoon, or evening given the associated time range.
+
+You can use tags in the morning, afternoon, and evening fields of a "Time of Day" tag.
+For example, you could have %hour%, %minute%, and %second% tags in any of the fields
+if you need to customize your filename pattern even further!
+
+A special type of date/time format tag called a date/time format function tag
+(or just "date/time tag function") can be used to define a certain amount of time
+either behind or ahead the current time.
+
+A date/time function tag is specified by a date/time part
+(year, month, day, hour, minute, or second), an operator (either "-" or "+"),
+and the amount of time applied.
+For example ...
+{year-1}       for last year
+{day-1}        for yesterday
+{day+1}        for tomorrow
+{month-2}      for 2 months ago
+{hour+6}       for 6 hours ahead
 
 
 
