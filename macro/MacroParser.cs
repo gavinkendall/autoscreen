@@ -5,12 +5,10 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
-
-using System.Text.RegularExpressions;
-
 namespace AutoScreenCapture
 {
     using System;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// 
@@ -216,6 +214,11 @@ namespace AutoScreenCapture
                                 macro = macro.Replace(tag.Name, eveningValue);
                             }
                         }
+                        break;
+
+                    case TagType.DateTimeFormatFunction:
+                        macro = macro.Replace(tag.Name,
+                            MacroTagFunctionParser.ParseTagFunctionForDateTimeFormat(screenCapture.DateTimePreviousCycle, tag.DateTimeFormatValue));
                         break;
                 }
             }

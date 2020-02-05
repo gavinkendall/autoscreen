@@ -45,6 +45,7 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("User");
             comboBoxType.Items.Add("Machine");
             comboBoxType.Items.Add("Time of Day");
+            comboBoxType.Items.Add("Date/Time Format Function");
 
             if (TagObject != null)
             {
@@ -194,6 +195,10 @@ namespace AutoScreenCapture
         private void TrimInput()
         {
             textBoxTagName.Text = textBoxTagName.Text.Trim();
+            textBoxDateTimeFormatValue.Text = textBoxDateTimeFormatValue.Text.Trim();
+            textBoxMorningValue.Text = textBoxMorningValue.Text.Trim();
+            textBoxAfternoonValue.Text = textBoxAfternoonValue.Text.Trim();
+            textBoxEveningValue.Text = textBoxEveningValue.Text.Trim();
 
             if (!textBoxTagName.Text.StartsWith("%"))
                 textBoxTagName.Text = "%" + textBoxTagName.Text;
@@ -316,7 +321,8 @@ namespace AutoScreenCapture
 
             TagType tagType = (TagType) comboBoxType.SelectedIndex;
 
-            if (tagType.Equals(TagType.DateTimeFormat))
+            if (tagType.Equals(TagType.DateTimeFormat) ||
+                tagType.Equals(TagType.DateTimeFormatFunction))
             {
                 labelDateTimeFormatValue.Enabled = true;
                 textBoxDateTimeFormatValue.Enabled = true;

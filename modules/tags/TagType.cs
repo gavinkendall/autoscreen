@@ -55,6 +55,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        TimeOfDay = 8
+        TimeOfDay = 8,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DateTimeFormatFunction = 9
     }
 }
