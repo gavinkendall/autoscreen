@@ -86,17 +86,17 @@ namespace AutoScreenCapture
             // Morning
             TimeOfDayMorningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
             TimeOfDayMorningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
-            TimeOfDayMorningValue = "morning";
+            TimeOfDayMorningValue = "morning at %hour%-%minute%-%second%";
 
             // Afternoon
             TimeOfDayAfternoonStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0); // 12pm
             TimeOfDayAfternoonEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 59, 59); // 5:59:59pm
-            TimeOfDayAfternoonValue = "afternoon";
+            TimeOfDayAfternoonValue = "afternoon at %hour%-%minute%-%second%";
 
             // Evening
             TimeOfDayEveningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
             TimeOfDayEveningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
-            TimeOfDayEveningValue = "evening";
+            TimeOfDayEveningValue = "evening at %hour%-%minute%-%second%";
 
             EveningExtendsToNextMorning = false;
         }
