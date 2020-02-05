@@ -38,6 +38,7 @@
             this.labelDateTimeFormatValue = new System.Windows.Forms.Label();
             this.textBoxDateTimeFormatValue = new System.Windows.Forms.TextBox();
             this.groupBoxTimeOfDay = new System.Windows.Forms.GroupBox();
+            this.checkBoxEveningExtendsToNextMorning = new System.Windows.Forms.CheckBox();
             this.labelEvening = new System.Windows.Forms.Label();
             this.labelAfternoon = new System.Windows.Forms.Label();
             this.textBoxEveningValue = new System.Windows.Forms.TextBox();
@@ -50,7 +51,6 @@
             this.dateTimePickerMorningEnd = new System.Windows.Forms.DateTimePicker();
             this.labelMorning = new System.Windows.Forms.Label();
             this.dateTimePickerMorningStart = new System.Windows.Forms.DateTimePicker();
-            this.checkBoxEveningExtendsToNextMorning = new System.Windows.Forms.CheckBox();
             this.groupBoxTimeOfDay.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,7 +75,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(395, 201);
+            this.buttonOK.Location = new System.Drawing.Point(395, 204);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -88,7 +88,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(476, 201);
+            this.buttonCancel.Location = new System.Drawing.Point(476, 204);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 0;
@@ -162,6 +162,17 @@
             this.groupBoxTimeOfDay.TabIndex = 0;
             this.groupBoxTimeOfDay.TabStop = false;
             this.groupBoxTimeOfDay.Text = "Time of Day";
+            // 
+            // checkBoxEveningExtendsToNextMorning
+            // 
+            this.checkBoxEveningExtendsToNextMorning.AutoSize = true;
+            this.checkBoxEveningExtendsToNextMorning.Location = new System.Drawing.Point(74, 101);
+            this.checkBoxEveningExtendsToNextMorning.Name = "checkBoxEveningExtendsToNextMorning";
+            this.checkBoxEveningExtendsToNextMorning.Size = new System.Drawing.Size(180, 17);
+            this.checkBoxEveningExtendsToNextMorning.TabIndex = 0;
+            this.checkBoxEveningExtendsToNextMorning.TabStop = false;
+            this.checkBoxEveningExtendsToNextMorning.Text = "Evening extends to next morning";
+            this.checkBoxEveningExtendsToNextMorning.UseVisualStyleBackColor = true;
             // 
             // labelEvening
             // 
@@ -288,16 +299,6 @@
             this.dateTimePickerMorningStart.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerMorningStart.TabIndex = 0;
             this.dateTimePickerMorningStart.TabStop = false;
-            // 
-            // checkBoxEveningExtendsToNextMorning
-            // 
-            this.checkBoxEveningExtendsToNextMorning.AutoSize = true;
-            this.checkBoxEveningExtendsToNextMorning.Location = new System.Drawing.Point(74, 101);
-            this.checkBoxEveningExtendsToNextMorning.Name = "checkBoxEveningExtendsToNextMorning";
-            this.checkBoxEveningExtendsToNextMorning.Size = new System.Drawing.Size(180, 17);
-            this.checkBoxEveningExtendsToNextMorning.TabIndex = 1;
-            this.checkBoxEveningExtendsToNextMorning.Text = "Evening extends to next morning";
-            this.checkBoxEveningExtendsToNextMorning.UseVisualStyleBackColor = true;
             // 
             // FormTag
             // 

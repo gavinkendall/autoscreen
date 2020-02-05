@@ -160,22 +160,41 @@ namespace AutoScreenCapture
                         break;
 
                     case TagType.TimeOfDay:
+                        string morningValue = tag.TimeOfDayMorningValue;
+                        string afternoonValue = tag.TimeOfDayAfternoonValue;
+                        string eveningValue = tag.TimeOfDayEveningValue;
+
+                        // Temporarily make this tag a DateTimeFormat type because we're going to recursively call ParseTagsForFilePath
+                        // for each macro tag in the morning, afternoon, and evening fields.
+                        tag.Type = TagType.DateTimeFormat;
+
+                        // Recursively call the same method we're in to parse each field as if it was a date/time macro tag.
+                        // This can achieve some interesting results such as being able to call the same %timeofday% tag
+                        // in onto itself because it will use its own date/time format value, but the intention is to have tags
+                        // like %date%, %time%, %hour%, %minute%, and %second% be used in the morning, afternoon, and evening fields.
+                        morningValue = ParseTagsForFilePath(name, morningValue, screenNumber, format, activeWindowTitle, tagCollection);
+                        afternoonValue = ParseTagsForFilePath(name, afternoonValue, screenNumber, format, activeWindowTitle, tagCollection);
+                        eveningValue = ParseTagsForFilePath(name, eveningValue, screenNumber, format, activeWindowTitle, tagCollection);
+
+                        // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeOfDay type.
+                        tag.Type = TagType.TimeOfDay;
+
                         if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
                             screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
                         {
-                            macro = macro.Replace(tag.Name, tag.TimeOfDayMorningValue);
+                            macro = macro.Replace(tag.Name, morningValue);
                         }
 
                         if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
                             screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
                         {
-                            macro = macro.Replace(tag.Name, tag.TimeOfDayAfternoonValue);
+                            macro = macro.Replace(tag.Name, afternoonValue);
                         }
 
                         if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
                             screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
                         {
-                            macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
+                            macro = macro.Replace(tag.Name, eveningValue);
                         }
 
                         // Split the evening start time and evening end time into separate checks if the user wants to extend
@@ -188,13 +207,13 @@ namespace AutoScreenCapture
                             if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
                                 screenCapture.DateTimePreviousCycle.TimeOfDay <= dayEnd.TimeOfDay)
                             {
-                                macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
+                                macro = macro.Replace(tag.Name, eveningValue);
                             }
 
                             if (screenCapture.DateTimePreviousCycle.TimeOfDay >= dayStart.TimeOfDay &&
                                 screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
                             {
-                                macro = macro.Replace(tag.Name, tag.TimeOfDayEveningValue);
+                                macro = macro.Replace(tag.Name, eveningValue);
                             }
                         }
                         break;
