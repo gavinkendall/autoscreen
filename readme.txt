@@ -369,7 +369,12 @@ the value defined for morning, afternoon, or evening given the associated time r
 
 You can use tags in the morning, afternoon, and evening fields of a "Time of Day" tag.
 For example, you could have %hour%, %minute%, and %second% tags in any of the fields
-if you need to customize your filename pattern even further!
+if you need to customize your filename pattern even further. A "Time of Day" tag can
+also be called by another "Time of Day" tag for creating an interesting chain of tags
+that respond to particular times of the day. For example, you can create a "Time of Day"
+tag which returns the value of %day% before midnight and %yesterday% after midnight
+and then create a second "Time of Day" tag that calls the first "Time of Day" tag
+between the hours of late evening and the early hours of the next morning.
 
 A special type of date/time format tag called a date/time format function tag
 (or just "date/time tag function") can be used to define a certain amount of time
