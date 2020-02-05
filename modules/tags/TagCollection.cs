@@ -270,6 +270,12 @@ namespace AutoScreenCapture
                     Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat));
                     Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat));
                     Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat));
+                    Add(new Tag("lastyear", TagType.DateTimeFormatFunction, "{year-1}"));
+                    Add(new Tag("lastmonth", TagType.DateTimeFormatFunction, "{month-1}"));
+                    Add(new Tag("yesterday", TagType.DateTimeFormatFunction, "{day-1}"));
+                    Add(new Tag("tomorrow", TagType.DateTimeFormatFunction, "{day+1}"));
+                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatFunction, "{hour-6}"));
+                    Add(new Tag("6hoursahead", TagType.DateTimeFormatFunction, "{hour+6}"));
                     Add(new Tag("count", TagType.ScreenCaptureCycleCount));
                     Add(new Tag("user", TagType.User));
                     Add(new Tag("machine", TagType.Machine));
