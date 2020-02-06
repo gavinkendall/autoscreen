@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-02-05 (February 5, 2020)
+Last updated on 2020-02-06 (February 6, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.2.4.6)]
 =============================================================================================================
 
@@ -181,7 +181,7 @@ This module enables you to setup as many screens as you prefer.
 The "Add New Screen ..." button will show you a preview of the currently selected Component
 (whether it be the Active Window or an available screen/display/monitor).
 
-The "Name" text box contains the name of the screen. For a new screen the Name field will
+The "Name" text field contains the name of the screen. For a new screen the Name field will
 auto-populate with a default name based on the next available screen name that can be used.
 
 The value of the Name field can be retrieved with the %name% macro tag so it could be used
@@ -216,13 +216,13 @@ screenshot that will be taken for that particular screen.
 The "Preview" image area shows you a preview of the selected Component. The preview refreshes
 every 500 milliseconds.
 
-The "Folder" text box refers to the directory in which screenshots will be written to.
+The "Folder" text field refers to the directory in which screenshots will be written to.
 You can use the backslash character (\) as part of your folder structure to define sub-folders.
 An ending backslash character is recommended, but it will be included automatically upon save.
 
-The "Macro" text box refers to the macro used that defines how each individual file is named.
-Any characters invalid to Windows will be stripped out (such as /, :, *, ?, \, <, >, and |).
-You cannot use the backslash character (\) as part of your macro.
+The "Macro" text field refers to the macro used that defines how each individual file is named.
+Any characters invalid to Windows will be stripped out (such as /, :, *, ?, <, >, and |).
+You can use the backslash character (\) as part of your macro to define sub-folders.
 
 The "Remove Selected Screens" button is used to remove a selected number of screens in the list.
 Select the screens you want to remove and then click the button to remove the selected screens.
@@ -239,7 +239,7 @@ This module enables you to setup as many regions as you prefer.
 The "Add New Region ..." button will show you, by default, a preview of a region at position 0,0
 with the width set to 800 and the height set to 600.
 
-The "Name" text box contains the name of the region. For a new region the Name field will
+The "Name" text field contains the name of the region. For a new region the Name field will
 auto-populate with a default name based on the next available region name that can be used.
 
 The value of the Name field can be retrieved with the %name% macro tag so it could be used
@@ -263,13 +263,13 @@ screen from the "Import Screen Dimensions" drop-down control.
 The "Preview" image area shows you a preview of the specified region using the given X, Y, Width,
 and Height values. The preview refreshes every 500 milliseconds.
 
-The "Folder" text box refers to the directory in which screenshots will be written to.
+The "Folder" text field refers to the directory in which screenshots will be written to.
 You can use the backslash character (\) as part of your folder structure to define sub-folders.
 An ending backslash character is recommended, but it will be included automatically upon save.
 
-The "Macro" text box refers to the macro used that defines how each individual file is named.
-Any characters invalid to Windows will be stripped out (such as /, :, *, ?, \, <, >, and |).
-You cannot use the backslash character (\) as part of your macro.
+The "Macro" text field refers to the macro used that defines how each individual file is named.
+Any characters invalid to Windows will be stripped out (such as /, :, *, ?, <, >, and |).
+You can use the backslash character (\) as part of your macro to define sub-folders.
 
 The "Remove Selected Regions" button is used to remove a selected number of regions in the list.
 Select the regions you want to remove and then click the button to remove the selected regions.
@@ -286,15 +286,15 @@ This module enables you to setup your favourite image editors.
 The "Add New Editor ..." button will show a window where you can specify the name, application,
 and application arguments for the new image editor that you're adding to the list of editors.
 
-The "Name" text box contains the name of the editor. You can name it however you want.
+The "Name" text field contains the name of the editor. You can name it however you want.
 
-The "Application" text box contains the path where the application binary is located.
+The "Application" text field contains the path where the application binary is located.
 For example, "C:\Windows\System32\mspaint.exe" is the path to Microsoft Paint.
 
 (Since version 2.2.1.1 you can also use batch scripts (*.bat) and PowerShell scripts (*.ps1)
 as the editor. In fact, you can use any type of file for an editor.)
 
-The "Arguments" text box contains the application's command line arguments that will be used
+The "Arguments" text field contains the application's command line arguments that will be used
 during the execution of the application. The %screenshot% tag represents the filepath of the
 screenshot's image file. This could be the filepath of the screenshot that you're wanting to
 edit via the "Edit" menu of the screenshot you're viewing from the Screenshots module or
@@ -311,42 +311,69 @@ window enabling you to change the settings of that editor.
 
 Modules - Tags
 --------------
+This module enables you to setup macro tags.
+
 A tag is a special value, surrounded by the percentage character, which gives you the ability
 to acquire certain information that can be used in your macro.
 
-The following tags are available by default:
-%name%           Name of screen or region                The "Name" of the screen
-%screen%         Screen number (1, 2, 3, 4 ...)          The screen's associated number
-%format%         Image format of screen or region        The format of the image used for the screen
-%date%           Date                                    The current date as yyyy-MM-dd
-%time%           Time                                    The current time as HH-mm-ss-fff
-%year%           Year                                    The current year as yyyy
-%month%          Month                                   The current month as MM
-%day%            Day                                     The current day as dd
-%hour%           Hour                                    The current hour as HH
-%minute%         Minute                                  The current minute as mm
-%second%         Second                                  The current second as ss
-%millisecond%    Millisecond                             The current millisecond as fff
-%count%          Number of screen capture cycles during the current screen capture session
-%user%           User                                    The name of the logged in user
-%machine%        Machine                                 The name of the machine being used
-%title%          Title                                   The title of the active window
-%timeofday%      Time of Day                             A specified value based on the time of day
+The "Add New Tag ..." button will display a dialog box in order to create a new tag.
+
+The "Name" text field is for the tag's name. This is a required field, but make sure to include
+the percentage character ("%") at the beginning and the end of the tag name.
+
+The "Type" drop-down control defines the type of tag being used. There are 10 tag types:
+Screen Name                       The "Name" of the screen or region
+Screen Number                     The screen's associated number (such as 1, 2, 3, 4)
+Image Format                      The format of the image used for the screen
+Screen Capture Cycle Count        Number of screen capture cycles during the current screen capture session
+Active Window Title               The title of the active window
+Date/Time Format                  A value representing a date/time format (such as "yyyy-MM-dd HH-mm-ss-fff")
+User                              The name of the logged in user
+Machine                           The name of the machine being used
+Time of Day                       A specified value based on the time of day
+Date/Time Format Function         A value representing a date/time tag function (such as "{day-1}")
+
+If you select either the Date/Time Format or Date/Time Format Function type then the Date/Time Format Value
+text field will be available to enter a value. This value can be a date/time format (such as "HH-mm-ss")
+to represent the current date/time as a defined pattern or a date/time tag function (such as "{month-1}")
+which represents the current date/time modified by an operator and an applied amount of time.
+
+If you select the Time of Day type then the Time of Day group of controls will be available. This includes
+three sets of controls that enable you to specify the start time, end time, and value of three time ranges
+for what you want Auto Screen Capture to consider as the morning, afternoon, and evening. The value can be
+text and/or a series of macro tags. If you specify the evening end time to be beyond 23:59:59 then please
+enable the "Evening extends to next morning" option so that the evening value continues to be used for
+the following morning.
+
+Macro tags available by default are ...
+%name%           Screen Name
+%screen%         Screen Number
+%format%         Image Format
+%date%           Date/Time Format               Current date as "yyyy-MM-dd"
+%time%           Date/Time Format               Current time as "HH-mm-ss-fff"
+%year%           Date/Time Format               Current year as "yyyy"
+%month%          Date/Time Format               Current month as "MM"
+%day%            Date/Time Format               Current day as "dd"
+%hour%           Date/Time Format               Current hour as "HH"
+%minute%         Date/Time Format               Current minute as "mm"
+%second%         Date/Time Format               Current second as "ss"
+%millisecond%    Date/Time Format               Current millisecond as "fff"
+%lastyear%       Date/Time Format Function      Current year minus 1 with function "{year-1}"
+%lastmonth%      Date/Time Format Function      Current month minus 1 with function "{month-1}"
+%yesterday%      Date/Time Format Function      Current day minus 1 with function "{day-1}"
+%tomorrow%       Date/Time Format Function      Current day plus 1 with function "{day+1}"
+%6hoursbehind%   Date/Time Format Function      Current hour minus 6 with function "{hour-6}"
+%6hoursahead%    Date/Time Format Function      Current hour plus 6 with function "{hour+6}"
+%count%          Screen Capture Cycle Count
+%user%           User
+%machine%        Machine
+%title%          Active Window Title
+%timeofday%      Time of Day
 
 You can add, edit, or remove tags. Each tag needs a tag name and a tag type.
 
 You may also need to specify the date/time format value and/or the time of day values
-based on the chosen tag type. There are 10 tag types:
-Screen Name
-Screen Number
-Image Format
-Screen Capture Cycle Count
-Active Window Title
-Date/Time Format
-User
-Machine
-Time of Day
-Date/Time Format Function
+based on the chosen tag type.
 
 So, typically, any date/time value would be associated with the Date/Time Format type.
 This means that you would need to specify a date/time format value which can include ...
@@ -377,8 +404,8 @@ and then create a second "Time of Day" tag that calls the first "Time of Day" ta
 between the hours of late evening and the early hours of the next morning.
 
 A special type of date/time format tag called a date/time format function tag
-(or just "date/time tag function") can be used to define a certain amount of time
-either behind or ahead the current time.
+(or just "date/time tag function") can be used to define an applied amount of time
+either behind or ahead the current date/time.
 
 A date/time function tag is specified by a date/time part
 (year, month, day, hour, minute, or second), an operator (either "-" or "+"),
@@ -809,6 +836,22 @@ An example of a trigger node in triggers.xml:
     <action>ExitApplication</action>
     <editor />
 </trigger>
+
+
+
+Troubleshooting and Debugging
+-----------------------------
+If things just seem weird or can't be easily explained beyond the normal usage of Auto Screen Capture
+then you can always run the application in its Debug Mode. You can enable Debug Mode by either running
+"autoscreen.exe -debug" from a command prompt or changing the DebugMode application setting to "True".
+While the application is in Debug Mode it will write out logging messages to the logs directory and be
+a lot more verbose with its logging compared to what you usually get with the Logging option enabled.
+
+If all else fails and you still can't figure out what's going on then the best approach is the classic
+"Have you tried turning it off and on again?" approach. In the case of Auto Screen Capture that means
+deleting the "!autoscreen" directory (that was created on the first run according to its config file)
+and running the application again. Every reference to screens, regions, screenshots, tags, and triggers
+will be reset to its default state as if Auto Screen Capture was being run for the very first time.
 
 
 
