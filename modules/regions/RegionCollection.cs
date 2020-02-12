@@ -38,6 +38,7 @@ namespace AutoScreenCapture
         private const string REGION_Y = "y";
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
+        private const string REGION_ENABLED = "enabled";
         private const string REGION_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_REGIONS_NODE + "/" + XML_FILE_REGION_NODE;
 
         private string AppCodename { get; set; }
@@ -215,6 +216,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         region.Height = Convert.ToInt32(xReader.Value);
                                         break;
+
+                                    case REGION_ENABLED:
+                                        xReader.Read();
+                                        region.Enabled = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -225,9 +231,11 @@ namespace AutoScreenCapture
                         // the XML file is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
+                            Log.Write("An old version of the regions file was detected. Attempting upgrade to new region schema");
+
                             if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                             {
-                                Log.Write("An old version of the regions file was detected. Attempting upgrade to new region format");
+                                Log.Write("Clara 2.1.8.2 or older detected");
 
                                 region.ViewId = Guid.NewGuid();
 
@@ -242,7 +250,8 @@ namespace AutoScreenCapture
                                 region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
                                 region.JpegQuality = 100;
                                 region.ResolutionRatio = 100;
-                                region.Mouse = false;
+                                region.Mouse = true;
+                                region.Enabled = true;
                             }
                         }
 
@@ -331,6 +340,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_Y, region.Y.ToString());
                         xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
                         xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
+                        xWriter.WriteElementString(REGION_ENABLED, region.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

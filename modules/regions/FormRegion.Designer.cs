@@ -62,6 +62,7 @@
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.groupBoxScreenTemplate = new System.Windows.Forms.GroupBox();
             this.comboBoxScreenTemplate = new System.Windows.Forms.ComboBox();
+            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
@@ -445,6 +446,17 @@
             this.comboBoxScreenTemplate.TabIndex = 14;
             this.comboBoxScreenTemplate.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionScreenTemplate_SelectedIndexChanged);
             // 
+            // checkBoxEnabled
+            // 
+            this.checkBoxEnabled.AutoSize = true;
+            this.checkBoxEnabled.Location = new System.Drawing.Point(707, 8);
+            this.checkBoxEnabled.Name = "checkBoxEnabled";
+            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxEnabled.TabIndex = 0;
+            this.checkBoxEnabled.TabStop = false;
+            this.checkBoxEnabled.Text = "Enabled";
+            this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            // 
             // FormRegion
             // 
             this.AcceptButton = this.buttonOK;
@@ -453,6 +465,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.checkBoxEnabled);
             this.Controls.Add(this.groupBoxScreenTemplate);
             this.Controls.Add(this.groupBoxPreview);
             this.Controls.Add(this.groupBoxSize);
@@ -530,5 +543,6 @@
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.GroupBox groupBoxScreenTemplate;
         private System.Windows.Forms.ComboBox comboBoxScreenTemplate;
+        private System.Windows.Forms.CheckBox checkBoxEnabled;
     }
 }

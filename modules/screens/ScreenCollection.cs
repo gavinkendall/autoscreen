@@ -35,6 +35,7 @@ namespace AutoScreenCapture
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
+        private const string SCREEN_ENABLED = "enabled";
         private const string SCREEN_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENS_NODE + "/" + XML_FILE_SCREEN_NODE;
 
         private static string AppCodename { get; set; }
@@ -215,11 +216,35 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.Mouse = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case SCREEN_ENABLED:
+                                        xReader.Read();
+                                        screen.Enabled = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
 
                         xReader.Close();
+
+                        // Change the data for each screen that's being loaded if we've detected that
+                        // the XML file is from an older version of the application.
+                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        {
+                            Log.Write("An old version of the screens file was detected. Attempting upgrade to new screen schema");
+
+                            Version thisVersion = Settings.VersionManager.Versions.Get(Settings.ApplicationCodename, Settings.ApplicationVersion);
+                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+
+                            if (v2250 != null && v2250.VersionNumber <= thisVersion.VersionNumber)
+                            {
+                                Log.Write("Dalek 2.2.5.0 or older detected");
+
+                                // This is a new property for Screen that was introduced in 2.2.5.0
+                                // so any version on, or before 2.2.5.0, needs to have it during an upgrade.
+                                screen.Enabled = true;
+                            }
+                        }
 
                         if (!string.IsNullOrEmpty(screen.Name))
                         {
@@ -240,7 +265,7 @@ namespace AutoScreenCapture
                     for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
                     {
                         Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
-                            imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, true));
+                            imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, mouse: true, enabled: true));
 
                         Log.Write($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
                     }
@@ -312,6 +337,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                         xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
+                        xWriter.WriteElementString(SCREEN_ENABLED, screen.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

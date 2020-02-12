@@ -52,6 +52,7 @@
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
+            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
@@ -298,6 +299,17 @@
             this.timerScreenPreview.Interval = 500;
             this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerPreview);
             // 
+            // checkBoxEnabled
+            // 
+            this.checkBoxEnabled.AutoSize = true;
+            this.checkBoxEnabled.Location = new System.Drawing.Point(707, 8);
+            this.checkBoxEnabled.Name = "checkBoxEnabled";
+            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxEnabled.TabIndex = 0;
+            this.checkBoxEnabled.TabStop = false;
+            this.checkBoxEnabled.Text = "Enabled";
+            this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonOK;
@@ -306,6 +318,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.checkBoxEnabled);
             this.Controls.Add(this.groupBoxPreview);
             this.Controls.Add(this.groupBoxComponent);
             this.Controls.Add(this.groupBoxImage);
@@ -363,5 +376,6 @@
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;
         private System.Windows.Forms.Timer timerScreenPreview;
+        private System.Windows.Forms.CheckBox checkBoxEnabled;
     }
 }

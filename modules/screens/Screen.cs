@@ -62,6 +62,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Screen()
         {
         }
@@ -77,7 +82,8 @@ namespace AutoScreenCapture
         /// <param name="jpegQuality"></param>
         /// <param name="resolutionRatio"></param>
         /// <param name="mouse"></param>
-        public Screen(string name, string folder, string macro, int component, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse)
+        /// <param name="enabled"></param>
+        public Screen(string name, string folder, string macro, int component, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, bool enabled)
         {
             ViewId = Guid.NewGuid();
             Name = name;
@@ -88,6 +94,7 @@ namespace AutoScreenCapture
             JpegQuality = jpegQuality;
             ResolutionRatio = resolutionRatio;
             Mouse = mouse;
+            Enabled = enabled;
         }
     }
 }

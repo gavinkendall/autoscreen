@@ -93,6 +93,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = RegionObject.Y;
                 numericUpDownWidth.Value = RegionObject.Width;
                 numericUpDownHeight.Value = RegionObject.Height;
+                checkBoxEnabled.Checked = RegionObject.Enabled;
             }
             else
             {
@@ -109,6 +110,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = 0;
                 numericUpDownWidth.Value = 800;
                 numericUpDownHeight.Value = 600;
+                checkBoxEnabled.Checked = true;
             }
 
             timerPreview.Enabled = true;
@@ -150,7 +152,8 @@ namespace AutoScreenCapture
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
-                        (int)numericUpDownHeight.Value));
+                        (int)numericUpDownHeight.Value,
+                        checkBoxEnabled.Checked));
 
                     Okay();
                 }
@@ -193,6 +196,7 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Y = (int) numericUpDownY.Value;
                         RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
                         RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
+                        RegionCollection.Get(RegionObject).Enabled = checkBoxEnabled.Checked;
 
                         Okay();
                     }
@@ -239,7 +243,8 @@ namespace AutoScreenCapture
                  RegionObject.X != (int)numericUpDownX.Value ||
                  RegionObject.Y != (int)numericUpDownY.Value ||
                  RegionObject.Width != (int)numericUpDownWidth.Value ||
-                 RegionObject.Height != (int)numericUpDownHeight.Value))
+                 RegionObject.Height != (int)numericUpDownHeight.Value ||
+                 RegionObject.Enabled.Equals(checkBoxEnabled.Checked)))
             {
                 return true;
             }

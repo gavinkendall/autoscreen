@@ -93,6 +93,7 @@ namespace AutoScreenCapture
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 numericUpDownResolutionRatio.Value = ScreenObject.ResolutionRatio;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
+                checkBoxEnabled.Checked = ScreenObject.Enabled;
             }
             else
             {
@@ -106,6 +107,7 @@ namespace AutoScreenCapture
                 numericUpDownJpegQuality.Value = 100;
                 numericUpDownResolutionRatio.Value = 100;
                 checkBoxMouse.Checked = true;
+                checkBoxEnabled.Checked = true;
             }
 
             timerScreenPreview.Enabled = true;
@@ -160,7 +162,8 @@ namespace AutoScreenCapture
                         ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         (int)numericUpDownJpegQuality.Value,
                         (int)numericUpDownResolutionRatio.Value,
-                        checkBoxMouse.Checked));
+                        checkBoxMouse.Checked,
+                        checkBoxEnabled.Checked));
 
                     Okay();
                 }
@@ -200,6 +203,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
+                        ScreenCollection.Get(ScreenObject).Enabled = checkBoxEnabled.Checked;
 
                         Okay();
                     }
@@ -243,7 +247,8 @@ namespace AutoScreenCapture
                  !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
-                 !ScreenObject.Mouse.Equals(checkBoxMouse.Checked)))
+                 !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
+                 !ScreenObject.Enabled.Equals(checkBoxEnabled.Enabled)))
             {
                 return true;
             }
@@ -345,6 +350,7 @@ namespace AutoScreenCapture
             comboBoxScreenComponent.Enabled = enabled;
             numericUpDownJpegQuality.Enabled = enabled;
             numericUpDownResolutionRatio.Enabled = enabled;
+            checkBoxEnabled.Enabled = enabled;
         }
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)

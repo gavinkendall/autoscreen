@@ -77,6 +77,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Region()
         {
         }
@@ -95,7 +100,8 @@ namespace AutoScreenCapture
         /// <param name="y"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public Region(string name, string folder, string macro, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height)
+        /// <param name="enabled"></param>
+        public Region(string name, string folder, string macro, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, bool enabled)
         {
             ViewId = Guid.NewGuid();
             Name = name;
@@ -109,6 +115,7 @@ namespace AutoScreenCapture
             Y = y;
             Width = width;
             Height = height;
+            Enabled = enabled;
         }
     }
 }
