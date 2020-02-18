@@ -301,6 +301,7 @@
             // 
             // checkBoxEnabled
             // 
+            this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEnabled.AutoSize = true;
             this.checkBoxEnabled.Location = new System.Drawing.Point(707, 8);
             this.checkBoxEnabled.Name = "checkBoxEnabled";

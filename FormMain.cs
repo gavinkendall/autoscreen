@@ -1743,7 +1743,8 @@ namespace AutoScreenCapture
                     Location = new Point(xPosScreen + X_POS_SCREEN_TEXTBOX, yPosScreen),
                     Text = screen.Name,
                     ReadOnly = true,
-                    TabStop = false
+                    TabStop = false,
+                    BackColor = screen.Enabled ? Color.PaleGreen : Color.PaleVioletRed
                 };
                 tabPageScreens.Controls.Add(textBoxScreen);
 
@@ -1834,7 +1835,8 @@ namespace AutoScreenCapture
                     Location = new Point(xPosRegion + X_POS_REGION_TEXTBOX, yPosRegion),
                     Text = region.Name,
                     ReadOnly = true,
-                    TabStop = false
+                    TabStop = false,
+                    BackColor = region.Enabled ? Color.PaleGreen : Color.PaleVioletRed
                 };
                 tabPageRegions.Controls.Add(textBoxRegion);
 
@@ -3149,59 +3151,21 @@ namespace AutoScreenCapture
 
             foreach (Region region in formRegion.RegionCollection)
             {
-                MacroParser.screenCapture = _screenCapture;
-
-                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
-                {
-                    if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
-                    {
-                        if (_screenCapture.TakeScreenshot(
-                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
-                            format: region.Format,
-                            component: -1,
-                            screenshotType: ScreenshotType.Region,
-                            jpegQuality: region.JpegQuality,
-                            viewId: region.ViewId,
-                            bitmap: bitmap,
-                            label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
-                            windowTitle: _screenCapture.ActiveWindowTitle,
-                            processName: _screenCapture.ActiveWindowProcessName,
-                            screenshotCollection: _screenshotCollection
-                        ))
-                        {
-                            ScreenshotTakenWithSuccess();
-                        }
-                        else
-                        {
-                            ScreenshotTakenWithFailure();
-                        }
-                    }
-                }
-            }
-        }
-
-        private void RunScreenCaptures()
-        {
-            Log.Write("Running screen captures");
-
-            foreach (Screen screen in formScreen.ScreenCollection)
-            {
-                if (screen.Component == 0)
+                if (region.Enabled)
                 {
                     MacroParser.screenCapture = _screenCapture;
 
-                    // Active Window
                     if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                     {
-                        if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
+                        if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                         {
                             if (_screenCapture.TakeScreenshot(
-                                path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
-                                format: screen.Format,
-                                component: screen.Component,
-                                screenshotType: ScreenshotType.ActiveWindow,
-                                jpegQuality: screen.JpegQuality,
-                                viewId: screen.ViewId,
+                                path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                format: region.Format,
+                                component: -1,
+                                screenshotType: ScreenshotType.Region,
+                                jpegQuality: region.JpegQuality,
+                                viewId: region.ViewId,
                                 bitmap: bitmap,
                                 label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                 windowTitle: _screenCapture.ActiveWindowTitle,
@@ -3214,31 +3178,35 @@ namespace AutoScreenCapture
                             else
                             {
                                 ScreenshotTakenWithFailure();
-                                break;
                             }
                         }
                     }
                 }
-                else
+            }
+        }
+
+        private void RunScreenCaptures()
+        {
+            Log.Write("Running screen captures");
+
+            foreach (Screen screen in formScreen.ScreenCollection)
+            {
+                if (screen.Enabled)
                 {
-                    if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                    if (screen.Component == 0)
                     {
                         MacroParser.screenCapture = _screenCapture;
 
+                        // Active Window
                         if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                         {
-                            // Screen X
-                            if (_screenCapture.GetScreenImages(screen.Component,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                            formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.TakeScreenshot(
                                     path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                     format: screen.Format,
                                     component: screen.Component,
-                                    screenshotType: ScreenshotType.Screen,
+                                    screenshotType: ScreenshotType.ActiveWindow,
                                     jpegQuality: screen.JpegQuality,
                                     viewId: screen.ViewId,
                                     bitmap: bitmap,
@@ -3254,6 +3222,46 @@ namespace AutoScreenCapture
                                 {
                                     ScreenshotTakenWithFailure();
                                     break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                        {
+                            MacroParser.screenCapture = _screenCapture;
+
+                            if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                            {
+                                // Screen X
+                                if (_screenCapture.GetScreenImages(screen.Component,
+                                    formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                                    formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                                    formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                                    formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                {
+                                    if (_screenCapture.TakeScreenshot(
+                                        path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                        format: screen.Format,
+                                        component: screen.Component,
+                                        screenshotType: ScreenshotType.Screen,
+                                        jpegQuality: screen.JpegQuality,
+                                        viewId: screen.ViewId,
+                                        bitmap: bitmap,
+                                        label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
+                                        windowTitle: _screenCapture.ActiveWindowTitle,
+                                        processName: _screenCapture.ActiveWindowProcessName,
+                                        screenshotCollection: _screenshotCollection
+                                    ))
+                                    {
+                                        ScreenshotTakenWithSuccess();
+                                    }
+                                    else
+                                    {
+                                        ScreenshotTakenWithFailure();
+                                        break;
+                                    }
                                 }
                             }
                         }
