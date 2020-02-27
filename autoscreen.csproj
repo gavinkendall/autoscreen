@@ -77,7 +77,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="config\Config.cs" />
+    <Compile Include="main_interface\FormMain-CommandLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Exit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Labels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Modules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Regions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-ScreenCapture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Screens.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Screenshots.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-SystemTrayIcon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-TabPages.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="macro\MacroTagFunctionParser.cs" />
+    <Compile Include="main_interface\FormMain-TEMPLATE-DELETE-LATER.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="main_interface\FormMain-Triggers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="modules\editors\Editor.cs" />
     <Compile Include="modules\editors\EditorCollection.cs" />
     <Compile Include="FileSystem.cs" />
@@ -87,16 +129,16 @@
     <Compile Include="modules\editors\FormEditor.Designer.cs">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormEnterPassphrase.cs">
+    <Compile Include="security\FormEnterPassphrase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormEnterPassphrase.Designer.cs">
+    <Compile Include="security\FormEnterPassphrase.Designer.cs">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
+    <Compile Include="main_interface\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="main_interface\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\regions\FormRegion.cs">
@@ -147,20 +189,20 @@
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
     <Compile Include="screenshots\ScreenshotType.cs" />
-    <Compile Include="Security.cs" />
+    <Compile Include="security\Security.cs" />
     <Compile Include="settings\Setting.cs" />
     <Compile Include="settings\SettingCollection.cs" />
     <Compile Include="settings\Settings.cs" />
-    <Compile Include="versions\VersionCollection.cs" />
-    <Compile Include="versions\Version.cs" />
-    <Compile Include="versions\VersionManager.cs" />
+    <Compile Include="versioning\VersionCollection.cs" />
+    <Compile Include="versioning\Version.cs" />
+    <Compile Include="versioning\VersionManager.cs" />
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="formEnterPassphrase.resx">
+    <EmbeddedResource Include="security\formEnterPassphrase.resx">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
+    <EmbeddedResource Include="main_interface\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -190,7 +232,7 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="ScreenCapture.cs" />
+    <Compile Include="screenshots\ScreenCapture.cs" />
     <Compile Include="modules\slideshow\Slideshow.cs" />
   </ItemGroup>
   <ItemGroup>
