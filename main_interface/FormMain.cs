@@ -24,6 +24,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMain : Form
     {
+        private string _info = string.Empty;
+
         private FormEditor formEditor = new FormEditor();
         private FormTrigger formTrigger = new FormTrigger();
         private FormRegion formRegion = new FormRegion();
@@ -66,29 +68,6 @@ namespace AutoScreenCapture
         private const int CAPTURE_INTERVAL_DEFAULT_IN_MINUTES = 1;
 
         /// <summary>
-        /// The various regular expressions used in the parsing of the command line arguments.
-        /// </summary>
-        private const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
-
-        private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
-
-        private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
-
-        private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
-
-        private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
-
-        private const string REGEX_COMMAND_LINE_INTERVAL = @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
-
-        private const string REGEX_COMMAND_LINE_PASSPHRASE = "^-passphrase=(?<Passphrase>.+)$";
-
-        private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
-
-        private const string REGEX_COMMAND_LINE_LOG = "^-log";
-
-        private const string REGEX_COMMAND_LINE_DEBUG = "^-debug";
-
-        /// <summary>
         /// Constructor for the main form. Arguments from the command line can be passed to it.
         /// </summary>
         /// <param name="args">Arguments from the command line</param>
@@ -124,6 +103,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
+            _info = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" +
+                          Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationName).Value + ")";
+
+            ShowInfo();
+
             SearchFilterValues();
             SearchDates();
             SearchScreenshots();
@@ -457,20 +441,6 @@ namespace AutoScreenCapture
                 labelDays.Enabled = true;
                 numericUpDownKeepScreenshotsForDays.Enabled = true;
 
-                groupBoxSchedule.Enabled = true;
-                checkBoxScheduleStartAt.Enabled = true;
-                checkBoxScheduleStopAt.Enabled = true;
-                checkBoxScheduleOnTheseDays.Enabled = true;
-                checkBoxSunday.Enabled = true;
-                checkBoxMonday.Enabled = true;
-                checkBoxTuesday.Enabled = true;
-                checkBoxWednesday.Enabled = true;
-                checkBoxThursday.Enabled = true;
-                checkBoxFriday.Enabled = true;
-                checkBoxSaturday.Enabled = true;
-                dateTimePickerScheduleStartAt.Enabled = true;
-                dateTimePickerScheduleStopAt.Enabled = true;
-
                 checkBoxScreenshotLabel.Enabled = true;
                 comboBoxScreenshotLabel.Enabled = true;
             }
@@ -500,20 +470,6 @@ namespace AutoScreenCapture
             labelKeepScreenshots.Enabled = false;
             labelDays.Enabled = false;
             numericUpDownKeepScreenshotsForDays.Enabled = false;
-
-            groupBoxSchedule.Enabled = false;
-            checkBoxScheduleStartAt.Enabled = false;
-            checkBoxScheduleStopAt.Enabled = false;
-            checkBoxScheduleOnTheseDays.Enabled = false;
-            checkBoxSunday.Enabled = false;
-            checkBoxMonday.Enabled = false;
-            checkBoxTuesday.Enabled = false;
-            checkBoxWednesday.Enabled = false;
-            checkBoxThursday.Enabled = false;
-            checkBoxFriday.Enabled = false;
-            checkBoxSaturday.Enabled = false;
-            dateTimePickerScheduleStartAt.Enabled = false;
-            dateTimePickerScheduleStopAt.Enabled = false;
 
             checkBoxScreenshotLabel.Enabled = false;
             comboBoxScreenshotLabel.Enabled = false;
@@ -1230,35 +1186,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Enables the checkboxes for the days that could be selected when setting up a scheduled screen capture session.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckedChanged_checkBoxScheduleOnTheseDays(object sender, EventArgs e)
-        {
-            if (checkBoxScheduleOnTheseDays.Checked)
-            {
-                checkBoxSaturday.Enabled = true;
-                checkBoxSunday.Enabled = true;
-                checkBoxMonday.Enabled = true;
-                checkBoxTuesday.Enabled = true;
-                checkBoxWednesday.Enabled = true;
-                checkBoxThursday.Enabled = true;
-                checkBoxFriday.Enabled = true;
-            }
-            else
-            {
-                checkBoxSaturday.Enabled = false;
-                checkBoxSunday.Enabled = false;
-                checkBoxMonday.Enabled = false;
-                checkBoxTuesday.Enabled = false;
-                checkBoxWednesday.Enabled = false;
-                checkBoxThursday.Enabled = false;
-                checkBoxFriday.Enabled = false;
-            }
-        }
-
-        /// <summary>
         /// The timer used for starting scheduled screen capture sessions.
         /// </summary>
         /// <param name="sender"></param>
@@ -1298,12 +1225,14 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// The timer used for stopping scheduled screen capture sessions.
+        /// The timer used for Schedules and displaying capture information.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Tick_timerScheduledCaptureStop(object sender, EventArgs e)
+        private void Tick_timerScheduledCapture(object sender, EventArgs e)
         {
+            ShowInfo();
+
             //if (checkBoxScheduleStopAt.Checked)
             //{
             //    if (checkBoxScheduleOnTheseDays.Checked)
@@ -1352,7 +1281,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Saves screenshots every minute.
+        /// Saves screenshots every 30 seconds.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1363,6 +1292,50 @@ namespace AutoScreenCapture
             SaveScreenshots();
 
             _screenCapture.PerformingMaintenance = false;
+        }
+
+        private void ShowInfo()
+        {
+            toolStripInfo.Text = _info;
+
+            if (_screenCapture.Running)
+            {
+                if (_screenCapture.PerformingMaintenance)
+                {
+                    notifyIcon.Text = "Performing maintenance ...";
+                }
+                else
+                {
+                    int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
+                    int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
+                    int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
+                    int remainingMilliseconds = _screenCapture.TimeRemainingForNextScreenshot.Milliseconds;
+
+                    string remainingHoursStr = (remainingHours > 0
+                        ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
+                        : string.Empty);
+                    string remainingMinutesStr = (remainingMinutes > 0
+                        ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
+                        : string.Empty);
+
+                    string remainingTimeStr = string.Empty;
+
+                    if (remainingSeconds < 1)
+                    {
+                        remainingTimeStr = "0." + remainingMilliseconds.ToString() + " milliseconds";
+                    }
+                    else
+                    {
+                        remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
+                                           " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
+                                           _screenCapture.DateTimeNextCycle.ToLongTimeString();
+                    }
+
+                    notifyIcon.Text = "Next capture in " + remainingTimeStr;
+                }
+
+                toolStripInfo.Text = notifyIcon.Text;
+            }
         }
     }
 }

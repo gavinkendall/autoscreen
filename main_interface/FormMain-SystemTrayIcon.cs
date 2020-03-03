@@ -22,46 +22,7 @@
         /// <param name="e"></param>
         private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_screenCapture.Running)
-            {
-                if (_screenCapture.PerformingMaintenance)
-                {
-                    notifyIcon.Text = "Performing maintenance ...";
-                }
-                else
-                {
-                    int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
-                    int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
-                    int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
-                    int remainingMilliseconds = _screenCapture.TimeRemainingForNextScreenshot.Milliseconds;
-
-                    string remainingHoursStr = (remainingHours > 0
-                        ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
-                        : string.Empty);
-                    string remainingMinutesStr = (remainingMinutes > 0
-                        ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
-                        : string.Empty);
-
-                    string remainingTimeStr = string.Empty;
-
-                    if (remainingSeconds < 1)
-                    {
-                        remainingTimeStr = "0." + remainingMilliseconds.ToString() + " milliseconds";
-                    }
-                    else
-                    {
-                        remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
-                                           " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
-                                           _screenCapture.DateTimeNextCycle.ToLongTimeString();
-                    }
-
-                    notifyIcon.Text = "Next capture in " + remainingTimeStr;
-                }
-            }
-            else
-            {
-                notifyIcon.Text = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value.ToString();
-            }
+            ShowInfo();
         }
 
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)

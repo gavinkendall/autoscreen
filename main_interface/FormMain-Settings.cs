@@ -143,41 +143,6 @@
 
                 notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
                 Log.Write("BoolShowSystemTrayIcon = " + notifyIcon.Visible);
-                checkBoxScheduleStopAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value);
-                Log.Write("BoolCaptureStopAt = " + checkBoxScheduleStopAt.Checked);
-
-                checkBoxScheduleStartAt.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value);
-                Log.Write("BoolCaptureStartAt = " + checkBoxScheduleStartAt.Checked);
-
-                checkBoxSunday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnSunday = " + checkBoxSunday.Checked);
-
-                checkBoxMonday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnMonday = " + checkBoxMonday.Checked);
-
-                checkBoxTuesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnTuesday = " + checkBoxTuesday.Checked);
-
-                checkBoxWednesday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnWednesday = " + checkBoxWednesday.Checked);
-
-                checkBoxThursday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnThursday = " + checkBoxThursday.Checked);
-
-                checkBoxFriday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnFriday = " + checkBoxFriday.Checked);
-
-                checkBoxSaturday.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnSaturday = " + checkBoxSaturday.Checked);
-
-                checkBoxScheduleOnTheseDays.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value);
-                Log.Write("BoolCaptureOnTheseDays = " + checkBoxScheduleOnTheseDays.Checked);
-
-                dateTimePickerScheduleStartAt.Value = DateTime.Parse(Settings.User.GetByKey("DateTimeCaptureStartAt", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value.ToString());
-                Log.Write("DateTimeCaptureStartAt = " + dateTimePickerScheduleStartAt.Value);
-
-                dateTimePickerScheduleStopAt.Value = DateTime.Parse(Settings.User.GetByKey("DateTimeCaptureStopAt", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value.ToString());
-                Log.Write("DateTimeCaptureStopAt = " + dateTimePickerScheduleStopAt.Value);
 
                 numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value);
                 Log.Write("IntKeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
@@ -214,18 +179,6 @@
                 Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
                 Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
                 Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("BoolCaptureStopAt", defaultValue: false).Value = checkBoxScheduleStopAt.Checked;
-                Settings.User.GetByKey("BoolCaptureStartAt", defaultValue: false).Value = checkBoxScheduleStartAt.Checked;
-                Settings.User.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value = checkBoxSunday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value = checkBoxMonday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value = checkBoxTuesday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value = checkBoxWednesday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value = checkBoxThursday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value = checkBoxFriday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value = checkBoxSaturday.Checked;
-                Settings.User.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value = checkBoxScheduleOnTheseDays.Checked;
-                Settings.User.GetByKey("DateTimeCaptureStopAt", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)).Value = dateTimePickerScheduleStopAt.Value;
-                Settings.User.GetByKey("DateTimeCaptureStartAt", defaultValue: new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)).Value = dateTimePickerScheduleStartAt.Value;
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
                 Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = comboBoxScreenshotLabel.Text;
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
@@ -252,15 +205,6 @@
         private void SaveSettings(object sender, EventArgs e)
         {
             SaveSettings();
-        }
-
-        private void toolStripSplitButtonSaveSettings_ButtonClick(object sender, EventArgs e)
-        {
-            toolStripSplitButtonSaveSettings.Enabled = false;
-
-            SaveSettings();
-
-            toolStripSplitButtonSaveSettings.Enabled = true;
         }
     }
 }

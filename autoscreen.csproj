@@ -247,7 +247,6 @@
     <Content Include="images\about.png" />
     <Content Include="images\edit.png" />
     <Content Include="images\refresh.png" />
-    <Content Include="images\save.png" />
     <Content Include="images\start_screen_capture.png" />
     <Content Include="images\stop_screen_capture.png" />
   </ItemGroup>

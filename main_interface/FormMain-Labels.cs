@@ -26,7 +26,9 @@
         {
             try
             {
-                if (ScreenCapture.LockScreenCaptureSession)
+                List<string> labels = _screenshotCollection.GetLabels();
+
+                if (ScreenCapture.LockScreenCaptureSession || labels.Count == 0)
                 {
                     toolStripSeparatorApplyLabel.Visible = false;
                     toolStripMenuItemApplyLabel.Visible = false;
@@ -37,7 +39,6 @@
                 toolStripSeparatorApplyLabel.Visible = true;
                 toolStripMenuItemApplyLabel.Visible = true;
 
-                List<string> labels = _screenshotCollection.GetLabels();
                 labels.Sort();
 
                 comboBoxScreenshotLabel.DataSource = labels;

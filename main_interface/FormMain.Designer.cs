@@ -36,7 +36,8 @@ namespace AutoScreenCapture
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonStopScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSplitButtonSaveSettings = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripLabelFiller = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlViews = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.listBoxScreenshots = new System.Windows.Forms.ListBox();
@@ -55,19 +56,6 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageSetup = new System.Windows.Forms.TabPage();
-            this.groupBoxSchedule = new System.Windows.Forms.GroupBox();
-            this.checkBoxScheduleOnTheseDays = new System.Windows.Forms.CheckBox();
-            this.checkBoxFriday = new System.Windows.Forms.CheckBox();
-            this.checkBoxThursday = new System.Windows.Forms.CheckBox();
-            this.checkBoxWednesday = new System.Windows.Forms.CheckBox();
-            this.checkBoxTuesday = new System.Windows.Forms.CheckBox();
-            this.checkBoxMonday = new System.Windows.Forms.CheckBox();
-            this.checkBoxSunday = new System.Windows.Forms.CheckBox();
-            this.checkBoxSaturday = new System.Windows.Forms.CheckBox();
-            this.dateTimePickerScheduleStopAt = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerScheduleStartAt = new System.Windows.Forms.DateTimePicker();
-            this.checkBoxScheduleStopAt = new System.Windows.Forms.CheckBox();
-            this.checkBoxScheduleStartAt = new System.Windows.Forms.CheckBox();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.labelPasswordDescription = new System.Windows.Forms.Label();
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
@@ -96,8 +84,7 @@ namespace AutoScreenCapture
             this.tabPageEditors = new System.Windows.Forms.TabPage();
             this.tabPageTags = new System.Windows.Forms.TabPage();
             this.tabPageTriggers = new System.Windows.Forms.TabPage();
-            this.timerScheduledCaptureStart = new System.Windows.Forms.Timer(this.components);
-            this.timerScheduledCaptureStop = new System.Windows.Forms.Timer(this.components);
+            this.timerScheduledCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.labelScreenshotTitle = new System.Windows.Forms.Label();
@@ -121,7 +108,6 @@ namespace AutoScreenCapture
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageSetup.SuspendLayout();
-            this.groupBoxSchedule.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
@@ -148,7 +134,8 @@ namespace AutoScreenCapture
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButtonStartScreenCapture,
             this.toolStripSplitButtonStopScreenCapture,
-            this.toolStripSplitButtonSaveSettings});
+            this.toolStripLabelFiller,
+            this.toolStripInfo});
             this.statusStrip.Location = new System.Drawing.Point(0, 436);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -163,8 +150,8 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStartScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
             this.toolStripSplitButtonStartScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonStartScreenCapture.Name = "toolStripSplitButtonStartScreenCapture";
-            this.toolStripSplitButtonStartScreenCapture.Size = new System.Drawing.Size(52, 20);
-            this.toolStripSplitButtonStartScreenCapture.Text = "Start";
+            this.toolStripSplitButtonStartScreenCapture.Size = new System.Drawing.Size(135, 20);
+            this.toolStripSplitButtonStartScreenCapture.Text = "Start Screen Capture";
             this.toolStripSplitButtonStartScreenCapture.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
             // 
             // toolStripSplitButtonStopScreenCapture
@@ -175,19 +162,31 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStopScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
             this.toolStripSplitButtonStopScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonStopScreenCapture.Name = "toolStripSplitButtonStopScreenCapture";
-            this.toolStripSplitButtonStopScreenCapture.Size = new System.Drawing.Size(52, 20);
-            this.toolStripSplitButtonStopScreenCapture.Text = "Stop";
+            this.toolStripSplitButtonStopScreenCapture.Size = new System.Drawing.Size(135, 20);
+            this.toolStripSplitButtonStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripSplitButtonStopScreenCapture.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
             // 
-            // toolStripSplitButtonSaveSettings
+            // toolStripLabelFiller
             // 
-            this.toolStripSplitButtonSaveSettings.DropDownButtonWidth = 0;
-            this.toolStripSplitButtonSaveSettings.Image = global::AutoScreenCapture.Properties.Resources.save;
-            this.toolStripSplitButtonSaveSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonSaveSettings.Name = "toolStripSplitButtonSaveSettings";
-            this.toolStripSplitButtonSaveSettings.Size = new System.Drawing.Size(97, 20);
-            this.toolStripSplitButtonSaveSettings.Text = "Save Settings";
-            this.toolStripSplitButtonSaveSettings.ButtonClick += new System.EventHandler(this.toolStripSplitButtonSaveSettings_ButtonClick);
+            this.toolStripLabelFiller.Name = "toolStripLabelFiller";
+            this.toolStripLabelFiller.Padding = new System.Windows.Forms.Padding(90, 0, 90, 0);
+            this.toolStripLabelFiller.Size = new System.Drawing.Size(180, 17);
+            // 
+            // toolStripInfo
+            // 
+            this.toolStripInfo.AutoSize = false;
+            this.toolStripInfo.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.toolStripInfo.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenInner;
+            this.toolStripInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripInfo.Name = "toolStripInfo";
+            this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toolStripInfo.Size = new System.Drawing.Size(368, 17);
+            this.toolStripInfo.Spring = true;
+            this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
             // tabControlViews
             // 
@@ -343,7 +342,6 @@ namespace AutoScreenCapture
             // tabPageSetup
             // 
             this.tabPageSetup.AutoScroll = true;
-            this.tabPageSetup.Controls.Add(this.groupBoxSchedule);
             this.tabPageSetup.Controls.Add(this.groupBoxSecurity);
             this.tabPageSetup.Controls.Add(this.checkBoxScreenshotLabel);
             this.tabPageSetup.Controls.Add(this.comboBoxScreenshotLabel);
@@ -356,179 +354,12 @@ namespace AutoScreenCapture
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
             // 
-            // groupBoxSchedule
-            // 
-            this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleOnTheseDays);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxFriday);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxThursday);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxWednesday);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxTuesday);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxMonday);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxSunday);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxSaturday);
-            this.groupBoxSchedule.Controls.Add(this.dateTimePickerScheduleStopAt);
-            this.groupBoxSchedule.Controls.Add(this.dateTimePickerScheduleStartAt);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStopAt);
-            this.groupBoxSchedule.Controls.Add(this.checkBoxScheduleStartAt);
-            this.groupBoxSchedule.Location = new System.Drawing.Point(6, 178);
-            this.groupBoxSchedule.Name = "groupBoxSchedule";
-            this.groupBoxSchedule.Size = new System.Drawing.Size(205, 108);
-            this.groupBoxSchedule.TabIndex = 0;
-            this.groupBoxSchedule.TabStop = false;
-            this.groupBoxSchedule.Text = "Schedule";
-            // 
-            // checkBoxScheduleOnTheseDays
-            // 
-            this.checkBoxScheduleOnTheseDays.AutoSize = true;
-            this.checkBoxScheduleOnTheseDays.Location = new System.Drawing.Point(6, 63);
-            this.checkBoxScheduleOnTheseDays.Name = "checkBoxScheduleOnTheseDays";
-            this.checkBoxScheduleOnTheseDays.Size = new System.Drawing.Size(119, 17);
-            this.checkBoxScheduleOnTheseDays.TabIndex = 0;
-            this.checkBoxScheduleOnTheseDays.TabStop = false;
-            this.checkBoxScheduleOnTheseDays.Text = "Only on these days:";
-            this.checkBoxScheduleOnTheseDays.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxFriday
-            // 
-            this.checkBoxFriday.AutoSize = true;
-            this.checkBoxFriday.Enabled = false;
-            this.checkBoxFriday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxFriday.Location = new System.Drawing.Point(165, 86);
-            this.checkBoxFriday.Name = "checkBoxFriday";
-            this.checkBoxFriday.Size = new System.Drawing.Size(33, 16);
-            this.checkBoxFriday.TabIndex = 0;
-            this.checkBoxFriday.TabStop = false;
-            this.checkBoxFriday.Text = "Fr";
-            this.checkBoxFriday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxThursday
-            // 
-            this.checkBoxThursday.AutoSize = true;
-            this.checkBoxThursday.Enabled = false;
-            this.checkBoxThursday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxThursday.Location = new System.Drawing.Point(130, 86);
-            this.checkBoxThursday.Name = "checkBoxThursday";
-            this.checkBoxThursday.Size = new System.Drawing.Size(34, 16);
-            this.checkBoxThursday.TabIndex = 0;
-            this.checkBoxThursday.TabStop = false;
-            this.checkBoxThursday.Text = "Th";
-            this.checkBoxThursday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxWednesday
-            // 
-            this.checkBoxWednesday.AutoSize = true;
-            this.checkBoxWednesday.Enabled = false;
-            this.checkBoxWednesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxWednesday.Location = new System.Drawing.Point(92, 86);
-            this.checkBoxWednesday.Name = "checkBoxWednesday";
-            this.checkBoxWednesday.Size = new System.Drawing.Size(38, 16);
-            this.checkBoxWednesday.TabIndex = 0;
-            this.checkBoxWednesday.TabStop = false;
-            this.checkBoxWednesday.Text = "We";
-            this.checkBoxWednesday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxTuesday
-            // 
-            this.checkBoxTuesday.AutoSize = true;
-            this.checkBoxTuesday.Enabled = false;
-            this.checkBoxTuesday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxTuesday.Location = new System.Drawing.Point(58, 86);
-            this.checkBoxTuesday.Name = "checkBoxTuesday";
-            this.checkBoxTuesday.Size = new System.Drawing.Size(34, 16);
-            this.checkBoxTuesday.TabIndex = 0;
-            this.checkBoxTuesday.TabStop = false;
-            this.checkBoxTuesday.Text = "Tu";
-            this.checkBoxTuesday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxMonday
-            // 
-            this.checkBoxMonday.AutoSize = true;
-            this.checkBoxMonday.Enabled = false;
-            this.checkBoxMonday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxMonday.Location = new System.Drawing.Point(20, 86);
-            this.checkBoxMonday.Name = "checkBoxMonday";
-            this.checkBoxMonday.Size = new System.Drawing.Size(38, 16);
-            this.checkBoxMonday.TabIndex = 0;
-            this.checkBoxMonday.TabStop = false;
-            this.checkBoxMonday.Text = "Mo";
-            this.checkBoxMonday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSunday
-            // 
-            this.checkBoxSunday.AutoSize = true;
-            this.checkBoxSunday.Enabled = false;
-            this.checkBoxSunday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxSunday.Location = new System.Drawing.Point(165, 64);
-            this.checkBoxSunday.Name = "checkBoxSunday";
-            this.checkBoxSunday.Size = new System.Drawing.Size(35, 16);
-            this.checkBoxSunday.TabIndex = 0;
-            this.checkBoxSunday.TabStop = false;
-            this.checkBoxSunday.Text = "Su";
-            this.checkBoxSunday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSaturday
-            // 
-            this.checkBoxSaturday.AutoSize = true;
-            this.checkBoxSaturday.Enabled = false;
-            this.checkBoxSaturday.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxSaturday.Location = new System.Drawing.Point(130, 64);
-            this.checkBoxSaturday.Name = "checkBoxSaturday";
-            this.checkBoxSaturday.Size = new System.Drawing.Size(35, 16);
-            this.checkBoxSaturday.TabIndex = 0;
-            this.checkBoxSaturday.TabStop = false;
-            this.checkBoxSaturday.Text = "Sa";
-            this.checkBoxSaturday.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePickerScheduleStopAt
-            // 
-            this.dateTimePickerScheduleStopAt.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerScheduleStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerScheduleStopAt.Location = new System.Drawing.Point(130, 39);
-            this.dateTimePickerScheduleStopAt.Name = "dateTimePickerScheduleStopAt";
-            this.dateTimePickerScheduleStopAt.ShowUpDown = true;
-            this.dateTimePickerScheduleStopAt.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerScheduleStopAt.TabIndex = 0;
-            this.dateTimePickerScheduleStopAt.TabStop = false;
-            // 
-            // dateTimePickerScheduleStartAt
-            // 
-            this.dateTimePickerScheduleStartAt.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerScheduleStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerScheduleStartAt.Location = new System.Drawing.Point(130, 16);
-            this.dateTimePickerScheduleStartAt.Name = "dateTimePickerScheduleStartAt";
-            this.dateTimePickerScheduleStartAt.ShowUpDown = true;
-            this.dateTimePickerScheduleStartAt.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerScheduleStartAt.TabIndex = 0;
-            this.dateTimePickerScheduleStartAt.TabStop = false;
-            // 
-            // checkBoxScheduleStopAt
-            // 
-            this.checkBoxScheduleStopAt.AutoSize = true;
-            this.checkBoxScheduleStopAt.Location = new System.Drawing.Point(6, 41);
-            this.checkBoxScheduleStopAt.Name = "checkBoxScheduleStopAt";
-            this.checkBoxScheduleStopAt.Size = new System.Drawing.Size(99, 17);
-            this.checkBoxScheduleStopAt.TabIndex = 0;
-            this.checkBoxScheduleStopAt.TabStop = false;
-            this.checkBoxScheduleStopAt.Text = "Stop capture at";
-            this.checkBoxScheduleStopAt.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxScheduleStartAt
-            // 
-            this.checkBoxScheduleStartAt.AutoSize = true;
-            this.checkBoxScheduleStartAt.Location = new System.Drawing.Point(6, 18);
-            this.checkBoxScheduleStartAt.Name = "checkBoxScheduleStartAt";
-            this.checkBoxScheduleStartAt.Size = new System.Drawing.Size(99, 17);
-            this.checkBoxScheduleStartAt.TabIndex = 0;
-            this.checkBoxScheduleStartAt.TabStop = false;
-            this.checkBoxScheduleStartAt.Text = "Start capture at";
-            this.checkBoxScheduleStartAt.UseVisualStyleBackColor = true;
-            // 
             // groupBoxSecurity
             // 
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 292);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 178);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -607,7 +438,7 @@ namespace AutoScreenCapture
             this.groupBoxCaptureDelay.Size = new System.Drawing.Size(205, 122);
             this.groupBoxCaptureDelay.TabIndex = 0;
             this.groupBoxCaptureDelay.TabStop = false;
-            this.groupBoxCaptureDelay.Text = "Take screenshots every ...";
+            this.groupBoxCaptureDelay.Text = "Interval";
             // 
             // labelLimit
             // 
@@ -849,17 +680,11 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
             // 
-            // timerScheduledCaptureStart
+            // timerScheduledCapture
             // 
-            this.timerScheduledCaptureStart.Enabled = true;
-            this.timerScheduledCaptureStart.Interval = 1000;
-            this.timerScheduledCaptureStart.Tick += new System.EventHandler(this.Tick_timerScheduledCaptureStart);
-            // 
-            // timerScheduledCaptureStop
-            // 
-            this.timerScheduledCaptureStop.Enabled = true;
-            this.timerScheduledCaptureStop.Interval = 1000;
-            this.timerScheduledCaptureStop.Tick += new System.EventHandler(this.Tick_timerScheduledCaptureStop);
+            this.timerScheduledCapture.Enabled = true;
+            this.timerScheduledCapture.Interval = 1000;
+            this.timerScheduledCapture.Tick += new System.EventHandler(this.Tick_timerScheduledCapture);
             // 
             // timerScreenCapture
             // 
@@ -1097,8 +922,6 @@ namespace AutoScreenCapture
             this.tabControlModules.ResumeLayout(false);
             this.tabPageSetup.ResumeLayout(false);
             this.tabPageSetup.PerformLayout();
-            this.groupBoxSchedule.ResumeLayout(false);
-            this.groupBoxSchedule.PerformLayout();
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
             this.groupBoxCaptureDelay.ResumeLayout(false);
@@ -1148,8 +971,7 @@ namespace AutoScreenCapture
         private System.Windows.Forms.CheckBox checkBoxInitialScreenshot;
         private System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
         private System.Windows.Forms.Label labelLimit;
-        private System.Windows.Forms.Timer timerScheduledCaptureStart;
-        private System.Windows.Forms.Timer timerScheduledCaptureStop;
+        private System.Windows.Forms.Timer timerScheduledCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorAbout;
         private System.Windows.Forms.Timer timerScreenCapture;
@@ -1176,7 +998,6 @@ namespace AutoScreenCapture
         private ComboBox comboBoxFilterValue;
         private Label labelFilter;
         private Button buttonRefreshFilterValues;
-        private ToolStripSplitButton toolStripSplitButtonSaveSettings;
         private ComboBox comboBoxFilterType;
         private Label labelDays;
         private NumericUpDown numericUpDownKeepScreenshotsForDays;
@@ -1190,18 +1011,7 @@ namespace AutoScreenCapture
         private Label labelPasswordDescription;
         private Button buttonSetPassphrase;
         private TextBox textBoxPassphrase;
-        private GroupBox groupBoxSchedule;
-        private CheckBox checkBoxScheduleOnTheseDays;
-        private CheckBox checkBoxFriday;
-        private CheckBox checkBoxThursday;
-        private CheckBox checkBoxWednesday;
-        private CheckBox checkBoxTuesday;
-        private CheckBox checkBoxMonday;
-        private CheckBox checkBoxSunday;
-        private CheckBox checkBoxSaturday;
-        private DateTimePicker dateTimePickerScheduleStopAt;
-        private DateTimePicker dateTimePickerScheduleStartAt;
-        private CheckBox checkBoxScheduleStopAt;
-        private CheckBox checkBoxScheduleStartAt;
+        private ToolStripStatusLabel toolStripInfo;
+        private ToolStripStatusLabel toolStripLabelFiller;
     }
 }

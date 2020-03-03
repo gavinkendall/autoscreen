@@ -15,6 +15,29 @@
     public partial class FormMain : Form
     {
         /// <summary>
+        /// The various regular expressions used in the parsing of the command line arguments.
+        /// </summary>
+        private const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
+
+        private const string REGEX_COMMAND_LINE_INITIAL = "^-initial$";
+
+        private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
+
+        private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+
+        private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+
+        private const string REGEX_COMMAND_LINE_INTERVAL = @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})\.(?<Milliseconds>\d{3})$";
+
+        private const string REGEX_COMMAND_LINE_PASSPHRASE = "^-passphrase=(?<Passphrase>.+)$";
+
+        private const string REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON = "^-hideSystemTrayIcon$";
+
+        private const string REGEX_COMMAND_LINE_LOG = "^-log";
+
+        private const string REGEX_COMMAND_LINE_DEBUG = "^-debug";
+
+        /// <summary>
         /// Parses the command line and processes the commands the user has chosen from the command line.
         /// </summary>
         /// <param name="args"></param>
@@ -22,7 +45,7 @@
         {
             try
             {
-                #region Default Values for Command Line Arguments
+                bool scheduledStart = false;
 
                 checkBoxInitialScreenshot.Checked = false;
 
@@ -33,14 +56,6 @@
                 numericUpDownMinutesInterval.Value = CAPTURE_INTERVAL_DEFAULT_IN_MINUTES;
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
-
-                checkBoxScheduleStopAt.Checked = false;
-                checkBoxScheduleStartAt.Checked = false;
-                checkBoxScheduleOnTheseDays.Checked = false;
-
-                #endregion Default Values for Command Line Arguments
-
-                #region Command Line Argument Parsing
 
                 ScreenCapture.RunningFromCommandLine = true;
 
@@ -144,27 +159,20 @@
                         numericUpDownMillisecondsInterval.Value = milliseconds;
                     }
 
-                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STARTAT))
-                    {
-                        int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
+                    // This is going to be changed so that a start time and stop time is used by a new Schedule instead.
+                    //if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STARTAT))
+                    //{
+                    //    int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
+                    //    int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
+                    //    int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
+                    //}
 
-                        dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                        checkBoxScheduleStartAt.Checked = true;
-                    }
-
-                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOPAT))
-                    {
-                        int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
-
-                        dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                        checkBoxScheduleStopAt.Checked = true;
-                    }
+                    //if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOPAT))
+                    //{
+                    //    int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
+                    //    int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
+                    //    int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
+                    //}
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_PASSPHRASE))
                     {
@@ -195,11 +203,9 @@
                     }
                 }
 
-                #endregion Command Line Argument Parsing
-
                 InitializeThreads();
 
-                if (!checkBoxScheduleStartAt.Checked)
+                if (!scheduledStart)
                 {
                     StartScreenCapture();
                 }
