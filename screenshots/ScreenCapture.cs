@@ -412,7 +412,7 @@ namespace AutoScreenCapture
         /// <param name="screenshotCollection"></param>
         /// <returns></returns>
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
-            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
+            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, DateCollection dateCollection, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -454,7 +454,11 @@ namespace AutoScreenCapture
                                             Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
                                         }
 
-                                        screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+                                        Screenshot screenshot = new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label);
+                                        Date date = new Date(Convert.ToDateTime(screenshot.Date));
+
+                                        dateCollection.Add(date);
+                                        screenshotCollection.Add(screenshot);
 
                                         SaveToFile(path, format, jpegQuality, bitmap);
                                     }

@@ -27,8 +27,8 @@ namespace AutoScreenCapture
         private List<string> _slideNameList;
         private List<Screenshot> _screenshotList;
 
-        // Required when multiple threads are writing to the same log file.
-        private Mutex _mutexWriteFile = new Mutex();
+        // Required when multiple threads are writing to the same file.
+        private readonly Mutex _mutexWriteFile = new Mutex();
 
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREENSHOT_NODE = "screenshot";
@@ -167,7 +167,7 @@ namespace AutoScreenCapture
         /// <param name="filterValue"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        public  List<Slide> GetSlides(string filterType, string filterValue, string date)
+        public List<Slide> GetScreenshots(string filterType, string filterValue, string date)
         {
             Stopwatch stopwatch = new Stopwatch();
 
@@ -177,36 +177,36 @@ namespace AutoScreenCapture
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Image Format filter");
+                    Log.Write("Getting screenshots from screenshot list based on Image Format filter");
                     return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Label filter");
+                    Log.Write("Getting screenshots from screenshot list based on Label filter");
                     return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Process Name"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Process Name filter");
+                    Log.Write("Getting screenshots from screenshot list based on Process Name filter");
                     return _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Window Title filter");
+                    Log.Write("Getting screenshots from screenshot list based on Window Title filter");
                     return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
             }
 
-            Log.Write("Getting slides from slide list");
+            Log.Write("Getting screenshots from screenshot list");
 
             List<Slide> slides = _slideList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
 
             stopwatch.Stop();
 
-            Log.Write("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to get " + slides.Count + " slides");
+            Log.Write("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to get " + slides.Count + " screenshots");
 
             return slides;
         }

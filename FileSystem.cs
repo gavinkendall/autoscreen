@@ -68,6 +68,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public static readonly string DefaultDatesFile = "!autoscreen\\dates.xml";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string ScreenshotsFolder;
 
         /// <summary>
@@ -119,6 +124,11 @@ namespace AutoScreenCapture
         /// 
         /// </summary>
         public static string TagsFile;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string DatesFile;
 
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets

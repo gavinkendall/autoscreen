@@ -52,6 +52,9 @@
                 Log.Write("Hiding interface on clean application exit");
                 HideInterface();
 
+                Log.Write("Saving dates on clean application exit");
+                _dateCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
+
                 Log.Write("Saving screenshots on clean application exit");
                 _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
 

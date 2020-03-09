@@ -36,6 +36,7 @@ namespace AutoScreenCapture
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenshotCollection _screenshotCollection;
+        private DateCollection _dateCollection;
 
         /// <summary>
         /// Threads for background operations.
@@ -178,6 +179,9 @@ namespace AutoScreenCapture
 
                 Log.Write("Hiding interface on forced application exit because Windows is shutting down");
                 HideInterface();
+
+                Log.Write("Saving dates on forced application exit because Windows is shutting down");
+                _dateCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 Log.Write("Saving screenshots on forced application exit because Windows is shutting down");
                 _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);

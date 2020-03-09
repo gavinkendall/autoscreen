@@ -39,6 +39,7 @@
                                 label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                 windowTitle: _screenCapture.ActiveWindowTitle,
                                 processName: _screenCapture.ActiveWindowProcessName,
+                                dateCollection: _dateCollection,
                                 screenshotCollection: _screenshotCollection
                             ))
                             {
