@@ -28,7 +28,6 @@ namespace AutoScreenCapture
         private const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
         private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
         private const string REGEX_TAGS_FILE = "^TagsFile=(?<Path>.+)$";
-        private const string REGEX_DATES_FILE = "^DatesFile=(?<Path>.+)$";
 
         /// <summary>
         /// 
@@ -72,9 +71,7 @@ namespace AutoScreenCapture
                         "# References to screenshots.",
                         "ScreenshotsFile=!autoscreen\\screenshots.xml", "\n",
                         "# References to tags.",
-                        "TagsFile=!autoscreen\\tags.xml", "\n",
-                        "# References to dates.",
-                        "DatesFile=!autoscreen\\dates.xml"
+                        "TagsFile=!autoscreen\\tags.xml"
                     };
 
                     File.WriteAllLines(FileSystem.ConfigFile, linesToWrite);
@@ -116,9 +113,6 @@ namespace AutoScreenCapture
 
                     if (GetPath(line, REGEX_TAGS_FILE, out path))
                         FileSystem.TagsFile = path;
-
-                    if (GetPath(line, REGEX_DATES_FILE, out path))
-                        FileSystem.DatesFile = path;
                 }
             }
             catch (Exception ex)

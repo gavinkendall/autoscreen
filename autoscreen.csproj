@@ -77,8 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="config\Config.cs" />
-    <Compile Include="dates\Date.cs" />
-    <Compile Include="dates\DateCollection.cs" />
     <Compile Include="main_interface\FormMain-CommandLine.cs">
       <SubType>Form</SubType>
     </Compile>

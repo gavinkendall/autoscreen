@@ -99,16 +99,10 @@
                 BuildViewTabPages();
 
                 Log.Write("Initializing screenshot collection");
-                _screenshotCollection = new ScreenshotCollection();
+                _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, formScreen.ScreenCollection);
 
-                Log.Write("Loading screenshots into the screenshot collection to generate a history of what was captured");
-                _screenshotCollection.Load(_imageFormatCollection, formScreen.ScreenCollection, formRegion.RegionCollection);
-
-                Log.Write("Intializing date collection");
-                _dateCollection = new DateCollection();
-
-                Log.Write("Loading dates");
-                _dateCollection.Load();
+                Log.Write("Loading screenshots");
+                _screenshotCollection.Load();
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
                 Log.Write("IntScreenCaptureInterval = " + screenCaptureInterval);

@@ -412,7 +412,7 @@ namespace AutoScreenCapture
         /// <param name="screenshotCollection"></param>
         /// <returns></returns>
         public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
-            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, DateCollection dateCollection, ScreenshotCollection screenshotCollection)
+            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -455,9 +455,7 @@ namespace AutoScreenCapture
                                         }
 
                                         Screenshot screenshot = new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label);
-                                        Date date = new Date(Convert.ToDateTime(screenshot.Date));
 
-                                        dateCollection.Add(date);
                                         screenshotCollection.Add(screenshot);
 
                                         SaveToFile(path, format, jpegQuality, bitmap);

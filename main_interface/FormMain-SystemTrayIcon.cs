@@ -27,7 +27,7 @@
 
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (this.Visible)
+            if (Visible)
             {
                 HideInterface();
             }

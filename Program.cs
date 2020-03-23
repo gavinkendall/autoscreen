@@ -18,9 +18,7 @@ namespace AutoScreenCapture
         [STAThread]
         private static void Main(string[] args)
         {
-            bool createdNew;
-
-            using (new Mutex(false, ((GuidAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(GuidAttribute), false)).Value, out createdNew))
+            using (new Mutex(false, ((GuidAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(GuidAttribute), false)).Value, out bool createdNew))
             {
                 if (createdNew)
                 {

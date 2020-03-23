@@ -84,6 +84,7 @@ namespace AutoScreenCapture
         /// </summary>
         public Screenshot()
         {
+
         }
 
         /// <summary>

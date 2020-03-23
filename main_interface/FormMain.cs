@@ -24,8 +24,6 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMain : Form
     {
-        private string _info = string.Empty;
-
         private FormEditor formEditor = new FormEditor();
         private FormTrigger formTrigger = new FormTrigger();
         private FormRegion formRegion = new FormRegion();
@@ -36,7 +34,6 @@ namespace AutoScreenCapture
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenshotCollection _screenshotCollection;
-        private DateCollection _dateCollection;
 
         /// <summary>
         /// Threads for background operations.
@@ -104,9 +101,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            _info = Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " (" +
-                          Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationName).Value + ")";
-
             ShowInfo();
 
             SearchFilterValues();
@@ -180,9 +174,6 @@ namespace AutoScreenCapture
                 Log.Write("Hiding interface on forced application exit because Windows is shutting down");
                 HideInterface();
 
-                Log.Write("Saving dates on forced application exit because Windows is shutting down");
-                _dateCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
-
                 Log.Write("Saving screenshots on forced application exit because Windows is shutting down");
                 _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
 
@@ -248,7 +239,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> dates = _screenshotCollection.GetDates(comboBoxFilterType.Text, comboBoxFilterValue.Text);
+                List<string> dates = _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
                 DateTime[] boldedDates = new DateTime[dates.Count];
 
@@ -1300,7 +1291,7 @@ namespace AutoScreenCapture
 
         private void ShowInfo()
         {
-            toolStripInfo.Text = _info;
+            notifyIcon.Text = string.Empty;
 
             if (_screenCapture.Running)
             {
@@ -1310,36 +1301,36 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    string remainingTimeStr = string.Empty;
+
                     int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
                     int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
                     int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
-                    int remainingMilliseconds = _screenCapture.TimeRemainingForNextScreenshot.Milliseconds;
 
                     string remainingHoursStr = (remainingHours > 0
                         ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
                         : string.Empty);
+
                     string remainingMinutesStr = (remainingMinutes > 0
                         ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
                         : string.Empty);
 
-                    string remainingTimeStr = string.Empty;
+                    string remainingSecondsStr = (remainingSeconds > 0
+                        ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
+                        : string.Empty);
 
-                    if (remainingSeconds < 1)
+                    if (remainingSeconds > 0)
                     {
-                        remainingTimeStr = "0." + remainingMilliseconds.ToString() + " milliseconds";
-                    }
-                    else
-                    {
-                        remainingTimeStr = remainingHoursStr + remainingMinutesStr + remainingSeconds.ToString() +
-                                           " second" + (remainingSeconds > 1 ? "s" : string.Empty) + " at " +
-                                           _screenCapture.DateTimeNextCycle.ToLongTimeString();
+                        remainingTimeStr = "Next capture in " +
+                            remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
+                            _screenCapture.DateTimeNextCycle.ToLongTimeString();
                     }
 
-                    notifyIcon.Text = "Next capture in " + remainingTimeStr;
+                    notifyIcon.Text = remainingTimeStr;
                 }
-
-                toolStripInfo.Text = notifyIcon.Text;
             }
+
+            toolStripInfo.Text = notifyIcon.Text;
         }
     }
 }

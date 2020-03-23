@@ -25,7 +25,10 @@ namespace AutoScreenCapture
         private XmlDocument xDoc;
         private List<Slide> _slideList;
         private List<string> _slideNameList;
+        private List<string> _dateList;
         private List<Screenshot> _screenshotList;
+        private ImageFormatCollection _imageFormatCollection;
+        private ScreenCollection _screenCollection;
 
         // Required when multiple threads are writing to the same file.
         private readonly Mutex _mutexWriteFile = new Mutex();
@@ -51,8 +54,31 @@ namespace AutoScreenCapture
         private const string SCREENSHOTS_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE;
         private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
 
+        private const string DATES_XPATH = SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE;
+
         private  string AppCodename { get; set; }
         private  string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ScreenshotCollection(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection)
+        {
+            _screenshotList = new List<Screenshot>();
+            Log.Write("Initialized screenshot list");
+
+            _slideList = new List<Slide>();
+            Log.Write("Initialized slide list");
+
+            _slideNameList = new List<string>();
+            Log.Write("Initialized slide name list");
+
+            _dateList = new List<string>();
+            Log.Write("Initialized date list");
+
+            _imageFormatCollection = imageFormatCollection;
+            _screenCollection = screenCollection;
+        }
 
         /// <summary>
         /// 
@@ -83,7 +109,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public  Screenshot Get(int index)
+        public Screenshot Get(int index)
         {
             return (Screenshot)_screenshotList[index];
         }
@@ -91,7 +117,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public  int Count
+        public int Count
         {
             get { return _screenshotList.Count; }
         }
@@ -101,7 +127,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="filterType"></param>
         /// <returns></returns>
-        public  List<string> GetFilterValueList(string filterType)
+        public List<string> GetFilterValueList(string filterType)
         {
             if (filterType.Equals("Image Format"))
             {
@@ -126,13 +152,23 @@ namespace AutoScreenCapture
             return new List<string>();
         }
 
+        public List<string> GetDates()
+        {
+            if (_dateList.Count == 0)
+            {
+                _dateList = LoadDates();
+            }
+
+            return _dateList;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="filterType"></param>
         /// <param name="filterValue"></param>
         /// <returns></returns>
-        public  List<string> GetDates(string filterType, string filterValue)
+        public List<string> GetDatesByFilter(string filterType, string filterValue)
         {
             if (!string.IsNullOrEmpty(filterValue))
             {
@@ -157,7 +193,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            return _screenshotList.Select(x => x.Date).ToList();
+            return GetDates();
         }
 
         /// <summary>
@@ -169,9 +205,17 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public List<Slide> GetScreenshots(string filterType, string filterValue, string date)
         {
-            Stopwatch stopwatch = new Stopwatch();
+            if (string.IsNullOrEmpty(date))
+            {
+                return null;
+            }
 
-            stopwatch.Start();
+            Log.Write("Getting screenshots from screenshot list");
+
+            if (_slideList.Where(x => x.Date.Equals(date)).Select(x => x).Count() == 0)
+            {
+                LoadByDate(date);
+            }
 
             if (!string.IsNullOrEmpty(filterValue))
             {
@@ -200,15 +244,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            Log.Write("Getting screenshots from screenshot list");
-
-            List<Slide> slides = _slideList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
-
-            stopwatch.Stop();
-
-            Log.Write("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to get " + slides.Count + " screenshots");
-
-            return slides;
+            return _slideList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
         }
 
         /// <summary>
@@ -249,37 +285,13 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Loads the screenshots.
+        /// 
         /// </summary>
-        public  void Load(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, RegionCollection regionCollection)
+        public void Load()
         {
             try
             {
                 _mutexWriteFile.WaitOne();
-
-                Log.Write("Loading screenshots from \"" + FileSystem.ScreenshotsFile + "\" (if this is a large file then it might take a while)");
-
-                Stopwatch stopwatch = new Stopwatch();
-
-                stopwatch.Start();
-
-                if (_screenshotList == null)
-                {
-                    _screenshotList = new List<Screenshot>();
-                    Log.Write("Initialized screenshot list");
-                }
-
-                if (_slideList == null)
-                {
-                    _slideList = new List<Slide>();
-                    Log.Write("Initialized slide list");
-                }
-
-                if (_slideNameList == null)
-                {
-                    _slideNameList = new List<string>();
-                    Log.Write("Initialized slide name list");
-                }
 
                 if (_screenshotList != null && !File.Exists(FileSystem.ScreenshotsFile))
                 {
@@ -316,7 +328,7 @@ namespace AutoScreenCapture
                     Log.Write("Created \"" + FileSystem.ScreenshotsFile + "\"");
                 }
 
-                if (_screenshotList != null && File.Exists(FileSystem.ScreenshotsFile))
+                if (File.Exists(FileSystem.ScreenshotsFile))
                 {
                     xDoc = new XmlDocument();
 
@@ -324,18 +336,142 @@ namespace AutoScreenCapture
                     {
                         xDoc.Load(FileSystem.ScreenshotsFile);
 
+                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        {
+                            Log.Write("Old application version discovered when loading \"" + FileSystem.ScreenshotsFile + "\"");
+
+                            // We'll have to create the app:version and app:codename attributes for screenshots.xml if we're upgrading from "Clara".
+                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
+                            {
+                                XmlAttribute attributeVersion = xDoc.CreateAttribute("app", "version", "autoscreen");
+                                XmlAttribute attributeCodename = xDoc.CreateAttribute("app", "codename", "autoscreen");
+
+                                attributeVersion.Value = Settings.ApplicationVersion;
+                                attributeCodename.Value = Settings.ApplicationCodename;
+
+                                xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes.Append(attributeVersion);
+                                xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes.Append(attributeCodename);
+                            }
+
+                            // Apply the latest version and codename if the version of Auto Screen Capture is older than this version.
+                            xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes["app:version"].Value = Settings.ApplicationVersion;
+                            xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes["app:codename"].Value = Settings.ApplicationCodename;
+
+                            xDoc.Save(FileSystem.ScreenshotsFile);
+
+                            Log.Write("Upgraded \"" + FileSystem.ScreenshotsFile + "\"");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenshotCollection::Load", ex);
+            }
+            finally
+            {
+                _mutexWriteFile.ReleaseMutex();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<string> LoadDates()
+        {
+            try
+            {
+                List<string> dates = new List<string>();
+
+                _mutexWriteFile.WaitOne();
+
+                if (xDoc != null)
+                {
+                    lock (xDoc)
+                    {
+                        AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                        AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                        Log.Write("Getting dates from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "\"");
+
+                        XmlNodeList xDates = xDoc.SelectNodes(DATES_XPATH);
+
+                        if (xDates != null)
+                        {
+                            Log.Write("Loading " + xDates.Count + " dates from \"" + FileSystem.ScreenshotsFile + "\" ...");
+
+                            foreach (XmlNode xDate in xDates)
+                            {
+                                XmlNodeReader xReader = new XmlNodeReader(xDate);
+
+                                while (xReader.Read())
+                                {
+                                    if (xReader.IsStartElement())
+                                    {
+                                        switch (xReader.Name)
+                                        {
+                                            case SCREENSHOT_DATE:
+                                                xReader.Read();
+                                                dates.Add(xReader.Value);
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                xReader.Close();
+                            }
+                        }
+                        else
+                        {
+                            Log.Write("WARNING: Unable to load dates from \"" + FileSystem.ScreenshotsFile + "\"");
+                        }
+                    }
+                }
+
+                return dates;
+            }
+            catch (Exception ex)
+            {
+                Log.Write("ScreenshotCollection::LoadByDate", ex);
+                return null;
+            }
+            finally
+            {
+                _mutexWriteFile.ReleaseMutex();
+            }
+        }
+
+        /// <summary>
+        /// Loads screenshots by a specified date.
+        /// </summary>
+        public void LoadByDate(string date)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(date))
+                {
+                    return;
+                }
+
+                _mutexWriteFile.WaitOne();
+
+                if (xDoc != null)
+                {
+                    lock (xDoc)
+                    {
                         AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                         AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
                         Log.Write("Getting screenshots from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "\"");
 
-                        XmlNodeList xScreeshots = xDoc.SelectNodes(SCREENSHOT_XPATH);
+                        XmlNodeList xScreenshots = xDoc.SelectNodes(SCREENSHOT_XPATH + "[date='" + date + "']");
 
-                        if (xScreeshots != null)
+                        if (xScreenshots != null)
                         {
-                            Log.Write("Loading " + xScreeshots.Count + " screenshots from \"" + FileSystem.ScreenshotsFile + "\" ...");
+                            Log.Write("Loading " + xScreenshots.Count + " screenshots from \"" + FileSystem.ScreenshotsFile + "\" ...");
 
-                            foreach (XmlNode xScreenshot in xScreeshots)
+                            foreach (XmlNode xScreenshot in xScreenshots)
                             {
                                 Screenshot screenshot = new Screenshot();
                                 screenshot.Slide = new Slide();
@@ -383,7 +519,7 @@ namespace AutoScreenCapture
 
                                             case SCREENSHOT_FORMAT:
                                                 xReader.Read();
-                                                screenshot.Format = imageFormatCollection.GetByName(xReader.Value);
+                                                screenshot.Format = _imageFormatCollection.GetByName(xReader.Value);
 
                                                 if (Log.DebugMode)
                                                     Log.Write("[" + screenshot.ViewId + "] Format = " + screenshot.Format);
@@ -479,7 +615,7 @@ namespace AutoScreenCapture
                                     {
                                         // We need to associate the screenshot's view ID with the component's view ID
                                         // because this special ID value is used for figuring out what screenshot image to display.
-                                        screenshot.ViewId = screenCollection.GetByComponent(screenshot.Component).ViewId;
+                                        screenshot.ViewId = _screenCollection.GetByComponent(screenshot.Component).ViewId;
 
                                         string windowTitle = "*Screenshot imported from an old version of Auto Screen Capture*";
 
@@ -568,42 +704,12 @@ namespace AutoScreenCapture
                         {
                             Log.Write("WARNING: Unable to load screenshots from \"" + FileSystem.ScreenshotsFile + "\"");
                         }
-
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
-                        {
-                            Log.Write("Old application version discovered when loading \"" + FileSystem.ScreenshotsFile + "\"");
-
-                            // We'll have to create the app:version and app:codename attributes for screenshots.xml if we're upgrading from "Clara".
-                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
-                            {
-                                XmlAttribute attributeVersion = xDoc.CreateAttribute("app", "version", "autoscreen");
-                                XmlAttribute attributeCodename = xDoc.CreateAttribute("app", "codename", "autoscreen");
-
-                                attributeVersion.Value = Settings.ApplicationVersion;
-                                attributeCodename.Value = Settings.ApplicationCodename;
-
-                                xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes.Append(attributeVersion);
-                                xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes.Append(attributeCodename);
-                            }
-
-                            // Apply the latest version and codename if the version of Auto Screen Capture is older than this version.
-                            xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes["app:version"].Value = Settings.ApplicationVersion;
-                            xDoc.SelectSingleNode("/" + XML_FILE_ROOT_NODE).Attributes["app:codename"].Value = Settings.ApplicationCodename;
-
-                            xDoc.Save(FileSystem.ScreenshotsFile);
-
-                            Log.Write("Upgraded \"" + FileSystem.ScreenshotsFile + "\"");
-                        }
                     }
                 }
-
-                stopwatch.Stop();
-
-                Log.Write("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to load " + _screenshotList.Count + " screenshots");
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenshotCollection::Load", ex);
+                Log.Write("ScreenshotCollection::LoadByDate", ex);
             }
             finally
             {
