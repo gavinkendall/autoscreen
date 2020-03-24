@@ -48,17 +48,17 @@
         /// This thread is responsible for finding slides.
         /// </summary>
         /// <param name="e"></param>
-        private void RunScreenshotSearch(DoWorkEventArgs e)
+        private void RunSlideSearch(DoWorkEventArgs e)
         {
             if (listBoxScreenshots.InvokeRequired)
             {
-                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunScreenshotSearch), new object[] { e });
+                listBoxScreenshots.Invoke(new RunSlideSearchDelegate(RunSlideSearch), new object[] { e });
             }
             else
             {
                 listBoxScreenshots.DisplayMember = "Value";
                 listBoxScreenshots.ValueMember = "Name";
-                listBoxScreenshots.DataSource = _screenshotCollection.GetScreenshots(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                 if (listBoxScreenshots.Items.Count > 0)
                 {
@@ -69,7 +69,7 @@
 
         private void RunSaveScreenshots(DoWorkEventArgs e)
         {
-            _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
+            _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@
         /// <param name="e"></param>
         private void DoWork_runScreenshotSearchThread(object sender, DoWorkEventArgs e)
         {
-            RunScreenshotSearch(e);
+            RunSlideSearch(e);
         }
 
         private void DoWork_runSaveScreenshotsThread(object sender, DoWorkEventArgs e)

@@ -53,7 +53,7 @@
                 HideInterface();
 
                 Log.Write("Saving screenshots on clean application exit");
-                _screenshotCollection.Save((int)numericUpDownKeepScreenshotsForDays.Value);
+                _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {

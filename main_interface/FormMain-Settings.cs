@@ -102,7 +102,7 @@
                 _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, formScreen.ScreenCollection);
 
                 Log.Write("Loading screenshots");
-                _screenshotCollection.Load();
+                _screenshotCollection.LoadXmlFile();
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
                 Log.Write("IntScreenCaptureInterval = " + screenCaptureInterval);
