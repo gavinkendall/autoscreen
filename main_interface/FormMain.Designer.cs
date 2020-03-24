@@ -104,6 +104,8 @@ namespace AutoScreenCapture
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
+            this.textBoxLabel = new System.Windows.Forms.TextBox();
+            this.labelLabel = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -169,8 +171,8 @@ namespace AutoScreenCapture
             // toolStripLabelFiller
             // 
             this.toolStripLabelFiller.Name = "toolStripLabelFiller";
-            this.toolStripLabelFiller.Padding = new System.Windows.Forms.Padding(90, 0, 90, 0);
-            this.toolStripLabelFiller.Size = new System.Drawing.Size(180, 17);
+            this.toolStripLabelFiller.Padding = new System.Windows.Forms.Padding(97, 0, 97, 0);
+            this.toolStripLabelFiller.Size = new System.Drawing.Size(194, 17);
             // 
             // toolStripInfo
             // 
@@ -183,7 +185,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(368, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(354, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -700,7 +702,7 @@ namespace AutoScreenCapture
             this.labelScreenshotTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelScreenshotTitle.AutoSize = true;
-            this.labelScreenshotTitle.Location = new System.Drawing.Point(258, 413);
+            this.labelScreenshotTitle.Location = new System.Drawing.Point(460, 413);
             this.labelScreenshotTitle.Name = "labelScreenshotTitle";
             this.labelScreenshotTitle.Size = new System.Drawing.Size(72, 13);
             this.labelScreenshotTitle.TabIndex = 0;
@@ -710,10 +712,10 @@ namespace AutoScreenCapture
             // 
             this.textBoxScreenshotTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreenshotTitle.Location = new System.Drawing.Point(338, 410);
+            this.textBoxScreenshotTitle.Location = new System.Drawing.Point(538, 410);
             this.textBoxScreenshotTitle.Name = "textBoxScreenshotTitle";
             this.textBoxScreenshotTitle.ReadOnly = true;
-            this.textBoxScreenshotTitle.Size = new System.Drawing.Size(483, 20);
+            this.textBoxScreenshotTitle.Size = new System.Drawing.Size(283, 20);
             this.textBoxScreenshotTitle.TabIndex = 0;
             this.textBoxScreenshotTitle.TabStop = false;
             // 
@@ -883,11 +885,33 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance.Interval = 300000;
             this.timerPerformMaintenance.Tick += new System.EventHandler(this.timerPerformMaintenance_Tick);
             // 
+            // textBoxLabel
+            // 
+            this.textBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxLabel.Location = new System.Drawing.Point(300, 410);
+            this.textBoxLabel.Name = "textBoxLabel";
+            this.textBoxLabel.ReadOnly = true;
+            this.textBoxLabel.Size = new System.Drawing.Size(154, 20);
+            this.textBoxLabel.TabIndex = 4;
+            this.textBoxLabel.TabStop = false;
+            // 
+            // labelLabel
+            // 
+            this.labelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelLabel.AutoSize = true;
+            this.labelLabel.Location = new System.Drawing.Point(258, 413);
+            this.labelLabel.Name = "labelLabel";
+            this.labelLabel.Size = new System.Drawing.Size(36, 13);
+            this.labelLabel.TabIndex = 5;
+            this.labelLabel.Text = "Label:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(833, 458);
+            this.Controls.Add(this.labelLabel);
+            this.Controls.Add(this.textBoxLabel);
             this.Controls.Add(this.comboBoxFilterType);
             this.Controls.Add(this.buttonRefreshFilterValues);
             this.Controls.Add(this.labelFilter);
@@ -1013,5 +1037,7 @@ namespace AutoScreenCapture
         private TextBox textBoxPassphrase;
         private ToolStripStatusLabel toolStripInfo;
         private ToolStripStatusLabel toolStripLabelFiller;
+        private TextBox textBoxLabel;
+        private Label labelLabel;
     }
 }

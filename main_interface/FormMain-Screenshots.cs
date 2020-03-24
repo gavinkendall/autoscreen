@@ -87,6 +87,7 @@
 
         private void ShowScreenshotBySlideIndex()
         {
+            textBoxLabel.Text = string.Empty;
             textBoxScreenshotTitle.Text = string.Empty;
             textBoxScreenshotFormat.Text = string.Empty;
             textBoxScreenshotWidth.Text = string.Empty;
@@ -154,6 +155,7 @@
 
                     if (pictureBox.Image != null)
                     {
+                        textBoxLabel.Text = selectedScreenshot.Label;
                         textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
                         textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
