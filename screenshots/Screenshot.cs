@@ -5,10 +5,10 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+
 namespace AutoScreenCapture
 {
-    using System;
-
     /// <summary>
     /// 
     /// </summary>

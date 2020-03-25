@@ -5,18 +5,18 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.IO;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.IO;
-
     /// <summary>
-    /// 
+    /// Anything involving files and folders are defined in this class.
     /// </summary>
     public static class FileSystem
     {
         /// <summary>
-        /// 
+        /// The path delimiter to use.
         /// </summary>
         public readonly static string PathDelimiter = Path.DirectorySeparatorChar.ToString();
 
@@ -26,7 +26,7 @@ namespace AutoScreenCapture
         public static readonly string FileManager = "explorer";
 
         /// <summary>
-        /// 
+        /// The name of the Auto Screen Capture Configuration File.
         /// </summary>
         public static string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.conf";
 
@@ -36,106 +36,96 @@ namespace AutoScreenCapture
         public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides";
 
         /// <summary>
-        /// 
+        /// The file containing the references to Editors.
         /// </summary>
         public static readonly string DefaultEditorsFile = "!autoscreen\\editors.xml";
 
         /// <summary>
-        /// 
+        /// The file containing the references to Regions.
         /// </summary>
         public static readonly string DefaultRegionsFile = "!autoscreen\\regions.xml";
 
         /// <summary>
-        /// 
+        /// The file containing the references to Screens.
         /// </summary>
         public static readonly string DefaultScreensFile = "!autoscreen\\screens.xml";
 
         /// <summary>
-        /// 
+        /// The file containing the references to Triggers.
         /// </summary>
         public static readonly string DefaultTriggersFile = "!autoscreen\\triggers.xml";
 
         /// <summary>
-        /// 
+        /// The file containing the references to Screenshots.
         /// </summary>
         public static readonly string DefaultScreenshotsFile = "!autoscreen\\screenshots.xml";
 
         /// <summary>
-        /// 
+        /// The file containing the references to Tags.
         /// </summary>
         public static readonly string DefaultTagsFile = "!autoscreen\\tags.xml";
 
         /// <summary>
-        /// 
-        /// </summary>
-        public static readonly string DefaultDatesFile = "!autoscreen\\dates.xml";
-
-        /// <summary>
-        /// 
+        /// Screenshots folder.
         /// </summary>
         public static string ScreenshotsFolder;
 
         /// <summary>
-        /// 
+        /// Debug folder.
         /// </summary>
         public static string DebugFolder;
 
         /// <summary>
-        /// 
+        /// Logs folder.
         /// </summary>
         public static string LogsFolder;
 
         /// <summary>
-        /// 
+        /// Application Settings file.
         /// </summary>
         public static string ApplicationSettingsFile;
 
         /// <summary>
-        /// 
+        /// User Settings file.
         /// </summary>
         public static string UserSettingsFile;
 
         /// <summary>
-        /// 
+        /// Editors file.
         /// </summary>
         public static string EditorsFile;
 
         /// <summary>
-        /// 
+        /// Regions file.
         /// </summary>
         public static string RegionsFile;
 
         /// <summary>
-        /// 
+        /// Screens file.
         /// </summary>
         public static string ScreensFile;
 
         /// <summary>
-        /// 
+        /// Triggers file.
         /// </summary>
         public static string TriggersFile;
 
         /// <summary>
-        /// 
+        /// Screenshots file.
         /// </summary>
         public static string ScreenshotsFile;
 
         /// <summary>
-        /// 
+        /// Tags file.
         /// </summary>
         public static string TagsFile;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static string DatesFile;
 
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets
         /// to include the trailing backslash for the screenshots folder.
         /// </summary>
-        /// <param name="screenshotsFolderPath"></param>
-        /// <returns></returns>
+        /// <param name="screenshotsFolderPath">The path of the screenshots folder to correct.</param>
+        /// <returns>A corrected version of the screenshots folder path.</returns>
         public static string CorrectScreenshotsFolderPath(string screenshotsFolderPath)
         {
             if (string.IsNullOrEmpty(screenshotsFolderPath) || screenshotsFolderPath.Length <= 0)

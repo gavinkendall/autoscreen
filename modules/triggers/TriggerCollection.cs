@@ -5,17 +5,17 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Xml;
-
     /// <summary>
-    /// 
+    /// A collection class to store and manage Trigger objects.
     /// </summary>
     public class TriggerCollection : IEnumerable<Trigger>
     {
@@ -37,9 +37,9 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// Returns the enumerator for the collection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of Trigger objects.</returns>
         public List<Trigger>.Enumerator GetEnumerator()
         {
             return _triggerList.GetEnumerator();

@@ -5,20 +5,16 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using AutoScreenCapture.Properties;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Drawing;
-    using System.IO;
-    using System.Net;
-    using System.Net.Mail;
-    using System.Text.RegularExpressions;
-    using System.Windows.Forms;
-    using System.Collections.Generic;
-    using AutoScreenCapture.Properties;
-
     /// <summary>
     /// The application's main window.
     /// </summary>
@@ -574,7 +570,7 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                formEditor.EditorCollection.Save();
+                formEditor.EditorCollection.SaveToXmlFile();
             }
         }
 
@@ -607,7 +603,7 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                formEditor.EditorCollection.Save();
+                formEditor.EditorCollection.SaveToXmlFile();
             }
         }
 
@@ -646,7 +642,7 @@ namespace AutoScreenCapture
                     BuildViewTabPages();
                     BuildScreenshotPreviewContextualMenu();
 
-                    formEditor.EditorCollection.Save();
+                    formEditor.EditorCollection.SaveToXmlFile();
                 }
             }
         }

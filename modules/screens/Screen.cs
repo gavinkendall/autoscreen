@@ -5,10 +5,10 @@
 // <author>Gavin Kendall</author>
 // <summary>A class representing a region.</summary>
 //-----------------------------------------------------------------------
+using System;
+
 namespace AutoScreenCapture
 {
-    using System;
-
     /// <summary>
     /// 
     /// </summary>

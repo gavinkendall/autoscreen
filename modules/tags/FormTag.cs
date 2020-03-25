@@ -5,11 +5,11 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Windows.Forms;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Windows.Forms;
-
     /// <summary>
     /// 
     /// </summary>

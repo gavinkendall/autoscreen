@@ -5,12 +5,12 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.IO;
+using System.Reflection;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.IO;
-    using System.Reflection;
-
     /// <summary>
     /// 
     /// </summary>

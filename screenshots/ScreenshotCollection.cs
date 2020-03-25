@@ -5,27 +5,25 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.IO;
+using System.Text;
+using System.Xml;
+using System.Linq;
+using System.Threading;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Xml;
-    using System.Linq;
-    using System.Threading;
-    using System.Diagnostics;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-
     /// <summary>
-    /// 
+    /// A collection class to store and manage Screenshot objects.
     /// </summary>
     public class ScreenshotCollection
     {
         private XmlDocument xDoc;
         private List<Slide> _slideList;
         private List<string> _slideNameList;
-        private List<string> _dateList;
         private List<Screenshot> _screenshotList;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenCollection _screenCollection;
@@ -72,9 +70,6 @@ namespace AutoScreenCapture
 
             _slideNameList = new List<string>();
             Log.Write("Initialized slide name list");
-
-            _dateList = new List<string>();
-            Log.Write("Initialized date list");
 
             _imageFormatCollection = imageFormatCollection;
             _screenCollection = screenCollection;
@@ -183,12 +178,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (_dateList.Count == 0)
-            {
-                _dateList = LoadXmlFileAndReturnNodeValues("date", null, "date");
-            }
-
-            return _dateList;
+            return LoadXmlFileAndReturnNodeValues("date", null, "date");
         }
 
         /// <summary>
@@ -207,12 +197,7 @@ namespace AutoScreenCapture
 
             Log.Write("Getting slides from screenshot list");
 
-            // Load the screenshots.xml file and add all the screenshots that match a particular date
-            // when the associated slides cannot be found in memory.
-            if (_slideList.Where(x => x.Date.Equals(date)).Select(x => x).Count() == 0)
-            {
-                LoadXmlFileAndAddScreenshots(date);
-            }
+            LoadXmlFileAndAddScreenshots(date);
 
             if (!string.IsNullOrEmpty(filterValue))
             {
@@ -247,15 +232,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public List<string> GetLabels()
-        {
-            return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="slideName"></param>
         /// <param name="viewId"></param>
         /// <returns></returns>
@@ -282,7 +258,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Loads screenshot references from the screenshots.xml file into an XmlDocument so it's available in memory.
+        /// The old way of loading screenshots also had the application construct each Screenshot object from an XML screenshot node and add it to the collection. This would take a long time to load for a large screenshots.xml file.
+        /// The new way (as of version 2.2.5.0) will only load XML screenshot nodes whenever necessary.
         /// </summary>
         public void LoadXmlFile()
         {
@@ -346,8 +324,15 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Loads a list of node values from the screenshots.xml file by a specified XML node given its name and value.
+        /// Loads a list of node values from the screenshots.xml file based on a node name.
+        /// LoadXmlFileAndReturnNodeValues(nodeName: "label", nodeValue: null, nodeReturn: "label") retrieves all label node values of label nodes.
+        /// LoadXmlFileAndReturnNodeValues(nodeName: "label", nodeValue: "My label", nodeReturn: "label") retrieves all label node values of label nodes matching "My label".
+        /// LoadXmlFileAndReturnNodeValues(nodeName: "label", nodeValue: "My label", nodeReturn: "date") retrieves all date node values of label nodes matching "My label".
         /// </summary>
+        /// <param name="nodeName">The name of the node to search for in the XML file. This will become part of an XPath query.</param>
+        /// <param name="nodeValue">The value of the node to search for in the XML file. If given a value, it will be used in an XPath query to search for a specific node value once a node is found using the node name. If given null, the node name will be used to retrieve all nodes matching the node name.</param>
+        /// <param name="nodeReturn">The value of the node that will be returned based on the node name.</param>
+        /// <returns>A list of node values.</returns>
         public List<string> LoadXmlFileAndReturnNodeValues(string nodeName, string nodeValue, string nodeReturn)
         {
             try
@@ -426,9 +411,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Loads the screenshots taken on a particular day from the screenshots.xml file.
         /// </summary>
-        /// <param name="date"></param>
+        /// <param name="date">The date to load screenshots from.</param>
         public void LoadXmlFileAndAddScreenshots(string date)
         {
             try
@@ -704,9 +689,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Saves the screenshots in the collection to the screenshots.xml file.
+        /// This method will also delete old screenshot references based on the number of days screenshots should be kept.
         /// </summary>
-        /// <param name="keepScreenshotsForDays"></param>
+        /// <param name="keepScreenshotsForDays">The number of days screenshots should be kept.</param>
         public void SaveToXmlFile(int keepScreenshotsForDays)
         {
             try

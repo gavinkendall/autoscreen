@@ -1,17 +1,9 @@
-﻿namespace AutoScreenCapture
-{
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Drawing;
-    using System.IO;
-    using System.Net;
-    using System.Net.Mail;
-    using System.Text.RegularExpressions;
-    using System.Windows.Forms;
-    using System.Collections.Generic;
-    using AutoScreenCapture.Properties;
+﻿using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 
+namespace AutoScreenCapture
+{
     public partial class FormMain : Form
     {
         /// <summary>
@@ -58,7 +50,7 @@
                 _imageFormatCollection = new ImageFormatCollection();
 
                 Log.Write("Initializing editor collection");
-                formEditor.EditorCollection.Load();
+                formEditor.EditorCollection.LoadXmlFileAndAddEditors();
                 Log.Write("Number of editors loaded = " + formEditor.EditorCollection.Count);
 
                 Log.Write("Initializing trigger collection");

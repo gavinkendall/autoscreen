@@ -5,14 +5,14 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Forms;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Threading;
-    using System.Windows.Forms;
-
     internal static class Program
     {
         [STAThread]

@@ -26,7 +26,7 @@
         {
             try
             {
-                List<string> labels = _screenshotCollection.GetLabels();
+                List<string> labels = _screenshotCollection.LoadXmlFileAndReturnNodeValues("label", null, "label");
 
                 if (ScreenCapture.LockScreenCaptureSession || labels.Count == 0)
                 {

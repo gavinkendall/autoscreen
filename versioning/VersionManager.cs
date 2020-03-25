@@ -39,11 +39,12 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Checks to see if we're loading an XML file from an old version of the application.
+        /// This is used by the collections for editors, regions, screens, tags, screenshots, triggers, and settings.
         /// </summary>
-        /// <param name="appCodenameToCheck"></param>
-        /// <param name="appVersionToCheck"></param>
-        /// <returns></returns>
+        /// <param name="appCodenameToCheck">The codename of the application to check.</param>
+        /// <param name="appVersionToCheck">The version of the application to check.</param>
+        /// <returns>True if we're handling a file from an old version. False if it's the current version or we don't know what version it is.</returns>
         public bool IsOldAppVersion(string appCodenameToCheck, string appVersionToCheck)
         {
             if (string.IsNullOrEmpty(appCodenameToCheck) && string.IsNullOrEmpty(appVersionToCheck))

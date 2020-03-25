@@ -5,17 +5,17 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Xml;
-
     /// <summary>
-    /// 
+    /// A collection class to store and manage Setting objects.
     /// </summary>
     public class SettingCollection : IEnumerable<Setting>
     {
@@ -37,9 +37,9 @@ namespace AutoScreenCapture
         internal string Filepath { get; set; }
 
         /// <summary>
-        /// 
+        /// Returns the enumerator for the collection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of Setting objects.</returns>
         public List<Setting>.Enumerator GetEnumerator()
         {
             return _settingList.GetEnumerator();

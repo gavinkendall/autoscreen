@@ -5,17 +5,17 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.IO;
-    using System.Linq;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using System.Text;
-
     /// <summary>
     /// 
     /// </summary>

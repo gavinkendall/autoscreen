@@ -1,17 +1,10 @@
-﻿namespace AutoScreenCapture
-{
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Drawing;
-    using System.IO;
-    using System.Net;
-    using System.Net.Mail;
-    using System.Text.RegularExpressions;
-    using System.Windows.Forms;
-    using System.Collections.Generic;
-    using AutoScreenCapture.Properties;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using AutoScreenCapture.Properties;
 
+namespace AutoScreenCapture
+{
     public partial class FormMain : Form
     {
         /// <summary>

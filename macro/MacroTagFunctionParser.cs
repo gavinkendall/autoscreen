@@ -5,11 +5,14 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Text.RegularExpressions;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Text.RegularExpressions;
-
+    /// <summary>
+    /// 
+    /// </summary>
     public static class MacroTagFunctionParser
     {
         // A macro tag function is surrounded by curly braces and gets interpreted to return a result.
@@ -20,6 +23,12 @@ namespace AutoScreenCapture
         // {minute+5}          5 minutes ahead the given DateTime
         private static readonly string DateTimeFormatTagFunctionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}$";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="tagFunction"></param>
+        /// <returns></returns>
         public static string ParseTagFunctionForDateTimeFormat(DateTime dateTime, string tagFunction)
         {
             string result = tagFunction;

@@ -5,11 +5,11 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Text.RegularExpressions;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Text.RegularExpressions;
-
     /// <summary>
     /// 
     /// </summary>

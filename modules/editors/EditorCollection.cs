@@ -5,17 +5,17 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml;
+
 namespace AutoScreenCapture
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Xml;
-
     /// <summary>
-    /// 
+    /// A collection class to store and manage Editor objects.
     /// </summary>
     public class EditorCollection : IEnumerable<Editor>
     {
@@ -35,9 +35,9 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// Returns the enumerator for the collection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of Editor objects.</returns>
         public List<Editor>.Enumerator GetEnumerator()
         {
             return _editorList.GetEnumerator();
@@ -54,9 +54,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Adds an Editor object to the collection.
         /// </summary>
-        /// <param name="editor"></param>
+        /// <param name="editor">An Editor object to add.</param>
         public void Add(Editor editor)
         {
             _editorList.Add(editor);
@@ -65,9 +65,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Removes an Editor object from the collection.
         /// </summary>
-        /// <param name="editor"></param>
+        /// <param name="editor">The Editor object to remove.</param>
         public void Remove(Editor editor)
         {
             _editorList.Remove(editor);
@@ -76,18 +76,19 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the number of Editor objects in the collection.
         /// </summary>
+        /// <returns>A count of Editor objects.</returns>
         public int Count
         {
             get { return _editorList.Count; }
         }
 
         /// <summary>
-        /// 
+        /// Gets a specific Editor object from the collection.
         /// </summary>
-        /// <param name="editorToFind"></param>
-        /// <returns></returns>
+        /// <param name="editorToFind">The Editor object to retrieve.</param>
+        /// <returns>An Editor object.</returns>
         public Editor Get(Editor editorToFind)
         {
             foreach (Editor editor in _editorList)
@@ -102,10 +103,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets an Editor object based on its name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of an Editor object.</param>
+        /// <returns>An Editor object.</returns>
         public Editor GetByName(string name)
         {
             foreach (Editor editor in _editorList)
@@ -120,9 +121,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Loads the image editors.
+        /// Loads the image editors from the editors.xml file.
         /// </summary>
-        public void Load()
+        public void LoadXmlFileAndAddEditors()
         {
             try
             {
@@ -176,7 +177,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
-                        Save();
+                        SaveToXmlFile();
                     }
                 }
                 else
@@ -186,14 +187,14 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("EditorCollection::Load", ex);
+                Log.Write("EditorCollection::LoadXmlFileAndAddEditors", ex);
             }
         }
 
         /// <summary>
-        /// Saves the image editors.
+        /// Saves the image editors in the collection to the editors.xml file.
         /// </summary>
-        public void Save()
+        public void SaveToXmlFile()
         {
             try
             {

@@ -5,20 +5,20 @@
 // <author>Gavin Kendall</author>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System.Collections;
+using System.Collections.Generic;
+
 namespace AutoScreenCapture
 {
-    using System.Collections;
-    using System.Collections.Generic;
-
     /// <summary>
-    /// 
+    /// A collection class to store and manage ImageFormat objects.
     /// </summary>
     public class ImageFormatCollection : IEnumerable<ImageFormat>
     {
         private readonly List<ImageFormat> _imageFormatList = new List<ImageFormat>();
 
         /// <summary>
-        /// 
+        /// Adds the default image formats to the ImageFormat collection.
         /// </summary>
         public ImageFormatCollection()
         {
@@ -32,9 +32,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Returns the enumerator for the collection.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A list of ImageFormat objects.</returns>
         public List<ImageFormat>.Enumerator GetEnumerator()
         {
             return _imageFormatList.GetEnumerator();
@@ -51,9 +51,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Adds an ImageFormat object to the collection.
         /// </summary>
-        /// <param name="imageFormat"></param>
+        /// <param name="imageFormat">The ImageFormat object to add.</param>
         public void Add(ImageFormat imageFormat)
         {
             _imageFormatList.Add(imageFormat);
@@ -62,10 +62,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets an ImageFormat object based on its name.
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">The name of an ImageFormat object.</param>
+        /// <returns>An ImageFormat object.</returns>
         public ImageFormat GetByName(string name)
         {
             foreach (ImageFormat imageFormat in _imageFormatList)

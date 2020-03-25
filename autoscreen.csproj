@@ -114,9 +114,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="macro\MacroTagFunctionParser.cs" />
-    <Compile Include="main_interface\FormMain-TEMPLATE-DELETE-LATER.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="main_interface\FormMain-Triggers.cs">
       <SubType>Form</SubType>
     </Compile>
