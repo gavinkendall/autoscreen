@@ -6,8 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -17,10 +15,8 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Editor objects.
     /// </summary>
-    public class EditorCollection : IEnumerable<Editor>
+    public class EditorCollection : CollectionTemplate<Editor>
     {
-        private readonly List<Editor> _editorList = new List<Editor>();
-
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_EDITOR_NODE = "editor";
         private const string XML_FILE_EDITORS_NODE = "editors";
@@ -32,93 +28,7 @@ namespace AutoScreenCapture
         private const string EDITOR_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_EDITORS_NODE + "/" + XML_FILE_EDITOR_NODE;
 
         private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }
-
-        /// <summary>
-        /// Returns the enumerator for the collection.
-        /// </summary>
-        /// <returns>A list of Editor objects.</returns>
-        public List<Editor>.Enumerator GetEnumerator()
-        {
-            return _editorList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Editor>)_editorList).GetEnumerator();
-        }
-
-        IEnumerator<Editor> IEnumerable<Editor>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        /// Adds an Editor object to the collection.
-        /// </summary>
-        /// <param name="editor">An Editor object to add.</param>
-        public void Add(Editor editor)
-        {
-            _editorList.Add(editor);
-
-            Log.Write("Editor added: " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
-        }
-
-        /// <summary>
-        /// Removes an Editor object from the collection.
-        /// </summary>
-        /// <param name="editor">The Editor object to remove.</param>
-        public void Remove(Editor editor)
-        {
-            _editorList.Remove(editor);
-
-            Log.Write("Editor removed: " + editor.Name + " (" + editor.Application + " " + editor.Arguments + ")");
-        }
-
-        /// <summary>
-        /// Gets the number of Editor objects in the collection.
-        /// </summary>
-        /// <returns>A count of Editor objects.</returns>
-        public int Count
-        {
-            get { return _editorList.Count; }
-        }
-
-        /// <summary>
-        /// Gets a specific Editor object from the collection.
-        /// </summary>
-        /// <param name="editorToFind">The Editor object to retrieve.</param>
-        /// <returns>An Editor object.</returns>
-        public Editor Get(Editor editorToFind)
-        {
-            foreach (Editor editor in _editorList)
-            {
-                if (editor.Equals(editorToFind))
-                {
-                    return editor;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets an Editor object based on its name.
-        /// </summary>
-        /// <param name="name">The name of an Editor object.</param>
-        /// <returns>An Editor object.</returns>
-        public Editor GetByName(string name)
-        {
-            foreach (Editor editor in _editorList)
-            {
-                if (editor.Name.Equals(name))
-                {
-                    return editor;
-                }
-            }
-
-            return null;
-        }
+        private static string AppVersion { get; set; }        
 
         /// <summary>
         /// Loads the image editors from the editors.xml file.
@@ -237,10 +147,8 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_EDITORS_NODE);
 
-                    foreach (object obj in _editorList)
+                    foreach (Editor editor in base.Collection)
                     {
-                        Editor editor = (Editor) obj;
-
                         xWriter.WriteStartElement(XML_FILE_EDITOR_NODE);
                         xWriter.WriteElementString(EDITOR_NAME, editor.Name);
                         xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
@@ -259,7 +167,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("EditorCollection::Save", ex);
+                Log.Write("EditorCollection::SaveToXmlFile", ex);
             }
         }
     }

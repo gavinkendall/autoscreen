@@ -55,19 +55,19 @@ namespace AutoScreenCapture
                 Log.Write("Number of editors loaded = " + formEditor.EditorCollection.Count);
 
                 Log.Write("Initializing trigger collection");
-                formTrigger.TriggerCollection.Load();
+                formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers();
                 Log.Write("Number of triggers loaded = " + formTrigger.TriggerCollection.Count);
 
                 Log.Write("Initializing region collection");
-                formRegion.RegionCollection.Load(_imageFormatCollection);
+                formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection);
                 Log.Write("Number of regions loaded = " + formRegion.RegionCollection.Count);
 
                 Log.Write("Initializing screen collection");
-                formScreen.ScreenCollection.Load(_imageFormatCollection);
+                formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection);
                 Log.Write("Number of screens loaded = " + formScreen.ScreenCollection.Count);
 
                 Log.Write("Initializing tag collection");
-                formTag.TagCollection.Load();
+                formTag.TagCollection.LoadXmlFileAndAddTags();
                 Log.Write("Number of tags loaded = " + formTag.TagCollection.Count);
 
                 Log.Write("Building screens module");

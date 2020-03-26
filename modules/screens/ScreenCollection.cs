@@ -6,8 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -17,10 +15,8 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Screen objects.
     /// </summary>
-    public class ScreenCollection : IEnumerable<Screen>
+    public class ScreenCollection : CollectionTemplate<Screen>
     {
-        private readonly List<Screen> _screenList = new List<Screen>();
-
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCREEN_NODE = "screen";
         private const string XML_FILE_SCREENS_NODE = "screens";
@@ -42,98 +38,13 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// Returns the enumerator for the collection.
-        /// </summary>
-        /// <returns>A list of Screen objects.</returns>
-        public List<Screen>.Enumerator GetEnumerator()
-        {
-            return _screenList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Screen>)_screenList).GetEnumerator();
-        }
-
-        IEnumerator<Screen> IEnumerable<Screen>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="screen"></param>
-        public void Add(Screen screen)
-        {
-            _screenList.Add(screen);
-
-            Log.Write("Screen added: " + screen.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="screen"></param>
-        public void Remove(Screen screen)
-        {
-            _screenList.Remove(screen);
-
-            Log.Write("Screen removed: " + screen.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count
-        {
-            get { return _screenList.Count; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="screenToFind"></param>
-        /// <returns></returns>
-        public Screen Get(Screen screenToFind)
-        {
-            foreach (Screen screen in _screenList)
-            {
-                if (screen.Equals(screenToFind))
-                {
-                    return screen;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Screen GetByName(string name)
-        {
-            foreach (Screen screen in _screenList)
-            {
-                if (screen.Name.Equals(name))
-                {
-                    return screen;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="component"></param>
         /// <returns></returns>
         public Screen GetByComponent(int component)
         {
-            foreach (Screen screen in _screenList)
+            foreach (Screen screen in base.Collection)
             {
                 if (screen.Component == component)
                 {
@@ -147,7 +58,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screens.
         /// </summary>
-        public void Load(ImageFormatCollection imageFormatCollection)
+        public void LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection)
         {
             try
             {
@@ -254,7 +165,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
-                        Save();
+                        SaveToXmlFile();
                     }
                 }
                 else
@@ -270,19 +181,19 @@ namespace AutoScreenCapture
                         Log.Write($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
                     }
 
-                    Save();
+                    SaveToXmlFile();
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCollection::Load", ex);
+                Log.Write("ScreenCollection::LoadXmlFileAndAddScreens", ex);
             }
         }
 
         /// <summary>
         /// Saves the screens.
         /// </summary>
-        public void Save()
+        public void SaveToXmlFile()
         {
             try
             {
@@ -323,10 +234,8 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
 
-                    foreach (object obj in _screenList)
+                    foreach (Screen screen in base.Collection)
                     {
-                        Screen screen = (Screen) obj;
-
                         xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
                         xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                         xWriter.WriteElementString(SCREEN_NAME, screen.Name);
@@ -352,7 +261,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCollection::Save", ex);
+                Log.Write("ScreenCollection::SaveToXmlFile", ex);
             }
         }
     }

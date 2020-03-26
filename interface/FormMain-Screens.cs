@@ -24,7 +24,7 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                formScreen.ScreenCollection.Save();
+                formScreen.ScreenCollection.SaveToXmlFile();
             }
         }
 
@@ -56,7 +56,7 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                formScreen.ScreenCollection.Save();
+                formScreen.ScreenCollection.SaveToXmlFile();
             }
         }
 
@@ -92,7 +92,7 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                formScreen.ScreenCollection.Save();
+                formScreen.ScreenCollection.SaveToXmlFile();
             }
         }
 
@@ -113,7 +113,7 @@ namespace AutoScreenCapture
                     BuildScreensModule();
                     BuildViewTabPages();
 
-                    formScreen.ScreenCollection.Save();
+                    formScreen.ScreenCollection.SaveToXmlFile();
                 }
             }
         }

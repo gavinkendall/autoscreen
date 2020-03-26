@@ -6,8 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -17,10 +15,8 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Tag objects.
     /// </summary>
-    public class TagCollection : IEnumerable<Tag>
+    public class TagCollection : CollectionTemplate<Tag>
     {
-        private readonly List<Tag> _tagList = new List<Tag>();
-
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_TAG_NODE = "tag";
         private const string XML_FILE_TAGS_NODE = "tags";
@@ -52,29 +48,10 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// Returns the enumerator for the collection.
-        /// </summary>
-        /// <returns>A list of Tag objects.</returns>
-        public List<Tag>.Enumerator GetEnumerator()
-        {
-            return _tagList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Tag>)_tagList).GetEnumerator();
-        }
-
-        IEnumerator<Tag> IEnumerable<Tag>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="tag"></param>
-        public void Add(Tag tag)
+        public override void Add(Tag tag)
         {
             if (string.IsNullOrEmpty(tag.Name)) return;
 
@@ -84,70 +61,13 @@ namespace AutoScreenCapture
             if (!tag.Name.EndsWith("%"))
                 tag.Name += "%";
 
-            _tagList.Add(tag);
-
-            Log.Write("Tag added: " + tag.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="tag"></param>
-        public void Remove(Tag tag)
-        {
-            _tagList.Remove(tag);
-
-            Log.Write("Tag removed: " + tag.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count
-        {
-            get { return _tagList.Count; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="tagToFind"></param>
-        /// <returns></returns>
-        public Tag Get(Tag tagToFind)
-        {
-            foreach (Tag tag in _tagList)
-            {
-                if (tag.Equals(tagToFind))
-                {
-                    return tag;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Tag GetByName(string name)
-        {
-            foreach (Tag tag in _tagList)
-            {
-                if (tag.Name.Equals(name))
-                {
-                    return tag;
-                }
-            }
-
-            return null;
+            base.Add(tag);
         }
 
         /// <summary>
         /// Loads the tags.
         /// </summary>
-        public void Load()
+        public void LoadXmlFileAndAddTags()
         {
             try
             {
@@ -250,7 +170,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
-                        Save();
+                        SaveToXmlFile();
                     }
                 }
                 else
@@ -282,19 +202,19 @@ namespace AutoScreenCapture
                     Add(new Tag("title", TagType.ActiveWindowTitle));
                     Add(new Tag("timeofday", TagType.TimeOfDay));
 
-                    Save();
+                    SaveToXmlFile();
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("TagCollection::Load", ex);
+                Log.Write("TagCollection::LoadXmlFileAndAddTags", ex);
             }
         }
 
         /// <summary>
         /// Saves the tags.
         /// </summary>
-        public void Save()
+        public void SaveToXmlFile()
         {
             try
             {
@@ -335,10 +255,8 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_TAGS_NODE);
 
-                    foreach (object obj in _tagList)
+                    foreach (Tag tag in base.Collection)
                     {
-                        Tag tag = (Tag)obj;
-
                         xWriter.WriteStartElement(XML_FILE_TAG_NODE);
                         xWriter.WriteElementString(TAG_NAME, tag.Name);
                         xWriter.WriteElementString(TAG_TYPE, tag.Type.ToString());
@@ -367,7 +285,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("TagCollection::Save", ex);
+                Log.Write("TagCollection::SaveToXmlFile", ex);
             }
         }
     }

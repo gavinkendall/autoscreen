@@ -24,7 +24,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                formRegion.RegionCollection.Save();
+                formRegion.RegionCollection.SaveToXmlFile();
             }
         }
 
@@ -56,7 +56,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                formRegion.RegionCollection.Save();
+                formRegion.RegionCollection.SaveToXmlFile();
             }
         }
 
@@ -92,7 +92,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                formRegion.RegionCollection.Save();
+                formRegion.RegionCollection.SaveToXmlFile();
             }
         }
 
@@ -113,7 +113,7 @@ namespace AutoScreenCapture
                     BuildRegionsModule();
                     BuildViewTabPages();
 
-                    formRegion.RegionCollection.Save();
+                    formRegion.RegionCollection.SaveToXmlFile();
                 }
             }
         }

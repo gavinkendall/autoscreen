@@ -22,7 +22,7 @@ namespace AutoScreenCapture
             {
                 BuildTriggersModule();
 
-                formTrigger.TriggerCollection.Save();
+                formTrigger.TriggerCollection.SaveToXmlFile();
             }
         }
 
@@ -53,7 +53,7 @@ namespace AutoScreenCapture
             {
                 BuildTriggersModule();
 
-                formTrigger.TriggerCollection.Save();
+                formTrigger.TriggerCollection.SaveToXmlFile();
             }
         }
 
@@ -78,7 +78,7 @@ namespace AutoScreenCapture
                 {
                     BuildTriggersModule();
 
-                    formTrigger.TriggerCollection.Save();
+                    formTrigger.TriggerCollection.SaveToXmlFile();
                 }
             }
         }

@@ -17,10 +17,8 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Trigger objects.
     /// </summary>
-    public class TriggerCollection : IEnumerable<Trigger>
+    public class TriggerCollection : CollectionTemplate<Trigger>
     {
-        private readonly List<Trigger> _triggerList = new List<Trigger>();
-
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_TRIGGER_NODE = "trigger";
         private const string XML_FILE_TRIGGERS_NODE = "triggers";
@@ -37,94 +35,9 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// Returns the enumerator for the collection.
-        /// </summary>
-        /// <returns>A list of Trigger objects.</returns>
-        public List<Trigger>.Enumerator GetEnumerator()
-        {
-            return _triggerList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Trigger>) _triggerList).GetEnumerator();
-        }
-
-        IEnumerator<Trigger> IEnumerable<Trigger>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="trigger"></param>
-        public void Add(Trigger trigger)
-        {
-            _triggerList.Add(trigger);
-
-            Log.Write("Trigger added: " + trigger.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="trigger"></param>
-        public void Remove(Trigger trigger)
-        {
-            _triggerList.Remove(trigger);
-
-            Log.Write("Trigger removed: " + trigger.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count
-        {
-            get { return _triggerList.Count; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="triggerToFind"></param>
-        /// <returns></returns>
-        public Trigger Get(Trigger triggerToFind)
-        {
-            foreach (Trigger trigger in _triggerList)
-            {
-                if (trigger.Equals(triggerToFind))
-                {
-                    return trigger;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Trigger GetByName(string name)
-        {
-            foreach (Trigger trigger in _triggerList)
-            {
-                if (trigger.Name.Equals(name))
-                {
-                    return trigger;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Loads the triggers.
         /// </summary>
-        public void Load()
+        public void LoadXmlFileAndAddTriggers()
         {
             try
             {
@@ -184,7 +97,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
-                        Save();
+                        SaveToXmlFile();
                     }
                 }
                 else
@@ -194,28 +107,32 @@ namespace AutoScreenCapture
                     // Setup a few "built in" triggers by default.
                     Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
                         TriggerActionType.ShowInterface, string.Empty));
+
                     Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted,
                         TriggerActionType.HideInterface, string.Empty));
+
                     Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
                         TriggerActionType.ShowInterface, string.Empty));
+
                     Add(new Trigger("Interface Closing -> Exit", TriggerConditionType.InterfaceClosing,
                         TriggerActionType.ExitApplication, string.Empty));
+
                     Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
                         TriggerActionType.StopScreenCapture, string.Empty));
 
-                    Save();
+                    SaveToXmlFile();
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("TriggerCollection::Load", ex);
+                Log.Write("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
             }
         }
 
         /// <summary>
         /// Saves the triggers.
         /// </summary>
-        public void Save()
+        public void SaveToXmlFile()
         {
             try
             {
@@ -256,10 +173,8 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
 
-                    foreach (object obj in _triggerList)
+                    foreach (Trigger trigger in base.Collection)
                     {
-                        Trigger trigger = (Trigger) obj;
-
                         xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
                         xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
@@ -279,7 +194,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("TriggerCollection::Save", ex);
+                Log.Write("TriggerCollection::SaveToXmlFile", ex);
             }
         }
     }

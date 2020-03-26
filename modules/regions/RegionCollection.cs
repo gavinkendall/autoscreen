@@ -6,8 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -17,10 +15,8 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Region objects.
     /// </summary>
-    public class RegionCollection : IEnumerable<Region>
+    public class RegionCollection : CollectionTemplate<Region>
     {
-        private readonly List<Region> _regionList = new List<Region>();
-
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_REGION_NODE = "region";
         private const string XML_FILE_REGIONS_NODE = "regions";
@@ -45,94 +41,9 @@ namespace AutoScreenCapture
         private string AppVersion { get; set; }
 
         /// <summary>
-        /// Returns the enumerator for the collection.
-        /// </summary>
-        /// <returns>A list of Region objects.</returns>
-        public List<Region>.Enumerator GetEnumerator()
-        {
-            return _regionList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Region>)_regionList).GetEnumerator();
-        }
-
-        IEnumerator<Region> IEnumerable<Region>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="region"></param>
-        public void Add(Region region)
-        {
-            _regionList.Add(region);
-
-            Log.Write("Region added: " + region.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="region"></param>
-        public void Remove(Region region)
-        {
-            _regionList.Remove(region);
-
-            Log.Write("Region removed: " + region.Name);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count
-        {
-            get { return _regionList.Count; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="regionToFind"></param>
-        /// <returns></returns>
-        public Region Get(Region regionToFind)
-        {
-            foreach (Region region in _regionList)
-            {
-                if (region.Equals(regionToFind))
-                {
-                    return region;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public Region GetByName(string name)
-        {
-            foreach (Region region in _regionList)
-            {
-                if (region.Name.Equals(name))
-                {
-                    return region;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Loads the regions.
         /// </summary>
-        public void Load(ImageFormatCollection imageFormatCollection)
+        public void LoadXmlFileAndAddRegions(ImageFormatCollection imageFormatCollection)
         {
             try
             {
@@ -265,7 +176,7 @@ namespace AutoScreenCapture
                     // with their appropriate property values if it was an old version of the application.
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
-                        Save();
+                        SaveToXmlFile();
                     }
                 }
                 else
@@ -282,7 +193,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the regions.
         /// </summary>
-        public void Save()
+        public void SaveToXmlFile()
         {
             try
             {
@@ -323,10 +234,8 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_REGIONS_NODE);
 
-                    foreach (object obj in _regionList)
+                    foreach (Region region in base.Collection)
                     {
-                        Region region = (Region) obj;
-
                         xWriter.WriteStartElement(XML_FILE_REGION_NODE);
                         xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                         xWriter.WriteElementString(REGION_NAME, region.Name);
@@ -355,7 +264,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("RegionCollection::Save", ex);
+                Log.Write("RegionCollection::SaveToXmlFile", ex);
             }
         }
     }

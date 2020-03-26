@@ -23,7 +23,7 @@ namespace AutoScreenCapture
             {
                 BuildTagsModule();
 
-                formTag.TagCollection.Save();
+                formTag.TagCollection.SaveToXmlFile();
             }
         }
 
@@ -54,7 +54,7 @@ namespace AutoScreenCapture
             {
                 BuildTagsModule();
 
-                formTag.TagCollection.Save();
+                formTag.TagCollection.SaveToXmlFile();
             }
         }
 
@@ -77,7 +77,7 @@ namespace AutoScreenCapture
                 {
                     BuildTagsModule();
 
-                    formTag.TagCollection.Save();
+                    formTag.TagCollection.SaveToXmlFile();
                 }
             }
         }

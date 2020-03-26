@@ -6,8 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -17,108 +15,18 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Schedule objects.
     /// </summary>
-    public class ScheduleCollection : IEnumerable<Schedule>
+    public class ScheduleCollection : CollectionTemplate<Schedule>
     {
-        private readonly List<Schedule> _scheduleList = new List<Schedule>();
-
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_SCHEDULE_NODE = "schedule";
         private const string XML_FILE_SCHEDULES_NODE = "schedules";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string SCHEDULE_NAME = "name";
-        private const string SCHEDULE_ARGUMENTS = "arguments";
-        private const string SCHEDULE_APPLICATION = "application";
         private const string SCHEDULE_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCHEDULES_NODE + "/" + XML_FILE_SCHEDULE_NODE;
 
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
-
-        /// <summary>
-        /// Returns the enumerator for the collection.
-        /// </summary>
-        /// <returns>A list of Schedule objects.</returns>
-        public List<Schedule>.Enumerator GetEnumerator()
-        {
-            return _scheduleList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Schedule>)_scheduleList).GetEnumerator();
-        }
-
-        IEnumerator<Schedule> IEnumerable<Schedule>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        /// Adds an Schedule object to the collection.
-        /// </summary>
-        /// <param name="schedule">An Schedule object to add.</param>
-        public void Add(Schedule schedule)
-        {
-            _scheduleList.Add(schedule);
-
-            Log.Write("Schedule added: " + schedule.Name);
-        }
-
-        /// <summary>
-        /// Removes an Schedule object from the collection.
-        /// </summary>
-        /// <param name="schedule">The Schedule object to remove.</param>
-        public void Remove(Schedule schedule)
-        {
-            _scheduleList.Remove(schedule);
-
-            Log.Write("Schedule removed: " + schedule.Name);
-        }
-
-        /// <summary>
-        /// Gets the number of Schedule objects in the collection.
-        /// </summary>
-        /// <returns>A count of Schedule objects.</returns>
-        public int Count
-        {
-            get { return _scheduleList.Count; }
-        }
-
-        /// <summary>
-        /// Gets a specific Schedule object from the collection.
-        /// </summary>
-        /// <param name="scheduleToFind">The Schedule object to retrieve.</param>
-        /// <returns>An Schedule object.</returns>
-        public Schedule Get(Schedule scheduleToFind)
-        {
-            foreach (Schedule schedule in _scheduleList)
-            {
-                if (schedule.Equals(scheduleToFind))
-                {
-                    return schedule;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets an Schedule object based on its name.
-        /// </summary>
-        /// <param name="name">The name of an Schedule object.</param>
-        /// <returns>An Schedule object.</returns>
-        public Schedule GetByName(string name)
-        {
-            foreach (Schedule schedule in _scheduleList)
-            {
-                if (schedule.Name.Equals(name))
-                {
-                    return schedule;
-                }
-            }
-
-            return null;
-        }
 
         /// <summary>
         /// Loads the image schedules from the schedules.xml file.
@@ -226,10 +134,8 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_SCHEDULES_NODE);
 
-                    foreach (object obj in _scheduleList)
+                    foreach (Schedule schedule in base.Collection)
                     {
-                        Schedule schedule = (Schedule) obj;
-
                         xWriter.WriteStartElement(XML_FILE_SCHEDULE_NODE);
                         xWriter.WriteElementString(SCHEDULE_NAME, schedule.Name);
 
