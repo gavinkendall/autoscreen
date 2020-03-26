@@ -138,6 +138,7 @@
     <Compile Include="interface\FormMain-Triggers.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="modules\CollectionTemplate.cs" />
     <Compile Include="modules\editors\Editor.cs" />
     <Compile Include="modules\editors\EditorCollection.cs" />
     <Compile Include="FileSystem.cs" />
