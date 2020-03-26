@@ -764,6 +764,8 @@ namespace AutoScreenCapture
                                 }
 
                                 _screenshotList.Remove(screenshot);
+                                _slideList.Remove(screenshot.Slide);
+                                _slideNameList.Remove(screenshot.Slide.Name);
                             }
                         }
                     }
