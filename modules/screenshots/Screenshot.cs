@@ -84,7 +84,7 @@ namespace AutoScreenCapture
         /// </summary>
         public Screenshot()
         {
-
+            Saved = false;
         }
 
         /// <summary>

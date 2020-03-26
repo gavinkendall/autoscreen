@@ -96,7 +96,6 @@
             this.comboBoxCondition.Name = "comboBoxCondition";
             this.comboBoxCondition.Size = new System.Drawing.Size(351, 21);
             this.comboBoxCondition.TabIndex = 2;
-            this.comboBoxCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxCondition_SelectedIndexChanged);
             // 
             // labelTriggerAction
             // 
@@ -115,7 +114,6 @@
             this.comboBoxAction.Name = "comboBoxAction";
             this.comboBoxAction.Size = new System.Drawing.Size(351, 21);
             this.comboBoxAction.TabIndex = 3;
-            this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
             // 
             // labelEditor
             // 

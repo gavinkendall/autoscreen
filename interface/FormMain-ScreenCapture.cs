@@ -8,6 +8,120 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
+        /// Returns the screen capture interval. This value will be used as the screen capture timer's interval property.
+        /// </summary>
+        /// <returns></returns>
+        private int GetScreenCaptureInterval()
+        {
+            return ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                (int)numericUpDownMillisecondsInterval.Value);
+        }
+
+        /// <summary>
+        /// Figures out if the "Start Capture" controls should be enabled or disabled.
+        /// </summary>
+        private void EnableStartCapture()
+        {
+            if (GetScreenCaptureInterval() > 0)
+            {
+                toolStripSplitButtonStartScreenCapture.Enabled = true;
+                toolStripMenuItemStartScreenCapture.Enabled = true;
+
+                groupBoxCaptureDelay.Enabled = true;
+                numericUpDownHoursInterval.Enabled = true;
+                checkBoxInitialScreenshot.Enabled = true;
+                numericUpDownMinutesInterval.Enabled = true;
+                checkBoxCaptureLimit.Enabled = true;
+                numericUpDownCaptureLimit.Enabled = true;
+                numericUpDownSecondsInterval.Enabled = true;
+                numericUpDownMillisecondsInterval.Enabled = true;
+
+                labelKeepScreenshots.Enabled = true;
+                labelDays.Enabled = true;
+                numericUpDownKeepScreenshotsForDays.Enabled = true;
+
+                checkBoxScreenshotLabel.Enabled = true;
+                comboBoxScreenshotLabel.Enabled = true;
+            }
+            else
+            {
+                DisableStartCapture();
+            }
+        }
+
+        /// <summary>
+        /// Enables the "Stop Capture" controls.
+        /// </summary>
+        private void EnableStopScreenCapture()
+        {
+            toolStripSplitButtonStopScreenCapture.Enabled = true;
+            toolStripMenuItemStopScreenCapture.Enabled = true;
+
+            groupBoxCaptureDelay.Enabled = false;
+            numericUpDownHoursInterval.Enabled = false;
+            checkBoxInitialScreenshot.Enabled = false;
+            numericUpDownMinutesInterval.Enabled = false;
+            checkBoxCaptureLimit.Enabled = false;
+            numericUpDownCaptureLimit.Enabled = false;
+            numericUpDownSecondsInterval.Enabled = false;
+            numericUpDownMillisecondsInterval.Enabled = false;
+
+            labelKeepScreenshots.Enabled = false;
+            labelDays.Enabled = false;
+            numericUpDownKeepScreenshotsForDays.Enabled = false;
+
+            checkBoxScreenshotLabel.Enabled = false;
+            comboBoxScreenshotLabel.Enabled = false;
+        }
+
+        /// <summary>
+        /// Disables the "Stop Capture" controls.
+        /// </summary>
+        private void DisableStopCapture()
+        {
+            toolStripSplitButtonStopScreenCapture.Enabled = false;
+            toolStripMenuItemStopScreenCapture.Enabled = false;
+        }
+
+        /// <summary>
+        /// Disables the "Start Capture" controls.
+        /// </summary>
+        private void DisableStartCapture()
+        {
+            toolStripSplitButtonStartScreenCapture.Enabled = false;
+            toolStripMenuItemStartScreenCapture.Enabled = false;
+        }
+
+        /// <summary>
+        /// Checks the capture limit when the checkbox is selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckedChanged_checkBoxCaptureLimit(object sender, EventArgs e)
+        {
+            CaptureLimitCheck();
+        }
+
+        /// <summary>
+        /// Checks the capture limit.
+        /// </summary>
+        private void CaptureLimitCheck()
+        {
+            if (checkBoxCaptureLimit.Checked)
+            {
+                numericUpDownCaptureLimit.Enabled = true;
+
+                _screenCapture.Count = 0;
+                _screenCapture.Limit = (int)numericUpDownCaptureLimit.Value;
+            }
+            else
+            {
+                numericUpDownCaptureLimit.Enabled = false;
+            }
+        }
+
+        /// <summary>
         /// Takes a screenshot of each available region and screen.
         /// </summary>
         private void TakeScreenshot()

@@ -665,6 +665,12 @@ namespace AutoScreenCapture
                                         !string.IsNullOrEmpty(screenshot.Slide.Value) &&
                                         !string.IsNullOrEmpty(screenshot.WindowTitle))
                                 {
+                                    // Since we're loading existing screenshots from the XML file each screenshot needs to be flagged as being "Saved"
+                                    // because they were already saved to the file before loading them. The "Saved" flag should only be used when we're
+                                    // saving new screenshots to avoid saving the entire screenshots collection.
+                                    //
+                                    // In other words, any screenshot flagged with a "Saved" value of "true" will be treated as if it is already in the file.
+                                    // A screenshot flagged with a "Saved" value of "false" will be treated as a new screenshot that should be saved to the file.
                                     screenshot.Saved = true;
 
                                     Add(screenshot);
@@ -766,6 +772,7 @@ namespace AutoScreenCapture
                     {
                         Screenshot screenshot = _screenshotList[i];
 
+                        // A new screenshot that needs to be written to the file will have its "Saved" property set to "false" so make sure to check that.
                         if (!screenshot.Saved && xDoc != null && screenshot?.Format != null && !string.IsNullOrEmpty(screenshot.Format.Name))
                         {
                             XmlElement xScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
@@ -828,6 +835,7 @@ namespace AutoScreenCapture
                                     xScreenshots.AppendChild(xScreenshot);
                                 }
 
+                                // Make sure to set this property to "true" so we only write out new screenshots (those with "Saved" set to "false").
                                 screenshot.Saved = true;
 
                                 _screenshotList[i] = screenshot;

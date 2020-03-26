@@ -77,44 +77,59 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="config\Config.cs" />
-    <Compile Include="main_interface\FormMain-CommandLine.cs">
+    <Compile Include="interface\FormMain-CommandLine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Exit.cs">
+    <Compile Include="interface\FormMain-Convert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Filters.cs">
+    <Compile Include="interface\FormMain-Editors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Labels.cs">
+    <Compile Include="interface\FormMain-Exit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Modules.cs">
+    <Compile Include="interface\FormMain-Filters.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Regions.cs">
+    <Compile Include="interface\FormMain-Labels.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-ScreenCapture.cs">
+    <Compile Include="interface\FormMain-Modules.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Screens.cs">
+    <Compile Include="interface\FormMain-Regions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Screenshots.cs">
+    <Compile Include="interface\FormMain-Schedules.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-Settings.cs">
+    <Compile Include="interface\FormMain-ScreenCapture.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-SystemTrayIcon.cs">
+    <Compile Include="interface\FormMain-Screens.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain-TabPages.cs">
+    <Compile Include="interface\FormMain-Screenshots.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormMain-Security.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormMain-Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormMain-SystemTrayIcon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormMain-TabPages.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="macro\MacroTagFunctionParser.cs" />
-    <Compile Include="main_interface\FormMain-Triggers.cs">
+    <Compile Include="interface\FormMain-Tags.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormMain-Triggers.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="modules\editors\Editor.cs" />
@@ -126,16 +141,24 @@
     <Compile Include="modules\editors\FormEditor.Designer.cs">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="modules\schedules\ScheduleCollection.cs" />
+    <Compile Include="modules\schedules\FormSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modules\schedules\FormSchedule.Designer.cs">
+      <DependentUpon>FormSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="modules\schedules\Schedule.cs" />
     <Compile Include="security\FormEnterPassphrase.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="security\FormEnterPassphrase.Designer.cs">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </Compile>
-    <Compile Include="main_interface\FormMain.cs">
+    <Compile Include="interface\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="main_interface\FormMain.Designer.cs">
+    <Compile Include="interface\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\regions\FormRegion.cs">
@@ -180,12 +203,12 @@
     <Compile Include="modules\triggers\TriggerConditionType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="screenshots\Screenshot.cs" />
-    <Compile Include="screenshots\ScreenshotCollection.cs" />
+    <Compile Include="modules\screenshots\Screenshot.cs" />
+    <Compile Include="modules\screenshots\ScreenshotCollection.cs" />
     <Compile Include="macro\MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
-    <Compile Include="screenshots\ScreenshotType.cs" />
+    <Compile Include="modules\screenshots\ScreenshotType.cs" />
     <Compile Include="security\Security.cs" />
     <Compile Include="settings\Setting.cs" />
     <Compile Include="settings\SettingCollection.cs" />
@@ -196,10 +219,13 @@
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="modules\schedules\FormSchedule.resx">
+      <DependentUpon>FormSchedule.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="security\formEnterPassphrase.resx">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="main_interface\FormMain.resx">
+    <EmbeddedResource Include="interface\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -229,7 +255,7 @@
     <None Include="app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <Compile Include="screenshots\ScreenCapture.cs" />
+    <Compile Include="ScreenCapture.cs" />
     <Compile Include="modules\slideshow\Slideshow.cs" />
   </ItemGroup>
   <ItemGroup>

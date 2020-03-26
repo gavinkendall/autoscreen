@@ -14,6 +14,21 @@
 
     public partial class FormMain : Form
     {
+        private void Click_applyLabel(object sender, EventArgs e)
+        {
+            if (sender != null && sender is ToolStripDropDownItem)
+            {
+                ToolStripDropDownItem toolStripDropDownItem = (ToolStripDropDownItem)sender;
+
+                if (!string.IsNullOrEmpty(toolStripDropDownItem.Text))
+                {
+                    checkBoxScreenshotLabel.Checked = true;
+                    comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
+                    SaveSettings();
+                }
+            }
+        }
+
         private void ComboBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (ToolStripMenuItem label in toolStripMenuItemApplyLabel.DropDownItems)

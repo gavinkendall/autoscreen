@@ -1,10 +1,123 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        /// <summary>
+        /// Shows the "Add Screen" window to enable the user to add a chosen Screen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_addScreen(object sender, EventArgs e)
+        {
+            formScreen.ScreenObject = null;
+            formScreen.ImageFormatCollection = _imageFormatCollection;
+            formScreen.ScreenCapture = _screenCapture;
+
+            formScreen.ShowDialog(this);
+
+            if (formScreen.DialogResult == DialogResult.OK)
+            {
+                BuildScreensModule();
+                BuildViewTabPages();
+
+                formScreen.ScreenCollection.Save();
+            }
+        }
+
+        /// <summary>
+        /// Removes the selected Screens from the Screens tab page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_removeSelectedScreens(object sender, EventArgs e)
+        {
+            int countBeforeRemoval = formScreen.ScreenCollection.Count;
+
+            foreach (Control control in tabPageScreens.Controls)
+            {
+                if (control.GetType().Equals(typeof(CheckBox)))
+                {
+                    CheckBox checkBox = (CheckBox)control;
+
+                    if (checkBox.Checked)
+                    {
+                        Screen screen = formScreen.ScreenCollection.Get((Screen)checkBox.Tag);
+                        formScreen.ScreenCollection.Remove(screen);
+                    }
+                }
+            }
+
+            if (countBeforeRemoval > formScreen.ScreenCollection.Count)
+            {
+                BuildScreensModule();
+                BuildViewTabPages();
+
+                formScreen.ScreenCollection.Save();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Change Screen" window to enable the user to edit a chosen Screen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_changeScreen(object sender, EventArgs e)
+        {
+            Screen screen = new Screen();
+
+            if (sender is Button)
+            {
+                Button buttonSelected = (Button)sender;
+                screen = (Screen)buttonSelected.Tag;
+            }
+
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                screen = (Screen)toolStripMenuItemSelected.Tag;
+            }
+
+            formScreen.ScreenObject = screen;
+            formScreen.ImageFormatCollection = _imageFormatCollection;
+            formScreen.ScreenCapture = _screenCapture;
+
+            formScreen.ShowDialog(this);
+
+            if (formScreen.DialogResult == DialogResult.OK)
+            {
+                BuildScreensModule();
+                BuildViewTabPages();
+
+                formScreen.ScreenCollection.Save();
+            }
+        }
+
+        private void Click_removeScreen(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                Screen screenSelected = (Screen)toolStripMenuItemSelected.Tag;
+
+                DialogResult dialogResult = MessageBox.Show("Do you want to remove the screen named \"" + screenSelected.Name + "\"?", "Remove Screen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Screen screen = formScreen.ScreenCollection.Get(screenSelected);
+                    formScreen.ScreenCollection.Remove(screen);
+
+                    BuildScreensModule();
+                    BuildViewTabPages();
+
+                    formScreen.ScreenCollection.Save();
+                }
+            }
+        }
+
         private void RunScreenCaptures()
         {
             Log.Write("Running screen captures");

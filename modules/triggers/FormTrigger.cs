@@ -248,30 +248,5 @@ namespace AutoScreenCapture
 
             comboBoxEditor.SelectedIndex = 0;
         }
-
-        private void comboBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            EnableOrDisableEditors();
-        }
-
-        private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            EnableOrDisableEditors();
-        }
-
-        private void EnableOrDisableEditors()
-        {
-            if (comboBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor &&
-                (comboBoxCondition.SelectedIndex == (int)TriggerConditionType.ScreenCaptureStopped ||
-                comboBoxCondition.SelectedIndex == (int)TriggerConditionType.ScreenshotTaken))
-            {
-                comboBoxEditor.Enabled = true;
-            }
-            else
-            {
-                comboBoxEditor.SelectedIndex = 0;
-                comboBoxEditor.Enabled = false;
-            }
-        }
     }
 }

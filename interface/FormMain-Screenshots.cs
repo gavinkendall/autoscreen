@@ -11,6 +11,56 @@ namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        /// <summary>
+        /// Saves screenshots every minute.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerPerformMaintenance_Tick(object sender, EventArgs e)
+        {
+            _screenCapture.PerformingMaintenance = true;
+
+            SaveScreenshots();
+
+            _screenCapture.PerformingMaintenance = false;
+        }
+
+        /// <summary>
+        /// Shows the list of screenshots when a date on the calendar has been selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DateSelected_monthCalendar(object sender, DateRangeEventArgs e)
+        {
+            ShowScreenshots();
+        }
+
+        /// <summary>
+        /// Emails screenshots using the EmailSever and EmailMessage settings in application settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_emailScreenshot(object sender, EventArgs e)
+        {
+            Screenshot screenshot = null;
+
+            if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+            {
+                var screen = (Screen)tabControlViews.SelectedTab.Tag;
+
+                screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+            }
+
+            if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+            {
+                var region = (Region)tabControlViews.SelectedTab.Tag;
+
+                screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+            }
+
+            EmailScreenshot(screenshot, prompt: true);
+        }
+
         private void SaveScreenshots()
         {
             if (runSaveScreenshotsThread != null && !runSaveScreenshotsThread.IsBusy)
@@ -167,8 +217,8 @@ namespace AutoScreenCapture
                 else
                 {
                     toolStripTextBox.Text = string.Empty;
-                    toolStripTextBox.BackColor = Color.PaleVioletRed;
-                    toolStripTextBox.ToolTipText = "Could not find or access image file";
+                    toolStripTextBox.BackColor = Color.LightYellow;
+                    toolStripTextBox.ToolTipText = string.Empty;
 
                     pictureBox.Image = null;
                 }

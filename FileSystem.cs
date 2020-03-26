@@ -65,6 +65,8 @@ namespace AutoScreenCapture
         /// </summary>
         public static readonly string DefaultTagsFile = "!autoscreen\\tags.xml";
 
+        public static readonly string DefaultSchedulesFile = "!autoscreen\\schedules.xml";
+
         /// <summary>
         /// Screenshots folder.
         /// </summary>
@@ -119,6 +121,8 @@ namespace AutoScreenCapture
         /// Tags file.
         /// </summary>
         public static string TagsFile;
+
+        public static string SchedulesFile;
 
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets
