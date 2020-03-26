@@ -102,7 +102,7 @@ namespace AutoScreenCapture
             {
                 Type t = @object.GetType();
 
-                if (t.GetProperty("Name").Equals(name))
+                if (t.GetProperty("Name").GetValue(@object, null).Equals(name))
                 {
                     return @object;
                 }

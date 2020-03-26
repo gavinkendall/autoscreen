@@ -162,7 +162,7 @@ namespace AutoScreenCapture
                 Log.Write("Arguments before %screenshot% tag replacement: " + editor.Arguments);
                 Log.Write("Arguments after %screenshot% tag replacement: " + editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
 
-                Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
+                _ = Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
             }
         }
     }
