@@ -893,7 +893,7 @@ namespace AutoScreenCapture
             // timerPerformMaintenance
             // 
             this.timerPerformMaintenance.Enabled = true;
-            this.timerPerformMaintenance.Interval = 60000;
+            this.timerPerformMaintenance.Interval = 300000;
             this.timerPerformMaintenance.Tick += new System.EventHandler(this.timerPerformMaintenance_Tick);
             // 
             // textBoxLabel

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -83,6 +84,10 @@ namespace AutoScreenCapture
 
                 Log.Write("Building tags module");
                 BuildTagsModule();
+
+                Log.Write("Building schedules module");
+                //BuildModule("Schedule", typeof(Schedule), typeof(FormSchedule), (List<Schedule>)formSchedule.ScheduleCollection, tabPageSchedules, Click_addSchedule, Click_removeSelectedSchedules);
+                BuildSchedulesModule();
 
                 Log.Write("Building screenshot preview context menu");
                 BuildScreenshotPreviewContextualMenu();

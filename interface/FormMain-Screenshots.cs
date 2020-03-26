@@ -12,7 +12,7 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// Saves screenshots every minute.
+        /// Saves screenshots every five minutes (300000 milliseconds).
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

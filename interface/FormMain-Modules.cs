@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -8,6 +8,60 @@ namespace AutoScreenCapture
 {
     public partial class FormMain
     {
+        //private void BuildModule(string name, Type objectType, Type formType, List<T> list, TabPage tabPage,
+        //    EventHandler eventHandlerForAddNew, EventHandler eventHandlerForRemoveSelected)
+        //{
+        //    int xPos = 5;
+        //    int yPos = 3;
+
+        //    const int OBJECT_HEIGHT = 20;
+        //    const int CHECKBOX_WIDTH = 20;
+        //    const int CHECKBOX_HEIGHT = 20;
+        //    const int BIG_BUTTON_WIDTH = 205;
+        //    const int BIG_BUTTON_HEIGHT = 25;
+        //    const int SMALL_BUTTON_WIDTH = 27;
+        //    const int SMALL_BUTTON_HEIGHT = 20;
+        //    const int X_POS_OBJECT_TEXTBOX = 20;
+        //    const int X_POS_OBJECT_BUTTON = 178;
+        //    const int OBJECT_TEXTBOX_WIDTH = 153;
+        //    const int Y_POS_OBJECT_INCREMENT = 23;
+        //    const int OBJECT_TEXTBOX_MAX_LENGTH = 50;
+
+        //    const string EDIT_BUTTON_TEXT = "...";
+
+        //    tabPage.Controls.Clear();
+
+        //    Button buttonAddNew = new Button
+        //    {
+        //        Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+        //        Location = new Point(xPos, yPos),
+        //        Text = $"Add New {name} ...",
+        //        TabStop = false
+        //    };
+        //    buttonAddNew.Click += eventHandlerForAddNew;
+        //    tabPage.Controls.Add(buttonAddNew);
+
+        //    yPos += 27;
+
+        //    Button buttonRemoveSelected = new Button
+        //    {
+        //        Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+        //        Location = new Point(xPos, yPos),
+        //        Text = $"Remove Selected {name}s",
+        //        TabStop = false
+        //    };
+        //    buttonRemoveSelected.Click += eventHandlerForRemoveSelected;
+        //    tabPage.Controls.Add(buttonRemoveSelected);
+
+        //    yPos += 28;
+
+        //    //formType f = (formType)form;
+        //    //foreach(Type type in )
+        //    //{
+
+        //    //}
+        //}
+
         private void BuildScreensModule()
         {
             int xPosScreen = 5;
