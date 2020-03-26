@@ -85,5 +85,20 @@ namespace AutoScreenCapture
             //    }
             //}
         }
+
+        private void Click_addSchedule(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Click_removeSelectedSchedules(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Click_changeSchedule(object sender, EventArgs e)
+        {
+
+        }
     }
 }

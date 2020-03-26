@@ -1,10 +1,16 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
+        {
+            PopulateLabelList();
+        }
+
         /// <summary>
         /// Exits the application from the system tray icon menu.
         /// </summary>

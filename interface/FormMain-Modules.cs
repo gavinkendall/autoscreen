@@ -485,9 +485,95 @@ namespace AutoScreenCapture
             }
         }
 
-        private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
+        private void BuildSchedulesModule()
         {
-            PopulateLabelList();
+            int xPosSchedule = 5;
+            int yPosSchedule = 3;
+
+            const int SCHEDULE_HEIGHT = 20;
+            const int CHECKBOX_WIDTH = 20;
+            const int CHECKBOX_HEIGHT = 20;
+            const int BIG_BUTTON_WIDTH = 205;
+            const int BIG_BUTTON_HEIGHT = 25;
+            const int SMALL_BUTTON_WIDTH = 27;
+            const int SMALL_BUTTON_HEIGHT = 20;
+            const int X_POS_SCHEDULE_TEXTBOX = 20;
+            const int X_POS_SCHEDULE_BUTTON = 178;
+            const int SCHEDULE_TEXTBOX_WIDTH = 153;
+            const int Y_POS_SCHEDULE_INCREMENT = 23;
+            const int SCHEDULE_TEXTBOX_MAX_LENGTH = 50;
+
+            const string EDIT_BUTTON_TEXT = "...";
+
+            tabPageSchedules.Controls.Clear();
+
+            // The button for adding a new Schedule.
+            Button buttonAddNewSchedule = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosSchedule, yPosSchedule),
+                Text = "Add New Schedule ...",
+                TabStop = false
+            };
+            buttonAddNewSchedule.Click += new EventHandler(Click_addSchedule);
+            tabPageSchedules.Controls.Add(buttonAddNewSchedule);
+
+            // Move down and then add the "Remove Selected Schedules" button.
+            yPosSchedule += 27;
+
+            Button buttonRemoveSelectedSchedules = new Button
+            {
+                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Location = new Point(xPosSchedule, yPosSchedule),
+                Text = "Remove Selected Schedules",
+                TabStop = false
+            };
+            buttonRemoveSelectedSchedules.Click += new EventHandler(Click_removeSelectedSchedules);
+            tabPageSchedules.Controls.Add(buttonRemoveSelectedSchedules);
+
+            // Move down a bit so we can start populating the Schedules tab page with a list of Schedules.
+            yPosSchedule += 28;
+
+            foreach (Schedule schedule in formSchedule.ScheduleCollection)
+            {
+                // Add a checkbox so that the user has the ability to remove the selected Schedule.
+                CheckBox checkboxSchedule = new CheckBox
+                {
+                    Size = new Size(CHECKBOX_WIDTH, CHECKBOX_HEIGHT),
+                    Location = new Point(xPosSchedule, yPosSchedule),
+                    Tag = schedule,
+                    TabStop = false
+                };
+                tabPageSchedules.Controls.Add(checkboxSchedule);
+
+                // Add a read-only text box showing the name of the Schedule.
+                TextBox textBoxSchedule = new TextBox
+                {
+                    Width = SCHEDULE_TEXTBOX_WIDTH,
+                    Height = SCHEDULE_HEIGHT,
+                    MaxLength = SCHEDULE_TEXTBOX_MAX_LENGTH,
+                    Location = new Point(xPosSchedule + X_POS_SCHEDULE_TEXTBOX, yPosSchedule),
+                    Text = schedule.Name,
+                    ReadOnly = true,
+                    TabStop = false
+                };
+                tabPageSchedules.Controls.Add(textBoxSchedule);
+
+                // Add a button so that the user can change the Schedule.
+                Button buttonChangeSchedule = new Button
+                {
+                    Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
+                    Location = new Point(xPosSchedule + X_POS_SCHEDULE_BUTTON, yPosSchedule),
+                    Text = EDIT_BUTTON_TEXT,
+                    Tag = schedule,
+                    TabStop = false
+                };
+                buttonChangeSchedule.Click += new EventHandler(Click_changeSchedule);
+                tabPageSchedules.Controls.Add(buttonChangeSchedule);
+
+                // Move down the Schedules tab page so we're ready to loop around again and add the next Schedule to it.
+                yPosSchedule += Y_POS_SCHEDULE_INCREMENT;
+            }
         }
     }
 }
