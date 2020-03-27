@@ -6,6 +6,7 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace AutoScreenCapture
@@ -60,17 +61,63 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string DateFormat = YearFormat + "-" + MonthFormat + "-" + DayFormat;
+        public static string DateFormat
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append(YearFormat);
+                sb.Append("-");
+                sb.Append(MonthFormat);
+                sb.Append("-");
+                sb.Append(DayFormat);
+
+                return sb.ToString();
+            }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string TimeFormat = HourFormat + ":" + MinuteFormat + ":" + SecondFormat + "." + MillisecondFormat;
+        public static string TimeFormat
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append(HourFormat);
+                sb.Append(":");
+                sb.Append(MinuteFormat);
+                sb.Append(":");
+                sb.Append(SecondFormat);
+                sb.Append(":");
+                sb.Append(MillisecondFormat);
+
+                return sb.ToString();
+            }
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string TimeFormatForWindows = HourFormat + "-" + MinuteFormat + "-" + SecondFormat + "-" + MillisecondFormat;
+        public static string TimeFormatForWindows
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append(HourFormat);
+                sb.Append("-");
+                sb.Append(MinuteFormat);
+                sb.Append("-");
+                sb.Append(SecondFormat);
+                sb.Append("-");
+                sb.Append(MillisecondFormat);
+
+                return sb.ToString();
+            }
+        }
 
         /// <summary>
         /// 

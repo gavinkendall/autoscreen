@@ -204,7 +204,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("FormMain::ParseCommandLine", ex);
+                Log.Write("FormMain::ParseCommandLineArguments", ex);
             }
         }
     }

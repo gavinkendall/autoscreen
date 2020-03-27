@@ -32,10 +32,26 @@ namespace AutoScreenCapture
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ENABLED = "enabled";
-        private const string SCREEN_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENS_NODE + "/" + XML_FILE_SCREEN_NODE;
+        private readonly string SCREEN_XPATH;
 
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ScreenCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_SCREENS_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_SCREEN_NODE);
+
+            SCREEN_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// 

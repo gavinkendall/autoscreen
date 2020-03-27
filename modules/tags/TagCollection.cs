@@ -42,10 +42,26 @@ namespace AutoScreenCapture
 
         private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
 
-        private const string TAG_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_TAGS_NODE + "/" + XML_FILE_TAG_NODE;
+        private readonly string TAG_XPATH;
 
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TagCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_TAGS_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_TAG_NODE);
+
+            TAG_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// 

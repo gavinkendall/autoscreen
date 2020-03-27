@@ -29,10 +29,26 @@ namespace AutoScreenCapture
         private const string TRIGGER_ACTION = "action";
         private const string TRIGGER_EDITOR = "editor";
 
-        private const string TRIGGER_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_TRIGGERS_NODE + "/" + XML_FILE_TRIGGER_NODE;
+        private readonly string TRIGGER_XPATH;
 
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TriggerCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_TRIGGERS_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_TRIGGER_NODE);
+
+            TRIGGER_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// Loads the triggers.

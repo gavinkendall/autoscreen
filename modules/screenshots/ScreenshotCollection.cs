@@ -49,10 +49,8 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_PROCESS_NAME = "processname";
         private const string SCREENSHOT_LABEL = "label";
 
-        private const string SCREENSHOTS_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE;
-        private const string SCREENSHOT_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCREENSHOTS_NODE + "/" + XML_FILE_SCREENSHOT_NODE;
-
-        private const string DATES_XPATH = SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE;
+        private readonly string SCREENSHOTS_XPATH;
+        private readonly string SCREENSHOT_XPATH;
 
         private  string AppCodename { get; set; }
         private  string AppVersion { get; set; }
@@ -62,6 +60,23 @@ namespace AutoScreenCapture
         /// </summary>
         public ScreenshotCollection(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection)
         {
+            StringBuilder sbScreenshots = new StringBuilder();
+            sbScreenshots.Append("/");
+            sbScreenshots.Append(XML_FILE_ROOT_NODE);
+            sbScreenshots.Append("/");
+            sbScreenshots.Append(XML_FILE_SCREENSHOTS_NODE);
+
+            StringBuilder sbScreenshot = new StringBuilder();
+            sbScreenshot.Append("/");
+            sbScreenshot.Append(XML_FILE_ROOT_NODE);
+            sbScreenshot.Append("/");
+            sbScreenshot.Append(XML_FILE_SCREENSHOTS_NODE);
+            sbScreenshot.Append("/");
+            sbScreenshot.Append(XML_FILE_SCREENSHOT_NODE);
+
+            SCREENSHOTS_XPATH = sbScreenshots.ToString();
+            SCREENSHOT_XPATH = sbScreenshot.ToString();
+
             _screenshotList = new List<Screenshot>();
             Log.Write("Initialized screenshot list");
 

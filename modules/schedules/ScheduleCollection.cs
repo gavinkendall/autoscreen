@@ -23,10 +23,26 @@ namespace AutoScreenCapture
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string SCHEDULE_NAME = "name";
-        private const string SCHEDULE_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SCHEDULES_NODE + "/" + XML_FILE_SCHEDULE_NODE;
+        private readonly string SCHEDULE_XPATH;
 
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ScheduleCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_SCHEDULES_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_SCHEDULE_NODE);
+
+            SCHEDULE_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// Loads the image schedules from the schedules.xml file.

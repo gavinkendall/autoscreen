@@ -25,10 +25,26 @@ namespace AutoScreenCapture
         private const string EDITOR_NAME = "name";
         private const string EDITOR_ARGUMENTS = "arguments";
         private const string EDITOR_APPLICATION = "application";
-        private const string EDITOR_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_EDITORS_NODE + "/" + XML_FILE_EDITOR_NODE;
+        private readonly string EDITOR_XPATH;
 
         private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }        
+        private static string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public EditorCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_EDITORS_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_EDITOR_NODE);
+
+            EDITOR_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// Loads the image editors from the editors.xml file.

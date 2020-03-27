@@ -35,10 +35,26 @@ namespace AutoScreenCapture
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
         private const string REGION_ENABLED = "enabled";
-        private const string REGION_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_REGIONS_NODE + "/" + XML_FILE_REGION_NODE;
+        private readonly string REGION_XPATH;
 
         private string AppCodename { get; set; }
         private string AppVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public RegionCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_REGIONS_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_REGION_NODE);
+
+            REGION_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// Loads the regions.

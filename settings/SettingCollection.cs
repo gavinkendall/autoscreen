@@ -29,12 +29,28 @@ namespace AutoScreenCapture
 
         private const string SETTING_KEY = "key";
         private const string SETTING_VALUE = "value";
-        private const string SETTING_XPATH = "/" + XML_FILE_ROOT_NODE + "/" + XML_FILE_SETTINGS_NODE + "/" + XML_FILE_SETTING_NODE;
+        private readonly string SETTING_XPATH;
 
         private string AppCodename { get; set; }
         private string AppVersion { get; set; }
 
         internal string Filepath { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public SettingCollection()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("/");
+            sb.Append(XML_FILE_ROOT_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_SETTINGS_NODE);
+            sb.Append("/");
+            sb.Append(XML_FILE_SETTING_NODE);
+
+            SETTING_XPATH = sb.ToString();
+        }
 
         /// <summary>
         /// Returns the enumerator for the collection.
