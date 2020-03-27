@@ -62,7 +62,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_buttonChangeTrigger(object sender, EventArgs e)
+        private void Click_changeTrigger(object sender, EventArgs e)
         {
             Button buttonSelected = (Button)sender;
 

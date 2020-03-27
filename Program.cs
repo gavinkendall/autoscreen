@@ -6,6 +6,7 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -22,6 +23,8 @@ namespace AutoScreenCapture
             {
                 if (createdNew)
                 {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new FormMain(args));
                 }

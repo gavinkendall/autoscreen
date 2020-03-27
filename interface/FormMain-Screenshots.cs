@@ -260,7 +260,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemShowScreenshotLocation(object sender, EventArgs e)
+        private void Click_showScreenshotLocation(object sender, EventArgs e)
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
@@ -297,10 +297,10 @@ namespace AutoScreenCapture
 
             ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
             showScreenshotLocationToolStripItem.Click +=
-                new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+                new EventHandler(Click_showScreenshotLocation);
 
             ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
-            addNewEditorToolStripItem.Click += new EventHandler(Click_addEditorToolStripMenuItem);
+            addNewEditorToolStripItem.Click += new EventHandler(Click_addEditor);
 
             contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocationToolStripItem);
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());

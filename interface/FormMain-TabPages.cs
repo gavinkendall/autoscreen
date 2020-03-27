@@ -109,7 +109,7 @@ namespace AutoScreenCapture
 
             toolStripButtonEmail.Click += new EventHandler(Click_emailScreenshot);
 
-            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditorToolStripMenuItem);
+            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditor);
 
             foreach (Editor editor in formEditor.EditorCollection)
             {
@@ -205,7 +205,7 @@ namespace AutoScreenCapture
                 DisplayStyle = ToolStripItemDisplayStyle.Image
             };
 
-            toolstripButtonOpenFolder.Click += new EventHandler(Click_toolStripMenuItemShowScreenshotLocation);
+            toolstripButtonOpenFolder.Click += new EventHandler(Click_showScreenshotLocation);
 
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripSplitButtonEdit);
