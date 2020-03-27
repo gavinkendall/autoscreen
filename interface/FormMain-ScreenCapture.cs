@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using AutoScreenCapture.Properties;
@@ -193,6 +194,20 @@ namespace AutoScreenCapture
 
                 _screenCapture.Running = true;
 
+                // Set the priority of the current process to above normal when we're taking
+                // screenshots at an interval of 10 seconds or lower.
+                if ((int)numericUpDownSecondsInterval.Value <= 10)
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
+                }
+
+                // Set the priority of the current process to low when we're taking
+                // screenshots at an interval of 30 seconds or higher.
+                if ((int)numericUpDownSecondsInterval.Value >= 30)
+                {
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Idle;
+                }
+
                 notifyIcon.Icon = Resources.autoscreen_running;
 
                 _screenCapture.DateTimeStartCapture = DateTime.Now;
@@ -241,6 +256,9 @@ namespace AutoScreenCapture
 
                     _screenCapture.Count = 0;
                     _screenCapture.Running = false;
+
+                    // Set the priority of the current process to normal when we're not taking screenshots.
+                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Normal;
 
                     notifyIcon.Icon = Resources.autoscreen;
 
