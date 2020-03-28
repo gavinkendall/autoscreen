@@ -160,15 +160,13 @@ namespace AutoScreenCapture
                         {
                             Log.Write("An old version of the screens file was detected. Attempting upgrade to new screen schema");
 
-                            Version thisVersion = Settings.VersionManager.Versions.Get(Settings.ApplicationCodename, Settings.ApplicationVersion);
                             Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
-                            if (v2250 != null && v2250.VersionNumber <= thisVersion.VersionNumber)
+                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                             {
-                                Log.Write("Dalek 2.2.5.0 or older detected");
-
                                 // This is a new property for Screen that was introduced in 2.2.5.0
-                                // so any version on, or before 2.2.5.0, needs to have it during an upgrade.
+                                // so any version before 2.2.5.0 needs to have it during an upgrade.
                                 screen.Enabled = true;
                             }
                         }
