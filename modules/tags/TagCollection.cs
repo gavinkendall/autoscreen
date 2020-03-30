@@ -42,6 +42,8 @@ namespace AutoScreenCapture
 
         private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
 
+        private const string TAG_ENABLED = "enabled";
+
         private readonly string TAG_XPATH;
 
         private static string AppCodename { get; set; }
@@ -172,11 +174,35 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         tag.EveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case TAG_ENABLED:
+                                        xReader.Read();
+                                        tag.Enabled = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
 
                         xReader.Close();
+
+                        // Change the data for each Tag that's being loaded if we've detected that
+                        // the XML file is from an older version of the application.
+                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        {
+                            Log.Write("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+
+                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+
+                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            {
+                                Log.Write("Dalek 2.2.4.6 or older detected");
+
+                                // This is a new property for Tag that was introduced in 2.2.5.0
+                                // so any version before 2.2.5.0 needs to have it during an upgrade.
+                                tag.Enabled = true;
+                            }
+                        }
 
                         if (!string.IsNullOrEmpty(tag.Name))
                         {
@@ -194,29 +220,29 @@ namespace AutoScreenCapture
                     Log.Write($"WARNING: {FileSystem.TagsFile} not found. Creating default tags");
 
                     // Setup a few "built in" tags by default.
-                    Add(new Tag("name", TagType.ScreenName));
-                    Add(new Tag("screen", TagType.ScreenNumber));
-                    Add(new Tag("format", TagType.ImageFormat));
-                    Add(new Tag("date", TagType.DateTimeFormat, MacroParser.DateFormat));
-                    Add(new Tag("time", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows));
-                    Add(new Tag("year", TagType.DateTimeFormat, MacroParser.YearFormat));
-                    Add(new Tag("month", TagType.DateTimeFormat, MacroParser.MonthFormat));
-                    Add(new Tag("day", TagType.DateTimeFormat, MacroParser.DayFormat));
-                    Add(new Tag("hour", TagType.DateTimeFormat, MacroParser.HourFormat));
-                    Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat));
-                    Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat));
-                    Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat));
-                    Add(new Tag("lastyear", TagType.DateTimeFormatFunction, "{year-1}"));
-                    Add(new Tag("lastmonth", TagType.DateTimeFormatFunction, "{month-1}"));
-                    Add(new Tag("yesterday", TagType.DateTimeFormatFunction, "{day-1}"));
-                    Add(new Tag("tomorrow", TagType.DateTimeFormatFunction, "{day+1}"));
-                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatFunction, "{hour-6}"));
-                    Add(new Tag("6hoursahead", TagType.DateTimeFormatFunction, "{hour+6}"));
-                    Add(new Tag("count", TagType.ScreenCaptureCycleCount));
-                    Add(new Tag("user", TagType.User));
-                    Add(new Tag("machine", TagType.Machine));
-                    Add(new Tag("title", TagType.ActiveWindowTitle));
-                    Add(new Tag("timeofday", TagType.TimeOfDay));
+                    Add(new Tag("name", TagType.ScreenName, enabled: true));
+                    Add(new Tag("screen", TagType.ScreenNumber, enabled: true));
+                    Add(new Tag("format", TagType.ImageFormat, enabled: true));
+                    Add(new Tag("date", TagType.DateTimeFormat, MacroParser.DateFormat, enabled: true));
+                    Add(new Tag("time", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, enabled: true));
+                    Add(new Tag("year", TagType.DateTimeFormat, MacroParser.YearFormat, enabled: true));
+                    Add(new Tag("month", TagType.DateTimeFormat, MacroParser.MonthFormat, enabled: true));
+                    Add(new Tag("day", TagType.DateTimeFormat, MacroParser.DayFormat, enabled: true));
+                    Add(new Tag("hour", TagType.DateTimeFormat, MacroParser.HourFormat, enabled: true));
+                    Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat, enabled: true));
+                    Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat, enabled: true));
+                    Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat, enabled: true));
+                    Add(new Tag("lastyear", TagType.DateTimeFormatFunction, "{year-1}", enabled: true));
+                    Add(new Tag("lastmonth", TagType.DateTimeFormatFunction, "{month-1}", enabled: true));
+                    Add(new Tag("yesterday", TagType.DateTimeFormatFunction, "{day-1}", enabled: true));
+                    Add(new Tag("tomorrow", TagType.DateTimeFormatFunction, "{day+1}", enabled: true));
+                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatFunction, "{hour-6}", enabled: true));
+                    Add(new Tag("6hoursahead", TagType.DateTimeFormatFunction, "{hour+6}", enabled: true));
+                    Add(new Tag("count", TagType.ScreenCaptureCycleCount, enabled: true));
+                    Add(new Tag("user", TagType.User, enabled: true));
+                    Add(new Tag("machine", TagType.Machine, enabled: true));
+                    Add(new Tag("title", TagType.ActiveWindowTitle, enabled: true));
+                    Add(new Tag("timeofday", TagType.TimeOfDay, enabled: true));
 
                     SaveToXmlFile();
                 }
@@ -287,6 +313,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_AFTERNOON_VALUE, tag.TimeOfDayAfternoonValue);
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_VALUE, tag.TimeOfDayEveningValue);
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING, tag.EveningExtendsToNextMorning.ToString());
+                        xWriter.WriteElementString(TAG_ENABLED, tag.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

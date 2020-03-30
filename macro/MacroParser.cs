@@ -134,6 +134,11 @@ namespace AutoScreenCapture
         {
             foreach (Tag tag in tagCollection)
             {
+                if (!tag.Enabled)
+                {
+                    continue;
+                }
+
                 switch (tag.Type)
                 {
                     case TagType.DateTimeFormat:
@@ -170,6 +175,11 @@ namespace AutoScreenCapture
 
             foreach (Tag tag in tagCollection)
             {
+                if (!tag.Enabled)
+                {
+                    continue;
+                }
+
                 switch (tag.Type)
                 {
                     case TagType.ActiveWindowTitle:

@@ -87,6 +87,11 @@ namespace AutoScreenCapture
         {
             foreach (Trigger trigger in formTrigger.TriggerCollection)
             {
+                if (!trigger.Enabled)
+                {
+                    continue;
+                }
+
                 // Don't show the interface on startup if we're running from the command line.
                 if (ScreenCapture.RunningFromCommandLine &&
                     trigger.ConditionType == TriggerConditionType.ApplicationStartup &&

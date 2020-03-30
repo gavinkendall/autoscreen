@@ -53,12 +53,14 @@ namespace AutoScreenCapture
                 comboBoxCondition.SelectedIndex = (int)TriggerObject.ConditionType;
                 comboBoxAction.SelectedIndex = (int)TriggerObject.ActionType;
                 comboBoxEditor.SelectedIndex = comboBoxEditor.Items.IndexOf(TriggerObject.Editor);
+                checkBoxEnabled.Checked = TriggerObject.Enabled;
             }
             else
             {
                 Text = "Add New Trigger";
 
                 textBoxTriggerName.Text = string.Empty;
+                checkBoxEnabled.Checked = true;
             }
         }
 
@@ -90,7 +92,8 @@ namespace AutoScreenCapture
                     TriggerCollection.Add(new Trigger(textBoxTriggerName.Text,
                         (TriggerConditionType)comboBoxCondition.SelectedIndex,
                         (TriggerActionType)comboBoxAction.SelectedIndex,
-                        comboBoxEditor.Enabled ? comboBoxEditor.SelectedItem.ToString() : string.Empty));
+                        comboBoxEditor.SelectedItem.ToString(),
+                        checkBoxEnabled.Checked));
 
                     Okay();
                 }
@@ -132,6 +135,8 @@ namespace AutoScreenCapture
                             TriggerCollection.Get(TriggerObject).Editor = string.Empty;
                         }
 
+                        TriggerCollection.Get(TriggerObject).Enabled = checkBoxEnabled.Checked;
+
                         Okay();
                     }
                 }
@@ -168,7 +173,8 @@ namespace AutoScreenCapture
             if (TriggerObject != null &&
                 ((int)TriggerObject.ConditionType != comboBoxCondition.SelectedIndex ||
                 (int)TriggerObject.ActionType != comboBoxAction.SelectedIndex ||
-                !TriggerObject.Editor.Equals(comboBoxEditor.SelectedItem.ToString())))
+                !TriggerObject.Editor.Equals(comboBoxEditor.SelectedItem.ToString()) ||
+                TriggerObject.Enabled != checkBoxEnabled.Checked))
             {
                 return true;
             }

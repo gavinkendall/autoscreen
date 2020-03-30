@@ -39,6 +39,7 @@
             this.comboBoxAction = new System.Windows.Forms.ComboBox();
             this.labelEditor = new System.Windows.Forms.Label();
             this.comboBoxEditor = new System.Windows.Forms.ComboBox();
+            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -60,7 +61,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(275, 110);
+            this.buttonOK.Location = new System.Drawing.Point(359, 109);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 5;
@@ -71,7 +72,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(356, 110);
+            this.buttonCancel.Location = new System.Drawing.Point(440, 109);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 6;
@@ -94,7 +95,7 @@
             this.comboBoxCondition.FormattingEnabled = true;
             this.comboBoxCondition.Location = new System.Drawing.Point(80, 32);
             this.comboBoxCondition.Name = "comboBoxCondition";
-            this.comboBoxCondition.Size = new System.Drawing.Size(351, 21);
+            this.comboBoxCondition.Size = new System.Drawing.Size(435, 21);
             this.comboBoxCondition.TabIndex = 2;
             // 
             // labelTriggerAction
@@ -112,7 +113,7 @@
             this.comboBoxAction.FormattingEnabled = true;
             this.comboBoxAction.Location = new System.Drawing.Point(80, 57);
             this.comboBoxAction.Name = "comboBoxAction";
-            this.comboBoxAction.Size = new System.Drawing.Size(351, 21);
+            this.comboBoxAction.Size = new System.Drawing.Size(435, 21);
             this.comboBoxAction.TabIndex = 3;
             // 
             // labelEditor
@@ -130,8 +131,20 @@
             this.comboBoxEditor.FormattingEnabled = true;
             this.comboBoxEditor.Location = new System.Drawing.Point(80, 82);
             this.comboBoxEditor.Name = "comboBoxEditor";
-            this.comboBoxEditor.Size = new System.Drawing.Size(351, 21);
+            this.comboBoxEditor.Size = new System.Drawing.Size(435, 21);
             this.comboBoxEditor.TabIndex = 4;
+            // 
+            // checkBoxEnabled
+            // 
+            this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxEnabled.AutoSize = true;
+            this.checkBoxEnabled.Location = new System.Drawing.Point(450, 8);
+            this.checkBoxEnabled.Name = "checkBoxEnabled";
+            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxEnabled.TabIndex = 7;
+            this.checkBoxEnabled.TabStop = false;
+            this.checkBoxEnabled.Text = "Enabled";
+            this.checkBoxEnabled.UseVisualStyleBackColor = true;
             // 
             // FormTrigger
             // 
@@ -139,7 +152,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(443, 142);
+            this.ClientSize = new System.Drawing.Size(527, 141);
+            this.Controls.Add(this.checkBoxEnabled);
             this.Controls.Add(this.comboBoxEditor);
             this.Controls.Add(this.labelEditor);
             this.Controls.Add(this.comboBoxAction);
@@ -175,5 +189,6 @@
         private System.Windows.Forms.ComboBox comboBoxAction;
         private System.Windows.Forms.Label labelEditor;
         private System.Windows.Forms.ComboBox comboBoxEditor;
+        private System.Windows.Forms.CheckBox checkBoxEnabled;
     }
 }

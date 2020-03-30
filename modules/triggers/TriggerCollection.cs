@@ -28,6 +28,7 @@ namespace AutoScreenCapture
         private const string TRIGGER_CONDITION = "condition";
         private const string TRIGGER_ACTION = "action";
         private const string TRIGGER_EDITOR = "editor";
+        private const string TRIGGER_ENABLED = "enabled";
 
         private readonly string TRIGGER_XPATH;
 
@@ -99,11 +100,35 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         trigger.Editor = xReader.Value;
                                         break;
+
+                                    case TRIGGER_ENABLED:
+                                        xReader.Read();
+                                        trigger.Enabled = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
 
                         xReader.Close();
+
+                        // Change the data for each Trigger that's being loaded if we've detected that
+                        // the XML file is from an older version of the application.
+                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        {
+                            Log.Write("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
+
+                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+
+                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            {
+                                Log.Write("Dalek 2.2.4.6 or older detected");
+
+                                // This is a new property for Trigger that was introduced in 2.2.5.0
+                                // so any version before 2.2.5.0 needs to have it during an upgrade.
+                                trigger.Enabled = true;
+                            }
+                        }
 
                         if (!string.IsNullOrEmpty(trigger.Name))
                         {
@@ -122,19 +147,19 @@ namespace AutoScreenCapture
 
                     // Setup a few "built in" triggers by default.
                     Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
-                        TriggerActionType.ShowInterface, string.Empty));
+                        TriggerActionType.ShowInterface, string.Empty, enabled: true));
 
                     Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted,
-                        TriggerActionType.HideInterface, string.Empty));
+                        TriggerActionType.HideInterface, string.Empty, enabled: true));
 
                     Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
-                        TriggerActionType.ShowInterface, string.Empty));
+                        TriggerActionType.ShowInterface, string.Empty, enabled: true));
 
                     Add(new Trigger("Interface Closing -> Exit", TriggerConditionType.InterfaceClosing,
-                        TriggerActionType.ExitApplication, string.Empty));
+                        TriggerActionType.ExitApplication, string.Empty, enabled: true));
 
                     Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
-                        TriggerActionType.StopScreenCapture, string.Empty));
+                        TriggerActionType.StopScreenCapture, string.Empty, enabled: true));
 
                     SaveToXmlFile();
                 }
@@ -196,6 +221,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
                         xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
+                        xWriter.WriteElementString(TRIGGER_ENABLED, trigger.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

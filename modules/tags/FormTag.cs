@@ -69,6 +69,8 @@ namespace AutoScreenCapture
                 textBoxEveningValue.Text = TagObject.TimeOfDayEveningValue;
 
                 checkBoxEveningExtendsToNextMorning.Checked = TagObject.EveningExtendsToNextMorning;
+
+                checkBoxEnabled.Checked = TagObject.Enabled;
             }
             else
             {
@@ -94,6 +96,8 @@ namespace AutoScreenCapture
                 textBoxEveningValue.Text = tag.TimeOfDayEveningValue;
 
                 checkBoxEveningExtendsToNextMorning.Checked = tag.EveningExtendsToNextMorning;
+
+                checkBoxEnabled.Checked = true;
             }
         }
 
@@ -134,7 +138,8 @@ namespace AutoScreenCapture
                         dateTimePickerEveningStart.Value,
                         dateTimePickerEveningEnd.Value,
                         textBoxEveningValue.Text,
-                        checkBoxEveningExtendsToNextMorning.Checked
+                        checkBoxEveningExtendsToNextMorning.Checked,
+                        checkBoxEnabled.Checked
                         ));
 
                     Okay();
@@ -177,6 +182,7 @@ namespace AutoScreenCapture
                         TagCollection.Get(TagObject).TimeOfDayEveningEnd = dateTimePickerEveningEnd.Value;
                         TagCollection.Get(TagObject).TimeOfDayEveningValue = textBoxEveningValue.Text;
                         TagCollection.Get(TagObject).EveningExtendsToNextMorning = checkBoxEveningExtendsToNextMorning.Checked;
+                        TagCollection.Get(TagObject).Enabled = checkBoxEnabled.Checked;
 
                         Okay();
                     }
@@ -244,7 +250,12 @@ namespace AutoScreenCapture
 
             if (TagObject != null)
             {
-                if (((int) TagObject.Type != comboBoxType.SelectedIndex))
+                if (TagObject.Enabled != checkBoxEnabled.Checked)
+                {
+                    changed = true;
+                }
+
+                if (((int)TagObject.Type != comboBoxType.SelectedIndex))
                 {
                     changed = true;
                 }

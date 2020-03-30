@@ -37,6 +37,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Schedule()
         {
 

@@ -35,8 +35,14 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Trigger()
         {
+            Enabled = false;
         }
 
         /// <summary>
@@ -46,12 +52,13 @@ namespace AutoScreenCapture
         /// <param name="conditionType"></param>
         /// <param name="actionType"></param>
         /// <param name="editor"></param>
-        public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor)
+        public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor, bool enabled)
         {
             Name = name;
             ConditionType = conditionType;
             ActionType = actionType;
             Editor = editor;
+            Enabled = enabled;
         }
     }
 }

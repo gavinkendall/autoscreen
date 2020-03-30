@@ -33,6 +33,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxScheduleName = new System.Windows.Forms.TextBox();
             this.labelScheduleName = new System.Windows.Forms.Label();
+            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -58,7 +59,7 @@
             // 
             // textBoxScheduleName
             // 
-            this.textBoxScheduleName.Location = new System.Drawing.Point(80, 6);
+            this.textBoxScheduleName.Location = new System.Drawing.Point(80, 42);
             this.textBoxScheduleName.MaxLength = 50;
             this.textBoxScheduleName.Name = "textBoxScheduleName";
             this.textBoxScheduleName.Size = new System.Drawing.Size(318, 20);
@@ -67,11 +68,23 @@
             // labelScheduleName
             // 
             this.labelScheduleName.AutoSize = true;
-            this.labelScheduleName.Location = new System.Drawing.Point(12, 9);
+            this.labelScheduleName.Location = new System.Drawing.Point(12, 45);
             this.labelScheduleName.Name = "labelScheduleName";
             this.labelScheduleName.Size = new System.Drawing.Size(38, 13);
             this.labelScheduleName.TabIndex = 0;
             this.labelScheduleName.Text = "Name:";
+            // 
+            // checkBoxEnabled
+            // 
+            this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxEnabled.AutoSize = true;
+            this.checkBoxEnabled.Location = new System.Drawing.Point(366, 12);
+            this.checkBoxEnabled.Name = "checkBoxEnabled";
+            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxEnabled.TabIndex = 7;
+            this.checkBoxEnabled.TabStop = false;
+            this.checkBoxEnabled.Text = "Enabled";
+            this.checkBoxEnabled.UseVisualStyleBackColor = true;
             // 
             // FormSchedule
             // 
@@ -80,6 +93,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(443, 114);
+            this.Controls.Add(this.checkBoxEnabled);
             this.Controls.Add(this.labelScheduleName);
             this.Controls.Add(this.textBoxScheduleName);
             this.Controls.Add(this.buttonOK);
@@ -103,5 +117,6 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.TextBox textBoxScheduleName;
         private System.Windows.Forms.Label labelScheduleName;
+        private System.Windows.Forms.CheckBox checkBoxEnabled;
     }
 }

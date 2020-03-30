@@ -77,6 +77,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool EveningExtendsToNextMorning { get; set; }
 
         private void SetDefaultValues()
@@ -99,6 +104,8 @@ namespace AutoScreenCapture
             TimeOfDayEveningValue = "evening at %hour%-%minute%-%second%";
 
             EveningExtendsToNextMorning = false;
+
+            Enabled = false;
         }
 
         /// <summary>
@@ -109,22 +116,23 @@ namespace AutoScreenCapture
             SetDefaultValues();
         }
 
-        public Tag(string name, TagType tagType)
+        public Tag(string name, TagType tagType, bool enabled)
         {
             SetDefaultValues();
 
             Name = name;
             Type = tagType;
+            Enabled = enabled;
         }
 
-        public Tag(string name, TagType tagType, string dateTimeFormatValue)
+        public Tag(string name, TagType tagType, string dateTimeFormatValue, bool enabled)
         {
             SetDefaultValues();
 
             Name = name;
             Type = tagType;
-
             DateTimeFormatValue = dateTimeFormatValue;
+            Enabled = enabled;
         }
 
         /// <summary>
@@ -153,7 +161,8 @@ namespace AutoScreenCapture
             DateTime timeOfDayEveningStart,
             DateTime timeOfDayEveningEnd,
             string timeOfDayEveningValue,
-            bool eveningExtendsToNextMorning)
+            bool eveningExtendsToNextMorning,
+            bool enabled)
         {
             Name = name;
             Type = tagType;
@@ -174,6 +183,8 @@ namespace AutoScreenCapture
             TimeOfDayEveningValue = timeOfDayEveningValue;
 
             EveningExtendsToNextMorning = eveningExtendsToNextMorning;
+
+            Enabled = enabled;
         }
     }
 }

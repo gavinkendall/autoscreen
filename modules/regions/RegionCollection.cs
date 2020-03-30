@@ -160,7 +160,11 @@ namespace AutoScreenCapture
                         {
                             Log.Write("An old version of the regions file was detected. Attempting upgrade to new region schema");
 
-                            if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
+                            Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
+                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+
+                            if (v2182 != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                             {
                                 Log.Write("Clara 2.1.8.2 or older detected");
 
@@ -178,6 +182,15 @@ namespace AutoScreenCapture
                                 region.JpegQuality = 100;
                                 region.ResolutionRatio = 100;
                                 region.Mouse = true;
+                                region.Enabled = true;
+                            }
+
+                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            {
+                                Log.Write("Dalek 2.2.4.6 or older detected");
+
+                                // This is a new property for Screen that was introduced in 2.2.5.0
+                                // so any version before 2.2.5.0 needs to have it during an upgrade.
                                 region.Enabled = true;
                             }
                         }

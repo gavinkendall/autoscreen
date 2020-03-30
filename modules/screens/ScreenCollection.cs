@@ -154,17 +154,19 @@ namespace AutoScreenCapture
 
                         xReader.Close();
 
-                        // Change the data for each screen that's being loaded if we've detected that
+                        // Change the data for each Screen that's being loaded if we've detected that
                         // the XML file is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            Log.Write("An old version of the screens file was detected. Attempting upgrade to new screen schema");
+                            Log.Write("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                             {
+                                Log.Write("Dalek 2.2.4.6 or older detected");
+
                                 // This is a new property for Screen that was introduced in 2.2.5.0
                                 // so any version before 2.2.5.0 needs to have it during an upgrade.
                                 screen.Enabled = true;

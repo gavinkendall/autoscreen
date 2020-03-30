@@ -108,13 +108,18 @@ namespace AutoScreenCapture
                     {
                         Size = new Size(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT),
                         Location = new Point(xPos + X_POS_ICON, yPos),
+                        Tag = @object,
                         TabStop = false,
                         BorderStyle = BorderStyle.FixedSingle
                     };
 
-                    // At the moment Screen is the only type that has an "Enabled" property
+                    // Types of Screen, Region, Tag, Schedule, and Trigger have an "Enabled" property
                     // so we change the color of the label background depending on the value of "Enabled".
-                    if (t.Equals(typeof(Screen)))
+                    if (t.Equals(typeof(Screen)) ||
+                        t.Equals(typeof(Region)) ||
+                        t.Equals(typeof(Tag)) ||
+                        t.Equals(typeof(Schedule)) ||
+                        t.Equals(typeof(Trigger)))
                     {
                         bool enabled = (bool)t.GetProperty("Enabled").GetValue(@object, null);
                         labelEnabledStatus.BackColor = enabled ? Color.PaleGreen : Color.PaleVioletRed;
@@ -158,7 +163,27 @@ namespace AutoScreenCapture
 
         private void Click_enabledStatus(object sender, EventArgs e)
         {
-            
+            Label label = (Label)sender;
+
+            if (label.Tag.GetType() == typeof(Screen))
+            {
+                Screen screen = (Screen)label.Tag;
+                
+                if (screen.Enabled)
+                {
+                    screen.Enabled = false;
+                    label.BackColor = Color.Red;
+                }
+                else
+                {
+                    screen.Enabled = true;
+                    label.BackColor = Color.Green;
+                }
+            }
+
+            //Type t = label.Tag.GetType();
+
+            //Console.WriteLine(sender.ToString());
         }
 
         private void BuildScreensModule()
