@@ -274,6 +274,7 @@ namespace AutoScreenCapture
                         Setting setting = (Setting) obj;
 
                         xWriter.WriteStartElement(XML_FILE_SETTING_NODE);
+
                         xWriter.WriteElementString(SETTING_KEY, setting.Key);
                         xWriter.WriteElementString(SETTING_VALUE, setting.Value.ToString());
 

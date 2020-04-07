@@ -42,6 +42,8 @@ namespace AutoScreenCapture
 
         private void FormEditor_Load(object sender, EventArgs e)
         {
+            checkBoxMakeDefaultEditor.Checked = false;
+
             if (EditorObject != null)
             {
                 Text = "Change Editor";
@@ -50,6 +52,13 @@ namespace AutoScreenCapture
                 textBoxEditorName.Text = EditorObject.Name;
                 textBoxEditorApplication.Text = EditorObject.Application;
                 textBoxEditorArguments.Text = EditorObject.Arguments;
+
+                string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", defaultValue: string.Empty).Value.ToString();
+
+                if (EditorObject.Name.Equals(defaultEditor))
+                {
+                    checkBoxMakeDefaultEditor.Checked = true;
+                }
             }
             else
             {
@@ -69,6 +78,12 @@ namespace AutoScreenCapture
 
         private void Click_buttonOK(object sender, EventArgs e)
         {
+            if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxEditorName.Text))
+            {
+                Settings.User.GetByKey("StringDefaultEditor", defaultValue: string.Empty).Value = textBoxEditorName.Text;
+                Settings.User.Save();
+            }
+
             if (EditorObject != null)
             {
                 ChangeEditor();

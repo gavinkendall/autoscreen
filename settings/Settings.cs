@@ -251,6 +251,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("IntKeepScreenshotsForDays", 30));
                 User.Add(new Setting("StringScreenshotLabel", string.Empty));
                 User.Add(new Setting("BoolApplyScreenshotLabel", false));
+                User.Add(new Setting("StringDefaultEditor", string.Empty));
 
                 User.Save();
             }

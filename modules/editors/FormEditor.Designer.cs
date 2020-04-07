@@ -38,6 +38,7 @@
             this.buttonChooseEditor = new System.Windows.Forms.Button();
             this.labelEditorArguments = new System.Windows.Forms.Label();
             this.textBoxEditorArguments = new System.Windows.Forms.TextBox();
+            this.checkBoxMakeDefaultEditor = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -120,6 +121,16 @@
             this.textBoxEditorArguments.Size = new System.Drawing.Size(351, 20);
             this.textBoxEditorArguments.TabIndex = 4;
             // 
+            // checkBoxMakeDefaultEditor
+            // 
+            this.checkBoxMakeDefaultEditor.AutoSize = true;
+            this.checkBoxMakeDefaultEditor.Location = new System.Drawing.Point(15, 88);
+            this.checkBoxMakeDefaultEditor.Name = "checkBoxMakeDefaultEditor";
+            this.checkBoxMakeDefaultEditor.Size = new System.Drawing.Size(183, 17);
+            this.checkBoxMakeDefaultEditor.TabIndex = 7;
+            this.checkBoxMakeDefaultEditor.Text = "Make this editor the default editor";
+            this.checkBoxMakeDefaultEditor.UseVisualStyleBackColor = true;
+            // 
             // FormEditor
             // 
             this.AcceptButton = this.buttonOK;
@@ -127,6 +138,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(443, 114);
+            this.Controls.Add(this.checkBoxMakeDefaultEditor);
             this.Controls.Add(this.textBoxEditorArguments);
             this.Controls.Add(this.labelEditorArguments);
             this.Controls.Add(this.buttonChooseEditor);
@@ -160,5 +172,6 @@
         private System.Windows.Forms.Button buttonChooseEditor;
         private System.Windows.Forms.Label labelEditorArguments;
         private System.Windows.Forms.TextBox textBoxEditorArguments;
+        private System.Windows.Forms.CheckBox checkBoxMakeDefaultEditor;
     }
 }

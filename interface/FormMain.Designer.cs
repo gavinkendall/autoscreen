@@ -50,6 +50,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorInterface = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
@@ -239,6 +240,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorInterface,
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
+            this.toolStripMenuItemCaptureNowEdit,
             this.toolStripSeparatorCapture,
             this.toolStripMenuItemApplyLabel,
             this.toolStripSeparatorApplyLabel,
@@ -252,7 +254,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemAbout.Image = global::AutoScreenCapture.Properties.Resources.about;
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
             this.toolStripMenuItemAbout.Size = new System.Drawing.Size(254, 22);
-            this.toolStripMenuItemAbout.Text = "About ...";
+            this.toolStripMenuItemAbout.Text = "About Auto Screen Capture";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
             // 
             // toolStripSeparatorAbout
@@ -299,6 +301,15 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(254, 22);
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
+            // 
+            // toolStripMenuItemCaptureNowEdit
+            // 
+            this.toolStripMenuItemCaptureNowEdit.Name = "toolStripMenuItemCaptureNowEdit";
+            this.toolStripMenuItemCaptureNowEdit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.toolStripMenuItemCaptureNowEdit.Size = new System.Drawing.Size(254, 22);
+            this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now / Edit";
+            this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.Click_toolStripMenuItemCaptureNowEdit);
             // 
             // toolStripSeparatorCapture
             // 
@@ -1047,5 +1058,6 @@ namespace AutoScreenCapture
         private TextBox textBoxLabel;
         private Label labelLabel;
         private TabPage tabPageSchedules;
+        private ToolStripMenuItem toolStripMenuItemCaptureNowEdit;
     }
 }

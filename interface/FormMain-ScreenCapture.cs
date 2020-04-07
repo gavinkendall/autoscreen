@@ -253,6 +253,25 @@ namespace AutoScreenCapture
             }
         }
 
+        private void CaptureNowEdit()
+        {
+            string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", defaultValue: string.Empty).Value.ToString();
+
+            if (string.IsNullOrEmpty(defaultEditor))
+            {
+                return;
+            }
+
+            TakeScreenshot();
+
+            Editor editor = formEditor.EditorCollection.GetByName(defaultEditor);
+
+            if (editor != null)
+            {
+                RunEditor(editor, TriggerActionType.RunEditor);
+            }
+        }
+
         private void ScreenshotTakenWithFailure()
         {
             Log.Write("Application encountered error while taking a screenshot. Stopping screen capture");
@@ -277,6 +296,16 @@ namespace AutoScreenCapture
         private void Click_toolStripMenuItemStopScreenCapture(object sender, EventArgs e)
         {
             StopScreenCapture();
+        }
+
+        /// <summary>
+        /// Takes screenshots and then opens those screenshots in the default editor. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_toolStripMenuItemCaptureNowEdit(object sender, EventArgs e)
+        {
+            CaptureNowEdit();
         }
 
         /// <summary>

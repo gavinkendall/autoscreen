@@ -133,7 +133,7 @@ namespace AutoScreenCapture
         /// <param name="triggerActionType">The trigger's action type.</param>
         private void RunEditor(Editor editor, TriggerActionType triggerActionType)
         {
-            if (editor != null && triggerActionType == TriggerActionType.RunEditor && _screenCapture.Running)
+            if (editor != null && triggerActionType == TriggerActionType.RunEditor)
             {
                 Screenshot screenshot = _screenshotCollection.Get(_screenshotCollection.Count - 1);
 
