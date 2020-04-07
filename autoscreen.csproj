@@ -131,6 +131,7 @@
     <Compile Include="interface\FormMain-TabPages.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="keyboard\HotKeyMap.cs" />
     <Compile Include="macro\MacroTagFunctionParser.cs" />
     <Compile Include="interface\FormMain-Tags.cs">
       <SubType>Form</SubType>

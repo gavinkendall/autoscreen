@@ -28,6 +28,7 @@ namespace AutoScreenCapture
         private FormTag formTag = new FormTag();
         private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
         private FormSchedule formSchedule = new FormSchedule();
+        private HotKeyMap hotKeyMap = new HotKeyMap();
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
@@ -63,6 +64,10 @@ namespace AutoScreenCapture
         public FormMain(string[] args)
         {
             InitializeComponent();
+
+            hotKeyMap.KeyPressed +=  new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
+            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Shift, Keys.Z);
+            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Shift, Keys.X);
 
             if (args.Length > 0)
             {
@@ -383,6 +388,19 @@ namespace AutoScreenCapture
                 " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2020)", "About",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+        }
+
+        private void hotKey_KeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            if (e.Key == Keys.Z)
+            {
+                StartScreenCapture();
+            }
+
+            if (e.Key == Keys.X)
+            {
+                StopScreenCapture();
+            }
         }
     }
 }
