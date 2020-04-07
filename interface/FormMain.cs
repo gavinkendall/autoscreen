@@ -68,7 +68,7 @@ namespace AutoScreenCapture
             hotKeyMap.KeyPressed +=  new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
             hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Shift, Keys.Z);
             hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Shift, Keys.X);
-            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Shift, Keys.S);
+            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Shift, Keys.E);
 
             if (args.Length > 0)
             {
@@ -403,7 +403,7 @@ namespace AutoScreenCapture
                 StopScreenCapture();
             }
 
-            if (e.Key == Keys.S)
+            if (e.Key == Keys.E)
             {
                 CaptureNowEdit();
             }

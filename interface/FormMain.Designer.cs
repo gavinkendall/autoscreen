@@ -304,9 +304,10 @@ namespace AutoScreenCapture
             // 
             // toolStripMenuItemCaptureNowEdit
             // 
+            this.toolStripMenuItemCaptureNowEdit.Image = global::AutoScreenCapture.Properties.Resources.edit;
             this.toolStripMenuItemCaptureNowEdit.Name = "toolStripMenuItemCaptureNowEdit";
             this.toolStripMenuItemCaptureNowEdit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
+            | System.Windows.Forms.Keys.E)));
             this.toolStripMenuItemCaptureNowEdit.Size = new System.Drawing.Size(254, 22);
             this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now / Edit";
             this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.Click_toolStripMenuItemCaptureNowEdit);
