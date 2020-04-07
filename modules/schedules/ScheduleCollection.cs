@@ -172,6 +172,7 @@ namespace AutoScreenCapture
                     foreach (Schedule schedule in base.Collection)
                     {
                         xWriter.WriteStartElement(XML_FILE_SCHEDULE_NODE);
+
                         xWriter.WriteElementString(SCHEDULE_NAME, schedule.Name);
 
                         xWriter.WriteEndElement();

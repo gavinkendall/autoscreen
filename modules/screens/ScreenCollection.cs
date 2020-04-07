@@ -253,6 +253,8 @@ namespace AutoScreenCapture
                     foreach (Screen screen in base.Collection)
                     {
                         xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
+
+                        xWriter.WriteElementString(SCREEN_ENABLED, screen.Enabled.ToString());
                         xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                         xWriter.WriteElementString(SCREEN_NAME, screen.Name);
                         xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectScreenshotsFolderPath(screen.Folder));
@@ -262,7 +264,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                         xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
-                        xWriter.WriteElementString(SCREEN_ENABLED, screen.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

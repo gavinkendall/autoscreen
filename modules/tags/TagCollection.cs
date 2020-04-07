@@ -300,6 +300,8 @@ namespace AutoScreenCapture
                     foreach (Tag tag in base.Collection)
                     {
                         xWriter.WriteStartElement(XML_FILE_TAG_NODE);
+
+                        xWriter.WriteElementString(TAG_ENABLED, tag.Enabled.ToString());
                         xWriter.WriteElementString(TAG_NAME, tag.Name);
                         xWriter.WriteElementString(TAG_TYPE, tag.Type.ToString());
                         xWriter.WriteElementString(TAG_DATETIME_FORMAT_VALUE, tag.DateTimeFormatValue);
@@ -313,7 +315,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_AFTERNOON_VALUE, tag.TimeOfDayAfternoonValue);
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_VALUE, tag.TimeOfDayEveningValue);
                         xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING, tag.EveningExtendsToNextMorning.ToString());
-                        xWriter.WriteElementString(TAG_ENABLED, tag.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

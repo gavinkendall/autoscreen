@@ -266,6 +266,8 @@ namespace AutoScreenCapture
                     foreach (Region region in base.Collection)
                     {
                         xWriter.WriteStartElement(XML_FILE_REGION_NODE);
+
+                        xWriter.WriteElementString(REGION_ENABLED, region.Enabled.ToString());
                         xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                         xWriter.WriteElementString(REGION_NAME, region.Name);
                         xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectScreenshotsFolderPath(region.Folder));
@@ -278,7 +280,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_Y, region.Y.ToString());
                         xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
                         xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
-                        xWriter.WriteElementString(REGION_ENABLED, region.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }

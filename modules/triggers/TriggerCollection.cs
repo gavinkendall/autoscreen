@@ -217,11 +217,15 @@ namespace AutoScreenCapture
                     foreach (Trigger trigger in base.Collection)
                     {
                         xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
+
+                        xWriter.WriteElementString(TRIGGER_ENABLED, trigger.Enabled.ToString());
                         xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
+
+                        // Make sure the "editor" node is the last one written because its value can be empty
+                        // and if its value is empty then we won't be able to read the next node after it during load.
                         xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
-                        xWriter.WriteElementString(TRIGGER_ENABLED, trigger.Enabled.ToString());
 
                         xWriter.WriteEndElement();
                     }
