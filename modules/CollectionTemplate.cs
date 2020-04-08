@@ -17,20 +17,18 @@ namespace AutoScreenCapture
     /// <typeparam name="T"></typeparam>
     public class CollectionTemplate<T> : IEnumerable<T>
     {
-        private readonly List<T> _collection = new List<T>();
-
         /// <summary>
         /// Returns the enumerator for the collection.
         /// </summary>
         /// <returns>A list of objects of a generic type.</returns>
         public List<T>.Enumerator GetEnumerator()
         {
-            return _collection.GetEnumerator();
+            return Collection.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<T>)_collection).GetEnumerator();
+            return ((IEnumerable<T>)Collection).GetEnumerator();
         }
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
@@ -42,10 +40,7 @@ namespace AutoScreenCapture
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<T> Collection
-        {
-            get { return _collection; }
-        }
+        public List<T> Collection { get; } = new List<T>();
 
         /// <summary>
         /// 
@@ -53,7 +48,7 @@ namespace AutoScreenCapture
         /// <param name="object"></param>
         public virtual void Add(T @object)
         {
-            _collection.Add(@object);
+            Collection.Add(@object);
         }
 
         /// <summary>
@@ -62,7 +57,7 @@ namespace AutoScreenCapture
         /// <param name="object"></param>
         public void Remove(T @object)
         {
-            _collection.Remove(@object);
+            Collection.Remove(@object);
         }
 
         /// <summary>
@@ -70,7 +65,7 @@ namespace AutoScreenCapture
         /// </summary>
         public int Count
         {
-            get { return _collection.Count; }
+            get { return Collection.Count; }
         }
 
         /// <summary>
@@ -80,7 +75,7 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public T Get(T @objectToFind)
         {
-            foreach (T @object in _collection)
+            foreach (T @object in Collection)
             {
                 if (@object.Equals(@objectToFind))
                 {
@@ -88,7 +83,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            return default(T);
+            return default;
         }
 
         /// <summary>
@@ -98,7 +93,7 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public T GetByName(string name)
         {
-            foreach (T @object in _collection)
+            foreach (T @object in Collection)
             {
                 Type t = @object.GetType();
 
@@ -108,7 +103,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            return default(T);
+            return default;
         }
     }
 }

@@ -88,17 +88,70 @@ namespace AutoScreenCapture
 
         private void Click_addSchedule(object sender, EventArgs e)
         {
+            formSchedule.ScheduleObject = null;
 
+            formSchedule.ShowDialog(this);
+
+            if (formSchedule.DialogResult == DialogResult.OK)
+            {
+                BuildSchedulesModule();
+
+                formSchedule.ScheduleCollection.SaveToXmlFile();
+            }
         }
 
         private void Click_removeSelectedSchedules(object sender, EventArgs e)
         {
+            int countBeforeRemoval = formSchedule.ScheduleCollection.Count;
 
+            foreach (Control control in tabPageSchedules.Controls)
+            {
+                if (control.GetType().Equals(typeof(CheckBox)))
+                {
+                    CheckBox checkBox = (CheckBox)control;
+
+                    if (checkBox.Checked)
+                    {
+                        Schedule schedule = formSchedule.ScheduleCollection.Get((Schedule)checkBox.Tag);
+                        formSchedule.ScheduleCollection.Remove(schedule);
+                    }
+                }
+            }
+
+            if (countBeforeRemoval > formSchedule.ScheduleCollection.Count)
+            {
+                BuildSchedulesModule();
+
+                formSchedule.ScheduleCollection.SaveToXmlFile();
+            }
         }
 
         private void Click_changeSchedule(object sender, EventArgs e)
         {
+            Schedule schedule = new Schedule();
 
+            if (sender is Button)
+            {
+                Button buttonSelected = (Button)sender;
+                schedule = (Schedule)buttonSelected.Tag;
+            }
+
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                schedule = (Schedule)toolStripMenuItemSelected.Tag;
+            }
+
+            formSchedule.ScheduleObject = schedule;
+
+            formSchedule.ShowDialog(this);
+
+            if (formSchedule.DialogResult == DialogResult.OK)
+            {
+                BuildSchedulesModule();
+
+                formSchedule.ScheduleCollection.SaveToXmlFile();
+            }
         }
     }
 }

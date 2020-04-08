@@ -248,7 +248,7 @@ namespace AutoScreenCapture
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
-                 !ScreenObject.Enabled.Equals(checkBoxEnabled.Enabled)))
+                 !ScreenObject.Enabled.Equals(checkBoxEnabled.Checked)))
             {
                 return true;
             }

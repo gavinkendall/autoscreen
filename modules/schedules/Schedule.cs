@@ -51,9 +51,10 @@ namespace AutoScreenCapture
         /// 
         /// </summary>
         /// <param name="name"></param>
-        public Schedule(string name)
+        public Schedule(string name, bool enabled)
         {
             Name = name;
+            Enabled = enabled;
         }
     }
 }

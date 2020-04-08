@@ -43,12 +43,14 @@ namespace AutoScreenCapture
                 Text = "Change Schedule";
 
                 textBoxScheduleName.Text = ScheduleObject.Name;
+                checkBoxEnabled.Checked = ScheduleObject.Enabled;
             }
             else
             {
                 Text = "Add New Schedule";
 
                 textBoxScheduleName.Text = string.Empty;
+                checkBoxEnabled.Checked = true;
             }
         }
 
@@ -77,18 +79,22 @@ namespace AutoScreenCapture
 
                 if (ScheduleCollection.GetByName(textBoxScheduleName.Text) == null)
                 {
-                    ScheduleCollection.Add(new Schedule(textBoxScheduleName.Text));
+                    ScheduleCollection.Add(new Schedule(
+                        textBoxScheduleName.Text,
+                        checkBoxEnabled.Checked));
 
                     Okay();
                 }
                 else
                 {
-                    MessageBox.Show("A schedule with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("A schedule with this name already exists.", "Duplicate Name Conflict",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Please enter valid input for each field.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter valid input for each field.", "Invalid Input",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -102,13 +108,13 @@ namespace AutoScreenCapture
 
                     if (ScheduleCollection.GetByName(textBoxScheduleName.Text) != null && NameChanged())
                     {
-                        MessageBox.Show("An schedule with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("A schedule with this name already exists.", "Duplicate Name Conflict",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        //ScheduleCollection.Get(ScheduleObject).Application = textBoxScheduleApplication.Text;
-                        //ScheduleCollection.Get(ScheduleObject).Arguments = textBoxScheduleArguments.Text;
-                        //ScheduleCollection.Get(ScheduleObject).Name = textBoxScheduleName.Text;
+                        ScheduleCollection.Get(ScheduleObject).Name = textBoxScheduleName.Text;
+                        ScheduleCollection.Get(ScheduleObject).Enabled = checkBoxEnabled.Checked;
 
                         Okay();
                     }
@@ -141,7 +147,8 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
-            if (ScheduleObject != null)
+            if (ScheduleObject != null &&
+                (!ScheduleObject.Enabled.Equals(checkBoxEnabled.Checked)))
             {
                 return true;
             }

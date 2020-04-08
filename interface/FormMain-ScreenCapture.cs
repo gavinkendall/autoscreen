@@ -253,6 +253,11 @@ namespace AutoScreenCapture
             }
         }
 
+        private void CaptureNowArchive()
+        {
+            TakeScreenshot();
+        }
+
         private void CaptureNowEdit()
         {
             string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", defaultValue: string.Empty).Value.ToString();
@@ -299,7 +304,17 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Takes screenshots and then opens those screenshots in the default editor. 
+        /// Takes screenshots and saves them.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Click_toolStripMenuItemCaptureNowArchive(object sender, EventArgs e)
+        {
+            CaptureNowArchive();
+        }
+
+        /// <summary>
+        /// Takes screenshots, saves them, and then opens those screenshots in the default editor. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
