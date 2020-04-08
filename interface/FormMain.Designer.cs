@@ -134,6 +134,11 @@ namespace AutoScreenCapture
             // 
             // statusStrip
             // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonStartScreenCapture,
+            this.toolStripSplitButtonStopScreenCapture,
+            this.toolStripLabelFiller,
+            this.toolStripInfo});
             this.statusStrip.Location = new System.Drawing.Point(0, 436);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
