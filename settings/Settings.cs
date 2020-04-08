@@ -202,7 +202,7 @@ namespace AutoScreenCapture
 
                     if (!Application.KeyExists("LowDiskPercentageThreshold"))
                     {
-                        Application.Add(new Setting("LowDiskPercentageThreshold", 3));
+                        Application.Add(new Setting("LowDiskPercentageThreshold", 1));
                     }
                 }
                 else
@@ -222,7 +222,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("EmailMessageBCC", string.Empty));
                     Application.Add(new Setting("EmailMessageSubject", string.Empty));
                     Application.Add(new Setting("EmailMessageBody", string.Empty));
-                    Application.Add(new Setting("LowDiskPercentageThreshold", 3));
+                    Application.Add(new Setting("LowDiskPercentageThreshold", 1));
                 }
 
                 Application.Save();

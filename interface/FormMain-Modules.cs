@@ -23,8 +23,8 @@ namespace AutoScreenCapture
             const int BIG_BUTTON_HEIGHT = 25;
             const int SMALL_IMAGE_WIDTH = 20;
             const int SMALL_IMAGE_HEIGHT = 20;
-            const int SMALL_BUTTON_WIDTH = 27;
-            const int SMALL_BUTTON_HEIGHT = 20;
+            const int SMALL_BUTTON_WIDTH = 21;
+            const int SMALL_BUTTON_HEIGHT = 21;
             const int X_POS_TEXTBOX = 48;
             const int X_POS_BUTTON = 178;
             const int TEXTBOX_WIDTH = 125;
@@ -38,23 +38,28 @@ namespace AutoScreenCapture
             // The button for adding a new object (this could be a Screen, Region, Editor, Trigger, or Tag).
             Button buttonAddNew = new Button
             {
-                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
+                Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
                 Location = new Point(xPos, yPos),
-                Text = $"Add New {name} ...",
+                Image = Properties.Resources.add,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.Transparent,
+                ForeColor = Color.Transparent,
+                ImageAlign = ContentAlignment.MiddleCenter,
                 TabStop = false
             };
             buttonAddNew.Click += eventHandlerForAddNew;
             tabPage.Controls.Add(buttonAddNew);
 
-            // Move down a bit.
-            yPos += 27;
-
             // Render the button for removing multiple selected objects.
             Button buttonRemoveSelected = new Button
             {
-                Size = new Size(BIG_BUTTON_WIDTH, BIG_BUTTON_HEIGHT),
-                Location = new Point(xPos, yPos),
-                Text = $"Remove Selected {name}s",
+                Size = new Size(SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT),
+                Location = new Point(xPos + 27, yPos),
+                Image = Properties.Resources.delete,
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.Transparent,
+                ForeColor = Color.Transparent,
+                ImageAlign = ContentAlignment.MiddleCenter,
                 TabStop = false
             };
             buttonRemoveSelected.Click += eventHandlerForRemoveSelected;
@@ -149,7 +154,11 @@ namespace AutoScreenCapture
                 {
                     Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
                     Location = new Point(xPos + X_POS_BUTTON, yPos),
-                    Text = EDIT_BUTTON_TEXT,
+                    Image = Properties.Resources.configure,
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.Transparent,
+                    ForeColor = Color.Transparent,
+                    ImageAlign = ContentAlignment.MiddleCenter,
                     Tag = @object,
                     TabStop = false
                 };
@@ -165,25 +174,95 @@ namespace AutoScreenCapture
         {
             Label label = (Label)sender;
 
+            if (label.Tag.GetType() == typeof(Region))
+            {
+                Region region = (Region)label.Tag;
+                
+                if (region.Enabled)
+                {
+                    region.Enabled = false;
+                    label.BackColor = Color.PaleVioletRed;
+                }
+                else
+                {
+                    region.Enabled = true;
+                    label.BackColor = Color.PaleGreen;
+                }
+
+                formRegion.RegionCollection.SaveToXmlFile();
+            }
+
+            if (label.Tag.GetType() == typeof(Schedule))
+            {
+                Schedule schedule = (Schedule)label.Tag;
+
+                if (schedule.Enabled)
+                {
+                    schedule.Enabled = false;
+                    label.BackColor = Color.PaleVioletRed;
+                }
+                else
+                {
+                    schedule.Enabled = true;
+                    label.BackColor = Color.PaleGreen;
+                }
+
+                formSchedule.ScheduleCollection.SaveToXmlFile();
+            }
+
             if (label.Tag.GetType() == typeof(Screen))
             {
                 Screen screen = (Screen)label.Tag;
-                
+
                 if (screen.Enabled)
                 {
                     screen.Enabled = false;
-                    label.BackColor = Color.Red;
+                    label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
                     screen.Enabled = true;
-                    label.BackColor = Color.Green;
+                    label.BackColor = Color.PaleGreen;
                 }
+
+                formScreen.ScreenCollection.SaveToXmlFile();
             }
 
-            //Type t = label.Tag.GetType();
+            if (label.Tag.GetType() == typeof(Tag))
+            {
+                Tag tag = (Tag)label.Tag;
 
-            //Console.WriteLine(sender.ToString());
+                if (tag.Enabled)
+                {
+                    tag.Enabled = false;
+                    label.BackColor = Color.PaleVioletRed;
+                }
+                else
+                {
+                    tag.Enabled = true;
+                    label.BackColor = Color.PaleGreen;
+                }
+
+                formTag.TagCollection.SaveToXmlFile();
+            }
+
+            if (label.Tag.GetType() == typeof(Trigger))
+            {
+                Trigger trigger = (Trigger)label.Tag;
+
+                if (trigger.Enabled)
+                {
+                    trigger.Enabled = false;
+                    label.BackColor = Color.PaleVioletRed;
+                }
+                else
+                {
+                    trigger.Enabled = true;
+                    label.BackColor = Color.PaleGreen;
+                }
+
+                formTrigger.TriggerCollection.SaveToXmlFile();
+            }
         }
 
         private void BuildScreensModule()

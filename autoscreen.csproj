@@ -279,7 +279,7 @@
     <Content Include="images\delete.png" />
     <Content Include="images\email.png" />
     <Content Include="images\keyboard.png" />
-    <Content Include="images\options.png" />
+    <Content Include="images\configure.png" />
     <Content Include="images\openfolder.png" />
     <Content Include="images\about.png" />
     <Content Include="images\edit.png" />

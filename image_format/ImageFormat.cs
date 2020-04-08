@@ -8,30 +8,30 @@
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// An ImageFormat object and its associated properties.
     /// </summary>
     public class ImageFormat
     {
         /// <summary>
-        /// 
+        /// The name of the ImageFormat object.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// The file extension of the ImageFormat object.
         /// </summary>
         public string Extension { get; set; }
 
         /// <summary>
-        /// 
+        /// The actual image format from Microsoft's System.Drawing.Imaging library.
         /// </summary>
         public System.Drawing.Imaging.ImageFormat Format { get; private set; }
 
         /// <summary>
-        /// 
+        /// Constructs an ImageFormat object given the name and extension.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="extension"></param>
+        /// <param name="name">The name of the ImageFormat object.</param>
+        /// <param name="extension">The file extension of the ImageFormat object.</param>
         public ImageFormat(string name, string extension)
         {
             Name = name;

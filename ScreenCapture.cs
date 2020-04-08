@@ -443,10 +443,10 @@ namespace AutoScreenCapture
 
                                 if (Log.DebugMode)
                                 {
-                                    Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 3).Value) + "%");
+                                    Log.Write("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value) + "%");
                                 }
 
-                                if (freeDiskSpacePercentage > Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 3).Value))
+                                if (freeDiskSpacePercentage > Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value))
                                 {
                                     string dirName = Path.GetDirectoryName(path);
 

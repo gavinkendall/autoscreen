@@ -65,7 +65,7 @@ namespace AutoScreenCapture
                 Text = "Add New Editor";
                 Icon = (Icon)(resources.GetObject("$this.Icon"));
 
-                textBoxEditorName.Text = string.Empty;
+                textBoxEditorName.Text = "Editor " + (EditorCollection.Count + 1);
                 textBoxEditorApplication.Text = string.Empty;
                 textBoxEditorArguments.Text = defaultArguments;
             }

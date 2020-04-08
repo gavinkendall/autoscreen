@@ -124,7 +124,7 @@ namespace AutoScreenCapture
                 Text = "Configure",
                 Alignment = ToolStripItemAlignment.Right,
                 AutoToolTip = false,
-                Image = Resources.options
+                Image = Resources.configure
             };
 
             toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen", null, Click_addScreen);

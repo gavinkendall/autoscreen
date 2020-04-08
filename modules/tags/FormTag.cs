@@ -78,7 +78,7 @@ namespace AutoScreenCapture
 
                 Tag tag = new Tag();
 
-                textBoxTagName.Text = string.Empty;
+                textBoxTagName.Text = "%tag" + (TagCollection.Count + 1) + "%";
                 comboBoxType.SelectedIndex = 0;
                 textBoxDateTimeFormatValue.Text = tag.DateTimeFormatValue;
 

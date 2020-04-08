@@ -59,7 +59,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Trigger";
 
-                textBoxTriggerName.Text = string.Empty;
+                textBoxTriggerName.Text = "Trigger " + (TriggerCollection.Count + 1);
                 checkBoxEnabled.Checked = true;
             }
         }

@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// The configuration file is used to define the folders and files that the application will use.
     /// </summary>
     public static class Config
     {
@@ -31,7 +31,7 @@ namespace AutoScreenCapture
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
         /// <summary>
-        /// 
+        /// Loads the configuration file.
         /// </summary>
         public static void Load()
         {
@@ -127,6 +127,13 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Gets the path from the configuration file based on what line is being processed and a regex pattern.
+        /// </summary>
+        /// <param name="line">The line to read from the file.</param>
+        /// <param name="regex">The regex pattern to use against the line.</param>
+        /// <param name="path">The output of the path being returned.</param>
+        /// <returns>A boolean to indicate if getting a path was successful or not.</returns>
         private static bool GetPath(string line, string regex, out string path)
         {
             if (line.StartsWith("#") || !Regex.IsMatch(line, regex))

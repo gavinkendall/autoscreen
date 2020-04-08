@@ -49,7 +49,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Schedule";
 
-                textBoxScheduleName.Text = string.Empty;
+                textBoxScheduleName.Text = "Schedule " + (ScheduleCollection.Count + 1);
                 checkBoxEnabled.Checked = true;
             }
         }
