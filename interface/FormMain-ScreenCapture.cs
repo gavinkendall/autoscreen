@@ -124,15 +124,22 @@ namespace AutoScreenCapture
         /// <summary>
         /// Takes a screenshot of each available region and screen.
         /// </summary>
-        private void TakeScreenshot()
+        private void TakeScreenshot(bool userInterruptCapture)
         {
             formScreen.RefreshScreenDictionary();
 
-            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
             {
                 _screenCapture.Count++;
 
-                _screenCapture.DateTimePreviousCycle = DateTime.Now;
+                DateTime dtNow = DateTime.Now;
+
+                _screenCapture.DateTimeScreenshotsTaken = dtNow;
+
+                if (!userInterruptCapture)
+                {
+                    _screenCapture.DateTimePreviousCycle = dtNow;
+                }
 
                 _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
 
@@ -201,7 +208,7 @@ namespace AutoScreenCapture
                 {
                     Log.Write("Taking initial screenshots");
 
-                    TakeScreenshot();
+                    TakeScreenshot(userInterruptCapture: false);
                 }
 
                 // Start taking screenshots.
@@ -255,7 +262,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowArchive()
         {
-            TakeScreenshot();
+            TakeScreenshot(userInterruptCapture: true);
         }
 
         private void CaptureNowEdit()
@@ -267,7 +274,7 @@ namespace AutoScreenCapture
                 return;
             }
 
-            TakeScreenshot();
+            TakeScreenshot(userInterruptCapture: true);
 
             Editor editor = formEditor.EditorCollection.GetByName(defaultEditor);
 
@@ -337,7 +344,7 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.Count < _screenCapture.Limit)
                     {
-                        TakeScreenshot();
+                        TakeScreenshot(userInterruptCapture: false);
                     }
 
                     if (_screenCapture.Count == _screenCapture.Limit)
@@ -348,7 +355,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    TakeScreenshot();
+                    TakeScreenshot(userInterruptCapture: false);
                 }
             }
             else

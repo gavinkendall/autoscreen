@@ -127,24 +127,29 @@ namespace AutoScreenCapture
         /// <summary>
         /// The date/time when the user started a screen capture session.
         /// </summary>
-        public  DateTime DateTimeStartCapture { get; set; }
+        public DateTime DateTimeStartCapture { get; set; }
 
         /// <summary>
-        /// The date/time when screenshots are taken (or when the previous screenshots were taken).
+        /// The date/time when screenshots are taken.
         /// </summary>
-        public  DateTime DateTimePreviousCycle { get; set; }
+        public DateTime DateTimeScreenshotsTaken { get; set; }
+
+        /// <summary>
+        /// The date/time when the previous cycle of screenshots were taken.
+        /// </summary>
+        public DateTime DateTimePreviousCycle { get; set; }
 
         /// <summary>
         /// The date/time of the next screen capture cycle.
         /// If we're still waiting for the very first screenshots to be taken then calculate from the date/time when the user started a screen capture session
         /// otherwise calculate from the date/time when the previous screenshots were taken.
         /// </summary>
-        public  DateTime DateTimeNextCycle { get { return DateTimePreviousCycle.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousCycle.AddMilliseconds(Delay); } }
+        public DateTime DateTimeNextCycle { get { return DateTimePreviousCycle.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousCycle.AddMilliseconds(Delay); } }
 
         /// <summary>
         /// The time remaining between now and the next screenshot that will be taken.
         /// </summary>
-        public  TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextCycle.Subtract(DateTime.Now).Duration(); } }
+        public TimeSpan TimeRemainingForNextScreenshot { get { return DateTimeNextCycle.Subtract(DateTime.Now).Duration(); } }
 
         /// <summary>
         /// The title of the active window.
@@ -454,7 +459,7 @@ namespace AutoScreenCapture
                                             Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
                                         }
 
-                                        Screenshot screenshot = new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label);
+                                        Screenshot screenshot = new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label);
 
                                         screenshotCollection.Add(screenshot);
 
@@ -486,7 +491,7 @@ namespace AutoScreenCapture
                                     Log.Write("Directory \"" + dirName + "\" did not exist so it was created");
                                 }
 
-                                screenshotCollection.Add(new Screenshot(DateTimePreviousCycle, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+                                screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
 
                                 SaveToFile(path, format, jpegQuality, bitmap);
                             }

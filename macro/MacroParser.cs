@@ -142,7 +142,7 @@ namespace AutoScreenCapture
                 switch (tag.Type)
                 {
                     case TagType.DateTimeFormat:
-                        macro = macro.Replace(tag.Name, screenCapture.DateTimePreviousCycle.ToString(tag.DateTimeFormatValue));
+                        macro = macro.Replace(tag.Name, screenCapture.DateTimeScreenshotsTaken.ToString(tag.DateTimeFormatValue));
                         break;
 
                     case TagType.User:
@@ -187,7 +187,7 @@ namespace AutoScreenCapture
                         break;
 
                     case TagType.DateTimeFormat:
-                        macro = macro.Replace(tag.Name, screenCapture.DateTimePreviousCycle.ToString(tag.DateTimeFormatValue));
+                        macro = macro.Replace(tag.Name, screenCapture.DateTimeScreenshotsTaken.ToString(tag.DateTimeFormatValue));
                         break;
 
                     case TagType.ImageFormat:
@@ -234,20 +234,20 @@ namespace AutoScreenCapture
                         // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeOfDay type.
                         tag.Type = TagType.TimeOfDay;
 
-                        if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
-                            screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
+                        if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
+                            screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
                         {
                             macro = macro.Replace(tag.Name, morningValue);
                         }
 
-                        if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
-                            screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
+                        if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
+                            screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
                         {
                             macro = macro.Replace(tag.Name, afternoonValue);
                         }
 
-                        if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
-                            screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                        if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
+                            screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
                         {
                             macro = macro.Replace(tag.Name, eveningValue);
                         }
@@ -259,14 +259,14 @@ namespace AutoScreenCapture
                             DateTime dayStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                             DateTime dayEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
-                            if (screenCapture.DateTimePreviousCycle.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
-                                screenCapture.DateTimePreviousCycle.TimeOfDay <= dayEnd.TimeOfDay)
+                            if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
+                                screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= dayEnd.TimeOfDay)
                             {
                                 macro = macro.Replace(tag.Name, eveningValue);
                             }
 
-                            if (screenCapture.DateTimePreviousCycle.TimeOfDay >= dayStart.TimeOfDay &&
-                                screenCapture.DateTimePreviousCycle.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                            if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= dayStart.TimeOfDay &&
+                                screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
                             {
                                 macro = macro.Replace(tag.Name, eveningValue);
                             }
@@ -275,7 +275,7 @@ namespace AutoScreenCapture
 
                     case TagType.DateTimeFormatFunction:
                         macro = macro.Replace(tag.Name,
-                            MacroTagFunctionParser.ParseTagFunctionForDateTimeFormat(screenCapture.DateTimePreviousCycle, tag.DateTimeFormatValue));
+                            MacroTagFunctionParser.ParseTagFunctionForDateTimeFormat(screenCapture.DateTimeScreenshotsTaken, tag.DateTimeFormatValue));
                         break;
                 }
             }
