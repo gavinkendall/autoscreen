@@ -168,10 +168,8 @@ namespace AutoScreenCapture
                 _screenCapture.Count = 0;
                 _screenCapture.Running = false;
 
-                notifyIcon.Icon = Resources.autoscreen;
-
-                // Hide the system tray icon.
-                notifyIcon.Visible = false;
+                SystemTrayIconStatusNormal();
+                HideSystemTrayIcon();
 
                 Log.Write("Hiding interface on forced application exit because Windows is shutting down");
                 HideInterface();

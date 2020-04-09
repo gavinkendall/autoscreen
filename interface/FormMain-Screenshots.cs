@@ -32,6 +32,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void DateSelected_monthCalendar(object sender, DateRangeEventArgs e)
         {
+            if (!_screenCapture.Running)
+            {
+                SystemTrayBalloonTip("Loading screenshots from " + monthCalendar.SelectionStart.ToLongDateString());
+            }
+
             ShowScreenshots();
         }
 

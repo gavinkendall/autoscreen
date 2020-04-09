@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoScreenCapture.Properties;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -6,6 +7,8 @@ namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        private const int BALLOON_TIP_TIMEOUT = 20000;
+
         private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
         {
             PopulateLabelList();
@@ -42,6 +45,31 @@ namespace AutoScreenCapture
             {
                 ShowInterface();
             }
+        }
+
+        private void SystemTrayBalloonTip(string message)
+        {
+            notifyIcon.ShowBalloonTip(20000, Settings.ApplicationName, message, ToolTipIcon.Info);
+        }
+
+        private void HideSystemTrayIcon()
+        {
+            notifyIcon.Visible = false;
+        }
+
+        private void SystemTrayIconStatusNormal()
+        {
+            notifyIcon.Icon = Resources.autoscreen;
+        }
+
+        private void SystemTrayIconStatusRunning()
+        {
+            if (notifyIcon.Visible && !checkBoxInitialScreenshot.Checked && timerScreenCapture.Interval > BALLOON_TIP_TIMEOUT)
+            {
+                SystemTrayBalloonTip("This icon turns green when taking screenshots. To stop, right-click on this icon and select Stop Screen Capture.");
+            }
+
+            notifyIcon.Icon = Resources.autoscreen_running;
         }
 
         private void ShowInfo()

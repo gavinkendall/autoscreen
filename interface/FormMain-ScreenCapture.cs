@@ -200,8 +200,6 @@ namespace AutoScreenCapture
 
                 _screenCapture.Running = true;
 
-                notifyIcon.Icon = Resources.autoscreen_running;
-
                 _screenCapture.DateTimeStartCapture = DateTime.Now;
 
                 if (checkBoxInitialScreenshot.Checked)
@@ -214,6 +212,8 @@ namespace AutoScreenCapture
                 // Start taking screenshots.
 
                 timerScreenCapture.Interval = screenCaptureInterval;
+
+                SystemTrayIconStatusRunning();
 
                 Log.Write("Running triggers of condition type ScreenCaptureStarted");
                 RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
