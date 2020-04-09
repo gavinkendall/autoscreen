@@ -98,6 +98,12 @@
     <Compile Include="interface\FormMain-Filters.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="interface\FormMain-Help.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormMain-KeyboardShortcuts.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="interface\FormMain-Labels.cs">
       <SubType>Form</SubType>
     </Compile>

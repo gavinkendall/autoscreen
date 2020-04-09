@@ -99,6 +99,10 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
+            HelpMessage("Welcome to " +
+                Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
+                Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value);
+
             ShowInfo();
 
             SearchFilterValues();
@@ -390,29 +394,6 @@ namespace AutoScreenCapture
                 " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2020)", "About",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
-        }
-
-        private void hotKey_KeyPressed(object sender, KeyPressedEventArgs e)
-        {
-            if (e.Key == Keys.Z)
-            {
-                StartScreenCapture();
-            }
-
-            if (e.Key == Keys.X)
-            {
-                StopScreenCapture();
-            }
-
-            if (e.Key == Keys.A)
-            {
-                CaptureNowArchive();
-            }
-
-            if (e.Key == Keys.E)
-            {
-                CaptureNowEdit();
-            }
         }
     }
 }
