@@ -103,6 +103,8 @@ namespace AutoScreenCapture
                 Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
                 Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value);
 
+            LoadHelpTips();
+
             ShowInfo();
 
             SearchFilterValues();

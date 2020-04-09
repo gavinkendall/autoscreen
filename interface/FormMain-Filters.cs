@@ -12,6 +12,8 @@ namespace AutoScreenCapture
             if (!string.IsNullOrEmpty(comboBoxFilterType.Text))
             {
                 comboBoxFilterValue.Enabled = true;
+                buttonRefreshFilterValues.Enabled = true;
+
                 SearchFilterValues();
             }
             else
@@ -26,6 +28,7 @@ namespace AutoScreenCapture
                 }
 
                 comboBoxFilterValue.Enabled = false;
+                buttonRefreshFilterValues.Enabled = false;
             }
         }
 

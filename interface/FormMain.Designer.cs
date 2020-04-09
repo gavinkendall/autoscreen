@@ -110,6 +110,7 @@ namespace AutoScreenCapture
             this.textBoxLabel = new System.Windows.Forms.TextBox();
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -908,6 +909,7 @@ namespace AutoScreenCapture
             // buttonRefreshFilterValues
             // 
             this.buttonRefreshFilterValues.BackColor = System.Drawing.Color.Transparent;
+            this.buttonRefreshFilterValues.Enabled = false;
             this.buttonRefreshFilterValues.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefreshFilterValues.ForeColor = System.Drawing.Color.Transparent;
             this.buttonRefreshFilterValues.Image = global::AutoScreenCapture.Properties.Resources.refresh;
@@ -981,6 +983,13 @@ namespace AutoScreenCapture
             this.labelHelp.Size = new System.Drawing.Size(829, 17);
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelHelp.Click += new System.EventHandler(this.labelHelp_Click);
+            // 
+            // timerShowNextHelpTip
+            // 
+            this.timerShowNextHelpTip.Enabled = true;
+            this.timerShowNextHelpTip.Interval = 20000;
+            this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
             // FormMain
             // 
@@ -1121,5 +1130,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemCaptureNowArchive;
         private Label labelHelp;
         private ToolStripSplitButton toolStripSplitButtonKeyboardShortcuts;
+        private Timer timerShowNextHelpTip;
     }
 }
