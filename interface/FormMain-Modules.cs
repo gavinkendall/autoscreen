@@ -19,8 +19,6 @@ namespace AutoScreenCapture
             const int CHECKBOX_WIDTH = 20;
             const int CHECKBOX_HEIGHT = 20;
             const int X_POS_ICON = 20;
-            const int BIG_BUTTON_WIDTH = 205;
-            const int BIG_BUTTON_HEIGHT = 25;
             const int SMALL_IMAGE_WIDTH = 20;
             const int SMALL_IMAGE_HEIGHT = 20;
             const int SMALL_BUTTON_WIDTH = 21;
@@ -30,8 +28,6 @@ namespace AutoScreenCapture
             const int TEXTBOX_WIDTH = 125;
             const int Y_POS_INCREMENT = 23;
             const int TEXTBOX_MAX_LENGTH = 50;
-
-            const string EDIT_BUTTON_TEXT = "...";
 
             tabPage.Controls.Clear();
 

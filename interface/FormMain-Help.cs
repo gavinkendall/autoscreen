@@ -11,9 +11,19 @@ namespace AutoScreenCapture
 
         private void LoadHelpTips()
         {
-            helpTips.Add("test 1");
-            helpTips.Add("test 2");
-            helpTips.Add("test 3");
+            helpTips.Add("Help tips are displayed here in the help bar. You can either click this help bar to show the next tip or wait until the next tip is shown");
+            helpTips.Add("Start Screen Capture begins a session of taking screenshots at the specified interval. The application will run in your system tray");
+            helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day");
+            helpTips.Add("Below the calendar are modules such as Setup, Screenshots, Screens, Regions, and Editors. Scroll through the modules to become familiar with them");
+            helpTips.Add("The Setup module is used to specify the frequency at which screenshots will be taken (the interval) and what label to apply to each screenshot");
+            helpTips.Add("The Screenshots module displays the list of screenshots taken on the day selected from the calendar");
+            helpTips.Add("The Regions module displays a list of regions. Add, remove, or change regions from the Regions module");
+            helpTips.Add("Use the Configure drop-down menu to add, remove, or change a Screen or Region. You can add multiple regions each with its own set of properties");
+            helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");
+            helpTips.Add("Use the Macro field of a Screen or Region to define the filename pattern for each file. A macro can be very useful for keeping files organized");
+            helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Tags module");
+            helpTips.Add("There are keyboard shortcuts you can use to manually take screenshots in your own time rather than wait for the next screen capture cycle");
+            helpTips.Add("You can change the behaviour of the application by changing the triggers. Each trigger performs a certain action based on a particular condition");
         }
 
         private void timerShowNextHelpTip_Tick(object sender, EventArgs e)
