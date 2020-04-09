@@ -44,6 +44,36 @@ namespace AutoScreenCapture
 
                 textBoxScheduleName.Text = ScheduleObject.Name;
                 checkBoxEnabled.Checked = ScheduleObject.Enabled;
+
+                radioButtonOneTime.Checked = ScheduleObject.ModeOneTime;
+                radioButtonPeriod.Checked = ScheduleObject.ModePeriod;
+
+                dateTimePickerSingleShot.Value = ScheduleObject.CaptureAt;
+                dateTimePickerScheduleStartAt.Value = ScheduleObject.StartAt;
+                dateTimePickerScheduleStopAt.Value = ScheduleObject.StopAt;
+
+                checkBoxMonday.Checked = ScheduleObject.Monday;
+                checkBoxTuesday.Checked = ScheduleObject.Tuesday;
+                checkBoxWednesday.Checked = ScheduleObject.Wednesday;
+                checkBoxThursday.Checked = ScheduleObject.Thursday;
+                checkBoxFriday.Checked = ScheduleObject.Friday;
+                checkBoxSaturday.Checked = ScheduleObject.Saturday;
+                checkBoxSunday.Checked = ScheduleObject.Sunday;
+
+                if (checkBoxMonday.Checked &&
+                    checkBoxTuesday.Checked &&
+                    checkBoxWednesday.Checked &&
+                    checkBoxThursday.Checked &&
+                    checkBoxFriday.Checked)
+                {
+                    checkBoxWorkWeek.Checked = true;
+                }
+
+                if (checkBoxSaturday.Checked &&
+                    checkBoxSunday.Checked)
+                {
+                    checkBoxWeekend.Checked = true;
+                }
             }
             else
             {
