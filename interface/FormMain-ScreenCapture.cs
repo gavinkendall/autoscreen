@@ -124,7 +124,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Takes a screenshot of each available region and screen.
         /// </summary>
-        private void TakeScreenshot(bool userInterruptCapture)
+        private void TakeScreenshot(bool captureNow)
         {
             formScreen.RefreshScreenDictionary();
 
@@ -136,7 +136,7 @@ namespace AutoScreenCapture
 
                 _screenCapture.DateTimeScreenshotsTaken = dtNow;
 
-                if (!userInterruptCapture)
+                if (!captureNow)
                 {
                     _screenCapture.DateTimePreviousCycle = dtNow;
                 }
@@ -208,7 +208,7 @@ namespace AutoScreenCapture
                 {
                     Log.Write("Taking initial screenshots");
 
-                    TakeScreenshot(userInterruptCapture: false);
+                    TakeScreenshot(captureNow: false);
                 }
 
                 // Start taking screenshots.
@@ -262,7 +262,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowArchive()
         {
-            TakeScreenshot(userInterruptCapture: true);
+            TakeScreenshot(captureNow: true);
         }
 
         private void CaptureNowEdit()
@@ -274,7 +274,7 @@ namespace AutoScreenCapture
                 return;
             }
 
-            TakeScreenshot(userInterruptCapture: true);
+            TakeScreenshot(captureNow: true);
 
             Editor editor = formEditor.EditorCollection.GetByName(defaultEditor);
 
@@ -344,7 +344,7 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.Count < _screenCapture.Limit)
                     {
-                        TakeScreenshot(userInterruptCapture: false);
+                        TakeScreenshot(captureNow: false);
                     }
 
                     if (_screenCapture.Count == _screenCapture.Limit)
@@ -355,7 +355,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    TakeScreenshot(userInterruptCapture: false);
+                    TakeScreenshot(captureNow: false);
                 }
             }
             else

@@ -15,6 +15,8 @@ namespace AutoScreenCapture
 
         private const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
 
+        private const string REGEX_COMMAND_LINE_CAPTUREAT = @"^-captureat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+
         private const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
 
         private const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
@@ -151,12 +153,16 @@ namespace AutoScreenCapture
                         numericUpDownMillisecondsInterval.Value = milliseconds;
                     }
 
-                    // This is going to be changed so that a start time and stop time is used by a new Schedule instead.
                     //if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STARTAT))
                     //{
                     //    int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
                     //    int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
                     //    int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
+
+                    //    //formSchedule.ScheduleCollection.
+                    //    formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModeOneTime = false;
+                    //    formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModePeriod = true;
+                    //    formSchedule.ScheduleCollection.GetByName("Command Line Schedule").StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
                     //}
 
                     //if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOPAT))

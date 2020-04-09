@@ -70,6 +70,10 @@ namespace AutoScreenCapture
                 formTag.TagCollection.LoadXmlFileAndAddTags();
                 Log.Write("Number of tags loaded = " + formTag.TagCollection.Count);
 
+                Log.Write("Initializing schedule collection");
+                formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules();
+                Log.Write("Number of schedules loaded = " + formSchedule.ScheduleCollection.Count);
+
                 Log.Write("Building screens module");
                 BuildScreensModule();
 

@@ -23,6 +23,19 @@ namespace AutoScreenCapture
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string SCHEDULE_NAME = "name";
+        private const string SCHEDULE_ENABLED = "enabled";
+        private const string SCHEDULE_MODE_ONETIME = "mode_onetime";
+        private const string SCHEDULE_MODE_PERIOD = "mode_period";
+        private const string SCHEDULE_CAPTUREAT = "captureat";
+        private const string SCHEDULE_STARTAT = "startat";
+        private const string SCHEDULE_STOPAT = "stopat";
+        private const string SCHEDULE_MONDAY = "monday";
+        private const string SCHEDULE_TUESDAY = "tuesday";
+        private const string SCHEDULE_WEDNESDAY = "wednesday";
+        private const string SCHEDULE_THURSDAY = "thursday";
+        private const string SCHEDULE_FRIDAY = "friday";
+        private const string SCHEDULE_SATURDAY = "saturday";
+        private const string SCHEDULE_SUNDAY = "sunday";
         private readonly string SCHEDULE_XPATH;
 
         private static string AppCodename { get; set; }
@@ -76,6 +89,71 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         schedule.Name = xReader.Value;
                                         break;
+
+                                    case SCHEDULE_ENABLED:
+                                        xReader.Read();
+                                        schedule.Enabled = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_MODE_ONETIME:
+                                        xReader.Read();
+                                        schedule.ModeOneTime = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_MODE_PERIOD:
+                                        xReader.Read();
+                                        schedule.ModePeriod = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_CAPTUREAT:
+                                        xReader.Read();
+                                        schedule.CaptureAt = Convert.ToDateTime(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_STARTAT:
+                                        xReader.Read();
+                                        schedule.StartAt = Convert.ToDateTime(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_STOPAT:
+                                        xReader.Read();
+                                        schedule.StopAt = Convert.ToDateTime(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_MONDAY:
+                                        xReader.Read();
+                                        schedule.Monday = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_TUESDAY:
+                                        xReader.Read();
+                                        schedule.Tuesday = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_WEDNESDAY:
+                                        xReader.Read();
+                                        schedule.Wednesday = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_THURSDAY:
+                                        xReader.Read();
+                                        schedule.Thursday = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_FRIDAY:
+                                        xReader.Read();
+                                        schedule.Friday = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_SATURDAY:
+                                        xReader.Read();
+                                        schedule.Saturday = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCHEDULE_SUNDAY:
+                                        xReader.Read();
+                                        schedule.Sunday = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -115,6 +193,22 @@ namespace AutoScreenCapture
                 else
                 {
                     Log.Write($"WARNING: {FileSystem.SchedulesFile} not found. Unable to load schedules");
+
+                    Log.Write("Creating default Command Line Schedule for use with command line arguments such as -captureat, -startat, and -stopat");
+                    Schedule schedule = new Schedule()
+                    {
+                        Name = "Command Line Schedule",
+                        Enabled = false,
+                        ModeOneTime = true,
+                        ModePeriod = false,
+                        CaptureAt = DateTime.Now,
+                        StartAt = DateTime.Now,
+                        StopAt = DateTime.Now
+                    };
+
+                    Add(schedule);
+
+                    SaveToXmlFile();
                 }
             }
             catch (Exception ex)
@@ -173,7 +267,20 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_SCHEDULE_NODE);
 
+                        xWriter.WriteElementString(SCHEDULE_ENABLED, schedule.Enabled.ToString());
                         xWriter.WriteElementString(SCHEDULE_NAME, schedule.Name);
+                        xWriter.WriteElementString(SCHEDULE_MODE_ONETIME, schedule.ModeOneTime.ToString());
+                        xWriter.WriteElementString(SCHEDULE_MODE_PERIOD, schedule.ModePeriod.ToString());
+                        xWriter.WriteElementString(SCHEDULE_CAPTUREAT, schedule.CaptureAt.ToString());
+                        xWriter.WriteElementString(SCHEDULE_STARTAT, schedule.StartAt.ToString());
+                        xWriter.WriteElementString(SCHEDULE_STOPAT, schedule.StopAt.ToString());
+                        xWriter.WriteElementString(SCHEDULE_MONDAY, schedule.Monday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_TUESDAY, schedule.Tuesday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_WEDNESDAY, schedule.Wednesday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_THURSDAY, schedule.Thursday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_FRIDAY, schedule.Friday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_SATURDAY, schedule.Saturday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_SUNDAY, schedule.Sunday.ToString());
 
                         xWriter.WriteEndElement();
                     }

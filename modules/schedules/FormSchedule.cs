@@ -51,6 +51,24 @@ namespace AutoScreenCapture
 
                 textBoxScheduleName.Text = "Schedule " + (ScheduleCollection.Count + 1);
                 checkBoxEnabled.Checked = true;
+
+                dateTimePickerSingleShot.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
+                dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
+                dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
+
+                radioButtonOneTime.Checked = true;
+                radioButtonPeriod.Checked = false;
+
+                labelTakeScreenshotsOnce.Enabled = true;
+                dateTimePickerSingleShot.Enabled = true;
+
+                labelTakeScreenshotsPeriod.Enabled = false;
+                dateTimePickerScheduleStartAt.Enabled = false;
+                labelAnd.Enabled = false;
+                dateTimePickerScheduleStopAt.Enabled = false;
+
+                checkBoxWorkWeek.Checked = true;
+                checkBoxWeekend.Checked = true;
             }
         }
 
@@ -79,9 +97,25 @@ namespace AutoScreenCapture
 
                 if (ScheduleCollection.GetByName(textBoxScheduleName.Text) == null)
                 {
-                    ScheduleCollection.Add(new Schedule(
-                        textBoxScheduleName.Text,
-                        checkBoxEnabled.Checked));
+                    Schedule schedule = new Schedule()
+                    {
+                        Name = textBoxScheduleName.Text,
+                        Enabled = checkBoxEnabled.Checked,
+                        ModeOneTime = radioButtonOneTime.Checked,
+                        ModePeriod = radioButtonPeriod.Checked,
+                        CaptureAt = dateTimePickerSingleShot.Value,
+                        StartAt = dateTimePickerScheduleStartAt.Value,
+                        StopAt = dateTimePickerScheduleStopAt.Value,
+                        Monday = checkBoxMonday.Checked,
+                        Tuesday = checkBoxTuesday.Checked,
+                        Wednesday = checkBoxWednesday.Checked,
+                        Thursday = checkBoxThursday.Checked,
+                        Friday = checkBoxFriday.Checked,
+                        Saturday = checkBoxSaturday.Checked,
+                        Sunday = checkBoxSunday.Checked
+                    };
+
+                    ScheduleCollection.Add(schedule);
 
                     Okay();
                 }
@@ -115,6 +149,18 @@ namespace AutoScreenCapture
                     {
                         ScheduleCollection.Get(ScheduleObject).Name = textBoxScheduleName.Text;
                         ScheduleCollection.Get(ScheduleObject).Enabled = checkBoxEnabled.Checked;
+                        ScheduleCollection.Get(ScheduleObject).ModeOneTime = radioButtonOneTime.Checked;
+                        ScheduleCollection.Get(ScheduleObject).ModePeriod = radioButtonPeriod.Checked;
+                        ScheduleCollection.Get(ScheduleObject).CaptureAt = dateTimePickerSingleShot.Value;
+                        ScheduleCollection.Get(ScheduleObject).StartAt = dateTimePickerScheduleStartAt.Value;
+                        ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerScheduleStopAt.Value;
+                        ScheduleCollection.Get(ScheduleObject).Monday = checkBoxMonday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Tuesday = checkBoxTuesday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Wednesday = checkBoxWednesday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Thursday = checkBoxThursday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Friday = checkBoxFriday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Saturday = checkBoxSaturday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Sunday = checkBoxSunday.Checked;
 
                         Okay();
                     }
@@ -137,7 +183,14 @@ namespace AutoScreenCapture
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxScheduleName.Text))
+            if (!string.IsNullOrEmpty(textBoxScheduleName.Text) &&
+                (checkBoxMonday.Checked ||
+                checkBoxTuesday.Checked ||
+                checkBoxWednesday.Checked ||
+                checkBoxThursday.Checked ||
+                checkBoxFriday.Checked ||
+                checkBoxSaturday.Checked ||
+                checkBoxSunday.Checked))
             {
                 return true;
             }
@@ -148,7 +201,17 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             if (ScheduleObject != null &&
-                (!ScheduleObject.Enabled.Equals(checkBoxEnabled.Checked)))
+                (!ScheduleObject.Enabled.Equals(checkBoxEnabled.Checked) ||
+                !ScheduleObject.CaptureAt.Equals(dateTimePickerSingleShot.Value) ||
+                !ScheduleObject.StartAt.Equals(dateTimePickerScheduleStartAt.Value) ||
+                !ScheduleObject.StopAt.Equals(dateTimePickerScheduleStopAt.Value) ||
+                !ScheduleObject.Monday.Equals(checkBoxMonday.Checked) ||
+                !ScheduleObject.Tuesday.Equals(checkBoxTuesday.Checked) ||
+                !ScheduleObject.Wednesday.Equals(checkBoxWednesday.Checked) ||
+                !ScheduleObject.Thursday.Equals(checkBoxThursday.Checked) ||
+                !ScheduleObject.Friday.Equals(checkBoxFriday.Checked) ||
+                !ScheduleObject.Saturday.Equals(checkBoxSaturday.Checked) ||
+                !ScheduleObject.Sunday.Equals(checkBoxSunday.Checked)))
             {
                 return true;
             }
@@ -172,6 +235,68 @@ namespace AutoScreenCapture
             DialogResult = DialogResult.OK;
 
             Close();
+        }
+
+        private void radioButtonOneTime_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonOneTime.Checked)
+            {
+                labelTakeScreenshotsOnce.Enabled = true;
+                dateTimePickerSingleShot.Enabled = true;
+
+                labelTakeScreenshotsPeriod.Enabled = false;
+                dateTimePickerScheduleStartAt.Enabled = false;
+                labelAnd.Enabled = false;
+                dateTimePickerScheduleStopAt.Enabled = false;
+            }
+        }
+
+        private void radioButtonPeriod_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonPeriod.Checked)
+            {
+                labelTakeScreenshotsOnce.Enabled = false;
+                dateTimePickerSingleShot.Enabled = false;
+
+                labelTakeScreenshotsPeriod.Enabled = true;
+                dateTimePickerScheduleStartAt.Enabled = true;
+                labelAnd.Enabled = true;
+                dateTimePickerScheduleStopAt.Enabled = true;
+            }
+        }
+
+        private void checkBoxWorkWeek_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxWorkWeek.Checked)
+            {
+                checkBoxMonday.Checked = true;
+                checkBoxTuesday.Checked = true;
+                checkBoxWednesday.Checked = true;
+                checkBoxThursday.Checked = true;
+                checkBoxFriday.Checked = true;
+            }
+            else
+            {
+                checkBoxMonday.Checked = false;
+                checkBoxTuesday.Checked = false;
+                checkBoxWednesday.Checked = false;
+                checkBoxThursday.Checked = false;
+                checkBoxFriday.Checked = false;
+            }
+        }
+
+        private void checkBoxWeekend_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxWeekend.Checked)
+            {
+                checkBoxSaturday.Checked = true;
+                checkBoxSunday.Checked = true;
+            }
+            else
+            {
+                checkBoxSaturday.Checked = false;
+                checkBoxSunday.Checked = false;
+            }
         }
     }
 }

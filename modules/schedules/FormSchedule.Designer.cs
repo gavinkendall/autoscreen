@@ -41,14 +41,14 @@
             this.dateTimePickerSingleShot = new System.Windows.Forms.DateTimePicker();
             this.checkBoxMonday = new System.Windows.Forms.CheckBox();
             this.groupBoxDays = new System.Windows.Forms.GroupBox();
-            this.checkBoxTuesday = new System.Windows.Forms.CheckBox();
-            this.checkBoxWednesday = new System.Windows.Forms.CheckBox();
-            this.checkBoxThursday = new System.Windows.Forms.CheckBox();
-            this.checkBoxFriday = new System.Windows.Forms.CheckBox();
-            this.checkBoxSaturday = new System.Windows.Forms.CheckBox();
-            this.checkBoxSunday = new System.Windows.Forms.CheckBox();
-            this.checkBoxWorkWeek = new System.Windows.Forms.CheckBox();
             this.checkBoxWeekend = new System.Windows.Forms.CheckBox();
+            this.checkBoxWorkWeek = new System.Windows.Forms.CheckBox();
+            this.checkBoxSunday = new System.Windows.Forms.CheckBox();
+            this.checkBoxSaturday = new System.Windows.Forms.CheckBox();
+            this.checkBoxFriday = new System.Windows.Forms.CheckBox();
+            this.checkBoxThursday = new System.Windows.Forms.CheckBox();
+            this.checkBoxWednesday = new System.Windows.Forms.CheckBox();
+            this.checkBoxTuesday = new System.Windows.Forms.CheckBox();
             this.labelTakeScreenshotsOnce = new System.Windows.Forms.Label();
             this.labelTakeScreenshotsPeriod = new System.Windows.Forms.Label();
             this.labelAnd = new System.Windows.Forms.Label();
@@ -140,6 +140,7 @@
             this.radioButtonOneTime.TabStop = true;
             this.radioButtonOneTime.Text = "One Time";
             this.radioButtonOneTime.UseVisualStyleBackColor = true;
+            this.radioButtonOneTime.CheckedChanged += new System.EventHandler(this.radioButtonOneTime_CheckedChanged);
             // 
             // radioButtonPeriod
             // 
@@ -150,6 +151,7 @@
             this.radioButtonPeriod.TabIndex = 12;
             this.radioButtonPeriod.Text = "Period";
             this.radioButtonPeriod.UseVisualStyleBackColor = true;
+            this.radioButtonPeriod.CheckedChanged += new System.EventHandler(this.radioButtonPeriod_CheckedChanged);
             // 
             // dateTimePickerSingleShot
             // 
@@ -190,55 +192,27 @@
             this.groupBoxDays.TabStop = false;
             this.groupBoxDays.Text = "Days";
             // 
-            // checkBoxTuesday
+            // checkBoxWeekend
             // 
-            this.checkBoxTuesday.AutoSize = true;
-            this.checkBoxTuesday.Location = new System.Drawing.Point(189, 19);
-            this.checkBoxTuesday.Name = "checkBoxTuesday";
-            this.checkBoxTuesday.Size = new System.Drawing.Size(67, 17);
-            this.checkBoxTuesday.TabIndex = 15;
-            this.checkBoxTuesday.Text = "Tuesday";
-            this.checkBoxTuesday.UseVisualStyleBackColor = true;
+            this.checkBoxWeekend.AutoSize = true;
+            this.checkBoxWeekend.Location = new System.Drawing.Point(10, 42);
+            this.checkBoxWeekend.Name = "checkBoxWeekend";
+            this.checkBoxWeekend.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxWeekend.TabIndex = 22;
+            this.checkBoxWeekend.Text = "Weekend";
+            this.checkBoxWeekend.UseVisualStyleBackColor = true;
+            this.checkBoxWeekend.CheckedChanged += new System.EventHandler(this.checkBoxWeekend_CheckedChanged);
             // 
-            // checkBoxWednesday
+            // checkBoxWorkWeek
             // 
-            this.checkBoxWednesday.AutoSize = true;
-            this.checkBoxWednesday.Location = new System.Drawing.Point(262, 19);
-            this.checkBoxWednesday.Name = "checkBoxWednesday";
-            this.checkBoxWednesday.Size = new System.Drawing.Size(83, 17);
-            this.checkBoxWednesday.TabIndex = 16;
-            this.checkBoxWednesday.Text = "Wednesday";
-            this.checkBoxWednesday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxThursday
-            // 
-            this.checkBoxThursday.AutoSize = true;
-            this.checkBoxThursday.Location = new System.Drawing.Point(351, 19);
-            this.checkBoxThursday.Name = "checkBoxThursday";
-            this.checkBoxThursday.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxThursday.TabIndex = 17;
-            this.checkBoxThursday.Text = "Thursday";
-            this.checkBoxThursday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxFriday
-            // 
-            this.checkBoxFriday.AutoSize = true;
-            this.checkBoxFriday.Location = new System.Drawing.Point(427, 19);
-            this.checkBoxFriday.Name = "checkBoxFriday";
-            this.checkBoxFriday.Size = new System.Drawing.Size(54, 17);
-            this.checkBoxFriday.TabIndex = 18;
-            this.checkBoxFriday.Text = "Friday";
-            this.checkBoxFriday.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSaturday
-            // 
-            this.checkBoxSaturday.AutoSize = true;
-            this.checkBoxSaturday.Location = new System.Drawing.Point(119, 42);
-            this.checkBoxSaturday.Name = "checkBoxSaturday";
-            this.checkBoxSaturday.Size = new System.Drawing.Size(68, 17);
-            this.checkBoxSaturday.TabIndex = 19;
-            this.checkBoxSaturday.Text = "Saturday";
-            this.checkBoxSaturday.UseVisualStyleBackColor = true;
+            this.checkBoxWorkWeek.AutoSize = true;
+            this.checkBoxWorkWeek.Location = new System.Drawing.Point(10, 19);
+            this.checkBoxWorkWeek.Name = "checkBoxWorkWeek";
+            this.checkBoxWorkWeek.Size = new System.Drawing.Size(84, 17);
+            this.checkBoxWorkWeek.TabIndex = 21;
+            this.checkBoxWorkWeek.Text = "Work Week";
+            this.checkBoxWorkWeek.UseVisualStyleBackColor = true;
+            this.checkBoxWorkWeek.CheckedChanged += new System.EventHandler(this.checkBoxWorkWeek_CheckedChanged);
             // 
             // checkBoxSunday
             // 
@@ -250,25 +224,55 @@
             this.checkBoxSunday.Text = "Sunday";
             this.checkBoxSunday.UseVisualStyleBackColor = true;
             // 
-            // checkBoxWorkWeek
+            // checkBoxSaturday
             // 
-            this.checkBoxWorkWeek.AutoSize = true;
-            this.checkBoxWorkWeek.Location = new System.Drawing.Point(10, 19);
-            this.checkBoxWorkWeek.Name = "checkBoxWorkWeek";
-            this.checkBoxWorkWeek.Size = new System.Drawing.Size(84, 17);
-            this.checkBoxWorkWeek.TabIndex = 21;
-            this.checkBoxWorkWeek.Text = "Work Week";
-            this.checkBoxWorkWeek.UseVisualStyleBackColor = true;
+            this.checkBoxSaturday.AutoSize = true;
+            this.checkBoxSaturday.Location = new System.Drawing.Point(119, 42);
+            this.checkBoxSaturday.Name = "checkBoxSaturday";
+            this.checkBoxSaturday.Size = new System.Drawing.Size(68, 17);
+            this.checkBoxSaturday.TabIndex = 19;
+            this.checkBoxSaturday.Text = "Saturday";
+            this.checkBoxSaturday.UseVisualStyleBackColor = true;
             // 
-            // checkBoxWeekend
+            // checkBoxFriday
             // 
-            this.checkBoxWeekend.AutoSize = true;
-            this.checkBoxWeekend.Location = new System.Drawing.Point(10, 42);
-            this.checkBoxWeekend.Name = "checkBoxWeekend";
-            this.checkBoxWeekend.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxWeekend.TabIndex = 22;
-            this.checkBoxWeekend.Text = "Weekend";
-            this.checkBoxWeekend.UseVisualStyleBackColor = true;
+            this.checkBoxFriday.AutoSize = true;
+            this.checkBoxFriday.Location = new System.Drawing.Point(427, 19);
+            this.checkBoxFriday.Name = "checkBoxFriday";
+            this.checkBoxFriday.Size = new System.Drawing.Size(54, 17);
+            this.checkBoxFriday.TabIndex = 18;
+            this.checkBoxFriday.Text = "Friday";
+            this.checkBoxFriday.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxThursday
+            // 
+            this.checkBoxThursday.AutoSize = true;
+            this.checkBoxThursday.Location = new System.Drawing.Point(351, 19);
+            this.checkBoxThursday.Name = "checkBoxThursday";
+            this.checkBoxThursday.Size = new System.Drawing.Size(70, 17);
+            this.checkBoxThursday.TabIndex = 17;
+            this.checkBoxThursday.Text = "Thursday";
+            this.checkBoxThursday.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxWednesday
+            // 
+            this.checkBoxWednesday.AutoSize = true;
+            this.checkBoxWednesday.Location = new System.Drawing.Point(262, 19);
+            this.checkBoxWednesday.Name = "checkBoxWednesday";
+            this.checkBoxWednesday.Size = new System.Drawing.Size(83, 17);
+            this.checkBoxWednesday.TabIndex = 16;
+            this.checkBoxWednesday.Text = "Wednesday";
+            this.checkBoxWednesday.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxTuesday
+            // 
+            this.checkBoxTuesday.AutoSize = true;
+            this.checkBoxTuesday.Location = new System.Drawing.Point(189, 19);
+            this.checkBoxTuesday.Name = "checkBoxTuesday";
+            this.checkBoxTuesday.Size = new System.Drawing.Size(67, 17);
+            this.checkBoxTuesday.TabIndex = 15;
+            this.checkBoxTuesday.Text = "Tuesday";
+            this.checkBoxTuesday.UseVisualStyleBackColor = true;
             // 
             // labelTakeScreenshotsOnce
             // 

@@ -22,6 +22,21 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public bool ModeOneTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ModePeriod { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime CaptureAt { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime StartAt { get; set; }
 
         /// <summary>
@@ -32,7 +47,37 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public DayOfWeek Day { get; set; }
+        public bool Monday { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Tuesday { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Wednesday { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Thursday { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Friday { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Saturday { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Sunday { get; set; }
 
         /// <summary>
         /// 
@@ -45,16 +90,6 @@ namespace AutoScreenCapture
         public Schedule()
         {
 
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        public Schedule(string name, bool enabled)
-        {
-            Name = name;
-            Enabled = enabled;
         }
     }
 }

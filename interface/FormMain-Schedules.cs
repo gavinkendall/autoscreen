@@ -9,45 +9,6 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// The timer used for starting scheduled screen capture sessions.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Tick_timerScheduledCaptureStart(object sender, EventArgs e)
-        {
-            // This timer needs to loop over the Schedules to determine start and stop times.
-
-            //if (checkBoxScheduleStartAt.Checked)
-            //{
-            //    if (checkBoxScheduleOnTheseDays.Checked)
-            //    {
-            //        if (((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
-            //            ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-            //             (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
-            //             (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second)))
-            //        {
-            //            StartScreenCapture();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if ((DateTime.Now.Hour == dateTimePickerScheduleStartAt.Value.Hour) &&
-            //            (DateTime.Now.Minute == dateTimePickerScheduleStartAt.Value.Minute) &&
-            //            (DateTime.Now.Second == dateTimePickerScheduleStartAt.Value.Second))
-            //        {
-            //            StartScreenCapture();
-            //        }
-            //    }
-            //}
-        }
-
-        /// <summary>
         /// The timer used for Schedules and displaying capture information.
         /// </summary>
         /// <param name="sender"></param>
@@ -56,34 +17,46 @@ namespace AutoScreenCapture
         {
             ShowInfo();
 
-            //if (checkBoxScheduleStopAt.Checked)
-            //{
-            //    if (checkBoxScheduleOnTheseDays.Checked)
-            //    {
-            //        if (((DateTime.Now.DayOfWeek == DayOfWeek.Saturday && checkBoxSaturday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && checkBoxSunday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Monday && checkBoxMonday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && checkBoxTuesday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && checkBoxWednesday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && checkBoxThursday.Checked) ||
-            //             (DateTime.Now.DayOfWeek == DayOfWeek.Friday && checkBoxFriday.Checked)) &&
-            //            ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-            //             (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
-            //             (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second)))
-            //        {
-            //            StopScreenCapture();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if ((DateTime.Now.Hour == dateTimePickerScheduleStopAt.Value.Hour) &&
-            //            (DateTime.Now.Minute == dateTimePickerScheduleStopAt.Value.Minute) &&
-            //            (DateTime.Now.Second == dateTimePickerScheduleStopAt.Value.Second))
-            //        {
-            //            StopScreenCapture();
-            //        }
-            //    }
-            //}
+            foreach(Schedule schedule in formSchedule.ScheduleCollection)
+            {
+                DateTime dtNow = DateTime.Now;
+
+                if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
+                    (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
+                    (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
+                    (dtNow.DayOfWeek == DayOfWeek.Thursday && schedule.Thursday) ||
+                    (dtNow.DayOfWeek == DayOfWeek.Friday && schedule.Friday) ||
+                    (dtNow.DayOfWeek == DayOfWeek.Saturday && schedule.Saturday) ||
+                    (dtNow.DayOfWeek == DayOfWeek.Sunday && schedule.Sunday))
+                {
+                    if (schedule.ModeOneTime)
+                    {
+                        if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
+                            (dtNow.Minute == schedule.CaptureAt.Minute) &&
+                            (dtNow.Second == schedule.CaptureAt.Second))
+                        {
+                            TakeScreenshot(captureNow: true);
+                        }
+                    }
+
+                    if (schedule.ModePeriod)
+                    {
+                        if ((dtNow.Hour == schedule.StartAt.Hour) &&
+                            (dtNow.Minute == schedule.StartAt.Minute) &&
+                            (dtNow.Second == schedule.StartAt.Second))
+                        {
+                            StartScreenCapture();
+                        }
+
+                        if ((dtNow.Hour == schedule.StopAt.Hour) &&
+                            (dtNow.Minute == schedule.StopAt.Minute) &&
+                            (dtNow.Second == schedule.StopAt.Second))
+                        {
+                            StopScreenCapture();
+                        }
+                    }
+                }
+            }
         }
 
         private void Click_addSchedule(object sender, EventArgs e)
