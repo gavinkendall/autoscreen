@@ -19,7 +19,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemExit(object sender, EventArgs e)
+        private void toolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             ExitApplication();
         }

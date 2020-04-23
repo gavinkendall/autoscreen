@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormEditor.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -71,12 +71,12 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_buttonCancel(object sender, EventArgs e)
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void Click_buttonOK(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
             if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxEditorName.Text))
             {
@@ -221,7 +221,7 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void Click_buttonChooseEditor(object sender, EventArgs e)
+        private void buttonChooseEditor_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {

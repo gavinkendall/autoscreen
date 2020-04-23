@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Config.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -19,6 +19,7 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
         private const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
+        private const string REGEX_COMMAND_FOLDER = "^CommandFolder=(?<Path>.+)$";
 
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
         private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
@@ -57,6 +58,8 @@ namespace AutoScreenCapture
                         "DebugFolder=!autoscreen\\debug\\", "",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
                         "LogsFolder=!autoscreen\\logs\\", "",
+                        "# This folder is monitored by the application for commands issued from the command line while it's running.",
+                        "CommandFolder=!autoscreen\\command\\", "",
                         "# The application settings (such as DebugMode).",
                         "ApplicationSettingsFile=!autoscreen\\settings\\application.xml", "",
                         "# Your personal settings.",
@@ -92,6 +95,9 @@ namespace AutoScreenCapture
 
                     if (GetPath(line, REGEX_LOGS_FOLDER, out path))
                         FileSystem.LogsFolder = path;
+
+                    if (GetPath(line, REGEX_COMMAND_FOLDER, out path))
+                        FileSystem.CommandFolder = path;
 
                     if (GetPath(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
                         FileSystem.ApplicationSettingsFile = path;

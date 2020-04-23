@@ -11,7 +11,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_addScreen(object sender, EventArgs e)
+        private void addScreen_Click(object sender, EventArgs e)
         {
             formScreen.ScreenObject = null;
             formScreen.ImageFormatCollection = _imageFormatCollection;
@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_removeSelectedScreens(object sender, EventArgs e)
+        private void removeSelectedScreens_Click(object sender, EventArgs e)
         {
             int countBeforeRemoval = formScreen.ScreenCollection.Count;
 
@@ -65,7 +65,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_changeScreen(object sender, EventArgs e)
+        private void changeScreen_Click(object sender, EventArgs e)
         {
             Screen screen = new Screen();
 
@@ -96,7 +96,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_removeScreen(object sender, EventArgs e)
+        private void removeScreen_Click(object sender, EventArgs e)
         {
             if (sender is ToolStripMenuItem)
             {

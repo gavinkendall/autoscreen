@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormEnterPassphrase.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -29,12 +29,12 @@ namespace AutoScreenCapture
             textBoxPassphrase.Focus();
         }
 
-        private void Click_buttonCancel(object sender, EventArgs e)
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void Click_buttonUnlock(object sender, EventArgs e)
+        private void buttonUnlock_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxPassphrase.Text)) return;
 

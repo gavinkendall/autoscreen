@@ -53,7 +53,7 @@
             this.buttonCancel.TabStop = false;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.Click_buttonCancel);
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonUnlock
             // 
@@ -65,7 +65,7 @@
             this.buttonUnlock.TabStop = false;
             this.buttonUnlock.Text = "Unlock";
             this.buttonUnlock.UseVisualStyleBackColor = true;
-            this.buttonUnlock.Click += new System.EventHandler(this.Click_buttonUnlock);
+            this.buttonUnlock.Click += new System.EventHandler(this.buttonUnlock_Click);
             // 
             // FormEnterPassphrase
             // 

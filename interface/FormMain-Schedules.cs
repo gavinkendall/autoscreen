@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,64 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// The timer used for Schedules and displaying capture information.
+        /// The timer used for monitoring externally issued commands, running Schedules, and displaying capture information.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Tick_timerScheduledCapture(object sender, EventArgs e)
+        private void timerScheduledCapture_Tick(object sender, EventArgs e)
         {
+            if (Directory.Exists(FileSystem.CommandFolder))
+            {
+                foreach (string file in Directory.GetFiles(FileSystem.CommandFolder))
+                {
+                    if (file.EndsWith("debug") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        Log.DebugMode = !Log.DebugMode;
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = Log.DebugMode;
+                        Settings.Application.Save();
+                        break;
+                    }
+
+                    if (file.EndsWith("log") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        Log.Enabled = !Log.Enabled;
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.Enabled;
+                        Settings.Application.Save();
+                        break;
+                    }
+
+                    if (file.EndsWith("capture") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        TakeScreenshot(captureNow: true);
+                        break;
+                    }
+
+                    if (file.EndsWith("start") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        StartScreenCapture();
+                        break;
+                    }
+
+                    if (file.EndsWith("stop") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        StopScreenCapture();
+                        break;
+                    }
+
+                    if (file.EndsWith("exit") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        ExitApplication();
+                        break;
+                    }
+                }
+            }
+
             ShowInfo();
 
             foreach(Schedule schedule in formSchedule.ScheduleCollection)
@@ -59,7 +112,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_addSchedule(object sender, EventArgs e)
+        private void addSchedule_Click(object sender, EventArgs e)
         {
             formSchedule.ScheduleObject = null;
 
@@ -73,7 +126,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_removeSelectedSchedules(object sender, EventArgs e)
+        private void removeSelectedSchedules_Click(object sender, EventArgs e)
         {
             int countBeforeRemoval = formSchedule.ScheduleCollection.Count;
 
@@ -99,7 +152,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_changeSchedule(object sender, EventArgs e)
+        private void changeSchedule_Click(object sender, EventArgs e)
         {
             Schedule schedule = new Schedule();
 

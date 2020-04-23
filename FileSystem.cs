@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FileSystem.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -89,6 +89,11 @@ namespace AutoScreenCapture
         /// Logs folder.
         /// </summary>
         public static string LogsFolder;
+
+        /// <summary>
+        /// Command folder.
+        /// </summary>
+        public static string CommandFolder;
 
         /// <summary>
         /// Application Settings file.

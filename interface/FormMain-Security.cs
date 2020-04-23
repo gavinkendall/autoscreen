@@ -13,7 +13,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_buttonSetPassphrase(object sender, EventArgs e)
+        private void buttonSetPassphrase_Click(object sender, EventArgs e)
         {
             if (textBoxPassphrase.Text.Length > 0)
             {

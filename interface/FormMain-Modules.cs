@@ -126,7 +126,7 @@ namespace AutoScreenCapture
                         labelEnabledStatus.BackColor = enabled ? Color.PaleGreen : Color.PaleVioletRed;
                     }
 
-                    labelEnabledStatus.Click += Click_enabledStatus;
+                    labelEnabledStatus.Click += enabledStatus_Click;
 
                     tabPage.Controls.Add(labelEnabledStatus);
                 }
@@ -166,7 +166,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_enabledStatus(object sender, EventArgs e)
+        private void enabledStatus_Click(object sender, EventArgs e)
         {
             Label label = (Label)sender;
 
@@ -263,32 +263,32 @@ namespace AutoScreenCapture
 
         private void BuildScreensModule()
         {
-            BuildModule("Screen", formScreen.ScreenCollection, tabPageScreens, Click_addScreen, Click_removeSelectedScreens, Click_changeScreen);
+            BuildModule("Screen", formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, changeScreen_Click);
         }
 
         private void BuildRegionsModule()
         {
-            BuildModule("Region", formRegion.RegionCollection, tabPageRegions, Click_addRegion, Click_removeSelectedRegions, Click_changeRegion);
+            BuildModule("Region", formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
         }
 
         private void BuildTagsModule()
         {
-            BuildModule("Tag", formTag.TagCollection, tabPageTags, Click_addTag, Click_removeSelectedTags, Click_changeTag);
+            BuildModule("Tag", formTag.TagCollection, tabPageTags, addTag_Click, removeSelectedTags_Click, changeTag_Click);
         }
 
         private void BuildEditorsModule()
         {
-            BuildModule("Editor", formEditor.EditorCollection, tabPageEditors, Click_addEditor, Click_removeSelectedEditors, Click_changeEditor);
+            BuildModule("Editor", formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, changeEditor_Click);
         }
 
         private void BuildTriggersModule()
         {
-            BuildModule("Trigger", formTrigger.TriggerCollection, tabPageTriggers, Click_addTrigger, Click_removeSelectedTriggers, Click_changeTrigger);
+            BuildModule("Trigger", formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, changeTrigger_Click);
         }
 
         private void BuildSchedulesModule()
         {
-            BuildModule("Schedule", formSchedule.ScheduleCollection, tabPageSchedules, Click_addSchedule, Click_removeSelectedSchedules, Click_changeSchedule);
+            BuildModule("Schedule", formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, changeSchedule_Click);
         }
     }
 }

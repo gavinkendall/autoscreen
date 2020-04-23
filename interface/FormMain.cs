@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormMain.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -77,10 +77,6 @@ namespace AutoScreenCapture
             }
             else
             {
-                Config.Load();
-
-                Settings.Initialize();
-
                 LoadSettings();
 
                 InitializeThreads();
@@ -366,7 +362,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemShowInterface(object sender, EventArgs e)
+        private void toolStripMenuItemShowInterface_Click(object sender, EventArgs e)
         {
             ShowInterface();
         }
@@ -376,7 +372,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemHideInterface(object sender, EventArgs e)
+        private void toolStripMenuItemHideInterface_Click(object sender, EventArgs e)
         {
             HideInterface();
         }
@@ -386,7 +382,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemAbout(object sender, EventArgs e)
+        private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
                 Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +

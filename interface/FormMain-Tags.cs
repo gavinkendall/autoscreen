@@ -13,7 +13,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_addTag(object sender, EventArgs e)
+        private void addTag_Click(object sender, EventArgs e)
         {
             formTag.TagObject = null;
 
@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_removeSelectedTags(object sender, EventArgs e)
+        private void removeSelectedTags_Click(object sender, EventArgs e)
         {
             int countBeforeRemoval = formTag.TagCollection.Count;
 
@@ -63,7 +63,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_changeTag(object sender, EventArgs e)
+        private void changeTag_Click(object sender, EventArgs e)
         {
             Button buttonSelected = (Button)sender;
 

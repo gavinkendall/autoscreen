@@ -40,7 +40,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_emailScreenshot(object sender, EventArgs e)
+        private void emailScreenshot_Click(object sender, EventArgs e)
         {
             Screenshot screenshot = null;
 
@@ -260,7 +260,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_showScreenshotLocation(object sender, EventArgs e)
+        private void showScreenshotLocation_Click(object sender, EventArgs e)
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
@@ -297,10 +297,10 @@ namespace AutoScreenCapture
 
             ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
             showScreenshotLocationToolStripItem.Click +=
-                new EventHandler(Click_showScreenshotLocation);
+                new EventHandler(showScreenshotLocation_Click);
 
             ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
-            addNewEditorToolStripItem.Click += new EventHandler(Click_addEditor);
+            addNewEditorToolStripItem.Click += new EventHandler(addEditor_Click);
 
             contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocationToolStripItem);
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
@@ -314,7 +314,7 @@ namespace AutoScreenCapture
                     // Add the Editor to the screenshot preview contextual menu.
 
                     contextMenuStripScreenshotPreview.Items.Add(editor.Name,
-                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                        Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
                     // ****************************************************************************
                 }
             }

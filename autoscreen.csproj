@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="command\CommandLineRegex.cs" />
     <Compile Include="config\Config.cs" />
     <Compile Include="interface\FormMain-CommandLine.cs">
       <SubType>Form</SubType>
@@ -138,7 +139,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="keyboard\HotKeyMap.cs" />
-    <Compile Include="macro\MacroTagFunctionParser.cs" />
+    <Compile Include="macro\MacroTagExpressionParser.cs" />
     <Compile Include="interface\FormMain-Tags.cs">
       <SubType>Form</SubType>
     </Compile>

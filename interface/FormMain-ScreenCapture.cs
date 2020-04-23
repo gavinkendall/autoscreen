@@ -295,7 +295,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemStartScreenCapture(object sender, EventArgs e)
+        private void toolStripMenuItemStartScreenCapture_Click(object sender, EventArgs e)
         {
             StartScreenCapture();
         }
@@ -305,7 +305,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemStopScreenCapture(object sender, EventArgs e)
+        private void toolStripMenuItemStopScreenCapture_Click(object sender, EventArgs e)
         {
             StopScreenCapture();
         }
@@ -315,7 +315,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemCaptureNowArchive(object sender, EventArgs e)
+        private void toolStripMenuItemCaptureNowArchive_Click(object sender, EventArgs e)
         {
             CaptureNowArchive();
         }
@@ -325,7 +325,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_toolStripMenuItemCaptureNowEdit(object sender, EventArgs e)
+        private void toolStripMenuItemCaptureNowEdit_Click(object sender, EventArgs e)
         {
             CaptureNowEdit();
         }

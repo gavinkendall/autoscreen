@@ -50,7 +50,7 @@
             this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.Click_buttonCancel);
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonOK
             // 
@@ -60,7 +60,7 @@
             this.buttonOK.TabIndex = 5;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.Click_buttonOK);
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // textBoxEditorName
             // 
@@ -103,7 +103,7 @@
             this.buttonChooseEditor.TabIndex = 3;
             this.buttonChooseEditor.Text = "...";
             this.buttonChooseEditor.UseVisualStyleBackColor = true;
-            this.buttonChooseEditor.Click += new System.EventHandler(this.Click_buttonChooseEditor);
+            this.buttonChooseEditor.Click += new System.EventHandler(this.buttonChooseEditor_Click);
             // 
             // labelEditorArguments
             // 

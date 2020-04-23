@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormRegion.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -116,12 +116,12 @@ namespace AutoScreenCapture
             timerPreview.Enabled = true;
         }
 
-        private void Click_buttonRegionCancel(object sender, EventArgs e)
+        private void buttonRegionCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void Click_buttonRegionOK(object sender, EventArgs e)
+        private void buttonRegionOK_Click(object sender, EventArgs e)
         {
             if (RegionObject != null)
             {

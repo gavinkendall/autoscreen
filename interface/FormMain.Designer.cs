@@ -162,7 +162,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStartScreenCapture.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripSplitButtonStartScreenCapture.Size = new System.Drawing.Size(135, 20);
             this.toolStripSplitButtonStartScreenCapture.Text = "Start Screen Capture";
-            this.toolStripSplitButtonStartScreenCapture.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
+            this.toolStripSplitButtonStartScreenCapture.ButtonClick += new System.EventHandler(this.toolStripMenuItemStartScreenCapture_Click);
             // 
             // toolStripSplitButtonStopScreenCapture
             // 
@@ -177,7 +177,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStopScreenCapture.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
             this.toolStripSplitButtonStopScreenCapture.Size = new System.Drawing.Size(145, 20);
             this.toolStripSplitButtonStopScreenCapture.Text = "Stop Screen Capture";
-            this.toolStripSplitButtonStopScreenCapture.ButtonClick += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
+            this.toolStripSplitButtonStopScreenCapture.ButtonClick += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
             // toolStripSplitButtonKeyboardShortcuts
             // 
@@ -279,7 +279,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
             this.toolStripMenuItemAbout.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemAbout.Text = "About Auto Screen Capture";
-            this.toolStripMenuItemAbout.Click += new System.EventHandler(this.Click_toolStripMenuItemAbout);
+            this.toolStripMenuItemAbout.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
             // toolStripSeparatorAbout
             // 
@@ -291,14 +291,14 @@ namespace AutoScreenCapture
             this.toolStripMenuItemShowInterface.Name = "toolStripMenuItemShowInterface";
             this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemShowInterface.Text = "Show Interface";
-            this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemShowInterface);
+            this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.toolStripMenuItemShowInterface_Click);
             // 
             // toolStripMenuItemHideInterface
             // 
             this.toolStripMenuItemHideInterface.Name = "toolStripMenuItemHideInterface";
             this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
-            this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.Click_toolStripMenuItemHideInterface);
+            this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.toolStripMenuItemHideInterface_Click);
             // 
             // toolStripSeparatorInterface
             // 
@@ -313,7 +313,7 @@ namespace AutoScreenCapture
             | System.Windows.Forms.Keys.Z)));
             this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemStartScreenCapture.Text = "Start Screen Capture";
-            this.toolStripMenuItemStartScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStartScreenCapture);
+            this.toolStripMenuItemStartScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStartScreenCapture_Click);
             // 
             // toolStripMenuItemStopScreenCapture
             // 
@@ -324,7 +324,7 @@ namespace AutoScreenCapture
             | System.Windows.Forms.Keys.X)));
             this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
-            this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.Click_toolStripMenuItemStopScreenCapture);
+            this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
             // toolStripMenuItemCaptureNowArchive
             // 
@@ -334,7 +334,7 @@ namespace AutoScreenCapture
             | System.Windows.Forms.Keys.A)));
             this.toolStripMenuItemCaptureNowArchive.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemCaptureNowArchive.Text = "Capture Now / Archive";
-            this.toolStripMenuItemCaptureNowArchive.Click += new System.EventHandler(this.Click_toolStripMenuItemCaptureNowArchive);
+            this.toolStripMenuItemCaptureNowArchive.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowArchive_Click);
             // 
             // toolStripMenuItemCaptureNowEdit
             // 
@@ -344,7 +344,7 @@ namespace AutoScreenCapture
             | System.Windows.Forms.Keys.E)));
             this.toolStripMenuItemCaptureNowEdit.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now / Edit";
-            this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.Click_toolStripMenuItemCaptureNowEdit);
+            this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowEdit_Click);
             // 
             // toolStripSeparatorCapture
             // 
@@ -368,7 +368,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(260, 22);
             this.toolStripMenuItemExit.Text = "Exit";
-            this.toolStripMenuItemExit.Click += new System.EventHandler(this.Click_toolStripMenuItemExit);
+            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
             // tabControlModules
             // 
@@ -435,7 +435,7 @@ namespace AutoScreenCapture
             this.buttonSetPassphrase.TabStop = false;
             this.buttonSetPassphrase.Text = "Lock";
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
-            this.buttonSetPassphrase.Click += new System.EventHandler(this.Click_buttonSetPassphrase);
+            this.buttonSetPassphrase.Click += new System.EventHandler(this.buttonSetPassphrase_Click);
             // 
             // textBoxPassphrase
             // 
@@ -749,7 +749,7 @@ namespace AutoScreenCapture
             // 
             this.timerScheduledCapture.Enabled = true;
             this.timerScheduledCapture.Interval = 1000;
-            this.timerScheduledCapture.Tick += new System.EventHandler(this.Tick_timerScheduledCapture);
+            this.timerScheduledCapture.Tick += new System.EventHandler(this.timerScheduledCapture_Tick);
             // 
             // timerScreenCapture
             // 

@@ -14,7 +14,7 @@
 
     public partial class FormMain : Form
     {
-        private void Click_applyLabel(object sender, EventArgs e)
+        private void applyLabel_Click(object sender, EventArgs e)
         {
             if (sender != null && sender is ToolStripDropDownItem)
             {
@@ -70,7 +70,7 @@
                         CheckOnClick = true
                     };
 
-                    toolStripMenuItem.Click += new EventHandler(Click_applyLabel);
+                    toolStripMenuItem.Click += new EventHandler(applyLabel_Click);
 
                     toolStripMenuItemApplyLabel.DropDownItems.Add(toolStripMenuItem);
                 }

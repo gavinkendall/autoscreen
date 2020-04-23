@@ -11,7 +11,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_addRegion(object sender, EventArgs e)
+        private void addRegion_Click(object sender, EventArgs e)
         {
             formRegion.RegionObject = null;
             formRegion.ImageFormatCollection = _imageFormatCollection;
@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_removeSelectedRegions(object sender, EventArgs e)
+        private void removeSelectedRegions_Click(object sender, EventArgs e)
         {
             int countBeforeRemoval = formRegion.RegionCollection.Count;
 
@@ -65,7 +65,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_changeRegion(object sender, EventArgs e)
+        private void changeRegion_Click(object sender, EventArgs e)
         {
             Region region = new Region();
 
@@ -96,7 +96,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_removeRegion(object sender, EventArgs e)
+        private void removeRegion_Click(object sender, EventArgs e)
         {
             if (sender is ToolStripMenuItem)
             {

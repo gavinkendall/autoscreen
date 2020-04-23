@@ -10,7 +10,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_addTrigger(object sender, EventArgs e)
+        private void addTrigger_Click(object sender, EventArgs e)
         {
             formTrigger.TriggerObject = null;
 
@@ -31,7 +31,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_removeSelectedTriggers(object sender, EventArgs e)
+        private void removeSelectedTriggers_Click(object sender, EventArgs e)
         {
             int countBeforeRemoval = formTrigger.TriggerCollection.Count;
 
@@ -62,7 +62,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_changeTrigger(object sender, EventArgs e)
+        private void changeTrigger_Click(object sender, EventArgs e)
         {
             Button buttonSelected = (Button)sender;
 

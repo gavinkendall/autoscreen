@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormTag.cs" company="Gavin Kendall">
-//     Copyright (c) Gavin Kendall. All rights reserved.
+//     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary></summary>
@@ -101,12 +101,12 @@ namespace AutoScreenCapture
             }
         }
 
-        private void Click_buttonCancel(object sender, EventArgs e)
+        private void buttonCancel_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void Click_buttonOK(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
             if (TagObject != null)
             {

@@ -15,7 +15,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_addEditor(object sender, EventArgs e)
+        private void addEditor_Click(object sender, EventArgs e)
         {
             formEditor.EditorObject = null;
 
@@ -36,7 +36,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_removeSelectedEditors(object sender, EventArgs e)
+        private void removeSelectedEditors_Click(object sender, EventArgs e)
         {
             int countBeforeRemoval = formEditor.EditorCollection.Count;
 
@@ -69,7 +69,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_runEditor(object sender, EventArgs e)
+        private void runEditor_Click(object sender, EventArgs e)
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
@@ -83,7 +83,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Click_changeEditor(object sender, EventArgs e)
+        private void changeEditor_Click(object sender, EventArgs e)
         {
             Button buttonSelected = (Button)sender;
 

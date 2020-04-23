@@ -107,15 +107,15 @@ namespace AutoScreenCapture
                 Image = Resources.email
             };
 
-            toolStripButtonEmail.Click += new EventHandler(Click_emailScreenshot);
+            toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
-            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, Click_addEditor);
+            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, addEditor_Click);
 
             foreach (Editor editor in formEditor.EditorCollection)
             {
                 if (editor != null && File.Exists(editor.Application))
                 {
-                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), Click_runEditor);
+                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
                 }
             }
 
@@ -127,8 +127,8 @@ namespace AutoScreenCapture
                 Image = Resources.configure
             };
 
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen", null, Click_addScreen);
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Region", null, Click_addRegion);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen", null, addScreen_Click);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Region", null, addRegion_Click);
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
@@ -140,7 +140,7 @@ namespace AutoScreenCapture
                     Tag = toolStrip.Tag
                 };
 
-                toolStripMenuItemChangeScreen.Click += new EventHandler(Click_changeScreen);
+                toolStripMenuItemChangeScreen.Click += new EventHandler(changeScreen_Click);
 
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemChangeScreen);
 
@@ -150,7 +150,7 @@ namespace AutoScreenCapture
                     Tag = toolStrip.Tag
                 };
 
-                toolStripMenuItemRemoveScreen.Click += new EventHandler(Click_removeScreen);
+                toolStripMenuItemRemoveScreen.Click += new EventHandler(removeScreen_Click);
 
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveScreen);
             }
@@ -163,7 +163,7 @@ namespace AutoScreenCapture
                     Tag = toolStrip.Tag
                 };
 
-                toolStripMenuItemRegion.Click += new EventHandler(Click_changeRegion);
+                toolStripMenuItemRegion.Click += new EventHandler(changeRegion_Click);
 
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRegion);
 
@@ -173,7 +173,7 @@ namespace AutoScreenCapture
                     Tag = toolStrip.Tag
                 };
 
-                toolStripMenuItemRemoveRegion.Click += new EventHandler(Click_removeRegion);
+                toolStripMenuItemRemoveRegion.Click += new EventHandler(removeRegion_Click);
 
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
             }
@@ -205,7 +205,7 @@ namespace AutoScreenCapture
                 DisplayStyle = ToolStripItemDisplayStyle.Image
             };
 
-            toolstripButtonOpenFolder.Click += new EventHandler(Click_showScreenshotLocation);
+            toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
 
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripSplitButtonEdit);
