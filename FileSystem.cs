@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// This is to be backwards compatible with an old version of the application that used the "slides" folder.
         /// </summary>
-        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides";
+        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
 
         /// <summary>
         /// The file to create when the user runs an instance of autoscreen while existing instances are already running.
