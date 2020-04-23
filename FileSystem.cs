@@ -36,6 +36,11 @@ namespace AutoScreenCapture
         public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides";
 
         /// <summary>
+        /// The file to create when the user runs an instance of autoscreen while existing instances are already running.
+        /// </summary>
+        public static readonly string StartupErrorFile = "autoscreen_startup_error.txt";
+
+        /// <summary>
         /// The file containing the references to Editors.
         /// </summary>
         public static readonly string DefaultEditorsFile = "!autoscreen\\editors.xml";
@@ -65,6 +70,9 @@ namespace AutoScreenCapture
         /// </summary>
         public static readonly string DefaultTagsFile = "!autoscreen\\tags.xml";
 
+        /// <summary>
+        /// The file containing the references to Schedules.
+        /// </summary>
         public static readonly string DefaultSchedulesFile = "!autoscreen\\schedules.xml";
 
         /// <summary>
@@ -122,6 +130,9 @@ namespace AutoScreenCapture
         /// </summary>
         public static string TagsFile;
 
+        /// <summary>
+        /// Schedules file.
+        /// </summary>
         public static string SchedulesFile;
 
         /// <summary>
