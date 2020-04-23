@@ -45,7 +45,7 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("User");
             comboBoxType.Items.Add("Machine");
             comboBoxType.Items.Add("Time of Day");
-            comboBoxType.Items.Add("Date/Time Format Function");
+            comboBoxType.Items.Add("Date/Time Format Expression");
 
             if (TagObject != null)
             {
@@ -333,7 +333,7 @@ namespace AutoScreenCapture
             TagType tagType = (TagType) comboBoxType.SelectedIndex;
 
             if (tagType.Equals(TagType.DateTimeFormat) ||
-                tagType.Equals(TagType.DateTimeFormatFunction))
+                tagType.Equals(TagType.DateTimeFormatExpression))
             {
                 labelDateTimeFormatValue.Enabled = true;
                 textBoxDateTimeFormatValue.Enabled = true;

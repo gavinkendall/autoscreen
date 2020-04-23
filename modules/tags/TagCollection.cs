@@ -232,12 +232,12 @@ namespace AutoScreenCapture
                     Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat, enabled: true));
                     Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat, enabled: true));
                     Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat, enabled: true));
-                    Add(new Tag("lastyear", TagType.DateTimeFormatFunction, "{year-1}", enabled: true));
-                    Add(new Tag("lastmonth", TagType.DateTimeFormatFunction, "{month-1}", enabled: true));
-                    Add(new Tag("yesterday", TagType.DateTimeFormatFunction, "{day-1}", enabled: true));
-                    Add(new Tag("tomorrow", TagType.DateTimeFormatFunction, "{day+1}", enabled: true));
-                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatFunction, "{hour-6}", enabled: true));
-                    Add(new Tag("6hoursahead", TagType.DateTimeFormatFunction, "{hour+6}", enabled: true));
+                    Add(new Tag("lastyear", TagType.DateTimeFormatExpression, "{year-1}", enabled: true));
+                    Add(new Tag("lastmonth", TagType.DateTimeFormatExpression, "{month-1}", enabled: true));
+                    Add(new Tag("yesterday", TagType.DateTimeFormatExpression, "{day-1}", enabled: true));
+                    Add(new Tag("tomorrow", TagType.DateTimeFormatExpression, "{day+1}", enabled: true));
+                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatExpression, "{hour-6}", enabled: true));
+                    Add(new Tag("6hoursahead", TagType.DateTimeFormatExpression, "{hour+6}", enabled: true));
                     Add(new Tag("count", TagType.ScreenCaptureCycleCount, enabled: true));
                     Add(new Tag("user", TagType.User, enabled: true));
                     Add(new Tag("machine", TagType.Machine, enabled: true));

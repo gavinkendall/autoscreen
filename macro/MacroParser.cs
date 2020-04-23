@@ -273,9 +273,9 @@ namespace AutoScreenCapture
                         }
                         break;
 
-                    case TagType.DateTimeFormatFunction:
+                    case TagType.DateTimeFormatExpression:
                         macro = macro.Replace(tag.Name,
-                            MacroTagFunctionParser.ParseTagFunctionForDateTimeFormat(screenCapture.DateTimeScreenshotsTaken, tag.DateTimeFormatValue));
+                            MacroTagExpressionParser.ParseTagExpressionForDateTimeFormat(screenCapture.DateTimeScreenshotsTaken, tag.DateTimeFormatValue));
                         break;
                 }
             }

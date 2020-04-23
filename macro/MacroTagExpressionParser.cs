@@ -13,15 +13,15 @@ namespace AutoScreenCapture
     /// <summary>
     /// 
     /// </summary>
-    public static class MacroTagFunctionParser
+    public static class MacroTagExpressionParser
     {
-        // A macro tag function is surrounded by curly braces and gets interpreted to return a result.
-        // At the moment I'm only interested in implementing date/time format functions.
+        // A macro tag expression is surrounded by curly braces and gets interpreted to return a result.
+        // At the moment I'm only interested in implementing date/time format expressions.
         //
         // For example ...
         // {year-1}            1 year behind the given DateTime
         // {minute+5}          5 minutes ahead the given DateTime
-        private static readonly string DateTimeFormatTagFunctionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}$";
+        private static readonly string DateTimeFormatTagExpressionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}$";
 
         /// <summary>
         /// 
@@ -29,15 +29,15 @@ namespace AutoScreenCapture
         /// <param name="dateTime"></param>
         /// <param name="tagFunction"></param>
         /// <returns></returns>
-        public static string ParseTagFunctionForDateTimeFormat(DateTime dateTime, string tagFunction)
+        public static string ParseTagExpressionForDateTimeFormat(DateTime dateTime, string tagFunction)
         {
             string result = tagFunction;
 
-            if (Regex.IsMatch(tagFunction, DateTimeFormatTagFunctionRegex))
+            if (Regex.IsMatch(tagFunction, DateTimeFormatTagExpressionRegex))
             {
-                string dateTimePart = Regex.Match(tagFunction, DateTimeFormatTagFunctionRegex).Groups["DateTimePart"].Value;
-                string @operator = Regex.Match(tagFunction, DateTimeFormatTagFunctionRegex).Groups["Operator"].Value;
-                int @value = Convert.ToInt32(Regex.Match(tagFunction, DateTimeFormatTagFunctionRegex).Groups["Value"].Value);
+                string dateTimePart = Regex.Match(tagFunction, DateTimeFormatTagExpressionRegex).Groups["DateTimePart"].Value;
+                string @operator = Regex.Match(tagFunction, DateTimeFormatTagExpressionRegex).Groups["Operator"].Value;
+                int @value = Convert.ToInt32(Regex.Match(tagFunction, DateTimeFormatTagExpressionRegex).Groups["Value"].Value);
 
                 if (@operator.Equals("-"))
                 {

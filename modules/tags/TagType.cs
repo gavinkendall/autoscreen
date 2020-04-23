@@ -58,8 +58,8 @@ namespace AutoScreenCapture
         TimeOfDay = 8,
 
         /// <summary>
-        /// 
+        /// A date/time expression (such as "{hour-6}" to indicate 6 hours behind).
         /// </summary>
-        DateTimeFormatFunction = 9
+        DateTimeFormatExpression = 9
     }
 }
