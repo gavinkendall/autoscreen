@@ -754,7 +754,7 @@ namespace AutoScreenCapture
             // timerScreenCapture
             // 
             this.timerScreenCapture.Enabled = true;
-            this.timerScreenCapture.Tick += new System.EventHandler(this.Tick_timerScreenCapture);
+            this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
             // labelScreenshotTitle
             // 

@@ -126,6 +126,16 @@ namespace AutoScreenCapture
                     if (GetPath(line, REGEX_SCHEDULES_FILE, out path))
                         FileSystem.SchedulesFile = path;
                 }
+
+                if (string.IsNullOrEmpty(FileSystem.CommandFolder))
+                {
+                    FileSystem.CommandFolder = FileSystem.DefaultCommandFolder;
+
+                    if (!Directory.Exists(FileSystem.DefaultCommandFolder))
+                    {
+                        Directory.CreateDirectory(FileSystem.DefaultCommandFolder);
+                    }
+                }
             }
             catch (Exception ex)
             {

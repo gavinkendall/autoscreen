@@ -335,7 +335,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Tick_timerScreenCapture(object sender, EventArgs e)
+        private void timerScreenCapture_Tick(object sender, EventArgs e)
         {
             if (_screenCapture.Running)
             {

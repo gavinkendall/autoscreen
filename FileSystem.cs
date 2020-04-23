@@ -96,6 +96,12 @@ namespace AutoScreenCapture
         public static string CommandFolder;
 
         /// <summary>
+        /// The default command folder if the actual command folder cannot be found. This will most likely happen with an
+        /// older version of Auto Screen Capture so we need to make sure that, since 2.2.5.0, we have a command folder.
+        /// </summary>
+        public static string DefaultCommandFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command\\";
+
+        /// <summary>
         /// Application Settings file.
         /// </summary>
         public static string ApplicationSettingsFile;
