@@ -77,7 +77,7 @@
             }
             catch (Exception ex)
             {
-                Log.Write("FormMain::PopulateLabelList", ex);
+                Log.WriteException("FormMain::PopulateLabelList", ex);
             }
         }
     }

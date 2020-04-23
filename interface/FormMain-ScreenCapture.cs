@@ -153,7 +153,7 @@ namespace AutoScreenCapture
 
         private void ScreenshotTakenWithSuccess()
         {
-            Log.Write("Running triggers of condition type ScreenshotTaken");
+            Log.WriteMessage("Running triggers of condition type ScreenshotTaken");
             RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
         }
 
@@ -196,7 +196,7 @@ namespace AutoScreenCapture
                     ScreenCapture.LockScreenCaptureSession = false;
                 }
 
-                Log.Write("Starting screen capture");
+                Log.WriteMessage("Starting screen capture");
 
                 _screenCapture.Running = true;
 
@@ -204,7 +204,7 @@ namespace AutoScreenCapture
 
                 if (checkBoxInitialScreenshot.Checked)
                 {
-                    Log.Write("Taking initial screenshots");
+                    Log.WriteMessage("Taking initial screenshots");
 
                     TakeScreenshot(captureNow: false);
                 }
@@ -215,7 +215,7 @@ namespace AutoScreenCapture
 
                 SystemTrayIconStatusRunning();
 
-                Log.Write("Running triggers of condition type ScreenCaptureStarted");
+                Log.WriteMessage("Running triggers of condition type ScreenCaptureStarted");
                 RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
             }
         }
@@ -227,11 +227,11 @@ namespace AutoScreenCapture
         {
             if (_screenCapture.Running)
             {
-                Log.Write("Stopping screen capture");
+                Log.WriteMessage("Stopping screen capture");
 
                 if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
-                    Log.Write("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    Log.WriteMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     formEnterPassphrase.ShowDialog(this);
                 }
 
@@ -254,7 +254,7 @@ namespace AutoScreenCapture
                     SearchFilterValues();
                     SearchDates();
 
-                    Log.Write("Running triggers of condition type ScreenCaptureStopped");
+                    Log.WriteMessage("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
@@ -286,7 +286,7 @@ namespace AutoScreenCapture
 
         private void ScreenshotTakenWithFailure()
         {
-            Log.Write("Application encountered error while taking a screenshot. Stopping screen capture");
+            Log.WriteMessage("Application encountered error while taking a screenshot. Stopping screen capture");
             StopScreenCapture();
         }
 
@@ -349,7 +349,7 @@ namespace AutoScreenCapture
 
                     if (_screenCapture.Count == _screenCapture.Limit)
                     {
-                        Log.Write("Running triggers of condition type LimitReached");
+                        Log.WriteMessage("Running triggers of condition type LimitReached");
                         RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                     }
                 }

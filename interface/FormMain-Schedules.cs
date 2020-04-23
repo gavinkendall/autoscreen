@@ -32,8 +32,8 @@ namespace AutoScreenCapture
                     if (file.EndsWith("log") && File.Exists(file))
                     {
                         File.Delete(file);
-                        Log.Enabled = !Log.Enabled;
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.Enabled;
+                        Log.LoggingEnabled = !Log.LoggingEnabled;
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.LoggingEnabled;
                         Settings.Application.Save();
                         break;
                     }

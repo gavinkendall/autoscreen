@@ -74,7 +74,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchScreenshots()
         {
-            Log.Write("Searching for screenshots");
+            Log.WriteMessage("Searching for screenshots");
 
             Slideshow.Index = 0;
             Slideshow.Count = 0;
@@ -391,7 +391,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("FormMain::EmailScreenshot", ex);
+                Log.WriteException("FormMain::EmailScreenshot", ex);
             }
         }
 

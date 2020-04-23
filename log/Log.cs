@@ -26,27 +26,48 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static bool Enabled { get; set; }
+        public static bool LoggingEnabled { get; set; }
 
         private static readonly string extension = ".txt";
         private static readonly string logFile = "autoscreen-log";
         private static readonly string errorFile = "autoscreen-error";
 
         /// <summary>
-        /// 
+        /// Writes a message to the log files in the logs folder.
         /// </summary>
         /// <param name="message"></param>
-        public static void Write(string message)
+        public static void WriteMessage(string message)
         {
-            Write(message, null);
+            Write(message, writeError: false, null);
         }
 
         /// <summary>
-        /// 
+        /// Writes a message to the error file in the debug folder.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="ex"></param>
-        public static void Write(string message, Exception ex)
+        /// <param name="message">The message to write.</param>
+        public static void WriteError(string message)
+        {
+            Write(message, writeError: true, null);
+        }
+
+        /// <summary>
+        /// Writes an exception error to the error file and log files.
+        /// </summary>
+        /// <param name="message">The message to write.</param>
+        /// <param name="ex">The exception received from the .NET Framework.</param>
+        public static void WriteException(string message, Exception ex)
+        {
+            // We want "writeError to be false because then we'll leave it up to DebugMode if it happens to be turned on for debugging purposes.
+            Write(message, writeError: false, ex);
+        }
+
+        /// <summary>
+        /// Writes a message (whether it be an error or just a general message) and the exception (if any).
+        /// </summary>
+        /// <param name="message">The message to write.</param>
+        /// <param name="writeError">Determines if we write the message to the error file in the debug folder.</param>
+        /// <param name="ex">The exception received from the .NET Framework.</param>
+        private static void Write(string message, bool writeError, Exception ex)
         {
             try
             {
@@ -54,10 +75,10 @@ namespace AutoScreenCapture
 
                 if (ex != null)
                 {
-                    Enabled = true;
+                    LoggingEnabled = true;
                 }
 
-                if (DebugMode || Enabled)
+                if (DebugMode || LoggingEnabled || writeError)
                 {
                     string appVersion = "[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") ";
 
@@ -81,12 +102,23 @@ namespace AutoScreenCapture
                         Directory.CreateDirectory(FileSystem.LogsFolder);
                     }
 
+                    if (writeError)
+                    {
+                        using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
+                        {
+                            sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] ERROR: " + message);
+
+                            sw.Flush();
+                            sw.Close();
+                        }
+                    }
+
                     if (ex != null)
                     {
                         using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
                         {
                             sw.WriteLine(appVersion +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error Message: " +
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Exception Message: " +
                                          ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
 
                             sw.Flush();
@@ -96,7 +128,7 @@ namespace AutoScreenCapture
                         using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
                         {
                             sw.WriteLine(appVersion +
-                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Error Message: " +
+                                         DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Exception Message: " +
                                          ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
 
                             sw.Flush();

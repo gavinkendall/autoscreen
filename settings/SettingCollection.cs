@@ -186,7 +186,7 @@ namespace AutoScreenCapture
                     {
                         File.Delete(Filepath);
 
-                        Log.Write("WARNING: User settings file was too big and needed to be deleted");
+                        Log.WriteMessage("WARNING: User settings file was too big and needed to be deleted");
                         return;
                     }
 
@@ -233,7 +233,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("SettingCollection::Load", ex);
+                Log.WriteException("SettingCollection::Load", ex);
             }
         }
 
@@ -291,7 +291,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("SettingCollection::Save", ex);
+                Log.WriteException("SettingCollection::Save", ex);
             }
         }
 
@@ -304,7 +304,7 @@ namespace AutoScreenCapture
             {
                 if (!Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion)) return;
 
-                Log.Write("An old version of Auto Screen Capture was detected. Attempting upgrade");
+                Log.WriteMessage("An old version of Auto Screen Capture was detected. Attempting upgrade");
 
                 var oldUserSettings = (SettingCollection) this.MemberwiseClone();
                 oldUserSettings._settingList = new List<Setting>(_settingList);
@@ -351,7 +351,7 @@ namespace AutoScreenCapture
 
                 if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                 {
-                    Log.Write("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
+                    Log.WriteMessage("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
 
                     // Go through the old settings and get the old values from them to be used for the new settings.
 
@@ -557,14 +557,14 @@ namespace AutoScreenCapture
                     RemoveByKey("ScreenshotDelay");
                 }
 
-                Log.Write("Upgrade completed.");
+                Log.WriteMessage("Upgrade completed.");
 
                 // Now that we've upgraded all the settings we should save them to disk.
                 Save();
             }
             catch (Exception ex)
             {
-                Log.Write("SettingCollection::Upgrade", ex);
+                Log.WriteException("SettingCollection::Upgrade", ex);
             }
         }
     }

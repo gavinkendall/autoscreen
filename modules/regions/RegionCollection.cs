@@ -158,7 +158,7 @@ namespace AutoScreenCapture
                         // the XML file is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            Log.Write("An old version of the regions file was detected. Attempting upgrade to new region schema");
+                            Log.WriteMessage("An old version of the regions file was detected. Attempting upgrade to new region schema");
 
                             Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
                             Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
@@ -166,7 +166,7 @@ namespace AutoScreenCapture
 
                             if (v2182 != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                             {
-                                Log.Write("Clara 2.1.8.2 or older detected");
+                                Log.WriteMessage("Clara 2.1.8.2 or older detected");
 
                                 region.ViewId = Guid.NewGuid();
 
@@ -187,7 +187,7 @@ namespace AutoScreenCapture
 
                             if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                             {
-                                Log.Write("Dalek 2.2.4.6 or older detected");
+                                Log.WriteMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Screen that was introduced in 2.2.5.0
                                 // so any version before 2.2.5.0 needs to have it during an upgrade.
@@ -210,12 +210,12 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.RegionsFile} not found. Unable to load regions");
+                    Log.WriteMessage($"WARNING: {FileSystem.RegionsFile} not found. Unable to load regions");
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("RegionCollection::Load", ex);
+                Log.WriteException("RegionCollection::Load", ex);
             }
         }
 
@@ -294,7 +294,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("RegionCollection::SaveToXmlFile", ex);
+                Log.WriteException("RegionCollection::SaveToXmlFile", ex);
             }
         }
     }

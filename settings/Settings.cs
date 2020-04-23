@@ -257,7 +257,7 @@ namespace AutoScreenCapture
             }
 
             Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", defaultValue: false).Value);
-            Log.Enabled = Convert.ToBoolean(Application.GetByKey("Logging", defaultValue: false).Value);
+            Log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", defaultValue: false).Value);
         }
     }
 }

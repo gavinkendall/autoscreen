@@ -78,13 +78,13 @@ namespace AutoScreenCapture
             SCREENSHOT_XPATH = sbScreenshot.ToString();
 
             _screenshotList = new List<Screenshot>();
-            Log.Write("Initialized screenshot list");
+            Log.WriteMessage("Initialized screenshot list");
 
             _slideList = new List<Slide>();
-            Log.Write("Initialized slide list");
+            Log.WriteMessage("Initialized slide list");
 
             _slideNameList = new List<string>();
-            Log.Write("Initialized slide name list");
+            Log.WriteMessage("Initialized slide name list");
 
             _imageFormatCollection = imageFormatCollection;
             _screenCollection = screenCollection;
@@ -210,7 +210,7 @@ namespace AutoScreenCapture
                 return null;
             }
 
-            Log.Write("Getting slides from screenshot list");
+            Log.WriteMessage("Getting slides from screenshot list");
 
             LoadXmlFileAndAddScreenshots(date);
 
@@ -218,25 +218,25 @@ namespace AutoScreenCapture
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Image Format filter");
+                    Log.WriteMessage("Getting slides from screenshot list based on Image Format filter");
                     return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Label filter");
+                    Log.WriteMessage("Getting slides from screenshot list based on Label filter");
                     return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Process Name"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Process Name filter");
+                    Log.WriteMessage("Getting slides from screenshot list based on Process Name filter");
                     return _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
-                    Log.Write("Getting slides from screenshot list based on Window Title filter");
+                    Log.WriteMessage("Getting slides from screenshot list based on Window Title filter");
                     return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
             }
@@ -285,7 +285,7 @@ namespace AutoScreenCapture
 
                 if (_screenshotList != null && !File.Exists(FileSystem.ScreenshotsFile))
                 {
-                    Log.Write("Could not find \"" + FileSystem.ScreenshotsFile + "\" so creating default version");
+                    Log.WriteMessage("Could not find \"" + FileSystem.ScreenshotsFile + "\" so creating default version");
 
                     XmlWriterSettings xSettings = new XmlWriterSettings
                     {
@@ -315,7 +315,7 @@ namespace AutoScreenCapture
                         xWriter.Close();
                     }
 
-                    Log.Write("Created \"" + FileSystem.ScreenshotsFile + "\"");
+                    Log.WriteMessage("Created \"" + FileSystem.ScreenshotsFile + "\"");
                 }
 
                 if (File.Exists(FileSystem.ScreenshotsFile))
@@ -330,7 +330,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenshotCollection::LoadXmlFile", ex);
+                Log.WriteException("ScreenshotCollection::LoadXmlFile", ex);
             }
             finally
             {
@@ -367,12 +367,12 @@ namespace AutoScreenCapture
                     {
                         if (string.IsNullOrEmpty(nodeValue))
                         {
-                            Log.Write("Loading node values by " + nodeName + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "/" + nodeName + "\"");
+                            Log.WriteMessage("Loading node values by " + nodeName + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "/" + nodeName + "\"");
                             xNodes = xDoc.SelectNodes(SCREENSHOT_XPATH + "/" + nodeName);
                         }
                         else
                         {
-                            Log.Write("Loading node values by " + nodeName + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "[" + nodeName + "='" + nodeValue + "']\"");
+                            Log.WriteMessage("Loading node values by " + nodeName + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "[" + nodeName + "='" + nodeValue + "']\"");
                             xNodes = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + nodeName + "='" + nodeValue + "']");
                         }
 
@@ -407,7 +407,7 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            Log.Write("WARNING: Unable to load node values from \"" + FileSystem.ScreenshotsFile + "\"");
+                            Log.WriteMessage("WARNING: Unable to load node values from \"" + FileSystem.ScreenshotsFile + "\"");
                         }
                     }
                 }
@@ -416,7 +416,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenshotCollection::LoadXmlFileAndReturnNodeValues", ex);
+                Log.WriteException("ScreenshotCollection::LoadXmlFileAndReturnNodeValues", ex);
                 return null;
             }
             finally
@@ -452,12 +452,12 @@ namespace AutoScreenCapture
                         AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                         AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
-                        Log.Write("Loading screenshots taken on " + date + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "[date='" + date + "']" + "\"");
+                        Log.WriteMessage("Loading screenshots taken on " + date + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "[date='" + date + "']" + "\"");
                         xScreenshots = xDoc.SelectNodes(SCREENSHOT_XPATH + "[date='" + date + "']");
 
                         if (xScreenshots != null)
                         {
-                            Log.Write("Loading " + xScreenshots.Count + " screenshots from \"" + FileSystem.ScreenshotsFile + "\" ...");
+                            Log.WriteMessage("Loading " + xScreenshots.Count + " screenshots from \"" + FileSystem.ScreenshotsFile + "\" ...");
 
                             foreach (XmlNode xScreenshot in xScreenshots)
                             {
@@ -661,14 +661,14 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            Log.Write("WARNING: Unable to load screenshots taken on " + date + " from \"" + FileSystem.ScreenshotsFile + "\"");
+                            Log.WriteMessage("WARNING: Unable to load screenshots taken on " + date + " from \"" + FileSystem.ScreenshotsFile + "\"");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
+                Log.WriteException("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
             }
             finally
             {

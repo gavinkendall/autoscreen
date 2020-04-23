@@ -129,7 +129,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("Config::Load", ex);
+                Log.WriteException("Config::Load", ex);
             }
         }
 

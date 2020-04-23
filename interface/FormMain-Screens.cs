@@ -120,7 +120,7 @@ namespace AutoScreenCapture
 
         private void RunScreenCaptures()
         {
-            Log.Write("Running screen captures");
+            Log.WriteMessage("Running screen captures");
 
             foreach (Screen screen in formScreen.ScreenCollection)
             {

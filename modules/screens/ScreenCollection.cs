@@ -158,14 +158,14 @@ namespace AutoScreenCapture
                         // the XML file is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            Log.Write("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
+                            Log.WriteMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                             {
-                                Log.Write("Dalek 2.2.4.6 or older detected");
+                                Log.WriteMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Screen that was introduced in 2.2.5.0
                                 // so any version before 2.2.5.0 needs to have it during an upgrade.
@@ -186,7 +186,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.ScreensFile} not found. Detecting available screens and creating them");
+                    Log.WriteMessage($"WARNING: {FileSystem.ScreensFile} not found. Detecting available screens and creating them");
 
                     // Setup some screens based on what we can find.
                     for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
@@ -194,7 +194,7 @@ namespace AutoScreenCapture
                         Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
                             imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, mouse: true, enabled: true));
 
-                        Log.Write($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
+                        Log.WriteMessage($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
                     }
 
                     SaveToXmlFile();
@@ -202,7 +202,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCollection::LoadXmlFileAndAddScreens", ex);
+                Log.WriteException("ScreenCollection::LoadXmlFileAndAddScreens", ex);
             }
         }
 
@@ -278,7 +278,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScreenCollection::SaveToXmlFile", ex);
+                Log.WriteException("ScreenCollection::SaveToXmlFile", ex);
             }
         }
     }

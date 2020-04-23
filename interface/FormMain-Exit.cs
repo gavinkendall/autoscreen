@@ -11,11 +11,11 @@ namespace AutoScreenCapture
         /// </summary>
         private void ExitApplication()
         {
-            Log.Write("Exiting application");
+            Log.WriteMessage("Exiting application");
 
             if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
-                Log.Write("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                Log.WriteMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                 formEnterPassphrase.ShowDialog(this);
             }
 
@@ -24,7 +24,7 @@ namespace AutoScreenCapture
             // to continue with normal functionality.
             if (!ScreenCapture.LockScreenCaptureSession)
             {
-                Log.Write("Running triggers of condition type ApplicationExit");
+                Log.WriteMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                 Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
@@ -39,10 +39,10 @@ namespace AutoScreenCapture
                 SystemTrayIconStatusNormal();
                 HideSystemTrayIcon();
 
-                Log.Write("Hiding interface on clean application exit");
+                Log.WriteMessage("Hiding interface on clean application exit");
                 HideInterface();
 
-                Log.Write("Saving screenshots on clean application exit");
+                Log.WriteMessage("Saving screenshots on clean application exit");
                 _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
@@ -55,7 +55,7 @@ namespace AutoScreenCapture
                     runScreenshotSearchThread.CancelAsync();
                 }
 
-                Log.Write("Bye!");
+                Log.WriteMessage("Bye!");
 
                 // Exit.
                 Environment.Exit(0);

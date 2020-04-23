@@ -108,12 +108,12 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors");
+                    Log.WriteMessage($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors");
                 }
             }
             catch (Exception ex)
             {
-                Log.Write("EditorCollection::LoadXmlFileAndAddEditors", ex);
+                Log.WriteException("EditorCollection::LoadXmlFileAndAddEditors", ex);
             }
         }
 
@@ -183,7 +183,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("EditorCollection::SaveToXmlFile", ex);
+                Log.WriteException("EditorCollection::SaveToXmlFile", ex);
             }
         }
     }

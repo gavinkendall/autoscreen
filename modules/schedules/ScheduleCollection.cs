@@ -164,14 +164,14 @@ namespace AutoScreenCapture
                         // the XML file is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            Log.Write("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
+                            Log.WriteMessage("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                             {
-                                Log.Write("Dalek 2.2.4.6 or older detected");
+                                Log.WriteMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Schedule that was introduced in 2.2.5.0
                                 // so any version before 2.2.5.0 needs to have it during an upgrade.
@@ -192,9 +192,9 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.Write($"WARNING: {FileSystem.SchedulesFile} not found. Unable to load schedules");
+                    Log.WriteMessage($"WARNING: {FileSystem.SchedulesFile} not found. Unable to load schedules");
 
-                    Log.Write("Creating default Command Line Schedule for use with command line arguments such as -captureat, -startat, and -stopat");
+                    Log.WriteMessage("Creating default Command Line Schedule for use with command line arguments such as -captureat, -startat, and -stopat");
                     Schedule schedule = new Schedule()
                     {
                         Name = "Command Line Schedule",
@@ -213,7 +213,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScheduleCollection::LoadXmlFileAndAddSchedules", ex);
+                Log.WriteException("ScheduleCollection::LoadXmlFileAndAddSchedules", ex);
             }
         }
 
@@ -295,7 +295,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.Write("ScheduleCollection::SaveToXmlFile", ex);
+                Log.WriteException("ScheduleCollection::SaveToXmlFile", ex);
             }
         }
     }

@@ -40,14 +40,14 @@ namespace AutoScreenCapture
 
             if (Security.Hash(textBoxPassphrase.Text).Equals(Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value))
             {
-                Log.Write("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
+                Log.WriteMessage("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
 
                 ScreenCapture.LockScreenCaptureSession = false;
                 Close();
             }
             else
             {
-                Log.Write("WARNING: There was an attempt to unlock the running screen capture session! The user was " + Environment.UserName + " on " + Environment.MachineName);
+                Log.WriteMessage("WARNING: There was an attempt to unlock the running screen capture session! The user was " + Environment.UserName + " on " + Environment.MachineName);
 
                 textBoxPassphrase.Clear();
                 textBoxPassphrase.Focus();

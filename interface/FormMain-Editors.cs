@@ -139,7 +139,7 @@ namespace AutoScreenCapture
 
                 if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
                 {
-                    Log.Write("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
+                    Log.WriteMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
 
                     RunEditor(editor, screenshot);
                 }
@@ -157,10 +157,10 @@ namespace AutoScreenCapture
             // then we'll use that argument as the screenshot file path when executing the image editor.
             if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && File.Exists(screenshot.Path)))
             {
-                Log.Write("Starting process for editor \"" + editor.Name + "\" ...");
-                Log.Write("Application: " + editor.Application);
-                Log.Write("Arguments before %screenshot% tag replacement: " + editor.Arguments);
-                Log.Write("Arguments after %screenshot% tag replacement: " + editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
+                Log.WriteMessage("Starting process for editor \"" + editor.Name + "\" ...");
+                Log.WriteMessage("Application: " + editor.Application);
+                Log.WriteMessage("Arguments before %screenshot% tag replacement: " + editor.Arguments);
+                Log.WriteMessage("Arguments after %screenshot% tag replacement: " + editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
 
                 _ = Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
             }
