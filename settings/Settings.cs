@@ -204,6 +204,11 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("LowDiskPercentageThreshold", 1));
                     }
+
+                    if (!Application.KeyExists("ScreenshotsLoadLimit"))
+                    {
+                        Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
+                    }
                 }
                 else
                 {
@@ -223,6 +228,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("EmailMessageSubject", string.Empty));
                     Application.Add(new Setting("EmailMessageBody", string.Empty));
                     Application.Add(new Setting("LowDiskPercentageThreshold", 1));
+                    Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
                 }
 
                 Application.Save();

@@ -29,11 +29,47 @@ namespace AutoScreenCapture
                         break;
                     }
 
+                    if (file.EndsWith("debug_on") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        Log.DebugMode = true;
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
+                        Settings.Application.Save();
+                        break;
+                    }
+
+                    if (file.EndsWith("debug_off") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        Log.DebugMode = false;
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = false;
+                        Settings.Application.Save();
+                        break;
+                    }
+
                     if (file.EndsWith("log") && File.Exists(file))
                     {
                         File.Delete(file);
                         Log.LoggingEnabled = !Log.LoggingEnabled;
                         Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.LoggingEnabled;
+                        Settings.Application.Save();
+                        break;
+                    }
+
+                    if (file.EndsWith("log_on") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        Log.LoggingEnabled = true;
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = true;
+                        Settings.Application.Save();
+                        break;
+                    }
+
+                    if (file.EndsWith("log_off") && File.Exists(file))
+                    {
+                        File.Delete(file);
+                        Log.LoggingEnabled = false;
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = false;
                         Settings.Application.Save();
                         break;
                     }

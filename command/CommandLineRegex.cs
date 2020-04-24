@@ -65,7 +65,27 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public const string REGEX_COMMAND_LINE_LOG_ON = "^-log=on";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_LOG_OFF = "^-log=off";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string REGEX_COMMAND_LINE_DEBUG = "^-debug";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_DEBUG_ON = "^-debug=on";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_DEBUG_OFF = "^-debug=off";
 
         /// <summary>
         /// 

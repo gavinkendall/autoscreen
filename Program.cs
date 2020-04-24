@@ -136,9 +136,29 @@ namespace AutoScreenCapture
                     CreateFile("debug");
                 }
 
+                if(Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_ON))
+                {
+                    CreateFile("debug_on");
+                }
+
+                if(Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_OFF))
+                {
+                    CreateFile("debug_off");
+                }
+
                 if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG))
                 {
                     CreateFile("log");
+                }
+
+                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_ON))
+                {
+                    CreateFile("log_on");
+                }
+
+                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_OFF))
+                {
+                    CreateFile("log_off");
                 }
 
                 if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTURE))

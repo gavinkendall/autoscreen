@@ -212,7 +212,10 @@ namespace AutoScreenCapture
 
             Log.WriteMessage("Getting slides from screenshot list");
 
-            LoadXmlFileAndAddScreenshots(date);
+            if (LoadXmlFileAndAddScreenshots(date) != 0)
+            {
+                return null;
+            }
 
             if (!string.IsNullOrEmpty(filterValue))
             {
@@ -429,7 +432,7 @@ namespace AutoScreenCapture
         /// Loads the screenshots taken on a particular day from the screenshots.xml file.
         /// </summary>
         /// <param name="date">The date to load screenshots from.</param>
-        public void LoadXmlFileAndAddScreenshots(string date)
+        public int LoadXmlFileAndAddScreenshots(string date)
         {
             try
             {
@@ -437,12 +440,9 @@ namespace AutoScreenCapture
 
                 XmlNodeList xScreenshots = null;
 
-                // I'm wondering if I need to load all the screenshots from today or just load the ones in the current session.
-                // Maybe introduce an application setting to determine this behaviour.
-                //if (string.IsNullOrEmpty(date) || date.Equals(DateTime.Now.ToString(MacroParser.DateFormat)))
                 if (string.IsNullOrEmpty(date))
                 {
-                    return;
+                    return 1;
                 }
 
                 if (xDoc != null)
@@ -457,7 +457,16 @@ namespace AutoScreenCapture
 
                         if (xScreenshots != null)
                         {
-                            Log.WriteMessage("Loading " + xScreenshots.Count + " screenshots from \"" + FileSystem.ScreenshotsFile + "\" ...");
+                            Log.WriteMessage("Loading " + xScreenshots.Count + " screenshots taken on " + date + " from \"" + FileSystem.ScreenshotsFile + "\" ...");
+
+                            int screenshotsLoadLimit = Convert.ToInt32(Settings.Application.GetByKey("ScreenshotsLoadLimit", defaultValue: 5000).Value);
+
+                            if (xScreenshots.Count >= screenshotsLoadLimit)
+                            {
+                                Log.WriteMessage("Cannot load screenshots. The number of screenshots to be loaded (" + xScreenshots.Count + ") exceeded the number allowed set by ScreenshotsLoadLimit (" + screenshotsLoadLimit + ")");
+
+                                return 2;
+                            }
 
                             foreach (XmlNode xScreenshot in xScreenshots)
                             {
@@ -665,10 +674,13 @@ namespace AutoScreenCapture
                         }
                     }
                 }
+
+                return 0;
             }
             catch (Exception ex)
             {
                 Log.WriteException("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
+                return -1;
             }
             finally
             {
