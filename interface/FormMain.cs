@@ -78,8 +78,6 @@ namespace AutoScreenCapture
             else
             {
                 LoadSettings();
-
-                InitializeThreads();
             }
 
             Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
@@ -114,46 +112,6 @@ namespace AutoScreenCapture
 
             Log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
-        }
-
-        private void InitializeThreads()
-        {
-            Log.WriteDebugMessage("Initializing threads");
-
-            runDeleteSlidesThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runDeleteSlidesThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteSlidesThread);
-
-            runDateSearchThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runDateSearchThread.DoWork += new DoWorkEventHandler(DoWork_runDateSearchThread);
-
-            runScreenshotSearchThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runScreenshotSearchThread.DoWork += new DoWorkEventHandler(DoWork_runScreenshotSearchThread);
-
-            runFilterSearchThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
-
-            runSaveScreenshotsThread = new BackgroundWorker
-            {
-                WorkerReportsProgress = false,
-                WorkerSupportsCancellation = true
-            };
-            runSaveScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runSaveScreenshotsThread);
         }
 
         /// <summary>
@@ -214,19 +172,47 @@ namespace AutoScreenCapture
         {
             Log.WriteDebugMessage("Searching for dates");
 
-            if (runDateSearchThread != null && !runDateSearchThread.IsBusy)
+            if (runDateSearchThread == null)
             {
-                runDateSearchThread.RunWorkerAsync();
+                runDateSearchThread = new BackgroundWorker
+                {
+                    WorkerReportsProgress = false,
+                    WorkerSupportsCancellation = true
+                };
+
+                runDateSearchThread.DoWork += new DoWorkEventHandler(DoWork_runDateSearchThread);
             }
+            else
+            {
+                if (!runDateSearchThread.IsBusy)
+                {
+                    runDateSearchThread.RunWorkerAsync();
+                }
+            }
+
+            GC.Collect();
         }
 
         private void DeleteSlides()
         {
             Log.WriteDebugMessage("Deleting slides directory from old version of application (if needed)");
 
-            if (runDeleteSlidesThread != null && !runDeleteSlidesThread.IsBusy)
+            if (runDeleteSlidesThread == null)
             {
-                runDeleteSlidesThread.RunWorkerAsync();
+                runDeleteSlidesThread = new BackgroundWorker
+                {
+                    WorkerReportsProgress = false,
+                    WorkerSupportsCancellation = true
+                };
+
+                runDeleteSlidesThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteSlidesThread);
+            }
+            else
+            {
+                if (!runDeleteSlidesThread.IsBusy)
+                {
+                    runDeleteSlidesThread.RunWorkerAsync();
+                }
             }
         }
 

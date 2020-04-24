@@ -63,9 +63,22 @@ namespace AutoScreenCapture
 
         private void SaveScreenshots()
         {
-            if (runSaveScreenshotsThread != null && !runSaveScreenshotsThread.IsBusy)
+            if (runSaveScreenshotsThread == null)
             {
-                runSaveScreenshotsThread.RunWorkerAsync();
+                runSaveScreenshotsThread = new BackgroundWorker
+                {
+                    WorkerReportsProgress = false,
+                    WorkerSupportsCancellation = true
+                };
+
+                runSaveScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runSaveScreenshotsThread);
+            }
+            else
+            {
+                if (!runSaveScreenshotsThread.IsBusy)
+                {
+                    runSaveScreenshotsThread.RunWorkerAsync();
+                }
             }
         }
 
@@ -83,12 +96,27 @@ namespace AutoScreenCapture
 
             listBoxScreenshots.DataSource = null;
 
-            if (runScreenshotSearchThread != null && !runScreenshotSearchThread.IsBusy)
+            if (runScreenshotSearchThread == null)
             {
-                runScreenshotSearchThread.RunWorkerAsync();
+                runScreenshotSearchThread = new BackgroundWorker
+                {
+                    WorkerReportsProgress = false,
+                    WorkerSupportsCancellation = true
+                };
+
+                runScreenshotSearchThread.DoWork += new DoWorkEventHandler(DoWork_runScreenshotSearchThread);
+            }
+            else
+            {
+                if (!runScreenshotSearchThread.IsBusy)
+                {
+                    runScreenshotSearchThread.RunWorkerAsync();
+                }
             }
 
             listBoxScreenshots.EndUpdate();
+
+            GC.Collect();
         }
 
         /// <summary>

@@ -109,8 +109,6 @@ namespace AutoScreenCapture
                 checkBoxMouse.Checked = true;
                 checkBoxEnabled.Checked = true;
             }
-
-            timerScreenPreview.Enabled = true;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -312,8 +310,6 @@ namespace AutoScreenCapture
                         )
                         : null;
                 }
-
-                System.GC.Collect();
             }
             catch (Exception ex)
             {
@@ -323,7 +319,7 @@ namespace AutoScreenCapture
 
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timerScreenPreview.Enabled = false;
+
         }
 
         private System.Windows.Forms.Screen GetScreenByIndex(int index)

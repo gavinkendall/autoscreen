@@ -112,8 +112,6 @@ namespace AutoScreenCapture
                 numericUpDownHeight.Value = 600;
                 checkBoxEnabled.Checked = true;
             }
-
-            timerPreview.Enabled = true;
         }
 
         private void buttonRegionCancel_Click(object sender, EventArgs e)
@@ -297,8 +295,6 @@ namespace AutoScreenCapture
                     (int)numericUpDownResolutionRatio.Value,
                     checkBoxMouse.Checked
                 );
-
-                System.GC.Collect();
             }
             catch (Exception ex)
             {
@@ -308,7 +304,7 @@ namespace AutoScreenCapture
 
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
         {
-            timerPreview.Enabled = false;
+
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)

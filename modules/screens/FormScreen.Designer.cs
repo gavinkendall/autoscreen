@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreen));
             this.labelName = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
@@ -51,7 +50,6 @@
             this.groupBoxComponent = new System.Windows.Forms.GroupBox();
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
-            this.timerScreenPreview = new System.Windows.Forms.Timer(this.components);
             this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
@@ -294,11 +292,6 @@
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
             // 
-            // timerScreenPreview
-            // 
-            this.timerScreenPreview.Interval = 500;
-            this.timerScreenPreview.Tick += new System.EventHandler(this.Tick_timerPreview);
-            // 
             // checkBoxEnabled
             // 
             this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -376,7 +369,6 @@
         private System.Windows.Forms.GroupBox groupBoxComponent;
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;
-        private System.Windows.Forms.Timer timerScreenPreview;
         private System.Windows.Forms.CheckBox checkBoxEnabled;
     }
 }

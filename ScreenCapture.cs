@@ -180,8 +180,6 @@ namespace AutoScreenCapture
                     }
                 }
 
-                GC.Collect();
-
                 return image;
             }
             catch (Exception ex)
@@ -189,6 +187,10 @@ namespace AutoScreenCapture
                 Log.WriteExceptionMessage("ScreenCapture::GetImageByPath", ex);
 
                 return null;
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 
@@ -249,8 +251,6 @@ namespace AutoScreenCapture
                     graphicsSource.Flush();
                     graphicsDestination.Flush();
 
-                    GC.Collect();
-
                     return bitmapDestination;
                 }
 
@@ -265,6 +265,10 @@ namespace AutoScreenCapture
                 }
 
                 return null;
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 
@@ -290,8 +294,6 @@ namespace AutoScreenCapture
 
                     graphics.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
 
-                    GC.Collect();
-
                     return bitmap;
                 }
 
@@ -306,6 +308,10 @@ namespace AutoScreenCapture
                 }
 
                 return null;
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 
@@ -382,8 +388,6 @@ namespace AutoScreenCapture
                     ? GetActiveWindowBitmap()
                     : GetScreenBitmap(x, y, width, height, resolutionRatio, mouse);
 
-                GC.Collect();
-
                 if (bitmap != null)
                 {
                     return true;
@@ -398,6 +402,10 @@ namespace AutoScreenCapture
                 bitmap = null;
 
                 return false;
+            }
+            finally
+            {
+                GC.Collect();
             }
         }
 

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRegion));
             this.labelName = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
@@ -45,7 +44,6 @@
             this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.timerPreview = new System.Windows.Forms.Timer(this.components);
             this.labelFolder = new System.Windows.Forms.Label();
             this.textBoxFolder = new System.Windows.Forms.TextBox();
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
@@ -250,11 +248,6 @@
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonRegionCancel_Click);
-            // 
-            // timerPreview
-            // 
-            this.timerPreview.Interval = 500;
-            this.timerPreview.Tick += new System.EventHandler(this.Tick_timerRegionPreview);
             // 
             // labelFolder
             // 
@@ -527,7 +520,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownHeight;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Timer timerPreview;
         private System.Windows.Forms.Label labelFolder;
         private System.Windows.Forms.TextBox textBoxFolder;
         private System.Windows.Forms.Button buttonBrowseFolder;

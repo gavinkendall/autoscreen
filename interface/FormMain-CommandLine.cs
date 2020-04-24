@@ -109,8 +109,6 @@ namespace AutoScreenCapture
                     }
                 }
 
-                InitializeThreads();
-
                 if (!scheduledStart)
                 {
                     StartScreenCapture();

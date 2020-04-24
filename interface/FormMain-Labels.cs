@@ -79,6 +79,10 @@
             {
                 Log.WriteExceptionMessage("FormMain::PopulateLabelList", ex);
             }
+            finally
+            {
+                GC.Collect();
+            }
         }
     }
 }

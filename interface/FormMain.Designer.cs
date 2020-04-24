@@ -1023,6 +1023,7 @@ namespace AutoScreenCapture
             this.MinimumSize = new System.Drawing.Size(849, 497);
             this.Name = "FormMain";
             this.Opacity = 0D;
+            this.Visible = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormViewer_FormClosing);

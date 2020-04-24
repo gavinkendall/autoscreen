@@ -60,12 +60,27 @@ namespace AutoScreenCapture
         {
             comboBoxFilterValue.BeginUpdate();
 
-            if (runFilterSearchThread != null && !runFilterSearchThread.IsBusy)
+            if (runFilterSearchThread == null)
             {
-                runFilterSearchThread.RunWorkerAsync();
+                runFilterSearchThread = new BackgroundWorker
+                {
+                    WorkerReportsProgress = false,
+                    WorkerSupportsCancellation = true
+                };
+
+                runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
+            }
+            else
+            {
+                if (!runFilterSearchThread.IsBusy)
+                {
+                    runFilterSearchThread.RunWorkerAsync();
+                }
             }
 
             comboBoxFilterValue.EndUpdate();
+
+            GC.Collect();
         }
     }
 }
