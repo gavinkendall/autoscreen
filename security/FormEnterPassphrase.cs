@@ -40,7 +40,7 @@ namespace AutoScreenCapture
 
             if (Security.Hash(textBoxPassphrase.Text).Equals(Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value))
             {
-                Log.WriteMessage("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
+                Log.WriteDebugMessage("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
 
                 ScreenCapture.LockScreenCaptureSession = false;
                 Close();

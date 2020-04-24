@@ -186,7 +186,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("ScreenCapture::GetImageByPath", ex);
+                Log.WriteExceptionMessage("ScreenCapture::GetImageByPath", ex);
 
                 return null;
             }
@@ -261,7 +261,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    Log.WriteException("ScreenCapture::GetScreenBitmap", ex);
+                    Log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
                 }
 
                 return null;
@@ -302,7 +302,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    Log.WriteException("ScreenCapture::GetScreenBitmap", ex);
+                    Log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
                 }
 
                 return null;
@@ -334,7 +334,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("ScreenCapture::GetActiveWindowTitle", ex);
+                Log.WriteExceptionMessage("ScreenCapture::GetActiveWindowTitle", ex);
 
                 return null;
             }
@@ -356,7 +356,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("ScreenCapture::GetActiveWindowProcessName", ex);
+                Log.WriteExceptionMessage("ScreenCapture::GetActiveWindowProcessName", ex);
 
                 return null;
             }
@@ -393,7 +393,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("ScreenCapture::GetScreenImages", ex);
+                Log.WriteExceptionMessage("ScreenCapture::GetScreenImages", ex);
 
                 bitmap = null;
 
@@ -423,10 +423,7 @@ namespace AutoScreenCapture
             {
                 if (!string.IsNullOrEmpty(path) && path.Length < MAX_WINDOWS_PATH_LENGTH)
                 {
-                    if (Log.DebugMode)
-                    {
-                        Log.WriteMessage("Attempting to write image to file at path \"" + path + "\"");
-                    }
+                    Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
 
                     FileInfo fileInfo = new FileInfo(path);
 
@@ -442,10 +439,7 @@ namespace AutoScreenCapture
                                 int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value);
                                 double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
 
-                                if (Log.DebugMode)
-                                {
-                                    Log.WriteMessage("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
-                                }
+                                Log.WriteDebugMessage("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
 
                                 if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                                 {
@@ -457,7 +451,7 @@ namespace AutoScreenCapture
                                         {
                                             Directory.CreateDirectory(dirName);
 
-                                            Log.WriteMessage("Directory \"" + dirName + "\" did not exist so it was created");
+                                            Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                         }
 
                                         Screenshot screenshot = new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label);
@@ -469,7 +463,7 @@ namespace AutoScreenCapture
                                 }
                                 else
                                 {
-                                    Log.WriteError($"Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
+                                    Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
                                     return false;
                                 }
                             }
@@ -489,7 +483,7 @@ namespace AutoScreenCapture
                                 {
                                     Directory.CreateDirectory(dirName);
 
-                                    Log.WriteMessage("Directory \"" + dirName + "\" did not exist so it was created");
+                                    Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                 }
 
                                 screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
@@ -505,7 +499,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteMessage($"No path available or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
+                    Log.WriteMessage($"WARNING: No path available or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
 
                     return false;
                 }
@@ -514,7 +508,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("ScreenCapture::TakeScreenshot", ex);
+                Log.WriteExceptionMessage("ScreenCapture::TakeScreenshot", ex);
 
                 return false;
             }
@@ -545,7 +539,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("ScreenCapture::SaveToFile", ex);
+                Log.WriteExceptionMessage("ScreenCapture::SaveToFile", ex);
             }
         }
 

@@ -112,13 +112,13 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
-            Log.WriteMessage("Running triggers of condition type ApplicationStartup");
+            Log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
 
         private void InitializeThreads()
         {
-            Log.WriteMessage("Initializing threads");
+            Log.WriteDebugMessage("Initializing threads");
 
             runDeleteSlidesThread = new BackgroundWorker
             {
@@ -174,10 +174,10 @@ namespace AutoScreenCapture
                 SystemTrayIconStatusNormal();
                 HideSystemTrayIcon();
 
-                Log.WriteMessage("Hiding interface on forced application exit because Windows is shutting down");
+                Log.WriteDebugMessage("Hiding interface on forced application exit because Windows is shutting down");
                 HideInterface();
 
-                Log.WriteMessage("Saving screenshots on forced application exit because Windows is shutting down");
+                Log.WriteDebugMessage("Saving screenshots on forced application exit because Windows is shutting down");
                 _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
@@ -197,7 +197,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Log.WriteMessage("Running triggers of condition type InterfaceClosing");
+                Log.WriteDebugMessage("Running triggers of condition type InterfaceClosing");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
 
                 // If there isn't a Trigger for "InterfaceClosing" that performs an action
@@ -212,7 +212,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchDates()
         {
-            Log.WriteMessage("Searching for dates");
+            Log.WriteDebugMessage("Searching for dates");
 
             if (runDateSearchThread != null && !runDateSearchThread.IsBusy)
             {
@@ -222,7 +222,7 @@ namespace AutoScreenCapture
 
         private void DeleteSlides()
         {
-            Log.WriteMessage("Deleting slides directory from old version of application (if needed)");
+            Log.WriteDebugMessage("Deleting slides directory from old version of application (if needed)");
 
             if (runDeleteSlidesThread != null && !runDeleteSlidesThread.IsBusy)
             {
@@ -272,11 +272,11 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteMessage("Showing interface");
+                Log.WriteDebugMessage("Showing interface");
 
                 if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
-                    Log.WriteMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     formEnterPassphrase.ShowDialog(this);
                 }
 
@@ -308,13 +308,13 @@ namespace AutoScreenCapture
 
                     Focus();
 
-                    Log.WriteMessage("Running triggers of condition type InterfaceShowing");
+                    Log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
                     RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteException("FormMain::ShowInterface", ex);
+                Log.WriteExceptionMessage("FormMain::ShowInterface", ex);
             }
         }
 
@@ -325,7 +325,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteMessage("Hiding interface");
+                Log.WriteDebugMessage("Hiding interface");
 
                 Opacity = 0;
 
@@ -333,12 +333,12 @@ namespace AutoScreenCapture
                 Visible = false;
                 ShowInTaskbar = false;
 
-                Log.WriteMessage("Running triggers of condition type InterfaceHiding");
+                Log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
             }
             catch (Exception ex)
             {
-                Log.WriteException("FormMain::HideInterface", ex);
+                Log.WriteExceptionMessage("FormMain::HideInterface", ex);
             }
         }
 

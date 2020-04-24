@@ -58,7 +58,7 @@ namespace AutoScreenCapture
         {
             _imageFormatList.Add(imageFormat);
 
-            Log.WriteMessage("Image format added: " + imageFormat.Name + " (" + imageFormat.Extension + ")");
+            Log.WriteDebugMessage("Image format added: " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
         /// <summary>

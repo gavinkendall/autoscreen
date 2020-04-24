@@ -15,7 +15,7 @@ namespace AutoScreenCapture
 
             if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
             {
-                Log.WriteMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                 formEnterPassphrase.ShowDialog(this);
             }
 
@@ -24,7 +24,7 @@ namespace AutoScreenCapture
             // to continue with normal functionality.
             if (!ScreenCapture.LockScreenCaptureSession)
             {
-                Log.WriteMessage("Running triggers of condition type ApplicationExit");
+                Log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                 Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
@@ -39,10 +39,10 @@ namespace AutoScreenCapture
                 SystemTrayIconStatusNormal();
                 HideSystemTrayIcon();
 
-                Log.WriteMessage("Hiding interface on clean application exit");
+                Log.WriteDebugMessage("Hiding interface on clean application exit");
                 HideInterface();
 
-                Log.WriteMessage("Saving screenshots on clean application exit");
+                Log.WriteDebugMessage("Saving screenshots on clean application exit");
                 _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)

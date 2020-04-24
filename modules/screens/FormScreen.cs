@@ -317,7 +317,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("FormScreen::UpdatePreview", ex);
+                Log.WriteExceptionMessage("FormScreen::UpdatePreview", ex);
             }
         }
 

@@ -194,7 +194,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("FileSystem::DeleteFilesInDirectory", ex);
+                Log.WriteExceptionMessage("FileSystem::DeleteFilesInDirectory", ex);
             }
         }
     }

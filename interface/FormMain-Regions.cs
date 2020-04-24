@@ -120,7 +120,7 @@ namespace AutoScreenCapture
 
         private void RunRegionCaptures()
         {
-            Log.WriteMessage("Running region captures");
+            Log.WriteDebugMessage("Running region captures");
 
             foreach (Region region in formRegion.RegionCollection)
             {

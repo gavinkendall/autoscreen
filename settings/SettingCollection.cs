@@ -186,7 +186,8 @@ namespace AutoScreenCapture
                     {
                         File.Delete(Filepath);
 
-                        Log.WriteMessage("WARNING: User settings file was too big and needed to be deleted");
+                        Log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
+
                         return;
                     }
 
@@ -233,7 +234,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("SettingCollection::Load", ex);
+                Log.WriteExceptionMessage("SettingCollection::Load", ex);
             }
         }
 
@@ -291,7 +292,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("SettingCollection::Save", ex);
+                Log.WriteExceptionMessage("SettingCollection::Save", ex);
             }
         }
 
@@ -351,7 +352,7 @@ namespace AutoScreenCapture
 
                 if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                 {
-                    Log.WriteMessage("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
+                    Log.WriteDebugMessage("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
 
                     // Go through the old settings and get the old values from them to be used for the new settings.
 
@@ -564,7 +565,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("SettingCollection::Upgrade", ex);
+                Log.WriteExceptionMessage("SettingCollection::Upgrade", ex);
             }
         }
     }

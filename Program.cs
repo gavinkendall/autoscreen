@@ -68,7 +68,7 @@ namespace AutoScreenCapture
 
                             using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + FileSystem.StartupErrorFile, true))
                             {
-                                sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] An existing instance of autoscreen is already running and no commands were given so this instance is being terminated. If you want to run this instance and terminate all other running instances run autoscreen again with the -kill command, wait for all running instances to terminate, and then run autoscreen normally. If you want to control the currently running instance of autoscreen then run autoscreen with a -capture, -start, -stop, -log, -debug, or -exit command");
+                                sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] An existing instance of autoscreen is already running");
 
                                 sw.Flush();
                                 sw.Close();

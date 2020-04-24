@@ -153,7 +153,7 @@ namespace AutoScreenCapture
 
         private void ScreenshotTakenWithSuccess()
         {
-            Log.WriteMessage("Running triggers of condition type ScreenshotTaken");
+            Log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
             RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
         }
 
@@ -215,7 +215,7 @@ namespace AutoScreenCapture
 
                 SystemTrayIconStatusRunning();
 
-                Log.WriteMessage("Running triggers of condition type ScreenCaptureStarted");
+                Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
                 RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
             }
         }
@@ -231,7 +231,7 @@ namespace AutoScreenCapture
 
                 if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
                 {
-                    Log.WriteMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     formEnterPassphrase.ShowDialog(this);
                 }
 
@@ -254,7 +254,7 @@ namespace AutoScreenCapture
                     SearchFilterValues();
                     SearchDates();
 
-                    Log.WriteMessage("Running triggers of condition type ScreenCaptureStopped");
+                    Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
@@ -349,7 +349,7 @@ namespace AutoScreenCapture
 
                     if (_screenCapture.Count == _screenCapture.Limit)
                     {
-                        Log.WriteMessage("Running triggers of condition type LimitReached");
+                        Log.WriteDebugMessage("Running triggers of condition type LimitReached");
                         RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                     }
                 }

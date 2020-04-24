@@ -16,32 +16,33 @@ namespace AutoScreenCapture
             {
                 Log.WriteMessage("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " ***");
                 Log.WriteMessage("Starting application");
-                Log.WriteMessage("At this point the application should be able to run normally");
-                Log.WriteMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
-                Log.WriteMessage("Your autoscreen.conf file is \"" + FileSystem.ConfigFile + "\"");
-                Log.WriteMessage("The name and location of it can be changed with the -config command line argument:");
-                Log.WriteMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
-                Log.WriteMessage("Checking what we loaded from your autoscreen.conf file ...");
-                Log.WriteMessage("ApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
-                Log.WriteMessage("UserSettingsFile=" + FileSystem.UserSettingsFile);
-                Log.WriteMessage("DebugFolder=" + FileSystem.DebugFolder);
-                Log.WriteMessage("LogsFolder=" + FileSystem.LogsFolder);
-                Log.WriteMessage("ScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
-                Log.WriteMessage("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
-                Log.WriteMessage("TriggersFile=" + FileSystem.TriggersFile);
-                Log.WriteMessage("ScreensFile=" + FileSystem.ScreensFile);
-                Log.WriteMessage("RegionsFile=" + FileSystem.RegionsFile);
-                Log.WriteMessage("EditorsFile=" + FileSystem.EditorsFile);
-                Log.WriteMessage("TagsFile = " + FileSystem.TagsFile);
+                Log.WriteDebugMessage("At this point the application should be able to run normally");
+                Log.WriteDebugMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
+                Log.WriteDebugMessage("Your autoscreen.conf file is \"" + FileSystem.ConfigFile + "\"");
+                Log.WriteDebugMessage("The name and location of it can be changed with the -config command line argument:");
+                Log.WriteDebugMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
+                Log.WriteDebugMessage("Checking what we loaded from your autoscreen.conf file ...");
+                Log.WriteDebugMessage("ApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
+                Log.WriteDebugMessage("UserSettingsFile=" + FileSystem.UserSettingsFile);
+                Log.WriteDebugMessage("DebugFolder=" + FileSystem.DebugFolder);
+                Log.WriteDebugMessage("LogsFolder=" + FileSystem.LogsFolder);
+                Log.WriteDebugMessage("CommandFolder=" + FileSystem.CommandFolder);
+                Log.WriteDebugMessage("ScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
+                Log.WriteDebugMessage("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
+                Log.WriteDebugMessage("TriggersFile=" + FileSystem.TriggersFile);
+                Log.WriteDebugMessage("ScreensFile=" + FileSystem.ScreensFile);
+                Log.WriteDebugMessage("RegionsFile=" + FileSystem.RegionsFile);
+                Log.WriteDebugMessage("EditorsFile=" + FileSystem.EditorsFile);
+                Log.WriteDebugMessage("TagsFile = " + FileSystem.TagsFile);
 
-                Log.WriteMessage("It looks like I successfully parsed your \"" + FileSystem.ConfigFile + "\" file.");
-                Log.WriteMessage("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
+                Log.WriteDebugMessage("It looks like I successfully parsed your \"" + FileSystem.ConfigFile + "\" file.");
+                Log.WriteDebugMessage("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
 
                 Log.WriteMessage("Loading user settings");
                 Settings.User.Load();
-                Log.WriteMessage("User settings loaded");
+                Log.WriteDebugMessage("User settings loaded");
 
-                Log.WriteMessage("Attempting upgrade of user settings from old version of application (if needed)");
+                Log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
                 Settings.User.Upgrade();
 
                 Log.WriteMessage("Initializing screen capture");
@@ -52,27 +53,27 @@ namespace AutoScreenCapture
 
                 Log.WriteMessage("Initializing editor collection");
                 formEditor.EditorCollection.LoadXmlFileAndAddEditors();
-                Log.WriteMessage("Number of editors loaded = " + formEditor.EditorCollection.Count);
+                Log.WriteDebugMessage("Number of editors loaded = " + formEditor.EditorCollection.Count);
 
                 Log.WriteMessage("Initializing trigger collection");
                 formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers();
-                Log.WriteMessage("Number of triggers loaded = " + formTrigger.TriggerCollection.Count);
+                Log.WriteDebugMessage("Number of triggers loaded = " + formTrigger.TriggerCollection.Count);
 
                 Log.WriteMessage("Initializing region collection");
                 formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection);
-                Log.WriteMessage("Number of regions loaded = " + formRegion.RegionCollection.Count);
+                Log.WriteDebugMessage("Number of regions loaded = " + formRegion.RegionCollection.Count);
 
                 Log.WriteMessage("Initializing screen collection");
                 formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection);
-                Log.WriteMessage("Number of screens loaded = " + formScreen.ScreenCollection.Count);
+                Log.WriteDebugMessage("Number of screens loaded = " + formScreen.ScreenCollection.Count);
 
                 Log.WriteMessage("Initializing tag collection");
                 formTag.TagCollection.LoadXmlFileAndAddTags();
-                Log.WriteMessage("Number of tags loaded = " + formTag.TagCollection.Count);
+                Log.WriteDebugMessage("Number of tags loaded = " + formTag.TagCollection.Count);
 
                 Log.WriteMessage("Initializing schedule collection");
                 formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules();
-                Log.WriteMessage("Number of schedules loaded = " + formSchedule.ScheduleCollection.Count);
+                Log.WriteDebugMessage("Number of schedules loaded = " + formSchedule.ScheduleCollection.Count);
 
                 Log.WriteMessage("Building screens module");
                 BuildScreensModule();
@@ -101,31 +102,30 @@ namespace AutoScreenCapture
                 Log.WriteMessage("Initializing screenshot collection");
                 _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, formScreen.ScreenCollection);
 
-                Log.WriteMessage("Loading screenshots");
                 _screenshotCollection.LoadXmlFile();
 
                 int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
-                Log.WriteMessage("IntScreenCaptureInterval = " + screenCaptureInterval);
+                Log.WriteDebugMessage("IntScreenCaptureInterval = " + screenCaptureInterval);
 
                 if (screenCaptureInterval == 0)
                 {
                     screenCaptureInterval = 60000;
-                    Log.WriteMessage("WARNING: Screen capture interval was found to be 0 so 60,000 milliseconds (or 1 minute) is being used as the default value");
+                    Log.WriteDebugMessage("WARNING: Screen capture interval was found to be 0 so 60,000 milliseconds (or 1 minute) is being used as the default value");
                 }
 
-                Log.WriteMessage("Assigning screen capture interval value to its appropriate hour, minute, second, and millisecond variables");
+                Log.WriteDebugMessage("Assigning screen capture interval value to its appropriate hour, minute, second, and millisecond variables");
 
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Hours);
-                Log.WriteMessage("Hours = " + screenCaptureIntervalHours);
+                Log.WriteDebugMessage("Hours = " + screenCaptureIntervalHours);
 
                 decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Minutes);
-                Log.WriteMessage("Minutes = " + screenCaptureIntervalMinutes);
+                Log.WriteDebugMessage("Minutes = " + screenCaptureIntervalMinutes);
 
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Seconds);
-                Log.WriteMessage("Seconds = " + screenCaptureIntervalSeconds);
+                Log.WriteDebugMessage("Seconds = " + screenCaptureIntervalSeconds);
 
                 decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
-                Log.WriteMessage("Milliseconds = " + screenCaptureIntervalMilliseconds);
+                Log.WriteDebugMessage("Milliseconds = " + screenCaptureIntervalMilliseconds);
 
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
@@ -133,22 +133,22 @@ namespace AutoScreenCapture
                 numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value);
-                Log.WriteMessage("IntCaptureLimit = " + numericUpDownCaptureLimit.Value);
+                Log.WriteDebugMessage("IntCaptureLimit = " + numericUpDownCaptureLimit.Value);
 
                 checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value);
-                Log.WriteMessage("BoolCaptureLimit = " + checkBoxCaptureLimit.Checked);
+                Log.WriteDebugMessage("BoolCaptureLimit = " + checkBoxCaptureLimit.Checked);
 
                 checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
-                Log.WriteMessage("BoolTakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
+                Log.WriteDebugMessage("BoolTakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
 
                 notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
-                Log.WriteMessage("BoolShowSystemTrayIcon = " + notifyIcon.Visible);
+                Log.WriteDebugMessage("BoolShowSystemTrayIcon = " + notifyIcon.Visible);
 
                 numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value);
-                Log.WriteMessage("IntKeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
+                Log.WriteDebugMessage("IntKeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
 
                 comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
-                Log.WriteMessage("StringScreenshotLabel = " + comboBoxScreenshotLabel.Text);
+                Log.WriteDebugMessage("StringScreenshotLabel = " + comboBoxScreenshotLabel.Text);
 
                 checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value);
 
@@ -158,7 +158,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("FormMain::LoadSettings", ex);
+                Log.WriteExceptionMessage("FormMain::LoadSettings", ex);
             }
         }
 
@@ -169,7 +169,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteMessage("Saving settings");
+                Log.WriteDebugMessage("Saving settings");
 
                 Stopwatch stopwatch = new Stopwatch();
 
@@ -185,15 +185,15 @@ namespace AutoScreenCapture
 
                 Settings.User.Save();
 
-                Log.WriteMessage("Settings saved");
+                Log.WriteDebugMessage("Settings saved");
 
                 stopwatch.Stop();
 
-                Log.WriteMessage("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to save user settings");
+                Log.WriteDebugMessage("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to save user settings");
             }
             catch (Exception ex)
             {
-                Log.WriteException("FormMain::SaveSettings", ex);
+                Log.WriteExceptionMessage("FormMain::SaveSettings", ex);
             }
         }
 

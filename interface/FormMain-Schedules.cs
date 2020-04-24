@@ -10,12 +10,22 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// The timer used for monitoring externally issued commands, running Schedules, and displaying capture information.
+        /// The timer used for checking help tips, monitoring externally-issued commands, running Schedules, and displaying capture information.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerScheduledCapture_Tick(object sender, EventArgs e)
         {
+            // Display help tip message from any class that isn't part of FormMain.
+            if (!string.IsNullOrEmpty(HelpTip.Message))
+            {
+                RestartHelpTipTimer();
+
+                HelpMessage(HelpTip.Message);
+                HelpTip.Message = string.Empty;
+            }
+
+            // Process commands issued externally via the command line.
             if (Directory.Exists(FileSystem.CommandFolder))
             {
                 foreach (string file in Directory.GetFiles(FileSystem.CommandFolder))
@@ -104,8 +114,10 @@ namespace AutoScreenCapture
                 }
             }
 
+            // Displays the next time screenshots are going to be captured in the system tray icon's tool tip.
             ShowInfo();
 
+            // Process the list of schedules we need to consider.
             foreach(Schedule schedule in formSchedule.ScheduleCollection)
             {
                 DateTime dtNow = DateTime.Now;

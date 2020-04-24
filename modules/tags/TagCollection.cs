@@ -127,7 +127,7 @@ namespace AutoScreenCapture
 
                                             if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                                             {
-                                                Log.WriteMessage("Dalek 2.2.4.6 or older detected");
+                                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                                 // Starting with 2.2.5.0 the DateTimeFormatFunction type became the DateTimeFormatExpression type.
                                                 value = value.Replace("DateTimeFormatFunction", "DateTimeFormatExpression");
@@ -206,14 +206,14 @@ namespace AutoScreenCapture
                         // the XML file is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
-                            Log.WriteMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+                            Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
                             {
-                                Log.WriteMessage("Dalek 2.2.4.6 or older detected");
+                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Tag that was introduced in 2.2.5.0
                                 // so any version before 2.2.5.0 needs to have it during an upgrade.
@@ -234,7 +234,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteMessage($"WARNING: {FileSystem.TagsFile} not found. Creating default tags");
+                    Log.WriteDebugMessage($"WARNING: {FileSystem.TagsFile} not found. Creating default tags");
 
                     // Setup a few "built in" tags by default.
                     Add(new Tag("name", TagType.ScreenName, enabled: true));
@@ -266,7 +266,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("TagCollection::LoadXmlFileAndAddTags", ex);
+                Log.WriteExceptionMessage("TagCollection::LoadXmlFileAndAddTags", ex);
             }
         }
 
@@ -346,7 +346,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteException("TagCollection::SaveToXmlFile", ex);
+                Log.WriteExceptionMessage("TagCollection::SaveToXmlFile", ex);
             }
         }
     }
