@@ -143,10 +143,10 @@ namespace AutoScreenCapture
             textBoxScreenshotDate.Text = string.Empty;
             textBoxScreenshotTime.Text = string.Empty;
 
-            TabPage selectedTabPage = tabControlViews.SelectedTab;
-
-            if (selectedTabPage != null)
+            if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null)
             {
+                TabPage selectedTabPage = tabControlViews.SelectedTab;
+
                 ToolStrip toolStrip = (ToolStrip)selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
 
                 ToolStripTextBox toolStripTextBox = (ToolStripTextBox)toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];

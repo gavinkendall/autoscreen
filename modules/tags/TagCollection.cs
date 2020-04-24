@@ -295,7 +295,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
                         {
-                            sw.WriteLine("TagsFile=" + FileSystem.TagsFile);
+                            sw.WriteLine("\nTagsFile=" + FileSystem.TagsFile);
                         }
                     }
                 }

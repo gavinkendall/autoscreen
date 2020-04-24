@@ -38,42 +38,78 @@ namespace AutoScreenCapture
         /// <summary>
         /// The file to create when the user runs an instance of autoscreen while existing instances are already running.
         /// </summary>
-        public static readonly string StartupErrorFile = "autoscreen_startup_error.txt";
+        public static readonly string StartupErrorFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen_startup_error.txt";
+
+        /// <summary>
+        /// Default settings folder.
+        /// </summary>
+        public static string DefaultSettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
+
+        /// <summary>
+        /// Default screenshots folder.
+        /// </summary>
+        public static string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
+
+        /// <summary>
+        /// Default debug folder.
+        /// </summary>
+        public static string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+
+        /// <summary>
+        /// Default logs folder.
+        /// </summary>
+        public static string DefaultLogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\logs\\";
+
+        /// <summary>
+        /// The default command folder if the actual command folder cannot be found. This will most likely happen with an
+        /// older version of Auto Screen Capture so we need to make sure that, since 2.2.5.0, we have a command folder.
+        /// </summary>
+        public static string DefaultCommandFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command\\";
+
+        /// <summary>
+        /// Default application settings file.
+        /// </summary>
+        public static string DefaultApplicationSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\application.xml";
+
+        /// <summary>
+        /// Default user settings file.
+        /// </summary>
+        public static string DefaultUserSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\user.xml";
 
         /// <summary>
         /// The file containing the references to Editors.
         /// </summary>
-        public static readonly string DefaultEditorsFile = "!autoscreen\\editors.xml";
+        public static readonly string DefaultEditorsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\editors.xml";
 
         /// <summary>
         /// The file containing the references to Regions.
         /// </summary>
-        public static readonly string DefaultRegionsFile = "!autoscreen\\regions.xml";
+        public static readonly string DefaultRegionsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\regions.xml";
 
         /// <summary>
         /// The file containing the references to Screens.
         /// </summary>
-        public static readonly string DefaultScreensFile = "!autoscreen\\screens.xml";
+        public static readonly string DefaultScreensFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screens.xml";
 
         /// <summary>
         /// The file containing the references to Triggers.
         /// </summary>
-        public static readonly string DefaultTriggersFile = "!autoscreen\\triggers.xml";
+        public static readonly string DefaultTriggersFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\triggers.xml";
 
         /// <summary>
         /// The file containing the references to Screenshots.
         /// </summary>
-        public static readonly string DefaultScreenshotsFile = "!autoscreen\\screenshots.xml";
+        public static readonly string DefaultScreenshotsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screenshots.xml";
 
         /// <summary>
         /// The file containing the references to Tags.
         /// </summary>
-        public static readonly string DefaultTagsFile = "!autoscreen\\tags.xml";
+        public static readonly string DefaultTagsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\tags.xml";
 
         /// <summary>
         /// The file containing the references to Schedules.
         /// </summary>
-        public static readonly string DefaultSchedulesFile = "!autoscreen\\schedules.xml";
+        public static readonly string DefaultSchedulesFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\schedules.xml";
 
         /// <summary>
         /// Screenshots folder.
@@ -96,18 +132,12 @@ namespace AutoScreenCapture
         public static string CommandFolder;
 
         /// <summary>
-        /// The default command folder if the actual command folder cannot be found. This will most likely happen with an
-        /// older version of Auto Screen Capture so we need to make sure that, since 2.2.5.0, we have a command folder.
-        /// </summary>
-        public static string DefaultCommandFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command\\";
-
-        /// <summary>
-        /// Application Settings file.
+        /// Application settings file.
         /// </summary>
         public static string ApplicationSettingsFile;
 
         /// <summary>
-        /// User Settings file.
+        /// User settings file.
         /// </summary>
         public static string UserSettingsFile;
 

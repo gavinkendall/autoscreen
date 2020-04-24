@@ -144,7 +144,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
                         {
-                            sw.WriteLine("EditorsFile=" + FileSystem.EditorsFile);
+                            sw.WriteLine("\nEditorsFile=" + FileSystem.EditorsFile);
                         }
                     }
                 }

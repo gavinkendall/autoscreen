@@ -245,7 +245,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
                         {
-                            sw.WriteLine("SchedulesFile=" + FileSystem.SchedulesFile);
+                            sw.WriteLine("\nSchedulesFile=" + FileSystem.SchedulesFile);
                         }
                     }
                 }

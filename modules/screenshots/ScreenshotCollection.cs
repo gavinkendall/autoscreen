@@ -732,7 +732,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
                         {
-                            sw.WriteLine("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
+                            sw.WriteLine("\nScreenshotsFile=" + FileSystem.ScreenshotsFile);
                         }
                     }
                 }

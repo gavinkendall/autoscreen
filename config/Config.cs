@@ -127,19 +127,173 @@ namespace AutoScreenCapture
                         FileSystem.SchedulesFile = path;
                 }
 
-                if (string.IsNullOrEmpty(FileSystem.CommandFolder))
-                {
-                    FileSystem.CommandFolder = FileSystem.DefaultCommandFolder;
+                CheckAndCreateFolders();
 
-                    if (!Directory.Exists(FileSystem.DefaultCommandFolder))
-                    {
-                        Directory.CreateDirectory(FileSystem.DefaultCommandFolder);
-                    }
-                }
+                CheckAndCreateFiles();
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("Config::Load", ex);
+            }
+        }
+
+        // Check the folders to make sure that each folder was included in the config file and the folder exists.
+        private static void CheckAndCreateFolders()
+        {
+            if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
+            {
+                FileSystem.ScreenshotsFolder = FileSystem.DefaultScreenshotsFolder;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
+                }
+
+                if (!Directory.Exists(FileSystem.DefaultScreenshotsFolder))
+                {
+                    Directory.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
+                }
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+            {
+                FileSystem.DebugFolder = FileSystem.DefaultDebugFolder;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nDebugFolder=" + FileSystem.DefaultDebugFolder);
+                }
+
+                if (!Directory.Exists(FileSystem.DefaultDebugFolder))
+                {
+                    Directory.CreateDirectory(FileSystem.DefaultDebugFolder);
+                }
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+            {
+                FileSystem.LogsFolder = FileSystem.DefaultLogsFolder;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nLogsFolder=" + FileSystem.DefaultLogsFolder);
+                }
+
+                if (!Directory.Exists(FileSystem.DefaultLogsFolder))
+                {
+                    Directory.CreateDirectory(FileSystem.DefaultLogsFolder);
+                }
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.CommandFolder))
+            {
+                FileSystem.CommandFolder = FileSystem.DefaultCommandFolder;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nCommandFolder=" + FileSystem.DefaultCommandFolder);
+                }
+
+                if (!Directory.Exists(FileSystem.DefaultCommandFolder))
+                {
+                    Directory.CreateDirectory(FileSystem.DefaultCommandFolder);
+                }
+            }
+        }
+
+        private static void CheckAndCreateFiles()
+        {
+            if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
+            {
+                FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
+                }
+
+                if (!Directory.Exists(FileSystem.DefaultSettingsFolder))
+                {
+                    Directory.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                }
+
+                SettingCollection applicationSettingsCollection = new SettingCollection
+                {
+                    Filepath = FileSystem.ApplicationSettingsFile
+                };
+
+                applicationSettingsCollection.Save();
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+            {
+                FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
+                }
+
+                if (!Directory.Exists(FileSystem.DefaultSettingsFolder))
+                {
+                    Directory.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                }
+
+                SettingCollection userSettingsCollection = new SettingCollection
+                {
+                    Filepath = FileSystem.ApplicationSettingsFile
+                };
+
+                userSettingsCollection.Save();
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
+            {
+                ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
+                ScreenCollection screenCollection = new ScreenCollection();
+
+                ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection);
+                screenshotCollection.SaveToXmlFile(0);
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.EditorsFile))
+            {
+                EditorCollection editorCollection = new EditorCollection();
+                editorCollection.SaveToXmlFile();
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.RegionsFile))
+            {
+                RegionCollection regionCollection = new RegionCollection();
+                regionCollection.SaveToXmlFile();
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.ScreensFile))
+            {
+                // Loading the screen collection will automatically create the available screens and add them to the collection.
+                ScreenCollection screenCollection = new ScreenCollection();
+                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection());
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.TriggersFile))
+            {
+                // Loading triggers will automatically create the default triggers and add them to the collection.
+                TriggerCollection triggerCollection = new TriggerCollection();
+                triggerCollection.LoadXmlFileAndAddTriggers();
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.TagsFile))
+            {
+                // Loading tags will automatically create the default tags and add them to the collection.
+                TagCollection tagCollection = new TagCollection();
+                tagCollection.LoadXmlFileAndAddTags();
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.SchedulesFile))
+            {
+                // Loading schedules will automatically create the default schedules and add them to the collection.
+                ScheduleCollection scheduleCollection = new ScheduleCollection();
+                scheduleCollection.LoadXmlFileAndAddSchedules();
             }
         }
 

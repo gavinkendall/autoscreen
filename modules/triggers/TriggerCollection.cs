@@ -195,7 +195,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
                         {
-                            sw.WriteLine("TriggersFile=" + FileSystem.TriggersFile);
+                            sw.WriteLine("\nTriggersFile=" + FileSystem.TriggersFile);
                         }
                     }
                 }

@@ -244,7 +244,7 @@ namespace AutoScreenCapture
                     {
                         using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
                         {
-                            sw.WriteLine("RegionsFile=" + FileSystem.RegionsFile);
+                            sw.WriteLine("\nRegionsFile=" + FileSystem.RegionsFile);
                         }
                     }
                 }

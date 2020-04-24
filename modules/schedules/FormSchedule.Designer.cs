@@ -281,7 +281,7 @@
             this.labelTakeScreenshotsOnce.Name = "labelTakeScreenshotsOnce";
             this.labelTakeScreenshotsOnce.Size = new System.Drawing.Size(126, 13);
             this.labelTakeScreenshotsOnce.TabIndex = 16;
-            this.labelTakeScreenshotsOnce.Text = "Take screenshots only at";
+            this.labelTakeScreenshotsOnce.Text = "Take screenshots exactly at";
             // 
             // labelTakeScreenshotsPeriod
             // 
