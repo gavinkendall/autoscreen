@@ -737,35 +737,44 @@ namespace AutoScreenCapture
                     }
                 }
 
-                lock (_screenshotList)
+                // Delete old screenshots.
+                if (keepScreenshotsForDays > 0)
                 {
-                    if (_screenshotList != null && _screenshotList.Count > 0 && keepScreenshotsForDays > 0)
+                    lock (_screenshotList)
                     {
+                        // Check what we already have in memory and remove the screenshot object from every list.
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-keepScreenshotsForDays)).ToList();
 
-                        if (screenshotsToDelete != null && screenshotsToDelete.Count > 0)
+                        foreach (Screenshot screenshot in screenshotsToDelete)
                         {
-                            foreach (Screenshot screenshot in screenshotsToDelete)
-                            {
-                                XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + screenshot.Date + "']");
-
-                                foreach (XmlNode node in nodesToDelete)
-                                {
-                                    node.ParentNode.RemoveChild(node);
-                                }
-
-                                if (File.Exists(screenshot.Path))
-                                {
-                                    File.Delete(screenshot.Path);
-                                }
-
-                                _screenshotList.Remove(screenshot);
-                                _slideList.Remove(screenshot.Slide);
-                                _slideNameList.Remove(screenshot.Slide.Name);
-                            }
+                            _screenshotList.Remove(screenshot);
+                            _slideList.Remove(screenshot.Slide);
+                            _slideNameList.Remove(screenshot.Slide.Name);
                         }
                     }
 
+                    // Check what we have in the XML document and delete the image file based on its path as well as removing the node from the XML document so we no longer reference it.
+                    for (int i = keepScreenshotsForDays; i > 0; i--)
+                    {
+                        XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + DateTime.Now.Date.AddDays(-i).ToString(MacroParser.DateFormat) + "']");
+
+                        foreach (XmlNode node in nodesToDelete)
+                        {
+                            string path = node.SelectSingleNode("path").FirstChild.Value;
+
+                            if (File.Exists(path))
+                            {
+                                File.Delete(path);
+                            }
+
+                            node.ParentNode.RemoveChild(node);
+                        }
+                    }
+                }
+
+                // Save screeenshots.
+                lock (_screenshotList)
+                {
                     for (int i = 0; i < _screenshotList.Count; i++)
                     {
                         Screenshot screenshot = _screenshotList[i];

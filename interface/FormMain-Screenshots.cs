@@ -20,7 +20,11 @@ namespace AutoScreenCapture
         {
             _screenCapture.PerformingMaintenance = true;
 
+            // Save and delete old screenshots.
             SaveScreenshots();
+
+            // Refresh the calendar.
+            SearchDates();
 
             _screenCapture.PerformingMaintenance = false;
         }
