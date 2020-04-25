@@ -92,8 +92,8 @@ namespace AutoScreenCapture
                     continue;
                 }
 
-                // Don't show the interface on startup if we're running from the command line.
-                if (ScreenCapture.RunningFromCommandLine &&
+                // Don't show the interface on startup if AutoStartFromCommandLine is enabled.
+                if (ScreenCapture.AutoStartFromCommandLine &&
                     trigger.ConditionType == TriggerConditionType.ApplicationStartup &&
                     trigger.ActionType == TriggerActionType.ShowInterface)
                 {

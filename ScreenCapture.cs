@@ -112,7 +112,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static bool RunningFromCommandLine { get; set; }
+        public static bool AutoStartFromCommandLine { get; set; }
 
         /// <summary>
         /// 

@@ -55,7 +55,7 @@ namespace AutoScreenCapture
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
                         Application.SetCompatibleTextRenderingDefault(false);
-                        Application.Run(new FormMain(args));
+                        Application.Run(new FormMain());
                     }
                     else
                     {
@@ -79,18 +79,11 @@ namespace AutoScreenCapture
             }
         }
 
-        private static void CreateFile(string filename)
-        {
-            File.Create(FileSystem.CommandFolder + filename).Dispose();
-        }
-
         private static void ParseCommandLineArguments(string[] args)
         {
             // Because ordering is important I want to make sure that we pick up the configuration file first.
             // This will avoid scenarios like "autoscreen.exe -debug -config" creating all the default folders
             // and files (thanks to -debug being the first argument) before -config is parsed.
-            //
-            // This is also why we're parsing the command line arguments in Program before we initialize FormMain.
 
             foreach (string arg in args)
             {
@@ -126,59 +119,32 @@ namespace AutoScreenCapture
             }
 
             // All of these commands can be externally issued to an already running instance.
-            // The current running instance monitors the Command folder for special empty files
-            // that are named after the command being issued so we can perform a certain action
-            // based on the command being given.
+            // The current running instance monitors the command file for the commands in the file.
             foreach (string arg in args)
             {
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG))
+                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_ON) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_OFF) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_ON) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_OFF) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTURE) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_START) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOP) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_EXIT) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_ON) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_OFF) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LIMIT) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INTERVAL) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE))
                 {
-                    CreateFile("debug");
-                }
-
-                if(Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_ON))
-                {
-                    CreateFile("debug_on");
-                }
-
-                if(Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_OFF))
-                {
-                    CreateFile("debug_off");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG))
-                {
-                    CreateFile("log");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_ON))
-                {
-                    CreateFile("log_on");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_OFF))
-                {
-                    CreateFile("log_off");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTURE))
-                {
-                    CreateFile("capture");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_START))
-                {
-                    CreateFile("start");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOP))
-                {
-                    CreateFile("stop");
-                }
-
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_EXIT))
-                {
-                    CreateFile("exit");
+                    using (StreamWriter sw = File.AppendText(FileSystem.CommandFile))
+                    {
+                        sw.WriteLine(arg);
+                    }
                 }
             }
         }

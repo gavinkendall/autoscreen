@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -14,29 +15,146 @@ namespace AutoScreenCapture
         {
             try
             {
-                bool scheduledStart = false;
+                // Clear the contents of the command file before parsing the command line arguments.
+                // We have the commands in "args" already and, to prevent commands like -exit screwing up
+                // the application's ability to read commands on the next run, we need to make sure that the
+                // command file is empty at this point in time. We don't want to be taking screenshots every
+                // second just because the -capture command was left remaining in the command file!
+                //
+                // Also, this ensures that a sensitive command such as the -passphrase=x command is
+                // immediately removed from the file.
+                File.WriteAllText(FileSystem.CommandFile, String.Empty);
 
-                checkBoxInitialScreenshot.Checked = false;
-
-                checkBoxCaptureLimit.Checked = false;
-                numericUpDownCaptureLimit.Value = CAPTURE_LIMIT_MIN;
-
-                numericUpDownHoursInterval.Value = 0;
-                numericUpDownMinutesInterval.Value = CAPTURE_INTERVAL_DEFAULT_IN_MINUTES;
-                numericUpDownSecondsInterval.Value = 0;
-                numericUpDownMillisecondsInterval.Value = 0;
-
-                ScreenCapture.RunningFromCommandLine = true;
-
-                LoadSettings();
+                ScreenCapture.AutoStartFromCommandLine = Convert.ToBoolean(Settings.Application.GetByKey("AutoStartFromCommandLine", defaultValue: false).Value);
 
                 foreach (string arg in args)
                 {
-                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL))
+                    // -debug
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG))
                     {
-                        checkBoxInitialScreenshot.Checked = true;
+                        Log.DebugMode = !Log.DebugMode;
+
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = Log.DebugMode;
+                        Settings.Application.Save();
                     }
 
+                    // -debug=on
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_ON))
+                    {
+                        Log.DebugMode = true;
+
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
+                        Settings.Application.Save();
+                    }
+
+                    // -debug=off
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_OFF))
+                    {
+                        Log.DebugMode = false;
+
+                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = false;
+                        Settings.Application.Save();
+                    }
+
+                    // -log
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG))
+                    {
+                        Log.LoggingEnabled = !Log.LoggingEnabled;
+
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.LoggingEnabled;
+                        Settings.Application.Save();
+                    }
+
+                    // -log=on
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_ON))
+                    {
+                        Log.LoggingEnabled = true;
+
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = true;
+                        Settings.Application.Save();
+                    }
+
+                    // -log=off
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_OFF))
+                    {
+                        Log.LoggingEnabled = false;
+
+                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = false;
+                        Settings.Application.Save();
+                    }
+
+                    // -capture
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTURE))
+                    {
+                        TakeScreenshot(captureNow: true);
+                    }
+
+                    // -start
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_START))
+                    {
+                        StartScreenCapture();
+                        return;
+                    }
+
+                    // -stop
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOP))
+                    {
+                        StopScreenCapture();
+                        return;
+                    }
+
+                    // -exit
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_EXIT))
+                    {
+                        ExitApplication();
+                    }
+
+                    // -showSystemTrayIcon
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON))
+                    {
+                        Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = true;
+                        Settings.User.Save();
+
+                        notifyIcon.Visible = true;
+                    }
+
+                    // -hideSystemTrayIcon
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
+                    {
+                        Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = false;
+                        Settings.User.Save();
+
+                        notifyIcon.Visible = false;
+                    }
+
+                    // -initial
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL))
+                    {
+                        checkBoxInitialScreenshot.Checked = !checkBoxInitialScreenshot.Checked;
+
+                        Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
+                        Settings.User.Save();
+                    }
+
+                    // -initial=on
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_ON))
+                    {
+                        checkBoxInitialScreenshot.Checked = true;
+
+                        Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = true;
+                        Settings.User.Save();
+                    }
+
+                    // -initial=off
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_OFF))
+                    {
+                        checkBoxInitialScreenshot.Checked = false;
+
+                        Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = false;
+                        Settings.User.Save();
+                    }
+
+                    // -limit=x
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LIMIT))
                     {
                         int cmdLimit = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_LIMIT).Groups["Limit"].Value);
@@ -48,6 +166,7 @@ namespace AutoScreenCapture
                         }
                     }
 
+                    // -interval=hh:mm:ss.nnn
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INTERVAL))
                     {
                         int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_INTERVAL).Groups["Hours"].Value);
@@ -80,6 +199,7 @@ namespace AutoScreenCapture
                     //    int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
                     //}
 
+                    // -passphrase=x
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE))
                     {
                         string passphrase = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE).Groups["Passphrase"].Value;
@@ -99,17 +219,9 @@ namespace AutoScreenCapture
                             ScreenCapture.LockScreenCaptureSession = true;
                         }
                     }
-
-                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
-                    {
-                        Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = false;
-                        Settings.User.Save();
-
-                        notifyIcon.Visible = false;
-                    }
                 }
 
-                if (!scheduledStart)
+                if (ScreenCapture.AutoStartFromCommandLine)
                 {
                     StartScreenCapture();
                 }

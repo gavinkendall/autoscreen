@@ -19,8 +19,8 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
         private const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
-        private const string REGEX_COMMAND_FOLDER = "^CommandFolder=(?<Path>.+)$";
 
+        private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
         private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
         private const string REGEX_EDITORS_FILE = "^EditorsFile=(?<Path>.+)$";
@@ -58,8 +58,8 @@ namespace AutoScreenCapture
                         "DebugFolder=" + FileSystem.DefaultDebugFolder, "",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
                         "LogsFolder=" + FileSystem.DefaultLogsFolder, "",
-                        "# This folder is monitored by the application for commands issued from the command line while it's running.",
-                        "CommandFolder=" + FileSystem.DefaultCommandFolder, "",
+                        "# This file is monitored by the application for commands issued from the command line while it's running.",
+                        "CommandFile=" + FileSystem.DefaultCommandFile, "",
                         "# The application settings (such as DebugMode).",
                         "ApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile, "",
                         "# Your personal settings.",
@@ -96,8 +96,8 @@ namespace AutoScreenCapture
                     if (GetPath(line, REGEX_LOGS_FOLDER, out path))
                         FileSystem.LogsFolder = path;
 
-                    if (GetPath(line, REGEX_COMMAND_FOLDER, out path))
-                        FileSystem.CommandFolder = path;
+                    if (GetPath(line, REGEX_COMMAND_FILE, out path))
+                        FileSystem.CommandFile = path;
 
                     if (GetPath(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
                         FileSystem.ApplicationSettingsFile = path;
@@ -184,25 +184,25 @@ namespace AutoScreenCapture
                     Directory.CreateDirectory(FileSystem.DefaultLogsFolder);
                 }
             }
-
-            if (string.IsNullOrEmpty(FileSystem.CommandFolder))
-            {
-                FileSystem.CommandFolder = FileSystem.DefaultCommandFolder;
-
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nCommandFolder=" + FileSystem.DefaultCommandFolder);
-                }
-
-                if (!Directory.Exists(FileSystem.DefaultCommandFolder))
-                {
-                    Directory.CreateDirectory(FileSystem.DefaultCommandFolder);
-                }
-            }
         }
 
         private static void CheckAndCreateFiles()
         {
+            if (string.IsNullOrEmpty(FileSystem.CommandFile))
+            {
+                FileSystem.CommandFile = FileSystem.DefaultCommandFile;
+
+                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
+                {
+                    sw.WriteLine("\nCommandFile=" + FileSystem.DefaultCommandFile);
+                }
+
+                if (!File.Exists(FileSystem.DefaultCommandFile))
+                {
+                    File.Create(FileSystem.DefaultCommandFile).Dispose();
+                }
+            }
+
             if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
             {
                 FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;

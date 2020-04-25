@@ -25,93 +25,19 @@ namespace AutoScreenCapture
                 HelpTip.Message = string.Empty;
             }
 
-            // Process commands issued externally via the command line.
-            if (Directory.Exists(FileSystem.CommandFolder))
+            // Parse commands issued externally via the command line.
+            if (File.Exists(FileSystem.CommandFile))
             {
-                foreach (string file in Directory.GetFiles(FileSystem.CommandFolder))
+                string[] args = File.ReadAllLines(FileSystem.CommandFile);
+
+                if (args.Length > 0)
                 {
-                    if (file.EndsWith("debug") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        Log.DebugMode = !Log.DebugMode;
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = Log.DebugMode;
-                        Settings.Application.Save();
-                        break;
-                    }
-
-                    if (file.EndsWith("debug_on") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        Log.DebugMode = true;
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
-                        Settings.Application.Save();
-                        break;
-                    }
-
-                    if (file.EndsWith("debug_off") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        Log.DebugMode = false;
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = false;
-                        Settings.Application.Save();
-                        break;
-                    }
-
-                    if (file.EndsWith("log") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        Log.LoggingEnabled = !Log.LoggingEnabled;
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.LoggingEnabled;
-                        Settings.Application.Save();
-                        break;
-                    }
-
-                    if (file.EndsWith("log_on") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        Log.LoggingEnabled = true;
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = true;
-                        Settings.Application.Save();
-                        break;
-                    }
-
-                    if (file.EndsWith("log_off") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        Log.LoggingEnabled = false;
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = false;
-                        Settings.Application.Save();
-                        break;
-                    }
-
-                    if (file.EndsWith("capture") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        TakeScreenshot(captureNow: true);
-                        break;
-                    }
-
-                    if (file.EndsWith("start") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        StartScreenCapture();
-                        break;
-                    }
-
-                    if (file.EndsWith("stop") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        StopScreenCapture();
-                        break;
-                    }
-
-                    if (file.EndsWith("exit") && File.Exists(file))
-                    {
-                        File.Delete(file);
-                        ExitApplication();
-                        break;
-                    }
+                    ParseCommandLineArguments(args);
                 }
+            }
+            else
+            {
+                File.Create(FileSystem.CommandFile).Dispose();
             }
 
             // Displays the next time screenshots are going to be captured in the system tray icon's tool tip.

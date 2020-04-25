@@ -26,7 +26,7 @@ namespace AutoScreenCapture
                 Log.WriteDebugMessage("UserSettingsFile=" + FileSystem.UserSettingsFile);
                 Log.WriteDebugMessage("DebugFolder=" + FileSystem.DebugFolder);
                 Log.WriteDebugMessage("LogsFolder=" + FileSystem.LogsFolder);
-                Log.WriteDebugMessage("CommandFolder=" + FileSystem.CommandFolder);
+                Log.WriteDebugMessage("CommandFile=" + FileSystem.CommandFile);
                 Log.WriteDebugMessage("ScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
                 Log.WriteDebugMessage("ScreenshotsFile=" + FileSystem.ScreenshotsFile);
                 Log.WriteDebugMessage("TriggersFile=" + FileSystem.TriggersFile);

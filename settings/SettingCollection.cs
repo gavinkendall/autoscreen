@@ -31,8 +31,8 @@ namespace AutoScreenCapture
         private const string SETTING_VALUE = "value";
         private readonly string SETTING_XPATH;
 
-        private string AppCodename { get; set; }
-        private string AppVersion { get; set; }
+        public string AppCodename { get; set; }
+        public string AppVersion { get; set; }
 
         internal string Filepath { get; set; }
 

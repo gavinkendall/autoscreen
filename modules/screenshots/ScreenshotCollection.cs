@@ -121,6 +121,11 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public Screenshot Get(int index)
         {
+            if (index == -1)
+            {
+                return new Screenshot();
+            }
+            
             return (Screenshot)_screenshotList[index];
         }
 

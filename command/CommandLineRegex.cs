@@ -25,6 +25,16 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        public const string REGEX_COMMAND_LINE_INITIAL_ON = "^-initial=on$";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_INITIAL_OFF = "^-initial=off$";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public const string REGEX_COMMAND_LINE_LIMIT = @"^-limit=(?<Limit>\d{1,7})$";
 
         /// <summary>
@@ -51,6 +61,11 @@ namespace AutoScreenCapture
         /// 
         /// </summary>
         public const string REGEX_COMMAND_LINE_PASSPHRASE = "^-passphrase=(?<Passphrase>.+)$";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON = "^-showSystemTrayIcon$";
 
         /// <summary>
         /// 

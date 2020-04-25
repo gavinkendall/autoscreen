@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-02-06 (February 6, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.2.4.6)]
+Last updated on 2020-04-25 (April 25, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.2.5.0)]
 =============================================================================================================
 
 
@@ -10,7 +10,7 @@ Summary
 Auto Screen Capture is a small and portable screen capture utility for gamers, designers, and testers.
 
 The application enables you to automatically take screenshots at a chosen interval. For example, you may
-want to capture the progress of playing through a game's level or just use the application as a diary.
+want to capture the progress of playing through a game's level or track your progress on a long project.
 
 You can also schedule your automated screen capture sessions by specifying when a session starts and
 when a session stops on particular days of the week.
@@ -43,6 +43,7 @@ Screenshots
 Screens
 Regions
 Editors
+Schedules
 Tags
 Triggers
 
@@ -52,7 +53,7 @@ Modules - Setup
 ---------------
 The Setup module is divided into a few sections.
 
-*"Take screenshots every ..."*
+*Interval*
 This section sets the interval value for the timer that will be used when screenshots are being
 taken during a screen capture session. You can set the number of hours, minutes, seconds, and milliseconds
 that Auto Screen Capture should wait until it takes screenshots of your displays.
@@ -109,27 +110,6 @@ Auto Screen Capture will keep track of what screenshots were taken during the ti
 As of version 2.2.3.1 a label can be selected from the "Apply Label" system tray icon menu.
 This menu will not be available if the session is locked.
 
-*Schedule*
-This section handles the scheduling of screen capture sessions.
-
-You can tell Auto Screen Capture when to start and stop taking screenshots at particular times and on
-defined days of the week.
-
-"Start capture at" tells the application to start taking screenshots at a specified time.
-(You can also use the "-startat" command line argument.)
-
-"Stop capture at" tells the application to stop taking screenshots at a specified time.
-(You can also use the "-stopat" command line argument.)
-
-"Only on these days" tells the application to consider the specified times on defined days of the week:
-Mo (Monday)
-Tu (Tuesday)
-We (Wednesday)
-Th (Thursday)
-Fr (Friday)
-Sa (Saturday)
-Su (Sunday)
-
 *Security*
 You can set a passphrase in order to lock the running screen capture session once the application starts
 taking screenshots.
@@ -172,13 +152,16 @@ For example, "Keep screenshots for 30 days" will keep the image files on disk fo
 If any image files are found to be older than 30 days then those files will be automatically deleted.
 (Folders containing image files will not be deleted. This is intentional.)
 
+Old screenshots will be deleted every five minutes. New screenshots will be saved every five minutes.
+The calendar will also update every five minutes (as of version 2.2.5.0).
+
 
 
 Modules - Screens
 -----------------
 This module enables you to setup as many screens as you prefer.
 
-The "Add New Screen ..." button will show you a preview of the currently selected Component
+The green button with the white plus will show you a preview of the currently selected Component
 (whether it be the Active Window or an available screen/display/monitor).
 
 The "Name" text field contains the name of the screen. For a new screen the Name field will
@@ -213,8 +196,7 @@ WMF
 The "Include mouse pointer" option, when enabled, will include the mouse pointer in the image of the
 screenshot that will be taken for that particular screen.
 
-The "Preview" image area shows you a preview of the selected Component. The preview refreshes
-every 500 milliseconds.
+The "Preview" image area shows you a preview of the selected Component.
 
 The "Folder" text field refers to the directory in which screenshots will be written to.
 You can use the backslash character (\) as part of your folder structure to define sub-folders.
@@ -224,11 +206,10 @@ The "Macro" text field refers to the macro used that defines how each individual
 Any characters invalid to Windows will be stripped out (such as /, :, *, ?, <, >, and |).
 You can use the backslash character (\) as part of your macro to define sub-folders.
 
-The "Remove Selected Screens" button is used to remove a selected number of screens in the list.
+The button with the red cross is used to remove a selected number of screens in the list.
 Select the screens you want to remove and then click the button to remove the selected screens.
 
-The "..." button to the right of a screen name in the list of screens will open the Change Screen
-window enabling you to change the settings of that screen.
+The button with the cog will open the Change Screen window enabling you to change properties.
 
 
 
@@ -236,7 +217,7 @@ Modules - Regions
 -----------------
 This module enables you to setup as many regions as you prefer.
 
-The "Add New Region ..." button will show you, by default, a preview of a region at position 0,0
+The green button with the white plus will show you, by default, a preview of a region at position 0,0
 with the width set to 800 and the height set to 600.
 
 The "Name" text field contains the name of the region. For a new region the Name field will
@@ -261,7 +242,7 @@ You can import the X, Y, Width, and Height values from an available screen by se
 screen from the "Import Screen Dimensions" drop-down control.
 
 The "Preview" image area shows you a preview of the specified region using the given X, Y, Width,
-and Height values. The preview refreshes every 500 milliseconds.
+and Height values.
 
 The "Folder" text field refers to the directory in which screenshots will be written to.
 You can use the backslash character (\) as part of your folder structure to define sub-folders.
@@ -271,11 +252,10 @@ The "Macro" text field refers to the macro used that defines how each individual
 Any characters invalid to Windows will be stripped out (such as /, :, *, ?, <, >, and |).
 You can use the backslash character (\) as part of your macro to define sub-folders.
 
-The "Remove Selected Regions" button is used to remove a selected number of regions in the list.
+The button with the red cross is used to remove a selected number of regions in the list.
 Select the regions you want to remove and then click the button to remove the selected regions.
 
-The "..." button to the right of a region name in the list of regions will open the Change Region
-window enabling you to change the settings of that region.
+The button with the cog will open the Change Region window enabling you to change properties.
 
 
 
@@ -283,7 +263,7 @@ Modules - Editors
 -----------------
 This module enables you to setup your favourite image editors.
 
-The "Add New Editor ..." button will show a window where you can specify the name, application,
+The green button with the white plus will show a window where you can specify the name, application,
 and application arguments for the new image editor that you're adding to the list of editors.
 
 The "Name" text field contains the name of the editor. You can name it however you want.
@@ -301,11 +281,13 @@ edit via the "Edit" menu of the screenshot you're viewing from the Screenshots m
 the filepath of the last screenshot that was taken when a Trigger uses a specified Editor
 to open the screenshot in the editor.
 
-The "Remove Selected Editors" button is used to remove a selected number of editors in the list.
+The "Make this editor the default editor" checkbox sets the editor as the default editor to be
+used when you select "Capture Now / Edit" from the system tray icon's menu.
+
+The button with the red cross button is used to remove a selected number of editors in the list.
 Select the editors you want to remove and then click the button to remove the selected editors.
 
-The "..." button to the right of an editor name in the list of editors will open the Change Editor
-window enabling you to change the settings of that editor.
+The button with the cog will open the Change Editor window enabling you to change properties.
 
 
 
@@ -313,10 +295,10 @@ Modules - Tags
 --------------
 This module enables you to setup macro tags.
 
-A tag is a special value, surrounded by the percentage character, which gives you the ability
-to acquire certain information that can be used in your macro.
+A tag is a special value, surrounded by the percentage character (%), which gives you the ability
+to acquire certain information that can be used in your macro for the filename pattern.
 
-The "Add New Tag ..." button will display a dialog box in order to create a new tag.
+The green button with the white plus will display a dialog box in order to create a new tag.
 
 The "Name" text field is for the tag's name. This is a required field, but make sure to include
 the percentage character ("%") at the beginning and the end of the tag name.
@@ -331,11 +313,14 @@ Date/Time Format                  A value representing a date/time format (such 
 User                              The name of the logged in user
 Machine                           The name of the machine being used
 Time of Day                       A specified value based on the time of day
-Date/Time Format Function         A value representing a date/time tag function (such as "{day-1}")
+Date/Time Format Expression       A value representing a date/time tag expression (such as "{day-1}")
 
-If you select either the Date/Time Format or Date/Time Format Function type then the Date/Time Format Value
+(The Date/Time Format Expression type is simply the new name for the Date/Time Format Function type previously
+used by Auto Screen Capture. The functionality of this type remains the same as before.)
+
+If you select either the Date/Time Format or Date/Time Format Expression type then the Date/Time Format Value
 text field will be available to enter a value. This value can be a date/time format (such as "HH-mm-ss")
-to represent the current date/time as a defined pattern or a date/time tag function (such as "{month-1}")
+to represent the current date/time as a defined pattern or a date/time tag expression (such as "{month-1}")
 which represents the current date/time modified by an operator and an applied amount of time.
 
 If you select the Time of Day type then the Time of Day group of controls will be available. This includes
@@ -343,7 +328,8 @@ three sets of controls that enable you to specify the start time, end time, and 
 for what you want Auto Screen Capture to consider as the morning, afternoon, and evening. The value can be
 text and/or a series of macro tags. If you specify the evening end time to be beyond 23:59:59 then please
 enable the "Evening extends to next morning" option so that the evening value continues to be used for
-the following morning.
+the following morning. For example, an Evening value between 21:00:00 and 03:00:00 can be used when you
+want to dynamically change the filename between 9pm and 3am the next morning.
 
 Macro tags available by default are ...
 %name%           Screen Name
@@ -358,12 +344,12 @@ Macro tags available by default are ...
 %minute%         Date/Time Format               Current minute as "mm"
 %second%         Date/Time Format               Current second as "ss"
 %millisecond%    Date/Time Format               Current millisecond as "fff"
-%lastyear%       Date/Time Format Function      Current year minus 1 with function "{year-1}"
-%lastmonth%      Date/Time Format Function      Current month minus 1 with function "{month-1}"
-%yesterday%      Date/Time Format Function      Current day minus 1 with function "{day-1}"
-%tomorrow%       Date/Time Format Function      Current day plus 1 with function "{day+1}"
-%6hoursbehind%   Date/Time Format Function      Current hour minus 6 with function "{hour-6}"
-%6hoursahead%    Date/Time Format Function      Current hour plus 6 with function "{hour+6}"
+%lastyear%       Date/Time Format Expression    Current year minus 1 with expression "{year-1}"
+%lastmonth%      Date/Time Format Expression    Current month minus 1 with expression "{month-1}"
+%yesterday%      Date/Time Format Expression    Current day minus 1 with expression "{day-1}"
+%tomorrow%       Date/Time Format Expression    Current day plus 1 with expression "{day+1}"
+%6hoursbehind%   Date/Time Format Expression    Current hour minus 6 with expression "{hour-6}"
+%6hoursahead%    Date/Time Format Expression    Current hour plus 6 with expression "{hour+6}"
 %count%          Screen Capture Cycle Count
 %user%           User
 %machine%        Machine
@@ -403,11 +389,11 @@ tag which returns the value of %day% before midnight and %yesterday% after midni
 and then create a second "Time of Day" tag that calls the first "Time of Day" tag
 between the hours of late evening and the early hours of the next morning.
 
-A special type of date/time format tag called a date/time format function tag
-(or just "date/time tag function") can be used to define an applied amount of time
+A special type of date/time format tag called a date/time format expression tag
+(or just "date/time tag expression") can be used to define an applied amount of time
 either behind or ahead the current date/time.
 
-A date/time function tag is specified by a date/time part
+A date/time expression tag is specified by a date/time part
 (year, month, day, hour, minute, or second), an operator (either "-" or "+"),
 and the amount of time applied.
 For example ...
@@ -416,6 +402,9 @@ For example ...
 {day+1}        for tomorrow
 {month-2}      for 2 months ago
 {hour+6}       for 6 hours ahead
+
+As of version 2.2.5.0, Date/Time Format Function was renamed to Date/Time Format Expression
+to better define its purpose.
 
 
 
@@ -459,23 +448,24 @@ Condition = LimitReached -> Action = StopScreenCapture
 Command Line Arguments
 ----------------------
 You can run the Auto Screen Capture "autoscreen.exe" binary with command line arguments.
+Simply running "autoscreen.exe" without arguments will open Auto Screen Capture and not
+necessarily start a screen capture session unless a trigger is setup to do so, the -start
+command has been given, or the AutoStartFromCommandLine setting is enabled.
 
--log
-Enables logging.
-All log files, by default, are stored in the "!autoscreen\debug\logs" folder
-(and this folder path is configurable as of version 2.2.1.0).
+As of version 2.2.5.0 most commands can be given to Auto Screen Capture while it's running.
+This gives you the opportunity to control a running instance of the application.
 
--debug
-This is similar to the -log command line argument.
-Logging will be turned on and log files will be stored in the logs folder.
-DebugMode will also be set to True.
-Be very careful when enabling DebugMode because it's basically verbose logging.
-In other words, if you have a lot of screenshots to load, then DebugMode is going to log every detail
-about each individual screenshot reference it finds.
-I introduced this command line argument in 2.0.6, removed it in 2.2.0.7, and re-introduced it in 2.2.1.0 :)
+-start
+Starts the timer and begins running a screen capture session.
 
--hideSystemTrayIcon
-The application's system tray icon will be hidden while the application is running.
+-stop
+Stops the timer and stops the currently running screen capture session.
+
+-exit
+Quits Auto Screen Capture.
+
+-capture
+Takes screenshots in a single capture cycle.
 
 -interval=hh:mm:ss.nnn
 Sets the timer's interval to take a screenshot of each screen and region
@@ -483,8 +473,46 @@ every hour (hh), minute (mm), second (ss), and millisecond (nnn).
 For example, "-interval=02:30:10.000" sets the timer's interval to take screenshots
 every 2 hours, 30 minutes, and 10 seconds.
 
+-log
+Toggles logging. As of version 2.2.5.0 this command toggles logging on and off rather than
+simply enabling (or turning on) logging so be aware how frequently you use this command.
+For example, if logging is currently off then using "-log" will turn logging on and using "-log"
+again will turn it off. All log files, by default, are stored in the "!autoscreen\debug\logs" folder
+(and this folder path is configurable as of version 2.2.1.0). As of version 2.2.5.0 you can issue
+this command during a running instance of Auto Screen Capture.
+
+-log=on
+Enables logging.
+
+-log=off
+Disables logging.
+
+-debug
+Toggles "DebugMode". When enabled this command logs all debugging information.
+Be very careful when enabling DebugMode because it's basically verbose logging.
+I introduced this command line argument in 2.0.6, removed it in 2.2.0.7, and re-introduced it in 2.2.1.0 :)
+
+-debug=on
+Turns on "DebugMode".
+
+-debug=off
+Turns off "DebugMode".
+
+-showSystemTrayIcon
+Show the application's system tray icon.
+
+-hideSystemTrayIcon
+Hides the application's system tray icon.
+
 -initial
-Takes a screenshot of each screen and region before starting the timer.
+Toggles "Initial Capture".
+When enabled this command takes a screenshot of each screen and region before starting the timer.
+
+-initial=on
+Turns on "Initial Capture".
+
+-initial=off
+Turns off "Initial Capture".
 
 -startat=hh:mm:ss
 Schedules the application to start taking screenshots at a specified time.

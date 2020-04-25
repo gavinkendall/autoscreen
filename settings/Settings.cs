@@ -209,6 +209,25 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
                     }
+
+                    if (!Application.KeyExists("AutoStartFromCommandLine"))
+                    {
+                        Application.Add(new Setting("AutoStartFromCommandLine", false));
+
+                        // If this is a version before 2.2.5.0 then set this setting to true because
+                        // starting a screen capture session was the old behaviour when running autoscreen.exe
+                        // from the command line.
+                        if (VersionManager.IsOldAppVersion(Application.AppCodename, Application.AppVersion))
+                        {
+                            Version v2250 = VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version configVersion = VersionManager.Versions.Get(Application.AppCodename, Application.AppVersion);
+
+                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            {
+                                Application.GetByKey("AutoStartFromCommandLine", defaultValue: false).Value = true;
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -229,6 +248,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("EmailMessageBody", string.Empty));
                     Application.Add(new Setting("LowDiskPercentageThreshold", 1));
                     Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
+                    Application.Add(new Setting("AutoStartFromCommandLine", false));
                 }
 
                 Application.Save();

@@ -58,10 +58,9 @@ namespace AutoScreenCapture
         private const int CAPTURE_INTERVAL_DEFAULT_IN_MINUTES = 1;
 
         /// <summary>
-        /// Constructor for the main form. Arguments from the command line can be passed to it.
+        /// Constructor for the main form.
         /// </summary>
-        /// <param name="args">Arguments from the command line</param>
-        public FormMain(string[] args)
+        public FormMain()
         {
             InitializeComponent();
 
@@ -71,14 +70,7 @@ namespace AutoScreenCapture
             hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.A);
             hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.E);
 
-            if (args.Length > 0)
-            {
-                ParseCommandLineArguments(args);
-            }
-            else
-            {
-                LoadSettings();
-            }
+            LoadSettings();
 
             Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
 
