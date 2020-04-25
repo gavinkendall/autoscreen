@@ -451,21 +451,25 @@ You can run the Auto Screen Capture "autoscreen.exe" binary with command line ar
 Simply running "autoscreen.exe" without arguments will open Auto Screen Capture and not
 necessarily start a screen capture session unless a trigger is setup to do so, the -start
 command has been given, or the AutoStartFromCommandLine setting is enabled.
+("AutoStartFromCommandLine" will be enabled if you're upgrading from a version that's
+older than version 2.2.5.0 to emulate the old behaviour of running from the command line)
 
 As of version 2.2.5.0 most commands can be given to Auto Screen Capture while it's running.
 This gives you the opportunity to control a running instance of the application.
 
 -start
 Starts the timer and begins running a screen capture session.
+("AutoStartFromCommandLine" will be ignored)
 
 -stop
 Stops the timer and stops the currently running screen capture session.
+("AutoStartFromCommandLine" will be ignored)
 
 -exit
 Quits Auto Screen Capture.
 
 -capture
-Takes screenshots in a single capture cycle.
+Takes screenshots in a single capture cycle at the time the command is given.
 
 -interval=hh:mm:ss.nnn
 Sets the timer's interval to take a screenshot of each screen and region

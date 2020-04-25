@@ -753,7 +753,7 @@ namespace AutoScreenCapture
             // 
             // timerScreenCapture
             // 
-            this.timerScreenCapture.Enabled = true;
+            this.timerScreenCapture.Enabled = false;
             this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
             // labelScreenshotTitle

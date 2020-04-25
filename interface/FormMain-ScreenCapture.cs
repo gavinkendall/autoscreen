@@ -213,6 +213,9 @@ namespace AutoScreenCapture
 
                 timerScreenCapture.Interval = screenCaptureInterval;
 
+                timerScreenCapture.Enabled = true;
+                timerScreenCapture.Start();
+
                 SystemTrayIconStatusRunning();
 
                 Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
@@ -248,6 +251,9 @@ namespace AutoScreenCapture
 
                     _screenCapture.Count = 0;
                     _screenCapture.Running = false;
+
+                    timerScreenCapture.Stop();
+                    timerScreenCapture.Enabled = false;
                     
                     notifyIcon.Icon = Resources.autoscreen;
 

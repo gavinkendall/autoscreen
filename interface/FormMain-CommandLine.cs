@@ -163,6 +163,8 @@ namespace AutoScreenCapture
                         {
                             numericUpDownCaptureLimit.Value = cmdLimit;
                             checkBoxCaptureLimit.Checked = true;
+
+                            _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
                         }
                     }
 
@@ -178,6 +180,24 @@ namespace AutoScreenCapture
                         numericUpDownMinutesInterval.Value = minutes;
                         numericUpDownSecondsInterval.Value = seconds;
                         numericUpDownMillisecondsInterval.Value = milliseconds;
+
+                        int screenCaptureInterval = GetScreenCaptureInterval();
+
+                        if (screenCaptureInterval > 0)
+                        {
+                            timerScreenCapture.Stop();
+                            timerScreenCapture.Enabled = false;
+
+                            _screenCapture.DateTimePreviousCycle = DateTime.Now;
+                            _screenCapture.Delay = screenCaptureInterval;
+                            timerScreenCapture.Interval = screenCaptureInterval;
+
+                            Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = screenCaptureInterval;
+                            Settings.User.Save();
+
+                            timerScreenCapture.Enabled = true;
+                            timerScreenCapture.Start();
+                        }
                     }
 
                     //if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT))
