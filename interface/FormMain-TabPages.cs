@@ -109,6 +109,30 @@ namespace AutoScreenCapture
 
             toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
+            // Check to see if Email (SMTP) is configured.
+            string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
+
+            string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
+            string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
+
+            string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
+            string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
+
+            if (string.IsNullOrEmpty(host) ||
+                string.IsNullOrEmpty(username) ||
+                string.IsNullOrEmpty(password) ||
+                string.IsNullOrEmpty(@from) ||
+                string.IsNullOrEmpty(to))
+            {
+                toolStripButtonEmail.ToolTipText = "SMTP settings have not been configured for Auto Screen Capture to email screenshots";
+                toolStripButtonEmail.Enabled = false;
+            }
+            else
+            {
+                toolStripButtonEmail.ToolTipText = "Email this screenshot using the configured SMTP settings";
+                toolStripButtonEmail.Enabled = true;
+            }
+
             toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, addEditor_Click);
 
             foreach (Editor editor in formEditor.EditorCollection)
@@ -207,8 +231,8 @@ namespace AutoScreenCapture
 
             toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
 
-            toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripSplitButtonEdit);
+            toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripSplitButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
             toolStrip.Items.Add(toolstripButtonOpenFolder);

@@ -109,6 +109,57 @@ namespace AutoScreenCapture
                 else
                 {
                     Log.WriteDebugMessage($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors");
+
+                    // Setup default image editors.
+                    // This is going to get maintenance heavy. I just know it.
+
+                    // Microsoft Paint
+                    if (File.Exists(@"C:\Windows\System32\mspaint.exe"))
+                    {
+                        Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "%screenshot%"));
+
+                        // We'll make Microsoft Paint the default image editor because usually everyone has it already.
+                        Settings.User.SetValueByKey("StringDefaultEditor", "Microsoft Paint");
+                    }
+
+                    // Microsoft Outlook
+                    if (File.Exists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
+                    {
+                        Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a %screenshot%"));
+                    }
+
+                    // Chrome
+                    if (File.Exists(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"))
+                    {
+                        Add(new Editor("Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "%screenshot%"));
+                    }
+
+                    // Firefox
+                    if (File.Exists(@"C:\Program Files\Mozilla Firefox\firefox.exe"))
+                    {
+                        Add(new Editor("Firefox", @"C:\Program Files\Mozilla Firefox\firefox.exe", "%screenshot%"));
+                    }
+
+                    // GIMP
+                    // We assume GIMP will be in the default location available for all users on 64-bit systems.
+                    if (File.Exists(@"C:\Program Files\GIMP 2\bin\gimp-2.10.exe"))
+                    {
+                        Add(new Editor("GIMP", @"C:\Program Files\GIMP 2\bin\gimp-2.10.exe", "%screenshot%"));
+                    }
+
+                    // Glimpse
+                    if (File.Exists(@"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe"))
+                    {
+                        Add(new Editor("Glimpse", @"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe", "%screenshot%"));
+                    }
+
+                    // Clip Studio Paint
+                    if (File.Exists(@"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe"))
+                    {
+                        Add(new Editor("Clip Studio Paint", @"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe", "%screenshot%"));
+                    }
+
+                    SaveToXmlFile();
                 }
             }
             catch (Exception ex)

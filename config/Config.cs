@@ -53,31 +53,31 @@ namespace AutoScreenCapture
                         "# If only the folder name is given then it will be parsed as the sub-folder of the folder",
                         "# where the executed autoscreen.exe binary is located.", "",
                         "# This is the folder where screenshots will be stored by default.",
-                        "ScreenshotsFolder=screenshots\\", "",
+                        "ScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder, "",
                         "# If any errors are encountered then you will find them in this folder when DebugMode is enabled.",
-                        "DebugFolder=!autoscreen\\debug\\", "",
+                        "DebugFolder=" + FileSystem.DefaultDebugFolder, "",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
-                        "LogsFolder=!autoscreen\\logs\\", "",
+                        "LogsFolder=" + FileSystem.DefaultLogsFolder, "",
                         "# This folder is monitored by the application for commands issued from the command line while it's running.",
-                        "CommandFolder=!autoscreen\\command\\", "",
+                        "CommandFolder=" + FileSystem.DefaultCommandFolder, "",
                         "# The application settings (such as DebugMode).",
-                        "ApplicationSettingsFile=!autoscreen\\settings\\application.xml", "",
+                        "ApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile, "",
                         "# Your personal settings.",
-                        "UserSettingsFile=!autoscreen\\settings\\user.xml", "",
+                        "UserSettingsFile=" + FileSystem.DefaultUserSettingsFile, "",
                         "# References to image editors.",
-                        "EditorsFile=!autoscreen\\editors.xml", "",
+                        "EditorsFile=" + FileSystem.DefaultEditorsFile, "",
                         "# References to regions.",
-                        "RegionsFile=!autoscreen\\regions.xml", "",
+                        "RegionsFile=" + FileSystem.DefaultRegionsFile, "",
                         "# References to screens.",
-                        "ScreensFile=!autoscreen\\screens.xml", "",
+                        "ScreensFile=" + FileSystem.DefaultScreensFile, "",
                         "# References to triggers.",
-                        "TriggersFile=!autoscreen\\triggers.xml", "",
+                        "TriggersFile=" + FileSystem.DefaultTriggersFile, "",
                         "# References to screenshots.",
-                        "ScreenshotsFile=!autoscreen\\screenshots.xml", "",
+                        "ScreenshotsFile=" + FileSystem.DefaultScreenshotsFile, "",
                         "# References to tags.",
-                        "TagsFile=!autoscreen\\tags.xml", "",
+                        "TagsFile=" + FileSystem.DefaultTagsFile, "",
                         "# References to schedules.",
-                        "SchedulesFile=!autoscreen\\schedules.xml"
+                        "SchedulesFile=" + FileSystem.DefaultSchedulesFile, ""
                     };
 
                     File.WriteAllLines(FileSystem.ConfigFile, linesToWrite);
@@ -258,8 +258,9 @@ namespace AutoScreenCapture
 
             if (string.IsNullOrEmpty(FileSystem.EditorsFile))
             {
+                // Loading the editor collection will automatically create the default editors and add them to the collection.
                 EditorCollection editorCollection = new EditorCollection();
-                editorCollection.SaveToXmlFile();
+                editorCollection.LoadXmlFileAndAddEditors();
             }
 
             if (string.IsNullOrEmpty(FileSystem.RegionsFile))

@@ -102,7 +102,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SetValueByKey(string key, object value)
+        public void SetValueByKey(string key, object value)
         {
             RemoveByKey(key);
             Add(new Setting(key, value));

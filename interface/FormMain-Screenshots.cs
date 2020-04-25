@@ -48,21 +48,30 @@ namespace AutoScreenCapture
         {
             Screenshot screenshot = null;
 
-            if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+            Slide selectedSlide = Slideshow.SelectedSlide;
+
+            if (selectedSlide != null)
             {
-                var screen = (Screen)tabControlViews.SelectedTab.Tag;
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+                {
+                    var screen = (Screen)tabControlViews.SelectedTab.Tag;
 
-                screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
+                }
+
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+                {
+                    var region = (Region)tabControlViews.SelectedTab.Tag;
+
+                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
+                }
+
+                EmailScreenshot(screenshot, prompt: true);
             }
-
-            if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+            else
             {
-                var region = (Region)tabControlViews.SelectedTab.Tag;
-
-                screenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                MessageBox.Show("SMTP settings are configured but no image is available to email.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            EmailScreenshot(screenshot, prompt: true);
         }
 
         private void SaveScreenshots()
@@ -363,6 +372,12 @@ namespace AutoScreenCapture
             {
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path)) return;
 
+                string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
+                int port = Convert.ToInt32(Settings.Application.GetByKey("EmailServerPort", string.Empty).Value);
+
+                string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
+                string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
+
                 string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
                 string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
                 string cc = Settings.Application.GetByKey("EmailMessageCC", string.Empty).Value.ToString();
@@ -370,10 +385,20 @@ namespace AutoScreenCapture
                 string subject = Settings.Application.GetByKey("EmailMessageSubject", string.Empty).Value.ToString();
                 string body = Settings.Application.GetByKey("EmailMessageBody", string.Empty).Value.ToString();
 
-                if (string.IsNullOrEmpty(@from) || string.IsNullOrEmpty(to)) return;
+                if (string.IsNullOrEmpty(host) ||
+                    string.IsNullOrEmpty(username) ||
+                    string.IsNullOrEmpty(password) ||
+                    string.IsNullOrEmpty(@from) ||
+                    string.IsNullOrEmpty(to))
+                {
+                    return;
+                }
 
-                var mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(@from);
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(@from)
+                };
+
                 mailMessage.To.Add(to);
 
                 if (!string.IsNullOrEmpty(cc))
@@ -394,22 +419,15 @@ namespace AutoScreenCapture
 
                 if (mailMessage.Attachments == null || mailMessage.Attachments.Count <= 0) return;
 
-                string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
-                int port = Convert.ToInt32(Settings.Application.GetByKey("EmailServerPort", string.Empty).Value);
-
-                string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
-                string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
-
-                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return;
-
-                var smtpClient = new SmtpClient(host, port);
-
-                smtpClient.EnableSsl = Convert.ToBoolean(Settings.Application.GetByKey("EmailServerEnableSSL", string.Empty).Value);
-                smtpClient.Credentials = new NetworkCredential(username, password);
+                var smtpClient = new SmtpClient(host, port)
+                {
+                    EnableSsl = Convert.ToBoolean(Settings.Application.GetByKey("EmailServerEnableSSL", string.Empty).Value),
+                    Credentials = new NetworkCredential(username, password)
+                };
 
                 if (prompt)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Do you want to email this screenshot?", "Email Screenshot", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult dialogResult = MessageBox.Show($"Do you want to email this screenshot from \"{from}\" to \"{to}\" using \"{host}:{port}\"?", "Email Screenshot", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (dialogResult == DialogResult.Yes)
                     {
@@ -420,6 +438,8 @@ namespace AutoScreenCapture
                 {
                     smtpClient.Send(mailMessage);
                 }
+
+                smtpClient.Dispose();
             }
             catch (Exception ex)
             {
