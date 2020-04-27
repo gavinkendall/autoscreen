@@ -764,22 +764,18 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    // Check what we have in the XML document and delete the image file based on its path as well as removing the node from the XML document so we no longer reference it.
-                    for (int i = keepScreenshotsForDays; i > 0; i--)
+                    XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "<='" + DateTime.Now.Date.AddDays(-keepScreenshotsForDays).ToString(MacroParser.DateFormat) + "']");
+
+                    foreach (XmlNode node in nodesToDelete)
                     {
-                        XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + DateTime.Now.Date.AddDays(-i).ToString(MacroParser.DateFormat) + "']");
+                        string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                        foreach (XmlNode node in nodesToDelete)
+                        if (File.Exists(path))
                         {
-                            string path = node.SelectSingleNode("path").FirstChild.Value;
-
-                            if (File.Exists(path))
-                            {
-                                File.Delete(path);
-                            }
-
-                            node.ParentNode.RemoveChild(node);
+                            File.Delete(path);
                         }
+
+                        node.ParentNode.RemoveChild(node);
                     }
                 }
 
