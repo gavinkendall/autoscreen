@@ -66,7 +66,7 @@ namespace AutoScreenCapture
                             // them about the -kill command which can be used to terminate all running instances.
                             string appVersion = "[(v" + Settings.ApplicationVersion + ") ";
 
-                            using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + FileSystem.StartupErrorFile, true))
+                            using (StreamWriter sw = new StreamWriter(FileSystem.StartupErrorFile, true))
                             {
                                 sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] An existing instance of autoscreen is already running");
 

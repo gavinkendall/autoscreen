@@ -376,16 +376,20 @@ namespace AutoScreenCapture
                         if (string.IsNullOrEmpty(nodeValue))
                         {
                             Log.WriteDebugMessage("Loading node values by " + nodeName + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "/" + nodeName + "\"");
+
                             xNodes = xDoc.SelectNodes(SCREENSHOT_XPATH + "/" + nodeName);
                         }
                         else
                         {
                             Log.WriteDebugMessage("Loading node values by " + nodeName + " from \"" + FileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "[" + nodeName + "='" + nodeValue + "']\"");
+
                             xNodes = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + nodeName + "='" + nodeValue + "']");
                         }
 
                         if (xNodes != null)
                         {
+                            Log.WriteDebugMessage("Number of nodes loaded from XML file = " + xNodes.Count);
+
                             List<string> nodeValues = new List<string>();
 
                             foreach (XmlNode xNode in xNodes)
@@ -410,6 +414,8 @@ namespace AutoScreenCapture
 
                                 xReader.Close();
                             }
+
+                            Log.WriteDebugMessage("Number of unique node values returned = " + xNodes.Count);
 
                             return nodeValues;
                         }
