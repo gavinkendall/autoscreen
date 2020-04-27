@@ -64,7 +64,7 @@ namespace AutoScreenCapture
 
         private void SystemTrayIconStatusRunning()
         {
-            if (notifyIcon.Visible && !checkBoxInitialScreenshot.Checked && timerScreenCapture.Interval > BALLOON_TIP_TIMEOUT)
+            if (notifyIcon.Visible && !checkBoxInitialScreenshot.Checked && timerScreenCapture.Interval > BALLOON_TIP_TIMEOUT && toolStripMenuItemShowBalloonInformation.Checked)
             {
                 SystemTrayBalloonTip("The system tray icon turns green when taking screenshots. To stop, right-click on the icon and select Stop Screen Capture");
             }
@@ -78,39 +78,32 @@ namespace AutoScreenCapture
 
             if (_screenCapture.Running)
             {
-                if (_screenCapture.PerformingMaintenance)
+                string remainingTimeStr = string.Empty;
+
+                int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
+                int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
+                int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
+
+                string remainingHoursStr = (remainingHours > 0
+                    ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
+                    : string.Empty);
+
+                string remainingMinutesStr = (remainingMinutes > 0
+                    ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
+                    : string.Empty);
+
+                string remainingSecondsStr = (remainingSeconds > 0
+                    ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
+                    : string.Empty);
+
+                if (remainingSeconds > 0)
                 {
-                    notifyIcon.Text = "Performing maintenance ...";
+                    remainingTimeStr = "Next capture in " +
+                        remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
+                        _screenCapture.DateTimeNextCycle.ToLongTimeString();
                 }
-                else
-                {
-                    string remainingTimeStr = string.Empty;
 
-                    int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
-                    int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
-                    int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
-
-                    string remainingHoursStr = (remainingHours > 0
-                        ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
-                        : string.Empty);
-
-                    string remainingMinutesStr = (remainingMinutes > 0
-                        ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
-                        : string.Empty);
-
-                    string remainingSecondsStr = (remainingSeconds > 0
-                        ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
-                        : string.Empty);
-
-                    if (remainingSeconds > 0)
-                    {
-                        remainingTimeStr = "Next capture in " +
-                            remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
-                            _screenCapture.DateTimeNextCycle.ToLongTimeString();
-                    }
-
-                    notifyIcon.Text = remainingTimeStr;
-                }
+                notifyIcon.Text = remainingTimeStr;
             }
 
             toolStripInfo.Text = notifyIcon.Text;

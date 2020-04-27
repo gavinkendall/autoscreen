@@ -311,6 +311,11 @@ namespace AutoScreenCapture
                 Visible = false;
                 ShowInTaskbar = false;
 
+                if (!_screenCapture.Running && toolStripMenuItemShowBalloonInformation.Checked)
+                {
+                    SystemTrayBalloonTip("The application is still available in your system tray so if you want to exit simply right-click its system tray icon and select Exit");
+                }
+
                 Log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
             }

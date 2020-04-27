@@ -120,11 +120,6 @@ namespace AutoScreenCapture
         public bool Running { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public bool PerformingMaintenance { get; set; }
-
-        /// <summary>
         /// The date/time when the user started a screen capture session.
         /// </summary>
         public DateTime DateTimeStartCapture { get; set; }

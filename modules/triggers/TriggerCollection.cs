@@ -155,8 +155,8 @@ namespace AutoScreenCapture
                     Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
                         TriggerActionType.ShowInterface, string.Empty, enabled: true));
 
-                    Add(new Trigger("Interface Closing -> Exit", TriggerConditionType.InterfaceClosing,
-                        TriggerActionType.ExitApplication, string.Empty, enabled: true));
+                    Add(new Trigger("Interface Closing -> Hide", TriggerConditionType.InterfaceClosing,
+                        TriggerActionType.HideInterface, string.Empty, enabled: true));
 
                     Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
                         TriggerActionType.StopScreenCapture, string.Empty, enabled: true));

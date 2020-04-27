@@ -18,15 +18,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
-            _screenCapture.PerformingMaintenance = true;
-
             // Save and delete old screenshots.
             SaveScreenshots();
 
             // Refresh the calendar.
             SearchDates();
-
-            _screenCapture.PerformingMaintenance = false;
         }
 
         /// <summary>
