@@ -124,8 +124,6 @@ namespace AutoScreenCapture
             }
 
             listBoxScreenshots.EndUpdate();
-
-            GC.Collect();
         }
 
         /// <summary>

@@ -181,8 +181,6 @@ namespace AutoScreenCapture
                     runDateSearchThread.RunWorkerAsync();
                 }
             }
-
-            GC.Collect();
         }
 
         private void DeleteSlides()

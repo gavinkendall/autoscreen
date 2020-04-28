@@ -79,8 +79,6 @@ namespace AutoScreenCapture
             }
 
             comboBoxFilterValue.EndUpdate();
-
-            GC.Collect();
         }
     }
 }
