@@ -764,18 +764,27 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    XmlNodeList nodesToDelete = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "<='" + DateTime.Now.Date.AddDays(-keepScreenshotsForDays).ToString(MacroParser.DateFormat) + "']");
+                    XmlNode minDateNode = xDoc.SelectSingleNode(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE + "[not(. >=../preceding-sibling::" + SCREENSHOT_DATE + ") and not(. >=../following-sibling::" + SCREENSHOT_DATE + ")]");
 
-                    foreach (XmlNode node in nodesToDelete)
+                    DateTime dtMin = DateTime.Parse(minDateNode.FirstChild.Value).Date;
+                    DateTime dtMax = DateTime.Now.Date.AddDays(-keepScreenshotsForDays).Date;
+
+                    for (DateTime date = dtMin; date.Date <= dtMax; date = date.AddDays(1))
                     {
-                        string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                        if (File.Exists(path))
+                        XmlNodeList screenshotNodesToDeleteByDate = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + date.ToString(MacroParser.DateFormat) + "']");
+
+                        foreach (XmlNode node in screenshotNodesToDeleteByDate)
                         {
-                            File.Delete(path);
-                        }
+                            string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                        node.ParentNode.RemoveChild(node);
+                            if (File.Exists(path))
+                            {
+                                File.Delete(path);
+                            }
+
+                            node.ParentNode.RemoveChild(node);
+                        }
                     }
                 }
 
