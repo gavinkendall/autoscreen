@@ -139,7 +139,10 @@ namespace AutoScreenCapture
                     Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_OFF) ||
                     Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LIMIT) ||
                     Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INTERVAL) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE))
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT) ||
+                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT))
                 {
                     using (StreamWriter sw = File.AppendText(FileSystem.CommandFile))
                     {

@@ -272,7 +272,7 @@ namespace AutoScreenCapture
 
                     foreach (object obj in _settingList)
                     {
-                        Setting setting = (Setting) obj;
+                        Setting setting = (Setting)obj;
 
                         xWriter.WriteStartElement(XML_FILE_SETTING_NODE);
 
@@ -307,7 +307,7 @@ namespace AutoScreenCapture
 
                 Log.WriteMessage("An old version of Auto Screen Capture was detected. Attempting upgrade");
 
-                var oldUserSettings = (SettingCollection) this.MemberwiseClone();
+                var oldUserSettings = (SettingCollection)this.MemberwiseClone();
                 oldUserSettings._settingList = new List<Setting>(_settingList);
 
                 Settings.VersionManager.OldUserSettings = oldUserSettings;

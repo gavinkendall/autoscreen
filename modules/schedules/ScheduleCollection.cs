@@ -194,20 +194,71 @@ namespace AutoScreenCapture
                 {
                     Log.WriteDebugMessage($"WARNING: {FileSystem.SchedulesFile} not found. Unable to load schedules");
 
-                    Log.WriteDebugMessage("Creating default Command Line Schedule for use with command line arguments such as -captureat, -startat, and -stopat");
+                    // If we can't find the schedules.xml file we'll need to have a "Command Line Schedule" schedule created to be compatible with old commands like -startat and -stopat.
+                    Log.WriteDebugMessage("Creating default Command Line Schedule for use with command line arguments such as -startat and -stopat");
 
-                    Schedule schedule = new Schedule()
+                    DateTime dtNow = DateTime.Now;
+
+                    Schedule commandLineSchedule = new Schedule()
                     {
                         Name = "Command Line Schedule",
                         Enabled = false,
                         ModeOneTime = true,
                         ModePeriod = false,
-                        CaptureAt = DateTime.Now,
-                        StartAt = DateTime.Now,
-                        StopAt = DateTime.Now
+                        CaptureAt = dtNow,
+                        StartAt = dtNow,
+                        StopAt = dtNow
                     };
 
-                    Add(schedule);
+                    // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Command Line Schedule" and enable it.
+                    SettingCollection oldUserSettings = Settings.VersionManager.OldUserSettings;
+
+                    if (oldUserSettings != null)
+                    {
+                        bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", defaultValue: false).Value);
+                        bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", defaultValue: false).Value);
+
+                        DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", defaultValue: DateTime.Now).Value);
+                        DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", defaultValue: DateTime.Now).Value);
+
+                        // Days
+                        bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value);
+                        bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value);
+                        bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value);
+                        bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value);
+                        bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value);
+                        bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value);
+                        bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value);
+                        bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value);
+
+                        commandLineSchedule.ModeOneTime = false;
+                        commandLineSchedule.ModePeriod = true;
+
+                        if (captureStartAt)
+                        {
+                            commandLineSchedule.Enabled = true;
+                            commandLineSchedule.StartAt = dtStartAt;
+                        }
+
+                        if (captureStopAt)
+                        {
+                            commandLineSchedule.Enabled = true;
+                            commandLineSchedule.StopAt = dtStopAt;
+                        }
+
+                        if (captureOnTheseDays)
+                        {
+                            commandLineSchedule.Sunday = sunday;
+                            commandLineSchedule.Monday = monday;
+                            commandLineSchedule.Tuesday = tuesday;
+                            commandLineSchedule.Wednesday = wednesday;
+                            commandLineSchedule.Thursday = thursday;
+                            commandLineSchedule.Friday = friday;
+                            commandLineSchedule.Saturday = saturday;
+                        }
+                    }
+
+                    Add(commandLineSchedule);
 
                     SaveToXmlFile();
                 }

@@ -75,51 +75,51 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_LOG = "^-log";
+        public const string REGEX_COMMAND_LINE_LOG = "^-log$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_LOG_ON = "^-log=on";
+        public const string REGEX_COMMAND_LINE_LOG_ON = "^-log=on$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_LOG_OFF = "^-log=off";
+        public const string REGEX_COMMAND_LINE_LOG_OFF = "^-log=off$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_DEBUG = "^-debug";
+        public const string REGEX_COMMAND_LINE_DEBUG = "^-debug$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_DEBUG_ON = "^-debug=on";
+        public const string REGEX_COMMAND_LINE_DEBUG_ON = "^-debug=on$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_DEBUG_OFF = "^-debug=off";
+        public const string REGEX_COMMAND_LINE_DEBUG_OFF = "^-debug=off$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_CAPTURE = "^-capture";
+        public const string REGEX_COMMAND_LINE_CAPTURE = "^-capture$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_START = "^-start";
+        public const string REGEX_COMMAND_LINE_START = "^-start$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_STOP = "^-stop";
+        public const string REGEX_COMMAND_LINE_STOP = "^-stop$";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string REGEX_COMMAND_LINE_EXIT = "^-exit";
+        public const string REGEX_COMMAND_LINE_EXIT = "^-exit$";
     }
 }

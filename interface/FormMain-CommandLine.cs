@@ -200,25 +200,6 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    //if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT))
-                    //{
-                    //    int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
-                    //    int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
-                    //    int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
-
-                    //    //formSchedule.ScheduleCollection.
-                    //    formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModeOneTime = false;
-                    //    formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModePeriod = true;
-                    //    formSchedule.ScheduleCollection.GetByName("Command Line Schedule").StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-                    //}
-
-                    //if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT))
-                    //{
-                    //    int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
-                    //    int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
-                    //    int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
-                    //}
-
                     // -passphrase=x
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE))
                     {
@@ -238,6 +219,48 @@ namespace AutoScreenCapture
 
                             ScreenCapture.LockScreenCaptureSession = true;
                         }
+                    }
+
+                    // -startat=hh:mm:ss
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT))
+                    {
+                        int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
+
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModeOneTime = false;
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModePeriod = true;
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+
+                        formSchedule.ScheduleCollection.SaveToXmlFile();
+                    }
+
+                    // -stopat=hh:mm:ss
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT))
+                    {
+                        int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
+
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModeOneTime = false;
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModePeriod = true;
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").StopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+
+                        formSchedule.ScheduleCollection.SaveToXmlFile();
+                    }
+
+                    // -captureat=hh:mm:ss
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT))
+                    {
+                        int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
+
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModeOneTime = true;
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").ModePeriod = false;
+                        formSchedule.ScheduleCollection.GetByName("Command Line Schedule").CaptureAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+
+                        formSchedule.ScheduleCollection.SaveToXmlFile();
                     }
                 }
 
