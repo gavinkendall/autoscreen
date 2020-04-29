@@ -350,6 +350,20 @@ namespace AutoScreenCapture
                 RemoveByKey("BoolLockScreenCaptureSession");
                 RemoveByKey("Passphrase");
 
+                // These settings are no longer used starting with version 2.2.5.0
+                RemoveByKey("BoolCaptureStopAt");
+                RemoveByKey("BoolCaptureStartAt");
+                RemoveByKey("BoolCaptureOnSunday");
+                RemoveByKey("BoolCaptureOnMonday");
+                RemoveByKey("BoolCaptureOnTuesday");
+                RemoveByKey("BoolCaptureOnWednesday");
+                RemoveByKey("BoolCaptureOnThursday");
+                RemoveByKey("BoolCaptureOnFriday");
+                RemoveByKey("BoolCaptureOnSaturday");
+                RemoveByKey("BoolCaptureOnTheseDays");
+                RemoveByKey("DateTimeCaptureStopAt");
+                RemoveByKey("DateTimeCaptureStartAt");
+
                 if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                 {
                     Log.WriteDebugMessage("Accurate version information could not be found so assuming upgrade from 2.1.8.2");

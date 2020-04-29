@@ -261,18 +261,6 @@ namespace AutoScreenCapture
                 User.Add(new Setting("BoolCaptureLimit", false));
                 User.Add(new Setting("BoolTakeInitialScreenshot", false));
                 User.Add(new Setting("BoolShowSystemTrayIcon", true));
-                User.Add(new Setting("BoolCaptureStopAt", false));
-                User.Add(new Setting("BoolCaptureStartAt", false));
-                User.Add(new Setting("BoolCaptureOnSunday", false));
-                User.Add(new Setting("BoolCaptureOnMonday", false));
-                User.Add(new Setting("BoolCaptureOnTuesday", false));
-                User.Add(new Setting("BoolCaptureOnWednesday", false));
-                User.Add(new Setting("BoolCaptureOnThursday", false));
-                User.Add(new Setting("BoolCaptureOnFriday", false));
-                User.Add(new Setting("BoolCaptureOnSaturday", false));
-                User.Add(new Setting("BoolCaptureOnTheseDays", false));
-                User.Add(new Setting("DateTimeCaptureStopAt", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0)));
-                User.Add(new Setting("DateTimeCaptureStartAt", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0)));
                 User.Add(new Setting("StringPassphrase", string.Empty));
                 User.Add(new Setting("IntKeepScreenshotsForDays", 30));
                 User.Add(new Setting("StringScreenshotLabel", string.Empty));
