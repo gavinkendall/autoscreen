@@ -311,7 +311,7 @@ namespace AutoScreenCapture
 
                 if (!_screenCapture.Running && toolStripMenuItemShowBalloonInformation.Checked)
                 {
-                    SystemTrayBalloonTip("The application is still available in your system tray so if you want to exit simply right-click its system tray icon and select Exit");
+                    SystemTrayBalloonMessage("The application is available in your system tray. To exit, right-click its system tray icon and select Exit");
                 }
 
                 Log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");

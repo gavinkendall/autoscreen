@@ -38,6 +38,8 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStopScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonKeyboardShortcuts = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonHelp = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItemShowBalloonInformation = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemShowHelpTipsAndHelpBar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlViews = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -111,8 +113,6 @@ namespace AutoScreenCapture
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItemShowBalloonInformation = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemShowHelpTipsAndHelpBar = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -202,6 +202,23 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonHelp.Name = "toolStripSplitButtonHelp";
             this.toolStripSplitButtonHelp.Size = new System.Drawing.Size(64, 20);
             this.toolStripSplitButtonHelp.Text = "Help";
+            // 
+            // toolStripMenuItemShowBalloonInformation
+            // 
+            this.toolStripMenuItemShowBalloonInformation.CheckOnClick = true;
+            this.toolStripMenuItemShowBalloonInformation.Name = "toolStripMenuItemShowBalloonInformation";
+            this.toolStripMenuItemShowBalloonInformation.Size = new System.Drawing.Size(220, 22);
+            this.toolStripMenuItemShowBalloonInformation.Text = "Show balloon information";
+            this.toolStripMenuItemShowBalloonInformation.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowBalloonInformation_CheckedChanged);
+            // 
+            // toolStripMenuItemShowHelpTipsAndHelpBar
+            // 
+            this.toolStripMenuItemShowHelpTipsAndHelpBar.CheckOnClick = true;
+            this.toolStripMenuItemShowHelpTipsAndHelpBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMenuItemShowHelpTipsAndHelpBar.Name = "toolStripMenuItemShowHelpTipsAndHelpBar";
+            this.toolStripMenuItemShowHelpTipsAndHelpBar.Size = new System.Drawing.Size(220, 22);
+            this.toolStripMenuItemShowHelpTipsAndHelpBar.Text = "Show help tips and help bar";
+            this.toolStripMenuItemShowHelpTipsAndHelpBar.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowHelpTipsAndHelpBar_CheckedChanged);
             // 
             // toolStripInfo
             // 
@@ -994,21 +1011,6 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Enabled = true;
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
-            // 
-            // toolStripMenuItemShowBalloonInformation
-            // 
-            this.toolStripMenuItemShowBalloonInformation.CheckOnClick = true;
-            this.toolStripMenuItemShowBalloonInformation.Name = "toolStripMenuItemShowBalloonInformation";
-            this.toolStripMenuItemShowBalloonInformation.Size = new System.Drawing.Size(220, 22);
-            this.toolStripMenuItemShowBalloonInformation.Text = "Show balloon information";
-            // 
-            // toolStripMenuItemShowHelpTipsAndHelpBar
-            // 
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.CheckOnClick = true;
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.Name = "toolStripMenuItemShowHelpTipsAndHelpBar";
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.Size = new System.Drawing.Size(220, 22);
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.Text = "Show help tips and help bar";
             // 
             // FormMain
             // 

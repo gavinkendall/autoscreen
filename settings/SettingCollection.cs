@@ -305,7 +305,7 @@ namespace AutoScreenCapture
             {
                 if (!Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion)) return;
 
-                Log.WriteMessage("An old version of Auto Screen Capture was detected. Attempting upgrade");
+                Log.WriteMessage("An old version of " + Settings.ApplicationName + " was detected. Attempting upgrade");
 
                 var oldUserSettings = (SettingCollection)this.MemberwiseClone();
                 oldUserSettings._settingList = new List<Setting>(_settingList);

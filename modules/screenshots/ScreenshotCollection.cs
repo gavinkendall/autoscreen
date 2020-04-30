@@ -591,7 +591,7 @@ namespace AutoScreenCapture
                                         // because this special ID value is used for figuring out what screenshot image to display.
                                         screenshot.ViewId = _screenCollection.GetByComponent(screenshot.Component).ViewId;
 
-                                        string windowTitle = "*Screenshot imported from an old version of Auto Screen Capture*";
+                                        string windowTitle = "*Screenshot imported from an old version of " + Settings.ApplicationName + "*";
 
                                         Regex rgxOldSlidename = new Regex(@"^(?<Date>\d{4}-\d{2}-\d{2}) (?<Time>(?<Hour>\d{2})-(?<Minute>\d{2})-(?<Second>\d{2})-(?<Millisecond>\d{3}))");
 

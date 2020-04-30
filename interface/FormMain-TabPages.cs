@@ -124,7 +124,7 @@ namespace AutoScreenCapture
                 string.IsNullOrEmpty(@from) ||
                 string.IsNullOrEmpty(to))
             {
-                toolStripButtonEmail.ToolTipText = "SMTP settings have not been configured for Auto Screen Capture to email screenshots";
+                toolStripButtonEmail.ToolTipText = "SMTP settings have not been configured for " + Settings.ApplicationName + " to email screenshots";
                 toolStripButtonEmail.Enabled = false;
             }
             else

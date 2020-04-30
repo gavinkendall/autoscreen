@@ -61,12 +61,12 @@ namespace AutoScreenCapture
                     {
                         if (args.Length == 0 && Convert.ToBoolean(Settings.Application.GetByKey("ShowStartupError", defaultValue: true).Value))
                         {
-                            // We've determined that an instance is already running. We should write out an error message informing the user.
+                            // We've determined that an existing instance is already running. We should write out an error message informing the user.
                             string appVersion = "[(v" + Settings.ApplicationVersion + ") ";
 
                             using (StreamWriter sw = new StreamWriter(FileSystem.StartupErrorFile, true))
                             {
-                                sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] An existing instance of autoscreen is already running");
+                                sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] Cannot start " + Settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + FileSystem.ApplicationSettingsFile + "\"");
 
                                 sw.Flush();
                                 sw.Close();

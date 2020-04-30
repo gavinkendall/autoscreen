@@ -47,9 +47,17 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SystemTrayBalloonTip(string message)
+        private void SystemTrayBalloonMessage(string message)
         {
-            notifyIcon.ShowBalloonTip(20000, Settings.ApplicationName, message, ToolTipIcon.Info);
+            SystemTrayBalloonMessage(message, BALLOON_TIP_TIMEOUT);
+        }
+
+        private void SystemTrayBalloonMessage(string message, int balloonTipTimeout)
+        {
+            if (notifyIcon.Visible && toolStripMenuItemShowBalloonInformation.Checked)
+            {
+                notifyIcon.ShowBalloonTip(balloonTipTimeout, Settings.ApplicationName, message, ToolTipIcon.Info);
+            }
         }
 
         private void HideSystemTrayIcon()
@@ -64,9 +72,9 @@ namespace AutoScreenCapture
 
         private void SystemTrayIconStatusRunning()
         {
-            if (notifyIcon.Visible && !checkBoxInitialScreenshot.Checked && timerScreenCapture.Interval > BALLOON_TIP_TIMEOUT && toolStripMenuItemShowBalloonInformation.Checked)
+            if (!checkBoxInitialScreenshot.Checked && timerScreenCapture.Interval > BALLOON_TIP_TIMEOUT)
             {
-                SystemTrayBalloonTip("The system tray icon turns green when taking screenshots. To stop, right-click on the icon and select Stop Screen Capture");
+                SystemTrayBalloonMessage("The system tray icon turns green when taking screenshots. To stop, right-click on the icon and select Stop Screen Capture");
             }
 
             notifyIcon.Icon = Resources.autoscreen_running;

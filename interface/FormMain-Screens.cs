@@ -135,7 +135,7 @@ namespace AutoScreenCapture
                         {
                             if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                             {
-                                if (_screenCapture.TakeScreenshot(
+                                if (_screenCapture.SaveScreenshot(
                                     path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                     format: screen.Format,
                                     component: screen.Component,
@@ -174,7 +174,7 @@ namespace AutoScreenCapture
                                     formScreen.ScreenDictionary[screen.Component].Bounds.Width,
                                     formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
-                                    if (_screenCapture.TakeScreenshot(
+                                    if (_screenCapture.SaveScreenshot(
                                         path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                         format: screen.Format,
                                         component: screen.Component,

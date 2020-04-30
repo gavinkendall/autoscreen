@@ -17,7 +17,7 @@ using System.Text;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// This class is responsible for getting bitmap images of the screen area. It also saves screenshots to the file system.
     /// </summary>
     public class ScreenCapture
     {
@@ -47,7 +47,7 @@ namespace AutoScreenCapture
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         /// <summary>
-        /// 
+        /// Gets the window thread process ID.
         /// </summary>
         /// <param name="hWnd"></param>
         /// <param name="ProcessId"></param>
@@ -65,12 +65,12 @@ namespace AutoScreenCapture
         private const Int32 DI_NORMAL = 0x0003;
 
         /// <summary>
-        /// 
+        /// The minimum capture limit.
         /// </summary>
         public const int CAPTURE_LIMIT_MIN = 1;
 
         /// <summary>
-        /// 
+        /// The maximum capture limit.
         /// </summary>
         public const int CAPTURE_LIMIT_MAX = 9999;
 
@@ -85,37 +85,37 @@ namespace AutoScreenCapture
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
 
         /// <summary>
-        /// 
+        /// The maximum image resolution ratio.
         /// </summary>
         public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
 
         /// <summary>
-        /// 
+        /// The interval delay for the timer when a screen capture session is running.
         /// </summary>
-        public  int Delay { get; set; }
+        public int Delay { get; set; }
 
         /// <summary>
-        /// 
+        /// The limit on how many screen capture cycles we go through during a screen capture session.
         /// </summary>
-        public  int Limit { get; set; }
+        public int Limit { get; set; }
 
         /// <summary>
-        /// 
+        /// The number of screen capture cycles we've gone through during a screen capture session.
         /// </summary>
-        public  int Count { get; set; }
+        public int Count { get; set; }
 
         /// <summary>
-        /// 
+        /// Determines if the screen capture session is locked.
         /// </summary>
         public static bool LockScreenCaptureSession { get; set; }
 
         /// <summary>
-        /// 
+        /// Determines if we automatically start a screen capture session immediately when command line arguments are used.
         /// </summary>
         public static bool AutoStartFromCommandLine { get; set; }
 
         /// <summary>
-        /// 
+        /// Determines if a screen capture session is currently running.
         /// </summary>
         public bool Running { get; set; }
 
@@ -152,15 +152,15 @@ namespace AutoScreenCapture
         public string ActiveWindowTitle { get; set; }
 
         /// <summary>
-        /// 
+        /// The process name associated with the active window.
         /// </summary>
         public string ActiveWindowProcessName { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets the screenshot image from an image file. This is used when we want to show screenshot images.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">The path of an image file (such as a JPEG or PNG file).</param>
+        /// <returns>The image of the file.</returns>
         public Image GetImageByPath(string path)
         {
             try
@@ -190,15 +190,15 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the bitmap image of the screen based on X, Y, Width, and Height. This is used by Screens and Regions.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="resolutionRatio"></param>
-        /// <param name="mouse"></param>
-        /// <returns></returns>
+        /// <param name="x">The X value of the bitmap.</param>
+        /// <param name="y">The Y value of the bitmap.</param>
+        /// <param name="width">The Width value of the bitmap.</param>
+        /// <param name="height">The Height value of the bitmap.</param>
+        /// <param name="resolutionRatio">The resolution ratio to apply to the bitmap.</param>
+        /// <param name="mouse">Determines if the mouse pointer should be included in the bitmap.</param>
+        /// <returns>A bitmap image representing what we captured.</returns>
         public Bitmap GetScreenBitmap(int x, int y, int width, int height, int resolutionRatio, bool mouse)
         {
             try
@@ -268,15 +268,14 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the bitmap image of the active window.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A bitmap image representing the active window.</returns>
         public Bitmap GetActiveWindowBitmap()
         {
             try
             {
-                Rectangle rect;
-                GetWindowRect(GetForegroundWindow(), out rect);
+                GetWindowRect(GetForegroundWindow(), out Rectangle rect);
 
                 int width = rect.Width - rect.X;
                 int height = rect.Height - rect.Y;
@@ -311,9 +310,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the title of the active window.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The title of the active window.</returns>
         public string GetActiveWindowTitle()
         {
             try
@@ -342,16 +341,15 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the process name of the application associated with the active window.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The process name of the application associated with the active window.</returns>
         public string GetActiveWindowProcessName()
         {
             try
             {
                 IntPtr hwnd = GetForegroundWindow();
-                uint pid;
-                GetWindowThreadProcessId(hwnd, out pid);
+                GetWindowThreadProcessId(hwnd, out uint pid);
                 Process p = Process.GetProcessById((int)pid);
                 return p.ProcessName;
             }
@@ -364,17 +362,17 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the bitmap images for the avaialble screens.
         /// </summary>
-        /// <param name="component"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="mouse"></param>
-        /// <param name="resolutionRatio"></param>
-        /// <param name="bitmap"></param>
-        /// <returns></returns>
+        /// <param name="component">The component to capture. This could be the active window or a screen.</param>
+        /// <param name="x">The X value of the bitmap.</param>
+        /// <param name="y">The Y value of the bitmap.</param>
+        /// <param name="width">The Width value of the bitmap.</param>
+        /// <param name="height">The Height value of the bitmap.</param>
+        /// <param name="mouse">Determines if we include the mouse pointer in the captured bitmap.</param>
+        /// <param name="resolutionRatio">The resolution ratio of the bitmap. A lower value makes the bitmap more blurry.</param>
+        /// <param name="bitmap">The bitmap to operate on.</param>
+        /// <returns>A boolean to indicate if we were successful in getting a bitmap.</returns>
         public bool GetScreenImages(int component, int x, int y, int width, int height, bool mouse, int resolutionRatio, out Bitmap bitmap)
         {
             try
@@ -405,21 +403,21 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Saves the captured bitmap image as a screenshot to an image file.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="format"></param>
-        /// <param name="component"></param>
-        /// <param name="screenshotType"></param>
-        /// <param name="jpegQuality"></param>
-        /// <param name="viewId"></param>
-        /// <param name="bitmap"></param>
-        /// <param name="label"></param>
-        /// <param name="windowTitle"></param>
-        /// <param name="processName"></param>
-        /// <param name="screenshotCollection"></param>
-        /// <returns></returns>
-        public bool TakeScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
+        /// <param name="path">The filepath of the image file to write to.</param>
+        /// <param name="format">The format of the image file.</param>
+        /// <param name="component">The component of the screenshot to be saved. This could be the active window or a screen.</param>
+        /// <param name="screenshotType">The type of screenshot to save. This could be the active window, a region, or a screen.</param>
+        /// <param name="jpegQuality">The JPEG quality setting for JPEG images being saved.</param>
+        /// <param name="viewId">The unique identifier to identify a particular region or screen.</param>
+        /// <param name="bitmap">The bitmap image to write to the image file.</param>
+        /// <param name="label">The current label being used at the time of capture which we will apply to the screenshot object.</param>
+        /// <param name="windowTitle">The title of the window being captured.</param>
+        /// <param name="processName">The process name of the application being captured.</param>
+        /// <param name="screenshotCollection">A collection of screenshot objects.</param>
+        /// <returns>A boolean to determine if we successfully saved the screenshot.</returns>
+        public bool SaveScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
             Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
         {
             try
@@ -440,7 +438,7 @@ namespace AutoScreenCapture
                             if (driveInfo.IsReady)
                             {
                                 int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value);
-                                double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float) driveInfo.TotalSize) * 100;
+                                double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float)driveInfo.TotalSize) * 100;
 
                                 Log.WriteDebugMessage("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
 
@@ -467,12 +465,15 @@ namespace AutoScreenCapture
                                 else
                                 {
                                     Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
+
                                     return false;
                                 }
                             }
                             else
                             {
-                                Log.WriteMessage("WARNING: Unable to save screenshot. Drive not ready");
+                                Log.WriteErrorMessage("Unable to save screenshot. Drive not ready");
+
+                                return false;
                             }
                         }
                         else
@@ -497,12 +498,14 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        Log.WriteMessage("WARNING: Unable to save screenshot. Directory root does not exist");
+                        Log.WriteErrorMessage("Unable to save screenshot. Directory root does not exist");
+
+                        return false;
                     }
                 }
                 else
                 {
-                    Log.WriteMessage($"WARNING: No path available or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
+                    Log.WriteErrorMessage($"No path available or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
 
                     return false;
                 }
@@ -511,7 +514,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCapture::TakeScreenshot", ex);
+                Log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
 
                 return false;
             }
@@ -546,7 +549,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private  ImageCodecInfo GetEncoderInfo(string mimeType)
+        private ImageCodecInfo GetEncoderInfo(string mimeType)
         {
             var encoders = ImageCodecInfo.GetImageEncoders();
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);
