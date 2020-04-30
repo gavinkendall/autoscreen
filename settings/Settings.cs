@@ -230,12 +230,18 @@ namespace AutoScreenCapture
                             }
                         }
                     }
+
+                    if (!Application.KeyExists("ShowStartupError"))
+                    {
+                        Application.Add(new Setting("ShowStartupError", true));
+                    }
                 }
                 else
                 {
                     Application.Add(new Setting("Name", ApplicationName));
                     Application.Add(new Setting("Version", ApplicationVersion));
                     Application.Add(new Setting("DebugMode", false));
+                    Application.Add(new Setting("ExitOnError", false));
                     Application.Add(new Setting("Logging", false));
                     Application.Add(new Setting("EmailServerHost", "smtp.office365.com"));
                     Application.Add(new Setting("EmailServerPort", 587));
@@ -251,6 +257,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("LowDiskPercentageThreshold", 1));
                     Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
                     Application.Add(new Setting("AutoStartFromCommandLine", false));
+                    Application.Add(new Setting("ShowStartupError", true));
                 }
 
                 Application.Save();
@@ -268,6 +275,8 @@ namespace AutoScreenCapture
                 User.Add(new Setting("StringScreenshotLabel", string.Empty));
                 User.Add(new Setting("BoolApplyScreenshotLabel", false));
                 User.Add(new Setting("StringDefaultEditor", string.Empty));
+                User.Add(new Setting("BoolShowBalloonInformation", true));
+                User.Add(new Setting("BoolShowHelpTipsAndHelpBar", true));
 
                 User.Save();
             }
