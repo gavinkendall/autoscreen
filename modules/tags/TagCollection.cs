@@ -122,14 +122,14 @@ namespace AutoScreenCapture
 
                                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                                         {
-                                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
                                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
-                                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                                             {
                                                 Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                                                // Starting with 2.2.5.0 the DateTimeFormatFunction type became the DateTimeFormatExpression type.
+                                                // Starting with 2.3.0.0 the DateTimeFormatFunction type became the DateTimeFormatExpression type.
                                                 value = value.Replace("DateTimeFormatFunction", "DateTimeFormatExpression");
                                             }
                                         }
@@ -208,15 +208,15 @@ namespace AutoScreenCapture
                         {
                             Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
-                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
                                 Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                                // This is a new property for Tag that was introduced in 2.2.5.0
-                                // so any version before 2.2.5.0 needs to have it during an upgrade.
+                                // This is a new property for Tag that was introduced in 2.3.0.0
+                                // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 tag.Enabled = true;
                             }
                         }

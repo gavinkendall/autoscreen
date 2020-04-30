@@ -166,15 +166,15 @@ namespace AutoScreenCapture
                         {
                             Log.WriteDebugMessage("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2250 = Settings.VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
-                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
                                 Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                                // This is a new property for Schedule that was introduced in 2.2.5.0
-                                // so any version before 2.2.5.0 needs to have it during an upgrade.
+                                // This is a new property for Schedule that was introduced in 2.3.0.0
+                                // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 schedule.Enabled = true;
                             }
                         }
@@ -194,14 +194,14 @@ namespace AutoScreenCapture
                 {
                     Log.WriteDebugMessage($"WARNING: {FileSystem.SchedulesFile} not found. Unable to load schedules");
 
-                    // If we can't find the schedules.xml file we'll need to have a "Command Line Schedule" schedule created to be compatible with old commands like -startat and -stopat.
-                    Log.WriteDebugMessage("Creating default Command Line Schedule for use with command line arguments such as -startat and -stopat");
+                    // If we can't find the schedules.xml file we'll need to have a "Special Schedule" schedule created to be compatible with old commands like -startat and -stopat.
+                    Log.WriteDebugMessage("Creating default Special Schedule for use with command line arguments such as -startat and -stopat");
 
                     DateTime dtNow = DateTime.Now;
 
-                    Schedule commandLineSchedule = new Schedule()
+                    Schedule specialSchedule = new Schedule()
                     {
-                        Name = "Command Line Schedule",
+                        Name = "Special Schedule",
                         Enabled = false,
                         ModeOneTime = true,
                         ModePeriod = false,
@@ -210,7 +210,7 @@ namespace AutoScreenCapture
                         StopAt = dtNow
                     };
 
-                    // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Command Line Schedule" and enable it.
+                    // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
                     SettingCollection oldUserSettings = Settings.VersionManager.OldUserSettings;
 
                     if (oldUserSettings != null)
@@ -231,34 +231,34 @@ namespace AutoScreenCapture
                         bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value);
                         bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value);
 
-                        commandLineSchedule.ModeOneTime = false;
-                        commandLineSchedule.ModePeriod = true;
+                        specialSchedule.ModeOneTime = false;
+                        specialSchedule.ModePeriod = true;
 
                         if (captureStartAt)
                         {
-                            commandLineSchedule.Enabled = true;
-                            commandLineSchedule.StartAt = dtStartAt;
+                            specialSchedule.Enabled = true;
+                            specialSchedule.StartAt = dtStartAt;
                         }
 
                         if (captureStopAt)
                         {
-                            commandLineSchedule.Enabled = true;
-                            commandLineSchedule.StopAt = dtStopAt;
+                            specialSchedule.Enabled = true;
+                            specialSchedule.StopAt = dtStopAt;
                         }
 
                         if (captureOnTheseDays)
                         {
-                            commandLineSchedule.Sunday = sunday;
-                            commandLineSchedule.Monday = monday;
-                            commandLineSchedule.Tuesday = tuesday;
-                            commandLineSchedule.Wednesday = wednesday;
-                            commandLineSchedule.Thursday = thursday;
-                            commandLineSchedule.Friday = friday;
-                            commandLineSchedule.Saturday = saturday;
+                            specialSchedule.Sunday = sunday;
+                            specialSchedule.Monday = monday;
+                            specialSchedule.Tuesday = tuesday;
+                            specialSchedule.Wednesday = wednesday;
+                            specialSchedule.Thursday = thursday;
+                            specialSchedule.Friday = friday;
+                            specialSchedule.Saturday = saturday;
                         }
                     }
 
-                    Add(commandLineSchedule);
+                    Add(specialSchedule);
 
                     SaveToXmlFile();
                 }

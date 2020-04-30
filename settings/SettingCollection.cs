@@ -350,7 +350,7 @@ namespace AutoScreenCapture
                 RemoveByKey("BoolLockScreenCaptureSession");
                 RemoveByKey("Passphrase");
 
-                // These settings are no longer used starting with version 2.2.5.0
+                // These settings are no longer used starting with version 2.3.0.0
                 RemoveByKey("BoolCaptureStopAt");
                 RemoveByKey("BoolCaptureStartAt");
                 RemoveByKey("BoolCaptureOnSunday");

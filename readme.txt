@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
 Last updated on 2020-04-25 (April 25, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.2.5.0)]
+[The information presented here refers to the latest version of the application (which is currently 2.3.0.0)]
 =============================================================================================================
 
 
@@ -153,7 +153,7 @@ If any image files are found to be older than 30 days then those files will be a
 (Folders containing image files will not be deleted. This is intentional.)
 
 Old screenshots will be deleted every five minutes. New screenshots will be saved every five minutes.
-The calendar will also update every five minutes (as of version 2.2.5.0).
+The calendar will also update every five minutes (as of version 2.3.0.0).
 
 
 
@@ -403,7 +403,7 @@ For example ...
 {month-2}      for 2 months ago
 {hour+6}       for 6 hours ahead
 
-As of version 2.2.5.0, Date/Time Format Function was renamed to Date/Time Format Expression
+As of version 2.3.0.0, Date/Time Format Function was renamed to Date/Time Format Expression
 to better define its purpose.
 
 
@@ -452,9 +452,9 @@ Simply running "autoscreen.exe" without arguments will open Auto Screen Capture 
 necessarily start a screen capture session unless a trigger is setup to do so, the -start
 command has been given, or the AutoStartFromCommandLine setting is enabled.
 ("AutoStartFromCommandLine" will be enabled if you're upgrading from a version that's
-older than version 2.2.5.0 to emulate the old behaviour of running from the command line)
+older than version 2.3.0.0 to emulate the old behaviour of running from the command line)
 
-As of version 2.2.5.0 most commands can be given to Auto Screen Capture while it's running.
+As of version 2.3.0.0 most commands can be given to Auto Screen Capture while it's running.
 This gives you the opportunity to control a running instance of the application.
 
 -start
@@ -478,11 +478,11 @@ For example, "-interval=02:30:10.000" sets the timer's interval to take screensh
 every 2 hours, 30 minutes, and 10 seconds.
 
 -log
-Toggles logging. As of version 2.2.5.0 this command toggles logging on and off rather than
+Toggles logging. As of version 2.3.0.0 this command toggles logging on and off rather than
 simply enabling (or turning on) logging so be aware how frequently you use this command.
 For example, if logging is currently off then using "-log" will turn logging on and using "-log"
 again will turn it off. All log files, by default, are stored in the "!autoscreen\debug\logs" folder
-(and this folder path is configurable as of version 2.2.1.0). As of version 2.2.5.0 you can issue
+(and this folder path is configurable as of version 2.2.1.0). As of version 2.3.0.0 you can issue
 this command during a running instance of Auto Screen Capture.
 
 -log=on

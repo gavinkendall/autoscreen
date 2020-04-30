@@ -62,7 +62,7 @@ namespace AutoScreenCapture
 
         /// <summary>
         /// The default command file if the actual command file cannot be found. This will most likely happen with an
-        /// older version of Auto Screen Capture so we need to make sure that, since 2.2.5.0, we have a command file.
+        /// older version of Auto Screen Capture so we need to make sure that, since 2.3.0.0, we have a command file.
         /// </summary>
         public static string DefaultCommandFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command.txt";
 

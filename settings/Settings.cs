@@ -29,7 +29,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        public static readonly string ApplicationCodename = "Dalek";
+        public static readonly string ApplicationCodename = "Boombayah";
 
         /// <summary>
         /// 
@@ -53,6 +53,7 @@ namespace AutoScreenCapture
 
         private const string CODENAME_CLARA = "Clara";
         private const string CODENAME_DALEK = "Dalek";
+        private const string CODENAME_BOOMBAYAH = "Boombayah";
 
         /// <summary>
         /// 
@@ -107,6 +108,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.3.1")); // Apply Label is made invisible when screen capture session is locked. Fixed bug with parsing command line arguments.
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.3.2")); // Apply Label fixed to show labels whenever the system tray icon menu is opened.
             _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.4.6")); // System tray icon turns green when screen capture session is running. Tags are now user-defined and have their own module.
+            _versionCollection.Add(new Version(CODENAME_DALEK, "2.2.5.0")); // A version that was never released. This was to make startup speed faster but major features implemented for the application (such as Schedules and controlling a running instance of the application from the command line) deserved 2.2.5.0 to become 2.3.0.0! Boombayah!
 
             Application = new SettingCollection
             {
@@ -214,15 +216,15 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("AutoStartFromCommandLine", false));
 
-                        // If this is a version before 2.2.5.0 then set this setting to true because
+                        // If this is a version before 2.3.0.0 then set this setting to true because
                         // starting a screen capture session was the old behaviour when running autoscreen.exe
                         // from the command line.
                         if (VersionManager.IsOldAppVersion(Application.AppCodename, Application.AppVersion))
                         {
-                            Version v2250 = VersionManager.Versions.Get("Dalek", "2.2.5.0");
+                            Version v2300 = VersionManager.Versions.Get("Boombayah", "2.3.0.0");
                             Version configVersion = VersionManager.Versions.Get(Application.AppCodename, Application.AppVersion);
 
-                            if (v2250 != null && configVersion != null && configVersion.VersionNumber < v2250.VersionNumber)
+                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
                                 Application.GetByKey("AutoStartFromCommandLine", defaultValue: false).Value = true;
                             }

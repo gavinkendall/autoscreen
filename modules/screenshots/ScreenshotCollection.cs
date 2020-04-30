@@ -283,7 +283,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads screenshot references from the screenshots.xml file into an XmlDocument so it's available in memory.
         /// The old way of loading screenshots also had the application construct each Screenshot object from an XML screenshot node and add it to the collection. This would take a long time to load for a large screenshots.xml file.
-        /// The new way (as of version 2.2.5.0) will only load XML screenshot nodes whenever necessary.
+        /// The new way (as of version 2.3.0.0) will only load XML screenshot nodes whenever necessary.
         /// </summary>
         public void LoadXmlFile()
         {
@@ -766,24 +766,27 @@ namespace AutoScreenCapture
 
                     XmlNode minDateNode = xDoc.SelectSingleNode(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE + "[not(. >=../preceding-sibling::" + SCREENSHOT_DATE + ") and not(. >=../following-sibling::" + SCREENSHOT_DATE + ")]");
 
-                    DateTime dtMin = DateTime.Parse(minDateNode.FirstChild.Value).Date;
-                    DateTime dtMax = DateTime.Now.Date.AddDays(-keepScreenshotsForDays).Date;
-
-                    for (DateTime date = dtMin; date.Date <= dtMax; date = date.AddDays(1))
+                    if (minDateNode != null)
                     {
+                        DateTime dtMin = DateTime.Parse(minDateNode.FirstChild.Value).Date;
+                        DateTime dtMax = DateTime.Now.Date.AddDays(-keepScreenshotsForDays).Date;
 
-                        XmlNodeList screenshotNodesToDeleteByDate = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + date.ToString(MacroParser.DateFormat) + "']");
-
-                        foreach (XmlNode node in screenshotNodesToDeleteByDate)
+                        for (DateTime date = dtMin; date.Date <= dtMax; date = date.AddDays(1))
                         {
-                            string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                            if (File.Exists(path))
+                            XmlNodeList screenshotNodesToDeleteByDate = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + date.ToString(MacroParser.DateFormat) + "']");
+
+                            foreach (XmlNode node in screenshotNodesToDeleteByDate)
                             {
-                                File.Delete(path);
-                            }
+                                string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                            node.ParentNode.RemoveChild(node);
+                                if (File.Exists(path))
+                                {
+                                    File.Delete(path);
+                                }
+
+                                node.ParentNode.RemoveChild(node);
+                            }
                         }
                     }
                 }
