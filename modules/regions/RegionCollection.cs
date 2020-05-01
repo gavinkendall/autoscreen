@@ -155,7 +155,7 @@ namespace AutoScreenCapture
                         xReader.Close();
 
                         // Change the data for each region that's being loaded if we've detected that
-                        // the XML file is from an older version of the application.
+                        // the XML document is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
                             Log.WriteDebugMessage("An old version of the regions file was detected. Attempting upgrade to new region schema");
@@ -201,7 +201,7 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    // Write out the regions to the XML file now that we've updated the region objects
+                    // Write out the regions to the XML document now that we've updated the region objects
                     // with their appropriate property values if it was an old version of the application.
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {

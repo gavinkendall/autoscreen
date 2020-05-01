@@ -420,11 +420,11 @@ namespace AutoScreenCapture
         /// LoadXmlFileAndReturnNodeValues(nodeName: "label", nodeValue: "My label", nodeReturn: "label") retrieves all label node values of label nodes matching "My label".
         /// LoadXmlFileAndReturnNodeValues(nodeName: "label", nodeValue: "My label", nodeReturn: "date") retrieves all date node values of label nodes matching "My label".
         /// </summary>
-        /// <param name="nodeName">The name of the node to search for in the XML file. This will become part of an XPath query.</param>
-        /// <param name="nodeValue">The value of the node to search for in the XML file. If given a value, it will be used in an XPath query to search for a specific node value once a node is found using the node name. If given null, the node name will be used to retrieve all nodes matching the node name.</param>
+        /// <param name="nodeName">The name of the node to search for in the XML document. This will become part of an XPath query.</param>
+        /// <param name="nodeValue">The value of the node to search for in the XML document. If given a value, it will be used in an XPath query to search for a specific node value once a node is found using the node name. If given null, the node name will be used to retrieve all nodes matching the node name.</param>
         /// <param name="nodeReturn">The value of the node that will be returned based on the node name.</param>
         /// <returns>A list of node values.</returns>
-        public List<string> LoadXmlFileAndReturnNodeValues(string nodeName, string nodeValue, string nodeReturn)
+        private List<string> LoadXmlFileAndReturnNodeValues(string nodeName, string nodeValue, string nodeReturn)
         {
             try
             {
@@ -456,7 +456,7 @@ namespace AutoScreenCapture
 
                         if (xNodes != null)
                         {
-                            Log.WriteDebugMessage("Number of nodes loaded from XML file = " + xNodes.Count);
+                            Log.WriteDebugMessage("Number of nodes loaded from XML document = " + xNodes.Count);
 
                             List<string> nodeValues = new List<string>();
 
@@ -737,7 +737,7 @@ namespace AutoScreenCapture
                                         !string.IsNullOrEmpty(screenshot.Slide.Value) &&
                                         !string.IsNullOrEmpty(screenshot.WindowTitle))
                                 {
-                                    // Since we're loading existing screenshots from the XML file each screenshot needs to be flagged as being "Saved"
+                                    // Since we're loading existing screenshots from the XML document each screenshot needs to be flagged as being "Saved"
                                     // because they were already saved to the file before loading them. The "Saved" flag should only be used when we're
                                     // saving new screenshots to avoid saving the entire screenshots collection.
                                     //

@@ -41,7 +41,8 @@
         {
             try
             {
-                List<string> labels = _screenshotCollection.LoadXmlFileAndReturnNodeValues("label", null, "label");
+                List<string> labels = new List<string>();
+                labels = _screenshotCollection.GetFilterValueList("label");
 
                 if (ScreenCapture.LockScreenCaptureSession || labels.Count == 0)
                 {

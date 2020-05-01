@@ -39,7 +39,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Checks to see if we're loading an XML file from an old version of the application.
+        /// Checks to see if we're loading an XML document from an old version of the application.
         /// This is used by the collections for editors, regions, screens, tags, screenshots, triggers, and settings.
         /// </summary>
         /// <param name="appCodenameToCheck">The codename of the application to check.</param>

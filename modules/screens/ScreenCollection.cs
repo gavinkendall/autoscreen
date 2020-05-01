@@ -155,7 +155,7 @@ namespace AutoScreenCapture
                         xReader.Close();
 
                         // Change the data for each Screen that's being loaded if we've detected that
-                        // the XML file is from an older version of the application.
+                        // the XML document is from an older version of the application.
                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                         {
                             Log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
