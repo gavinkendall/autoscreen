@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A class for registering and unregistering keyboard shortcuts.
     /// </summary>
     public sealed class HotKeyMap : IDisposable
     {
@@ -55,7 +55,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Constructor for the keyboard shortcuts class.
         /// </summary>
         public HotKeyMap()
         {
@@ -66,10 +66,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Registers a keyboard shortcut.
         /// </summary>
-        /// <param name="modifier"></param>
-        /// <param name="key"></param>
+        /// <param name="modifier">The modifier keys to register.</param>
+        /// <param name="key">The key to register.</param>
         public void RegisterHotKey(ModifierKeys modifier, Keys key)
         {
             _currentId += 1;
@@ -79,12 +79,12 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// An event handler that triggers when a key is pressed.
         /// </summary>
         public event EventHandler<KeyPressedEventArgs> KeyPressed;
 
         /// <summary>
-        /// 
+        /// Unregisters the keyboard shortcuts on dispose.
         /// </summary>
         public void Dispose()
         {
@@ -98,7 +98,7 @@ namespace AutoScreenCapture
     }
 
     /// <summary>
-    /// 
+    /// A class to handle key presses.
     /// </summary>
     public class KeyPressedEventArgs : EventArgs
     {
@@ -114,7 +114,7 @@ namespace AutoScreenCapture
     }
 
     /// <summary>
-    /// 
+    /// A list of available modifier keys.
     /// </summary>
     [Flags]
     public enum ModifierKeys : uint

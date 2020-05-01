@@ -897,6 +897,15 @@ namespace AutoScreenCapture
                         {
                             XmlElement xScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
 
+                            // Starting from version 2.3.0.0 we're going to save the version number of the application
+                            // with every screenshot that gets saved so, when looking at the screenshots XML document,
+                            // we can determine what version each screenshot originated from. If there is no <version></version>
+                            // tag then assume you're looking at a screenshot XML node from before version 2.3.0.0!
+                            //
+                            // It should also be noted that we don't want to "upgrade" the version of the entire XML document
+                            // because the document can become very large and we don't want to lose the ability to know if we're
+                            // reading from an old version of the document. We don't read from the entire document either (starting with 2.3)
+                            // since the new way is reading individual screenshot XML nodes.
                             XmlElement xVersion = xDoc.CreateElement(SCREENSHOT_VERSION);
                             xVersion.InnerText = screenshot.Version;
 

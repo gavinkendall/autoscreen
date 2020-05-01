@@ -8,30 +8,30 @@
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A version manager which is responsible for taking care of Auto Screen Capture's versioninng capabilities.
     /// </summary>
     public class VersionManager
     {
         /// <summary>
-        /// 
+        /// A collection of Version objects.
         /// </summary>
         public VersionCollection Versions { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of this application's current user settings.
         /// </summary>
         public SettingCollection CurrentUserSettings { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of old user settings.
         /// </summary>
         public SettingCollection OldUserSettings { get; set; }
 
         /// <summary>
-        /// 
+        /// The constructor of the Version Manager that accepts a version collection and a setting collection.
         /// </summary>
-        /// <param name="versions"></param>
-        /// <param name="currentUserSettings"></param>
+        /// <param name="versions">A collection of Version objects.</param>
+        /// <param name="currentUserSettings">A collection of current user settings.</param>
         public VersionManager(VersionCollection versions, SettingCollection currentUserSettings)
         {
             Versions = versions;

@@ -37,7 +37,7 @@ namespace AutoScreenCapture
         internal string Filepath { get; set; }
 
         /// <summary>
-        /// 
+        /// Empty constructor for the SettingCollection. This prepares the XML node path.
         /// </summary>
         public SettingCollection()
         {
@@ -72,7 +72,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Adds a Setting to the collection.
         /// </summary>
         /// <param name="setting"></param>
         public void Add(Setting setting)
@@ -102,6 +102,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Changes the value of a Setting based on its key.
+        /// </summary>
+        /// <param name="key">The unique key of the Setting.</param>
+        /// <param name="value">The new object that will be used for the existing Setting.</param>
         public void SetValueByKey(string key, object value)
         {
             RemoveByKey(key);
@@ -139,14 +144,14 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets a Setting by its unique key. This method also creates the Setting by using the given key if the Setting cannot be found in the collection.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
+        /// <param name="key">The unique key of the Setting.</param>
+        /// <param name="defaultValue">The default value to use if the Setting cannot be found in the collection.</param>
+        /// <returns>A Setting object (whether it be an existing Setting or a new Setting).</returns>
         public Setting GetByKey(string key, object defaultValue)
         {
-            return GetByKey(key, defaultValue, true);
+            return GetByKey(key, defaultValue, createKeyIfNotFound: true);
         }
 
         /// <summary>
@@ -297,7 +302,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Attempts an upgrade on a collection of settings that may have come from an old version of the application.
         /// </summary>
         public void Upgrade()
         {

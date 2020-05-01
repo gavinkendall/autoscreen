@@ -12,19 +12,19 @@ using System.Threading;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A class for logging messages to text files.
     /// </summary>
     public static class Log
     {
         private static Mutex _mutexWriteFile = new Mutex();
 
         /// <summary>
-        /// 
+        /// Debug Mode. This can be controlled from the command line with the -debug command.
         /// </summary>
         public static bool DebugMode { get; set;}
 
         /// <summary>
-        /// 
+        /// Logging. This can either be enabled or disabled by the application settings or via the -log command line argument.
         /// </summary>
         public static bool LoggingEnabled { get; set; }
 

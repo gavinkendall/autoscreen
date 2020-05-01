@@ -11,12 +11,12 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A form for challenging the user for the correct passphrase when the screen capture session is locked.
     /// </summary>
     public partial class FormEnterPassphrase : Form
     {
         /// <summary>
-        /// 
+        /// The empty constructor for the form.
         /// </summary>
         public FormEnterPassphrase()
         {

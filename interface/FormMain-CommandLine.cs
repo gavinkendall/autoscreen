@@ -1,4 +1,11 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-CommandLine.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;

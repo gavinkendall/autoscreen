@@ -1,9 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-Editors.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture

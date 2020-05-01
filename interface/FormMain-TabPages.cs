@@ -1,4 +1,11 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-TabPages.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;

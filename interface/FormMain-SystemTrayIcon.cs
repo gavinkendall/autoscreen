@@ -1,4 +1,11 @@
-﻿using AutoScreenCapture.Properties;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-SystemTrayIcon.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using AutoScreenCapture.Properties;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;

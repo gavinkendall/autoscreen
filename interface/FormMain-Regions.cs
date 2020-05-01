@@ -1,4 +1,11 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-Regions.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 

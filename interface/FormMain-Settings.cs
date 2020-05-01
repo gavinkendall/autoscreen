@@ -1,5 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-Settings.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -14,7 +20,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteMessage("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " ***");
+                Log.WriteMessage("*** Welcome to " + Settings.ApplicationName + " " + Settings.ApplicationVersion + " (\"" + Settings.ApplicationCodename + "\") ***");
                 Log.WriteMessage("Starting application");
                 Log.WriteDebugMessage("At this point the application should be able to run normally");
                 Log.WriteDebugMessage("but it would be a good idea to check what we found in your autoscreen.conf file");

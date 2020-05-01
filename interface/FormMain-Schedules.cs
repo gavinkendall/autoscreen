@@ -1,8 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="FormMain-Schedules.cs" company="Gavin Kendall">
+//     Copyright (c) 2020 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary></summary>
+//-----------------------------------------------------------------------
+using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture

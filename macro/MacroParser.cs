@@ -12,54 +12,54 @@ using System.Text.RegularExpressions;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// The Macro Parser is responsible for parsing some given text looking for "macro tags" and responding with the appropriate value for each macro tag.
     /// </summary>
     public static class MacroParser
     {
         private static readonly string WindowsPathRegexPattern = "^(?<DriveOrUNCPrefix>[A-Z]:\\\\{1}|\\\\{1})(?<Path>.+)$";
 
         /// <summary>
-        /// 
+        /// The screen capture class is needed for some of the macro tag parsing.
         /// </summary>
         public static ScreenCapture screenCapture;
 
         /// <summary>
-        /// 
+        /// The format for years.
         /// </summary>
         public static readonly string YearFormat = "yyyy";
 
         /// <summary>
-        /// 
+        /// The format for months.
         /// </summary>
         public static readonly string MonthFormat = "MM";
 
         /// <summary>
-        /// 
+        /// The format for days.
         /// </summary>
         public static readonly string DayFormat = "dd";
 
         /// <summary>
-        /// 
+        /// The format for hours.
         /// </summary>
         public static readonly string HourFormat = "HH";
 
         /// <summary>
-        /// 
+        /// The format for minutes.
         /// </summary>
         public static readonly string MinuteFormat = "mm";
 
         /// <summary>
-        /// 
+        /// The format for seconds.
         /// </summary>
         public static readonly string SecondFormat = "ss";
 
         /// <summary>
-        /// 
+        /// The format for milliseconds.
         /// </summary>
         public static readonly string MillisecondFormat = "fff";
 
         /// <summary>
-        /// 
+        /// Returns a string representation of a date in the format yyyy-MM-dd
         /// </summary>
         public static string DateFormat
         {
@@ -78,7 +78,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Returns a string representation of a time in the format HH:mm:ss.fff
         /// </summary>
         public static string TimeFormat
         {
@@ -99,7 +99,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Returns a string representation of a time in the format HH-mm-ss-fff that's safe for filenames in Windows.
         /// </summary>
         public static string TimeFormatForWindows
         {
@@ -120,16 +120,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// The default macro to be assigned to the Macro field for a new Screen or Region.
         /// </summary>
         public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
         /// <summary>
-        /// 
+        /// Parses given text (the "macro") for macro tags and replaces the tags with appropriate values for folder paths.
         /// </summary>
-        /// <param name="macro"></param>
-        /// <param name="tagCollection"></param>
-        /// <returns></returns>
+        /// <param name="macro">The macro to parse.</param>
+        /// <param name="tagCollection">A tag collection containing the macro tags to parse.</param>
+        /// <returns>A parsed macro string value.</returns>
         public static string ParseTagsForFolderPath(string macro, TagCollection tagCollection)
         {
             foreach (Tag tag in tagCollection)
