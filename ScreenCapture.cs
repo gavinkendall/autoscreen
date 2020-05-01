@@ -422,11 +422,25 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (!string.IsNullOrEmpty(path) && path.Length >= MAX_WINDOWS_PATH_LENGTH)
+                {
+                    // We just want to log a normal message and not stop the screen capture session because we want to continue
+                    // for other components that are using paths which are still valid.
+                    Log.WriteMessage($"No path available at \"{path}\" or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
+                }
+
                 if (!string.IsNullOrEmpty(path) && path.Length < MAX_WINDOWS_PATH_LENGTH)
                 {
                     Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
 
                     FileInfo fileInfo = new FileInfo(path);
+
+                    if (fileInfo.Directory != null && !fileInfo.Directory.Root.Exists)
+                    {
+                        // We just want to log a normal message and not stop the screen capture session because we want to continue
+                        // for other components that are using directory roots which still exist.
+                        Log.WriteMessage($"Unable to save screenshot for \"{fileInfo.Directory.Name}\". Directory root does not exist");
+                    }
 
                     if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
                     {
@@ -464,6 +478,7 @@ namespace AutoScreenCapture
                                 }
                                 else
                                 {
+                                    // There is not enough disk space on the drive so stop the current running screen capture session and log an error message.
                                     Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
 
                                     return false;
@@ -471,6 +486,7 @@ namespace AutoScreenCapture
                             }
                             else
                             {
+                                // Drive isn't ready so stop the current running screen capture session and log an error message.
                                 Log.WriteErrorMessage("Unable to save screenshot. Drive not ready");
 
                                 return false;
@@ -496,18 +512,6 @@ namespace AutoScreenCapture
                             }
                         }
                     }
-                    else
-                    {
-                        Log.WriteErrorMessage("Unable to save screenshot. Directory root does not exist");
-
-                        return false;
-                    }
-                }
-                else
-                {
-                    Log.WriteErrorMessage($"No path available or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
-
-                    return false;
                 }
 
                 return true;
