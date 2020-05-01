@@ -38,8 +38,6 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStopScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonKeyboardShortcuts = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonHelp = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripMenuItemShowBalloonInformation = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemShowHelpTipsAndHelpBar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlViews = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -194,31 +192,11 @@ namespace AutoScreenCapture
             // 
             // toolStripSplitButtonHelp
             // 
-            this.toolStripSplitButtonHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemShowBalloonInformation,
-            this.toolStripMenuItemShowHelpTipsAndHelpBar});
             this.toolStripSplitButtonHelp.Image = global::AutoScreenCapture.Properties.Resources.about;
             this.toolStripSplitButtonHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonHelp.Name = "toolStripSplitButtonHelp";
             this.toolStripSplitButtonHelp.Size = new System.Drawing.Size(64, 20);
             this.toolStripSplitButtonHelp.Text = "Help";
-            // 
-            // toolStripMenuItemShowBalloonInformation
-            // 
-            this.toolStripMenuItemShowBalloonInformation.CheckOnClick = true;
-            this.toolStripMenuItemShowBalloonInformation.Name = "toolStripMenuItemShowBalloonInformation";
-            this.toolStripMenuItemShowBalloonInformation.Size = new System.Drawing.Size(220, 22);
-            this.toolStripMenuItemShowBalloonInformation.Text = "Show balloon information";
-            this.toolStripMenuItemShowBalloonInformation.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowBalloonInformation_CheckedChanged);
-            // 
-            // toolStripMenuItemShowHelpTipsAndHelpBar
-            // 
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.CheckOnClick = true;
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.Name = "toolStripMenuItemShowHelpTipsAndHelpBar";
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.Size = new System.Drawing.Size(220, 22);
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.Text = "Show help tips and help bar";
-            this.toolStripMenuItemShowHelpTipsAndHelpBar.CheckedChanged += new System.EventHandler(this.toolStripMenuItemShowHelpTipsAndHelpBar_CheckedChanged);
             // 
             // toolStripInfo
             // 
@@ -1152,7 +1130,5 @@ namespace AutoScreenCapture
         private ToolStripSplitButton toolStripSplitButtonKeyboardShortcuts;
         private Timer timerShowNextHelpTip;
         private ToolStripSplitButton toolStripSplitButtonHelp;
-        private ToolStripMenuItem toolStripMenuItemShowBalloonInformation;
-        private ToolStripMenuItem toolStripMenuItemShowHelpTipsAndHelpBar;
     }
 }

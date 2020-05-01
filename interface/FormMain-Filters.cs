@@ -47,7 +47,8 @@ namespace AutoScreenCapture
             {
                 if (comboBoxFilterType.SelectedItem != null && !string.IsNullOrEmpty(comboBoxFilterType.Text))
                 {
-                    List<string> filterValueList = _screenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
+                    List<string> filterValueList = new List<string>();
+                    filterValueList = _screenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
                     filterValueList.Add(string.Empty);
                     filterValueList.Sort();
 

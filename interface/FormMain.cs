@@ -218,7 +218,8 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> dates = _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text);
+                List<string> dates = new List<string>();
+                dates = _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
                 DateTime[] boldedDates = new DateTime[dates.Count];
 
@@ -309,7 +310,8 @@ namespace AutoScreenCapture
                 Visible = false;
                 ShowInTaskbar = false;
 
-                if (!_screenCapture.Running && toolStripMenuItemShowBalloonInformation.Checked)
+                // Show a balloon tip (if necessary) when the interface is being hidden but the current screen capture session isn't running.
+                if (!_screenCapture.Running)
                 {
                     SystemTrayBalloonMessage("The application is available in your system tray. To exit, right-click its system tray icon and select Exit");
                 }

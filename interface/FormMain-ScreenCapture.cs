@@ -166,6 +166,11 @@ namespace AutoScreenCapture
 
             if (!_screenCapture.Running && screenCaptureInterval > 0)
             {
+                // Increment the number of times the user has started a screen capture session.
+                int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("IntStartScreenCaptureCount", defaultValue: 0).Value);
+                startScreenCaptureCount++;
+                Settings.User.SetValueByKey("IntStartScreenCaptureCount", startScreenCaptureCount);
+
                 SaveSettings();
 
                 // Stop the date search thread if it's busy.

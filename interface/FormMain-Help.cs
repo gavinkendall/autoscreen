@@ -104,22 +104,5 @@ namespace AutoScreenCapture
             RestartHelpTipTimer();
             HelpMessage("Specify the number of days screenshots should be kept until they are automatically deleted");
         }
-
-        private void toolStripMenuItemShowBalloonInformation_CheckedChanged(object sender, EventArgs e)
-        {
-            SystemTrayBalloonMessage("");
-        }
-
-        private void toolStripMenuItemShowHelpTipsAndHelpBar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (toolStripMenuItemShowHelpTipsAndHelpBar.Checked)
-            {
-                labelHelp.Visible = true;
-            }
-            else
-            {
-                labelHelp.Visible = false;
-            }
-        }
     }
 }

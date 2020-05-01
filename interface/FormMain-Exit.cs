@@ -27,6 +27,9 @@ namespace AutoScreenCapture
                 Log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
+                // This is no longer the first run of the application when exiting.
+                Settings.User.SetValueByKey("BoolFirstRun", false);
+
                 Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
                 SaveSettings();
 

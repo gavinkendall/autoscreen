@@ -70,6 +70,11 @@ namespace AutoScreenCapture
         public string Label { get; set; }
 
         /// <summary>
+        ///  The version of Auto Screen Capture that handled this particular screenshot object.
+        /// </summary>
+        public string Version { get; private set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public ScreenshotType ScreenshotType { get; set; }
@@ -85,6 +90,7 @@ namespace AutoScreenCapture
         public Screenshot()
         {
             Saved = false;
+            Version = Settings.ApplicationVersion;
         }
 
         /// <summary>
@@ -114,6 +120,7 @@ namespace AutoScreenCapture
             ProcessName = processName + ".exe";
             Label = label;
             Saved = false;
+            Version = Settings.ApplicationVersion;
 
             Slide = new Slide()
             {

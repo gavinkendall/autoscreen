@@ -275,8 +275,8 @@ namespace AutoScreenCapture
                 User.Add(new Setting("StringScreenshotLabel", string.Empty));
                 User.Add(new Setting("BoolApplyScreenshotLabel", false));
                 User.Add(new Setting("StringDefaultEditor", string.Empty));
-                User.Add(new Setting("BoolShowBalloonInformation", true));
-                User.Add(new Setting("BoolShowHelpTipsAndHelpBar", true));
+                User.Add(new Setting("BoolFirstRun", true));
+                User.Add(new Setting("IntStartScreenCaptureCount", 0));
 
                 User.Save();
             }

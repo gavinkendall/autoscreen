@@ -152,10 +152,6 @@ namespace AutoScreenCapture
 
                 checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value);
 
-                // Help
-                toolStripMenuItemShowBalloonInformation.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolShowBalloonInformation", defaultValue: false).Value);
-                toolStripMenuItemShowHelpTipsAndHelpBar.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolShowHelpTipsAndHelpBar", defaultValue: true).Value);
-
                 EnableStartCapture();
 
                 CaptureLimitCheck();
@@ -186,8 +182,8 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
                 Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = comboBoxScreenshotLabel.Text;
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
-                Settings.User.GetByKey("BoolShowBalloonInformation", defaultValue: false).Value = toolStripMenuItemShowBalloonInformation.Checked;
-                Settings.User.GetByKey("BoolShowHelpTipsAndHelpBar", defaultValue: true).Value = toolStripMenuItemShowHelpTipsAndHelpBar.Checked;
+                //Settings.User.GetByKey("BoolShowBalloonInformation", defaultValue: false).Value = toolStripMenuItemShowBalloonInformation.Checked;
+                //Settings.User.GetByKey("BoolShowHelpTipsAndHelpBar", defaultValue: true).Value = toolStripMenuItemShowHelpTipsAndHelpBar.Checked;
 
                 Settings.User.Save();
 

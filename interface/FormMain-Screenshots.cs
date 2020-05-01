@@ -12,12 +12,17 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// Saves screenshots every five minutes (300000 milliseconds).
+        /// Deletes old screenshots and saves new screenshots every five minutes (300000 milliseconds).
+        /// This is for maintenance purposes.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
+            // After the first 5 minutes, and every 5 minute interval from now on, we're going to make sure
+            // that this is no longer the very first run of the application so we can stop showing balloon tips.
+            Settings.User.SetValueByKey("BoolFirstRun", false);
+
             // Save and delete old screenshots.
             SaveScreenshots();
 

@@ -54,7 +54,8 @@ namespace AutoScreenCapture
 
         private void SystemTrayBalloonMessage(string message, int balloonTipTimeout)
         {
-            if (notifyIcon.Visible && toolStripMenuItemShowBalloonInformation.Checked)
+            // Show the balloon tip only if the system tray icon is visible and the "BoolFirstRun" setting returns "True".
+            if (notifyIcon.Visible && Convert.ToBoolean(Settings.User.GetByKey("BoolFirstRun", defaultValue: true).Value))
             {
                 notifyIcon.ShowBalloonTip(balloonTipTimeout, Settings.ApplicationName, message, ToolTipIcon.Info);
             }

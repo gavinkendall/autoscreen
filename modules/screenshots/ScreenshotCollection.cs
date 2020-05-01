@@ -48,6 +48,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_WINDOW_TITLE = "windowtitle";
         private const string SCREENSHOT_PROCESS_NAME = "processname";
         private const string SCREENSHOT_LABEL = "label";
+        private const string SCREENSHOT_VERSION = "version";
 
         private readonly string SCREENSHOTS_XPATH;
         private readonly string SCREENSHOT_XPATH;
@@ -138,67 +139,134 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the filter values. We first try to get the filter values from internal memory and, if we can't, we'll get them from the XML document instead.
         /// </summary>
         /// <param name="filterType"></param>
         /// <returns></returns>
         public List<string> GetFilterValueList(string filterType)
         {
+            List<string> filterValues = new List<string>();
+
             if (filterType.Equals("Image Format"))
             {
-                return LoadXmlFileAndReturnNodeValues("format", null, "format");
+                filterValues = _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name)).Select(x => x.Format.Name).Distinct().ToList();
+
+                if (filterValues.Count == 0)
+                {
+                    filterValues = LoadXmlFileAndReturnNodeValues("format", null, "format");
+                }
+
+                return filterValues;
             }
 
             if (filterType.Equals("Label"))
             {
-                return LoadXmlFileAndReturnNodeValues("label", null, "label");
+                filterValues = _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
+
+                if (filterValues.Count == 0)
+                {
+                    filterValues = LoadXmlFileAndReturnNodeValues("label", null, "label");
+                }
+
+                return filterValues;
             }
 
             if (filterType.Equals("Process Name"))
             {
-                return LoadXmlFileAndReturnNodeValues("processname", null, "processname");
+                filterValues = _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName)).Select(x => x.ProcessName).Distinct().ToList();
+
+                if (filterValues.Count == 0)
+                {
+                    filterValues = LoadXmlFileAndReturnNodeValues("processname", null, "processname");
+                }
+
+                return filterValues;
             }
 
             if (filterType.Equals("Window Title"))
             {
-                return LoadXmlFileAndReturnNodeValues("windowtitle", null, "windowtitle");
+                filterValues = _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle)).Select(x => x.WindowTitle).Distinct().ToList();
+
+                if (filterValues.Count == 0)
+                {
+                    filterValues = LoadXmlFileAndReturnNodeValues("windowtitle", null, "windowtitle");
+                }
+
+                return filterValues;
             }
 
-            return null;
+            return filterValues;
         }
 
         /// <summary>
-        /// 
+        /// Gets the dates for the calendar. We first try to get the dates from internal memory and, if we can't, we'll get them from the XML document instead.
         /// </summary>
         /// <param name="filterType"></param>
         /// <param name="filterValue"></param>
         /// <returns></returns>
         public List<string> GetDatesByFilter(string filterType, string filterValue)
         {
+            List<string> dates = new List<string>();
+
             if (!string.IsNullOrEmpty(filterValue))
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    return LoadXmlFileAndReturnNodeValues("format", filterValue, "date");
+                    dates = _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue)).Select(x => x.Date).ToList();
+
+                    if (dates.Count == 0)
+                    {
+                        dates = LoadXmlFileAndReturnNodeValues("format", filterValue, "date");
+                    }
+
+                    return dates;
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    return LoadXmlFileAndReturnNodeValues("label", filterValue, "date");
+                    dates = _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
+
+                    if (dates.Count == 0)
+                    {
+                        dates = LoadXmlFileAndReturnNodeValues("label", filterValue, "date");
+                    }
+
+                    return dates;
                 }
 
                 if (filterType.Equals("Process Name"))
                 {
-                    return LoadXmlFileAndReturnNodeValues("processname", filterValue, "date");
+                    dates = _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue)).Select(x => x.Date).ToList();
+
+                    if (dates.Count == 0)
+                    {
+                        dates = LoadXmlFileAndReturnNodeValues("processname", filterValue, "date");
+                    }
+
+                    return dates;
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
-                    return LoadXmlFileAndReturnNodeValues("windowtitle", filterValue, "date");
+                    dates = _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue)).Select(x => x.Date).ToList();
+
+                    if (dates.Count == 0)
+                    {
+                        dates = LoadXmlFileAndReturnNodeValues("windowtitle", filterValue, "date");
+                    }
+
+                    return dates;
                 }
             }
 
-            return LoadXmlFileAndReturnNodeValues("date", null, "date");
+            dates = _screenshotList.Select(x => x.Date).ToList();
+
+            if (dates.Count == 0)
+            {
+                dates = LoadXmlFileAndReturnNodeValues("date", null, "date");
+            }
+
+            return dates;
         }
 
         /// <summary>
@@ -803,6 +871,9 @@ namespace AutoScreenCapture
                         {
                             XmlElement xScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
 
+                            XmlElement xVersion = xDoc.CreateElement(SCREENSHOT_VERSION);
+                            xVersion.InnerText = screenshot.Version;
+
                             XmlElement xViedId = xDoc.CreateElement(SCREENSHOT_VIEWID);
                             xViedId.InnerText = screenshot.ViewId.ToString();
 
@@ -836,6 +907,7 @@ namespace AutoScreenCapture
                             XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
                             xLabel.InnerText = screenshot.Label;
 
+                            xScreenshot.AppendChild(xVersion);
                             xScreenshot.AppendChild(xViedId);
                             xScreenshot.AppendChild(xDate);
                             xScreenshot.AppendChild(xTime);
