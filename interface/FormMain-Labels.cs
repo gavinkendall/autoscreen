@@ -42,7 +42,7 @@
             try
             {
                 List<string> labels = new List<string>();
-                labels = _screenshotCollection.GetFilterValueList("label");
+                labels = _screenshotCollection.GetFilterValueList("Label");
 
                 if (ScreenCapture.LockScreenCaptureSession || labels.Count == 0)
                 {
