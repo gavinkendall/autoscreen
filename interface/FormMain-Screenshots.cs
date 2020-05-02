@@ -26,11 +26,10 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
-            // After the first 5 minutes, and every 5 minute interval from now on, we're going to make sure
-            // that this is no longer the very first run of the application so we can stop showing balloon tips.
-            Settings.User.SetValueByKey("BoolFirstRun", false);
-
             // Save and delete old screenshots.
+            // This can take about 10 minutes when the application is first started because we initialize
+            // the thread after the first 5 minutes and then save screenshots in the next 5 minutes after that.
+            // Screenshots will then be saved every 5 minutes after this initial 10 minute delay.
             SaveScreenshots();
 
             // Refresh the calendar.

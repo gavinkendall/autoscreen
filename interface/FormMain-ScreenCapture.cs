@@ -177,6 +177,12 @@ namespace AutoScreenCapture
                 startScreenCaptureCount++;
                 Settings.User.SetValueByKey("IntStartScreenCaptureCount", startScreenCaptureCount);
 
+                // Turn off "BoolFirstRun" after the first run of a screen capture session so we longer show balloon tips.
+                if (startScreenCaptureCount > 1)
+                {
+                    Settings.User.SetValueByKey("BoolFirstRun", false);
+                }
+
                 SaveSettings();
 
                 // Stop the date search thread if it's busy.
