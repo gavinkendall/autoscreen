@@ -147,64 +147,31 @@ namespace AutoScreenCapture
         {
             List<string> filterValues = new List<string>();
 
-            bool readFromScreenshotList = false;
-
-            XmlNode minDateNode = GetMinDateFromXMLDocument();
-
-            // Basically, if we can't find the minimum date in the XML document or if we can find it but it's "today" then read from the internal screenshot list
-            // otherwise read from the XML document directly so we can get historical data (stuff that wasn't added for today's sessions).
-            if (minDateNode == null || (minDateNode != null && DateTime.Parse(minDateNode.FirstChild.Value).Date.Equals(DateTime.Now.Date)))
-            {
-                readFromScreenshotList = true;
-            }
-
             if (filterType.Equals("Image Format"))
             {
-                if (readFromScreenshotList)
-                {
-                    filterValues = _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name)).Select(x => x.Format.Name).Distinct().ToList();
-                }
-                else
-                {
-                    filterValues = LoadXmlFileAndReturnNodeValues("format", null, "format");
-                }
+                filterValues = LoadXmlFileAndReturnNodeValues("format", null, "format");
+                filterValues.AddRange(_screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name)).Select(x => x.Format.Name));
             }
 
             if (filterType.Equals("Label"))
             {
-                if (readFromScreenshotList)
-                {
-                    filterValues = _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label).Distinct().ToList();
-                }
-                else
-                {
-                    filterValues = LoadXmlFileAndReturnNodeValues("label", null, "label");
-                }
+                filterValues = LoadXmlFileAndReturnNodeValues("label", null, "label");
+                filterValues.AddRange(_screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label)).Select(x => x.Label));
             }
 
             if (filterType.Equals("Process Name"))
             {
-                if (readFromScreenshotList)
-                {
-                    filterValues = _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName)).Select(x => x.ProcessName).Distinct().ToList();
-                }
-                else
-                {
-                    filterValues = LoadXmlFileAndReturnNodeValues("processname", null, "processname");
-                }
+                filterValues = LoadXmlFileAndReturnNodeValues("processname", null, "processname");
+                filterValues.AddRange(_screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName)).Select(x => x.ProcessName));
             }
 
             if (filterType.Equals("Window Title"))
             {
-                if (readFromScreenshotList)
-                {
-                    filterValues = _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle)).Select(x => x.WindowTitle).Distinct().ToList();
-                }
-                else
-                {
-                    filterValues = LoadXmlFileAndReturnNodeValues("windowtitle", null, "windowtitle");
-                }
+                filterValues = LoadXmlFileAndReturnNodeValues("windowtitle", null, "windowtitle");
+                filterValues.AddRange(_screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle)).Select(x => x.WindowTitle));
             }
+
+            filterValues = filterValues.Distinct().ToList();
 
             return filterValues;
         }
@@ -219,78 +186,39 @@ namespace AutoScreenCapture
         {
             List<string> dates = new List<string>();
 
-            bool readFromScreenshotList = false;
-
-            XmlNode minDateNode = GetMinDateFromXMLDocument();
-
-            // Basically, if we can't find the minimum date in the XML document or if we can find it but it's "today" then read from the internal screenshot list
-            // otherwise read from the XML document directly so we can get historical data (stuff that wasn't added for today's sessions).
-            if (minDateNode == null || (minDateNode != null && DateTime.Parse(minDateNode.FirstChild.Value).Date.Equals(DateTime.Now.Date)))
-            {
-                readFromScreenshotList = true;
-            }
-
             if (!string.IsNullOrEmpty(filterValue))
             {
                 if (filterType.Equals("Image Format"))
                 {
-                    if (readFromScreenshotList)
-                    {
-                        dates = _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue)).Select(x => x.Date).ToList();
-                    }
-                    else
-                    {
-                        dates = LoadXmlFileAndReturnNodeValues("format", filterValue, "date");
-                    }
+                    dates = LoadXmlFileAndReturnNodeValues("format", filterValue, "date");
+                    dates.AddRange(_screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue)).Select(x => x.Date));
                 }
 
                 if (filterType.Equals("Label"))
                 {
-                    if (readFromScreenshotList)
-                    {
-                        dates = _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date).ToList();
-                    }
-                    else
-                    {
-                        dates = LoadXmlFileAndReturnNodeValues("label", filterValue, "date");
-                    }
+                    dates = LoadXmlFileAndReturnNodeValues("label", filterValue, "date");
+                    dates.AddRange(_screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date));
                 }
 
                 if (filterType.Equals("Process Name"))
                 {
-                    if (readFromScreenshotList)
-                    {
-                        dates = _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue)).Select(x => x.Date).ToList();
-                    }
-                    else
-                    {
-                        dates = LoadXmlFileAndReturnNodeValues("processname", filterValue, "date");
-                    }
+                    dates = LoadXmlFileAndReturnNodeValues("processname", filterValue, "date");
+                    dates.AddRange(_screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue)).Select(x => x.Date));
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
-                    if (readFromScreenshotList)
-                    {
-                        dates = _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue)).Select(x => x.Date).ToList();
-                    }
-                    else
-                    {
-                        dates = LoadXmlFileAndReturnNodeValues("windowtitle", filterValue, "date");
-                    }
+                    dates = LoadXmlFileAndReturnNodeValues("windowtitle", filterValue, "date");
+                    dates.AddRange(_screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue)).Select(x => x.Date));
                 }
             }
             else
             {
-                if (readFromScreenshotList)
-                {
-                    dates = _screenshotList.Select(x => x.Date).ToList();
-                }
-                else
-                {
-                    dates = LoadXmlFileAndReturnNodeValues("date", null, "date");
-                }
+                dates = LoadXmlFileAndReturnNodeValues("date", null, "date");
+                dates.AddRange(_screenshotList.Select(x => x.Date));
             }
+
+            dates = dates.Distinct().ToList();
 
             return dates;
         }
