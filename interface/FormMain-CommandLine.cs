@@ -292,9 +292,9 @@ namespace AutoScreenCapture
                     // -captureat=hh:mm:ss
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT))
                     {
-                        int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
-                        int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
+                        int hours = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT).Groups["Hours"].Value);
+                        int minutes = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT).Groups["Minutes"].Value);
+                        int seconds = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT).Groups["Seconds"].Value);
 
                         formSchedule.ScheduleCollection.GetByName(ScheduleCollection.SpecialScheduleName).Enabled = true;
                         formSchedule.ScheduleCollection.GetByName(ScheduleCollection.SpecialScheduleName).ModeOneTime = true;
