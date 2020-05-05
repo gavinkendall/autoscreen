@@ -38,6 +38,12 @@ namespace AutoScreenCapture
         private const string SCHEDULE_SUNDAY = "sunday";
         private readonly string SCHEDULE_XPATH;
 
+        /// <summary>
+        /// The name of the "special schedule" that's used when commands are given from the command line
+        /// or the old schedule is imported from an old version of Auto Screen Capture (anything before 2.3).
+        /// </summary>
+        public static string SpecialScheduleName = "Special Schedule";
+
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
 
@@ -201,7 +207,7 @@ namespace AutoScreenCapture
 
                     Schedule specialSchedule = new Schedule()
                     {
-                        Name = "Special Schedule",
+                        Name = ScheduleCollection.SpecialScheduleName,
                         Enabled = false,
                         ModeOneTime = true,
                         ModePeriod = false,
