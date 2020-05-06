@@ -311,6 +311,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: LoadXmlFile Start ::");
+
                 _mutexWriteFile.WaitOne();
 
                 if (_screenshotList != null && !File.Exists(FileSystem.ScreenshotsFile))
@@ -350,13 +352,19 @@ namespace AutoScreenCapture
 
                 if (File.Exists(FileSystem.ScreenshotsFile))
                 {
+                    Log.WriteDebugMessage("Screenshots file \"" + FileSystem.ScreenshotsFile + "\" found. Attempting to load XML document");
+
                     xDoc = new XmlDocument();
 
                     lock (xDoc)
                     {
                         xDoc.Load(FileSystem.ScreenshotsFile);
+
+                        Log.WriteDebugMessage("XML document loaded");
                     }
                 }
+
+                Log.WriteDebugMessage(":: LoadXmlFile End ::");
             }
             catch (Exception ex)
             {
@@ -382,6 +390,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: LoadXmlFileAndReturnNodeValues Start ::");
+
                 XmlNodeList xNodes = null;
 
                 if (string.IsNullOrEmpty(nodeName))
@@ -448,6 +458,8 @@ namespace AutoScreenCapture
                     }
                 }
 
+                Log.WriteDebugMessage(":: LoadXmlFileAndReturnNodeValues End ::");
+
                 return null;
             }
             catch (Exception ex)
@@ -469,6 +481,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddScreenshots Start ::");
+
                 _mutexWriteFile.WaitOne();
 
                 XmlNodeList xScreenshots = null;
@@ -710,6 +724,8 @@ namespace AutoScreenCapture
                     }
                 }
 
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddScreenshots End ::");
+
                 return 0;
             }
             catch (Exception ex)
@@ -732,6 +748,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: SaveToXmlFile Start ::");
+
                 _mutexWriteFile.WaitOne();
 
                 if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
@@ -912,6 +930,8 @@ namespace AutoScreenCapture
                         }
                     }
                 }
+
+                Log.WriteDebugMessage(":: SaveToXmlFile End ::");
             }
             finally
             {

@@ -120,6 +120,11 @@ namespace AutoScreenCapture
         public bool Running { get; set; }
 
         /// <summary>
+        /// Determines if we had an error during screen capture.
+        /// </summary>
+        public bool CaptureError { get; set; }
+
+        /// <summary>
         /// The date/time when the user started a screen capture session.
         /// </summary>
         public DateTime DateTimeStartCapture { get; set; }
@@ -175,11 +180,15 @@ namespace AutoScreenCapture
                     }
                 }
 
+                CaptureError = false;
+
                 return image;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScreenCapture::GetImageByPath", ex);
+
+                CaptureError = true;
 
                 return null;
             }
@@ -246,8 +255,12 @@ namespace AutoScreenCapture
                     graphicsSource.Flush();
                     graphicsDestination.Flush();
 
+                    CaptureError = false;
+
                     return bitmapDestination;
                 }
+
+                CaptureError = true;
 
                 return null;
             }
@@ -258,6 +271,8 @@ namespace AutoScreenCapture
                 {
                     Log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
                 }
+
+                CaptureError = true;
 
                 return null;
             }
@@ -288,8 +303,12 @@ namespace AutoScreenCapture
 
                     graphics.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
 
+                    CaptureError = false;
+
                     return bitmap;
                 }
+
+                CaptureError = true;
 
                 return null;
             }
@@ -300,6 +319,8 @@ namespace AutoScreenCapture
                 {
                     Log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
                 }
+
+                CaptureError = true;
 
                 return null;
             }
@@ -326,15 +347,21 @@ namespace AutoScreenCapture
 
                 if (GetWindowText(handle, buffer, chars) > 0)
                 {
+                    CaptureError = false;
+
                     // Make sure to strip out the backslash if it's in the window title.
                     return buffer.ToString().Replace(@"\", string.Empty);
                 }
+
+                CaptureError = false;
 
                 return "(system)";
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScreenCapture::GetActiveWindowTitle", ex);
+
+                CaptureError = true;
 
                 return null;
             }
@@ -383,8 +410,12 @@ namespace AutoScreenCapture
 
                 if (bitmap != null)
                 {
+                    CaptureError = false;
+
                     return true;
                 }
+
+                CaptureError = true;
 
                 return false;
             }
@@ -393,6 +424,8 @@ namespace AutoScreenCapture
                 Log.WriteExceptionMessage("ScreenCapture::GetScreenImages", ex);
 
                 bitmap = null;
+
+                CaptureError = true;
 
                 return false;
             }

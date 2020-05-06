@@ -168,75 +168,86 @@ namespace AutoScreenCapture
         /// </summary>
         private void StartScreenCapture()
         {
-            int screenCaptureInterval = GetScreenCaptureInterval();
-
-            if (!_screenCapture.Running && screenCaptureInterval > 0)
+            try
             {
-                // Increment the number of times the user has started a screen capture session.
-                int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("IntStartScreenCaptureCount", defaultValue: 0).Value);
-                startScreenCaptureCount++;
-                Settings.User.SetValueByKey("IntStartScreenCaptureCount", startScreenCaptureCount);
+                Log.WriteDebugMessage(":: StartScreenCapture Start ::");
 
-                // Turn off "BoolFirstRun" after the first run of a screen capture session so we longer show balloon tips.
-                if (startScreenCaptureCount > 1)
+                int screenCaptureInterval = GetScreenCaptureInterval();
+
+                if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
-                    Settings.User.SetValueByKey("BoolFirstRun", false);
+                    // Increment the number of times the user has started a screen capture session.
+                    int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("IntStartScreenCaptureCount", defaultValue: 0).Value);
+                    startScreenCaptureCount++;
+                    Settings.User.SetValueByKey("IntStartScreenCaptureCount", startScreenCaptureCount);
+
+                    // Turn off "BoolFirstRun" after the first run of a screen capture session so we longer show balloon tips.
+                    if (startScreenCaptureCount > 1)
+                    {
+                        Settings.User.SetValueByKey("BoolFirstRun", false);
+                    }
+
+                    SaveSettings();
+
+                    // Stop the date search thread if it's busy.
+                    if (runDateSearchThread != null && runDateSearchThread.IsBusy)
+                    {
+                        runDateSearchThread.CancelAsync();
+                    }
+
+                    // Stop the slide search thread if it's busy.
+                    if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
+                    {
+                        runScreenshotSearchThread.CancelAsync();
+                    }
+
+                    DisableStartCapture();
+                    EnableStopScreenCapture();
+
+                    // Setup the properties for the screen capture class.
+                    _screenCapture.Delay = screenCaptureInterval;
+                    _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
+
+                    if (Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString().Length > 0)
+                    {
+                        ScreenCapture.LockScreenCaptureSession = true;
+                    }
+                    else
+                    {
+                        ScreenCapture.LockScreenCaptureSession = false;
+                    }
+
+                    Log.WriteMessage("Starting screen capture");
+
+                    _screenCapture.Running = true;
+
+                    _screenCapture.DateTimeStartCapture = DateTime.Now;
+
+                    if (checkBoxInitialScreenshot.Checked)
+                    {
+                        Log.WriteMessage("Taking initial screenshots");
+
+                        TakeScreenshot(captureNow: false);
+                    }
+
+                    // Start taking screenshots.
+
+                    timerScreenCapture.Interval = screenCaptureInterval;
+
+                    timerScreenCapture.Enabled = true;
+                    timerScreenCapture.Start();
+
+                    SystemTrayIconStatusRunning();
+
+                    Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
+                    RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
+
+                    Log.WriteDebugMessage(":: StartScreenCapture End ::");
                 }
-
-                SaveSettings();
-
-                // Stop the date search thread if it's busy.
-                if (runDateSearchThread != null && runDateSearchThread.IsBusy)
-                {
-                    runDateSearchThread.CancelAsync();
-                }
-
-                // Stop the slide search thread if it's busy.
-                if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
-                {
-                    runScreenshotSearchThread.CancelAsync();
-                }
-
-                DisableStartCapture();
-                EnableStopScreenCapture();
-
-                // Setup the properties for the screen capture class.
-                _screenCapture.Delay = screenCaptureInterval;
-                _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
-
-                if (Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString().Length > 0)
-                {
-                    ScreenCapture.LockScreenCaptureSession = true;
-                }
-                else
-                {
-                    ScreenCapture.LockScreenCaptureSession = false;
-                }
-
-                Log.WriteMessage("Starting screen capture");
-
-                _screenCapture.Running = true;
-
-                _screenCapture.DateTimeStartCapture = DateTime.Now;
-
-                if (checkBoxInitialScreenshot.Checked)
-                {
-                    Log.WriteMessage("Taking initial screenshots");
-
-                    TakeScreenshot(captureNow: false);
-                }
-
-                // Start taking screenshots.
-
-                timerScreenCapture.Interval = screenCaptureInterval;
-
-                timerScreenCapture.Enabled = true;
-                timerScreenCapture.Start();
-
-                SystemTrayIconStatusRunning();
-
-                Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
-                RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("FormMain-ScreenCapture::StartScreenCapture", ex);
             }
         }
 
@@ -245,41 +256,52 @@ namespace AutoScreenCapture
         /// </summary>
         private void StopScreenCapture()
         {
-            if (_screenCapture.Running)
+            try
             {
-                Log.WriteMessage("Stopping screen capture");
+                Log.WriteDebugMessage(":: StopScreenCapture Start ::");
 
-                if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+                if (_screenCapture.Running)
                 {
-                    Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                    formEnterPassphrase.ShowDialog(this);
+                    Log.WriteMessage("Stopping screen capture");
+
+                    if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+                    {
+                        Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                        formEnterPassphrase.ShowDialog(this);
+                    }
+
+                    // This is intentional. Do not rewrite these statements as an if/else
+                    // because as soon as lockScreenCaptureSession is set to false we want
+                    // to continue with normal functionality.
+                    if (!ScreenCapture.LockScreenCaptureSession)
+                    {
+                        Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
+                        SaveSettings();
+
+                        DisableStopCapture();
+                        EnableStartCapture();
+
+                        _screenCapture.Count = 0;
+                        _screenCapture.Running = false;
+
+                        timerScreenCapture.Stop();
+                        timerScreenCapture.Enabled = false;
+
+                        notifyIcon.Icon = Resources.autoscreen;
+
+                        SearchFilterValues();
+                        SearchDates();
+
+                        Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
+                        RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
+                    }
                 }
 
-                // This is intentional. Do not rewrite these statements as an if/else
-                // because as soon as lockScreenCaptureSession is set to false we want
-                // to continue with normal functionality.
-                if (!ScreenCapture.LockScreenCaptureSession)
-                {
-                    Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
-                    SaveSettings();
-
-                    DisableStopCapture();
-                    EnableStartCapture();
-
-                    _screenCapture.Count = 0;
-                    _screenCapture.Running = false;
-
-                    timerScreenCapture.Stop();
-                    timerScreenCapture.Enabled = false;
-                    
-                    notifyIcon.Icon = Resources.autoscreen;
-
-                    SearchFilterValues();
-                    SearchDates();
-
-                    Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
-                    RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
-                }
+                Log.WriteDebugMessage(":: StopScreenCapture End ::");
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("FormMain-ScreenCapture::StopScreenCapture", ex);
             }
         }
 

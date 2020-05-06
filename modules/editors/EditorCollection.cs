@@ -53,10 +53,16 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddEditors Start ::");
+
                 if (File.Exists(FileSystem.EditorsFile))
                 {
+                    Log.WriteDebugMessage("Editors file \"" + FileSystem.EditorsFile + "\" found. Attempting to load XML document");
+
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.EditorsFile);
+
+                    Log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -103,6 +109,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
+                        Log.WriteDebugMessage("Editors file detected as an old version");
                         SaveToXmlFile();
                     }
                 }
@@ -161,6 +168,8 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddEditors End ::");
             }
             catch (Exception ex)
             {

@@ -70,10 +70,16 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddSchedules Start ::");
+
                 if (File.Exists(FileSystem.SchedulesFile))
                 {
+                    Log.WriteDebugMessage("Schedules file \"" + FileSystem.SchedulesFile + "\" found. Attempting to load XML document");
+
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.SchedulesFile);
+
+                    Log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -193,6 +199,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
+                        Log.WriteDebugMessage("Schedules file detected as an old version");
                         SaveToXmlFile();
                     }
                 }
@@ -268,6 +275,8 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddSchedules End ::");
             }
             catch (Exception ex)
             {

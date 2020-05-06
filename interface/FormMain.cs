@@ -52,7 +52,6 @@ namespace AutoScreenCapture
         /// </summary>
         private const int CAPTURE_LIMIT_MIN = 0;
         private const int CAPTURE_LIMIT_MAX = 9999;
-        private const int CAPTURE_INTERVAL_DEFAULT_IN_MINUTES = 1;
 
         /// <summary>
         /// Constructor for the main form.

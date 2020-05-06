@@ -63,10 +63,16 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddRegions Start ::");
+
                 if (File.Exists(FileSystem.RegionsFile))
                 {
+                    Log.WriteDebugMessage("Regions file \"" + FileSystem.RegionsFile + "\" found. Attempting to load XML document");
+
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.RegionsFile);
+
+                    Log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -205,6 +211,7 @@ namespace AutoScreenCapture
                     // with their appropriate property values if it was an old version of the application.
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
+                        Log.WriteDebugMessage("Regions file detected as an old version");
                         SaveToXmlFile();
                     }
                 }
@@ -214,6 +221,8 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                Log.WriteDebugMessage(":: LoadXmlFileAndAddRegions End ::");
             }
             catch (Exception ex)
             {

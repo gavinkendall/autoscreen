@@ -127,65 +127,30 @@ namespace AutoScreenCapture
 
         private void RunScreenCaptures()
         {
-            Log.WriteDebugMessage("Running screen captures");
-
-            foreach (Screen screen in formScreen.ScreenCollection)
+            try
             {
-                if (screen.Enabled)
-                {
-                    if (screen.Component == 0)
-                    {
-                        MacroParser.screenCapture = _screenCapture;
+                Log.WriteDebugMessage(":: RunScreenCaptures Start ::");
 
-                        // Active Window
-                        if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
-                        {
-                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
-                            {
-                                if (_screenCapture.SaveScreenshot(
-                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
-                                    format: screen.Format,
-                                    component: screen.Component,
-                                    screenshotType: ScreenshotType.ActiveWindow,
-                                    jpegQuality: screen.JpegQuality,
-                                    viewId: screen.ViewId,
-                                    bitmap: bitmap,
-                                    label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
-                                    windowTitle: _screenCapture.ActiveWindowTitle,
-                                    processName: _screenCapture.ActiveWindowProcessName,
-                                    screenshotCollection: _screenshotCollection
-                                ))
-                                {
-                                    ScreenshotTakenWithSuccess();
-                                }
-                                else
-                                {
-                                    ScreenshotTakenWithFailure();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else
+                Log.WriteDebugMessage("Running screen captures");
+
+                foreach (Screen screen in formScreen.ScreenCollection)
+                {
+                    if (screen.Enabled)
                     {
-                        if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                        if (screen.Component == 0)
                         {
                             MacroParser.screenCapture = _screenCapture;
 
+                            // Active Window
                             if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                             {
-                                // Screen X
-                                if (_screenCapture.GetScreenImages(screen.Component,
-                                    formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                                    formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                                    formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                                    formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
                                     if (_screenCapture.SaveScreenshot(
                                         path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                         format: screen.Format,
                                         component: screen.Component,
-                                        screenshotType: ScreenshotType.Screen,
+                                        screenshotType: ScreenshotType.ActiveWindow,
                                         jpegQuality: screen.JpegQuality,
                                         viewId: screen.ViewId,
                                         bitmap: bitmap,
@@ -205,8 +170,54 @@ namespace AutoScreenCapture
                                 }
                             }
                         }
+                        else
+                        {
+                            if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                            {
+                                MacroParser.screenCapture = _screenCapture;
+
+                                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                                {
+                                    // Screen X
+                                    if (_screenCapture.GetScreenImages(screen.Component,
+                                        formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                                        formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                                        formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                                        formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                    {
+                                        if (_screenCapture.SaveScreenshot(
+                                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                            format: screen.Format,
+                                            component: screen.Component,
+                                            screenshotType: ScreenshotType.Screen,
+                                            jpegQuality: screen.JpegQuality,
+                                            viewId: screen.ViewId,
+                                            bitmap: bitmap,
+                                            label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
+                                            windowTitle: _screenCapture.ActiveWindowTitle,
+                                            processName: _screenCapture.ActiveWindowProcessName,
+                                            screenshotCollection: _screenshotCollection
+                                        ))
+                                        {
+                                            ScreenshotTakenWithSuccess();
+                                        }
+                                        else
+                                        {
+                                            ScreenshotTakenWithFailure();
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+
+                Log.WriteDebugMessage(":: RunScreenCaptures End ::");
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("FormMain-Screens::RunScreenCaptures", ex);
             }
         }
     }

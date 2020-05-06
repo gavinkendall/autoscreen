@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -161,10 +160,12 @@ namespace AutoScreenCapture
                 EnableStartCapture();
 
                 CaptureLimitCheck();
+
+                Log.WriteDebugMessage("Settings loaded");
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormMain::LoadSettings", ex);
+                Log.WriteExceptionMessage("FormMain-Settings::LoadSettings", ex);
             }
         }
 
@@ -175,11 +176,9 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: SaveSettings Start ::");
+
                 Log.WriteDebugMessage("Saving settings");
-
-                Stopwatch stopwatch = new Stopwatch();
-
-                stopwatch.Start();
 
                 Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = GetScreenCaptureInterval();
                 Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
@@ -188,20 +187,16 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
                 Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = comboBoxScreenshotLabel.Text;
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
-                //Settings.User.GetByKey("BoolShowBalloonInformation", defaultValue: false).Value = toolStripMenuItemShowBalloonInformation.Checked;
-                //Settings.User.GetByKey("BoolShowHelpTipsAndHelpBar", defaultValue: true).Value = toolStripMenuItemShowHelpTipsAndHelpBar.Checked;
 
                 Settings.User.Save();
 
                 Log.WriteDebugMessage("Settings saved");
 
-                stopwatch.Stop();
-
-                Log.WriteDebugMessage("It took " + stopwatch.ElapsedMilliseconds + " milliseconds to save user settings");
+                Log.WriteDebugMessage(":: SaveSettings End ::");
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormMain::SaveSettings", ex);
+                Log.WriteExceptionMessage("FormMain-Settings::SaveSettings", ex);
             }
         }
 

@@ -22,6 +22,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                Log.WriteDebugMessage(":: ParseCommandLineArguments Start ::");
+
                 // Clear the contents of the command file before parsing the command line arguments.
                 // We have the commands in "args" already and, to prevent commands like -exit screwing up
                 // the application's ability to read commands on the next run, we need to make sure that the
@@ -313,10 +315,12 @@ namespace AutoScreenCapture
                 {
                     StartScreenCapture();
                 }
+
+                Log.WriteDebugMessage(":: ParseCommandLineArguments End ::");
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormMain::ParseCommandLineArguments", ex);
+                Log.WriteExceptionMessage("FormMain-CommandLine::ParseCommandLineArguments", ex);
             }
         }
 

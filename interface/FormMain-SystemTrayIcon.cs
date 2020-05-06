@@ -31,17 +31,6 @@ namespace AutoScreenCapture
             ExitApplication();
         }
 
-        /// <summary>
-        /// Displays the remaining time for when the next screenshot will be taken
-        /// when the mouse pointer moves over the system tray icon.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void notifyIcon_MouseMove(object sender, MouseEventArgs e)
-        {
-            ShowInfo();
-        }
-
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (Visible)
@@ -62,7 +51,10 @@ namespace AutoScreenCapture
         private void SystemTrayBalloonMessage(string message, int balloonTipTimeout)
         {
             // Show the balloon tip only if the system tray icon is visible and the "BoolFirstRun" setting returns "True".
-            if (notifyIcon.Visible && Convert.ToBoolean(Settings.User.GetByKey("BoolFirstRun", defaultValue: true).Value))
+
+            bool.TryParse(Settings.User.GetByKey("BoolFirstRun", defaultValue: true).Value.ToString(), out bool firstRun);
+
+            if (notifyIcon.Visible && firstRun)
             {
                 notifyIcon.ShowBalloonTip(balloonTipTimeout, Settings.ApplicationName, message, ToolTipIcon.Info);
             }
@@ -92,7 +84,7 @@ namespace AutoScreenCapture
         {
             notifyIcon.Text = string.Empty;
 
-            if (_screenCapture.Running)
+            if (_screenCapture.Running && !_screenCapture.CaptureError)
             {
                 string remainingTimeStr = string.Empty;
 

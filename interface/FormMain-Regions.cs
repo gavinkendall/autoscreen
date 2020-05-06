@@ -127,41 +127,52 @@ namespace AutoScreenCapture
 
         private void RunRegionCaptures()
         {
-            Log.WriteDebugMessage("Running region captures");
-
-            foreach (Region region in formRegion.RegionCollection)
+            try
             {
-                if (region.Enabled)
-                {
-                    MacroParser.screenCapture = _screenCapture;
+                Log.WriteDebugMessage(":: RunRegionCaptures Start ::");
 
-                    if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                Log.WriteDebugMessage("Running region captures");
+
+                foreach (Region region in formRegion.RegionCollection)
+                {
+                    if (region.Enabled)
                     {
-                        if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
+                        MacroParser.screenCapture = _screenCapture;
+
+                        if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                         {
-                            if (_screenCapture.SaveScreenshot(
-                                path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
-                                format: region.Format,
-                                component: -1,
-                                screenshotType: ScreenshotType.Region,
-                                jpegQuality: region.JpegQuality,
-                                viewId: region.ViewId,
-                                bitmap: bitmap,
-                                label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
-                                windowTitle: _screenCapture.ActiveWindowTitle,
-                                processName: _screenCapture.ActiveWindowProcessName,
-                                screenshotCollection: _screenshotCollection
-                            ))
+                            if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                             {
-                                ScreenshotTakenWithSuccess();
-                            }
-                            else
-                            {
-                                ScreenshotTakenWithFailure();
+                                if (_screenCapture.SaveScreenshot(
+                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                    format: region.Format,
+                                    component: -1,
+                                    screenshotType: ScreenshotType.Region,
+                                    jpegQuality: region.JpegQuality,
+                                    viewId: region.ViewId,
+                                    bitmap: bitmap,
+                                    label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
+                                    windowTitle: _screenCapture.ActiveWindowTitle,
+                                    processName: _screenCapture.ActiveWindowProcessName,
+                                    screenshotCollection: _screenshotCollection
+                                ))
+                                {
+                                    ScreenshotTakenWithSuccess();
+                                }
+                                else
+                                {
+                                    ScreenshotTakenWithFailure();
+                                }
                             }
                         }
                     }
                 }
+
+                Log.WriteDebugMessage(":: RunRegionCaptures End ::");
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("FormMain-Regions::RunRegionCaptures", ex);
             }
         }
     }
