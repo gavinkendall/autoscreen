@@ -375,20 +375,70 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (screenshot == null || string.IsNullOrEmpty(screenshot.Path)) return;
+                Log.WriteDebugMessage(":: EmailScreenshot Start ::");
+
+                if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
+                {
+                    Log.WriteDebugMessage("Cannot email screenshot because screenshot is either null or path is empty");
+                    return;
+                }
+
+                Log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
 
                 string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
-                int port = Convert.ToInt32(Settings.Application.GetByKey("EmailServerPort", string.Empty).Value);
+
+                Log.WriteDebugMessage("Host = " + host);
+
+                int.TryParse(Settings.Application.GetByKey("EmailServerPort", defaultValue: 587).Value.ToString(), out int port);
+
+                Log.WriteDebugMessage("Port = " + port);
+
+                bool.TryParse(Settings.Application.GetByKey("EmailServerEnableSSL", defaultValue: true).Value.ToString(), out bool ssl);
+
+                Log.WriteDebugMessage("SSL = " + ssl);
+
+                bool.TryParse(Settings.Application.GetByKey("EmailPrompt", defaultValue: true).Value.ToString(), out prompt);
+
+                Log.WriteDebugMessage("Prompt = " + prompt);
 
                 string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("Username = " + username);
+
                 string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
 
+                if (string.IsNullOrEmpty(password))
+                {
+                    Log.WriteDebugMessage("Password = [empty]");
+                }
+                else
+                {
+                    Log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
+                }
+
                 string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("From = " + from);
+
                 string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("To = " + to);
+
                 string cc = Settings.Application.GetByKey("EmailMessageCC", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("CC = " + cc);
+
                 string bcc = Settings.Application.GetByKey("EmailMessageBCC", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("BCC = " + bcc);
+
                 string subject = Settings.Application.GetByKey("EmailMessageSubject", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("Subject = " + subject);
+
                 string body = Settings.Application.GetByKey("EmailMessageBody", string.Empty).Value.ToString();
+
+                Log.WriteDebugMessage("Body = " + body);
 
                 if (string.IsNullOrEmpty(host) ||
                     string.IsNullOrEmpty(username) ||
@@ -396,6 +446,8 @@ namespace AutoScreenCapture
                     string.IsNullOrEmpty(@from) ||
                     string.IsNullOrEmpty(to))
                 {
+                    Log.WriteDebugMessage("Host, Username, Password, From, or To is empty");
+
                     return;
                 }
 
@@ -424,11 +476,15 @@ namespace AutoScreenCapture
 
                 if (mailMessage.Attachments == null || mailMessage.Attachments.Count <= 0) return;
 
+                Log.WriteDebugMessage("Added screenshot as attachment");
+
                 var smtpClient = new SmtpClient(host, port)
                 {
-                    EnableSsl = Convert.ToBoolean(Settings.Application.GetByKey("EmailServerEnableSSL", string.Empty).Value),
+                    EnableSsl = ssl,
                     Credentials = new NetworkCredential(username, password)
                 };
+
+                Log.WriteDebugMessage("SMTP client prepared");
 
                 if (prompt)
                 {
@@ -436,19 +492,26 @@ namespace AutoScreenCapture
 
                     if (dialogResult == DialogResult.Yes)
                     {
+                        Log.WriteDebugMessage("Sending email with prompt confirmation");
                         smtpClient.Send(mailMessage);
+                        Log.WriteDebugMessage("Email sent");
                     }
                 }
                 else
                 {
+                    Log.WriteDebugMessage("Sending email without prompt confirmation");
                     smtpClient.Send(mailMessage);
+                    Log.WriteDebugMessage("Email sent");
                 }
 
                 smtpClient.Dispose();
+                Log.WriteDebugMessage("SMTP client disposed");
+
+                Log.WriteDebugMessage(":: EmailScreenshot End ::");
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormMain::EmailScreenshot", ex);
+                Log.WriteExceptionMessage("FormMain-Screenshots::EmailScreenshot", ex);
             }
         }
 

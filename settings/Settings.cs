@@ -215,6 +215,11 @@ namespace AutoScreenCapture
                         Application.Add(new Setting("EmailMessageBody", string.Empty));
                     }
 
+                    if (!Application.KeyExists("EmailPrompt"))
+                    {
+                        Application.Add(new Setting("EmailPrompt", true));
+                    }
+
                     if (!Application.KeyExists("LowDiskPercentageThreshold"))
                     {
                         Application.Add(new Setting("LowDiskPercentageThreshold", 1));
@@ -267,6 +272,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("EmailMessageBCC", string.Empty));
                     Application.Add(new Setting("EmailMessageSubject", string.Empty));
                     Application.Add(new Setting("EmailMessageBody", string.Empty));
+                    Application.Add(new Setting("EmailPrompt", true));
                     Application.Add(new Setting("LowDiskPercentageThreshold", 1));
                     Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
                     Application.Add(new Setting("AutoStartFromCommandLine", false));
