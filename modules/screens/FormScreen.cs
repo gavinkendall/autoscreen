@@ -109,6 +109,8 @@ namespace AutoScreenCapture
                 checkBoxMouse.Checked = true;
                 checkBoxEnabled.Checked = true;
             }
+
+            UpdatePreview(ScreenCapture);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -272,11 +274,6 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void Tick_timerPreview(object sender, EventArgs e)
-        {
-            UpdatePreview(ScreenCapture);
-        }
-
         private void buttonBrowseFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
@@ -291,35 +288,37 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (comboBoxScreenComponent.SelectedIndex == 0)
+                if (checkBoxEnabled.Checked)
                 {
-                    pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
+                    if (comboBoxScreenComponent.SelectedIndex == 0)
+                    {
+                        pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
+                    }
+                    else
+                    {
+                        System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
+
+                        pictureBoxPreview.Image = screen != null
+                            ? screenCapture.GetScreenBitmap(
+                                screen.Bounds.X,
+                                screen.Bounds.Y,
+                                screen.Bounds.Width,
+                                screen.Bounds.Height,
+                                (int)numericUpDownResolutionRatio.Value,
+                                checkBoxMouse.Checked
+                            )
+                            : null;
+                    }
                 }
                 else
                 {
-                    System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
-
-                    pictureBoxPreview.Image = screen != null
-                        ? screenCapture.GetScreenBitmap(
-                            screen.Bounds.X,
-                            screen.Bounds.Y,
-                            screen.Bounds.Width,
-                            screen.Bounds.Height,
-                            (int)numericUpDownResolutionRatio.Value,
-                            checkBoxMouse.Checked
-                        )
-                        : null;
+                    pictureBoxPreview.Image = null;
                 }
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("FormScreen::UpdatePreview", ex);
             }
-        }
-
-        private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
         }
 
         private System.Windows.Forms.Screen GetScreenByIndex(int index)
@@ -359,6 +358,11 @@ namespace AutoScreenCapture
             {
                 numericUpDownJpegQuality.Enabled = false;
             }
+        }
+
+        private void updatePreview(object sender, EventArgs e)
+        {
+            UpdatePreview(ScreenCapture);
         }
     }
 }

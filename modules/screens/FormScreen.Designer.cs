@@ -105,6 +105,7 @@
             this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxPreview.TabIndex = 5;
             this.pictureBoxPreview.TabStop = false;
+            this.pictureBoxPreview.Click += new System.EventHandler(this.updatePreview);
             // 
             // buttonOK
             // 
@@ -195,6 +196,7 @@
             0,
             0,
             0});
+            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreview);
             // 
             // labelResolutionRatio
             // 
@@ -240,6 +242,7 @@
             this.checkBoxMouse.TabIndex = 12;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
+            this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreview);
             // 
             // groupBoxImage
             // 
@@ -303,6 +306,7 @@
             this.checkBoxEnabled.TabStop = false;
             this.checkBoxEnabled.Text = "Enabled";
             this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxEnabled.CheckedChanged += new System.EventHandler(this.updatePreview);
             // 
             // FormScreen
             // 
@@ -332,7 +336,6 @@
             this.Name = "FormScreen";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreen_FormClosing);
             this.Load += new System.EventHandler(this.FormScreen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();

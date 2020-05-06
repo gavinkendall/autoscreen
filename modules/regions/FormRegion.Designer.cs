@@ -121,6 +121,7 @@
             this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxPreview.TabIndex = 5;
             this.pictureBoxPreview.TabStop = false;
+            this.pictureBoxPreview.Click += new System.EventHandler(this.updatePreview);
             // 
             // labelX
             // 
@@ -174,6 +175,7 @@
             this.numericUpDownX.Name = "numericUpDownX";
             this.numericUpDownX.Size = new System.Drawing.Size(51, 20);
             this.numericUpDownX.TabIndex = 3;
+            this.numericUpDownX.ValueChanged += new System.EventHandler(this.updatePreview);
             // 
             // numericUpDownY
             // 
@@ -191,6 +193,7 @@
             this.numericUpDownY.Name = "numericUpDownY";
             this.numericUpDownY.Size = new System.Drawing.Size(51, 20);
             this.numericUpDownY.TabIndex = 4;
+            this.numericUpDownY.ValueChanged += new System.EventHandler(this.updatePreview);
             // 
             // numericUpDownWidth
             // 
@@ -208,6 +211,7 @@
             this.numericUpDownWidth.Name = "numericUpDownWidth";
             this.numericUpDownWidth.Size = new System.Drawing.Size(51, 20);
             this.numericUpDownWidth.TabIndex = 6;
+            this.numericUpDownWidth.ValueChanged += new System.EventHandler(this.updatePreview);
             // 
             // numericUpDownHeight
             // 
@@ -225,6 +229,7 @@
             this.numericUpDownHeight.Name = "numericUpDownHeight";
             this.numericUpDownHeight.Size = new System.Drawing.Size(51, 20);
             this.numericUpDownHeight.TabIndex = 7;
+            this.numericUpDownHeight.ValueChanged += new System.EventHandler(this.updatePreview);
             // 
             // buttonOK
             // 
@@ -315,6 +320,7 @@
             0,
             0,
             0});
+            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreview);
             // 
             // labelResolutionRatio
             // 
@@ -360,6 +366,7 @@
             this.checkBoxMouse.TabIndex = 12;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
+            this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreview);
             // 
             // groupBoxImage
             // 
@@ -450,6 +457,7 @@
             this.checkBoxEnabled.TabStop = false;
             this.checkBoxEnabled.Text = "Enabled";
             this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxEnabled.CheckedChanged += new System.EventHandler(this.updatePreview);
             // 
             // FormRegion
             // 
@@ -481,7 +489,6 @@
             this.Name = "FormRegion";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRegion_FormClosing);
             this.Load += new System.EventHandler(this.FormRegion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).EndInit();

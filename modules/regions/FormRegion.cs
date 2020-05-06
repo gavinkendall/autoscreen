@@ -112,6 +112,8 @@ namespace AutoScreenCapture
                 numericUpDownHeight.Value = 600;
                 checkBoxEnabled.Checked = true;
             }
+
+            UpdatePreview(screenCapture);
         }
 
         private void buttonRegionCancel_Click(object sender, EventArgs e)
@@ -268,11 +270,6 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void Tick_timerRegionPreview(object sender, EventArgs e)
-        {
-            UpdatePreview(screenCapture);
-        }
-
         private void buttonRegionBrowseFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();
@@ -287,24 +284,26 @@ namespace AutoScreenCapture
         {
             try
             {
-                pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
-                    (int)numericUpDownX.Value,
-                    (int)numericUpDownY.Value,
-                    (int)numericUpDownWidth.Value,
-                    (int)numericUpDownHeight.Value,
-                    (int)numericUpDownResolutionRatio.Value,
-                    checkBoxMouse.Checked
-                );
+                if (checkBoxEnabled.Checked)
+                {
+                    pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
+                        (int)numericUpDownX.Value,
+                        (int)numericUpDownY.Value,
+                        (int)numericUpDownWidth.Value,
+                        (int)numericUpDownHeight.Value,
+                        (int)numericUpDownResolutionRatio.Value,
+                        checkBoxMouse.Checked
+                    );
+                }
+                else
+                {
+                    pictureBoxPreview.Image = null;
+                }
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("FormRegion::UpdatePreview", ex);
             }
-        }
-
-        private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
@@ -332,6 +331,11 @@ namespace AutoScreenCapture
             {
                 numericUpDownJpegQuality.Enabled = false;
             }
+        }
+
+        private void updatePreview(object sender, EventArgs e)
+        {
+            UpdatePreview(screenCapture);
         }
     }
 }
