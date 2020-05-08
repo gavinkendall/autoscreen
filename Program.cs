@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -64,13 +63,7 @@ namespace AutoScreenCapture
                             // We've determined that an existing instance is already running. We should write out an error message informing the user.
                             string appVersion = "[(v" + Settings.ApplicationVersion + ") ";
 
-                            using (StreamWriter sw = new StreamWriter(FileSystem.StartupErrorFile, true))
-                            {
-                                sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] Cannot start " + Settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + FileSystem.ApplicationSettingsFile + "\"");
-
-                                sw.Flush();
-                                sw.Close();
-                            }
+                            FileSystem.AppendToFile(FileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] Cannot start " + Settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + FileSystem.ApplicationSettingsFile + "\"");
                         }
                     }
                 }
@@ -142,10 +135,7 @@ namespace AutoScreenCapture
                     Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT) ||
                     Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT))
                 {
-                    using (StreamWriter sw = File.AppendText(FileSystem.CommandFile))
-                    {
-                        sw.WriteLine(arg);
-                    }
+                    FileSystem.AppendToFile(FileSystem.CommandFile, arg);
                 }
             }
         }

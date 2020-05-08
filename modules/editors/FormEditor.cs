@@ -8,7 +8,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -206,7 +205,7 @@ namespace AutoScreenCapture
 
         private bool ApplicationExists()
         {
-            if (File.Exists(textBoxEditorApplication.Text))
+            if (FileSystem.FileExists(textBoxEditorApplication.Text))
             {
                 return true;
             }

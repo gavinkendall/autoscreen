@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text;
 using System.Xml;
 using System.Linq;
@@ -57,7 +56,7 @@ namespace AutoScreenCapture
         private  string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of screenshots.
         /// </summary>
         public ScreenshotCollection(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection)
         {
@@ -92,7 +91,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Adds a screenshot to the collection.
         /// </summary>
         /// <param name="screenshot"></param>
         public void Add(Screenshot screenshot)
@@ -116,7 +115,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets a screenshot based on its index.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -131,7 +130,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// The number of screenshots in the collection.
         /// </summary>
         public int Count
         {
@@ -224,12 +223,12 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the slides associated with the collection of screenshots.
         /// </summary>
-        /// <param name="filterType"></param>
-        /// <param name="filterValue"></param>
-        /// <param name="date"></param>
-        /// <returns></returns>
+        /// <param name="filterType">The type of filter to use.</param>
+        /// <param name="filterValue">The filter value to use.</param>
+        /// <param name="date">The date to use.</param>
+        /// <returns>A list of slides based on the filters being used.</returns>
         public List<Slide> GetSlides(string filterType, string filterValue, string date)
         {
             if (string.IsNullOrEmpty(date))
@@ -275,10 +274,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets a screenshot based on the name of its slide and the view ID.
         /// </summary>
-        /// <param name="slideName"></param>
-        /// <param name="viewId"></param>
+        /// <param name="slideName">The name of the slide associated with the screenshot.</param>
+        /// <param name="viewId">The view ID of the screenshot.</param>
         /// <returns></returns>
         public Screenshot GetScreenshot(string slideName, Guid viewId)
         {
@@ -315,7 +314,7 @@ namespace AutoScreenCapture
 
                 _mutexWriteFile.WaitOne();
 
-                if (_screenshotList != null && !File.Exists(FileSystem.ScreenshotsFile))
+                if (_screenshotList != null && !FileSystem.FileExists(FileSystem.ScreenshotsFile))
                 {
                     Log.WriteMessage("Could not find \"" + FileSystem.ScreenshotsFile + "\" so creating default version");
 
@@ -350,7 +349,7 @@ namespace AutoScreenCapture
                     Log.WriteMessage("Created \"" + FileSystem.ScreenshotsFile + "\"");
                 }
 
-                if (File.Exists(FileSystem.ScreenshotsFile))
+                if (FileSystem.FileExists(FileSystem.ScreenshotsFile))
                 {
                     Log.WriteDebugMessage("Screenshots file \"" + FileSystem.ScreenshotsFile + "\" found. Attempting to load XML document");
 
@@ -779,12 +778,9 @@ namespace AutoScreenCapture
                         xDoc.Save(FileSystem.ScreenshotsFile);
                     }
 
-                    if (File.Exists(FileSystem.ConfigFile))
+                    if (FileSystem.FileExists(FileSystem.ConfigFile))
                     {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nScreenshotsFile=" + FileSystem.ScreenshotsFile);
-                        }
+                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFile=" + FileSystem.ScreenshotsFile);
                     }
                 }
 
@@ -820,9 +816,9 @@ namespace AutoScreenCapture
                             {
                                 string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                                if (File.Exists(path))
+                                if (FileSystem.FileExists(path))
                                 {
-                                    File.Delete(path);
+                                    FileSystem.DeleteFile(path);
                                 }
 
                                 node.ParentNode.RemoveChild(node);

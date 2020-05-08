@@ -8,7 +8,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -172,12 +171,9 @@ namespace AutoScreenCapture
             {
                 Image image = null;
 
-                if (!string.IsNullOrEmpty(path) && File.Exists(path))
+                if (!string.IsNullOrEmpty(path) && FileSystem.FileExists(path))
                 {
-                    using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-                    {
-                        image = Image.FromStream(stream);
-                    }
+                    image = FileSystem.GetImage(path);
                 }
 
                 CaptureError = false;
@@ -466,38 +462,33 @@ namespace AutoScreenCapture
                 {
                     Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
 
-                    FileInfo fileInfo = new FileInfo(path);
-
-                    if (fileInfo.Directory != null && !fileInfo.Directory.Root.Exists)
+                    if (!FileSystem.DirectoryRootExists(path))
                     {
                         // We just want to log a normal message and not stop the screen capture session because we want to continue
                         // for other components that are using directory roots which still exist.
-                        Log.WriteMessage($"Unable to save screenshot for \"{fileInfo.Directory.Name}\". Directory root does not exist");
+                        Log.WriteMessage($"Unable to save screenshot for \"{path}\". Directory root does not exist");
                     }
-
-                    if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
+                    else
                     {
                         // This is a normal path used in Windows (such as "C:\screenshots\").
                         if (!path.StartsWith(FileSystem.PathDelimiter))
                         {
-                            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
-
-                            if (driveInfo.IsReady)
+                            if (FileSystem.DriveReady(path))
                             {
                                 int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value);
-                                double freeDiskSpacePercentage = (driveInfo.AvailableFreeSpace / (float)driveInfo.TotalSize) * 100;
+                                double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(path);
 
-                                Log.WriteDebugMessage("Percentage of free disk space on drive " + fileInfo.Directory.Root.FullName + " is " + (int) freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
+                                Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
 
                                 if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                                 {
-                                    string dirName = Path.GetDirectoryName(path);
+                                    string dirName = FileSystem.GetDirectoryName(path);
 
                                     if (!string.IsNullOrEmpty(dirName))
                                     {
-                                        if (!Directory.Exists(dirName))
+                                        if (!FileSystem.DirectoryExists(dirName))
                                         {
-                                            Directory.CreateDirectory(dirName);
+                                            FileSystem.CreateDirectory(dirName);
 
                                             Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                         }
@@ -512,7 +503,7 @@ namespace AutoScreenCapture
                                 else
                                 {
                                     // There is not enough disk space on the drive so stop the current running screen capture session and log an error message.
-                                    Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive {fileInfo.Directory.Root.FullName} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
+                                    Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
 
                                     return false;
                                 }
@@ -528,13 +519,13 @@ namespace AutoScreenCapture
                         else
                         {
                             // This is UNC network share path (such as "\\SERVER\screenshots\").
-                            string dirName = Path.GetDirectoryName(path);
+                            string dirName = FileSystem.GetDirectoryName(path);
 
                             if (!string.IsNullOrEmpty(dirName))
                             {
-                                if (!Directory.Exists(dirName))
+                                if (!FileSystem.DirectoryExists(dirName))
                                 {
-                                    Directory.CreateDirectory(dirName);
+                                    FileSystem.CreateDirectory(dirName);
 
                                     Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                 }

@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace AutoScreenCapture
@@ -138,7 +137,7 @@ namespace AutoScreenCapture
 
             if (Application != null && !string.IsNullOrEmpty(Application.Filepath))
             {
-                if (File.Exists(Application.Filepath))
+                if (FileSystem.FileExists(Application.Filepath))
                 {
                     Application.Load();
 
@@ -282,7 +281,7 @@ namespace AutoScreenCapture
                 Application.Save();
             }
 
-            if (User != null && !string.IsNullOrEmpty(User.Filepath) && !File.Exists(User.Filepath))
+            if (User != null && !string.IsNullOrEmpty(User.Filepath) && !FileSystem.FileExists(User.Filepath))
             {
                 User.Add(new Setting("IntScreenCaptureInterval", 60000));
                 User.Add(new Setting("IntCaptureLimit", 0));

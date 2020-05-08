@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -48,7 +47,7 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// The empty constructor for the schedule collection.
         /// </summary>
         public ScheduleCollection()
         {
@@ -72,7 +71,7 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: LoadXmlFileAndAddSchedules Start ::");
 
-                if (File.Exists(FileSystem.SchedulesFile))
+                if (FileSystem.FileExists(FileSystem.SchedulesFile))
                 {
                     Log.WriteDebugMessage("Schedules file \"" + FileSystem.SchedulesFile + "\" found. Attempting to load XML document");
 
@@ -307,18 +306,12 @@ namespace AutoScreenCapture
                 {
                     FileSystem.SchedulesFile = FileSystem.DefaultSchedulesFile;
 
-                    if (File.Exists(FileSystem.ConfigFile))
-                    {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nSchedulesFile=" + FileSystem.SchedulesFile);
-                        }
-                    }
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSchedulesFile=" + FileSystem.SchedulesFile);
                 }
 
-                if (File.Exists(FileSystem.SchedulesFile))
+                if (FileSystem.FileExists(FileSystem.SchedulesFile))
                 {
-                    File.Delete(FileSystem.SchedulesFile);
+                    FileSystem.DeleteFile(FileSystem.SchedulesFile);
                 }
 
                 using (XmlWriter xWriter =

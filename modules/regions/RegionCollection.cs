@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -41,7 +40,7 @@ namespace AutoScreenCapture
         private string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// The empty constructor for the region collection.
         /// </summary>
         public RegionCollection()
         {
@@ -65,7 +64,7 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: LoadXmlFileAndAddRegions Start ::");
 
-                if (File.Exists(FileSystem.RegionsFile))
+                if (FileSystem.FileExists(FileSystem.RegionsFile))
                 {
                     Log.WriteDebugMessage("Regions file \"" + FileSystem.RegionsFile + "\" found. Attempting to load XML document");
 
@@ -251,18 +250,15 @@ namespace AutoScreenCapture
                 {
                     FileSystem.RegionsFile = FileSystem.DefaultRegionsFile;
 
-                    if (File.Exists(FileSystem.ConfigFile))
+                    if (FileSystem.FileExists(FileSystem.ConfigFile))
                     {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nRegionsFile=" + FileSystem.RegionsFile);
-                        }
+                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nRegionsFile=" + FileSystem.RegionsFile);
                     }
                 }
 
-                if (File.Exists(FileSystem.RegionsFile))
+                if (FileSystem.FileExists(FileSystem.RegionsFile))
                 {
-                    File.Delete(FileSystem.RegionsFile);
+                    FileSystem.DeleteFile(FileSystem.RegionsFile);
                 }
 
                 using (XmlWriter xWriter =

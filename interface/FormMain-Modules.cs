@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -101,7 +100,7 @@ namespace AutoScreenCapture
                         SizeMode = PictureBoxSizeMode.StretchImage
                     };
 
-                    if (File.Exists(application))
+                    if (FileSystem.FileExists(application))
                     {
                         // Add an image showing the application icon of the Editor if we can find the application's path.
                         appIcon.Image = Icon.ExtractAssociatedIcon(application).ToBitmap();

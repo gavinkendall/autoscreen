@@ -9,7 +9,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Windows.Forms;
@@ -222,18 +221,17 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(path))
                 {
-                    toolStripTextBox.Text = Path.GetFileName(path);
+                    toolStripTextBox.Text = FileSystem.GetFileName(path);
                     toolStripTextBox.ToolTipText = path;
 
-                    FileInfo fileInfo = new FileInfo(path);
-
-                    if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
+                    //if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
+                    if (FileSystem.DirectoryRootExists(path))
                     {
-                        string dirName = Path.GetDirectoryName(path);
+                        string dirName = FileSystem.GetDirectoryName(path);
 
                         if (!string.IsNullOrEmpty(dirName))
                         {
-                            if (Directory.Exists(dirName) && File.Exists(path))
+                            if (FileSystem.DirectoryExists(dirName) && FileSystem.FileExists(path))
                             {
                                 toolStripTextBox.BackColor = Color.PaleGreen;
                             }
@@ -327,7 +325,7 @@ namespace AutoScreenCapture
                 }
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
-                    File.Exists(selectedScreenshot.Path))
+                    FileSystem.FileExists(selectedScreenshot.Path))
                 {
                     Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
                 }
@@ -354,7 +352,7 @@ namespace AutoScreenCapture
 
             foreach (Editor editor in formEditor.EditorCollection)
             {
-                if (editor != null && File.Exists(editor.Application))
+                if (editor != null && FileSystem.FileExists(editor.Application))
                 {
                     // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
                     // Add the Editor to the screenshot preview contextual menu.

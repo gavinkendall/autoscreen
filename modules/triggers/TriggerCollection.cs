@@ -6,9 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -58,7 +55,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (File.Exists(FileSystem.TriggersFile))
+                if (FileSystem.FileExists(FileSystem.TriggersFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.Load(FileSystem.TriggersFile);
@@ -191,18 +188,15 @@ namespace AutoScreenCapture
                 {
                     FileSystem.TriggersFile = FileSystem.DefaultTriggersFile;
 
-                    if (File.Exists(FileSystem.ConfigFile))
+                    if (FileSystem.FileExists(FileSystem.ConfigFile))
                     {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nTriggersFile=" + FileSystem.TriggersFile);
-                        }
+                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nTriggersFile=" + FileSystem.TriggersFile);
                     }
                 }
 
-                if (File.Exists(FileSystem.TriggersFile))
+                if (FileSystem.FileExists(FileSystem.TriggersFile))
                 {
-                    File.Delete(FileSystem.TriggersFile);
+                    FileSystem.DeleteFile(FileSystem.TriggersFile);
                 }
 
                 using (XmlWriter xWriter =

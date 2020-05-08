@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -246,7 +245,7 @@ namespace AutoScreenCapture
 
             foreach (Editor editor in EditorCollection)
             {
-                if (editor != null && File.Exists(editor.Application))
+                if (editor != null && FileSystem.FileExists(editor.Application))
                 {
                     comboBoxEditor.Items.Add(editor.Name);
                 }

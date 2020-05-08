@@ -6,6 +6,7 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace AutoScreenCapture
@@ -205,7 +206,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (Directory.Exists(dirName))
+                if (FileSystem.DirectoryExists(dirName))
                 {
                     DirectoryInfo di = new DirectoryInfo(dirName);
 
@@ -226,6 +227,152 @@ namespace AutoScreenCapture
             {
                 Log.WriteExceptionMessage("FileSystem::DeleteFilesInDirectory", ex);
             }
+        }
+
+        /// <summary>
+        /// Determines if the directory root exists.
+        /// </summary>
+        /// <param name="path">The path to check for the directory root.</param>
+        /// <returns>True if the directory root exists. False if the directory root does not exist.</returns>
+        public static bool DirectoryRootExists(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+
+            return fileInfo.Directory != null && fileInfo.Directory.Root.Exists;
+        }
+
+        /// <summary>
+        /// Determines if the drive of the given path is ready.
+        /// </summary>
+        /// <param name="path">The path to check for the drive's status.</param>
+        /// <returns>True if the drive is ready. False if the drive is not ready.</returns>
+        public static bool DriveReady(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+            return driveInfo.IsReady;
+        }
+
+        /// <summary>
+        /// Determines if the directory exists for a given path.
+        /// </summary>
+        /// <param name="path">The path to check if the directory exists.</param>
+        /// <returns>True if the directory exists. False if the directory does not exist.</returns>
+        public static bool DirectoryExists(string path)
+        {
+            return Directory.Exists(path);
+        }
+
+        /// <summary>
+        /// Creates a directory for a given path.
+        /// </summary>
+        /// <param name="path">The path of the directory to create.</param>
+        public static void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        /// <summary>
+        /// Determines if the file exists for a given path.
+        /// </summary>
+        /// <param name="path">The path of the file to check.</param>
+        /// <returns>True if the file exists. False if the file does not exist.</returns>
+        public static bool FileExists(string path)
+        {
+            return File.Exists(path);
+        }
+
+        public static bool HasExtension(string path)
+        {
+            return Path.HasExtension(path);
+        }
+
+        public static void CreateFile(string path)
+        {
+            File.Create(path).Dispose();
+        }
+
+        /// <summary>
+        /// Gets the free disk space percentage of the drive for a given path.
+        /// </summary>
+        /// <param name="path">The path of the drive to check.</param>
+        /// <returns>The free disk space percentage.</returns>
+        public static double FreeDiskSpacePercentage(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+            return (driveInfo.AvailableFreeSpace / (float)driveInfo.TotalSize) * 100;
+        }
+
+        /// <summary>
+        /// Gets the image from a given path.
+        /// </summary>
+        /// <param name="path">The path of the image file to get the image from.</param>
+        /// <returns>The image of an image file.</returns>
+        public static Image GetImage(string path)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                return Image.FromStream(stream);
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the directory from a given path.
+        /// </summary>
+        /// <param name="path">The path to get the directory name.</param>
+        /// <returns>The directory name of the given path.</returns>
+        public static string GetDirectoryName(string path)
+        {
+            return Path.GetDirectoryName(path);
+        }
+
+        public static string GetFileName(string path)
+        {
+            return Path.GetFileName(path);
+        }
+
+        public static void WriteToFile(string path, string line)
+        {
+            File.WriteAllText(path, line);
+        }
+
+        public static void WriteToFile(string path, string[] linesToWrite)
+        {
+            File.WriteAllLines(path, linesToWrite);
+        }
+
+        public static void AppendToFile(string path, string line)
+        {
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(line);
+                sw.Flush();
+                sw.Close();
+            }
+        }
+
+        public static string[] ReadFromFile(string path)
+        {
+            return File.ReadAllLines(path);
+        }
+
+        public static char DirectorySeparatorChar()
+        {
+            return Path.DirectorySeparatorChar;
+        }
+
+        public static void DeleteFile(string path)
+        {
+            File.Delete(path);
+        }
+
+        public static long FileContentLength(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            return fileInfo.Length;
         }
     }
 }

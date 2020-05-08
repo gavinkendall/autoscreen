@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace AutoScreenCapture
@@ -38,12 +37,12 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!Directory.Exists(Path.GetDirectoryName(FileSystem.ConfigFile)))
+                if (!FileSystem.DirectoryExists(FileSystem.GetDirectoryName(FileSystem.ConfigFile)))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(FileSystem.ConfigFile));
+                    FileSystem.CreateDirectory(FileSystem.GetDirectoryName(FileSystem.ConfigFile));
                 }
 
-                if (!File.Exists(FileSystem.ConfigFile))
+                if (!FileSystem.FileExists(FileSystem.ConfigFile))
                 {
                     string[] linesToWrite =
                     {
@@ -80,10 +79,10 @@ namespace AutoScreenCapture
                         "SchedulesFile=" + FileSystem.DefaultSchedulesFile, ""
                     };
 
-                    File.WriteAllLines(FileSystem.ConfigFile, linesToWrite);
+                    FileSystem.WriteToFile(FileSystem.ConfigFile, linesToWrite);
                 }
 
-                foreach (string line in File.ReadAllLines(FileSystem.ConfigFile))
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
                     string path;
 
@@ -144,14 +143,11 @@ namespace AutoScreenCapture
             {
                 FileSystem.ScreenshotsFolder = FileSystem.DefaultScreenshotsFolder;
 
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
-                }
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
 
-                if (!Directory.Exists(FileSystem.DefaultScreenshotsFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultScreenshotsFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
+                    FileSystem.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
                 }
             }
 
@@ -159,14 +155,11 @@ namespace AutoScreenCapture
             {
                 FileSystem.DebugFolder = FileSystem.DefaultDebugFolder;
 
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nDebugFolder=" + FileSystem.DefaultDebugFolder);
-                }
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DefaultDebugFolder);
 
-                if (!Directory.Exists(FileSystem.DefaultDebugFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultDebugFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.DefaultDebugFolder);
+                    FileSystem.CreateDirectory(FileSystem.DefaultDebugFolder);
                 }
             }
 
@@ -174,14 +167,11 @@ namespace AutoScreenCapture
             {
                 FileSystem.LogsFolder = FileSystem.DefaultLogsFolder;
 
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nLogsFolder=" + FileSystem.DefaultLogsFolder);
-                }
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.DefaultLogsFolder);
 
-                if (!Directory.Exists(FileSystem.DefaultLogsFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultLogsFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.DefaultLogsFolder);
+                    FileSystem.CreateDirectory(FileSystem.DefaultLogsFolder);
                 }
             }
         }
@@ -192,14 +182,11 @@ namespace AutoScreenCapture
             {
                 FileSystem.CommandFile = FileSystem.DefaultCommandFile;
 
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nCommandFile=" + FileSystem.DefaultCommandFile);
-                }
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.DefaultCommandFile);
 
-                if (!File.Exists(FileSystem.DefaultCommandFile))
+                if (!FileSystem.FileExists(FileSystem.DefaultCommandFile))
                 {
-                    File.Create(FileSystem.DefaultCommandFile).Dispose();
+                    FileSystem.CreateFile(FileSystem.DefaultCommandFile);
                 }
             }
 
@@ -207,14 +194,11 @@ namespace AutoScreenCapture
             {
                 FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;
 
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
-                }
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
 
-                if (!Directory.Exists(FileSystem.DefaultSettingsFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
                 }
 
                 SettingCollection applicationSettingsCollection = new SettingCollection
@@ -229,14 +213,11 @@ namespace AutoScreenCapture
             {
                 FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
 
-                using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                {
-                    sw.WriteLine("\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
-                }
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
 
-                if (!Directory.Exists(FileSystem.DefaultSettingsFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
                 }
 
                 SettingCollection userSettingsCollection = new SettingCollection
@@ -319,27 +300,27 @@ namespace AutoScreenCapture
             tagCollection.Add(new Tag("user", TagType.User, enabled: true));
             tagCollection.Add(new Tag("machine", TagType.Machine, enabled: true));
 
-            path = MacroParser.ParseTagsForFolderPath(path, tagCollection);
+            path = MacroParser.ParseTagsForFolderPath(false, path, tagCollection);
 
-            if (Path.HasExtension(path))
+            if (FileSystem.HasExtension(path))
             {
-                string dir = Path.GetDirectoryName(path);
+                string dir = FileSystem.GetDirectoryName(path);
 
-                if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
+                if (!string.IsNullOrEmpty(dir) && !FileSystem.DirectoryExists(dir))
                 {
-                    Directory.CreateDirectory(dir);
+                    FileSystem.CreateDirectory(dir);
                 }
             }
             else
             {
-                if (!path.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                if (!path.EndsWith(FileSystem.DirectorySeparatorChar().ToString()))
                 {
-                    path += Path.DirectorySeparatorChar;
+                    path += FileSystem.DirectorySeparatorChar();
                 }
 
-                if (!string.IsNullOrEmpty(path) && !Directory.Exists(path))
+                if (!string.IsNullOrEmpty(path) && !FileSystem.DirectoryExists(path))
                 {
-                    Directory.CreateDirectory(path);
+                    FileSystem.CreateDirectory(path);
                 }
             }
 

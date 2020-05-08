@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -30,9 +29,9 @@ namespace AutoScreenCapture
             }
 
             // Parse commands issued externally via the command line.
-            if (File.Exists(FileSystem.CommandFile))
+            if (FileSystem.FileExists(FileSystem.CommandFile))
             {
-                string[] args = File.ReadAllLines(FileSystem.CommandFile);
+                string[] args = FileSystem.ReadFromFile(FileSystem.CommandFile);
 
                 if (args.Length > 0)
                 {
@@ -41,7 +40,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                File.Create(FileSystem.CommandFile).Dispose();
+                FileSystem.CreateFile(FileSystem.CommandFile);
             }
 
             // Displays the next time screenshots are going to be captured in the system tray icon's tool tip.

@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using AutoScreenCapture.Properties;
 
@@ -144,7 +143,7 @@ namespace AutoScreenCapture
 
             foreach (Editor editor in formEditor.EditorCollection)
             {
-                if (editor != null && File.Exists(editor.Application))
+                if (editor != null && FileSystem.FileExists(editor.Application))
                 {
                     toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
                 }

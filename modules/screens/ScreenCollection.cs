@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -38,7 +37,7 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// The empty constructor for the screen collection.
         /// </summary>
         public ScreenCollection()
         {
@@ -54,7 +53,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets a component by the component index.
         /// </summary>
         /// <param name="component"></param>
         /// <returns></returns>
@@ -80,7 +79,7 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: LoadXmlFileAndAddScreens Start ::");
 
-                if (File.Exists(FileSystem.ScreensFile))
+                if (FileSystem.FileExists(FileSystem.ScreensFile))
                 {
                     Log.WriteDebugMessage("Screens file \"" + FileSystem.ScreensFile + "\" found. Attempting to load XML document");
 
@@ -236,18 +235,15 @@ namespace AutoScreenCapture
                 {
                     FileSystem.ScreensFile = FileSystem.DefaultScreensFile;
 
-                    if (File.Exists(FileSystem.ConfigFile))
+                    if (FileSystem.FileExists(FileSystem.ConfigFile))
                     {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nScreensFile=" + FileSystem.ScreensFile);
-                        }
+                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreensFile=" + FileSystem.ScreensFile);
                     }
                 }
 
-                if (File.Exists(FileSystem.ScreensFile))
+                if (FileSystem.FileExists(FileSystem.ScreensFile))
                 {
-                    File.Delete(FileSystem.ScreensFile);
+                    FileSystem.DeleteFile(FileSystem.ScreensFile);
                 }
 
                 using (XmlWriter xWriter =

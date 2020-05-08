@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -181,15 +180,13 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(Filepath)) return;
 
-                if (File.Exists(Filepath))
+                if (FileSystem.FileExists(Filepath))
                 {
-                    FileInfo fileInfo = new FileInfo(Filepath);
-
                     // Check the size of the settings file.
                     // Delete the file if it's too big so we don't hang.
-                    if (fileInfo.Length > MAX_FILE_SIZE)
+                    if (FileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
                     {
-                        File.Delete(Filepath);
+                        FileSystem.DeleteFile(Filepath);
 
                         Log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
 
@@ -262,9 +259,9 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (File.Exists(Filepath))
+                if (FileSystem.FileExists(Filepath))
                 {
-                    File.Delete(Filepath);
+                    FileSystem.DeleteFile(Filepath);
                 }
 
                 using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))

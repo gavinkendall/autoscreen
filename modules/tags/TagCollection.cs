@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -91,7 +90,7 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: LoadXmlFileAndAddTags Start ::");
 
-                if (File.Exists(FileSystem.TagsFile))
+                if (FileSystem.FileExists(FileSystem.TagsFile))
                 {
                     Log.WriteDebugMessage("Tags file \"" + FileSystem.TagsFile + "\" found. Attempting to load XML document");
 
@@ -300,18 +299,15 @@ namespace AutoScreenCapture
                 {
                     FileSystem.TagsFile = FileSystem.DefaultTagsFile;
 
-                    if (File.Exists(FileSystem.ConfigFile))
+                    if (FileSystem.FileExists(FileSystem.ConfigFile))
                     {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nTagsFile=" + FileSystem.TagsFile);
-                        }
+                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nTagsFile=" + FileSystem.TagsFile);
                     }
                 }
 
-                if (File.Exists(FileSystem.TagsFile))
+                if (FileSystem.FileExists(FileSystem.TagsFile))
                 {
-                    File.Delete(FileSystem.TagsFile);
+                    FileSystem.DeleteFile(FileSystem.TagsFile);
                 }
 
                 using (XmlWriter xWriter =

@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text;
 using System.Xml;
 
@@ -31,7 +30,7 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// The empty constructor for the editor collection.
         /// </summary>
         public EditorCollection()
         {
@@ -55,7 +54,7 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: LoadXmlFileAndAddEditors Start ::");
 
-                if (File.Exists(FileSystem.EditorsFile))
+                if (FileSystem.FileExists(FileSystem.EditorsFile))
                 {
                     Log.WriteDebugMessage("Editors file \"" + FileSystem.EditorsFile + "\" found. Attempting to load XML document");
 
@@ -121,7 +120,7 @@ namespace AutoScreenCapture
                     // This is going to get maintenance heavy. I just know it.
 
                     // Microsoft Paint
-                    if (File.Exists(@"C:\Windows\System32\mspaint.exe"))
+                    if (FileSystem.FileExists(@"C:\Windows\System32\mspaint.exe"))
                     {
                         Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "%screenshot%"));
 
@@ -130,38 +129,38 @@ namespace AutoScreenCapture
                     }
 
                     // Microsoft Outlook
-                    if (File.Exists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
+                    if (FileSystem.FileExists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
                     {
                         Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a %screenshot%"));
                     }
 
                     // Chrome
-                    if (File.Exists(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"))
+                    if (FileSystem.FileExists(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"))
                     {
                         Add(new Editor("Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "%screenshot%"));
                     }
 
                     // Firefox
-                    if (File.Exists(@"C:\Program Files\Mozilla Firefox\firefox.exe"))
+                    if (FileSystem.FileExists(@"C:\Program Files\Mozilla Firefox\firefox.exe"))
                     {
                         Add(new Editor("Firefox", @"C:\Program Files\Mozilla Firefox\firefox.exe", "%screenshot%"));
                     }
 
                     // GIMP
                     // We assume GIMP will be in the default location available for all users on 64-bit systems.
-                    if (File.Exists(@"C:\Program Files\GIMP 2\bin\gimp-2.10.exe"))
+                    if (FileSystem.FileExists(@"C:\Program Files\GIMP 2\bin\gimp-2.10.exe"))
                     {
                         Add(new Editor("GIMP", @"C:\Program Files\GIMP 2\bin\gimp-2.10.exe", "%screenshot%"));
                     }
 
                     // Glimpse
-                    if (File.Exists(@"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe"))
+                    if (FileSystem.FileExists(@"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe"))
                     {
                         Add(new Editor("Glimpse", @"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe", "%screenshot%"));
                     }
 
                     // Clip Studio Paint
-                    if (File.Exists(@"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe"))
+                    if (FileSystem.FileExists(@"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe"))
                     {
                         Add(new Editor("Clip Studio Paint", @"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe", "%screenshot%"));
                     }
@@ -200,18 +199,15 @@ namespace AutoScreenCapture
                 {
                     FileSystem.EditorsFile = FileSystem.DefaultEditorsFile;
 
-                    if (File.Exists(FileSystem.ConfigFile))
+                    if (FileSystem.FileExists(FileSystem.ConfigFile))
                     {
-                        using (StreamWriter sw = File.AppendText(FileSystem.ConfigFile))
-                        {
-                            sw.WriteLine("\nEditorsFile=" + FileSystem.EditorsFile);
-                        }
+                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nEditorsFile=" + FileSystem.EditorsFile);
                     }
                 }
 
-                if (File.Exists(FileSystem.EditorsFile))
+                if (FileSystem.FileExists(FileSystem.EditorsFile))
                 {
-                    File.Delete(FileSystem.EditorsFile);
+                    FileSystem.DeleteFile(FileSystem.EditorsFile);
                 }
 
                 using (XmlWriter xWriter =

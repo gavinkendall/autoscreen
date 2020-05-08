@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Threading;
 
 namespace AutoScreenCapture
@@ -99,50 +98,29 @@ namespace AutoScreenCapture
                     FileSystem.LogsFolder = FileSystem.DebugFolder + "logs" + FileSystem.PathDelimiter;
                 }
 
-                if (!Directory.Exists(FileSystem.DebugFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.DebugFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.DebugFolder);
+                    FileSystem.CreateDirectory(FileSystem.DebugFolder);
                 }
 
-                if (!Directory.Exists(FileSystem.LogsFolder))
+                if (!FileSystem.DirectoryExists(FileSystem.LogsFolder))
                 {
-                    Directory.CreateDirectory(FileSystem.LogsFolder);
+                    FileSystem.CreateDirectory(FileSystem.LogsFolder);
                 }
 
                 // These are just general errors from the application so, if we have one, then write it out to the error file.
                 if (writeError)
                 {
-                    using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
-                    {
-                        sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] ERROR: " + message);
-
-                        sw.Flush();
-                        sw.Close();
-                    }
+                    FileSystem.AppendToFile(FileSystem.DebugFolder + errorFile + extension, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] ERROR: " + message);
                 }
 
                 // Log any exception errors we encounter.
                 if (ex != null)
                 {
-                    using (StreamWriter sw = new StreamWriter(FileSystem.DebugFolder + errorFile + extension, true))
-                    {
-                        sw.WriteLine(appVersion +
-                                     DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Exception Message: " +
-                                     ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
+                    string exceptionError = appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Exception Message: " + ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace;
 
-                        sw.Flush();
-                        sw.Close();
-                    }
-
-                    using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
-                    {
-                        sw.WriteLine(appVersion +
-                                     DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Exception Message: " +
-                                     ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace);
-
-                        sw.Flush();
-                        sw.Close();
-                    }
+                    FileSystem.AppendToFile(FileSystem.DebugFolder + errorFile + extension, exceptionError);
+                    FileSystem.AppendToFile(FileSystem.LogsFolder + logFile + extension, exceptionError);
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.
@@ -154,30 +132,16 @@ namespace AutoScreenCapture
                 else
                 {
                     // Write to the main log file.
-                    using (StreamWriter sw = new StreamWriter(FileSystem.LogsFolder + logFile + extension, true))
-                    {
-                        sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
-
-                        sw.Flush();
-                        sw.Close();
-                    }
+                    FileSystem.AppendToFile(FileSystem.LogsFolder + logFile + extension, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
 
                     // Create a date-stamped directory if it does not already exist.
-                    if (!Directory.Exists(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat)))
+                    if (!FileSystem.DirectoryExists(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat)))
                     {
-                        Directory.CreateDirectory(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat));
+                        FileSystem.CreateDirectory(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat));
                     }
 
                     // Write to a log file within a directory representing the day when the message was logged.
-                    using (StreamWriter sw = new StreamWriter(
-                        FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat) + FileSystem.PathDelimiter +
-                        logFile + "_" + DateTime.Now.ToString(MacroParser.DateFormat) + extension, true))
-                    {
-                        sw.WriteLine(appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
-
-                        sw.Flush();
-                        sw.Close();
-                    }
+                    FileSystem.AppendToFile(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat) + FileSystem.PathDelimiter + logFile + "_" + DateTime.Now.ToString(MacroParser.DateFormat) + extension, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
                 }
             }
             finally

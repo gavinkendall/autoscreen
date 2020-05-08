@@ -6,7 +6,6 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -32,7 +31,7 @@ namespace AutoScreenCapture
                 //
                 // Also, this ensures that a sensitive command such as the -passphrase=x command is
                 // immediately removed from the file.
-                File.WriteAllText(FileSystem.CommandFile, String.Empty);
+                FileSystem.WriteToFile(FileSystem.CommandFile, string.Empty);
 
                 ScreenCapture.AutoStartFromCommandLine = Convert.ToBoolean(Settings.Application.GetByKey("AutoStartFromCommandLine", defaultValue: false).Value);
 
