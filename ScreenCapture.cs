@@ -515,16 +515,25 @@ namespace AutoScreenCapture
 
                         if (!string.IsNullOrEmpty(dirName))
                         {
-                            if (!FileSystem.DirectoryExists(dirName))
+                            try
                             {
-                                FileSystem.CreateDirectory(dirName);
+                                if (!FileSystem.DirectoryExists(dirName))
+                                {
+                                    FileSystem.CreateDirectory(dirName);
 
-                                Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
+                                    Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
+                                }
+
+                                screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+
+                                SaveToFile(path, format, jpegQuality, bitmap);
                             }
-
-                            screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
-
-                            SaveToFile(path, format, jpegQuality, bitmap);
+                            catch (Exception)
+                            {
+                                // We don't want to stop the screen capture session at this point because there may be other components that
+                                // can write to their given paths. If this is a misconfigured path for a particular component then just log an error.
+                                Log.WriteErrorMessage($"Cannot write to \"{path}\" because the user may not have the appropriate permissions to access the path");
+                            }
                         }
                     }
                 }
