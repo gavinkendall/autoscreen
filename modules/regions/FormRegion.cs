@@ -16,6 +16,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegion : Form
     {
+        private FormMacroTagsToolWindow _formMacroTags;
+
         /// <summary>
         /// A collection of regions.
         /// </summary>
@@ -53,6 +55,8 @@ namespace AutoScreenCapture
 
         private void FormRegion_Load(object sender, EventArgs e)
         {
+            HelpMessage("This is where to configure a region capture. Change the X, Y, Width, and Height properties while watching Preview");
+
             ScreenDictionary.Clear();
             comboBoxScreenTemplate.Items.Clear();
 
@@ -120,6 +124,11 @@ namespace AutoScreenCapture
 
             UpdatePreviewMacro();
             UpdatePreviewImage(ScreenCapture);
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonRegionCancel_Click(object sender, EventArgs e)
@@ -300,10 +309,16 @@ namespace AutoScreenCapture
                         (int)numericUpDownResolutionRatio.Value,
                         checkBoxMouse.Checked
                     );
+
+                    UpdatePreviewMacro();
                 }
                 else
                 {
                     pictureBoxPreview.Image = null;
+
+                    textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
+                    textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
+                    textBoxMacroPreview.Text = "[Enabled is off and this region is inactive. No screenshots will be taken during screen capture]";
                 }
             }
             catch (Exception ex)
@@ -314,6 +329,9 @@ namespace AutoScreenCapture
 
         private void UpdatePreviewMacro()
         {
+            textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
+            textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
+
             textBoxMacroPreview.Text = MacroParser.ParseTagsForFolderPath(true, textBoxFolder.Text, TagCollection) +
                 MacroParser.ParseTagsForFilePath(true, textBoxName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
@@ -356,6 +374,55 @@ namespace AutoScreenCapture
         private void updatePreviewMacro(object sender, EventArgs e)
         {
             UpdatePreviewMacro();
+        }
+
+        private void buttonMacroTags_Click(object sender, EventArgs e)
+        {
+            _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
+            _formMacroTags.Show();
+        }
+
+        private void checkBoxMouse_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
+        }
+
+        private void comboBoxFormat_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Change the image format for the screenshots taken by this region capture. JPEG is the recommended image format");
+        }
+
+        private void comboBoxScreenTemplate_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Acquire the width and height from an available screen to import as the width and height for your region capture");
+        }
+
+        private void checkBoxEnabled_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("You can capture this region if Enabled is checked or turned on otherwise you can disable this region capture so as to not take screenshots for it");
+        }
+
+        private void buttonBrowseFolder_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Browse for a folder where screenshots of this region capture will be saved to");
+        }
+
+        private void textBoxMacro_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Macro tags are used for acquiring information associated with a particular tag (such as %date% and %time% for the current date and time)");
+        }
+
+        private void buttonMacroTags_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Open a list of available macro tags");
+        }
+
+        private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_formMacroTags != null)
+            {
+                _formMacroTags.Close();
+            }
         }
     }
 }

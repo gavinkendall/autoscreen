@@ -192,7 +192,7 @@ namespace AutoScreenCapture
             // 
             // toolStripSplitButtonHelp
             // 
-            this.toolStripSplitButtonHelp.Image = global::AutoScreenCapture.Properties.Resources.about;
+            this.toolStripSplitButtonHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
             this.toolStripSplitButtonHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonHelp.Name = "toolStripSplitButtonHelp";
             this.toolStripSplitButtonHelp.Size = new System.Drawing.Size(64, 20);

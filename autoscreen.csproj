@@ -140,6 +140,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="keyboard\HotKeyMap.cs" />
+    <Compile Include="modules\tags\FormMacroTagsToolWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="modules\tags\FormMacroTagsToolWindow.Designer.cs">
+      <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="macro\MacroTagExpressionParser.cs" />
     <Compile Include="interface\FormMain-Tags.cs">
       <SubType>Form</SubType>
@@ -232,6 +238,9 @@
     <Compile Include="versioning\VersionCollection.cs" />
     <Compile Include="versioning\Version.cs" />
     <Compile Include="versioning\VersionManager.cs" />
+    <EmbeddedResource Include="modules\tags\FormMacroTagsToolWindow.resx">
+      <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -282,10 +291,12 @@
     <Content Include="icons\png\autoscreen-running.png" />
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />
+    <None Include="images\brick.png" />
     <Content Include="images\capture_archive.png" />
     <Content Include="images\capture_edit.png" />
     <Content Include="images\delete.png" />
     <Content Include="images\email.png" />
+    <None Include="images\help.png" />
     <Content Include="images\keyboard.png" />
     <Content Include="images\configure.png" />
     <Content Include="images\openfolder.png" />

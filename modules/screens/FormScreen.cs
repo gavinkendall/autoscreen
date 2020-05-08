@@ -16,6 +16,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormScreen : Form
     {
+        private FormMacroTagsToolWindow _formMacroTags;
+
         /// <summary>
         /// A collection of screens.
         /// </summary>
@@ -58,6 +60,8 @@ namespace AutoScreenCapture
 
         private void FormScreen_Load(object sender, EventArgs e)
         {
+            HelpMessage("This is where to configure a screen capture. Select an available screen from the Component drop-down menu and keep an eye on Preview");
+
             comboBoxFormat.Items.Clear();
             comboBoxScreenComponent.Items.Clear();
 
@@ -117,6 +121,11 @@ namespace AutoScreenCapture
 
             UpdatePreviewMacro();
             UpdatePreviewImage(ScreenCapture);
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -315,10 +324,16 @@ namespace AutoScreenCapture
                             )
                             : null;
                     }
+
+                    UpdatePreviewMacro();
                 }
                 else
                 {
                     pictureBoxPreview.Image = null;
+
+                    textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
+                    textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
+                    textBoxMacroPreview.Text = "[Enabled is off and this screen is inactive. No screenshots will be taken during screen capture]";
                 }
             }
             catch (Exception ex)
@@ -329,6 +344,9 @@ namespace AutoScreenCapture
 
         private void UpdatePreviewMacro()
         {
+            textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
+            textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
+
             textBoxMacroPreview.Text = MacroParser.ParseTagsForFolderPath(true, textBoxFolder.Text, TagCollection) +
                 MacroParser.ParseTagsForFilePath(true, textBoxName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
@@ -383,6 +401,50 @@ namespace AutoScreenCapture
         private void updatePreviewMacro(object sender, EventArgs e)
         {
             UpdatePreviewMacro();
+        }
+
+        private void buttonMacroTags_Click(object sender, EventArgs e)
+        {
+            _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
+            _formMacroTags.Show();
+        }
+
+        private void checkBoxMouse_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
+        }
+
+        private void comboBoxFormat_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
+        }
+
+        private void checkBoxEnabled_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("You can capture this screen if Enabled is checked or turned on otherwise you can disable this screen capture so as to not take screenshots for it");
+        }
+
+        private void buttonScreenBrowseFolder_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Browse for a folder where screenshots of this screen capture will be saved to");
+        }
+
+        private void textBoxMacro_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Macro tags are used for acquiring information associated with a particular tag (such as %date% and %time% for the current date and time)");
+        }
+
+        private void buttonMacroTags_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Open a list of available macro tags");
+        }
+
+        private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_formMacroTags != null)
+            {
+                _formMacroTags.Close();
+            }
         }
     }
 }
