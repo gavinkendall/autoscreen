@@ -230,30 +230,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Determines if the drive of the given path is ready.
-        /// </summary>
-        /// <param name="path">The path to check for the drive's status.</param>
-        /// <returns>True if the drive is ready. False if the drive is not ready.</returns>
-        public static bool DriveReady(string path)
-        {
-            if (string.IsNullOrEmpty(path) || path.StartsWith(PathDelimiter))
-            {
-                return false;
-            }
-
-            System.Text.RegularExpressions.Regex rgxDriveLetter = new System.Text.RegularExpressions.Regex($"^[a-zA-Z]{1}");
-
-            if (!rgxDriveLetter.IsMatch(path))
-            {
-                return false;
-            }
-
-            DriveInfo driveInfo = new DriveInfo(rgxDriveLetter.Match(path).Value);
-
-            return driveInfo.IsReady;
-        }
-
-        /// <summary>
         /// Determines if the directory exists for a given path.
         /// </summary>
         /// <param name="path">The path to check if the directory exists.</param>
