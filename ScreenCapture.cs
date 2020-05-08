@@ -462,78 +462,69 @@ namespace AutoScreenCapture
                 {
                     Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
 
-                    if (!FileSystem.DirectoryRootExists(path))
+                    // This is a normal path used in Windows (such as "C:\screenshots\").
+                    if (!path.StartsWith(FileSystem.PathDelimiter))
                     {
-                        // We just want to log a normal message and not stop the screen capture session because we want to continue
-                        // for other components that are using directory roots which still exist.
-                        Log.WriteMessage($"Unable to save screenshot for \"{path}\". Directory root does not exist");
-                    }
-                    else
-                    {
-                        // This is a normal path used in Windows (such as "C:\screenshots\").
-                        if (!path.StartsWith(FileSystem.PathDelimiter))
+                        if (FileSystem.DriveReady(path))
                         {
-                            if (FileSystem.DriveReady(path))
+                            int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value);
+                            double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(path);
+
+                            Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
+
+                            if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                             {
-                                int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value);
-                                double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(path);
+                                string dirName = FileSystem.GetDirectoryName(path);
 
-                                Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
-
-                                if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
+                                if (!string.IsNullOrEmpty(dirName))
                                 {
-                                    string dirName = FileSystem.GetDirectoryName(path);
-
-                                    if (!string.IsNullOrEmpty(dirName))
+                                    if (!FileSystem.DirectoryExists(dirName))
                                     {
-                                        if (!FileSystem.DirectoryExists(dirName))
-                                        {
-                                            FileSystem.CreateDirectory(dirName);
+                                        FileSystem.CreateDirectory(dirName);
 
-                                            Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
-                                        }
-
-                                        Screenshot screenshot = new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label);
-
-                                        screenshotCollection.Add(screenshot);
-
-                                        SaveToFile(path, format, jpegQuality, bitmap);
+                                        Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                     }
-                                }
-                                else
-                                {
-                                    // There is not enough disk space on the drive so stop the current running screen capture session and log an error message.
-                                    Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
 
-                                    return false;
+                                    Screenshot screenshot = new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label);
+
+                                    screenshotCollection.Add(screenshot);
+
+                                    SaveToFile(path, format, jpegQuality, bitmap);
                                 }
                             }
                             else
                             {
-                                // Drive isn't ready so stop the current running screen capture session and log an error message.
-                                Log.WriteErrorMessage("Unable to save screenshot. Drive not ready");
+                                // There is not enough disk space on the drive so stop the current running screen capture session and log an error message.
+                                Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
 
                                 return false;
                             }
                         }
                         else
                         {
-                            // This is UNC network share path (such as "\\SERVER\screenshots\").
-                            string dirName = FileSystem.GetDirectoryName(path);
+                            // Drive isn't ready so stop the current running screen capture session and log an error message.
+                            Log.WriteErrorMessage("Unable to save screenshot. Drive not ready");
 
-                            if (!string.IsNullOrEmpty(dirName))
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        // This is UNC network share path (such as "\\SERVER\screenshots\").
+                        string dirName = FileSystem.GetDirectoryName(path);
+
+                        if (!string.IsNullOrEmpty(dirName))
+                        {
+                            if (!FileSystem.DirectoryExists(dirName))
                             {
-                                if (!FileSystem.DirectoryExists(dirName))
-                                {
-                                    FileSystem.CreateDirectory(dirName);
+                                FileSystem.CreateDirectory(dirName);
 
-                                    Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
-                                }
-
-                                screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
-
-                                SaveToFile(path, format, jpegQuality, bitmap);
+                                Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                             }
+
+                            screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+
+                            SaveToFile(path, format, jpegQuality, bitmap);
                         }
                     }
                 }

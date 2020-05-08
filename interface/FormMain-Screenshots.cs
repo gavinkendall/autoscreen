@@ -224,22 +224,18 @@ namespace AutoScreenCapture
                     toolStripTextBox.Text = FileSystem.GetFileName(path);
                     toolStripTextBox.ToolTipText = path;
 
-                    //if (fileInfo.Directory != null && fileInfo.Directory.Root.Exists)
-                    if (FileSystem.DirectoryRootExists(path))
-                    {
-                        string dirName = FileSystem.GetDirectoryName(path);
+                    string dirName = FileSystem.GetDirectoryName(path);
 
-                        if (!string.IsNullOrEmpty(dirName))
+                    if (!string.IsNullOrEmpty(dirName))
+                    {
+                        if (FileSystem.DirectoryExists(dirName) && FileSystem.FileExists(path))
                         {
-                            if (FileSystem.DirectoryExists(dirName) && FileSystem.FileExists(path))
-                            {
-                                toolStripTextBox.BackColor = Color.PaleGreen;
-                            }
-                            else
-                            {
-                                toolStripTextBox.BackColor = Color.PaleVioletRed;
-                                toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
-                            }
+                            toolStripTextBox.BackColor = Color.PaleGreen;
+                        }
+                        else
+                        {
+                            toolStripTextBox.BackColor = Color.PaleVioletRed;
+                            toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
                         }
                     }
 

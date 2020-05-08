@@ -206,7 +206,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (FileSystem.DirectoryExists(dirName))
+                if (DirectoryExists(dirName))
                 {
                     DirectoryInfo di = new DirectoryInfo(dirName);
 
@@ -230,26 +230,25 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Determines if the directory root exists.
-        /// </summary>
-        /// <param name="path">The path to check for the directory root.</param>
-        /// <returns>True if the directory root exists. False if the directory root does not exist.</returns>
-        public static bool DirectoryRootExists(string path)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-
-            return fileInfo.Directory != null && fileInfo.Directory.Root.Exists;
-        }
-
-        /// <summary>
         /// Determines if the drive of the given path is ready.
         /// </summary>
         /// <param name="path">The path to check for the drive's status.</param>
         /// <returns>True if the drive is ready. False if the drive is not ready.</returns>
         public static bool DriveReady(string path)
         {
-            FileInfo fileInfo = new FileInfo(path);
-            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+            if (string.IsNullOrEmpty(path) || path.StartsWith(PathDelimiter))
+            {
+                return false;
+            }
+
+            System.Text.RegularExpressions.Regex rgxDriveLetter = new System.Text.RegularExpressions.Regex($"^[a-zA-Z]{1}");
+
+            if (!rgxDriveLetter.IsMatch(path))
+            {
+                return false;
+            }
+
+            DriveInfo driveInfo = new DriveInfo(rgxDriveLetter.Match(path).Value);
 
             return driveInfo.IsReady;
         }
@@ -261,6 +260,11 @@ namespace AutoScreenCapture
         /// <returns>True if the directory exists. False if the directory does not exist.</returns>
         public static bool DirectoryExists(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+
             return Directory.Exists(path);
         }
 
@@ -270,6 +274,11 @@ namespace AutoScreenCapture
         /// <param name="path">The path of the directory to create.</param>
         public static void CreateDirectory(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             Directory.CreateDirectory(path);
         }
 
@@ -280,6 +289,11 @@ namespace AutoScreenCapture
         /// <returns>True if the file exists. False if the file does not exist.</returns>
         public static bool FileExists(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+
             return File.Exists(path);
         }
 
@@ -290,6 +304,11 @@ namespace AutoScreenCapture
         /// <returns>True if the file has a file extension. False if the file does not have a file extension.</returns>
         public static bool HasExtension(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+
             return Path.HasExtension(path);
         }
 
@@ -299,6 +318,11 @@ namespace AutoScreenCapture
         /// <param name="path">The path of the file to create.</param>
         public static void CreateFile(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             File.Create(path).Dispose();
         }
 
@@ -309,6 +333,11 @@ namespace AutoScreenCapture
         /// <returns>The free disk space percentage.</returns>
         public static double FreeDiskSpacePercentage(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return 0;
+            }
+
             FileInfo fileInfo = new FileInfo(path);
             DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
 
@@ -322,6 +351,11 @@ namespace AutoScreenCapture
         /// <returns>The image of an image file.</returns>
         public static Image GetImage(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return Image.FromStream(stream);
@@ -335,6 +369,11 @@ namespace AutoScreenCapture
         /// <returns>The directory name of the given path.</returns>
         public static string GetDirectoryName(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return string.Empty;
+            }
+
             return Path.GetDirectoryName(path);
         }
 
@@ -345,6 +384,11 @@ namespace AutoScreenCapture
         /// <returns>The filename of the given path.</returns>
         public static string GetFileName(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return string.Empty;
+            }
+
             return Path.GetFileName(path);
         }
 
@@ -355,6 +399,11 @@ namespace AutoScreenCapture
         /// <param name="line">The line of text to write to the file.</param>
         public static void WriteToFile(string path, string line)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             File.WriteAllText(path, line);
         }
 
@@ -365,6 +414,11 @@ namespace AutoScreenCapture
         /// <param name="linesToWrite">The array of lines to write to the file.</param>
         public static void WriteToFile(string path, string[] linesToWrite)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             File.WriteAllLines(path, linesToWrite);
         }
 
@@ -375,6 +429,11 @@ namespace AutoScreenCapture
         /// <param name="line">The line to append to the file.</param>
         public static void AppendToFile(string path, string line)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             using (StreamWriter sw = File.AppendText(path))
             {
                 sw.WriteLine(line);
@@ -390,6 +449,11 @@ namespace AutoScreenCapture
         /// <returns>An array of lines representing the lines of text in the file.</returns>
         public static string[] ReadFromFile(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
             return File.ReadAllLines(path);
         }
 
@@ -408,6 +472,11 @@ namespace AutoScreenCapture
         /// <param name="path">The path of the file to delete.</param>
         public static void DeleteFile(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
             File.Delete(path);
         }
 
@@ -418,6 +487,11 @@ namespace AutoScreenCapture
         /// <returns>The number of characters in the file.</returns>
         public static long FileContentLength(string path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                return -1;
+            }
+
             FileInfo fileInfo = new FileInfo(path);
             return fileInfo.Length;
         }
