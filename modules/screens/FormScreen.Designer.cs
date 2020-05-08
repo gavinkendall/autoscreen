@@ -50,6 +50,7 @@
             this.groupBoxComponent = new System.Windows.Forms.GroupBox();
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
+            this.textBoxMacroPreview = new System.Windows.Forms.TextBox();
             this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
@@ -80,7 +81,7 @@
             // 
             this.labelMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelMacro.AutoSize = true;
-            this.labelMacro.Location = new System.Drawing.Point(229, 502);
+            this.labelMacro.Location = new System.Drawing.Point(229, 425);
             this.labelMacro.Name = "labelMacro";
             this.labelMacro.Size = new System.Drawing.Size(40, 13);
             this.labelMacro.TabIndex = 0;
@@ -90,10 +91,11 @@
             // 
             this.textBoxMacro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMacro.Location = new System.Drawing.Point(273, 499);
+            this.textBoxMacro.Location = new System.Drawing.Point(273, 422);
             this.textBoxMacro.Name = "textBoxMacro";
-            this.textBoxMacro.Size = new System.Drawing.Size(505, 20);
+            this.textBoxMacro.Size = new System.Drawing.Size(477, 20);
             this.textBoxMacro.TabIndex = 17;
+            this.textBoxMacro.TextChanged += new System.EventHandler(this.updatePreviewMacro);
             // 
             // pictureBoxPreview
             // 
@@ -101,16 +103,16 @@
             this.pictureBoxPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxPreview.Location = new System.Drawing.Point(3, 16);
             this.pictureBoxPreview.Name = "pictureBoxPreview";
-            this.pictureBoxPreview.Size = new System.Drawing.Size(552, 408);
+            this.pictureBoxPreview.Size = new System.Drawing.Size(524, 331);
             this.pictureBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxPreview.TabIndex = 5;
             this.pictureBoxPreview.TabStop = false;
-            this.pictureBoxPreview.Click += new System.EventHandler(this.updatePreview);
+            this.pictureBoxPreview.Click += new System.EventHandler(this.updatePreviewImage);
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(574, 525);
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
             this.buttonOK.TabIndex = 18;
@@ -120,9 +122,9 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(679, 525);
+            this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
             this.buttonCancel.TabIndex = 19;
@@ -134,7 +136,7 @@
             // 
             this.labelFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelFolder.AutoSize = true;
-            this.labelFolder.Location = new System.Drawing.Point(229, 476);
+            this.labelFolder.Location = new System.Drawing.Point(229, 399);
             this.labelFolder.Name = "labelFolder";
             this.labelFolder.Size = new System.Drawing.Size(39, 13);
             this.labelFolder.TabIndex = 0;
@@ -144,15 +146,16 @@
             // 
             this.textBoxFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxFolder.Location = new System.Drawing.Point(273, 473);
+            this.textBoxFolder.Location = new System.Drawing.Point(273, 396);
             this.textBoxFolder.Name = "textBoxFolder";
-            this.textBoxFolder.Size = new System.Drawing.Size(472, 20);
+            this.textBoxFolder.Size = new System.Drawing.Size(444, 20);
             this.textBoxFolder.TabIndex = 15;
+            this.textBoxFolder.TextChanged += new System.EventHandler(this.updatePreviewMacro);
             // 
             // buttonScreenBrowseFolder
             // 
             this.buttonScreenBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonScreenBrowseFolder.Location = new System.Drawing.Point(751, 471);
+            this.buttonScreenBrowseFolder.Location = new System.Drawing.Point(723, 394);
             this.buttonScreenBrowseFolder.Name = "buttonScreenBrowseFolder";
             this.buttonScreenBrowseFolder.Size = new System.Drawing.Size(27, 23);
             this.buttonScreenBrowseFolder.TabIndex = 16;
@@ -196,7 +199,7 @@
             0,
             0,
             0});
-            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreview);
+            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // labelResolutionRatio
             // 
@@ -242,7 +245,7 @@
             this.checkBoxMouse.TabIndex = 12;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
-            this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreview);
+            this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // groupBoxImage
             // 
@@ -279,6 +282,7 @@
             this.comboBoxScreenComponent.Name = "comboBoxScreenComponent";
             this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
             this.comboBoxScreenComponent.TabIndex = 3;
+            this.comboBoxScreenComponent.SelectedIndexChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // groupBoxPreview
             // 
@@ -286,27 +290,38 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxPreview.Controls.Add(this.textBoxMacroPreview);
             this.groupBoxPreview.Controls.Add(this.pictureBoxPreview);
             this.groupBoxPreview.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxPreview.Location = new System.Drawing.Point(223, 38);
             this.groupBoxPreview.Name = "groupBoxPreview";
-            this.groupBoxPreview.Size = new System.Drawing.Size(558, 427);
+            this.groupBoxPreview.Size = new System.Drawing.Size(530, 350);
             this.groupBoxPreview.TabIndex = 0;
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
+            // 
+            // textBoxMacroPreview
+            // 
+            this.textBoxMacroPreview.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.textBoxMacroPreview.Location = new System.Drawing.Point(3, 327);
+            this.textBoxMacroPreview.Name = "textBoxMacroPreview";
+            this.textBoxMacroPreview.ReadOnly = true;
+            this.textBoxMacroPreview.Size = new System.Drawing.Size(524, 20);
+            this.textBoxMacroPreview.TabIndex = 20;
+            this.textBoxMacroPreview.TabStop = false;
             // 
             // checkBoxEnabled
             // 
             this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEnabled.AutoSize = true;
-            this.checkBoxEnabled.Location = new System.Drawing.Point(707, 8);
+            this.checkBoxEnabled.Location = new System.Drawing.Point(679, 8);
             this.checkBoxEnabled.Name = "checkBoxEnabled";
             this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
             this.checkBoxEnabled.TabIndex = 0;
             this.checkBoxEnabled.TabStop = false;
             this.checkBoxEnabled.Text = "Enabled";
             this.checkBoxEnabled.UseVisualStyleBackColor = true;
-            this.checkBoxEnabled.CheckedChanged += new System.EventHandler(this.updatePreview);
+            this.checkBoxEnabled.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // FormScreen
             // 
@@ -315,7 +330,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(784, 560);
+            this.ClientSize = new System.Drawing.Size(756, 454);
             this.Controls.Add(this.checkBoxEnabled);
             this.Controls.Add(this.groupBoxPreview);
             this.Controls.Add(this.groupBoxComponent);
@@ -344,6 +359,7 @@
             this.groupBoxImage.PerformLayout();
             this.groupBoxComponent.ResumeLayout(false);
             this.groupBoxPreview.ResumeLayout(false);
+            this.groupBoxPreview.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,5 +389,6 @@
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;
         private System.Windows.Forms.CheckBox checkBoxEnabled;
+        private System.Windows.Forms.TextBox textBoxMacroPreview;
     }
 }

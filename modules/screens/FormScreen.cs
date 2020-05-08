@@ -12,37 +12,42 @@ using System.Collections.Generic;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A class for handling screens.
     /// </summary>
     public partial class FormScreen : Form
     {
         /// <summary>
-        /// 
+        /// A collection of screens.
         /// </summary>
         public ScreenCollection ScreenCollection { get; } = new ScreenCollection();
 
         /// <summary>
-        /// 
+        /// The current screen object this form handles when creating a new screen or changing a screen.
         /// </summary>
         public Screen ScreenObject { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of image formats.
         /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of tags to be used for macro parsing.
+        /// </summary>
+        public TagCollection TagCollection { get; set; }
+
+        /// <summary>
+        /// Access to screen capture methods.
         /// </summary>
         public ScreenCapture ScreenCapture { get; set; }
 
         /// <summary>
-        /// 
+        /// A dictionary of available screens.
         /// </summary>
         public Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
 
         /// <summary>
-        /// 
+        /// Constructor for FormScreen.
         /// </summary>
         public FormScreen()
         {
@@ -110,7 +115,8 @@ namespace AutoScreenCapture
                 checkBoxEnabled.Checked = true;
             }
 
-            UpdatePreview(ScreenCapture);
+            UpdatePreviewMacro();
+            UpdatePreviewImage(ScreenCapture);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -284,7 +290,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void UpdatePreview(ScreenCapture screenCapture)
+        private void UpdatePreviewImage(ScreenCapture screenCapture)
         {
             try
             {
@@ -319,6 +325,13 @@ namespace AutoScreenCapture
             {
                 Log.WriteExceptionMessage("FormScreen::UpdatePreview", ex);
             }
+        }
+
+        private void UpdatePreviewMacro()
+        {
+            textBoxMacroPreview.Text = MacroParser.ParseTagsForFolderPath(true, textBoxFolder.Text, TagCollection) +
+                MacroParser.ParseTagsForFilePath(true, textBoxName.Text, textBoxMacro.Text, 1,
+                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
         }
 
         private System.Windows.Forms.Screen GetScreenByIndex(int index)
@@ -358,11 +371,18 @@ namespace AutoScreenCapture
             {
                 numericUpDownJpegQuality.Enabled = false;
             }
+
+            updatePreviewMacro(sender, e);
         }
 
-        private void updatePreview(object sender, EventArgs e)
+        private void updatePreviewImage(object sender, EventArgs e)
         {
-            UpdatePreview(ScreenCapture);
+            UpdatePreviewImage(ScreenCapture);
+        }
+
+        private void updatePreviewMacro(object sender, EventArgs e)
+        {
+            UpdatePreviewMacro();
         }
     }
 }

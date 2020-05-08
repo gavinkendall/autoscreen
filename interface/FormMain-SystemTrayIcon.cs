@@ -83,6 +83,7 @@ namespace AutoScreenCapture
         private void ShowInfo()
         {
             notifyIcon.Text = string.Empty;
+            toolStripInfo.Text = string.Empty;
 
             if (_screenCapture.Running && !_screenCapture.CaptureError)
             {
@@ -112,9 +113,8 @@ namespace AutoScreenCapture
                 }
 
                 notifyIcon.Text = remainingTimeStr;
+                toolStripInfo.Text = remainingTimeStr;
             }
-
-            toolStripInfo.Text = notifyIcon.Text;
         }
     }
 }

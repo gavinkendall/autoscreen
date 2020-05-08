@@ -130,8 +130,19 @@ namespace AutoScreenCapture
         /// <param name="macro">The macro to parse.</param>
         /// <param name="tagCollection">A tag collection containing the macro tags to parse.</param>
         /// <returns>A parsed macro string value.</returns>
-        public static string ParseTagsForFolderPath(string macro, TagCollection tagCollection)
+        public static string ParseTagsForFolderPath(bool preview, string macro, TagCollection tagCollection)
         {
+            DateTime dt;
+
+            if (preview || screenCapture == null)
+            {
+                dt = DateTime.Now;
+            }
+            else
+            {
+                dt = screenCapture.DateTimeScreenshotsTaken;
+            }
+
             foreach (Tag tag in tagCollection)
             {
                 if (!tag.Enabled)
@@ -142,7 +153,7 @@ namespace AutoScreenCapture
                 switch (tag.Type)
                 {
                     case TagType.DateTimeFormat:
-                        macro = macro.Replace(tag.Name, screenCapture.DateTimeScreenshotsTaken.ToString(tag.DateTimeFormatValue));
+                        macro = macro.Replace(tag.Name, dt.ToString(tag.DateTimeFormatValue));
                         break;
 
                     case TagType.User:
@@ -161,6 +172,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Replaces tags (such as "%year%") with an appropriate value (such as "2019").
         /// </summary>
+        /// <param name="preview">Determines if this is a preview of a macro. We either use screen capture date/time or DateTime.Now depending on this boolean.</param>
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="screenNumber"></param>
@@ -168,8 +180,22 @@ namespace AutoScreenCapture
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTagsForFilePath(string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, TagCollection tagCollection)
+        public static string ParseTagsForFilePath(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, TagCollection tagCollection)
         {
+            int count;
+            DateTime dt;
+
+            if (preview || screenCapture == null)
+            {
+                count = 1;
+                dt = DateTime.Now;
+            }
+            else
+            {
+                count = screenCapture.Count;
+                dt = screenCapture.DateTimeScreenshotsTaken;
+            }
+
             // Strip out any backslash characters from the name so we avoid creating unnecessary directories based on the name.
             name = name.Replace("\\", string.Empty);
 
@@ -187,7 +213,7 @@ namespace AutoScreenCapture
                         break;
 
                     case TagType.DateTimeFormat:
-                        macro = macro.Replace(tag.Name, screenCapture.DateTimeScreenshotsTaken.ToString(tag.DateTimeFormatValue));
+                        macro = macro.Replace(tag.Name, dt.ToString(tag.DateTimeFormatValue));
                         break;
 
                     case TagType.ImageFormat:
@@ -195,7 +221,7 @@ namespace AutoScreenCapture
                         break;
 
                     case TagType.ScreenCaptureCycleCount:
-                        macro = macro.Replace(tag.Name, screenCapture.Count.ToString());
+                        macro = macro.Replace(tag.Name, count.ToString());
                         break;
 
                     case TagType.ScreenName:
@@ -227,27 +253,27 @@ namespace AutoScreenCapture
                         // This can achieve some interesting results such as being able to call the same %timeofday% tag
                         // in onto itself because it will use its own date/time format value, but the intention is to have tags
                         // like %date%, %time%, %hour%, %minute%, and %second% be used in the morning, afternoon, and evening fields.
-                        morningValue = ParseTagsForFilePath(name, morningValue, screenNumber, format, activeWindowTitle, tagCollection);
-                        afternoonValue = ParseTagsForFilePath(name, afternoonValue, screenNumber, format, activeWindowTitle, tagCollection);
-                        eveningValue = ParseTagsForFilePath(name, eveningValue, screenNumber, format, activeWindowTitle, tagCollection);
+                        morningValue = ParseTagsForFilePath(preview, name, morningValue, screenNumber, format, activeWindowTitle, tagCollection);
+                        afternoonValue = ParseTagsForFilePath(preview, name, afternoonValue, screenNumber, format, activeWindowTitle, tagCollection);
+                        eveningValue = ParseTagsForFilePath(preview, name, eveningValue, screenNumber, format, activeWindowTitle, tagCollection);
 
                         // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeOfDay type.
                         tag.Type = TagType.TimeOfDay;
 
-                        if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
-                            screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
+                        if (dt.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
+                            dt.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
                         {
                             macro = macro.Replace(tag.Name, morningValue);
                         }
 
-                        if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
-                            screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
+                        if (dt.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
+                            dt.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
                         {
                             macro = macro.Replace(tag.Name, afternoonValue);
                         }
 
-                        if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
-                            screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                        if (dt.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
+                            dt.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
                         {
                             macro = macro.Replace(tag.Name, eveningValue);
                         }
@@ -259,14 +285,14 @@ namespace AutoScreenCapture
                             DateTime dayStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                             DateTime dayEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
 
-                            if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
-                                screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= dayEnd.TimeOfDay)
+                            if (dt.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
+                                dt.TimeOfDay <= dayEnd.TimeOfDay)
                             {
                                 macro = macro.Replace(tag.Name, eveningValue);
                             }
 
-                            if (screenCapture.DateTimeScreenshotsTaken.TimeOfDay >= dayStart.TimeOfDay &&
-                                screenCapture.DateTimeScreenshotsTaken.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                            if (dt.TimeOfDay >= dayStart.TimeOfDay &&
+                                dt.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
                             {
                                 macro = macro.Replace(tag.Name, eveningValue);
                             }
@@ -275,7 +301,7 @@ namespace AutoScreenCapture
 
                     case TagType.DateTimeFormatExpression:
                         macro = macro.Replace(tag.Name,
-                            MacroTagExpressionParser.ParseTagExpressionForDateTimeFormat(screenCapture.DateTimeScreenshotsTaken, tag.DateTimeFormatValue));
+                            MacroTagExpressionParser.ParseTagExpressionForDateTimeFormat(dt, tag.DateTimeFormatValue));
                         break;
                 }
             }

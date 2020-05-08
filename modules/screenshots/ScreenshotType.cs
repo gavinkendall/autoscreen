@@ -8,22 +8,22 @@
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A class representing a type of screenshot.
     /// </summary>
     public enum ScreenshotType
     {
         /// <summary>
-        /// 
+        /// The type of screenshot represents the active window.
         /// </summary>
         ActiveWindow = 0,
 
         /// <summary>
-        /// 
+        /// The type of screenshot represents a region.
         /// </summary>
         Region = 1,
 
         /// <summary>
-        /// 
+        /// The type of screenshot represents a screen.
         /// </summary>
         Screen = 2
     }

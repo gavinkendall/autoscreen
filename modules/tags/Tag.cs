@@ -10,77 +10,77 @@ using System;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A class representing a macro tag.
     /// </summary>
     public class Tag
     {
         /// <summary>
-        /// 
+        /// The name of the macro tag.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// The type of tag.
         /// </summary>
         public TagType Type { get; set; }
 
         /// <summary>
-        /// 
+        /// The date/time format value of the tag.
         /// </summary>
         public string DateTimeFormatValue { get; set; }
 
         /// <summary>
-        /// 
+        /// The start date/time of the morning for the Time of Day tag type.
         /// </summary>
         public DateTime TimeOfDayMorningStart { get; set; }
 
         /// <summary>
-        /// 
+        /// The end date/time of the morning for the Time of Day tag type.
         /// </summary>
         public DateTime TimeOfDayMorningEnd { get; set; }
 
         /// <summary>
-        /// 
+        /// The start date/time of the afternoon for the Time of Day tag type.
         /// </summary>
         public DateTime TimeOfDayAfternoonStart { get; set; }
 
         /// <summary>
-        /// 
+        /// The end date/time of the afternoon for the Time of Day tag type.
         /// </summary>
         public DateTime TimeOfDayAfternoonEnd { get; set; }
 
         /// <summary>
-        /// 
+        /// The start date/time of the evening for the Time of Day tag type.
         /// </summary>
         public DateTime TimeOfDayEveningStart { get; set; }
 
         /// <summary>
-        /// 
+        /// The end date/time of the evening for the Time of Day tag type.
         /// </summary>
         public DateTime TimeOfDayEveningEnd { get; set; }
 
         /// <summary>
-        /// 
+        /// The morning value for the Time of Day tag type.
         /// </summary>
         public string TimeOfDayMorningValue { get; set; }
 
         /// <summary>
-        /// 
+        /// The afternoon value for the Time of Day tag type.
         /// </summary>
         public string TimeOfDayAfternoonValue { get; set; }
 
         /// <summary>
-        /// 
+        /// The evening value for the Time of Day tag type.
         /// </summary>
         public string TimeOfDayEveningValue { get; set; }
 
         /// <summary>
-        /// 
+        /// Determines if a tag is active or inactive.
         /// </summary>
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// 
+        /// Determines if the time in the evening should extend to the early hours of the next morning.
         /// </summary>
         public bool EveningExtendsToNextMorning { get; set; }
 
@@ -109,13 +109,19 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// The empty constructor for creating a tag.
         /// </summary>
         public Tag()
         {
             SetDefaultValues();
         }
 
+        /// <summary>
+        /// Creates a tag given its name, tag type, and its status (whether it be active or inactive).
+        /// </summary>
+        /// <param name="name">The name of the tag.</param>
+        /// <param name="tagType">The type of tag.</param>
+        /// <param name="enabled">The status of the tag.</param>
         public Tag(string name, TagType tagType, bool enabled)
         {
             SetDefaultValues();
@@ -125,6 +131,13 @@ namespace AutoScreenCapture
             Enabled = enabled;
         }
 
+        /// <summary>
+        /// Creates a tag given its name, tag type, date/time format value, and its status.
+        /// </summary>
+        /// <param name="name">The name of the tag.</param>
+        /// <param name="tagType">The type of tag.</param>
+        /// <param name="dateTimeFormatValue">The date/time format value.</param>
+        /// <param name="enabled">The status of the tag.</param>
         public Tag(string name, TagType tagType, string dateTimeFormatValue, bool enabled)
         {
             SetDefaultValues();
@@ -136,19 +149,19 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Creates a tag given its name, tag type, and "Time of Day" properties.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="tagType"></param>
-        /// <param name="timeOfDayMorningStart"></param>
-        /// <param name="timeOfDayMorningEnd"></param>
-        /// <param name="timeOfDayMorningValue"></param>
+        /// <param name="name">The name of the tag.</param>
+        /// <param name="tagType">The type of tag.</param>
+        /// <param name="timeOfDayMorningStart">The start time of the morning.</param>
+        /// <param name="timeOfDayMorningEnd">The end time of the morning.</param>
+        /// <param name="timeOfDayMorningValue">The macro value for the morning.</param>
         /// <param name="timeOfDayAfternoonStart"></param>
         /// <param name="timeOfDayAfternoonEnd"></param>
-        /// <param name="timeOfDayAfternoonValue"></param>
+        /// <param name="timeOfDayAfternoonValue">The macro value for the afternoon.</param>
         /// <param name="timeOfDayEveningStart"></param>
         /// <param name="timeOfDayEveningEnd"></param>
-        /// <param name="timeOfDayEveningValue"></param>
+        /// <param name="timeOfDayEveningValue">The macro value for the evening.</param>
         /// <param name="eveningExtendsToNextMorning</param>
         public Tag(string name, TagType tagType,
             string dateTimeFormatValue,

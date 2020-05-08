@@ -22,7 +22,8 @@ namespace AutoScreenCapture
         {
             formRegion.RegionObject = null;
             formRegion.ImageFormatCollection = _imageFormatCollection;
-            formRegion.screenCapture = _screenCapture;
+            formRegion.ScreenCapture = _screenCapture;
+            formRegion.TagCollection = formTag.TagCollection;
 
             formRegion.ShowDialog(this);
 
@@ -90,7 +91,8 @@ namespace AutoScreenCapture
 
             formRegion.RegionObject = region;
             formRegion.ImageFormatCollection = _imageFormatCollection;
-            formRegion.screenCapture = _screenCapture;
+            formRegion.ScreenCapture = _screenCapture;
+            formRegion.TagCollection = formTag.TagCollection;
 
             formRegion.ShowDialog(this);
 
@@ -144,7 +146,7 @@ namespace AutoScreenCapture
                             if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.SaveScreenshot(
-                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(false, region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                     format: region.Format,
                                     component: -1,
                                     screenshotType: ScreenshotType.Region,

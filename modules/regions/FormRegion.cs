@@ -12,34 +12,39 @@ using System.Collections.Generic;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A class for handling regions.
     /// </summary>
     public partial class FormRegion : Form
     {
         /// <summary>
-        /// 
+        /// A collection of regions.
         /// </summary>
         public RegionCollection RegionCollection { get; } = new RegionCollection();
 
         /// <summary>
-        /// 
+        /// The current region object this form handles when creating a new region or changing a region.
         /// </summary>
         public Region RegionObject { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of image formats.
         /// </summary>
         public ImageFormatCollection ImageFormatCollection { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of tags to be used for macro parsing.
         /// </summary>
-        public ScreenCapture screenCapture { get; set; }
-
-        private Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
+        public TagCollection TagCollection { get; set; }
 
         /// <summary>
-        /// 
+        /// Access to screen capture methods.
+        /// </summary>
+        public ScreenCapture ScreenCapture { get; set; }
+
+        private readonly Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
+
+        /// <summary>
+        /// Constructor for FormRegion.
         /// </summary>
         public FormRegion()
         {
@@ -113,7 +118,8 @@ namespace AutoScreenCapture
                 checkBoxEnabled.Checked = true;
             }
 
-            UpdatePreview(screenCapture);
+            UpdatePreviewMacro();
+            UpdatePreviewImage(ScreenCapture);
         }
 
         private void buttonRegionCancel_Click(object sender, EventArgs e)
@@ -280,7 +286,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void UpdatePreview(ScreenCapture screenCapture)
+        private void UpdatePreviewImage(ScreenCapture screenCapture)
         {
             try
             {
@@ -304,6 +310,13 @@ namespace AutoScreenCapture
             {
                 Log.WriteExceptionMessage("FormRegion::UpdatePreview", ex);
             }
+        }
+
+        private void UpdatePreviewMacro()
+        {
+            textBoxMacroPreview.Text = MacroParser.ParseTagsForFolderPath(true, textBoxFolder.Text, TagCollection) +
+                MacroParser.ParseTagsForFilePath(true, textBoxName.Text, textBoxMacro.Text, 1,
+                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
@@ -331,11 +344,18 @@ namespace AutoScreenCapture
             {
                 numericUpDownJpegQuality.Enabled = false;
             }
+
+            UpdatePreviewMacro();
         }
 
-        private void updatePreview(object sender, EventArgs e)
+        private void updatePreviewImage(object sender, EventArgs e)
         {
-            UpdatePreview(screenCapture);
+            UpdatePreviewImage(ScreenCapture);
+        }
+
+        private void updatePreviewMacro(object sender, EventArgs e)
+        {
+            UpdatePreviewMacro();
         }
     }
 }
