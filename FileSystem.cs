@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods used for basic IO operations such as creating files, deleting files, and checking if drives are ready.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Drawing;
@@ -283,11 +283,20 @@ namespace AutoScreenCapture
             return File.Exists(path);
         }
 
+        /// <summary>
+        /// Determines if the file in the given path has a file extension.
+        /// </summary>
+        /// <param name="path">The path of the file to check.</param>
+        /// <returns>True if the file has a file extension. False if the file does not have a file extension.</returns>
         public static bool HasExtension(string path)
         {
             return Path.HasExtension(path);
         }
 
+        /// <summary>
+        /// Creates a new file given the path of the file.
+        /// </summary>
+        /// <param name="path">The path of the file to create.</param>
         public static void CreateFile(string path)
         {
             File.Create(path).Dispose();
@@ -329,21 +338,41 @@ namespace AutoScreenCapture
             return Path.GetDirectoryName(path);
         }
 
+        /// <summary>
+        /// Gets the filename of the given path.
+        /// </summary>
+        /// <param name="path">The path to get the filename from.</param>
+        /// <returns>The filename of the given path.</returns>
         public static string GetFileName(string path)
         {
             return Path.GetFileName(path);
         }
 
+        /// <summary>
+        /// Writes a line to a file.
+        /// </summary>
+        /// <param name="path">The path to the file to be written.</param>
+        /// <param name="line">The line of text to write to the file.</param>
         public static void WriteToFile(string path, string line)
         {
             File.WriteAllText(path, line);
         }
 
+        /// <summary>
+        /// Writes multiple lines to a file.
+        /// </summary>
+        /// <param name="path">The path to the file to be written.</param>
+        /// <param name="linesToWrite">The array of lines to write to the file.</param>
         public static void WriteToFile(string path, string[] linesToWrite)
         {
             File.WriteAllLines(path, linesToWrite);
         }
 
+        /// <summary>
+        /// Appends a line to an existing file.
+        /// </summary>
+        /// <param name="path">The path to the file to be written.</param>
+        /// <param name="line">The line to append to the file.</param>
         public static void AppendToFile(string path, string line)
         {
             using (StreamWriter sw = File.AppendText(path))
@@ -354,21 +383,39 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Reads from a file.
+        /// </summary>
+        /// <param name="path">The path to the file to read from.</param>
+        /// <returns>An array of lines representing the lines of text in the file.</returns>
         public static string[] ReadFromFile(string path)
         {
             return File.ReadAllLines(path);
         }
 
+        /// <summary>
+        /// Gets the directory separator character.
+        /// </summary>
+        /// <returns>The directory separator character.</returns>
         public static char DirectorySeparatorChar()
         {
             return Path.DirectorySeparatorChar;
         }
 
+        /// <summary>
+        /// Deletes a file.
+        /// </summary>
+        /// <param name="path">The path of the file to delete.</param>
         public static void DeleteFile(string path)
         {
             File.Delete(path);
         }
 
+        /// <summary>
+        /// Gets the length of a file's contents.
+        /// </summary>
+        /// <param name="path">The path to the file to check.</param>
+        /// <returns>The number of characters in the file.</returns>
         public static long FileContentLength(string path)
         {
             FileInfo fileInfo = new FileInfo(path);

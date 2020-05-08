@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The version manager figures out if we're handling an old version of the application and stores the old user settings just in case we need to update them to be used with a newer settings schema.</summary>
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {

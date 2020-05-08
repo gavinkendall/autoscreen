@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>This class is used for hashing the given passphrase.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text;

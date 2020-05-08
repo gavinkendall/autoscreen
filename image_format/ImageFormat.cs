@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The image format being used by each captured screenshot.</summary>
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {

@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A form for adding a new macro tag or changing an existing macro tag.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;
@@ -11,22 +11,22 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A form for managing a macro tag.
     /// </summary>
     public partial class FormTag : Form
     {
         /// <summary>
-        /// 
+        /// A collection of macro tags.
         /// </summary>
         public TagCollection TagCollection { get; } = new TagCollection();
 
         /// <summary>
-        /// 
+        /// The macro tag object we're handling.
         /// </summary>
         public Tag TagObject { get; set; }
 
         /// <summary>
-        /// 
+        /// Empty constructor.
         /// </summary>
         public FormTag()
         {

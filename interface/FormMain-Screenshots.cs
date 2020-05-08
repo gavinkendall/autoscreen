@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods handling screenshots in the interface.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.ComponentModel;
@@ -365,10 +365,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Emails a screenshot using the SMTP settings configured in the application settings file.
         /// </summary>
-        /// <param name="screenshot"></param>
-        /// <param name="prompt"></param>
+        /// <param name="screenshot">The screenshot to email.</param>
+        /// <param name="prompt">Determines if we should prompt the user with a confirmation dialog box.</param>
         private void EmailScreenshot(Screenshot screenshot, bool prompt)
         {
             try
@@ -513,10 +513,6 @@ namespace AutoScreenCapture
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="triggerActionType"></param>
         private void EmailScreenshot(TriggerActionType triggerActionType)
         {
             if (triggerActionType == TriggerActionType.EmailScreenshot && _screenCapture.Running)

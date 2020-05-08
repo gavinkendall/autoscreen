@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>This class keeps track of what slide the user is currently on.</summary>
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {

@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The main entry for Auto Screen Capture.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Diagnostics;

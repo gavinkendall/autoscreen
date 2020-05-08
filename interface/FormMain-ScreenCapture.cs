@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods related to capturing screens and what we should do when buttons are clicked or menu items are selected.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;

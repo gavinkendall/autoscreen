@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>Parses text replacing macro tags with the appropriate values.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text;
@@ -175,7 +175,7 @@ namespace AutoScreenCapture
         /// <param name="preview">Determines if this is a preview of a macro. We either use screen capture date/time or DateTime.Now depending on this boolean.</param>
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
-        /// <param name="screenNumber"></param>
+        /// <param name="screenNumber">The screen number. For example, if this is the second display then the screen number is 2.</param>
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>

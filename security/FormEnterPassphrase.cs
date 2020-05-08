@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A form for asking the user for the passphrase during a locked screen capture session.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;

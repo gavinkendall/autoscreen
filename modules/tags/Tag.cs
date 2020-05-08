@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>A class representing a tag.</summary>
+// <summary>A class representing a macro tag.</summary>
 //-----------------------------------------------------------------------
 using System;
 

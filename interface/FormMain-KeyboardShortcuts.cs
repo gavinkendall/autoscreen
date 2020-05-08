@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>This is where we handle the key press even for a particular keyboard shortcut.</summary>
 //-----------------------------------------------------------------------
 using System.Windows.Forms;
 

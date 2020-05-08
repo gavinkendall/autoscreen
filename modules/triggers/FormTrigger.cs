@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A form for adding a new trigger or changing an existing trigger.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;
@@ -11,27 +11,27 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A form for managing a trigger.
     /// </summary>
     public partial class FormTrigger : Form
     {
         /// <summary>
-        /// 
+        /// A collection of triggers.
         /// </summary>
         public TriggerCollection TriggerCollection { get; } = new TriggerCollection();
 
         /// <summary>
-        /// 
+        /// The trigger object to handle.
         /// </summary>
         public Trigger TriggerObject { get; set; }
 
         /// <summary>
-        /// 
+        /// A collection of editors.
         /// </summary>
         public EditorCollection EditorCollection { get; set; }
 
         /// <summary>
-        /// 
+        /// Empty constructor.
         /// </summary>
         public FormTrigger()
         {

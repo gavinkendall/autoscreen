@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods for handling help tips in the help bar at the top of the main interface window.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Collections.Generic;

@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>Parses a formatted date/time value to figure out what operators to apply (whether it be + or -) for adding or removing time.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text.RegularExpressions;

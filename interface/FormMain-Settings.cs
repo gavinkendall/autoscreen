@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>Methods for loading settings and saving settings.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;

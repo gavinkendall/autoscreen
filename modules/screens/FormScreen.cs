@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A form for adding a new screen or changing an existing screen.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;

@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A collection of triggers.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text;
@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// Empty constructor.
         /// </summary>
         public TriggerCollection()
         {

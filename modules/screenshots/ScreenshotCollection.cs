@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A collection of screenshots.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text;

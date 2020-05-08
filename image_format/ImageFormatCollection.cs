@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The collection of image formats.</summary>
 //-----------------------------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;

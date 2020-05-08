@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods for converting data.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;

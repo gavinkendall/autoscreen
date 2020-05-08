@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods for handling command line arguments.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text.RegularExpressions;

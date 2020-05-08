@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The regular expressions used for command line arguments.</summary>
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {

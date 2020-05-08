@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A screenshot is associated with either a screen or a region and has a date, a time, and filepath.</summary>
 //-----------------------------------------------------------------------
 using System;
 

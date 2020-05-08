@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>This is where we specify the names and file extensions of the image formats that we support.</summary>
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {

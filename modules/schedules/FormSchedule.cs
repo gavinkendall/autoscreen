@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A form for adding a new schedule or changing an existing schedule.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;
@@ -11,22 +11,22 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// A form for managing a schedule.
     /// </summary>
     public partial class FormSchedule : Form
     {
         /// <summary>
-        /// 
+        /// A collection of schedules.
         /// </summary>
         public ScheduleCollection ScheduleCollection { get; } = new ScheduleCollection();
 
         /// <summary>
-        /// 
+        /// The schedule object to handle.
         /// </summary>
         public Schedule ScheduleObject { get; set; }
 
         /// <summary>
-        /// 
+        /// Empty constructor.
         /// </summary>
         public FormSchedule()
         {

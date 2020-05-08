@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>This class is used to represent a certain version of Auto Screen Capture so we can check on an old version and then update the old data to a newer data structure if it's required.</summary>
 //-----------------------------------------------------------------------
 using System;
 

@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>All the methods for when screens are added, removed, or changed.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Drawing;

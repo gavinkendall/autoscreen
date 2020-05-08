@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The type of screenshot can either represent the active window, a region, or a screen.</summary>
 //-----------------------------------------------------------------------
 namespace AutoScreenCapture
 {

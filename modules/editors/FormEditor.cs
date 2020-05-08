@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A form for adding a new editor or changing an existing editor.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.ComponentModel;
@@ -13,17 +13,17 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// The form for managing image editors.
     /// </summary>
     public partial class FormEditor : Form
     {
         /// <summary>
-        /// 
+        /// A collection of editors.
         /// </summary>
         public EditorCollection EditorCollection { get; } = new EditorCollection();
 
         /// <summary>
-        /// 
+        /// The editor object to handle.
         /// </summary>
         public Editor EditorObject { get; set; }
 
@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         private ComponentResourceManager resources = new ComponentResourceManager(typeof(FormEditor));
 
         /// <summary>
-        /// 
+        /// Empty constructor.
         /// </summary>
         public FormEditor()
         {

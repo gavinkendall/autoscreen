@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>Writes messages to log files.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Threading;

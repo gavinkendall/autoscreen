@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>A collection of macro tags.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Text;
@@ -49,7 +49,7 @@ namespace AutoScreenCapture
         private static string AppVersion { get; set; }
 
         /// <summary>
-        /// 
+        /// Empty constructor for the tag collection.
         /// </summary>
         public TagCollection()
         {
@@ -65,9 +65,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Adds a tag to the tag collection.
         /// </summary>
-        /// <param name="tag"></param>
+        /// <param name="tag">The tag to add to the tag collection.</param>
         public override void Add(Tag tag)
         {
             if (string.IsNullOrEmpty(tag.Name)) return;

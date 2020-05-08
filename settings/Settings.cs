@@ -3,7 +3,7 @@
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary></summary>
+// <summary>The default application settings and default user settings are defined here.</summary>
 //-----------------------------------------------------------------------
 using System;
 using System.Reflection;
@@ -11,7 +11,7 @@ using System.Reflection;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// A class that contains all the settings of Auto Screen Capture.
+    /// A class for all the application-specific and user-specific settings used by Auto Screen Capture.
     /// </summary>
     public static class Settings
     {
