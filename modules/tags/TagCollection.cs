@@ -41,7 +41,7 @@ namespace AutoScreenCapture
 
         private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
 
-        private const string TAG_ENABLED = "enabled";
+        private const string TAG_ACTIVE = "active";
 
         private readonly string TAG_XPATH;
 
@@ -197,9 +197,9 @@ namespace AutoScreenCapture
                                         tag.EveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
                                         break;
 
-                                    case TAG_ENABLED:
+                                    case TAG_ACTIVE:
                                         xReader.Read();
-                                        tag.Enabled = Convert.ToBoolean(xReader.Value);
+                                        tag.Active = Convert.ToBoolean(xReader.Value);
                                         break;
                                 }
                             }
@@ -222,7 +222,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Tag that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                tag.Enabled = true;
+                                tag.Active = true;
                             }
                         }
 
@@ -243,29 +243,29 @@ namespace AutoScreenCapture
                     Log.WriteDebugMessage($"WARNING: {FileSystem.TagsFile} not found. Creating default tags");
 
                     // Setup a few "built in" tags by default.
-                    Add(new Tag("name", TagType.ScreenName, enabled: true));
-                    Add(new Tag("screen", TagType.ScreenNumber, enabled: true));
-                    Add(new Tag("format", TagType.ImageFormat, enabled: true));
-                    Add(new Tag("date", TagType.DateTimeFormat, MacroParser.DateFormat, enabled: true));
-                    Add(new Tag("time", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, enabled: true));
-                    Add(new Tag("year", TagType.DateTimeFormat, MacroParser.YearFormat, enabled: true));
-                    Add(new Tag("month", TagType.DateTimeFormat, MacroParser.MonthFormat, enabled: true));
-                    Add(new Tag("day", TagType.DateTimeFormat, MacroParser.DayFormat, enabled: true));
-                    Add(new Tag("hour", TagType.DateTimeFormat, MacroParser.HourFormat, enabled: true));
-                    Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat, enabled: true));
-                    Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat, enabled: true));
-                    Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat, enabled: true));
-                    Add(new Tag("lastyear", TagType.DateTimeFormatExpression, "{year-1}", enabled: true));
-                    Add(new Tag("lastmonth", TagType.DateTimeFormatExpression, "{month-1}", enabled: true));
-                    Add(new Tag("yesterday", TagType.DateTimeFormatExpression, "{day-1}", enabled: true));
-                    Add(new Tag("tomorrow", TagType.DateTimeFormatExpression, "{day+1}", enabled: true));
-                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatExpression, "{hour-6}", enabled: true));
-                    Add(new Tag("6hoursahead", TagType.DateTimeFormatExpression, "{hour+6}", enabled: true));
-                    Add(new Tag("count", TagType.ScreenCaptureCycleCount, enabled: true));
-                    Add(new Tag("user", TagType.User, enabled: true));
-                    Add(new Tag("machine", TagType.Machine, enabled: true));
-                    Add(new Tag("title", TagType.ActiveWindowTitle, enabled: true));
-                    Add(new Tag("timeofday", TagType.TimeOfDay, enabled: true));
+                    Add(new Tag("name", TagType.ScreenName, active: true));
+                    Add(new Tag("screen", TagType.ScreenNumber, active: true));
+                    Add(new Tag("format", TagType.ImageFormat, active: true));
+                    Add(new Tag("date", TagType.DateTimeFormat, MacroParser.DateFormat, active: true));
+                    Add(new Tag("time", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
+                    Add(new Tag("year", TagType.DateTimeFormat, MacroParser.YearFormat, active: true));
+                    Add(new Tag("month", TagType.DateTimeFormat, MacroParser.MonthFormat, active: true));
+                    Add(new Tag("day", TagType.DateTimeFormat, MacroParser.DayFormat, active: true));
+                    Add(new Tag("hour", TagType.DateTimeFormat, MacroParser.HourFormat, active: true));
+                    Add(new Tag("minute", TagType.DateTimeFormat, MacroParser.MinuteFormat, active: true));
+                    Add(new Tag("second", TagType.DateTimeFormat, MacroParser.SecondFormat, active: true));
+                    Add(new Tag("millisecond", TagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
+                    Add(new Tag("lastyear", TagType.DateTimeFormatExpression, "{year-1}", active: true));
+                    Add(new Tag("lastmonth", TagType.DateTimeFormatExpression, "{month-1}", active: true));
+                    Add(new Tag("yesterday", TagType.DateTimeFormatExpression, "{day-1}", active: true));
+                    Add(new Tag("tomorrow", TagType.DateTimeFormatExpression, "{day+1}", active: true));
+                    Add(new Tag("6hoursbehind", TagType.DateTimeFormatExpression, "{hour-6}", active: true));
+                    Add(new Tag("6hoursahead", TagType.DateTimeFormatExpression, "{hour+6}", active: true));
+                    Add(new Tag("count", TagType.ScreenCaptureCycleCount, active: true));
+                    Add(new Tag("user", TagType.User, active: true));
+                    Add(new Tag("machine", TagType.Machine, active: true));
+                    Add(new Tag("title", TagType.ActiveWindowTitle, active: true));
+                    Add(new Tag("timeofday", TagType.TimeOfDay, active: true));
 
                     SaveToXmlFile();
                 }
@@ -323,7 +323,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_TAG_NODE);
 
-                        xWriter.WriteElementString(TAG_ENABLED, tag.Enabled.ToString());
+                        xWriter.WriteElementString(TAG_ACTIVE, tag.Active.ToString());
                         xWriter.WriteElementString(TAG_NAME, tag.Name);
                         xWriter.WriteElementString(TAG_TYPE, tag.Type.ToString());
                         xWriter.WriteElementString(TAG_DATETIME_FORMAT_VALUE, tag.DateTimeFormatValue);

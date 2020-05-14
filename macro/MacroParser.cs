@@ -145,7 +145,7 @@ namespace AutoScreenCapture
 
             foreach (Tag tag in tagCollection)
             {
-                if (!tag.Enabled)
+                if (!tag.Active)
                 {
                     continue;
                 }
@@ -201,7 +201,7 @@ namespace AutoScreenCapture
 
             foreach (Tag tag in tagCollection)
             {
-                if (!tag.Enabled)
+                if (!tag.Active)
                 {
                     continue;
                 }

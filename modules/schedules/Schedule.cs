@@ -80,9 +80,9 @@ namespace AutoScreenCapture
         public bool Sunday { get; set; }
 
         /// <summary>
-        /// Determines if the schedule is enabled or disabled.
+        /// Determines if the schedule is active or inactive.
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool Active { get; set; }
 
         /// <summary>
         /// An empty constructor for a new schedule.

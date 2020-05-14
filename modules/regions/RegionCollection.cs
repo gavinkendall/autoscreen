@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         private const string REGION_Y = "y";
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
-        private const string REGION_ENABLED = "enabled";
+        private const string REGION_ACTIVE = "active";
         private readonly string REGION_XPATH;
 
         private string AppCodename { get; set; }
@@ -149,9 +149,9 @@ namespace AutoScreenCapture
                                         region.Height = Convert.ToInt32(xReader.Value);
                                         break;
 
-                                    case REGION_ENABLED:
+                                    case REGION_ACTIVE:
                                         xReader.Read();
-                                        region.Enabled = Convert.ToBoolean(xReader.Value);
+                                        region.Active = Convert.ToBoolean(xReader.Value);
                                         break;
                                 }
                             }
@@ -187,7 +187,7 @@ namespace AutoScreenCapture
                                 region.JpegQuality = 100;
                                 region.ResolutionRatio = 100;
                                 region.Mouse = true;
-                                region.Enabled = true;
+                                region.Active = true;
                             }
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -196,7 +196,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                region.Enabled = true;
+                                region.Active = true;
                             }
                         }
 
@@ -274,7 +274,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_REGION_NODE);
 
-                        xWriter.WriteElementString(REGION_ENABLED, region.Enabled.ToString());
+                        xWriter.WriteElementString(REGION_ACTIVE, region.Active.ToString());
                         xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                         xWriter.WriteElementString(REGION_NAME, region.Name);
                         xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectScreenshotsFolderPath(region.Folder));

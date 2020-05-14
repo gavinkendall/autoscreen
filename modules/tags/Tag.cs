@@ -77,7 +77,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Determines if a tag is active or inactive.
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool Active { get; set; }
 
         /// <summary>
         /// Determines if the time in the evening should extend to the early hours of the next morning.
@@ -105,7 +105,7 @@ namespace AutoScreenCapture
 
             EveningExtendsToNextMorning = false;
 
-            Enabled = false;
+            Active = false;
         }
 
         /// <summary>
@@ -121,14 +121,14 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="name">The name of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
-        /// <param name="enabled">The status of the tag.</param>
-        public Tag(string name, TagType tagType, bool enabled)
+        /// <param name="active">The status of the tag.</param>
+        public Tag(string name, TagType tagType, bool active)
         {
             SetDefaultValues();
 
             Name = name;
             Type = tagType;
-            Enabled = enabled;
+            Active = active;
         }
 
         /// <summary>
@@ -137,15 +137,15 @@ namespace AutoScreenCapture
         /// <param name="name">The name of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
-        /// <param name="enabled">The status of the tag.</param>
-        public Tag(string name, TagType tagType, string dateTimeFormatValue, bool enabled)
+        /// <param name="active">The status of the tag.</param>
+        public Tag(string name, TagType tagType, string dateTimeFormatValue, bool active)
         {
             SetDefaultValues();
 
             Name = name;
             Type = tagType;
             DateTimeFormatValue = dateTimeFormatValue;
-            Enabled = enabled;
+            Active = active;
         }
 
         /// <summary>
@@ -153,6 +153,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="name">The name of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
+        /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="timeOfDayMorningStart">The start time of the morning.</param>
         /// <param name="timeOfDayMorningEnd">The end time of the morning.</param>
         /// <param name="timeOfDayMorningValue">The macro value for the morning.</param>
@@ -162,7 +163,8 @@ namespace AutoScreenCapture
         /// <param name="timeOfDayEveningStart"></param>
         /// <param name="timeOfDayEveningEnd"></param>
         /// <param name="timeOfDayEveningValue">The macro value for the evening.</param>
-        /// <param name="eveningExtendsToNextMorning</param>
+        /// <param name="eveningExtendsToNextMorning">Determines if we extend the evening time into the next morning.</param>
+        /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
         public Tag(string name, TagType tagType,
             string dateTimeFormatValue,
             DateTime timeOfDayMorningStart,
@@ -175,7 +177,7 @@ namespace AutoScreenCapture
             DateTime timeOfDayEveningEnd,
             string timeOfDayEveningValue,
             bool eveningExtendsToNextMorning,
-            bool enabled)
+            bool active)
         {
             Name = name;
             Type = tagType;
@@ -197,7 +199,7 @@ namespace AutoScreenCapture
 
             EveningExtendsToNextMorning = eveningExtendsToNextMorning;
 
-            Enabled = enabled;
+            Active = active;
         }
     }
 }

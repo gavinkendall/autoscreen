@@ -102,7 +102,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = RegionObject.Y;
                 numericUpDownWidth.Value = RegionObject.Width;
                 numericUpDownHeight.Value = RegionObject.Height;
-                checkBoxEnabled.Checked = RegionObject.Enabled;
+                checkBoxActive.Checked = RegionObject.Active;
             }
             else
             {
@@ -119,7 +119,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = 0;
                 numericUpDownWidth.Value = 800;
                 numericUpDownHeight.Value = 600;
-                checkBoxEnabled.Checked = true;
+                checkBoxActive.Checked = true;
             }
 
             UpdatePreviewMacro();
@@ -168,7 +168,7 @@ namespace AutoScreenCapture
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
                         (int)numericUpDownHeight.Value,
-                        checkBoxEnabled.Checked));
+                        checkBoxActive.Checked));
 
                     Okay();
                 }
@@ -211,7 +211,7 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Y = (int) numericUpDownY.Value;
                         RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
                         RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
-                        RegionCollection.Get(RegionObject).Enabled = checkBoxEnabled.Checked;
+                        RegionCollection.Get(RegionObject).Active = checkBoxActive.Checked;
 
                         Okay();
                     }
@@ -259,7 +259,7 @@ namespace AutoScreenCapture
                  RegionObject.Y != (int)numericUpDownY.Value ||
                  RegionObject.Width != (int)numericUpDownWidth.Value ||
                  RegionObject.Height != (int)numericUpDownHeight.Value ||
-                 RegionObject.Enabled.Equals(checkBoxEnabled.Checked)))
+                 RegionObject.Active.Equals(checkBoxActive.Checked)))
             {
                 return true;
             }
@@ -299,7 +299,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (checkBoxEnabled.Checked)
+                if (checkBoxActive.Checked)
                 {
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                         (int)numericUpDownX.Value,
@@ -318,7 +318,7 @@ namespace AutoScreenCapture
 
                     textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
                     textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
-                    textBoxMacroPreview.Text = "[Enabled is off and this region is inactive. No screenshots will be taken during screen capture]";
+                    textBoxMacroPreview.Text = "[Active option is off. No screenshots of this region will be taken during a screen capture session]";
                 }
             }
             catch (Exception ex)
@@ -397,9 +397,9 @@ namespace AutoScreenCapture
             HelpMessage("Acquire the width and height from an available screen to import as the width and height for your region capture");
         }
 
-        private void checkBoxEnabled_MouseHover(object sender, EventArgs e)
+        private void checkBoxActive_MouseHover(object sender, EventArgs e)
         {
-            HelpMessage("You can capture this region if Enabled is checked or turned on otherwise you can disable this region capture so as to not take screenshots for it");
+            HelpMessage("You can capture this region if Active is checked or turned on");
         }
 
         private void buttonBrowseFolder_MouseHover(object sender, EventArgs e)

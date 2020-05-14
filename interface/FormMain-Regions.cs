@@ -137,7 +137,7 @@ namespace AutoScreenCapture
 
                 foreach (Region region in formRegion.RegionCollection)
                 {
-                    if (region.Enabled)
+                    if (region.Active)
                     {
                         MacroParser.screenCapture = _screenCapture;
 

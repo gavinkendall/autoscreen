@@ -120,15 +120,15 @@ namespace AutoScreenCapture
                         BorderStyle = BorderStyle.FixedSingle
                     };
 
-                    // Types of Screen, Region, Tag, Schedule, and Trigger have an "Enabled" property
-                    // so we change the color of the label background depending on the value of "Enabled".
+                    // Types of Screen, Region, Tag, Schedule, and Trigger have an "Active" property
+                    // so we change the color of the label background depending on the value of "Active".
                     if (t.Equals(typeof(Screen)) ||
                         t.Equals(typeof(Region)) ||
                         t.Equals(typeof(Tag)) ||
                         t.Equals(typeof(Schedule)) ||
                         t.Equals(typeof(Trigger)))
                     {
-                        bool enabled = (bool)t.GetProperty("Enabled").GetValue(@object, null);
+                        bool enabled = (bool)t.GetProperty("Active").GetValue(@object, null);
                         labelEnabledStatus.BackColor = enabled ? Color.PaleGreen : Color.PaleVioletRed;
                     }
 
@@ -180,14 +180,14 @@ namespace AutoScreenCapture
             {
                 Region region = (Region)label.Tag;
                 
-                if (region.Enabled)
+                if (region.Active)
                 {
-                    region.Enabled = false;
+                    region.Active = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    region.Enabled = true;
+                    region.Active = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -198,14 +198,14 @@ namespace AutoScreenCapture
             {
                 Schedule schedule = (Schedule)label.Tag;
 
-                if (schedule.Enabled)
+                if (schedule.Active)
                 {
-                    schedule.Enabled = false;
+                    schedule.Active = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    schedule.Enabled = true;
+                    schedule.Active = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -216,14 +216,14 @@ namespace AutoScreenCapture
             {
                 Screen screen = (Screen)label.Tag;
 
-                if (screen.Enabled)
+                if (screen.Active)
                 {
-                    screen.Enabled = false;
+                    screen.Active = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    screen.Enabled = true;
+                    screen.Active = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -234,14 +234,14 @@ namespace AutoScreenCapture
             {
                 Tag tag = (Tag)label.Tag;
 
-                if (tag.Enabled)
+                if (tag.Active)
                 {
-                    tag.Enabled = false;
+                    tag.Active = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    tag.Enabled = true;
+                    tag.Active = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -252,14 +252,14 @@ namespace AutoScreenCapture
             {
                 Trigger trigger = (Trigger)label.Tag;
 
-                if (trigger.Enabled)
+                if (trigger.Active)
                 {
-                    trigger.Enabled = false;
+                    trigger.Active = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    trigger.Enabled = true;
+                    trigger.Active = true;
                     label.BackColor = Color.PaleGreen;
                 }
 

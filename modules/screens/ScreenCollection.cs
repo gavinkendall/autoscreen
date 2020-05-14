@@ -30,7 +30,7 @@ namespace AutoScreenCapture
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
-        private const string SCREEN_ENABLED = "enabled";
+        private const string SCREEN_ACTIVE = "active";
         private readonly string SCREEN_XPATH;
 
         private static string AppCodename { get; set; }
@@ -149,9 +149,9 @@ namespace AutoScreenCapture
                                         screen.Mouse = Convert.ToBoolean(xReader.Value);
                                         break;
 
-                                    case SCREEN_ENABLED:
+                                    case SCREEN_ACTIVE:
                                         xReader.Read();
-                                        screen.Enabled = Convert.ToBoolean(xReader.Value);
+                                        screen.Active = Convert.ToBoolean(xReader.Value);
                                         break;
                                 }
                             }
@@ -174,7 +174,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                screen.Enabled = true;
+                                screen.Active = true;
                             }
                         }
 
@@ -259,7 +259,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
 
-                        xWriter.WriteElementString(SCREEN_ENABLED, screen.Enabled.ToString());
+                        xWriter.WriteElementString(SCREEN_ACTIVE, screen.Active.ToString());
                         xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                         xWriter.WriteElementString(SCREEN_NAME, screen.Name);
                         xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectScreenshotsFolderPath(screen.Folder));

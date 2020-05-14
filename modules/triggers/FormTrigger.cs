@@ -52,14 +52,14 @@ namespace AutoScreenCapture
                 comboBoxCondition.SelectedIndex = (int)TriggerObject.ConditionType;
                 comboBoxAction.SelectedIndex = (int)TriggerObject.ActionType;
                 comboBoxEditor.SelectedIndex = comboBoxEditor.Items.IndexOf(TriggerObject.Editor);
-                checkBoxEnabled.Checked = TriggerObject.Enabled;
+                checkBoxActive.Checked = TriggerObject.Active;
             }
             else
             {
                 Text = "Add New Trigger";
 
                 textBoxTriggerName.Text = "Trigger " + (TriggerCollection.Count + 1);
-                checkBoxEnabled.Checked = true;
+                checkBoxActive.Checked = true;
             }
         }
 
@@ -92,7 +92,7 @@ namespace AutoScreenCapture
                         (TriggerConditionType)comboBoxCondition.SelectedIndex,
                         (TriggerActionType)comboBoxAction.SelectedIndex,
                         comboBoxEditor.SelectedItem.ToString(),
-                        checkBoxEnabled.Checked));
+                        checkBoxActive.Checked));
 
                     Okay();
                 }
@@ -134,7 +134,7 @@ namespace AutoScreenCapture
                             TriggerCollection.Get(TriggerObject).Editor = string.Empty;
                         }
 
-                        TriggerCollection.Get(TriggerObject).Enabled = checkBoxEnabled.Checked;
+                        TriggerCollection.Get(TriggerObject).Active = checkBoxActive.Checked;
 
                         Okay();
                     }
@@ -173,7 +173,7 @@ namespace AutoScreenCapture
                 ((int)TriggerObject.ConditionType != comboBoxCondition.SelectedIndex ||
                 (int)TriggerObject.ActionType != comboBoxAction.SelectedIndex ||
                 !TriggerObject.Editor.Equals(comboBoxEditor.SelectedItem.ToString()) ||
-                TriggerObject.Enabled != checkBoxEnabled.Checked))
+                TriggerObject.Active != checkBoxActive.Checked))
             {
                 return true;
             }

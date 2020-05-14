@@ -22,7 +22,7 @@ namespace AutoScreenCapture
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string SCHEDULE_NAME = "name";
-        private const string SCHEDULE_ENABLED = "enabled";
+        private const string SCHEDULE_ACTIVE = "active";
         private const string SCHEDULE_MODE_ONETIME = "mode_onetime";
         private const string SCHEDULE_MODE_PERIOD = "mode_period";
         private const string SCHEDULE_CAPTUREAT = "captureat";
@@ -101,9 +101,9 @@ namespace AutoScreenCapture
                                         schedule.Name = xReader.Value;
                                         break;
 
-                                    case SCHEDULE_ENABLED:
+                                    case SCHEDULE_ACTIVE:
                                         xReader.Read();
-                                        schedule.Enabled = Convert.ToBoolean(xReader.Value);
+                                        schedule.Active = Convert.ToBoolean(xReader.Value);
                                         break;
 
                                     case SCHEDULE_MODE_ONETIME:
@@ -186,7 +186,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Schedule that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                schedule.Enabled = true;
+                                schedule.Active = true;
                             }
                         }
 
@@ -214,7 +214,7 @@ namespace AutoScreenCapture
                     Schedule specialSchedule = new Schedule()
                     {
                         Name = ScheduleCollection.SpecialScheduleName,
-                        Enabled = false,
+                        Active = false,
                         ModeOneTime = true,
                         ModePeriod = false,
                         CaptureAt = dtNow,
@@ -248,13 +248,13 @@ namespace AutoScreenCapture
 
                         if (captureStartAt)
                         {
-                            specialSchedule.Enabled = true;
+                            specialSchedule.Active = true;
                             specialSchedule.StartAt = dtStartAt;
                         }
 
                         if (captureStopAt)
                         {
-                            specialSchedule.Enabled = true;
+                            specialSchedule.Active = true;
                             specialSchedule.StopAt = dtStopAt;
                         }
 
@@ -327,7 +327,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_SCHEDULE_NODE);
 
-                        xWriter.WriteElementString(SCHEDULE_ENABLED, schedule.Enabled.ToString());
+                        xWriter.WriteElementString(SCHEDULE_ACTIVE, schedule.Active.ToString());
                         xWriter.WriteElementString(SCHEDULE_NAME, schedule.Name);
                         xWriter.WriteElementString(SCHEDULE_MODE_ONETIME, schedule.ModeOneTime.ToString());
                         xWriter.WriteElementString(SCHEDULE_MODE_PERIOD, schedule.ModePeriod.ToString());

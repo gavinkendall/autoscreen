@@ -137,7 +137,7 @@ namespace AutoScreenCapture
 
                 foreach (Screen screen in formScreen.ScreenCollection)
                 {
-                    if (screen.Enabled)
+                    if (screen.Active)
                     {
                         if (screen.Component == 0)
                         {

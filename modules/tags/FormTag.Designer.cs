@@ -51,7 +51,7 @@
             this.dateTimePickerMorningEnd = new System.Windows.Forms.DateTimePicker();
             this.labelMorning = new System.Windows.Forms.Label();
             this.dateTimePickerMorningStart = new System.Windows.Forms.DateTimePicker();
-            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
+            this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.groupBoxTimeOfDay.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -301,17 +301,17 @@
             this.dateTimePickerMorningStart.TabIndex = 0;
             this.dateTimePickerMorningStart.TabStop = false;
             // 
-            // checkBoxEnabled
+            // checkBoxActive
             // 
-            this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxEnabled.AutoSize = true;
-            this.checkBoxEnabled.Location = new System.Drawing.Point(489, 8);
-            this.checkBoxEnabled.Name = "checkBoxEnabled";
-            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
-            this.checkBoxEnabled.TabIndex = 1;
-            this.checkBoxEnabled.TabStop = false;
-            this.checkBoxEnabled.Text = "Enabled";
-            this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxActive.AutoSize = true;
+            this.checkBoxActive.Location = new System.Drawing.Point(498, 8);
+            this.checkBoxActive.Name = "checkBoxActive";
+            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActive.TabIndex = 1;
+            this.checkBoxActive.TabStop = false;
+            this.checkBoxActive.Text = "Active";
+            this.checkBoxActive.UseVisualStyleBackColor = true;
             // 
             // FormTag
             // 
@@ -320,7 +320,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(563, 248);
-            this.Controls.Add(this.checkBoxEnabled);
+            this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.groupBoxTimeOfDay);
             this.Controls.Add(this.textBoxDateTimeFormatValue);
             this.Controls.Add(this.labelDateTimeFormatValue);
@@ -369,6 +369,6 @@
         private System.Windows.Forms.Label labelMorning;
         private System.Windows.Forms.DateTimePicker dateTimePickerMorningStart;
         private System.Windows.Forms.CheckBox checkBoxEveningExtendsToNextMorning;
-        private System.Windows.Forms.CheckBox checkBoxEnabled;
+        private System.Windows.Forms.CheckBox checkBoxActive;
     }
 }

@@ -39,7 +39,7 @@
             this.comboBoxAction = new System.Windows.Forms.ComboBox();
             this.labelEditor = new System.Windows.Forms.Label();
             this.comboBoxEditor = new System.Windows.Forms.ComboBox();
-            this.checkBoxEnabled = new System.Windows.Forms.CheckBox();
+            this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -134,17 +134,17 @@
             this.comboBoxEditor.Size = new System.Drawing.Size(435, 21);
             this.comboBoxEditor.TabIndex = 4;
             // 
-            // checkBoxEnabled
+            // checkBoxActive
             // 
-            this.checkBoxEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxEnabled.AutoSize = true;
-            this.checkBoxEnabled.Location = new System.Drawing.Point(450, 8);
-            this.checkBoxEnabled.Name = "checkBoxEnabled";
-            this.checkBoxEnabled.Size = new System.Drawing.Size(65, 17);
-            this.checkBoxEnabled.TabIndex = 7;
-            this.checkBoxEnabled.TabStop = false;
-            this.checkBoxEnabled.Text = "Enabled";
-            this.checkBoxEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxActive.AutoSize = true;
+            this.checkBoxActive.Location = new System.Drawing.Point(459, 8);
+            this.checkBoxActive.Name = "checkBoxActive";
+            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActive.TabIndex = 7;
+            this.checkBoxActive.TabStop = false;
+            this.checkBoxActive.Text = "Active";
+            this.checkBoxActive.UseVisualStyleBackColor = true;
             // 
             // FormTrigger
             // 
@@ -153,7 +153,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(527, 141);
-            this.Controls.Add(this.checkBoxEnabled);
+            this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.comboBoxEditor);
             this.Controls.Add(this.labelEditor);
             this.Controls.Add(this.comboBoxAction);
@@ -189,6 +189,6 @@
         private System.Windows.Forms.ComboBox comboBoxAction;
         private System.Windows.Forms.Label labelEditor;
         private System.Windows.Forms.ComboBox comboBoxEditor;
-        private System.Windows.Forms.CheckBox checkBoxEnabled;
+        private System.Windows.Forms.CheckBox checkBoxActive;
     }
 }

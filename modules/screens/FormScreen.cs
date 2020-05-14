@@ -102,7 +102,7 @@ namespace AutoScreenCapture
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 numericUpDownResolutionRatio.Value = ScreenObject.ResolutionRatio;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
-                checkBoxEnabled.Checked = ScreenObject.Enabled;
+                checkBoxActive.Checked = ScreenObject.Active;
             }
             else
             {
@@ -116,7 +116,7 @@ namespace AutoScreenCapture
                 numericUpDownJpegQuality.Value = 100;
                 numericUpDownResolutionRatio.Value = 100;
                 checkBoxMouse.Checked = true;
-                checkBoxEnabled.Checked = true;
+                checkBoxActive.Checked = true;
             }
 
             UpdatePreviewMacro();
@@ -178,7 +178,7 @@ namespace AutoScreenCapture
                         (int)numericUpDownJpegQuality.Value,
                         (int)numericUpDownResolutionRatio.Value,
                         checkBoxMouse.Checked,
-                        checkBoxEnabled.Checked));
+                        checkBoxActive.Checked));
 
                     Okay();
                 }
@@ -218,7 +218,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
-                        ScreenCollection.Get(ScreenObject).Enabled = checkBoxEnabled.Checked;
+                        ScreenCollection.Get(ScreenObject).Active = checkBoxActive.Checked;
 
                         Okay();
                     }
@@ -263,7 +263,7 @@ namespace AutoScreenCapture
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
-                 !ScreenObject.Enabled.Equals(checkBoxEnabled.Checked)))
+                 !ScreenObject.Active.Equals(checkBoxActive.Checked)))
             {
                 return true;
             }
@@ -303,7 +303,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (checkBoxEnabled.Checked)
+                if (checkBoxActive.Checked)
                 {
                     if (comboBoxScreenComponent.SelectedIndex == 0)
                     {
@@ -333,7 +333,7 @@ namespace AutoScreenCapture
 
                     textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
                     textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
-                    textBoxMacroPreview.Text = "[Enabled is off and this screen is inactive. No screenshots will be taken during screen capture]";
+                    textBoxMacroPreview.Text = "[Active option is off. No screenshots of this screen will be taken during a screen capture session]";
                 }
             }
             catch (Exception ex)
@@ -376,7 +376,7 @@ namespace AutoScreenCapture
             comboBoxScreenComponent.Enabled = enabled;
             numericUpDownJpegQuality.Enabled = enabled;
             numericUpDownResolutionRatio.Enabled = enabled;
-            checkBoxEnabled.Enabled = enabled;
+            checkBoxActive.Enabled = enabled;
         }
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
@@ -419,9 +419,9 @@ namespace AutoScreenCapture
             HelpMessage("Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
         }
 
-        private void checkBoxEnabled_MouseHover(object sender, EventArgs e)
+        private void checkBoxActive_MouseHover(object sender, EventArgs e)
         {
-            HelpMessage("You can capture this screen if Enabled is checked or turned on otherwise you can disable this screen capture so as to not take screenshots for it");
+            HelpMessage("You can capture this screen if Active is checked or turned on");
         }
 
         private void buttonScreenBrowseFolder_MouseHover(object sender, EventArgs e)

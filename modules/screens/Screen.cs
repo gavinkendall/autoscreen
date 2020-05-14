@@ -62,7 +62,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Determines if the screen is active or inactive.
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool Active { get; set; }
 
         /// <summary>
         /// The empty constructor of the screen.
@@ -95,7 +95,7 @@ namespace AutoScreenCapture
             JpegQuality = jpegQuality;
             ResolutionRatio = resolutionRatio;
             Mouse = mouse;
-            Enabled = enabled;
+            Active = enabled;
         }
     }
 }

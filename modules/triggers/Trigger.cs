@@ -35,14 +35,14 @@ namespace AutoScreenCapture
         /// <summary>
         /// Determines if the trigger is active or inactive.
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool Active { get; set; }
 
         /// <summary>
         /// The empty constructor for the trigger.
         /// </summary>
         public Trigger()
         {
-            Enabled = false;
+            Active = false;
         }
 
         /// <summary>
@@ -52,14 +52,14 @@ namespace AutoScreenCapture
         /// <param name="conditionType">The condition to check by the trigger in order to perform an action based on this condition.</param>
         /// <param name="actionType">The action to perform based on the condition.</param>
         /// <param name="editor">The editor associated with the trigger.</param>
-        /// <param name="enabled">Determines if the trigger is active or inactive.</param>
-        public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor, bool enabled)
+        /// <param name="active">Determines if the trigger is active or inactive.</param>
+        public Trigger(string name, TriggerConditionType conditionType, TriggerActionType actionType, string editor, bool active)
         {
             Name = name;
             ConditionType = conditionType;
             ActionType = actionType;
             Editor = editor;
-            Enabled = enabled;
+            Active = active;
         }
     }
 }

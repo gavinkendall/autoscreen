@@ -25,7 +25,7 @@ namespace AutoScreenCapture
         private const string TRIGGER_CONDITION = "condition";
         private const string TRIGGER_ACTION = "action";
         private const string TRIGGER_EDITOR = "editor";
-        private const string TRIGGER_ENABLED = "enabled";
+        private const string TRIGGER_ACTIVE = "active";
 
         private readonly string TRIGGER_XPATH;
 
@@ -98,9 +98,9 @@ namespace AutoScreenCapture
                                         trigger.Editor = xReader.Value;
                                         break;
 
-                                    case TRIGGER_ENABLED:
+                                    case TRIGGER_ACTIVE:
                                         xReader.Read();
-                                        trigger.Enabled = Convert.ToBoolean(xReader.Value);
+                                        trigger.Active = Convert.ToBoolean(xReader.Value);
                                         break;
                                 }
                             }
@@ -123,7 +123,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Trigger that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                trigger.Enabled = true;
+                                trigger.Active = true;
                             }
                         }
 
@@ -144,19 +144,19 @@ namespace AutoScreenCapture
 
                     // Setup a few "built in" triggers by default.
                     Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
-                        TriggerActionType.ShowInterface, string.Empty, enabled: true));
+                        TriggerActionType.ShowInterface, string.Empty, active: true));
 
                     Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted,
-                        TriggerActionType.HideInterface, string.Empty, enabled: true));
+                        TriggerActionType.HideInterface, string.Empty, active: true));
 
                     Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
-                        TriggerActionType.ShowInterface, string.Empty, enabled: true));
+                        TriggerActionType.ShowInterface, string.Empty, active: true));
 
                     Add(new Trigger("Interface Closing -> Hide", TriggerConditionType.InterfaceClosing,
-                        TriggerActionType.HideInterface, string.Empty, enabled: true));
+                        TriggerActionType.HideInterface, string.Empty, active: true));
 
                     Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
-                        TriggerActionType.StopScreenCapture, string.Empty, enabled: true));
+                        TriggerActionType.StopScreenCapture, string.Empty, active: true));
 
                     SaveToXmlFile();
                 }
@@ -212,7 +212,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
 
-                        xWriter.WriteElementString(TRIGGER_ENABLED, trigger.Enabled.ToString());
+                        xWriter.WriteElementString(TRIGGER_ACTIVE, trigger.Active.ToString());
                         xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());

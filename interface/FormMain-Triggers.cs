@@ -94,7 +94,7 @@ namespace AutoScreenCapture
         {
             foreach (Trigger trigger in formTrigger.TriggerCollection)
             {
-                if (!trigger.Enabled)
+                if (!trigger.Active)
                 {
                     continue;
                 }

@@ -77,7 +77,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Determines if the region is active or inactive.
         /// </summary>
-        public bool Enabled { get; set; }
+        public bool Active { get; set; }
 
         /// <summary>
         /// The empty constructor of the region.
@@ -101,8 +101,8 @@ namespace AutoScreenCapture
         /// <param name="y">The Y coordinate of the region capture.</param>
         /// <param name="width">The width of the region capture.</param>
         /// <param name="height">The height of the region capture.</param>
-        /// <param name="enabled">Determines if the region capture should be active or inactive.</param>
-        public Region(string name, string folder, string macro, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, bool enabled)
+        /// <param name="active">Determines if the region capture should be active or inactive.</param>
+        public Region(string name, string folder, string macro, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, bool active)
         {
             ViewId = Guid.NewGuid();
             Name = name;
@@ -116,7 +116,7 @@ namespace AutoScreenCapture
             Y = y;
             Width = width;
             Height = height;
-            Enabled = enabled;
+            Active = active;
         }
     }
 }

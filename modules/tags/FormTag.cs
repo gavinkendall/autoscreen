@@ -70,7 +70,7 @@ namespace AutoScreenCapture
 
                 checkBoxEveningExtendsToNextMorning.Checked = TagObject.EveningExtendsToNextMorning;
 
-                checkBoxEnabled.Checked = TagObject.Enabled;
+                checkBoxActive.Checked = TagObject.Active;
             }
             else
             {
@@ -97,7 +97,7 @@ namespace AutoScreenCapture
 
                 checkBoxEveningExtendsToNextMorning.Checked = tag.EveningExtendsToNextMorning;
 
-                checkBoxEnabled.Checked = true;
+                checkBoxActive.Checked = true;
             }
         }
 
@@ -139,7 +139,7 @@ namespace AutoScreenCapture
                         dateTimePickerEveningEnd.Value,
                         textBoxEveningValue.Text,
                         checkBoxEveningExtendsToNextMorning.Checked,
-                        checkBoxEnabled.Checked
+                        checkBoxActive.Checked
                         ));
 
                     Okay();
@@ -182,7 +182,7 @@ namespace AutoScreenCapture
                         TagCollection.Get(TagObject).TimeOfDayEveningEnd = dateTimePickerEveningEnd.Value;
                         TagCollection.Get(TagObject).TimeOfDayEveningValue = textBoxEveningValue.Text;
                         TagCollection.Get(TagObject).EveningExtendsToNextMorning = checkBoxEveningExtendsToNextMorning.Checked;
-                        TagCollection.Get(TagObject).Enabled = checkBoxEnabled.Checked;
+                        TagCollection.Get(TagObject).Active = checkBoxActive.Checked;
 
                         Okay();
                     }
@@ -250,7 +250,7 @@ namespace AutoScreenCapture
 
             if (TagObject != null)
             {
-                if (TagObject.Enabled != checkBoxEnabled.Checked)
+                if (TagObject.Active != checkBoxActive.Checked)
                 {
                     changed = true;
                 }
