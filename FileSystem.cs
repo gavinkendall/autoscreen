@@ -321,6 +321,24 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Determines if the drive of the given path is ready.
+        /// </summary>
+        /// <param name="path">The path to check for the drive's status.</param>
+        /// <returns>True if the drive is ready. False if the drive is not ready.</returns>
+        public static bool DriveReady(string path)
+        {
+            if (string.IsNullOrEmpty(path) || path.StartsWith(PathDelimiter))
+            {
+                return false;
+            }
+
+            FileInfo fileInfo = new FileInfo(path);
+            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+            return driveInfo.IsReady;
+        }
+
+        /// <summary>
         /// Gets the image from a given path.
         /// </summary>
         /// <param name="path">The path of the image file to get the image from.</param>
