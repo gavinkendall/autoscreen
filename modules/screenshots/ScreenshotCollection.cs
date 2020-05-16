@@ -302,6 +302,17 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Gets a list of screenshots based on the date and time.
+        /// </summary>
+        /// <param name="date">The date for when screenshots were taken.</param>
+        /// <param name="time">The time for when screenshots were taken.</param>
+        /// <returns>A list of screenshots.</returns>
+        public List<Screenshot> GetScreenshots(string date, string time)
+        {
+            return _screenshotList.Where(x => x.Date.Equals(date) && x.Time.Equals(time)).ToList();
+        }
+
+        /// <summary>
         /// Loads screenshot references from the screenshots.xml file into an XmlDocument so it's available in memory.
         /// The old way of loading screenshots also had the application construct each Screenshot object from an XML screenshot node and add it to the collection. This would take a long time to load for a large screenshots.xml file.
         /// The new way (as of version 2.3.0.0) will only load XML screenshot nodes whenever necessary.

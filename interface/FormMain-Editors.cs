@@ -134,7 +134,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Executes a chosen image editor from a Trigger to open the last screenshot taken with the image editor.
+        /// Executes a chosen image editor from a Trigger to open the last set of screenshots taken with the image editor.
         /// </summary>
         /// <param name="editor">The image editor to execute.</param>
         /// <param name="triggerActionType">The trigger's action type.</param>
@@ -142,13 +142,16 @@ namespace AutoScreenCapture
         {
             if (editor != null && triggerActionType == TriggerActionType.RunEditor)
             {
-                Screenshot screenshot = _screenshotCollection.Get(_screenshotCollection.Count - 1);
+                DateTime dt = _screenCapture.DateTimeScreenshotsTaken;
 
-                if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
+                foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dt.ToString(MacroParser.DateFormat), dt.ToString(MacroParser.TimeFormat)))
                 {
-                    Log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
+                    if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
+                    {
+                        Log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
 
-                    RunEditor(editor, screenshot);
+                        RunEditor(editor, screenshot);
+                    }
                 }
             }
         }
