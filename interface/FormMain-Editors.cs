@@ -79,6 +79,10 @@ namespace AutoScreenCapture
                 Editor editor = formEditor.EditorCollection.GetByName(sender.ToString());
                 RunEditor(editor);
             }
+            else
+            {
+                MessageBox.Show("No image is available to edit.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

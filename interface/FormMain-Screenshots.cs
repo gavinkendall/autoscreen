@@ -56,7 +56,7 @@ namespace AutoScreenCapture
 
             Slide selectedSlide = Slideshow.SelectedSlide;
 
-            if (selectedSlide != null)
+            if (selectedSlide != null && listBoxScreenshots.SelectedIndex > -1)
             {
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
