@@ -380,7 +380,7 @@ namespace AutoScreenCapture
 
         private void buttonMacroTags_Click(object sender, EventArgs e)
         {
-            if (_formMacroTags == null)
+            if (_formMacroTags == null || _formMacroTags.IsDisposed)
             {
                 _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
                 _formMacroTags.Show();

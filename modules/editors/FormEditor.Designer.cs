@@ -153,7 +153,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormEditor";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormEditor_Load);
             this.ResumeLayout(false);

@@ -169,7 +169,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormTrigger";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormTrigger_Load);
             this.ResumeLayout(false);

@@ -327,7 +327,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSchedule";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormSchedule_Load);
             this.groupBoxDays.ResumeLayout(false);

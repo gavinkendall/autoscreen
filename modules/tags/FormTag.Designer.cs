@@ -391,7 +391,6 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(772, 493);
             this.Name = "FormTag";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormTag_Load);
             this.groupBoxTimeOfDay.ResumeLayout(false);

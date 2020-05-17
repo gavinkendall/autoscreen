@@ -540,7 +540,6 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(772, 493);
             this.Name = "FormRegion";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormRegion_FormClosing);
             this.Load += new System.EventHandler(this.FormRegion_Load);
