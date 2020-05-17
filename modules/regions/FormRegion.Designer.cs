@@ -279,6 +279,7 @@
             this.textBoxFolder.Size = new System.Drawing.Size(444, 20);
             this.textBoxFolder.TabIndex = 27;
             this.textBoxFolder.TextChanged += new System.EventHandler(this.updatePreviewMacro);
+            this.textBoxFolder.MouseHover += new System.EventHandler(this.textBoxFolder_MouseHover);
             // 
             // buttonBrowseFolder
             // 

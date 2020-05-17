@@ -155,6 +155,7 @@
             this.textBoxFolder.Size = new System.Drawing.Size(444, 20);
             this.textBoxFolder.TabIndex = 17;
             this.textBoxFolder.TextChanged += new System.EventHandler(this.updatePreviewMacro);
+            this.textBoxFolder.MouseHover += new System.EventHandler(this.textBoxFolder_MouseHover);
             // 
             // buttonScreenBrowseFolder
             // 

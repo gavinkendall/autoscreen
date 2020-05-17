@@ -411,6 +411,11 @@ namespace AutoScreenCapture
             HelpMessage("You can capture this region if Active is checked (turned on)");
         }
 
+        private void textBoxFolder_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The folder where to store the files of the screenshots being taken");
+        }
+
         private void buttonBrowseFolder_MouseHover(object sender, EventArgs e)
         {
             HelpMessage("Browse for a folder where screenshots of this region capture will be saved to");

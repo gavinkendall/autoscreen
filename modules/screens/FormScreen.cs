@@ -433,6 +433,11 @@ namespace AutoScreenCapture
             HelpMessage("You can capture this screen if Active is checked (turned on)");
         }
 
+        private void textBoxFolder_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The folder where to store the files of the screenshots being taken");
+        }
+
         private void buttonScreenBrowseFolder_MouseHover(object sender, EventArgs e)
         {
             HelpMessage("Browse for a folder where screenshots of this screen capture will be saved to");
