@@ -20,6 +20,16 @@ namespace AutoScreenCapture
         public string Name { get; set; }
 
         /// <summary>
+        /// A short description of the macro tag.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Notes for the user to write in whatever they need to.
+        /// </summary>
+        public string Notes { get; set; }
+
+        /// <summary>
         /// The type of tag.
         /// </summary>
         public TagType Type { get; set; }
@@ -120,13 +130,15 @@ namespace AutoScreenCapture
         /// Creates a tag given its name, tag type, and its status (whether it be active or inactive).
         /// </summary>
         /// <param name="name">The name of the tag.</param>
+        /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="active">The status of the tag.</param>
-        public Tag(string name, TagType tagType, bool active)
+        public Tag(string name, string description, TagType tagType, bool active)
         {
             SetDefaultValues();
 
             Name = name;
+            Description = description;
             Type = tagType;
             Active = active;
         }
@@ -135,14 +147,16 @@ namespace AutoScreenCapture
         /// Creates a tag given its name, tag type, date/time format value, and its status.
         /// </summary>
         /// <param name="name">The name of the tag.</param>
+        /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="active">The status of the tag.</param>
-        public Tag(string name, TagType tagType, string dateTimeFormatValue, bool active)
+        public Tag(string name, string description, TagType tagType, string dateTimeFormatValue, bool active)
         {
             SetDefaultValues();
 
             Name = name;
+            Description = description;
             Type = tagType;
             DateTimeFormatValue = dateTimeFormatValue;
             Active = active;
@@ -152,6 +166,7 @@ namespace AutoScreenCapture
         /// Creates a tag given its name, tag type, and "Time of Day" properties.
         /// </summary>
         /// <param name="name">The name of the tag.</param>
+        /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="timeOfDayMorningStart">The start time of the morning.</param>
@@ -165,7 +180,7 @@ namespace AutoScreenCapture
         /// <param name="timeOfDayEveningValue">The macro value for the evening.</param>
         /// <param name="eveningExtendsToNextMorning">Determines if we extend the evening time into the next morning.</param>
         /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
-        public Tag(string name, TagType tagType,
+        public Tag(string name, string description, TagType tagType,
             string dateTimeFormatValue,
             DateTime timeOfDayMorningStart,
             DateTime timeOfDayMorningEnd,
@@ -180,6 +195,7 @@ namespace AutoScreenCapture
             bool active)
         {
             Name = name;
+            Description = description;
             Type = tagType;
 
             DateTimeFormatValue = dateTimeFormatValue;

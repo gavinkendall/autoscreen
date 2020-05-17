@@ -440,7 +440,7 @@ namespace AutoScreenCapture
 
                                 while (xReader.Read())
                                 {
-                                    if (xReader.IsStartElement())
+                                    if (xReader.IsStartElement() && !xReader.IsEmptyElement)
                                     {
                                         if (xReader.Name.Equals(nodeReturn))
                                         {
@@ -536,7 +536,7 @@ namespace AutoScreenCapture
 
                                 while (xReader.Read())
                                 {
-                                    if (xReader.IsStartElement())
+                                    if (xReader.IsStartElement() && !xReader.IsEmptyElement)
                                     {
                                         switch (xReader.Name)
                                         {

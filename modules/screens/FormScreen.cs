@@ -60,6 +60,8 @@ namespace AutoScreenCapture
 
         private void FormScreen_Load(object sender, EventArgs e)
         {
+            textBoxName.Focus();
+
             HelpMessage("This is where to configure a screen capture. Select an available screen from the Component drop-down menu and keep an eye on Preview");
 
             comboBoxFormat.Items.Clear();
@@ -347,8 +349,8 @@ namespace AutoScreenCapture
             textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
-            textBoxMacroPreview.Text = MacroParser.ParseTagsForFolderPath(true, textBoxFolder.Text, TagCollection) +
-                MacroParser.ParseTagsForFilePath(true, textBoxName.Text, textBoxMacro.Text, 1,
+            textBoxMacroPreview.Text = MacroParser.ParseTags(textBoxFolder.Text, TagCollection) +
+                MacroParser.ParseTags(preview: true, textBoxName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
         }
 
@@ -405,8 +407,15 @@ namespace AutoScreenCapture
 
         private void buttonMacroTags_Click(object sender, EventArgs e)
         {
-            _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
-            _formMacroTags.Show();
+            if (_formMacroTags == null)
+            {
+                _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
+                _formMacroTags.Show();
+            }
+            else
+            {
+                _formMacroTags.BringToFront();
+            }
         }
 
         private void checkBoxMouse_MouseHover(object sender, EventArgs e)

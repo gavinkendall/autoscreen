@@ -15,7 +15,7 @@ namespace AutoScreenCapture
     public partial class FormMain
     {
         // A generic method for building a module.
-        private void BuildModule<T>(string name, IEnumerable<T> list, TabPage tabPage,
+        private void BuildModule<T>(IEnumerable<T> list, TabPage tabPage,
             EventHandler eventHandlerForAddNew, EventHandler eventHandlerForRemoveSelected, EventHandler eventhandlerForChange)
         {
             int xPos = 5;
@@ -269,32 +269,32 @@ namespace AutoScreenCapture
 
         private void BuildScreensModule()
         {
-            BuildModule("Screen", formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, changeScreen_Click);
+            BuildModule(formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, changeScreen_Click);
         }
 
         private void BuildRegionsModule()
         {
-            BuildModule("Region", formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
+            BuildModule(formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
         }
 
         private void BuildTagsModule()
         {
-            BuildModule("Tag", formTag.TagCollection, tabPageTags, addTag_Click, removeSelectedTags_Click, changeTag_Click);
+            BuildModule(formTag.TagCollection, tabPageTags, addTag_Click, removeSelectedTags_Click, changeTag_Click);
         }
 
         private void BuildEditorsModule()
         {
-            BuildModule("Editor", formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, changeEditor_Click);
+            BuildModule(formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, changeEditor_Click);
         }
 
         private void BuildTriggersModule()
         {
-            BuildModule("Trigger", formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, changeTrigger_Click);
+            BuildModule(formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, changeTrigger_Click);
         }
 
         private void BuildSchedulesModule()
         {
-            BuildModule("Schedule", formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, changeSchedule_Click);
+            BuildModule(formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, changeSchedule_Click);
         }
     }
 }

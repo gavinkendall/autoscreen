@@ -146,7 +146,7 @@ namespace AutoScreenCapture
                             if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.SaveScreenshot(
-                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTagsForFolderPath(false, region.Folder, formTag.TagCollection)) + MacroParser.ParseTagsForFilePath(false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(region.Folder, formTag.TagCollection)) + MacroParser.ParseTags(preview: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
                                     format: region.Format,
                                     component: -1,
                                     screenshotType: ScreenshotType.Region,

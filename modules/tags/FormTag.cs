@@ -52,6 +52,9 @@ namespace AutoScreenCapture
                 Text = "Change Tag";
 
                 textBoxTagName.Text = TagObject.Name;
+
+                textBoxDescription.Text = TagObject.Description;
+
                 comboBoxType.SelectedIndex = (int)TagObject.Type;
                 textBoxDateTimeFormatValue.Text = TagObject.DateTimeFormatValue;
 
@@ -71,6 +74,8 @@ namespace AutoScreenCapture
                 checkBoxEveningExtendsToNextMorning.Checked = TagObject.EveningExtendsToNextMorning;
 
                 checkBoxActive.Checked = TagObject.Active;
+
+                textBoxNotes.Text = TagObject.Notes;
             }
             else
             {
@@ -79,6 +84,9 @@ namespace AutoScreenCapture
                 Tag tag = new Tag();
 
                 textBoxTagName.Text = "%tag" + (TagCollection.Count + 1) + "%";
+
+                textBoxDescription.Text = string.Empty;
+
                 comboBoxType.SelectedIndex = 0;
                 textBoxDateTimeFormatValue.Text = tag.DateTimeFormatValue;
 
@@ -98,6 +106,8 @@ namespace AutoScreenCapture
                 checkBoxEveningExtendsToNextMorning.Checked = tag.EveningExtendsToNextMorning;
 
                 checkBoxActive.Checked = true;
+
+                textBoxNotes.Text = string.Empty;
             }
         }
 
@@ -127,6 +137,7 @@ namespace AutoScreenCapture
                 if (TagCollection.GetByName(textBoxTagName.Text) == null)
                 {
                     TagCollection.Add(new Tag(textBoxTagName.Text,
+                        textBoxDescription.Text,
                         (TagType)comboBoxType.SelectedIndex,
                         textBoxDateTimeFormatValue.Text,
                         dateTimePickerMorningStart.Value,
@@ -170,6 +181,7 @@ namespace AutoScreenCapture
                     else
                     {
                         TagCollection.Get(TagObject).Name = textBoxTagName.Text;
+                        TagCollection.Get(TagObject).Description = textBoxDescription.Text;
                         TagCollection.Get(TagObject).Type = (TagType)comboBoxType.SelectedIndex;
                         TagCollection.Get(TagObject).DateTimeFormatValue = textBoxDateTimeFormatValue.Text;
                         TagCollection.Get(TagObject).TimeOfDayMorningStart = dateTimePickerMorningStart.Value;
@@ -183,6 +195,7 @@ namespace AutoScreenCapture
                         TagCollection.Get(TagObject).TimeOfDayEveningValue = textBoxEveningValue.Text;
                         TagCollection.Get(TagObject).EveningExtendsToNextMorning = checkBoxEveningExtendsToNextMorning.Checked;
                         TagCollection.Get(TagObject).Active = checkBoxActive.Checked;
+                        TagCollection.Get(TagObject).Notes = textBoxNotes.Text;
 
                         Okay();
                     }
@@ -201,10 +214,12 @@ namespace AutoScreenCapture
         private void TrimInput()
         {
             textBoxTagName.Text = textBoxTagName.Text.Trim();
+            textBoxDescription.Text = textBoxDescription.Text.Trim();
             textBoxDateTimeFormatValue.Text = textBoxDateTimeFormatValue.Text.Trim();
             textBoxMorningValue.Text = textBoxMorningValue.Text.Trim();
             textBoxAfternoonValue.Text = textBoxAfternoonValue.Text.Trim();
             textBoxEveningValue.Text = textBoxEveningValue.Text.Trim();
+            textBoxNotes.Text = textBoxNotes.Text.Trim();
 
             if (!textBoxTagName.Text.StartsWith("%"))
                 textBoxTagName.Text = "%" + textBoxTagName.Text;
@@ -218,6 +233,7 @@ namespace AutoScreenCapture
             if (textBoxDateTimeFormatValue.Enabled || groupBoxTimeOfDay.Enabled)
             {
                 if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                    !string.IsNullOrEmpty(textBoxDescription.Text) &&
                     textBoxDateTimeFormatValue.Enabled &&
                     !string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text))
                 {
@@ -225,6 +241,7 @@ namespace AutoScreenCapture
                 }
 
                 if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                    !string.IsNullOrEmpty(textBoxDescription.Text) &&
                     groupBoxTimeOfDay.Enabled &&
                     !string.IsNullOrEmpty(textBoxMorningValue.Text) &&
                     !string.IsNullOrEmpty(textBoxAfternoonValue.Text) &&
@@ -235,7 +252,8 @@ namespace AutoScreenCapture
             }
             else
             {
-                if (!string.IsNullOrEmpty(textBoxTagName.Text))
+                if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                    !string.IsNullOrEmpty(textBoxDescription.Text))
                 {
                     return true;
                 }
@@ -250,12 +268,10 @@ namespace AutoScreenCapture
 
             if (TagObject != null)
             {
-                if (TagObject.Active != checkBoxActive.Checked)
-                {
-                    changed = true;
-                }
-
-                if (((int)TagObject.Type != comboBoxType.SelectedIndex))
+                if (!TagObject.Description.Equals(textBoxDescription.Text) ||
+                    !TagObject.Notes.Equals(textBoxNotes.Text) ||
+                    TagObject.Active != checkBoxActive.Checked ||
+                    (int)TagObject.Type != comboBoxType.SelectedIndex)
                 {
                     changed = true;
                 }

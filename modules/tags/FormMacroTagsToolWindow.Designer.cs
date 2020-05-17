@@ -30,27 +30,60 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMacroTagsToolWindow));
             this.listBoxMacroTags = new System.Windows.Forms.ListBox();
+            this.labelHelpInfoIcon = new System.Windows.Forms.Label();
+            this.labelHelp = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBoxMacroTags
             // 
-            this.listBoxMacroTags.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxMacroTags.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxMacroTags.FormattingEnabled = true;
             this.listBoxMacroTags.HorizontalScrollbar = true;
-            this.listBoxMacroTags.Location = new System.Drawing.Point(0, 0);
+            this.listBoxMacroTags.Location = new System.Drawing.Point(3, 46);
             this.listBoxMacroTags.Name = "listBoxMacroTags";
             this.listBoxMacroTags.ScrollAlwaysVisible = true;
-            this.listBoxMacroTags.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.listBoxMacroTags.Size = new System.Drawing.Size(184, 391);
-            this.listBoxMacroTags.TabIndex = 0;
+            this.listBoxMacroTags.Size = new System.Drawing.Size(357, 212);
+            this.listBoxMacroTags.TabIndex = 3;
             this.listBoxMacroTags.TabStop = false;
+            this.listBoxMacroTags.SelectedIndexChanged += new System.EventHandler(this.listBoxMacroTags_SelectedIndexChanged);
+            // 
+            // labelHelpInfoIcon
+            // 
+            this.labelHelpInfoIcon.AutoEllipsis = true;
+            this.labelHelpInfoIcon.BackColor = System.Drawing.Color.LightYellow;
+            this.labelHelpInfoIcon.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelHelpInfoIcon.Image = global::AutoScreenCapture.Properties.Resources.about;
+            this.labelHelpInfoIcon.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelHelpInfoIcon.Location = new System.Drawing.Point(0, 0);
+            this.labelHelpInfoIcon.Name = "labelHelpInfoIcon";
+            this.labelHelpInfoIcon.Size = new System.Drawing.Size(22, 43);
+            this.labelHelpInfoIcon.TabIndex = 0;
+            this.labelHelpInfoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelHelp
+            // 
+            this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelHelp.AutoEllipsis = true;
+            this.labelHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelHelp.Location = new System.Drawing.Point(22, 0);
+            this.labelHelp.Name = "labelHelp";
+            this.labelHelp.Size = new System.Drawing.Size(338, 43);
+            this.labelHelp.TabIndex = 1;
+            this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FormMacroTagsToolWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(184, 391);
+            this.ClientSize = new System.Drawing.Size(360, 261);
+            this.Controls.Add(this.labelHelp);
+            this.Controls.Add(this.labelHelpInfoIcon);
             this.Controls.Add(this.listBoxMacroTags);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -68,5 +101,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBoxMacroTags;
+        private System.Windows.Forms.Label labelHelpInfoIcon;
+        private System.Windows.Forms.Label labelHelp;
     }
 }

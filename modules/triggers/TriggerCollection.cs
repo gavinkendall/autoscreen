@@ -72,7 +72,7 @@ namespace AutoScreenCapture
 
                         while (xReader.Read())
                         {
-                            if (xReader.IsStartElement())
+                            if (xReader.IsStartElement() && !xReader.IsEmptyElement)
                             {
                                 switch (xReader.Name)
                                 {
@@ -216,9 +216,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
-
-                        // Make sure the "editor" node is the last one written because its value can be empty
-                        // and if its value is empty then we won't be able to read the next node after it during load.
                         xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
 
                         xWriter.WriteEndElement();

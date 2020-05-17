@@ -36,9 +36,19 @@ namespace AutoScreenCapture
                 macroTags.Add(tag.Name);
             }
 
-            macroTags.Sort();
-
             listBoxMacroTags.DataSource = macroTags;
+
+            if (_tagCollection.Collection.Count > 0)
+            {
+                listBoxMacroTags.SelectedIndex = 0;
+            }
+        }
+
+        private void listBoxMacroTags_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            Tag tag = _tagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
+
+            labelHelp.Text = MacroParser.ParseTag(tag.Description, tag);
         }
     }
 }

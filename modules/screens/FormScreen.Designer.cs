@@ -68,7 +68,7 @@
             this.labelName.Location = new System.Drawing.Point(12, 35);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(38, 13);
-            this.labelName.TabIndex = 0;
+            this.labelName.TabIndex = 1;
             this.labelName.Text = "Name:";
             // 
             // textBoxName
@@ -76,8 +76,8 @@
             this.textBoxName.Location = new System.Drawing.Point(56, 32);
             this.textBoxName.MaxLength = 50;
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(318, 20);
-            this.textBoxName.TabIndex = 1;
+            this.textBoxName.Size = new System.Drawing.Size(546, 20);
+            this.textBoxName.TabIndex = 2;
             // 
             // labelMacro
             // 
@@ -86,7 +86,7 @@
             this.labelMacro.Location = new System.Drawing.Point(229, 425);
             this.labelMacro.Name = "labelMacro";
             this.labelMacro.Size = new System.Drawing.Size(40, 13);
-            this.labelMacro.TabIndex = 0;
+            this.labelMacro.TabIndex = 19;
             this.labelMacro.Text = "Macro:";
             // 
             // textBoxMacro
@@ -96,7 +96,7 @@
             this.textBoxMacro.Location = new System.Drawing.Point(273, 422);
             this.textBoxMacro.Name = "textBoxMacro";
             this.textBoxMacro.Size = new System.Drawing.Size(444, 20);
-            this.textBoxMacro.TabIndex = 17;
+            this.textBoxMacro.TabIndex = 20;
             this.textBoxMacro.TextChanged += new System.EventHandler(this.updatePreviewMacro);
             this.textBoxMacro.MouseHover += new System.EventHandler(this.textBoxMacro_MouseHover);
             // 
@@ -118,7 +118,7 @@
             this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 18;
+            this.buttonOK.TabIndex = 22;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -130,7 +130,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 19;
+            this.buttonCancel.TabIndex = 23;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -142,7 +142,7 @@
             this.labelFolder.Location = new System.Drawing.Point(229, 399);
             this.labelFolder.Name = "labelFolder";
             this.labelFolder.Size = new System.Drawing.Size(39, 13);
-            this.labelFolder.TabIndex = 0;
+            this.labelFolder.TabIndex = 16;
             this.labelFolder.Text = "Folder:";
             // 
             // textBoxFolder
@@ -152,7 +152,7 @@
             this.textBoxFolder.Location = new System.Drawing.Point(273, 396);
             this.textBoxFolder.Name = "textBoxFolder";
             this.textBoxFolder.Size = new System.Drawing.Size(444, 20);
-            this.textBoxFolder.TabIndex = 15;
+            this.textBoxFolder.TabIndex = 17;
             this.textBoxFolder.TextChanged += new System.EventHandler(this.updatePreviewMacro);
             // 
             // buttonScreenBrowseFolder
@@ -162,7 +162,7 @@
             this.buttonScreenBrowseFolder.Location = new System.Drawing.Point(723, 394);
             this.buttonScreenBrowseFolder.Name = "buttonScreenBrowseFolder";
             this.buttonScreenBrowseFolder.Size = new System.Drawing.Size(27, 23);
-            this.buttonScreenBrowseFolder.TabIndex = 16;
+            this.buttonScreenBrowseFolder.TabIndex = 18;
             this.buttonScreenBrowseFolder.UseVisualStyleBackColor = true;
             this.buttonScreenBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
             this.buttonScreenBrowseFolder.MouseHover += new System.EventHandler(this.buttonScreenBrowseFolder_MouseHover);
@@ -175,7 +175,7 @@
             this.comboBoxFormat.Location = new System.Drawing.Point(148, 22);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
-            this.comboBoxFormat.TabIndex = 9;
+            this.comboBoxFormat.TabIndex = 8;
             this.comboBoxFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxFormat_SelectedIndexChanged);
             this.comboBoxFormat.MouseHover += new System.EventHandler(this.comboBoxFormat_MouseHover);
             // 
@@ -185,7 +185,7 @@
             this.labelFormat.Location = new System.Drawing.Point(6, 25);
             this.labelFormat.Name = "labelFormat";
             this.labelFormat.Size = new System.Drawing.Size(42, 13);
-            this.labelFormat.TabIndex = 0;
+            this.labelFormat.TabIndex = 7;
             this.labelFormat.Text = "Format:";
             // 
             // numericUpDownResolutionRatio
@@ -198,7 +198,7 @@
             0});
             this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
             this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 11;
+            this.numericUpDownResolutionRatio.TabIndex = 12;
             this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
             100,
             0,
@@ -212,7 +212,7 @@
             this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
             this.labelResolutionRatio.Name = "labelResolutionRatio";
             this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 0;
+            this.labelResolutionRatio.TabIndex = 11;
             this.labelResolutionRatio.Text = "Resolution Ratio:";
             // 
             // numericUpDownJpegQuality
@@ -238,7 +238,7 @@
             this.labelJpegQuality.Location = new System.Drawing.Point(6, 51);
             this.labelJpegQuality.Name = "labelJpegQuality";
             this.labelJpegQuality.Size = new System.Drawing.Size(72, 13);
-            this.labelJpegQuality.TabIndex = 0;
+            this.labelJpegQuality.TabIndex = 9;
             this.labelJpegQuality.Text = "JPEG Quality:";
             // 
             // checkBoxMouse
@@ -247,7 +247,7 @@
             this.checkBoxMouse.Location = new System.Drawing.Point(9, 102);
             this.checkBoxMouse.Name = "checkBoxMouse";
             this.checkBoxMouse.Size = new System.Drawing.Size(130, 17);
-            this.checkBoxMouse.TabIndex = 12;
+            this.checkBoxMouse.TabIndex = 13;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
             this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
@@ -266,7 +266,7 @@
             this.groupBoxImage.Location = new System.Drawing.Point(12, 110);
             this.groupBoxImage.Name = "groupBoxImage";
             this.groupBoxImage.Size = new System.Drawing.Size(205, 126);
-            this.groupBoxImage.TabIndex = 8;
+            this.groupBoxImage.TabIndex = 6;
             this.groupBoxImage.TabStop = false;
             this.groupBoxImage.Text = "Image";
             // 
@@ -276,7 +276,7 @@
             this.groupBoxComponent.Location = new System.Drawing.Point(12, 58);
             this.groupBoxComponent.Name = "groupBoxComponent";
             this.groupBoxComponent.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxComponent.TabIndex = 2;
+            this.groupBoxComponent.TabIndex = 4;
             this.groupBoxComponent.TabStop = false;
             this.groupBoxComponent.Text = "Component";
             // 
@@ -287,7 +287,7 @@
             this.comboBoxScreenComponent.Location = new System.Drawing.Point(6, 19);
             this.comboBoxScreenComponent.Name = "comboBoxScreenComponent";
             this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxScreenComponent.TabIndex = 3;
+            this.comboBoxScreenComponent.TabIndex = 5;
             this.comboBoxScreenComponent.SelectedIndexChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // groupBoxPreview
@@ -302,7 +302,7 @@
             this.groupBoxPreview.Location = new System.Drawing.Point(223, 58);
             this.groupBoxPreview.Name = "groupBoxPreview";
             this.groupBoxPreview.Size = new System.Drawing.Size(530, 330);
-            this.groupBoxPreview.TabIndex = 0;
+            this.groupBoxPreview.TabIndex = 14;
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
             // 
@@ -313,7 +313,7 @@
             this.textBoxMacroPreview.Name = "textBoxMacroPreview";
             this.textBoxMacroPreview.ReadOnly = true;
             this.textBoxMacroPreview.Size = new System.Drawing.Size(524, 20);
-            this.textBoxMacroPreview.TabIndex = 20;
+            this.textBoxMacroPreview.TabIndex = 15;
             this.textBoxMacroPreview.TabStop = false;
             // 
             // checkBoxActive
@@ -323,8 +323,7 @@
             this.checkBoxActive.Location = new System.Drawing.Point(691, 34);
             this.checkBoxActive.Name = "checkBoxActive";
             this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
-            this.checkBoxActive.TabIndex = 0;
-            this.checkBoxActive.TabStop = false;
+            this.checkBoxActive.TabIndex = 3;
             this.checkBoxActive.Text = "Active";
             this.checkBoxActive.UseVisualStyleBackColor = true;
             this.checkBoxActive.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
@@ -342,7 +341,7 @@
             this.labelHelp.Location = new System.Drawing.Point(2, 4);
             this.labelHelp.Name = "labelHelp";
             this.labelHelp.Size = new System.Drawing.Size(749, 17);
-            this.labelHelp.TabIndex = 21;
+            this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // buttonMacroTags
@@ -352,7 +351,7 @@
             this.buttonMacroTags.Location = new System.Drawing.Point(723, 420);
             this.buttonMacroTags.Name = "buttonMacroTags";
             this.buttonMacroTags.Size = new System.Drawing.Size(27, 23);
-            this.buttonMacroTags.TabIndex = 22;
+            this.buttonMacroTags.TabIndex = 21;
             this.buttonMacroTags.UseVisualStyleBackColor = true;
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
@@ -365,9 +364,11 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.checkBoxActive);
+            this.Controls.Add(this.textBoxName);
+            this.Controls.Add(this.labelName);
             this.Controls.Add(this.buttonMacroTags);
             this.Controls.Add(this.labelHelp);
-            this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.groupBoxPreview);
             this.Controls.Add(this.groupBoxComponent);
             this.Controls.Add(this.groupBoxImage);
@@ -378,12 +379,10 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.textBoxMacro);
             this.Controls.Add(this.labelMacro);
-            this.Controls.Add(this.textBoxName);
-            this.Controls.Add(this.labelName);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(500, 400);
+            this.MinimumSize = new System.Drawing.Size(772, 493);
             this.Name = "FormScreen";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
