@@ -79,7 +79,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
@@ -90,7 +90,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
@@ -106,7 +106,7 @@
             this.labelTagType.Location = new System.Drawing.Point(9, 61);
             this.labelTagType.Name = "labelTagType";
             this.labelTagType.Size = new System.Drawing.Size(34, 13);
-            this.labelTagType.TabIndex = 6;
+            this.labelTagType.TabIndex = 4;
             this.labelTagType.Text = "Type:";
             // 
             // comboBoxType
@@ -116,7 +116,7 @@
             this.comboBoxType.Location = new System.Drawing.Point(12, 81);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(243, 21);
-            this.comboBoxType.TabIndex = 7;
+            this.comboBoxType.TabIndex = 5;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxType_SelectedIndexChanged);
             // 
             // labelDateTimeFormatValue
@@ -343,7 +343,7 @@
             this.labelDescription.Location = new System.Drawing.Point(268, 61);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(63, 13);
-            this.labelDescription.TabIndex = 4;
+            this.labelDescription.TabIndex = 6;
             this.labelDescription.Text = "Description:";
             // 
             // textBoxDescription
@@ -354,7 +354,7 @@
             this.textBoxDescription.MaxLength = 100;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(470, 20);
-            this.textBoxDescription.TabIndex = 5;
+            this.textBoxDescription.TabIndex = 7;
             // 
             // FormTag
             // 

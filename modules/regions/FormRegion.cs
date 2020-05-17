@@ -423,7 +423,17 @@ namespace AutoScreenCapture
 
         private void buttonMacroTags_MouseHover(object sender, EventArgs e)
         {
-            HelpMessage("Open a list of available macro tags");
+            HelpMessage("Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
+        }
+
+        private void pictureBoxPreview_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("A preview of what will be captured during a running screen capture session. Click to update the preview image");
+        }
+
+        private void textBoxMacroPreview_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("A preview of how your files will be named. Use macro tags (such as %date% and %time%) in the Macro field to customize the filename pattern");
         }
 
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)

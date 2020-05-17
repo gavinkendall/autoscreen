@@ -111,6 +111,7 @@
             this.pictureBoxPreview.TabIndex = 5;
             this.pictureBoxPreview.TabStop = false;
             this.pictureBoxPreview.Click += new System.EventHandler(this.updatePreviewImage);
+            this.pictureBoxPreview.MouseHover += new System.EventHandler(this.pictureBoxPreview_MouseHover);
             // 
             // buttonOK
             // 
@@ -315,6 +316,7 @@
             this.textBoxMacroPreview.Size = new System.Drawing.Size(524, 20);
             this.textBoxMacroPreview.TabIndex = 15;
             this.textBoxMacroPreview.TabStop = false;
+            this.textBoxMacroPreview.MouseHover += new System.EventHandler(this.textBoxMacroPreview_MouseHover);
             // 
             // checkBoxActive
             // 
