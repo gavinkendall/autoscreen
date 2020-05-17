@@ -76,6 +76,7 @@
             this.textBoxTagName.Name = "textBoxTagName";
             this.textBoxTagName.Size = new System.Drawing.Size(546, 20);
             this.textBoxTagName.TabIndex = 2;
+            this.textBoxTagName.MouseHover += new System.EventHandler(this.textBoxTagName_MouseHover);
             // 
             // buttonOK
             // 
@@ -118,6 +119,7 @@
             this.comboBoxType.Size = new System.Drawing.Size(243, 21);
             this.comboBoxType.TabIndex = 5;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxType_SelectedIndexChanged);
+            this.comboBoxType.MouseHover += new System.EventHandler(this.comboBoxType_MouseHover);
             // 
             // labelDateTimeFormatValue
             // 
@@ -137,6 +139,7 @@
             this.textBoxDateTimeFormatValue.Name = "textBoxDateTimeFormatValue";
             this.textBoxDateTimeFormatValue.Size = new System.Drawing.Size(600, 20);
             this.textBoxDateTimeFormatValue.TabIndex = 9;
+            this.textBoxDateTimeFormatValue.MouseHover += new System.EventHandler(this.textBoxDateTimeFormatValue_MouseHover);
             // 
             // groupBoxTimeOfDay
             // 
@@ -171,6 +174,7 @@
             this.checkBoxEveningExtendsToNextMorning.TabIndex = 23;
             this.checkBoxEveningExtendsToNextMorning.Text = "Evening extends to next morning";
             this.checkBoxEveningExtendsToNextMorning.UseVisualStyleBackColor = true;
+            this.checkBoxEveningExtendsToNextMorning.MouseHover += new System.EventHandler(this.checkBoxEveningExtendsToNextMorning_MouseHover);
             // 
             // labelEvening
             // 
@@ -199,6 +203,7 @@
             this.textBoxEveningValue.Name = "textBoxEveningValue";
             this.textBoxEveningValue.Size = new System.Drawing.Size(500, 20);
             this.textBoxEveningValue.TabIndex = 22;
+            this.textBoxEveningValue.MouseHover += new System.EventHandler(this.textBoxEveningValue_MouseHover);
             // 
             // dateTimePickerEveningEnd
             // 
@@ -229,6 +234,7 @@
             this.textBoxAfternoonValue.Name = "textBoxAfternoonValue";
             this.textBoxAfternoonValue.Size = new System.Drawing.Size(500, 20);
             this.textBoxAfternoonValue.TabIndex = 18;
+            this.textBoxAfternoonValue.MouseHover += new System.EventHandler(this.textBoxAfternoonValue_MouseHover);
             // 
             // dateTimePickerAfternoonEnd
             // 
@@ -259,6 +265,7 @@
             this.textBoxMorningValue.Name = "textBoxMorningValue";
             this.textBoxMorningValue.Size = new System.Drawing.Size(500, 20);
             this.textBoxMorningValue.TabIndex = 14;
+            this.textBoxMorningValue.MouseHover += new System.EventHandler(this.textBoxMorningValue_MouseHover);
             // 
             // dateTimePickerMorningEnd
             // 
@@ -299,6 +306,7 @@
             this.checkBoxActive.TabIndex = 3;
             this.checkBoxActive.Text = "Active";
             this.checkBoxActive.UseVisualStyleBackColor = true;
+            this.checkBoxActive.MouseHover += new System.EventHandler(this.checkBoxActive_MouseHover);
             // 
             // labelHelp
             // 
@@ -327,6 +335,7 @@
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 118);
             this.textBoxNotes.TabIndex = 25;
+            this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
             // 
             // labelNotes
             // 
@@ -355,6 +364,7 @@
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(470, 20);
             this.textBoxDescription.TabIndex = 7;
+            this.textBoxDescription.MouseHover += new System.EventHandler(this.textBoxDescription_MouseHover);
             // 
             // FormTag
             // 

@@ -335,7 +335,7 @@ namespace AutoScreenCapture
 
                     textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
                     textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
-                    textBoxMacroPreview.Text = "[Active option is off. No screenshots of this screen will be taken during a screen capture session]";
+                    textBoxMacroPreview.Text = "[Active option is off. No screenshots of this screen will be taken during a running screen capture session]";
                 }
             }
             catch (Exception ex)
@@ -430,7 +430,7 @@ namespace AutoScreenCapture
 
         private void checkBoxActive_MouseHover(object sender, EventArgs e)
         {
-            HelpMessage("You can capture this screen if Active is checked or turned on");
+            HelpMessage("You can capture this screen if Active is checked (turned on)");
         }
 
         private void buttonScreenBrowseFolder_MouseHover(object sender, EventArgs e)

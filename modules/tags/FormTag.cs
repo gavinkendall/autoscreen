@@ -35,6 +35,10 @@ namespace AutoScreenCapture
 
         private void FormTag_Load(object sender, EventArgs e)
         {
+            textBoxTagName.Focus();
+
+            HelpMessage("This is where to configure a macro tag; special text that is replaced by an appropriate value (such as %time% is replaced with the current time)");
+
             comboBoxType.Items.Clear();
             comboBoxType.Items.Add("Screen Name");
             comboBoxType.Items.Add("Screen Number");
@@ -109,6 +113,11 @@ namespace AutoScreenCapture
 
                 textBoxNotes.Text = string.Empty;
             }
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -377,6 +386,56 @@ namespace AutoScreenCapture
 
                 checkBoxEveningExtendsToNextMorning.Enabled = true;
             }
+        }
+
+        private void textBoxTagName_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The name for the macro tag. Please make sure to surround the tag name with % (such as %time%)");
+        }
+
+        private void checkBoxActive_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Filenames containing this macro tag will be parsed if Active is checked (turned on)");
+        }
+
+        private void comboBoxType_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The type of macro tag depends on what information will be acquired for it");
+        }
+
+        private void textBoxDescription_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The macro tag requires a description to summarize the tag's purpose");
+        }
+
+        private void textBoxDateTimeFormatValue_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Parse a date format (yyyy = year, MM = month, dd = day), time format (HH = hour, mm = minute, ss = second, fff = millisecond), or expression ({day+7})");
+        }
+
+        private void textBoxMorningValue_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The macro to use for the time range that represents the morning");
+        }
+
+        private void textBoxAfternoonValue_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The macro to use for the time range that represents the afternoon");
+        }
+
+        private void textBoxEveningValue_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The macro to use for the time range that represents the evening");
+        }
+
+        private void checkBoxEveningExtendsToNextMorning_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Determines if the macro used for the evening time range should also apply to the early hours of the next morning (such as from 11pm to 3am)");
+        }
+
+        private void textBoxNotes_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("An area for you to keep notes about the macro tag");
         }
     }
 }
