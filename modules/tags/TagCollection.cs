@@ -120,6 +120,13 @@ namespace AutoScreenCapture
                                     case TAG_NAME:
                                         xReader.Read();
                                         tag.Name = xReader.Value;
+
+                                        if (!tag.Name.StartsWith("%"))
+                                            tag.Name = "%" + tag.Name;
+
+                                        if (!tag.Name.EndsWith("%"))
+                                            tag.Name += "%";
+
                                         break;
 
                                     case TAG_DESCRIPTION:
@@ -137,8 +144,12 @@ namespace AutoScreenCapture
 
                                         string value = xReader.Value;
 
+                                        // Change the data for each Tag that's being loaded if we've detected that
+                                        // the XML document is from an older version of the application.
                                         if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                                         {
+                                            Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+
                                             Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
                                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
@@ -235,6 +246,50 @@ namespace AutoScreenCapture
                                 // This is a new property for Tag that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 tag.Active = true;
+
+                                // "Description" is a new property for Tag that was introduced in 2.3.0.0
+                                switch (tag.Type)
+                                {
+                                    case TagType.ActiveWindowTitle:
+                                        tag.Description = "The title of the active window";
+                                        break;
+
+                                    case TagType.DateTimeFormat:
+                                        tag.Description = "A value representing either a date, a time, or a combination of the date and time (" + tag.Name + ")";
+                                        break;
+
+                                    case TagType.ImageFormat:
+                                        tag.Description = "The image format of the screenshot (such as jpeg or png)";
+                                        break;
+
+                                    case TagType.ScreenCaptureCycleCount:
+                                        tag.Description = "The number of capture cycles during a screen capture session";
+                                        break;
+
+                                    case TagType.ScreenName:
+                                        tag.Description = "The name of the screen or region";
+                                        break;
+
+                                    case TagType.ScreenNumber:
+                                        tag.Description = "The screen number. For example, the first display is screen number 1";
+                                        break;
+
+                                    case TagType.User:
+                                        tag.Description = "The name of the user (" + tag.Name + ")";
+                                        break;
+
+                                    case TagType.Machine:
+                                        tag.Description = "The name of the computer (" + tag.Name + ")";
+                                        break;
+
+                                    case TagType.TimeOfDay:
+                                        tag.Description = "The macro to use for a specific time of day";
+                                        break;
+
+                                    case TagType.DateTimeFormatExpression:
+                                        tag.Description = "An expression which represents a time that is either ahead or behind the current time (" + tag.Name + ")";
+                                        break;
+                                }
                             }
                         }
 
@@ -257,7 +312,7 @@ namespace AutoScreenCapture
                     // Setup a few "built in" tags by default.
                     Add(new Tag("name", "The name of the screen or region", TagType.ScreenName, active: true));
                     Add(new Tag("screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", TagType.ScreenNumber, active: true));
-                    Add(new Tag("format", "The image format such as \"jpeg\" or \"png\"", TagType.ImageFormat, active: true));
+                    Add(new Tag("format", "The image format such as jpeg or png", TagType.ImageFormat, active: true));
                     Add(new Tag("date", "The current date (%date%)", TagType.DateTimeFormat, MacroParser.DateFormat, active: true));
                     Add(new Tag("time", "The current time (%time%)", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
                     Add(new Tag("year", "The current year (%year%)", TagType.DateTimeFormat, MacroParser.YearFormat, active: true));
@@ -277,7 +332,7 @@ namespace AutoScreenCapture
                     Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
                     Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
                     Add(new Tag("title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
-                    Add(new Tag("timeofday", "The macro to use at a specific time of day so you can have a macro for the morning, a macro for the afternoon, and a macro for the evening", TagType.TimeOfDay, active: true));
+                    Add(new Tag("timeofday", "The macro to use at a specific time of day so you can have a macro for the morning, a macro for the afternoon, and a macro for the evening. At the moment it is %timeofday%", TagType.TimeOfDay, active: true));
 
                     SaveToXmlFile();
                 }

@@ -192,7 +192,7 @@ namespace AutoScreenCapture
             DateTime timeOfDayEveningEnd,
             string timeOfDayEveningValue,
             bool eveningExtendsToNextMorning,
-            bool active)
+            bool active, string notes)
         {
             Name = name;
             Description = description;
@@ -216,6 +216,8 @@ namespace AutoScreenCapture
             EveningExtendsToNextMorning = eveningExtendsToNextMorning;
 
             Active = active;
+
+            Notes = notes;
         }
     }
 }

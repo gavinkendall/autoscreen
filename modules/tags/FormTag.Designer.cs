@@ -103,7 +103,7 @@
             // labelTagType
             // 
             this.labelTagType.AutoSize = true;
-            this.labelTagType.Location = new System.Drawing.Point(9, 114);
+            this.labelTagType.Location = new System.Drawing.Point(9, 61);
             this.labelTagType.Name = "labelTagType";
             this.labelTagType.Size = new System.Drawing.Size(34, 13);
             this.labelTagType.TabIndex = 6;
@@ -111,20 +111,18 @@
             // 
             // comboBoxType
             // 
-            this.comboBoxType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.FormattingEnabled = true;
-            this.comboBoxType.Location = new System.Drawing.Point(53, 111);
+            this.comboBoxType.Location = new System.Drawing.Point(12, 81);
             this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(414, 21);
+            this.comboBoxType.Size = new System.Drawing.Size(243, 21);
             this.comboBoxType.TabIndex = 7;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxType_SelectedIndexChanged);
             // 
             // labelDateTimeFormatValue
             // 
             this.labelDateTimeFormatValue.AutoSize = true;
-            this.labelDateTimeFormatValue.Location = new System.Drawing.Point(9, 141);
+            this.labelDateTimeFormatValue.Location = new System.Drawing.Point(9, 118);
             this.labelDateTimeFormatValue.Name = "labelDateTimeFormatValue";
             this.labelDateTimeFormatValue.Size = new System.Drawing.Size(126, 13);
             this.labelDateTimeFormatValue.TabIndex = 8;
@@ -134,7 +132,7 @@
             // 
             this.textBoxDateTimeFormatValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDateTimeFormatValue.Location = new System.Drawing.Point(141, 138);
+            this.textBoxDateTimeFormatValue.Location = new System.Drawing.Point(141, 115);
             this.textBoxDateTimeFormatValue.MaxLength = 50;
             this.textBoxDateTimeFormatValue.Name = "textBoxDateTimeFormatValue";
             this.textBoxDateTimeFormatValue.Size = new System.Drawing.Size(600, 20);
@@ -157,7 +155,7 @@
             this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerMorningEnd);
             this.groupBoxTimeOfDay.Controls.Add(this.labelMorning);
             this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerMorningStart);
-            this.groupBoxTimeOfDay.Location = new System.Drawing.Point(16, 164);
+            this.groupBoxTimeOfDay.Location = new System.Drawing.Point(16, 141);
             this.groupBoxTimeOfDay.Name = "groupBoxTimeOfDay";
             this.groupBoxTimeOfDay.Size = new System.Drawing.Size(728, 125);
             this.groupBoxTimeOfDay.TabIndex = 10;
@@ -322,18 +320,18 @@
             this.textBoxNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNotes.Location = new System.Drawing.Point(9, 313);
+            this.textBoxNotes.Location = new System.Drawing.Point(9, 287);
             this.textBoxNotes.MaxLength = 500;
             this.textBoxNotes.Multiline = true;
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxNotes.Size = new System.Drawing.Size(735, 92);
+            this.textBoxNotes.Size = new System.Drawing.Size(735, 118);
             this.textBoxNotes.TabIndex = 25;
             // 
             // labelNotes
             // 
             this.labelNotes.AutoSize = true;
-            this.labelNotes.Location = new System.Drawing.Point(9, 297);
+            this.labelNotes.Location = new System.Drawing.Point(9, 271);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
             this.labelNotes.TabIndex = 24;
@@ -342,7 +340,7 @@
             // labelDescription
             // 
             this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(9, 64);
+            this.labelDescription.Location = new System.Drawing.Point(268, 61);
             this.labelDescription.Name = "labelDescription";
             this.labelDescription.Size = new System.Drawing.Size(63, 13);
             this.labelDescription.TabIndex = 4;
@@ -350,10 +348,12 @@
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Location = new System.Drawing.Point(12, 80);
+            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxDescription.Location = new System.Drawing.Point(271, 81);
             this.textBoxDescription.MaxLength = 100;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(735, 20);
+            this.textBoxDescription.Size = new System.Drawing.Size(470, 20);
             this.textBoxDescription.TabIndex = 5;
             // 
             // FormTag
@@ -377,9 +377,7 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelEditorName);
             this.Controls.Add(this.textBoxTagName);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(772, 493);
             this.Name = "FormTag";

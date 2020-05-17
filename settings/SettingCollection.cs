@@ -30,7 +30,14 @@ namespace AutoScreenCapture
         private const string SETTING_VALUE = "value";
         private readonly string SETTING_XPATH;
 
+        /// <summary>
+        /// The application's codename from the XML document.
+        /// </summary>
         public string AppCodename { get; set; }
+
+        /// <summary>
+        /// The application's version from the XML document.
+        /// </summary>
         public string AppVersion { get; set; }
 
         internal string Filepath { get; set; }

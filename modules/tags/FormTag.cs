@@ -85,7 +85,7 @@ namespace AutoScreenCapture
 
                 textBoxTagName.Text = "%tag" + (TagCollection.Count + 1) + "%";
 
-                textBoxDescription.Text = string.Empty;
+                textBoxDescription.Text = "Please provide a brief summary for the purpose of this macro tag";
 
                 comboBoxType.SelectedIndex = 0;
                 textBoxDateTimeFormatValue.Text = tag.DateTimeFormatValue;
@@ -150,7 +150,8 @@ namespace AutoScreenCapture
                         dateTimePickerEveningEnd.Value,
                         textBoxEveningValue.Text,
                         checkBoxEveningExtendsToNextMorning.Checked,
-                        checkBoxActive.Checked
+                        checkBoxActive.Checked,
+                        textBoxNotes.Text
                         ));
 
                     Okay();
