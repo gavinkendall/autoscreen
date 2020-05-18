@@ -80,43 +80,21 @@ namespace AutoScreenCapture
         public bool Active { get; set; }
 
         /// <summary>
+        /// Determines if we should consider the active window title upon capture.
+        /// </summary>
+        public bool ActiveWindowTitleCaptureCheck { get; set; }
+
+        /// <summary>
+        /// The text to find in the active window title.
+        /// </summary>
+        public string ActiveWindowTitleCaptureText { get; set; }
+
+        /// <summary>
         /// The empty constructor of the region.
         /// </summary>
         public Region()
         {
 
-        }
-
-        /// <summary>
-        /// The constructor for creating a region.
-        /// </summary>
-        /// <param name="name">The name of the region.</param>
-        /// <param name="folder">The folder path for the region capture.</param>
-        /// <param name="macro">The macro for the region capture's filename.</param>
-        /// <param name="format">The image format of the region capture.</param>
-        /// <param name="jpegQuality">The JPEG quality of the region capture.</param>
-        /// <param name="resolutionRatio">The resolution ratio of the region capture.</param>
-        /// <param name="mouse">Determines if we include the mouse pointer in the region capture.</param>
-        /// <param name="x">The X coordinate of the region capture.</param>
-        /// <param name="y">The Y coordinate of the region capture.</param>
-        /// <param name="width">The width of the region capture.</param>
-        /// <param name="height">The height of the region capture.</param>
-        /// <param name="active">Determines if the region capture should be active or inactive.</param>
-        public Region(string name, string folder, string macro, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, int x, int y, int width, int height, bool active)
-        {
-            ViewId = Guid.NewGuid();
-            Name = name;
-            Folder = FileSystem.CorrectScreenshotsFolderPath(folder);
-            Macro = macro;
-            Format = format;
-            JpegQuality = jpegQuality;
-            ResolutionRatio = resolutionRatio;
-            Mouse = mouse;
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
-            Active = active;
         }
     }
 }

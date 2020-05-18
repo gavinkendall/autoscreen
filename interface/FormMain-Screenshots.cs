@@ -148,14 +148,17 @@ namespace AutoScreenCapture
             }
             else
             {
-                listBoxScreenshots.DisplayMember = "Value";
-                listBoxScreenshots.ValueMember = "Name";
-                listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
-
-                // Show the last set of screenshots only if the user is on today's list.
-                if (listBoxScreenshots.Items.Count > 0 && monthCalendar.SelectionStart.Date.Equals(DateTime.Now.Date))
+                if (_screenshotCollection != null)
                 {
-                    listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
+                    listBoxScreenshots.DisplayMember = "Value";
+                    listBoxScreenshots.ValueMember = "Name";
+                    listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+
+                    // Show the last set of screenshots only if the user is on today's list.
+                    if (listBoxScreenshots.Items.Count > 0 && monthCalendar.SelectionStart.Date.Equals(DateTime.Now.Date))
+                    {
+                        listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
+                    }
                 }
             }
         }

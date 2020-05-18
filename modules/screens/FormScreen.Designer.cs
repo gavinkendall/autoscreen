@@ -54,12 +54,16 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
+            this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
+            this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
+            this.checkBoxActiveWindowTitle = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImage.SuspendLayout();
             this.groupBoxComponent.SuspendLayout();
             this.groupBoxPreview.SuspendLayout();
+            this.groupBoxActiveWindowTitle.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelName
@@ -86,7 +90,7 @@
             this.labelMacro.Location = new System.Drawing.Point(229, 425);
             this.labelMacro.Name = "labelMacro";
             this.labelMacro.Size = new System.Drawing.Size(40, 13);
-            this.labelMacro.TabIndex = 19;
+            this.labelMacro.TabIndex = 22;
             this.labelMacro.Text = "Macro:";
             // 
             // textBoxMacro
@@ -96,7 +100,7 @@
             this.textBoxMacro.Location = new System.Drawing.Point(273, 422);
             this.textBoxMacro.Name = "textBoxMacro";
             this.textBoxMacro.Size = new System.Drawing.Size(444, 20);
-            this.textBoxMacro.TabIndex = 20;
+            this.textBoxMacro.TabIndex = 23;
             this.textBoxMacro.TextChanged += new System.EventHandler(this.updatePreviewMacro);
             this.textBoxMacro.MouseHover += new System.EventHandler(this.textBoxMacro_MouseHover);
             // 
@@ -119,7 +123,7 @@
             this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 22;
+            this.buttonOK.TabIndex = 25;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -131,7 +135,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 23;
+            this.buttonCancel.TabIndex = 26;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -143,7 +147,7 @@
             this.labelFolder.Location = new System.Drawing.Point(229, 399);
             this.labelFolder.Name = "labelFolder";
             this.labelFolder.Size = new System.Drawing.Size(39, 13);
-            this.labelFolder.TabIndex = 16;
+            this.labelFolder.TabIndex = 19;
             this.labelFolder.Text = "Folder:";
             // 
             // textBoxFolder
@@ -153,7 +157,7 @@
             this.textBoxFolder.Location = new System.Drawing.Point(273, 396);
             this.textBoxFolder.Name = "textBoxFolder";
             this.textBoxFolder.Size = new System.Drawing.Size(444, 20);
-            this.textBoxFolder.TabIndex = 17;
+            this.textBoxFolder.TabIndex = 20;
             this.textBoxFolder.TextChanged += new System.EventHandler(this.updatePreviewMacro);
             this.textBoxFolder.MouseHover += new System.EventHandler(this.textBoxFolder_MouseHover);
             // 
@@ -164,7 +168,7 @@
             this.buttonScreenBrowseFolder.Location = new System.Drawing.Point(723, 394);
             this.buttonScreenBrowseFolder.Name = "buttonScreenBrowseFolder";
             this.buttonScreenBrowseFolder.Size = new System.Drawing.Size(27, 23);
-            this.buttonScreenBrowseFolder.TabIndex = 18;
+            this.buttonScreenBrowseFolder.TabIndex = 21;
             this.buttonScreenBrowseFolder.UseVisualStyleBackColor = true;
             this.buttonScreenBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
             this.buttonScreenBrowseFolder.MouseHover += new System.EventHandler(this.buttonScreenBrowseFolder_MouseHover);
@@ -304,7 +308,7 @@
             this.groupBoxPreview.Location = new System.Drawing.Point(223, 58);
             this.groupBoxPreview.Name = "groupBoxPreview";
             this.groupBoxPreview.Size = new System.Drawing.Size(530, 330);
-            this.groupBoxPreview.TabIndex = 14;
+            this.groupBoxPreview.TabIndex = 17;
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
             // 
@@ -315,7 +319,7 @@
             this.textBoxMacroPreview.Name = "textBoxMacroPreview";
             this.textBoxMacroPreview.ReadOnly = true;
             this.textBoxMacroPreview.Size = new System.Drawing.Size(524, 20);
-            this.textBoxMacroPreview.TabIndex = 15;
+            this.textBoxMacroPreview.TabIndex = 18;
             this.textBoxMacroPreview.TabStop = false;
             this.textBoxMacroPreview.MouseHover += new System.EventHandler(this.textBoxMacroPreview_MouseHover);
             // 
@@ -354,10 +358,43 @@
             this.buttonMacroTags.Location = new System.Drawing.Point(723, 420);
             this.buttonMacroTags.Name = "buttonMacroTags";
             this.buttonMacroTags.Size = new System.Drawing.Size(27, 23);
-            this.buttonMacroTags.TabIndex = 21;
+            this.buttonMacroTags.TabIndex = 24;
             this.buttonMacroTags.UseVisualStyleBackColor = true;
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
+            // 
+            // groupBoxActiveWindowTitle
+            // 
+            this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
+            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitle);
+            this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(12, 242);
+            this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
+            this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 72);
+            this.groupBoxActiveWindowTitle.TabIndex = 14;
+            this.groupBoxActiveWindowTitle.TabStop = false;
+            this.groupBoxActiveWindowTitle.Text = "Active Window Title";
+            // 
+            // textBoxActiveWindowTitle
+            // 
+            this.textBoxActiveWindowTitle.Enabled = false;
+            this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 42);
+            this.textBoxActiveWindowTitle.MaxLength = 500;
+            this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
+            this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(193, 20);
+            this.textBoxActiveWindowTitle.TabIndex = 16;
+            this.textBoxActiveWindowTitle.MouseHover += new System.EventHandler(this.textBoxActiveWindowTitle_MouseHover);
+            // 
+            // checkBoxActiveWindowTitle
+            // 
+            this.checkBoxActiveWindowTitle.AutoSize = true;
+            this.checkBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxActiveWindowTitle.Name = "checkBoxActiveWindowTitle";
+            this.checkBoxActiveWindowTitle.Size = new System.Drawing.Size(185, 17);
+            this.checkBoxActiveWindowTitle.TabIndex = 15;
+            this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
+            this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
+            this.checkBoxActiveWindowTitle.MouseHover += new System.EventHandler(this.checkBoxActiveWindowTitle_MouseHover);
             // 
             // FormScreen
             // 
@@ -367,6 +404,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.groupBoxActiveWindowTitle);
             this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.labelName);
@@ -398,6 +436,8 @@
             this.groupBoxComponent.ResumeLayout(false);
             this.groupBoxPreview.ResumeLayout(false);
             this.groupBoxPreview.PerformLayout();
+            this.groupBoxActiveWindowTitle.ResumeLayout(false);
+            this.groupBoxActiveWindowTitle.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -430,5 +470,8 @@
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Button buttonMacroTags;
+        private System.Windows.Forms.GroupBox groupBoxActiveWindowTitle;
+        private System.Windows.Forms.TextBox textBoxActiveWindowTitle;
+        private System.Windows.Forms.CheckBox checkBoxActiveWindowTitle;
     }
 }

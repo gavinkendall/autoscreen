@@ -133,8 +133,6 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: RunScreenCaptures Start ::");
 
-                Log.WriteDebugMessage("Running screen captures");
-
                 foreach (Screen screen in formScreen.ScreenCollection)
                 {
                     if (screen.Active)
@@ -146,6 +144,14 @@ namespace AutoScreenCapture
                             // Active Window
                             if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                             {
+                                // Do not contiune if the active window title needs to be checked and the active window title
+                                // does not contain the text defined in "Active Window Title Capture Text".
+                                if (screen.ActiveWindowTitleCaptureCheck && !string.IsNullOrEmpty(screen.ActiveWindowTitleCaptureText) &&
+                                    !_screenCapture.ActiveWindowTitle.ToLower().Contains(screen.ActiveWindowTitleCaptureText.ToLower()))
+                                {
+                                    return;
+                                }
+
                                 if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
                                     if (_screenCapture.SaveScreenshot(
@@ -180,6 +186,14 @@ namespace AutoScreenCapture
 
                                 if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                                 {
+                                    // Do not contiune if the active window title needs to be checked and the active window title
+                                    // does not contain the text defined in "Active Window Title Capture Text".
+                                    if (screen.ActiveWindowTitleCaptureCheck && !string.IsNullOrEmpty(screen.ActiveWindowTitleCaptureText) &&
+                                        !_screenCapture.ActiveWindowTitle.ToLower().Contains(screen.ActiveWindowTitleCaptureText.ToLower()))
+                                    {
+                                        return;
+                                    }
+
                                     // Screen X
                                     if (_screenCapture.GetScreenImages(screen.Component,
                                         formScreen.ScreenDictionary[screen.Component].Bounds.X,

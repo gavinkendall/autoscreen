@@ -31,6 +31,9 @@ namespace AutoScreenCapture
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ACTIVE = "active";
+        private const string SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK = "active_window_title_capture_check";
+        private const string SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT = "active_window_title_capture_text";
+
         private readonly string SCREEN_XPATH;
 
         private static string AppCodename { get; set; }
@@ -153,6 +156,16 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.Active = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK:
+                                        xReader.Read();
+                                        screen.ActiveWindowTitleCaptureCheck = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT:
+                                        xReader.Read();
+                                        screen.ActiveWindowTitleCaptureText = xReader.Value;
+                                        break;
                                 }
                             }
                         }
@@ -197,8 +210,22 @@ namespace AutoScreenCapture
                     // Setup some screens based on what we can find.
                     for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
                     {
-                        Add(new Screen($"Screen {screenNumber}", FileSystem.ScreenshotsFolder, MacroParser.DefaultMacro, screenNumber,
-                            imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat), 100, 100, mouse: true, enabled: true));
+                        Screen screen = new Screen()
+                        {
+                            Name = $"Screen {screenNumber}",
+                            Folder = FileSystem.ScreenshotsFolder,
+                            Macro = MacroParser.DefaultMacro,
+                            Component = screenNumber,
+                            Format = imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
+                            JpegQuality = 100,
+                            ResolutionRatio = 100,
+                            Mouse = true,
+                            Active = true,
+                            ActiveWindowTitleCaptureCheck = false,
+                            ActiveWindowTitleCaptureText = string.Empty
+                        };
+
+                        Add(screen);
 
                         Log.WriteDebugMessage($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
                     }
@@ -269,6 +296,8 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                         xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
+                        xWriter.WriteElementString(SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK, screen.ActiveWindowTitleCaptureCheck.ToString());
+                        xWriter.WriteElementString(SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT, screen.ActiveWindowTitleCaptureText);
 
                         xWriter.WriteEndElement();
                     }

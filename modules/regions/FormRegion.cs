@@ -105,6 +105,8 @@ namespace AutoScreenCapture
                 numericUpDownWidth.Value = RegionObject.Width;
                 numericUpDownHeight.Value = RegionObject.Height;
                 checkBoxActive.Checked = RegionObject.Active;
+                checkBoxActiveWindowTitle.Checked = RegionObject.ActiveWindowTitleCaptureCheck;
+                textBoxActiveWindowTitle.Text = RegionObject.ActiveWindowTitleCaptureText;
             }
             else
             {
@@ -122,6 +124,8 @@ namespace AutoScreenCapture
                 numericUpDownWidth.Value = 800;
                 numericUpDownHeight.Value = 600;
                 checkBoxActive.Checked = true;
+                checkBoxActiveWindowTitle.Checked = false;
+                textBoxActiveWindowTitle.Text = string.Empty;
             }
 
             UpdatePreviewMacro();
@@ -158,19 +162,23 @@ namespace AutoScreenCapture
 
                 if (RegionCollection.GetByName(textBoxName.Text) == null)
                 {
-                    RegionCollection.Add(new Region(
-                        textBoxName.Text,
-                        FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
-                        textBoxMacro.Text,
-                        ImageFormatCollection.GetByName(comboBoxFormat.Text),
-                        (int)numericUpDownJpegQuality.Value,
-                        (int)numericUpDownResolutionRatio.Value,
-                        checkBoxMouse.Checked,
-                        (int)numericUpDownX.Value,
-                        (int)numericUpDownY.Value,
-                        (int)numericUpDownWidth.Value,
-                        (int)numericUpDownHeight.Value,
-                        checkBoxActive.Checked));
+                    RegionCollection.Add(new Region()
+                    {
+                        Name = textBoxName.Text,
+                        Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
+                        Macro = textBoxMacro.Text,
+                        Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
+                        JpegQuality = (int)numericUpDownJpegQuality.Value,
+                        ResolutionRatio = (int)numericUpDownResolutionRatio.Value,
+                        Mouse = checkBoxMouse.Checked,
+                        X = (int)numericUpDownX.Value,
+                        Y = (int)numericUpDownY.Value,
+                        Width = (int)numericUpDownWidth.Value,
+                        Height = (int)numericUpDownHeight.Value,
+                        Active = checkBoxActive.Checked,
+                        ActiveWindowTitleCaptureCheck = checkBoxActiveWindowTitle.Checked,
+                        ActiveWindowTitleCaptureText = textBoxActiveWindowTitle.Text
+                    });
 
                     Okay();
                 }
@@ -214,6 +222,8 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
                         RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
                         RegionCollection.Get(RegionObject).Active = checkBoxActive.Checked;
+                        RegionCollection.Get(RegionObject).ActiveWindowTitleCaptureCheck = checkBoxActiveWindowTitle.Checked;
+                        RegionCollection.Get(RegionObject).ActiveWindowTitleCaptureText = textBoxActiveWindowTitle.Text;
 
                         Okay();
                     }
@@ -234,6 +244,7 @@ namespace AutoScreenCapture
             textBoxName.Text = textBoxName.Text.Trim();
             textBoxFolder.Text = textBoxFolder.Text.Trim();
             textBoxMacro.Text = textBoxMacro.Text.Trim();
+            textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
         }
 
         private bool InputValid()
@@ -441,11 +452,33 @@ namespace AutoScreenCapture
             HelpMessage("A preview of how your files will be named. Use macro tags (such as %date% and %time%) in the Macro field to customize the filename pattern");
         }
 
+        private void checkBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("If checked then the text you define will be compared with the active window title");
+        }
+
+        private void textBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The text to compare with the active window title. If it contains the defined text then this region will be captured. An empty field will be ignored");
+        }
+
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_formMacroTags != null)
             {
                 _formMacroTags.Close();
+            }
+        }
+
+        private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxActiveWindowTitle.Checked)
+            {
+                textBoxActiveWindowTitle.Enabled = true;
+            }
+            else
+            {
+                textBoxActiveWindowTitle.Enabled = false;
             }
         }
     }

@@ -214,17 +214,20 @@ namespace AutoScreenCapture
             }
             else
             {
-                List<string> dates = new List<string>();
-                dates = _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text);
-
-                DateTime[] boldedDates = new DateTime[dates.Count];
-
-                for (int i = 0; i < dates.Count; i++)
+                if (_screenshotCollection != null)
                 {
-                    boldedDates.SetValue(ConvertDateStringToDateTime(dates[i].ToString()), i);
-                }
+                    List<string> dates = new List<string>();
+                    dates = _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
-                monthCalendar.BoldedDates = boldedDates;
+                    DateTime[] boldedDates = new DateTime[dates.Count];
+
+                    for (int i = 0; i < dates.Count; i++)
+                    {
+                        boldedDates.SetValue(ConvertDateStringToDateTime(dates[i].ToString()), i);
+                    }
+
+                    monthCalendar.BoldedDates = boldedDates;
+                }
             }
         }
 

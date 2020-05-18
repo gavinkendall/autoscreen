@@ -133,8 +133,6 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: RunRegionCaptures Start ::");
 
-                Log.WriteDebugMessage("Running region captures");
-
                 foreach (Region region in formRegion.RegionCollection)
                 {
                     if (region.Active)
@@ -143,6 +141,14 @@ namespace AutoScreenCapture
 
                         if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                         {
+                            // Do not contiune if the active window title needs to be checked and the active window title
+                            // does not contain the text defined in "Active Window Title Capture Text".
+                            if (region.ActiveWindowTitleCaptureCheck && !string.IsNullOrEmpty(region.ActiveWindowTitleCaptureText) &&
+                                !_screenCapture.ActiveWindowTitle.ToLower().Contains(region.ActiveWindowTitleCaptureText.ToLower()))
+                            {
+                                return;
+                            }
+
                             if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.SaveScreenshot(

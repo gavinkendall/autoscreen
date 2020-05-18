@@ -65,37 +65,21 @@ namespace AutoScreenCapture
         public bool Active { get; set; }
 
         /// <summary>
+        /// Determines if we should consider the active window title upon capture.
+        /// </summary>
+        public bool ActiveWindowTitleCaptureCheck { get; set; }
+
+        /// <summary>
+        /// The text to find in the active window title.
+        /// </summary>
+        public string ActiveWindowTitleCaptureText { get; set; } 
+
+        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()
         {
 
-        }
-
-        /// <summary>
-        /// The constructor for creating a screen.
-        /// </summary>
-        /// <param name="name">The name of the screen.</param>
-        /// <param name="folder">The folder path for the screen capture.</param>
-        /// <param name="macro">The macro for the screen capture's filename.</param>
-        /// <param name="component">The component of the screen capture.</param>
-        /// <param name="format">The image format of the screen capture.</param>
-        /// <param name="jpegQuality">The JPEG quality of the screen capture.</param>
-        /// <param name="resolutionRatio">The resolution ratio of the screen capture.</param>
-        /// <param name="mouse">Determines if we include the mouse pointer in the screen capture.</param>
-        /// <param name="enabled">Determines if the screen capture should be active or inactive.</param>
-        public Screen(string name, string folder, string macro, int component, ImageFormat format, int jpegQuality, int resolutionRatio, bool mouse, bool enabled)
-        {
-            ViewId = Guid.NewGuid();
-            Name = name;
-            Folder = FileSystem.CorrectScreenshotsFolderPath(folder);
-            Macro = macro;
-            Component = component;
-            Format = format;
-            JpegQuality = jpegQuality;
-            ResolutionRatio = resolutionRatio;
-            Mouse = mouse;
-            Active = enabled;
         }
     }
 }
