@@ -27,7 +27,7 @@ namespace AutoScreenCapture
         /// </summary>
         public Editor EditorObject { get; set; }
 
-        private readonly string defaultArguments = "%screenshot%";
+        private readonly string defaultArguments = "%filepath%";
 
         private ComponentResourceManager resources = new ComponentResourceManager(typeof(FormEditor));
 

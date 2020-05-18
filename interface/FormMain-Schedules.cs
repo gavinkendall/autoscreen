@@ -19,6 +19,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerScheduledCapture_Tick(object sender, EventArgs e)
         {
+            DateTime dtNow = DateTime.Now;
+
             // Display help tip message from any class that isn't part of FormMain.
             if (!string.IsNullOrEmpty(HelpTip.Message))
             {
@@ -49,8 +51,6 @@ namespace AutoScreenCapture
             // Process the list of schedules we need to consider.
             foreach(Schedule schedule in formSchedule.ScheduleCollection)
             {
-                DateTime dtNow = DateTime.Now;
-
                 if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
                     (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
                     (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
@@ -85,6 +85,23 @@ namespace AutoScreenCapture
                             StopScreenCapture();
                         }
                     }
+                }
+            }
+
+            // Process the list of triggers of condition type Date/Time and condition type Time.
+            foreach (Trigger trigger in formTrigger.TriggerCollection)
+            {
+                if (trigger.ConditionType == TriggerConditionType.DateTime &&
+                    trigger.Date.ToString(MacroParser.DateFormat).Equals(dtNow.ToString(MacroParser.DateFormat)) &&
+                    trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                {
+                    DoTriggerAction(trigger);
+                }
+
+                if (trigger.ConditionType == TriggerConditionType.Time &&
+                    trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                {
+                    DoTriggerAction(trigger);
                 }
             }
         }

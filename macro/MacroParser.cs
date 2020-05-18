@@ -91,8 +91,27 @@ namespace AutoScreenCapture
                 sb.Append(MinuteFormat);
                 sb.Append(":");
                 sb.Append(SecondFormat);
-                sb.Append(":");
+                sb.Append(".");
                 sb.Append(MillisecondFormat);
+
+                return sb.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Returns a string representation of a time in the format HH:mm:ss
+        /// </summary>
+        public static string TimeFormatForTrigger
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append(HourFormat);
+                sb.Append(":");
+                sb.Append(MinuteFormat);
+                sb.Append(":");
+                sb.Append(SecondFormat);
 
                 return sb.ToString();
             }

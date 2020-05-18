@@ -91,7 +91,28 @@ namespace AutoScreenCapture
 
                                     case EDITOR_ARGUMENTS:
                                         xReader.Read();
-                                        editor.Arguments = xReader.Value;
+
+                                        string value = xReader.Value;
+
+                                        // Change the data for each Tag that's being loaded if we've detected that
+                                        // the XML document is from an older version of the application.
+                                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                                        {
+                                            Log.WriteDebugMessage("An old version of the editors.xml file was detected. Attempting upgrade to new schema.");
+
+                                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+
+                                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
+                                            {
+                                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+
+                                                // Starting with 2.3.0.0 the %screenshot% argument tag became the %filepath% argument tag.
+                                                value = value.Replace("%screenshot%", "%filepath%");
+                                            }
+                                        }
+
+                                        editor.Arguments = value;
                                         break;
                                 }
                             }
@@ -122,7 +143,7 @@ namespace AutoScreenCapture
                     // Microsoft Paint
                     if (FileSystem.FileExists(@"C:\Windows\System32\mspaint.exe"))
                     {
-                        Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "%screenshot%"));
+                        Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "%filepath%"));
 
                         // We'll make Microsoft Paint the default image editor because usually everyone has it already.
                         Settings.User.SetValueByKey("StringDefaultEditor", "Microsoft Paint");
@@ -131,38 +152,38 @@ namespace AutoScreenCapture
                     // Microsoft Outlook
                     if (FileSystem.FileExists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
                     {
-                        Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a %screenshot%"));
+                        Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a %filepath%"));
                     }
 
                     // Chrome
                     if (FileSystem.FileExists(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"))
                     {
-                        Add(new Editor("Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "%screenshot%"));
+                        Add(new Editor("Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "%filepath%"));
                     }
 
                     // Firefox
                     if (FileSystem.FileExists(@"C:\Program Files\Mozilla Firefox\firefox.exe"))
                     {
-                        Add(new Editor("Firefox", @"C:\Program Files\Mozilla Firefox\firefox.exe", "%screenshot%"));
+                        Add(new Editor("Firefox", @"C:\Program Files\Mozilla Firefox\firefox.exe", "%filepath%"));
                     }
 
                     // GIMP
                     // We assume GIMP will be in the default location available for all users on 64-bit systems.
                     if (FileSystem.FileExists(@"C:\Program Files\GIMP 2\bin\gimp-2.10.exe"))
                     {
-                        Add(new Editor("GIMP", @"C:\Program Files\GIMP 2\bin\gimp-2.10.exe", "%screenshot%"));
+                        Add(new Editor("GIMP", @"C:\Program Files\GIMP 2\bin\gimp-2.10.exe", "%filepath%"));
                     }
 
                     // Glimpse
                     if (FileSystem.FileExists(@"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe"))
                     {
-                        Add(new Editor("Glimpse", @"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe", "%screenshot%"));
+                        Add(new Editor("Glimpse", @"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe", "%filepath%"));
                     }
 
                     // Clip Studio Paint
                     if (FileSystem.FileExists(@"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe"))
                     {
-                        Add(new Editor("Clip Studio Paint", @"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe", "%screenshot%"));
+                        Add(new Editor("Clip Studio Paint", @"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe", "%filepath%"));
                     }
 
                     SaveToXmlFile();

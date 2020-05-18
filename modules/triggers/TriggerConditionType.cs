@@ -55,6 +55,16 @@ namespace AutoScreenCapture
         /// <summary>
         /// The condition to check will be if screenshots have been taken.
         /// </summary>
-        ScreenshotTaken = 8
+        ScreenshotTaken = 8,
+
+        /// <summary>
+        /// The condition to check will be if the date and time match with the specified date and time.
+        /// </summary>
+        DateTime = 9,
+
+        /// <summary>
+        /// The condition to check will be if the time matches with the specified time.
+        /// </summary>
+        Time = 10
     }
 }

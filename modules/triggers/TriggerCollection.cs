@@ -26,6 +26,8 @@ namespace AutoScreenCapture
         private const string TRIGGER_ACTION = "action";
         private const string TRIGGER_EDITOR = "editor";
         private const string TRIGGER_ACTIVE = "active";
+        private const string TRIGGER_DATE = "date";
+        private const string TRIGGER_TIME = "time";
 
         private readonly string TRIGGER_XPATH;
 
@@ -102,6 +104,16 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         trigger.Active = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case TRIGGER_DATE:
+                                        xReader.Read();
+                                        trigger.Date = Convert.ToDateTime(xReader.Value);
+                                        break;
+
+                                    case TRIGGER_TIME:
+                                        xReader.Read();
+                                        trigger.Time = Convert.ToDateTime(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -142,21 +154,52 @@ namespace AutoScreenCapture
                 {
                     Log.WriteDebugMessage($"WARNING: {FileSystem.TriggersFile} not found. Creating default triggers");
 
+                    Trigger triggerApplicationStartShowInterface = new Trigger()
+                    {
+                        Active = true,
+                        Name = "Application Startup -> Show",
+                        ConditionType = TriggerConditionType.ApplicationStartup,
+                        ActionType = TriggerActionType.ShowInterface
+                    };
+
+                    Trigger triggerScreenCaptureStartedHideInterface = new Trigger()
+                    {
+                        Active = true,
+                        Name = "Capture Started -> Hide",
+                        ConditionType = TriggerConditionType.ScreenCaptureStarted,
+                        ActionType = TriggerActionType.HideInterface
+                    };
+
+                    Trigger triggerScreenCaptureStoppedShowInterface = new Trigger()
+                    {
+                        Active = true,
+                        Name = "Capture Stopped -> Show",
+                        ConditionType = TriggerConditionType.ScreenCaptureStopped,
+                        ActionType = TriggerActionType.ShowInterface
+                    };
+
+                    Trigger triggerInterfaceClosingHideInterface = new Trigger()
+                    {
+                        Active = true,
+                        Name = "Interface Closing -> Hide",
+                        ConditionType = TriggerConditionType.InterfaceClosing,
+                        ActionType = TriggerActionType.HideInterface
+                    };
+
+                    Trigger triggerLimitReachedStopScreenCapture = new Trigger()
+                    {
+                        Active = true,
+                        Name = "Limit Reached -> Stop",
+                        ConditionType = TriggerConditionType.LimitReached,
+                        ActionType = TriggerActionType.StopScreenCapture
+                    };
+
                     // Setup a few "built in" triggers by default.
-                    Add(new Trigger("Application Startup -> Show", TriggerConditionType.ApplicationStartup,
-                        TriggerActionType.ShowInterface, string.Empty, active: true));
-
-                    Add(new Trigger("Capture Started -> Hide", TriggerConditionType.ScreenCaptureStarted,
-                        TriggerActionType.HideInterface, string.Empty, active: true));
-
-                    Add(new Trigger("Capture Stopped -> Show", TriggerConditionType.ScreenCaptureStopped,
-                        TriggerActionType.ShowInterface, string.Empty, active: true));
-
-                    Add(new Trigger("Interface Closing -> Hide", TriggerConditionType.InterfaceClosing,
-                        TriggerActionType.HideInterface, string.Empty, active: true));
-
-                    Add(new Trigger("Limit Reached -> Stop", TriggerConditionType.LimitReached,
-                        TriggerActionType.StopScreenCapture, string.Empty, active: true));
+                    Add(triggerApplicationStartShowInterface);
+                    Add(triggerScreenCaptureStartedHideInterface);
+                    Add(triggerScreenCaptureStoppedShowInterface);
+                    Add(triggerInterfaceClosingHideInterface);
+                    Add(triggerLimitReachedStopScreenCapture);
 
                     SaveToXmlFile();
                 }
@@ -217,6 +260,8 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
                         xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
+                        xWriter.WriteElementString(TRIGGER_DATE, trigger.Date.ToString());
+                        xWriter.WriteElementString(TRIGGER_TIME, trigger.Time.ToString());
 
                         xWriter.WriteEndElement();
                     }

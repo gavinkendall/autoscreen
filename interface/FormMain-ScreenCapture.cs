@@ -38,7 +38,10 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = true;
                 checkBoxInitialScreenshot.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
+
+                labelLimit.Enabled = true;
                 checkBoxCaptureLimit.Enabled = true;
+
                 numericUpDownCaptureLimit.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
@@ -68,7 +71,10 @@ namespace AutoScreenCapture
             numericUpDownHoursInterval.Enabled = false;
             checkBoxInitialScreenshot.Enabled = false;
             numericUpDownMinutesInterval.Enabled = false;
+
+            labelLimit.Enabled = false;
             checkBoxCaptureLimit.Enabled = false;
+
             numericUpDownCaptureLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;

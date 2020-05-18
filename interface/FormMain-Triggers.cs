@@ -92,6 +92,8 @@ namespace AutoScreenCapture
 
         private void RunTriggersOfConditionType(TriggerConditionType conditionType)
         {
+            DateTime dtNow = DateTime.Now;
+
             foreach (Trigger trigger in formTrigger.TriggerCollection)
             {
                 if (!trigger.Active)
@@ -109,39 +111,44 @@ namespace AutoScreenCapture
 
                 if (trigger.ConditionType == conditionType)
                 {
-                    // These actions need to directly correspond with the TriggerActionType class.
-                    switch (trigger.ActionType)
-                    {
-                        case TriggerActionType.ExitApplication:
-                            ExitApplication();
-                            break;
-
-                        case TriggerActionType.HideInterface:
-                            HideInterface();
-                            break;
-
-                        case TriggerActionType.RunEditor:
-                            Editor editor = formEditor.EditorCollection.GetByName(trigger.Editor);
-                            RunEditor(editor, TriggerActionType.RunEditor);
-                            break;
-
-                        case TriggerActionType.ShowInterface:
-                            ShowInterface();
-                            break;
-
-                        case TriggerActionType.StartScreenCapture:
-                            StartScreenCapture();
-                            break;
-
-                        case TriggerActionType.StopScreenCapture:
-                            StopScreenCapture();
-                            break;
-
-                        case TriggerActionType.EmailScreenshot:
-                            EmailScreenshot(TriggerActionType.EmailScreenshot);
-                            break;
-                    }
+                    DoTriggerAction(trigger);
                 }
+            }
+        }
+
+        private void DoTriggerAction(Trigger trigger)
+        {
+            // These actions need to directly correspond with the TriggerActionType class.
+            switch (trigger.ActionType)
+            {
+                case TriggerActionType.ExitApplication:
+                    ExitApplication();
+                    break;
+
+                case TriggerActionType.HideInterface:
+                    HideInterface();
+                    break;
+
+                case TriggerActionType.RunEditor:
+                    Editor editor = formEditor.EditorCollection.GetByName(trigger.Editor);
+                    RunEditor(editor, TriggerActionType.RunEditor);
+                    break;
+
+                case TriggerActionType.ShowInterface:
+                    ShowInterface();
+                    break;
+
+                case TriggerActionType.StartScreenCapture:
+                    StartScreenCapture();
+                    break;
+
+                case TriggerActionType.StopScreenCapture:
+                    StopScreenCapture();
+                    break;
+
+                case TriggerActionType.EmailScreenshot:
+                    EmailScreenshot(TriggerActionType.EmailScreenshot);
+                    break;
             }
         }
     }

@@ -163,16 +163,16 @@ namespace AutoScreenCapture
         /// <param name="screenshot">The screenshot to use.</param>
         private void RunEditor(Editor editor, Screenshot screenshot)
         {
-            // Execute the chosen image editor. If the %screenshot% argument happens to be included
+            // Execute the chosen image editor. If the %filepath% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
             if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && FileSystem.FileExists(screenshot.Path)))
             {
                 Log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
                 Log.WriteDebugMessage("Application: " + editor.Application);
-                Log.WriteDebugMessage("Arguments before %screenshot% tag replacement: " + editor.Arguments);
-                Log.WriteDebugMessage("Arguments after %screenshot% tag replacement: " + editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
+                Log.WriteDebugMessage("Arguments before %filepath% tag replacement: " + editor.Arguments);
+                Log.WriteDebugMessage("Arguments after %filepath% tag replacement: " + editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
 
-                _ = Process.Start(editor.Application, editor.Arguments.Replace("%screenshot%", "\"" + screenshot.Path + "\""));
+                _ = Process.Start(editor.Application, editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
             }
         }
     }
