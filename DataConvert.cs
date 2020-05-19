@@ -1,16 +1,18 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FormMain-Convert.cs" company="Gavin Kendall">
+// <copyright file="DataConvert.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>All the methods for converting data.</summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
-    public partial class FormMain : Form
+    /// <summary>
+    /// All the methods for converting data.
+    /// </summary>
+    public static class DataConvert
     {
         /// <summary>
         /// Converts the given hours, minutes, seconds, and milliseconds into an aggregate milliseconds value.
@@ -20,9 +22,9 @@ namespace AutoScreenCapture
         /// <param name="seconds">The number of seconds to be converted.</param>
         /// <param name="milliseconds">The number of milliseconds to be converted.</param>
         /// <returns></returns>
-        private int ConvertIntoMilliseconds(int hours, int minutes, int seconds, int milliseconds)
+        public static int ConvertIntoMilliseconds(int hours, int minutes, int seconds, int milliseconds)
         {
-            return DataConvert.ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
+            return 1000 * (hours * 3600 + minutes * 60 + seconds) + milliseconds;
         }
 
         /// <summary>
@@ -30,9 +32,9 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="date">A string representation of a date (such as "2019-02-06").</param>
         /// <returns>A DateTime object based on the provided date string.</returns>
-        private DateTime ConvertDateStringToDateTime(string date)
+        public static DateTime ConvertDateStringToDateTime(string date)
         {
-            return DataConvert.ConvertDateStringToDateTime(date);
+            return new DateTime(System.Convert.ToInt32(date.Substring(0, 4)), System.Convert.ToInt32(date.Substring(5, 2)), System.Convert.ToInt32(date.Substring(8, 2)));
         }
     }
 }

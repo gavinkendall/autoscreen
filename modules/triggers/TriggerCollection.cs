@@ -28,6 +28,7 @@ namespace AutoScreenCapture
         private const string TRIGGER_ACTIVE = "active";
         private const string TRIGGER_DATE = "date";
         private const string TRIGGER_TIME = "time";
+        private const string TRIGGER_SCREEN_CAPTURE_INTERVAL = "screen_capture_interval";
 
         private readonly string TRIGGER_XPATH;
 
@@ -114,6 +115,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         trigger.Time = Convert.ToDateTime(xReader.Value);
                                         break;
+
+                                    case TRIGGER_SCREEN_CAPTURE_INTERVAL:
+                                        xReader.Read();
+                                        trigger.ScreenCaptureInterval = Convert.ToInt32(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -133,9 +139,12 @@ namespace AutoScreenCapture
                             {
                                 Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                                // This is a new property for Trigger that was introduced in 2.3.0.0
-                                // so any version before 2.3.0.0 needs to have it during an upgrade.
+                                // These are new properties for Trigger that were introduced in 2.3.0.0
+                                // so any version before 2.3.0.0 needs to have them during an upgrade.
                                 trigger.Active = true;
+                                trigger.Date = DateTime.Now;
+                                trigger.Time = DateTime.Now;
+                                trigger.ScreenCaptureInterval = 0;
                             }
                         }
 
@@ -159,7 +168,10 @@ namespace AutoScreenCapture
                         Active = true,
                         Name = "Application Startup -> Show",
                         ConditionType = TriggerConditionType.ApplicationStartup,
-                        ActionType = TriggerActionType.ShowInterface
+                        ActionType = TriggerActionType.ShowInterface,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
                     };
 
                     Trigger triggerScreenCaptureStartedHideInterface = new Trigger()
@@ -167,7 +179,10 @@ namespace AutoScreenCapture
                         Active = true,
                         Name = "Capture Started -> Hide",
                         ConditionType = TriggerConditionType.ScreenCaptureStarted,
-                        ActionType = TriggerActionType.HideInterface
+                        ActionType = TriggerActionType.HideInterface,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
                     };
 
                     Trigger triggerScreenCaptureStoppedShowInterface = new Trigger()
@@ -175,7 +190,10 @@ namespace AutoScreenCapture
                         Active = true,
                         Name = "Capture Stopped -> Show",
                         ConditionType = TriggerConditionType.ScreenCaptureStopped,
-                        ActionType = TriggerActionType.ShowInterface
+                        ActionType = TriggerActionType.ShowInterface,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
                     };
 
                     Trigger triggerInterfaceClosingHideInterface = new Trigger()
@@ -183,7 +201,10 @@ namespace AutoScreenCapture
                         Active = true,
                         Name = "Interface Closing -> Hide",
                         ConditionType = TriggerConditionType.InterfaceClosing,
-                        ActionType = TriggerActionType.HideInterface
+                        ActionType = TriggerActionType.HideInterface,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
                     };
 
                     Trigger triggerLimitReachedStopScreenCapture = new Trigger()
@@ -191,7 +212,10 @@ namespace AutoScreenCapture
                         Active = true,
                         Name = "Limit Reached -> Stop",
                         ConditionType = TriggerConditionType.LimitReached,
-                        ActionType = TriggerActionType.StopScreenCapture
+                        ActionType = TriggerActionType.StopScreenCapture,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
                     };
 
                     // Setup a few "built in" triggers by default.
@@ -262,6 +286,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
                         xWriter.WriteElementString(TRIGGER_DATE, trigger.Date.ToString());
                         xWriter.WriteElementString(TRIGGER_TIME, trigger.Time.ToString());
+                        xWriter.WriteElementString(TRIGGER_SCREEN_CAPTURE_INTERVAL, trigger.ScreenCaptureInterval.ToString());
 
                         xWriter.WriteEndElement();
                     }

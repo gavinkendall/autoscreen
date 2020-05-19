@@ -149,6 +149,20 @@ namespace AutoScreenCapture
                 case TriggerActionType.EmailScreenshot:
                     EmailScreenshot(TriggerActionType.EmailScreenshot);
                     break;
+
+                case TriggerActionType.SetScreenCaptureInterval:
+                    _screenCapture.Interval = trigger.ScreenCaptureInterval;
+
+                    decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Hours);
+                    decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Minutes);
+                    decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Seconds);
+                    decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Milliseconds);
+
+                    numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                    numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                    numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                    numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+                    break;
             }
         }
     }

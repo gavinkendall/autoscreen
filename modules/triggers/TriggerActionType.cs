@@ -45,6 +45,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// The action to perform will email the last screenshots captured.
         /// </summary>
-        EmailScreenshot = 6
+        EmailScreenshot = 6,
+
+        /// <summary>
+        /// The action to perform will set the screen capture interval.
+        /// </summary>
+        SetScreenCaptureInterval = 7
     }
 }

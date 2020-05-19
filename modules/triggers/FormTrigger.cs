@@ -60,6 +60,16 @@ namespace AutoScreenCapture
                 {
                     listBoxEditor.SelectedIndex = listBoxEditor.Items.IndexOf(TriggerObject.Editor);
                 }
+
+                decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(TriggerObject.ScreenCaptureInterval)).Hours);
+                decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(TriggerObject.ScreenCaptureInterval)).Minutes);
+                decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(TriggerObject.ScreenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(TriggerObject.ScreenCaptureInterval)).Milliseconds);
+
+                numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
             }
             else
             {
@@ -67,6 +77,13 @@ namespace AutoScreenCapture
 
                 textBoxTriggerName.Text = "Trigger " + (TriggerCollection.Count + 1);
                 checkBoxActive.Checked = true;
+                dateTimePickerDate.Value = DateTime.Now;
+                dateTimePickerTime.Value = DateTime.Now;
+
+                numericUpDownHoursInterval.Value = 0;
+                numericUpDownMinutesInterval.Value = 0;
+                numericUpDownSecondsInterval.Value = 0;
+                numericUpDownMillisecondsInterval.Value = 0;
             }
         }
 
@@ -95,6 +112,10 @@ namespace AutoScreenCapture
 
                 if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
+                    int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                        (int)numericUpDownMillisecondsInterval.Value);
+
                     Trigger trigger = new Trigger()
                     {
                         Name = textBoxTriggerName.Text,
@@ -103,7 +124,8 @@ namespace AutoScreenCapture
                         Editor = listBoxEditor.SelectedItem.ToString(),
                         Active = checkBoxActive.Checked,
                         Date = dateTimePickerDate.Value,
-                        Time = dateTimePickerTime.Value
+                        Time = dateTimePickerTime.Value,
+                        ScreenCaptureInterval = screenCaptureInterval
                     };
 
                     TriggerCollection.Add(trigger);
@@ -150,6 +172,12 @@ namespace AutoScreenCapture
                         {
                             TriggerCollection.Get(TriggerObject).Editor = string.Empty;
                         }
+
+                        int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                            (int)numericUpDownMillisecondsInterval.Value);
+
+                        TriggerCollection.Get(TriggerObject).ScreenCaptureInterval = screenCaptureInterval;
 
                         Okay();
                     }
@@ -254,6 +282,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCapture, "Start Screen Capture").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StopScreenCapture, "Stop Screen Capture").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EmailScreenshot, "Email Screenshot").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetScreenCaptureInterval, "Set Screen Capture Interval").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -282,6 +311,7 @@ namespace AutoScreenCapture
         private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             EnableOrDisableEditors();
+            EnableOrDisableScreenCaptureInterval();
         }
 
         private void EnableOrDisableEditors()
@@ -327,6 +357,26 @@ namespace AutoScreenCapture
 
                 labelDate.Enabled = false;
                 labelTime.Enabled = false;
+            }
+        }
+
+        private void EnableOrDisableScreenCaptureInterval()
+        {
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
+            {
+                labelInterval.Enabled = true;
+                numericUpDownHoursInterval.Enabled = true;
+                numericUpDownMinutesInterval.Enabled = true;
+                numericUpDownSecondsInterval.Enabled = true;
+                numericUpDownMillisecondsInterval.Enabled = true;
+            }
+            else
+            {
+                labelInterval.Enabled = false;
+                numericUpDownHoursInterval.Enabled = false;
+                numericUpDownMinutesInterval.Enabled = false;
+                numericUpDownSecondsInterval.Enabled = false;
+                numericUpDownMillisecondsInterval.Enabled = false;
             }
         }
     }

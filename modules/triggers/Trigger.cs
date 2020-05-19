@@ -50,6 +50,11 @@ namespace AutoScreenCapture
         public DateTime Time { get; set; }
 
         /// <summary>
+        /// The interval to use. This overrides the main interval.
+        /// </summary>
+        public int ScreenCaptureInterval { get; set; }
+
+        /// <summary>
         /// The empty constructor for the trigger.
         /// </summary>
         public Trigger()

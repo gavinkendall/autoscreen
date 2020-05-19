@@ -220,7 +220,7 @@ namespace AutoScreenCapture
                             timerScreenCapture.Enabled = false;
 
                             _screenCapture.DateTimePreviousCycle = DateTime.Now;
-                            _screenCapture.Delay = screenCaptureInterval;
+                            _screenCapture.Interval = screenCaptureInterval;
                             timerScreenCapture.Interval = screenCaptureInterval;
 
                             Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = screenCaptureInterval;

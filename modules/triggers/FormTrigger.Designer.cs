@@ -45,6 +45,15 @@
             this.labelDate = new System.Windows.Forms.Label();
             this.dateTimePickerDate = new System.Windows.Forms.DateTimePicker();
             this.labelTime = new System.Windows.Forms.Label();
+            this.labelInterval = new System.Windows.Forms.Label();
+            this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownSecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -70,7 +79,7 @@
             this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 14;
+            this.buttonOK.TabIndex = 19;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -82,7 +91,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 15;
+            this.buttonCancel.TabIndex = 20;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -90,19 +99,19 @@
             // labelTriggerCondition
             // 
             this.labelTriggerCondition.AutoSize = true;
-            this.labelTriggerCondition.Location = new System.Drawing.Point(9, 90);
+            this.labelTriggerCondition.Location = new System.Drawing.Point(9, 59);
             this.labelTriggerCondition.Name = "labelTriggerCondition";
             this.labelTriggerCondition.Size = new System.Drawing.Size(54, 13);
-            this.labelTriggerCondition.TabIndex = 8;
+            this.labelTriggerCondition.TabIndex = 4;
             this.labelTriggerCondition.Text = "Condition:";
             // 
             // labelTriggerAction
             // 
             this.labelTriggerAction.AutoSize = true;
-            this.labelTriggerAction.Location = new System.Drawing.Point(259, 90);
+            this.labelTriggerAction.Location = new System.Drawing.Point(259, 59);
             this.labelTriggerAction.Name = "labelTriggerAction";
             this.labelTriggerAction.Size = new System.Drawing.Size(40, 13);
-            this.labelTriggerAction.TabIndex = 9;
+            this.labelTriggerAction.TabIndex = 5;
             this.labelTriggerAction.Text = "Action:";
             // 
             // checkBoxActive
@@ -138,40 +147,41 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxEditor.Enabled = false;
             this.listBoxEditor.FormattingEnabled = true;
-            this.listBoxEditor.Location = new System.Drawing.Point(512, 108);
+            this.listBoxEditor.Location = new System.Drawing.Point(512, 77);
             this.listBoxEditor.Name = "listBoxEditor";
             this.listBoxEditor.Size = new System.Drawing.Size(235, 290);
-            this.listBoxEditor.TabIndex = 13;
+            this.listBoxEditor.TabIndex = 9;
             // 
             // labelEditor
             // 
             this.labelEditor.AutoSize = true;
-            this.labelEditor.Location = new System.Drawing.Point(509, 90);
+            this.labelEditor.Location = new System.Drawing.Point(509, 59);
             this.labelEditor.Name = "labelEditor";
             this.labelEditor.Size = new System.Drawing.Size(37, 13);
-            this.labelEditor.TabIndex = 10;
+            this.labelEditor.TabIndex = 6;
             this.labelEditor.Text = "Editor:";
             // 
             // dateTimePickerTime
             // 
+            this.dateTimePickerTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dateTimePickerTime.CustomFormat = "HH:mm:ss";
             this.dateTimePickerTime.Enabled = false;
             this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerTime.Location = new System.Drawing.Point(179, 58);
+            this.dateTimePickerTime.Location = new System.Drawing.Point(179, 376);
             this.dateTimePickerTime.Name = "dateTimePickerTime";
             this.dateTimePickerTime.ShowUpDown = true;
             this.dateTimePickerTime.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerTime.TabIndex = 7;
+            this.dateTimePickerTime.TabIndex = 13;
             // 
             // listBoxCondition
             // 
             this.listBoxCondition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listBoxCondition.FormattingEnabled = true;
-            this.listBoxCondition.Location = new System.Drawing.Point(12, 108);
+            this.listBoxCondition.Location = new System.Drawing.Point(12, 77);
             this.listBoxCondition.Name = "listBoxCondition";
             this.listBoxCondition.Size = new System.Drawing.Size(235, 290);
-            this.listBoxCondition.TabIndex = 11;
+            this.listBoxCondition.TabIndex = 7;
             this.listBoxCondition.SelectedIndexChanged += new System.EventHandler(this.listBoxCondition_SelectedIndexChanged);
             // 
             // listBoxAction
@@ -179,40 +189,105 @@
             this.listBoxAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listBoxAction.FormattingEnabled = true;
-            this.listBoxAction.Location = new System.Drawing.Point(262, 108);
+            this.listBoxAction.Location = new System.Drawing.Point(262, 77);
             this.listBoxAction.Name = "listBoxAction";
             this.listBoxAction.Size = new System.Drawing.Size(235, 290);
-            this.listBoxAction.TabIndex = 12;
+            this.listBoxAction.TabIndex = 8;
             this.listBoxAction.SelectedIndexChanged += new System.EventHandler(this.listBoxAction_SelectedIndexChanged);
             // 
             // labelDate
             // 
+            this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelDate.AutoSize = true;
-            this.labelDate.Location = new System.Drawing.Point(9, 63);
+            this.labelDate.Location = new System.Drawing.Point(9, 378);
             this.labelDate.Name = "labelDate";
             this.labelDate.Size = new System.Drawing.Size(33, 13);
-            this.labelDate.TabIndex = 4;
+            this.labelDate.TabIndex = 10;
             this.labelDate.Text = "Date:";
             // 
             // dateTimePickerDate
             // 
+            this.dateTimePickerDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dateTimePickerDate.CustomFormat = "yyyy-MM-dd";
             this.dateTimePickerDate.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
             this.dateTimePickerDate.Enabled = false;
             this.dateTimePickerDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerDate.Location = new System.Drawing.Point(56, 58);
+            this.dateTimePickerDate.Location = new System.Drawing.Point(48, 376);
             this.dateTimePickerDate.Name = "dateTimePickerDate";
             this.dateTimePickerDate.Size = new System.Drawing.Size(79, 20);
-            this.dateTimePickerDate.TabIndex = 5;
+            this.dateTimePickerDate.TabIndex = 11;
             // 
             // labelTime
             // 
+            this.labelTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelTime.AutoSize = true;
-            this.labelTime.Location = new System.Drawing.Point(140, 63);
+            this.labelTime.Location = new System.Drawing.Point(140, 378);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(33, 13);
-            this.labelTime.TabIndex = 6;
+            this.labelTime.TabIndex = 12;
             this.labelTime.Text = "Time:";
+            // 
+            // labelInterval
+            // 
+            this.labelInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelInterval.AutoSize = true;
+            this.labelInterval.Location = new System.Drawing.Point(259, 378);
+            this.labelInterval.Name = "labelInterval";
+            this.labelInterval.Size = new System.Drawing.Size(45, 13);
+            this.labelInterval.TabIndex = 14;
+            this.labelInterval.Text = "Interval:";
+            // 
+            // numericUpDownHoursInterval
+            // 
+            this.numericUpDownHoursInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(310, 376);
+            this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.numericUpDownHoursInterval.Name = "numericUpDownHoursInterval";
+            this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownHoursInterval.TabIndex = 15;
+            // 
+            // numericUpDownMinutesInterval
+            // 
+            this.numericUpDownMinutesInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(358, 376);
+            this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownMinutesInterval.Name = "numericUpDownMinutesInterval";
+            this.numericUpDownMinutesInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMinutesInterval.TabIndex = 16;
+            // 
+            // numericUpDownSecondsInterval
+            // 
+            this.numericUpDownSecondsInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(406, 376);
+            this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownSecondsInterval.Name = "numericUpDownSecondsInterval";
+            this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownSecondsInterval.TabIndex = 17;
+            // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(454, 376);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 18;
             // 
             // FormTrigger
             // 
@@ -221,6 +296,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.numericUpDownMillisecondsInterval);
+            this.Controls.Add(this.numericUpDownSecondsInterval);
+            this.Controls.Add(this.numericUpDownMinutesInterval);
+            this.Controls.Add(this.numericUpDownHoursInterval);
+            this.Controls.Add(this.labelInterval);
             this.Controls.Add(this.labelTime);
             this.Controls.Add(this.dateTimePickerDate);
             this.Controls.Add(this.labelDate);
@@ -243,6 +323,10 @@
             this.Name = "FormTrigger";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormTrigger_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,5 +350,10 @@
         private System.Windows.Forms.Label labelDate;
         private System.Windows.Forms.DateTimePicker dateTimePickerDate;
         private System.Windows.Forms.Label labelTime;
+        private System.Windows.Forms.Label labelInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
     }
 }

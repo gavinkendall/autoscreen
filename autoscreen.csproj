@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="command\CommandLineRegex.cs" />
     <Compile Include="config\Config.cs" />
+    <Compile Include="DataConvert.cs" />
     <Compile Include="help\HelpTip.cs" />
     <Compile Include="interface\FormMain-CommandLine.cs">
       <SubType>Form</SubType>

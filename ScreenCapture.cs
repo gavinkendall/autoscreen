@@ -91,7 +91,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The interval delay for the timer when a screen capture session is running.
         /// </summary>
-        public int Delay { get; set; }
+        public int Interval { get; set; }
 
         /// <summary>
         /// The limit on how many screen capture cycles we go through during a screen capture session.
@@ -143,7 +143,7 @@ namespace AutoScreenCapture
         /// If we're still waiting for the very first screenshots to be taken then calculate from the date/time when the user started a screen capture session
         /// otherwise calculate from the date/time when the previous screenshots were taken.
         /// </summary>
-        public DateTime DateTimeNextCycle { get { return DateTimePreviousCycle.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Delay) : DateTimePreviousCycle.AddMilliseconds(Delay); } }
+        public DateTime DateTimeNextCycle { get { return DateTimePreviousCycle.Ticks == 0 ? DateTimeStartCapture.AddMilliseconds(Interval) : DateTimePreviousCycle.AddMilliseconds(Interval); } }
 
         /// <summary>
         /// The time remaining between now and the next screenshot that will be taken.

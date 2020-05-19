@@ -211,7 +211,7 @@ namespace AutoScreenCapture
                     EnableStopScreenCapture();
 
                     // Setup the properties for the screen capture class.
-                    _screenCapture.Delay = screenCaptureInterval;
+                    _screenCapture.Interval = screenCaptureInterval;
                     _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
 
                     if (Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString().Length > 0)

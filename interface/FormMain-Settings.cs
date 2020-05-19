@@ -178,8 +178,6 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage(":: SaveSettings Start ::");
 
-                Log.WriteDebugMessage("Saving settings");
-
                 Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = GetScreenCaptureInterval();
                 Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
                 Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
@@ -189,8 +187,6 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
 
                 Settings.User.Save();
-
-                Log.WriteDebugMessage("Settings saved");
 
                 Log.WriteDebugMessage(":: SaveSettings End ::");
             }
