@@ -74,12 +74,9 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void runEditor_Click(object sender, EventArgs e)
         {
-            if (listBoxScreenshots.SelectedIndex > -1)
-            {
-                Editor editor = formEditor.EditorCollection.GetByName(sender.ToString());
-                RunEditor(editor);
-            }
-            else
+            Editor editor = formEditor.EditorCollection.GetByName(sender.ToString());
+
+            if (!RunEditor(editor))
             {
                 MessageBox.Show("No image is available to edit.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -115,22 +112,24 @@ namespace AutoScreenCapture
         /// Executes a chosen image editor from the interface.
         /// </summary>
         /// <param name="editor">The image editor to execute.</param>
-        private void RunEditor(Editor editor)
+        private bool RunEditor(Editor editor)
         {
             if (editor != null)
             {
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen)tabControlViews.SelectedTab.Tag;
-                    RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
+                    return RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
-                    RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
+                    return RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
                 }
             }
+
+            return false;
         }
 
         /// <summary>
@@ -150,7 +149,10 @@ namespace AutoScreenCapture
                     {
                         Log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
 
-                        RunEditor(editor, screenshot);
+                        if (!RunEditor(editor, screenshot))
+                        {
+                            Log.WriteDebugMessage("Running editor failed. Perhaps the filepath of the screenshot file is no longer available");
+                        }
                     }
                 }
             }
@@ -161,7 +163,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="editor">The editor to use.</param>
         /// <param name="screenshot">The screenshot to use.</param>
-        private void RunEditor(Editor editor, Screenshot screenshot)
+        private bool RunEditor(Editor editor, Screenshot screenshot)
         {
             // Execute the chosen image editor. If the %filepath% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
@@ -173,7 +175,13 @@ namespace AutoScreenCapture
                 Log.WriteDebugMessage("Arguments after %filepath% tag replacement: " + editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
 
                 _ = Process.Start(editor.Application, editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
+
+                // We successfully opened the editor with the given screenshot path.
+                return true;
             }
+
+            // We failed to open the editor with the given screenshot path.
+            return false;
         }
     }
 }
