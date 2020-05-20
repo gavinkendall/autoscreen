@@ -92,12 +92,12 @@ namespace AutoScreenCapture
 
                 if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
                 {
-                    SetControls(enabled: true);
                     comboBoxScreenComponent.SelectedIndex = ScreenObject.Component;
                 }
                 else
                 {
-                    SetControls(enabled: false);
+                    comboBoxScreenComponent.SelectedIndex = 0;
+                    MessageBox.Show("The configured screen component has an invalid index since it is not available on this system. The component has therefore been set to Active Window.", "Invalid Screen Index", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
@@ -152,7 +152,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Updates the screen dictionary with the available screens.
         /// </summary>
         public void RefreshScreenDictionary()
         {
@@ -376,20 +376,6 @@ namespace AutoScreenCapture
             {
                 return null;
             }
-        }
-
-        private void SetControls(bool enabled)
-        {
-            buttonOK.Enabled = enabled;
-            textBoxName.Enabled = enabled;
-            textBoxMacro.Enabled = enabled;
-            checkBoxMouse.Enabled = enabled;
-            textBoxFolder.Enabled = enabled;
-            comboBoxFormat.Enabled = enabled;
-            comboBoxScreenComponent.Enabled = enabled;
-            numericUpDownJpegQuality.Enabled = enabled;
-            numericUpDownResolutionRatio.Enabled = enabled;
-            checkBoxActive.Enabled = enabled;
         }
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
