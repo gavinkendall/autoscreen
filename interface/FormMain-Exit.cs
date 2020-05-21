@@ -19,14 +19,12 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: ParseCommandLineArguments Start ::");
-
                 Log.WriteMessage("Exiting application");
 
-                if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+                if (ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
                     Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                    formEnterPassphrase.ShowDialog(this);
+                    _formEnterPassphrase.ShowDialog(this);
                 }
 
                 // This is intentional. Do not rewrite these statements as an if/else

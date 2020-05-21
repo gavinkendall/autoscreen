@@ -349,7 +349,7 @@ namespace AutoScreenCapture
             contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
             contextMenuStripScreenshotPreview.Items.Add(addNewEditorToolStripItem);
 
-            foreach (Editor editor in formEditor.EditorCollection)
+            foreach (Editor editor in _formEditor.EditorCollection)
             {
                 if (editor != null && FileSystem.FileExists(editor.Application))
                 {
@@ -372,7 +372,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: EmailScreenshot Start ::");
+                Log.WriteDebugMessage("Emailing screenshots");
 
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
                 {
@@ -503,8 +503,6 @@ namespace AutoScreenCapture
 
                 smtpClient.Dispose();
                 Log.WriteDebugMessage("SMTP client disposed");
-
-                Log.WriteDebugMessage(":: EmailScreenshot End ::");
             }
             catch (Exception ex)
             {

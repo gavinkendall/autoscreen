@@ -20,19 +20,19 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addScreen_Click(object sender, EventArgs e)
         {
-            formScreen.ScreenObject = null;
-            formScreen.ImageFormatCollection = _imageFormatCollection;
-            formScreen.ScreenCapture = _screenCapture;
-            formScreen.TagCollection = formTag.TagCollection;
+            _formScreen.ScreenObject = null;
+            _formScreen.ImageFormatCollection = _imageFormatCollection;
+            _formScreen.ScreenCapture = _screenCapture;
+            _formScreen.TagCollection = _formTag.TagCollection;
 
-            formScreen.ShowDialog(this);
+            _formScreen.ShowDialog(this);
 
-            if (formScreen.DialogResult == DialogResult.OK)
+            if (_formScreen.DialogResult == DialogResult.OK)
             {
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                formScreen.ScreenCollection.SaveToXmlFile();
+                _formScreen.ScreenCollection.SaveToXmlFile();
             }
         }
 
@@ -43,7 +43,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void removeSelectedScreens_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formScreen.ScreenCollection.Count;
+            int countBeforeRemoval = _formScreen.ScreenCollection.Count;
 
             foreach (Control control in tabPageScreens.Controls)
             {
@@ -53,18 +53,18 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Screen screen = formScreen.ScreenCollection.Get((Screen)checkBox.Tag);
-                        formScreen.ScreenCollection.Remove(screen);
+                        Screen screen = _formScreen.ScreenCollection.Get((Screen)checkBox.Tag);
+                        _formScreen.ScreenCollection.Remove(screen);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formScreen.ScreenCollection.Count)
+            if (countBeforeRemoval > _formScreen.ScreenCollection.Count)
             {
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                formScreen.ScreenCollection.SaveToXmlFile();
+                _formScreen.ScreenCollection.SaveToXmlFile();
             }
         }
 
@@ -89,19 +89,19 @@ namespace AutoScreenCapture
                 screen = (Screen)toolStripMenuItemSelected.Tag;
             }
 
-            formScreen.ScreenObject = screen;
-            formScreen.ImageFormatCollection = _imageFormatCollection;
-            formScreen.ScreenCapture = _screenCapture;
-            formScreen.TagCollection = formTag.TagCollection;
+            _formScreen.ScreenObject = screen;
+            _formScreen.ImageFormatCollection = _imageFormatCollection;
+            _formScreen.ScreenCapture = _screenCapture;
+            _formScreen.TagCollection = _formTag.TagCollection;
 
-            formScreen.ShowDialog(this);
+            _formScreen.ShowDialog(this);
 
-            if (formScreen.DialogResult == DialogResult.OK)
+            if (_formScreen.DialogResult == DialogResult.OK)
             {
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                formScreen.ScreenCollection.SaveToXmlFile();
+                _formScreen.ScreenCollection.SaveToXmlFile();
             }
         }
 
@@ -116,13 +116,13 @@ namespace AutoScreenCapture
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Screen screen = formScreen.ScreenCollection.Get(screenSelected);
-                    formScreen.ScreenCollection.Remove(screen);
+                    Screen screen = _formScreen.ScreenCollection.Get(screenSelected);
+                    _formScreen.ScreenCollection.Remove(screen);
 
                     BuildScreensModule();
                     BuildViewTabPages();
 
-                    formScreen.ScreenCollection.SaveToXmlFile();
+                    _formScreen.ScreenCollection.SaveToXmlFile();
                 }
             }
         }
@@ -131,9 +131,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: RunScreenCaptures Start ::");
-
-                foreach (Screen screen in formScreen.ScreenCollection)
+                foreach (Screen screen in _formScreen.ScreenCollection)
                 {
                     if (screen.Active)
                     {
@@ -155,7 +153,7 @@ namespace AutoScreenCapture
                                 if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
                                     if (_screenCapture.SaveScreenshot(
-                                        path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTags(preview: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                        path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                                         format: screen.Format,
                                         component: screen.Component,
                                         screenshotType: ScreenshotType.ActiveWindow,
@@ -180,7 +178,7 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            if (formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                            if (_formScreen.ScreenDictionary.ContainsKey(screen.Component))
                             {
                                 MacroParser.screenCapture = _screenCapture;
 
@@ -196,13 +194,13 @@ namespace AutoScreenCapture
 
                                     // Screen X
                                     if (_screenCapture.GetScreenImages(screen.Component,
-                                        formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                                        formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                                        formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                                        formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                        _formScreen.ScreenDictionary[screen.Component].Bounds.X,
+                                        _formScreen.ScreenDictionary[screen.Component].Bounds.Y,
+                                        _formScreen.ScreenDictionary[screen.Component].Bounds.Width,
+                                        _formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                                     {
                                         if (_screenCapture.SaveScreenshot(
-                                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(screen.Folder, formTag.TagCollection)) + MacroParser.ParseTags(preview: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                                             format: screen.Format,
                                             component: screen.Component,
                                             screenshotType: ScreenshotType.Screen,
@@ -228,8 +226,6 @@ namespace AutoScreenCapture
                         }
                     }
                 }
-
-                Log.WriteDebugMessage(":: RunScreenCaptures End ::");
             }
             catch (Exception ex)
             {

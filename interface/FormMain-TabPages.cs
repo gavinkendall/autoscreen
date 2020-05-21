@@ -18,7 +18,7 @@ namespace AutoScreenCapture
         {
             tabControlViews.Controls.Clear();
 
-            foreach (Screen screen in formScreen.ScreenCollection)
+            foreach (Screen screen in _formScreen.ScreenCollection)
             {
                 ToolStrip toolStripScreen = new ToolStrip
                 {
@@ -55,7 +55,7 @@ namespace AutoScreenCapture
                 tabControlViews.Controls.Add(tabPageScreen);
             }
 
-            foreach (Region region in formRegion.RegionCollection)
+            foreach (Region region in _formRegion.RegionCollection)
             {
                 ToolStrip toolStripRegion = new ToolStrip
                 {
@@ -141,7 +141,7 @@ namespace AutoScreenCapture
 
             toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, addEditor_Click);
 
-            foreach (Editor editor in formEditor.EditorCollection)
+            foreach (Editor editor in _formEditor.EditorCollection)
             {
                 if (editor != null && FileSystem.FileExists(editor.Application))
                 {

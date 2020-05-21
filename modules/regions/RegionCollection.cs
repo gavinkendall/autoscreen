@@ -65,8 +65,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddRegions Start ::");
-
                 if (FileSystem.FileExists(FileSystem.RegionsFile))
                 {
                     Log.WriteDebugMessage("Regions file \"" + FileSystem.RegionsFile + "\" found. Attempting to load XML document");
@@ -233,8 +231,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
-
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddRegions End ::");
             }
             catch (Exception ex)
             {

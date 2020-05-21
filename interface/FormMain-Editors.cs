@@ -20,17 +20,17 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addEditor_Click(object sender, EventArgs e)
         {
-            formEditor.EditorObject = null;
+            _formEditor.EditorObject = null;
 
-            formEditor.ShowDialog(this);
+            _formEditor.ShowDialog(this);
 
-            if (formEditor.DialogResult == DialogResult.OK)
+            if (_formEditor.DialogResult == DialogResult.OK)
             {
                 BuildEditorsModule();
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                formEditor.EditorCollection.SaveToXmlFile();
+                _formEditor.EditorCollection.SaveToXmlFile();
             }
         }
 
@@ -41,7 +41,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void removeSelectedEditors_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formEditor.EditorCollection.Count;
+            int countBeforeRemoval = _formEditor.EditorCollection.Count;
 
             foreach (Control control in tabPageEditors.Controls)
             {
@@ -51,19 +51,19 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Editor editor = formEditor.EditorCollection.Get((Editor)checkBox.Tag);
-                        formEditor.EditorCollection.Remove(editor);
+                        Editor editor = _formEditor.EditorCollection.Get((Editor)checkBox.Tag);
+                        _formEditor.EditorCollection.Remove(editor);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formEditor.EditorCollection.Count)
+            if (countBeforeRemoval > _formEditor.EditorCollection.Count)
             {
                 BuildEditorsModule();
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                formEditor.EditorCollection.SaveToXmlFile();
+                _formEditor.EditorCollection.SaveToXmlFile();
             }
         }
 
@@ -74,7 +74,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void runEditor_Click(object sender, EventArgs e)
         {
-            Editor editor = formEditor.EditorCollection.GetByName(sender.ToString());
+            Editor editor = _formEditor.EditorCollection.GetByName(sender.ToString());
 
             if (!RunEditor(editor))
             {
@@ -93,17 +93,17 @@ namespace AutoScreenCapture
 
             if (buttonSelected.Tag != null)
             {
-                formEditor.EditorObject = (Editor)buttonSelected.Tag;
+                _formEditor.EditorObject = (Editor)buttonSelected.Tag;
 
-                formEditor.ShowDialog(this);
+                _formEditor.ShowDialog(this);
 
-                if (formEditor.DialogResult == DialogResult.OK)
+                if (_formEditor.DialogResult == DialogResult.OK)
                 {
                     BuildEditorsModule();
                     BuildViewTabPages();
                     BuildScreenshotPreviewContextualMenu();
 
-                    formEditor.EditorCollection.SaveToXmlFile();
+                    _formEditor.EditorCollection.SaveToXmlFile();
                 }
             }
         }
@@ -114,18 +114,20 @@ namespace AutoScreenCapture
         /// <param name="editor">The image editor to execute.</param>
         private bool RunEditor(Editor editor)
         {
-            if (editor != null)
+            if (editor != null && Slideshow.SelectedSlide != null)
             {
+                Slide selectedSlide = Slideshow.SelectedSlide;
+
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen)tabControlViews.SelectedTab.Tag;
-                    return RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId));
+                    return RunEditor(editor, _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId));
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
-                    return RunEditor(editor, _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId));
+                    return RunEditor(editor, _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId));
                 }
             }
 

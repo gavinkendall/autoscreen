@@ -60,7 +60,7 @@ namespace AutoScreenCapture
 
         private void FormScreen_Load(object sender, EventArgs e)
         {
-            textBoxName.Focus();
+            textBoxScreenName.Focus();
 
             HelpMessage("This is where to configure a screen capture. Select an available screen from the Component drop-down menu and keep an eye on Preview");
 
@@ -86,7 +86,7 @@ namespace AutoScreenCapture
             {
                 Text = "Change Screen";
 
-                textBoxName.Text = ScreenObject.Name;
+                textBoxScreenName.Text = ScreenObject.Name;
                 textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
                 textBoxMacro.Text = ScreenObject.Macro;
 
@@ -112,7 +112,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Screen";
 
-                textBoxName.Text = "Screen " + (ScreenCollection.Count + 1);
+                textBoxScreenName.Text = "Screen " + (ScreenCollection.Count + 1);
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = MacroParser.DefaultMacro;
                 comboBoxScreenComponent.SelectedIndex = 0;
@@ -173,11 +173,11 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (ScreenCollection.GetByName(textBoxName.Text) == null)
+                if (ScreenCollection.GetByName(textBoxScreenName.Text) == null)
                 {
                     ScreenCollection.Add(new Screen()
                     {
-                        Name = textBoxName.Text,
+                        Name = textBoxScreenName.Text,
                         Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         Macro = textBoxMacro.Text,
                         Component = comboBoxScreenComponent.SelectedIndex,
@@ -213,14 +213,14 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (ScreenCollection.GetByName(textBoxName.Text) != null && NameChanged())
+                    if (ScreenCollection.GetByName(textBoxScreenName.Text) != null && NameChanged())
                     {
                         MessageBox.Show("A screen with this name already exists.", "Duplicate Name Conflict",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        ScreenCollection.Get(ScreenObject).Name = textBoxName.Text;
+                        ScreenCollection.Get(ScreenObject).Name = textBoxScreenName.Text;
                         ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
@@ -248,7 +248,7 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxName.Text = textBoxName.Text.Trim();
+            textBoxScreenName.Text = textBoxScreenName.Text.Trim();
             textBoxFolder.Text = textBoxFolder.Text.Trim();
             textBoxMacro.Text = textBoxMacro.Text.Trim();
             textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
@@ -256,7 +256,7 @@ namespace AutoScreenCapture
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxName.Text) &&
+            if (!string.IsNullOrEmpty(textBoxScreenName.Text) &&
                 !string.IsNullOrEmpty(textBoxFolder.Text) &&
                 !string.IsNullOrEmpty(textBoxMacro.Text))
             {
@@ -287,7 +287,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (ScreenObject != null &&
-                !ScreenObject.Name.Equals(textBoxName.Text))
+                !ScreenObject.Name.Equals(textBoxScreenName.Text))
             {
                 return true;
             }
@@ -361,7 +361,7 @@ namespace AutoScreenCapture
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
             textBoxMacroPreview.Text = MacroParser.ParseTags(textBoxFolder.Text, TagCollection) +
-                MacroParser.ParseTags(preview: true, textBoxName.Text, textBoxMacro.Text, 1,
+                MacroParser.ParseTags(preview: true, textBoxScreenName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
         }
 

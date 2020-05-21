@@ -90,8 +90,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddTags Start ::");
-
                 if (FileSystem.FileExists(FileSystem.TagsFile))
                 {
                     Log.WriteDebugMessage("Tags file \"" + FileSystem.TagsFile + "\" found. Attempting to load XML document");
@@ -336,8 +334,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
-
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddTags End ::");
             }
             catch (Exception ex)
             {

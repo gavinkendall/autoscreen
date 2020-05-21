@@ -321,8 +321,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFile Start ::");
-
                 _mutexWriteFile.WaitOne();
 
                 if (_screenshotList != null && !FileSystem.FileExists(FileSystem.ScreenshotsFile))
@@ -373,8 +371,6 @@ namespace AutoScreenCapture
                         Log.WriteDebugMessage("XML document loaded");
                     }
                 }
-
-                Log.WriteDebugMessage(":: LoadXmlFile End ::");
             }
             catch (Exception ex)
             {
@@ -400,8 +396,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndReturnNodeValues Start ::");
-
                 XmlNodeList xNodes = null;
 
                 if (string.IsNullOrEmpty(nodeName))
@@ -468,8 +462,6 @@ namespace AutoScreenCapture
                     }
                 }
 
-                Log.WriteDebugMessage(":: LoadXmlFileAndReturnNodeValues End ::");
-
                 return null;
             }
             catch (Exception ex)
@@ -491,8 +483,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddScreenshots Start ::");
-
                 _mutexWriteFile.WaitOne();
 
                 XmlNodeList xScreenshots = null;
@@ -734,8 +724,6 @@ namespace AutoScreenCapture
                     }
                 }
 
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddScreenshots End ::");
-
                 return 0;
             }
             catch (Exception ex)
@@ -758,8 +746,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: SaveToXmlFile Start ::");
-
                 _mutexWriteFile.WaitOne();
 
                 if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
@@ -937,8 +923,6 @@ namespace AutoScreenCapture
                         }
                     }
                 }
-
-                Log.WriteDebugMessage(":: SaveToXmlFile End ::");
             }
             finally
             {

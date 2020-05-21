@@ -37,8 +37,8 @@
             this.labelTriggerAction = new System.Windows.Forms.Label();
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.listBoxEditor = new System.Windows.Forms.ListBox();
-            this.labelEditor = new System.Windows.Forms.Label();
+            this.listBoxModuleItemList = new System.Windows.Forms.ListBox();
+            this.labelModuleItemList = new System.Windows.Forms.Label();
             this.dateTimePickerTime = new System.Windows.Forms.DateTimePicker();
             this.listBoxCondition = new System.Windows.Forms.ListBox();
             this.listBoxAction = new System.Windows.Forms.ListBox();
@@ -124,6 +124,7 @@
             this.checkBoxActive.TabIndex = 3;
             this.checkBoxActive.Text = "Active";
             this.checkBoxActive.UseVisualStyleBackColor = true;
+            this.checkBoxActive.MouseHover += new System.EventHandler(this.checkBoxActive_MouseHover);
             // 
             // labelHelp
             // 
@@ -140,26 +141,26 @@
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // listBoxEditor
+            // listBoxModuleItemList
             // 
-            this.listBoxEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listBoxModuleItemList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBoxEditor.Enabled = false;
-            this.listBoxEditor.FormattingEnabled = true;
-            this.listBoxEditor.Location = new System.Drawing.Point(512, 77);
-            this.listBoxEditor.Name = "listBoxEditor";
-            this.listBoxEditor.Size = new System.Drawing.Size(235, 290);
-            this.listBoxEditor.TabIndex = 9;
+            this.listBoxModuleItemList.FormattingEnabled = true;
+            this.listBoxModuleItemList.Location = new System.Drawing.Point(512, 77);
+            this.listBoxModuleItemList.Name = "listBoxModuleItemList";
+            this.listBoxModuleItemList.Size = new System.Drawing.Size(235, 290);
+            this.listBoxModuleItemList.TabIndex = 9;
+            this.listBoxModuleItemList.MouseHover += new System.EventHandler(this.listBoxModuleItemList_MouseHover);
             // 
-            // labelEditor
+            // labelModuleItemList
             // 
-            this.labelEditor.AutoSize = true;
-            this.labelEditor.Location = new System.Drawing.Point(509, 59);
-            this.labelEditor.Name = "labelEditor";
-            this.labelEditor.Size = new System.Drawing.Size(37, 13);
-            this.labelEditor.TabIndex = 6;
-            this.labelEditor.Text = "Editor:";
+            this.labelModuleItemList.AutoSize = true;
+            this.labelModuleItemList.Location = new System.Drawing.Point(509, 59);
+            this.labelModuleItemList.Name = "labelModuleItemList";
+            this.labelModuleItemList.Size = new System.Drawing.Size(244, 13);
+            this.labelModuleItemList.TabIndex = 6;
+            this.labelModuleItemList.Text = "Editor, Screen, Region, Schedule, Tag, or Trigger:";
             // 
             // dateTimePickerTime
             // 
@@ -183,6 +184,7 @@
             this.listBoxCondition.Size = new System.Drawing.Size(235, 290);
             this.listBoxCondition.TabIndex = 7;
             this.listBoxCondition.SelectedIndexChanged += new System.EventHandler(this.listBoxCondition_SelectedIndexChanged);
+            this.listBoxCondition.MouseHover += new System.EventHandler(this.listBoxCondition_MouseHover);
             // 
             // listBoxAction
             // 
@@ -194,6 +196,7 @@
             this.listBoxAction.Size = new System.Drawing.Size(235, 290);
             this.listBoxAction.TabIndex = 8;
             this.listBoxAction.SelectedIndexChanged += new System.EventHandler(this.listBoxAction_SelectedIndexChanged);
+            this.listBoxAction.MouseHover += new System.EventHandler(this.listBoxAction_MouseHover);
             // 
             // labelDate
             // 
@@ -307,8 +310,8 @@
             this.Controls.Add(this.listBoxAction);
             this.Controls.Add(this.listBoxCondition);
             this.Controls.Add(this.dateTimePickerTime);
-            this.Controls.Add(this.labelEditor);
-            this.Controls.Add(this.listBoxEditor);
+            this.Controls.Add(this.labelModuleItemList);
+            this.Controls.Add(this.listBoxModuleItemList);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.labelTriggerAction);
@@ -342,8 +345,8 @@
         private System.Windows.Forms.Label labelTriggerAction;
         private System.Windows.Forms.CheckBox checkBoxActive;
         private System.Windows.Forms.Label labelHelp;
-        private System.Windows.Forms.ListBox listBoxEditor;
-        private System.Windows.Forms.Label labelEditor;
+        private System.Windows.Forms.ListBox listBoxModuleItemList;
+        private System.Windows.Forms.Label labelModuleItemList;
         private System.Windows.Forms.DateTimePicker dateTimePickerTime;
         private System.Windows.Forms.ListBox listBoxCondition;
         private System.Windows.Forms.ListBox listBoxAction;

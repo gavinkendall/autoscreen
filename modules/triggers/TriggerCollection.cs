@@ -29,6 +29,7 @@ namespace AutoScreenCapture
         private const string TRIGGER_DATE = "date";
         private const string TRIGGER_TIME = "time";
         private const string TRIGGER_SCREEN_CAPTURE_INTERVAL = "screen_capture_interval";
+        private const string TRIGGER_MODULE_ITEM = "module_item";
 
         private readonly string TRIGGER_XPATH;
 
@@ -96,9 +97,11 @@ namespace AutoScreenCapture
                                             (TriggerActionType) Enum.Parse(typeof(TriggerActionType), xReader.Value);
                                         break;
 
+                                    // This is purely for backwards compatibility with older versions.
+                                    // We no longer use Editor. We use ModuleItem now (since 2.3.0.0).
                                     case TRIGGER_EDITOR:
                                         xReader.Read();
-                                        trigger.Editor = xReader.Value;
+                                        trigger.ModuleItem = xReader.Value;
                                         break;
 
                                     case TRIGGER_ACTIVE:
@@ -119,6 +122,11 @@ namespace AutoScreenCapture
                                     case TRIGGER_SCREEN_CAPTURE_INTERVAL:
                                         xReader.Read();
                                         trigger.ScreenCaptureInterval = Convert.ToInt32(xReader.Value);
+                                        break;
+
+                                    case TRIGGER_MODULE_ITEM:
+                                        xReader.Read();
+                                        trigger.ModuleItem = xReader.Value;
                                         break;
                                 }
                             }
@@ -283,10 +291,10 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());
-                        xWriter.WriteElementString(TRIGGER_EDITOR, trigger.Editor);
                         xWriter.WriteElementString(TRIGGER_DATE, trigger.Date.ToString());
                         xWriter.WriteElementString(TRIGGER_TIME, trigger.Time.ToString());
                         xWriter.WriteElementString(TRIGGER_SCREEN_CAPTURE_INTERVAL, trigger.ScreenCaptureInterval.ToString());
+                        xWriter.WriteElementString(TRIGGER_MODULE_ITEM, trigger.ModuleItem);
 
                         xWriter.WriteEndElement();
                     }

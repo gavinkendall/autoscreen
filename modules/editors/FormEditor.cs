@@ -41,12 +41,23 @@ namespace AutoScreenCapture
 
         private void FormEditor_Load(object sender, EventArgs e)
         {
+            textBoxEditorName.Focus();
+
             checkBoxMakeDefaultEditor.Checked = false;
 
             if (EditorObject != null)
             {
                 Text = "Change Editor";
-                Icon = Icon.ExtractAssociatedIcon(EditorObject.Application);
+
+                if (!string.IsNullOrEmpty(EditorObject.Application) &&
+                    FileSystem.FileExists(EditorObject.Application))
+                {
+                    Icon = Icon.ExtractAssociatedIcon(EditorObject.Application);
+                }
+                else
+                {
+                    Icon = (Icon)(resources.GetObject("$this.Icon"));
+                }
 
                 textBoxEditorName.Text = EditorObject.Name;
                 textBoxEditorApplication.Text = EditorObject.Application;
@@ -234,7 +245,16 @@ namespace AutoScreenCapture
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Icon = Icon.ExtractAssociatedIcon(openFileDialog.FileName);
+                if (!string.IsNullOrEmpty(openFileDialog.FileName) &&
+                    FileSystem.FileExists(openFileDialog.FileName))
+                {
+                    Icon = Icon.ExtractAssociatedIcon(openFileDialog.FileName);
+                }
+                else
+                {
+                    Icon = (Icon)(resources.GetObject("$this.Icon"));
+                }
+
                 textBoxEditorApplication.Text = openFileDialog.FileName;
             }
         }

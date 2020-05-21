@@ -52,8 +52,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddEditors Start ::");
-
                 if (FileSystem.FileExists(FileSystem.EditorsFile))
                 {
                     Log.WriteDebugMessage("Editors file \"" + FileSystem.EditorsFile + "\" found. Attempting to load XML document");
@@ -188,8 +186,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
-
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddEditors End ::");
             }
             catch (Exception ex)
             {

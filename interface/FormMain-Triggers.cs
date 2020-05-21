@@ -19,17 +19,21 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addTrigger_Click(object sender, EventArgs e)
         {
-            formTrigger.TriggerObject = null;
+            _formTrigger.TriggerObject = null;
 
-            formTrigger.EditorCollection = formEditor.EditorCollection;
+            _formTrigger.EditorCollection = _formEditor.EditorCollection;
+            _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
+            _formTrigger.RegionCollection = _formRegion.RegionCollection;
+            _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
+            _formTrigger.TagCollection = _formTag.TagCollection;
 
-            formTrigger.ShowDialog(this);
+            _formTrigger.ShowDialog(this);
 
-            if (formTrigger.DialogResult == DialogResult.OK)
+            if (_formTrigger.DialogResult == DialogResult.OK)
             {
                 BuildTriggersModule();
 
-                formTrigger.TriggerCollection.SaveToXmlFile();
+                _formTrigger.TriggerCollection.SaveToXmlFile();
             }
         }
 
@@ -40,7 +44,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void removeSelectedTriggers_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formTrigger.TriggerCollection.Count;
+            int countBeforeRemoval = _formTrigger.TriggerCollection.Count;
 
             foreach (Control control in tabPageTriggers.Controls)
             {
@@ -50,17 +54,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Trigger trigger = formTrigger.TriggerCollection.Get((Trigger)checkBox.Tag);
-                        formTrigger.TriggerCollection.Remove(trigger);
+                        Trigger trigger = _formTrigger.TriggerCollection.Get((Trigger)checkBox.Tag);
+                        _formTrigger.TriggerCollection.Remove(trigger);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formTrigger.TriggerCollection.Count)
+            if (countBeforeRemoval > _formTrigger.TriggerCollection.Count)
             {
                 BuildTriggersModule();
 
-                formTrigger.TriggerCollection.SaveToXmlFile();
+                _formTrigger.TriggerCollection.SaveToXmlFile();
             }
         }
 
@@ -75,17 +79,21 @@ namespace AutoScreenCapture
 
             if (buttonSelected.Tag != null)
             {
-                formTrigger.TriggerObject = (Trigger)buttonSelected.Tag;
+                _formTrigger.TriggerObject = (Trigger)buttonSelected.Tag;
 
-                formTrigger.EditorCollection = formEditor.EditorCollection;
+                _formTrigger.EditorCollection = _formEditor.EditorCollection;
+                _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
+                _formTrigger.RegionCollection = _formRegion.RegionCollection;
+                _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
+                _formTrigger.TagCollection = _formTag.TagCollection;
 
-                formTrigger.ShowDialog(this);
+                _formTrigger.ShowDialog(this);
 
-                if (formTrigger.DialogResult == DialogResult.OK)
+                if (_formTrigger.DialogResult == DialogResult.OK)
                 {
                     BuildTriggersModule();
 
-                    formTrigger.TriggerCollection.SaveToXmlFile();
+                    _formTrigger.TriggerCollection.SaveToXmlFile();
                 }
             }
         }
@@ -94,7 +102,7 @@ namespace AutoScreenCapture
         {
             DateTime dtNow = DateTime.Now;
 
-            foreach (Trigger trigger in formTrigger.TriggerCollection)
+            foreach (Trigger trigger in _formTrigger.TriggerCollection)
             {
                 if (!trigger.Active)
                 {
@@ -130,7 +138,7 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.RunEditor:
-                    Editor editor = formEditor.EditorCollection.GetByName(trigger.Editor);
+                    Editor editor = _formEditor.EditorCollection.GetByName(trigger.ModuleItem);
                     RunEditor(editor, TriggerActionType.RunEditor);
                     break;
 
@@ -162,6 +170,56 @@ namespace AutoScreenCapture
                     numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                     numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                     numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+                    break;
+
+                case TriggerActionType.ActivateScreen:
+                    _formScreen.ScreenCollection.GetByName(trigger.ModuleItem).Active = true;
+                    BuildScreensModule();
+                    break;
+
+                case TriggerActionType.DeactivateScreen:
+                    _formScreen.ScreenCollection.GetByName(trigger.ModuleItem).Active = false;
+                    BuildScreensModule();
+                    break;
+
+                case TriggerActionType.ActivateRegion:
+                    _formRegion.RegionCollection.GetByName(trigger.ModuleItem).Active = true;
+                    BuildRegionsModule();
+                    break;
+
+                case TriggerActionType.DeactivateRegion:
+                    _formRegion.RegionCollection.GetByName(trigger.ModuleItem).Active = false;
+                    BuildRegionsModule();
+                    break;
+
+                case TriggerActionType.ActivateSchedule:
+                    _formSchedule.ScheduleCollection.GetByName(trigger.ModuleItem).Active = true;
+                    BuildSchedulesModule();
+                    break;
+
+                case TriggerActionType.DeactivateSchedule:
+                    _formSchedule.ScheduleCollection.GetByName(trigger.ModuleItem).Active = false;
+                    BuildSchedulesModule();
+                    break;
+
+                case TriggerActionType.ActivateTag:
+                    _formTag.TagCollection.GetByName(trigger.ModuleItem).Active = true;
+                    BuildTagsModule();
+                    break;
+
+                case TriggerActionType.DeactivateTag:
+                    _formTag.TagCollection.GetByName(trigger.ModuleItem).Active = false;
+                    BuildTagsModule();
+                    break;
+
+                case TriggerActionType.ActivateTrigger:
+                    _formTrigger.TriggerCollection.GetByName(trigger.ModuleItem).Active = true;
+                    BuildTriggersModule();
+                    break;
+
+                case TriggerActionType.DeactivateTrigger:
+                    _formTrigger.TriggerCollection.GetByName(trigger.ModuleItem).Active = false;
+                    BuildTriggersModule();
                     break;
             }
         }

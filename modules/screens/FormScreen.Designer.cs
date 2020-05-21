@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreen));
             this.labelName = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBoxScreenName = new System.Windows.Forms.TextBox();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
@@ -77,11 +77,11 @@
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(56, 32);
-            this.textBoxName.MaxLength = 50;
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(546, 20);
-            this.textBoxName.TabIndex = 2;
+            this.textBoxScreenName.Location = new System.Drawing.Point(56, 32);
+            this.textBoxScreenName.MaxLength = 50;
+            this.textBoxScreenName.Name = "textBoxName";
+            this.textBoxScreenName.Size = new System.Drawing.Size(546, 20);
+            this.textBoxScreenName.TabIndex = 2;
             // 
             // labelMacro
             // 
@@ -406,7 +406,7 @@
             this.ClientSize = new System.Drawing.Size(756, 454);
             this.Controls.Add(this.groupBoxActiveWindowTitle);
             this.Controls.Add(this.checkBoxActive);
-            this.Controls.Add(this.textBoxName);
+            this.Controls.Add(this.textBoxScreenName);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.buttonMacroTags);
             this.Controls.Add(this.labelHelp);
@@ -446,7 +446,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxScreenName;
         private System.Windows.Forms.Label labelMacro;
         private System.Windows.Forms.TextBox textBoxMacro;
         private System.Windows.Forms.PictureBox pictureBoxPreview;

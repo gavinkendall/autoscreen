@@ -80,8 +80,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddScreens Start ::");
-
                 if (FileSystem.FileExists(FileSystem.ScreensFile))
                 {
                     Log.WriteDebugMessage("Screens file \"" + FileSystem.ScreensFile + "\" found. Attempting to load XML document");
@@ -232,8 +230,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
-
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddScreens End ::");
             }
             catch (Exception ex)
             {

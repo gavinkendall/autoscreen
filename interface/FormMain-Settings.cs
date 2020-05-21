@@ -57,28 +57,28 @@ namespace AutoScreenCapture
                 _imageFormatCollection = new ImageFormatCollection();
 
                 Log.WriteMessage("Initializing editor collection");
-                formEditor.EditorCollection.LoadXmlFileAndAddEditors();
-                Log.WriteDebugMessage("Number of editors loaded = " + formEditor.EditorCollection.Count);
+                _formEditor.EditorCollection.LoadXmlFileAndAddEditors();
+                Log.WriteDebugMessage("Number of editors loaded = " + _formEditor.EditorCollection.Count);
 
                 Log.WriteMessage("Initializing trigger collection");
-                formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers();
-                Log.WriteDebugMessage("Number of triggers loaded = " + formTrigger.TriggerCollection.Count);
+                _formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers();
+                Log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
 
                 Log.WriteMessage("Initializing region collection");
-                formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection);
-                Log.WriteDebugMessage("Number of regions loaded = " + formRegion.RegionCollection.Count);
+                _formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection);
+                Log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
 
                 Log.WriteMessage("Initializing screen collection");
-                formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection);
-                Log.WriteDebugMessage("Number of screens loaded = " + formScreen.ScreenCollection.Count);
+                _formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection);
+                Log.WriteDebugMessage("Number of screens loaded = " + _formScreen.ScreenCollection.Count);
 
                 Log.WriteMessage("Initializing tag collection");
-                formTag.TagCollection.LoadXmlFileAndAddTags();
-                Log.WriteDebugMessage("Number of tags loaded = " + formTag.TagCollection.Count);
+                _formTag.TagCollection.LoadXmlFileAndAddTags();
+                Log.WriteDebugMessage("Number of tags loaded = " + _formTag.TagCollection.Count);
 
                 Log.WriteMessage("Initializing schedule collection");
-                formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules();
-                Log.WriteDebugMessage("Number of schedules loaded = " + formSchedule.ScheduleCollection.Count);
+                _formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules();
+                Log.WriteDebugMessage("Number of schedules loaded = " + _formSchedule.ScheduleCollection.Count);
 
                 Log.WriteMessage("Building screens module");
                 BuildScreensModule();
@@ -105,7 +105,7 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
 
                 Log.WriteMessage("Initializing screenshot collection");
-                _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, formScreen.ScreenCollection);
+                _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, _formScreen.ScreenCollection);
 
                 _screenshotCollection.LoadXmlFile();
 
@@ -176,8 +176,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: SaveSettings Start ::");
-
                 Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = GetScreenCaptureInterval();
                 Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
                 Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
@@ -187,8 +185,6 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
 
                 Settings.User.Save();
-
-                Log.WriteDebugMessage(":: SaveSettings End ::");
             }
             catch (Exception ex)
             {

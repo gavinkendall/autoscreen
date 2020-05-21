@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -105,6 +106,10 @@ namespace AutoScreenCapture
                         // Add an image showing the application icon of the Editor if we can find the application's path.
                         appIcon.Image = Icon.ExtractAssociatedIcon(application).ToBitmap();
                     }
+                    else
+                    {
+                        appIcon.Image = Properties.Resources.warning;
+                    }
 
                     tabPage.Controls.Add(appIcon);
                 }
@@ -191,7 +196,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                formRegion.RegionCollection.SaveToXmlFile();
+                _formRegion.RegionCollection.SaveToXmlFile();
             }
 
             if (label.Tag.GetType() == typeof(Schedule))
@@ -209,7 +214,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                formSchedule.ScheduleCollection.SaveToXmlFile();
+                _formSchedule.ScheduleCollection.SaveToXmlFile();
             }
 
             if (label.Tag.GetType() == typeof(Screen))
@@ -227,7 +232,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                formScreen.ScreenCollection.SaveToXmlFile();
+                _formScreen.ScreenCollection.SaveToXmlFile();
             }
 
             if (label.Tag.GetType() == typeof(Tag))
@@ -245,7 +250,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                formTag.TagCollection.SaveToXmlFile();
+                _formTag.TagCollection.SaveToXmlFile();
             }
 
             if (label.Tag.GetType() == typeof(Trigger))
@@ -263,38 +268,38 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                formTrigger.TriggerCollection.SaveToXmlFile();
+                _formTrigger.TriggerCollection.SaveToXmlFile();
             }
         }
 
         private void BuildScreensModule()
         {
-            BuildModule(formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, changeScreen_Click);
+            BuildModule(_formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, changeScreen_Click);
         }
 
         private void BuildRegionsModule()
         {
-            BuildModule(formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
+            BuildModule(_formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
         }
 
         private void BuildTagsModule()
         {
-            BuildModule(formTag.TagCollection, tabPageTags, addTag_Click, removeSelectedTags_Click, changeTag_Click);
+            BuildModule(_formTag.TagCollection, tabPageTags, addTag_Click, removeSelectedTags_Click, changeTag_Click);
         }
 
         private void BuildEditorsModule()
         {
-            BuildModule(formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, changeEditor_Click);
+            BuildModule(_formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, changeEditor_Click);
         }
 
         private void BuildTriggersModule()
         {
-            BuildModule(formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, changeTrigger_Click);
+            BuildModule(_formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, changeTrigger_Click);
         }
 
         private void BuildSchedulesModule()
         {
-            BuildModule(formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, changeSchedule_Click);
+            BuildModule(_formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, changeSchedule_Click);
         }
     }
 }

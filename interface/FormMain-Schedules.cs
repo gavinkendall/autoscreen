@@ -49,7 +49,7 @@ namespace AutoScreenCapture
             ShowInfo();
 
             // Process the list of schedules we need to consider.
-            foreach(Schedule schedule in formSchedule.ScheduleCollection)
+            foreach(Schedule schedule in _formSchedule.ScheduleCollection)
             {
                 if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
                     (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
@@ -89,7 +89,7 @@ namespace AutoScreenCapture
             }
 
             // Process the list of triggers of condition type Date/Time and condition type Time.
-            foreach (Trigger trigger in formTrigger.TriggerCollection)
+            foreach (Trigger trigger in _formTrigger.TriggerCollection)
             {
                 if (trigger.ConditionType == TriggerConditionType.DateTime &&
                     trigger.Date.ToString(MacroParser.DateFormat).Equals(dtNow.ToString(MacroParser.DateFormat)) &&
@@ -108,21 +108,21 @@ namespace AutoScreenCapture
 
         private void addSchedule_Click(object sender, EventArgs e)
         {
-            formSchedule.ScheduleObject = null;
+            _formSchedule.ScheduleObject = null;
 
-            formSchedule.ShowDialog(this);
+            _formSchedule.ShowDialog(this);
 
-            if (formSchedule.DialogResult == DialogResult.OK)
+            if (_formSchedule.DialogResult == DialogResult.OK)
             {
                 BuildSchedulesModule();
 
-                formSchedule.ScheduleCollection.SaveToXmlFile();
+                _formSchedule.ScheduleCollection.SaveToXmlFile();
             }
         }
 
         private void removeSelectedSchedules_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formSchedule.ScheduleCollection.Count;
+            int countBeforeRemoval = _formSchedule.ScheduleCollection.Count;
 
             foreach (Control control in tabPageSchedules.Controls)
             {
@@ -132,17 +132,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Schedule schedule = formSchedule.ScheduleCollection.Get((Schedule)checkBox.Tag);
-                        formSchedule.ScheduleCollection.Remove(schedule);
+                        Schedule schedule = _formSchedule.ScheduleCollection.Get((Schedule)checkBox.Tag);
+                        _formSchedule.ScheduleCollection.Remove(schedule);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formSchedule.ScheduleCollection.Count)
+            if (countBeforeRemoval > _formSchedule.ScheduleCollection.Count)
             {
                 BuildSchedulesModule();
 
-                formSchedule.ScheduleCollection.SaveToXmlFile();
+                _formSchedule.ScheduleCollection.SaveToXmlFile();
             }
         }
 
@@ -162,15 +162,15 @@ namespace AutoScreenCapture
                 schedule = (Schedule)toolStripMenuItemSelected.Tag;
             }
 
-            formSchedule.ScheduleObject = schedule;
+            _formSchedule.ScheduleObject = schedule;
 
-            formSchedule.ShowDialog(this);
+            _formSchedule.ShowDialog(this);
 
-            if (formSchedule.DialogResult == DialogResult.OK)
+            if (_formSchedule.DialogResult == DialogResult.OK)
             {
                 BuildSchedulesModule();
 
-                formSchedule.ScheduleCollection.SaveToXmlFile();
+                _formSchedule.ScheduleCollection.SaveToXmlFile();
             }
         }
     }

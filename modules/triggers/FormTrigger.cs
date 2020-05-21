@@ -31,6 +31,26 @@ namespace AutoScreenCapture
         public EditorCollection EditorCollection { get; set; }
 
         /// <summary>
+        /// A collection of screens.
+        /// </summary>
+        public ScreenCollection ScreenCollection { get; set; }
+
+        /// <summary>
+        /// A collection of regions.
+        /// </summary>
+        public RegionCollection RegionCollection { get; set; }
+
+        /// <summary>
+        /// A collection of schedules.
+        /// </summary>
+        public ScheduleCollection ScheduleCollection { get; set; }
+
+        /// <summary>
+        /// A collection of tags.
+        /// </summary>
+        public TagCollection TagCollection { get; set; }
+
+        /// <summary>
         /// Empty constructor.
         /// </summary>
         public FormTrigger()
@@ -40,7 +60,10 @@ namespace AutoScreenCapture
 
         private void FormTrigger_Load(object sender, EventArgs e)
         {
-            LoadEditors();
+            textBoxTriggerName.Focus();
+
+            HelpMessage("An action can be performed based on a specific condition (Screenshot Taken and Run Editor will edit taken screenshots with a chosen editor)");
+
             LoadActions();
             LoadConditions();
 
@@ -56,9 +79,9 @@ namespace AutoScreenCapture
                 dateTimePickerDate.Value = TriggerObject.Date;
                 dateTimePickerTime.Value = TriggerObject.Time;
 
-                if (listBoxEditor.Items.Count > 0 && TriggerObject.Editor != null)
+                if (listBoxModuleItemList.Items.Count > 0 && TriggerObject.ModuleItem != null)
                 {
-                    listBoxEditor.SelectedIndex = listBoxEditor.Items.IndexOf(TriggerObject.Editor);
+                    listBoxModuleItemList.SelectedIndex = listBoxModuleItemList.Items.IndexOf(TriggerObject.ModuleItem);
                 }
 
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(TriggerObject.ScreenCaptureInterval)).Hours);
@@ -85,6 +108,11 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
             }
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -121,11 +149,11 @@ namespace AutoScreenCapture
                         Name = textBoxTriggerName.Text,
                         ConditionType = (TriggerConditionType)listBoxCondition.SelectedIndex,
                         ActionType = (TriggerActionType)listBoxAction.SelectedIndex,
-                        Editor = listBoxEditor.SelectedItem.ToString(),
                         Active = checkBoxActive.Checked,
                         Date = dateTimePickerDate.Value,
                         Time = dateTimePickerTime.Value,
-                        ScreenCaptureInterval = screenCaptureInterval
+                        ScreenCaptureInterval = screenCaptureInterval,
+                        ModuleItem = listBoxModuleItemList.SelectedItem.ToString()
                     };
 
                     TriggerCollection.Add(trigger);
@@ -164,13 +192,13 @@ namespace AutoScreenCapture
                         TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
                         TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
 
-                        if (listBoxEditor.Enabled)
+                        if (listBoxModuleItemList.Enabled)
                         {
-                            TriggerCollection.Get(TriggerObject).Editor = listBoxEditor.SelectedItem.ToString();
+                            TriggerCollection.Get(TriggerObject).ModuleItem = listBoxModuleItemList.SelectedItem.ToString();
                         }
                         else
                         {
-                            TriggerCollection.Get(TriggerObject).Editor = string.Empty;
+                            TriggerCollection.Get(TriggerObject).ModuleItem = string.Empty;
                         }
 
                         int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
@@ -215,9 +243,9 @@ namespace AutoScreenCapture
             if (TriggerObject != null &&
                 ((int)TriggerObject.ConditionType != listBoxCondition.SelectedIndex ||
                 (int)TriggerObject.ActionType != listBoxAction.SelectedIndex ||
-                (listBoxEditor.Items.Count > 0 && TriggerObject.Editor != null &&
-                listBoxEditor.SelectedItem != null &&
-                !TriggerObject.Editor.Equals(listBoxEditor.SelectedItem.ToString())) ||
+                (listBoxModuleItemList.Items.Count > 0 && TriggerObject.ModuleItem != null &&
+                listBoxModuleItemList.SelectedItem != null &&
+                !TriggerObject.ModuleItem.Equals(listBoxModuleItemList.SelectedItem.ToString())) ||
                 TriggerObject.Active != checkBoxActive.Checked ||
                 TriggerObject.Date != dateTimePickerDate.Value ||
                 TriggerObject.Time != dateTimePickerTime.Value))
@@ -246,6 +274,11 @@ namespace AutoScreenCapture
         private void Okay()
         {
             DialogResult = DialogResult.OK;
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EmailScreenshot)
+            {
+                MessageBox.Show("Please ensure that the application's email (SMTP) settings are correctly configured in order to automatically email screenshots to the intended recipient. It is important that you do not use this application to spam people. Thank you.\n\nThe settings are prefixed with \"Email\" and located in the following XML document used for application-wide settings ...\n" + FileSystem.ApplicationSettingsFile, "Check Email Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
             Close();
         }
@@ -284,52 +317,127 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EmailScreenshot, "Email Screenshot").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetScreenCaptureInterval, "Set Screen Capture Interval").Description);
 
+            // All the actions involving activating Screens, Regions, Schedules, Tags, and Triggers.
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateScreen, "Activate Screen").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateRegion, "Activate Region").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateSchedule, "Activate Schedule").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTag, "Activate Tag").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTrigger, "Activate Trigger").Description);
+
+            // All the actions involving deactivating Screens, Regions, Schedules, Tags, and Triggers.
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateScreen, "Deactivate Screen").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateRegion, "Deactivate Region").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateSchedule, "Deactivate Schedule").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Tag").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTrigger, "Deactivate Trigger").Description);
+
             listBoxAction.SelectedIndex = 0;
         }
 
-        private void LoadEditors()
+        private void LoadModuleItems()
         {
-            listBoxEditor.Items.Clear();
+            listBoxModuleItemList.Items.Clear();
 
-            foreach (Editor editor in EditorCollection)
+            labelModuleItemList.Text = "Editor, Screen, Region, Schedule, Tag, or Trigger:";
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor)
             {
-                if (editor != null && FileSystem.FileExists(editor.Application))
+                labelModuleItemList.Text = "Editor:";
+
+                foreach (Editor editor in EditorCollection)
                 {
-                    listBoxEditor.Items.Add(editor.Name);
+                    if (editor != null && FileSystem.FileExists(editor.Application))
+                    {
+                        listBoxModuleItemList.Items.Add(editor.Name);
+                    }
                 }
             }
 
-            listBoxEditor.SelectedIndex = 0;
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateScreen)
+            {
+                labelModuleItemList.Text = "Screen:";
+
+                foreach (Screen screen in ScreenCollection)
+                {
+                    if (screen != null)
+                    {
+                        listBoxModuleItemList.Items.Add(screen.Name);
+                    }
+                }
+            }
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateRegion)
+            {
+                labelModuleItemList.Text = "Region:";
+
+                foreach (Region region in RegionCollection)
+                {
+                    if (region != null)
+                    {
+                        listBoxModuleItemList.Items.Add(region.Name);
+                    }
+                }
+            }
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateSchedule)
+            {
+                labelModuleItemList.Text = "Schedule:";
+
+                foreach (Schedule schedule in ScheduleCollection)
+                {
+                    if (schedule != null)
+                    {
+                        listBoxModuleItemList.Items.Add(schedule.Name);
+                    }
+                }
+            }
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag)
+            {
+                labelModuleItemList.Text = "Tag:";
+
+                foreach (Tag tag in TagCollection)
+                {
+                    if (tag != null)
+                    {
+                        listBoxModuleItemList.Items.Add(tag.Name);
+                    }
+                }
+            }
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTrigger ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTrigger)
+            {
+                labelModuleItemList.Text = "Trigger:";
+
+                foreach (Trigger trigger in TriggerCollection)
+                {
+                    if (trigger != null)
+                    {
+                        listBoxModuleItemList.Items.Add(trigger.Name);
+                    }
+                }
+            }
+
+            if (listBoxModuleItemList.Items.Count > 0)
+            {
+                listBoxModuleItemList.SelectedIndex = 0;
+            }
         }
 
         private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
         {
             EnableOrDisableDateTime();
-            EnableOrDisableEditors();
         }
 
         private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EnableOrDisableEditors();
             EnableOrDisableScreenCaptureInterval();
-        }
-
-        private void EnableOrDisableEditors()
-        {
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor &&
-                (listBoxCondition.SelectedIndex == (int)TriggerConditionType.ScreenCaptureStopped ||
-                listBoxCondition.SelectedIndex == (int)TriggerConditionType.ScreenshotTaken))
-            {
-                labelEditor.Enabled = true;
-                listBoxEditor.Enabled = true;
-            }
-            else
-            {
-                listBoxEditor.SelectedIndex = 0;
-
-                labelEditor.Enabled = false;
-                listBoxEditor.Enabled = false;
-            }
+            LoadModuleItems();
         }
 
         private void EnableOrDisableDateTime()
@@ -377,6 +485,63 @@ namespace AutoScreenCapture
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
                 numericUpDownMillisecondsInterval.Enabled = false;
+            }
+        }
+
+        private void checkBoxActive_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The trigger's condition will be considered and its associated action will be performed if Active is checked (turned on)");
+        }
+
+        private void listBoxCondition_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("A list of available trigger conditions. Select a condition that best represents the event you're interested in (such as Screenshot Taken)");
+        }
+
+        private void listBoxAction_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("A list of available trigger actions. Select an action to perform based on the selected condition that occurs (such as Run Editor)");
+        }
+
+        private void listBoxModuleItemList_MouseHover(object sender, EventArgs e)
+        {
+            string moduleItemType = string.Empty;
+
+            switch(listBoxAction.SelectedIndex)
+            {
+                case (int)TriggerActionType.RunEditor:
+                    moduleItemType = "editors";
+                    break;
+
+                case (int)TriggerActionType.ActivateScreen:
+                case (int)TriggerActionType.DeactivateScreen:
+                    moduleItemType = "screens";
+                    break;
+
+                case (int)TriggerActionType.ActivateRegion:
+                case (int)TriggerActionType.DeactivateRegion:
+                    moduleItemType = "regions";
+                    break;
+
+                case (int)TriggerActionType.ActivateSchedule:
+                case (int)TriggerActionType.DeactivateSchedule:
+                    moduleItemType = "schedules";
+                    break;
+
+                case (int)TriggerActionType.ActivateTag:
+                case (int)TriggerActionType.DeactivateTag:
+                    moduleItemType = "tags";
+                    break;
+
+                case (int)TriggerActionType.ActivateTrigger:
+                case (int)TriggerActionType.DeactivateTrigger:
+                    moduleItemType = "triggers";
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(moduleItemType))
+            {
+                HelpMessage("A list of available " + moduleItemType);
             }
         }
     }

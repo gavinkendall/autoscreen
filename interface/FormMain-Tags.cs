@@ -19,15 +19,15 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addTag_Click(object sender, EventArgs e)
         {
-            formTag.TagObject = null;
+            _formTag.TagObject = null;
 
-            formTag.ShowDialog(this);
+            _formTag.ShowDialog(this);
 
-            if (formTag.DialogResult == DialogResult.OK)
+            if (_formTag.DialogResult == DialogResult.OK)
             {
                 BuildTagsModule();
 
-                formTag.TagCollection.SaveToXmlFile();
+                _formTag.TagCollection.SaveToXmlFile();
             }
         }
 
@@ -38,7 +38,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void removeSelectedTags_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formTag.TagCollection.Count;
+            int countBeforeRemoval = _formTag.TagCollection.Count;
 
             foreach (Control control in tabPageTags.Controls)
             {
@@ -48,17 +48,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Tag trigger = formTag.TagCollection.Get((Tag)checkBox.Tag);
-                        formTag.TagCollection.Remove(trigger);
+                        Tag trigger = _formTag.TagCollection.Get((Tag)checkBox.Tag);
+                        _formTag.TagCollection.Remove(trigger);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formTag.TagCollection.Count)
+            if (countBeforeRemoval > _formTag.TagCollection.Count)
             {
                 BuildTagsModule();
 
-                formTag.TagCollection.SaveToXmlFile();
+                _formTag.TagCollection.SaveToXmlFile();
             }
         }
 
@@ -73,15 +73,15 @@ namespace AutoScreenCapture
 
             if (buttonSelected.Tag != null)
             {
-                formTag.TagObject = (Tag)buttonSelected.Tag;
+                _formTag.TagObject = (Tag)buttonSelected.Tag;
 
-                formTag.ShowDialog(this);
+                _formTag.ShowDialog(this);
 
-                if (formTag.DialogResult == DialogResult.OK)
+                if (_formTag.DialogResult == DialogResult.OK)
                 {
                     BuildTagsModule();
 
-                    formTag.TagCollection.SaveToXmlFile();
+                    _formTag.TagCollection.SaveToXmlFile();
                 }
             }
         }

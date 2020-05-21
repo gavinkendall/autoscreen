@@ -138,7 +138,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot(bool captureNow)
         {
-            formScreen.RefreshScreenDictionary();
+            _formScreen.RefreshScreenDictionary();
 
             if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
             {
@@ -176,7 +176,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: StartScreenCapture Start ::");
+                Log.WriteDebugMessage("Starting a screen capture session");
 
                 int screenCaptureInterval = GetScreenCaptureInterval();
 
@@ -247,8 +247,6 @@ namespace AutoScreenCapture
 
                     Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
-
-                    Log.WriteDebugMessage(":: StartScreenCapture End ::");
                 }
             }
             catch (Exception ex)
@@ -264,14 +262,12 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: StopScreenCapture Start ::");
-
                 Log.WriteMessage("Stopping screen capture");
 
-                if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+                if (ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
                     Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                    formEnterPassphrase.ShowDialog(this);
+                    _formEnterPassphrase.ShowDialog(this);
                 }
 
                 // This is intentional. Do not rewrite these statements as an if/else
@@ -299,8 +295,6 @@ namespace AutoScreenCapture
                     Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
-
-                Log.WriteDebugMessage(":: StopScreenCapture End ::");
             }
             catch (Exception ex)
             {
@@ -324,7 +318,7 @@ namespace AutoScreenCapture
 
             TakeScreenshot(captureNow: true);
 
-            Editor editor = formEditor.EditorCollection.GetByName(defaultEditor);
+            Editor editor = _formEditor.EditorCollection.GetByName(defaultEditor);
 
             if (editor != null)
             {

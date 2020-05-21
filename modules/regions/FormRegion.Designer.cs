@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRegion));
             this.labelName = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBoxRegionName = new System.Windows.Forms.TextBox();
             this.labelMacro = new System.Windows.Forms.Label();
             this.textBoxMacro = new System.Windows.Forms.TextBox();
             this.pictureBoxPreview = new System.Windows.Forms.PictureBox();
@@ -93,11 +93,11 @@
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(56, 32);
-            this.textBoxName.MaxLength = 50;
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(546, 20);
-            this.textBoxName.TabIndex = 2;
+            this.textBoxRegionName.Location = new System.Drawing.Point(56, 32);
+            this.textBoxRegionName.MaxLength = 50;
+            this.textBoxRegionName.Name = "textBoxName";
+            this.textBoxRegionName.Size = new System.Drawing.Size(546, 20);
+            this.textBoxRegionName.TabIndex = 2;
             // 
             // labelMacro
             // 
@@ -571,7 +571,7 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.textBoxMacro);
             this.Controls.Add(this.labelMacro);
-            this.Controls.Add(this.textBoxName);
+            this.Controls.Add(this.textBoxRegionName);
             this.Controls.Add(this.labelName);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -607,7 +607,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxRegionName;
         private System.Windows.Forms.Label labelMacro;
         private System.Windows.Forms.TextBox textBoxMacro;
         private System.Windows.Forms.PictureBox pictureBoxPreview;

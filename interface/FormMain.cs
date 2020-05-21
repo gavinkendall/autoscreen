@@ -18,14 +18,14 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         // The various forms that are used for modules.
-        private FormEditor formEditor = new FormEditor();
-        private FormTrigger formTrigger = new FormTrigger();
-        private FormRegion formRegion = new FormRegion();
-        private FormScreen formScreen = new FormScreen();
-        private FormTag formTag = new FormTag();
-        private FormEnterPassphrase formEnterPassphrase = new FormEnterPassphrase();
-        private FormSchedule formSchedule = new FormSchedule();
-        private HotKeyMap hotKeyMap = new HotKeyMap();
+        private FormEditor _formEditor = new FormEditor();
+        private FormTrigger _formTrigger = new FormTrigger();
+        private FormRegion _formRegion = new FormRegion();
+        private FormScreen _formScreen = new FormScreen();
+        private FormTag _formTag = new FormTag();
+        private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
+        private FormSchedule _formSchedule = new FormSchedule();
+        private HotKeyMap _hotKeyMap = new HotKeyMap();
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
@@ -60,11 +60,11 @@ namespace AutoScreenCapture
         {
             InitializeComponent();
 
-            hotKeyMap.KeyPressed +=  new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
-            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.Z);
-            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.X);
-            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.A);
-            hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.E);
+            _hotKeyMap.KeyPressed +=  new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
+            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.Z);
+            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.X);
+            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.A);
+            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.E);
 
             LoadSettings();
 
@@ -250,10 +250,10 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage("Showing interface");
 
-                if (ScreenCapture.LockScreenCaptureSession && !formEnterPassphrase.Visible)
+                if (ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
                     Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                    formEnterPassphrase.ShowDialog(this);
+                    _formEnterPassphrase.ShowDialog(this);
                 }
 
                 // This is intentional. Do not rewrite these statements as an if/else

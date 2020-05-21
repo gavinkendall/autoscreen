@@ -538,6 +538,14 @@ namespace AutoScreenCapture
 
                 return true;
             }
+            catch (System.IO.PathTooLongException ex)
+            {
+                Log.WriteErrorMessage($"The path is too long. I see the path is \"{path}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
+                Log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
+
+                // This shouldn't be an error that should stop a screen capture session.
+                return true;
+            }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);

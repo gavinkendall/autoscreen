@@ -69,8 +69,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddSchedules Start ::");
-
                 if (FileSystem.FileExists(FileSystem.SchedulesFile))
                 {
                     Log.WriteDebugMessage("Schedules file \"" + FileSystem.SchedulesFile + "\" found. Attempting to load XML document");
@@ -274,8 +272,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
-
-                Log.WriteDebugMessage(":: LoadXmlFileAndAddSchedules End ::");
             }
             catch (Exception ex)
             {

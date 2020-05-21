@@ -30,11 +30,6 @@ namespace AutoScreenCapture
         public TriggerActionType ActionType { get; set; }
 
         /// <summary>
-        /// The editor associated with the trigger.
-        /// </summary>
-        public string Editor { get; set; }
-
-        /// <summary>
         /// Determines if the trigger is active or inactive.
         /// </summary>
         public bool Active { get; set; }
@@ -53,6 +48,12 @@ namespace AutoScreenCapture
         /// The interval to use. This overrides the main interval.
         /// </summary>
         public int ScreenCaptureInterval { get; set; }
+
+        /// <summary>
+        /// The name of the module item associated with the trigger.
+        /// This could be the name of a Screen, Region, Editor, Schedule, or Tag.
+        /// </summary>
+        public string ModuleItem { get; set; }
 
         /// <summary>
         /// The empty constructor for the trigger.

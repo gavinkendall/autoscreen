@@ -40,8 +40,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: PopulateLabelList Start ::");
-
                 List<string> labels = new List<string>();
                 labels = _screenshotCollection.GetFilterValueList("Label");
 
@@ -76,8 +74,6 @@ namespace AutoScreenCapture
 
                     toolStripMenuItemApplyLabel.DropDownItems.Add(toolStripMenuItem);
                 }
-
-                Log.WriteDebugMessage(":: PopulateLabelList End ::");
             }
             catch (Exception ex)
             {

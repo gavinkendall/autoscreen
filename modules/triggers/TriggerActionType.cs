@@ -50,6 +50,56 @@ namespace AutoScreenCapture
         /// <summary>
         /// The action to perform will set the screen capture interval.
         /// </summary>
-        SetScreenCaptureInterval = 7
+        SetScreenCaptureInterval = 7,
+
+        /// <summary>
+        /// The action to perform will activate a chosen screen.
+        /// </summary>
+        ActivateScreen = 8,
+
+        /// <summary>
+        /// The action to perform will activate a chosen region.
+        /// </summary>
+        ActivateRegion = 9,
+
+        /// <summary>
+        /// The action to perform will activate a chosen schedule.
+        /// </summary>
+        ActivateSchedule = 10,
+
+        /// <summary>
+        /// The action to perform will activate a chosen tag.
+        /// </summary>
+        ActivateTag = 11,
+
+        /// <summary>
+        /// The action to perform will activate a chosen trigger.
+        /// </summary>
+        ActivateTrigger = 12,
+
+        /// <summary>
+        /// The action to perform will deactivate a chosen screen.
+        /// </summary>
+        DeactivateScreen = 13,
+
+        /// <summary>
+        /// The action to perform will deactivate a chosen region.
+        /// </summary>
+        DeactivateRegion = 14,
+
+        /// <summary>
+        /// The action to perform will deactivate a chosen schedule.
+        /// </summary>
+        DeactivateSchedule = 15,
+
+        /// <summary>
+        /// The action to perform will deactivate a chosen tag.
+        /// </summary>
+        DeactivateTag = 16,
+
+        /// <summary>
+        /// The action to perform will deactivate a chosen trigger.
+        /// </summary>
+        DeactivateTrigger = 17
     }
 }

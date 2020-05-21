@@ -35,6 +35,8 @@ namespace AutoScreenCapture
 
         private void FormSchedule_Load(object sender, EventArgs e)
         {
+            textBoxScheduleName.Focus();
+
             if (ScheduleObject != null)
             {
                 Text = "Change Schedule";

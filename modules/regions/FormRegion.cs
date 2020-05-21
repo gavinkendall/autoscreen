@@ -55,7 +55,7 @@ namespace AutoScreenCapture
 
         private void FormRegion_Load(object sender, EventArgs e)
         {
-            textBoxName.Focus();
+            textBoxRegionName.Focus();
 
             HelpMessage("This is where to configure a region capture. Change the X, Y, Width, and Height properties while watching Preview");
 
@@ -93,7 +93,7 @@ namespace AutoScreenCapture
             {
                 Text = "Change Region";
 
-                textBoxName.Text = RegionObject.Name;
+                textBoxRegionName.Text = RegionObject.Name;
                 textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(RegionObject.Folder);
                 textBoxMacro.Text = RegionObject.Macro;
                 comboBoxFormat.SelectedItem = RegionObject.Format.Name;
@@ -112,7 +112,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Region";
 
-                textBoxName.Text = "Region " + (RegionCollection.Count + 1);
+                textBoxRegionName.Text = "Region " + (RegionCollection.Count + 1);
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = MacroParser.DefaultMacro;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
@@ -160,11 +160,11 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (RegionCollection.GetByName(textBoxName.Text) == null)
+                if (RegionCollection.GetByName(textBoxRegionName.Text) == null)
                 {
                     RegionCollection.Add(new Region()
                     {
-                        Name = textBoxName.Text,
+                        Name = textBoxRegionName.Text,
                         Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         Macro = textBoxMacro.Text,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
@@ -203,14 +203,14 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (RegionCollection.GetByName(textBoxName.Text) != null && NameChanged())
+                    if (RegionCollection.GetByName(textBoxRegionName.Text) != null && NameChanged())
                     {
                         MessageBox.Show("A region with this name already exists.", "Duplicate Name Conflict",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        RegionCollection.Get(RegionObject).Name = textBoxName.Text;
+                        RegionCollection.Get(RegionObject).Name = textBoxRegionName.Text;
                         RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
@@ -241,7 +241,7 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxName.Text = textBoxName.Text.Trim();
+            textBoxRegionName.Text = textBoxRegionName.Text.Trim();
             textBoxFolder.Text = textBoxFolder.Text.Trim();
             textBoxMacro.Text = textBoxMacro.Text.Trim();
             textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
@@ -249,7 +249,7 @@ namespace AutoScreenCapture
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxName.Text) &&
+            if (!string.IsNullOrEmpty(textBoxRegionName.Text) &&
                 !string.IsNullOrEmpty(textBoxFolder.Text) &&
                 !string.IsNullOrEmpty(textBoxMacro.Text))
             {
@@ -283,7 +283,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (RegionObject != null &&
-                !RegionObject.Name.Equals(textBoxName.Text))
+                !RegionObject.Name.Equals(textBoxRegionName.Text))
             {
                 return true;
             }
@@ -346,7 +346,7 @@ namespace AutoScreenCapture
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
             textBoxMacroPreview.Text = MacroParser.ParseTags(textBoxFolder.Text, TagCollection) +
-                MacroParser.ParseTags(preview: true, textBoxName.Text, textBoxMacro.Text, 1,
+                MacroParser.ParseTags(preview: true, textBoxRegionName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
         }
 

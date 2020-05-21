@@ -20,19 +20,19 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addRegion_Click(object sender, EventArgs e)
         {
-            formRegion.RegionObject = null;
-            formRegion.ImageFormatCollection = _imageFormatCollection;
-            formRegion.ScreenCapture = _screenCapture;
-            formRegion.TagCollection = formTag.TagCollection;
+            _formRegion.RegionObject = null;
+            _formRegion.ImageFormatCollection = _imageFormatCollection;
+            _formRegion.ScreenCapture = _screenCapture;
+            _formRegion.TagCollection = _formTag.TagCollection;
 
-            formRegion.ShowDialog(this);
+            _formRegion.ShowDialog(this);
 
-            if (formRegion.DialogResult == DialogResult.OK)
+            if (_formRegion.DialogResult == DialogResult.OK)
             {
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                formRegion.RegionCollection.SaveToXmlFile();
+                _formRegion.RegionCollection.SaveToXmlFile();
             }
         }
 
@@ -43,7 +43,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void removeSelectedRegions_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = formRegion.RegionCollection.Count;
+            int countBeforeRemoval = _formRegion.RegionCollection.Count;
 
             foreach (Control control in tabPageRegions.Controls)
             {
@@ -53,18 +53,18 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Region region = formRegion.RegionCollection.Get((Region)checkBox.Tag);
-                        formRegion.RegionCollection.Remove(region);
+                        Region region = _formRegion.RegionCollection.Get((Region)checkBox.Tag);
+                        _formRegion.RegionCollection.Remove(region);
                     }
                 }
             }
 
-            if (countBeforeRemoval > formRegion.RegionCollection.Count)
+            if (countBeforeRemoval > _formRegion.RegionCollection.Count)
             {
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                formRegion.RegionCollection.SaveToXmlFile();
+                _formRegion.RegionCollection.SaveToXmlFile();
             }
         }
 
@@ -89,19 +89,19 @@ namespace AutoScreenCapture
                 region = (Region)toolStripMenuItemSelected.Tag;
             }
 
-            formRegion.RegionObject = region;
-            formRegion.ImageFormatCollection = _imageFormatCollection;
-            formRegion.ScreenCapture = _screenCapture;
-            formRegion.TagCollection = formTag.TagCollection;
+            _formRegion.RegionObject = region;
+            _formRegion.ImageFormatCollection = _imageFormatCollection;
+            _formRegion.ScreenCapture = _screenCapture;
+            _formRegion.TagCollection = _formTag.TagCollection;
 
-            formRegion.ShowDialog(this);
+            _formRegion.ShowDialog(this);
 
-            if (formRegion.DialogResult == DialogResult.OK)
+            if (_formRegion.DialogResult == DialogResult.OK)
             {
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                formRegion.RegionCollection.SaveToXmlFile();
+                _formRegion.RegionCollection.SaveToXmlFile();
             }
         }
 
@@ -116,13 +116,13 @@ namespace AutoScreenCapture
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Region region = formRegion.RegionCollection.Get(regionSelected);
-                    formRegion.RegionCollection.Remove(region);
+                    Region region = _formRegion.RegionCollection.Get(regionSelected);
+                    _formRegion.RegionCollection.Remove(region);
 
                     BuildRegionsModule();
                     BuildViewTabPages();
 
-                    formRegion.RegionCollection.SaveToXmlFile();
+                    _formRegion.RegionCollection.SaveToXmlFile();
                 }
             }
         }
@@ -131,9 +131,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage(":: RunRegionCaptures Start ::");
-
-                foreach (Region region in formRegion.RegionCollection)
+                foreach (Region region in _formRegion.RegionCollection)
                 {
                     if (region.Active)
                     {
@@ -152,7 +150,7 @@ namespace AutoScreenCapture
                             if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (_screenCapture.SaveScreenshot(
-                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(region.Folder, formTag.TagCollection)) + MacroParser.ParseTags(preview: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, formTag.TagCollection),
+                                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(region.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                                     format: region.Format,
                                     component: -1,
                                     screenshotType: ScreenshotType.Region,
@@ -175,8 +173,6 @@ namespace AutoScreenCapture
                         }
                     }
                 }
-
-                Log.WriteDebugMessage(":: RunRegionCaptures End ::");
             }
             catch (Exception ex)
             {
