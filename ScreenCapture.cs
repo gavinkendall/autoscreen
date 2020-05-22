@@ -449,7 +449,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                int filepathLimitLength = Convert.ToInt32(Settings.Application.GetByKey("FilepathLimitLength", DefaultSettings.FilepathLengthLimit));
+                int filepathLimitLength = Convert.ToInt32(Settings.Application.GetByKey("FilepathLimitLength", DefaultSettings.FilepathLengthLimit).Value);
 
                 if (!string.IsNullOrEmpty(path) && path.Length <= filepathLimitLength)
                 {
