@@ -293,6 +293,7 @@
     <Content Include="icons\png\autoscreen-running.png" />
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />
+    <Content Include="images\application_add.png" />
     <Content Include="images\warning.png" />
     <None Include="images\brick.png" />
     <Content Include="images\capture_archive.png" />
