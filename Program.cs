@@ -58,7 +58,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        if (args.Length == 0 && Convert.ToBoolean(Settings.Application.GetByKey("ShowStartupError", defaultValue: true).Value))
+                        if (args.Length == 0 && Convert.ToBoolean(Settings.Application.GetByKey("ShowStartupError", DefaultSettings.ShowStartupError).Value))
                         {
                             // We've determined that an existing instance is already running. We should write out an error message informing the user.
                             string appVersion = "[(v" + Settings.ApplicationVersion + ") ";

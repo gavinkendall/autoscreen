@@ -86,7 +86,7 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
-                string appVersion = "[(v" + Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value + ") ";
+                string appVersion = "[(v" + Settings.Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value + ") ";
 
                 if (string.IsNullOrEmpty(FileSystem.DebugFolder))
                 {
@@ -124,7 +124,7 @@ namespace AutoScreenCapture
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.
-                    if (Convert.ToBoolean(Settings.Application.GetByKey("ExitOnError", false).Value))
+                    if (Convert.ToBoolean(Settings.Application.GetByKey("ExitOnError", DefaultSettings.ExitOnError).Value))
                     {
                         Environment.Exit(1);
                     }

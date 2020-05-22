@@ -183,7 +183,7 @@ namespace AutoScreenCapture
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
                     // Increment the number of times the user has started a screen capture session.
-                    int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("IntStartScreenCaptureCount", defaultValue: 0).Value);
+                    int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("IntStartScreenCaptureCount", DefaultSettings.IntStartScreenCaptureCount).Value);
                     startScreenCaptureCount++;
                     Settings.User.SetValueByKey("IntStartScreenCaptureCount", startScreenCaptureCount);
 
@@ -214,7 +214,7 @@ namespace AutoScreenCapture
                     _screenCapture.Interval = screenCaptureInterval;
                     _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
 
-                    if (Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value.ToString().Length > 0)
+                    if (Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value.ToString().Length > 0)
                     {
                         ScreenCapture.LockScreenCaptureSession = true;
                     }
@@ -275,7 +275,7 @@ namespace AutoScreenCapture
                 // to continue with normal functionality.
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
-                    Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
+                    Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = string.Empty;
                     SaveSettings();
 
                     DisableStopCapture();
@@ -309,7 +309,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowEdit()
         {
-            string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", defaultValue: string.Empty).Value.ToString();
+            string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {

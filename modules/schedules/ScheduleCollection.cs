@@ -225,21 +225,21 @@ namespace AutoScreenCapture
 
                     if (oldUserSettings != null)
                     {
-                        bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", defaultValue: false).Value);
-                        bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", defaultValue: false).Value);
+                        bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", DefaultSettings.BoolCaptureStartAt).Value);
+                        bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", DefaultSettings.BoolCaptureStopAt).Value);
 
-                        DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", defaultValue: DateTime.Now).Value);
-                        DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", defaultValue: DateTime.Now).Value);
+                        DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", DefaultSettings.DateTimeCaptureStartAt).Value);
+                        DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", DefaultSettings.DateTimeCaptureStopAt).Value);
 
                         // Days
-                        bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", defaultValue: false).Value);
-                        bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", defaultValue: false).Value);
-                        bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", defaultValue: false).Value);
-                        bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", defaultValue: false).Value);
-                        bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", defaultValue: false).Value);
-                        bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", defaultValue: false).Value);
-                        bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", defaultValue: false).Value);
-                        bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", defaultValue: false).Value);
+                        bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", DefaultSettings.BoolCaptureOnTheseDays).Value);
+                        bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", DefaultSettings.BoolCaptureOnSunday).Value);
+                        bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", DefaultSettings.BoolCaptureOnMonday).Value);
+                        bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", DefaultSettings.BoolCaptureOnTuesday).Value);
+                        bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", DefaultSettings.BoolCaptureOnWednesday).Value);
+                        bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", DefaultSettings.BoolCaptureOnThursday).Value);
+                        bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", DefaultSettings.BoolCaptureOnFriday).Value);
+                        bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", DefaultSettings.BoolCaptureOnSaturday).Value);
 
                         specialSchedule.ModeOneTime = false;
                         specialSchedule.ModePeriod = true;

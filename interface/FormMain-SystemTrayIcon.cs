@@ -52,7 +52,7 @@ namespace AutoScreenCapture
         {
             // Show the balloon tip only if the system tray icon is visible and the "BoolFirstRun" setting returns "True".
 
-            bool.TryParse(Settings.User.GetByKey("BoolFirstRun", defaultValue: true).Value.ToString(), out bool firstRun);
+            bool.TryParse(Settings.User.GetByKey("BoolFirstRun", DefaultSettings.BoolFirstRun).Value.ToString(), out bool firstRun);
 
             if (notifyIcon.Visible && firstRun)
             {

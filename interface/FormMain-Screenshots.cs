@@ -382,27 +382,27 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
 
-                string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
+                string host = Settings.Application.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
 
                 Log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.Application.GetByKey("EmailServerPort", defaultValue: 587).Value.ToString(), out int port);
+                int.TryParse(Settings.Application.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int port);
 
                 Log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(Settings.Application.GetByKey("EmailServerEnableSSL", defaultValue: true).Value.ToString(), out bool ssl);
+                bool.TryParse(Settings.Application.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
 
                 Log.WriteDebugMessage("SSL = " + ssl);
 
-                bool.TryParse(Settings.Application.GetByKey("EmailPrompt", defaultValue: true).Value.ToString(), out prompt);
+                bool.TryParse(Settings.Application.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value.ToString(), out prompt);
 
                 Log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
+                string username = Settings.Application.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
 
                 Log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
+                string password = Settings.Application.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -413,27 +413,27 @@ namespace AutoScreenCapture
                     Log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
                 }
 
-                string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
+                string from = Settings.Application.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
 
                 Log.WriteDebugMessage("From = " + from);
 
-                string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
+                string to = Settings.Application.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
 
                 Log.WriteDebugMessage("To = " + to);
 
-                string cc = Settings.Application.GetByKey("EmailMessageCC", string.Empty).Value.ToString();
+                string cc = Settings.Application.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
 
                 Log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = Settings.Application.GetByKey("EmailMessageBCC", string.Empty).Value.ToString();
+                string bcc = Settings.Application.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
 
                 Log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = Settings.Application.GetByKey("EmailMessageSubject", string.Empty).Value.ToString();
+                string subject = Settings.Application.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
 
                 Log.WriteDebugMessage("Subject = " + subject);
 
-                string body = Settings.Application.GetByKey("EmailMessageBody", string.Empty).Value.ToString();
+                string body = Settings.Application.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
 
                 Log.WriteDebugMessage("Body = " + body);
 

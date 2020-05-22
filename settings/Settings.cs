@@ -6,7 +6,6 @@
 // <summary>The default application settings and default user settings are defined here.</summary>
 //-----------------------------------------------------------------------
 using System;
-using System.Reflection;
 
 namespace AutoScreenCapture
 {
@@ -18,12 +17,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// The name of this application.
         /// </summary>
-        public static readonly string ApplicationName = "Auto Screen Capture";
+        public static readonly string ApplicationName = DefaultSettings.ApplicationName;
 
         /// <summary>
         /// The version of this application. This is acquired from the application's assembly.
         /// </summary>
-        public static readonly string ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static readonly string ApplicationVersion = DefaultSettings.ApplicationVersion;
 
         // The major versions of Auto Screen Capture.
         // Any version that is older than "Clara" is considered as "Clara".
@@ -72,7 +71,6 @@ namespace AutoScreenCapture
         {
             _versionCollection = new VersionCollection
             {
-
                 // This version.
                 new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true),
 
@@ -141,141 +139,147 @@ namespace AutoScreenCapture
                 {
                     Application.Load();
 
-                    Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value = ApplicationName;
-                    Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value = ApplicationVersion;
+                    Application.GetByKey("Name", DefaultSettings.ApplicationName).Value = ApplicationName;
+                    Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value = ApplicationVersion;
 
                     if (!Application.KeyExists("DebugMode"))
                     {
-                        Application.Add(new Setting("DebugMode", false));
+                        Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
                     }
 
                     if (!Application.KeyExists("ExitOnError"))
                     {
-                        Application.Add(new Setting("ExitOnError", false));
+                        Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
                     }
 
                     if (!Application.KeyExists("Logging"))
                     {
-                        Application.Add(new Setting("Logging", false));
+                        Application.Add(new Setting("Logging", DefaultSettings.Logging));
                     }
 
                     if (!Application.KeyExists("EmailServerHost"))
                     {
-                        Application.Add(new Setting("EmailServerHost", "smtp.office365.com"));
+                        Application.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
                     }
 
                     if (!Application.KeyExists("EmailServerPort"))
                     {
-                        Application.Add(new Setting("EmailServerPort", 587));
+                        Application.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
                     }
 
                     if (!Application.KeyExists("EmailServerEnableSSL"))
                     {
-                        Application.Add(new Setting("EmailServerEnableSSL", true));
+                        Application.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
                     }
 
                     if (!Application.KeyExists("EmailClientUsername"))
                     {
-                        Application.Add(new Setting("EmailClientUsername", string.Empty));
+                        Application.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
                     }
 
                     if (!Application.KeyExists("EmailClientPassword"))
                     {
-                        Application.Add(new Setting("EmailClientPassword", string.Empty));
+                        Application.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
                     }
 
                     if (!Application.KeyExists("EmailMessageFrom"))
                     {
-                        Application.Add(new Setting("EmailMessageFrom", string.Empty));
+                        Application.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
                     }
 
                     if (!Application.KeyExists("EmailMessageTo"))
                     {
-                        Application.Add(new Setting("EmailMessageTo", string.Empty));
+                        Application.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
                     }
 
                     if (!Application.KeyExists("EmailMessageCC"))
                     {
-                        Application.Add(new Setting("EmailMessageCC", string.Empty));
+                        Application.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
                     }
 
                     if (!Application.KeyExists("EmailMessageBCC"))
                     {
-                        Application.Add(new Setting("EmailMessageBCC", string.Empty));
+                        Application.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
                     }
 
                     if (!Application.KeyExists("EmailMessageSubject"))
                     {
-                        Application.Add(new Setting("EmailMessageSubject", string.Empty));
+                        Application.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
                     }
 
                     if (!Application.KeyExists("EmailMessageBody"))
                     {
-                        Application.Add(new Setting("EmailMessageBody", string.Empty));
+                        Application.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
                     }
 
                     if (!Application.KeyExists("EmailPrompt"))
                     {
-                        Application.Add(new Setting("EmailPrompt", true));
+                        Application.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
                     }
 
                     if (!Application.KeyExists("LowDiskPercentageThreshold"))
                     {
-                        Application.Add(new Setting("LowDiskPercentageThreshold", 1));
+                        Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
                     }
 
                     if (!Application.KeyExists("ScreenshotsLoadLimit"))
                     {
-                        Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
+                        Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
                     }
 
                     if (!Application.KeyExists("AutoStartFromCommandLine"))
                     {
-                        Application.Add(new Setting("AutoStartFromCommandLine", false));
+                        Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
 
                         // If this is a version before 2.3.0.0 then set this setting to true because
                         // starting a screen capture session was the old behaviour when running autoscreen.exe
                         // from the command line.
                         if (VersionManager.IsOldAppVersion(Application.AppCodename, Application.AppVersion))
                         {
-                            Version v2300 = VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2300 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, "2.3.0.0");
                             Version configVersion = VersionManager.Versions.Get(Application.AppCodename, Application.AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
-                                Application.GetByKey("AutoStartFromCommandLine", defaultValue: false).Value = true;
+                                Application.GetByKey("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine).Value = true;
                             }
                         }
                     }
 
                     if (!Application.KeyExists("ShowStartupError"))
                     {
-                        Application.Add(new Setting("ShowStartupError", true));
+                        Application.Add(new Setting("ShowStartupError", DefaultSettings.ShowStartupError));
+                    }
+
+                    if (!Application.KeyExists("FilepathLengthLimit"))
+                    {
+                        Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
                     }
                 }
                 else
                 {
                     Application.Add(new Setting("Name", ApplicationName));
                     Application.Add(new Setting("Version", ApplicationVersion));
-                    Application.Add(new Setting("DebugMode", false));
-                    Application.Add(new Setting("ExitOnError", false));
-                    Application.Add(new Setting("Logging", false));
-                    Application.Add(new Setting("EmailServerHost", "smtp.office365.com"));
-                    Application.Add(new Setting("EmailServerPort", 587));
-                    Application.Add(new Setting("EmailServerEnableSSL", true));
-                    Application.Add(new Setting("EmailClientUsername", string.Empty));
-                    Application.Add(new Setting("EmailClientPassword", string.Empty));
-                    Application.Add(new Setting("EmailMessageFrom", string.Empty));
-                    Application.Add(new Setting("EmailMessageTo", string.Empty));
-                    Application.Add(new Setting("EmailMessageCC", string.Empty));
-                    Application.Add(new Setting("EmailMessageBCC", string.Empty));
-                    Application.Add(new Setting("EmailMessageSubject", string.Empty));
-                    Application.Add(new Setting("EmailMessageBody", string.Empty));
-                    Application.Add(new Setting("EmailPrompt", true));
-                    Application.Add(new Setting("LowDiskPercentageThreshold", 1));
-                    Application.Add(new Setting("ScreenshotsLoadLimit", 5000));
-                    Application.Add(new Setting("AutoStartFromCommandLine", false));
-                    Application.Add(new Setting("ShowStartupError", true));
+                    Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
+                    Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
+                    Application.Add(new Setting("Logging", DefaultSettings.Logging));
+                    Application.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
+                    Application.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
+                    Application.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
+                    Application.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
+                    Application.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
+                    Application.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
+                    Application.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
+                    Application.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
+                    Application.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
+                    Application.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
+                    Application.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
+                    Application.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
+                    Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
+                    Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
+                    Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
+                    Application.Add(new Setting("ShowStartupError", DefaultSettings.ShowStartupError));
+                    Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
                 }
 
                 Application.Save();
@@ -283,24 +287,24 @@ namespace AutoScreenCapture
 
             if (User != null && !string.IsNullOrEmpty(User.Filepath) && !FileSystem.FileExists(User.Filepath))
             {
-                User.Add(new Setting("IntScreenCaptureInterval", 60000));
-                User.Add(new Setting("IntCaptureLimit", 0));
-                User.Add(new Setting("BoolCaptureLimit", false));
-                User.Add(new Setting("BoolTakeInitialScreenshot", false));
-                User.Add(new Setting("BoolShowSystemTrayIcon", true));
-                User.Add(new Setting("StringPassphrase", string.Empty));
-                User.Add(new Setting("IntKeepScreenshotsForDays", 30));
-                User.Add(new Setting("StringScreenshotLabel", string.Empty));
-                User.Add(new Setting("BoolApplyScreenshotLabel", false));
-                User.Add(new Setting("StringDefaultEditor", string.Empty));
-                User.Add(new Setting("BoolFirstRun", true));
-                User.Add(new Setting("IntStartScreenCaptureCount", 0));
+                User.Add(new Setting("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval));
+                User.Add(new Setting("IntCaptureLimit", DefaultSettings.IntCaptureLimit));
+                User.Add(new Setting("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit));
+                User.Add(new Setting("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot));
+                User.Add(new Setting("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon));
+                User.Add(new Setting("StringPassphrase", DefaultSettings.StringPassphrase));
+                User.Add(new Setting("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays));
+                User.Add(new Setting("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel));
+                User.Add(new Setting("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel));
+                User.Add(new Setting("StringDefaultEditor", DefaultSettings.StringDefaultEditor));
+                User.Add(new Setting("BoolFirstRun", DefaultSettings.BoolFirstRun));
+                User.Add(new Setting("IntStartScreenCaptureCount", DefaultSettings.IntStartScreenCaptureCount));
 
                 User.Save();
             }
 
-            Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", defaultValue: false).Value);
-            Log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", defaultValue: false).Value);
+            Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
+            Log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", DefaultSettings.Logging).Value);
         }
     }
 }

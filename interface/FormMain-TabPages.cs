@@ -116,13 +116,13 @@ namespace AutoScreenCapture
             toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
             // Check to see if Email (SMTP) is configured.
-            string host = Settings.Application.GetByKey("EmailServerHost", string.Empty).Value.ToString();
+            string host = Settings.Application.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
 
-            string username = Settings.Application.GetByKey("EmailClientUsername", string.Empty).Value.ToString();
-            string password = Settings.Application.GetByKey("EmailClientPassword", string.Empty).Value.ToString();
+            string username = Settings.Application.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
+            string password = Settings.Application.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
 
-            string from = Settings.Application.GetByKey("EmailMessageFrom", string.Empty).Value.ToString();
-            string to = Settings.Application.GetByKey("EmailMessageTo", string.Empty).Value.ToString();
+            string from = Settings.Application.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
+            string to = Settings.Application.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
 
             if (string.IsNullOrEmpty(host) ||
                 string.IsNullOrEmpty(username) ||

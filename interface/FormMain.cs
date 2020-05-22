@@ -68,7 +68,7 @@ namespace AutoScreenCapture
 
             LoadSettings();
 
-            Text = (string)Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value;
+            Text = (string)Settings.Application.GetByKey("Name", DefaultSettings.ApplicationName).Value;
 
             // Get rid of the old "slides" directory that may still remain from an old version of the application.
             DeleteSlides();
@@ -82,8 +82,8 @@ namespace AutoScreenCapture
         private void FormMain_Load(object sender, EventArgs e)
         {
             HelpMessage("Welcome to " +
-                Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
-                Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value);
+                Settings.Application.GetByKey("Name", DefaultSettings.ApplicationName).Value + " " +
+                Settings.Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value);
 
             // Start the scheduled capture timer.
             timerScheduledCapture.Interval = 1000;
@@ -261,7 +261,7 @@ namespace AutoScreenCapture
                 // to continue with normal functionality.
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
-                    Settings.User.GetByKey("StringPassphrase", defaultValue: false).Value = string.Empty;
+                    Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = string.Empty;
                     SaveSettings();
 
                     Opacity = 100;
@@ -372,8 +372,8 @@ namespace AutoScreenCapture
         private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                Settings.Application.GetByKey("Name", defaultValue: Settings.ApplicationName).Value + " " +
-                Settings.Application.GetByKey("Version", defaultValue: Settings.ApplicationVersion).Value +
+                Settings.Application.GetByKey("Name", DefaultSettings.ApplicationName).Value + " " +
+                Settings.Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value +
                 " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2020)", "About",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);

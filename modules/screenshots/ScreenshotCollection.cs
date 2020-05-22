@@ -506,7 +506,7 @@ namespace AutoScreenCapture
                         {
                             Log.WriteMessage("Loading " + xScreenshots.Count + " screenshots taken on " + date);
 
-                            int screenshotsLoadLimit = Convert.ToInt32(Settings.Application.GetByKey("ScreenshotsLoadLimit", defaultValue: 5000).Value);
+                            int screenshotsLoadLimit = Convert.ToInt32(Settings.Application.GetByKey("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit).Value);
 
                             if (xScreenshots.Count >= screenshotsLoadLimit)
                             {

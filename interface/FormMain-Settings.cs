@@ -109,7 +109,7 @@ namespace AutoScreenCapture
 
                 _screenshotCollection.LoadXmlFile();
 
-                int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value);
+                int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value);
                 Log.WriteDebugMessage("IntScreenCaptureInterval = " + screenCaptureInterval);
 
                 if (screenCaptureInterval == 0)
@@ -137,25 +137,25 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                 numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
-                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value);
+                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", DefaultSettings.IntCaptureLimit).Value);
                 Log.WriteDebugMessage("IntCaptureLimit = " + numericUpDownCaptureLimit.Value);
 
-                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value);
+                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit).Value);
                 Log.WriteDebugMessage("BoolCaptureLimit = " + checkBoxCaptureLimit.Checked);
 
-                checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value);
+                checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value);
                 Log.WriteDebugMessage("BoolTakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
 
-                notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value);
+                notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value);
                 Log.WriteDebugMessage("BoolShowSystemTrayIcon = " + notifyIcon.Visible);
 
-                numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value);
+                numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays).Value);
                 Log.WriteDebugMessage("IntKeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
 
-                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value.ToString();
+                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value.ToString();
                 Log.WriteDebugMessage("StringScreenshotLabel = " + comboBoxScreenshotLabel.Text);
 
-                checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value);
+                checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel).Value);
 
                 EnableStartCapture();
 
@@ -176,13 +176,13 @@ namespace AutoScreenCapture
         {
             try
             {
-                Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = GetScreenCaptureInterval();
-                Settings.User.GetByKey("IntCaptureLimit", defaultValue: 0).Value = numericUpDownCaptureLimit.Value;
-                Settings.User.GetByKey("BoolCaptureLimit", defaultValue: false).Value = checkBoxCaptureLimit.Checked;
-                Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("IntKeepScreenshotsForDays", defaultValue: 30).Value = numericUpDownKeepScreenshotsForDays.Value;
-                Settings.User.GetByKey("StringScreenshotLabel", defaultValue: string.Empty).Value = comboBoxScreenshotLabel.Text;
-                Settings.User.GetByKey("BoolApplyScreenshotLabel", defaultValue: false).Value = checkBoxScreenshotLabel.Checked;
+                Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value = GetScreenCaptureInterval();
+                Settings.User.GetByKey("IntCaptureLimit", DefaultSettings.IntCaptureLimit).Value = numericUpDownCaptureLimit.Value;
+                Settings.User.GetByKey("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit).Value = checkBoxCaptureLimit.Checked;
+                Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
+                Settings.User.GetByKey("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays).Value = numericUpDownKeepScreenshotsForDays.Value;
+                Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value = comboBoxScreenshotLabel.Text;
+                Settings.User.GetByKey("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel).Value = checkBoxScreenshotLabel.Checked;
 
                 Settings.User.Save();
             }

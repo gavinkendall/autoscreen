@@ -31,7 +31,7 @@ namespace AutoScreenCapture
                 // immediately removed from the file.
                 FileSystem.WriteToFile(FileSystem.CommandFile, string.Empty);
 
-                ScreenCapture.AutoStartFromCommandLine = Convert.ToBoolean(Settings.Application.GetByKey("AutoStartFromCommandLine", defaultValue: false).Value);
+                ScreenCapture.AutoStartFromCommandLine = Convert.ToBoolean(Settings.Application.GetByKey("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine).Value);
 
                 // Create the "Special Schedule" if it doesn't already exist.
                 if (_formSchedule.ScheduleCollection.GetByName(ScheduleCollection.SpecialScheduleName) == null)
@@ -63,7 +63,7 @@ namespace AutoScreenCapture
                     {
                         Log.DebugMode = !Log.DebugMode;
 
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = Log.DebugMode;
+                        Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = Log.DebugMode;
                         Settings.Application.Save();
                     }
 
@@ -72,7 +72,7 @@ namespace AutoScreenCapture
                     {
                         Log.DebugMode = true;
 
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = true;
+                        Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = true;
                         Settings.Application.Save();
                     }
 
@@ -81,7 +81,7 @@ namespace AutoScreenCapture
                     {
                         Log.DebugMode = false;
 
-                        Settings.Application.GetByKey("DebugMode", defaultValue: false).Value = false;
+                        Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = false;
                         Settings.Application.Save();
                     }
 
@@ -90,7 +90,7 @@ namespace AutoScreenCapture
                     {
                         Log.LoggingEnabled = !Log.LoggingEnabled;
 
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = Log.LoggingEnabled;
+                        Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = Log.LoggingEnabled;
                         Settings.Application.Save();
                     }
 
@@ -99,7 +99,7 @@ namespace AutoScreenCapture
                     {
                         Log.LoggingEnabled = true;
 
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = true;
+                        Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = true;
                         Settings.Application.Save();
                     }
 
@@ -108,7 +108,7 @@ namespace AutoScreenCapture
                     {
                         Log.LoggingEnabled = false;
 
-                        Settings.Application.GetByKey("Logging", defaultValue: false).Value = false;
+                        Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = false;
                         Settings.Application.Save();
                     }
 
@@ -141,7 +141,7 @@ namespace AutoScreenCapture
                     // -showSystemTrayIcon
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON))
                     {
-                        Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = true;
+                        Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value = true;
                         Settings.User.Save();
 
                         notifyIcon.Visible = true;
@@ -150,7 +150,7 @@ namespace AutoScreenCapture
                     // -hideSystemTrayIcon
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
-                        Settings.User.GetByKey("BoolShowSystemTrayIcon", defaultValue: true).Value = false;
+                        Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value = false;
                         Settings.User.Save();
 
                         notifyIcon.Visible = false;
@@ -161,7 +161,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = !checkBoxInitialScreenshot.Checked;
 
-                        Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = checkBoxInitialScreenshot.Checked;
+                        Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
                         Settings.User.Save();
                     }
 
@@ -170,7 +170,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = true;
 
-                        Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = true;
+                        Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = true;
                         Settings.User.Save();
                     }
 
@@ -179,7 +179,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = false;
 
-                        Settings.User.GetByKey("BoolTakeInitialScreenshot", defaultValue: false).Value = false;
+                        Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = false;
                         Settings.User.Save();
                     }
 
@@ -221,7 +221,7 @@ namespace AutoScreenCapture
                             _screenCapture.Interval = screenCaptureInterval;
                             timerScreenCapture.Interval = screenCaptureInterval;
 
-                            Settings.User.GetByKey("IntScreenCaptureInterval", defaultValue: 60000).Value = screenCaptureInterval;
+                            Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value = screenCaptureInterval;
                             Settings.User.Save();
 
                             timerScreenCapture.Enabled = true;
@@ -243,7 +243,7 @@ namespace AutoScreenCapture
                                 Settings.Initialize();
                             }
 
-                            Settings.User.GetByKey("StringPassphrase", defaultValue: string.Empty).Value = Security.Hash(passphrase);
+                            Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = Security.Hash(passphrase);
                             Settings.User.Save();
 
                             ScreenCapture.LockScreenCaptureSession = true;

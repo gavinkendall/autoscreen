@@ -73,8 +73,6 @@ namespace AutoScreenCapture
         /// </summary>
         public const int CAPTURE_LIMIT_MAX = 9999;
 
-        private const int MAX_WINDOWS_PATH_LENGTH = 248;
-
         /// <summary>
         /// The default image format.
         /// </summary>
@@ -451,14 +449,9 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!string.IsNullOrEmpty(path) && path.Length >= MAX_WINDOWS_PATH_LENGTH)
-                {
-                    // We just want to log a normal message and not stop the screen capture session because we want to continue
-                    // for other components that are using paths which are still valid.
-                    Log.WriteMessage($"No path available at \"{path}\" or path length exceeds {MAX_WINDOWS_PATH_LENGTH} characters");
-                }
+                int filepathLimitLength = Convert.ToInt32(Settings.Application.GetByKey("FilepathLimitLength", DefaultSettings.FilepathLengthLimit));
 
-                if (!string.IsNullOrEmpty(path) && path.Length < MAX_WINDOWS_PATH_LENGTH)
+                if (!string.IsNullOrEmpty(path) && path.Length <= filepathLimitLength)
                 {
                     Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
 
@@ -467,7 +460,7 @@ namespace AutoScreenCapture
                     {
                         if (FileSystem.DriveReady(path))
                         {
-                            int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", defaultValue: 1).Value);
+                            int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold).Value);
                             double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(path);
 
                             Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
@@ -534,6 +527,12 @@ namespace AutoScreenCapture
                             }
                         }
                     }
+                }
+                else
+                {
+                    // We just want to log a normal message and not stop the screen capture session because we want to continue
+                    // for other components that are using paths which are still valid.
+                    Log.WriteMessage($"Unable to save screenshot. The path is either empty or its length exceeds the configured length of {filepathLimitLength} characters. Correct the value for the FilepathLimitLength application setting");
                 }
 
                 return true;
