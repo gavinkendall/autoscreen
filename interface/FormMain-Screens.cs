@@ -143,12 +143,17 @@ namespace AutoScreenCapture
                             if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                             {
                                 // Do not contiune if the active window title needs to be checked and the active window title
-                                // does not contain the text defined in "Active Window Title Capture Text".
+                                // does not contain the text defined in "Active Window Title Capture Text" and CaptureNow is false.
+                                // CaptureNow could be set to "true" during a "Capture Now / Archive" or "Capture Now / Edit" option
+                                // so, in that case, we want to capture the screen and save the screenshot regardless of the title text.
                                 if (screen.ActiveWindowTitleCaptureCheck && !string.IsNullOrEmpty(screen.ActiveWindowTitleCaptureText) &&
-                                    !_screenCapture.ActiveWindowTitle.ToLower().Contains(screen.ActiveWindowTitleCaptureText.ToLower()))
+                                    !_screenCapture.ActiveWindowTitle.ToLower().Contains(screen.ActiveWindowTitleCaptureText.ToLower()) &&
+                                    !_screenCapture.CaptureNow)
                                 {
                                     return;
                                 }
+
+                                _screenCapture.CaptureNow = false;
 
                                 if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
@@ -185,12 +190,17 @@ namespace AutoScreenCapture
                                 if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                                 {
                                     // Do not contiune if the active window title needs to be checked and the active window title
-                                    // does not contain the text defined in "Active Window Title Capture Text".
+                                    // does not contain the text defined in "Active Window Title Capture Text" and CaptureNow is false.
+                                    // CaptureNow could be set to "true" during a "Capture Now / Archive" or "Capture Now / Edit" option
+                                    // so, in that case, we want to capture the screen and save the screenshot regardless of the title text.
                                     if (screen.ActiveWindowTitleCaptureCheck && !string.IsNullOrEmpty(screen.ActiveWindowTitleCaptureText) &&
-                                        !_screenCapture.ActiveWindowTitle.ToLower().Contains(screen.ActiveWindowTitleCaptureText.ToLower()))
+                                        !_screenCapture.ActiveWindowTitle.ToLower().Contains(screen.ActiveWindowTitleCaptureText.ToLower()) &&
+                                        !_screenCapture.CaptureNow)
                                     {
                                         return;
                                     }
+
+                                    _screenCapture.CaptureNow = false;
 
                                     // Screen X
                                     if (_screenCapture.GetScreenImages(screen.Component,

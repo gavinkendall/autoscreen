@@ -143,6 +143,7 @@ namespace AutoScreenCapture
             if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
             {
                 _screenCapture.Count++;
+                _screenCapture.CaptureNow = captureNow;
 
                 DateTime dtNow = DateTime.Now;
 

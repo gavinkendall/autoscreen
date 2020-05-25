@@ -159,6 +159,11 @@ namespace AutoScreenCapture
         public string ActiveWindowProcessName { get; set; }
 
         /// <summary>
+        /// Determines if we're capturing the screen now or let a scheduled capture occur.
+        /// </summary>
+        public bool CaptureNow { get; set; }
+
+        /// <summary>
         /// Gets the screenshot image from an image file. This is used when we want to show screenshot images.
         /// </summary>
         /// <param name="path">The path of an image file (such as a JPEG or PNG file).</param>
