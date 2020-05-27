@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTag));
             this.labelEditorName = new System.Windows.Forms.Label();
-            this.textBoxTagName = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelTagType = new System.Windows.Forms.Label();
@@ -71,12 +71,12 @@
             // 
             // textBoxTagName
             // 
-            this.textBoxTagName.Location = new System.Drawing.Point(56, 32);
-            this.textBoxTagName.MaxLength = 50;
-            this.textBoxTagName.Name = "textBoxTagName";
-            this.textBoxTagName.Size = new System.Drawing.Size(546, 20);
-            this.textBoxTagName.TabIndex = 2;
-            this.textBoxTagName.MouseHover += new System.EventHandler(this.textBoxTagName_MouseHover);
+            this.textBoxName.Location = new System.Drawing.Point(56, 32);
+            this.textBoxName.MaxLength = 50;
+            this.textBoxName.Name = "textBoxTagName";
+            this.textBoxName.Size = new System.Drawing.Size(546, 20);
+            this.textBoxName.TabIndex = 2;
+            this.textBoxName.MouseHover += new System.EventHandler(this.textBoxTagName_MouseHover);
             // 
             // buttonOK
             // 
@@ -386,7 +386,7 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelEditorName);
-            this.Controls.Add(this.textBoxTagName);
+            this.Controls.Add(this.textBoxName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(772, 493);
@@ -403,7 +403,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelEditorName;
-        private System.Windows.Forms.TextBox textBoxTagName;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelTagType;

@@ -31,13 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditor));
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.textBoxEditorName = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelEditorName = new System.Windows.Forms.Label();
             this.labelEditorApplication = new System.Windows.Forms.Label();
-            this.textBoxEditorApplication = new System.Windows.Forms.TextBox();
+            this.textBoxApplication = new System.Windows.Forms.TextBox();
             this.buttonChooseEditor = new System.Windows.Forms.Button();
             this.labelEditorArguments = new System.Windows.Forms.Label();
-            this.textBoxEditorArguments = new System.Windows.Forms.TextBox();
+            this.textBoxArguments = new System.Windows.Forms.TextBox();
             this.checkBoxMakeDefaultEditor = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.labelNotes = new System.Windows.Forms.Label();
@@ -67,13 +67,14 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // textBoxEditorName
+            // textBoxName
             // 
-            this.textBoxEditorName.Location = new System.Drawing.Point(56, 32);
-            this.textBoxEditorName.MaxLength = 50;
-            this.textBoxEditorName.Name = "textBoxEditorName";
-            this.textBoxEditorName.Size = new System.Drawing.Size(546, 20);
-            this.textBoxEditorName.TabIndex = 2;
+            this.textBoxName.Location = new System.Drawing.Point(56, 32);
+            this.textBoxName.MaxLength = 50;
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(546, 20);
+            this.textBoxName.TabIndex = 2;
+            this.textBoxName.MouseHover += new System.EventHandler(this.textBoxName_MouseHover);
             // 
             // labelEditorName
             // 
@@ -93,14 +94,15 @@
             this.labelEditorApplication.TabIndex = 4;
             this.labelEditorApplication.Text = "Application:";
             // 
-            // textBoxEditorApplication
+            // textBoxApplication
             // 
-            this.textBoxEditorApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEditorApplication.Location = new System.Drawing.Point(77, 64);
-            this.textBoxEditorApplication.Name = "textBoxEditorApplication";
-            this.textBoxEditorApplication.Size = new System.Drawing.Size(634, 20);
-            this.textBoxEditorApplication.TabIndex = 5;
+            this.textBoxApplication.Location = new System.Drawing.Point(77, 64);
+            this.textBoxApplication.Name = "textBoxApplication";
+            this.textBoxApplication.Size = new System.Drawing.Size(634, 20);
+            this.textBoxApplication.TabIndex = 5;
+            this.textBoxApplication.MouseHover += new System.EventHandler(this.textBoxApplication_MouseHover);
             // 
             // buttonChooseEditor
             // 
@@ -112,6 +114,7 @@
             this.buttonChooseEditor.TabIndex = 6;
             this.buttonChooseEditor.UseVisualStyleBackColor = true;
             this.buttonChooseEditor.Click += new System.EventHandler(this.buttonChooseEditor_Click);
+            this.buttonChooseEditor.MouseHover += new System.EventHandler(this.buttonChooseEditor_MouseHover);
             // 
             // labelEditorArguments
             // 
@@ -122,14 +125,15 @@
             this.labelEditorArguments.TabIndex = 7;
             this.labelEditorArguments.Text = "Arguments:";
             // 
-            // textBoxEditorArguments
+            // textBoxArguments
             // 
-            this.textBoxEditorArguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxArguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEditorArguments.Location = new System.Drawing.Point(77, 93);
-            this.textBoxEditorArguments.Name = "textBoxEditorArguments";
-            this.textBoxEditorArguments.Size = new System.Drawing.Size(664, 20);
-            this.textBoxEditorArguments.TabIndex = 8;
+            this.textBoxArguments.Location = new System.Drawing.Point(77, 93);
+            this.textBoxArguments.Name = "textBoxArguments";
+            this.textBoxArguments.Size = new System.Drawing.Size(664, 20);
+            this.textBoxArguments.TabIndex = 8;
+            this.textBoxArguments.MouseHover += new System.EventHandler(this.textBoxArguments_MouseHover);
             // 
             // checkBoxMakeDefaultEditor
             // 
@@ -141,6 +145,7 @@
             this.checkBoxMakeDefaultEditor.TabIndex = 3;
             this.checkBoxMakeDefaultEditor.Text = "Default";
             this.checkBoxMakeDefaultEditor.UseVisualStyleBackColor = true;
+            this.checkBoxMakeDefaultEditor.MouseHover += new System.EventHandler(this.checkBoxMakeDefaultEditor_MouseHover);
             // 
             // labelHelp
             // 
@@ -178,6 +183,7 @@
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 265);
             this.textBoxNotes.TabIndex = 10;
+            this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
             // 
             // FormEditor
             // 
@@ -190,13 +196,13 @@
             this.Controls.Add(this.textBoxNotes);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.checkBoxMakeDefaultEditor);
-            this.Controls.Add(this.textBoxEditorArguments);
+            this.Controls.Add(this.textBoxArguments);
             this.Controls.Add(this.labelEditorArguments);
             this.Controls.Add(this.buttonChooseEditor);
-            this.Controls.Add(this.textBoxEditorApplication);
+            this.Controls.Add(this.textBoxApplication);
             this.Controls.Add(this.labelEditorApplication);
             this.Controls.Add(this.labelEditorName);
-            this.Controls.Add(this.textBoxEditorName);
+            this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -214,13 +220,13 @@
 
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.TextBox textBoxEditorName;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label labelEditorName;
         private System.Windows.Forms.Label labelEditorApplication;
-        private System.Windows.Forms.TextBox textBoxEditorApplication;
+        private System.Windows.Forms.TextBox textBoxApplication;
         private System.Windows.Forms.Button buttonChooseEditor;
         private System.Windows.Forms.Label labelEditorArguments;
-        private System.Windows.Forms.TextBox textBoxEditorArguments;
+        private System.Windows.Forms.TextBox textBoxArguments;
         private System.Windows.Forms.CheckBox checkBoxMakeDefaultEditor;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Label labelNotes;

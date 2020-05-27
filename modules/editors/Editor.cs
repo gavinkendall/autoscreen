@@ -31,10 +31,16 @@ namespace AutoScreenCapture
         public string Arguments { get; set; }
 
         /// <summary>
+        /// Notes for the user to write in whatever they need to.
+        /// </summary>
+        public string Notes { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Editor"/> class.
         /// </summary>
         public Editor()
         {
+            Notes = string.Empty;
         }
 
         /// <summary>

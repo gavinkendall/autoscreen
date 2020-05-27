@@ -41,7 +41,9 @@ namespace AutoScreenCapture
 
         private void FormEditor_Load(object sender, EventArgs e)
         {
-            textBoxEditorName.Focus();
+            textBoxName.Focus();
+
+            HelpMessage("This is where to configure an image editor for editing screenshots");
 
             checkBoxMakeDefaultEditor.Checked = false;
 
@@ -59,9 +61,9 @@ namespace AutoScreenCapture
                     Icon = (Icon)(resources.GetObject("$this.Icon"));
                 }
 
-                textBoxEditorName.Text = EditorObject.Name;
-                textBoxEditorApplication.Text = EditorObject.Application;
-                textBoxEditorArguments.Text = EditorObject.Arguments;
+                textBoxName.Text = EditorObject.Name;
+                textBoxApplication.Text = EditorObject.Application;
+                textBoxArguments.Text = EditorObject.Arguments;
 
                 string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value.ToString();
 
@@ -69,16 +71,24 @@ namespace AutoScreenCapture
                 {
                     checkBoxMakeDefaultEditor.Checked = true;
                 }
+
+                textBoxNotes.Text = EditorObject.Notes;
             }
             else
             {
                 Text = "Add New Editor";
                 Icon = (Icon)(resources.GetObject("$this.Icon"));
 
-                textBoxEditorName.Text = "Editor " + (EditorCollection.Count + 1);
-                textBoxEditorApplication.Text = string.Empty;
-                textBoxEditorArguments.Text = defaultArguments;
+                textBoxName.Text = "Editor " + (EditorCollection.Count + 1);
+                textBoxApplication.Text = string.Empty;
+                textBoxArguments.Text = defaultArguments;
+                textBoxNotes.Text = string.Empty;
             }
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -88,9 +98,9 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxEditorName.Text))
+            if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxName.Text))
             {
-                Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value = textBoxEditorName.Text;
+                Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value = textBoxName.Text;
                 Settings.User.Save();
             }
 
@@ -112,9 +122,17 @@ namespace AutoScreenCapture
 
                 if (ApplicationExists())
                 {
-                    if (EditorCollection.GetByName(textBoxEditorName.Text) == null)
+                    if (EditorCollection.GetByName(textBoxName.Text) == null)
                     {
-                        EditorCollection.Add(new Editor(textBoxEditorName.Text, textBoxEditorApplication.Text, textBoxEditorArguments.Text));
+                        Editor editor = new Editor()
+                        {
+                            Name = textBoxName.Text,
+                            Application = textBoxApplication.Text,
+                            Arguments = textBoxArguments.Text,
+                            Notes = textBoxNotes.Text
+                        };
+
+                        EditorCollection.Add(editor);
 
                         Okay();
                     }
@@ -125,7 +143,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    MessageBox.Show($"Could not find \"{textBoxEditorApplication.Text}\".", "Application Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Could not find \"{textBoxApplication.Text}\".", "Application Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -144,22 +162,23 @@ namespace AutoScreenCapture
 
                     if (ApplicationExists())
                     {
-                        if (EditorCollection.GetByName(textBoxEditorName.Text) != null && NameChanged())
+                        if (EditorCollection.GetByName(textBoxName.Text) != null && NameChanged())
                         {
                             MessageBox.Show("An editor with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         else
                         {
-                            EditorCollection.Get(EditorObject).Application = textBoxEditorApplication.Text;
-                            EditorCollection.Get(EditorObject).Arguments = textBoxEditorArguments.Text;
-                            EditorCollection.Get(EditorObject).Name = textBoxEditorName.Text;
+                            EditorCollection.Get(EditorObject).Application = textBoxApplication.Text;
+                            EditorCollection.Get(EditorObject).Arguments = textBoxArguments.Text;
+                            EditorCollection.Get(EditorObject).Name = textBoxName.Text;
+                            EditorCollection.Get(EditorObject).Notes = textBoxNotes.Text;
 
                             Okay();
                         }
                     }
                     else
                     {
-                        MessageBox.Show($"Could not find \"{textBoxEditorApplication.Text}\".", "Application Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Could not find \"{textBoxApplication.Text}\".", "Application Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
@@ -175,15 +194,16 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxEditorName.Text = textBoxEditorName.Text.Trim();
-            textBoxEditorApplication.Text = textBoxEditorApplication.Text.Trim();
-            textBoxEditorArguments.Text = textBoxEditorArguments.Text.Trim();
+            textBoxName.Text = textBoxName.Text.Trim();
+            textBoxApplication.Text = textBoxApplication.Text.Trim();
+            textBoxArguments.Text = textBoxArguments.Text.Trim();
+            textBoxNotes.Text = textBoxNotes.Text.Trim();
         }
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxEditorName.Text) &&
-                !string.IsNullOrEmpty(textBoxEditorApplication.Text))
+            if (!string.IsNullOrEmpty(textBoxName.Text) &&
+                !string.IsNullOrEmpty(textBoxApplication.Text))
             {
                 return true;
             }
@@ -194,8 +214,9 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             if (EditorObject != null &&
-                (!EditorObject.Application.Equals(textBoxEditorApplication.Text) ||
-                    !EditorObject.Arguments.Equals(textBoxEditorArguments.Text)))
+                (!EditorObject.Application.Equals(textBoxApplication.Text) ||
+                    !EditorObject.Arguments.Equals(textBoxArguments.Text)) ||
+                    !EditorObject.Notes.Equals(textBoxNotes.Text))
             {
                 return true;
             }
@@ -206,7 +227,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (EditorObject != null &&
-                !EditorObject.Name.Equals(textBoxEditorName.Text))
+                !EditorObject.Name.Equals(textBoxName.Text))
             {
                 return true;
             }
@@ -216,7 +237,7 @@ namespace AutoScreenCapture
 
         private bool ApplicationExists()
         {
-            if (FileSystem.FileExists(textBoxEditorApplication.Text))
+            if (FileSystem.FileExists(textBoxApplication.Text))
             {
                 return true;
             }
@@ -255,8 +276,38 @@ namespace AutoScreenCapture
                     Icon = (Icon)(resources.GetObject("$this.Icon"));
                 }
 
-                textBoxEditorApplication.Text = openFileDialog.FileName;
+                textBoxApplication.Text = openFileDialog.FileName;
             }
+        }
+
+        private void textBoxName_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The name for the editor");
+        }
+
+        private void checkBoxMakeDefaultEditor_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("When checked it will make this editor the default editor");
+        }
+
+        private void textBoxApplication_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The path of the application or script to use when editing screenshots");
+        }
+
+        private void buttonChooseEditor_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("Browse for an application or script");
+        }
+
+        private void textBoxArguments_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The command line arguments of the application. Include the %filepath% argument so the filepath of the screenshot can be passed to the application");
+        }
+
+        private void textBoxNotes_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("An area for you to keep notes about the editor");
         }
     }
 }

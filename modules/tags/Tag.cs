@@ -116,6 +116,8 @@ namespace AutoScreenCapture
             EveningExtendsToNextMorning = false;
 
             Active = false;
+
+            Notes = string.Empty;
         }
 
         /// <summary>
@@ -180,6 +182,7 @@ namespace AutoScreenCapture
         /// <param name="timeOfDayEveningValue">The macro value for the evening.</param>
         /// <param name="eveningExtendsToNextMorning">Determines if we extend the evening time into the next morning.</param>
         /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
+        /// <param name="notes"></param>
         public Tag(string name, string description, TagType tagType,
             string dateTimeFormatValue,
             DateTime timeOfDayMorningStart,

@@ -24,6 +24,8 @@ namespace AutoScreenCapture
         private const string EDITOR_NAME = "name";
         private const string EDITOR_ARGUMENTS = "arguments";
         private const string EDITOR_APPLICATION = "application";
+        private const string EDITOR_NOTES = "notes";
+
         private readonly string EDITOR_XPATH;
 
         private static string AppCodename { get; set; }
@@ -111,6 +113,11 @@ namespace AutoScreenCapture
                                         }
 
                                         editor.Arguments = value;
+                                        break;
+
+                                    case EDITOR_NOTES:
+                                        xReader.Read();
+                                        editor.Notes = xReader.Value;
                                         break;
                                 }
                             }
@@ -242,6 +249,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(EDITOR_NAME, editor.Name);
                         xWriter.WriteElementString(EDITOR_APPLICATION, editor.Application);
                         xWriter.WriteElementString(EDITOR_ARGUMENTS, editor.Arguments);
+                        xWriter.WriteElementString(EDITOR_NOTES, editor.Notes);
 
                         xWriter.WriteEndElement();
                     }

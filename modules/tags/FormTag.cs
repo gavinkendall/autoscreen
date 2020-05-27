@@ -35,7 +35,7 @@ namespace AutoScreenCapture
 
         private void FormTag_Load(object sender, EventArgs e)
         {
-            textBoxTagName.Focus();
+            textBoxName.Focus();
 
             HelpMessage("This is where to configure a macro tag; special text that is replaced by an appropriate value (such as %time% is replaced with the current time)");
 
@@ -55,7 +55,7 @@ namespace AutoScreenCapture
             {
                 Text = "Change Tag";
 
-                textBoxTagName.Text = TagObject.Name;
+                textBoxName.Text = TagObject.Name;
 
                 textBoxDescription.Text = TagObject.Description;
 
@@ -87,7 +87,7 @@ namespace AutoScreenCapture
 
                 Tag tag = new Tag();
 
-                textBoxTagName.Text = "%tag" + (TagCollection.Count + 1) + "%";
+                textBoxName.Text = "%tag" + (TagCollection.Count + 1) + "%";
 
                 textBoxDescription.Text = "Please provide a brief summary for the purpose of this macro tag";
 
@@ -143,9 +143,9 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (TagCollection.GetByName(textBoxTagName.Text) == null)
+                if (TagCollection.GetByName(textBoxName.Text) == null)
                 {
-                    TagCollection.Add(new Tag(textBoxTagName.Text,
+                    TagCollection.Add(new Tag(textBoxName.Text,
                         textBoxDescription.Text,
                         (TagType)comboBoxType.SelectedIndex,
                         textBoxDateTimeFormatValue.Text,
@@ -184,13 +184,13 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (TagCollection.GetByName(textBoxTagName.Text) != null && NameChanged())
+                    if (TagCollection.GetByName(textBoxName.Text) != null && NameChanged())
                     {
                         MessageBox.Show("A tag with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        TagCollection.Get(TagObject).Name = textBoxTagName.Text;
+                        TagCollection.Get(TagObject).Name = textBoxName.Text;
                         TagCollection.Get(TagObject).Description = textBoxDescription.Text;
                         TagCollection.Get(TagObject).Type = (TagType)comboBoxType.SelectedIndex;
                         TagCollection.Get(TagObject).DateTimeFormatValue = textBoxDateTimeFormatValue.Text;
@@ -223,7 +223,7 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxTagName.Text = textBoxTagName.Text.Trim();
+            textBoxName.Text = textBoxName.Text.Trim();
             textBoxDescription.Text = textBoxDescription.Text.Trim();
             textBoxDateTimeFormatValue.Text = textBoxDateTimeFormatValue.Text.Trim();
             textBoxMorningValue.Text = textBoxMorningValue.Text.Trim();
@@ -231,18 +231,18 @@ namespace AutoScreenCapture
             textBoxEveningValue.Text = textBoxEveningValue.Text.Trim();
             textBoxNotes.Text = textBoxNotes.Text.Trim();
 
-            if (!textBoxTagName.Text.StartsWith("%"))
-                textBoxTagName.Text = "%" + textBoxTagName.Text;
+            if (!textBoxName.Text.StartsWith("%"))
+                textBoxName.Text = "%" + textBoxName.Text;
 
-            if (!textBoxTagName.Text.EndsWith("%"))
-                textBoxTagName.Text += "%";
+            if (!textBoxName.Text.EndsWith("%"))
+                textBoxName.Text += "%";
         }
 
         private bool InputValid()
         {
             if (textBoxDateTimeFormatValue.Enabled || groupBoxTimeOfDay.Enabled)
             {
-                if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                if (!string.IsNullOrEmpty(textBoxName.Text) &&
                     !string.IsNullOrEmpty(textBoxDescription.Text) &&
                     textBoxDateTimeFormatValue.Enabled &&
                     !string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text))
@@ -250,7 +250,7 @@ namespace AutoScreenCapture
                     return true;
                 }
 
-                if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                if (!string.IsNullOrEmpty(textBoxName.Text) &&
                     !string.IsNullOrEmpty(textBoxDescription.Text) &&
                     groupBoxTimeOfDay.Enabled &&
                     !string.IsNullOrEmpty(textBoxMorningValue.Text) &&
@@ -262,7 +262,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                if (!string.IsNullOrEmpty(textBoxTagName.Text) &&
+                if (!string.IsNullOrEmpty(textBoxName.Text) &&
                     !string.IsNullOrEmpty(textBoxDescription.Text))
                 {
                     return true;
@@ -315,7 +315,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (TagObject != null &&
-                !TagObject.Name.Equals(textBoxTagName.Text))
+                !TagObject.Name.Equals(textBoxName.Text))
             {
                 return true;
             }
