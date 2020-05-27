@@ -85,11 +85,16 @@ namespace AutoScreenCapture
         public bool Active { get; set; }
 
         /// <summary>
+        /// Notes for the user to write in whatever they need to.
+        /// </summary>
+        public string Notes { get; set; }
+
+        /// <summary>
         /// An empty constructor for a new schedule.
         /// </summary>
         public Schedule()
         {
-
+            Notes = string.Empty;
         }
     }
 }

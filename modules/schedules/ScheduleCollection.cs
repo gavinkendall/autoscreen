@@ -35,6 +35,8 @@ namespace AutoScreenCapture
         private const string SCHEDULE_FRIDAY = "friday";
         private const string SCHEDULE_SATURDAY = "saturday";
         private const string SCHEDULE_SUNDAY = "sunday";
+        private const string SCHEDULE_NOTES = "notes";
+
         private readonly string SCHEDULE_XPATH;
 
         /// <summary>
@@ -163,6 +165,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         schedule.Sunday = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case SCHEDULE_NOTES:
+                                        xReader.Read();
+                                        schedule.Notes = xReader.Value;
+                                        break;
                                 }
                             }
                         }
@@ -217,7 +224,8 @@ namespace AutoScreenCapture
                         ModePeriod = false,
                         CaptureAt = dtNow,
                         StartAt = dtNow,
-                        StopAt = dtNow
+                        StopAt = dtNow,
+                        Notes = string.Empty
                     };
 
                     // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
@@ -337,6 +345,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCHEDULE_FRIDAY, schedule.Friday.ToString());
                         xWriter.WriteElementString(SCHEDULE_SATURDAY, schedule.Saturday.ToString());
                         xWriter.WriteElementString(SCHEDULE_SUNDAY, schedule.Sunday.ToString());
+                        xWriter.WriteElementString(SCHEDULE_NOTES, schedule.Notes);
 
                         xWriter.WriteEndElement();
                     }

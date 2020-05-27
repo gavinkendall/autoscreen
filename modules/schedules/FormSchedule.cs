@@ -35,21 +35,23 @@ namespace AutoScreenCapture
 
         private void FormSchedule_Load(object sender, EventArgs e)
         {
-            textBoxScheduleName.Focus();
+            textBoxName.Focus();
+
+            HelpMessage("This is where to configure a schedule to determine when screenshots should be taken");
 
             if (ScheduleObject != null)
             {
                 Text = "Change Schedule";
 
-                textBoxScheduleName.Text = ScheduleObject.Name;
+                textBoxName.Text = ScheduleObject.Name;
                 checkBoxActive.Checked = ScheduleObject.Active;
 
                 radioButtonOneTime.Checked = ScheduleObject.ModeOneTime;
                 radioButtonPeriod.Checked = ScheduleObject.ModePeriod;
 
-                dateTimePickerSingleShot.Value = ScheduleObject.CaptureAt;
-                dateTimePickerScheduleStartAt.Value = ScheduleObject.StartAt;
-                dateTimePickerScheduleStopAt.Value = ScheduleObject.StopAt;
+                dateTimePickerCaptureAt.Value = ScheduleObject.CaptureAt;
+                dateTimePickerStartAt.Value = ScheduleObject.StartAt;
+                dateTimePickerStopAt.Value = ScheduleObject.StopAt;
 
                 checkBoxMonday.Checked = ScheduleObject.Monday;
                 checkBoxTuesday.Checked = ScheduleObject.Tuesday;
@@ -73,32 +75,41 @@ namespace AutoScreenCapture
                 {
                     checkBoxWeekend.Checked = true;
                 }
+
+                textBoxNotes.Text = ScheduleObject.Notes;
             }
             else
             {
                 Text = "Add New Schedule";
 
-                textBoxScheduleName.Text = "Schedule " + (ScheduleCollection.Count + 1);
+                textBoxName.Text = "Schedule " + (ScheduleCollection.Count + 1);
                 checkBoxActive.Checked = true;
 
-                dateTimePickerSingleShot.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
-                dateTimePickerScheduleStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
-                dateTimePickerScheduleStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
+                dateTimePickerCaptureAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
+                dateTimePickerStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
+                dateTimePickerStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
 
                 radioButtonOneTime.Checked = true;
                 radioButtonPeriod.Checked = false;
 
                 labelTakeScreenshotsOnce.Enabled = true;
-                dateTimePickerSingleShot.Enabled = true;
+                dateTimePickerCaptureAt.Enabled = true;
 
                 labelTakeScreenshotsPeriod.Enabled = false;
-                dateTimePickerScheduleStartAt.Enabled = false;
+                dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
-                dateTimePickerScheduleStopAt.Enabled = false;
+                dateTimePickerStopAt.Enabled = false;
 
                 checkBoxWorkWeek.Checked = true;
                 checkBoxWeekend.Checked = true;
+
+                textBoxNotes.Text = string.Empty;
             }
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -124,24 +135,25 @@ namespace AutoScreenCapture
             {
                 TrimInput();
 
-                if (ScheduleCollection.GetByName(textBoxScheduleName.Text) == null)
+                if (ScheduleCollection.GetByName(textBoxName.Text) == null)
                 {
                     Schedule schedule = new Schedule()
                     {
-                        Name = textBoxScheduleName.Text,
+                        Name = textBoxName.Text,
                         Active = checkBoxActive.Checked,
                         ModeOneTime = radioButtonOneTime.Checked,
                         ModePeriod = radioButtonPeriod.Checked,
-                        CaptureAt = dateTimePickerSingleShot.Value,
-                        StartAt = dateTimePickerScheduleStartAt.Value,
-                        StopAt = dateTimePickerScheduleStopAt.Value,
+                        CaptureAt = dateTimePickerCaptureAt.Value,
+                        StartAt = dateTimePickerStartAt.Value,
+                        StopAt = dateTimePickerStopAt.Value,
                         Monday = checkBoxMonday.Checked,
                         Tuesday = checkBoxTuesday.Checked,
                         Wednesday = checkBoxWednesday.Checked,
                         Thursday = checkBoxThursday.Checked,
                         Friday = checkBoxFriday.Checked,
                         Saturday = checkBoxSaturday.Checked,
-                        Sunday = checkBoxSunday.Checked
+                        Sunday = checkBoxSunday.Checked,
+                        Notes = textBoxNotes.Text
                     };
 
                     ScheduleCollection.Add(schedule);
@@ -169,20 +181,20 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (ScheduleCollection.GetByName(textBoxScheduleName.Text) != null && NameChanged())
+                    if (ScheduleCollection.GetByName(textBoxName.Text) != null && NameChanged())
                     {
                         MessageBox.Show("A schedule with this name already exists.", "Duplicate Name Conflict",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        ScheduleCollection.Get(ScheduleObject).Name = textBoxScheduleName.Text;
+                        ScheduleCollection.Get(ScheduleObject).Name = textBoxName.Text;
                         ScheduleCollection.Get(ScheduleObject).Active = checkBoxActive.Checked;
                         ScheduleCollection.Get(ScheduleObject).ModeOneTime = radioButtonOneTime.Checked;
                         ScheduleCollection.Get(ScheduleObject).ModePeriod = radioButtonPeriod.Checked;
-                        ScheduleCollection.Get(ScheduleObject).CaptureAt = dateTimePickerSingleShot.Value;
-                        ScheduleCollection.Get(ScheduleObject).StartAt = dateTimePickerScheduleStartAt.Value;
-                        ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerScheduleStopAt.Value;
+                        ScheduleCollection.Get(ScheduleObject).CaptureAt = dateTimePickerCaptureAt.Value;
+                        ScheduleCollection.Get(ScheduleObject).StartAt = dateTimePickerStartAt.Value;
+                        ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerStopAt.Value;
                         ScheduleCollection.Get(ScheduleObject).Monday = checkBoxMonday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Tuesday = checkBoxTuesday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Wednesday = checkBoxWednesday.Checked;
@@ -190,6 +202,7 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).Friday = checkBoxFriday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Saturday = checkBoxSaturday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Sunday = checkBoxSunday.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Notes = textBoxNotes.Text;
 
                         Okay();
                     }
@@ -207,12 +220,13 @@ namespace AutoScreenCapture
 
         private void TrimInput()
         {
-            textBoxScheduleName.Text = textBoxScheduleName.Text.Trim();
+            textBoxName.Text = textBoxName.Text.Trim();
+            textBoxNotes.Text = textBoxNotes.Text.Trim();
         }
 
         private bool InputValid()
         {
-            if (!string.IsNullOrEmpty(textBoxScheduleName.Text) &&
+            if (!string.IsNullOrEmpty(textBoxName.Text) &&
                 (checkBoxMonday.Checked ||
                 checkBoxTuesday.Checked ||
                 checkBoxWednesday.Checked ||
@@ -231,16 +245,17 @@ namespace AutoScreenCapture
         {
             if (ScheduleObject != null &&
                 (!ScheduleObject.Active.Equals(checkBoxActive.Checked) ||
-                !ScheduleObject.CaptureAt.Equals(dateTimePickerSingleShot.Value) ||
-                !ScheduleObject.StartAt.Equals(dateTimePickerScheduleStartAt.Value) ||
-                !ScheduleObject.StopAt.Equals(dateTimePickerScheduleStopAt.Value) ||
+                !ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
+                !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
+                !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value) ||
                 !ScheduleObject.Monday.Equals(checkBoxMonday.Checked) ||
                 !ScheduleObject.Tuesday.Equals(checkBoxTuesday.Checked) ||
                 !ScheduleObject.Wednesday.Equals(checkBoxWednesday.Checked) ||
                 !ScheduleObject.Thursday.Equals(checkBoxThursday.Checked) ||
                 !ScheduleObject.Friday.Equals(checkBoxFriday.Checked) ||
                 !ScheduleObject.Saturday.Equals(checkBoxSaturday.Checked) ||
-                !ScheduleObject.Sunday.Equals(checkBoxSunday.Checked)))
+                !ScheduleObject.Sunday.Equals(checkBoxSunday.Checked) ||
+                !ScheduleObject.Notes.Equals(textBoxNotes.Text)))
             {
                 return true;
             }
@@ -251,7 +266,7 @@ namespace AutoScreenCapture
         private bool NameChanged()
         {
             if (ScheduleObject != null &&
-                !ScheduleObject.Name.Equals(textBoxScheduleName.Text))
+                !ScheduleObject.Name.Equals(textBoxName.Text))
             {
                 return true;
             }
@@ -271,12 +286,12 @@ namespace AutoScreenCapture
             if (radioButtonOneTime.Checked)
             {
                 labelTakeScreenshotsOnce.Enabled = true;
-                dateTimePickerSingleShot.Enabled = true;
+                dateTimePickerCaptureAt.Enabled = true;
 
                 labelTakeScreenshotsPeriod.Enabled = false;
-                dateTimePickerScheduleStartAt.Enabled = false;
+                dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
-                dateTimePickerScheduleStopAt.Enabled = false;
+                dateTimePickerStopAt.Enabled = false;
             }
         }
 
@@ -285,12 +300,12 @@ namespace AutoScreenCapture
             if (radioButtonPeriod.Checked)
             {
                 labelTakeScreenshotsOnce.Enabled = false;
-                dateTimePickerSingleShot.Enabled = false;
+                dateTimePickerCaptureAt.Enabled = false;
 
                 labelTakeScreenshotsPeriod.Enabled = true;
-                dateTimePickerScheduleStartAt.Enabled = true;
+                dateTimePickerStartAt.Enabled = true;
                 labelAnd.Enabled = true;
-                dateTimePickerScheduleStopAt.Enabled = true;
+                dateTimePickerStopAt.Enabled = true;
             }
         }
 
@@ -326,6 +341,36 @@ namespace AutoScreenCapture
                 checkBoxSaturday.Checked = false;
                 checkBoxSunday.Checked = false;
             }
+        }
+
+        private void textBoxName_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The name for the schedule");
+        }
+
+        private void checkBoxActive_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The times and days in this schedule will be considered if Active is checked (turned on)");
+        }
+
+        private void dateTimePickerCaptureAt_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The time at which screenshots will be taken for a single capture cycle");
+        }
+
+        private void dateTimePickerStartAt_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The time at which a screen capture session will start running");
+        }
+
+        private void dateTimePickerStopAt_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("The time at which a running screen capture session will stop");
+        }
+
+        private void textBoxNotes_MouseHover(object sender, EventArgs e)
+        {
+            HelpMessage("An area for you to keep notes about the schedule");
         }
     }
 }
