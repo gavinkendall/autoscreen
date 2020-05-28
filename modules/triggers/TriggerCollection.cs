@@ -169,7 +169,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage($"WARNING: {FileSystem.TriggersFile} not found. Creating default triggers");
+                    Log.WriteDebugMessage("WARNING: Unable to load triggers");
 
                     Trigger triggerApplicationStartShowInterface = new Trigger()
                     {

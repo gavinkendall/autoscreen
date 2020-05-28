@@ -305,7 +305,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage($"WARNING: {FileSystem.TagsFile} not found. Creating default tags");
+                    Log.WriteDebugMessage("WARNING: Unable to load tags");
 
                     // Setup a few "built in" tags by default.
                     Add(new Tag("name", "The name of the screen or region", TagType.ScreenName, active: true));

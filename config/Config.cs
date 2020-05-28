@@ -84,6 +84,11 @@ namespace AutoScreenCapture
 
                 foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
                     string path;
 
                     if (GetPath(line, REGEX_SCREENSHOTS_FOLDER, out path))
@@ -288,7 +293,7 @@ namespace AutoScreenCapture
         /// <returns>A boolean to indicate if getting a path was successful or not.</returns>
         private static bool GetPath(string line, string regex, out string path)
         {
-            if (line.StartsWith("#") || !Regex.IsMatch(line, regex))
+            if (!Regex.IsMatch(line, regex))
             {
                 path = null;
                 return false;

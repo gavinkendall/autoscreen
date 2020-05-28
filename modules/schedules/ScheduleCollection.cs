@@ -209,7 +209,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage($"WARNING: {FileSystem.SchedulesFile} not found. Unable to load schedules");
+                    Log.WriteDebugMessage("WARNING: Unable to load schedules");
 
                     // If we can't find the schedules.xml file we'll need to have a "Special Schedule" schedule created to be compatible with old commands like -startat and -stopat.
                     Log.WriteDebugMessage("Creating default Special Schedule for use with command line arguments such as -startat and -stopat");
@@ -228,11 +228,11 @@ namespace AutoScreenCapture
                         Notes = string.Empty
                     };
 
-                    // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
-                    SettingCollection oldUserSettings = Settings.VersionManager.OldUserSettings;
-
-                    if (oldUserSettings != null)
+                    if (Settings.VersionManager != null && Settings.VersionManager.OldUserSettings != null)
                     {
+                        // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
+                        SettingCollection oldUserSettings = Settings.VersionManager.OldUserSettings;
+
                         bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", DefaultSettings.BoolCaptureStartAt).Value);
                         bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", DefaultSettings.BoolCaptureStopAt).Value);
 

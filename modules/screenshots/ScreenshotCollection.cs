@@ -371,6 +371,10 @@ namespace AutoScreenCapture
                         Log.WriteDebugMessage("XML document loaded");
                     }
                 }
+                else
+                {
+                    Log.WriteDebugMessage("WARNING: Unable to load screenshots");
+                }
             }
             catch (Exception ex)
             {

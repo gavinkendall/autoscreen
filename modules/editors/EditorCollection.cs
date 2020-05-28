@@ -140,7 +140,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage($"WARNING: {FileSystem.EditorsFile} not found. Unable to load editors");
+                    Log.WriteDebugMessage("WARNING: Unable to load editors");
 
                     // Setup default image editors.
                     // This is going to get maintenance heavy. I just know it.

@@ -203,7 +203,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage($"WARNING: {FileSystem.ScreensFile} not found. Detecting available screens and creating them");
+                    Log.WriteDebugMessage("WARNING: Unable to load screens");
 
                     // Setup some screens based on what we can find.
                     for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)

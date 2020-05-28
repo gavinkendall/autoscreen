@@ -227,7 +227,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage($"WARNING: {FileSystem.RegionsFile} not found. Unable to load regions");
+                    Log.WriteDebugMessage($"WARNING: Unable to load regions");
 
                     SaveToXmlFile();
                 }

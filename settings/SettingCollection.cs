@@ -240,6 +240,10 @@ namespace AutoScreenCapture
                         }
                     }
                 }
+                else
+                {
+                    Log.WriteDebugMessage("WARNING: Unable to load settings");
+                }
             }
             catch (Exception ex)
             {
