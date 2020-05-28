@@ -34,8 +34,6 @@ namespace AutoScreenCapture
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
         private const string REGION_ACTIVE = "active";
-        private const string REGION_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK = "active_window_title_capture_check";
-        private const string REGION_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT = "active_window_title_capture_text";
 
         private readonly string REGION_XPATH;
 
@@ -153,16 +151,6 @@ namespace AutoScreenCapture
                                     case REGION_ACTIVE:
                                         xReader.Read();
                                         region.Active = Convert.ToBoolean(xReader.Value);
-                                        break;
-
-                                    case REGION_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK:
-                                        xReader.Read();
-                                        region.ActiveWindowTitleCaptureCheck = Convert.ToBoolean(xReader.Value);
-                                        break;
-
-                                    case REGION_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT:
-                                        xReader.Read();
-                                        region.ActiveWindowTitleCaptureText = xReader.Value;
                                         break;
                                 }
                             }
@@ -296,8 +284,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_Y, region.Y.ToString());
                         xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
                         xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
-                        xWriter.WriteElementString(REGION_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK, region.ActiveWindowTitleCaptureCheck.ToString());
-                        xWriter.WriteElementString(REGION_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT, region.ActiveWindowTitleCaptureText);
 
                         xWriter.WriteEndElement();
                     }

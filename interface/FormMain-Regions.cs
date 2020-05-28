@@ -143,8 +143,8 @@ namespace AutoScreenCapture
                             // does not contain the text defined in "Active Window Title Capture Text" and CaptureNow is false.
                             // CaptureNow could be set to "true" during a "Capture Now / Archive" or "Capture Now / Edit" option
                             // so, in that case, we want to capture the screen and save the screenshot regardless of the title text.
-                            if (region.ActiveWindowTitleCaptureCheck && !string.IsNullOrEmpty(region.ActiveWindowTitleCaptureText) &&
-                                !_screenCapture.ActiveWindowTitle.ToLower().Contains(region.ActiveWindowTitleCaptureText.ToLower()) &&
+                            if (checkBoxActiveWindowTitle.Checked && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text) &&
+                                !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower()) &&
                                 !_screenCapture.CaptureNow)
                             {
                                 return;

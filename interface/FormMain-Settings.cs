@@ -157,6 +157,10 @@ namespace AutoScreenCapture
 
                 checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel).Value);
 
+                // The user can compare the current Active Window Title text to compare against what the text they've defined.
+                checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value);
+                textBoxActiveWindowTitle.Text = Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value.ToString();
+
                 EnableStartCapture();
 
                 CaptureLimitCheck();
@@ -181,8 +185,14 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit).Value = checkBoxCaptureLimit.Checked;
                 Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
                 Settings.User.GetByKey("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays).Value = numericUpDownKeepScreenshotsForDays.Value;
-                Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value = comboBoxScreenshotLabel.Text;
+
+                // Label.
+                Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value = comboBoxScreenshotLabel.Text.Trim();
                 Settings.User.GetByKey("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel).Value = checkBoxScreenshotLabel.Checked;
+
+                // Active Window Title text comparison check.
+                Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
+                Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
 
                 Settings.User.Save();
             }

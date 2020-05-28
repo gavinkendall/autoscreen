@@ -299,6 +299,8 @@ namespace AutoScreenCapture
                 User.Add(new Setting("StringDefaultEditor", DefaultSettings.StringDefaultEditor));
                 User.Add(new Setting("BoolFirstRun", DefaultSettings.BoolFirstRun));
                 User.Add(new Setting("IntStartScreenCaptureCount", DefaultSettings.IntStartScreenCaptureCount));
+                User.Add(new Setting("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck));
+                User.Add(new Setting("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText));
 
                 User.Save();
             }

@@ -105,8 +105,6 @@ namespace AutoScreenCapture
                 numericUpDownWidth.Value = RegionObject.Width;
                 numericUpDownHeight.Value = RegionObject.Height;
                 checkBoxActive.Checked = RegionObject.Active;
-                checkBoxActiveWindowTitle.Checked = RegionObject.ActiveWindowTitleCaptureCheck;
-                textBoxActiveWindowTitle.Text = RegionObject.ActiveWindowTitleCaptureText;
             }
             else
             {
@@ -124,8 +122,6 @@ namespace AutoScreenCapture
                 numericUpDownWidth.Value = 800;
                 numericUpDownHeight.Value = 600;
                 checkBoxActive.Checked = true;
-                checkBoxActiveWindowTitle.Checked = false;
-                textBoxActiveWindowTitle.Text = string.Empty;
             }
 
             UpdatePreviewMacro();
@@ -175,9 +171,7 @@ namespace AutoScreenCapture
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
-                        Active = checkBoxActive.Checked,
-                        ActiveWindowTitleCaptureCheck = checkBoxActiveWindowTitle.Checked,
-                        ActiveWindowTitleCaptureText = textBoxActiveWindowTitle.Text
+                        Active = checkBoxActive.Checked
                     });
 
                     Okay();
@@ -222,8 +216,6 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
                         RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
                         RegionCollection.Get(RegionObject).Active = checkBoxActive.Checked;
-                        RegionCollection.Get(RegionObject).ActiveWindowTitleCaptureCheck = checkBoxActiveWindowTitle.Checked;
-                        RegionCollection.Get(RegionObject).ActiveWindowTitleCaptureText = textBoxActiveWindowTitle.Text;
 
                         Okay();
                     }
@@ -244,7 +236,6 @@ namespace AutoScreenCapture
             textBoxRegionName.Text = textBoxRegionName.Text.Trim();
             textBoxFolder.Text = textBoxFolder.Text.Trim();
             textBoxMacro.Text = textBoxMacro.Text.Trim();
-            textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
         }
 
         private bool InputValid()
@@ -467,18 +458,6 @@ namespace AutoScreenCapture
             if (_formMacroTags != null)
             {
                 _formMacroTags.Close();
-            }
-        }
-
-        private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxActiveWindowTitle.Checked)
-            {
-                textBoxActiveWindowTitle.Enabled = true;
-            }
-            else
-            {
-                textBoxActiveWindowTitle.Enabled = false;
             }
         }
     }

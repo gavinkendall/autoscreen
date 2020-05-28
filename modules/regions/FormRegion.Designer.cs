@@ -64,9 +64,6 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
-            this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
-            this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
-            this.checkBoxActiveWindowTitle = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
@@ -79,7 +76,6 @@
             this.groupBoxSize.SuspendLayout();
             this.groupBoxPreview.SuspendLayout();
             this.groupBoxScreenTemplate.SuspendLayout();
-            this.groupBoxActiveWindowTitle.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelName
@@ -91,11 +87,11 @@
             this.labelName.TabIndex = 1;
             this.labelName.Text = "Name:";
             // 
-            // textBoxName
+            // textBoxRegionName
             // 
             this.textBoxRegionName.Location = new System.Drawing.Point(56, 32);
             this.textBoxRegionName.MaxLength = 50;
-            this.textBoxRegionName.Name = "textBoxName";
+            this.textBoxRegionName.Name = "textBoxRegionName";
             this.textBoxRegionName.Size = new System.Drawing.Size(546, 20);
             this.textBoxRegionName.TabIndex = 2;
             // 
@@ -514,39 +510,6 @@
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
             // 
-            // groupBoxActiveWindowTitle
-            // 
-            this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitle);
-            this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(12, 338);
-            this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
-            this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 72);
-            this.groupBoxActiveWindowTitle.TabIndex = 24;
-            this.groupBoxActiveWindowTitle.TabStop = false;
-            this.groupBoxActiveWindowTitle.Text = "Active Window Title";
-            // 
-            // textBoxActiveWindowTitle
-            // 
-            this.textBoxActiveWindowTitle.Enabled = false;
-            this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 42);
-            this.textBoxActiveWindowTitle.MaxLength = 500;
-            this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
-            this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(193, 20);
-            this.textBoxActiveWindowTitle.TabIndex = 26;
-            this.textBoxActiveWindowTitle.MouseHover += new System.EventHandler(this.textBoxActiveWindowTitle_MouseHover);
-            // 
-            // checkBoxActiveWindowTitle
-            // 
-            this.checkBoxActiveWindowTitle.AutoSize = true;
-            this.checkBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxActiveWindowTitle.Name = "checkBoxActiveWindowTitle";
-            this.checkBoxActiveWindowTitle.Size = new System.Drawing.Size(185, 17);
-            this.checkBoxActiveWindowTitle.TabIndex = 25;
-            this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
-            this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
-            this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
-            this.checkBoxActiveWindowTitle.MouseHover += new System.EventHandler(this.checkBoxActiveWindowTitle_MouseHover);
-            // 
             // FormRegion
             // 
             this.AcceptButton = this.buttonOK;
@@ -555,7 +518,6 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
-            this.Controls.Add(this.groupBoxActiveWindowTitle);
             this.Controls.Add(this.buttonMacroTags);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.checkBoxActive);
@@ -597,8 +559,6 @@
             this.groupBoxPreview.ResumeLayout(false);
             this.groupBoxPreview.PerformLayout();
             this.groupBoxScreenTemplate.ResumeLayout(false);
-            this.groupBoxActiveWindowTitle.ResumeLayout(false);
-            this.groupBoxActiveWindowTitle.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -641,8 +601,5 @@
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Button buttonMacroTags;
-        private System.Windows.Forms.GroupBox groupBoxActiveWindowTitle;
-        private System.Windows.Forms.TextBox textBoxActiveWindowTitle;
-        private System.Windows.Forms.CheckBox checkBoxActiveWindowTitle;
     }
 }

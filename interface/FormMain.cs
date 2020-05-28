@@ -378,5 +378,17 @@ namespace AutoScreenCapture
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
+
+        private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxActiveWindowTitle.Checked)
+            {
+                textBoxActiveWindowTitle.Enabled = true;
+            }
+            else
+            {
+                textBoxActiveWindowTitle.Enabled = false;
+            }
+        }
     }
 }

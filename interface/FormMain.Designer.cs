@@ -111,6 +111,9 @@ namespace AutoScreenCapture
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
+            this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
+            this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
+            this.checkBoxActiveWindowTitle = new System.Windows.Forms.CheckBox();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -124,6 +127,7 @@ namespace AutoScreenCapture
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.tabPageScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).BeginInit();
+            this.groupBoxActiveWindowTitle.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -391,6 +395,7 @@ namespace AutoScreenCapture
             // tabPageSetup
             // 
             this.tabPageSetup.AutoScroll = true;
+            this.tabPageSetup.Controls.Add(this.groupBoxActiveWindowTitle);
             this.tabPageSetup.Controls.Add(this.groupBoxSecurity);
             this.tabPageSetup.Controls.Add(this.checkBoxScreenshotLabel);
             this.tabPageSetup.Controls.Add(this.comboBoxScreenshotLabel);
@@ -408,7 +413,7 @@ namespace AutoScreenCapture
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 178);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 256);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -989,6 +994,37 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
+            // groupBoxActiveWindowTitle
+            // 
+            this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
+            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitle);
+            this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 178);
+            this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
+            this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 72);
+            this.groupBoxActiveWindowTitle.TabIndex = 25;
+            this.groupBoxActiveWindowTitle.TabStop = false;
+            this.groupBoxActiveWindowTitle.Text = "Active Window Title";
+            // 
+            // textBoxActiveWindowTitle
+            // 
+            this.textBoxActiveWindowTitle.Enabled = false;
+            this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 42);
+            this.textBoxActiveWindowTitle.MaxLength = 500;
+            this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
+            this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(193, 20);
+            this.textBoxActiveWindowTitle.TabIndex = 26;
+            // 
+            // checkBoxActiveWindowTitle
+            // 
+            this.checkBoxActiveWindowTitle.AutoSize = true;
+            this.checkBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxActiveWindowTitle.Name = "checkBoxActiveWindowTitle";
+            this.checkBoxActiveWindowTitle.Size = new System.Drawing.Size(185, 17);
+            this.checkBoxActiveWindowTitle.TabIndex = 25;
+            this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
+            this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1043,6 +1079,8 @@ namespace AutoScreenCapture
             this.tabPageScreenshots.ResumeLayout(false);
             this.tabPageScreenshots.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).EndInit();
+            this.groupBoxActiveWindowTitle.ResumeLayout(false);
+            this.groupBoxActiveWindowTitle.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1129,5 +1167,8 @@ namespace AutoScreenCapture
         private ToolStripSplitButton toolStripSplitButtonKeyboardShortcuts;
         private Timer timerShowNextHelpTip;
         private ToolStripSplitButton toolStripSplitButtonHelp;
+        private GroupBox groupBoxActiveWindowTitle;
+        private TextBox textBoxActiveWindowTitle;
+        private CheckBox checkBoxActiveWindowTitle;
     }
 }

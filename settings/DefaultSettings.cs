@@ -10,6 +10,9 @@ using System.Reflection;
 
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// The default settings for the application and the user.
+    /// </summary>
     public static class DefaultSettings
     {
         /// <summary>
@@ -57,6 +60,8 @@ namespace AutoScreenCapture
         internal static readonly string StringDefaultEditor = string.Empty;
         internal static readonly bool BoolFirstRun = true;
         internal static readonly int IntStartScreenCaptureCount = 0;
+        internal static readonly bool BoolActiveWindowTitleCaptureCheck = false;
+        internal static readonly string StringActiveWindowTitleCaptureText = string.Empty;
 
         // Old default user settings.
         internal static readonly bool BoolCaptureStartAt = false;

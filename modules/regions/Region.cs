@@ -80,16 +80,6 @@ namespace AutoScreenCapture
         public bool Active { get; set; }
 
         /// <summary>
-        /// Determines if we should consider the active window title upon capture.
-        /// </summary>
-        public bool ActiveWindowTitleCaptureCheck { get; set; }
-
-        /// <summary>
-        /// The text to find in the active window title.
-        /// </summary>
-        public string ActiveWindowTitleCaptureText { get; set; }
-
-        /// <summary>
         /// The empty constructor of the region.
         /// </summary>
         public Region()

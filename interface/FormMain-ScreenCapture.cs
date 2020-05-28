@@ -52,6 +52,10 @@ namespace AutoScreenCapture
 
                 checkBoxScreenshotLabel.Enabled = true;
                 comboBoxScreenshotLabel.Enabled = true;
+
+                groupBoxActiveWindowTitle.Enabled = true;
+                checkBoxActiveWindowTitle.Enabled = true;
+                textBoxActiveWindowTitle.Enabled = true;
             }
             else
             {
@@ -85,6 +89,10 @@ namespace AutoScreenCapture
 
             checkBoxScreenshotLabel.Enabled = false;
             comboBoxScreenshotLabel.Enabled = false;
+
+            groupBoxActiveWindowTitle.Enabled = false;
+            checkBoxActiveWindowTitle.Enabled = false;
+            textBoxActiveWindowTitle.Enabled = false;
         }
 
         /// <summary>

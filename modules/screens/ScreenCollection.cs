@@ -31,8 +31,6 @@ namespace AutoScreenCapture
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ACTIVE = "active";
-        private const string SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK = "active_window_title_capture_check";
-        private const string SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT = "active_window_title_capture_text";
 
         private readonly string SCREEN_XPATH;
 
@@ -154,16 +152,6 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.Active = Convert.ToBoolean(xReader.Value);
                                         break;
-
-                                    case SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK:
-                                        xReader.Read();
-                                        screen.ActiveWindowTitleCaptureCheck = Convert.ToBoolean(xReader.Value);
-                                        break;
-
-                                    case SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT:
-                                        xReader.Read();
-                                        screen.ActiveWindowTitleCaptureText = xReader.Value;
-                                        break;
                                 }
                             }
                         }
@@ -218,9 +206,7 @@ namespace AutoScreenCapture
                             JpegQuality = 100,
                             ResolutionRatio = 100,
                             Mouse = true,
-                            Active = true,
-                            ActiveWindowTitleCaptureCheck = false,
-                            ActiveWindowTitleCaptureText = string.Empty
+                            Active = true
                         };
 
                         Add(screen);
@@ -292,8 +278,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                         xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
-                        xWriter.WriteElementString(SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_CHECK, screen.ActiveWindowTitleCaptureCheck.ToString());
-                        xWriter.WriteElementString(SCREEN_ACTIVE_WINDOW_TITLE_CAPTURE_TEXT, screen.ActiveWindowTitleCaptureText);
 
                         xWriter.WriteEndElement();
                     }
