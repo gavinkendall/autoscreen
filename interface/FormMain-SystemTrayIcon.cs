@@ -74,6 +74,10 @@ namespace AutoScreenCapture
                 notifyIcon.Icon = Resources.autoscreen_error;
 
                 notifyIcon.Text = "The application encountered an error";
+
+                labelHelp.Image = Resources.warning;
+                labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
+                HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
             }
             else
             {
@@ -115,6 +119,9 @@ namespace AutoScreenCapture
                 {
                     notifyIcon.Icon = Resources.autoscreen;
                 }
+
+                labelHelp.Image = Resources.about;
+                labelHelp.BackColor = System.Drawing.Color.LightYellow;
             }
 
             toolStripInfo.Text = notifyIcon.Text;

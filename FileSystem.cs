@@ -27,6 +27,16 @@ namespace AutoScreenCapture
         public static readonly string FileManager = "explorer";
 
         /// <summary>
+        /// The name of the log files that get messages written if logging is enabled. The Log class uses its own file extension so only the name is used here.
+        /// </summary>
+        public static string LogFile = "autoscreen-log";
+
+        /// <summary>
+        /// The error file containing possible exception error messages when the application encounters an error.
+        /// </summary>
+        public static string ErrorFile = "autoscreen-error.txt";
+
+        /// <summary>
         /// The name of the Auto Screen Capture Configuration File.
         /// </summary>
         public static string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.conf";
