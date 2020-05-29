@@ -254,11 +254,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the settings.
         /// </summary>
-        public void Save()
+        public bool Save()
         {
             try
             {
-                if (string.IsNullOrEmpty(Filepath)) return;
+                if (string.IsNullOrEmpty(Filepath)) return true;
 
                 XmlWriterSettings xSettings = new XmlWriterSettings();
                 xSettings.Indent = true;
@@ -302,10 +302,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("SettingCollection::Save", ex);
+
+                return false;
             }
         }
 

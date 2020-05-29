@@ -32,7 +32,10 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                _formRegion.RegionCollection.SaveToXmlFile();
+                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -64,7 +67,10 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                _formRegion.RegionCollection.SaveToXmlFile();
+                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -101,7 +107,10 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                _formRegion.RegionCollection.SaveToXmlFile();
+                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -122,7 +131,10 @@ namespace AutoScreenCapture
                     BuildRegionsModule();
                     BuildViewTabPages();
 
-                    _formRegion.RegionCollection.SaveToXmlFile();
+                    if (!_formRegion.RegionCollection.SaveToXmlFile())
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
                 }
             }
         }

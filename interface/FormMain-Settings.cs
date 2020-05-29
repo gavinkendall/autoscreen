@@ -57,27 +57,57 @@ namespace AutoScreenCapture
                 _imageFormatCollection = new ImageFormatCollection();
 
                 Log.WriteMessage("Initializing editor collection");
-                _formEditor.EditorCollection.LoadXmlFileAndAddEditors();
+                
+                if (!_formEditor.EditorCollection.LoadXmlFileAndAddEditors())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
                 Log.WriteDebugMessage("Number of editors loaded = " + _formEditor.EditorCollection.Count);
 
                 Log.WriteMessage("Initializing trigger collection");
-                _formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers();
+
+                if (!_formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
                 Log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
 
                 Log.WriteMessage("Initializing region collection");
-                _formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection);
+
+                if (!_formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
                 Log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
 
                 Log.WriteMessage("Initializing screen collection");
-                _formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection);
+
+                if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
                 Log.WriteDebugMessage("Number of screens loaded = " + _formScreen.ScreenCollection.Count);
 
                 Log.WriteMessage("Initializing tag collection");
-                _formTag.TagCollection.LoadXmlFileAndAddTags();
+
+                if (!_formTag.TagCollection.LoadXmlFileAndAddTags())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
                 Log.WriteDebugMessage("Number of tags loaded = " + _formTag.TagCollection.Count);
 
                 Log.WriteMessage("Initializing schedule collection");
-                _formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules();
+
+                if (!_formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
                 Log.WriteDebugMessage("Number of schedules loaded = " + _formSchedule.ScheduleCollection.Count);
 
                 Log.WriteMessage("Building screens module");
@@ -194,7 +224,10 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
                 Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
 
-                Settings.User.Save();
+                if (!Settings.User.Save())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
             catch (Exception ex)
             {

@@ -103,6 +103,16 @@ namespace AutoScreenCapture.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon autoscreen_error {
+            get {
+                object obj = ResourceManager.GetObject("autoscreen_error", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon autoscreen_running {
             get {
                 object obj = ResourceManager.GetObject("autoscreen_running", resourceCulture);

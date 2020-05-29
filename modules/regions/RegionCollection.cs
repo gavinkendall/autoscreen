@@ -59,7 +59,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the regions.
         /// </summary>
-        public void LoadXmlFileAndAddRegions(ImageFormatCollection imageFormatCollection)
+        public bool LoadXmlFileAndAddRegions(ImageFormatCollection imageFormatCollection)
         {
             try
             {
@@ -219,17 +219,21 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("RegionCollection::Load", ex);
+
+                return false;
             }
         }
 
         /// <summary>
         /// Saves the regions.
         /// </summary>
-        public void SaveToXmlFile()
+        public bool SaveToXmlFile()
         {
             try
             {
@@ -295,10 +299,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("RegionCollection::SaveToXmlFile", ex);
+
+                return false;
             }
         }
     }

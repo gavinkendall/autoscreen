@@ -86,7 +86,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the tags.
         /// </summary>
-        public void LoadXmlFileAndAddTags()
+        public bool LoadXmlFileAndAddTags()
         {
             try
             {
@@ -334,17 +334,21 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("TagCollection::LoadXmlFileAndAddTags", ex);
+
+                return false;
             }
         }
 
         /// <summary>
         /// Saves the tags.
         /// </summary>
-        public void SaveToXmlFile()
+        public bool SaveToXmlFile()
         {
             try
             {
@@ -413,10 +417,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("TagCollection::SaveToXmlFile", ex);
+
+                return false;
             }
         }
     }

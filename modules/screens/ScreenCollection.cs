@@ -74,7 +74,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screens.
         /// </summary>
-        public void LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection)
+        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection)
         {
             try
             {
@@ -216,17 +216,21 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScreenCollection::LoadXmlFileAndAddScreens", ex);
+
+                return false;
             }
         }
 
         /// <summary>
         /// Saves the screens.
         /// </summary>
-        public void SaveToXmlFile()
+        public bool SaveToXmlFile()
         {
             try
             {
@@ -289,10 +293,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScreenCollection::SaveToXmlFile", ex);
+
+                return false;
             }
         }
     }

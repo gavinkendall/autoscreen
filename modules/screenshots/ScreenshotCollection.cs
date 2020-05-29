@@ -733,6 +733,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
+
                 return -1;
             }
             finally

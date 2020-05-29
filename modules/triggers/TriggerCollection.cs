@@ -55,7 +55,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the triggers.
         /// </summary>
-        public void LoadXmlFileAndAddTriggers()
+        public bool LoadXmlFileAndAddTriggers()
         {
             try
             {
@@ -235,17 +235,21 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
+
+                return false;
             }
         }
 
         /// <summary>
         /// Saves the triggers.
         /// </summary>
-        public void SaveToXmlFile()
+        public bool SaveToXmlFile()
         {
             try
             {
@@ -306,10 +310,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("TriggerCollection::SaveToXmlFile", ex);
+
+                return false;
             }
         }
     }

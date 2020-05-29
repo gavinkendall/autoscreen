@@ -27,7 +27,10 @@ namespace AutoScreenCapture
             {
                 BuildTagsModule();
 
-                _formTag.TagCollection.SaveToXmlFile();
+                if (!_formTag.TagCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -58,7 +61,10 @@ namespace AutoScreenCapture
             {
                 BuildTagsModule();
 
-                _formTag.TagCollection.SaveToXmlFile();
+                if (!_formTag.TagCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -81,7 +87,10 @@ namespace AutoScreenCapture
                 {
                     BuildTagsModule();
 
-                    _formTag.TagCollection.SaveToXmlFile();
+                    if (!_formTag.TagCollection.SaveToXmlFile())
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
                 }
             }
         }

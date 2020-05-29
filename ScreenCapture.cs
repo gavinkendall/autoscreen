@@ -117,6 +117,11 @@ namespace AutoScreenCapture
         public bool Running { get; set; }
 
         /// <summary>
+        ///  Determines if the application encountered an error.
+        /// </summary>
+        public bool ApplicationError { get; set; }
+
+        /// <summary>
         /// Determines if we had an error during screen capture.
         /// </summary>
         public bool CaptureError { get; set; }

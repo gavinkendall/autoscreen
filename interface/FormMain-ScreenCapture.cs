@@ -252,8 +252,6 @@ namespace AutoScreenCapture
                     timerScreenCapture.Enabled = true;
                     timerScreenCapture.Start();
 
-                    SystemTrayIconStatusRunning();
-
                     Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
                 }
@@ -295,8 +293,6 @@ namespace AutoScreenCapture
 
                     timerScreenCapture.Stop();
                     timerScreenCapture.Enabled = false;
-
-                    notifyIcon.Icon = Resources.autoscreen;
 
                     SearchFilterValues();
                     SearchDates();

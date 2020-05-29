@@ -116,7 +116,10 @@ namespace AutoScreenCapture
             {
                 BuildSchedulesModule();
 
-                _formSchedule.ScheduleCollection.SaveToXmlFile();
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -142,7 +145,10 @@ namespace AutoScreenCapture
             {
                 BuildSchedulesModule();
 
-                _formSchedule.ScheduleCollection.SaveToXmlFile();
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -170,7 +176,10 @@ namespace AutoScreenCapture
             {
                 BuildSchedulesModule();
 
-                _formSchedule.ScheduleCollection.SaveToXmlFile();
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
     }

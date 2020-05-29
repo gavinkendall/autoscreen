@@ -288,8 +288,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="autoscreen.ico" />
+    <Content Include="icons\ico\autoscreen-error.ico" />
     <Content Include="icons\ico\autoscreen.ico" />
     <Content Include="icons\ico\autoscreen_running.ico" />
+    <Content Include="icons\png\autoscreen-error.png" />
     <Content Include="icons\png\autoscreen-running.png" />
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />

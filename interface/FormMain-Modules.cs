@@ -196,7 +196,10 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                _formRegion.RegionCollection.SaveToXmlFile();
+                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
 
             if (label.Tag.GetType() == typeof(Schedule))
@@ -214,7 +217,10 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                _formSchedule.ScheduleCollection.SaveToXmlFile();
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
 
             if (label.Tag.GetType() == typeof(Screen))
@@ -232,7 +238,10 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                _formScreen.ScreenCollection.SaveToXmlFile();
+                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
 
             if (label.Tag.GetType() == typeof(Tag))
@@ -250,7 +259,10 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                _formTag.TagCollection.SaveToXmlFile();
+                if (!_formTag.TagCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
 
             if (label.Tag.GetType() == typeof(Trigger))
@@ -268,7 +280,10 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                _formTrigger.TriggerCollection.SaveToXmlFile();
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 

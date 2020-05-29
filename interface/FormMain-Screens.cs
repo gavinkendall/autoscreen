@@ -32,7 +32,10 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                _formScreen.ScreenCollection.SaveToXmlFile();
+                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -64,7 +67,10 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                _formScreen.ScreenCollection.SaveToXmlFile();
+                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -101,7 +107,10 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                _formScreen.ScreenCollection.SaveToXmlFile();
+                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -122,7 +131,10 @@ namespace AutoScreenCapture
                     BuildScreensModule();
                     BuildViewTabPages();
 
-                    _formScreen.ScreenCollection.SaveToXmlFile();
+                    if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
                 }
             }
         }

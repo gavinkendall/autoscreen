@@ -67,7 +67,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the image schedules from the schedules.xml file.
         /// </summary>
-        public void LoadXmlFileAndAddSchedules()
+        public bool LoadXmlFileAndAddSchedules()
         {
             try
             {
@@ -280,17 +280,21 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScheduleCollection::LoadXmlFileAndAddSchedules", ex);
+
+                return false;
             }
         }
 
         /// <summary>
         /// Saves the image schedules in the collection to the schedules.xml file.
         /// </summary>
-        public void SaveToXmlFile()
+        public bool SaveToXmlFile()
         {
             try
             {
@@ -357,10 +361,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("ScheduleCollection::SaveToXmlFile", ex);
+
+                return false;
             }
         }
     }

@@ -50,7 +50,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the image editors from the editors.xml file.
         /// </summary>
-        public void LoadXmlFileAndAddEditors()
+        public bool LoadXmlFileAndAddEditors()
         {
             try
             {
@@ -193,17 +193,21 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("EditorCollection::LoadXmlFileAndAddEditors", ex);
+
+                return false;
             }
         }
 
         /// <summary>
         /// Saves the image editors in the collection to the editors.xml file.
         /// </summary>
-        public void SaveToXmlFile()
+        public bool SaveToXmlFile()
         {
             try
             {
@@ -261,10 +265,14 @@ namespace AutoScreenCapture
                     xWriter.Flush();
                     xWriter.Close();
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("EditorCollection::SaveToXmlFile", ex);
+
+                return false;
             }
         }
     }

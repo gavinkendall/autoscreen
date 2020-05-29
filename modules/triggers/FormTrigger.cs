@@ -192,7 +192,7 @@ namespace AutoScreenCapture
                         TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
                         TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
 
-                        if (listBoxModuleItemList.Enabled)
+                        if (listBoxModuleItemList.SelectedItem != null)
                         {
                             TriggerCollection.Get(TriggerObject).ModuleItem = listBoxModuleItemList.SelectedItem.ToString();
                         }

@@ -30,7 +30,10 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                _formEditor.EditorCollection.SaveToXmlFile();
+                if (!_formEditor.EditorCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -63,7 +66,10 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                _formEditor.EditorCollection.SaveToXmlFile();
+                if (!_formEditor.EditorCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -103,7 +109,10 @@ namespace AutoScreenCapture
                     BuildViewTabPages();
                     BuildScreenshotPreviewContextualMenu();
 
-                    _formEditor.EditorCollection.SaveToXmlFile();
+                    if (!_formEditor.EditorCollection.SaveToXmlFile())
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
                 }
             }
         }

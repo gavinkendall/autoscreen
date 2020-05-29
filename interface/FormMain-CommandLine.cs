@@ -53,7 +53,10 @@ namespace AutoScreenCapture
 
                     BuildSchedulesModule();
 
-                    _formSchedule.ScheduleCollection.SaveToXmlFile();
+                    if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
                 }
 
                 foreach (string arg in args)
@@ -64,7 +67,11 @@ namespace AutoScreenCapture
                         Log.DebugMode = !Log.DebugMode;
 
                         Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = Log.DebugMode;
-                        Settings.Application.Save();
+
+                        if (!Settings.Application.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -debug=on
@@ -73,7 +80,11 @@ namespace AutoScreenCapture
                         Log.DebugMode = true;
 
                         Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = true;
-                        Settings.Application.Save();
+
+                        if (!Settings.Application.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -debug=off
@@ -82,7 +93,11 @@ namespace AutoScreenCapture
                         Log.DebugMode = false;
 
                         Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = false;
-                        Settings.Application.Save();
+                        
+                        if (!Settings.Application.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -log
@@ -91,7 +106,11 @@ namespace AutoScreenCapture
                         Log.LoggingEnabled = !Log.LoggingEnabled;
 
                         Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = Log.LoggingEnabled;
-                        Settings.Application.Save();
+
+                        if (!Settings.Application.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -log=on
@@ -100,7 +119,11 @@ namespace AutoScreenCapture
                         Log.LoggingEnabled = true;
 
                         Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = true;
-                        Settings.Application.Save();
+
+                        if (!Settings.Application.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -log=off
@@ -109,7 +132,11 @@ namespace AutoScreenCapture
                         Log.LoggingEnabled = false;
 
                         Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = false;
-                        Settings.Application.Save();
+
+                        if (!Settings.Application.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -capture
@@ -142,7 +169,11 @@ namespace AutoScreenCapture
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON))
                     {
                         Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value = true;
-                        Settings.User.Save();
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
 
                         notifyIcon.Visible = true;
                     }
@@ -151,7 +182,11 @@ namespace AutoScreenCapture
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
                         Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value = false;
-                        Settings.User.Save();
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
 
                         notifyIcon.Visible = false;
                     }
@@ -162,7 +197,11 @@ namespace AutoScreenCapture
                         checkBoxInitialScreenshot.Checked = !checkBoxInitialScreenshot.Checked;
 
                         Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
-                        Settings.User.Save();
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -initial=on
@@ -171,7 +210,11 @@ namespace AutoScreenCapture
                         checkBoxInitialScreenshot.Checked = true;
 
                         Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = true;
-                        Settings.User.Save();
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -initial=off
@@ -180,7 +223,11 @@ namespace AutoScreenCapture
                         checkBoxInitialScreenshot.Checked = false;
 
                         Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = false;
-                        Settings.User.Save();
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -limit=x
@@ -222,7 +269,11 @@ namespace AutoScreenCapture
                             timerScreenCapture.Interval = screenCaptureInterval;
 
                             Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value = screenCaptureInterval;
-                            Settings.User.Save();
+
+                            if (!Settings.User.Save())
+                            {
+                                _screenCapture.ApplicationError = true;
+                            }
 
                             timerScreenCapture.Enabled = true;
                             timerScreenCapture.Start();
@@ -244,7 +295,11 @@ namespace AutoScreenCapture
                             }
 
                             Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = Security.Hash(passphrase);
-                            Settings.User.Save();
+
+                            if (!Settings.User.Save())
+                            {
+                                _screenCapture.ApplicationError = true;
+                            }
 
                             ScreenCapture.LockScreenCaptureSession = true;
                         }
@@ -266,7 +321,10 @@ namespace AutoScreenCapture
 
                         BuildSchedulesModule();
 
-                        _formSchedule.ScheduleCollection.SaveToXmlFile();
+                        if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -stopat=hh:mm:ss
@@ -285,7 +343,10 @@ namespace AutoScreenCapture
 
                         BuildSchedulesModule();
 
-                        _formSchedule.ScheduleCollection.SaveToXmlFile();
+                        if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
 
                     // -captureat=hh:mm:ss
@@ -304,7 +365,10 @@ namespace AutoScreenCapture
 
                         BuildSchedulesModule();
 
-                        _formSchedule.ScheduleCollection.SaveToXmlFile();
+                        if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
                 }
 

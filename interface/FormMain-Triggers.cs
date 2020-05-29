@@ -33,7 +33,10 @@ namespace AutoScreenCapture
             {
                 BuildTriggersModule();
 
-                _formTrigger.TriggerCollection.SaveToXmlFile();
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -64,7 +67,10 @@ namespace AutoScreenCapture
             {
                 BuildTriggersModule();
 
-                _formTrigger.TriggerCollection.SaveToXmlFile();
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                {
+                    _screenCapture.ApplicationError = true;
+                }
             }
         }
 
@@ -93,7 +99,10 @@ namespace AutoScreenCapture
                 {
                     BuildTriggersModule();
 
-                    _formTrigger.TriggerCollection.SaveToXmlFile();
+                    if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
                 }
             }
         }
