@@ -205,13 +205,6 @@ namespace AutoScreenCapture
                 {
                     FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
                 }
-
-                SettingCollection applicationSettingsCollection = new SettingCollection
-                {
-                    Filepath = FileSystem.ApplicationSettingsFile
-                };
-
-                applicationSettingsCollection.Save();
             }
 
             if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
@@ -224,14 +217,16 @@ namespace AutoScreenCapture
                 {
                     FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
                 }
-
-                SettingCollection userSettingsCollection = new SettingCollection
-                {
-                    Filepath = FileSystem.ApplicationSettingsFile
-                };
-
-                userSettingsCollection.Save();
             }
+
+            Settings.Initialize();
+
+            Log.WriteMessage("Loading user settings");
+            Settings.User.Load();
+            Log.WriteDebugMessage("User settings loaded");
+
+            Log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
+            Settings.User.Upgrade();
 
             if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
             {

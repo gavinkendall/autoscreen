@@ -43,13 +43,6 @@ namespace AutoScreenCapture
                 Log.WriteDebugMessage("It looks like I successfully parsed your \"" + FileSystem.ConfigFile + "\" file.");
                 Log.WriteDebugMessage("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
 
-                Log.WriteMessage("Loading user settings");
-                Settings.User.Load();
-                Log.WriteDebugMessage("User settings loaded");
-
-                Log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
-                Settings.User.Upgrade();
-
                 Log.WriteMessage("Initializing screen capture");
                 _screenCapture = new ScreenCapture();
 

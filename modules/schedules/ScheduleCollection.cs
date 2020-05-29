@@ -218,14 +218,14 @@ namespace AutoScreenCapture
 
                     Schedule specialSchedule = new Schedule()
                     {
-                        Name = ScheduleCollection.SpecialScheduleName,
+                        Name = SpecialScheduleName,
                         Active = false,
                         ModeOneTime = true,
                         ModePeriod = false,
                         CaptureAt = dtNow,
                         StartAt = dtNow,
                         StopAt = dtNow,
-                        Notes = string.Empty
+                        Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
                     if (Settings.VersionManager != null && Settings.VersionManager.OldUserSettings != null)
@@ -274,6 +274,8 @@ namespace AutoScreenCapture
                             specialSchedule.Friday = friday;
                             specialSchedule.Saturday = saturday;
                         }
+
+                        specialSchedule.Notes += " Your schedule from a previous version of the application has been imported.";
                     }
 
                     Add(specialSchedule);

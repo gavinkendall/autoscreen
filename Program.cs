@@ -41,8 +41,6 @@ namespace AutoScreenCapture
                     // Normally we could use the -config command to specify the configuration file to use, but if we
                     // have no commands to parse then we'll load the settings from the default configuration file.
                     Config.Load();
-
-                    Settings.Initialize();
                 }
 
                 // This block of code figures out if we're already running an instance of the application.
@@ -87,8 +85,6 @@ namespace AutoScreenCapture
                         FileSystem.ConfigFile = configFile;
 
                         Config.Load();
-
-                        Settings.Initialize();
                     }
                 }
             }
@@ -97,16 +93,12 @@ namespace AutoScreenCapture
             if (Settings.Application == null)
             {
                 Config.Load();
-
-                Settings.Initialize();
             }
 
             // Load user settings.
             if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
             {
                 Config.Load();
-
-                Settings.Initialize();
             }
 
             // All of these commands can be externally issued to an already running instance.

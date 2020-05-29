@@ -290,8 +290,6 @@ namespace AutoScreenCapture
                             if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                             {
                                 Config.Load();
-
-                                Settings.Initialize();
                             }
 
                             Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = Security.Hash(passphrase);
