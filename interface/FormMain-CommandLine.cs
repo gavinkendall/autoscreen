@@ -46,7 +46,8 @@ namespace AutoScreenCapture
                         ModePeriod = false,
                         CaptureAt = dtNow,
                         StartAt = dtNow,
-                        StopAt = dtNow
+                        StopAt = dtNow,
+                        Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
                     _formSchedule.ScheduleCollection.Add(specialSchedule);

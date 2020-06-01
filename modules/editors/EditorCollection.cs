@@ -109,6 +109,9 @@ namespace AutoScreenCapture
 
                                                 // Starting with 2.3.0.0 the %screenshot% argument tag became the %filepath% argument tag.
                                                 value = value.Replace("%screenshot%", "%filepath%");
+
+                                                // Set this editor as the default editor. Version 2.3 requires at least one editor to be the default editor.
+                                                Settings.User.SetValueByKey("StringDefaultEditor", editor.Name);
                                             }
                                         }
 

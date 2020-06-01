@@ -67,64 +67,71 @@ namespace AutoScreenCapture
 
         private void ShowInfo()
         {
-            notifyIcon.Text = string.Empty;
-
-            if (_screenCapture.ApplicationError)
+            try
             {
-                notifyIcon.Icon = Resources.autoscreen_error;
+                notifyIcon.Text = string.Empty;
 
-                notifyIcon.Text = "The application encountered an error";
-
-                labelHelp.Image = Resources.warning;
-                labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
-                HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
-            }
-            else
-            {
-                if (_screenCapture.Running)
+                if (_screenCapture.ApplicationError)
                 {
-                    notifyIcon.Icon = Resources.autoscreen_running;
+                    notifyIcon.Icon = Resources.autoscreen_error;
 
-                    if (!_screenCapture.CaptureError)
-                    {
-                        string remainingTimeStr = string.Empty;
+                    notifyIcon.Text = "The application encountered an error";
 
-                        int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
-                        int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
-                        int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
-
-                        string remainingHoursStr = (remainingHours > 0
-                            ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
-                            : string.Empty);
-
-                        string remainingMinutesStr = (remainingMinutes > 0
-                            ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
-                            : string.Empty);
-
-                        string remainingSecondsStr = (remainingSeconds > 0
-                            ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
-                            : string.Empty);
-
-                        if (remainingSeconds > 0)
-                        {
-                            remainingTimeStr = "Next capture in " +
-                                remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
-                                _screenCapture.DateTimeNextCycle.ToLongTimeString();
-                        }
-
-                        notifyIcon.Text = remainingTimeStr;
-                    }
+                    labelHelp.Image = Resources.warning;
+                    labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
+                    HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
                 }
                 else
                 {
-                    notifyIcon.Icon = Resources.autoscreen;
+                    if (_screenCapture.Running)
+                    {
+                        notifyIcon.Icon = Resources.autoscreen_running;
+
+                        if (!_screenCapture.CaptureError)
+                        {
+                            string remainingTimeStr = string.Empty;
+
+                            int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
+                            int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
+                            int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
+
+                            string remainingHoursStr = (remainingHours > 0
+                                ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
+                                : string.Empty);
+
+                            string remainingMinutesStr = (remainingMinutes > 0
+                                ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
+                                : string.Empty);
+
+                            string remainingSecondsStr = (remainingSeconds > 0
+                                ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
+                                : string.Empty);
+
+                            if (remainingSeconds > 0)
+                            {
+                                remainingTimeStr = "Next capture in " +
+                                    remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
+                                    _screenCapture.DateTimeNextCycle.ToLongTimeString();
+                            }
+
+                            notifyIcon.Text = remainingTimeStr;
+                        }
+                    }
+                    else
+                    {
+                        notifyIcon.Icon = Resources.autoscreen;
+                    }
+
+                    labelHelp.Image = Resources.about;
+                    labelHelp.BackColor = System.Drawing.Color.LightYellow;
                 }
 
-                labelHelp.Image = Resources.about;
-                labelHelp.BackColor = System.Drawing.Color.LightYellow;
+                toolStripInfo.Text = notifyIcon.Text;
             }
-
-            toolStripInfo.Text = notifyIcon.Text;
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("FormMain-SystemTrayIcon::ShowInfo", ex);
+            }
         }
     }
 }
