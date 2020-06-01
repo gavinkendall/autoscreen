@@ -4,6 +4,19 @@
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>All the methods for handling schedules.</summary>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
 using System.Windows.Forms;
@@ -19,90 +32,97 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerScheduledCapture_Tick(object sender, EventArgs e)
         {
-            DateTime dtNow = DateTime.Now;
-
-            // Display help tip message from any class that isn't part of FormMain.
-            if (!string.IsNullOrEmpty(HelpTip.Message))
+            try
             {
-                RestartHelpTipTimer();
+                DateTime dtNow = DateTime.Now;
 
-                HelpMessage(HelpTip.Message);
-                HelpTip.Message = string.Empty;
-            }
-
-            // Parse commands issued externally via the command line.
-            if (FileSystem.FileExists(FileSystem.CommandFile))
-            {
-                string[] args = FileSystem.ReadFromFile(FileSystem.CommandFile);
-
-                if (args.Length > 0)
+                // Display help tip message from any class that isn't part of FormMain.
+                if (!string.IsNullOrEmpty(HelpTip.Message))
                 {
-                    ParseCommandLineArguments(args);
+                    RestartHelpTipTimer();
+
+                    HelpMessage(HelpTip.Message);
+                    HelpTip.Message = string.Empty;
                 }
-            }
-            else
-            {
-                FileSystem.CreateFile(FileSystem.CommandFile);
-            }
 
-            // Displays the next time screenshots are going to be captured in the system tray icon's tool tip.
-            ShowInfo();
-
-            // Process the list of schedules we need to consider.
-            foreach(Schedule schedule in _formSchedule.ScheduleCollection)
-            {
-                if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
-                    (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
-                    (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
-                    (dtNow.DayOfWeek == DayOfWeek.Thursday && schedule.Thursday) ||
-                    (dtNow.DayOfWeek == DayOfWeek.Friday && schedule.Friday) ||
-                    (dtNow.DayOfWeek == DayOfWeek.Saturday && schedule.Saturday) ||
-                    (dtNow.DayOfWeek == DayOfWeek.Sunday && schedule.Sunday))
+                // Parse commands issued externally via the command line.
+                if (FileSystem.FileExists(FileSystem.CommandFile))
                 {
-                    if (schedule.ModeOneTime)
-                    {
-                        if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
-                            (dtNow.Minute == schedule.CaptureAt.Minute) &&
-                            (dtNow.Second == schedule.CaptureAt.Second))
-                        {
-                            TakeScreenshot(captureNow: true);
-                        }
-                    }
+                    string[] args = FileSystem.ReadFromFile(FileSystem.CommandFile);
 
-                    if (schedule.ModePeriod)
+                    if (args.Length > 0)
                     {
-                        if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                            (dtNow.Minute == schedule.StartAt.Minute) &&
-                            (dtNow.Second == schedule.StartAt.Second))
-                        {
-                            StartScreenCapture();
-                        }
-
-                        if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                            (dtNow.Minute == schedule.StopAt.Minute) &&
-                            (dtNow.Second == schedule.StopAt.Second))
-                        {
-                            StopScreenCapture();
-                        }
+                        ParseCommandLineArguments(args);
                     }
                 }
+                else
+                {
+                    FileSystem.CreateFile(FileSystem.CommandFile);
+                }
+
+                // Displays the next time screenshots are going to be captured in the system tray icon's tool tip.
+                ShowInfo();
+
+                // Process the list of schedules we need to consider.
+                foreach (Schedule schedule in _formSchedule.ScheduleCollection)
+                {
+                    if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
+                        (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
+                        (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
+                        (dtNow.DayOfWeek == DayOfWeek.Thursday && schedule.Thursday) ||
+                        (dtNow.DayOfWeek == DayOfWeek.Friday && schedule.Friday) ||
+                        (dtNow.DayOfWeek == DayOfWeek.Saturday && schedule.Saturday) ||
+                        (dtNow.DayOfWeek == DayOfWeek.Sunday && schedule.Sunday))
+                    {
+                        if (schedule.ModeOneTime)
+                        {
+                            if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
+                                (dtNow.Minute == schedule.CaptureAt.Minute) &&
+                                (dtNow.Second == schedule.CaptureAt.Second))
+                            {
+                                TakeScreenshot(captureNow: true);
+                            }
+                        }
+
+                        if (schedule.ModePeriod)
+                        {
+                            if ((dtNow.Hour == schedule.StartAt.Hour) &&
+                                (dtNow.Minute == schedule.StartAt.Minute) &&
+                                (dtNow.Second == schedule.StartAt.Second))
+                            {
+                                StartScreenCapture();
+                            }
+
+                            if ((dtNow.Hour == schedule.StopAt.Hour) &&
+                                (dtNow.Minute == schedule.StopAt.Minute) &&
+                                (dtNow.Second == schedule.StopAt.Second))
+                            {
+                                StopScreenCapture();
+                            }
+                        }
+                    }
+                }
+
+                // Process the list of triggers of condition type Date/Time and condition type Time.
+                foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                {
+                    if (trigger.ConditionType == TriggerConditionType.DateTime &&
+                        trigger.Date.ToString(MacroParser.DateFormat).Equals(dtNow.ToString(MacroParser.DateFormat)) &&
+                        trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                    {
+                        DoTriggerAction(trigger);
+                    }
+
+                    if (trigger.ConditionType == TriggerConditionType.Time &&
+                        trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                    {
+                        DoTriggerAction(trigger);
+                    }
+                }
             }
-
-            // Process the list of triggers of condition type Date/Time and condition type Time.
-            foreach (Trigger trigger in _formTrigger.TriggerCollection)
+            catch (Exception ex)
             {
-                if (trigger.ConditionType == TriggerConditionType.DateTime &&
-                    trigger.Date.ToString(MacroParser.DateFormat).Equals(dtNow.ToString(MacroParser.DateFormat)) &&
-                    trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
-                {
-                    DoTriggerAction(trigger);
-                }
-
-                if (trigger.ConditionType == TriggerConditionType.Time &&
-                    trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
-                {
-                    DoTriggerAction(trigger);
-                }
+                Log.WriteExceptionMessage("FormMain-Schedules::timerScheduledCapture_Tick", ex);
             }
         }
 

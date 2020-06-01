@@ -86,6 +86,12 @@
     <Compile Include="config\Config.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="help\HelpTip.cs" />
+    <Compile Include="interface\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\FormMain-CommandLine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,6 +252,9 @@
     <Compile Include="versioning\VersionCollection.cs" />
     <Compile Include="versioning\Version.cs" />
     <Compile Include="versioning\VersionManager.cs" />
+    <EmbeddedResource Include="interface\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="interface\FormRegionSelectWithMouse.resx">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-04-25 (April 25, 2020)
+Last updated on 2020-06-01 (June 1, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.3.0.0)]
 =============================================================================================================
 
@@ -16,6 +16,13 @@ You can also schedule your automated screen capture sessions by specifying when 
 when a session stops on particular days of the week.
 
 A calendar is included to help you keep track of what days screenshots were taken.
+
+
+
+License
+-------
+This application comes under version 3 of the GNU General Public License (GPLv3).
+You can read the license in full at https://www.gnu.org/licenses/gpl-3.0.en.html
 
 
 
@@ -109,6 +116,10 @@ Auto Screen Capture will keep track of what screenshots were taken during the ti
 
 As of version 2.2.3.1 a label can be selected from the "Apply Label" system tray icon menu.
 This menu will not be available if the session is locked.
+
+*Active Window Title*
+This is where to specify the text to compare against the active window title so that the application only
+takes screenshots if the active window title contains the defined text.
 
 *Security*
 You can set a passphrase in order to lock the running screen capture session once the application starts
@@ -275,14 +286,14 @@ For example, "C:\Windows\System32\mspaint.exe" is the path to Microsoft Paint.
 as the editor. In fact, you can use any type of file for an editor.)
 
 The "Arguments" text field contains the application's command line arguments that will be used
-during the execution of the application. The %screenshot% tag represents the filepath of the
+during the execution of the application. The %filepath% tag represents the filepath of the
 screenshot's image file. This could be the filepath of the screenshot that you're wanting to
 edit via the "Edit" menu of the screenshot you're viewing from the Screenshots module or
 the filepath of the last screenshot that was taken when a Trigger uses a specified Editor
 to open the screenshot in the editor.
 
-The "Make this editor the default editor" checkbox sets the editor as the default editor to be
-used when you select "Capture Now / Edit" from the system tray icon's menu.
+The "Default" checkbox sets the editor as the default editor to be used when you select
+"Capture Now -> Edit" from the system tray icon's menu.
 
 The button with the red cross button is used to remove a selected number of editors in the list.
 Select the editors you want to remove and then click the button to remove the selected editors.
@@ -426,6 +437,8 @@ LimitReached                          Perform an action when the Limit has been 
 ScreenCaptureStarted                  Perform an action when a screen capture session starts
 ScreenCaptureStopped                  Perform an action when the running session is stopped
 ScreenshotTaken                       Perform an action when a screenshot is taken
+Date/Time                             Perform an action when a defined date and time has been met
+Time                                  Perform an action when a defined time has been met on a daily basis
 
 The following actions are available:
 ExitApplication                       Quits Auto Screen Capture
@@ -436,11 +449,13 @@ StartScreenCapture                    Starts a screen capture session
 StopScreenCapture                     Stops the currently running screen capture session
 EmailScreenshot                       Uses the email settings in "application.xml" to email
                                       the last screenshot image that was captured
+Set Screen Capture Interval           Sets (or changes) the screen capture interval to the defined interval
 
 The following triggers are created by default on the first run of Auto Screen Capture:
 Condition = ApplicationStartup -> Action = ShowInterface
 Condition = ScreenCaptureStarted -> Action = HideInterface
-Condition = InterfaceClosing -> Action = ExitApplication
+Condition = ScreenCaptureStopped -> Action = ShowInterface
+Condition = InterfaceClosing -> Action = HideInterface
 Condition = LimitReached -> Action = StopScreenCapture
 
 
@@ -518,6 +533,9 @@ Turns on "Initial Capture".
 -initial=off
 Turns off "Initial Capture".
 
+-captureat=hh:mm:ss
+Takes screenshots at the specified time.
+
 -startat=hh:mm:ss
 Schedules the application to start taking screenshots at a specified time.
 
@@ -548,6 +566,7 @@ application upon execution:
 ScreenshotsFolder=screenshots
 DebugFolder=!autoscreen\debug
 LogsFolder=!autoscreen\logs
+CommandFile=!autoscreen\command.txt
 ApplicationSettingsFile=application.xml
 UserSettingsFile=user.xml
 EditorsFile=!autoscreen\editors.xml
@@ -609,7 +628,7 @@ If you run into any issues with the application you can safely delete the "autos
 and try again. However, some issues may require you to remove the "!autoscreen" directory which is
 usually used to store the application's various XML files for its internal data system.
 
-The default configuration file looks like this ...
+The default configuration file looks like this (the paths, however, might be different for you) ...
 =========================================== autoscreen.conf ===========================================
 # Auto Screen Capture Configuration File
 # Use this file to tell the application what folders and files it should utilize.
@@ -625,6 +644,9 @@ DebugFolder=!autoscreen\debug
 
 # Logs are stored in this folder when either Logging or DebugMode is enabled.
 LogsFolder=!autoscreen\logs
+
+# This file is monitored by the application for commands issued from the command line while it's running.
+CommandFile=!autoscreen\command.txt
 
 # The application settings (such as DebugMode).
 ApplicationSettingsFile=!autoscreen\settings\application.xml
@@ -657,6 +679,7 @@ You can create your own configuration file as long as it has, at a minimum, the 
 ScreenshotsFolder=screenshots
 DebugFolder=!autoscreen\debug
 LogsFolder=!autoscreen\logs
+CommandFile=!autoscreen\command.txt
 ApplicationSettingsFile=!autoscreen\settings\application.xml
 UserSettingsFile=!autoscreen\settings\user.xml
 EditorsFile=!autoscreen\editors.xml
@@ -672,6 +695,7 @@ it's also possible to use network paths instead.
 By default the "!autoscreen" directory is created, and used, for storing XML files ...
 application.xml               Setup settings for the application (such as Debug Mode and Email)
 user.xml                      Setup settings for the user (such as Interval and Schedule)
+command.txt                   The command file is used to parse commands issued to a running instance
 editors.xml                   Setup the user's image editors to use when editing screenshots
 regions.xml                   Setup regions to capture on the user's computer
 screens.xml                   Setup screens to capture on the user's computer
@@ -702,6 +726,7 @@ For example, each user's "autoscreen.conf" file could look like this ...
 ScreenshotsFolder=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screenshots
 DebugFolder=\\SKYWALKER\shared\autoscreen\%machine%\%user%\debug
 LogsFolder=\\SKYWALKER\shared\autoscreen\%machine%\%user%\logs
+Commandfile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\command.txt
 ApplicationSettingsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\settings\application.xml
 UserSettingsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\settings\user.xml
 EditorsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\editors.xml
@@ -718,10 +743,6 @@ If you have a configuration file that you want Auto Screen Capture to use when t
 you can specify the path and name of the configuration file with the "-config" command line argument.
 For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
 config file named "MyAutoScreenCapture.conf" on the C:\ drive.
-
-The "autoscreen.conf" files are also available for particular versions of Auto Screen Capture:
-https://sourceforge.net/projects/autoscreen/files/2.2.3.2/
-https://sourceforge.net/projects/autoscreen/files/2.2.4.6/ (which introduced "TagsFile")
 
 
 
@@ -750,7 +771,7 @@ A few examples of application setting nodes in application.xml:
 </setting>
 <setting>
     <key>LowDiskPercentageThreshold</key>
-    <value>3</value>
+    <value>1</value>
 </setting>
 <setting>
     <key>ExitOnError</key>
@@ -783,6 +804,7 @@ value is 0 then the application will capture the active window otherwise it will
 capture an available screen based on its number; 1, 2, 3, 4, 5, 6, etc.
 An example of a screen node in screens.xml:
 <screen>
+    <active>True</active>
     <viewid>32e576b6-6ca4-4159-9256-11e8a2248d4c</viewid>
     <name>Screen 1</name>
     <folder>screenshots\</folder>
@@ -801,6 +823,7 @@ should be included in the image. A region also includes the X, Y, Width, and Hei
 values to determine the area of the screen it should capture.
 An example of a region node in regions.xml:
 <region>
+    <active>True</active>
     <viewid>c0a75b62-70af-4b4e-bba0-74a937cba83e</viewid>
     <name>Region 1</name>
     <folder>screenshots\</folder>
@@ -823,6 +846,7 @@ the format of the screenshot, the active window title, process name, and label.
 The "viewid" identifies the screen or region which the screenshot is associated with.
 An example of a screenshot node in screenshots.xml:
 <screenshot>
+    <version>2.3.0.0</version>
     <viewid>32e576b6-6ca4-4159-9256-11e8a2248d4c</viewid>
     <date>2020-02-03</date>
     <time>18:43:21.391</time>
@@ -837,24 +861,37 @@ An example of a screenshot node in screenshots.xml:
     </label>
 </screenshot>
 
+editors.xml
+This file contains all the image editors to use.
+An example of an editor node in editors.xml:
+<editor>
+    <name>Microsoft Paint</name>
+    <application>C:\Windows\System32\mspaint.exe</application>
+    <arguments>%filepath%</arguments>
+    <notes />
+</editor>
+
 tags.xml
 This file determines what tags should be used in a macro when a screenshot is written
 to an image file. Tags like %date% and %time% dynamically change value depending
 on the date and time a macro is parsed and an image file is processed.
 An example of a tag node in tags.xml:
 <tag>
+    <active>True</active>
     <name>%time%</name>
+    <description>The current time (%time%)</description>
+    <notes />
     <type>DateTimeFormat</type>
     <datetime_format_value>HH-mm-ss-fff</datetime_format_value>
-    <time_of_day_morning_start>2/3/2020 12:00:00 AM</time_of_day_morning_start>
-    <time_of_day_morning_end>2/3/2020 11:59:59 AM</time_of_day_morning_end>
-    <time_of_day_afternoon_start>2/3/2020 12:00:00 PM</time_of_day_afternoon_start>
-    <time_of_day_afternoon_end>2/3/2020 5:59:59 PM</time_of_day_afternoon_end>
-    <time_of_day_evening_start>2/3/2020 6:00:00 PM</time_of_day_evening_start>
-    <time_of_day_evening_end>2/3/2020 11:59:59 PM</time_of_day_evening_end>
-    <time_of_day_morning_value>morning</time_of_day_morning_value>
-    <time_of_day_afternoon_value>afternoon</time_of_day_afternoon_value>
-    <time_of_day_evening_value>evening</time_of_day_evening_value>
+    <time_of_day_morning_start>6/1/2020 12:00:00 AM</time_of_day_morning_start>
+    <time_of_day_morning_end>6/1/2020 11:59:59 AM</time_of_day_morning_end>
+    <time_of_day_afternoon_start>6/1/2020 12:00:00 PM</time_of_day_afternoon_start>
+    <time_of_day_afternoon_end>6/1/2020 5:59:59 PM</time_of_day_afternoon_end>
+    <time_of_day_evening_start>6/1/2020 6:00:00 PM</time_of_day_evening_start>
+    <time_of_day_evening_end>6/1/2020 11:59:59 PM</time_of_day_evening_end>
+    <time_of_day_morning_value>morning at %hour%-%minute%-%second%</time_of_day_morning_value>
+    <time_of_day_afternoon_value>afternoon at %hour%-%minute%-%second%</time_of_day_afternoon_value>
+    <time_of_day_evening_value>evening at %hour%-%minute%-%second%</time_of_day_evening_value>
     <evening_extends_to_next_morning>False</evening_extends_to_next_morning>
 </tag>
 
@@ -863,10 +900,14 @@ This file contains the various triggers that control the behaviour of the applic
 Each trigger is based on a condition to consider and an action to take if the condition is met.
 An example of a trigger node in triggers.xml:
 <trigger>
+    <active>True</active>
     <name>Interface Closing -&gt; Exit</name>
     <condition>InterfaceClosing</condition>
     <action>ExitApplication</action>
-    <editor />
+    <date>5/31/2020 9:32:19 PM</date>
+    <time>5/31/2020 9:32:19 PM</time>
+    <screen_capture_interval>0</screen_capture_interval>
+    <module_item />
 </trigger>
 
 
@@ -908,8 +949,37 @@ of relying on the application's default filename pattern. The series was codenam
 I would be watching Doctor Who (featuring Clara Oswald) while working on Auto Screen Capture :)
 
 2.2 Series ("Dalek")
-The application took a major step into defining what Auto Screen Capture is today with the ability to
-capture screenshots from multiple displays, filter screenshots, and automatically remove old screenshots.
-You can control the application's behaviour with Triggers and customize filenames with your own Tags.
-You can also replace an old "autoscreen.exe" binary with any 2.2 binary and it will upgrade its
-data system so that old screenshot references are updated with the newest reference schema.
+The application took a major step forward with the ability to capture screenshots from multiple displays,
+filter screenshots, and automatically remove old screenshots. You can control the application's behaviour
+with Triggers and customize filenames with your own Tags. You can also replace an old "autoscreen.exe"
+binary with any 2.2 binary and it will upgrade its data system so that old screenshot references are
+updated with the newest reference schema.
+
+2.3 Series ("Boombayah")
+Commands can now be issued to a running instance of the application!
+These include ...
+-interval=hh:mm:ss.nnn
+-start
+-startat=hh:mm:ss
+-stop
+-stopat=hh:mm:ss
+-capture
+-captureat=hh:mm:ss
+-debug
+-debug=on
+-debug=off
+-log
+-log=on
+-log=off
+-hideSystemTrayIcon
+-showSystemTrayIcon
+Also introduced is the ability to activate and deactivate screens, regions, schedules, tags, and triggers.
+You can now set an image editor to be your default editor when using "Capture Now -> Edit".
+Another amazing enhancement are the multiple schedules that you can create and being able to have better
+control over the application's workflow with more trigger conditions and trigger actions.
+The system tray icon turns red if an error has been encountered.
+The system tray icon turns yellow if a drive being used is running low on available disk space.
+You can define length of filepaths with the FilepathLimitLength application setting.
+It's also much faster at startup (even with a lot of screenshot references being available).
+The codename for this version is based on "Boombayah" by BLACKPINK (https://youtu.be/bwmSjveL3Lc)
+since this was constantly playing in the background while I was writing the code for 2.3.0.0 :)

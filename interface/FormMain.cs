@@ -4,6 +4,19 @@
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>The main interface form for setting up sub-forms, showing the interface, hiding the interface, displaying dates in the calendar, and searching for screenshots.</summary>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
 using System.ComponentModel;
@@ -17,6 +30,9 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMain : Form
     {
+        // The "About Auto Screen Capture" form.
+        private FormAbout _formAbout = new FormAbout();
+
         // The various forms that are used for modules.
         private FormEditor _formEditor = new FormEditor();
         private FormTrigger _formTrigger = new FormTrigger();
@@ -66,6 +82,7 @@ namespace AutoScreenCapture
             _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.X);
             _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.A);
             _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.E);
+            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.S);
 
             LoadSettings();
 
@@ -371,12 +388,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                Settings.Application.GetByKey("Name", DefaultSettings.ApplicationName).Value + " " +
-                Settings.Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value +
-                " (\"" + Settings.ApplicationCodename + "\")\nDeveloped by Gavin Kendall (2008 - 2020)", "About",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            _formAbout.ShowDialog(this);
         }
 
         private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)

@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ScreenshotType.cs" company="Gavin Kendall">
+// <copyright file="FormAbout.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>The type of screenshot can either represent the active window, a region, or a screen.</summary>
+// <summary>A form showing information about Auto Screen Capture.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,26 +18,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
+using System.Windows.Forms;
+
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// A class representing a type of screenshot.
+    /// A form showing information about Auto Screen Capture.
     /// </summary>
-    public enum ScreenshotType
+    public partial class FormAbout : Form
     {
         /// <summary>
-        /// The type of screenshot represents the active window.
+        /// Empty constructor.
         /// </summary>
-        ActiveWindow = 0,
-
-        /// <summary>
-        /// The type of screenshot represents a region.
-        /// </summary>
-        Region = 1,
-
-        /// <summary>
-        /// The type of screenshot represents a screen.
-        /// </summary>
-        Screen = 2
+        public FormAbout()
+        {
+            InitializeComponent();
+        }
     }
 }

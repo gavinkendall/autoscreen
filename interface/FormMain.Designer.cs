@@ -194,6 +194,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonKeyboardShortcuts.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripSplitButtonKeyboardShortcuts.Size = new System.Drawing.Size(131, 20);
             this.toolStripSplitButtonKeyboardShortcuts.Text = "Keyboard Shortcuts";
+            this.toolStripSplitButtonKeyboardShortcuts.Visible = false;
             // 
             // toolStripSplitButtonHelp
             // 
@@ -202,6 +203,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonHelp.Name = "toolStripSplitButtonHelp";
             this.toolStripSplitButtonHelp.Size = new System.Drawing.Size(64, 20);
             this.toolStripSplitButtonHelp.Text = "Help";
+            this.toolStripSplitButtonHelp.Visible = false;
             // 
             // toolStripInfo
             // 
@@ -275,40 +277,40 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(269, 270);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(280, 248);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Image = global::AutoScreenCapture.Properties.Resources.about;
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemAbout.Text = "About Auto Screen Capture";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
             // toolStripSeparatorAbout
             // 
             this.toolStripSeparatorAbout.Name = "toolStripSeparatorAbout";
-            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(265, 6);
+            this.toolStripSeparatorAbout.Size = new System.Drawing.Size(276, 6);
             // 
             // toolStripMenuItemShowInterface
             // 
             this.toolStripMenuItemShowInterface.Name = "toolStripMenuItemShowInterface";
-            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemShowInterface.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemShowInterface.Text = "Show Interface";
             this.toolStripMenuItemShowInterface.Click += new System.EventHandler(this.toolStripMenuItemShowInterface_Click);
             // 
             // toolStripMenuItemHideInterface
             // 
             this.toolStripMenuItemHideInterface.Name = "toolStripMenuItemHideInterface";
-            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemHideInterface.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
             this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.toolStripMenuItemHideInterface_Click);
             // 
             // toolStripSeparatorInterface
             // 
             this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
-            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(265, 6);
+            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(276, 6);
             // 
             // toolStripMenuItemStartScreenCapture
             // 
@@ -316,7 +318,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStartScreenCapture.Name = "toolStripMenuItemStartScreenCapture";
             this.toolStripMenuItemStartScreenCapture.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.Z)));
-            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemStartScreenCapture.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemStartScreenCapture.Text = "Start Screen Capture";
             this.toolStripMenuItemStartScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStartScreenCapture_Click);
             // 
@@ -327,7 +329,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture.Name = "toolStripMenuItemStopScreenCapture";
             this.toolStripMenuItemStopScreenCapture.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.X)));
-            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
@@ -337,7 +339,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowArchive.Name = "toolStripMenuItemCaptureNowArchive";
             this.toolStripMenuItemCaptureNowArchive.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.A)));
-            this.toolStripMenuItemCaptureNowArchive.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemCaptureNowArchive.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemCaptureNowArchive.Text = "Capture Now -> Archive";
             this.toolStripMenuItemCaptureNowArchive.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowArchive_Click);
             // 
@@ -347,7 +349,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowEdit.Name = "toolStripMenuItemCaptureNowEdit";
             this.toolStripMenuItemCaptureNowEdit.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.E)));
-            this.toolStripMenuItemCaptureNowEdit.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemCaptureNowEdit.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now -> Edit";
             this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowEdit_Click);
             // 
@@ -355,31 +357,33 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemRegionSelectClipboard.Image = global::AutoScreenCapture.Properties.Resources.region_select;
             this.toolStripMenuItemRegionSelectClipboard.Name = "toolStripMenuItemRegionSelectClipboard";
-            this.toolStripMenuItemRegionSelectClipboard.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemRegionSelectClipboard.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.S)));
+            this.toolStripMenuItemRegionSelectClipboard.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemRegionSelectClipboard.Text = "Region Select -> Clipboard";
             this.toolStripMenuItemRegionSelectClipboard.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboard_Click);
             // 
             // toolStripSeparatorCapture
             // 
             this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
-            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(265, 6);
+            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(276, 6);
             // 
             // toolStripMenuItemApplyLabel
             // 
             this.toolStripMenuItemApplyLabel.Name = "toolStripMenuItemApplyLabel";
-            this.toolStripMenuItemApplyLabel.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemApplyLabel.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemApplyLabel.Text = "Apply Label";
             // 
             // toolStripSeparatorApplyLabel
             // 
             this.toolStripSeparatorApplyLabel.Name = "toolStripSeparatorApplyLabel";
-            this.toolStripSeparatorApplyLabel.Size = new System.Drawing.Size(265, 6);
+            this.toolStripSeparatorApplyLabel.Size = new System.Drawing.Size(276, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.ShowShortcutKeys = false;
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(268, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(279, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
