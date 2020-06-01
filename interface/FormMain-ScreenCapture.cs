@@ -383,6 +383,17 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Shows a mouse-driven region selection canvas so you can select a region and then save the captured image to the clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectClipboard_Click(object sender, EventArgs e)
+        {
+            FormRegionSelectWithMouse _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse.LoadCanvas(outputMode: 1); // 1 is for saving the captured image to the clipboard
+        }
+
+        /// <summary>
         /// The timer for taking screenshots.
         /// </summary>
         /// <param name="sender"></param>

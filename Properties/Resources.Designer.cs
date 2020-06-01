@@ -233,6 +233,16 @@ namespace AutoScreenCapture.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap region_select {
+            get {
+                object obj = ResourceManager.GetObject("region_select", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap start_screen_capture {
             get {
                 object obj = ResourceManager.GetObject("start_screen_capture", resourceCulture);

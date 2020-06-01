@@ -25,6 +25,7 @@ namespace AutoScreenCapture
         private FormTag _formTag = new FormTag();
         private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
         private FormSchedule _formSchedule = new FormSchedule();
+
         private HotKeyMap _hotKeyMap = new HotKeyMap();
 
         private ScreenCapture _screenCapture;

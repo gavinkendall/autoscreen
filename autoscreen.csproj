@@ -140,6 +140,12 @@
     <Compile Include="interface\FormMain-TabPages.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="interface\FormRegionSelectWithMouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormRegionSelectWithMouse.Designer.cs">
+      <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
+    </Compile>
     <Compile Include="keyboard\HotKeyMap.cs" />
     <Compile Include="modules\tags\FormMacroTagsToolWindow.cs">
       <SubType>Form</SubType>
@@ -240,6 +246,9 @@
     <Compile Include="versioning\VersionCollection.cs" />
     <Compile Include="versioning\Version.cs" />
     <Compile Include="versioning\VersionManager.cs" />
+    <EmbeddedResource Include="interface\FormRegionSelectWithMouse.resx">
+      <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="modules\tags\FormMacroTagsToolWindow.resx">
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -296,6 +305,7 @@
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />
     <Content Include="images\application_add.png" />
+    <Content Include="images\region_select.png" />
     <Content Include="images\warning.png" />
     <None Include="images\brick.png" />
     <Content Include="images\capture_archive.png" />
