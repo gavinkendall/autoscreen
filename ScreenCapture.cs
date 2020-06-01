@@ -122,6 +122,11 @@ namespace AutoScreenCapture
         public bool ApplicationError { get; set; }
 
         /// <summary>
+        /// Determines if the application encountered an event that isn't an error but we still need to inform the user about.
+        /// </summary>
+        public bool ApplicationWarning { get; set; }
+
+        /// <summary>
         /// Determines if we had an error during screen capture.
         /// </summary>
         public bool CaptureError { get; set; }
@@ -497,10 +502,10 @@ namespace AutoScreenCapture
                             }
                             else
                             {
-                                // There is not enough disk space on the drive so stop the current running screen capture session and log an error message.
-                                Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "% so screen capture session is being stopped");
+                                // There is not enough disk space on the drive so log an error message and change the system tray icon's colour to yellow.
+                                Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "%");
 
-                                return false;
+                                ApplicationWarning = true;
                             }
                         }
                         else

@@ -71,15 +71,22 @@ namespace AutoScreenCapture
             {
                 notifyIcon.Text = string.Empty;
 
-                if (_screenCapture.ApplicationError)
+                if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
-                    notifyIcon.Icon = Resources.autoscreen_error;
+                    if (_screenCapture.ApplicationError)
+                    {
+                        notifyIcon.Icon = Resources.autoscreen_error;
+                        notifyIcon.Text = "The application encountered an error";
 
-                    notifyIcon.Text = "The application encountered an error";
-
-                    labelHelp.Image = Resources.warning;
-                    labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
-                    HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
+                        labelHelp.Image = Resources.warning;
+                        labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
+                        HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
+                    }
+                    else if (_screenCapture.ApplicationWarning)
+                    {
+                        notifyIcon.Icon = Resources.autoscreen_warning;
+                        notifyIcon.Text = "A drive being used is running low on available disk space";
+                    }
                 }
                 else
                 {

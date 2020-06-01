@@ -235,6 +235,7 @@ namespace AutoScreenCapture
                     Log.WriteMessage("Starting screen capture");
 
                     _screenCapture.Running = true;
+                    _screenCapture.ApplicationWarning = false;
 
                     _screenCapture.DateTimeStartCapture = DateTime.Now;
 
