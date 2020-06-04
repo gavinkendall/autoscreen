@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-06-01 (June 1, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.0.0)]
+Last updated on 2020-06-01 (June 4, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.0.1)]
 =============================================================================================================
 
 
@@ -979,7 +979,7 @@ Another amazing enhancement are the multiple schedules that you can create and b
 control over the application's workflow with more trigger conditions and trigger actions.
 The system tray icon turns red if an error has been encountered.
 The system tray icon turns yellow if a drive being used is running low on available disk space.
-You can define length of filepaths with the FilepathLimitLength application setting.
+You can define length of filepaths with the FilepathLengthLimit application setting.
 It's also much faster at startup (even with a lot of screenshot references being available).
 The codename for this version is based on "Boombayah" by BLACKPINK (https://youtu.be/bwmSjveL3Lc)
 since this was constantly playing in the background while I was writing the code for 2.3.0.0 :)

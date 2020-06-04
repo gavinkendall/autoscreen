@@ -394,6 +394,9 @@ namespace AutoScreenCapture
                 RemoveByKey("DateTimeCaptureStopAt");
                 RemoveByKey("DateTimeCaptureStartAt");
 
+                // This application setting was accidentally introduced in 2.3.0.0 so it needs to be removed.
+                RemoveByKey("FilepathLimitLength"); // This should have been "FilepathLengthLimit"
+
                 if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                 {
                     Log.WriteDebugMessage("Accurate version information could not be found so assuming upgrade from 2.1.8.2");

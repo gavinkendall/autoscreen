@@ -130,7 +130,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_DALEK, "2.2.3.1"), // Apply Label is made invisible when screen capture session is locked. Fixed bug with parsing command line arguments.
                 new Version(CODENAME_DALEK, "2.2.3.2"), // Apply Label fixed to show labels whenever the system tray icon menu is opened.
                 new Version(CODENAME_DALEK, "2.2.4.6"), // System tray icon turns green when screen capture session is running. Tags are now user-defined and have their own module.
-                new Version(CODENAME_DALEK, "2.2.5.0") // A version that was never released. This was to make startup speed faster but major features implemented for the application (such as Schedules and controlling a running instance of the application from the command line) deserved 2.2.5.0 to become 2.3.0.0! Boombayah!
+                new Version(CODENAME_DALEK, "2.2.5.0"), // A version that was never released. This was to make startup speed faster but major features implemented for the application (such as Schedules and controlling a running instance of the application from the command line) deserved 2.2.5.0 to become 2.3.0.0! Boombayah!
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.0") // Faster startup, commands can be issued to a running instance, multiple schedules, more trigger conditions and trigger actions, and help tips in the help bar.
             };
 
             Application = new SettingCollection

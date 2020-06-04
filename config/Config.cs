@@ -238,6 +238,9 @@ namespace AutoScreenCapture
             Settings.User.Load();
             Log.WriteDebugMessage("User settings loaded");
 
+            Log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
+            Settings.Application.Upgrade();
+
             Log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
             Settings.User.Upgrade();
 
