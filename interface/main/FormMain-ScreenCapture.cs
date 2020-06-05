@@ -277,6 +277,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain-ScreenCapture::StartScreenCapture", ex);
             }
         }
@@ -322,6 +323,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain-ScreenCapture::StopScreenCapture", ex);
             }
         }

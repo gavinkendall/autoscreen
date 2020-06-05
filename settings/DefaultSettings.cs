@@ -75,6 +75,22 @@ namespace AutoScreenCapture
         internal static readonly int IntStartScreenCaptureCount = 0;
         internal static readonly bool BoolActiveWindowTitleCaptureCheck = false;
         internal static readonly string StringActiveWindowTitleCaptureText = string.Empty;
+        internal static readonly bool BoolUseKeyboardShortcuts = false;
+        internal static readonly string StringKeyboardShortcutStartScreenCaptureModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutStartScreenCaptureModifier2 = "Alt";
+        internal static readonly string StringKeyboardShortcutStartScreenCaptureKey = "Z";
+        internal static readonly string StringKeyboardShortcutStopScreenCaptureModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutStopScreenCaptureModifier2 = "Alt";
+        internal static readonly string StringKeyboardShortcutStopScreenCaptureKey = "X";
+        internal static readonly string StringKeyboardShortcutCaptureNowArchiveModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutCaptureNowArchiveModifier2 = "Alt";
+        internal static readonly string StringKeyboardShortcutCaptureNowArchiveKey = "A";
+        internal static readonly string StringKeyboardShortcutCaptureNowEditModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutCaptureNowEditModifier2 = "Alt";
+        internal static readonly string StringKeyboardShortcutCaptureNowEditKey = "E";
+        internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier2 = "Alt";
+        internal static readonly string StringKeyboardShortcutRegionSelectClipboardKey = "S";
 
         // Old default user settings.
         internal static readonly bool BoolCaptureStartAt = false;

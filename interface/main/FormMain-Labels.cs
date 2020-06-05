@@ -90,6 +90,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain-Labels::PopulateLabelList", ex);
             }
         }

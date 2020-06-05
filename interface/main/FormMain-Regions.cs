@@ -206,6 +206,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain-Regions::RunRegionCaptures", ex);
             }
         }

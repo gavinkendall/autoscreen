@@ -205,6 +205,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain-Settings::LoadSettings", ex);
             }
         }
@@ -237,6 +238,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain-Settings::SaveSettings", ex);
             }
         }

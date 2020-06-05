@@ -64,6 +64,7 @@
             // 
             // richTextBoxDeveloper
             // 
+            this.richTextBoxDeveloper.DetectUrls = false;
             this.richTextBoxDeveloper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxDeveloper.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxDeveloper.Location = new System.Drawing.Point(3, 3);
@@ -87,6 +88,7 @@
             // 
             // richTextBoxLicense
             // 
+            this.richTextBoxLicense.DetectUrls = false;
             this.richTextBoxLicense.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxLicense.Location = new System.Drawing.Point(3, 3);
@@ -103,9 +105,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 288);
             this.Controls.Add(this.tabControlAbout);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(479, 327);
             this.Name = "FormAbout";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About Auto Screen Capture";
             this.tabControlAbout.ResumeLayout(false);
             this.tabPageDeveloper.ResumeLayout(false);

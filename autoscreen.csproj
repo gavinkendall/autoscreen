@@ -92,58 +92,64 @@
     <Compile Include="interface\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\FormMain-CommandLine.cs">
+    <Compile Include="interface\FormKeyboardShortcuts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Convert.cs">
+    <Compile Include="interface\FormKeyboardShortcuts.Designer.cs">
+      <DependentUpon>FormKeyboardShortcuts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="interface\main\FormMain-CommandLine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Editors.cs">
+    <Compile Include="interface\main\FormMain-Convert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Exit.cs">
+    <Compile Include="interface\main\FormMain-Editors.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Filters.cs">
+    <Compile Include="interface\main\FormMain-Exit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Help.cs">
+    <Compile Include="interface\main\FormMain-Filters.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-KeyboardShortcuts.cs">
+    <Compile Include="interface\main\FormMain-Help.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Labels.cs">
+    <Compile Include="interface\main\FormMain-KeyboardShortcuts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Modules.cs">
+    <Compile Include="interface\main\FormMain-Labels.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Regions.cs">
+    <Compile Include="interface\main\FormMain-Modules.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Schedules.cs">
+    <Compile Include="interface\main\FormMain-Regions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-ScreenCapture.cs">
+    <Compile Include="interface\main\FormMain-Schedules.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Screens.cs">
+    <Compile Include="interface\main\FormMain-ScreenCapture.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Screenshots.cs">
+    <Compile Include="interface\main\FormMain-Screens.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Security.cs">
+    <Compile Include="interface\main\FormMain-Screenshots.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Settings.cs">
+    <Compile Include="interface\main\FormMain-Security.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-SystemTrayIcon.cs">
+    <Compile Include="interface\main\FormMain-Settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-TabPages.cs">
+    <Compile Include="interface\main\FormMain-SystemTrayIcon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\main\FormMain-TabPages.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="interface\FormRegionSelectWithMouse.cs">
@@ -160,10 +166,10 @@
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="macro\MacroTagExpressionParser.cs" />
-    <Compile Include="interface\FormMain-Tags.cs">
+    <Compile Include="interface\main\FormMain-Tags.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain-Triggers.cs">
+    <Compile Include="interface\main\FormMain-Triggers.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="modules\CollectionTemplate.cs" />
@@ -184,16 +190,16 @@
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\schedules\Schedule.cs" />
-    <Compile Include="security\FormEnterPassphrase.cs">
+    <Compile Include="interface\FormEnterPassphrase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="security\FormEnterPassphrase.Designer.cs">
+    <Compile Include="interface\FormEnterPassphrase.Designer.cs">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\FormMain.cs">
+    <Compile Include="interface\main\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormMain.Designer.cs">
+    <Compile Include="interface\main\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\regions\FormRegion.cs">
@@ -254,6 +260,10 @@
     <Compile Include="versioning\VersionManager.cs" />
     <EmbeddedResource Include="interface\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\FormKeyboardShortcuts.resx">
+      <DependentUpon>FormKeyboardShortcuts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormRegionSelectWithMouse.resx">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
@@ -267,10 +277,10 @@
     <EmbeddedResource Include="modules\schedules\FormSchedule.resx">
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="security\formEnterPassphrase.resx">
+    <EmbeddedResource Include="interface\formEnterPassphrase.resx">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\FormMain.resx">
+    <EmbeddedResource Include="interface\main\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -31,6 +31,7 @@ namespace AutoScreenCapture
     {
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
@@ -91,6 +92,14 @@ namespace AutoScreenCapture
                 throw new InvalidOperationException("Unable to register hot key");
         }
 
+        public void UnregisterHotKeys()
+        {
+            for (int i = _currentId; i > 0; i--)
+            {
+                UnregisterHotKey(_window.Handle, i);
+            }
+        }
+
         /// <summary>
         /// An event handler that triggers when a key is pressed.
         /// </summary>
@@ -101,11 +110,6 @@ namespace AutoScreenCapture
         /// </summary>
         public void Dispose()
         {
-            for (int i = _currentId; i > 0; i--)
-            {
-                UnregisterHotKey(_window.Handle, i);
-            }
-
             _window.Dispose();
         }
     }
@@ -132,9 +136,29 @@ namespace AutoScreenCapture
     [Flags]
     public enum ModifierKeys : uint
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Alt
+        /// </summary>
         Alt = 1,
+
+        /// <summary>
+        /// Control
+        /// </summary>
         Control = 2,
+
+        /// <summary>
+        /// Shift
+        /// </summary>
         Shift = 4,
+
+        /// <summary>
+        /// Windows Key
+        /// </summary>
         Win = 8
     }
 }

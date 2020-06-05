@@ -150,6 +150,8 @@ namespace AutoScreenCapture
                     break;
             }
 
+            Cursor = Cursors.Arrow;
+
             Close();
         }
 

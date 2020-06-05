@@ -34,15 +34,24 @@ namespace AutoScreenCapture
         private FormAbout _formAbout = new FormAbout();
 
         // The various forms that are used for modules.
-        private FormEditor _formEditor = new FormEditor();
-        private FormTrigger _formTrigger = new FormTrigger();
+        private FormTag _formTag = new FormTag();
         private FormRegion _formRegion = new FormRegion();
         private FormScreen _formScreen = new FormScreen();
-        private FormTag _formTag = new FormTag();
-        private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
+        private FormEditor _formEditor = new FormEditor();
+        private FormTrigger _formTrigger = new FormTrigger();
         private FormSchedule _formSchedule = new FormSchedule();
 
+        // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
+        private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
+
+        // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap = new HotKeyMap();
+        private FormKeyboardShortcuts _formKeyboardShortcuts = new FormKeyboardShortcuts();
+        private string _keyboardShortcutStartScreenCaptureKeyUserSetting;
+        private string _keyboardShortcutStopScreenCaptureKeyUserSetting;
+        private string _keyboardShortcutCaptureNowArchiveKeyUserSetting;
+        private string _keyboardShortcutCaptureNowEditKeyUserSetting;
+        private string _keyboardShortcutRegionSelectClipboardKeyUserSetting;
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
@@ -77,12 +86,8 @@ namespace AutoScreenCapture
         {
             InitializeComponent();
 
+            RegisterKeyboardShortcuts();
             _hotKeyMap.KeyPressed +=  new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
-            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.Z);
-            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.X);
-            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.A);
-            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.E);
-            _hotKeyMap.RegisterHotKey(AutoScreenCapture.ModifierKeys.Control | AutoScreenCapture.ModifierKeys.Alt, Keys.S);
 
             LoadSettings();
 
@@ -307,6 +312,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain::ShowInterface", ex);
             }
         }
@@ -337,6 +343,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                _screenCapture.ApplicationError = true;
                 Log.WriteExceptionMessage("FormMain::HideInterface", ex);
             }
         }

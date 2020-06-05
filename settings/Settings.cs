@@ -131,7 +131,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_DALEK, "2.2.3.2"), // Apply Label fixed to show labels whenever the system tray icon menu is opened.
                 new Version(CODENAME_DALEK, "2.2.4.6"), // System tray icon turns green when screen capture session is running. Tags are now user-defined and have their own module.
                 new Version(CODENAME_DALEK, "2.2.5.0"), // A version that was never released. This was to make startup speed faster but major features implemented for the application (such as Schedules and controlling a running instance of the application from the command line) deserved 2.2.5.0 to become 2.3.0.0! Boombayah!
-                new Version(CODENAME_BOOMBAYAH, "2.3.0.0") // Faster startup, commands can be issued to a running instance, multiple schedules, more trigger conditions and trigger actions, and help tips in the help bar.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.0"), // Faster startup, commands can be issued to a running instance, multiple schedules, more trigger conditions and trigger actions, and help tips in the help bar.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.1") // Fixed bug with FilenameLengthLimit application setting.
             };
 
             Application = new SettingCollection
@@ -315,6 +316,22 @@ namespace AutoScreenCapture
                 User.Add(new Setting("IntStartScreenCaptureCount", DefaultSettings.IntStartScreenCaptureCount));
                 User.Add(new Setting("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck));
                 User.Add(new Setting("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText));
+                User.Add(new Setting("BoolUseKeyboardShortcuts", DefaultSettings.BoolUseKeyboardShortcuts));
+                User.Add(new Setting("StringKeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.StringKeyboardShortcutStartScreenCaptureModifier1));
+                User.Add(new Setting("StringKeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.StringKeyboardShortcutStartScreenCaptureModifier2));
+                User.Add(new Setting("StringKeyboardShortcutStartScreenCaptureKey", DefaultSettings.StringKeyboardShortcutStartScreenCaptureKey));
+                User.Add(new Setting("StringKeyboardShortcutStopScreenCaptureModifier1", DefaultSettings.StringKeyboardShortcutStopScreenCaptureModifier1));
+                User.Add(new Setting("StringKeyboardShortcutStopScreenCaptureModifier2", DefaultSettings.StringKeyboardShortcutStopScreenCaptureModifier2));
+                User.Add(new Setting("StringKeyboardShortcutStopScreenCaptureKey", DefaultSettings.StringKeyboardShortcutStopScreenCaptureKey));
+                User.Add(new Setting("StringKeyboardShortcutCaptureNowArchiveModifier1", DefaultSettings.StringKeyboardShortcutCaptureNowArchiveModifier1));
+                User.Add(new Setting("StringKeyboardShortcutCaptureNowArchiveModifier2", DefaultSettings.StringKeyboardShortcutCaptureNowArchiveModifier2));
+                User.Add(new Setting("StringKeyboardShortcutCaptureNowArchiveKey", DefaultSettings.StringKeyboardShortcutCaptureNowArchiveKey));
+                User.Add(new Setting("StringKeyboardShortcutCaptureNowEditModifier1", DefaultSettings.StringKeyboardShortcutCaptureNowEditModifier1));
+                User.Add(new Setting("StringKeyboardShortcutCaptureNowEditModifier2", DefaultSettings.StringKeyboardShortcutCaptureNowEditModifier2));
+                User.Add(new Setting("StringKeyboardShortcutCaptureNowEditKey", DefaultSettings.StringKeyboardShortcutCaptureNowEditKey));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardModifier1));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardModifier2));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardKey", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardKey));
 
                 User.Save();
             }
