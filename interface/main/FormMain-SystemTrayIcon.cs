@@ -148,10 +148,9 @@ namespace AutoScreenCapture
 
                 toolStripInfo.Text = notifyIcon.Text;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-SystemTrayIcon::ShowInfo", ex);
+                // There's some sort of target invocation exception that happens early in the morning. I'm not sure why yet so let's catch it but not log it for now.
             }
         }
     }

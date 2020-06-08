@@ -166,7 +166,7 @@ namespace AutoScreenCapture
                         Date = dateTimePickerDate.Value,
                         Time = dateTimePickerTime.Value,
                         ScreenCaptureInterval = screenCaptureInterval,
-                        ModuleItem = listBoxModuleItemList.SelectedItem.ToString()
+                        ModuleItem = listBoxModuleItemList.SelectedItem != null ? listBoxModuleItemList.SelectedItem.ToString() : string.Empty
                     };
 
                     TriggerCollection.Add(trigger);
