@@ -59,6 +59,7 @@ namespace AutoScreenCapture
         internal static readonly bool AutoStartFromCommandLine = false;
         internal static readonly bool ShowStartupError = true;
         internal static readonly int FilepathLengthLimit = 2000;
+        internal static readonly bool StopOnLowDiskError = true;
 
         // Default user settings.
         internal static readonly int IntScreenCaptureInterval = 60000;

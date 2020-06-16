@@ -118,12 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxDeveloper.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.0.3 ("Boombayah")
+    <value>Auto Screen Capture 2.3.0.4 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2020)
 
 https://autoscreen.sourceforge.io/
 https://github.com/gavinkendall/autoscreen/
-https://www.youtube.com/user/gavinkendall/</value>
+https://www.youtube.com/user/gavinkendall/
+https://twitter.com/autoscreen2</value>
   </data>
   <data name="richTextBoxLicense.Text" xml:space="preserve">
     <value>GNU GENERAL PUBLIC LICENSE
