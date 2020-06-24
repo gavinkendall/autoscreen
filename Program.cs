@@ -30,6 +30,16 @@ namespace AutoScreenCapture
 {
     internal static class Program
     {
+        private enum ProcessDPIAwareness
+        {
+            ProcessDPIUnaware = 0,
+            ProcessSystemDPIAware = 1,
+            ProcessPerMonitorDPIAware = 2
+        }
+
+        [DllImport("shcore.dll")]
+        private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
+
         [STAThread]
         private static void Main(string[] args)
         {
@@ -64,7 +74,15 @@ namespace AutoScreenCapture
                         // If we're not already running then start a new instance of the application.
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
-                        Application.EnableVisualStyles();
+                        if (Environment.OSVersion.Version.Major >= 6)
+                        {
+                            Application.EnableVisualStyles();
+
+                            Log.WriteMessage("OS version 6 or higher detected. Attempting to set DPI awareness");
+
+                            SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                        }
+
                         Application.SetCompatibleTextRenderingDefault(false);
                         Application.Run(new FormMain());
                     }

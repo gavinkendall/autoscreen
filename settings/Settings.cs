@@ -135,7 +135,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.1"), // Fixed bug with FilenameLengthLimit application setting.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.2"), // Keyboard Shortcuts implemented.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.3"), // Fixed bug when creating a new Trigger.
-                new Version(CODENAME_BOOMBAYAH, "2.3.0.4") // StopOnLowDiskError setting implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.4"), // StopOnLowDiskError setting implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.5") // Fixed bug with upgrade path. Changed target profile to be .NET 4 instead of .NET Client 4.
             };
 
             Application = new SettingCollection
