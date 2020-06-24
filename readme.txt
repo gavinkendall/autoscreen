@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-06-16 (June 16, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.0.4)]
+Last updated on 2020-06-24 (June 24, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.0.6)]
 =============================================================================================================
 
 
