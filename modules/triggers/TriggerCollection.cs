@@ -217,12 +217,12 @@ namespace AutoScreenCapture
                         ScreenCaptureInterval = 0
                     };
 
-                    Trigger triggerInterfaceClosingHideInterface = new Trigger()
+                    Trigger triggerInterfaceClosingExitApplication = new Trigger()
                     {
                         Active = true,
-                        Name = "Interface Closing -> Hide",
+                        Name = "Interface Closing -> Exit",
                         ConditionType = TriggerConditionType.InterfaceClosing,
-                        ActionType = TriggerActionType.HideInterface,
+                        ActionType = TriggerActionType.ExitApplication,
                         Date = DateTime.Now,
                         Time = DateTime.Now,
                         ScreenCaptureInterval = 0
@@ -243,7 +243,7 @@ namespace AutoScreenCapture
                     Add(triggerApplicationStartShowInterface);
                     Add(triggerScreenCaptureStartedHideInterface);
                     Add(triggerScreenCaptureStoppedShowInterface);
-                    Add(triggerInterfaceClosingHideInterface);
+                    Add(triggerInterfaceClosingExitApplication);
                     Add(triggerLimitReachedStopScreenCapture);
 
                     SaveToXmlFile();

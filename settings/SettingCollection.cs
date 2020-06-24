@@ -342,6 +342,13 @@ namespace AutoScreenCapture
 
                 Settings.VersionManager.OldUserSettings = oldUserSettings;
 
+                if (string.IsNullOrEmpty(AppCodename) || string.IsNullOrEmpty(AppVersion))
+                {
+                    Log.WriteMessage("No settings file found. Aborting upgrade path");
+
+                    return;
+                }
+
                 var versionInConfig = new Version(AppCodename, AppVersion, false);
 
                 if (versionInConfig.VersionString.Equals("2.2.0.0") ||

@@ -134,7 +134,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.0"), // Faster startup, commands can be issued to a running instance, multiple schedules, more trigger conditions and trigger actions, and help tips in the help bar.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.1"), // Fixed bug with FilenameLengthLimit application setting.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.2"), // Keyboard Shortcuts implemented.
-                new Version(CODENAME_BOOMBAYAH, "2.3.0.3") // Fixed bug when creating a new Trigger.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.3"), // Fixed bug when creating a new Trigger.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.4") // StopOnLowDiskError setting implemented.
             };
 
             Application = new SettingCollection

@@ -64,6 +64,7 @@ namespace AutoScreenCapture
                         // If we're not already running then start a new instance of the application.
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
+                        Application.EnableVisualStyles();
                         Application.SetCompatibleTextRenderingDefault(false);
                         Application.Run(new FormMain());
                     }
