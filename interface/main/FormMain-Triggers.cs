@@ -181,7 +181,10 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.SetScreenCaptureInterval:
+                    timerScreenCapture.Stop();
+
                     _screenCapture.Interval = trigger.ScreenCaptureInterval;
+                    timerScreenCapture.Interval = trigger.ScreenCaptureInterval;
 
                     decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Hours);
                     decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Minutes);
@@ -192,6 +195,8 @@ namespace AutoScreenCapture
                     numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                     numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                     numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+
+                    timerScreenCapture.Start();
                     break;
 
                 case TriggerActionType.ActivateScreen:

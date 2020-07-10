@@ -74,11 +74,12 @@ namespace AutoScreenCapture
                         // If we're not already running then start a new instance of the application.
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
-                        if (Environment.OSVersion.Version.Major >= 6)
+                        if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 3) ||
+                            Environment.OSVersion.Version.Major >= 10)
                         {
                             Application.EnableVisualStyles();
 
-                            Log.WriteMessage("OS version 6 or higher detected. Attempting to set DPI awareness");
+                            Log.WriteMessage("Windows 8.1 or higher detected. Attempting to set DPI awareness");
 
                             SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
                         }
