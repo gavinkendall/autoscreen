@@ -88,7 +88,6 @@ namespace AutoScreenCapture
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 AutoScaleMode = AutoScaleMode.Dpi;
-                Font = new Font(Font.Name, 8.25f * 96f / CreateGraphics().DpiX, Font.Style, Font.Unit, Font.GdiCharSet, Font.GdiVerticalFont);
             }
 
             InitializeComponent();
