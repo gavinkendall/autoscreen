@@ -40,7 +40,7 @@ namespace AutoScreenCapture
 
         // Default application settings.
         internal static readonly bool DebugMode = false;
-        internal static readonly bool ExitOnError = false;
+        internal static readonly bool ExitOnError = true;
         internal static readonly bool Logging = false;
         internal static readonly string EmailServerHost = "smtp.office365.com";
         internal static readonly int EmailServerPort = 587;
