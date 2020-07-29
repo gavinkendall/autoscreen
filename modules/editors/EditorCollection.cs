@@ -170,6 +170,15 @@ namespace AutoScreenCapture
                         Settings.User.SetValueByKey("StringDefaultEditor", "Microsoft Paint");
                     }
 
+                    // Snagit Editor
+                    if (FileSystem.FileExists(@"C:\Program Files\TechSmith\Snagit 2020\SnagitEditor.exe"))
+                    {
+                        Add(new Editor("Snagit Editor", @"C:\Program Files\TechSmith\Snagit 2020\SnagitEditor.exe", "%filepath%"));
+
+                        // If the user has Snagit installed then make the Snagit Editor the default editor.
+                        Settings.User.SetValueByKey("StringDefaultEditor", "Snagit Editor");
+                    }
+
                     // Microsoft Outlook
                     if (FileSystem.FileExists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
                     {

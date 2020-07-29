@@ -116,8 +116,10 @@ namespace AutoScreenCapture
                 _selectX = e.X;
                 _selectY = e.Y;
 
-                _selectPen = new Pen(Color.Yellow, 2);
-                _selectPen.DashStyle = DashStyle.Dash;
+                _selectPen = new Pen(Color.Red, 2)
+                {
+                    DashStyle = DashStyle.Dash
+                };
             }
 
             pictureBoxMouseCanvas.Refresh();

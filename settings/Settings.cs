@@ -141,7 +141,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.7"), // Fixed bug with a timed Trigger that needed to reset the timer when changing the screen capture interval.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.8"), // Fixed DPI Awareness OS Version check.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.9"), // Removed font changes for DPI Awareness.
-                new Version(CODENAME_BOOMBAYAH, "2.3.1.0") // Truncates long file paths.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.0"), // Truncates long file paths.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.1") // ActiveWindowTitleLengthLimit application setting implemented.
             };
 
             Application = new SettingCollection
