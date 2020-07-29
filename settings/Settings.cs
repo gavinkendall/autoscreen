@@ -142,7 +142,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.8"), // Fixed DPI Awareness OS Version check.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.9"), // Removed font changes for DPI Awareness.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.0"), // Truncates long file paths.
-                new Version(CODENAME_BOOMBAYAH, "2.3.1.1") // ActiveWindowTitleLengthLimit application setting implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.1"), // ActiveWindowTitleLengthLimit application setting implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.2") // Snagit Editor introduced as a new default image editor if available.
             };
 
             Application = new SettingCollection

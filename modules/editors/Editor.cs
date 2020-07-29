@@ -67,6 +67,7 @@ namespace AutoScreenCapture
             Name = name;
             Arguments = arguments;
             Application = application;
+            Notes = string.Empty;
         }
     }
 }
