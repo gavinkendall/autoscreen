@@ -479,8 +479,14 @@ namespace AutoScreenCapture
             {
                 int filepathLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit).Value);
 
-                if (!string.IsNullOrEmpty(path) && path.Length <= filepathLengthLimit)
+                if (!string.IsNullOrEmpty(path))// && path.Length <= filepathLengthLimit)
                 {
+                    if (path.Length > filepathLengthLimit)
+                    {
+                        Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so path value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
+                        path = path.Substring(0, filepathLengthLimit);
+                    }
+
                     Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
 
                     // This is a normal path used in Windows (such as "C:\screenshots\").
@@ -566,12 +572,6 @@ namespace AutoScreenCapture
                             }
                         }
                     }
-                }
-                else
-                {
-                    // We just want to log a normal message and not stop the screen capture session because we want to continue
-                    // for other components that are using paths which are still valid.
-                    Log.WriteMessage($"Unable to save screenshot. The path is either empty or its length exceeds the configured length of {filepathLengthLimit} characters. Correct the value for the FilepathLengthLimit application setting");
                 }
 
                 return true;

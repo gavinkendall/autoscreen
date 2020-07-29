@@ -139,7 +139,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.5"), // Fixed bug with upgrade path. Changed target profile to be .NET 4 instead of .NET Client 4.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.6"), // Fixed interface issues with Windows 10 DPI scaling.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.7"), // Fixed bug with a timed Trigger that needed to reset the timer when changing the screen capture interval.
-                new Version(CODENAME_BOOMBAYAH, "2.3.0.8") // Fixed DPI Awareness OS Version check.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.8"), // Fixed DPI Awareness OS Version check.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.9") // Removed font changes for DPI Awareness.
             };
 
             Application = new SettingCollection
