@@ -364,8 +364,8 @@ namespace AutoScreenCapture
             textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
-            textBoxMacroPreview.Text = MacroParser.ParseTags(textBoxFolder.Text, TagCollection) +
-                MacroParser.ParseTags(preview: true, textBoxScreenName.Text, textBoxMacro.Text, 1,
+            textBoxMacroPreview.Text = MacroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection) +
+                MacroParser.ParseTags(preview: true, config: false, textBoxScreenName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
         }
 

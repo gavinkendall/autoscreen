@@ -316,7 +316,7 @@ namespace AutoScreenCapture
             tagCollection.Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
             tagCollection.Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
 
-            path = MacroParser.ParseTags(path, tagCollection);
+            path = MacroParser.ParseTags(config: true, path, tagCollection);
 
             if (FileSystem.HasExtension(path))
             {

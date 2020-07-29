@@ -61,7 +61,7 @@ namespace AutoScreenCapture
         {
             Tag tag = _tagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
 
-            labelHelp.Text = MacroParser.ParseTags(tag.Description, _tagCollection);
+            labelHelp.Text = MacroParser.ParseTags(config: false, tag.Description, _tagCollection);
         }
     }
 }

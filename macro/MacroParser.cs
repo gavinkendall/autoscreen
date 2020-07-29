@@ -238,6 +238,7 @@ namespace AutoScreenCapture
         /// Replaces series of tags with appropriate values.
         /// </summary>
         /// <param name="preview">Determines if this is a preview of a macro. We either use screen capture date/time or DateTime.Now depending on this boolean.</param>
+        /// <param name="config">Determines if we are parsing tags from the config file or not.</param>
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="screenNumber">The screen number. For example, if this is the second display then the screen number is 2.</param>
@@ -245,8 +246,19 @@ namespace AutoScreenCapture
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, TagCollection tagCollection)
+        public static string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, TagCollection tagCollection)
         {
+            if (!config)
+            {
+                int activeWindowTitleLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit).Value);
+
+                if (!string.IsNullOrEmpty(activeWindowTitle) && activeWindowTitle.Length > activeWindowTitleLengthLimit)
+                {
+                    Log.WriteMessage($"Active Window title length exceeds the configured length of {activeWindowTitleLengthLimit} characters so value was truncated. Correct the value for the ActiveWindowTitleLengthLimit application setting to prevent truncation");
+                    activeWindowTitle = activeWindowTitle.Substring(0, activeWindowTitleLengthLimit);
+                }
+            }
+
             foreach (Tag tag in tagCollection)
             {
                 if (tag.Type == TagType.TimeOfDay)
@@ -274,9 +286,9 @@ namespace AutoScreenCapture
                     // This can achieve some interesting results such as being able to call the same %timeofday% tag
                     // in onto itself because it will use its own date/time format value, but the intention is to have tags
                     // like %date%, %time%, %hour%, %minute%, and %second% be used in the morning, afternoon, and evening fields.
-                    morningValue = ParseTags(preview, name, morningValue, screenNumber, format, activeWindowTitle, tagCollection);
-                    afternoonValue = ParseTags(preview, name, afternoonValue, screenNumber, format, activeWindowTitle, tagCollection);
-                    eveningValue = ParseTags(preview, name, eveningValue, screenNumber, format, activeWindowTitle, tagCollection);
+                    morningValue = ParseTags(preview, config, name, morningValue, screenNumber, format, activeWindowTitle, tagCollection);
+                    afternoonValue = ParseTags(preview, config, name, afternoonValue, screenNumber, format, activeWindowTitle, tagCollection);
+                    eveningValue = ParseTags(preview, config, name, eveningValue, screenNumber, format, activeWindowTitle, tagCollection);
 
                     // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeOfDay type.
                     tag.Type = TagType.TimeOfDay;
@@ -331,12 +343,13 @@ namespace AutoScreenCapture
         /// <summary>
         /// Replaces a series of tags with appropriate values. Assumes you are either parsing a folder path or just need a preview of the returned values.
         /// </summary>
+        /// <param name="config">Determines if we are parsing tags from the config file or not.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(string macro, TagCollection tagCollection)
+        public static string ParseTags(bool config, string macro, TagCollection tagCollection)
         {
-            return ParseTags(preview: true, string.Empty, macro, 0,
+            return ParseTags(preview: true, config, string.Empty, macro, 0,
                 new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG), string.Empty, tagCollection);
         }
 

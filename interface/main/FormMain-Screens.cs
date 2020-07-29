@@ -183,7 +183,7 @@ namespace AutoScreenCapture
                                 if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
                                     if (_screenCapture.SaveScreenshot(
-                                        path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                                        path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                                         format: screen.Format,
                                         component: screen.Component,
                                         screenshotType: ScreenshotType.ActiveWindow,
@@ -235,7 +235,7 @@ namespace AutoScreenCapture
                                         _formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                                     {
                                         if (_screenCapture.SaveScreenshot(
-                                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                                             format: screen.Format,
                                             component: screen.Component,
                                             screenshotType: ScreenshotType.Screen,

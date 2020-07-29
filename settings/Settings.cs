@@ -140,7 +140,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.6"), // Fixed interface issues with Windows 10 DPI scaling.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.7"), // Fixed bug with a timed Trigger that needed to reset the timer when changing the screen capture interval.
                 new Version(CODENAME_BOOMBAYAH, "2.3.0.8"), // Fixed DPI Awareness OS Version check.
-                new Version(CODENAME_BOOMBAYAH, "2.3.0.9") // Removed font changes for DPI Awareness.
+                new Version(CODENAME_BOOMBAYAH, "2.3.0.9"), // Removed font changes for DPI Awareness.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.0") // Truncates long file paths.
             };
 
             Application = new SettingCollection
@@ -283,6 +284,11 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
                     }
+
+                    if (!Application.KeyExists("ActiveWindowTitleLengthLimit"))
+                    {
+                        Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
+                    }
                 }
                 else
                 {
@@ -309,6 +315,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("ShowStartupError", DefaultSettings.ShowStartupError));
                     Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
                     Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
+                    Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
                 }
 
                 Application.Save();

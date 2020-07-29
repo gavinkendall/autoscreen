@@ -479,15 +479,15 @@ namespace AutoScreenCapture
             {
                 int filepathLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit).Value);
 
-                if (!string.IsNullOrEmpty(path))// && path.Length <= filepathLengthLimit)
+                if (!string.IsNullOrEmpty(path))
                 {
                     if (path.Length > filepathLengthLimit)
                     {
-                        Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so path value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
+                        Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
                         path = path.Substring(0, filepathLengthLimit);
                     }
 
-                    Log.WriteDebugMessage("Attempting to write image to file at path \"" + path + "\"");
+                    Log.WriteMessage("Attempting to write image to file at path \"" + path + "\"");
 
                     // This is a normal path used in Windows (such as "C:\screenshots\").
                     if (!path.StartsWith(FileSystem.PathDelimiter))
