@@ -52,6 +52,10 @@
             this.labelRegionSelectClipboard = new System.Windows.Forms.Label();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.labelRegionSelectAutoSave = new System.Windows.Forms.Label();
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey = new System.Windows.Forms.TextBox();
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // comboBoxKeyboardShortcutStartScreenCaptureModifier1
@@ -236,9 +240,9 @@
             this.labelCaptureNowArchive.Enabled = false;
             this.labelCaptureNowArchive.Location = new System.Drawing.Point(12, 97);
             this.labelCaptureNowArchive.Name = "labelCaptureNowArchive";
-            this.labelCaptureNowArchive.Size = new System.Drawing.Size(120, 13);
+            this.labelCaptureNowArchive.Size = new System.Drawing.Size(116, 13);
             this.labelCaptureNowArchive.TabIndex = 9;
-            this.labelCaptureNowArchive.Text = "Capture Now -> Archive";
+            this.labelCaptureNowArchive.Text = "Capture Now / Archive";
             // 
             // labelCaptureNowEdit
             // 
@@ -246,9 +250,9 @@
             this.labelCaptureNowEdit.Enabled = false;
             this.labelCaptureNowEdit.Location = new System.Drawing.Point(12, 124);
             this.labelCaptureNowEdit.Name = "labelCaptureNowEdit";
-            this.labelCaptureNowEdit.Size = new System.Drawing.Size(102, 13);
+            this.labelCaptureNowEdit.Size = new System.Drawing.Size(98, 13);
             this.labelCaptureNowEdit.TabIndex = 13;
-            this.labelCaptureNowEdit.Text = "Capture Now -> Edit";
+            this.labelCaptureNowEdit.Text = "Capture Now / Edit";
             // 
             // labelRegionSelectClipboard
             // 
@@ -256,16 +260,16 @@
             this.labelRegionSelectClipboard.Enabled = false;
             this.labelRegionSelectClipboard.Location = new System.Drawing.Point(12, 151);
             this.labelRegionSelectClipboard.Name = "labelRegionSelectClipboard";
-            this.labelRegionSelectClipboard.Size = new System.Drawing.Size(133, 13);
+            this.labelRegionSelectClipboard.Size = new System.Drawing.Size(129, 13);
             this.labelRegionSelectClipboard.TabIndex = 17;
-            this.labelRegionSelectClipboard.Text = "Region Select -> Clipboard";
+            this.labelRegionSelectClipboard.Text = "Region Select / Clipboard";
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(206, 186);
+            this.buttonOK.Location = new System.Drawing.Point(206, 214);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 21;
+            this.buttonOK.TabIndex = 25;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -273,12 +277,51 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(311, 186);
+            this.buttonCancel.Location = new System.Drawing.Point(311, 214);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 22;
+            this.buttonCancel.TabIndex = 26;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // labelRegionSelectAutoSave
+            // 
+            this.labelRegionSelectAutoSave.AutoSize = true;
+            this.labelRegionSelectAutoSave.Enabled = false;
+            this.labelRegionSelectAutoSave.Location = new System.Drawing.Point(12, 178);
+            this.labelRegionSelectAutoSave.Name = "labelRegionSelectAutoSave";
+            this.labelRegionSelectAutoSave.Size = new System.Drawing.Size(135, 13);
+            this.labelRegionSelectAutoSave.TabIndex = 21;
+            this.labelRegionSelectAutoSave.Text = "Region Select / Auto Save";
+            // 
+            // textBoxKeyboardShortcutRegionSelectAutoSaveKey
+            // 
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Enabled = false;
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Location = new System.Drawing.Point(370, 175);
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Name = "textBoxKeyboardShortcutRegionSelectAutoSaveKey";
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.TabIndex = 24;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Enabled = false;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Location = new System.Drawing.Point(277, 175);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Name = "comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2";
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.TabIndex = 23;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Enabled = false;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Location = new System.Drawing.Point(184, 175);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Name = "comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1";
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.TabIndex = 22;
             // 
             // FormKeyboardShortcuts
             // 
@@ -286,7 +329,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(422, 216);
+            this.ClientSize = new System.Drawing.Size(422, 249);
+            this.Controls.Add(this.labelRegionSelectAutoSave);
+            this.Controls.Add(this.textBoxKeyboardShortcutRegionSelectAutoSaveKey);
+            this.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2);
+            this.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.labelRegionSelectClipboard);
@@ -348,5 +395,9 @@
         private System.Windows.Forms.Label labelRegionSelectClipboard;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label labelRegionSelectAutoSave;
+        private System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectAutoSaveKey;
+        private System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2;
+        private System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1;
     }
 }

@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-07-29 (July 29, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.1.4)]
+Last updated on 2020-08-02 (August 2, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.1.5)]
 =============================================================================================================
 
 
@@ -120,6 +120,12 @@ This menu will not be available if the session is locked.
 *Active Window Title*
 This is where to specify the text to compare against the active window title so that the application only
 takes screenshots if the active window title contains the defined text.
+
+*Region Select / Auto Save*
+This section defines the path of the folder and the filename pattern ("macro") for when
+you right-click on the system tray icon and click on "Region Select / Auto Save" to
+automatically save the captured region of the screen to an image file. By default this
+saves a file to the user's desktop - much like doing Command+Shift+4 on a Mac.
 
 *Security*
 You can set a passphrase in order to lock the running screen capture session once the application starts

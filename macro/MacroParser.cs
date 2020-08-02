@@ -157,6 +157,12 @@ namespace AutoScreenCapture
         public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
         /// <summary>
+        /// The default folder and macro used for Region Select / Auto Save.
+        /// </summary>
+        public static readonly string DefaultAutoSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        public static readonly string DefaultAutoSaveMacro = "Screen Shot %date% at %time%.%format%";
+
+        /// <summary>
         /// Replaces a tag (such as "%year%") with an appropriate value (such as "2020").
         /// </summary>
         /// <param name="preview">Determines if this is a preview of a macro. We either use screen capture date/time or DateTime.Now depending on this boolean.</param>

@@ -19,13 +19,15 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Drawing;
 using System.Windows.Forms;
-using AutoScreenCapture.Properties;
 
 namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        private FormRegionSelectWithMouse _formRegionSelectWithMouse;
+
         /// <summary>
         /// Returns the screen capture interval. This value will be used as the screen capture timer's interval property.
         /// </summary>
@@ -405,8 +407,67 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboard_Click(object sender, EventArgs e)
         {
-            FormRegionSelectWithMouse _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.LoadCanvas(outputMode: 1); // 1 is for saving the captured image to the clipboard
+        }
+
+        /// <summary>
+        /// Shows a mouse-driven region selection canvas so you can select a region and then auto-save the captured image.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectAutoSave_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_MouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+        }
+
+        private void _formRegionSelectWithMouse_MouseSelectionCompleted(object sender, EventArgs e)
+        {
+            int x = _formRegionSelectWithMouse.outputX + 1;
+            int y = _formRegionSelectWithMouse.outputY + 1;
+            int width = _formRegionSelectWithMouse.outputWidth - 2;
+            int height = _formRegionSelectWithMouse.outputHeight - 2;
+
+            string autoSaveFolder = textBoxAutoSaveFolder.Text;
+            string autoSaveMacro = textBoxAutoSaveMacro.Text;
+
+            ImageFormat imageFormat = new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG);
+
+            if (_screenCapture.GetScreenImages(-1, x, y, width, height, mouse: false, resolutionRatio: 100, out Bitmap bitmap))
+            {
+                if (_screenCapture.SaveScreenshot(
+                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, autoSaveFolder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, DateTime.Now.ToString(MacroParser.DateFormat), autoSaveMacro, -1, imageFormat, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                    format: imageFormat,
+                    component: -1,
+                    screenshotType: ScreenshotType.Region,
+                    jpegQuality: 100,
+                    viewId: new Guid(),
+                    bitmap: bitmap,
+                    label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
+                    windowTitle: _screenCapture.ActiveWindowTitle,
+                    processName: _screenCapture.ActiveWindowProcessName,
+                    screenshotCollection: _screenshotCollection
+                ))
+                {
+                    ScreenshotTakenWithSuccess();
+                }
+                else
+                {
+                    ScreenshotTakenWithFailure();
+                }
+            }
+        }
+
+        private void buttonBrowseFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog browser = new FolderBrowserDialog();
+
+            if (browser.ShowDialog() == DialogResult.OK)
+            {
+                textBoxAutoSaveFolder.Text = browser.SelectedPath;
+            }
         }
 
         /// <summary>

@@ -93,6 +93,11 @@ namespace AutoScreenCapture
         internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier1 = "Control";
         internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier2 = "Alt";
         internal static readonly string StringKeyboardShortcutRegionSelectClipboardKey = "S";
+        internal static readonly string StringAutoSaveFolder = MacroParser.DefaultAutoSaveFolder;
+        internal static readonly string StringAutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
+        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveModifier2 = "Alt";
+        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveKey = "Q";
 
         // Old default user settings.
         internal static readonly bool BoolCaptureStartAt = false;

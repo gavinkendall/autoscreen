@@ -197,6 +197,10 @@ namespace AutoScreenCapture
                 checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value);
                 textBoxActiveWindowTitle.Text = Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value.ToString();
 
+                // Region Select / Auto Save
+                textBoxAutoSaveFolder.Text = Settings.User.GetByKey("StringAutoSaveFolder", DefaultSettings.StringAutoSaveFolder).Value.ToString();
+                textBoxAutoSaveMacro.Text = Settings.User.GetByKey("StringAutoSaveMacro", DefaultSettings.StringAutoSaveMacro).Value.ToString();
+
                 EnableStartCapture();
 
                 CaptureLimitCheck();
@@ -230,6 +234,10 @@ namespace AutoScreenCapture
                 // Active Window Title text comparison check.
                 Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
                 Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
+
+                // Region Select / Auto Save.
+                Settings.User.GetByKey("StringAutoSaveFolder", DefaultSettings.StringAutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
+                Settings.User.GetByKey("StringAutoSaveMacro", DefaultSettings.StringAutoSaveMacro).Value = textBoxAutoSaveMacro.Text.Trim();
 
                 if (!Settings.User.Save())
                 {

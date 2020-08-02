@@ -53,6 +53,7 @@ namespace AutoScreenCapture
         private string _keyboardShortcutCaptureNowArchiveKeyUserSetting;
         private string _keyboardShortcutCaptureNowEditKeyUserSetting;
         private string _keyboardShortcutRegionSelectClipboardKeyUserSetting;
+        private string _keyboardShortcutRegionSelectAutoSaveKeyUserSetting;
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;

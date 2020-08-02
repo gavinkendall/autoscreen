@@ -48,12 +48,27 @@ namespace AutoScreenCapture
         public FormRegionSelectWithMouse()
         {
             InitializeComponent();
+
+            outputX = 0;
+            outputY = 0;
+            outputWidth = 0;
+            outputHeight = 0;
         }
 
         /// <summary>
         /// The type of output this form should return.
         /// </summary>
         private int _outputMode { get; set; }
+
+        /// <summary>
+        /// An event handler for handling when the mouse selection has completed for the mouse-driven region capture.
+        /// </summary>
+        public event EventHandler MouseSelectionCompleted;
+
+        private void CompleteMouseSelection(object sender, EventArgs e)
+        {
+            MouseSelectionCompleted?.Invoke(sender, e);
+        }
 
         /// <summary>
         /// Laods the canvas with the chosen output mode.
@@ -139,16 +154,30 @@ namespace AutoScreenCapture
                 pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
             }
 
+            Bitmap bitmap = null;
+
             switch (_outputMode)
             {
                 case 0:
-                    outputX = _selectX;
-                    outputY = _selectY;
-                    outputWidth = _selectWidth;
-                    outputHeight = _selectHeight;
+                    bitmap = SelectBitmap();
+
+                    if (bitmap != null)
+                    {
+                        outputX = _selectX;
+                        outputY = _selectY;
+                        outputWidth = _selectWidth;
+                        outputHeight = _selectHeight;
+
+                        CompleteMouseSelection(sender, e);
+                    }
                     break;
                 case 1:
-                    SaveToClipboard();
+                    bitmap = SelectBitmap();
+
+                    if (bitmap != null)
+                    {
+                        SaveToClipboard(bitmap);
+                    }
                     break;
             }
 
@@ -157,7 +186,7 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void SaveToClipboard()
+        private Bitmap SelectBitmap()
         {
             if (_selectWidth > 0)
             {
@@ -173,7 +202,17 @@ namespace AutoScreenCapture
                 g.CompositingQuality = CompositingQuality.HighQuality;
                 g.DrawImage(bitmap, 0, 0, rect, GraphicsUnit.Pixel);
 
-                Clipboard.SetImage(img);
+                return img;
+            }
+
+            return null;
+        }
+
+        private void SaveToClipboard(Bitmap bitmap)
+        {
+            if (bitmap != null)
+            {
+                Clipboard.SetImage(bitmap);
             }
         }
     }

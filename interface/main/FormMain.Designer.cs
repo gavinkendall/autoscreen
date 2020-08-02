@@ -53,6 +53,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRegionSelectAutoSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +61,12 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageSetup = new System.Windows.Forms.TabPage();
+            this.groupBoxRegionSelectAutoSave = new System.Windows.Forms.GroupBox();
+            this.buttonBrowseFolder = new System.Windows.Forms.Button();
+            this.labelAutoSaveMacro = new System.Windows.Forms.Label();
+            this.labelAutoSaveFolder = new System.Windows.Forms.Label();
+            this.textBoxAutoSaveMacro = new System.Windows.Forms.TextBox();
+            this.textBoxAutoSaveFolder = new System.Windows.Forms.TextBox();
             this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
             this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
             this.checkBoxActiveWindowTitle = new System.Windows.Forms.CheckBox();
@@ -119,6 +126,7 @@ namespace AutoScreenCapture
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageSetup.SuspendLayout();
+            this.groupBoxRegionSelectAutoSave.SuspendLayout();
             this.groupBoxActiveWindowTitle.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
@@ -272,12 +280,13 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowArchive,
             this.toolStripMenuItemCaptureNowEdit,
             this.toolStripMenuItemRegionSelectClipboard,
+            this.toolStripMenuItemRegionSelectAutoSave,
             this.toolStripSeparatorCapture,
             this.toolStripMenuItemApplyLabel,
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 270);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 292);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -334,7 +343,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowArchive.Image = global::AutoScreenCapture.Properties.Resources.capture_archive;
             this.toolStripMenuItemCaptureNowArchive.Name = "toolStripMenuItemCaptureNowArchive";
             this.toolStripMenuItemCaptureNowArchive.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemCaptureNowArchive.Text = "Capture Now -> Archive";
+            this.toolStripMenuItemCaptureNowArchive.Text = "Capture Now / Archive";
             this.toolStripMenuItemCaptureNowArchive.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowArchive_Click);
             // 
             // toolStripMenuItemCaptureNowEdit
@@ -342,15 +351,23 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowEdit.Image = global::AutoScreenCapture.Properties.Resources.capture_edit;
             this.toolStripMenuItemCaptureNowEdit.Name = "toolStripMenuItemCaptureNowEdit";
             this.toolStripMenuItemCaptureNowEdit.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now -> Edit";
+            this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now / Edit";
             this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowEdit_Click);
+            // 
+            // toolStripMenuItemRegionSelectAutoSave
+            // 
+            this.toolStripMenuItemRegionSelectAutoSave.Image = global::AutoScreenCapture.Properties.Resources.region_select;
+            this.toolStripMenuItemRegionSelectAutoSave.Name = "toolStripMenuItemRegionSelectAutoSave";
+            this.toolStripMenuItemRegionSelectAutoSave.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemRegionSelectAutoSave.Text = "Region Select / Auto Save";
+            this.toolStripMenuItemRegionSelectAutoSave.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAutoSave_Click);
             // 
             // toolStripMenuItemRegionSelectClipboard
             // 
             this.toolStripMenuItemRegionSelectClipboard.Image = global::AutoScreenCapture.Properties.Resources.region_select;
             this.toolStripMenuItemRegionSelectClipboard.Name = "toolStripMenuItemRegionSelectClipboard";
             this.toolStripMenuItemRegionSelectClipboard.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemRegionSelectClipboard.Text = "Region Select -> Clipboard";
+            this.toolStripMenuItemRegionSelectClipboard.Text = "Region Select / Clipboard";
             this.toolStripMenuItemRegionSelectClipboard.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboard_Click);
             // 
             // toolStripSeparatorCapture
@@ -399,6 +416,7 @@ namespace AutoScreenCapture
             // tabPageSetup
             // 
             this.tabPageSetup.AutoScroll = true;
+            this.tabPageSetup.Controls.Add(this.groupBoxRegionSelectAutoSave);
             this.tabPageSetup.Controls.Add(this.groupBoxActiveWindowTitle);
             this.tabPageSetup.Controls.Add(this.groupBoxSecurity);
             this.tabPageSetup.Controls.Add(this.checkBoxScreenshotLabel);
@@ -412,6 +430,66 @@ namespace AutoScreenCapture
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
             // 
+            // groupBoxRegionSelectAutoSave
+            // 
+            this.groupBoxRegionSelectAutoSave.Controls.Add(this.buttonBrowseFolder);
+            this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveMacro);
+            this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveFolder);
+            this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveMacro);
+            this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveFolder);
+            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 256);
+            this.groupBoxRegionSelectAutoSave.Name = "groupBoxRegionSelectAutoSave";
+            this.groupBoxRegionSelectAutoSave.Size = new System.Drawing.Size(205, 78);
+            this.groupBoxRegionSelectAutoSave.TabIndex = 0;
+            this.groupBoxRegionSelectAutoSave.TabStop = false;
+            this.groupBoxRegionSelectAutoSave.Text = "Region Select / Auto Save";
+            // 
+            // buttonBrowseFolder
+            // 
+            this.buttonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBrowseFolder.Image = global::AutoScreenCapture.Properties.Resources.openfolder;
+            this.buttonBrowseFolder.Location = new System.Drawing.Point(172, 21);
+            this.buttonBrowseFolder.Name = "buttonBrowseFolder";
+            this.buttonBrowseFolder.Size = new System.Drawing.Size(27, 23);
+            this.buttonBrowseFolder.TabIndex = 0;
+            this.buttonBrowseFolder.TabStop = false;
+            this.buttonBrowseFolder.UseVisualStyleBackColor = true;
+            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
+            // 
+            // labelAutoSaveMacro
+            // 
+            this.labelAutoSaveMacro.AutoSize = true;
+            this.labelAutoSaveMacro.Location = new System.Drawing.Point(3, 52);
+            this.labelAutoSaveMacro.Name = "labelAutoSaveMacro";
+            this.labelAutoSaveMacro.Size = new System.Drawing.Size(40, 13);
+            this.labelAutoSaveMacro.TabIndex = 0;
+            this.labelAutoSaveMacro.Text = "Macro:";
+            // 
+            // labelAutoSaveFolder
+            // 
+            this.labelAutoSaveFolder.AutoSize = true;
+            this.labelAutoSaveFolder.Location = new System.Drawing.Point(3, 26);
+            this.labelAutoSaveFolder.Name = "labelAutoSaveFolder";
+            this.labelAutoSaveFolder.Size = new System.Drawing.Size(39, 13);
+            this.labelAutoSaveFolder.TabIndex = 0;
+            this.labelAutoSaveFolder.Text = "Folder:";
+            // 
+            // textBoxAutoSaveMacro
+            // 
+            this.textBoxAutoSaveMacro.Location = new System.Drawing.Point(49, 49);
+            this.textBoxAutoSaveMacro.Name = "textBoxAutoSaveMacro";
+            this.textBoxAutoSaveMacro.Size = new System.Drawing.Size(150, 20);
+            this.textBoxAutoSaveMacro.TabIndex = 0;
+            this.textBoxAutoSaveMacro.TabStop = false;
+            // 
+            // textBoxAutoSaveFolder
+            // 
+            this.textBoxAutoSaveFolder.Location = new System.Drawing.Point(49, 23);
+            this.textBoxAutoSaveFolder.Name = "textBoxAutoSaveFolder";
+            this.textBoxAutoSaveFolder.Size = new System.Drawing.Size(117, 20);
+            this.textBoxAutoSaveFolder.TabIndex = 0;
+            this.textBoxAutoSaveFolder.TabStop = false;
+            // 
             // groupBoxActiveWindowTitle
             // 
             this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
@@ -419,7 +497,7 @@ namespace AutoScreenCapture
             this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 178);
             this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
             this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 72);
-            this.groupBoxActiveWindowTitle.TabIndex = 25;
+            this.groupBoxActiveWindowTitle.TabIndex = 0;
             this.groupBoxActiveWindowTitle.TabStop = false;
             this.groupBoxActiveWindowTitle.Text = "Active Window Title";
             // 
@@ -430,7 +508,8 @@ namespace AutoScreenCapture
             this.textBoxActiveWindowTitle.MaxLength = 500;
             this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
             this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(193, 20);
-            this.textBoxActiveWindowTitle.TabIndex = 26;
+            this.textBoxActiveWindowTitle.TabIndex = 0;
+            this.textBoxActiveWindowTitle.TabStop = false;
             // 
             // checkBoxActiveWindowTitle
             // 
@@ -438,7 +517,8 @@ namespace AutoScreenCapture
             this.checkBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 19);
             this.checkBoxActiveWindowTitle.Name = "checkBoxActiveWindowTitle";
             this.checkBoxActiveWindowTitle.Size = new System.Drawing.Size(185, 17);
-            this.checkBoxActiveWindowTitle.TabIndex = 25;
+            this.checkBoxActiveWindowTitle.TabIndex = 0;
+            this.checkBoxActiveWindowTitle.TabStop = false;
             this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
             this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
             this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
@@ -448,7 +528,7 @@ namespace AutoScreenCapture
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 256);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 339);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -494,6 +574,7 @@ namespace AutoScreenCapture
             this.checkBoxScreenshotLabel.Name = "checkBoxScreenshotLabel";
             this.checkBoxScreenshotLabel.Size = new System.Drawing.Size(193, 17);
             this.checkBoxScreenshotLabel.TabIndex = 0;
+            this.checkBoxScreenshotLabel.TabStop = false;
             this.checkBoxScreenshotLabel.Text = "Apply this label to each screenshot:";
             this.checkBoxScreenshotLabel.UseVisualStyleBackColor = true;
             this.checkBoxScreenshotLabel.MouseHover += new System.EventHandler(this.checkBoxScreenshotLabel_MouseHover);
@@ -1071,6 +1152,8 @@ namespace AutoScreenCapture
             this.tabControlModules.ResumeLayout(false);
             this.tabPageSetup.ResumeLayout(false);
             this.tabPageSetup.PerformLayout();
+            this.groupBoxRegionSelectAutoSave.ResumeLayout(false);
+            this.groupBoxRegionSelectAutoSave.PerformLayout();
             this.groupBoxActiveWindowTitle.ResumeLayout(false);
             this.groupBoxActiveWindowTitle.PerformLayout();
             this.groupBoxSecurity.ResumeLayout(false);
@@ -1175,5 +1258,12 @@ namespace AutoScreenCapture
         private TextBox textBoxActiveWindowTitle;
         private CheckBox checkBoxActiveWindowTitle;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboard;
+        private GroupBox groupBoxRegionSelectAutoSave;
+        private Label labelAutoSaveMacro;
+        private Label labelAutoSaveFolder;
+        private TextBox textBoxAutoSaveMacro;
+        private TextBox textBoxAutoSaveFolder;
+        private Button buttonBrowseFolder;
+        private ToolStripMenuItem toolStripMenuItemRegionSelectAutoSave;
     }
 }
