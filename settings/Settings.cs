@@ -146,7 +146,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.2"), // Snagit Editor introduced as a new default image editor if available.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.3"), // Fixed bug with new Editor throwing null reference exception on changing its properties because Notes was null.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.4"), // ExitOnError set to True by default.
-                new Version(CODENAME_BOOMBAYAH, "2.3.1.5") // Region Select / Auto Save implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.5"), // Region Select / Auto Save implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.6") // Region Select Edit implemented and fixed bug with ViewId for new Screens and Regions.
             };
 
             Application = new SettingCollection
@@ -294,6 +295,11 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
                     }
+
+                    if (!Application.KeyExists("OptimizeScreenCapture"))
+                    {
+                        Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
+                    }
                 }
                 else
                 {
@@ -321,6 +327,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
                     Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
                     Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
+                    Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
                 }
 
                 Application.Save();

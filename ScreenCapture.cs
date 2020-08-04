@@ -25,6 +25,8 @@ using System.Linq;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace AutoScreenCapture
 {
@@ -278,7 +280,7 @@ namespace AutoScreenCapture
                     graphicsDestination.Flush();
 
                     CaptureError = false;
-
+                    
                     return bitmapDestination;
                 }
 
@@ -478,6 +480,7 @@ namespace AutoScreenCapture
             try
             {
                 int filepathLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit).Value);
+                bool optimizeScreenCapture = Convert.ToBoolean(Settings.Application.GetByKey("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture).Value);
 
                 if (!string.IsNullOrEmpty(path))
                 {
@@ -512,11 +515,37 @@ namespace AutoScreenCapture
                                         Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                     }
 
-                                    Screenshot screenshot = new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label);
+                                    Screenshot lastScreenshotOfThisView = screenshotCollection.GetLastScreenshotOfView(viewId);
 
-                                    screenshotCollection.Add(screenshot);
+                                    Screenshot newScreenshotOfThisView = new Screenshot(windowTitle, DateTimeScreenshotsTaken)
+                                    {
+                                        ViewId = viewId,
+                                        Path = path,
+                                        Format = format,
+                                        Component = component,
+                                        ScreenshotType = screenshotType,
+                                        ProcessName = processName + ".exe",
+                                        Label = label
+                                    };
 
-                                    SaveToFile(path, format, jpegQuality, bitmap);
+                                    if (optimizeScreenCapture)
+                                    {
+                                        newScreenshotOfThisView.Hash = GetMD5Hash(bitmap, format);
+
+                                        if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
+                                            !lastScreenshotOfThisView.Hash.Equals(newScreenshotOfThisView.Hash))
+                                        {
+                                            screenshotCollection.Add(newScreenshotOfThisView);
+
+                                            SaveToFile(path, format, jpegQuality, bitmap);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        screenshotCollection.Add(newScreenshotOfThisView);
+
+                                        SaveToFile(path, format, jpegQuality, bitmap);
+                                    }
                                 }
                             }
                             else
@@ -560,9 +589,37 @@ namespace AutoScreenCapture
                                     Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                                 }
 
-                                screenshotCollection.Add(new Screenshot(DateTimeScreenshotsTaken, path, format, component, screenshotType, windowTitle, processName, viewId, label));
+                                Screenshot lastScreenshotOfThisView = screenshotCollection.GetLastScreenshotOfView(viewId);
 
-                                SaveToFile(path, format, jpegQuality, bitmap);
+                                Screenshot newScreenshotOfThisView = new Screenshot(windowTitle, DateTimeScreenshotsTaken)
+                                {
+                                    ViewId = viewId,
+                                    Path = path,
+                                    Format = format,
+                                    Component = component,
+                                    ScreenshotType = screenshotType,
+                                    ProcessName = processName + ".exe",
+                                    Label = label
+                                };
+
+                                if (optimizeScreenCapture)
+                                {
+                                    newScreenshotOfThisView.Hash = GetMD5Hash(bitmap, format);
+
+                                    if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
+                                        !lastScreenshotOfThisView.Hash.Equals(newScreenshotOfThisView.Hash))
+                                    {
+                                        screenshotCollection.Add(newScreenshotOfThisView);
+
+                                        SaveToFile(path, format, jpegQuality, bitmap);
+                                    }
+                                }
+                                else
+                                {
+                                    screenshotCollection.Add(newScreenshotOfThisView);
+
+                                    SaveToFile(path, format, jpegQuality, bitmap);
+                                }
                             }
                             catch (Exception)
                             {
@@ -625,6 +682,30 @@ namespace AutoScreenCapture
         {
             var encoders = ImageCodecInfo.GetImageEncoders();
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);
+        }
+
+        private static string GetMD5Hash(Bitmap bitmap, ImageFormat format)
+        {
+            byte[] bytes = null;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, format.Format);
+                bytes = ms.ToArray();
+            }
+
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+
+            byte[] hash = md5.ComputeHash(bytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (byte b in hash)
+            {
+                sb.Append(b.ToString("x2").ToLower());
+            }
+
+            return sb.ToString();
         }
     }
 }

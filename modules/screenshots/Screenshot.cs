@@ -98,6 +98,11 @@ namespace AutoScreenCapture
         public bool Saved { get; set; }
 
         /// <summary>
+        /// The hash of the bitmap image associated with the screenshot.
+        /// </summary>
+        public string Hash { get; set; }
+
+        /// <summary>
         /// The empty constructor a screenshot object.
         /// </summary>
         public Screenshot()
@@ -109,29 +114,16 @@ namespace AutoScreenCapture
         /// <summary>
         /// The constructor for creating a screenshot.
         /// </summary>
-        /// <param name="dateTime">The date/time the screenshot was taken.</param>
-        /// <param name="path">The path of the filename for the screenshot.</param>
-        /// <param name="format">The image format of the screenshot.</param>
-        /// <param name="component">The component used for the screenshot.</param>
-        /// <param name="screenshotType">The type of screenshot.</param>
         /// <param name="windowTitle">The title of the active window when the screenshot was taken.</param>
-        /// <param name="processName">The process name of the active application when the screenshot was taken.</param>
-        /// <param name="viewId">The view ID associated with either the screen or the region for the screenshot.</param>
-        /// <param name="label">The label to be applied to the screenshot.</param>
-        public Screenshot(DateTime dateTime, string path, ImageFormat format, int component, ScreenshotType screenshotType, string windowTitle, string processName, Guid viewId, string label)
+        /// <param name="dateTime">The date/time the screenshot was taken.</param>
+        public Screenshot(string windowTitle, DateTime dateTime)
         {
             if (string.IsNullOrEmpty(windowTitle)) return;
 
-            ViewId = viewId;
+            WindowTitle = windowTitle;
+
             Date = dateTime.ToString(MacroParser.DateFormat);
             Time = dateTime.ToString(MacroParser.TimeFormat);
-            Path = path;
-            Format = format;
-            Component = component;
-            ScreenshotType = screenshotType;
-            WindowTitle = windowTitle;
-            ProcessName = processName + ".exe";
-            Label = label;
             Saved = false;
             Version = Settings.ApplicationVersion;
 

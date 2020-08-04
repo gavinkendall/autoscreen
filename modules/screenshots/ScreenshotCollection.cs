@@ -300,9 +300,9 @@ namespace AutoScreenCapture
             {
                 lock (_screenshotList)
                 {
-                    foreach (Screenshot screenshot in _screenshotList)
+                    foreach (Screenshot screenshot in _screenshotList.Where(x => x.ViewId.Equals(viewId)))
                     {
-                        if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName) && screenshot.ViewId.Equals(viewId))
+                        if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName))
                         {
                             foundScreenshot = screenshot;
                             break;
@@ -312,6 +312,33 @@ namespace AutoScreenCapture
             }
 
             return foundScreenshot;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        public Screenshot GetLastScreenshotOfView(Guid viewId)
+        {
+            try
+            {
+                Screenshot foundScreenshot = new Screenshot();
+
+                if (_screenshotList != null)
+                {
+                    lock (_screenshotList)
+                    {
+                        foundScreenshot = _screenshotList.Last(x => x.ViewId.Equals(viewId));
+                    }
+                }
+
+                return foundScreenshot;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>
