@@ -419,11 +419,28 @@ namespace AutoScreenCapture
         private void toolStripMenuItemRegionSelectAutoSave_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_MouseSelectionCompleted;
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
         }
 
-        private void _formRegionSelectWithMouse_MouseSelectionCompleted(object sender, EventArgs e)
+        /// <summary>
+        /// Shows a mouse-driven region selection canvas so you can select a region and then edit the captured image with the default image editor.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectEdit_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+        }
+
+        /// <summary>
+        /// The event method used by "Region Select / Auto Save".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted(object sender, EventArgs e)
         {
             int x = _formRegionSelectWithMouse.outputX + 1;
             int y = _formRegionSelectWithMouse.outputY + 1;
@@ -437,6 +454,11 @@ namespace AutoScreenCapture
 
             if (_screenCapture.GetScreenImages(-1, x, y, width, height, mouse: false, resolutionRatio: 100, out Bitmap bitmap))
             {
+                DateTime dtNow = DateTime.Now;
+
+                _screenCapture.DateTimeScreenshotsTaken = dtNow;
+                _screenCapture.ActiveWindowTitle = "*** Auto Screen Capture - Region Select / Auto Save ***";
+
                 if (_screenCapture.SaveScreenshot(
                     path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, autoSaveFolder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, DateTime.Now.ToString(MacroParser.DateFormat), autoSaveMacro, -1, imageFormat, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                     format: imageFormat,
@@ -460,6 +482,38 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// The event method for "Region Select / Edit".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted(object sender, EventArgs e)
+        {
+            // Get the name of the default image editor.
+            string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value.ToString();
+
+            if (string.IsNullOrEmpty(defaultEditor))
+            {
+                return;
+            }
+
+            // Save the screenshot as an image file using the Auto Save event method.
+            _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted(sender, e);
+
+            // Run the default image editor.
+            Editor editor = _formEditor.EditorCollection.GetByName(defaultEditor);
+
+            if (editor != null)
+            {
+                RunEditor(editor, TriggerActionType.RunEditor);
+            }
+        }
+
+        /// <summary>
+        /// Shows a folder selection dialog box for "Region Select / Auto Save".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonBrowseFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog browser = new FolderBrowserDialog();

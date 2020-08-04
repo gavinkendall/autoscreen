@@ -54,6 +54,7 @@ namespace AutoScreenCapture
         private string _keyboardShortcutCaptureNowEditKeyUserSetting;
         private string _keyboardShortcutRegionSelectClipboardKeyUserSetting;
         private string _keyboardShortcutRegionSelectAutoSaveKeyUserSetting;
+        private string _keyboardShortcutRegionSelectEditKeyUserSetting;
 
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;

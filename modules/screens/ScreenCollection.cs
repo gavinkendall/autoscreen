@@ -211,6 +211,7 @@ namespace AutoScreenCapture
                     {
                         Screen screen = new Screen()
                         {
+                            ViewId = Guid.NewGuid(),
                             Name = $"Screen {screenNumber}",
                             Folder = FileSystem.ScreenshotsFolder,
                             Macro = MacroParser.DefaultMacro,

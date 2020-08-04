@@ -19,12 +19,6 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -108,6 +102,16 @@ namespace AutoScreenCapture
             comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Items.Add(AutoScreenCapture.ModifierKeys.Control.ToString());
             comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Items.Add(AutoScreenCapture.ModifierKeys.Shift.ToString());
 
+            comboBoxKeyboardShortcutRegionSelectEditModifier1.Items.Clear();
+            comboBoxKeyboardShortcutRegionSelectEditModifier1.Items.Add(AutoScreenCapture.ModifierKeys.Alt.ToString());
+            comboBoxKeyboardShortcutRegionSelectEditModifier1.Items.Add(AutoScreenCapture.ModifierKeys.Control.ToString());
+            comboBoxKeyboardShortcutRegionSelectEditModifier1.Items.Add(AutoScreenCapture.ModifierKeys.Shift.ToString());
+
+            comboBoxKeyboardShortcutRegionSelectEditModifier2.Items.Clear();
+            comboBoxKeyboardShortcutRegionSelectEditModifier2.Items.Add(AutoScreenCapture.ModifierKeys.Alt.ToString());
+            comboBoxKeyboardShortcutRegionSelectEditModifier2.Items.Add(AutoScreenCapture.ModifierKeys.Control.ToString());
+            comboBoxKeyboardShortcutRegionSelectEditModifier2.Items.Add(AutoScreenCapture.ModifierKeys.Shift.ToString());
+
             // Map the modifier key enum value from the provided user setting to the combo box control's selected index.
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutStartScreenCaptureModifier1, Settings.User.GetByKey("StringKeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.StringKeyboardShortcutStartScreenCaptureModifier1).Value.ToString());
             comboBoxKeyboardShortcutStartScreenCaptureModifier2.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutStartScreenCaptureModifier2, Settings.User.GetByKey("StringKeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.StringKeyboardShortcutStartScreenCaptureModifier2).Value.ToString());
@@ -121,6 +125,8 @@ namespace AutoScreenCapture
             comboBoxKeyboardShortcutRegionSelectClipboardModifier2.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutRegionSelectClipboardModifier2, Settings.User.GetByKey("StringKeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardModifier2).Value.ToString());
             comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1, Settings.User.GetByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveModifier1).Value.ToString());
             comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2, Settings.User.GetByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveModifier2).Value.ToString());
+            comboBoxKeyboardShortcutRegionSelectEditModifier1.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutRegionSelectEditModifier1, Settings.User.GetByKey("StringKeyboardShortcutRegionSelectEditModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier1).Value.ToString());
+            comboBoxKeyboardShortcutRegionSelectEditModifier2.SelectedIndex = MapModifierKeyFromUserSetting(comboBoxKeyboardShortcutRegionSelectEditModifier2, Settings.User.GetByKey("StringKeyboardShortcutRegionSelectEditModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier2).Value.ToString());
 
             textBoxKeyboardShortcutStartScreenCaptureKey.Text = Settings.User.GetByKey("StringKeyboardShortcutStartScreenCaptureKey", DefaultSettings.StringKeyboardShortcutStartScreenCaptureKey).Value.ToString().ToUpper();
             textBoxKeyboardShortcutStopScreenCaptureKey.Text = Settings.User.GetByKey("StringKeyboardShortcutStopScreenCaptureKey", DefaultSettings.StringKeyboardShortcutStopScreenCaptureKey).Value.ToString().ToUpper();
@@ -128,6 +134,7 @@ namespace AutoScreenCapture
             textBoxKeyboardShortcutCaptureNowEditKey.Text = Settings.User.GetByKey("StringKeyboardShortcutCaptureNowEditKey", DefaultSettings.StringKeyboardShortcutCaptureNowEditKey).Value.ToString().ToUpper();
             textBoxKeyboardShortcutRegionSelectClipboardKey.Text = Settings.User.GetByKey("StringKeyboardShortcutRegionSelectClipboardKey", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardKey).Value.ToString().ToUpper();
             textBoxKeyboardShortcutRegionSelectAutoSaveKey.Text = Settings.User.GetByKey("StringKeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveKey).Value.ToString().ToUpper();
+            textBoxKeyboardShortcutRegionSelectEditKey.Text = Settings.User.GetByKey("StringKeyboardShortcutRegionSelectEditKey", DefaultSettings.StringKeyboardShortcutRegionSelectEditKey).Value.ToString().ToUpper();
         }
 
         private int MapModifierKeyFromUserSetting(ComboBox comboBox, string userSetting)
@@ -198,6 +205,12 @@ namespace AutoScreenCapture
                 comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Enabled = true;
                 textBoxKeyboardShortcutRegionSelectAutoSaveKey.Enabled = true;
+
+                // Region Select / Edit
+                labelRegionSelectEdit.Enabled = true;
+                comboBoxKeyboardShortcutRegionSelectEditModifier1.Enabled = true;
+                comboBoxKeyboardShortcutRegionSelectEditModifier2.Enabled = true;
+                textBoxKeyboardShortcutRegionSelectEditKey.Enabled = true;
             }
             else
             {
@@ -236,6 +249,12 @@ namespace AutoScreenCapture
                 comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Enabled = false;
                 comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Enabled = false;
                 textBoxKeyboardShortcutRegionSelectAutoSaveKey.Enabled = false;
+
+                // Region Select / Edit
+                labelRegionSelectEdit.Enabled = false;
+                comboBoxKeyboardShortcutRegionSelectEditModifier1.Enabled = false;
+                comboBoxKeyboardShortcutRegionSelectEditModifier2.Enabled = false;
+                textBoxKeyboardShortcutRegionSelectEditKey.Enabled = false;
             }
         }
 
@@ -246,7 +265,8 @@ namespace AutoScreenCapture
                 comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Text.Equals(comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Text) ||
                 comboBoxKeyboardShortcutCaptureNowEditModifier1.Text.Equals(comboBoxKeyboardShortcutCaptureNowEditModifier2.Text) ||
                 comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Text.Equals(comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Text) ||
-                comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Text.Equals(comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Text))
+                comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Text.Equals(comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Text) ||
+                comboBoxKeyboardShortcutRegionSelectEditModifier1.Text.Equals(comboBoxKeyboardShortcutRegionSelectEditModifier2.Text))
             {
                 MessageBox.Show("The first and second modifier keys (such as Alt, Control, and Shift) cannot equal each other.", "Equal Modifier Keys", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -266,6 +286,8 @@ namespace AutoScreenCapture
                 Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectClipboardModifier2", comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Text.ToString());
                 Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Text.ToString());
                 Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Text.ToString());
+                Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectEditModifier1", comboBoxKeyboardShortcutRegionSelectEditModifier1.Text.ToString());
+                Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectEditModifier2", comboBoxKeyboardShortcutRegionSelectEditModifier2.Text.ToString());
 
                 Settings.User.SetValueByKey("StringKeyboardShortcutStartScreenCaptureKey", textBoxKeyboardShortcutStartScreenCaptureKey.Text.ToString().ToUpper());
                 Settings.User.SetValueByKey("StringKeyboardShortcutStopScreenCaptureKey", textBoxKeyboardShortcutStopScreenCaptureKey.Text.ToString().ToUpper());
@@ -273,6 +295,7 @@ namespace AutoScreenCapture
                 Settings.User.SetValueByKey("StringKeyboardShortcutCaptureNowEditKey", textBoxKeyboardShortcutCaptureNowEditKey.Text.ToString().ToUpper());
                 Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectClipboardKey", textBoxKeyboardShortcutRegionSelectClipboardKey.Text.ToString().ToUpper());
                 Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectAutoSaveKey", textBoxKeyboardShortcutRegionSelectAutoSaveKey.Text.ToString().ToUpper());
+                Settings.User.SetValueByKey("StringKeyboardShortcutRegionSelectEditKey", textBoxKeyboardShortcutRegionSelectEditKey.Text.ToString().ToUpper());
 
                 Settings.User.Save();
 

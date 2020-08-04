@@ -79,12 +79,19 @@ namespace AutoScreenCapture
                     AutoScreenCapture.ModifierKeys keyboardShortcutRegionSelectAutoSaveModifier1 = GetModifierKeyFromUserSetting(keyboardShortcutRegionSelectAutoSaveModifier1UserSetting);
                     AutoScreenCapture.ModifierKeys keyboardShortcutRegionSelectAutoSaveModifier2 = GetModifierKeyFromUserSetting(keyboardShortcutRegionSelectAutoSaveModifier2UserSetting);
 
+                    string keyboardShortcutRegionSelectEditModifier1UserSetting = Settings.User.GetByKey("StringKeyboardShortcutRegionSelectEditModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier1).Value.ToString();
+                    string keyboardShortcutRegionSelectEditModifier2UserSetting = Settings.User.GetByKey("StringKeyboardShortcutRegionSelectEditModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier2).Value.ToString();
+                    _keyboardShortcutRegionSelectEditKeyUserSetting = Settings.User.GetByKey("StringKeyboardShortcutRegionSelectEditKey", DefaultSettings.StringKeyboardShortcutRegionSelectEditKey).Value.ToString();
+                    AutoScreenCapture.ModifierKeys keyboardShortcutRegionSelectEditModifier1 = GetModifierKeyFromUserSetting(keyboardShortcutRegionSelectEditModifier1UserSetting);
+                    AutoScreenCapture.ModifierKeys keyboardShortcutRegionSelectEditModifier2 = GetModifierKeyFromUserSetting(keyboardShortcutRegionSelectEditModifier2UserSetting);
+
                     _hotKeyMap.RegisterHotKey(keyboardShortcutStartScreenCaptureModifier1 | keyboardShortcutStartScreenCaptureModifier2, GetKeyFromUserSetting(_keyboardShortcutStartScreenCaptureKeyUserSetting));
                     _hotKeyMap.RegisterHotKey(keyboardShortcutStopScreenCaptureModifier1 | keyboardShortcutStartScreenCaptureModifier2, GetKeyFromUserSetting(_keyboardShortcutStopScreenCaptureKeyUserSetting));
                     _hotKeyMap.RegisterHotKey(keyboardShortcutCaptureNowArchiveModifier1 | keyboardShortcutCaptureNowArchiveModifier2, GetKeyFromUserSetting(_keyboardShortcutCaptureNowArchiveKeyUserSetting));
                     _hotKeyMap.RegisterHotKey(keyboardShortcutCaptureNowEditModifier1 | keyboardShortcutCaptureNowEditModifier2, GetKeyFromUserSetting(_keyboardShortcutCaptureNowEditKeyUserSetting));
                     _hotKeyMap.RegisterHotKey(keyboardShortcutRegionSelectClipboardModifier1 | keyboardShortcutRegionSelectClipboardModifier2, GetKeyFromUserSetting(_keyboardShortcutRegionSelectClipboardKeyUserSetting));
                     _hotKeyMap.RegisterHotKey(keyboardShortcutRegionSelectAutoSaveModifier1 | keyboardShortcutRegionSelectAutoSaveModifier2, GetKeyFromUserSetting(_keyboardShortcutRegionSelectAutoSaveKeyUserSetting));
+                    _hotKeyMap.RegisterHotKey(keyboardShortcutRegionSelectEditModifier1 | keyboardShortcutRegionSelectEditModifier2, GetKeyFromUserSetting(_keyboardShortcutRegionSelectEditKeyUserSetting));
 
                     toolStripMenuItemStartScreenCapture.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutStartScreenCaptureModifier1UserSetting, keyboardShortcutStartScreenCaptureModifier2UserSetting, _keyboardShortcutStartScreenCaptureKeyUserSetting);
                     toolStripMenuItemStopScreenCapture.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutStopScreenCaptureModifier1UserSetting, keyboardShortcutStopScreenCaptureModifier2UserSetting, _keyboardShortcutStopScreenCaptureKeyUserSetting);
@@ -92,6 +99,7 @@ namespace AutoScreenCapture
                     toolStripMenuItemCaptureNowEdit.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutCaptureNowEditModifier1UserSetting, keyboardShortcutCaptureNowEditModifier2UserSetting, _keyboardShortcutCaptureNowEditKeyUserSetting);
                     toolStripMenuItemRegionSelectClipboard.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectClipboardModifier1UserSetting, keyboardShortcutRegionSelectClipboardModifier2UserSetting, _keyboardShortcutRegionSelectClipboardKeyUserSetting);
                     toolStripMenuItemRegionSelectAutoSave.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectAutoSaveModifier1UserSetting, keyboardShortcutRegionSelectAutoSaveModifier2UserSetting, _keyboardShortcutRegionSelectAutoSaveKeyUserSetting);
+                    toolStripMenuItemRegionSelectEdit.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectEditModifier1UserSetting, keyboardShortcutRegionSelectEditModifier2UserSetting, _keyboardShortcutRegionSelectEditKeyUserSetting);
                 }
                 else
                 {
@@ -100,6 +108,8 @@ namespace AutoScreenCapture
                     toolStripMenuItemCaptureNowArchive.ShortcutKeys = Keys.None;
                     toolStripMenuItemCaptureNowEdit.ShortcutKeys = Keys.None;
                     toolStripMenuItemRegionSelectClipboard.ShortcutKeys = Keys.None;
+                    toolStripMenuItemRegionSelectAutoSave.ShortcutKeys = Keys.None;
+                    toolStripMenuItemRegionSelectEdit.ShortcutKeys = Keys.None;
                 }
             }
             catch (Exception ex)
@@ -177,6 +187,11 @@ namespace AutoScreenCapture
             if (e.Key == GetKeyFromUserSetting(_keyboardShortcutRegionSelectAutoSaveKeyUserSetting))
             {
                 toolStripMenuItemRegionSelectAutoSave_Click(sender, e);
+            }
+
+            if (e.Key == GetKeyFromUserSetting(_keyboardShortcutRegionSelectEditKeyUserSetting))
+            {
+                toolStripMenuItemRegionSelectEdit_Click(sender, e);
             }
         }
     }

@@ -77,6 +77,10 @@ namespace AutoScreenCapture
         internal static readonly int IntStartScreenCaptureCount = 0;
         internal static readonly bool BoolActiveWindowTitleCaptureCheck = false;
         internal static readonly string StringActiveWindowTitleCaptureText = string.Empty;
+        internal static readonly string StringAutoSaveFolder = MacroParser.DefaultAutoSaveFolder;
+        internal static readonly string StringAutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
+
+        // Keyboard Shortcuts.
         internal static readonly bool BoolUseKeyboardShortcuts = false;
         internal static readonly string StringKeyboardShortcutStartScreenCaptureModifier1 = "Control";
         internal static readonly string StringKeyboardShortcutStartScreenCaptureModifier2 = "Alt";
@@ -91,13 +95,14 @@ namespace AutoScreenCapture
         internal static readonly string StringKeyboardShortcutCaptureNowEditModifier2 = "Alt";
         internal static readonly string StringKeyboardShortcutCaptureNowEditKey = "E";
         internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier1 = "Control";
-        internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier2 = "Alt";
-        internal static readonly string StringKeyboardShortcutRegionSelectClipboardKey = "S";
-        internal static readonly string StringAutoSaveFolder = MacroParser.DefaultAutoSaveFolder;
-        internal static readonly string StringAutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
+        internal static readonly string StringKeyboardShortcutRegionSelectClipboardModifier2 = "Shift";
+        internal static readonly string StringKeyboardShortcutRegionSelectClipboardKey = "C";
         internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveModifier1 = "Control";
-        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveModifier2 = "Alt";
-        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveKey = "Q";
+        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveModifier2 = "Shift";
+        internal static readonly string StringKeyboardShortcutRegionSelectAutoSaveKey = "S";
+        internal static readonly string StringKeyboardShortcutRegionSelectEditModifier1 = "Control";
+        internal static readonly string StringKeyboardShortcutRegionSelectEditModifier2 = "Shift";
+        internal static readonly string StringKeyboardShortcutRegionSelectEditKey = "E";
 
         // Old default user settings.
         internal static readonly bool BoolCaptureStartAt = false;

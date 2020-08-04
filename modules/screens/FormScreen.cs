@@ -186,6 +186,7 @@ namespace AutoScreenCapture
                 {
                     ScreenCollection.Add(new Screen()
                     {
+                        ViewId = Guid.NewGuid(),
                         Name = textBoxScreenName.Text,
                         Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         Macro = textBoxMacro.Text,

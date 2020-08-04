@@ -145,7 +145,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.1"), // ActiveWindowTitleLengthLimit application setting implemented.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.2"), // Snagit Editor introduced as a new default image editor if available.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.3"), // Fixed bug with new Editor throwing null reference exception on changing its properties because Notes was null.
-                new Version(CODENAME_BOOMBAYAH, "2.3.1.4") // ExitOnError set to True by default.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.4"), // ExitOnError set to True by default.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.5") // Region Select / Auto Save implemented.
             };
 
             Application = new SettingCollection
@@ -359,6 +360,12 @@ namespace AutoScreenCapture
                 User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardKey", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardKey));
                 User.Add(new Setting("StringAutoSaveFolder", DefaultSettings.StringAutoSaveFolder));
                 User.Add(new Setting("StringAutoSaveMacro", DefaultSettings.StringAutoSaveMacro));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveModifier1));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveModifier2));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveKey));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectEditModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier1));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectEditModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier2));
+                User.Add(new Setting("StringKeyboardShortcutRegionSelectEditKey", DefaultSettings.StringKeyboardShortcutRegionSelectEditKey));
 
                 User.Save();
             }

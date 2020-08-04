@@ -173,6 +173,7 @@ namespace AutoScreenCapture
                 {
                     RegionCollection.Add(new Region()
                     {
+                        ViewId = Guid.NewGuid(),
                         Name = textBoxRegionName.Text,
                         Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         Macro = textBoxMacro.Text,
