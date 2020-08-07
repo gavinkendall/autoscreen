@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-08-04 (August 4, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.1.7)]
+Last updated on 2020-08-07 (August 7, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.1.8)]
 =============================================================================================================
 
 
@@ -243,6 +243,9 @@ auto-populate with a default name based on the next available region name that c
 The value of the Name field can be retrieved with the %name% macro tag so it could be used
 as part of the screenshot's filename. Therefore any characters that are invalid to Windows
 will be stripped out of the name (such as /, :, *, ?, \, <, >, and |).
+
+The "Region Select" button is used to acquire the X, Y, Width, and Height values by
+using a mouse-driven region selection on the screen.
 
 Change the X and Y values in the "Position" section to adjust the region's position.
 X = 0 and Y = 0 usually represents the corner of the primary display. You can also use negative

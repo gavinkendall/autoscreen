@@ -64,6 +64,7 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
+            this.buttonRegionSelect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
@@ -135,7 +136,7 @@
             this.labelX.Location = new System.Drawing.Point(21, 22);
             this.labelX.Name = "labelX";
             this.labelX.Size = new System.Drawing.Size(17, 13);
-            this.labelX.TabIndex = 5;
+            this.labelX.TabIndex = 6;
             this.labelX.Text = "X:";
             // 
             // labelY
@@ -144,7 +145,7 @@
             this.labelY.Location = new System.Drawing.Point(125, 22);
             this.labelY.Name = "labelY";
             this.labelY.Size = new System.Drawing.Size(17, 13);
-            this.labelY.TabIndex = 7;
+            this.labelY.TabIndex = 8;
             this.labelY.Text = "Y:";
             // 
             // labelWidth
@@ -153,7 +154,7 @@
             this.labelWidth.Location = new System.Drawing.Point(6, 22);
             this.labelWidth.Name = "labelWidth";
             this.labelWidth.Size = new System.Drawing.Size(38, 13);
-            this.labelWidth.TabIndex = 10;
+            this.labelWidth.TabIndex = 11;
             this.labelWidth.Text = "Width:";
             // 
             // labelHeight
@@ -162,7 +163,7 @@
             this.labelHeight.Location = new System.Drawing.Point(101, 22);
             this.labelHeight.Name = "labelHeight";
             this.labelHeight.Size = new System.Drawing.Size(41, 13);
-            this.labelHeight.TabIndex = 12;
+            this.labelHeight.TabIndex = 13;
             this.labelHeight.Text = "Height:";
             // 
             // numericUpDownX
@@ -180,7 +181,7 @@
             -2147483648});
             this.numericUpDownX.Name = "numericUpDownX";
             this.numericUpDownX.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownX.TabIndex = 6;
+            this.numericUpDownX.TabIndex = 7;
             this.numericUpDownX.ValueChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // numericUpDownY
@@ -198,7 +199,7 @@
             -2147483648});
             this.numericUpDownY.Name = "numericUpDownY";
             this.numericUpDownY.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownY.TabIndex = 8;
+            this.numericUpDownY.TabIndex = 9;
             this.numericUpDownY.ValueChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // numericUpDownWidth
@@ -216,7 +217,7 @@
             -2147483648});
             this.numericUpDownWidth.Name = "numericUpDownWidth";
             this.numericUpDownWidth.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownWidth.TabIndex = 11;
+            this.numericUpDownWidth.TabIndex = 12;
             this.numericUpDownWidth.ValueChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // numericUpDownHeight
@@ -234,7 +235,7 @@
             -2147483648});
             this.numericUpDownHeight.Name = "numericUpDownHeight";
             this.numericUpDownHeight.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownHeight.TabIndex = 13;
+            this.numericUpDownHeight.TabIndex = 14;
             this.numericUpDownHeight.ValueChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // buttonOK
@@ -301,7 +302,7 @@
             this.comboBoxFormat.Location = new System.Drawing.Point(148, 22);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
-            this.comboBoxFormat.TabIndex = 16;
+            this.comboBoxFormat.TabIndex = 19;
             this.comboBoxFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionFormat_SelectedIndexChanged);
             this.comboBoxFormat.MouseHover += new System.EventHandler(this.comboBoxFormat_MouseHover);
             // 
@@ -311,7 +312,7 @@
             this.labelFormat.Location = new System.Drawing.Point(6, 25);
             this.labelFormat.Name = "labelFormat";
             this.labelFormat.Size = new System.Drawing.Size(42, 13);
-            this.labelFormat.TabIndex = 15;
+            this.labelFormat.TabIndex = 18;
             this.labelFormat.Text = "Format:";
             // 
             // numericUpDownResolutionRatio
@@ -324,7 +325,7 @@
             0});
             this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
             this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 20;
+            this.numericUpDownResolutionRatio.TabIndex = 23;
             this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
             100,
             0,
@@ -338,7 +339,7 @@
             this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
             this.labelResolutionRatio.Name = "labelResolutionRatio";
             this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 19;
+            this.labelResolutionRatio.TabIndex = 22;
             this.labelResolutionRatio.Text = "Resolution Ratio:";
             // 
             // numericUpDownJpegQuality
@@ -351,7 +352,7 @@
             0});
             this.numericUpDownJpegQuality.Name = "numericUpDownJpegQuality";
             this.numericUpDownJpegQuality.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownJpegQuality.TabIndex = 18;
+            this.numericUpDownJpegQuality.TabIndex = 21;
             this.numericUpDownJpegQuality.Value = new decimal(new int[] {
             100,
             0,
@@ -364,7 +365,7 @@
             this.labelJpegQuality.Location = new System.Drawing.Point(6, 51);
             this.labelJpegQuality.Name = "labelJpegQuality";
             this.labelJpegQuality.Size = new System.Drawing.Size(72, 13);
-            this.labelJpegQuality.TabIndex = 17;
+            this.labelJpegQuality.TabIndex = 20;
             this.labelJpegQuality.Text = "JPEG Quality:";
             // 
             // checkBoxMouse
@@ -373,7 +374,7 @@
             this.checkBoxMouse.Location = new System.Drawing.Point(9, 102);
             this.checkBoxMouse.Name = "checkBoxMouse";
             this.checkBoxMouse.Size = new System.Drawing.Size(130, 17);
-            this.checkBoxMouse.TabIndex = 21;
+            this.checkBoxMouse.TabIndex = 24;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
             this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
@@ -389,10 +390,10 @@
             this.groupBoxImage.Controls.Add(this.labelJpegQuality);
             this.groupBoxImage.Controls.Add(this.numericUpDownJpegQuality);
             this.groupBoxImage.Controls.Add(this.comboBoxFormat);
-            this.groupBoxImage.Location = new System.Drawing.Point(12, 158);
+            this.groupBoxImage.Location = new System.Drawing.Point(12, 262);
             this.groupBoxImage.Name = "groupBoxImage";
             this.groupBoxImage.Size = new System.Drawing.Size(205, 126);
-            this.groupBoxImage.TabIndex = 14;
+            this.groupBoxImage.TabIndex = 17;
             this.groupBoxImage.TabStop = false;
             this.groupBoxImage.Text = "Image";
             // 
@@ -402,10 +403,10 @@
             this.groupBoxPosition.Controls.Add(this.labelY);
             this.groupBoxPosition.Controls.Add(this.numericUpDownX);
             this.groupBoxPosition.Controls.Add(this.numericUpDownY);
-            this.groupBoxPosition.Location = new System.Drawing.Point(12, 58);
+            this.groupBoxPosition.Location = new System.Drawing.Point(12, 103);
             this.groupBoxPosition.Name = "groupBoxPosition";
             this.groupBoxPosition.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxPosition.TabIndex = 4;
+            this.groupBoxPosition.TabIndex = 5;
             this.groupBoxPosition.TabStop = false;
             this.groupBoxPosition.Text = "Position";
             // 
@@ -415,10 +416,10 @@
             this.groupBoxSize.Controls.Add(this.numericUpDownHeight);
             this.groupBoxSize.Controls.Add(this.numericUpDownWidth);
             this.groupBoxSize.Controls.Add(this.labelHeight);
-            this.groupBoxSize.Location = new System.Drawing.Point(12, 107);
+            this.groupBoxSize.Location = new System.Drawing.Point(12, 152);
             this.groupBoxSize.Name = "groupBoxSize";
             this.groupBoxSize.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxSize.TabIndex = 9;
+            this.groupBoxSize.TabIndex = 10;
             this.groupBoxSize.TabStop = false;
             this.groupBoxSize.Text = "Size";
             // 
@@ -452,10 +453,10 @@
             // groupBoxScreenTemplate
             // 
             this.groupBoxScreenTemplate.Controls.Add(this.comboBoxScreenTemplate);
-            this.groupBoxScreenTemplate.Location = new System.Drawing.Point(12, 288);
+            this.groupBoxScreenTemplate.Location = new System.Drawing.Point(12, 205);
             this.groupBoxScreenTemplate.Name = "groupBoxScreenTemplate";
             this.groupBoxScreenTemplate.Size = new System.Drawing.Size(205, 47);
-            this.groupBoxScreenTemplate.TabIndex = 22;
+            this.groupBoxScreenTemplate.TabIndex = 15;
             this.groupBoxScreenTemplate.TabStop = false;
             this.groupBoxScreenTemplate.Text = "Import Screen Dimensions";
             // 
@@ -466,7 +467,7 @@
             this.comboBoxScreenTemplate.Location = new System.Drawing.Point(6, 19);
             this.comboBoxScreenTemplate.Name = "comboBoxScreenTemplate";
             this.comboBoxScreenTemplate.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxScreenTemplate.TabIndex = 23;
+            this.comboBoxScreenTemplate.TabIndex = 16;
             this.comboBoxScreenTemplate.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionScreenTemplate_SelectedIndexChanged);
             this.comboBoxScreenTemplate.MouseHover += new System.EventHandler(this.comboBoxScreenTemplate_MouseHover);
             // 
@@ -510,6 +511,18 @@
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
             // 
+            // buttonRegionSelect
+            // 
+            this.buttonRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region_select;
+            this.buttonRegionSelect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonRegionSelect.Location = new System.Drawing.Point(12, 69);
+            this.buttonRegionSelect.Name = "buttonRegionSelect";
+            this.buttonRegionSelect.Size = new System.Drawing.Size(205, 23);
+            this.buttonRegionSelect.TabIndex = 4;
+            this.buttonRegionSelect.Text = "Region Select";
+            this.buttonRegionSelect.UseVisualStyleBackColor = true;
+            this.buttonRegionSelect.Click += new System.EventHandler(this.buttonRegionSelect_Click);
+            // 
             // FormRegion
             // 
             this.AcceptButton = this.buttonOK;
@@ -518,6 +531,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.buttonRegionSelect);
             this.Controls.Add(this.buttonMacroTags);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.checkBoxActive);
@@ -601,5 +615,6 @@
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Button buttonMacroTags;
+        private System.Windows.Forms.Button buttonRegionSelect;
     }
 }

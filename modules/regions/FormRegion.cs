@@ -30,6 +30,7 @@ namespace AutoScreenCapture
     public partial class FormRegion : Form
     {
         private FormMacroTagsToolWindow _formMacroTags;
+        private FormRegionSelectWithMouse _formRegionSelectWithMouse;
 
         /// <summary>
         /// A collection of regions.
@@ -473,6 +474,26 @@ namespace AutoScreenCapture
             {
                 _formMacroTags.Close();
             }
+        }
+
+        private void buttonRegionSelect_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+        }
+
+        private void _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted(object sender, EventArgs e)
+        {
+            int x = _formRegionSelectWithMouse.outputX + 1;
+            int y = _formRegionSelectWithMouse.outputY + 1;
+            int width = _formRegionSelectWithMouse.outputWidth - 2;
+            int height = _formRegionSelectWithMouse.outputHeight - 2;
+
+            numericUpDownX.Value = x;
+            numericUpDownY.Value = y;
+            numericUpDownWidth.Value = width;
+            numericUpDownHeight.Value = height;
         }
     }
 }
