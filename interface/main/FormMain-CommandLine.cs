@@ -60,6 +60,7 @@ namespace AutoScreenCapture
                         CaptureAt = dtNow,
                         StartAt = dtNow,
                         StopAt = dtNow,
+                        ScreenCaptureInterval = DefaultSettings.IntScreenCaptureInterval,
                         Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
@@ -291,6 +292,8 @@ namespace AutoScreenCapture
 
                             timerScreenCapture.Enabled = true;
                             timerScreenCapture.Start();
+
+                            _formSchedule.ScheduleCollection.GetByName(ScheduleCollection.SpecialScheduleName).ScreenCaptureInterval = screenCaptureInterval;
                         }
                     }
 

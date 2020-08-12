@@ -58,6 +58,11 @@ namespace AutoScreenCapture
         public DateTime StopAt { get; set; }
 
         /// <summary>
+        /// The interval to use. This overrides the main interval.
+        /// </summary>
+        public int ScreenCaptureInterval { get; set; }
+
+        /// <summary>
         /// Determines if we take screenshots on a Monday.
         /// </summary>
         public bool Monday { get; set; }

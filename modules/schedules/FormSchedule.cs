@@ -34,6 +34,11 @@ namespace AutoScreenCapture
         public ScheduleCollection ScheduleCollection { get; } = new ScheduleCollection();
 
         /// <summary>
+        /// The screen capture interval for the schedule to use for overriding the main screen capture interval.
+        /// </summary>
+        public int ScreenCaptureInterval { get; set; }
+
+        /// <summary>
         /// The schedule object to handle.
         /// </summary>
         public Schedule ScheduleObject { get; set; }
@@ -65,6 +70,16 @@ namespace AutoScreenCapture
                 dateTimePickerCaptureAt.Value = ScheduleObject.CaptureAt;
                 dateTimePickerStartAt.Value = ScheduleObject.StartAt;
                 dateTimePickerStopAt.Value = ScheduleObject.StopAt;
+
+                decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Hours);
+                decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Minutes);
+                decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Milliseconds);
+
+                numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 checkBoxMonday.Checked = ScheduleObject.Monday;
                 checkBoxTuesday.Checked = ScheduleObject.Tuesday;
@@ -102,6 +117,16 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
                 dateTimePickerStopAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
 
+                decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Hours);
+                decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Minutes);
+                decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Seconds);
+                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Milliseconds);
+
+                numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+
                 radioButtonOneTime.Checked = true;
                 radioButtonPeriod.Checked = false;
 
@@ -112,9 +137,14 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
                 dateTimePickerStopAt.Enabled = false;
+                labelInterval.Enabled = false;
+                numericUpDownHoursInterval.Enabled = false;
+                numericUpDownMinutesInterval.Enabled = false;
+                numericUpDownSecondsInterval.Enabled = false;
+                numericUpDownMillisecondsInterval.Enabled = false;
 
                 checkBoxWorkWeek.Checked = true;
-                checkBoxWeekend.Checked = true;
+                checkBoxWeekend.Checked = false;
 
                 textBoxNotes.Text = string.Empty;
             }
@@ -150,6 +180,10 @@ namespace AutoScreenCapture
 
                 if (ScheduleCollection.GetByName(textBoxName.Text) == null)
                 {
+                    int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                        (int)numericUpDownMillisecondsInterval.Value);
+
                     Schedule schedule = new Schedule()
                     {
                         Name = textBoxName.Text,
@@ -159,6 +193,7 @@ namespace AutoScreenCapture
                         CaptureAt = dateTimePickerCaptureAt.Value,
                         StartAt = dateTimePickerStartAt.Value,
                         StopAt = dateTimePickerStopAt.Value,
+                        ScreenCaptureInterval = screenCaptureInterval,
                         Monday = checkBoxMonday.Checked,
                         Tuesday = checkBoxTuesday.Checked,
                         Wednesday = checkBoxWednesday.Checked,
@@ -208,6 +243,13 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).CaptureAt = dateTimePickerCaptureAt.Value;
                         ScheduleCollection.Get(ScheduleObject).StartAt = dateTimePickerStartAt.Value;
                         ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerStopAt.Value;
+
+                        int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                            (int)numericUpDownMillisecondsInterval.Value);
+
+                        ScheduleCollection.Get(ScheduleObject).ScreenCaptureInterval = screenCaptureInterval;
+
                         ScheduleCollection.Get(ScheduleObject).Monday = checkBoxMonday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Tuesday = checkBoxTuesday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Wednesday = checkBoxWednesday.Checked;
@@ -256,11 +298,16 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
+            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                            (int)numericUpDownMillisecondsInterval.Value);
+
             if (ScheduleObject != null &&
                 (!ScheduleObject.Active.Equals(checkBoxActive.Checked) ||
                 !ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
                 !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
                 !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value) ||
+                !ScheduleObject.ScreenCaptureInterval.Equals(screenCaptureInterval) ||
                 !ScheduleObject.Monday.Equals(checkBoxMonday.Checked) ||
                 !ScheduleObject.Tuesday.Equals(checkBoxTuesday.Checked) ||
                 !ScheduleObject.Wednesday.Equals(checkBoxWednesday.Checked) ||
@@ -305,6 +352,11 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
                 dateTimePickerStopAt.Enabled = false;
+                labelInterval.Enabled = false;
+                numericUpDownHoursInterval.Enabled = false;
+                numericUpDownMinutesInterval.Enabled = false;
+                numericUpDownSecondsInterval.Enabled = false;
+                numericUpDownMillisecondsInterval.Enabled = false;
             }
         }
 
@@ -319,6 +371,11 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = true;
                 labelAnd.Enabled = true;
                 dateTimePickerStopAt.Enabled = true;
+                labelInterval.Enabled = true;
+                numericUpDownHoursInterval.Enabled = true;
+                numericUpDownMinutesInterval.Enabled = true;
+                numericUpDownSecondsInterval.Enabled = true;
+                numericUpDownMillisecondsInterval.Enabled = true;
             }
         }
 

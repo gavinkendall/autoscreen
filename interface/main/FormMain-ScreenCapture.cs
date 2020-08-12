@@ -194,15 +194,24 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Starts a screen capture session.
+        /// Starts a screen capture session with the default screen capture interval.
         /// </summary>
         private void StartScreenCapture()
+        {
+            int screenCaptureInterval = GetScreenCaptureInterval();
+
+            StartScreenCapture(screenCaptureInterval);
+        }
+
+        /// <summary>
+        /// Starts a screen capture session with a defined screen capture interval.
+        /// </summary>
+        /// <param name="screenCaptureInterval">The screen capture interval to use.</param>
+        private void StartScreenCapture(int screenCaptureInterval)
         {
             try
             {
                 Log.WriteDebugMessage("Starting a screen capture session");
-
-                int screenCaptureInterval = GetScreenCaptureInterval();
 
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
@@ -312,6 +321,7 @@ namespace AutoScreenCapture
 
                     _screenCapture.Count = 0;
                     _screenCapture.Running = false;
+                    _screenCapture.DateTimePreviousCycle = DateTime.MinValue;
 
                     timerScreenCapture.Stop();
                     timerScreenCapture.Enabled = false;

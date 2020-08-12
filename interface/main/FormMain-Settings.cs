@@ -150,7 +150,7 @@ namespace AutoScreenCapture
 
                 if (screenCaptureInterval == 0)
                 {
-                    screenCaptureInterval = 60000;
+                    screenCaptureInterval = DefaultSettings.IntScreenCaptureInterval;
                     Log.WriteDebugMessage("WARNING: Screen capture interval was found to be 0 so 60,000 milliseconds (or 1 minute) is being used as the default value");
                 }
 

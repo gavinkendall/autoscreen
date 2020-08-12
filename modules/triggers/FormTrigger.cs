@@ -253,6 +253,10 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
+            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                            (int)numericUpDownMillisecondsInterval.Value);
+
             if (TriggerObject != null &&
                 ((int)TriggerObject.ConditionType != listBoxCondition.SelectedIndex ||
                 (int)TriggerObject.ActionType != listBoxAction.SelectedIndex ||
@@ -261,7 +265,8 @@ namespace AutoScreenCapture
                 !TriggerObject.ModuleItem.Equals(listBoxModuleItemList.SelectedItem.ToString())) ||
                 TriggerObject.Active != checkBoxActive.Checked ||
                 TriggerObject.Date != dateTimePickerDate.Value ||
-                TriggerObject.Time != dateTimePickerTime.Value))
+                TriggerObject.Time != dateTimePickerTime.Value ||
+                !TriggerObject.ScreenCaptureInterval.Equals(screenCaptureInterval)))
             {
                 return true;
             }

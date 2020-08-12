@@ -90,7 +90,7 @@ namespace AutoScreenCapture
                                 (dtNow.Minute == schedule.StartAt.Minute) &&
                                 (dtNow.Second == schedule.StartAt.Second))
                             {
-                                StartScreenCapture();
+                                StartScreenCapture(schedule.ScreenCaptureInterval);
                             }
 
                             if ((dtNow.Hour == schedule.StopAt.Hour) &&
@@ -130,6 +130,12 @@ namespace AutoScreenCapture
         private void addSchedule_Click(object sender, EventArgs e)
         {
             _formSchedule.ScheduleObject = null;
+
+            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                        (int)numericUpDownMillisecondsInterval.Value);
+
+            _formSchedule.ScreenCaptureInterval = screenCaptureInterval;
 
             _formSchedule.ShowDialog(this);
 

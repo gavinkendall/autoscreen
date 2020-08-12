@@ -55,7 +55,16 @@
             this.labelHelp = new System.Windows.Forms.Label();
             this.labelNotes = new System.Windows.Forms.Label();
             this.textBoxNotes = new System.Windows.Forms.TextBox();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownSecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
+            this.labelInterval = new System.Windows.Forms.Label();
             this.groupBoxDays.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -65,7 +74,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 25;
+            this.buttonCancel.TabIndex = 30;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -76,7 +85,7 @@
             this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 24;
+            this.buttonOK.TabIndex = 29;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -126,7 +135,7 @@
             // 
             this.dateTimePickerStopAt.CustomFormat = "HH:mm:ss";
             this.dateTimePickerStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStopAt.Location = new System.Drawing.Point(348, 110);
+            this.dateTimePickerStopAt.Location = new System.Drawing.Point(403, 110);
             this.dateTimePickerStopAt.Name = "dateTimePickerStopAt";
             this.dateTimePickerStopAt.ShowUpDown = true;
             this.dateTimePickerStopAt.Size = new System.Drawing.Size(68, 20);
@@ -175,7 +184,7 @@
             this.checkBoxMonday.Location = new System.Drawing.Point(119, 19);
             this.checkBoxMonday.Name = "checkBoxMonday";
             this.checkBoxMonday.Size = new System.Drawing.Size(64, 17);
-            this.checkBoxMonday.TabIndex = 14;
+            this.checkBoxMonday.TabIndex = 19;
             this.checkBoxMonday.Text = "Monday";
             this.checkBoxMonday.UseVisualStyleBackColor = true;
             // 
@@ -195,7 +204,7 @@
             this.groupBoxDays.Location = new System.Drawing.Point(12, 149);
             this.groupBoxDays.Name = "groupBoxDays";
             this.groupBoxDays.Size = new System.Drawing.Size(732, 67);
-            this.groupBoxDays.TabIndex = 12;
+            this.groupBoxDays.TabIndex = 17;
             this.groupBoxDays.TabStop = false;
             this.groupBoxDays.Text = "Days";
             // 
@@ -205,7 +214,7 @@
             this.checkBoxWeekend.Location = new System.Drawing.Point(10, 42);
             this.checkBoxWeekend.Name = "checkBoxWeekend";
             this.checkBoxWeekend.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxWeekend.TabIndex = 19;
+            this.checkBoxWeekend.TabIndex = 24;
             this.checkBoxWeekend.Text = "Weekend";
             this.checkBoxWeekend.UseVisualStyleBackColor = true;
             this.checkBoxWeekend.CheckedChanged += new System.EventHandler(this.checkBoxWeekend_CheckedChanged);
@@ -216,7 +225,7 @@
             this.checkBoxWorkWeek.Location = new System.Drawing.Point(10, 19);
             this.checkBoxWorkWeek.Name = "checkBoxWorkWeek";
             this.checkBoxWorkWeek.Size = new System.Drawing.Size(84, 17);
-            this.checkBoxWorkWeek.TabIndex = 13;
+            this.checkBoxWorkWeek.TabIndex = 18;
             this.checkBoxWorkWeek.Text = "Work Week";
             this.checkBoxWorkWeek.UseVisualStyleBackColor = true;
             this.checkBoxWorkWeek.CheckedChanged += new System.EventHandler(this.checkBoxWorkWeek_CheckedChanged);
@@ -227,7 +236,7 @@
             this.checkBoxSunday.Location = new System.Drawing.Point(189, 42);
             this.checkBoxSunday.Name = "checkBoxSunday";
             this.checkBoxSunday.Size = new System.Drawing.Size(62, 17);
-            this.checkBoxSunday.TabIndex = 21;
+            this.checkBoxSunday.TabIndex = 26;
             this.checkBoxSunday.Text = "Sunday";
             this.checkBoxSunday.UseVisualStyleBackColor = true;
             // 
@@ -237,7 +246,7 @@
             this.checkBoxSaturday.Location = new System.Drawing.Point(119, 42);
             this.checkBoxSaturday.Name = "checkBoxSaturday";
             this.checkBoxSaturday.Size = new System.Drawing.Size(68, 17);
-            this.checkBoxSaturday.TabIndex = 20;
+            this.checkBoxSaturday.TabIndex = 25;
             this.checkBoxSaturday.Text = "Saturday";
             this.checkBoxSaturday.UseVisualStyleBackColor = true;
             // 
@@ -247,7 +256,7 @@
             this.checkBoxFriday.Location = new System.Drawing.Point(427, 19);
             this.checkBoxFriday.Name = "checkBoxFriday";
             this.checkBoxFriday.Size = new System.Drawing.Size(54, 17);
-            this.checkBoxFriday.TabIndex = 18;
+            this.checkBoxFriday.TabIndex = 23;
             this.checkBoxFriday.Text = "Friday";
             this.checkBoxFriday.UseVisualStyleBackColor = true;
             // 
@@ -257,7 +266,7 @@
             this.checkBoxThursday.Location = new System.Drawing.Point(351, 19);
             this.checkBoxThursday.Name = "checkBoxThursday";
             this.checkBoxThursday.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxThursday.TabIndex = 17;
+            this.checkBoxThursday.TabIndex = 22;
             this.checkBoxThursday.Text = "Thursday";
             this.checkBoxThursday.UseVisualStyleBackColor = true;
             // 
@@ -267,7 +276,7 @@
             this.checkBoxWednesday.Location = new System.Drawing.Point(262, 19);
             this.checkBoxWednesday.Name = "checkBoxWednesday";
             this.checkBoxWednesday.Size = new System.Drawing.Size(83, 17);
-            this.checkBoxWednesday.TabIndex = 16;
+            this.checkBoxWednesday.TabIndex = 21;
             this.checkBoxWednesday.Text = "Wednesday";
             this.checkBoxWednesday.UseVisualStyleBackColor = true;
             // 
@@ -277,7 +286,7 @@
             this.checkBoxTuesday.Location = new System.Drawing.Point(189, 19);
             this.checkBoxTuesday.Name = "checkBoxTuesday";
             this.checkBoxTuesday.Size = new System.Drawing.Size(67, 17);
-            this.checkBoxTuesday.TabIndex = 15;
+            this.checkBoxTuesday.TabIndex = 20;
             this.checkBoxTuesday.Text = "Tuesday";
             this.checkBoxTuesday.UseVisualStyleBackColor = true;
             // 
@@ -295,18 +304,18 @@
             this.labelTakeScreenshotsPeriod.AutoSize = true;
             this.labelTakeScreenshotsPeriod.Location = new System.Drawing.Point(101, 113);
             this.labelTakeScreenshotsPeriod.Name = "labelTakeScreenshotsPeriod";
-            this.labelTakeScreenshotsPeriod.Size = new System.Drawing.Size(136, 13);
+            this.labelTakeScreenshotsPeriod.Size = new System.Drawing.Size(141, 13);
             this.labelTakeScreenshotsPeriod.TabIndex = 8;
-            this.labelTakeScreenshotsPeriod.Text = "Take screenshots between";
+            this.labelTakeScreenshotsPeriod.Text = "Take screenshots starting at";
             // 
             // labelAnd
             // 
             this.labelAnd.AutoSize = true;
             this.labelAnd.Location = new System.Drawing.Point(317, 113);
             this.labelAnd.Name = "labelAnd";
-            this.labelAnd.Size = new System.Drawing.Size(25, 13);
+            this.labelAnd.Size = new System.Drawing.Size(80, 13);
             this.labelAnd.TabIndex = 10;
-            this.labelAnd.Text = "and";
+            this.labelAnd.Text = "and stopping at";
             // 
             // labelHelp
             // 
@@ -329,7 +338,7 @@
             this.labelNotes.Location = new System.Drawing.Point(9, 229);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
-            this.labelNotes.TabIndex = 22;
+            this.labelNotes.TabIndex = 27;
             this.labelNotes.Text = "Notes:";
             // 
             // textBoxNotes
@@ -343,8 +352,69 @@
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 160);
-            this.textBoxNotes.TabIndex = 23;
+            this.textBoxNotes.TabIndex = 28;
             this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
+            // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(700, 111);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 16;
+            // 
+            // numericUpDownSecondsInterval
+            // 
+            this.numericUpDownSecondsInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(652, 111);
+            this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownSecondsInterval.Name = "numericUpDownSecondsInterval";
+            this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownSecondsInterval.TabIndex = 15;
+            // 
+            // numericUpDownMinutesInterval
+            // 
+            this.numericUpDownMinutesInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(604, 111);
+            this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.numericUpDownMinutesInterval.Name = "numericUpDownMinutesInterval";
+            this.numericUpDownMinutesInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMinutesInterval.TabIndex = 14;
+            // 
+            // numericUpDownHoursInterval
+            // 
+            this.numericUpDownHoursInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(556, 111);
+            this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.numericUpDownHoursInterval.Name = "numericUpDownHoursInterval";
+            this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownHoursInterval.TabIndex = 13;
+            // 
+            // labelInterval
+            // 
+            this.labelInterval.AutoSize = true;
+            this.labelInterval.Location = new System.Drawing.Point(482, 113);
+            this.labelInterval.Name = "labelInterval";
+            this.labelInterval.Size = new System.Drawing.Size(63, 13);
+            this.labelInterval.TabIndex = 12;
+            this.labelInterval.Text = "with interval";
             // 
             // FormSchedule
             // 
@@ -353,6 +423,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.labelInterval);
+            this.Controls.Add(this.numericUpDownMillisecondsInterval);
+            this.Controls.Add(this.numericUpDownSecondsInterval);
+            this.Controls.Add(this.numericUpDownMinutesInterval);
+            this.Controls.Add(this.numericUpDownHoursInterval);
             this.Controls.Add(this.labelNotes);
             this.Controls.Add(this.textBoxNotes);
             this.Controls.Add(this.labelHelp);
@@ -378,6 +453,10 @@
             this.Load += new System.EventHandler(this.FormSchedule_Load);
             this.groupBoxDays.ResumeLayout(false);
             this.groupBoxDays.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,5 +490,10 @@
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Label labelNotes;
         private System.Windows.Forms.TextBox textBoxNotes;
+        private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
+        private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
+        private System.Windows.Forms.Label labelInterval;
     }
 }

@@ -41,6 +41,7 @@ namespace AutoScreenCapture
         private const string SCHEDULE_CAPTUREAT = "captureat";
         private const string SCHEDULE_STARTAT = "startat";
         private const string SCHEDULE_STOPAT = "stopat";
+        private const string SCHEDULE_SCREEN_CAPTURE_INTERVAL = "screen_capture_interval";
         private const string SCHEDULE_MONDAY = "monday";
         private const string SCHEDULE_TUESDAY = "tuesday";
         private const string SCHEDULE_WEDNESDAY = "wednesday";
@@ -144,6 +145,11 @@ namespace AutoScreenCapture
                                         schedule.StopAt = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case SCHEDULE_SCREEN_CAPTURE_INTERVAL:
+                                        xReader.Read();
+                                        schedule.ScreenCaptureInterval = Convert.ToInt32(xReader.Value);
+                                        break;
+
                                     case SCHEDULE_MONDAY:
                                         xReader.Read();
                                         schedule.Monday = Convert.ToBoolean(xReader.Value);
@@ -196,6 +202,7 @@ namespace AutoScreenCapture
                             Log.WriteDebugMessage("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2319 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.1.9");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -205,6 +212,14 @@ namespace AutoScreenCapture
                                 // This is a new property for Schedule that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 schedule.Active = true;
+                            }
+
+                            if (v2319 != null && configVersion != null && configVersion.VersionNumber < v2319.VersionNumber)
+                            {
+                                Log.WriteDebugMessage("Boombayah 2.3.1.8 or older detected");
+
+                                // A new property for Schedule introduced in 2.3.1.9
+                                schedule.ScreenCaptureInterval = 0;
                             }
                         }
 
@@ -238,6 +253,7 @@ namespace AutoScreenCapture
                         CaptureAt = dtNow,
                         StartAt = dtNow,
                         StopAt = dtNow,
+                        ScreenCaptureInterval = DefaultSettings.IntScreenCaptureInterval,
                         Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
@@ -357,6 +373,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCHEDULE_CAPTUREAT, schedule.CaptureAt.ToString());
                         xWriter.WriteElementString(SCHEDULE_STARTAT, schedule.StartAt.ToString());
                         xWriter.WriteElementString(SCHEDULE_STOPAT, schedule.StopAt.ToString());
+                        xWriter.WriteElementString(SCHEDULE_SCREEN_CAPTURE_INTERVAL, schedule.ScreenCaptureInterval.ToString());
                         xWriter.WriteElementString(SCHEDULE_MONDAY, schedule.Monday.ToString());
                         xWriter.WriteElementString(SCHEDULE_TUESDAY, schedule.Tuesday.ToString());
                         xWriter.WriteElementString(SCHEDULE_WEDNESDAY, schedule.Wednesday.ToString());

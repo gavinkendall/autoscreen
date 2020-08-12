@@ -147,7 +147,9 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.3"), // Fixed bug with new Editor throwing null reference exception on changing its properties because Notes was null.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.4"), // ExitOnError set to True by default.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.5"), // Region Select / Auto Save implemented.
-                new Version(CODENAME_BOOMBAYAH, "2.3.1.6") // Region Select Edit implemented and fixed bug with ViewId for new Screens and Regions.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.6"), // Region Select Edit implemented and fixed bug with ViewId for new Screens and Regions.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.7"), // OptimizeScreenCapture implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.8") // Region Select implemented for Regions.
             };
 
             Application = new SettingCollection
