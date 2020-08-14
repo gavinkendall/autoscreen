@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-08-12 (August 12, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.1.9)]
+Last updated on 2020-08-14 (August 14, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.2.0)]
 =============================================================================================================
 
 
@@ -12,7 +12,16 @@ Auto Screen Capture is a small and portable screen capture utility for gamers, d
 The application enables you to automatically take screenshots at a chosen interval. For example, you may
 want to capture the progress of playing through a game's level or track your progress on a long project.
 
-You can also schedule your automated screen capture sessions by specifying when a session starts and
+It includes basic region (or area) selection screen capture options from the system tray icon menu
+so simply right-clicking on the system tray icon will give you the following options:
+Region Select / Clipboard     for a region selection and place the screenshot into the clipboard
+Region Select / Auto Save     for a region selection and save the screenshot on the desktop
+Region Select / Edit          for a region selection, save the screenshot, and open it in an editor
+
+You may use any application or script as your default editor rather than Microsoft Paint and,
+if you happen to have Snagit Editor installed, then the Snagit Editor will be your default editor.
+
+You can schedule your automated screen capture sessions by specifying when a session starts and
 when a session stops on particular days of the week.
 
 A calendar is included to help you keep track of what days screenshots were taken.
@@ -680,6 +689,9 @@ ScreenshotsFile=!autoscreen\screenshots.xml
 
 # References to tags.
 TagsFile=!autoscreen\tags.xml
+
+# References to schedules.
+SchedulesFile=C:\autoscreen\bin\Debug\!autoscreen\schedules.xml
 =======================================================================================================
 
 As you can see the configuration file defines the folders and XML files the application should use.
@@ -697,6 +709,7 @@ ScreensFile=!autoscreen\screens.xml
 TriggersFile=!autoscreen\triggers.xml
 ScreenshotsFile=!autoscreen\screenshots.xml
 TagsFile=!autoscreen\tags.xml
+SchedulesFile=!autoscreen\schedules.xml
 
 All of these values represent local paths for the computer that Auto Screen Capture is running on, but
 it's also possible to use network paths instead.
@@ -711,6 +724,7 @@ screens.xml                   Setup screens to capture on the user's computer
 triggers.xml                  Setup triggers to control the application's behavior
 screenshots.xml               List the screenshots that have been captured by the application
 tags.xml                      Setup tags to use in a macro for customizing filenames
+schedules.xml                 Schedules for defining when screen capture sessions start and stop
 
 You can use a network path (rather than a local system path). For example, if you have a server
 named "SKYWALKER" and it's accessible by Auto Screen Capture running from a user's computer you
@@ -744,6 +758,7 @@ ScreensFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screens.xml
 TriggersFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\triggers.xml
 ScreenshotsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\screenshots.xml
 TagsFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\tags.xml
+SchedulesFile=\\SKYWALKER\shared\autoscreen\%machine%\%user%\\schedules.xml
 =======================================================================================================
 
 You don't need to use "autoscreen.conf" as the name for your configuration file.

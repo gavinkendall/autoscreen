@@ -149,7 +149,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.5"), // Region Select / Auto Save implemented.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.6"), // Region Select Edit implemented and fixed bug with ViewId for new Screens and Regions.
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.7"), // OptimizeScreenCapture implemented.
-                new Version(CODENAME_BOOMBAYAH, "2.3.1.8") // Region Select implemented for Regions.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.8"), // Region Select implemented for Regions.
+                new Version(CODENAME_BOOMBAYAH, "2.3.1.9") // Schedules can now have their own interval set for them separate from the main interval. Also fixed bug with screen capture duration info.
             };
 
             Application = new SettingCollection
