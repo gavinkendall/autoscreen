@@ -66,6 +66,11 @@ namespace AutoScreenCapture
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
+                    if (!schedule.Active)
+                    {
+                        continue;
+                    }
+
                     if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
                         (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
                         (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
@@ -106,6 +111,11 @@ namespace AutoScreenCapture
                 // Process the list of triggers of condition type Date/Time and condition type Time.
                 foreach (Trigger trigger in _formTrigger.TriggerCollection)
                 {
+                    if (!trigger.Active)
+                    {
+                        continue;
+                    }
+
                     if (trigger.ConditionType == TriggerConditionType.DateTime &&
                         trigger.Date.ToString(MacroParser.DateFormat).Equals(dtNow.ToString(MacroParser.DateFormat)) &&
                         trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
