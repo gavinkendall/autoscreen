@@ -60,7 +60,8 @@ namespace AutoScreenCapture
                     FileSystem.CreateFile(FileSystem.CommandFile);
                 }
 
-                // Displays the next time screenshots are going to be captured in the system tray icon's tool tip.
+                // Displays the next time screenshots are going to be captured
+                // in the system tray icon's tool tip, the main interface, and information window.
                 ShowInfo();
 
                 // Process the list of schedules we need to consider.

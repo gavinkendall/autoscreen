@@ -45,6 +45,9 @@ namespace AutoScreenCapture
         // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
         private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
 
+        // A small window is shown when the user selects "Information Window" from the system tray icon menu.
+        private FormInformationWindow _formInformationWindow = new FormInformationWindow();
+
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap = new HotKeyMap();
         private FormKeyboardShortcuts _formKeyboardShortcuts = new FormKeyboardShortcuts();
@@ -398,13 +401,39 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Shows a small information window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemInformationWindow_Click(object sender, EventArgs e)
+        {
+            if (!_formInformationWindow.Visible)
+            {
+                _formInformationWindow.Show();
+            }
+            else
+            {
+                _formInformationWindow.Focus();
+                _formInformationWindow.BringToFront();
+            }
+        }
+
+        /// <summary>
         /// Shows the "About" window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void toolStripMenuItemAbout_Click(object sender, EventArgs e)
         {
-            _formAbout.ShowDialog(this);
+            if (!_formAbout.Visible)
+            {
+                _formAbout.ShowDialog(this);
+            }
+            else
+            {
+                _formAbout.Focus();
+                _formAbout.BringToFront();
+            }
         }
 
         private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-08-17 (August 17, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.2.1)]
+Last updated on 2020-08-21 (August 21, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.2.2)]
 =============================================================================================================
 
 
@@ -476,6 +476,31 @@ Condition = ScreenCaptureStopped -> Action = ShowInterface
 Condition = InterfaceClosing -> Action = HideInterface
 Condition = LimitReached -> Action = StopScreenCapture
 
+
+
+System Tray Icon
+----------------
+Auto Screen Capture normally runs in your system tray and its icon will be displayed to show
+the current status of the application. If the icon is green then screenshots are being taken.
+If the icon is red then there is likely an error which the application has encountered.
+
+You can right-click the system tray icon to bring up a menu. This menu has the following items:
+About Auto Screen Capture             Shows information about the developer and the app's license
+Show Interface                        Shows the main interface of the application
+Hide Interface                        Hides the main interface of the application
+Information Window                    Shows a small floating window displaying capture information
+Start Screen Capture                  Starts a screen capture session
+Stop Screen Capture                   Stops a running screen capture session
+Capture Now / Archive                 Takes a set of screenshots and saves them
+Capture Now / Edit                    Takes a set of screenshots, saves them, and edits them
+Region Select / Clipboard             Select an area and send the screenshot to the clipboard
+Region Select / Auto Save             Select an area and auto save the screenshot
+Region Select / Edit                  Select an area, auto save the screenshot, and edit it
+Apply Label                           Enables you to apply a label to each screenshot taken
+Exit                                  Quits the application
+
+(You can hide the system tray icon with the "-hideSystemTrayIcon" command line argument
+and show it with the "-showSystemTrayIcon" command line argument.)
 
 
 Command Line Arguments

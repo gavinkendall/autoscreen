@@ -110,6 +110,7 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(479, 327);
             this.Name = "FormAbout";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About Auto Screen Capture";
             this.tabControlAbout.ResumeLayout(false);
             this.tabPageDeveloper.ResumeLayout(false);

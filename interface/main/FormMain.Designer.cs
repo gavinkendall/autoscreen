@@ -53,9 +53,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemRegionSelectClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectAutoSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemRegionSelectEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorRegionSelect = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,8 +124,7 @@ namespace AutoScreenCapture
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparatorRegionSelect = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemRegionSelectEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemInformationWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -276,6 +277,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorAbout,
             this.toolStripMenuItemShowInterface,
             this.toolStripMenuItemHideInterface,
+            this.toolStripMenuItemInformationWindow,
             this.toolStripSeparatorInterface,
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
@@ -290,7 +292,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 320);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 342);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -358,6 +360,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now / Edit";
             this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowEdit_Click);
             // 
+            // toolStripSeparatorCapture
+            // 
+            this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
+            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(216, 6);
+            // 
             // toolStripMenuItemRegionSelectClipboard
             // 
             this.toolStripMenuItemRegionSelectClipboard.Image = global::AutoScreenCapture.Properties.Resources.region_select;
@@ -374,10 +381,18 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectAutoSave.Text = "Region Select / Auto Save";
             this.toolStripMenuItemRegionSelectAutoSave.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAutoSave_Click);
             // 
-            // toolStripSeparatorCapture
+            // toolStripMenuItemRegionSelectEdit
             // 
-            this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
-            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(216, 6);
+            this.toolStripMenuItemRegionSelectEdit.Image = global::AutoScreenCapture.Properties.Resources.region_select;
+            this.toolStripMenuItemRegionSelectEdit.Name = "toolStripMenuItemRegionSelectEdit";
+            this.toolStripMenuItemRegionSelectEdit.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemRegionSelectEdit.Text = "Region Select / Edit";
+            this.toolStripMenuItemRegionSelectEdit.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectEdit_Click);
+            // 
+            // toolStripSeparatorRegionSelect
+            // 
+            this.toolStripSeparatorRegionSelect.Name = "toolStripSeparatorRegionSelect";
+            this.toolStripSeparatorRegionSelect.Size = new System.Drawing.Size(216, 6);
             // 
             // toolStripMenuItemApplyLabel
             // 
@@ -1114,18 +1129,12 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
-            // toolStripSeparatorRegionSelect
+            // toolStripMenuItemNextCaptureInformation
             // 
-            this.toolStripSeparatorRegionSelect.Name = "toolStripSeparatorRegionSelect";
-            this.toolStripSeparatorRegionSelect.Size = new System.Drawing.Size(216, 6);
-            // 
-            // toolStripMenuItemRegionSelectEdit
-            // 
-            this.toolStripMenuItemRegionSelectEdit.Image = global::AutoScreenCapture.Properties.Resources.region_select;
-            this.toolStripMenuItemRegionSelectEdit.Name = "toolStripMenuItemRegionSelectEdit";
-            this.toolStripMenuItemRegionSelectEdit.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemRegionSelectEdit.Text = "Region Select / Edit";
-            this.toolStripMenuItemRegionSelectEdit.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectEdit_Click);
+            this.toolStripMenuItemInformationWindow.Name = "toolStripMenuItemInformationWindow";
+            this.toolStripMenuItemInformationWindow.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemInformationWindow.Text = "Information Window";
+            this.toolStripMenuItemInformationWindow.Click += new System.EventHandler(this.toolStripMenuItemInformationWindow_Click);
             // 
             // FormMain
             // 
@@ -1284,5 +1293,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemRegionSelectAutoSave;
         private ToolStripMenuItem toolStripMenuItemRegionSelectEdit;
         private ToolStripSeparator toolStripSeparatorRegionSelect;
+        private ToolStripMenuItem toolStripMenuItemInformationWindow;
     }
 }

@@ -82,7 +82,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                notifyIcon.Text = string.Empty;
+                notifyIcon.Text = "Ready to start taking screenshots";
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -109,7 +109,7 @@ namespace AutoScreenCapture
 
                         if (!_screenCapture.CaptureError)
                         {
-                            string remainingTimeStr = string.Empty;
+                            string remainingTimeStr = "Taking screenshots";
 
                             int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
                             int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
@@ -147,6 +147,7 @@ namespace AutoScreenCapture
                 }
 
                 toolStripInfo.Text = notifyIcon.Text;
+                _formInformationWindow.Text = notifyIcon.Text;
             }
             catch (Exception)
             {
