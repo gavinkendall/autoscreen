@@ -45,8 +45,8 @@ namespace AutoScreenCapture
         // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
         private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
 
-        // A small window is shown when the user selects "Information Window" from the system tray icon menu.
-        private FormInformationWindow _formInformationWindow = new FormInformationWindow();
+        // A small window is shown when the user selects "Show Screen Capture Status" from the system tray icon menu.
+        private FormScreenCaptureStatus _formScreenCaptureStatus = new FormScreenCaptureStatus();
 
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap = new HotKeyMap();
@@ -401,20 +401,20 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows a small information window.
+        /// Shows a small screen capture status window.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemInformationWindow_Click(object sender, EventArgs e)
+        private void toolStripMenuItemScreenCaptureStatus_Click(object sender, EventArgs e)
         {
-            if (!_formInformationWindow.Visible)
+            if (!_formScreenCaptureStatus.Visible)
             {
-                _formInformationWindow.Show();
+                _formScreenCaptureStatus.Show();
             }
             else
             {
-                _formInformationWindow.Focus();
-                _formInformationWindow.BringToFront();
+                _formScreenCaptureStatus.Focus();
+                _formScreenCaptureStatus.BringToFront();
             }
         }
 

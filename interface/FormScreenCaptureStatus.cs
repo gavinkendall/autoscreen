@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FormInformationWindow.cs" company="Gavin Kendall">
+// <copyright file="FormScreenCaptureStatus.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -18,17 +18,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
-    public partial class FormInformationWindow : Form
+    /// <summary>
+    /// A form to show screen capture status.
+    /// </summary>
+    public partial class FormScreenCaptureStatus : Form
     {
         /// <summary>
-        /// A small fixed tool window that shows information in its title bar.
+        /// A small fixed tool window that shows screen capture status in its title bar.
         /// </summary>
-        public FormInformationWindow()
+        public FormScreenCaptureStatus()
         {
             InitializeComponent();
 

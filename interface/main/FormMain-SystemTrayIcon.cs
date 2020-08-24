@@ -147,7 +147,7 @@ namespace AutoScreenCapture
                 }
 
                 toolStripInfo.Text = notifyIcon.Text;
-                _formInformationWindow.Text = notifyIcon.Text;
+                _formScreenCaptureStatus.Text = notifyIcon.Text;
             }
             catch (Exception)
             {

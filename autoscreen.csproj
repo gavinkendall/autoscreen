@@ -93,11 +93,11 @@
     <Compile Include="interface\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\FormInformationWindow.cs">
+    <Compile Include="interface\FormScreenCaptureStatus.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormInformationWindow.Designer.cs">
-      <DependentUpon>FormInformationWindow.cs</DependentUpon>
+    <Compile Include="interface\FormScreenCaptureStatus.Designer.cs">
+      <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\FormKeyboardShortcuts.cs">
       <SubType>Form</SubType>
@@ -269,8 +269,8 @@
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\FormInformationWindow.resx">
-      <DependentUpon>FormInformationWindow.cs</DependentUpon>
+    <EmbeddedResource Include="interface\FormScreenCaptureStatus.resx">
+      <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormKeyboardShortcuts.resx">
       <DependentUpon>FormKeyboardShortcuts.cs</DependentUpon>

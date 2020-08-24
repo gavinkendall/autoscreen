@@ -1,6 +1,6 @@
 ﻿namespace AutoScreenCapture
 {
-    partial class FormInformationWindow
+    partial class FormScreenCaptureStatus
 {
     /// <summary>
     /// Required designer variable.
