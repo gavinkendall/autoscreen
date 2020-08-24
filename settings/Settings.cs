@@ -153,7 +153,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.1.9"), // Schedules can now have their own interval set for them separate from the main interval. Also fixed bug with screen capture duration info.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.0"), // Region Select Auto Save region is created if the regions.xml file is not found so you can view screenshots taken with Region Select Auto Save.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.1"), // Fixed bug with inactive schedules that should not perform any actions when inactive.
-                new Version(CODENAME_BOOMBAYAH, "2.3.2.2") // Information Window implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.2"), // Information Window implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.3") // Information Window renamed to Show Screen Capture Status
             };
 
             Application = new SettingCollection

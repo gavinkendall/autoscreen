@@ -165,6 +165,7 @@ namespace AutoScreenCapture
                 {
                     listBoxScreenshots.DisplayMember = "Value";
                     listBoxScreenshots.ValueMember = "Name";
+                    listBoxScreenshots.Sorted = true;
                     listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
 
                     // Show the last set of screenshots only if the user is on today's list.
