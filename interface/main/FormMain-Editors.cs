@@ -191,7 +191,8 @@ namespace AutoScreenCapture
         {
             // Execute the chosen image editor. If the %filepath% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
-            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && FileSystem.FileExists(screenshot.Path)))
+            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
+                FileSystem.FileExists(editor.Application) && FileSystem.FileExists(screenshot.Path)))
             {
                 Log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
                 Log.WriteDebugMessage("Application: " + editor.Application);

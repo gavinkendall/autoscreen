@@ -32,6 +32,27 @@ namespace AutoScreenCapture
         private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
         {
             PopulateLabelList();
+
+            if (ScreenCapture.LockScreenCaptureSession)
+            {
+                // Hide the "Show Screen Capture Status" menu item.
+                toolStripSeparatorTools.Visible = false;
+                toolStripMenuItemShowScreenCaptureStatus.Visible = false;
+
+                // Hide the "Capture Now" memu items.
+                toolStripMenuItemCaptureNowEdit.Visible = false;
+                toolStripMenuItemCaptureNowArchive.Visible = false;
+            }
+            else
+            {
+                // Show the "Show Screen Capture Status" menu item.
+                toolStripSeparatorTools.Visible = true;
+                toolStripMenuItemShowScreenCaptureStatus.Visible = true;
+
+                // Show the "Capture Now" memu items.
+                toolStripMenuItemCaptureNowEdit.Visible = true;
+                toolStripMenuItemCaptureNowArchive.Visible = true;
+            }
         }
 
         /// <summary>
@@ -82,6 +103,13 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (ScreenCapture.LockScreenCaptureSession)
+                {
+                    notifyIcon.Text = string.Empty;
+
+                    return;
+                }
+
                 notifyIcon.Text = "Ready to start taking screenshots";
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)

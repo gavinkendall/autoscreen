@@ -144,7 +144,7 @@ namespace AutoScreenCapture
                 sb.Append(MinuteFormat);
                 sb.Append("-");
                 sb.Append(SecondFormat);
-                sb.Append("-");
+                sb.Append(".");
                 sb.Append(MillisecondFormat);
 
                 return sb.ToString();

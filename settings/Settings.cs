@@ -50,6 +50,7 @@ namespace AutoScreenCapture
         // screenshots data from, what could be, a very large XML document of screenshot nodes.
         // This version also introduces keyboard shortcuts and it populates the Editors module with a list of applications it finds on the user's machine.
         // The startup time is also faster since we no longer initialize the threads in the beginning (that, in turn, reads from the XML documents).
+        // New system tray icon menu items such as Region Select / Clipboard, Region Select / Auto Save, and Region Select / Edit also introduced.
         private const string CODENAME_BOOMBAYAH = "Boombayah";
 
         /// <summary>
@@ -154,7 +155,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.0"), // Region Select Auto Save region is created if the regions.xml file is not found so you can view screenshots taken with Region Select Auto Save.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.1"), // Fixed bug with inactive schedules that should not perform any actions when inactive.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.2"), // Information Window implemented.
-                new Version(CODENAME_BOOMBAYAH, "2.3.2.3") // Information Window renamed to Show Screen Capture Status
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.3"), // Information Window renamed to Show Screen Capture Status
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.4") // ListboxScreenshots sorted.
             };
 
             Application = new SettingCollection

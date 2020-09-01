@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-08-24 (August 24, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.2.4)]
+Last updated on 2020-09-01 (September 1, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.2.5)]
 =============================================================================================================
 
 
@@ -352,6 +352,9 @@ text field will be available to enter a value. This value can be a date/time for
 to represent the current date/time as a defined pattern or a date/time tag expression (such as "{month-1}")
 which represents the current date/time modified by an operator and an applied amount of time.
 
+As of version 2.3.2.5 you can use date/time format in a tag expression. For example, the value of the tag
+expression can be "{day-1}[yyyy-MM-dd]" to show the previous day in the format yyyy-MM-dd.
+
 If you select the Time of Day type then the Time of Day group of controls will be available. This includes
 three sets of controls that enable you to specify the start time, end time, and value of three time ranges
 for what you want Auto Screen Capture to consider as the morning, afternoon, and evening. The value can be
@@ -375,8 +378,8 @@ Macro tags available by default are ...
 %millisecond%    Date/Time Format               Current millisecond as "fff"
 %lastyear%       Date/Time Format Expression    Current year minus 1 with expression "{year-1}"
 %lastmonth%      Date/Time Format Expression    Current month minus 1 with expression "{month-1}"
-%yesterday%      Date/Time Format Expression    Current day minus 1 with expression "{day-1}"
-%tomorrow%       Date/Time Format Expression    Current day plus 1 with expression "{day+1}"
+%yesterday%      Date/Time Format Expression    Current day minus 1 with expression "{day-1}[yyyy-MM-dd]"
+%tomorrow%       Date/Time Format Expression    Current day plus 1 with expression "{day+1}[yyyy-MM-dd]"
 %6hoursbehind%   Date/Time Format Expression    Current hour minus 6 with expression "{hour-6}"
 %6hoursahead%    Date/Time Format Expression    Current hour plus 6 with expression "{hour+6}"
 %count%          Screen Capture Cycle Count

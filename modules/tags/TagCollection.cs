@@ -335,10 +335,10 @@ namespace AutoScreenCapture
                     Add(new Tag("millisecond", "The current millisecond (%millisecond%)", TagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
                     Add(new Tag("lastyear", "The previous year (%lastyear%)", TagType.DateTimeFormatExpression, "{year-1}", active: true));
                     Add(new Tag("lastmonth", "The previous month (%lastmonth%)", TagType.DateTimeFormatExpression, "{month-1}", active: true));
-                    Add(new Tag("yesterday", "The previous day (%yesterday%)", TagType.DateTimeFormatExpression, "{day-1}", active: true));
-                    Add(new Tag("tomorrow", "The next day (%tomorrow%)", TagType.DateTimeFormatExpression, "{day+1}", active: true));
-                    Add(new Tag("6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", TagType.DateTimeFormatExpression, "{hour-6}", active: true));
-                    Add(new Tag("6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", TagType.DateTimeFormatExpression, "{hour+6}", active: true));
+                    Add(new Tag("yesterday", "The previous day (%yesterday%)", TagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
+                    Add(new Tag("tomorrow", "The next day (%tomorrow%)", TagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
+                    Add(new Tag("6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", TagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new Tag("6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", TagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
                     Add(new Tag("count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", TagType.ScreenCaptureCycleCount, active: true));
                     Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
                     Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
