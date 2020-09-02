@@ -1,7 +1,7 @@
 Auto Screen Capture by Gavin Kendall
-Last updated on 2020-09-01 (September 1, 2020)
+This file was last updated on 2020-09-02 (September 2, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.3.2.5)]
-=============================================================================================================
+========================================================================================================================
 
 
 
@@ -146,6 +146,11 @@ You will see the following message:
 The entered phrase will be cleared from the text field because your passphrase has now been hashed and
 stored in the application's user settings file ("user.xml").
 
+The menu items available in the system tray icon will also be limited when a session is locked.
+This ensures that the user will not be able to change labels or see when the next screen capture
+is going to happen. The system tray icon's status will appear to remain normal/idle even when
+screenshots are being taken. The user will still be able to use the "Region Select" menu items.
+
 When the application is stopped, the interface is shown, or the application is exiting, the user will be
 prompted with an "Enter Passphrase" window which has a text field and an Unlock button for the user to
 enter the correct passphrase in order to "unlock" the running screen capture session.
@@ -186,6 +191,10 @@ The calendar will also update every five minutes (as of version 2.3.0.0).
 Modules - Screens
 -----------------
 This module enables you to setup as many screens as you prefer.
+
+A green square in the list indicates that the Screen is active.
+A red square in the list indicates that the Screen is inactive.
+You can click on a square to toggle the active/inactive state.
 
 The green button with the white plus will show you a preview of the currently selected Component
 (whether it be the Active Window or an available screen/display/monitor).
@@ -242,6 +251,10 @@ The button with the cog will open the Change Screen window enabling you to chang
 Modules - Regions
 -----------------
 This module enables you to setup as many regions as you prefer.
+
+A green square in the list indicates that the Region is active.
+A red square in the list indicates that the Region is inactive.
+You can click on a square to toggle the active/inactive state.
 
 The green button with the white plus will show you, by default, a preview of a region at position 0,0
 with the width set to 800 and the height set to 600.
@@ -320,9 +333,95 @@ The button with the cog will open the Change Editor window enabling you to chang
 
 
 
+Modules - Schedules
+------------------
+This module gives you the ability to setup various schedules so you could have a schedule that
+takes screenshots during your working hours in the morning and another schedule that takes
+screenshots during your working hours in the afternoon.
+
+A green square in the list indicates that the Schedule is active.
+A red square in the list indicates that the Schedule is inactive.
+You can click on a square to toggle the active/inactive state.
+
+A schedule can either take screenshots of screens and regions for a single cycle ("One Time")
+or start the timer and take screenshots from a starting time until an ending time is reached
+(with the "Period" mode) at a certain interval ("hours:minutes:seconds.milliseconds").
+
+One Time
+With this mode you specify the time when a set of screenshots are taken. This happens only once
+and at the exact time specified.
+
+Period
+This mode specifies the time when the screen capture timer should start running and when the
+screen capture timer should stop running. You can define an interval for each individual
+schedule. The interval should be defined in hours, minutes, seconds, and milliseconds.
+The numeric controls represent the hours, minutes, seconds, and milliseconds of the interval.
+For example, "0:10:0.000" or 0 10 0 000 in the interface represents a 10 minute interval.
+The interval defined in a schedule takes priority over the main interval defined in "Setup".
+
+Days
+A schedule can run on a particular day of the week so you can have a schedule to take
+screenshots between the hours of 3pm and 5pm only on Saturdays.
+
+*** IMPORTANT NOTES ABOUT SCHEDULES ***
+The application needs to be idle for a schedule to start.
+Please make sure that the application's screen capture status says
+"Ready to start taking screenshots". This is because each schedule will start
+the application's screen capture timer at the specified start time so do not
+click on the "Start Screen Capture" button or select the "Start Screen Capture"
+option from the system tray icon's menu otherwise you will be starting the timer
+before your schedule can start the timer. Simply wait for the scheduled start time.
+
+A schedule cannot start if the screen capture timer is already running so if you
+have a short schedule in the middle of a long schedule then the long schedule will
+take priority over the short schedule. For example, if you have ...
+Schedule 1 starting at 9:00am and stopping at 5:00pm at interval 0:5:0.000 (5 minutes)
+... and ...
+Schedule 2 starting at 10:00am and stopping at 3:00pm at interval 0:0:10.000 (10 seconds)
+... the duration of Schedule 1 will take priority over the duration of Schedule 2.
+This also means that the 0:5:0.000 (five minute) interval will continue to be used.
+
+I recommend keeping your schedules as separate as possible so you don't mix them.
+Have each schedule in its own duration or time range without overlapping another
+schedule's duration or time range.
+
+Special Schedule
+As you may see in the Notes section ...
+"This schedule is used for the command line arguments -captureat, -startat, and -stopat."
+
+The Special Schedule remains inactive until the following command line arguments are used:
+-captureat=00:00:00
+-startat=00:00:00
+-stopat=00:00:00
+
+If you open a Command Prompt or PowerShell terminal, navigate to where autoscreen.exe
+is located, and issue a -captureat command line argument for 3:30pm ...
+autoscreen.exe -captureat=15:30:00
+This will set the Special Schedule in "One Time" mode to take screenshots at 3:30pm.
+
+Now issue a -startat and -stopat commands for a "Period" schedule ...
+autoscreen.exe -startat=15:45:00 -stopat=16:00:00
+This will set the Special Schedule in "Period" mode to start taking screenshots at 3:45pm
+and stop taking screenshots at 4:00pm.
+
+You may also notice that the Special Schedule will use the current day so be aware that
+if you executed these commands on a Wednesday then the Special Schedule will continue
+to use the defined start time and stop time every Wednesday until you deactivate it
+(you can click on the green square to make it a red square or edit the schedule and
+simply uncheck the "Active" checkbox).
+
+Please do not delete the Special Schedule. You can if you want to but it will be created
+every time you use the -captureat, -startat, and/or -stopat command line arguments.
+
+
+
 Modules - Tags
 --------------
 This module enables you to setup macro tags.
+
+A green square in the list indicates that the Tag is active.
+A red square in the list indicates that the Tag is inactive.
+You can click on a square to toggle the active/inactive state.
 
 A tag is a special value, surrounded by the percentage character (%), which gives you the ability
 to acquire certain information that can be used in your macro for the filename pattern.
@@ -380,8 +479,8 @@ Macro tags available by default are ...
 %lastmonth%      Date/Time Format Expression    Current month minus 1 with expression "{month-1}"
 %yesterday%      Date/Time Format Expression    Current day minus 1 with expression "{day-1}[yyyy-MM-dd]"
 %tomorrow%       Date/Time Format Expression    Current day plus 1 with expression "{day+1}[yyyy-MM-dd]"
-%6hoursbehind%   Date/Time Format Expression    Current hour minus 6 with expression "{hour-6}"
-%6hoursahead%    Date/Time Format Expression    Current hour plus 6 with expression "{hour+6}"
+%6hoursbehind%   Date/Time Format Expression    Current hour minus 6 with expression "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]"
+%6hoursahead%    Date/Time Format Expression    Current hour plus 6 with expression "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]"
 %count%          Screen Capture Cycle Count
 %user%           User
 %machine%        Machine
@@ -444,6 +543,10 @@ Modules - Triggers
 ------------------
 This module enables you to setup triggers.
 
+A green square in the list indicates that the Trigger is active.
+A red square in the list indicates that the Trigger is inactive.
+You can click on a square to toggle the active/inactive state.
+
 A trigger performs a specified Action based on a specified Condition to control the behaviour
 and workflow of Auto Screen Capture. For example, you could setup a trigger to open your
 favourite image editor whenever a screenshot is taken.
@@ -471,6 +574,16 @@ StopScreenCapture                     Stops the currently running screen capture
 EmailScreenshot                       Uses the email settings in "application.xml" to email
                                       the last screenshot image that was captured
 Set Screen Capture Interval           Sets (or changes) the screen capture interval to the defined interval
+Activate Screen                       Turns on (sets the "Active" toggle state to on for) a Screen
+Activate Region                       Turns on (sets the "Active" toggle state to on for) a Region
+Activate Schedule                     Turns on (sets the "Active" toggle state to on for) a Schedule
+Activate Tag                          Turns on (sets the "Active" toggle state to on for) a Tag
+Activate Trigger                      Turns on (sets the "Active" toggle state to on for) a Trigger
+Deactivate Screen                     Turns off (sets the "Active" toggle state to off for) a Screen
+Deactivate Region                     Turns off (sets the "Active" toggle state to off for) a Region
+Deactivate Schedule                   Turns off (sets the "Active" toggle state to off for) a Schedule
+Deactivate Tag                        Turns off (sets the "Active" toggle state to off for) a Tag
+Deactivate Trigger                    Turns off (sets the "Active" toggle state to off for) a Trigger
 
 The following triggers are created by default on the first run of Auto Screen Capture:
 Condition = ApplicationStartup -> Action = ShowInterface
@@ -491,7 +604,7 @@ You can right-click the system tray icon to bring up a menu. This menu has the f
 About Auto Screen Capture             Shows information about the developer and the app's license
 Show Interface                        Shows the main interface of the application
 Hide Interface                        Hides the main interface of the application
-Information Window                    Shows a small floating window displaying capture information
+Show Screen Capture Status            Shows a small floating window displaying the screen capture status
 Start Screen Capture                  Starts a screen capture session
 Stop Screen Capture                   Stops a running screen capture session
 Capture Now / Archive                 Takes a set of screenshots and saves them
