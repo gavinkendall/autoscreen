@@ -37,27 +37,30 @@
             this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.labelDateTimeFormatValue = new System.Windows.Forms.Label();
             this.textBoxDateTimeFormatValue = new System.Windows.Forms.TextBox();
-            this.groupBoxTimeOfDay = new System.Windows.Forms.GroupBox();
-            this.checkBoxEveningExtendsToNextMorning = new System.Windows.Forms.CheckBox();
-            this.labelEvening = new System.Windows.Forms.Label();
-            this.labelAfternoon = new System.Windows.Forms.Label();
-            this.textBoxEveningValue = new System.Windows.Forms.TextBox();
-            this.dateTimePickerEveningEnd = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerEveningStart = new System.Windows.Forms.DateTimePicker();
-            this.textBoxAfternoonValue = new System.Windows.Forms.TextBox();
-            this.dateTimePickerAfternoonEnd = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerAfternoonStart = new System.Windows.Forms.DateTimePicker();
-            this.textBoxMorningValue = new System.Windows.Forms.TextBox();
-            this.dateTimePickerMorningEnd = new System.Windows.Forms.DateTimePicker();
-            this.labelMorning = new System.Windows.Forms.Label();
-            this.dateTimePickerMorningStart = new System.Windows.Forms.DateTimePicker();
+            this.groupBoxTimeRange = new System.Windows.Forms.GroupBox();
+            this.labelMacro3 = new System.Windows.Forms.Label();
+            this.labelMacro2 = new System.Windows.Forms.Label();
+            this.textBoxMacro3Macro = new System.Windows.Forms.TextBox();
+            this.dateTimePickerMacro3End = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerMacro3Start = new System.Windows.Forms.DateTimePicker();
+            this.textBoxMacro2Macro = new System.Windows.Forms.TextBox();
+            this.dateTimePickerMacro2End = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerMacro2Start = new System.Windows.Forms.DateTimePicker();
+            this.textBoxMacro1Macro = new System.Windows.Forms.TextBox();
+            this.dateTimePickerMacro1End = new System.Windows.Forms.DateTimePicker();
+            this.labelMacro1 = new System.Windows.Forms.Label();
+            this.dateTimePickerMacro1Start = new System.Windows.Forms.DateTimePicker();
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.textBoxNotes = new System.Windows.Forms.TextBox();
             this.labelNotes = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.groupBoxTimeOfDay.SuspendLayout();
+            this.labelMacro4 = new System.Windows.Forms.Label();
+            this.textBoxMacro4Macro = new System.Windows.Forms.TextBox();
+            this.dateTimePickerMacro4End = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerMacro4Start = new System.Windows.Forms.DateTimePicker();
+            this.groupBoxTimeRange.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -69,11 +72,11 @@
             this.labelEditorName.TabIndex = 1;
             this.labelEditorName.Text = "Name:";
             // 
-            // textBoxTagName
+            // textBoxName
             // 
             this.textBoxName.Location = new System.Drawing.Point(56, 32);
             this.textBoxName.MaxLength = 50;
-            this.textBoxName.Name = "textBoxTagName";
+            this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(546, 20);
             this.textBoxName.TabIndex = 2;
             this.textBoxName.MouseHover += new System.EventHandler(this.textBoxTagName_MouseHover);
@@ -84,7 +87,7 @@
             this.buttonOK.Location = new System.Drawing.Point(12, 420);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 26;
+            this.buttonOK.TabIndex = 29;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -96,7 +99,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(117, 420);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 27;
+            this.buttonCancel.TabIndex = 30;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -141,160 +144,149 @@
             this.textBoxDateTimeFormatValue.TabIndex = 9;
             this.textBoxDateTimeFormatValue.MouseHover += new System.EventHandler(this.textBoxDateTimeFormatValue_MouseHover);
             // 
-            // groupBoxTimeOfDay
+            // groupBoxTimeRange
             // 
-            this.groupBoxTimeOfDay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBoxTimeRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxTimeOfDay.Controls.Add(this.checkBoxEveningExtendsToNextMorning);
-            this.groupBoxTimeOfDay.Controls.Add(this.labelEvening);
-            this.groupBoxTimeOfDay.Controls.Add(this.labelAfternoon);
-            this.groupBoxTimeOfDay.Controls.Add(this.textBoxEveningValue);
-            this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerEveningEnd);
-            this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerEveningStart);
-            this.groupBoxTimeOfDay.Controls.Add(this.textBoxAfternoonValue);
-            this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerAfternoonEnd);
-            this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerAfternoonStart);
-            this.groupBoxTimeOfDay.Controls.Add(this.textBoxMorningValue);
-            this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerMorningEnd);
-            this.groupBoxTimeOfDay.Controls.Add(this.labelMorning);
-            this.groupBoxTimeOfDay.Controls.Add(this.dateTimePickerMorningStart);
-            this.groupBoxTimeOfDay.Location = new System.Drawing.Point(16, 141);
-            this.groupBoxTimeOfDay.Name = "groupBoxTimeOfDay";
-            this.groupBoxTimeOfDay.Size = new System.Drawing.Size(728, 125);
-            this.groupBoxTimeOfDay.TabIndex = 10;
-            this.groupBoxTimeOfDay.TabStop = false;
-            this.groupBoxTimeOfDay.Text = "Time of Day";
+            this.groupBoxTimeRange.Controls.Add(this.labelMacro4);
+            this.groupBoxTimeRange.Controls.Add(this.textBoxMacro4Macro);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro4End);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro4Start);
+            this.groupBoxTimeRange.Controls.Add(this.labelMacro3);
+            this.groupBoxTimeRange.Controls.Add(this.labelMacro2);
+            this.groupBoxTimeRange.Controls.Add(this.textBoxMacro3Macro);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro3End);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro3Start);
+            this.groupBoxTimeRange.Controls.Add(this.textBoxMacro2Macro);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro2End);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro2Start);
+            this.groupBoxTimeRange.Controls.Add(this.textBoxMacro1Macro);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro1End);
+            this.groupBoxTimeRange.Controls.Add(this.labelMacro1);
+            this.groupBoxTimeRange.Controls.Add(this.dateTimePickerMacro1Start);
+            this.groupBoxTimeRange.Location = new System.Drawing.Point(16, 141);
+            this.groupBoxTimeRange.Name = "groupBoxTimeRange";
+            this.groupBoxTimeRange.Size = new System.Drawing.Size(728, 125);
+            this.groupBoxTimeRange.TabIndex = 10;
+            this.groupBoxTimeRange.TabStop = false;
+            this.groupBoxTimeRange.Text = "Time Range";
             // 
-            // checkBoxEveningExtendsToNextMorning
+            // labelMacro3
             // 
-            this.checkBoxEveningExtendsToNextMorning.AutoSize = true;
-            this.checkBoxEveningExtendsToNextMorning.Location = new System.Drawing.Point(74, 101);
-            this.checkBoxEveningExtendsToNextMorning.Name = "checkBoxEveningExtendsToNextMorning";
-            this.checkBoxEveningExtendsToNextMorning.Size = new System.Drawing.Size(180, 17);
-            this.checkBoxEveningExtendsToNextMorning.TabIndex = 23;
-            this.checkBoxEveningExtendsToNextMorning.Text = "Evening extends to next morning";
-            this.checkBoxEveningExtendsToNextMorning.UseVisualStyleBackColor = true;
-            this.checkBoxEveningExtendsToNextMorning.MouseHover += new System.EventHandler(this.checkBoxEveningExtendsToNextMorning_MouseHover);
+            this.labelMacro3.AutoSize = true;
+            this.labelMacro3.Location = new System.Drawing.Point(6, 78);
+            this.labelMacro3.Name = "labelMacro3";
+            this.labelMacro3.Size = new System.Drawing.Size(49, 13);
+            this.labelMacro3.TabIndex = 19;
+            this.labelMacro3.Text = "Macro 3:";
             // 
-            // labelEvening
+            // labelMacro2
             // 
-            this.labelEvening.AutoSize = true;
-            this.labelEvening.Location = new System.Drawing.Point(6, 78);
-            this.labelEvening.Name = "labelEvening";
-            this.labelEvening.Size = new System.Drawing.Size(49, 13);
-            this.labelEvening.TabIndex = 19;
-            this.labelEvening.Text = "Evening:";
+            this.labelMacro2.AutoSize = true;
+            this.labelMacro2.Location = new System.Drawing.Point(6, 52);
+            this.labelMacro2.Name = "labelMacro2";
+            this.labelMacro2.Size = new System.Drawing.Size(49, 13);
+            this.labelMacro2.TabIndex = 15;
+            this.labelMacro2.Text = "Macro 2:";
             // 
-            // labelAfternoon
+            // textBoxMacro3Macro
             // 
-            this.labelAfternoon.AutoSize = true;
-            this.labelAfternoon.Location = new System.Drawing.Point(6, 52);
-            this.labelAfternoon.Name = "labelAfternoon";
-            this.labelAfternoon.Size = new System.Drawing.Size(56, 13);
-            this.labelAfternoon.TabIndex = 15;
-            this.labelAfternoon.Text = "Afternoon:";
-            // 
-            // textBoxEveningValue
-            // 
-            this.textBoxEveningValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxMacro3Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEveningValue.Location = new System.Drawing.Point(222, 75);
-            this.textBoxEveningValue.MaxLength = 50;
-            this.textBoxEveningValue.Name = "textBoxEveningValue";
-            this.textBoxEveningValue.Size = new System.Drawing.Size(500, 20);
-            this.textBoxEveningValue.TabIndex = 22;
-            this.textBoxEveningValue.MouseHover += new System.EventHandler(this.textBoxEveningValue_MouseHover);
+            this.textBoxMacro3Macro.Location = new System.Drawing.Point(222, 75);
+            this.textBoxMacro3Macro.MaxLength = 50;
+            this.textBoxMacro3Macro.Name = "textBoxMacro3Macro";
+            this.textBoxMacro3Macro.Size = new System.Drawing.Size(500, 20);
+            this.textBoxMacro3Macro.TabIndex = 22;
             // 
-            // dateTimePickerEveningEnd
+            // dateTimePickerMacro3End
             // 
-            this.dateTimePickerEveningEnd.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerEveningEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerEveningEnd.Location = new System.Drawing.Point(148, 75);
-            this.dateTimePickerEveningEnd.Name = "dateTimePickerEveningEnd";
-            this.dateTimePickerEveningEnd.ShowUpDown = true;
-            this.dateTimePickerEveningEnd.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerEveningEnd.TabIndex = 21;
+            this.dateTimePickerMacro3End.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro3End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro3End.Location = new System.Drawing.Point(148, 75);
+            this.dateTimePickerMacro3End.Name = "dateTimePickerMacro3End";
+            this.dateTimePickerMacro3End.ShowUpDown = true;
+            this.dateTimePickerMacro3End.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro3End.TabIndex = 21;
             // 
-            // dateTimePickerEveningStart
+            // dateTimePickerMacro3Start
             // 
-            this.dateTimePickerEveningStart.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerEveningStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerEveningStart.Location = new System.Drawing.Point(74, 75);
-            this.dateTimePickerEveningStart.Name = "dateTimePickerEveningStart";
-            this.dateTimePickerEveningStart.ShowUpDown = true;
-            this.dateTimePickerEveningStart.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerEveningStart.TabIndex = 20;
+            this.dateTimePickerMacro3Start.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro3Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro3Start.Location = new System.Drawing.Point(74, 75);
+            this.dateTimePickerMacro3Start.Name = "dateTimePickerMacro3Start";
+            this.dateTimePickerMacro3Start.ShowUpDown = true;
+            this.dateTimePickerMacro3Start.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro3Start.TabIndex = 20;
             // 
-            // textBoxAfternoonValue
+            // textBoxMacro2Macro
             // 
-            this.textBoxAfternoonValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxMacro2Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxAfternoonValue.Location = new System.Drawing.Point(222, 49);
-            this.textBoxAfternoonValue.MaxLength = 50;
-            this.textBoxAfternoonValue.Name = "textBoxAfternoonValue";
-            this.textBoxAfternoonValue.Size = new System.Drawing.Size(500, 20);
-            this.textBoxAfternoonValue.TabIndex = 18;
-            this.textBoxAfternoonValue.MouseHover += new System.EventHandler(this.textBoxAfternoonValue_MouseHover);
+            this.textBoxMacro2Macro.Location = new System.Drawing.Point(222, 49);
+            this.textBoxMacro2Macro.MaxLength = 50;
+            this.textBoxMacro2Macro.Name = "textBoxMacro2Macro";
+            this.textBoxMacro2Macro.Size = new System.Drawing.Size(500, 20);
+            this.textBoxMacro2Macro.TabIndex = 18;
             // 
-            // dateTimePickerAfternoonEnd
+            // dateTimePickerMacro2End
             // 
-            this.dateTimePickerAfternoonEnd.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerAfternoonEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerAfternoonEnd.Location = new System.Drawing.Point(148, 49);
-            this.dateTimePickerAfternoonEnd.Name = "dateTimePickerAfternoonEnd";
-            this.dateTimePickerAfternoonEnd.ShowUpDown = true;
-            this.dateTimePickerAfternoonEnd.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerAfternoonEnd.TabIndex = 17;
+            this.dateTimePickerMacro2End.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro2End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro2End.Location = new System.Drawing.Point(148, 49);
+            this.dateTimePickerMacro2End.Name = "dateTimePickerMacro2End";
+            this.dateTimePickerMacro2End.ShowUpDown = true;
+            this.dateTimePickerMacro2End.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro2End.TabIndex = 17;
             // 
-            // dateTimePickerAfternoonStart
+            // dateTimePickerMacro2Start
             // 
-            this.dateTimePickerAfternoonStart.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerAfternoonStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerAfternoonStart.Location = new System.Drawing.Point(74, 49);
-            this.dateTimePickerAfternoonStart.Name = "dateTimePickerAfternoonStart";
-            this.dateTimePickerAfternoonStart.ShowUpDown = true;
-            this.dateTimePickerAfternoonStart.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerAfternoonStart.TabIndex = 16;
+            this.dateTimePickerMacro2Start.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro2Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro2Start.Location = new System.Drawing.Point(74, 49);
+            this.dateTimePickerMacro2Start.Name = "dateTimePickerMacro2Start";
+            this.dateTimePickerMacro2Start.ShowUpDown = true;
+            this.dateTimePickerMacro2Start.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro2Start.TabIndex = 16;
             // 
-            // textBoxMorningValue
+            // textBoxMacro1Macro
             // 
-            this.textBoxMorningValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxMacro1Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMorningValue.Location = new System.Drawing.Point(222, 23);
-            this.textBoxMorningValue.MaxLength = 50;
-            this.textBoxMorningValue.Name = "textBoxMorningValue";
-            this.textBoxMorningValue.Size = new System.Drawing.Size(500, 20);
-            this.textBoxMorningValue.TabIndex = 14;
-            this.textBoxMorningValue.MouseHover += new System.EventHandler(this.textBoxMorningValue_MouseHover);
+            this.textBoxMacro1Macro.Location = new System.Drawing.Point(222, 23);
+            this.textBoxMacro1Macro.MaxLength = 50;
+            this.textBoxMacro1Macro.Name = "textBoxMacro1Macro";
+            this.textBoxMacro1Macro.Size = new System.Drawing.Size(500, 20);
+            this.textBoxMacro1Macro.TabIndex = 14;
             // 
-            // dateTimePickerMorningEnd
+            // dateTimePickerMacro1End
             // 
-            this.dateTimePickerMorningEnd.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerMorningEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMorningEnd.Location = new System.Drawing.Point(148, 23);
-            this.dateTimePickerMorningEnd.Name = "dateTimePickerMorningEnd";
-            this.dateTimePickerMorningEnd.ShowUpDown = true;
-            this.dateTimePickerMorningEnd.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerMorningEnd.TabIndex = 13;
+            this.dateTimePickerMacro1End.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro1End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro1End.Location = new System.Drawing.Point(148, 23);
+            this.dateTimePickerMacro1End.Name = "dateTimePickerMacro1End";
+            this.dateTimePickerMacro1End.ShowUpDown = true;
+            this.dateTimePickerMacro1End.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro1End.TabIndex = 13;
             // 
-            // labelMorning
+            // labelMacro1
             // 
-            this.labelMorning.AutoSize = true;
-            this.labelMorning.Location = new System.Drawing.Point(6, 26);
-            this.labelMorning.Name = "labelMorning";
-            this.labelMorning.Size = new System.Drawing.Size(48, 13);
-            this.labelMorning.TabIndex = 11;
-            this.labelMorning.Text = "Morning:";
+            this.labelMacro1.AutoSize = true;
+            this.labelMacro1.Location = new System.Drawing.Point(6, 26);
+            this.labelMacro1.Name = "labelMacro1";
+            this.labelMacro1.Size = new System.Drawing.Size(49, 13);
+            this.labelMacro1.TabIndex = 11;
+            this.labelMacro1.Text = "Macro 1:";
             // 
-            // dateTimePickerMorningStart
+            // dateTimePickerMacro1Start
             // 
-            this.dateTimePickerMorningStart.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerMorningStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMorningStart.Location = new System.Drawing.Point(74, 23);
-            this.dateTimePickerMorningStart.Name = "dateTimePickerMorningStart";
-            this.dateTimePickerMorningStart.ShowUpDown = true;
-            this.dateTimePickerMorningStart.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerMorningStart.TabIndex = 12;
+            this.dateTimePickerMacro1Start.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro1Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro1Start.Location = new System.Drawing.Point(74, 23);
+            this.dateTimePickerMacro1Start.Name = "dateTimePickerMacro1Start";
+            this.dateTimePickerMacro1Start.ShowUpDown = true;
+            this.dateTimePickerMacro1Start.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro1Start.TabIndex = 12;
             // 
             // checkBoxActive
             // 
@@ -334,7 +326,7 @@
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 118);
-            this.textBoxNotes.TabIndex = 25;
+            this.textBoxNotes.TabIndex = 28;
             this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
             // 
             // labelNotes
@@ -343,7 +335,7 @@
             this.labelNotes.Location = new System.Drawing.Point(9, 271);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
-            this.labelNotes.TabIndex = 24;
+            this.labelNotes.TabIndex = 27;
             this.labelNotes.Text = "Notes:";
             // 
             // labelDescription
@@ -366,6 +358,45 @@
             this.textBoxDescription.TabIndex = 7;
             this.textBoxDescription.MouseHover += new System.EventHandler(this.textBoxDescription_MouseHover);
             // 
+            // labelMacro4
+            // 
+            this.labelMacro4.AutoSize = true;
+            this.labelMacro4.Location = new System.Drawing.Point(6, 104);
+            this.labelMacro4.Name = "labelMacro4";
+            this.labelMacro4.Size = new System.Drawing.Size(49, 13);
+            this.labelMacro4.TabIndex = 23;
+            this.labelMacro4.Text = "Macro 4:";
+            // 
+            // textBoxMacro4Macro
+            // 
+            this.textBoxMacro4Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMacro4Macro.Location = new System.Drawing.Point(222, 101);
+            this.textBoxMacro4Macro.MaxLength = 50;
+            this.textBoxMacro4Macro.Name = "textBoxMacro4Macro";
+            this.textBoxMacro4Macro.Size = new System.Drawing.Size(500, 20);
+            this.textBoxMacro4Macro.TabIndex = 26;
+            // 
+            // dateTimePickerMacro4End
+            // 
+            this.dateTimePickerMacro4End.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro4End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro4End.Location = new System.Drawing.Point(148, 101);
+            this.dateTimePickerMacro4End.Name = "dateTimePickerMacro4End";
+            this.dateTimePickerMacro4End.ShowUpDown = true;
+            this.dateTimePickerMacro4End.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro4End.TabIndex = 25;
+            // 
+            // dateTimePickerMacro4Start
+            // 
+            this.dateTimePickerMacro4Start.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro4Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro4Start.Location = new System.Drawing.Point(74, 101);
+            this.dateTimePickerMacro4Start.Name = "dateTimePickerMacro4Start";
+            this.dateTimePickerMacro4Start.ShowUpDown = true;
+            this.dateTimePickerMacro4Start.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro4Start.TabIndex = 24;
+            // 
             // FormTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,7 +409,7 @@
             this.Controls.Add(this.textBoxNotes);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.checkBoxActive);
-            this.Controls.Add(this.groupBoxTimeOfDay);
+            this.Controls.Add(this.groupBoxTimeRange);
             this.Controls.Add(this.textBoxDateTimeFormatValue);
             this.Controls.Add(this.labelDateTimeFormatValue);
             this.Controls.Add(this.comboBoxType);
@@ -393,8 +424,8 @@
             this.Name = "FormTag";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormTag_Load);
-            this.groupBoxTimeOfDay.ResumeLayout(false);
-            this.groupBoxTimeOfDay.PerformLayout();
+            this.groupBoxTimeRange.ResumeLayout(false);
+            this.groupBoxTimeRange.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,25 +441,28 @@
         private System.Windows.Forms.ComboBox comboBoxType;
         private System.Windows.Forms.Label labelDateTimeFormatValue;
         private System.Windows.Forms.TextBox textBoxDateTimeFormatValue;
-        private System.Windows.Forms.GroupBox groupBoxTimeOfDay;
-        private System.Windows.Forms.Label labelEvening;
-        private System.Windows.Forms.Label labelAfternoon;
-        private System.Windows.Forms.TextBox textBoxEveningValue;
-        private System.Windows.Forms.DateTimePicker dateTimePickerEveningEnd;
-        private System.Windows.Forms.DateTimePicker dateTimePickerEveningStart;
-        private System.Windows.Forms.TextBox textBoxAfternoonValue;
-        private System.Windows.Forms.DateTimePicker dateTimePickerAfternoonEnd;
-        private System.Windows.Forms.DateTimePicker dateTimePickerAfternoonStart;
-        private System.Windows.Forms.TextBox textBoxMorningValue;
-        private System.Windows.Forms.DateTimePicker dateTimePickerMorningEnd;
-        private System.Windows.Forms.Label labelMorning;
-        private System.Windows.Forms.DateTimePicker dateTimePickerMorningStart;
-        private System.Windows.Forms.CheckBox checkBoxEveningExtendsToNextMorning;
+        private System.Windows.Forms.GroupBox groupBoxTimeRange;
+        private System.Windows.Forms.Label labelMacro3;
+        private System.Windows.Forms.Label labelMacro2;
+        private System.Windows.Forms.TextBox textBoxMacro3Macro;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro3End;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro3Start;
+        private System.Windows.Forms.TextBox textBoxMacro2Macro;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro2End;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro2Start;
+        private System.Windows.Forms.TextBox textBoxMacro1Macro;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro1End;
+        private System.Windows.Forms.Label labelMacro1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro1Start;
         private System.Windows.Forms.CheckBox checkBoxActive;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.TextBox textBoxNotes;
         private System.Windows.Forms.Label labelNotes;
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.TextBox textBoxDescription;
+        private System.Windows.Forms.Label labelMacro4;
+        private System.Windows.Forms.TextBox textBoxMacro4Macro;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro4End;
+        private System.Windows.Forms.DateTimePicker dateTimePickerMacro4Start;
     }
 }

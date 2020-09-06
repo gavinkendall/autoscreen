@@ -156,7 +156,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.1"), // Fixed bug with inactive schedules that should not perform any actions when inactive.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.2"), // Information Window implemented.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.3"), // Information Window renamed to Show Screen Capture Status
-                new Version(CODENAME_BOOMBAYAH, "2.3.2.4") // ListboxScreenshots sorted.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.4"), // ListboxScreenshots sorted.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.5") // Macro tag expressions can now parse date time format.
             };
 
             Application = new SettingCollection

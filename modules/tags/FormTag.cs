@@ -61,7 +61,7 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("Date/Time Format");
             comboBoxType.Items.Add("User");
             comboBoxType.Items.Add("Machine");
-            comboBoxType.Items.Add("Time of Day");
+            comboBoxType.Items.Add("Time Range");
             comboBoxType.Items.Add("Date/Time Format Expression");
 
             if (TagObject != null)
@@ -75,20 +75,22 @@ namespace AutoScreenCapture
                 comboBoxType.SelectedIndex = (int)TagObject.Type;
                 textBoxDateTimeFormatValue.Text = TagObject.DateTimeFormatValue;
 
-                dateTimePickerMorningStart.Value = TagObject.TimeOfDayMorningStart;
-                dateTimePickerMorningEnd.Value = TagObject.TimeOfDayMorningEnd;
+                dateTimePickerMacro1Start.Value = TagObject.TimeRangeMacro1Start;
+                dateTimePickerMacro1End.Value = TagObject.TimeRangeMacro1End;
 
-                dateTimePickerAfternoonStart.Value = TagObject.TimeOfDayAfternoonStart;
-                dateTimePickerAfternoonEnd.Value = TagObject.TimeOfDayAfternoonEnd;
+                dateTimePickerMacro2Start.Value = TagObject.TimeRangeMacro2Start;
+                dateTimePickerMacro2End.Value = TagObject.TimeRangeMacro2End;
 
-                dateTimePickerEveningStart.Value = TagObject.TimeOfDayEveningStart;
-                dateTimePickerEveningEnd.Value = TagObject.TimeOfDayEveningEnd;
+                dateTimePickerMacro3Start.Value = TagObject.TimeRangeMacro3Start;
+                dateTimePickerMacro3End.Value = TagObject.TimeRangeMacro3End;
 
-                textBoxMorningValue.Text = TagObject.TimeOfDayMorningValue;
-                textBoxAfternoonValue.Text = TagObject.TimeOfDayAfternoonValue;
-                textBoxEveningValue.Text = TagObject.TimeOfDayEveningValue;
+                dateTimePickerMacro4Start.Value = TagObject.TimeRangeMacro4Start;
+                dateTimePickerMacro4End.Value = TagObject.TimeRangeMacro4End;
 
-                checkBoxEveningExtendsToNextMorning.Checked = TagObject.EveningExtendsToNextMorning;
+                textBoxMacro1Macro.Text = TagObject.TimeRangeMacro1Macro;
+                textBoxMacro2Macro.Text = TagObject.TimeRangeMacro2Macro;
+                textBoxMacro3Macro.Text = TagObject.TimeRangeMacro3Macro;
+                textBoxMacro4Macro.Text = TagObject.TimeRangeMacro4Macro;
 
                 checkBoxActive.Checked = TagObject.Active;
 
@@ -107,20 +109,22 @@ namespace AutoScreenCapture
                 comboBoxType.SelectedIndex = 0;
                 textBoxDateTimeFormatValue.Text = tag.DateTimeFormatValue;
 
-                dateTimePickerMorningStart.Value = tag.TimeOfDayMorningStart;
-                dateTimePickerMorningEnd.Value = tag.TimeOfDayMorningEnd;
+                dateTimePickerMacro1Start.Value = tag.TimeRangeMacro1Start;
+                dateTimePickerMacro1End.Value = tag.TimeRangeMacro1End;
 
-                dateTimePickerAfternoonStart.Value = tag.TimeOfDayAfternoonStart;
-                dateTimePickerAfternoonEnd.Value = tag.TimeOfDayAfternoonEnd;
+                dateTimePickerMacro2Start.Value = tag.TimeRangeMacro2Start;
+                dateTimePickerMacro2End.Value = tag.TimeRangeMacro2End;
 
-                dateTimePickerEveningStart.Value = tag.TimeOfDayEveningStart;
-                dateTimePickerEveningEnd.Value = tag.TimeOfDayEveningEnd;
+                dateTimePickerMacro3Start.Value = tag.TimeRangeMacro3Start;
+                dateTimePickerMacro3End.Value = tag.TimeRangeMacro3End;
 
-                textBoxMorningValue.Text = tag.TimeOfDayMorningValue;
-                textBoxAfternoonValue.Text = tag.TimeOfDayAfternoonValue;
-                textBoxEveningValue.Text = tag.TimeOfDayEveningValue;
+                dateTimePickerMacro4Start.Value = tag.TimeRangeMacro4Start;
+                dateTimePickerMacro4End.Value = tag.TimeRangeMacro4End;
 
-                checkBoxEveningExtendsToNextMorning.Checked = tag.EveningExtendsToNextMorning;
+                textBoxMacro1Macro.Text = tag.TimeRangeMacro1Macro;
+                textBoxMacro2Macro.Text = tag.TimeRangeMacro2Macro;
+                textBoxMacro3Macro.Text = tag.TimeRangeMacro3Macro;
+                textBoxMacro4Macro.Text = tag.TimeRangeMacro4Macro;
 
                 checkBoxActive.Checked = true;
 
@@ -162,16 +166,18 @@ namespace AutoScreenCapture
                         textBoxDescription.Text,
                         (TagType)comboBoxType.SelectedIndex,
                         textBoxDateTimeFormatValue.Text,
-                        dateTimePickerMorningStart.Value,
-                        dateTimePickerMorningEnd.Value,
-                        textBoxMorningValue.Text,
-                        dateTimePickerAfternoonStart.Value,
-                        dateTimePickerAfternoonEnd.Value,
-                        textBoxAfternoonValue.Text,
-                        dateTimePickerEveningStart.Value,
-                        dateTimePickerEveningEnd.Value,
-                        textBoxEveningValue.Text,
-                        checkBoxEveningExtendsToNextMorning.Checked,
+                        dateTimePickerMacro1Start.Value,
+                        dateTimePickerMacro1End.Value,
+                        textBoxMacro1Macro.Text,
+                        dateTimePickerMacro2Start.Value,
+                        dateTimePickerMacro2End.Value,
+                        textBoxMacro2Macro.Text,
+                        dateTimePickerMacro3Start.Value,
+                        dateTimePickerMacro3End.Value,
+                        textBoxMacro3Macro.Text,
+                        dateTimePickerMacro4Start.Value,
+                        dateTimePickerMacro4End.Value,
+                        textBoxMacro4Macro.Text,
                         checkBoxActive.Checked,
                         textBoxNotes.Text
                         ));
@@ -207,16 +213,18 @@ namespace AutoScreenCapture
                         TagCollection.Get(TagObject).Description = textBoxDescription.Text;
                         TagCollection.Get(TagObject).Type = (TagType)comboBoxType.SelectedIndex;
                         TagCollection.Get(TagObject).DateTimeFormatValue = textBoxDateTimeFormatValue.Text;
-                        TagCollection.Get(TagObject).TimeOfDayMorningStart = dateTimePickerMorningStart.Value;
-                        TagCollection.Get(TagObject).TimeOfDayMorningEnd = dateTimePickerMorningEnd.Value;
-                        TagCollection.Get(TagObject).TimeOfDayMorningValue = textBoxMorningValue.Text;
-                        TagCollection.Get(TagObject).TimeOfDayAfternoonStart = dateTimePickerAfternoonStart.Value;
-                        TagCollection.Get(TagObject).TimeOfDayAfternoonEnd = dateTimePickerAfternoonEnd.Value;
-                        TagCollection.Get(TagObject).TimeOfDayAfternoonValue = textBoxAfternoonValue.Text;
-                        TagCollection.Get(TagObject).TimeOfDayEveningStart = dateTimePickerEveningStart.Value;
-                        TagCollection.Get(TagObject).TimeOfDayEveningEnd = dateTimePickerEveningEnd.Value;
-                        TagCollection.Get(TagObject).TimeOfDayEveningValue = textBoxEveningValue.Text;
-                        TagCollection.Get(TagObject).EveningExtendsToNextMorning = checkBoxEveningExtendsToNextMorning.Checked;
+                        TagCollection.Get(TagObject).TimeRangeMacro1Start = dateTimePickerMacro1Start.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro1End = dateTimePickerMacro1End.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro1Macro = textBoxMacro1Macro.Text;
+                        TagCollection.Get(TagObject).TimeRangeMacro2Start = dateTimePickerMacro2Start.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro2End = dateTimePickerMacro2End.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro2Macro = textBoxMacro2Macro.Text;
+                        TagCollection.Get(TagObject).TimeRangeMacro3Start = dateTimePickerMacro3Start.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro3End = dateTimePickerMacro3End.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro3Macro = textBoxMacro3Macro.Text;
+                        TagCollection.Get(TagObject).TimeRangeMacro4Start = dateTimePickerMacro4Start.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro4End = dateTimePickerMacro4End.Value;
+                        TagCollection.Get(TagObject).TimeRangeMacro4Macro = textBoxMacro4Macro.Text;
                         TagCollection.Get(TagObject).Active = checkBoxActive.Checked;
                         TagCollection.Get(TagObject).Notes = textBoxNotes.Text;
 
@@ -239,9 +247,10 @@ namespace AutoScreenCapture
             textBoxName.Text = textBoxName.Text.Trim();
             textBoxDescription.Text = textBoxDescription.Text.Trim();
             textBoxDateTimeFormatValue.Text = textBoxDateTimeFormatValue.Text.Trim();
-            textBoxMorningValue.Text = textBoxMorningValue.Text.Trim();
-            textBoxAfternoonValue.Text = textBoxAfternoonValue.Text.Trim();
-            textBoxEveningValue.Text = textBoxEveningValue.Text.Trim();
+            textBoxMacro1Macro.Text = textBoxMacro1Macro.Text.Trim();
+            textBoxMacro2Macro.Text = textBoxMacro2Macro.Text.Trim();
+            textBoxMacro3Macro.Text = textBoxMacro3Macro.Text.Trim();
+            textBoxMacro4Macro.Text = textBoxMacro4Macro.Text.Trim();
             textBoxNotes.Text = textBoxNotes.Text.Trim();
 
             if (!textBoxName.Text.StartsWith("%"))
@@ -253,22 +262,12 @@ namespace AutoScreenCapture
 
         private bool InputValid()
         {
-            if (textBoxDateTimeFormatValue.Enabled || groupBoxTimeOfDay.Enabled)
+            if (textBoxDateTimeFormatValue.Enabled)
             {
                 if (!string.IsNullOrEmpty(textBoxName.Text) &&
                     !string.IsNullOrEmpty(textBoxDescription.Text) &&
                     textBoxDateTimeFormatValue.Enabled &&
                     !string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text))
-                {
-                    return true;
-                }
-
-                if (!string.IsNullOrEmpty(textBoxName.Text) &&
-                    !string.IsNullOrEmpty(textBoxDescription.Text) &&
-                    groupBoxTimeOfDay.Enabled &&
-                    !string.IsNullOrEmpty(textBoxMorningValue.Text) &&
-                    !string.IsNullOrEmpty(textBoxAfternoonValue.Text) &&
-                    !string.IsNullOrEmpty(textBoxEveningValue.Text))
                 {
                     return true;
                 }
@@ -306,17 +305,19 @@ namespace AutoScreenCapture
                     changed = true;
                 }
 
-                if (groupBoxTimeOfDay.Enabled &&
-                    !TagObject.TimeOfDayMorningStart.Equals(dateTimePickerMorningStart.Value) ||
-                    !TagObject.TimeOfDayMorningEnd.Equals(dateTimePickerMorningEnd.Value) ||
-                    !TagObject.TimeOfDayMorningValue.Equals(textBoxMorningValue.Text) ||
-                    !TagObject.TimeOfDayAfternoonStart.Equals(dateTimePickerAfternoonStart.Value) ||
-                    !TagObject.TimeOfDayAfternoonEnd.Equals(dateTimePickerAfternoonEnd.Value) ||
-                    !TagObject.TimeOfDayAfternoonValue.Equals(textBoxAfternoonValue.Text) ||
-                    !TagObject.TimeOfDayEveningStart.Equals(dateTimePickerEveningStart.Value) ||
-                    !TagObject.TimeOfDayEveningEnd.Equals(dateTimePickerEveningEnd.Value) ||
-                    !TagObject.TimeOfDayEveningValue.Equals(textBoxEveningValue.Text) ||
-                    !TagObject.EveningExtendsToNextMorning.Equals(checkBoxEveningExtendsToNextMorning.Checked))
+                if (groupBoxTimeRange.Enabled &&
+                    !TagObject.TimeRangeMacro1Start.Equals(dateTimePickerMacro1Start.Value) ||
+                    !TagObject.TimeRangeMacro1End.Equals(dateTimePickerMacro1End.Value) ||
+                    !TagObject.TimeRangeMacro1Macro.Equals(textBoxMacro1Macro.Text) ||
+                    !TagObject.TimeRangeMacro2Start.Equals(dateTimePickerMacro2Start.Value) ||
+                    !TagObject.TimeRangeMacro2End.Equals(dateTimePickerMacro2End.Value) ||
+                    !TagObject.TimeRangeMacro2Macro.Equals(textBoxMacro2Macro.Text) ||
+                    !TagObject.TimeRangeMacro3Start.Equals(dateTimePickerMacro3Start.Value) ||
+                    !TagObject.TimeRangeMacro3End.Equals(dateTimePickerMacro3End.Value) ||
+                    !TagObject.TimeRangeMacro3Macro.Equals(textBoxMacro3Macro.Text) ||
+                    !TagObject.TimeRangeMacro4Start.Equals(dateTimePickerMacro4Start.Value) ||
+                    !TagObject.TimeRangeMacro4End.Equals(dateTimePickerMacro4End.Value) ||
+                    !TagObject.TimeRangeMacro4Macro.Equals(textBoxMacro4Macro.Text))
                 {
                     changed = true;
                 }
@@ -350,24 +351,27 @@ namespace AutoScreenCapture
             labelDateTimeFormatValue.Enabled = false;
             textBoxDateTimeFormatValue.Enabled = false;
 
-            groupBoxTimeOfDay.Enabled = false;
+            groupBoxTimeRange.Enabled = false;
 
-            labelMorning.Enabled = false;
-            dateTimePickerMorningStart.Enabled = false;
-            dateTimePickerMorningEnd.Enabled = false;
-            textBoxMorningValue.Enabled = false;
+            labelMacro1.Enabled = false;
+            dateTimePickerMacro1Start.Enabled = false;
+            dateTimePickerMacro1End.Enabled = false;
+            textBoxMacro1Macro.Enabled = false;
 
-            labelAfternoon.Enabled = false;
-            dateTimePickerAfternoonStart.Enabled = false;
-            dateTimePickerAfternoonEnd.Enabled = false;
-            textBoxAfternoonValue.Enabled = false;
+            labelMacro2.Enabled = false;
+            dateTimePickerMacro2Start.Enabled = false;
+            dateTimePickerMacro2End.Enabled = false;
+            textBoxMacro2Macro.Enabled = false;
 
-            labelEvening.Enabled = false;
-            dateTimePickerEveningStart.Enabled = false;
-            dateTimePickerEveningEnd.Enabled = false;
-            textBoxEveningValue.Enabled = false;
+            labelMacro3.Enabled = false;
+            dateTimePickerMacro3Start.Enabled = false;
+            dateTimePickerMacro3End.Enabled = false;
+            textBoxMacro3Macro.Enabled = false;
 
-            checkBoxEveningExtendsToNextMorning.Enabled = false;
+            labelMacro4.Enabled = false;
+            dateTimePickerMacro4Start.Enabled = false;
+            dateTimePickerMacro4End.Enabled = false;
+            textBoxMacro4Macro.Enabled = false;
 
             TagType tagType = (TagType) comboBoxType.SelectedIndex;
 
@@ -378,26 +382,29 @@ namespace AutoScreenCapture
                 textBoxDateTimeFormatValue.Enabled = true;
             }
 
-            if (tagType.Equals(TagType.TimeOfDay))
+            if (tagType.Equals(TagType.TimeRange))
             {
-                groupBoxTimeOfDay.Enabled = true;
+                groupBoxTimeRange.Enabled = true;
 
-                labelMorning.Enabled = true;
-                dateTimePickerMorningStart.Enabled = true;
-                dateTimePickerMorningEnd.Enabled = true;
-                textBoxMorningValue.Enabled = true;
+                labelMacro1.Enabled = true;
+                dateTimePickerMacro1Start.Enabled = true;
+                dateTimePickerMacro1End.Enabled = true;
+                textBoxMacro1Macro.Enabled = true;
 
-                labelAfternoon.Enabled = true;
-                dateTimePickerAfternoonStart.Enabled = true;
-                dateTimePickerAfternoonEnd.Enabled = true;
-                textBoxAfternoonValue.Enabled = true;
+                labelMacro2.Enabled = true;
+                dateTimePickerMacro2Start.Enabled = true;
+                dateTimePickerMacro2End.Enabled = true;
+                textBoxMacro2Macro.Enabled = true;
 
-                labelEvening.Enabled = true;
-                dateTimePickerEveningStart.Enabled = true;
-                dateTimePickerEveningEnd.Enabled = true;
-                textBoxEveningValue.Enabled = true;
+                labelMacro3.Enabled = true;
+                dateTimePickerMacro3Start.Enabled = true;
+                dateTimePickerMacro3End.Enabled = true;
+                textBoxMacro3Macro.Enabled = true;
 
-                checkBoxEveningExtendsToNextMorning.Enabled = true;
+                labelMacro4.Enabled = true;
+                dateTimePickerMacro4Start.Enabled = true;
+                dateTimePickerMacro4End.Enabled = true;
+                textBoxMacro4Macro.Enabled = true;
             }
         }
 
@@ -424,26 +431,6 @@ namespace AutoScreenCapture
         private void textBoxDateTimeFormatValue_MouseHover(object sender, EventArgs e)
         {
             HelpMessage("Parse a date format (yyyy = year, MM = month, dd = day), time format (HH = hour, mm = minute, ss = second, fff = millisecond), or expression ({day+7})");
-        }
-
-        private void textBoxMorningValue_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The macro to use for the time range that represents the morning");
-        }
-
-        private void textBoxAfternoonValue_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The macro to use for the time range that represents the afternoon");
-        }
-
-        private void textBoxEveningValue_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The macro to use for the time range that represents the evening");
-        }
-
-        private void checkBoxEveningExtendsToNextMorning_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Determines if the macro used for the evening time range should also apply to the early hours of the next morning (such as from 11pm to 3am)");
         }
 
         private void textBoxNotes_MouseHover(object sender, EventArgs e)

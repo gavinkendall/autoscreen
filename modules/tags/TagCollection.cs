@@ -41,19 +41,33 @@ namespace AutoScreenCapture
 
         private const string TAG_DATETIME_FORMAT_VALUE = "datetime_format_value";
 
+        private const string TAG_TIMERANGE_MACRO1_START = "timerange_macro1_start";
+        private const string TAG_TIMERANGE_MACRO1_END = "timerange_macro1_end";
+
+        private const string TAG_TIMERANGE_MACRO2_START = "timerange_macro2_start";
+        private const string TAG_TIMERANGE_MACRO2_END = "timerange_macro2_end";
+
+        private const string TAG_TIMERANGE_MACRO3_START = "timerange_macro3_start";
+        private const string TAG_TIMERANGE_MACRO3_END = "timerange_macro3_end";
+
+        private const string TAG_TIMERANGE_MACRO4_START = "timerange_macro4_start";
+        private const string TAG_TIMERANGE_MACRO4_END = "timerange_macro4_end";
+
+        private const string TAG_TIMERANGE_MACRO1_MACRO = "timerange_macro1_macro";
+        private const string TAG_TIMERANGE_MACRO2_MACRO = "timerange_macro2_macro";
+        private const string TAG_TIMERANGE_MACRO3_MACRO = "timerange_macro3_macro";
+        private const string TAG_TIMERANGE_MACRO4_MACRO = "timerange_macro4_macro";
+
+        // These are old "Time of Day" fields from versions older than 2.3.2.6
         private const string TAG_TIME_OF_DAY_MORNING_START = "time_of_day_morning_start";
         private const string TAG_TIME_OF_DAY_MORNING_END = "time_of_day_morning_end";
-
         private const string TAG_TIME_OF_DAY_AFTERNOON_START = "time_of_day_afternoon_start";
         private const string TAG_TIME_OF_DAY_AFTERNOON_END = "time_of_day_afternoon_end";
-
         private const string TAG_TIME_OF_DAY_EVENING_START = "time_of_day_evening_start";
         private const string TAG_TIME_OF_DAY_EVENING_END = "time_of_day_evening_end";
-
         private const string TAG_TIME_OF_DAY_MORNING_VALUE = "time_of_day_morning_value";
         private const string TAG_TIME_OF_DAY_AFTERNOON_VALUE = "time_of_day_afternoon_value";
         private const string TAG_TIME_OF_DAY_EVENING_VALUE = "time_of_day_evening_value";
-
         private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
 
         private const string TAG_ACTIVE = "active";
@@ -117,6 +131,8 @@ namespace AutoScreenCapture
 
                     XmlNodeList xTags = xDoc.SelectNodes(TAG_XPATH);
 
+                    bool eveningExtendsToNextMorning = false;
+
                     foreach (XmlNode xTag in xTags)
                     {
                         Tag tag = new Tag();
@@ -162,6 +178,7 @@ namespace AutoScreenCapture
                                             Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
                                             Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                                            Version v2326 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
                                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -170,6 +187,14 @@ namespace AutoScreenCapture
 
                                                 // Starting with 2.3.0.0 the DateTimeFormatFunction type became the DateTimeFormatExpression type.
                                                 value = value.Replace("DateTimeFormatFunction", "DateTimeFormatExpression");
+                                            }
+
+                                            if (v2326 != null && configVersion != null && configVersion.VersionNumber < v2326.VersionNumber)
+                                            {
+                                                Log.WriteDebugMessage("Boombayah 2.3.2.5 or older detected");
+
+                                                // Starting with 2.3.2.6 the TimeOfDay type became the TimeRange type.
+                                                value = value.Replace("TimeOfDay", "TimeRange");
                                             }
                                         }
 
@@ -181,54 +206,78 @@ namespace AutoScreenCapture
                                         tag.DateTimeFormatValue = xReader.Value;
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO1_START:
                                     case TAG_TIME_OF_DAY_MORNING_START:
                                         xReader.Read();
-                                        tag.TimeOfDayMorningStart = Convert.ToDateTime(xReader.Value);
+                                        tag.TimeRangeMacro1Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO1_END:
                                     case TAG_TIME_OF_DAY_MORNING_END:
                                         xReader.Read();
-                                        tag.TimeOfDayMorningEnd = Convert.ToDateTime(xReader.Value);
+                                        tag.TimeRangeMacro1End = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO2_START:
                                     case TAG_TIME_OF_DAY_AFTERNOON_START:
                                         xReader.Read();
-                                        tag.TimeOfDayAfternoonStart = Convert.ToDateTime(xReader.Value);
+                                        tag.TimeRangeMacro2Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO2_END:
                                     case TAG_TIME_OF_DAY_AFTERNOON_END:
                                         xReader.Read();
-                                        tag.TimeOfDayAfternoonEnd = Convert.ToDateTime(xReader.Value);
+                                        tag.TimeRangeMacro2End = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO3_START:
                                     case TAG_TIME_OF_DAY_EVENING_START:
                                         xReader.Read();
-                                        tag.TimeOfDayEveningStart = Convert.ToDateTime(xReader.Value);
+                                        tag.TimeRangeMacro3Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO3_END:
                                     case TAG_TIME_OF_DAY_EVENING_END:
                                         xReader.Read();
-                                        tag.TimeOfDayEveningEnd = Convert.ToDateTime(xReader.Value);
+                                        tag.TimeRangeMacro3End = Convert.ToDateTime(xReader.Value);
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO4_START:
+                                        xReader.Read();
+                                        tag.TimeRangeMacro4Start = Convert.ToDateTime(xReader.Value);
+                                        break;
+
+                                    case TAG_TIMERANGE_MACRO4_END:
+                                        xReader.Read();
+                                        tag.TimeRangeMacro4End = Convert.ToDateTime(xReader.Value);
+                                        break;
+
+                                    case TAG_TIMERANGE_MACRO1_MACRO:
                                     case TAG_TIME_OF_DAY_MORNING_VALUE:
                                         xReader.Read();
-                                        tag.TimeOfDayMorningValue = xReader.Value;
+                                        tag.TimeRangeMacro1Macro = xReader.Value;
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO2_MACRO:
                                     case TAG_TIME_OF_DAY_AFTERNOON_VALUE:
                                         xReader.Read();
-                                        tag.TimeOfDayAfternoonValue = xReader.Value;
+                                        tag.TimeRangeMacro2Macro = xReader.Value;
                                         break;
 
+                                    case TAG_TIMERANGE_MACRO3_MACRO:
                                     case TAG_TIME_OF_DAY_EVENING_VALUE:
                                         xReader.Read();
-                                        tag.TimeOfDayEveningValue = xReader.Value;
+                                        tag.TimeRangeMacro3Macro = xReader.Value;
+                                        break;
+
+                                    case TAG_TIMERANGE_MACRO4_MACRO:
+                                        xReader.Read();
+                                        tag.TimeRangeMacro4Macro = xReader.Value;
                                         break;
 
                                     case TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING:
                                         xReader.Read();
-                                        tag.EveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
+                                        eveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
                                         break;
 
                                     case TAG_ACTIVE:
@@ -248,6 +297,7 @@ namespace AutoScreenCapture
                             Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2326 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -293,13 +343,33 @@ namespace AutoScreenCapture
                                         tag.Description = "The name of the computer (" + tag.Name + ")";
                                         break;
 
-                                    case TagType.TimeOfDay:
-                                        tag.Description = "The macro to use for a specific time of day";
+                                    case TagType.TimeRange:
+                                        tag.Description = "The macro to use for a specific time range";
                                         break;
 
                                     case TagType.DateTimeFormatExpression:
                                         tag.Description = "An expression which represents a time that is either ahead or behind the current time (" + tag.Name + ")";
                                         break;
+                                }
+                            }
+
+                            if (v2326 != null && configVersion != null && configVersion.VersionNumber < v2326.VersionNumber)
+                            {
+                                tag.TimeRangeMacro4Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                                tag.TimeRangeMacro4End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                                tag.TimeRangeMacro4Macro = string.Empty;
+
+                                // This is an old property from before 2.3.2.6 when TimeOfDay macro tags were used.
+                                // Since 2.3.2.6 we now use TimeRange tags so we need to split up the "evening" start and end times
+                                // into their own "Macro 4" start and end times when this property is set to true.
+                                if (eveningExtendsToNextMorning)
+                                {
+                                    tag.TimeRangeMacro4Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                                    tag.TimeRangeMacro4End = tag.TimeRangeMacro3End;
+
+                                    tag.TimeRangeMacro3End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
+
+                                    tag.TimeRangeMacro4Macro = tag.TimeRangeMacro3Macro;
                                 }
                             }
                         }
@@ -343,7 +413,7 @@ namespace AutoScreenCapture
                     Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
                     Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
                     Add(new Tag("title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
-                    Add(new Tag("timeofday", "The macro to use at a specific time of day so you can have a macro for the morning, a macro for the afternoon, and a macro for the evening. At the moment it is %timeofday%", TagType.TimeOfDay, active: true));
+                    Add(new Tag("timerange", "The macro to use during a specific time range. At the moment it is %timerange%", TagType.TimeRange, active: true));
 
                     SaveToXmlFile();
                 }
@@ -409,16 +479,18 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TAG_NOTES, tag.Notes);
                         xWriter.WriteElementString(TAG_TYPE, tag.Type.ToString());
                         xWriter.WriteElementString(TAG_DATETIME_FORMAT_VALUE, tag.DateTimeFormatValue);
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_MORNING_START, tag.TimeOfDayMorningStart.ToString());
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_MORNING_END, tag.TimeOfDayMorningEnd.ToString());
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_AFTERNOON_START, tag.TimeOfDayAfternoonStart.ToString());
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_AFTERNOON_END, tag.TimeOfDayAfternoonEnd.ToString());
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_START, tag.TimeOfDayEveningStart.ToString());
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_END, tag.TimeOfDayEveningEnd.ToString());
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_MORNING_VALUE, tag.TimeOfDayMorningValue);
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_AFTERNOON_VALUE, tag.TimeOfDayAfternoonValue);
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_VALUE, tag.TimeOfDayEveningValue);
-                        xWriter.WriteElementString(TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING, tag.EveningExtendsToNextMorning.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO1_START, tag.TimeRangeMacro1Start.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO1_END, tag.TimeRangeMacro1End.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO2_START, tag.TimeRangeMacro2Start.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO2_END, tag.TimeRangeMacro2End.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO3_START, tag.TimeRangeMacro3Start.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO3_END, tag.TimeRangeMacro3End.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO4_START, tag.TimeRangeMacro4Start.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO4_END, tag.TimeRangeMacro4End.ToString());
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO1_MACRO, tag.TimeRangeMacro1Macro);
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO2_MACRO, tag.TimeRangeMacro2Macro);
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO3_MACRO, tag.TimeRangeMacro3Macro);
+                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO4_MACRO, tag.TimeRangeMacro4Macro);
 
                         xWriter.WriteEndElement();
                     }

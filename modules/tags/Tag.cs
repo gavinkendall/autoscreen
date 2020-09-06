@@ -55,78 +55,77 @@ namespace AutoScreenCapture
         /// <summary>
         /// The start date/time of the morning for the Time of Day tag type.
         /// </summary>
-        public DateTime TimeOfDayMorningStart { get; set; }
+        public DateTime TimeRangeMacro1Start { get; set; }
 
         /// <summary>
         /// The end date/time of the morning for the Time of Day tag type.
         /// </summary>
-        public DateTime TimeOfDayMorningEnd { get; set; }
+        public DateTime TimeRangeMacro1End { get; set; }
 
         /// <summary>
         /// The start date/time of the afternoon for the Time of Day tag type.
         /// </summary>
-        public DateTime TimeOfDayAfternoonStart { get; set; }
+        public DateTime TimeRangeMacro2Start { get; set; }
 
         /// <summary>
         /// The end date/time of the afternoon for the Time of Day tag type.
         /// </summary>
-        public DateTime TimeOfDayAfternoonEnd { get; set; }
+        public DateTime TimeRangeMacro2End { get; set; }
 
         /// <summary>
         /// The start date/time of the evening for the Time of Day tag type.
         /// </summary>
-        public DateTime TimeOfDayEveningStart { get; set; }
+        public DateTime TimeRangeMacro3Start { get; set; }
 
         /// <summary>
         /// The end date/time of the evening for the Time of Day tag type.
         /// </summary>
-        public DateTime TimeOfDayEveningEnd { get; set; }
+        public DateTime TimeRangeMacro3End { get; set; }
+
+        public DateTime TimeRangeMacro4Start { get; set; }
+        public DateTime TimeRangeMacro4End { get; set; }
 
         /// <summary>
         /// The morning value for the Time of Day tag type.
         /// </summary>
-        public string TimeOfDayMorningValue { get; set; }
+        public string TimeRangeMacro1Macro { get; set; }
 
         /// <summary>
         /// The afternoon value for the Time of Day tag type.
         /// </summary>
-        public string TimeOfDayAfternoonValue { get; set; }
+        public string TimeRangeMacro2Macro { get; set; }
 
         /// <summary>
         /// The evening value for the Time of Day tag type.
         /// </summary>
-        public string TimeOfDayEveningValue { get; set; }
+        public string TimeRangeMacro3Macro { get; set; }
+
+        public string TimeRangeMacro4Macro { get; set; }
 
         /// <summary>
         /// Determines if a tag is active or inactive.
         /// </summary>
         public bool Active { get; set; }
 
-        /// <summary>
-        /// Determines if the time in the evening should extend to the early hours of the next morning.
-        /// </summary>
-        public bool EveningExtendsToNextMorning { get; set; }
-
         private void SetDefaultValues()
         {
             DateTimeFormatValue = MacroParser.DateFormat + "_" + MacroParser.TimeFormatForWindows;
 
-            // Morning
-            TimeOfDayMorningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
-            TimeOfDayMorningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
-            TimeOfDayMorningValue = "morning at %hour%-%minute%-%second%";
+            TimeRangeMacro1Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
+            TimeRangeMacro1End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
+            TimeRangeMacro1Macro = "morning at %hour%-%minute%-%second%";
 
-            // Afternoon
-            TimeOfDayAfternoonStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0); // 12pm
-            TimeOfDayAfternoonEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 59, 59); // 5:59:59pm
-            TimeOfDayAfternoonValue = "afternoon at %hour%-%minute%-%second%";
+            TimeRangeMacro2Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0); // 12pm
+            TimeRangeMacro2End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 59, 59); // 5:59:59pm
+            TimeRangeMacro2Macro = "afternoon at %hour%-%minute%-%second%";
 
-            // Evening
-            TimeOfDayEveningStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
-            TimeOfDayEveningEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
-            TimeOfDayEveningValue = "evening at %hour%-%minute%-%second%";
+            TimeRangeMacro3Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 18, 0, 0); // 6pm
+            TimeRangeMacro3End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59); // 11:59:59pm
+            TimeRangeMacro3Macro = "evening at %hour%-%minute%-%second%";
 
-            EveningExtendsToNextMorning = false;
+            TimeRangeMacro4Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            TimeRangeMacro4End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            TimeRangeMacro4Macro = string.Empty;
 
             Active = false;
 
@@ -184,30 +183,34 @@ namespace AutoScreenCapture
         /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
-        /// <param name="timeOfDayMorningStart">The start time of the morning.</param>
-        /// <param name="timeOfDayMorningEnd">The end time of the morning.</param>
-        /// <param name="timeOfDayMorningValue">The macro value for the morning.</param>
-        /// <param name="timeOfDayAfternoonStart"></param>
-        /// <param name="timeOfDayAfternoonEnd"></param>
-        /// <param name="timeOfDayAfternoonValue">The macro value for the afternoon.</param>
-        /// <param name="timeOfDayEveningStart"></param>
-        /// <param name="timeOfDayEveningEnd"></param>
-        /// <param name="timeOfDayEveningValue">The macro value for the evening.</param>
-        /// <param name="eveningExtendsToNextMorning">Determines if we extend the evening time into the next morning.</param>
+        /// <param name="timeRangeMacro1Start">The start time for Macro 1.</param>
+        /// <param name="timeRangeMacro1End">The end time for Macro 1.</param>
+        /// <param name="timeRangeMacro1Macro">The macro for Macro1.</param>
+        /// <param name="timeRangeMacro2Start">The start time for Macro 2.</param>
+        /// <param name="timeRangeMacro2End">The end time for Macro 2.</param>
+        /// <param name="timeRangeMacro2Macro">The macro for Macro 2.</param>
+        /// <param name="timeRangeMacro3Start">The start time for Macro 3.</param>
+        /// <param name="timeRangeMacro3End">The end time for Macro 3.</param>
+        /// <param name="timeRangeMacro3Macro">The macro for Macro 3.</param>
+        /// <param name="timeRangeMacro4Start">The start time for Macro 4.</param>
+        /// <param name="timeRangeMacro4End">The end time for Macro 4.</param>
+        /// <param name="timeRangeMacro4Macro">The macro for Macro 4</param>
         /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
-        /// <param name="notes"></param>
+        /// <param name="notes">Notes.</param>
         public Tag(string name, string description, TagType tagType,
             string dateTimeFormatValue,
-            DateTime timeOfDayMorningStart,
-            DateTime timeOfDayMorningEnd,
-            string timeOfDayMorningValue,
-            DateTime timeOfDayAfternoonStart,
-            DateTime timeOfDayAfternoonEnd,
-            string timeOfDayAfternoonValue,
-            DateTime timeOfDayEveningStart,
-            DateTime timeOfDayEveningEnd,
-            string timeOfDayEveningValue,
-            bool eveningExtendsToNextMorning,
+            DateTime timeRangeMacro1Start,
+            DateTime timeRangeMacro1End,
+            string timeRangeMacro1Macro,
+            DateTime timeRangeMacro2Start,
+            DateTime timeRangeMacro2End,
+            string timeRangeMacro2Macro,
+            DateTime timeRangeMacro3Start,
+            DateTime timeRangeMacro3End,
+            string timeRangeMacro3Macro,
+            DateTime timeRangeMacro4Start,
+            DateTime timeRangeMacro4End,
+            string timeRangeMacro4Macro,
             bool active, string notes)
         {
             Name = name;
@@ -216,20 +219,22 @@ namespace AutoScreenCapture
 
             DateTimeFormatValue = dateTimeFormatValue;
 
-            TimeOfDayMorningStart = timeOfDayMorningStart;
-            TimeOfDayMorningEnd = timeOfDayMorningEnd;
+            TimeRangeMacro1Start = timeRangeMacro1Start;
+            TimeRangeMacro1End = timeRangeMacro1End;
 
-            TimeOfDayAfternoonStart = timeOfDayAfternoonStart;
-            TimeOfDayAfternoonEnd = timeOfDayAfternoonEnd;
+            TimeRangeMacro2Start = timeRangeMacro2Start;
+            TimeRangeMacro2End = timeRangeMacro2End;
 
-            TimeOfDayEveningStart = timeOfDayEveningStart;
-            TimeOfDayEveningEnd = timeOfDayEveningEnd;
+            TimeRangeMacro3Start = timeRangeMacro3Start;
+            TimeRangeMacro3End = timeRangeMacro3End;
 
-            TimeOfDayMorningValue = timeOfDayMorningValue;
-            TimeOfDayAfternoonValue = timeOfDayAfternoonValue;
-            TimeOfDayEveningValue = timeOfDayEveningValue;
+            TimeRangeMacro4Start = timeRangeMacro4Start;
+            TimeRangeMacro4End = timeRangeMacro4End;
 
-            EveningExtendsToNextMorning = eveningExtendsToNextMorning;
+            TimeRangeMacro1Macro = timeRangeMacro1Macro;
+            TimeRangeMacro2Macro = timeRangeMacro2Macro;
+            TimeRangeMacro3Macro = timeRangeMacro3Macro;
+            TimeRangeMacro4Macro = timeRangeMacro4Macro;
 
             Active = active;
 

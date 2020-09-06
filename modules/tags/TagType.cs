@@ -66,9 +66,9 @@ namespace AutoScreenCapture
         Machine = 7,
 
         /// <summary>
-        /// A macro tag for a "time of day" macro that expands into morning, afternoon, and evening macro values.
+        /// A macro tag for a series of macros that are parsed during specified time ranges.
         /// </summary>
-        TimeOfDay = 8,
+        TimeRange = 8,
 
         /// <summary>
         /// A macro tag for a date/time expression (such as "{hour-6}" to indicate 6 hours behind).

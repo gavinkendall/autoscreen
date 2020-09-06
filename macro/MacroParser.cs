@@ -271,7 +271,7 @@ namespace AutoScreenCapture
 
             foreach (Tag tag in tagCollection)
             {
-                if (tag.Type == TagType.TimeOfDay)
+                if (tag.Type == TagType.TimeRange)
                 {
                     DateTime dt;
 
@@ -284,61 +284,46 @@ namespace AutoScreenCapture
                         dt = screenCapture.DateTimeScreenshotsTaken;
                     }
 
-                    string morningValue = tag.TimeOfDayMorningValue;
-                    string afternoonValue = tag.TimeOfDayAfternoonValue;
-                    string eveningValue = tag.TimeOfDayEveningValue;
+                    string macro1Macro = tag.TimeRangeMacro1Macro;
+                    string macro2Macro = tag.TimeRangeMacro2Macro;
+                    string macro3Macro = tag.TimeRangeMacro3Macro;
+                    string macro4Macro = tag.TimeRangeMacro4Macro;
 
                     // Temporarily make this tag a DateTimeFormat type because we're going to recursively call ParseTagsForFilePath
-                    // for each macro tag in the morning, afternoon, and evening fields.
+                    // for each macro tag in the macro 1, macro 2, macro 3, and macro 4 fields.
                     tag.Type = TagType.DateTimeFormat;
 
-                    // Recursively call the same method we're in to parse each field as if it was a date/time macro tag.
-                    // This can achieve some interesting results such as being able to call the same %timeofday% tag
-                    // in onto itself because it will use its own date/time format value, but the intention is to have tags
-                    // like %date%, %time%, %hour%, %minute%, and %second% be used in the morning, afternoon, and evening fields.
-                    morningValue = ParseTags(preview, config, name, morningValue, screenNumber, format, activeWindowTitle, tagCollection);
-                    afternoonValue = ParseTags(preview, config, name, afternoonValue, screenNumber, format, activeWindowTitle, tagCollection);
-                    eveningValue = ParseTags(preview, config, name, eveningValue, screenNumber, format, activeWindowTitle, tagCollection);
+                    // Recursively call the same method we're in to parse each TimeRange macro as if it was a date/time macro tag.
+                    macro1Macro = ParseTags(preview, config, name, macro1Macro, screenNumber, format, activeWindowTitle, tagCollection);
+                    macro2Macro = ParseTags(preview, config, name, macro2Macro, screenNumber, format, activeWindowTitle, tagCollection);
+                    macro3Macro = ParseTags(preview, config, name, macro3Macro, screenNumber, format, activeWindowTitle, tagCollection);
+                    macro4Macro = ParseTags(preview, config, name, macro4Macro, screenNumber, format, activeWindowTitle, tagCollection);
 
-                    // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeOfDay type.
-                    tag.Type = TagType.TimeOfDay;
+                    // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeRange type.
+                    tag.Type = TagType.TimeRange;
 
-                    if (dt.TimeOfDay >= tag.TimeOfDayMorningStart.TimeOfDay &&
-                        dt.TimeOfDay <= tag.TimeOfDayMorningEnd.TimeOfDay)
+                    if (dt.TimeOfDay >= tag.TimeRangeMacro1Start.TimeOfDay &&
+                        dt.TimeOfDay <= tag.TimeRangeMacro1End.TimeOfDay)
                     {
-                        macro = macro.Replace(tag.Name, morningValue);
+                        macro = macro.Replace(tag.Name, macro1Macro);
                     }
 
-                    if (dt.TimeOfDay >= tag.TimeOfDayAfternoonStart.TimeOfDay &&
-                        dt.TimeOfDay <= tag.TimeOfDayAfternoonEnd.TimeOfDay)
+                    if (dt.TimeOfDay >= tag.TimeRangeMacro2Start.TimeOfDay &&
+                        dt.TimeOfDay <= tag.TimeRangeMacro2End.TimeOfDay)
                     {
-                        macro = macro.Replace(tag.Name, afternoonValue);
+                        macro = macro.Replace(tag.Name, macro2Macro);
                     }
 
-                    if (dt.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
-                        dt.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
+                    if (dt.TimeOfDay >= tag.TimeRangeMacro3Start.TimeOfDay &&
+                        dt.TimeOfDay <= tag.TimeRangeMacro3End.TimeOfDay)
                     {
-                        macro = macro.Replace(tag.Name, eveningValue);
+                        macro = macro.Replace(tag.Name, macro3Macro);
                     }
 
-                    // Split the evening start time and evening end time into separate checks if the user wants to extend
-                    // the time of what they consider "evening" to also include the next morning.
-                    if (tag.EveningExtendsToNextMorning)
+                    if (dt.TimeOfDay >= tag.TimeRangeMacro4Start.TimeOfDay &&
+                        dt.TimeOfDay <= tag.TimeRangeMacro4End.TimeOfDay)
                     {
-                        DateTime dayStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                        DateTime dayEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59);
-
-                        if (dt.TimeOfDay >= tag.TimeOfDayEveningStart.TimeOfDay &&
-                            dt.TimeOfDay <= dayEnd.TimeOfDay)
-                        {
-                            macro = macro.Replace(tag.Name, eveningValue);
-                        }
-
-                        if (dt.TimeOfDay >= dayStart.TimeOfDay &&
-                            dt.TimeOfDay <= tag.TimeOfDayEveningEnd.TimeOfDay)
-                        {
-                            macro = macro.Replace(tag.Name, eveningValue);
-                        }
+                        macro = macro.Replace(tag.Name, macro4Macro);
                     }
                 }
                 else
