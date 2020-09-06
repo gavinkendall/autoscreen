@@ -78,6 +78,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// The condition to check will be if the time matches with the specified time.
         /// </summary>
-        Time = 10
+        Time = 10,
+
+        /// <summary>
+        /// The condition to check will be if the day and time matches with the specified day and time.
+        /// </summary>
+        DayTime = 11
     }
 }

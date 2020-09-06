@@ -92,6 +92,13 @@ namespace AutoScreenCapture
                 dateTimePickerDate.Value = TriggerObject.Date;
                 dateTimePickerTime.Value = TriggerObject.Time;
 
+                if (string.IsNullOrEmpty(TriggerObject.Day))
+                {
+                    TriggerObject.Day = "Weekday";
+                }
+
+                comboBoxDay.SelectedIndex = comboBoxDay.Items.IndexOf(TriggerObject.Day);
+
                 if (listBoxModuleItemList.Items.Count > 0 && TriggerObject.ModuleItem != null)
                 {
                     listBoxModuleItemList.SelectedIndex = listBoxModuleItemList.Items.IndexOf(TriggerObject.ModuleItem);
@@ -165,6 +172,7 @@ namespace AutoScreenCapture
                         Active = checkBoxActive.Checked,
                         Date = dateTimePickerDate.Value,
                         Time = dateTimePickerTime.Value,
+                        Day = comboBoxDay.Text,
                         ScreenCaptureInterval = screenCaptureInterval,
                         ModuleItem = listBoxModuleItemList.SelectedItem != null ? listBoxModuleItemList.SelectedItem.ToString() : string.Empty
                     };
@@ -204,6 +212,7 @@ namespace AutoScreenCapture
                         TriggerCollection.Get(TriggerObject).Active = checkBoxActive.Checked;
                         TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
                         TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
+                        TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
 
                         if (listBoxModuleItemList.SelectedItem != null)
                         {
@@ -303,6 +312,8 @@ namespace AutoScreenCapture
 
         private void LoadConditions()
         {
+            comboBoxDay.SelectedIndex = 0;
+
             listBoxCondition.Items.Clear();
 
             // Whatever changes you make here will need to reflect the exact order in which the conditions are listed in the TriggerConditionType class.
@@ -317,6 +328,7 @@ namespace AutoScreenCapture
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.ScreenshotTaken, "Screenshot Taken").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.DateTime, "Date/Time").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.Time, "Time").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.DayTime, "Day/Time").Description);
 
             listBoxCondition.SelectedIndex = 0;
         }
@@ -460,6 +472,14 @@ namespace AutoScreenCapture
 
         private void EnableOrDisableDateTime()
         {
+            dateTimePickerDate.Enabled = false;
+            dateTimePickerTime.Enabled = false;
+            comboBoxDay.Enabled = false;
+
+            labelDate.Enabled = false;
+            labelTime.Enabled = false;
+            labelDay.Enabled = false;
+
             if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
             {
                 dateTimePickerDate.Enabled = true;
@@ -468,21 +488,20 @@ namespace AutoScreenCapture
                 labelDate.Enabled = true;
                 labelTime.Enabled = true;
             }
-            else if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
+            
+            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
             {
-                dateTimePickerDate.Enabled = false;
                 dateTimePickerTime.Enabled = true;
-
-                labelDate.Enabled = false;
                 labelTime.Enabled = true;
             }
-            else
-            {
-                dateTimePickerDate.Enabled = false;
-                dateTimePickerTime.Enabled = false;
 
-                labelDate.Enabled = false;
-                labelTime.Enabled = false;
+            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DayTime)
+            {
+                dateTimePickerTime.Enabled = true;
+                comboBoxDay.Enabled = true;
+
+                labelTime.Enabled = true;
+                labelDay.Enabled = true;
             }
         }
 

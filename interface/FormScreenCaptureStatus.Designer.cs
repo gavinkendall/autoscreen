@@ -30,25 +30,25 @@
     {
             this.SuspendLayout();
             // 
-            // FormInformationWindow
+            // FormScreenCaptureStatus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(314, 0);
+            this.ClientSize = new System.Drawing.Size(334, 0);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(300, 30);
+            this.MaximumSize = new System.Drawing.Size(350, 39);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(300, 30);
-            this.Size = new System.Drawing.Size(300, 30);
-            this.Name = "FormNextCaptureInformation";
+            this.MinimumSize = new System.Drawing.Size(350, 39);
+            this.Name = "FormScreenCaptureStatus";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInformationWindow_FormClosing);
             this.ResumeLayout(false);
+
     }
 
     #endregion

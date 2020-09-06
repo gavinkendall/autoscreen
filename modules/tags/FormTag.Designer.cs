@@ -38,6 +38,10 @@
             this.labelDateTimeFormatValue = new System.Windows.Forms.Label();
             this.textBoxDateTimeFormatValue = new System.Windows.Forms.TextBox();
             this.groupBoxTimeRange = new System.Windows.Forms.GroupBox();
+            this.labelMacro4 = new System.Windows.Forms.Label();
+            this.textBoxMacro4Macro = new System.Windows.Forms.TextBox();
+            this.dateTimePickerMacro4End = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerMacro4Start = new System.Windows.Forms.DateTimePicker();
             this.labelMacro3 = new System.Windows.Forms.Label();
             this.labelMacro2 = new System.Windows.Forms.Label();
             this.textBoxMacro3Macro = new System.Windows.Forms.TextBox();
@@ -56,10 +60,6 @@
             this.labelNotes = new System.Windows.Forms.Label();
             this.labelDescription = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.labelMacro4 = new System.Windows.Forms.Label();
-            this.textBoxMacro4Macro = new System.Windows.Forms.TextBox();
-            this.dateTimePickerMacro4End = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerMacro4Start = new System.Windows.Forms.DateTimePicker();
             this.groupBoxTimeRange.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -171,10 +171,49 @@
             this.groupBoxTimeRange.TabStop = false;
             this.groupBoxTimeRange.Text = "Time Range";
             // 
+            // labelMacro4
+            // 
+            this.labelMacro4.AutoSize = true;
+            this.labelMacro4.Location = new System.Drawing.Point(6, 101);
+            this.labelMacro4.Name = "labelMacro4";
+            this.labelMacro4.Size = new System.Drawing.Size(49, 13);
+            this.labelMacro4.TabIndex = 23;
+            this.labelMacro4.Text = "Macro 4:";
+            // 
+            // textBoxMacro4Macro
+            // 
+            this.textBoxMacro4Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMacro4Macro.Location = new System.Drawing.Point(222, 98);
+            this.textBoxMacro4Macro.MaxLength = 50;
+            this.textBoxMacro4Macro.Name = "textBoxMacro4Macro";
+            this.textBoxMacro4Macro.Size = new System.Drawing.Size(500, 20);
+            this.textBoxMacro4Macro.TabIndex = 26;
+            // 
+            // dateTimePickerMacro4End
+            // 
+            this.dateTimePickerMacro4End.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro4End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro4End.Location = new System.Drawing.Point(148, 98);
+            this.dateTimePickerMacro4End.Name = "dateTimePickerMacro4End";
+            this.dateTimePickerMacro4End.ShowUpDown = true;
+            this.dateTimePickerMacro4End.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro4End.TabIndex = 25;
+            // 
+            // dateTimePickerMacro4Start
+            // 
+            this.dateTimePickerMacro4Start.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerMacro4Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerMacro4Start.Location = new System.Drawing.Point(74, 98);
+            this.dateTimePickerMacro4Start.Name = "dateTimePickerMacro4Start";
+            this.dateTimePickerMacro4Start.ShowUpDown = true;
+            this.dateTimePickerMacro4Start.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerMacro4Start.TabIndex = 24;
+            // 
             // labelMacro3
             // 
             this.labelMacro3.AutoSize = true;
-            this.labelMacro3.Location = new System.Drawing.Point(6, 78);
+            this.labelMacro3.Location = new System.Drawing.Point(6, 75);
             this.labelMacro3.Name = "labelMacro3";
             this.labelMacro3.Size = new System.Drawing.Size(49, 13);
             this.labelMacro3.TabIndex = 19;
@@ -183,7 +222,7 @@
             // labelMacro2
             // 
             this.labelMacro2.AutoSize = true;
-            this.labelMacro2.Location = new System.Drawing.Point(6, 52);
+            this.labelMacro2.Location = new System.Drawing.Point(6, 49);
             this.labelMacro2.Name = "labelMacro2";
             this.labelMacro2.Size = new System.Drawing.Size(49, 13);
             this.labelMacro2.TabIndex = 15;
@@ -193,7 +232,7 @@
             // 
             this.textBoxMacro3Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMacro3Macro.Location = new System.Drawing.Point(222, 75);
+            this.textBoxMacro3Macro.Location = new System.Drawing.Point(222, 72);
             this.textBoxMacro3Macro.MaxLength = 50;
             this.textBoxMacro3Macro.Name = "textBoxMacro3Macro";
             this.textBoxMacro3Macro.Size = new System.Drawing.Size(500, 20);
@@ -203,7 +242,7 @@
             // 
             this.dateTimePickerMacro3End.CustomFormat = "HH:mm:ss";
             this.dateTimePickerMacro3End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro3End.Location = new System.Drawing.Point(148, 75);
+            this.dateTimePickerMacro3End.Location = new System.Drawing.Point(148, 72);
             this.dateTimePickerMacro3End.Name = "dateTimePickerMacro3End";
             this.dateTimePickerMacro3End.ShowUpDown = true;
             this.dateTimePickerMacro3End.Size = new System.Drawing.Size(68, 20);
@@ -213,7 +252,7 @@
             // 
             this.dateTimePickerMacro3Start.CustomFormat = "HH:mm:ss";
             this.dateTimePickerMacro3Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro3Start.Location = new System.Drawing.Point(74, 75);
+            this.dateTimePickerMacro3Start.Location = new System.Drawing.Point(74, 72);
             this.dateTimePickerMacro3Start.Name = "dateTimePickerMacro3Start";
             this.dateTimePickerMacro3Start.ShowUpDown = true;
             this.dateTimePickerMacro3Start.Size = new System.Drawing.Size(68, 20);
@@ -223,7 +262,7 @@
             // 
             this.textBoxMacro2Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMacro2Macro.Location = new System.Drawing.Point(222, 49);
+            this.textBoxMacro2Macro.Location = new System.Drawing.Point(222, 46);
             this.textBoxMacro2Macro.MaxLength = 50;
             this.textBoxMacro2Macro.Name = "textBoxMacro2Macro";
             this.textBoxMacro2Macro.Size = new System.Drawing.Size(500, 20);
@@ -233,7 +272,7 @@
             // 
             this.dateTimePickerMacro2End.CustomFormat = "HH:mm:ss";
             this.dateTimePickerMacro2End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro2End.Location = new System.Drawing.Point(148, 49);
+            this.dateTimePickerMacro2End.Location = new System.Drawing.Point(148, 46);
             this.dateTimePickerMacro2End.Name = "dateTimePickerMacro2End";
             this.dateTimePickerMacro2End.ShowUpDown = true;
             this.dateTimePickerMacro2End.Size = new System.Drawing.Size(68, 20);
@@ -243,7 +282,7 @@
             // 
             this.dateTimePickerMacro2Start.CustomFormat = "HH:mm:ss";
             this.dateTimePickerMacro2Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro2Start.Location = new System.Drawing.Point(74, 49);
+            this.dateTimePickerMacro2Start.Location = new System.Drawing.Point(74, 46);
             this.dateTimePickerMacro2Start.Name = "dateTimePickerMacro2Start";
             this.dateTimePickerMacro2Start.ShowUpDown = true;
             this.dateTimePickerMacro2Start.Size = new System.Drawing.Size(68, 20);
@@ -253,7 +292,7 @@
             // 
             this.textBoxMacro1Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMacro1Macro.Location = new System.Drawing.Point(222, 23);
+            this.textBoxMacro1Macro.Location = new System.Drawing.Point(222, 20);
             this.textBoxMacro1Macro.MaxLength = 50;
             this.textBoxMacro1Macro.Name = "textBoxMacro1Macro";
             this.textBoxMacro1Macro.Size = new System.Drawing.Size(500, 20);
@@ -263,7 +302,7 @@
             // 
             this.dateTimePickerMacro1End.CustomFormat = "HH:mm:ss";
             this.dateTimePickerMacro1End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro1End.Location = new System.Drawing.Point(148, 23);
+            this.dateTimePickerMacro1End.Location = new System.Drawing.Point(148, 20);
             this.dateTimePickerMacro1End.Name = "dateTimePickerMacro1End";
             this.dateTimePickerMacro1End.ShowUpDown = true;
             this.dateTimePickerMacro1End.Size = new System.Drawing.Size(68, 20);
@@ -272,7 +311,7 @@
             // labelMacro1
             // 
             this.labelMacro1.AutoSize = true;
-            this.labelMacro1.Location = new System.Drawing.Point(6, 26);
+            this.labelMacro1.Location = new System.Drawing.Point(6, 23);
             this.labelMacro1.Name = "labelMacro1";
             this.labelMacro1.Size = new System.Drawing.Size(49, 13);
             this.labelMacro1.TabIndex = 11;
@@ -282,7 +321,7 @@
             // 
             this.dateTimePickerMacro1Start.CustomFormat = "HH:mm:ss";
             this.dateTimePickerMacro1Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro1Start.Location = new System.Drawing.Point(74, 23);
+            this.dateTimePickerMacro1Start.Location = new System.Drawing.Point(74, 20);
             this.dateTimePickerMacro1Start.Name = "dateTimePickerMacro1Start";
             this.dateTimePickerMacro1Start.ShowUpDown = true;
             this.dateTimePickerMacro1Start.Size = new System.Drawing.Size(68, 20);
@@ -357,45 +396,6 @@
             this.textBoxDescription.Size = new System.Drawing.Size(470, 20);
             this.textBoxDescription.TabIndex = 7;
             this.textBoxDescription.MouseHover += new System.EventHandler(this.textBoxDescription_MouseHover);
-            // 
-            // labelMacro4
-            // 
-            this.labelMacro4.AutoSize = true;
-            this.labelMacro4.Location = new System.Drawing.Point(6, 104);
-            this.labelMacro4.Name = "labelMacro4";
-            this.labelMacro4.Size = new System.Drawing.Size(49, 13);
-            this.labelMacro4.TabIndex = 23;
-            this.labelMacro4.Text = "Macro 4:";
-            // 
-            // textBoxMacro4Macro
-            // 
-            this.textBoxMacro4Macro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMacro4Macro.Location = new System.Drawing.Point(222, 101);
-            this.textBoxMacro4Macro.MaxLength = 50;
-            this.textBoxMacro4Macro.Name = "textBoxMacro4Macro";
-            this.textBoxMacro4Macro.Size = new System.Drawing.Size(500, 20);
-            this.textBoxMacro4Macro.TabIndex = 26;
-            // 
-            // dateTimePickerMacro4End
-            // 
-            this.dateTimePickerMacro4End.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerMacro4End.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro4End.Location = new System.Drawing.Point(148, 101);
-            this.dateTimePickerMacro4End.Name = "dateTimePickerMacro4End";
-            this.dateTimePickerMacro4End.ShowUpDown = true;
-            this.dateTimePickerMacro4End.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerMacro4End.TabIndex = 25;
-            // 
-            // dateTimePickerMacro4Start
-            // 
-            this.dateTimePickerMacro4Start.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerMacro4Start.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerMacro4Start.Location = new System.Drawing.Point(74, 101);
-            this.dateTimePickerMacro4Start.Name = "dateTimePickerMacro4Start";
-            this.dateTimePickerMacro4Start.ShowUpDown = true;
-            this.dateTimePickerMacro4Start.Size = new System.Drawing.Size(68, 20);
-            this.dateTimePickerMacro4Start.TabIndex = 24;
             // 
             // FormTag
             // 

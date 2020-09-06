@@ -58,6 +58,11 @@ namespace AutoScreenCapture
         public DateTime Time { get; set; }
 
         /// <summary>
+        /// The day value based on the Day/Time condition.
+        /// </summary>
+        public string Day { get; set; }
+
+        /// <summary>
         /// The interval to use. This overrides the main interval.
         /// </summary>
         public int ScreenCaptureInterval { get; set; }

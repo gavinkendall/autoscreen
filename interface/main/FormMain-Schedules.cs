@@ -109,7 +109,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                // Process the list of triggers of condition type Date/Time and condition type Time.
+                // Process the list of triggers of condition type Date/Time, condition type Time, and condition type Day/Time.
                 foreach (Trigger trigger in _formTrigger.TriggerCollection)
                 {
                     if (!trigger.Active)
@@ -128,6 +128,29 @@ namespace AutoScreenCapture
                         trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
                     {
                         DoTriggerAction(trigger);
+                    }
+
+                    if (trigger.ConditionType == TriggerConditionType.DayTime &&
+                        trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                    {
+                        if (trigger.Day.Equals(dtNow.DayOfWeek.ToString()))
+                        {
+                            DoTriggerAction(trigger);
+                        }
+
+                        if (trigger.Day.Equals("Weekday") && (dtNow.DayOfWeek == DayOfWeek.Monday ||
+                                dtNow.DayOfWeek == DayOfWeek.Tuesday ||
+                                dtNow.DayOfWeek == DayOfWeek.Wednesday ||
+                                dtNow.DayOfWeek == DayOfWeek.Thursday ||
+                                dtNow.DayOfWeek == DayOfWeek.Friday))
+                        {
+                            DoTriggerAction(trigger);
+                        }
+
+                        if (trigger.Day.Equals("Weekend") && (dtNow.DayOfWeek == DayOfWeek.Saturday || dtNow.DayOfWeek == DayOfWeek.Sunday))
+                        {
+                            DoTriggerAction(trigger);
+                        }
                     }
                 }
             }
