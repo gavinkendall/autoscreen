@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-09-02 (September 2, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.2.5)]
+This file was last updated on 2020-09-06 (September 6, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.2.6)]
 ========================================================================================================================
 
 
@@ -440,7 +440,7 @@ Active Window Title               The title of the active window
 Date/Time Format                  A value representing a date/time format (such as "yyyy-MM-dd HH-mm-ss-fff")
 User                              The name of the logged in user
 Machine                           The name of the machine being used
-Time of Day                       A specified value based on the time of day
+Time Range                        A specified value based on a time range
 Date/Time Format Expression       A value representing a date/time tag expression (such as "{day-1}")
 
 (The Date/Time Format Expression type is simply the new name for the Date/Time Format Function type previously
@@ -454,13 +454,9 @@ which represents the current date/time modified by an operator and an applied am
 As of version 2.3.2.5 you can use date/time format in a tag expression. For example, the value of the tag
 expression can be "{day-1}[yyyy-MM-dd]" to show the previous day in the format yyyy-MM-dd.
 
-If you select the Time of Day type then the Time of Day group of controls will be available. This includes
-three sets of controls that enable you to specify the start time, end time, and value of three time ranges
-for what you want Auto Screen Capture to consider as the morning, afternoon, and evening. The value can be
-text and/or a series of macro tags. If you specify the evening end time to be beyond 23:59:59 then please
-enable the "Evening extends to next morning" option so that the evening value continues to be used for
-the following morning. For example, an Evening value between 21:00:00 and 03:00:00 can be used when you
-want to dynamically change the filename between 9pm and 3am the next morning.
+If you select the Time Range type then the Time Range group of controls will be available. This includes
+four sets of controls that enable you to specify the start time, end time, and value of four time ranges.
+The macro for each time range can be text and/or a series of macro tags.
 
 Macro tags available by default are ...
 %name%           Screen Name
@@ -485,11 +481,11 @@ Macro tags available by default are ...
 %user%           User
 %machine%        Machine
 %title%          Active Window Title
-%timeofday%      Time of Day
+%timerange%      Time Range
 
 You can add, edit, or remove tags. Each tag needs a tag name and a tag type.
 
-You may also need to specify the date/time format value and/or the time of day values
+You may also need to specify the date/time format value and/or the time range values
 based on the chosen tag type.
 
 So, typically, any date/time value would be associated with the Date/Time Format type.
@@ -503,22 +499,6 @@ MM             for months
 yyyy           for years
 For example, a date/time format value of "yyyy-MM-dd HH-mm-ss" would be translated
 by your Date/Time Format tag as the current year, month, day, hour, minute, and second.
-
-A tag using the "Time of Day" tag type would need to have ...
-- Morning start time, morning end time, and morning value
-- Afternoon start time, afternoon end time, and afternoon value
-- Evening start time, evening end time, and evening value
-... so that (depending on the time of day) your tag's value would be replaced by
-the value defined for morning, afternoon, or evening given the associated time range.
-
-You can use tags in the morning, afternoon, and evening fields of a "Time of Day" tag.
-For example, you could have %hour%, %minute%, and %second% tags in any of the fields
-if you need to customize your filename pattern even further. A "Time of Day" tag can
-also be called by another "Time of Day" tag for creating an interesting chain of tags
-that respond to particular times of the day. For example, you can create a "Time of Day"
-tag which returns the value of %day% before midnight and %yesterday% after midnight
-and then create a second "Time of Day" tag that calls the first "Time of Day" tag
-between the hours of late evening and the early hours of the next morning.
 
 A special type of date/time format tag called a date/time format expression tag
 (or just "date/time tag expression") can be used to define an applied amount of time
@@ -563,6 +543,7 @@ ScreenCaptureStopped                  Perform an action when the running session
 ScreenshotTaken                       Perform an action when a screenshot is taken
 Date/Time                             Perform an action when a defined date and time has been met
 Time                                  Perform an action when a defined time has been met on a daily basis
+Day/Time                              Perform an action when a defined day and time has been met
 
 The following actions are available:
 ExitApplication                       Quits Auto Screen Capture
