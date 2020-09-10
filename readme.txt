@@ -442,7 +442,7 @@ User                              The name of the logged in user
 Machine                           The name of the machine being used
 Time Range                        A specified value based on a time range
 Date/Time Format Expression       A value representing a date/time tag expression (such as "{day-1}")
-Quarter Year                      A number representing the current quater of the current year
+Quarter Year                      A number representing the current quarter of the current year
 
 (The Date/Time Format Expression type is simply the new name for the Date/Time Format Function type previously
 used by Auto Screen Capture. The functionality of this type remains the same as before.)
