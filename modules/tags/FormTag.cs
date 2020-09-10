@@ -63,6 +63,7 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("Machine");
             comboBoxType.Items.Add("Time Range");
             comboBoxType.Items.Add("Date/Time Format Expression");
+            comboBoxType.Items.Add("Quarter Year");
 
             if (TagObject != null)
             {

@@ -73,6 +73,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// A macro tag for a date/time expression (such as "{hour-6}" to indicate 6 hours behind).
         /// </summary>
-        DateTimeFormatExpression = 9
+        DateTimeFormatExpression = 9,
+
+        /// <summary>
+        /// A macro tag to represent the quarter of the current year.
+        /// </summary>
+        QuarterYear = 10
     }
 }

@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-09-06 (September 6, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.2.6)]
+This file was last updated on 2020-09-10 (September 10, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.2.7)]
 ========================================================================================================================
 
 
@@ -431,7 +431,7 @@ The green button with the white plus will display a dialog box in order to creat
 The "Name" text field is for the tag's name. This is a required field, but make sure to include
 the percentage character ("%") at the beginning and the end of the tag name.
 
-The "Type" drop-down control defines the type of tag being used. There are 10 tag types:
+The "Type" drop-down control defines the type of tag being used. There are 11 tag types:
 Screen Name                       The "Name" of the screen or region
 Screen Number                     The screen's associated number (such as 1, 2, 3, 4)
 Image Format                      The format of the image used for the screen
@@ -442,6 +442,7 @@ User                              The name of the logged in user
 Machine                           The name of the machine being used
 Time Range                        A specified value based on a time range
 Date/Time Format Expression       A value representing a date/time tag expression (such as "{day-1}")
+Quarter Year                      A number representing the current quater of the current year
 
 (The Date/Time Format Expression type is simply the new name for the Date/Time Format Function type previously
 used by Auto Screen Capture. The functionality of this type remains the same as before.)
@@ -482,6 +483,7 @@ Macro tags available by default are ...
 %machine%        Machine
 %title%          Active Window Title
 %timerange%      Time Range
+%quateryear%     Quarter Year
 
 You can add, edit, or remove tags. Each tag needs a tag name and a tag type.
 

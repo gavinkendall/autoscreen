@@ -414,6 +414,7 @@ namespace AutoScreenCapture
                     Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
                     Add(new Tag("title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
                     Add(new Tag("timerange", "The macro to use during a specific time range. At the moment it is %timerange%", TagType.TimeRange, active: true));
+                    Add(new Tag("quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", TagType.QuarterYear, active: true));
 
                     SaveToXmlFile();
                 }

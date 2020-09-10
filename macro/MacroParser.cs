@@ -239,6 +239,10 @@ namespace AutoScreenCapture
                     macro = macro.Replace(tag.Name,
                         MacroTagExpressionParser.ParseTagExpressionForDateTimeFormat(dt, tag.DateTimeFormatValue));
                     break;
+
+                case TagType.QuarterYear:
+                    macro = macro.Replace(tag.Name, ((dt.Month - 1) / 3 + 1).ToString());
+                    break;
             }
 
             return StripInvalidWindowsCharacters(macro);
