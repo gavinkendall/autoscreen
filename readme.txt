@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-09-10 (September 10, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.2.7)]
+This file was last updated on 2020-09-19 (September 19, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.2.8)]
 ========================================================================================================================
 
 
@@ -483,7 +483,7 @@ Macro tags available by default are ...
 %machine%        Machine
 %title%          Active Window Title
 %timerange%      Time Range
-%quateryear%     Quarter Year
+%quarteryear%    Quarter Year
 
 You can add, edit, or remove tags. Each tag needs a tag name and a tag type.
 

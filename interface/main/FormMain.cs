@@ -345,7 +345,7 @@ namespace AutoScreenCapture
                 ShowInTaskbar = false;
 
                 // Show a balloon tip (if necessary) when the interface is being hidden but the current screen capture session isn't running.
-                if (!_screenCapture.Running)
+                if (notifyIcon.Visible && !_screenCapture.Running)
                 {
                     SystemTrayBalloonMessage("The application is available in your system tray. To exit, right-click its system tray icon and select Exit");
                 }

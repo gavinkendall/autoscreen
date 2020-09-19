@@ -274,7 +274,7 @@ namespace AutoScreenCapture
 
                     timerScreenCapture.Interval = screenCaptureInterval;
 
-                    if (!_screenCapture.ApplicationError && !checkBoxInitialScreenshot.Checked && screenCaptureInterval > BALLOON_TIP_TIMEOUT)
+                    if (notifyIcon.Visible && !_screenCapture.ApplicationError && !checkBoxInitialScreenshot.Checked && screenCaptureInterval > BALLOON_TIP_TIMEOUT)
                     {
                         SystemTrayBalloonMessage("The system tray icon turns green when taking screenshots. To stop, right-click on the icon and select Stop Screen Capture");
                     }

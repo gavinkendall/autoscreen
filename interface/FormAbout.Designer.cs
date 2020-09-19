@@ -34,15 +34,19 @@
             this.richTextBoxDeveloper = new System.Windows.Forms.RichTextBox();
             this.tabPageLicense = new System.Windows.Forms.TabPage();
             this.richTextBoxLicense = new System.Windows.Forms.RichTextBox();
+            this.tabPageChangelog = new System.Windows.Forms.TabPage();
+            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
             this.tabControlAbout.SuspendLayout();
             this.tabPageDeveloper.SuspendLayout();
             this.tabPageLicense.SuspendLayout();
+            this.tabPageChangelog.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAbout
             // 
             this.tabControlAbout.Controls.Add(this.tabPageDeveloper);
             this.tabControlAbout.Controls.Add(this.tabPageLicense);
+            this.tabControlAbout.Controls.Add(this.tabPageChangelog);
             this.tabControlAbout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlAbout.Location = new System.Drawing.Point(0, 0);
             this.tabControlAbout.Name = "tabControlAbout";
@@ -99,6 +103,30 @@
             this.richTextBoxLicense.TabStop = false;
             this.richTextBoxLicense.Text = resources.GetString("richTextBoxLicense.Text");
             // 
+            // tabPageChangelog
+            // 
+            this.tabPageChangelog.Controls.Add(this.richTextBoxChangelog);
+            this.tabPageChangelog.Location = new System.Drawing.Point(4, 22);
+            this.tabPageChangelog.Name = "tabPageChangelog";
+            this.tabPageChangelog.Size = new System.Drawing.Size(455, 262);
+            this.tabPageChangelog.TabIndex = 2;
+            this.tabPageChangelog.Text = "Changelog";
+            this.tabPageChangelog.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxChangelog
+            // 
+            this.richTextBoxChangelog.DetectUrls = false;
+            this.richTextBoxChangelog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxChangelog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxChangelog.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxChangelog.Name = "richTextBoxChangelog";
+            this.richTextBoxChangelog.ReadOnly = true;
+            this.richTextBoxChangelog.Size = new System.Drawing.Size(455, 262);
+            this.richTextBoxChangelog.TabIndex = 1;
+            this.richTextBoxChangelog.TabStop = false;
+            this.richTextBoxChangelog.Text = resources.GetString("richTextBoxChangelog.Text");
+            this.richTextBoxChangelog.WordWrap = false;
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -115,6 +143,7 @@
             this.tabControlAbout.ResumeLayout(false);
             this.tabPageDeveloper.ResumeLayout(false);
             this.tabPageLicense.ResumeLayout(false);
+            this.tabPageChangelog.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -126,5 +155,7 @@
         private System.Windows.Forms.TabPage tabPageLicense;
         private System.Windows.Forms.RichTextBox richTextBoxDeveloper;
         private System.Windows.Forms.RichTextBox richTextBoxLicense;
+        private System.Windows.Forms.TabPage tabPageChangelog;
+        private System.Windows.Forms.RichTextBox richTextBoxChangelog;
     }
 }
