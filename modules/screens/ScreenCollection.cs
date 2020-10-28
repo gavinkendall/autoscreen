@@ -44,6 +44,7 @@ namespace AutoScreenCapture
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ACTIVE = "active";
+        private const string SCREEN_APPLICATION_FOCUS = "application_focus";
 
         private readonly string SCREEN_XPATH;
 
@@ -164,6 +165,11 @@ namespace AutoScreenCapture
                                     case SCREEN_ACTIVE:
                                         xReader.Read();
                                         screen.Active = Convert.ToBoolean(xReader.Value);
+                                        break;
+
+                                    case SCREEN_APPLICATION_FOCUS:
+                                        xReader.Read();
+                                        screen.ApplicationFocus = xReader.Value;
                                         break;
                                 }
                             }
@@ -296,6 +302,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                         xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
+                        xWriter.WriteElementString(SCREEN_APPLICATION_FOCUS, screen.ApplicationFocus);
 
                         xWriter.WriteEndElement();
                     }

@@ -60,14 +60,8 @@ namespace AutoScreenCapture
         [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
-        /// <summary>
-        /// Gets the window thread process ID.
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="ProcessId"></param>
-        /// <returns></returns>
         [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
+        private static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
 
         [DllImport("user32.dll")]
         private static extern bool GetCursorInfo(out CURSORINFO pci);
@@ -77,6 +71,44 @@ namespace AutoScreenCapture
 
         private const Int32 CURSOR_SHOWING = 0x0001;
         private const Int32 DI_NORMAL = 0x0003;
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        private static WINDOWPLACEMENT GetPlacement(IntPtr hwnd)
+        {
+            WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+            placement.length = Marshal.SizeOf(placement);
+            GetWindowPlacement(hwnd, ref placement);
+            return placement;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        internal enum ShowWindowCommands : int
+        {
+            Hide = 0,
+            Normal = 1,
+            Minimized = 2,
+            Maximized = 3,
+        }
+
+        [Serializable]
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct WINDOWPLACEMENT
+        {
+            public int length;
+            public int flags;
+            public ShowWindowCommands showCmd;
+            public System.Drawing.Point ptMinPosition;
+            public System.Drawing.Point ptMaxPosition;
+            public System.Drawing.Rectangle rcNormalPosition;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 
         /// <summary>
         /// The minimum capture limit.
@@ -475,7 +507,7 @@ namespace AutoScreenCapture
         /// <param name="screenshotCollection">A collection of screenshot objects.</param>
         /// <returns>A boolean to determine if we successfully saved the screenshot.</returns>
         public bool SaveScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
-            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
+            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection, string applicationFocus)
         {
             try
             {
@@ -488,6 +520,26 @@ namespace AutoScreenCapture
                     {
                         Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
                         path = path.Substring(0, filepathLengthLimit);
+                    }
+
+                    if (!string.IsNullOrEmpty(applicationFocus))
+                    {
+                        Process[] process = Process.GetProcessesByName(applicationFocus);
+
+                        foreach (var item in process)
+                        {
+                            var proc = Process.GetProcessById(item.Id);
+
+                            IntPtr handle = proc.MainWindowHandle;
+                            SetForegroundWindow(handle);
+
+                            var placement = GetPlacement(proc.MainWindowHandle);
+
+                            if (placement.showCmd == ShowWindowCommands.Minimized)
+                            {
+                                ShowWindowAsync(proc.MainWindowHandle, (int)ShowWindowCommands.Normal);
+                            }
+                        }
                     }
 
                     Log.WriteMessage("Attempting to write image to file at path \"" + path + "\"");

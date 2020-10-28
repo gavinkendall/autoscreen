@@ -190,7 +190,8 @@ namespace AutoScreenCapture
                                     label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                     windowTitle: _screenCapture.ActiveWindowTitle,
                                     processName: _screenCapture.ActiveWindowProcessName,
-                                    screenshotCollection: _screenshotCollection
+                                    screenshotCollection: _screenshotCollection,
+                                    applicationFocus: null
                                 ))
                                 {
                                     ScreenshotTakenWithSuccess();

@@ -21,6 +21,7 @@
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace AutoScreenCapture
 {
@@ -80,6 +81,17 @@ namespace AutoScreenCapture
             comboBoxFormat.Items.Clear();
             comboBoxScreenComponent.Items.Clear();
 
+            comboBoxProcessList.Items.Clear();
+            comboBoxProcessList.Sorted = true;
+
+            foreach (Process process in Process.GetProcesses())
+            {
+                if (!comboBoxProcessList.Items.Contains(process.ProcessName))
+                {
+                    comboBoxProcessList.Items.Add(process.ProcessName);
+                }
+            }
+
             pictureBoxPreview.Image = null;
 
             foreach (ImageFormat imageFormat in ImageFormatCollection)
@@ -118,6 +130,7 @@ namespace AutoScreenCapture
                 numericUpDownResolutionRatio.Value = ScreenObject.ResolutionRatio;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
                 checkBoxActive.Checked = ScreenObject.Active;
+                comboBoxProcessList.SelectedItem = ScreenObject.ApplicationFocus;
             }
             else
             {
@@ -195,7 +208,8 @@ namespace AutoScreenCapture
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
                         ResolutionRatio = (int)numericUpDownResolutionRatio.Value,
                         Mouse = checkBoxMouse.Checked,
-                        Active = checkBoxActive.Checked
+                        Active = checkBoxActive.Checked,
+                        ApplicationFocus = comboBoxProcessList.Text
                     });
 
                     Okay();
@@ -237,6 +251,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
                         ScreenCollection.Get(ScreenObject).Active = checkBoxActive.Checked;
+                        ScreenCollection.Get(ScreenObject).ApplicationFocus = comboBoxProcessList.Text;
 
                         Okay();
                     }
@@ -281,7 +296,8 @@ namespace AutoScreenCapture
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
-                 !ScreenObject.Active.Equals(checkBoxActive.Checked)))
+                 !ScreenObject.Active.Equals(checkBoxActive.Checked ||
+                 !ScreenObject.ApplicationFocus.Equals(comboBoxProcessList.Text))))
             {
                 return true;
             }

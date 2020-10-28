@@ -159,7 +159,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.4"), // ListboxScreenshots sorted.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.5"), // Macro tag expressions can now parse date time format.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.6"), // "Time of Day" Tag is now "Time Range" Tag. Also implemented "Day/Time" Trigger.
-                new Version(CODENAME_BOOMBAYAH, "2.3.2.7") // Quarter Year tag implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.7"), // Quarter Year tag implemented.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.8") // Changelog added to About Auto Screen Capture window. Fixed bug with hidden system tray icon so no notification balloon appears when system tray icon is hidden.
             };
 
             Application = new SettingCollection

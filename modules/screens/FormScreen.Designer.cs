@@ -54,12 +54,15 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
+            this.groupBoxApplicationFocus = new System.Windows.Forms.GroupBox();
+            this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImage.SuspendLayout();
             this.groupBoxComponent.SuspendLayout();
             this.groupBoxPreview.SuspendLayout();
+            this.groupBoxApplicationFocus.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelName
@@ -177,7 +180,7 @@
             this.comboBoxFormat.Location = new System.Drawing.Point(148, 22);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
-            this.comboBoxFormat.TabIndex = 8;
+            this.comboBoxFormat.TabIndex = 10;
             this.comboBoxFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxFormat_SelectedIndexChanged);
             this.comboBoxFormat.MouseHover += new System.EventHandler(this.comboBoxFormat_MouseHover);
             // 
@@ -187,7 +190,7 @@
             this.labelFormat.Location = new System.Drawing.Point(6, 25);
             this.labelFormat.Name = "labelFormat";
             this.labelFormat.Size = new System.Drawing.Size(42, 13);
-            this.labelFormat.TabIndex = 7;
+            this.labelFormat.TabIndex = 9;
             this.labelFormat.Text = "Format:";
             // 
             // numericUpDownResolutionRatio
@@ -200,7 +203,7 @@
             0});
             this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
             this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 12;
+            this.numericUpDownResolutionRatio.TabIndex = 14;
             this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
             100,
             0,
@@ -214,7 +217,7 @@
             this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
             this.labelResolutionRatio.Name = "labelResolutionRatio";
             this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 11;
+            this.labelResolutionRatio.TabIndex = 13;
             this.labelResolutionRatio.Text = "Resolution Ratio:";
             // 
             // numericUpDownJpegQuality
@@ -227,7 +230,7 @@
             0});
             this.numericUpDownJpegQuality.Name = "numericUpDownJpegQuality";
             this.numericUpDownJpegQuality.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownJpegQuality.TabIndex = 10;
+            this.numericUpDownJpegQuality.TabIndex = 12;
             this.numericUpDownJpegQuality.Value = new decimal(new int[] {
             100,
             0,
@@ -240,7 +243,7 @@
             this.labelJpegQuality.Location = new System.Drawing.Point(6, 51);
             this.labelJpegQuality.Name = "labelJpegQuality";
             this.labelJpegQuality.Size = new System.Drawing.Size(72, 13);
-            this.labelJpegQuality.TabIndex = 9;
+            this.labelJpegQuality.TabIndex = 11;
             this.labelJpegQuality.Text = "JPEG Quality:";
             // 
             // checkBoxMouse
@@ -249,7 +252,7 @@
             this.checkBoxMouse.Location = new System.Drawing.Point(9, 102);
             this.checkBoxMouse.Name = "checkBoxMouse";
             this.checkBoxMouse.Size = new System.Drawing.Size(130, 17);
-            this.checkBoxMouse.TabIndex = 13;
+            this.checkBoxMouse.TabIndex = 15;
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
             this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
@@ -265,10 +268,10 @@
             this.groupBoxImage.Controls.Add(this.labelJpegQuality);
             this.groupBoxImage.Controls.Add(this.numericUpDownJpegQuality);
             this.groupBoxImage.Controls.Add(this.comboBoxFormat);
-            this.groupBoxImage.Location = new System.Drawing.Point(12, 110);
+            this.groupBoxImage.Location = new System.Drawing.Point(11, 162);
             this.groupBoxImage.Name = "groupBoxImage";
             this.groupBoxImage.Size = new System.Drawing.Size(205, 126);
-            this.groupBoxImage.TabIndex = 6;
+            this.groupBoxImage.TabIndex = 8;
             this.groupBoxImage.TabStop = false;
             this.groupBoxImage.Text = "Image";
             // 
@@ -304,7 +307,7 @@
             this.groupBoxPreview.Location = new System.Drawing.Point(223, 58);
             this.groupBoxPreview.Name = "groupBoxPreview";
             this.groupBoxPreview.Size = new System.Drawing.Size(530, 330);
-            this.groupBoxPreview.TabIndex = 17;
+            this.groupBoxPreview.TabIndex = 16;
             this.groupBoxPreview.TabStop = false;
             this.groupBoxPreview.Text = "Preview";
             // 
@@ -359,6 +362,25 @@
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
             // 
+            // groupBoxApplicationFocus
+            // 
+            this.groupBoxApplicationFocus.Controls.Add(this.comboBoxProcessList);
+            this.groupBoxApplicationFocus.Location = new System.Drawing.Point(12, 110);
+            this.groupBoxApplicationFocus.Name = "groupBoxApplicationFocus";
+            this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 46);
+            this.groupBoxApplicationFocus.TabIndex = 6;
+            this.groupBoxApplicationFocus.TabStop = false;
+            this.groupBoxApplicationFocus.Text = "Application Focus";
+            // 
+            // comboBoxProcessList
+            // 
+            this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcessList.FormattingEnabled = true;
+            this.comboBoxProcessList.Location = new System.Drawing.Point(5, 19);
+            this.comboBoxProcessList.Name = "comboBoxProcessList";
+            this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxProcessList.TabIndex = 7;
+            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonOK;
@@ -367,6 +389,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.groupBoxApplicationFocus);
             this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.textBoxScreenName);
             this.Controls.Add(this.labelName);
@@ -398,6 +421,7 @@
             this.groupBoxComponent.ResumeLayout(false);
             this.groupBoxPreview.ResumeLayout(false);
             this.groupBoxPreview.PerformLayout();
+            this.groupBoxApplicationFocus.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -430,5 +454,7 @@
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Button buttonMacroTags;
+        private System.Windows.Forms.GroupBox groupBoxApplicationFocus;
+        private System.Windows.Forms.ComboBox comboBoxProcessList;
     }
 }
