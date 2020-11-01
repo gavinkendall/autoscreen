@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxDeveloper.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.2.9 ("Boombayah")
+    <value>Auto Screen Capture 2.3.3.0 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2020)
 
 SourceForge Project Site
@@ -322,6 +322,7 @@ END OF TERMS AND CONDITIONS</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.3.0    Application Focus moved from Screen to Setup. Fixed Application Focus bug with Active Window Title. Renamed user setting keys. New method for capturing device display resolution.
 2.3.2.9    Application Focus implemented for Screen.
 2.3.2.8    Changelog added to About Auto Screen Capture window. Fixed bug with hidden system tray icon so no notification balloon appears when system tray icon is hidden.
 2.3.2.7    Quarter Year tag implemented so you can have %quarteryear% return "3" if we're currently in the third quarter of the current year.

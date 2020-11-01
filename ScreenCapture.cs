@@ -27,6 +27,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
@@ -109,6 +110,71 @@ namespace AutoScreenCapture
 
         [DllImport("user32.dll")]
         private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+
+        public const int ENUM_CURRENT_SETTINGS = -1;
+
+        [DllImport("user32.dll")]
+        public static extern bool EnumDisplaySettings(string lpszDeviceName, int iModeNum, ref DEVMODE lpDevMode);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct DEVMODE
+        {
+            private const int CCHDEVICENAME = 0x20;
+            private const int CCHFORMNAME = 0x20;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
+            public string dmDeviceName;
+            public short dmSpecVersion;
+            public short dmDriverVersion;
+            public short dmSize;
+            public short dmDriverExtra;
+            public int dmFields;
+            public int dmPositionX;
+            public int dmPositionY;
+            public ScreenOrientation dmDisplayOrientation;
+            public int dmDisplayFixedOutput;
+            public short dmColor;
+            public short dmDuplex;
+            public short dmYResolution;
+            public short dmTTOption;
+            public short dmCollate;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
+            public string dmFormName;
+            public short dmLogPixels;
+            public int dmBitsPerPel;
+            public int dmPelsWidth;
+            public int dmPelsHeight;
+            public int dmDisplayFlags;
+            public int dmDisplayFrequency;
+            public int dmICMMethod;
+            public int dmICMIntent;
+            public int dmMediaType;
+            public int dmDitherType;
+            public int dmReserved1;
+            public int dmReserved2;
+            public int dmPanningWidth;
+            public int dmPanningHeight;
+        }
+
+        /// <summary>
+        /// A struct containing a Windows Forms screen object, display device width, and display device height.
+        /// </summary>
+        public struct DeviceResolution
+        {
+            /// <summary>
+            /// A Windows Forms screen object.
+            /// </summary>
+            public System.Windows.Forms.Screen screen;
+
+            /// <summary>
+            /// The width of the display device.
+            /// </summary>
+            public int width;
+
+            /// <summary>
+            /// The height of the display device.
+            /// </summary>
+            public int height;
+        }
 
         /// <summary>
         /// The minimum capture limit.
@@ -219,6 +285,86 @@ namespace AutoScreenCapture
         /// Determines if we're capturing the screen now or let a scheduled capture occur.
         /// </summary>
         public bool CaptureNow { get; set; }
+
+        private ImageCodecInfo GetEncoderInfo(string mimeType)
+        {
+            var encoders = ImageCodecInfo.GetImageEncoders();
+            return encoders.FirstOrDefault(t => t.MimeType == mimeType);
+        }
+
+        private static string GetMD5Hash(Bitmap bitmap, ImageFormat format)
+        {
+            byte[] bytes = null;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, format.Format);
+                bytes = ms.ToArray();
+            }
+
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+
+            byte[] hash = md5.ComputeHash(bytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (byte b in hash)
+            {
+                sb.Append(b.ToString("x2").ToLower());
+            }
+
+            return sb.ToString();
+        }
+
+        private void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
+        {
+            try
+            {
+                if (bitmap != null && format != null && !string.IsNullOrEmpty(path))
+                {
+                    if (format.Name.Equals(ImageFormatSpec.NAME_JPEG))
+                    {
+                        var encoderParams = new EncoderParameters(1);
+                        encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuality);
+
+                        var encoderInfo = GetEncoderInfo("image/jpeg");
+
+                        bitmap.Save(path, encoderInfo, encoderParams);
+                    }
+                    else
+                    {
+                        bitmap.Save(path, format.Format);
+                    }
+
+                    Log.WriteMessage("Screenshot saved to file at path \"" + path + "\"");
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("ScreenCapture::SaveToFile", ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resolution of the display device associated with the screen.
+        /// </summary>
+        /// <param name="screen">The Windows Forms screen object associated with the display device.</param>
+        /// <returns>A struct having the screen, display device width, and display device height.</returns>
+        public static DeviceResolution GetDeviceResolution(System.Windows.Forms.Screen screen)
+        {
+            DEVMODE dm = new DEVMODE();
+            dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
+            EnumDisplaySettings(screen.DeviceName, ENUM_CURRENT_SETTINGS, ref dm);
+
+            DeviceResolution deviceResolution = new DeviceResolution()
+            {
+                screen = screen,
+                width = dm.dmPelsWidth,
+                height = dm.dmPelsHeight
+            };
+
+            return deviceResolution;
+        }
 
         /// <summary>
         /// Gets the screenshot image from an image file. This is used when we want to show screenshot images.
@@ -507,7 +653,7 @@ namespace AutoScreenCapture
         /// <param name="screenshotCollection">A collection of screenshot objects.</param>
         /// <returns>A boolean to determine if we successfully saved the screenshot.</returns>
         public bool SaveScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
-            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection, string applicationFocus)
+            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -520,26 +666,6 @@ namespace AutoScreenCapture
                     {
                         Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
                         path = path.Substring(0, filepathLengthLimit);
-                    }
-
-                    if (!string.IsNullOrEmpty(applicationFocus))
-                    {
-                        Process[] process = Process.GetProcessesByName(applicationFocus);
-
-                        foreach (var item in process)
-                        {
-                            var proc = Process.GetProcessById(item.Id);
-
-                            IntPtr handle = proc.MainWindowHandle;
-                            SetForegroundWindow(handle);
-
-                            var placement = GetPlacement(proc.MainWindowHandle);
-
-                            if (placement.showCmd == ShowWindowCommands.Minimized)
-                            {
-                                ShowWindowAsync(proc.MainWindowHandle, (int)ShowWindowCommands.Normal);
-                            }
-                        }
                     }
 
                     Log.WriteMessage("Attempting to write image to file at path \"" + path + "\"");
@@ -701,63 +827,30 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
+        /// <summary>
+        /// Sets the application focus to the defined application using a given process name.
+        /// </summary>
+        /// <param name="applicationFocus">The name of the process of the application to focus.</param>
+        public static void SetApplicationFocus(string applicationFocus)
         {
-            try
+            if (string.IsNullOrEmpty(applicationFocus)) return;
+
+            Process[] process = Process.GetProcessesByName(applicationFocus);
+
+            foreach (var item in process)
             {
-                if (bitmap != null && format != null && !string.IsNullOrEmpty(path))
+                var proc = Process.GetProcessById(item.Id);
+
+                IntPtr handle = proc.MainWindowHandle;
+                SetForegroundWindow(handle);
+
+                var placement = GetPlacement(proc.MainWindowHandle);
+
+                if (placement.showCmd == ShowWindowCommands.Minimized)
                 {
-                    if (format.Name.Equals(ImageFormatSpec.NAME_JPEG))
-                    {
-                        var encoderParams = new EncoderParameters(1);
-                        encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuality);
-
-                        var encoderInfo = GetEncoderInfo("image/jpeg");
-
-                        bitmap.Save(path, encoderInfo, encoderParams);
-                    }
-                    else
-                    {
-                        bitmap.Save(path, format.Format);
-                    }
-
-                    Log.WriteMessage("Screenshot saved to file at path \"" + path + "\"");
+                    ShowWindowAsync(proc.MainWindowHandle, (int)ShowWindowCommands.Normal);
                 }
             }
-            catch (Exception ex)
-            {
-                Log.WriteExceptionMessage("ScreenCapture::SaveToFile", ex);
-            }
-        }
-
-        private ImageCodecInfo GetEncoderInfo(string mimeType)
-        {
-            var encoders = ImageCodecInfo.GetImageEncoders();
-            return encoders.FirstOrDefault(t => t.MimeType == mimeType);
-        }
-
-        private static string GetMD5Hash(Bitmap bitmap, ImageFormat format)
-        {
-            byte[] bytes = null;
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bitmap.Save(ms, format.Format);
-                bytes = ms.ToArray();
-            }
-
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-
-            byte[] hash = md5.ComputeHash(bytes);
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (byte b in hash)
-            {
-                sb.Append(b.ToString("x2").ToLower());
-            }
-
-            return sb.ToString();
         }
     }
 }

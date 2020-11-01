@@ -193,8 +193,7 @@ namespace AutoScreenCapture
                                         label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                         windowTitle: _screenCapture.ActiveWindowTitle,
                                         processName: _screenCapture.ActiveWindowProcessName,
-                                        screenshotCollection: _screenshotCollection,
-                                        applicationFocus: screen.ApplicationFocus
+                                        screenshotCollection: _screenshotCollection
                                     ))
                                     {
                                         ScreenshotTakenWithSuccess();
@@ -230,10 +229,10 @@ namespace AutoScreenCapture
 
                                     // Screen X
                                     if (_screenCapture.GetScreenImages(screen.Component,
-                                        _formScreen.ScreenDictionary[screen.Component].Bounds.X,
-                                        _formScreen.ScreenDictionary[screen.Component].Bounds.Y,
-                                        _formScreen.ScreenDictionary[screen.Component].Bounds.Width,
-                                        _formScreen.ScreenDictionary[screen.Component].Bounds.Height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                        _formScreen.ScreenDictionary[screen.Component].screen.Bounds.X,
+                                        _formScreen.ScreenDictionary[screen.Component].screen.Bounds.Y,
+                                        _formScreen.ScreenDictionary[screen.Component].width,
+                                        _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                                     {
                                         if (_screenCapture.SaveScreenshot(
                                             path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
@@ -246,8 +245,7 @@ namespace AutoScreenCapture
                                             label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                                             windowTitle: _screenCapture.ActiveWindowTitle,
                                             processName: _screenCapture.ActiveWindowProcessName,
-                                            screenshotCollection: _screenshotCollection,
-                                            applicationFocus: screen.ApplicationFocus
+                                            screenshotCollection: _screenshotCollection
                                         ))
                                         {
                                             ScreenshotTakenWithSuccess();

@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -145,12 +146,12 @@ namespace AutoScreenCapture
 
                 _screenshotCollection.LoadXmlFile();
 
-                int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value);
-                Log.WriteDebugMessage("IntScreenCaptureInterval = " + screenCaptureInterval);
+                int screenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value);
+                Log.WriteDebugMessage("ScreenCaptureInterval = " + screenCaptureInterval);
 
                 if (screenCaptureInterval == 0)
                 {
-                    screenCaptureInterval = DefaultSettings.IntScreenCaptureInterval;
+                    screenCaptureInterval = DefaultSettings.ScreenCaptureInterval;
                     Log.WriteDebugMessage("WARNING: Screen capture interval was found to be 0 so 60,000 milliseconds (or 1 minute) is being used as the default value");
                 }
 
@@ -173,33 +174,36 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                 numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
-                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("IntCaptureLimit", DefaultSettings.IntCaptureLimit).Value);
-                Log.WriteDebugMessage("IntCaptureLimit = " + numericUpDownCaptureLimit.Value);
+                numericUpDownCaptureLimit.Value = Convert.ToInt32(Settings.User.GetByKey("CaptureLimit", DefaultSettings.CaptureLimit).Value);
+                Log.WriteDebugMessage("CaptureLimit = " + numericUpDownCaptureLimit.Value);
 
-                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit).Value);
-                Log.WriteDebugMessage("BoolCaptureLimit = " + checkBoxCaptureLimit.Checked);
+                checkBoxCaptureLimit.Checked = Convert.ToBoolean(Settings.User.GetByKey("CaptureLimitCheck", DefaultSettings.CaptureLimitCheck).Value);
+                Log.WriteDebugMessage("CaptureLimitCheck = " + checkBoxCaptureLimit.Checked);
 
-                checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value);
-                Log.WriteDebugMessage("BoolTakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
+                checkBoxInitialScreenshot.Checked = Convert.ToBoolean(Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value);
+                Log.WriteDebugMessage("TakeInitialScreenshot = " + checkBoxInitialScreenshot.Checked);
 
-                notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value);
-                Log.WriteDebugMessage("BoolShowSystemTrayIcon = " + notifyIcon.Visible);
+                notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon).Value);
+                Log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
 
-                numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays).Value);
-                Log.WriteDebugMessage("IntKeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
+                numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("KeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays).Value);
+                Log.WriteDebugMessage("KeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
 
-                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value.ToString();
-                Log.WriteDebugMessage("StringScreenshotLabel = " + comboBoxScreenshotLabel.Text);
+                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value.ToString();
+                Log.WriteDebugMessage("ScreenshotLabel = " + comboBoxScreenshotLabel.Text);
 
-                checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel).Value);
+                checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel).Value);
 
                 // The user can compare the current Active Window Title text to compare against what the text they've defined.
-                checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value);
-                textBoxActiveWindowTitle.Text = Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value.ToString();
+                checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
+                textBoxActiveWindowTitle.Text = Settings.User.GetByKey("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
+
+                // Application Focus
+                RefreshApplicationFocusList();
 
                 // Region Select / Auto Save
-                textBoxAutoSaveFolder.Text = Settings.User.GetByKey("StringAutoSaveFolder", DefaultSettings.StringAutoSaveFolder).Value.ToString();
-                textBoxAutoSaveMacro.Text = Settings.User.GetByKey("StringAutoSaveMacro", DefaultSettings.StringAutoSaveMacro).Value.ToString();
+                textBoxAutoSaveFolder.Text = Settings.User.GetByKey("AutoSaveFolder", DefaultSettings.AutoSaveFolder).Value.ToString();
+                textBoxAutoSaveMacro.Text = Settings.User.GetByKey("AutoSaveMacro", DefaultSettings.AutoSaveMacro).Value.ToString();
 
                 EnableStartCapture();
 
@@ -221,23 +225,26 @@ namespace AutoScreenCapture
         {
             try
             {
-                Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value = GetScreenCaptureInterval();
-                Settings.User.GetByKey("IntCaptureLimit", DefaultSettings.IntCaptureLimit).Value = numericUpDownCaptureLimit.Value;
-                Settings.User.GetByKey("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit).Value = checkBoxCaptureLimit.Checked;
-                Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays).Value = numericUpDownKeepScreenshotsForDays.Value;
+                Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value = GetScreenCaptureInterval();
+                Settings.User.GetByKey("CaptureLimit", DefaultSettings.CaptureLimit).Value = numericUpDownCaptureLimit.Value;
+                Settings.User.GetByKey("CaptureLimitCheck", DefaultSettings.CaptureLimitCheck).Value = checkBoxCaptureLimit.Checked;
+                Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
+                Settings.User.GetByKey("KeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays).Value = numericUpDownKeepScreenshotsForDays.Value;
 
                 // Label.
-                Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value = comboBoxScreenshotLabel.Text.Trim();
-                Settings.User.GetByKey("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel).Value = checkBoxScreenshotLabel.Checked;
+                Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value = comboBoxScreenshotLabel.Text.Trim();
+                Settings.User.GetByKey("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel).Value = checkBoxScreenshotLabel.Checked;
 
                 // Active Window Title text comparison check.
-                Settings.User.GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
-                Settings.User.GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
+                Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
+                Settings.User.GetByKey("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
+
+                // Application Focus
+                Settings.User.GetByKey("ApplicationFocus", DefaultSettings.ApplicationFocus).Value = comboBoxProcessList.Text;
 
                 // Region Select / Auto Save.
-                Settings.User.GetByKey("StringAutoSaveFolder", DefaultSettings.StringAutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
-                Settings.User.GetByKey("StringAutoSaveMacro", DefaultSettings.StringAutoSaveMacro).Value = textBoxAutoSaveMacro.Text.Trim();
+                Settings.User.GetByKey("AutoSaveFolder", DefaultSettings.AutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
+                Settings.User.GetByKey("AutoSaveMacro", DefaultSettings.AutoSaveMacro).Value = textBoxAutoSaveMacro.Text.Trim();
 
                 if (!Settings.User.Save())
                 {
@@ -259,6 +266,33 @@ namespace AutoScreenCapture
         private void SaveSettings(object sender, EventArgs e)
         {
             SaveSettings();
+        }
+
+        private void RefreshApplicationFocusList()
+        {
+            comboBoxProcessList.Items.Clear();
+            comboBoxProcessList.Sorted = true;
+
+            comboBoxProcessList.Items.Add(string.Empty);
+
+            foreach (Process process in Process.GetProcesses())
+            {
+                if (!comboBoxProcessList.Items.Contains(process.ProcessName))
+                {
+                    comboBoxProcessList.Items.Add(process.ProcessName);
+                }
+            }
+
+            int indexOf = comboBoxProcessList.Items.IndexOf(Settings.User.GetByKey("ApplicationFocus", DefaultSettings.ApplicationFocus).Value.ToString());
+
+            if (indexOf == -1)
+            {
+                comboBoxProcessList.SelectedIndex = 0;
+            }
+            else
+            {
+                comboBoxProcessList.SelectedIndex = indexOf;
+            }
         }
     }
 }

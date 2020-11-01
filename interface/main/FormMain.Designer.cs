@@ -48,13 +48,14 @@ namespace AutoScreenCapture
             this.toolStripSeparatorAbout = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemShowInterface = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHideInterface = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemShowScreenCaptureStatus = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorInterface = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemShowScreenCaptureStatus = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorTools = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparatorCapture = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorCaptureNow = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemRegionSelectClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectAutoSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,6 +65,10 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageSetup = new System.Windows.Forms.TabPage();
+            this.groupBoxApplicationFocus = new System.Windows.Forms.GroupBox();
+            this.buttonApplicationFocusTest = new System.Windows.Forms.Button();
+            this.buttonApplicationFocusRefresh = new System.Windows.Forms.Button();
+            this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             this.groupBoxRegionSelectAutoSave = new System.Windows.Forms.GroupBox();
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.labelAutoSaveMacro = new System.Windows.Forms.Label();
@@ -125,11 +130,12 @@ namespace AutoScreenCapture
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparatorTools = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
             this.tabPageSetup.SuspendLayout();
+            this.groupBoxApplicationFocus.SuspendLayout();
             this.groupBoxRegionSelectAutoSave.SuspendLayout();
             this.groupBoxActiveWindowTitle.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
@@ -283,9 +289,10 @@ namespace AutoScreenCapture
             this.toolStripSeparatorTools,
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
+            this.toolStripSeparatorScreenCapture,
             this.toolStripMenuItemCaptureNowArchive,
             this.toolStripMenuItemCaptureNowEdit,
-            this.toolStripSeparatorCapture,
+            this.toolStripSeparatorCaptureNow,
             this.toolStripMenuItemRegionSelectClipboard,
             this.toolStripMenuItemRegionSelectAutoSave,
             this.toolStripMenuItemRegionSelectEdit,
@@ -294,7 +301,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(222, 348);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(222, 354);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -324,6 +331,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHideInterface.Text = "Hide Interface";
             this.toolStripMenuItemHideInterface.Click += new System.EventHandler(this.toolStripMenuItemHideInterface_Click);
             // 
+            // toolStripSeparatorInterface
+            // 
+            this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
+            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(218, 6);
+            // 
             // toolStripMenuItemShowScreenCaptureStatus
             // 
             this.toolStripMenuItemShowScreenCaptureStatus.Name = "toolStripMenuItemShowScreenCaptureStatus";
@@ -331,10 +343,10 @@ namespace AutoScreenCapture
             this.toolStripMenuItemShowScreenCaptureStatus.Text = "Show Screen Capture Status";
             this.toolStripMenuItemShowScreenCaptureStatus.Click += new System.EventHandler(this.toolStripMenuItemScreenCaptureStatus_Click);
             // 
-            // toolStripSeparatorInterface
+            // toolStripSeparatorTools
             // 
-            this.toolStripSeparatorInterface.Name = "toolStripSeparatorInterface";
-            this.toolStripSeparatorInterface.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparatorTools.Name = "toolStripSeparatorTools";
+            this.toolStripSeparatorTools.Size = new System.Drawing.Size(218, 6);
             // 
             // toolStripMenuItemStartScreenCapture
             // 
@@ -369,10 +381,10 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowEdit.Text = "Capture Now / Edit";
             this.toolStripMenuItemCaptureNowEdit.Click += new System.EventHandler(this.toolStripMenuItemCaptureNowEdit_Click);
             // 
-            // toolStripSeparatorCapture
+            // toolStripSeparatorCaptureNow
             // 
-            this.toolStripSeparatorCapture.Name = "toolStripSeparatorCapture";
-            this.toolStripSeparatorCapture.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparatorCaptureNow.Name = "toolStripSeparatorCaptureNow";
+            this.toolStripSeparatorCaptureNow.Size = new System.Drawing.Size(218, 6);
             // 
             // toolStripMenuItemRegionSelectClipboard
             // 
@@ -444,6 +456,7 @@ namespace AutoScreenCapture
             // tabPageSetup
             // 
             this.tabPageSetup.AutoScroll = true;
+            this.tabPageSetup.Controls.Add(this.groupBoxApplicationFocus);
             this.tabPageSetup.Controls.Add(this.groupBoxRegionSelectAutoSave);
             this.tabPageSetup.Controls.Add(this.groupBoxActiveWindowTitle);
             this.tabPageSetup.Controls.Add(this.groupBoxSecurity);
@@ -458,6 +471,50 @@ namespace AutoScreenCapture
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
             // 
+            // groupBoxApplicationFocus
+            // 
+            this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusTest);
+            this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusRefresh);
+            this.groupBoxApplicationFocus.Controls.Add(this.comboBoxProcessList);
+            this.groupBoxApplicationFocus.Location = new System.Drawing.Point(6, 256);
+            this.groupBoxApplicationFocus.Name = "groupBoxApplicationFocus";
+            this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 76);
+            this.groupBoxApplicationFocus.TabIndex = 0;
+            this.groupBoxApplicationFocus.TabStop = false;
+            this.groupBoxApplicationFocus.Text = "Application Focus";
+            // 
+            // buttonApplicationFocusTest
+            // 
+            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(5, 46);
+            this.buttonApplicationFocusTest.Name = "buttonApplicationFocusTest";
+            this.buttonApplicationFocusTest.Size = new System.Drawing.Size(92, 23);
+            this.buttonApplicationFocusTest.TabIndex = 0;
+            this.buttonApplicationFocusTest.TabStop = false;
+            this.buttonApplicationFocusTest.Text = "Test";
+            this.buttonApplicationFocusTest.UseVisualStyleBackColor = true;
+            this.buttonApplicationFocusTest.Click += new System.EventHandler(this.buttonApplicationFocusTest_Click);
+            // 
+            // buttonApplicationFocusRefresh
+            // 
+            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(106, 46);
+            this.buttonApplicationFocusRefresh.Name = "buttonApplicationFocusRefresh";
+            this.buttonApplicationFocusRefresh.Size = new System.Drawing.Size(92, 23);
+            this.buttonApplicationFocusRefresh.TabIndex = 0;
+            this.buttonApplicationFocusRefresh.TabStop = false;
+            this.buttonApplicationFocusRefresh.Text = "Refresh";
+            this.buttonApplicationFocusRefresh.UseVisualStyleBackColor = true;
+            this.buttonApplicationFocusRefresh.Click += new System.EventHandler(this.buttonApplicationFocusRefresh_Click);
+            // 
+            // comboBoxProcessList
+            // 
+            this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcessList.FormattingEnabled = true;
+            this.comboBoxProcessList.Location = new System.Drawing.Point(5, 19);
+            this.comboBoxProcessList.Name = "comboBoxProcessList";
+            this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxProcessList.TabIndex = 0;
+            this.comboBoxProcessList.TabStop = false;
+            // 
             // groupBoxRegionSelectAutoSave
             // 
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.buttonBrowseFolder);
@@ -465,7 +522,7 @@ namespace AutoScreenCapture
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveFolder);
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveMacro);
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveFolder);
-            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 256);
+            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 338);
             this.groupBoxRegionSelectAutoSave.Name = "groupBoxRegionSelectAutoSave";
             this.groupBoxRegionSelectAutoSave.Size = new System.Drawing.Size(205, 78);
             this.groupBoxRegionSelectAutoSave.TabIndex = 0;
@@ -556,7 +613,7 @@ namespace AutoScreenCapture
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 339);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 422);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -1138,10 +1195,10 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
-            // toolStripSeparatorTools
+            // toolStripSeparatorScreenCapture
             // 
-            this.toolStripSeparatorTools.Name = "toolStripSeparatorTools";
-            this.toolStripSeparatorTools.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparatorScreenCapture.Name = "toolStripSeparatorScreenCapture";
+            this.toolStripSeparatorScreenCapture.Size = new System.Drawing.Size(218, 6);
             // 
             // FormMain
             // 
@@ -1185,6 +1242,7 @@ namespace AutoScreenCapture
             this.tabControlModules.ResumeLayout(false);
             this.tabPageSetup.ResumeLayout(false);
             this.tabPageSetup.PerformLayout();
+            this.groupBoxApplicationFocus.ResumeLayout(false);
             this.groupBoxRegionSelectAutoSave.ResumeLayout(false);
             this.groupBoxRegionSelectAutoSave.PerformLayout();
             this.groupBoxActiveWindowTitle.ResumeLayout(false);
@@ -1221,7 +1279,7 @@ namespace AutoScreenCapture
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorInterface;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCapture;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCaptureNow;
         private System.Windows.Forms.TabControl tabControlModules;
         private System.Windows.Forms.TabPage tabPageSetup;
         private System.Windows.Forms.TabPage tabPageScreenshots;
@@ -1302,5 +1360,10 @@ namespace AutoScreenCapture
         private ToolStripSeparator toolStripSeparatorRegionSelect;
         private ToolStripMenuItem toolStripMenuItemShowScreenCaptureStatus;
         private ToolStripSeparator toolStripSeparatorTools;
+        private GroupBox groupBoxApplicationFocus;
+        private ComboBox comboBoxProcessList;
+        private Button buttonApplicationFocusTest;
+        private Button buttonApplicationFocusRefresh;
+        private ToolStripSeparator toolStripSeparatorScreenCapture;
     }
 }

@@ -219,7 +219,7 @@ namespace AutoScreenCapture
                                 Log.WriteDebugMessage("Boombayah 2.3.1.8 or older detected");
 
                                 // A new property for Schedule introduced in 2.3.1.9
-                                schedule.ScreenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value);
+                                schedule.ScreenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value);
                             }
                         }
 
@@ -253,7 +253,7 @@ namespace AutoScreenCapture
                         CaptureAt = dtNow,
                         StartAt = dtNow,
                         StopAt = dtNow,
-                        ScreenCaptureInterval = DefaultSettings.IntScreenCaptureInterval,
+                        ScreenCaptureInterval = DefaultSettings.ScreenCaptureInterval,
                         Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 

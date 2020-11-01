@@ -295,7 +295,7 @@ namespace AutoScreenCapture
                 // to continue with normal functionality.
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
-                    Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = string.Empty;
+                    Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = string.Empty;
                     SaveSettings();
 
                     Opacity = 100;
@@ -446,6 +446,16 @@ namespace AutoScreenCapture
             {
                 textBoxActiveWindowTitle.Enabled = false;
             }
+        }
+
+        private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
+        {
+            ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+        }
+
+        private void buttonApplicationFocusRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshApplicationFocusList();
         }
     }
 }

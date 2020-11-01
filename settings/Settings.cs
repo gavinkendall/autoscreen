@@ -160,7 +160,8 @@ namespace AutoScreenCapture
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.5"), // Macro tag expressions can now parse date time format.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.6"), // "Time of Day" Tag is now "Time Range" Tag. Also implemented "Day/Time" Trigger.
                 new Version(CODENAME_BOOMBAYAH, "2.3.2.7"), // Quarter Year tag implemented.
-                new Version(CODENAME_BOOMBAYAH, "2.3.2.8") // Changelog added to About Auto Screen Capture window. Fixed bug with hidden system tray icon so no notification balloon appears when system tray icon is hidden.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.8"), // Changelog added to About Auto Screen Capture window. Fixed bug with hidden system tray icon so no notification balloon appears when system tray icon is hidden.
+                new Version(CODENAME_BOOMBAYAH, "2.3.2.9") // Application Focus implemented for Screen.
             };
 
             Application = new SettingCollection
@@ -348,44 +349,44 @@ namespace AutoScreenCapture
 
             if (User != null && !string.IsNullOrEmpty(User.Filepath) && !FileSystem.FileExists(User.Filepath))
             {
-                User.Add(new Setting("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval));
-                User.Add(new Setting("IntCaptureLimit", DefaultSettings.IntCaptureLimit));
-                User.Add(new Setting("BoolCaptureLimit", DefaultSettings.BoolCaptureLimit));
-                User.Add(new Setting("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot));
-                User.Add(new Setting("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon));
-                User.Add(new Setting("StringPassphrase", DefaultSettings.StringPassphrase));
-                User.Add(new Setting("IntKeepScreenshotsForDays", DefaultSettings.IntKeepScreenshotsForDays));
-                User.Add(new Setting("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel));
-                User.Add(new Setting("BoolApplyScreenshotLabel", DefaultSettings.BoolApplyScreenshotLabel));
-                User.Add(new Setting("StringDefaultEditor", DefaultSettings.StringDefaultEditor));
-                User.Add(new Setting("BoolFirstRun", DefaultSettings.BoolFirstRun));
-                User.Add(new Setting("IntStartScreenCaptureCount", DefaultSettings.IntStartScreenCaptureCount));
-                User.Add(new Setting("BoolActiveWindowTitleCaptureCheck", DefaultSettings.BoolActiveWindowTitleCaptureCheck));
-                User.Add(new Setting("StringActiveWindowTitleCaptureText", DefaultSettings.StringActiveWindowTitleCaptureText));
-                User.Add(new Setting("BoolUseKeyboardShortcuts", DefaultSettings.BoolUseKeyboardShortcuts));
-                User.Add(new Setting("StringKeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.StringKeyboardShortcutStartScreenCaptureModifier1));
-                User.Add(new Setting("StringKeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.StringKeyboardShortcutStartScreenCaptureModifier2));
-                User.Add(new Setting("StringKeyboardShortcutStartScreenCaptureKey", DefaultSettings.StringKeyboardShortcutStartScreenCaptureKey));
-                User.Add(new Setting("StringKeyboardShortcutStopScreenCaptureModifier1", DefaultSettings.StringKeyboardShortcutStopScreenCaptureModifier1));
-                User.Add(new Setting("StringKeyboardShortcutStopScreenCaptureModifier2", DefaultSettings.StringKeyboardShortcutStopScreenCaptureModifier2));
-                User.Add(new Setting("StringKeyboardShortcutStopScreenCaptureKey", DefaultSettings.StringKeyboardShortcutStopScreenCaptureKey));
-                User.Add(new Setting("StringKeyboardShortcutCaptureNowArchiveModifier1", DefaultSettings.StringKeyboardShortcutCaptureNowArchiveModifier1));
-                User.Add(new Setting("StringKeyboardShortcutCaptureNowArchiveModifier2", DefaultSettings.StringKeyboardShortcutCaptureNowArchiveModifier2));
-                User.Add(new Setting("StringKeyboardShortcutCaptureNowArchiveKey", DefaultSettings.StringKeyboardShortcutCaptureNowArchiveKey));
-                User.Add(new Setting("StringKeyboardShortcutCaptureNowEditModifier1", DefaultSettings.StringKeyboardShortcutCaptureNowEditModifier1));
-                User.Add(new Setting("StringKeyboardShortcutCaptureNowEditModifier2", DefaultSettings.StringKeyboardShortcutCaptureNowEditModifier2));
-                User.Add(new Setting("StringKeyboardShortcutCaptureNowEditKey", DefaultSettings.StringKeyboardShortcutCaptureNowEditKey));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardModifier1));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardModifier2));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectClipboardKey", DefaultSettings.StringKeyboardShortcutRegionSelectClipboardKey));
-                User.Add(new Setting("StringAutoSaveFolder", DefaultSettings.StringAutoSaveFolder));
-                User.Add(new Setting("StringAutoSaveMacro", DefaultSettings.StringAutoSaveMacro));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveModifier1));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveModifier2));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.StringKeyboardShortcutRegionSelectAutoSaveKey));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectEditModifier1", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier1));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectEditModifier2", DefaultSettings.StringKeyboardShortcutRegionSelectEditModifier2));
-                User.Add(new Setting("StringKeyboardShortcutRegionSelectEditKey", DefaultSettings.StringKeyboardShortcutRegionSelectEditKey));
+                User.Add(new Setting("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval));
+                User.Add(new Setting("CaptureLimit", DefaultSettings.CaptureLimit));
+                User.Add(new Setting("CaptureLimitCheck", DefaultSettings.CaptureLimitCheck));
+                User.Add(new Setting("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot));
+                User.Add(new Setting("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon));
+                User.Add(new Setting("Passphrase", DefaultSettings.Passphrase));
+                User.Add(new Setting("KeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays));
+                User.Add(new Setting("ScreenshotLabel", DefaultSettings.ScreenshotLabel));
+                User.Add(new Setting("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel));
+                User.Add(new Setting("DefaultEditor", DefaultSettings.DefaultEditor));
+                User.Add(new Setting("FirstRun", DefaultSettings.FirstRun));
+                User.Add(new Setting("StartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount));
+                User.Add(new Setting("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck));
+                User.Add(new Setting("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText));
+                User.Add(new Setting("UseKeyboardShortcuts", DefaultSettings.UseKeyboardShortcuts));
+                User.Add(new Setting("KeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier1));
+                User.Add(new Setting("KeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier2));
+                User.Add(new Setting("KeyboardShortcutStartScreenCaptureKey", DefaultSettings.KeyboardShortcutStartScreenCaptureKey));
+                User.Add(new Setting("KeyboardShortcutStopScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier1));
+                User.Add(new Setting("KeyboardShortcutStopScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier2));
+                User.Add(new Setting("KeyboardShortcutStopScreenCaptureKey", DefaultSettings.KeyboardShortcutStopScreenCaptureKey));
+                User.Add(new Setting("KeyboardShortcutCaptureNowArchiveModifier1", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier1));
+                User.Add(new Setting("KeyboardShortcutCaptureNowArchiveModifier2", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier2));
+                User.Add(new Setting("KeyboardShortcutCaptureNowArchiveKey", DefaultSettings.KeyboardShortcutCaptureNowArchiveKey));
+                User.Add(new Setting("KeyboardShortcutCaptureNowEditModifier1", DefaultSettings.KeyboardShortcutCaptureNowEditModifier1));
+                User.Add(new Setting("KeyboardShortcutCaptureNowEditModifier2", DefaultSettings.KeyboardShortcutCaptureNowEditModifier2));
+                User.Add(new Setting("KeyboardShortcutCaptureNowEditKey", DefaultSettings.KeyboardShortcutCaptureNowEditKey));
+                User.Add(new Setting("KeyboardShortcutRegionSelectClipboardModifier1", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier1));
+                User.Add(new Setting("KeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier2));
+                User.Add(new Setting("KeyboardShortcutRegionSelectClipboardKey", DefaultSettings.KeyboardShortcutRegionSelectClipboardKey));
+                User.Add(new Setting("AutoSaveFolder", DefaultSettings.AutoSaveFolder));
+                User.Add(new Setting("AutoSaveMacro", DefaultSettings.AutoSaveMacro));
+                User.Add(new Setting("KeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier1));
+                User.Add(new Setting("KeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier2));
+                User.Add(new Setting("KeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveKey));
+                User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1));
+                User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
+                User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
 
                 User.Save();
             }

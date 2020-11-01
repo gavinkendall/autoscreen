@@ -49,9 +49,9 @@ namespace AutoScreenCapture
                     RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                     // This is no longer the first run of the application when exiting.
-                    Settings.User.SetValueByKey("BoolFirstRun", false);
+                    Settings.User.SetValueByKey("FirstRun", false);
 
-                    Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = string.Empty;
+                    Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = string.Empty;
                     SaveSettings();
 
                     DisableStopCapture();

@@ -78,11 +78,6 @@ namespace AutoScreenCapture
         public bool Active { get; set; }
 
         /// <summary>
-        /// The name of the process that will be forced into the foreground upon screen capture.
-        /// </summary>
-        public string ApplicationFocus { get; set; }
-
-        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()

@@ -296,6 +296,7 @@
             // 
             // labelDay
             // 
+            this.labelDay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelDay.AutoSize = true;
             this.labelDay.Location = new System.Drawing.Point(9, 390);
             this.labelDay.Name = "labelDay";
@@ -305,6 +306,7 @@
             // 
             // comboBoxDay
             // 
+            this.comboBoxDay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.comboBoxDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDay.FormattingEnabled = true;
             this.comboBoxDay.Items.AddRange(new object[] {

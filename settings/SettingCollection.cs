@@ -90,19 +90,6 @@ namespace AutoScreenCapture
             return GetEnumerator();
         }
 
-        /// <summary>
-        /// Adds a Setting to the collection.
-        /// </summary>
-        /// <param name="setting"></param>
-        public void Add(Setting setting)
-        {
-            // Make sure we only add the setting to the list if it doesn't exist in the list yet.
-            if (!KeyExists(setting.Key))
-            {
-                _settingList.Add(setting);
-            }
-        }
-
         private void Remove(Setting setting)
         {
             if (KeyExists(setting.Key))
@@ -118,6 +105,19 @@ namespace AutoScreenCapture
                 Setting setting = GetByKey(key, null, false);
 
                 Remove(setting);
+            }
+        }
+
+        /// <summary>
+        /// Adds a Setting to the collection.
+        /// </summary>
+        /// <param name="setting"></param>
+        public void Add(Setting setting)
+        {
+            // Make sure we only add the setting to the list if it doesn't exist in the list yet.
+            if (!KeyExists(setting.Key))
+            {
+                _settingList.Add(setting);
             }
         }
 
@@ -342,13 +342,6 @@ namespace AutoScreenCapture
 
                 Settings.VersionManager.OldUserSettings = oldUserSettings;
 
-                if (string.IsNullOrEmpty(AppCodename) || string.IsNullOrEmpty(AppVersion))
-                {
-                    Log.WriteMessage("No settings file found. Aborting upgrade path");
-
-                    return;
-                }
-
                 var versionInConfig = new Version(AppCodename, AppVersion, false);
 
                 if (versionInConfig.VersionString.Equals("2.2.0.0") ||
@@ -377,17 +370,97 @@ namespace AutoScreenCapture
                         {
                             // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
                             // in an older version of the application then make sure to hash it and lock the session before we continue.
-                            SetValueByKey("StringPassphrase", Security.Hash(passphrase));
+                            SetValueByKey("Passphrase", Security.Hash(passphrase));
                             ScreenCapture.LockScreenCaptureSession = true;
                         }
                     }
                 }
 
-                // These settings are no longer used starting with version 2.2.0.17
-                RemoveByKey("BoolLockScreenCaptureSession");
-                RemoveByKey("Passphrase");
+                // Go through the old settings and get the old values from them to be used for the new settings.
+                SetValueByKey("ScreenCaptureInterval", Convert.ToInt32(GetByKey("Interval", DefaultSettings.ScreenCaptureInterval, createKeyIfNotFound: true).Value));
+                SetValueByKey("ScreenCaptureInterval", Convert.ToInt32(GetByKey("IntScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval, createKeyIfNotFound: true).Value));
+                SetValueByKey("CaptureLimit", Convert.ToInt32(GetByKey("IntCaptureLimit", DefaultSettings.CaptureLimit, createKeyIfNotFound: true).Value));
+                SetValueByKey("CaptureLimitCheck", Convert.ToBoolean(GetByKey("BoolCaptureLimit", DefaultSettings.CaptureLimitCheck, createKeyIfNotFound: true).Value));
+                SetValueByKey("TakeInitialScreenshot", Convert.ToBoolean(GetByKey("BoolTakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot, createKeyIfNotFound: true).Value));
+                SetValueByKey("TakeInitialScreenshot", Convert.ToBoolean(GetByKey("TakeInitialScreenshotCheck", DefaultSettings.TakeInitialScreenshot, createKeyIfNotFound: true).Value));
+                SetValueByKey("ShowSystemTrayIcon", Convert.ToBoolean(GetByKey("BoolShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeepScreenshotsForDays", Convert.ToInt32(GetByKey("DaysOldWhenRemoveSlides", DefaultSettings.KeepScreenshotsForDays, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeepScreenshotsForDays", Convert.ToInt32(GetByKey("IntKeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays, createKeyIfNotFound: true).Value));
+                SetValueByKey("ScreenshotLabel", Convert.ToString(GetByKey("StringScreenshotLabel", DefaultSettings.ScreenshotLabel, createKeyIfNotFound: true).Value));
+                SetValueByKey("ApplyScreenshotLabel", Convert.ToBoolean(GetByKey("BoolApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel, createKeyIfNotFound: true).Value));
+                SetValueByKey("DefaultEditor", Convert.ToString(GetByKey("StringDefaultEditor", DefaultSettings.DefaultEditor, createKeyIfNotFound: true).Value));
+                SetValueByKey("FirstRun", Convert.ToBoolean(GetByKey("BoolFirstRun", DefaultSettings.FirstRun, createKeyIfNotFound: true).Value));
+                SetValueByKey("StartScreenCaptureCount", Convert.ToInt32(GetByKey("IntStartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount, createKeyIfNotFound: true).Value));
+                SetValueByKey("ActiveWindowTitleCaptureCheck", Convert.ToBoolean(GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck, createKeyIfNotFound: true).Value));
+                SetValueByKey("ActiveWindowTitleCaptureText", Convert.ToString(GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText, createKeyIfNotFound: true).Value));
+                SetValueByKey("AutoSaveFolder", Convert.ToString(GetByKey("StringAutoSaveFolder", DefaultSettings.AutoSaveFolder, createKeyIfNotFound: true).Value));
+                SetValueByKey("AutoSaveMacro", Convert.ToString(GetByKey("StringAutoSaveMacro", DefaultSettings.AutoSaveMacro, createKeyIfNotFound: true).Value));
+                SetValueByKey("UseKeyboardShortcuts", Convert.ToBoolean(GetByKey("BoolUseKeyboardShortcuts", DefaultSettings.UseKeyboardShortcuts, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutStartScreenCaptureModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutStartScreenCaptureModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutStartScreenCaptureKey", Convert.ToString(GetByKey("StringKeyboardShortcutStartScreenCaptureKey", DefaultSettings.KeyboardShortcutStartScreenCaptureKey, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutStopScreenCaptureModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutStopScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutStopScreenCaptureModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutStopScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutStopScreenCaptureKey", Convert.ToString(GetByKey("StringKeyboardShortcutStopScreenCaptureKey", DefaultSettings.KeyboardShortcutStopScreenCaptureKey, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutCaptureNowArchiveModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowArchiveModifier1", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutCaptureNowArchiveModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowArchiveModifier2", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutCaptureNowArchiveKey", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowArchiveKey", DefaultSettings.KeyboardShortcutCaptureNowArchiveKey, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutCaptureNowEditModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowEditModifier1", DefaultSettings.KeyboardShortcutCaptureNowEditModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutCaptureNowEditModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowEditModifier2", DefaultSettings.KeyboardShortcutCaptureNowEditModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutCaptureNowEditKey", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowEditKey", DefaultSettings.KeyboardShortcutCaptureNowEditKey, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectClipboardModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectClipboardModifier1", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectClipboardModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectClipboardKey", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectClipboardKey", DefaultSettings.KeyboardShortcutRegionSelectClipboardKey, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectAutoSaveModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectAutoSaveModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectAutoSaveKey", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveKey, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectEditModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectEditModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2, createKeyIfNotFound: true).Value));
+                SetValueByKey("KeyboardShortcutRegionSelectEditKey", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey, createKeyIfNotFound: true).Value));
 
-                // These settings are no longer used starting with version 2.3.0.0
+                // Remove the old settings.
+                RemoveByKey("StringPassphrase");
+                RemoveByKey("Interval");
+                RemoveByKey("IntScreenCaptureInterval");
+                RemoveByKey("IntCaptureLimit");
+                RemoveByKey("BoolCaptureLimit");
+                RemoveByKey("BoolTakeInitialScreenshot");
+                RemoveByKey("TakeInitialScreenshotCheck");
+                RemoveByKey("BoolShowSystemTrayIcon");
+                RemoveByKey("DaysOldWhenRemoveSlides");
+                RemoveByKey("IntKeepScreenshotsForDays");
+                RemoveByKey("StringScreenshotLabel");
+                RemoveByKey("BoolApplyScreenshotLabel");
+                RemoveByKey("StringDefaultEditor");
+                RemoveByKey("BoolFirstRun");
+                RemoveByKey("IntStartScreenCaptureCount");
+                RemoveByKey("BoolActiveWindowTitleCaptureCheck");
+                RemoveByKey("StringActiveWindowTitleCaptureText");
+                RemoveByKey("StringAutoSaveFolder");
+                RemoveByKey("StringAutoSaveMacro");
+                RemoveByKey("BoolUseKeyboardShortcuts");
+                RemoveByKey("StringKeyboardShortcutStartScreenCaptureModifier1");
+                RemoveByKey("StringKeyboardShortcutStartScreenCaptureModifier2");
+                RemoveByKey("StringKeyboardShortcutStartScreenCaptureKey");
+                RemoveByKey("StringKeyboardShortcutStopScreenCaptureModifier1");
+                RemoveByKey("StringKeyboardShortcutStopScreenCaptureModifier2");
+                RemoveByKey("StringKeyboardShortcutStopScreenCaptureKey");
+                RemoveByKey("StringKeyboardShortcutCaptureNowArchiveModifier1");
+                RemoveByKey("StringKeyboardShortcutCaptureNowArchiveModifier2");
+                RemoveByKey("StringKeyboardShortcutCaptureNowArchiveKey");
+                RemoveByKey("StringKeyboardShortcutCaptureNowEditModifier1");
+                RemoveByKey("StringKeyboardShortcutCaptureNowEditModifier2");
+                RemoveByKey("StringKeyboardShortcutCaptureNowEditKey");
+                RemoveByKey("StringKeyboardShortcutRegionSelectClipboardModifier1");
+                RemoveByKey("StringKeyboardShortcutRegionSelectClipboardModifier2");
+                RemoveByKey("StringKeyboardShortcutRegionSelectClipboardKey");
+                RemoveByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1");
+                RemoveByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2");
+                RemoveByKey("StringKeyboardShortcutRegionSelectAutoSaveKey");
+                RemoveByKey("StringKeyboardShortcutRegionSelectEditModifier1");
+                RemoveByKey("StringKeyboardShortcutRegionSelectEditModifier2");
+                RemoveByKey("StringKeyboardShortcutRegionSelectEditKey");
+                RemoveByKey("BoolLockScreenCaptureSession");
                 RemoveByKey("BoolCaptureStopAt");
                 RemoveByKey("BoolCaptureStartAt");
                 RemoveByKey("BoolCaptureOnSunday");
@@ -400,217 +473,62 @@ namespace AutoScreenCapture
                 RemoveByKey("BoolCaptureOnTheseDays");
                 RemoveByKey("DateTimeCaptureStopAt");
                 RemoveByKey("DateTimeCaptureStartAt");
-
-                // This application setting was accidentally introduced in 2.3.0.0 so it needs to be removed.
-                RemoveByKey("FilepathLimitLength"); // This should have been "FilepathLengthLimit"
-
-                if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
-                {
-                    Log.WriteDebugMessage("Accurate version information could not be found so assuming upgrade from 2.1.8.2");
-
-                    // Go through the old settings and get the old values from them to be used for the new settings.
-
-                    // 2.1 used a setting named "Interval", but 2.2 uses "IntScreenCaptureInterval".
-                    if (KeyExists("Interval"))
-                    {
-                        SetValueByKey("IntScreenCaptureInterval",
-                            Convert.ToInt32(GetByKey("Interval", 60000, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureLimit", but 2.2 uses "IntCaptureLimit".
-                    if (KeyExists("CaptureLimit"))
-                    {
-                        SetValueByKey("IntCaptureLimit",
-                            Convert.ToInt32(GetByKey("CaptureLimit", 0, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureLimitCheck", but 2.2 uses "BoolCaptureLimit".
-                    if (KeyExists("CaptureLimitCheck"))
-                    {
-                        SetValueByKey("BoolCaptureLimit",
-                            Convert.ToBoolean(GetByKey("CaptureLimitCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "TakeInitialScreenshotCheck", but 2.2 uses "BoolTakeInitialScreenshot".
-                    if (KeyExists("TakeInitialScreenshotCheck"))
-                    {
-                        SetValueByKey("BoolTakeInitialScreenshot",
-                            Convert.ToBoolean(GetByKey("TakeInitialScreenshotCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "ShowSystemTrayIcon", but 2.2 uses "BoolShowSystemTrayIcon".
-                    if (KeyExists("ShowSystemTrayIcon"))
-                    {
-                        SetValueByKey("BoolShowSystemTrayIcon",
-                            Convert.ToBoolean(GetByKey("ShowSystemTrayIcon", true, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStopAtCheck", but 2.2 uses "BoolCaptureStopAt".
-                    if (KeyExists("CaptureStopAtCheck"))
-                    {
-                        SetValueByKey("BoolCaptureStopAt",
-                            Convert.ToBoolean(GetByKey("CaptureStopAtCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStartAtCheck", but 2.2 uses "BoolCaptureStartAt".
-                    if (KeyExists("CaptureStartAtCheck"))
-                    {
-                        SetValueByKey("BoolCaptureStartAt",
-                            Convert.ToBoolean(GetByKey("CaptureStartAtCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnSundayCheck", but 2.2 uses "BoolCaptureOnSunday".
-                    if (KeyExists("CaptureOnSundayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnSunday",
-                            Convert.ToBoolean(GetByKey("CaptureOnSundayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnMondayCheck", but 2.2 uses "BoolCaptureOnMonday".
-                    if (KeyExists("CaptureOnMondayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnMonday",
-                            Convert.ToBoolean(GetByKey("CaptureOnMondayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnTuesdayCheck", but 2.2 uses "BoolCaptureOnTuesday".
-                    if (KeyExists("CaptureOnTuesdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnTuesday",
-                            Convert.ToBoolean(GetByKey("CaptureOnTuesdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnWednesdayCheck", but 2.2 uses "BoolCaptureOnWednesday".
-                    if (KeyExists("CaptureOnWednesdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnWednesday",
-                            Convert.ToBoolean(GetByKey("CaptureOnWednesdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnThursdayCheck", but 2.2 uses "BoolCaptureOnThursday".
-                    if (KeyExists("CaptureOnThursdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnThursday",
-                            Convert.ToBoolean(GetByKey("CaptureOnThursdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnFridayCheck", but 2.2 uses "BoolCaptureOnFriday".
-                    if (KeyExists("CaptureOnFridayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnFriday",
-                            Convert.ToBoolean(GetByKey("CaptureOnFridayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnSaturdayCheck", but 2.2 uses "BoolCaptureOnSaturday".
-                    if (KeyExists("CaptureOnSaturdayCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnSaturday",
-                            Convert.ToBoolean(GetByKey("CaptureOnSaturdayCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureOnTheseDaysCheck", but 2.2 uses "BoolCaptureOnTheseDays".
-                    if (KeyExists("CaptureOnTheseDaysCheck"))
-                    {
-                        SetValueByKey("BoolCaptureOnTheseDays",
-                            Convert.ToBoolean(GetByKey("CaptureOnTheseDaysCheck", false, createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStopAtValue", but 2.2 uses "DateTimeCaptureStopAt".
-                    if (KeyExists("CaptureStopAtValue"))
-                    {
-                        SetValueByKey("DateTimeCaptureStopAt",
-                            Convert.ToDateTime(GetByKey("CaptureStopAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0), createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "CaptureStartAtValue", but 2.2 uses "DateTimeCaptureStartAt".
-                    if (KeyExists("CaptureStartAtValue"))
-                    {
-                        SetValueByKey("DateTimeCaptureStartAt",
-                            Convert.ToDateTime(GetByKey("CaptureStartAtValue", new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 8, 0, 0), createKeyIfNotFound: false).Value));
-                    }
-
-                    // 2.1 used a setting named "Passphrase", but 2.2 uses "StringPassphrase".
-                    if (KeyExists("Passphrase"))
-                    {
-                        SetValueByKey("StringPassphrase",
-                            GetByKey("Passphrase", string.Empty, createKeyIfNotFound: false).Value.ToString());
-                    }
-
-                    // 2.1 used a setting named "DaysOldWhenRemoveSlides", but 2.2 uses "IntKeepScreenshotsForDays".
-                    if (KeyExists("DaysOldWhenRemoveSlides"))
-                    {
-                        SetValueByKey("IntKeepScreenshotsForDays",
-                            Convert.ToInt32(
-                                GetByKey("DaysOldWhenRemoveSlides", 30, createKeyIfNotFound: false).Value));
-                    }
-
-                    // Remove the old settings.
-                    // When upgrading from 2.1 to 2.2 we should end up with about 20 settings instead of 60
-                    // because 2.1 was limited to using Screen 1, Screen 2, Screen 3, Screen 4, and Active Window
-                    // so there were settings dedicated to all the properties associated with them (such as Name, X, Y, Width, and Height).
-                    RemoveByKey("CaptureLimit");
-                    RemoveByKey("CaptureLimitCheck");
-                    RemoveByKey("TakeInitialScreenshotCheck");
-                    RemoveByKey("ShowSystemTrayIcon");
-                    RemoveByKey("CaptureStopAtCheck");
-                    RemoveByKey("CaptureStartAtCheck");
-                    RemoveByKey("CaptureOnSundayCheck");
-                    RemoveByKey("CaptureOnMondayCheck");
-                    RemoveByKey("CaptureOnTuesdayCheck");
-                    RemoveByKey("CaptureOnWednesdayCheck");
-                    RemoveByKey("CaptureOnThursdayCheck");
-                    RemoveByKey("CaptureOnFridayCheck");
-                    RemoveByKey("CaptureOnSaturdayCheck");
-                    RemoveByKey("CaptureOnTheseDaysCheck");
-                    RemoveByKey("CaptureStopAtValue");
-                    RemoveByKey("CaptureStartAtValue");
-                    RemoveByKey("LockScreenCaptureSession");
-                    RemoveByKey("Passphrase");
-                    RemoveByKey("ScreenshotsDirectory");
-                    RemoveByKey("ScheduleImageFormat");
-                    RemoveByKey("SlideSkip");
-                    RemoveByKey("ImageResolutionRatio");
-                    RemoveByKey("ImageFormatFilter");
-                    RemoveByKey("ImageFormatFilterIndex");
-                    RemoveByKey("Interval");
-                    RemoveByKey("SlideshowDelay");
-                    RemoveByKey("SlideSkipCheck");
-                    RemoveByKey("Screen1X");
-                    RemoveByKey("Screen1Y");
-                    RemoveByKey("Screen1Width");
-                    RemoveByKey("Screen1Height");
-                    RemoveByKey("Screen2X");
-                    RemoveByKey("Screen2Y");
-                    RemoveByKey("Screen2Width");
-                    RemoveByKey("Screen2Height");
-                    RemoveByKey("Screen3X");
-                    RemoveByKey("Screen3Y");
-                    RemoveByKey("Screen3Width");
-                    RemoveByKey("Screen3Height");
-                    RemoveByKey("Screen4X");
-                    RemoveByKey("Screen4Y");
-                    RemoveByKey("Screen4Width");
-                    RemoveByKey("Screen4Height");
-                    RemoveByKey("Screen1Name");
-                    RemoveByKey("Screen2Name");
-                    RemoveByKey("Screen3Name");
-                    RemoveByKey("Screen4Name");
-                    RemoveByKey("Screen5Name");
-                    RemoveByKey("Macro");
-                    RemoveByKey("JpegQualityLevel");
-                    RemoveByKey("DaysOldWhenRemoveSlides");
-                    RemoveByKey("CaptureScreen1");
-                    RemoveByKey("CaptureScreen2");
-                    RemoveByKey("CaptureScreen3");
-                    RemoveByKey("CaptureScreen4");
-                    RemoveByKey("CaptureActiveWindow");
-                    RemoveByKey("AutoReset");
-                    RemoveByKey("Mouse");
-                    RemoveByKey("StartButtonImageFormat");
-                    RemoveByKey("Schedule");
-                    RemoveByKey("DeleteScreenshotsOlderThanDays");
-                    RemoveByKey("ScreenshotDelay");
-                }
+                RemoveByKey("FilepathLimitLength");
+                RemoveByKey("CaptureStopAtCheck");
+                RemoveByKey("CaptureStartAtCheck");
+                RemoveByKey("CaptureOnSundayCheck");
+                RemoveByKey("CaptureOnMondayCheck");
+                RemoveByKey("CaptureOnTuesdayCheck");
+                RemoveByKey("CaptureOnWednesdayCheck");
+                RemoveByKey("CaptureOnThursdayCheck");
+                RemoveByKey("CaptureOnFridayCheck");
+                RemoveByKey("CaptureOnSaturdayCheck");
+                RemoveByKey("CaptureOnTheseDaysCheck");
+                RemoveByKey("CaptureStopAtValue");
+                RemoveByKey("CaptureStartAtValue");
+                RemoveByKey("LockScreenCaptureSession");
+                RemoveByKey("ScreenshotsDirectory");
+                RemoveByKey("ScheduleImageFormat");
+                RemoveByKey("SlideSkip");
+                RemoveByKey("ImageResolutionRatio");
+                RemoveByKey("ImageFormatFilter");
+                RemoveByKey("ImageFormatFilterIndex");
+                RemoveByKey("SlideshowDelay");
+                RemoveByKey("SlideSkipCheck");
+                RemoveByKey("Screen1X");
+                RemoveByKey("Screen1Y");
+                RemoveByKey("Screen1Width");
+                RemoveByKey("Screen1Height");
+                RemoveByKey("Screen2X");
+                RemoveByKey("Screen2Y");
+                RemoveByKey("Screen2Width");
+                RemoveByKey("Screen2Height");
+                RemoveByKey("Screen3X");
+                RemoveByKey("Screen3Y");
+                RemoveByKey("Screen3Width");
+                RemoveByKey("Screen3Height");
+                RemoveByKey("Screen4X");
+                RemoveByKey("Screen4Y");
+                RemoveByKey("Screen4Width");
+                RemoveByKey("Screen4Height");
+                RemoveByKey("Screen1Name");
+                RemoveByKey("Screen2Name");
+                RemoveByKey("Screen3Name");
+                RemoveByKey("Screen4Name");
+                RemoveByKey("Screen5Name");
+                RemoveByKey("Macro");
+                RemoveByKey("JpegQualityLevel");
+                RemoveByKey("CaptureScreen1");
+                RemoveByKey("CaptureScreen2");
+                RemoveByKey("CaptureScreen3");
+                RemoveByKey("CaptureScreen4");
+                RemoveByKey("CaptureActiveWindow");
+                RemoveByKey("AutoReset");
+                RemoveByKey("Mouse");
+                RemoveByKey("StartButtonImageFormat");
+                RemoveByKey("Schedule");
+                RemoveByKey("DeleteScreenshotsOlderThanDays");
+                RemoveByKey("ScreenshotDelay");
 
                 Log.WriteMessage("Upgrade completed.");
 

@@ -60,7 +60,7 @@ namespace AutoScreenCapture
                         CaptureAt = dtNow,
                         StartAt = dtNow,
                         StopAt = dtNow,
-                        ScreenCaptureInterval = DefaultSettings.IntScreenCaptureInterval,
+                        ScreenCaptureInterval = DefaultSettings.ScreenCaptureInterval,
                         Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
@@ -183,7 +183,7 @@ namespace AutoScreenCapture
                     // -showSystemTrayIcon
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON))
                     {
-                        Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value = true;
+                        Settings.User.GetByKey("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon).Value = true;
 
                         if (!Settings.User.Save())
                         {
@@ -196,7 +196,7 @@ namespace AutoScreenCapture
                     // -hideSystemTrayIcon
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
-                        Settings.User.GetByKey("BoolShowSystemTrayIcon", DefaultSettings.BoolShowSystemTrayIcon).Value = false;
+                        Settings.User.GetByKey("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon).Value = false;
 
                         if (!Settings.User.Save())
                         {
@@ -211,7 +211,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = !checkBoxInitialScreenshot.Checked;
 
-                        Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
+                        Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
 
                         if (!Settings.User.Save())
                         {
@@ -224,7 +224,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = true;
 
-                        Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = true;
+                        Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = true;
 
                         if (!Settings.User.Save())
                         {
@@ -237,7 +237,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = false;
 
-                        Settings.User.GetByKey("BoolTakeInitialScreenshot", DefaultSettings.BoolTakeInitialScreenshot).Value = false;
+                        Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = false;
 
                         if (!Settings.User.Save())
                         {
@@ -283,7 +283,7 @@ namespace AutoScreenCapture
                             _screenCapture.Interval = screenCaptureInterval;
                             timerScreenCapture.Interval = screenCaptureInterval;
 
-                            Settings.User.GetByKey("IntScreenCaptureInterval", DefaultSettings.IntScreenCaptureInterval).Value = screenCaptureInterval;
+                            Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value = screenCaptureInterval;
 
                             if (!Settings.User.Save())
                             {
@@ -309,7 +309,7 @@ namespace AutoScreenCapture
                                 Config.Load();
                             }
 
-                            Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = Security.Hash(passphrase);
+                            Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = Security.Hash(passphrase);
 
                             if (!Settings.User.Save())
                             {

@@ -54,15 +54,12 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
-            this.groupBoxApplicationFocus = new System.Windows.Forms.GroupBox();
-            this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImage.SuspendLayout();
             this.groupBoxComponent.SuspendLayout();
             this.groupBoxPreview.SuspendLayout();
-            this.groupBoxApplicationFocus.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelName
@@ -268,7 +265,7 @@
             this.groupBoxImage.Controls.Add(this.labelJpegQuality);
             this.groupBoxImage.Controls.Add(this.numericUpDownJpegQuality);
             this.groupBoxImage.Controls.Add(this.comboBoxFormat);
-            this.groupBoxImage.Location = new System.Drawing.Point(11, 162);
+            this.groupBoxImage.Location = new System.Drawing.Point(12, 114);
             this.groupBoxImage.Name = "groupBoxImage";
             this.groupBoxImage.Size = new System.Drawing.Size(205, 126);
             this.groupBoxImage.TabIndex = 8;
@@ -362,25 +359,6 @@
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
             // 
-            // groupBoxApplicationFocus
-            // 
-            this.groupBoxApplicationFocus.Controls.Add(this.comboBoxProcessList);
-            this.groupBoxApplicationFocus.Location = new System.Drawing.Point(12, 110);
-            this.groupBoxApplicationFocus.Name = "groupBoxApplicationFocus";
-            this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 46);
-            this.groupBoxApplicationFocus.TabIndex = 6;
-            this.groupBoxApplicationFocus.TabStop = false;
-            this.groupBoxApplicationFocus.Text = "Application Focus";
-            // 
-            // comboBoxProcessList
-            // 
-            this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProcessList.FormattingEnabled = true;
-            this.comboBoxProcessList.Location = new System.Drawing.Point(5, 19);
-            this.comboBoxProcessList.Name = "comboBoxProcessList";
-            this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxProcessList.TabIndex = 7;
-            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonOK;
@@ -389,7 +367,6 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
-            this.Controls.Add(this.groupBoxApplicationFocus);
             this.Controls.Add(this.checkBoxActive);
             this.Controls.Add(this.textBoxScreenName);
             this.Controls.Add(this.labelName);
@@ -421,7 +398,6 @@
             this.groupBoxComponent.ResumeLayout(false);
             this.groupBoxPreview.ResumeLayout(false);
             this.groupBoxPreview.PerformLayout();
-            this.groupBoxApplicationFocus.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,7 +430,5 @@
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Button buttonMacroTags;
-        private System.Windows.Forms.GroupBox groupBoxApplicationFocus;
-        private System.Windows.Forms.ComboBox comboBoxProcessList;
     }
 }

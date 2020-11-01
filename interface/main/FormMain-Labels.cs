@@ -70,7 +70,7 @@ namespace AutoScreenCapture
                 labels.Sort();
 
                 comboBoxScreenshotLabel.DataSource = labels;
-                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("StringScreenshotLabel", DefaultSettings.StringScreenshotLabel).Value.ToString();
+                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value.ToString();
 
                 toolStripMenuItemApplyLabel.DropDownItems.Clear();
 

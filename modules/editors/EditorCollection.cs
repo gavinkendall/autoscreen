@@ -124,7 +124,7 @@ namespace AutoScreenCapture
                                                 value = value.Replace("%screenshot%", "%filepath%");
 
                                                 // Set this editor as the default editor. Version 2.3 requires at least one editor to be the default editor.
-                                                Settings.User.SetValueByKey("StringDefaultEditor", editor.Name);
+                                                Settings.User.SetValueByKey("DefaultEditor", editor.Name);
                                             }
                                         }
 
@@ -167,7 +167,7 @@ namespace AutoScreenCapture
                         Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "%filepath%"));
 
                         // We'll make Microsoft Paint the default image editor because usually everyone has it already.
-                        Settings.User.SetValueByKey("StringDefaultEditor", "Microsoft Paint");
+                        Settings.User.SetValueByKey("DefaultEditor", "Microsoft Paint");
                     }
 
                     // Snagit Editor
@@ -176,7 +176,7 @@ namespace AutoScreenCapture
                         Add(new Editor("Snagit Editor", @"C:\Program Files\TechSmith\Snagit 2020\SnagitEditor.exe", "%filepath%"));
 
                         // If the user has Snagit installed then make the Snagit Editor the default editor.
-                        Settings.User.SetValueByKey("StringDefaultEditor", "Snagit Editor");
+                        Settings.User.SetValueByKey("DefaultEditor", "Snagit Editor");
                     }
 
                     // Microsoft Outlook

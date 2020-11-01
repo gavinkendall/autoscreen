@@ -177,6 +177,8 @@ namespace AutoScreenCapture
                     _screenCapture.DateTimePreviousCycle = dtNow;
                 }
 
+                ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+
                 _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
@@ -216,14 +218,14 @@ namespace AutoScreenCapture
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
                     // Increment the number of times the user has started a screen capture session.
-                    int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("IntStartScreenCaptureCount", DefaultSettings.IntStartScreenCaptureCount).Value);
+                    int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("StartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount).Value);
                     startScreenCaptureCount++;
-                    Settings.User.SetValueByKey("IntStartScreenCaptureCount", startScreenCaptureCount);
+                    Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
-                    // Turn off "BoolFirstRun" after the first run of a screen capture session so we longer show balloon tips.
+                    // Turn off "FirstRun" after the first run of a screen capture session so we longer show balloon tips.
                     if (startScreenCaptureCount > 1)
                     {
-                        Settings.User.SetValueByKey("BoolFirstRun", false);
+                        Settings.User.SetValueByKey("FirstRun", false);
                     }
 
                     SaveSettings();
@@ -247,7 +249,7 @@ namespace AutoScreenCapture
                     _screenCapture.Interval = screenCaptureInterval;
                     _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
 
-                    if (Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value.ToString().Length > 0)
+                    if (Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value.ToString().Length > 0)
                     {
                         ScreenCapture.LockScreenCaptureSession = true;
                     }
@@ -313,7 +315,7 @@ namespace AutoScreenCapture
                 // to continue with normal functionality.
                 if (!ScreenCapture.LockScreenCaptureSession)
                 {
-                    Settings.User.GetByKey("StringPassphrase", DefaultSettings.StringPassphrase).Value = string.Empty;
+                    Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = string.Empty;
                     SaveSettings();
 
                     DisableStopCapture();
@@ -347,7 +349,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowEdit()
         {
-            string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value.ToString();
+            string defaultEditor = Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {
@@ -480,8 +482,7 @@ namespace AutoScreenCapture
                     label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
                     windowTitle: _screenCapture.ActiveWindowTitle,
                     processName: _screenCapture.ActiveWindowProcessName,
-                    screenshotCollection: _screenshotCollection,
-                    applicationFocus: null
+                    screenshotCollection: _screenshotCollection
                 ))
                 {
                     ScreenshotTakenWithSuccess();
@@ -501,7 +502,7 @@ namespace AutoScreenCapture
         private void _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted(object sender, EventArgs e)
         {
             // Get the name of the default image editor.
-            string defaultEditor = Settings.User.GetByKey("StringDefaultEditor", DefaultSettings.StringDefaultEditor).Value.ToString();
+            string defaultEditor = Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {
