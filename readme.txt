@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-09-19 (September 19, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.2.8)]
+This file was last updated on 2020-11-01 (November 1, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.3.0)]
 ========================================================================================================================
 
 
@@ -129,6 +129,11 @@ This menu will not be available if the session is locked.
 *Active Window Title*
 This is where to specify the text to compare against the active window title so that the application only
 takes screenshots if the active window title contains the defined text.
+
+*Application Focus*
+This is where you can choose which application (process) will be forced into the foreground as the active
+application when screenshots are taken. Select an application from the list, click "Test" to make sure
+the correct application is brought to the foreground, and use the "Refresh" button to refresh the list.
 
 *Region Select / Auto Save*
 This section defines the path of the folder and the filename pattern ("macro") for when
