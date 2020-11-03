@@ -143,15 +143,9 @@ namespace AutoScreenCapture
         /// <returns>Setting object (either existing or new).</returns>
         public Setting GetByKey(string key, object defaultValue, bool createKeyIfNotFound)
         {
-            foreach (Setting setting in _settingList)
-            {
-                if (setting.Key.Equals(key))
-                {
-                    return setting;
-                }
-            }
+            Setting foundSetting = GetByKey(key);
 
-            if (createKeyIfNotFound)
+            if (foundSetting == null && createKeyIfNotFound)
             {
                 Setting newSetting = new Setting(key, defaultValue);
                 Add(newSetting);
@@ -159,7 +153,7 @@ namespace AutoScreenCapture
                 return newSetting;
             }
 
-            return null;
+            return foundSetting;
         }
 
         /// <summary>
@@ -171,6 +165,24 @@ namespace AutoScreenCapture
         public Setting GetByKey(string key, object defaultValue)
         {
             return GetByKey(key, defaultValue, createKeyIfNotFound: true);
+        }
+
+        /// <summary>
+        /// Gets a Setting by its unique key.
+        /// </summary>
+        /// <param name="key">The unique key of the Setting.</param>
+        /// <returns></returns>
+        public Setting GetByKey(string key)
+        {
+            foreach (Setting setting in _settingList)
+            {
+                if (setting.Key.Equals(key))
+                {
+                    return setting;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -189,6 +201,35 @@ namespace AutoScreenCapture
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Renames an old key to a new key while retaining the value from the old key.
+        /// </summary>
+        /// <param name="oldKey">The name of the old key.</param>
+        /// <param name="newKey">The name of the new key.</param>
+        public void RenameKey(string oldKey, string newKey)
+        {
+            if (KeyExists(oldKey))
+            {
+                Setting oldSetting = GetByKey(oldKey);
+
+                if (oldSetting == null)
+                {
+                    return;
+                }
+
+                object value = oldSetting.Value;
+
+                if (value == null)
+                {
+                    return;
+                }
+
+                SetValueByKey(newKey, value);
+
+                RemoveByKey(oldKey);
+            }
         }
 
         /// <summary>
@@ -335,7 +376,7 @@ namespace AutoScreenCapture
             {
                 if (!Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion)) return;
 
-                Log.WriteMessage("An old version of " + Settings.ApplicationName + " was detected. Attempting upgrade");
+                Log.WriteMessage("An old version or a fresh version of " + Settings.ApplicationName + " was detected. Attempting upgrade");
 
                 var oldUserSettings = (SettingCollection)this.MemberwiseClone();
                 oldUserSettings._settingList = new List<Setting>(_settingList);
@@ -379,89 +420,51 @@ namespace AutoScreenCapture
                 }
 
                 // Go through the old settings and get the old values from them to be used for the new settings.
-                SetValueByKey("ScreenCaptureInterval", Convert.ToInt32(GetByKey("Interval", DefaultSettings.ScreenCaptureInterval, createKeyIfNotFound: true).Value));
-                SetValueByKey("ScreenCaptureInterval", Convert.ToInt32(GetByKey("IntScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval, createKeyIfNotFound: true).Value));
-                SetValueByKey("CaptureLimit", Convert.ToInt32(GetByKey("IntCaptureLimit", DefaultSettings.CaptureLimit, createKeyIfNotFound: true).Value));
-                SetValueByKey("CaptureLimitCheck", Convert.ToBoolean(GetByKey("BoolCaptureLimit", DefaultSettings.CaptureLimitCheck, createKeyIfNotFound: true).Value));
-                SetValueByKey("TakeInitialScreenshot", Convert.ToBoolean(GetByKey("BoolTakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot, createKeyIfNotFound: true).Value));
-                SetValueByKey("TakeInitialScreenshot", Convert.ToBoolean(GetByKey("TakeInitialScreenshotCheck", DefaultSettings.TakeInitialScreenshot, createKeyIfNotFound: true).Value));
-                SetValueByKey("ShowSystemTrayIcon", Convert.ToBoolean(GetByKey("BoolShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeepScreenshotsForDays", Convert.ToInt32(GetByKey("DaysOldWhenRemoveSlides", DefaultSettings.KeepScreenshotsForDays, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeepScreenshotsForDays", Convert.ToInt32(GetByKey("IntKeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays, createKeyIfNotFound: true).Value));
-                SetValueByKey("ScreenshotLabel", Convert.ToString(GetByKey("StringScreenshotLabel", DefaultSettings.ScreenshotLabel, createKeyIfNotFound: true).Value));
-                SetValueByKey("ApplyScreenshotLabel", Convert.ToBoolean(GetByKey("BoolApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel, createKeyIfNotFound: true).Value));
-                SetValueByKey("DefaultEditor", Convert.ToString(GetByKey("StringDefaultEditor", DefaultSettings.DefaultEditor, createKeyIfNotFound: true).Value));
-                SetValueByKey("FirstRun", Convert.ToBoolean(GetByKey("BoolFirstRun", DefaultSettings.FirstRun, createKeyIfNotFound: true).Value));
-                SetValueByKey("StartScreenCaptureCount", Convert.ToInt32(GetByKey("IntStartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount, createKeyIfNotFound: true).Value));
-                SetValueByKey("ActiveWindowTitleCaptureCheck", Convert.ToBoolean(GetByKey("BoolActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck, createKeyIfNotFound: true).Value));
-                SetValueByKey("ActiveWindowTitleCaptureText", Convert.ToString(GetByKey("StringActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText, createKeyIfNotFound: true).Value));
-                SetValueByKey("AutoSaveFolder", Convert.ToString(GetByKey("StringAutoSaveFolder", DefaultSettings.AutoSaveFolder, createKeyIfNotFound: true).Value));
-                SetValueByKey("AutoSaveMacro", Convert.ToString(GetByKey("StringAutoSaveMacro", DefaultSettings.AutoSaveMacro, createKeyIfNotFound: true).Value));
-                SetValueByKey("UseKeyboardShortcuts", Convert.ToBoolean(GetByKey("BoolUseKeyboardShortcuts", DefaultSettings.UseKeyboardShortcuts, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutStartScreenCaptureModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutStartScreenCaptureModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutStartScreenCaptureKey", Convert.ToString(GetByKey("StringKeyboardShortcutStartScreenCaptureKey", DefaultSettings.KeyboardShortcutStartScreenCaptureKey, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutStopScreenCaptureModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutStopScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutStopScreenCaptureModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutStopScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutStopScreenCaptureKey", Convert.ToString(GetByKey("StringKeyboardShortcutStopScreenCaptureKey", DefaultSettings.KeyboardShortcutStopScreenCaptureKey, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutCaptureNowArchiveModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowArchiveModifier1", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutCaptureNowArchiveModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowArchiveModifier2", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutCaptureNowArchiveKey", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowArchiveKey", DefaultSettings.KeyboardShortcutCaptureNowArchiveKey, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutCaptureNowEditModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowEditModifier1", DefaultSettings.KeyboardShortcutCaptureNowEditModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutCaptureNowEditModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowEditModifier2", DefaultSettings.KeyboardShortcutCaptureNowEditModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutCaptureNowEditKey", Convert.ToString(GetByKey("StringKeyboardShortcutCaptureNowEditKey", DefaultSettings.KeyboardShortcutCaptureNowEditKey, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectClipboardModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectClipboardModifier1", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectClipboardModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectClipboardKey", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectClipboardKey", DefaultSettings.KeyboardShortcutRegionSelectClipboardKey, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectAutoSaveModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectAutoSaveModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectAutoSaveKey", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveKey, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectEditModifier1", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectEditModifier2", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2, createKeyIfNotFound: true).Value));
-                SetValueByKey("KeyboardShortcutRegionSelectEditKey", Convert.ToString(GetByKey("StringKeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey, createKeyIfNotFound: true).Value));
+                RenameKey("Interval", "ScreenCaptureInterval");
+                RenameKey("IntScreenCaptureInterval", "ScreenCaptureInterval");
+                RenameKey("IntCaptureLimit", "CaptureLimit");
+                RenameKey("BoolCaptureLimit", "CaptureLimitCheck");
+                RenameKey("BoolTakeInitialScreenshot", "TakeInitialScreenshot");
+                RenameKey("TakeInitialScreenshotCheck", "TakeInitialScreenshot");
+                RenameKey("BoolShowSystemTrayIcon", "ShowSystemTrayIcon");
+                RenameKey("DaysOldWhenRemoveSlides", "KeepScreenshotsForDays");
+                RenameKey("IntKeepScreenshotsForDays", "KeepScreenshotsForDays");
+                RenameKey("StringPassphrase", "Passphrase");
+                RenameKey("StringScreenshotLabel", "ScreenshotLabel");
+                RenameKey("BoolApplyScreenshotLabel", "ApplyScreenshotLabel");
+                RenameKey("StringDefaultEditor", "DefaultEditor");
+                RenameKey("BoolFirstRun", "FirstRun");
+                RenameKey("IntStartScreenCaptureCount", "StartScreenCaptureCount");
+                RenameKey("BoolActiveWindowTitleCaptureCheck", "ActiveWindowTitleCaptureCheck");
+                RenameKey("StringActiveWindowTitleCaptureText", "ActiveWindowTitleCaptureText");
+                RenameKey("StringAutoSaveFolder", "AutoSaveFolder");
+                RenameKey("StringAutoSaveMacro", "AutoSaveMacro");
+                RenameKey("BoolUseKeyboardShortcuts", "UseKeyboardShortcuts");
+
+                // Keyboard Shortcuts
+                RenameKey("StringKeyboardShortcutStartScreenCaptureModifier1", "KeyboardShortcutStartScreenCaptureModifier1");
+                RenameKey("StringKeyboardShortcutStartScreenCaptureModifier2", "KeyboardShortcutStartScreenCaptureModifier2");
+                RenameKey("StringKeyboardShortcutStartScreenCaptureKey", "KeyboardShortcutStartScreenCaptureKey");
+                RenameKey("StringKeyboardShortcutStopScreenCaptureModifier1", "KeyboardShortcutStopScreenCaptureModifier1");
+                RenameKey("StringKeyboardShortcutStopScreenCaptureModifier2", "KeyboardShortcutStopScreenCaptureModifier2");
+                RenameKey("StringKeyboardShortcutStopScreenCaptureKey", "KeyboardShortcutStopScreenCaptureKey");
+                RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier1", "KeyboardShortcutCaptureNowArchiveModifier1");
+                RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier2", "KeyboardShortcutCaptureNowArchiveModifier2");
+                RenameKey("StringKeyboardShortcutCaptureNowArchiveKey", "KeyboardShortcutCaptureNowArchiveKey");
+                RenameKey("StringKeyboardShortcutCaptureNowEditModifier1", "KeyboardShortcutCaptureNowEditModifier1");
+                RenameKey("StringKeyboardShortcutCaptureNowEditModifier2", "KeyboardShortcutCaptureNowEditModifier2");
+                RenameKey("StringKeyboardShortcutCaptureNowEditKey", "KeyboardShortcutCaptureNowEditKey");
+                RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier1", "KeyboardShortcutRegionSelectClipboardModifier1");
+                RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier2", "KeyboardShortcutRegionSelectClipboardModifier2");
+                RenameKey("StringKeyboardShortcutRegionSelectClipboardKey", "KeyboardShortcutRegionSelectClipboardKey");
+                RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", "KeyboardShortcutRegionSelectAutoSaveModifier1");
+                RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", "KeyboardShortcutRegionSelectAutoSaveModifier2");
+                RenameKey("StringKeyboardShortcutRegionSelectAutoSaveKey", "KeyboardShortcutRegionSelectAutoSaveKey");
+                RenameKey("StringKeyboardShortcutRegionSelectEditModifier1", "KeyboardShortcutRegionSelectEditModifier1");
+                RenameKey("StringKeyboardShortcutRegionSelectEditModifier2", "KeyboardShortcutRegionSelectEditModifier2");
+                RenameKey("StringKeyboardShortcutRegionSelectEditKey", "KeyboardShortcutRegionSelectEditKey");
 
                 // Remove the old settings.
-                RemoveByKey("StringPassphrase");
-                RemoveByKey("Interval");
-                RemoveByKey("IntScreenCaptureInterval");
-                RemoveByKey("IntCaptureLimit");
-                RemoveByKey("BoolCaptureLimit");
-                RemoveByKey("BoolTakeInitialScreenshot");
-                RemoveByKey("TakeInitialScreenshotCheck");
-                RemoveByKey("BoolShowSystemTrayIcon");
-                RemoveByKey("DaysOldWhenRemoveSlides");
-                RemoveByKey("IntKeepScreenshotsForDays");
-                RemoveByKey("StringScreenshotLabel");
-                RemoveByKey("BoolApplyScreenshotLabel");
-                RemoveByKey("StringDefaultEditor");
-                RemoveByKey("BoolFirstRun");
-                RemoveByKey("IntStartScreenCaptureCount");
-                RemoveByKey("BoolActiveWindowTitleCaptureCheck");
-                RemoveByKey("StringActiveWindowTitleCaptureText");
-                RemoveByKey("StringAutoSaveFolder");
-                RemoveByKey("StringAutoSaveMacro");
-                RemoveByKey("BoolUseKeyboardShortcuts");
-                RemoveByKey("StringKeyboardShortcutStartScreenCaptureModifier1");
-                RemoveByKey("StringKeyboardShortcutStartScreenCaptureModifier2");
-                RemoveByKey("StringKeyboardShortcutStartScreenCaptureKey");
-                RemoveByKey("StringKeyboardShortcutStopScreenCaptureModifier1");
-                RemoveByKey("StringKeyboardShortcutStopScreenCaptureModifier2");
-                RemoveByKey("StringKeyboardShortcutStopScreenCaptureKey");
-                RemoveByKey("StringKeyboardShortcutCaptureNowArchiveModifier1");
-                RemoveByKey("StringKeyboardShortcutCaptureNowArchiveModifier2");
-                RemoveByKey("StringKeyboardShortcutCaptureNowArchiveKey");
-                RemoveByKey("StringKeyboardShortcutCaptureNowEditModifier1");
-                RemoveByKey("StringKeyboardShortcutCaptureNowEditModifier2");
-                RemoveByKey("StringKeyboardShortcutCaptureNowEditKey");
-                RemoveByKey("StringKeyboardShortcutRegionSelectClipboardModifier1");
-                RemoveByKey("StringKeyboardShortcutRegionSelectClipboardModifier2");
-                RemoveByKey("StringKeyboardShortcutRegionSelectClipboardKey");
-                RemoveByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1");
-                RemoveByKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2");
-                RemoveByKey("StringKeyboardShortcutRegionSelectAutoSaveKey");
-                RemoveByKey("StringKeyboardShortcutRegionSelectEditModifier1");
-                RemoveByKey("StringKeyboardShortcutRegionSelectEditModifier2");
-                RemoveByKey("StringKeyboardShortcutRegionSelectEditKey");
                 RemoveByKey("BoolLockScreenCaptureSession");
                 RemoveByKey("BoolCaptureStopAt");
                 RemoveByKey("BoolCaptureStartAt");

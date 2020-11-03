@@ -38,8 +38,17 @@ namespace AutoScreenCapture
         public static readonly string ApplicationVersion = DefaultSettings.ApplicationVersion;
 
         // The major versions of Auto Screen Capture.
-        // Any version that is older than "Clara" is considered as "Clara".
-        private const string CODENAME_CLARA = "Clara"; // Clara introduced the Macro field for customizing the filename pattern of image files when writing them to disk.
+
+        /// <summary>
+        /// Any version that is older than "Clara" or a version cannot be determined is considered as "Clara".
+        /// </summary>
+        public const string CODENAME_CLARA = "Clara"; // Clara introduced the Macro field for customizing the filename pattern of image files when writing them to disk.
+
+        /// <summary>
+        /// The version number of any version old than "Clara" or a version that cannot be determined.
+        /// </summary>
+        public const string CODEVERSION_CLARA = "2.1.8.2";
+
         private const string CODENAME_DALEK = "Dalek"; // Dalek made it possible to have an unlimited number of screens, apply labels to screenshots, and create user-defined macro tags.
 
         // The current major version.

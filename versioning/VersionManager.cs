@@ -64,8 +64,8 @@ namespace AutoScreenCapture
             {
                 // This is likely to be version 2.1 "Clara" before the concept of an "app:version"
                 // or the management of application versions even existed in Auto Screen Capture.
-                appCodenameToCheck = "Clara";
-                appVersionToCheck = "2.1.8.2";
+                appCodenameToCheck = Settings.CODENAME_CLARA;
+                appVersionToCheck = Settings.CODEVERSION_CLARA;
             }
 
             if (!string.IsNullOrEmpty(appCodenameToCheck) && !string.IsNullOrEmpty(appVersionToCheck))

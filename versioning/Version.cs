@@ -54,6 +54,12 @@ namespace AutoScreenCapture
         /// <param name="appVersion">The version number of the application (as a string value).</param>
         public Version(string appCodename, string appVersion)
         {
+            if (string.IsNullOrEmpty(appCodename) && string.IsNullOrEmpty(appVersion))
+            {
+                appCodename = Settings.CODENAME_CLARA;
+                appVersion = Settings.CODEVERSION_CLARA;
+            }
+
             Codename = appCodename;
             VersionString = appVersion;
             VersionNumber = Convert.ToInt32(appVersion.Replace(".", string.Empty));
@@ -68,6 +74,12 @@ namespace AutoScreenCapture
         /// <param name="isCurrentVersion"></param>
         public Version(string appCodename, string appVersion, bool isCurrentVersion)
         {
+            if (string.IsNullOrEmpty(appCodename) && string.IsNullOrEmpty(appVersion))
+            {
+                appCodename = Settings.CODENAME_CLARA;
+                appVersion = Settings.CODEVERSION_CLARA;
+            }
+
             Codename = appCodename;
             VersionString = appVersion;
             VersionNumber = Convert.ToInt32(appVersion.Replace(".", string.Empty));
