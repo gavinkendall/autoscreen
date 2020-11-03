@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-11-01 (November 1, 2020)
-[The information presented here refers to the latest version of the application (which is currently 2.3.3.0)]
+This file was last updated on 2020-11-03 (November 3, 2020)
+[The information presented here refers to the latest version of the application (which is currently 2.3.3.1)]
 ========================================================================================================================
 
 
@@ -694,18 +694,29 @@ Stops taking screenshots when the specified limit has been reached where x is an
 For example, "-limit=10" will take screenshots for 10 cycles and then stop after the 10th cycle.
 Each cycle represents taking screenshots of every screen and region for a single tick of the timer.
 
--passphrase=x
+-passphrase="x"
 Sets a word or a series of words to be used as the passphrase for challenging the user when the
 application is going to show its interface, stop taking screenshots, or exit ensuring that the application
 continues taking screenshots until the passphrase is entered.
 This locks the screen capture session until the passphrase is successfully entered to unlock the session.
 The passphrase is stored as a SHA-512 hash.
 
--config=filepath
+-config="filepath"
 Sets up various paths of the application's folders and files using a specified configuration file.
 (where filepath is the path and name of the configuration file to use)
 For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
 config file named "MyAutoScreenCapture.conf" on the C:\ drive.
+
+-label="x"
+Applies a label to each screenshot given the provided text.
+
+-activeWindowTitle="x"
+Sets the text for Active Window Title so that a screenshot will be taken only if the text
+matches with the title of the active window.
+
+-applicationFocus="x"
+Sets the name of the application (or process) which will be brought to the foreground
+during a screen capture session.
 
 A configuration file that can be used by Auto Screen Capture should, at a minimum,
 contain the following 11 lines representing key-value pairs that will be parsed by the

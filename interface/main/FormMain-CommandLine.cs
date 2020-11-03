@@ -81,7 +81,7 @@ namespace AutoScreenCapture
                     {
                         Log.DebugMode = !Log.DebugMode;
 
-                        Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = Log.DebugMode;
+                        Settings.Application.SetValueByKey("DebugMode", Log.DebugMode);
 
                         if (!Settings.Application.Save())
                         {
@@ -94,7 +94,7 @@ namespace AutoScreenCapture
                     {
                         Log.DebugMode = true;
 
-                        Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = true;
+                        Settings.Application.SetValueByKey("DebugMode", true);
 
                         if (!Settings.Application.Save())
                         {
@@ -107,7 +107,7 @@ namespace AutoScreenCapture
                     {
                         Log.DebugMode = false;
 
-                        Settings.Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value = false;
+                        Settings.Application.SetValueByKey("DebugMode", false);
                         
                         if (!Settings.Application.Save())
                         {
@@ -120,7 +120,7 @@ namespace AutoScreenCapture
                     {
                         Log.LoggingEnabled = !Log.LoggingEnabled;
 
-                        Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = Log.LoggingEnabled;
+                        Settings.Application.SetValueByKey("Logging", Log.LoggingEnabled);
 
                         if (!Settings.Application.Save())
                         {
@@ -133,7 +133,7 @@ namespace AutoScreenCapture
                     {
                         Log.LoggingEnabled = true;
 
-                        Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = true;
+                        Settings.Application.SetValueByKey("Logging", true);
 
                         if (!Settings.Application.Save())
                         {
@@ -146,7 +146,7 @@ namespace AutoScreenCapture
                     {
                         Log.LoggingEnabled = false;
 
-                        Settings.Application.GetByKey("Logging", DefaultSettings.Logging).Value = false;
+                        Settings.Application.SetValueByKey("Logging", false);
 
                         if (!Settings.Application.Save())
                         {
@@ -183,7 +183,7 @@ namespace AutoScreenCapture
                     // -showSystemTrayIcon
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON))
                     {
-                        Settings.User.GetByKey("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon).Value = true;
+                        Settings.User.SetValueByKey("ShowSystemTrayIcon", true);
 
                         if (!Settings.User.Save())
                         {
@@ -196,7 +196,7 @@ namespace AutoScreenCapture
                     // -hideSystemTrayIcon
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
                     {
-                        Settings.User.GetByKey("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon).Value = false;
+                        Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
                         if (!Settings.User.Save())
                         {
@@ -211,7 +211,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = !checkBoxInitialScreenshot.Checked;
 
-                        Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
+                        Settings.User.SetValueByKey("TakeInitialScreenshot", checkBoxInitialScreenshot.Checked);
 
                         if (!Settings.User.Save())
                         {
@@ -224,7 +224,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = true;
 
-                        Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = true;
+                        Settings.User.SetValueByKey("TakeInitialScreenshot", true);
 
                         if (!Settings.User.Save())
                         {
@@ -237,7 +237,7 @@ namespace AutoScreenCapture
                     {
                         checkBoxInitialScreenshot.Checked = false;
 
-                        Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = false;
+                        Settings.User.SetValueByKey("TakeInitialScreenshot", false);
 
                         if (!Settings.User.Save())
                         {
@@ -283,7 +283,7 @@ namespace AutoScreenCapture
                             _screenCapture.Interval = screenCaptureInterval;
                             timerScreenCapture.Interval = screenCaptureInterval;
 
-                            Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value = screenCaptureInterval;
+                            Settings.User.SetValueByKey("ScreenCaptureInterval", screenCaptureInterval);
 
                             if (!Settings.User.Save())
                             {
@@ -297,7 +297,7 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    // -passphrase=x
+                    // -passphrase="x"
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE))
                     {
                         string passphrase = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE).Groups["Passphrase"].Value;
@@ -309,7 +309,9 @@ namespace AutoScreenCapture
                                 Config.Load();
                             }
 
-                            Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = Security.Hash(passphrase);
+                            passphrase = passphrase.Trim();
+
+                            Settings.User.SetValueByKey("Passphrase", Security.Hash(passphrase));
 
                             if (!Settings.User.Save())
                             {
@@ -383,6 +385,87 @@ namespace AutoScreenCapture
                         if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
                         {
                             _screenCapture.ApplicationError = true;
+                        }
+                    }
+
+                    // -activeWindowTitle="x"
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE))
+                    {
+                        string activeWindowTitle = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE).Groups["ActiveWindowTitle"].Value;
+
+                        if (activeWindowTitle.Length > 0)
+                        {
+                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                            {
+                                Config.Load();
+                            }
+
+                            activeWindowTitle = activeWindowTitle.Trim();
+
+                            Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
+                            Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
+
+                            if (!Settings.User.Save())
+                            {
+                                _screenCapture.ApplicationError = true;
+                            }
+
+                            checkBoxActiveWindowTitle.Checked = true;
+                            textBoxActiveWindowTitle.Text = activeWindowTitle;
+
+                            _screenCapture.ActiveWindowTitle = activeWindowTitle;
+                        }
+                    }
+
+                    // -applicationFocus="x"
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS))
+                    {
+                        string applicationFocus = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS).Groups["ApplicationFocus"].Value;
+
+                        if (applicationFocus.Length > 0)
+                        {
+                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                            {
+                                Config.Load();
+                            }
+
+                            applicationFocus = applicationFocus.Trim();
+
+                            Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
+
+                            if (!Settings.User.Save())
+                            {
+                                _screenCapture.ApplicationError = true;
+                            }
+
+                            RefreshApplicationFocusList();
+                        }
+                    }
+
+                    // -label="x"
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LABEL))
+                    {
+                        string label = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_LABEL).Groups["Label"].Value;
+
+                        if (label.Length > 0)
+                        {
+                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                            {
+                                Config.Load();
+                            }
+
+                            label = label.Trim();
+
+                            Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
+                            Settings.User.SetValueByKey("ScreenshotLabel", label);
+
+                            if (!Settings.User.Save())
+                            {
+                                _screenCapture.ApplicationError = true;
+                            }
+
+                            checkBoxScreenshotLabel.Checked = true;
+                            comboBoxScreenshotLabel.Text = label;
                         }
                     }
                 }

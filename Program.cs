@@ -138,30 +138,7 @@ namespace AutoScreenCapture
             // The current running instance monitors the command file for the commands in the file.
             foreach (string arg in args)
             {
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_ON) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_DEBUG_OFF) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_ON) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LOG_OFF) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTURE) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_START) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOP) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_EXIT) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_ON) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INITIAL_OFF) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_LIMIT) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_INTERVAL) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_PASSPHRASE) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STARTAT) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_STOPAT) ||
-                    Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTUREAT))
-                {
-                    FileSystem.AppendToFile(FileSystem.CommandFile, arg);
-                }
+                FileSystem.AppendToFile(FileSystem.CommandFile, arg);
             }
         }
     }

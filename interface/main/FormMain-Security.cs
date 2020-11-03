@@ -34,7 +34,9 @@ namespace AutoScreenCapture
         {
             if (textBoxPassphrase.Text.Length > 0)
             {
-                Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = Security.Hash(textBoxPassphrase.Text);
+                textBoxPassphrase.Text = textBoxPassphrase.Text.Trim();
+
+                Settings.User.SetValueByKey("Passphrase", Security.Hash(textBoxPassphrase.Text));
                 SaveSettings();
 
                 textBoxPassphrase.Clear();

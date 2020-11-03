@@ -366,6 +366,8 @@ namespace AutoScreenCapture
                     {
                         string passphrase = GetByKey("StringPassphrase", string.Empty, createKeyIfNotFound: false).Value.ToString();
 
+                        passphrase = passphrase.Trim();
+
                         if (passphrase.Length > 0)
                         {
                             // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
