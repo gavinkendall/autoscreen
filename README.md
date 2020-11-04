@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-11-03 (November 3, 2020)
+This file was last updated on 2020-11-04 (November 4, 2020)
 
 **[The information presented here refers to the latest version of the application (which is currently 2.3.3.1)]**
 
@@ -327,7 +327,7 @@ The button with the cog will open the Change Region window enabling you to chang
 
 Modules - Editors
 -----------------
-This module enables you to setup your favourite image editors.
+This module enables you to setup your favourite image editors, scripts, or executable applications.
 
 The green button with the white plus will show a window where you can specify the name, application,
 and application arguments for the new image editor that you're adding to the list of editors.
@@ -348,13 +348,27 @@ the filepath of the last screenshot that was taken when a Trigger uses a specifi
 to open the screenshot in the editor.
 
 The "Default" checkbox sets the editor as the default editor to be used when you select
-"Capture Now -> Edit" from the system tray icon's menu.
+"Capture Now -> Edit" or any of the Region Select options from the system tray icon's menu.
 
 The button with the red cross button is used to remove a selected number of editors in the list.
 Select the editors you want to remove and then click the button to remove the selected editors.
 
 The button with the cog will open the Change Editor window enabling you to change properties.
 
+You can create a trigger to run a particular editor when a screenshot is taken.
+For example, WinSCP could be setup as an Editor with ...
+```
+Name: WinSCP
+Application: C:\Users\gkendall\AppData\Local\Programs\WinSCP\WinSCP.exe
+Arguments: /command "open sftp://sftpu:password@MYSERVER/" "put %filepath% MyScreenshot.jpeg" "exit"
+```
+... and then a trigger setup as ...
+```
+Name: Take Screenshot and SFTP
+Condition: Screenshot Taken
+Action: Run Editor
+Editor: WinSCP
+```
 
 
 Modules - Schedules
@@ -635,9 +649,11 @@ The following triggers are created by default on the first run of Auto Screen Ca
 Condition = ApplicationStartup -> Action = ShowInterface
 Condition = ScreenCaptureStarted -> Action = HideInterface
 Condition = ScreenCaptureStopped -> Action = ShowInterface
-Condition = InterfaceClosing -> Action = HideInterface
+Condition = InterfaceClosing -> Action = ExitApplication
 Condition = LimitReached -> Action = StopScreenCapture
 ```
+You may want to disable/deactivate or remove/delete any triggers that show the interface if you're
+wanting Auto Screen Capture to not show its interface for certain situations.
 
 System Tray Icon
 ----------------
@@ -704,7 +720,7 @@ every 2 hours, 30 minutes, and 10 seconds.
 Toggles logging. As of version 2.3.0.0 this command toggles logging on and off rather than
 simply enabling (or turning on) logging so be aware how frequently you use this command.
 For example, if logging is currently off then using "-log" will turn logging on and using "-log"
-again will turn it off. All log files, by default, are stored in the "!autoscreen\debug\logs" folder
+again will turn it off. All log files, by default, are stored in the "!autoscreen\logs" folder
 (and this folder path is configurable as of version 2.2.1.0). As of version 2.3.0.0 you can issue
 this command during a running instance of Auto Screen Capture.
 
@@ -762,12 +778,6 @@ continues taking screenshots until the passphrase is entered.
 This locks the screen capture session until the passphrase is successfully entered to unlock the session.
 The passphrase is stored as a SHA-512 hash.
 
--config="filepath"
-Sets up various paths of the application's folders and files using a specified configuration file.
-(where filepath is the path and name of the configuration file to use)
-For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
-config file named "MyAutoScreenCapture.conf" on the C:\ drive.
-
 -label="x"
 Applies a label to each screenshot given the provided text.
 
@@ -778,6 +788,12 @@ matches with the title of the active window.
 -applicationFocus="x"
 Sets the name of the application (or process) which will be brought to the foreground
 during a screen capture session.
+
+-config="filepath"
+Sets up various paths of the application's folders and files using a specified configuration file.
+(where filepath is the path and name of the configuration file to use)
+For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
+config file named "MyAutoScreenCapture.conf" on the C:\ drive.
 ```
 
 A configuration file that can be used by Auto Screen Capture should, at a minimum,
@@ -819,20 +835,23 @@ autoscreen.exe -interval=00:01:00.000
 Starts the application, waits for 1 minute, and then starts taking screenshots for every minute
 until the application is stopped.
 
-autoscreen.exe -interval=00:01:00.000 -initial -limit=10
+autoscreen.exe -interval=00:01:00.000 -initial=on -limit=10
 Starts the application, takes initial screenshots, waits for 1 minute, takes the next set of screenshots,
 waits for 1 minute, takes screenshots etc. until the application is stopped or
 a limit of 10 "cycles" has been reached.
 
-autoscreen.exe -interval=00:01:00.000 -initial -hideSystemTrayIcon
+autoscreen.exe -interval=00:01:00.000 -initial=on -hideSystemTrayIcon
 Starts the application, takes initial screenshots, waits for 1 minute, takes the next set of screenshots,
 waits for 1 minute, takes screenshots, etc. until the application is stopped.
 Also hides the system tray icon.
 
-autoscreen.exe -interval=00:01:00.000 -initial -startat=13:30:00 -stopat=21:30:00
+autoscreen.exe -interval=00:01:00.000 -initial=on -startat=13:30:00 -stopat=21:30:00
 Starts the application's timer at 1:30pm, takes initial screenshots, waits for 1 minute,
 takes the next set of screenshots, waits for 1 minute, etc. until the application's timer
 stops at 9:30pm or the application is stopped by the user.
+
+autoscreen.exe -applicationFocus="firefox" -capture -exit
+Starts the application, brings Firefox into the foreground, takes a screenshot of Firefox, and quits.
 
 ** Known Bug **
 An issue with parsing command line arguments was accidentally introduced in version 2.2.1.0
@@ -1049,15 +1068,15 @@ A few examples of user setting nodes in user.xml:
 
 ```
 <setting>
-    <key>IntScreenCaptureInterval</key>
+    <key>ScreenCaptureInterval</key>
     <value>60000</value>
 </setting>
 <setting>
-    <key>IntCaptureLimit</key>
+    <key>CaptureLimit</key>
     <value>100</value>
 </setting>
 <setting>
-    <key>IntKeepScreenshotsForDays</key>
+    <key>KeepScreenshotsForDays</key>
     <value>30</value>
 </setting>
 ```
@@ -1234,13 +1253,13 @@ It was uploaded to SourceForge in 2008 and then picked up, and distributed, by B
 A calendar was introduced and, by version 2.0.5, you could capture up to four displays. The interval
 was also updated in order for the user to specify hours, minutes, seconds, and milliseconds.
 
-  - 2.1 Series ("Clara")
+ - 2.1 Series ("Clara")
 
 You were now able to define how your files would be named by using a macro and macro tags instead
 of relying on the application's default filename pattern. The series was codenamed "Clara" because
 I would be watching Doctor Who (featuring Clara Oswald) while working on Auto Screen Capture :)
 
-  - 2.2 Series ("Dalek")
+ - 2.2 Series ("Dalek")
 
 The application took a major step forward with the ability to capture screenshots from multiple displays,
 filter screenshots, and automatically remove old screenshots. You can control the application's behaviour
@@ -1248,7 +1267,7 @@ with Triggers and customize filenames with your own Tags. You can also replace a
 binary with any 2.2 binary and it will upgrade its data system so that old screenshot references are
 updated with the newest reference schema.
 
-  - 2.3 Series ("Boombayah")
+ - 2.3 Series ("Boombayah")
 
 Commands can now be issued to a running instance of the application!
 These include ...
@@ -1269,6 +1288,9 @@ These include ...
 -log=off
 -hideSystemTrayIcon
 -showSystemTrayIcon
+-label
+-activeWindowTitle
+-applicationFocus
 ```
 
 Also introduced is the ability to activate and deactivate screens, regions, schedules, tags, and triggers.
@@ -1281,8 +1303,3 @@ You can define length of filepaths with the FilepathLengthLimit application sett
 It's also much faster at startup (even with a lot of screenshot references being available).
 The codename for this version is based on "Boombayah" by BLACKPINK (https://youtu.be/bwmSjveL3Lc)
 since this was constantly playing in the background while I was writing the code for 2.3.0.0 :)
-
-
-I copied the text from readme.txt and formated agent use markdown. Except some chages with markdown tags, there is no change on the content at all. 
-It looks better now. 
-
