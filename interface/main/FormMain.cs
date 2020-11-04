@@ -204,13 +204,12 @@ namespace AutoScreenCapture
 
                 runDateSearchThread.DoWork += new DoWorkEventHandler(DoWork_runDateSearchThread);
             }
-            else
+
+            if (!runDateSearchThread.IsBusy)
             {
-                if (!runDateSearchThread.IsBusy)
-                {
-                    runDateSearchThread.RunWorkerAsync();
-                }
+                runDateSearchThread.RunWorkerAsync();
             }
+
         }
 
         private void DeleteSlides()
@@ -227,12 +226,10 @@ namespace AutoScreenCapture
 
                 runDeleteSlidesThread.DoWork += new DoWorkEventHandler(DoWork_runDeleteSlidesThread);
             }
-            else
+
+            if (!runDeleteSlidesThread.IsBusy)
             {
-                if (!runDeleteSlidesThread.IsBusy)
-                {
-                    runDeleteSlidesThread.RunWorkerAsync();
-                }
+                runDeleteSlidesThread.RunWorkerAsync();
             }
         }
 

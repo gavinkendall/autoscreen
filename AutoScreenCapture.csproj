@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AutoScreenCapture</RootNamespace>
-    <AssemblyName>autoscreen</AssemblyName>
+    <AssemblyName>AutoScreenCapture</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>autoscreen.ico</ApplicationIcon>
@@ -48,7 +48,7 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\autoscreen.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\AutoScreenCapture.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -367,7 +367,12 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="Gavin.Kendall.SFTP\Gavin.Kendall.SFTP.csproj">
+      <Project>{0c6e9617-7386-4d38-bea9-f71f48226fac}</Project>
+      <Name>Gavin.Kendall.SFTP</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

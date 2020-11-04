@@ -1,16 +1,16 @@
 ﻿using System.Reflection;
-using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Auto Screen Capture")]
-[assembly: AssemblyDescription("Automated screen capture utility for gamers, designers, and testers")]
+[assembly: AssemblyTitle("Gavin.Kendall.SFTP")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Gavin Kendall")]
-[assembly: AssemblyProduct("Auto Screen Capture")]
-[assembly: AssemblyCopyright("2008 - 2020 Gavin Kendall")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Gavin.Kendall.SFTP")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a9bfbcbc-30dc-4898-bde1-299f1f8522e0")]
+[assembly: Guid("0c6e9617-7386-4d38-bea9-f71f48226fac")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,6 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.3.4.0")]
-[assembly: AssemblyFileVersion("2.3.4.0")]
-[assembly: NeutralResourcesLanguageAttribute("en-CA")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
