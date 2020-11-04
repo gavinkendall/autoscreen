@@ -308,7 +308,7 @@ The button with the cog will open the Change Region window enabling you to chang
 
 Modules - Editors
 -----------------
-This module enables you to setup your favourite image editors.
+This module enables you to setup your favourite image editors, scripts, or executable applications.
 
 The green button with the white plus will show a window where you can specify the name, application,
 and application arguments for the new image editor that you're adding to the list of editors.
@@ -329,12 +329,23 @@ the filepath of the last screenshot that was taken when a Trigger uses a specifi
 to open the screenshot in the editor.
 
 The "Default" checkbox sets the editor as the default editor to be used when you select
-"Capture Now -> Edit" from the system tray icon's menu.
+"Capture Now -> Edit" or any of the Region Select options from the system tray icon's menu.
 
 The button with the red cross button is used to remove a selected number of editors in the list.
 Select the editors you want to remove and then click the button to remove the selected editors.
 
 The button with the cog will open the Change Editor window enabling you to change properties.
+
+You can create a trigger to run a particular editor when a screenshot is taken.
+For example, WinSCP could be setup as an Editor with ...
+Name: WinSCP
+Application: C:\Users\gkendall\AppData\Local\Programs\WinSCP\WinSCP.exe
+Arguments: /command "open sftp://sftpu:password@MYSERVER/" "put %filepath% MyScreenshot.jpeg" "exit"
+... and then a trigger setup as ...
+Name: Take Screenshot and SFTP
+Condition: Screenshot Taken
+Action: Run Editor
+Editor: WinSCP
 
 
 
@@ -646,7 +657,7 @@ every 2 hours, 30 minutes, and 10 seconds.
 Toggles logging. As of version 2.3.0.0 this command toggles logging on and off rather than
 simply enabling (or turning on) logging so be aware how frequently you use this command.
 For example, if logging is currently off then using "-log" will turn logging on and using "-log"
-again will turn it off. All log files, by default, are stored in the "!autoscreen\debug\logs" folder
+again will turn it off. All log files, by default, are stored in the "!autoscreen\logs" folder
 (and this folder path is configurable as of version 2.2.1.0). As of version 2.3.0.0 you can issue
 this command during a running instance of Auto Screen Capture.
 
@@ -755,20 +766,23 @@ autoscreen.exe -interval=00:01:00.000
 Starts the application, waits for 1 minute, and then starts taking screenshots for every minute
 until the application is stopped.
 
-autoscreen.exe -interval=00:01:00.000 -initial -limit=10
+autoscreen.exe -interval=00:01:00.000 -initial=on -limit=10
 Starts the application, takes initial screenshots, waits for 1 minute, takes the next set of screenshots,
 waits for 1 minute, takes screenshots etc. until the application is stopped or
 a limit of 10 "cycles" has been reached.
 
-autoscreen.exe -interval=00:01:00.000 -initial -hideSystemTrayIcon
+autoscreen.exe -interval=00:01:00.000 -initial=on -hideSystemTrayIcon
 Starts the application, takes initial screenshots, waits for 1 minute, takes the next set of screenshots,
 waits for 1 minute, takes screenshots, etc. until the application is stopped.
 Also hides the system tray icon.
 
-autoscreen.exe -interval=00:01:00.000 -initial -startat=13:30:00 -stopat=21:30:00
+autoscreen.exe -interval=00:01:00.000 -initial=on -startat=13:30:00 -stopat=21:30:00
 Starts the application's timer at 1:30pm, takes initial screenshots, waits for 1 minute,
 takes the next set of screenshots, waits for 1 minute, etc. until the application's timer
 stops at 9:30pm or the application is stopped by the user.
+
+autoscreen.exe -applicationFocus="firefox" -capture -exit
+Starts the application, brings Firefox into the foreground, takes a screenshot of Firefox, and quits.
 
 ** Known Bug **
 An issue with parsing command line arguments was accidentally introduced in version 2.2.1.0
