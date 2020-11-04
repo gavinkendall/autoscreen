@@ -52,6 +52,51 @@ This is where to view the source code, fork from the project, and submit pull re
 
 
 
+Video Tutorials
+---------------
+There are a number of videos on YouTube which demonstrate the features of Auto Screen Capture.
+
+Quick Demo
+https://youtu.be/0Mv9tb2OLss
+
+The Basics
+https://youtu.be/TPeHXZHhZpA
+
+Hidden Startup
+https://youtu.be/U-2WExUUdTw
+
+Snagit Editor
+https://youtu.be/_u3RpDl_Df4
+
+Naming Files With Macro Tags
+https://youtu.be/6o73hn2pCxg
+
+Active Window Title
+https://youtu.be/rkeXjxOQJwM
+
+Schedules
+https://youtu.be/pwvGvLBttg8
+
+Multiple Regions
+https://youtu.be/iXPtGo0kInQ
+
+Region Select / Auto Save
+https://youtu.be/woz-D8XKL5I
+
+Region Select / Edit
+https://youtu.be/ryTjdWOei5A
+
+Command Line Options
+https://youtu.be/zLPFJetI_5k
+
+Labels
+https://youtu.be/HzfMWGQyz5E
+
+Time Range Macro Tag Type
+https://youtu.be/DvK5VI6TnHQ
+
+
+
 Introduction to Modules
 -----------------------
 When you open Auto Screen Capture's interface you're going to see a number of tabs on the left side
