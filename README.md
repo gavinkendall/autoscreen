@@ -1,5 +1,4 @@
 # Auto Screen Capture
-### Gavin Kendall
 
 
 
