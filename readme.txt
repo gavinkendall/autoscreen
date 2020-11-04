@@ -1,5 +1,5 @@
 Auto Screen Capture by Gavin Kendall
-This file was last updated on 2020-11-03 (November 3, 2020)
+This file was last updated on 2020-11-04 (November 4, 2020)
 [The information presented here refers to the latest version of the application (which is currently 2.3.3.1)]
 ========================================================================================================================
 
@@ -577,8 +577,11 @@ The following triggers are created by default on the first run of Auto Screen Ca
 Condition = ApplicationStartup -> Action = ShowInterface
 Condition = ScreenCaptureStarted -> Action = HideInterface
 Condition = ScreenCaptureStopped -> Action = ShowInterface
-Condition = InterfaceClosing -> Action = HideInterface
+Condition = InterfaceClosing -> Action = ExitApplication
 Condition = LimitReached -> Action = StopScreenCapture
+
+You may want to disable/deactivate or remove/delete any triggers that show the interface if you're
+wanting Auto Screen Capture to not show its interface for certain situations.
 
 
 
@@ -701,12 +704,6 @@ continues taking screenshots until the passphrase is entered.
 This locks the screen capture session until the passphrase is successfully entered to unlock the session.
 The passphrase is stored as a SHA-512 hash.
 
--config="filepath"
-Sets up various paths of the application's folders and files using a specified configuration file.
-(where filepath is the path and name of the configuration file to use)
-For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
-config file named "MyAutoScreenCapture.conf" on the C:\ drive.
-
 -label="x"
 Applies a label to each screenshot given the provided text.
 
@@ -717,6 +714,12 @@ matches with the title of the active window.
 -applicationFocus="x"
 Sets the name of the application (or process) which will be brought to the foreground
 during a screen capture session.
+
+-config="filepath"
+Sets up various paths of the application's folders and files using a specified configuration file.
+(where filepath is the path and name of the configuration file to use)
+For example, "-config=C:\MyAutoScreenCapture.conf" will start the application using the
+config file named "MyAutoScreenCapture.conf" on the C:\ drive.
 
 A configuration file that can be used by Auto Screen Capture should, at a minimum,
 contain the following 11 lines representing key-value pairs that will be parsed by the
@@ -947,15 +950,15 @@ This file is for user settings such as screen capture interval, setting a limit 
 many screenshots should be taken, and how many days old screenshots should be kept for.
 A few examples of user setting nodes in user.xml:
 <setting>
-    <key>IntScreenCaptureInterval</key>
+    <key>ScreenCaptureInterval</key>
     <value>60000</value>
 </setting>
 <setting>
-    <key>IntCaptureLimit</key>
+    <key>CaptureLimit</key>
     <value>100</value>
 </setting>
 <setting>
-    <key>IntKeepScreenshotsForDays</key>
+    <key>KeepScreenshotsForDays</key>
     <value>30</value>
 </setting>
 
@@ -1137,6 +1140,9 @@ These include ...
 -log=off
 -hideSystemTrayIcon
 -showSystemTrayIcon
+-label
+-activeWindowTitle
+-applicationFocus
 Also introduced is the ability to activate and deactivate screens, regions, schedules, tags, and triggers.
 You can now set an image editor to be your default editor when using "Capture Now -> Edit".
 Another amazing enhancement are the multiple schedules that you can create and being able to have better
