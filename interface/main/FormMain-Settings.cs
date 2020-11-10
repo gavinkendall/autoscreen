@@ -283,16 +283,21 @@ namespace AutoScreenCapture
                 }
             }
 
-            int indexOf = comboBoxProcessList.Items.IndexOf(Settings.User.GetByKey("ApplicationFocus", DefaultSettings.ApplicationFocus).Value.ToString());
+            string applicationFocus = Settings.User.GetByKey("ApplicationFocus", DefaultSettings.ApplicationFocus).Value.ToString();
 
-            if (indexOf == -1)
+            if (string.IsNullOrEmpty(applicationFocus))
             {
                 comboBoxProcessList.SelectedIndex = 0;
+
+                return;
             }
-            else
+
+            if (!comboBoxProcessList.Items.Contains(applicationFocus))
             {
-                comboBoxProcessList.SelectedIndex = indexOf;
+                comboBoxProcessList.Items.Add(applicationFocus);
             }
+
+            comboBoxProcessList.SelectedIndex = comboBoxProcessList.Items.IndexOf(applicationFocus);            
         }
     }
 }

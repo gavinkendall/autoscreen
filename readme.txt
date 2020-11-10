@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
 
-[The information presented here refers to the latest version of the application (which is currently 2.3.3.1)]
+[The information presented here refers to the latest version of the application (which is currently 2.3.3.2)]
 ========================================================================================================================
 
 

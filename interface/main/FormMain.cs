@@ -99,7 +99,7 @@ namespace AutoScreenCapture
             InitializeComponent();
 
             RegisterKeyboardShortcuts();
-            _hotKeyMap.KeyPressed +=  new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
+            _hotKeyMap.KeyPressed += new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
 
             LoadSettings();
 
@@ -241,7 +241,7 @@ namespace AutoScreenCapture
         {
             if (monthCalendar.InvokeRequired)
             {
-                monthCalendar.Invoke(new RunDateSearchDelegate(RunDateSearch), new object[] {e});
+                monthCalendar.Invoke(new RunDateSearchDelegate(RunDateSearch), new object[] { e });
             }
             else
             {

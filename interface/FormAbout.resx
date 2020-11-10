@@ -323,6 +323,7 @@ END OF TERMS AND CONDITIONS</value>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
 2.3.4.0    SFTP support.
+2.3.3.2    Can now run an Editor without arguments or without %filepath% tag when using Run Editor trigger action. Includes changes to version collection, change to how Application Focus behaves when application not found (so now adds the application to the process list regardless), and bug fix applied to threads.
 2.3.3.1    New command line arguments -activeWindowTitle, -applicationFocus, and -label.
 2.3.3.0    Application Focus moved from Screen to Setup. Fixed Application Focus bug with Active Window Title. Renamed user setting keys. New method for capturing device display resolution.
 2.3.2.9    Application Focus implemented for Screen.
