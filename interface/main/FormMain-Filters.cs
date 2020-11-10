@@ -91,12 +91,10 @@ namespace AutoScreenCapture
 
                 runFilterSearchThread.DoWork += new DoWorkEventHandler(DoWork_runFilterSearchThread);
             }
-            else
+
+            if (!runFilterSearchThread.IsBusy)
             {
-                if (!runFilterSearchThread.IsBusy)
-                {
-                    runFilterSearchThread.RunWorkerAsync();
-                }
+                runFilterSearchThread.RunWorkerAsync();
             }
 
             comboBoxFilterValue.EndUpdate();

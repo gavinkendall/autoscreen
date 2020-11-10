@@ -105,12 +105,10 @@ namespace AutoScreenCapture
 
                 runSaveScreenshotsThread.DoWork += new DoWorkEventHandler(DoWork_runSaveScreenshotsThread);
             }
-            else
+
+            if (!runSaveScreenshotsThread.IsBusy)
             {
-                if (!runSaveScreenshotsThread.IsBusy)
-                {
-                    runSaveScreenshotsThread.RunWorkerAsync();
-                }
+                runSaveScreenshotsThread.RunWorkerAsync();
             }
         }
 
@@ -138,12 +136,10 @@ namespace AutoScreenCapture
 
                 runScreenshotSearchThread.DoWork += new DoWorkEventHandler(DoWork_runScreenshotSearchThread);
             }
-            else
+
+            if (!runScreenshotSearchThread.IsBusy)
             {
-                if (!runScreenshotSearchThread.IsBusy)
-                {
-                    runScreenshotSearchThread.RunWorkerAsync();
-                }
+                runScreenshotSearchThread.RunWorkerAsync();
             }
 
             listBoxScreenshots.EndUpdate();

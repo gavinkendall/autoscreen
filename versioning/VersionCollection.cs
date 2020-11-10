@@ -28,7 +28,15 @@ namespace AutoScreenCapture
     /// </summary>
     public class VersionCollection : IEnumerable<Version>
     {
-        private readonly List<Version> _versionList = new List<Version>();
+        private readonly List<Version> _versionList;
+
+        /// <summary>
+        /// A collection class to store and manage Version objects.
+        /// </summary>
+        public VersionCollection()
+        {
+            _versionList = new List<Version>();
+        }
 
         /// <summary>
         /// Returns the enumerator for the collection.
@@ -75,7 +83,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            return null;
+            // Assume we're handling "Clara" 2.1.8.2 instead of returning null because that will just mess up the upgrade path
+            return new Version(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
         }
     }
 }
