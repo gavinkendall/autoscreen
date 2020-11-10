@@ -139,16 +139,16 @@ namespace AutoScreenCapture
         /// <summary>
         /// Regex for parsing the -activeWindowTitle command.
         /// </summary>
-        public const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE = "^-activeWindowTitle=(?<ActiveWindowTitle>.+)$";
+        public const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE = "^-activeWindowTitle=(?<ActiveWindowTitle>.*)$";
 
         /// <summary>
         /// Regex for parsing the -applicationFocus command.
         /// </summary>
-        public const string REGEX_COMMAND_LINE_APPLICATION_FOCUS = "^-applicationFocus=(?<ApplicationFocus>.+)$";
+        public const string REGEX_COMMAND_LINE_APPLICATION_FOCUS = "^-applicationFocus=(?<ApplicationFocus>.*)$";
 
         /// <summary>
         /// Regex for parsing the -label command.
         /// </summary>
-        public const string REGEX_COMMAND_LINE_LABEL = "^-label=(?<Label>.+)$";
+        public const string REGEX_COMMAND_LINE_LABEL = "^-label=(?<Label>.*)$";
     }
 }

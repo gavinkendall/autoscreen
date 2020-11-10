@@ -393,27 +393,33 @@ namespace AutoScreenCapture
                     {
                         string activeWindowTitle = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE).Groups["ActiveWindowTitle"].Value;
 
-                        if (activeWindowTitle.Length > 0)
+                        if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
-                            {
-                                Config.Load();
-                            }
+                            Config.Load();
+                        }
 
+                        if (string.IsNullOrEmpty(activeWindowTitle))
+                        {
+                            Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
+
+                            checkBoxActiveWindowTitle.Checked = false;
+                        }
+                        else
+                        {
                             activeWindowTitle = activeWindowTitle.Trim();
 
                             Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
                             Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
 
-                            if (!Settings.User.Save())
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
                             checkBoxActiveWindowTitle.Checked = true;
                             textBoxActiveWindowTitle.Text = activeWindowTitle;
 
                             _screenCapture.ActiveWindowTitle = activeWindowTitle;
+                        }
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
                         }
                     }
 
@@ -422,24 +428,28 @@ namespace AutoScreenCapture
                     {
                         string applicationFocus = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS).Groups["ApplicationFocus"].Value;
 
-                        if (applicationFocus.Length > 0)
+                        if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
-                            {
-                                Config.Load();
-                            }
+                            Config.Load();
+                        }
 
+                        if (string.IsNullOrEmpty(applicationFocus))
+                        {
+                            Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
+                        }
+                        else
+                        {
                             applicationFocus = applicationFocus.Trim();
 
                             Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
-
-                            if (!Settings.User.Save())
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
-                            RefreshApplicationFocusList();
                         }
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        RefreshApplicationFocusList();
                     }
 
                     // -label="x"
@@ -447,25 +457,31 @@ namespace AutoScreenCapture
                     {
                         string label = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_LABEL).Groups["Label"].Value;
 
-                        if (label.Length > 0)
+                        if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
-                            {
-                                Config.Load();
-                            }
+                            Config.Load();
+                        }
 
+                        if (string.IsNullOrEmpty(label))
+                        {
+                            Settings.User.SetValueByKey("ApplyScreenshotLabel", false);
+
+                            checkBoxScreenshotLabel.Checked = false;
+                        }
+                        else
+                        {
                             label = label.Trim();
 
                             Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
                             Settings.User.SetValueByKey("ScreenshotLabel", label);
 
-                            if (!Settings.User.Save())
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
                             checkBoxScreenshotLabel.Checked = true;
                             comboBoxScreenshotLabel.Text = label;
+                        }
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
                         }
                     }
                 }

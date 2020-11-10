@@ -433,18 +433,6 @@ namespace AutoScreenCapture
             }
         }
 
-        private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxActiveWindowTitle.Checked)
-            {
-                textBoxActiveWindowTitle.Enabled = true;
-            }
-            else
-            {
-                textBoxActiveWindowTitle.Enabled = false;
-            }
-        }
-
         private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
         {
             ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);

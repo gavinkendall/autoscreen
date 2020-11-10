@@ -165,7 +165,7 @@ namespace AutoScreenCapture
             if (editor != null && triggerActionType == TriggerActionType.RunEditor)
             {
                 // Assume we're going to be passing in the path of the screenshot image to the program.
-                if (editor.Arguments.Contains("%filepath%"))
+                if (editor.Arguments != null && editor.Arguments.Contains("%filepath%"))
                 {
                     DateTime dt = _screenCapture.DateTimeScreenshotsTaken;
 
@@ -203,7 +203,8 @@ namespace AutoScreenCapture
         {
             // Execute the chosen image editor. If the %filepath% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
-            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
+            if (editor != null && editor.Arguments != null && !string.IsNullOrEmpty(editor.Arguments) &&
+                    (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
                 FileSystem.FileExists(editor.Application) && FileSystem.FileExists(screenshot.Path)))
             {
                 Log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
@@ -232,7 +233,7 @@ namespace AutoScreenCapture
             {
                 if (editor != null && FileSystem.FileExists(editor.Application))
                 {
-                    if (!string.IsNullOrEmpty(editor.Arguments))
+                    if (editor.Arguments != null && !string.IsNullOrEmpty(editor.Arguments))
                     {
                         _ = Process.Start(editor.Application, editor.Arguments);
                     }

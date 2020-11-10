@@ -53,6 +53,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorTools = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemCaptureNowArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCaptureNow = new System.Windows.Forms.ToolStripSeparator();
@@ -130,7 +131,6 @@ namespace AutoScreenCapture
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -301,7 +301,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(222, 354);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(222, 332);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -364,6 +364,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(221, 22);
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
+            // 
+            // toolStripSeparatorScreenCapture
+            // 
+            this.toolStripSeparatorScreenCapture.Name = "toolStripSeparatorScreenCapture";
+            this.toolStripSeparatorScreenCapture.Size = new System.Drawing.Size(218, 6);
             // 
             // toolStripMenuItemCaptureNowArchive
             // 
@@ -606,7 +611,6 @@ namespace AutoScreenCapture
             this.checkBoxActiveWindowTitle.TabStop = false;
             this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
             this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
-            this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
             // 
             // groupBoxSecurity
             // 
@@ -1194,11 +1198,6 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Enabled = true;
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
-            // 
-            // toolStripSeparatorScreenCapture
-            // 
-            this.toolStripSeparatorScreenCapture.Name = "toolStripSeparatorScreenCapture";
-            this.toolStripSeparatorScreenCapture.Size = new System.Drawing.Size(218, 6);
             // 
             // FormMain
             // 
