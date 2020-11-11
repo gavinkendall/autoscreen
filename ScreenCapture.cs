@@ -292,28 +292,41 @@ namespace AutoScreenCapture
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);
         }
 
-        private static string GetMD5Hash(Bitmap bitmap, ImageFormat format)
+        private void AddScreenshotAndSaveToFile(int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
-            byte[] bytes = null;
+            string dirName = FileSystem.GetDirectoryName(screenshot.Path);
 
-            using (MemoryStream ms = new MemoryStream())
+            if (string.IsNullOrEmpty(dirName))
             {
-                bitmap.Save(ms, format.Format);
-                bytes = ms.ToArray();
+                Log.WriteDebugMessage("Directory name for screenshot with path \"" + screenshot.Path + "\" could not be found");
+
+                return;
             }
 
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-
-            byte[] hash = md5.ComputeHash(bytes);
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (byte b in hash)
+            try
             {
-                sb.Append(b.ToString("x2").ToLower());
-            }
+                if (!FileSystem.DirectoryExists(dirName))
+                {
+                    FileSystem.CreateDirectory(dirName);
 
-            return sb.ToString();
+                    Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
+                }
+
+                if (screenshotCollection.Add(screenshot))
+                {
+                    SaveToFile(screenshot.Path, screenshot.Format, jpegQuality, screenshot.Bitmap);
+                }
+                else
+                {
+                    Log.WriteErrorMessage("Could not save screenshot with path \"" + screenshot.Path + "\" due to error adding to screenshot collection");
+                }
+            }
+            catch (Exception)
+            {
+                // We don't want to stop the screen capture session at this point because there may be other components that
+                // can write to their given paths. If this is a misconfigured path for a particular component then just log an error.
+                Log.WriteErrorMessage($"Cannot write to \"{screenshot.Path}\" because the user may not have the appropriate permissions to access the path");
+            }
         }
 
         private void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
@@ -640,96 +653,44 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the captured bitmap image as a screenshot to an image file.
         /// </summary>
-        /// <param name="path">The filepath of the image file to write to.</param>
-        /// <param name="format">The format of the image file.</param>
-        /// <param name="component">The component of the screenshot to be saved. This could be the active window or a screen.</param>
-        /// <param name="screenshotType">The type of screenshot to save. This could be the active window, a region, or a screen.</param>
         /// <param name="jpegQuality">The JPEG quality setting for JPEG images being saved.</param>
-        /// <param name="viewId">The unique identifier to identify a particular region or screen.</param>
-        /// <param name="bitmap">The bitmap image to write to the image file.</param>
-        /// <param name="label">The current label being used at the time of capture which we will apply to the screenshot object.</param>
-        /// <param name="windowTitle">The title of the window being captured.</param>
-        /// <param name="processName">The process name of the application being captured.</param>
+        /// <param name="screenshot">The screenshot to save.</param>
         /// <param name="screenshotCollection">A collection of screenshot objects.</param>
         /// <returns>A boolean to determine if we successfully saved the screenshot.</returns>
-        public bool SaveScreenshot(string path, ImageFormat format, int component, ScreenshotType screenshotType, int jpegQuality,
-            Guid viewId, Bitmap bitmap, string label, string windowTitle, string processName, ScreenshotCollection screenshotCollection)
+        public bool SaveScreenshot(int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             try
             {
                 int filepathLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit).Value);
-                bool optimizeScreenCapture = Convert.ToBoolean(Settings.Application.GetByKey("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture).Value);
-
-                if (!string.IsNullOrEmpty(path))
+                
+                if (!string.IsNullOrEmpty(screenshot.Path))
                 {
-                    if (path.Length > filepathLengthLimit)
+                    if (screenshot.Path.Length > filepathLengthLimit)
                     {
                         Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
-                        path = path.Substring(0, filepathLengthLimit);
+                        screenshot.Path = screenshot.Path.Substring(0, filepathLengthLimit);
                     }
 
-                    Log.WriteMessage("Attempting to write image to file at path \"" + path + "\"");
+                    Log.WriteMessage("Attempting to write image to file at path \"" + screenshot.Path + "\"");
 
                     // This is a normal path used in Windows (such as "C:\screenshots\").
-                    if (!path.StartsWith(FileSystem.PathDelimiter))
+                    if (!screenshot.Path.StartsWith(FileSystem.PathDelimiter))
                     {
-                        if (FileSystem.DriveReady(path))
+                        if (FileSystem.DriveReady(screenshot.Path))
                         {
                             int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold).Value);
-                            double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(path);
+                            double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(screenshot.Path);
 
-                            Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
+                            Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.Path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
 
                             if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                             {
-                                string dirName = FileSystem.GetDirectoryName(path);
-
-                                if (!string.IsNullOrEmpty(dirName))
-                                {
-                                    if (!FileSystem.DirectoryExists(dirName))
-                                    {
-                                        FileSystem.CreateDirectory(dirName);
-
-                                        Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
-                                    }
-
-                                    Screenshot lastScreenshotOfThisView = screenshotCollection.GetLastScreenshotOfView(viewId);
-
-                                    Screenshot newScreenshotOfThisView = new Screenshot(windowTitle, DateTimeScreenshotsTaken)
-                                    {
-                                        ViewId = viewId,
-                                        Path = path,
-                                        Format = format,
-                                        Component = component,
-                                        ScreenshotType = screenshotType,
-                                        ProcessName = processName + ".exe",
-                                        Label = label
-                                    };
-
-                                    if (optimizeScreenCapture)
-                                    {
-                                        newScreenshotOfThisView.Hash = GetMD5Hash(bitmap, format);
-
-                                        if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
-                                            !lastScreenshotOfThisView.Hash.Equals(newScreenshotOfThisView.Hash))
-                                        {
-                                            screenshotCollection.Add(newScreenshotOfThisView);
-
-                                            SaveToFile(path, format, jpegQuality, bitmap);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        screenshotCollection.Add(newScreenshotOfThisView);
-
-                                        SaveToFile(path, format, jpegQuality, bitmap);
-                                    }
-                                }
+                                AddScreenshotAndSaveToFile(jpegQuality, screenshot, screenshotCollection);
                             }
                             else
                             {
                                 // There is not enough disk space on the drive so log an error message and change the system tray icon's colour to yellow.
-                                Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "%");
+                                Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {screenshot.Path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "%");
 
                                 bool stopOnLowDiskError = Convert.ToBoolean(Settings.Application.GetByKey("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError).Value);
 
@@ -748,64 +709,13 @@ namespace AutoScreenCapture
                         else
                         {
                             // Drive isn't ready so log an error message.
-                            Log.WriteErrorMessage($"Unable to save screenshot for \"{path}\" because the drive is not found or not ready");
+                            Log.WriteErrorMessage($"Unable to save screenshot for \"{screenshot.Path}\" because the drive is not found or not ready");
                         }
                     }
                     else
                     {
-                        // This is UNC network share path (such as "\\SERVER\screenshots\").
-                        string dirName = FileSystem.GetDirectoryName(path);
-
-                        if (!string.IsNullOrEmpty(dirName))
-                        {
-                            try
-                            {
-                                if (!FileSystem.DirectoryExists(dirName))
-                                {
-                                    FileSystem.CreateDirectory(dirName);
-
-                                    Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
-                                }
-
-                                Screenshot lastScreenshotOfThisView = screenshotCollection.GetLastScreenshotOfView(viewId);
-
-                                Screenshot newScreenshotOfThisView = new Screenshot(windowTitle, DateTimeScreenshotsTaken)
-                                {
-                                    ViewId = viewId,
-                                    Path = path,
-                                    Format = format,
-                                    Component = component,
-                                    ScreenshotType = screenshotType,
-                                    ProcessName = processName + ".exe",
-                                    Label = label
-                                };
-
-                                if (optimizeScreenCapture)
-                                {
-                                    newScreenshotOfThisView.Hash = GetMD5Hash(bitmap, format);
-
-                                    if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
-                                        !lastScreenshotOfThisView.Hash.Equals(newScreenshotOfThisView.Hash))
-                                    {
-                                        screenshotCollection.Add(newScreenshotOfThisView);
-
-                                        SaveToFile(path, format, jpegQuality, bitmap);
-                                    }
-                                }
-                                else
-                                {
-                                    screenshotCollection.Add(newScreenshotOfThisView);
-
-                                    SaveToFile(path, format, jpegQuality, bitmap);
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                // We don't want to stop the screen capture session at this point because there may be other components that
-                                // can write to their given paths. If this is a misconfigured path for a particular component then just log an error.
-                                Log.WriteErrorMessage($"Cannot write to \"{path}\" because the user may not have the appropriate permissions to access the path");
-                            }
-                        }
+                        // This is a UNC network share path (such as "\\SERVER\screenshots\").
+                        AddScreenshotAndSaveToFile(jpegQuality, screenshot, screenshotCollection);
                     }
                 }
 
@@ -813,7 +723,7 @@ namespace AutoScreenCapture
             }
             catch (System.IO.PathTooLongException ex)
             {
-                Log.WriteErrorMessage($"The path is too long. I see the path is \"{path}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
+                Log.WriteErrorMessage($"The path is too long. I see the path is \"{screenshot.Path}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
                 Log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
 
                 // This shouldn't be an error that should stop a screen capture session.
@@ -851,6 +761,36 @@ namespace AutoScreenCapture
                     ShowWindowAsync(proc.MainWindowHandle, (int)ShowWindowCommands.Normal);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the MD5 hash of the bitmap image based on image format.
+        /// </summary>
+        /// <param name="bitmap">The bitmap to operate on.</param>
+        /// <param name="format">The image format to use.</param>
+        /// <returns>A hash of the image.</returns>
+        public static string GetMD5Hash(Bitmap bitmap, ImageFormat format)
+        {
+            byte[] bytes = null;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, format.Format);
+                bytes = ms.ToArray();
+            }
+
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+
+            byte[] hash = md5.ComputeHash(bytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (byte b in hash)
+            {
+                sb.Append(b.ToString("x2").ToLower());
+            }
+
+            return sb.ToString();
         }
     }
 }

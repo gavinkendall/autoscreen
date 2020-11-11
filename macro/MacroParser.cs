@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         private static readonly string WindowsPathRegexPattern = "^(?<DriveOrUNCPrefix>[A-Z]:\\\\{1}|\\\\{1})(?<Path>.+)$";
 
         /// <summary>
-        /// The screen capture class is needed for some of the macro tag parsing.
+        /// The screen capture class needed for some of the macro tag parsing.
         /// </summary>
         public static ScreenCapture screenCapture;
 

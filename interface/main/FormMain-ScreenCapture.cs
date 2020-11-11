@@ -163,8 +163,11 @@ namespace AutoScreenCapture
         {
             _formScreen.RefreshScreenDictionary();
 
+            // Test to see if we can get images of the screen before continuing.
             if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
             {
+                MacroParser.screenCapture = _screenCapture;
+
                 _screenCapture.Count++;
                 _screenCapture.CaptureNow = captureNow;
 
@@ -183,16 +186,24 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                {
+                    // Do not continue if the active window title needs to be checked and the active window title
+                    // does not contain the text defined in "Active Window Title Capture Text" and CaptureNow is false.
+                    // CaptureNow could be set to "true" during a "Capture Now / Archive" or "Capture Now / Edit" option
+                    // so, in that case, we want to capture screens and regions then save screenshots regardless of the title text.
+                    if (checkBoxActiveWindowTitle.Checked && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text) &&
+                        !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower()) &&
+                        !_screenCapture.CaptureNow)
+                    {
+                        return;
+                    }
+                }
+
                 RunRegionCaptures();
 
                 RunScreenCaptures();
             }
-        }
-
-        private void ScreenshotTakenWithSuccess()
-        {
-            Log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
-            RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
         }
 
         /// <summary>
@@ -366,9 +377,83 @@ namespace AutoScreenCapture
             }
         }
 
+        private bool SaveScreenshot(Bitmap bitmap, Screen screen, ScreenshotType screenshotType)
+        {
+            if (bitmap == null)
+            {
+                return false;
+            }
+
+            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken)
+            {
+                ViewId = screen.ViewId,
+                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                Bitmap = bitmap,
+                Format = screen.Format,
+                Component = screen.Component,
+                ScreenshotType = screenshotType,
+                ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
+                Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
+            };
+
+            if (_screenCapture.SaveScreenshot(screen.JpegQuality, screenshot, _screenshotCollection))
+            {
+                ScreenshotTakenWithSuccess();
+
+                return true;
+            }
+            else
+            {
+                ScreenshotTakenWithFailure();
+
+                return false;
+            }
+        }
+
+        private bool SaveScreenshot(Bitmap bitmap, Region region, ScreenshotType screenshotType)
+        {
+            if (bitmap == null)
+            {
+                return false;
+            }
+
+            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken)
+            {
+                ViewId = region.ViewId,
+                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, region.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                Bitmap = bitmap,
+                Format = region.Format,
+                Component = -1,
+                ScreenshotType = screenshotType,
+                ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
+                Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
+            };
+
+            if (_screenCapture.SaveScreenshot(region.JpegQuality, screenshot, _screenshotCollection))
+            {
+                ScreenshotTakenWithSuccess();
+
+                return true;
+            }
+            else
+            {
+                ScreenshotTakenWithFailure();
+
+                return false;
+            }
+        }
+
+        private void ScreenshotTakenWithSuccess()
+        {
+            Log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
+
+            RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
+        }
+
         private void ScreenshotTakenWithFailure()
         {
             Log.WriteMessage("Application encountered error while taking a screenshot. Stopping screen capture");
+
             StopScreenCapture();
         }
 
@@ -471,26 +556,17 @@ namespace AutoScreenCapture
                 _screenCapture.DateTimeScreenshotsTaken = dtNow;
                 _screenCapture.ActiveWindowTitle = "*** Auto Screen Capture - Region Select / Auto Save ***";
 
-                if (_screenCapture.SaveScreenshot(
-                    path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, autoSaveFolder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, DateTime.Now.ToString(MacroParser.DateFormat), autoSaveMacro, -1, imageFormat, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
-                    format: imageFormat,
-                    component: -1,
-                    screenshotType: ScreenshotType.Region,
-                    jpegQuality: 100,
-                    viewId: new Guid(),
-                    bitmap: bitmap,
-                    label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
-                    windowTitle: _screenCapture.ActiveWindowTitle,
-                    processName: _screenCapture.ActiveWindowProcessName,
-                    screenshotCollection: _screenshotCollection
-                ))
+                Region region = new Region()
                 {
-                    ScreenshotTakenWithSuccess();
-                }
-                else
-                {
-                    ScreenshotTakenWithFailure();
-                }
+                    ViewId = new Guid(),
+                    Name = string.Empty,
+                    JpegQuality = 100,
+                    Format = imageFormat,
+                    Folder = autoSaveFolder,
+                    Macro = autoSaveMacro
+                };
+
+                SaveScreenshot(bitmap, region, ScreenshotType.Region);
             }
         }
 

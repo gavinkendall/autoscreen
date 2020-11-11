@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Drawing;
 
 namespace AutoScreenCapture
 {
@@ -96,6 +97,11 @@ namespace AutoScreenCapture
         /// Determines if the screenshot has been written to disk and can be loaded from the "screenshots" XML document.
         /// </summary>
         public bool Saved { get; set; }
+
+        /// <summary>
+        /// The bitmap image associated with the screenshot.
+        /// </summary>
+        public Bitmap Bitmap { get; set; }
 
         /// <summary>
         /// The hash of the bitmap image associated with the screenshot.

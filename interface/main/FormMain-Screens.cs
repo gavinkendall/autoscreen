@@ -160,101 +160,29 @@ namespace AutoScreenCapture
                 {
                     if (screen.Active)
                     {
-                        if (screen.Component == 0)
+                        if (screen.Component == 0) // Active Window
                         {
-                            MacroParser.screenCapture = _screenCapture;
-
-                            // Active Window
-                            if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                             {
-                                // Do not contiune if the active window title needs to be checked and the active window title
-                                // does not contain the text defined in "Active Window Title Capture Text" and CaptureNow is false.
-                                // CaptureNow could be set to "true" during a "Capture Now / Archive" or "Capture Now / Edit" option
-                                // so, in that case, we want to capture the screen and save the screenshot regardless of the title text.
-                                if (checkBoxActiveWindowTitle.Checked && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text) &&
-                                    !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower()) &&
-                                    !_screenCapture.CaptureNow)
+                                if (!SaveScreenshot(bitmap, screen, ScreenshotType.ActiveWindow))
                                 {
-                                    return;
-                                }
-
-                                _screenCapture.CaptureNow = false;
-
-                                if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
-                                {
-                                    if (_screenCapture.SaveScreenshot(
-                                        path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
-                                        format: screen.Format,
-                                        component: screen.Component,
-                                        screenshotType: ScreenshotType.ActiveWindow,
-                                        jpegQuality: screen.JpegQuality,
-                                        viewId: screen.ViewId,
-                                        bitmap: bitmap,
-                                        label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
-                                        windowTitle: _screenCapture.ActiveWindowTitle,
-                                        processName: _screenCapture.ActiveWindowProcessName,
-                                        screenshotCollection: _screenshotCollection
-                                    ))
-                                    {
-                                        ScreenshotTakenWithSuccess();
-                                    }
-                                    else
-                                    {
-                                        ScreenshotTakenWithFailure();
-                                        break;
-                                    }
+                                    continue;
                                 }
                             }
                         }
-                        else
+                        else // Screen (regardless of how many displays there are)
                         {
                             if (_formScreen.ScreenDictionary.ContainsKey(screen.Component))
                             {
-                                MacroParser.screenCapture = _screenCapture;
-
-                                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                                if (_screenCapture.GetScreenImages(screen.Component,
+                                    _formScreen.ScreenDictionary[screen.Component].screen.Bounds.X,
+                                    _formScreen.ScreenDictionary[screen.Component].screen.Bounds.Y,
+                                    _formScreen.ScreenDictionary[screen.Component].width,
+                                    _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
                                 {
-                                    // Do not contiune if the active window title needs to be checked and the active window title
-                                    // does not contain the text defined in "Active Window Title Capture Text" and CaptureNow is false.
-                                    // CaptureNow could be set to "true" during a "Capture Now / Archive" or "Capture Now / Edit" option
-                                    // so, in that case, we want to capture the screen and save the screenshot regardless of the title text.
-                                    if (checkBoxActiveWindowTitle.Checked && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text) &&
-                                        !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower()) &&
-                                        !_screenCapture.CaptureNow)
+                                    if (!SaveScreenshot(bitmap, screen, ScreenshotType.Screen))
                                     {
-                                        return;
-                                    }
-
-                                    _screenCapture.CaptureNow = false;
-
-                                    // Screen X
-                                    if (_screenCapture.GetScreenImages(screen.Component,
-                                        _formScreen.ScreenDictionary[screen.Component].screen.Bounds.X,
-                                        _formScreen.ScreenDictionary[screen.Component].screen.Bounds.Y,
-                                        _formScreen.ScreenDictionary[screen.Component].width,
-                                        _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
-                                    {
-                                        if (_screenCapture.SaveScreenshot(
-                                            path: FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
-                                            format: screen.Format,
-                                            component: screen.Component,
-                                            screenshotType: ScreenshotType.Screen,
-                                            jpegQuality: screen.JpegQuality,
-                                            viewId: screen.ViewId,
-                                            bitmap: bitmap,
-                                            label: checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty,
-                                            windowTitle: _screenCapture.ActiveWindowTitle,
-                                            processName: _screenCapture.ActiveWindowProcessName,
-                                            screenshotCollection: _screenshotCollection
-                                        ))
-                                        {
-                                            ScreenshotTakenWithSuccess();
-                                        }
-                                        else
-                                        {
-                                            ScreenshotTakenWithFailure();
-                                            break;
-                                        }
+                                        continue;
                                     }
                                 }
                             }

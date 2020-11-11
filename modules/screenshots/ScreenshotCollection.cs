@@ -39,6 +39,7 @@ namespace AutoScreenCapture
         private List<Screenshot> _screenshotList;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenCollection _screenCollection;
+        private readonly bool _optimizeScreenCapture;
 
         // Required when multiple threads are writing to the same file.
         private readonly Mutex _mutexWriteFile = new Mutex();
@@ -65,8 +66,45 @@ namespace AutoScreenCapture
         private readonly string SCREENSHOTS_XPATH;
         private readonly string SCREENSHOT_XPATH;
 
-        private  string AppCodename { get; set; }
-        private  string AppVersion { get; set; }
+        private string AppCodename { get; set; }
+        private string AppVersion { get; set; }
+
+        /// <summary>
+        /// The last View ID used by the screenshot collection.
+        /// </summary>
+        public Guid LastViewId { get; set; }
+
+        private void AddScreenshotToCollection(Screenshot screenshot)
+        {
+            lock (_screenshotList)
+            {
+                if (!_screenshotList.Contains(screenshot))
+                {
+                    _screenshotList.Add(screenshot);
+
+                    LastViewId = screenshot.ViewId;
+                }
+
+                if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
+                {
+                    if (!_slideNameList.Contains(screenshot.Slide.Name))
+                    {
+                        _slideNameList.Add(screenshot.Slide.Name);
+                        _slideList.Add(screenshot.Slide);
+                    }
+                }
+            }
+        }
+
+        private XmlNode GetMinDateFromXMLDocument()
+        {
+            if (xDoc != null)
+            {
+                return xDoc.SelectSingleNode(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE + "[not(. >=../preceding-sibling::" + SCREENSHOT_DATE + ") and not(. >=../following-sibling::" + SCREENSHOT_DATE + ")]");
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// A collection of screenshots.
@@ -101,29 +139,60 @@ namespace AutoScreenCapture
 
             _imageFormatCollection = imageFormatCollection;
             _screenCollection = screenCollection;
+
+            _optimizeScreenCapture = Convert.ToBoolean(Settings.Application.GetByKey("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture).Value);
         }
 
         /// <summary>
         /// Adds a screenshot to the collection.
         /// </summary>
         /// <param name="screenshot"></param>
-        public void Add(Screenshot screenshot)
+        public bool Add(Screenshot screenshot)
         {
-            lock (_screenshotList)
+            try
             {
-                if (!_screenshotList.Contains(screenshot))
+                // Every screenshot needs a View ID.
+                if (screenshot.ViewId == null)
                 {
-                    _screenshotList.Add(screenshot);
+                    Log.WriteErrorMessage("Screenshot being added has no view ID");
+
+                    return false;
                 }
 
-                if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
+                // If the bitmap image is null then we're loading the screenshot from the screenshots.xml file
+                // and adding it to the collection otherwise we're adding the screenshot to the colection
+                // from a screen capture session.
+                if (screenshot.Bitmap == null)
                 {
-                    if (!_slideNameList.Contains(screenshot.Slide.Name))
+                    AddScreenshotToCollection(screenshot);
+                }
+                else
+                {
+                    if (_optimizeScreenCapture)
                     {
-                        _slideNameList.Add(screenshot.Slide.Name);
-                        _slideList.Add(screenshot.Slide);
+                        Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
+
+                        screenshot.Hash = ScreenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
+
+                        if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
+                            !lastScreenshotOfThisView.Hash.Equals(screenshot.Hash))
+                        {
+                            AddScreenshotToCollection(screenshot);
+                        }
+                    }
+                    else
+                    {
+                        AddScreenshotToCollection(screenshot);
                     }
                 }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("ScreenshotCollection::Add", ex);
+
+                return false;
             }
         }
 
@@ -315,10 +384,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Gets the last screenshot of a particular view based on View ID.
         /// </summary>
-        /// <param name="viewId"></param>
-        /// <returns></returns>
+        /// <param name="viewId">The View ID to check for.</param>
+        /// <returns>A screenshot object based on the View ID or null if a screenshot cannot be found.</returns>
         public Screenshot GetLastScreenshotOfView(Guid viewId)
         {
             try
@@ -671,8 +740,6 @@ namespace AutoScreenCapture
                                         // because this special ID value is used for figuring out what screenshot image to display.
                                         screenshot.ViewId = _screenCollection.GetByComponent(screenshot.Component).ViewId;
 
-                                        string windowTitle = "*Screenshot imported from an old version of " + Settings.ApplicationName + "*";
-
                                         Regex rgxOldSlidename = new Regex(@"^(?<Date>\d{4}-\d{2}-\d{2}) (?<Time>(?<Hour>\d{2})-(?<Minute>\d{2})-(?<Second>\d{2})-(?<Millisecond>\d{3}))");
 
                                         string hour = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Hour"].Value;
@@ -684,9 +751,7 @@ namespace AutoScreenCapture
                                         screenshot.Time = hour + ":" + minute + ":" + second + "." + millisecond;
 
                                         screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
-                                        screenshot.Slide.Value = screenshot.Time + " [" + windowTitle + "]";
-
-                                        screenshot.WindowTitle = windowTitle;
+                                        screenshot.Slide.Value = screenshot.Time + " [*Screenshot imported from an old version of " + Settings.ApplicationName + "*]";
                                     }
 
                                     // Remove all the existing XML child nodes from the old XML screenshot.
@@ -973,16 +1038,6 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.ReleaseMutex();
             }
-        }
-
-        private XmlNode GetMinDateFromXMLDocument()
-        {
-            if (xDoc != null)
-            {
-                return xDoc.SelectSingleNode(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE + "[not(. >=../preceding-sibling::" + SCREENSHOT_DATE + ") and not(. >=../following-sibling::" + SCREENSHOT_DATE + ")]");
-            }
-
-            return null;
         }
     }
 }
