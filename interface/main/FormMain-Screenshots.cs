@@ -85,7 +85,9 @@ namespace AutoScreenCapture
                     screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                EmailScreenshot(screenshot, prompt: true);
+                bool.TryParse(Settings.Application.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
+
+                EmailScreenshot(screenshot, prompt);
             }
             else
             {
@@ -404,8 +406,6 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("SSL = " + ssl);
 
-                bool.TryParse(Settings.Application.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value.ToString(), out prompt);
-
                 Log.WriteDebugMessage("Prompt = " + prompt);
 
                 string username = Settings.Application.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
@@ -525,7 +525,7 @@ namespace AutoScreenCapture
         {
             if (triggerActionType == TriggerActionType.EmailScreenshot && _screenCapture.Running)
             {
-                Screenshot screenshot = _screenshotCollection.Get(_screenshotCollection.Count - 1);
+                Screenshot screenshot = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
                 if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
                 {
