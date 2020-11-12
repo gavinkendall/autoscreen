@@ -79,6 +79,16 @@ namespace AutoScreenCapture
         /// </summary>
         public bool OptimizeScreenCapture { get; set; }
 
+        /// <summary>
+        /// A list of screenshot hash values to be used when adding screenshots so we do not add duplicate screenshots while running and when OptimizeScreenCapture is set.
+        /// </summary>
+        public List<string> AddedScreenshotHashList { get; set; }
+
+        /// <summary>
+        /// A list of screenshot hash values to be used when emailing screenshots so we do not email duplicate screenshots while running and when OptimizeScreenCapture is set.
+        /// </summary>
+        public List<string> EmailedScreenshotHashList { get; set; }
+
         private void AddScreenshotToCollection(Screenshot screenshot)
         {
             lock (_screenshotList)
@@ -146,6 +156,9 @@ namespace AutoScreenCapture
             _screenCollection = screenCollection;
 
             OptimizeScreenCapture = Convert.ToBoolean(Settings.Application.GetByKey("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture).Value);
+
+            AddedScreenshotHashList = new List<string>();
+            EmailedScreenshotHashList = new List<string>();
         }
 
         /// <summary>
@@ -180,9 +193,11 @@ namespace AutoScreenCapture
                         screenshot.Hash = ScreenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
 
                         if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
-                            !lastScreenshotOfThisView.Hash.Equals(screenshot.Hash))
+                            !AddedScreenshotHashList.Contains(screenshot.Hash))
                         {
                             AddScreenshotToCollection(screenshot);
+
+                            AddedScreenshotHashList.Add(screenshot.Hash);
                         }
                     }
                     else

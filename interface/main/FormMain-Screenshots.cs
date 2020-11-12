@@ -547,23 +547,23 @@ namespace AutoScreenCapture
         {
             if (triggerActionType == TriggerActionType.EmailScreenshot && _screenCapture.Running)
             {
-                Screenshot screenshot = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
+                Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
-                if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path) && !string.IsNullOrEmpty(screenshot.Hash))
+                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path) && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
                 {
                     if (_screenshotCollection.OptimizeScreenCapture)
                     {
-                        if (!_emailedScreenshotHash.Contains(screenshot.Hash))
+                        if (!_screenshotCollection.EmailedScreenshotHashList.Contains(lastScreenshotOfThisView.Hash))
                         {
-                            if (EmailScreenshot(screenshot, prompt: false))
+                            if (EmailScreenshot(lastScreenshotOfThisView, prompt: false))
                             {
-                                _emailedScreenshotHash.Add(screenshot.Hash);
+                                _screenshotCollection.EmailedScreenshotHashList.Add(lastScreenshotOfThisView.Hash);
                             }
                         }
                     }
                     else
                     {
-                        EmailScreenshot(screenshot, prompt: false);
+                        EmailScreenshot(lastScreenshotOfThisView, prompt: false);
                     }
                 }
             }
