@@ -39,7 +39,6 @@ namespace AutoScreenCapture
         private List<Screenshot> _screenshotList;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenCollection _screenCollection;
-        private readonly bool _optimizeScreenCapture;
 
         // Required when multiple threads are writing to the same file.
         private readonly Mutex _mutexWriteFile = new Mutex();
@@ -62,6 +61,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_PROCESS_NAME = "processname";
         private const string SCREENSHOT_LABEL = "label";
         private const string SCREENSHOT_VERSION = "version";
+        private const string SCREENSHOT_HASH = "hash";
 
         private readonly string SCREENSHOTS_XPATH;
         private readonly string SCREENSHOT_XPATH;
@@ -73,6 +73,11 @@ namespace AutoScreenCapture
         /// The last View ID used by the screenshot collection.
         /// </summary>
         public Guid LastViewId { get; set; }
+
+        /// <summary>
+        /// Determines if we compare the hash of the latest screenshot with the previous screeenshot before saving and collect the hash of each screenshot for comparison before emailing from trigger.
+        /// </summary>
+        public bool OptimizeScreenCapture { get; set; }
 
         private void AddScreenshotToCollection(Screenshot screenshot)
         {
@@ -140,7 +145,7 @@ namespace AutoScreenCapture
             _imageFormatCollection = imageFormatCollection;
             _screenCollection = screenCollection;
 
-            _optimizeScreenCapture = Convert.ToBoolean(Settings.Application.GetByKey("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture).Value);
+            OptimizeScreenCapture = Convert.ToBoolean(Settings.Application.GetByKey("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture).Value);
         }
 
         /// <summary>
@@ -168,7 +173,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    if (_optimizeScreenCapture)
+                    if (OptimizeScreenCapture)
                     {
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
@@ -726,6 +731,11 @@ namespace AutoScreenCapture
                                                 xReader.Read();
                                                 screenshot.Label = xReader.Value;
                                                 break;
+
+                                            case SCREENSHOT_HASH:
+                                                xReader.Read();
+                                                screenshot.Hash = xReader.Value;
+                                                break;
                                         }
                                     }
                                 }
@@ -792,6 +802,9 @@ namespace AutoScreenCapture
                                     XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
                                     xLabel.InnerText = screenshot.Label;
 
+                                    XmlElement xHash = xDoc.CreateElement(SCREENSHOT_HASH);
+                                    xHash.InnerText = screenshot.Hash;
+
                                     // Create the new XML child nodes for the old XML screenshot so that it's now in the format of the new XML screenshot.
                                     xScreenshot.AppendChild(xViewId);
                                     xScreenshot.AppendChild(xDate);
@@ -804,6 +817,7 @@ namespace AutoScreenCapture
                                     xScreenshot.AppendChild(xWindowTitle);
                                     xScreenshot.AppendChild(xProcessName);
                                     xScreenshot.AppendChild(xLabel);
+                                    xScreenshot.AppendChild(xHash);
                                 }
 
                                 if (!string.IsNullOrEmpty(screenshot.Date) &&
@@ -991,6 +1005,9 @@ namespace AutoScreenCapture
                             XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
                             xLabel.InnerText = screenshot.Label;
 
+                            XmlElement xHash = xDoc.CreateElement(SCREENSHOT_HASH);
+                            xHash.InnerText = screenshot.Hash;
+
                             xScreenshot.AppendChild(xVersion);
                             xScreenshot.AppendChild(xViedId);
                             xScreenshot.AppendChild(xDate);
@@ -1003,6 +1020,7 @@ namespace AutoScreenCapture
                             xScreenshot.AppendChild(xWindowTitle);
                             xScreenshot.AppendChild(xProcessName);
                             xScreenshot.AppendChild(xLabel);
+                            xScreenshot.AppendChild(xHash);
 
                             XmlNode xScreenshots = xDoc.SelectSingleNode(SCREENSHOTS_XPATH);
 
