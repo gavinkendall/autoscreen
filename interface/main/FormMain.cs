@@ -62,6 +62,7 @@ namespace AutoScreenCapture
         private ScreenCapture _screenCapture;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenshotCollection _screenshotCollection;
+        private List<string> _emailedScreenshotHash;
 
         /// <summary>
         /// Threads for background operations.
@@ -124,6 +125,8 @@ namespace AutoScreenCapture
             timerScheduledCapture.Interval = 1000;
             timerScheduledCapture.Enabled = true;
             timerScheduledCapture.Start();
+
+            _emailedScreenshotHash = new List<string>();
 
             LoadHelpTips();
 

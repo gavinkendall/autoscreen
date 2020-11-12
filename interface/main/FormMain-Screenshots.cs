@@ -380,7 +380,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="screenshot">The screenshot to email.</param>
         /// <param name="prompt">Determines if we should prompt the user with a confirmation dialog box.</param>
-        private void EmailScreenshot(Screenshot screenshot, bool prompt)
+        private bool EmailScreenshot(Screenshot screenshot, bool prompt)
         {
             try
             {
@@ -389,7 +389,8 @@ namespace AutoScreenCapture
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
                 {
                     Log.WriteDebugMessage("Cannot email screenshot because screenshot is either null or path is empty");
-                    return;
+
+                    return false;
                 }
 
                 Log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
@@ -455,7 +456,7 @@ namespace AutoScreenCapture
                 {
                     Log.WriteDebugMessage("Host, Username, Password, From, or To is empty");
 
-                    return;
+                    return false;
                 }
 
                 var mailMessage = new MailMessage
@@ -466,22 +467,33 @@ namespace AutoScreenCapture
                 mailMessage.To.Add(to);
 
                 if (!string.IsNullOrEmpty(cc))
+                {
                     mailMessage.CC.Add(cc);
+                }
 
                 if (!string.IsNullOrEmpty(bcc))
+                {
                     mailMessage.Bcc.Add(bcc);
+                }
 
                 if (!string.IsNullOrEmpty(subject))
+                {
                     mailMessage.Subject = subject;
+                }
 
                 if (!string.IsNullOrEmpty(body))
+                {
                     mailMessage.Body = body;
+                }
 
                 mailMessage.IsBodyHtml = false;
 
                 mailMessage.Attachments.Add(new Attachment(screenshot.Path));
 
-                if (mailMessage.Attachments == null || mailMessage.Attachments.Count <= 0) return;
+                if (mailMessage.Attachments == null || mailMessage.Attachments.Count <= 0)
+                {
+                    return false;
+                }
 
                 Log.WriteDebugMessage("Added screenshot as attachment");
 
@@ -500,24 +512,34 @@ namespace AutoScreenCapture
                     if (dialogResult == DialogResult.Yes)
                     {
                         Log.WriteDebugMessage("Sending email with prompt confirmation");
+
                         smtpClient.Send(mailMessage);
+
                         Log.WriteDebugMessage("Email sent");
                     }
                 }
                 else
                 {
                     Log.WriteDebugMessage("Sending email without prompt confirmation");
+
                     smtpClient.Send(mailMessage);
+
                     Log.WriteDebugMessage("Email sent");
                 }
 
                 smtpClient.Dispose();
+
                 Log.WriteDebugMessage("SMTP client disposed");
+
+                return true;
             }
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
+
                 Log.WriteExceptionMessage("FormMain-Screenshots::EmailScreenshot", ex);
+
+                return false;
             }
         }
 
@@ -527,9 +549,22 @@ namespace AutoScreenCapture
             {
                 Screenshot screenshot = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
-                if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
+                if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path) && !string.IsNullOrEmpty(screenshot.Hash))
                 {
-                    EmailScreenshot(screenshot, prompt: false);
+                    if (_screenshotCollection.OptimizeScreenCapture)
+                    {
+                        if (!_emailedScreenshotHash.Contains(screenshot.Hash))
+                        {
+                            if (EmailScreenshot(screenshot, prompt: false))
+                            {
+                                _emailedScreenshotHash.Add(screenshot.Hash);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        EmailScreenshot(screenshot, prompt: false);
+                    }
                 }
             }
         }
