@@ -53,53 +53,63 @@ namespace AutoScreenCapture
         public string DateTimeFormatValue { get; set; }
 
         /// <summary>
-        /// The start date/time of the morning for the Time of Day tag type.
+        /// The start date/time of the first macro for the Time Range tag type.
         /// </summary>
         public DateTime TimeRangeMacro1Start { get; set; }
 
         /// <summary>
-        /// The end date/time of the morning for the Time of Day tag type.
+        /// The end date/time of the first macro for the Time Range tag type.
         /// </summary>
         public DateTime TimeRangeMacro1End { get; set; }
 
         /// <summary>
-        /// The start date/time of the afternoon for the Time of Day tag type.
+        /// The start date/time of the second macro for the Time Range tag type.
         /// </summary>
         public DateTime TimeRangeMacro2Start { get; set; }
 
         /// <summary>
-        /// The end date/time of the afternoon for the Time of Day tag type.
+        /// The end date/time of the second macro for the Time Range tag type.
         /// </summary>
         public DateTime TimeRangeMacro2End { get; set; }
 
         /// <summary>
-        /// The start date/time of the evening for the Time of Day tag type.
+        /// The start date/time of the third macro for the Time Range tag type.
         /// </summary>
         public DateTime TimeRangeMacro3Start { get; set; }
 
         /// <summary>
-        /// The end date/time of the evening for the Time of Day tag type.
+        /// The end date/time of the third macro for the Time Range tag type.
         /// </summary>
         public DateTime TimeRangeMacro3End { get; set; }
 
+        /// <summary>
+        /// The start date/time of the fourth macro for the Time Range tag type.
+        /// </summary>
         public DateTime TimeRangeMacro4Start { get; set; }
+
+        /// <summary>
+        /// The end date/time of the fourth macro for the Time Range tag type.
+        /// </summary>
         public DateTime TimeRangeMacro4End { get; set; }
 
         /// <summary>
-        /// The morning value for the Time of Day tag type.
+        /// The value for the first macro of the Time Range tag type.
         /// </summary>
         public string TimeRangeMacro1Macro { get; set; }
 
         /// <summary>
-        /// The afternoon value for the Time of Day tag type.
+        /// The value for the second macro of the Time Range tag type.
         /// </summary>
         public string TimeRangeMacro2Macro { get; set; }
 
         /// <summary>
-        /// The evening value for the Time of Day tag type.
+        /// The value for the third macro of the Time Range tag type.
         /// </summary>
         public string TimeRangeMacro3Macro { get; set; }
 
+        /// <summary>
+        /// The value for the fourth macro of the Time Range tag type.
+        /// </summary>
         public string TimeRangeMacro4Macro { get; set; }
 
         /// <summary>

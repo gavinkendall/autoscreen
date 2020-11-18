@@ -83,6 +83,21 @@ namespace AutoScreenCapture
 
                     XmlNodeList xTriggers = xDoc.SelectNodes(TRIGGER_XPATH);
 
+                    Version v2300 = null;
+                    Version v2340 = null;
+                    Version configVersion = null;
+
+                    // Change the data for each Trigger that's being loaded if we've detected that
+                    // the XML document is from an older version of the application.
+                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    {
+                        Log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
+
+                        v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                        v2340 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.4.0");
+                        configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                    }
+
                     foreach (XmlNode xTrigger in xTriggers)
                     {
                         Trigger trigger = new Trigger();
@@ -101,14 +116,40 @@ namespace AutoScreenCapture
 
                                     case TRIGGER_CONDITION:
                                         xReader.Read();
-                                        trigger.ConditionType =
-                                            (TriggerConditionType) Enum.Parse(typeof(TriggerConditionType), xReader.Value);
+
+                                        string nodeValue = xReader.Value;
+
+                                        if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
+                                        {
+                                            Log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected");
+
+                                            // 2.3.4.0 changes the trigger condition of "ScreenshotTaken" to "AfterScreenshotTaken"
+                                            // because of the new condition "BeforeScreenshotTaken" introduced so now we separate those conditions.
+                                            if (nodeValue.Equals("ScreenshotTaken"))
+                                            {
+                                                nodeValue = TriggerConditionType.AfterScreenshotTaken.ToString();
+                                            }
+                                        }
+
+                                        TriggerConditionType triggerConditionType;
+
+                                        if (Enum.TryParse(nodeValue, out triggerConditionType))
+                                        {
+                                            trigger.ConditionType = triggerConditionType;
+                                        }
+                                        
                                         break;
 
                                     case TRIGGER_ACTION:
                                         xReader.Read();
-                                        trigger.ActionType =
-                                            (TriggerActionType) Enum.Parse(typeof(TriggerActionType), xReader.Value);
+
+                                        TriggerActionType triggerActionType;
+
+                                        if (Enum.TryParse(xReader.Value, out triggerActionType))
+                                        {
+                                            trigger.ActionType = triggerActionType;
+                                        }
+
                                         break;
 
                                     // This is purely for backwards compatibility with older versions.
@@ -153,26 +194,16 @@ namespace AutoScreenCapture
 
                         xReader.Close();
 
-                        // Change the data for each Trigger that's being loaded if we've detected that
-                        // the XML document is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                         {
-                            Log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
+                            Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
-
-                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
-                            {
-                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
-
-                                // These are new properties for Trigger that were introduced in 2.3.0.0
-                                // so any version before 2.3.0.0 needs to have them during an upgrade.
-                                trigger.Active = true;
-                                trigger.Date = DateTime.Now;
-                                trigger.Time = DateTime.Now;
-                                trigger.ScreenCaptureInterval = 0;
-                            }
+                            // These are new properties for Trigger that were introduced in 2.3.0.0
+                            // so any version before 2.3.0.0 needs to have them during an upgrade.
+                            trigger.Active = true;
+                            trigger.Date = DateTime.Now;
+                            trigger.Time = DateTime.Now;
+                            trigger.ScreenCaptureInterval = 0;
                         }
 
                         if (!string.IsNullOrEmpty(trigger.Name))

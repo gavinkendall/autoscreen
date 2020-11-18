@@ -66,9 +66,9 @@ namespace AutoScreenCapture
         ScreenCaptureStopped = 7,
 
         /// <summary>
-        /// The condition to check will be if screenshots have been taken.
+        /// The condition to check will be if a screenshot was taken successfully.
         /// </summary>
-        ScreenshotTaken = 8,
+        AfterScreenshotTaken = 8,
 
         /// <summary>
         /// The condition to check will be if the date and time match with the specified date and time.
@@ -83,6 +83,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// The condition to check will be if the day and time matches with the specified day and time.
         /// </summary>
-        DayTime = 11
+        DayTime = 11,
+
+        /// <summary>
+        /// The condition to check will be if a screenshot is about to be taken.
+        /// </summary>
+        BeforeScreenshotTaken = 12
     }
 }

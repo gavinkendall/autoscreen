@@ -21,7 +21,6 @@
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace AutoScreenCapture
 {
@@ -68,8 +67,6 @@ namespace AutoScreenCapture
         public FormScreen()
         {
             InitializeComponent();
-
-            RefreshScreenDictionary();
         }
 
         private void FormScreen_Load(object sender, EventArgs e)
@@ -164,7 +161,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Updates the screen dictionary with the available screens.
         /// </summary>
-        public void RefreshScreenDictionary()
+        public void ResetScreenDictionary()
         {
             ScreenDictionary.Clear();
 
@@ -175,6 +172,7 @@ namespace AutoScreenCapture
                 ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
 
                 ScreenDictionary.Add(component, deviceResolution);
+
                 component++;
             }
         }

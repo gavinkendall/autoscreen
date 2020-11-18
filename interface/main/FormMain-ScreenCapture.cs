@@ -161,7 +161,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot(bool captureNow)
         {
-            _formScreen.RefreshScreenDictionary();
+            RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
 
             // Test to see if we can get images of the screen before continuing.
             if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
@@ -445,9 +445,9 @@ namespace AutoScreenCapture
 
         private void ScreenshotTakenWithSuccess()
         {
-            Log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
+            Log.WriteDebugMessage("Running triggers of condition type AfterScreenshotTaken");
 
-            RunTriggersOfConditionType(TriggerConditionType.ScreenshotTaken);
+            RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotTaken);
         }
 
         private void ScreenshotTakenWithFailure()

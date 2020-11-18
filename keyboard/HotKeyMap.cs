@@ -92,6 +92,9 @@ namespace AutoScreenCapture
                 throw new InvalidOperationException("Unable to register hot key");
         }
 
+        /// <summary>
+        /// Unregister the hot keys.
+        /// </summary>
         public void UnregisterHotKeys()
         {
             for (int i = _currentId; i > 0; i--)
@@ -125,8 +128,15 @@ namespace AutoScreenCapture
             Key = key;
         }
 
+
+        /// <summary>
+        /// The modifier key that was pressed for the keyboard shortcut.
+        /// </summary>
         public ModifierKeys Modifier { get; }
 
+        /// <summary>
+        /// The hot key that was pressed for the keyboard shortcut.
+        /// </summary>
         public Keys Key { get; }
     }
 

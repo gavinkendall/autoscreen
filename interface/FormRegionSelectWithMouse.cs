@@ -37,9 +37,24 @@ namespace AutoScreenCapture
         private int _selectHeight;
         private Pen _selectPen;
 
+        /// <summary>
+        /// X output
+        /// </summary>
         public int outputX;
+
+        /// <summary>
+        /// Y output
+        /// </summary>
         public int outputY;
+
+        /// <summary>
+        /// Width output
+        /// </summary>
         public int outputWidth;
+
+        /// <summary>
+        /// Height output
+        /// </summary>
         public int outputHeight;
 
         /// <summary>

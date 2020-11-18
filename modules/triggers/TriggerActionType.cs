@@ -113,6 +113,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// The action to perform will deactivate a chosen trigger.
         /// </summary>
-        DeactivateTrigger = 17
+        DeactivateTrigger = 17,
+
+        /// <summary>
+        /// The action to perform will reset the screen dictionary.
+        /// </summary>
+        ResetScreenDictionary = 18
     }
 }
