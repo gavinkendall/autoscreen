@@ -57,11 +57,6 @@ namespace AutoScreenCapture
         public ScreenCapture ScreenCapture { get; set; }
 
         /// <summary>
-        /// A dictionary of available screens by device resolution.
-        /// </summary>
-        //public Dictionary<int, ScreenCapture.DeviceResolution> ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceResolution>();
-
-        /// <summary>
         /// Constructor for FormScreen.
         /// </summary>
         public FormScreen()

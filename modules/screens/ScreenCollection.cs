@@ -226,12 +226,14 @@ namespace AutoScreenCapture
 
                                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
                                 {
+                                    ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screenFromWindows);
+
                                     if (screen.Component.Equals(component))
                                     {
                                         screen.X = screenFromWindows.Bounds.X;
                                         screen.Y = screenFromWindows.Bounds.Y;
-                                        screen.Width = screenFromWindows.Bounds.Width;
-                                        screen.Height = screenFromWindows.Bounds.Height;
+                                        screen.Width = deviceResolution.width;
+                                        screen.Height = deviceResolution.height;
                                     }
 
                                     component++;
@@ -362,6 +364,8 @@ namespace AutoScreenCapture
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
+                ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
+
                 Add(new Screen()
                 {
                     ViewId = Guid.NewGuid(),
@@ -376,8 +380,8 @@ namespace AutoScreenCapture
                     Active = true,
                     X = screen.Bounds.X,
                     Y = screen.Bounds.Y,
-                    Width = screen.Bounds.Width,
-                    Height = screen.Bounds.Height
+                    Width = deviceResolution.width,
+                    Height = deviceResolution.height
                 });
 
                 Log.WriteDebugMessage($"Screen {component} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
