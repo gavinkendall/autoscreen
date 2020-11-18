@@ -78,6 +78,26 @@ namespace AutoScreenCapture
         public bool Active { get; set; }
 
         /// <summary>
+        /// The X coordinate value for the screen's "left" (horizontal) position.
+        /// </summary>
+        public int X { get; set; }
+
+        /// <summary>
+        /// The Y coordinate value for the screen's "top" (vertical) position.
+        /// </summary>
+        public int Y { get; set; }
+
+        /// <summary>
+        /// The width of the screen.
+        /// </summary>
+        public int Width { get; set; }
+
+        /// <summary>
+        /// The height of the screen.
+        /// </summary>
+        public int Height { get; set; }
+
+        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()

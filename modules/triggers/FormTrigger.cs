@@ -362,8 +362,8 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Tag").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTrigger, "Deactivate Trigger").Description);
 
-            // Reset the screen dictionary.
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ResetScreenDictionary, "Reset Screen Dictionary").Description);
+            // Reset the screen collection.
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ResetScreenCollection, "Reset Screen Collection").Description);
 
             listBoxAction.SelectedIndex = 0;
         }

@@ -156,6 +156,13 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (_formScreen.ScreenCollection.Count == 0)
+                {
+                    Log.WriteErrorMessage("The screen collection is empty and needs to be initialized");
+
+                    return;
+                }
+
                 foreach (Screen screen in _formScreen.ScreenCollection)
                 {
                     if (screen.Active)
@@ -172,18 +179,18 @@ namespace AutoScreenCapture
                         }
                         else // Screen (regardless of how many displays there are)
                         {
-                            if (_formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                            if (_screenCapture.GetScreenImages(screen.Component,
+                                screen.X,
+                                screen.Y,
+                                screen.Width,
+                                screen.Height,
+                                screen.Mouse,
+                                screen.ResolutionRatio,
+                                out Bitmap bitmap))
                             {
-                                if (_screenCapture.GetScreenImages(screen.Component,
-                                    _formScreen.ScreenDictionary[screen.Component].screen.Bounds.X,
-                                    _formScreen.ScreenDictionary[screen.Component].screen.Bounds.Y,
-                                    _formScreen.ScreenDictionary[screen.Component].width,
-                                    _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                if (!SaveScreenshot(bitmap, screen, ScreenshotType.Screen))
                                 {
-                                    if (!SaveScreenshot(bitmap, screen, ScreenshotType.Screen))
-                                    {
-                                        continue;
-                                    }
+                                    continue;
                                 }
                             }
                         }

@@ -249,8 +249,8 @@ namespace AutoScreenCapture
                     BuildTriggersModule();
                     break;
 
-                case TriggerActionType.ResetScreenDictionary:
-                    _formScreen.ResetScreenDictionary();
+                case TriggerActionType.ResetScreenCollection:
+                    _formScreen.ScreenCollection.Reset();
                     break;
             }
         }

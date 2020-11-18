@@ -68,22 +68,22 @@ namespace AutoScreenCapture
         public bool Mouse { get; set; }
 
         /// <summary>
-        /// The X coordinate value for the region capture's "left" (horizontal) position.
+        /// The X coordinate value for the region's "left" (horizontal) position.
         /// </summary>
         public int X { get; set; }
 
         /// <summary>
-        /// The Y coordinate value for the region capture's "top" (vertical) position.
+        /// The Y coordinate value for the region's "top" (vertical) position.
         /// </summary>
         public int Y { get; set; }
 
         /// <summary>
-        /// The width of the region capture.
+        /// The width of the region.
         /// </summary>
         public int Width { get; set; }
 
         /// <summary>
-        /// The height of the region capture.
+        /// The height of the region.
         /// </summary>
         public int Height { get; set; }
 

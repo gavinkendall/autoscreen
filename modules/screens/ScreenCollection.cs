@@ -44,11 +44,17 @@ namespace AutoScreenCapture
         private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ACTIVE = "active";
+        private const string SCREEN_X = "x";
+        private const string SCREEN_Y = "y";
+        private const string SCREEN_WIDTH = "width";
+        private const string SCREEN_HEIGHT = "height";
 
         private readonly string SCREEN_XPATH;
 
         private static string AppCodename { get; set; }
         private static string AppVersion { get; set; }
+
+        private ImageFormatCollection _imageFormatCollection;
 
         /// <summary>
         /// The empty constructor for the screen collection.
@@ -91,6 +97,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                _imageFormatCollection = imageFormatCollection;
+
                 if (FileSystem.FileExists(FileSystem.ScreensFile))
                 {
                     Log.WriteDebugMessage("Screens file \"" + FileSystem.ScreensFile + "\" found. Attempting to load XML document");
@@ -165,6 +173,26 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.Active = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case SCREEN_X:
+                                        xReader.Read();
+                                        screen.X = Convert.ToInt32(xReader.Value);
+                                        break;
+
+                                    case SCREEN_Y:
+                                        xReader.Read();
+                                        screen.Y = Convert.ToInt32(xReader.Value);
+                                        break;
+
+                                    case SCREEN_WIDTH:
+                                        xReader.Read();
+                                        screen.Width = Convert.ToInt32(xReader.Value);
+                                        break;
+
+                                    case SCREEN_HEIGHT:
+                                        xReader.Read();
+                                        screen.Height = Convert.ToInt32(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -178,6 +206,7 @@ namespace AutoScreenCapture
                             Log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2340 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.4.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -187,6 +216,26 @@ namespace AutoScreenCapture
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 screen.Active = true;
+                            }
+
+                            if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
+                            {
+                                Log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected");
+
+                                int component = 1;
+
+                                foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
+                                {
+                                    if (screen.Component.Equals(component))
+                                    {
+                                        screen.X = screenFromWindows.Bounds.X;
+                                        screen.Y = screenFromWindows.Bounds.Y;
+                                        screen.Width = screenFromWindows.Bounds.Width;
+                                        screen.Height = screenFromWindows.Bounds.Height;
+                                    }
+
+                                    component++;
+                                }
                             }
                         }
 
@@ -204,29 +253,9 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load screens");
+                    Log.WriteDebugMessage("WARNING: Unable to load screens. Initializing screen collection with Reset Screen Collection action");
 
-                    // Setup some screens based on what we can find.
-                    for (int screenNumber = 1; screenNumber <= System.Windows.Forms.Screen.AllScreens.Length; screenNumber++)
-                    {
-                        Screen screen = new Screen()
-                        {
-                            ViewId = Guid.NewGuid(),
-                            Name = $"Screen {screenNumber}",
-                            Folder = FileSystem.ScreenshotsFolder,
-                            Macro = MacroParser.DefaultMacro,
-                            Component = screenNumber,
-                            Format = imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
-                            JpegQuality = 100,
-                            ResolutionRatio = 100,
-                            Mouse = true,
-                            Active = true
-                        };
-
-                        Add(screen);
-
-                        Log.WriteDebugMessage($"Screen {screenNumber} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
-                    }
+                    Reset();
 
                     SaveToXmlFile();
                 }
@@ -296,6 +325,10 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
                         xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
+                        xWriter.WriteElementString(SCREEN_X, screen.X.ToString());
+                        xWriter.WriteElementString(SCREEN_Y, screen.Y.ToString());
+                        xWriter.WriteElementString(SCREEN_WIDTH, screen.Width.ToString());
+                        xWriter.WriteElementString(SCREEN_HEIGHT, screen.Height.ToString());
 
                         xWriter.WriteEndElement();
                     }
@@ -315,6 +348,41 @@ namespace AutoScreenCapture
                 Log.WriteExceptionMessage("ScreenCollection::SaveToXmlFile", ex);
 
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Resets the screen collection with the available screens provided by Windows.
+        /// </summary>
+        public void Reset()
+        {
+            base.Collection.Clear();
+
+            int component = 1;
+
+            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                Add(new Screen()
+                {
+                    ViewId = Guid.NewGuid(),
+                    Name = "Screen " + component,
+                    Folder = FileSystem.ScreenshotsFolder,
+                    Macro = MacroParser.DefaultMacro,
+                    Component = component,
+                    Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
+                    JpegQuality = 100,
+                    ResolutionRatio = 100,
+                    Mouse = true,
+                    Active = true,
+                    X = screen.Bounds.X,
+                    Y = screen.Bounds.Y,
+                    Width = screen.Bounds.Width,
+                    Height = screen.Bounds.Height
+                });
+
+                Log.WriteDebugMessage($"Screen {component} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
+
+                component++;
             }
         }
     }

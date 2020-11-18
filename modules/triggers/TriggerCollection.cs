@@ -121,7 +121,7 @@ namespace AutoScreenCapture
 
                                         if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                                         {
-                                            Log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected");
+                                            Log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected when parsing for trigger condition type");
 
                                             // 2.3.4.0 changes the trigger condition of "ScreenshotTaken" to "AfterScreenshotTaken"
                                             // because of the new condition "BeforeScreenshotTaken" introduced so now we separate those conditions.

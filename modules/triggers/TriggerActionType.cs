@@ -118,6 +118,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// The action to perform will reset the screen dictionary.
         /// </summary>
-        ResetScreenDictionary = 18
+        ResetScreenCollection = 18
     }
 }

@@ -59,7 +59,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// A dictionary of available screens by device resolution.
         /// </summary>
-        public Dictionary<int, ScreenCapture.DeviceResolution> ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceResolution>();
+        //public Dictionary<int, ScreenCapture.DeviceResolution> ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceResolution>();
 
         /// <summary>
         /// Constructor for FormScreen.
@@ -87,10 +87,11 @@ namespace AutoScreenCapture
 
             comboBoxScreenComponent.Items.Add("Active Window");
 
-            for (int i = 1; i <= ScreenDictionary.Count; i++)
+            for (int i = 1; i <= ScreenCollection.Count; i++)
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[i];
-                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceResolution.width + " x " + deviceResolution.height+ ")");
+                Screen screen = ScreenCollection.GetByComponent(i);
+
+                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + screen.Width + " x " + screen.Height + ")");
             }
 
             if (ScreenObject != null)
@@ -155,25 +156,6 @@ namespace AutoScreenCapture
             else
             {
                 AddNewScreen();
-            }
-        }
-
-        /// <summary>
-        /// Updates the screen dictionary with the available screens.
-        /// </summary>
-        public void ResetScreenDictionary()
-        {
-            ScreenDictionary.Clear();
-
-            int component = 1;
-
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
-            {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
-
-                ScreenDictionary.Add(component, deviceResolution);
-
-                component++;
             }
         }
 
@@ -330,14 +312,14 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
+                        Screen screen = ScreenCollection.GetByComponent(comboBoxScreenComponent.SelectedIndex);
 
                         pictureBoxPreview.Image = screen != null
                             ? screenCapture.GetScreenBitmap(
-                                screen.Bounds.X,
-                                screen.Bounds.Y,
-                                screen.Bounds.Width,
-                                screen.Bounds.Height,
+                                screen.X,
+                                screen.Y,
+                                screen.Width,
+                                screen.Height,
                                 (int)numericUpDownResolutionRatio.Value,
                                 checkBoxMouse.Checked
                             )
@@ -369,20 +351,6 @@ namespace AutoScreenCapture
             textBoxMacroPreview.Text = MacroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection) +
                 MacroParser.ParseTags(preview: true, config: false, textBoxScreenName.Text, textBoxMacro.Text, 1,
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
-        }
-
-        private System.Windows.Forms.Screen GetScreenByIndex(int index)
-        {
-            try
-            {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[index];
-
-                return deviceResolution.screen;
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
         }
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
