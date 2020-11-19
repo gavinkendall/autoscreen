@@ -57,7 +57,7 @@ namespace AutoScreenCapture
         /// </summary>
         public ScreenCapture ScreenCapture { get; set; }
 
-        private readonly Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
+        private readonly Dictionary<int, ScreenCapture.DeviceResolution> ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceResolution>();
 
         /// <summary>
         /// Constructor for FormRegion.
@@ -80,7 +80,9 @@ namespace AutoScreenCapture
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenDictionary.Add(component, screen);
+                ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
+
+                ScreenDictionary.Add(component, deviceResolution);
                 component++;
             }
 
@@ -89,8 +91,9 @@ namespace AutoScreenCapture
 
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
-                System.Windows.Forms.Screen screen = ScreenDictionary[i];
-                comboBoxScreenTemplate.Items.Add("Screen " + i + " (" + screen.Bounds.Width + " x " + screen.Bounds.Height + ")");
+                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[i];
+
+                comboBoxScreenTemplate.Items.Add("\"" + deviceResolution.screen.DeviceName + "\" X:" + deviceResolution.screen.Bounds.X + " Y:" + deviceResolution.screen.Bounds.Y + " (" + deviceResolution.width + "x" + deviceResolution.height + ")");
             }
 
             comboBoxScreenTemplate.SelectedIndex = 0;
@@ -360,12 +363,12 @@ namespace AutoScreenCapture
         {
             if (ScreenDictionary.ContainsKey(comboBoxScreenTemplate.SelectedIndex))
             {
-                System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxScreenTemplate.SelectedIndex];
+                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[comboBoxScreenTemplate.SelectedIndex];
 
-                numericUpDownX.Value = screen.Bounds.X;
-                numericUpDownY.Value = screen.Bounds.Y;
-                numericUpDownWidth.Value = screen.Bounds.Width;
-                numericUpDownHeight.Value = screen.Bounds.Height;
+                numericUpDownX.Value = deviceResolution.screen.Bounds.X;
+                numericUpDownY.Value = deviceResolution.screen.Bounds.Y;
+                numericUpDownWidth.Value = deviceResolution.width;
+                numericUpDownHeight.Value = deviceResolution.height;
 
                 comboBoxScreenTemplate.SelectedIndex = 0;
             }

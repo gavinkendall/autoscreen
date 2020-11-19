@@ -98,6 +98,16 @@ namespace AutoScreenCapture
         public int Height { get; set; }
 
         /// <summary>
+        /// The source of the display properties (whether it be from the screens.xml file or from the Windows operating system).
+        /// </summary>
+        public int SourceIndex { get; set; }
+
+        /// <summary>
+        /// The name of the device.
+        /// </summary>
+        public string DeviceName { get; set; }
+
+        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()

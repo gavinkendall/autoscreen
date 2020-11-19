@@ -48,6 +48,8 @@ namespace AutoScreenCapture
         private const string SCREEN_Y = "y";
         private const string SCREEN_WIDTH = "width";
         private const string SCREEN_HEIGHT = "height";
+        private const string SCREEN_SOURCE_INDEX = "source_index";
+        private const string SCREEN_DEVICE_NAME = "device_name";
 
         private readonly string SCREEN_XPATH;
 
@@ -73,15 +75,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Gets a component by the component index.
+        /// Gets a Screen give its source index and component index.
         /// </summary>
-        /// <param name="component"></param>
-        /// <returns></returns>
-        public Screen GetByComponent(int component)
+        /// <param name="source">The source index.</param>
+        /// <param name="component">The component index.</param>
+        /// <returns>A Screen object based on its source index and component index.</returns>
+        public Screen GetBySourceAndComponent(int source, int component)
         {
             foreach (Screen screen in base.Collection)
             {
-                if (screen.Component == component)
+                if (screen.SourceIndex == source && screen.Component == component)
                 {
                     return screen;
                 }
@@ -193,6 +196,16 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.Height = Convert.ToInt32(xReader.Value);
                                         break;
+
+                                    case SCREEN_SOURCE_INDEX:
+                                        xReader.Read();
+                                        screen.SourceIndex = Convert.ToInt32(xReader.Value);
+                                        break;
+
+                                    case SCREEN_DEVICE_NAME:
+                                        xReader.Read();
+                                        screen.DeviceName = xReader.Value;
+                                        break;
                                 }
                             }
                         }
@@ -234,6 +247,8 @@ namespace AutoScreenCapture
                                         screen.Y = screenFromWindows.Bounds.Y;
                                         screen.Width = deviceResolution.width;
                                         screen.Height = deviceResolution.height;
+                                        screen.SourceIndex = 1;
+                                        screen.DeviceName = deviceResolution.screen.DeviceName;
                                     }
 
                                     component++;
@@ -250,13 +265,43 @@ namespace AutoScreenCapture
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
                         Log.WriteDebugMessage("Screens file detected as an old version");
+
                         SaveToXmlFile();
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load screens. Initializing screen collection with Reset Screen Collection action");
+                    Log.WriteDebugMessage("WARNING: Unable to load screens. Initializing screen collection");
 
+                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    {
+                        Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
+                        Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+
+                        if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)
+                        {
+                            Add(new Screen()
+                            {
+                                ViewId = Guid.NewGuid(),
+                                Name = "Active Window",
+                                Folder = FileSystem.ScreenshotsFolder,
+                                Macro = MacroParser.DefaultMacro,
+                                Component = 0,
+                                Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
+                                JpegQuality = 100,
+                                ResolutionRatio = 100,
+                                Mouse = true,
+                                Active = true,
+                                X = 0,
+                                Y = 0,
+                                Width = 0,
+                                Height = 0,
+                                SourceIndex = 0,
+                                DeviceName = string.Empty
+                            });
+                        }
+                    }
+                    
                     Reset();
 
                     SaveToXmlFile();
@@ -304,8 +349,7 @@ namespace AutoScreenCapture
                     FileSystem.DeleteFile(FileSystem.ScreensFile);
                 }
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.ScreensFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ScreensFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
@@ -331,6 +375,8 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_Y, screen.Y.ToString());
                         xWriter.WriteElementString(SCREEN_WIDTH, screen.Width.ToString());
                         xWriter.WriteElementString(SCREEN_HEIGHT, screen.Height.ToString());
+                        xWriter.WriteElementString(SCREEN_SOURCE_INDEX, screen.SourceIndex.ToString());
+                        xWriter.WriteElementString(SCREEN_DEVICE_NAME, screen.DeviceName);
 
                         xWriter.WriteEndElement();
                     }
@@ -381,7 +427,9 @@ namespace AutoScreenCapture
                     X = screen.Bounds.X,
                     Y = screen.Bounds.Y,
                     Width = deviceResolution.width,
-                    Height = deviceResolution.height
+                    Height = deviceResolution.height,
+                    SourceIndex = 1,
+                    DeviceName = deviceResolution.screen.DeviceName
                 });
 
                 Log.WriteDebugMessage($"Screen {component} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");

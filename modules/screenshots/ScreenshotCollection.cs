@@ -693,7 +693,8 @@ namespace AutoScreenCapture
                                             // Active Window is now represented by 0 rather than 5.
                                             case SCREENSHOT_SCREEN:
                                                 if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion) &&
-                                                    Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
+                                                    Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null &&
+                                                    string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                                                 {
                                                     xReader.Read();
 
@@ -759,24 +760,33 @@ namespace AutoScreenCapture
 
                                 if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                                 {
-                                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
+                                    if (Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null &&
+                                        string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion) &&
+                                        string.IsNullOrEmpty(screenshot.Slide.Value))
                                     {
                                         // We need to associate the screenshot's view ID with the component's view ID
                                         // because this special ID value is used for figuring out what screenshot image to display.
-                                        screenshot.ViewId = _screenCollection.GetByComponent(screenshot.Component).ViewId;
+                                        // The source index at this point should be 1 since screens.xml wouldn't have existed at the time so that file would have been
+                                        // created with the default source being "Graphics Card" (source index 1).
+                                        Screen screen = _screenCollection.GetBySourceAndComponent(source: 1, screenshot.Component);
 
-                                        Regex rgxOldSlidename = new Regex(@"^(?<Date>\d{4}-\d{2}-\d{2}) (?<Time>(?<Hour>\d{2})-(?<Minute>\d{2})-(?<Second>\d{2})-(?<Millisecond>\d{3}))");
+                                        if (screen != null)
+                                        {
+                                            screenshot.ViewId = screen.ViewId;
 
-                                        string hour = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Hour"].Value;
-                                        string minute = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Minute"].Value;
-                                        string second = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Second"].Value;
-                                        string millisecond = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Millisecond"].Value;
+                                            Regex rgxOldSlidename = new Regex(@"^(?<Date>\d{4}-\d{2}-\d{2}) (?<Time>(?<Hour>\d{2})-(?<Minute>\d{2})-(?<Second>\d{2})-(?<Millisecond>\d{3}))");
 
-                                        screenshot.Date = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Date"].Value;
-                                        screenshot.Time = hour + ":" + minute + ":" + second + "." + millisecond;
+                                            string hour = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Hour"].Value;
+                                            string minute = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Minute"].Value;
+                                            string second = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Second"].Value;
+                                            string millisecond = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Millisecond"].Value;
 
-                                        screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
-                                        screenshot.Slide.Value = screenshot.Time + " [*Screenshot imported from an old version of " + Settings.ApplicationName + "*]";
+                                            screenshot.Date = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Date"].Value;
+                                            screenshot.Time = hour + ":" + minute + ":" + second + "." + millisecond;
+
+                                            screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
+                                            screenshot.Slide.Value = screenshot.Time + " [*Screenshot imported from an old version of " + Settings.ApplicationName + "*]";
+                                        }
                                     }
 
                                     // Remove all the existing XML child nodes from the old XML screenshot.
