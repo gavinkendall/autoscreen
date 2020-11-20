@@ -171,7 +171,7 @@ namespace AutoScreenCapture
                         {
                             if (_screenCapture.GetScreenImages(screen.Source, screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                             {
-                                if (!SaveScreenshot(bitmap, screen, ScreenshotType.ActiveWindow))
+                                if (!SaveScreenshot(bitmap, screen))
                                 {
                                     continue;
                                 }
@@ -188,7 +188,7 @@ namespace AutoScreenCapture
                                 screen.ResolutionRatio,
                                 out Bitmap bitmap))
                             {
-                                if (!SaveScreenshot(bitmap, screen, ScreenshotType.Screen))
+                                if (!SaveScreenshot(bitmap, screen))
                                 {
                                     continue;
                                 }

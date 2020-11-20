@@ -46,7 +46,7 @@
             this.numericUpDownJpegQuality = new System.Windows.Forms.NumericUpDown();
             this.labelJpegQuality = new System.Windows.Forms.Label();
             this.checkBoxMouse = new System.Windows.Forms.CheckBox();
-            this.groupBoxImage = new System.Windows.Forms.GroupBox();
+            this.groupBoxImageAttributes = new System.Windows.Forms.GroupBox();
             this.groupBoxDisplayProperties = new System.Windows.Forms.GroupBox();
             this.labelPositionAndSize = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
@@ -69,7 +69,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
-            this.groupBoxImage.SuspendLayout();
+            this.groupBoxImageAttributes.SuspendLayout();
             this.groupBoxDisplayProperties.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
@@ -271,22 +271,22 @@
             this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             this.checkBoxMouse.MouseHover += new System.EventHandler(this.checkBoxMouse_MouseHover);
             // 
-            // groupBoxImage
+            // groupBoxImageAttributes
             // 
-            this.groupBoxImage.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxImage.Controls.Add(this.labelResolutionRatio);
-            this.groupBoxImage.Controls.Add(this.numericUpDownResolutionRatio);
-            this.groupBoxImage.Controls.Add(this.labelFormat);
-            this.groupBoxImage.Controls.Add(this.checkBoxMouse);
-            this.groupBoxImage.Controls.Add(this.labelJpegQuality);
-            this.groupBoxImage.Controls.Add(this.numericUpDownJpegQuality);
-            this.groupBoxImage.Controls.Add(this.comboBoxFormat);
-            this.groupBoxImage.Location = new System.Drawing.Point(12, 262);
-            this.groupBoxImage.Name = "groupBoxImage";
-            this.groupBoxImage.Size = new System.Drawing.Size(205, 126);
-            this.groupBoxImage.TabIndex = 18;
-            this.groupBoxImage.TabStop = false;
-            this.groupBoxImage.Text = "Image";
+            this.groupBoxImageAttributes.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBoxImageAttributes.Controls.Add(this.labelResolutionRatio);
+            this.groupBoxImageAttributes.Controls.Add(this.numericUpDownResolutionRatio);
+            this.groupBoxImageAttributes.Controls.Add(this.labelFormat);
+            this.groupBoxImageAttributes.Controls.Add(this.checkBoxMouse);
+            this.groupBoxImageAttributes.Controls.Add(this.labelJpegQuality);
+            this.groupBoxImageAttributes.Controls.Add(this.numericUpDownJpegQuality);
+            this.groupBoxImageAttributes.Controls.Add(this.comboBoxFormat);
+            this.groupBoxImageAttributes.Location = new System.Drawing.Point(12, 262);
+            this.groupBoxImageAttributes.Name = "groupBoxImageAttributes";
+            this.groupBoxImageAttributes.Size = new System.Drawing.Size(205, 126);
+            this.groupBoxImageAttributes.TabIndex = 18;
+            this.groupBoxImageAttributes.TabStop = false;
+            this.groupBoxImageAttributes.Text = "Image Attributes";
             // 
             // groupBoxDisplayProperties
             // 
@@ -547,7 +547,7 @@
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.groupBoxPreview);
             this.Controls.Add(this.groupBoxDisplayProperties);
-            this.Controls.Add(this.groupBoxImage);
+            this.Controls.Add(this.groupBoxImageAttributes);
             this.Controls.Add(this.buttonScreenBrowseFolder);
             this.Controls.Add(this.textBoxFolder);
             this.Controls.Add(this.labelFolder);
@@ -566,8 +566,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).EndInit();
-            this.groupBoxImage.ResumeLayout(false);
-            this.groupBoxImage.PerformLayout();
+            this.groupBoxImageAttributes.ResumeLayout(false);
+            this.groupBoxImageAttributes.PerformLayout();
             this.groupBoxDisplayProperties.ResumeLayout(false);
             this.groupBoxDisplayProperties.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
@@ -600,7 +600,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownJpegQuality;
         private System.Windows.Forms.Label labelJpegQuality;
         private System.Windows.Forms.CheckBox checkBoxMouse;
-        private System.Windows.Forms.GroupBox groupBoxImage;
+        private System.Windows.Forms.GroupBox groupBoxImageAttributes;
         private System.Windows.Forms.GroupBox groupBoxDisplayProperties;
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;

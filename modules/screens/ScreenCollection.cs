@@ -82,7 +82,7 @@ namespace AutoScreenCapture
                     Y = screen.Bounds.Y,
                     Width = deviceResolution.width,
                     Height = deviceResolution.height,
-                    Source = 1,
+                    Source = 0,
                     DeviceName = deviceResolution.screen.DeviceName
                 });
 

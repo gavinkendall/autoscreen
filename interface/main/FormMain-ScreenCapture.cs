@@ -377,7 +377,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool SaveScreenshot(Bitmap bitmap, Screen screen, ScreenshotType screenshotType)
+        private bool SaveScreenshot(Bitmap bitmap, Screen screen)
         {
             if (bitmap == null)
             {
@@ -390,8 +390,6 @@ namespace AutoScreenCapture
                 Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                 Bitmap = bitmap,
                 Format = screen.Format,
-                Component = screen.Component,
-                ScreenshotType = screenshotType,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
                 Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
             };
@@ -410,7 +408,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool SaveScreenshot(Bitmap bitmap, Region region, ScreenshotType screenshotType)
+        private bool SaveScreenshot(Bitmap bitmap, Region region)
         {
             if (bitmap == null)
             {
@@ -423,8 +421,6 @@ namespace AutoScreenCapture
                 Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, region.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
                 Bitmap = bitmap,
                 Format = region.Format,
-                Component = -1,
-                ScreenshotType = screenshotType,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
                 Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
             };
@@ -566,7 +562,7 @@ namespace AutoScreenCapture
                     Macro = autoSaveMacro
                 };
 
-                SaveScreenshot(bitmap, region, ScreenshotType.Region);
+                SaveScreenshot(bitmap, region);
             }
         }
 

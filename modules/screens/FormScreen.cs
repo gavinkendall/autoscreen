@@ -73,7 +73,7 @@ namespace AutoScreenCapture
         {
             textBoxScreenName.Focus();
 
-            HelpMessage("This is where to configure a screen capture. Select an available screen from the Component drop-down menu and keep an eye on Preview");
+            HelpMessage("This is where to configure a screen capture. Select a source and a component then change the display properties and image attributes");
 
             comboBoxFormat.Items.Clear();
 

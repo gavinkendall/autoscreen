@@ -256,7 +256,6 @@
     <Compile Include="macro\MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
-    <Compile Include="modules\screenshots\ScreenshotType.cs" />
     <Compile Include="security\Security.cs" />
     <Compile Include="settings\DefaultSettings.cs" />
     <Compile Include="settings\Setting.cs" />
