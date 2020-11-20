@@ -167,9 +167,9 @@ namespace AutoScreenCapture
                 {
                     if (screen.Active)
                     {
-                        if (screen.Component == 0) // Active Window
+                        if (screen.Source == 0 && screen.Component == 0) // Active Window
                         {
-                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
                             {
                                 if (!SaveScreenshot(bitmap, screen, ScreenshotType.ActiveWindow))
                                 {
@@ -179,7 +179,7 @@ namespace AutoScreenCapture
                         }
                         else // Screen (regardless of how many displays there are)
                         {
-                            if (_screenCapture.GetScreenImages(screen.Component,
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component,
                                 screen.X,
                                 screen.Y,
                                 screen.Width,

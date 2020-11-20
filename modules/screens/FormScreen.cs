@@ -37,6 +37,11 @@ namespace AutoScreenCapture
         public ScreenCollection ScreenCollection { get; } = new ScreenCollection();
 
         /// <summary>
+        /// A collection of regions to be used for selecting a source.
+        /// </summary>
+        public RegionCollection RegionCollection { get; set; } = new RegionCollection();
+
+        /// <summary>
         /// The current screen object this form handles when creating a new screen or changing a screen.
         /// </summary>
         public Screen ScreenObject { get; set; }
@@ -91,7 +96,7 @@ namespace AutoScreenCapture
                 textBoxScreenName.Text = ScreenObject.Name;
                 textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
                 textBoxMacro.Text = ScreenObject.Macro;
-                comboBoxScreenSource.SelectedIndex = ScreenObject.SourceIndex;
+                comboBoxScreenSource.SelectedIndex = ScreenObject.Source;
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 numericUpDownResolutionRatio.Value = ScreenObject.ResolutionRatio;
@@ -171,7 +176,7 @@ namespace AutoScreenCapture
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
-                        SourceIndex = comboBoxScreenSource.SelectedIndex
+                        Source = comboBoxScreenSource.SelectedIndex
                     });
 
                     Okay();
@@ -217,7 +222,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Y = (int)numericUpDownY.Value;
                         ScreenCollection.Get(ScreenObject).Width = (int)numericUpDownWidth.Value;
                         ScreenCollection.Get(ScreenObject).Height = (int)numericUpDownHeight.Value;
-                        ScreenCollection.Get(ScreenObject).SourceIndex = comboBoxScreenSource.SelectedIndex;
+                        ScreenCollection.Get(ScreenObject).Source = comboBoxScreenSource.SelectedIndex;
 
                         Okay();
                     }
@@ -267,7 +272,7 @@ namespace AutoScreenCapture
                  ScreenObject.Y != (int)numericUpDownY.Value ||
                  ScreenObject.Width != (int)numericUpDownWidth.Value ||
                  ScreenObject.Height != (int)numericUpDownHeight.Value) ||
-                 ScreenObject.SourceIndex != comboBoxScreenSource.SelectedIndex)
+                 ScreenObject.Source != comboBoxScreenSource.SelectedIndex)
             {
                 return true;
             }
@@ -307,6 +312,32 @@ namespace AutoScreenCapture
         {
             try
             {
+                // The Source is "Auto Screen Capture" and the Component is "Active Window".
+                if (comboBoxScreenSource.SelectedIndex == 0 && comboBoxScreenComponent.SelectedIndex == 0)
+                {
+                    labelX.Enabled = false;
+                    labelY.Enabled = false;
+                    labelWidth.Enabled = false;
+                    labelHeight.Enabled = false;
+
+                    numericUpDownX.Enabled = false;
+                    numericUpDownY.Enabled = false;
+                    numericUpDownWidth.Enabled = false;
+                    numericUpDownHeight.Enabled = false;
+                }
+                else
+                {
+                    labelX.Enabled = true;
+                    labelY.Enabled = true;
+                    labelWidth.Enabled = true;
+                    labelHeight.Enabled = true;
+
+                    numericUpDownX.Enabled = true;
+                    numericUpDownY.Enabled = true;
+                    numericUpDownWidth.Enabled = true;
+                    numericUpDownHeight.Enabled = true;
+                }
+
                 if (checkBoxActive.Checked)
                 {
                     // The Source is "Auto Screen Capture" and the Component is "Active Window".
@@ -476,19 +507,39 @@ namespace AutoScreenCapture
         {
             comboBoxScreenComponent.Items.Clear();
 
-            // Auto Screen Capture (from the screens.xml file)
+            // Auto Screen Capture
             if (comboBoxScreenSource.SelectedIndex == 0)
             {
                 comboBoxScreenComponent.Items.Add("Active Window");
 
+                // Add screens from screens.xml file.
                 foreach (Screen screen in ScreenCollection)
                 {
+                    // We don't want a Screen object that's null.
                     if (screen == null)
                     {
                         continue;
                     }
 
+                    // We don't care if it's a Screen using Active Window as its Component because that's already available in the list.
+                    if (screen.Component == 0 && screen.Source == 0)
+                    {
+                        continue;
+                    }
+
                     comboBoxScreenComponent.Items.Add("\"" + screen.Name + "\" X:" + screen.X + " Y:" + screen.Y + " (" + screen.Width + "x" + screen.Height + ")");
+                }
+
+                // Add regions from regions.xml file.
+                foreach (Region region in RegionCollection)
+                {
+                    // We don't want a Region object that's null.
+                    if (region == null)
+                    {
+                        continue;
+                    }
+
+                    comboBoxScreenComponent.Items.Add("\"" + region.Name + "\" X:" + region.X + " Y:" + region.Y + " (" + region.Width + "x" + region.Height + ")");
                 }
             }
 

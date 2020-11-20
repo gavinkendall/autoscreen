@@ -88,6 +88,9 @@ namespace AutoScreenCapture
                     _screenCapture.ApplicationError = true;
                 }
 
+                // Add regions to the Screen form so we can select them as a source.
+                _formScreen.RegionCollection = _formRegion.RegionCollection;
+
                 Log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
 
                 Log.WriteMessage("Initializing screen collection");

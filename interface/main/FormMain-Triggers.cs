@@ -248,10 +248,6 @@ namespace AutoScreenCapture
                     _formTrigger.TriggerCollection.GetByName(trigger.ModuleItem).Active = false;
                     BuildTriggersModule();
                     break;
-
-                case TriggerActionType.ResetScreenCollection:
-                    _formScreen.ScreenCollection.Reset();
-                    break;
             }
         }
     }

@@ -100,7 +100,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The source of the display properties (whether it be from the screens.xml file or from the Windows operating system).
         /// </summary>
-        public int SourceIndex { get; set; }
+        public int Source { get; set; }
 
         /// <summary>
         /// The name of the device.

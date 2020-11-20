@@ -160,7 +160,7 @@ namespace AutoScreenCapture
                 {
                     if (region.Active)
                     {
-                        if (_screenCapture.GetScreenImages(-1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
+                        if (_screenCapture.GetScreenImages(-1, -1, region.X, region.Y, region.Width, region.Height, region.Mouse, region.ResolutionRatio, out Bitmap bitmap))
                         {
                             if (!SaveScreenshot(bitmap, region, ScreenshotType.Region))
                             {
