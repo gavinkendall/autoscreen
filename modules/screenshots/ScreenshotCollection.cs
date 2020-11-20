@@ -791,7 +791,7 @@ namespace AutoScreenCapture
                                     }
                                 }
 
-                                if (!screenshot.Version.Equals(Settings.ApplicationVersion))
+                                if (string.IsNullOrEmpty(screenshot.Version) || !screenshot.Version.Equals(Settings.ApplicationVersion))
                                 {
                                     // Remove all the existing XML child nodes from the old XML screenshot.
                                     xScreenshot.RemoveAll();
