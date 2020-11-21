@@ -368,7 +368,7 @@ namespace AutoScreenCapture
         /// <returns>The image of an image file.</returns>
         public static Image GetImage(string path)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return null;
             }
@@ -401,7 +401,7 @@ namespace AutoScreenCapture
         /// <returns>The filename of the given path.</returns>
         public static string GetFileName(string path)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return string.Empty;
             }
@@ -416,7 +416,7 @@ namespace AutoScreenCapture
         /// <param name="line">The line of text to write to the file.</param>
         public static void WriteToFile(string path, string line)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return;
             }
@@ -431,7 +431,7 @@ namespace AutoScreenCapture
         /// <param name="linesToWrite">The array of lines to write to the file.</param>
         public static void WriteToFile(string path, string[] linesToWrite)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return;
             }
@@ -446,7 +446,7 @@ namespace AutoScreenCapture
         /// <param name="line">The line to append to the file.</param>
         public static void AppendToFile(string path, string line)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return;
             }
@@ -466,7 +466,7 @@ namespace AutoScreenCapture
         /// <returns>An array of lines representing the lines of text in the file.</returns>
         public static string[] ReadFromFile(string path)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return null;
             }

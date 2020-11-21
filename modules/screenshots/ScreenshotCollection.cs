@@ -61,9 +61,8 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_VERSION = "version";
         private const string SCREENSHOT_HASH = "hash";
 
-        // These are for backwards compatibility with older versions.
+        // This is used for backwards compatibility with a very old version of the application.
         private const string SCREENSHOT_SCREEN = "screen";
-        private const string SCREENSHOT_COMPONENT = "component";
 
         private readonly string SCREENSHOTS_XPATH;
         private readonly string SCREENSHOT_XPATH;
@@ -720,16 +719,6 @@ namespace AutoScreenCapture
                                                         // The screen index from older versions should match with the component index.
                                                         screen = _screenCollection.GetBySourceAndComponent(source: 0, component: screenIndex);
                                                     }
-                                                }
-                                                break;
-
-                                            // "Component" was introduced in 2.2 as the new representation for "Screen".
-                                            case SCREENSHOT_COMPONENT:
-                                                if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
-                                                {
-                                                    xReader.Read();
-                                                    int component = Convert.ToInt32(xReader.Value);
-                                                    screen = _screenCollection.GetBySourceAndComponent(source: 0, component);
                                                 }
                                                 break;
 
