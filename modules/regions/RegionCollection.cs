@@ -177,8 +177,8 @@ namespace AutoScreenCapture
                         {
                             Log.WriteDebugMessage("An old version of the regions file was detected. Attempting upgrade to new region schema");
 
-                            Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2182 = Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
+                            Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2182 != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))

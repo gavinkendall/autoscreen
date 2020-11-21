@@ -74,6 +74,25 @@ namespace AutoScreenCapture
         /// <returns>A Version object.</returns>
         public Version Get(string appCodename, string appVersion)
         {
+            if (!string.IsNullOrEmpty(appVersion) &&
+                    (appVersion.Equals("2.2.0.10") ||
+                     appVersion.Equals("2.2.0.11") ||
+                     appVersion.Equals("2.2.0.12") ||
+                     appVersion.Equals("2.2.0.13") ||
+                     appVersion.Equals("2.2.0.14") ||
+                     appVersion.Equals("2.2.0.15") ||
+                     appVersion.Equals("2.2.0.16") ||
+                     appVersion.Equals("2.2.0.17") ||
+                     appVersion.Equals("2.2.0.18") ||
+                     appVersion.Equals("2.2.0.19") ||
+                     appVersion.Equals("2.2.0.20") ||
+                     appVersion.Equals("2.2.0.21") ||
+                     appVersion.Equals("2.2.0.22")))
+            {
+                // If it's any of the "bad" versions then return as 2.2.1.0
+                return new Version(Settings.CODENAME_DALEK, "2.2.1.0");
+            }
+
             foreach (Version version in _versionList)
             {
                 if (version.Codename.Equals(appCodename) &&

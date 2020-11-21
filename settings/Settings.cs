@@ -45,11 +45,14 @@ namespace AutoScreenCapture
         public const string CODENAME_CLARA = "Clara"; // Clara introduced the Macro field for customizing the filename pattern of image files when writing them to disk.
 
         /// <summary>
-        /// The version number of any version old than "Clara" or a version that cannot be determined.
+        /// The version number of any version older than "Clara" or a version that cannot be determined.
         /// </summary>
         public const string CODEVERSION_CLARA = "2.1.8.2";
 
-        private const string CODENAME_DALEK = "Dalek"; // Dalek made it possible to have an unlimited number of screens, apply labels to screenshots, and create user-defined macro tags.
+        /// <summary>
+        /// The version that introduced an unlimited number of screens in the 2.2 series.
+        /// </summary>
+        public const string CODENAME_DALEK = "Dalek"; // Dalek made it possible to have an unlimited number of screens, apply labels to screenshots, and create user-defined macro tags.
 
         // The current major version.
         // Boombayah (named after Blackpink's "Boombayah" - https://www.youtube.com/watch?v=bwmSjveL3Lc)
@@ -60,7 +63,15 @@ namespace AutoScreenCapture
         // This version also introduces keyboard shortcuts and it populates the Editors module with a list of applications it finds on the user's machine.
         // The startup time is also faster since we no longer initialize the threads in the beginning (that, in turn, reads from the XML documents).
         // New system tray icon menu items such as Region Select / Clipboard, Region Select / Auto Save, and Region Select / Edit also introduced.
-        private const string CODENAME_BOOMBAYAH = "Boombayah";
+        /// <summary>
+        /// The codename for the 2.3 series.
+        /// </summary>
+        public const string CODENAME_BOOMBAYAH = "Boombayah";
+
+        /// <summary>
+        /// The version number of the first version in the 2.3 series.
+        /// </summary>
+        public const string CODEVERSION_BOOMBAYAH = "2.3.0.0";
 
         /// <summary>
         /// The codename of this application.
@@ -291,7 +302,7 @@ namespace AutoScreenCapture
                         // from the command line.
                         if (VersionManager.IsOldAppVersion(Application.AppCodename, Application.AppVersion))
                         {
-                            Version v2300 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, "2.3.0.0");
+                            Version v2300 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, CODEVERSION_BOOMBAYAH);
                             Version configVersion = VersionManager.Versions.Get(Application.AppCodename, Application.AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)

@@ -252,8 +252,8 @@ namespace AutoScreenCapture
                         {
                             Log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version v2340 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.4.0");
+                            Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                            Version v2340 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -309,7 +309,7 @@ namespace AutoScreenCapture
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
-                        Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
+                        Version v2182 = Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
                         Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                         if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)

@@ -177,8 +177,8 @@ namespace AutoScreenCapture
                                         {
                                             Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
-                                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                                            Version v2326 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
+                                            Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                                            Version v2326 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.2.6");
                                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -296,8 +296,8 @@ namespace AutoScreenCapture
                         {
                             Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version v2326 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
+                            Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                            Version v2326 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.2.6");
                             Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)

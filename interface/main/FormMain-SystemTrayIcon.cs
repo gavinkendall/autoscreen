@@ -35,9 +35,9 @@ namespace AutoScreenCapture
 
             if (ScreenCapture.LockScreenCaptureSession)
             {
-                // Hide the "Show Screen Capture Status" menu item.
+                // Hide the "Screen Capture Status" menu item.
                 toolStripSeparatorTools.Visible = false;
-                toolStripMenuItemShowScreenCaptureStatus.Visible = false;
+                toolStripMenuItemScreenCaptureStatus.Visible = false;
 
                 // Hide the "Capture Now" memu items.
                 toolStripMenuItemCaptureNowEdit.Visible = false;
@@ -45,9 +45,9 @@ namespace AutoScreenCapture
             }
             else
             {
-                // Show the "Show Screen Capture Status" menu item.
+                // Show the "Screen Capture Status" menu item.
                 toolStripSeparatorTools.Visible = true;
-                toolStripMenuItemShowScreenCaptureStatus.Visible = true;
+                toolStripMenuItemScreenCaptureStatus.Visible = true;
 
                 // Show the "Capture Now" memu items.
                 toolStripMenuItemCaptureNowEdit.Visible = true;

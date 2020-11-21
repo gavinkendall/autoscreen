@@ -171,6 +171,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                screenshot.Version = Settings.ApplicationVersion;
+
                 // Every screenshot needs a View ID.
                 if (screenshot.ViewId == null)
                 {
@@ -701,7 +703,7 @@ namespace AutoScreenCapture
                                             // 2.1 used "Screen" for its definition of each display/monitor whereas 2.2 uses "Component".
                                             case SCREENSHOT_SCREEN:
                                                 if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion) &&
-                                                    Settings.VersionManager.Versions.Get("Clara", "2.1.8.2") != null &&
+                                                    Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA) != null &&
                                                     string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                                                 {
                                                     xReader.Read();
@@ -762,16 +764,14 @@ namespace AutoScreenCapture
 
                                 xReader.Close();
 
-                                Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
+                                Version v2182 = Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
                                 Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                 // Clara 2.1.8.2
-                                if (v2182 != null && configVersion != null && configVersion.VersionNumber == v2182.VersionNumber &&
-                                    (string.IsNullOrEmpty(screenshot.Version) || !screenshot.Version.Equals(Settings.ApplicationVersion)))
+                                if (v2182 != null && configVersion != null && configVersion.VersionNumber == v2182.VersionNumber)
                                 {
                                     if (screen != null)
                                     {
-                                        screenshot.Version = v2182.VersionString;
                                         screenshot.ViewId = screen.ViewId;
 
                                         Regex rgxOldSlidename = new Regex(@"^(?<Date>\d{4}-\d{2}-\d{2}) (?<Time>(?<Hour>\d{2})-(?<Minute>\d{2})-(?<Second>\d{2})-(?<Millisecond>\d{3}))");
@@ -787,11 +787,11 @@ namespace AutoScreenCapture
                                         screenshot.WindowTitle = Settings.ApplicationName;
 
                                         screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
-                                        screenshot.Slide.Value = screenshot.Time + " [*Screenshot imported from " + Settings.ApplicationName + " " + screenshot.Version + "*]";
+                                        screenshot.Slide.Value = screenshot.Time + " [*Screenshot imported from Auto Screen Capture 2.1.8.2*]";
                                     }
                                 }
 
-                                if (string.IsNullOrEmpty(screenshot.Version) || !screenshot.Version.Equals(Settings.ApplicationVersion))
+                                if (string.IsNullOrEmpty(screenshot.Version))
                                 {
                                     // Remove all the existing XML child nodes from the old XML screenshot.
                                     xScreenshot.RemoveAll();

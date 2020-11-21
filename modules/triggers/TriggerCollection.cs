@@ -93,8 +93,8 @@ namespace AutoScreenCapture
                     {
                         Log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
 
-                        v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                        v2340 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.4.0");
+                        v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                        v2340 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
                         configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
                     }
 
