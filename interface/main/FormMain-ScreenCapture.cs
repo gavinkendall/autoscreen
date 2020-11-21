@@ -61,10 +61,6 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
 
-                labelKeepScreenshots.Enabled = true;
-                labelDays.Enabled = true;
-                numericUpDownKeepScreenshotsForDays.Enabled = true;
-
                 checkBoxScreenshotLabel.Enabled = true;
                 comboBoxScreenshotLabel.Enabled = true;
 
@@ -97,10 +93,6 @@ namespace AutoScreenCapture
             numericUpDownCaptureLimit.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
-
-            labelKeepScreenshots.Enabled = false;
-            labelDays.Enabled = false;
-            numericUpDownKeepScreenshotsForDays.Enabled = false;
 
             checkBoxScreenshotLabel.Enabled = false;
             comboBoxScreenshotLabel.Enabled = false;

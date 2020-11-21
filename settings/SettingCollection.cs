@@ -324,10 +324,7 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (FileSystem.FileExists(Filepath))
-                {
-                    FileSystem.DeleteFile(Filepath);
-                }
+                FileSystem.DeleteFile(Filepath);
 
                 using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
                 {
@@ -427,8 +424,6 @@ namespace AutoScreenCapture
                 RenameKey("BoolTakeInitialScreenshot", "TakeInitialScreenshot");
                 RenameKey("TakeInitialScreenshotCheck", "TakeInitialScreenshot");
                 RenameKey("BoolShowSystemTrayIcon", "ShowSystemTrayIcon");
-                RenameKey("DaysOldWhenRemoveSlides", "KeepScreenshotsForDays");
-                RenameKey("IntKeepScreenshotsForDays", "KeepScreenshotsForDays");
                 RenameKey("StringPassphrase", "Passphrase");
                 RenameKey("StringScreenshotLabel", "ScreenshotLabel");
                 RenameKey("BoolApplyScreenshotLabel", "ApplyScreenshotLabel");
@@ -534,6 +529,9 @@ namespace AutoScreenCapture
                 RemoveByKey("Schedule");
                 RemoveByKey("DeleteScreenshotsOlderThanDays");
                 RemoveByKey("ScreenshotDelay");
+                RemoveByKey("DaysOldWhenRemoveSlides");
+                RemoveByKey("IntKeepScreenshotsForDays");
+                RemoveByKey("KeepScreenshotsForDays");
 
                 Log.WriteMessage("Upgrade completed.");
 

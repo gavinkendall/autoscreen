@@ -456,10 +456,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.TagsFile))
-                {
-                    FileSystem.DeleteFile(FileSystem.TagsFile);
-                }
+                FileSystem.DeleteFile(FileSystem.TagsFile);
 
                 using (XmlWriter xWriter =
                     XmlWriter.Create(FileSystem.TagsFile, xSettings))

@@ -42,6 +42,7 @@ namespace AutoScreenCapture
         private const string TRIGGER_DATE = "date";
         private const string TRIGGER_TIME = "time";
         private const string TRIGGER_DAY = "day";
+        private const string TRIGGER_DAYS = "days";
         private const string TRIGGER_SCREEN_CAPTURE_INTERVAL = "screen_capture_interval";
         private const string TRIGGER_MODULE_ITEM = "module_item";
 
@@ -177,6 +178,11 @@ namespace AutoScreenCapture
                                     case TRIGGER_DAY:
                                         xReader.Read();
                                         trigger.Day = xReader.Value;
+                                        break;
+
+                                    case TRIGGER_DAYS:
+                                        xReader.Read();
+                                        trigger.Days = Convert.ToInt32(xReader.Value);
                                         break;
 
                                     case TRIGGER_SCREEN_CAPTURE_INTERVAL:
@@ -323,10 +329,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.TriggersFile))
-                {
-                    FileSystem.DeleteFile(FileSystem.TriggersFile);
-                }
+                FileSystem.DeleteFile(FileSystem.TriggersFile);
 
                 using (XmlWriter xWriter =
                     XmlWriter.Create(FileSystem.TriggersFile, xSettings))
@@ -348,6 +351,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_DATE, trigger.Date.ToString());
                         xWriter.WriteElementString(TRIGGER_TIME, trigger.Time.ToString());
                         xWriter.WriteElementString(TRIGGER_DAY, string.IsNullOrEmpty(trigger.Day) ? "Weekday" : trigger.Day.ToString());
+                        xWriter.WriteElementString(TRIGGER_DAYS, trigger.Days.ToString());
                         xWriter.WriteElementString(TRIGGER_SCREEN_CAPTURE_INTERVAL, trigger.ScreenCaptureInterval.ToString());
                         xWriter.WriteElementString(TRIGGER_MODULE_ITEM, trigger.ModuleItem);
 

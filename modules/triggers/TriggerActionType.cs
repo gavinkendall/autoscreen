@@ -113,6 +113,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// The action to perform will deactivate a chosen trigger.
         /// </summary>
-        DeactivateTrigger = 17
+        DeactivateTrigger = 17,
+
+        /// <summary>
+        /// The action to perform will delete screenshots older than a specifed number of days.
+        /// </summary>
+        DeleteScreenshotsOlderThanDays = 18
     }
 }

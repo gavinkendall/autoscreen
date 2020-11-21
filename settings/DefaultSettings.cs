@@ -70,7 +70,6 @@ namespace AutoScreenCapture
         internal static readonly bool TakeInitialScreenshot = false;
         internal static readonly bool ShowSystemTrayIcon = true;
         internal static readonly string Passphrase = string.Empty;
-        internal static readonly int KeepScreenshotsForDays = 30;
         internal static readonly string ScreenshotLabel = string.Empty;
         internal static readonly bool ApplyScreenshotLabel = false;
         internal static readonly string DefaultEditor = string.Empty;

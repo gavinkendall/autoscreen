@@ -189,9 +189,6 @@ namespace AutoScreenCapture
                 notifyIcon.Visible = Convert.ToBoolean(Settings.User.GetByKey("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon).Value);
                 Log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
 
-                numericUpDownKeepScreenshotsForDays.Value = Convert.ToDecimal(Settings.User.GetByKey("KeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays).Value);
-                Log.WriteDebugMessage("KeepScreenshotsForDays = " + numericUpDownKeepScreenshotsForDays.Value);
-
                 comboBoxScreenshotLabel.Text = Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value.ToString();
                 Log.WriteDebugMessage("ScreenshotLabel = " + comboBoxScreenshotLabel.Text);
 
@@ -232,7 +229,6 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("CaptureLimit", DefaultSettings.CaptureLimit).Value = numericUpDownCaptureLimit.Value;
                 Settings.User.GetByKey("CaptureLimitCheck", DefaultSettings.CaptureLimitCheck).Value = checkBoxCaptureLimit.Checked;
                 Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
-                Settings.User.GetByKey("KeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays).Value = numericUpDownKeepScreenshotsForDays.Value;
 
                 // Label.
                 Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value = comboBoxScreenshotLabel.Text.Trim();

@@ -99,9 +99,6 @@ namespace AutoScreenCapture
             this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
             this.tabPageScreenshots = new System.Windows.Forms.TabPage();
-            this.labelDays = new System.Windows.Forms.Label();
-            this.numericUpDownKeepScreenshotsForDays = new System.Windows.Forms.NumericUpDown();
-            this.labelKeepScreenshots = new System.Windows.Forms.Label();
             this.tabPageScreens = new System.Windows.Forms.TabPage();
             this.tabPageRegions = new System.Windows.Forms.TabPage();
             this.tabPageEditors = new System.Windows.Forms.TabPage();
@@ -146,7 +143,6 @@ namespace AutoScreenCapture
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.tabPageScreenshots.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).BeginInit();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -263,10 +259,10 @@ namespace AutoScreenCapture
             this.listBoxScreenshots.FormattingEnabled = true;
             this.listBoxScreenshots.HorizontalScrollbar = true;
             this.listBoxScreenshots.IntegralHeight = false;
-            this.listBoxScreenshots.Location = new System.Drawing.Point(3, 27);
+            this.listBoxScreenshots.Location = new System.Drawing.Point(3, 3);
             this.listBoxScreenshots.Name = "listBoxScreenshots";
             this.listBoxScreenshots.ScrollAlwaysVisible = true;
-            this.listBoxScreenshots.Size = new System.Drawing.Size(235, 154);
+            this.listBoxScreenshots.Size = new System.Drawing.Size(235, 178);
             this.listBoxScreenshots.TabIndex = 0;
             this.listBoxScreenshots.TabStop = false;
             this.listBoxScreenshots.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_listBoxScreenshots);
@@ -301,7 +297,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 354);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 332);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -847,9 +843,6 @@ namespace AutoScreenCapture
             // tabPageScreenshots
             // 
             this.tabPageScreenshots.AutoScroll = true;
-            this.tabPageScreenshots.Controls.Add(this.labelDays);
-            this.tabPageScreenshots.Controls.Add(this.numericUpDownKeepScreenshotsForDays);
-            this.tabPageScreenshots.Controls.Add(this.labelKeepScreenshots);
             this.tabPageScreenshots.Controls.Add(this.listBoxScreenshots);
             this.tabPageScreenshots.Location = new System.Drawing.Point(4, 22);
             this.tabPageScreenshots.Name = "tabPageScreenshots";
@@ -858,40 +851,6 @@ namespace AutoScreenCapture
             this.tabPageScreenshots.TabIndex = 1;
             this.tabPageScreenshots.Text = "Screenshots";
             this.tabPageScreenshots.UseVisualStyleBackColor = true;
-            // 
-            // labelDays
-            // 
-            this.labelDays.AutoSize = true;
-            this.labelDays.Location = new System.Drawing.Point(154, 6);
-            this.labelDays.Name = "labelDays";
-            this.labelDays.Size = new System.Drawing.Size(29, 13);
-            this.labelDays.TabIndex = 0;
-            this.labelDays.Text = "days";
-            this.labelDays.MouseHover += new System.EventHandler(this.labelKeepScreenshots_MouseHover);
-            // 
-            // numericUpDownKeepScreenshotsForDays
-            // 
-            this.numericUpDownKeepScreenshotsForDays.Location = new System.Drawing.Point(110, 4);
-            this.numericUpDownKeepScreenshotsForDays.Maximum = new decimal(new int[] {
-            365,
-            0,
-            0,
-            0});
-            this.numericUpDownKeepScreenshotsForDays.Name = "numericUpDownKeepScreenshotsForDays";
-            this.numericUpDownKeepScreenshotsForDays.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownKeepScreenshotsForDays.TabIndex = 0;
-            this.numericUpDownKeepScreenshotsForDays.TabStop = false;
-            this.numericUpDownKeepScreenshotsForDays.Leave += new System.EventHandler(this.SaveSettings);
-            // 
-            // labelKeepScreenshots
-            // 
-            this.labelKeepScreenshots.AutoSize = true;
-            this.labelKeepScreenshots.Location = new System.Drawing.Point(3, 6);
-            this.labelKeepScreenshots.Name = "labelKeepScreenshots";
-            this.labelKeepScreenshots.Size = new System.Drawing.Size(107, 13);
-            this.labelKeepScreenshots.TabIndex = 0;
-            this.labelKeepScreenshots.Text = "Keep screenshots for";
-            this.labelKeepScreenshots.MouseHover += new System.EventHandler(this.labelKeepScreenshots_MouseHover);
             // 
             // tabPageScreens
             // 
@@ -1256,8 +1215,6 @@ namespace AutoScreenCapture
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             this.tabPageScreenshots.ResumeLayout(false);
-            this.tabPageScreenshots.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1322,9 +1279,6 @@ namespace AutoScreenCapture
         private Label labelFilter;
         private Button buttonRefreshFilterValues;
         private ComboBox comboBoxFilterType;
-        private Label labelDays;
-        private NumericUpDown numericUpDownKeepScreenshotsForDays;
-        private Label labelKeepScreenshots;
         private Timer timerPerformMaintenance;
         private ComboBox comboBoxScreenshotLabel;
         private CheckBox checkBoxScreenshotLabel;

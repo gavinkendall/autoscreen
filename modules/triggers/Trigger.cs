@@ -63,6 +63,11 @@ namespace AutoScreenCapture
         public string Day { get; set; }
 
         /// <summary>
+        /// The number of days.
+        /// </summary>
+        public int Days { get; set; }
+
+        /// <summary>
         /// The interval to use. This overrides the main interval.
         /// </summary>
         public int ScreenCaptureInterval { get; set; }

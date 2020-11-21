@@ -346,10 +346,7 @@ namespace AutoScreenCapture
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSchedulesFile=" + FileSystem.SchedulesFile);
                 }
 
-                if (FileSystem.FileExists(FileSystem.SchedulesFile))
-                {
-                    FileSystem.DeleteFile(FileSystem.SchedulesFile);
-                }
+                FileSystem.DeleteFile(FileSystem.SchedulesFile);
 
                 using (XmlWriter xWriter =
                     XmlWriter.Create(FileSystem.SchedulesFile, xSettings))

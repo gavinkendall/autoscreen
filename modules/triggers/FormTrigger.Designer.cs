@@ -52,10 +52,13 @@
             this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
             this.labelDay = new System.Windows.Forms.Label();
             this.comboBoxDay = new System.Windows.Forms.ComboBox();
+            this.labelDays = new System.Windows.Forms.Label();
+            this.numericUpDownDays = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).BeginInit();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -168,7 +171,6 @@
             // 
             this.dateTimePickerTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dateTimePickerTime.CustomFormat = "HH:mm:ss";
-            this.dateTimePickerTime.Enabled = false;
             this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerTime.Location = new System.Drawing.Point(179, 361);
             this.dateTimePickerTime.Name = "dateTimePickerTime";
@@ -215,7 +217,6 @@
             this.dateTimePickerDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dateTimePickerDate.CustomFormat = "yyyy-MM-dd";
             this.dateTimePickerDate.DropDownAlign = System.Windows.Forms.LeftRightAlignment.Right;
-            this.dateTimePickerDate.Enabled = false;
             this.dateTimePickerDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerDate.Location = new System.Drawing.Point(48, 361);
             this.dateTimePickerDate.Name = "dateTimePickerDate";
@@ -321,8 +322,31 @@
             "Sunday"});
             this.comboBoxDay.Location = new System.Drawing.Point(48, 387);
             this.comboBoxDay.Name = "comboBoxDay";
-            this.comboBoxDay.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxDay.Size = new System.Drawing.Size(79, 21);
             this.comboBoxDay.TabIndex = 22;
+            // 
+            // labelDays
+            // 
+            this.labelDays.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelDays.AutoSize = true;
+            this.labelDays.Location = new System.Drawing.Point(259, 390);
+            this.labelDays.Name = "labelDays";
+            this.labelDays.Size = new System.Drawing.Size(34, 13);
+            this.labelDays.TabIndex = 23;
+            this.labelDays.Text = "Days:";
+            // 
+            // numericUpDownDays
+            // 
+            this.numericUpDownDays.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownDays.Location = new System.Drawing.Point(310, 387);
+            this.numericUpDownDays.Maximum = new decimal(new int[] {
+            -402653185,
+            -1613725636,
+            54210108,
+            0});
+            this.numericUpDownDays.Name = "numericUpDownDays";
+            this.numericUpDownDays.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownDays.TabIndex = 24;
             // 
             // FormTrigger
             // 
@@ -331,6 +355,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.numericUpDownDays);
+            this.Controls.Add(this.labelDays);
             this.Controls.Add(this.comboBoxDay);
             this.Controls.Add(this.labelDay);
             this.Controls.Add(this.numericUpDownMillisecondsInterval);
@@ -364,6 +390,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -394,5 +421,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
         private System.Windows.Forms.Label labelDay;
         private System.Windows.Forms.ComboBox comboBoxDay;
+        private System.Windows.Forms.Label labelDays;
+        private System.Windows.Forms.NumericUpDown numericUpDownDays;
     }
 }

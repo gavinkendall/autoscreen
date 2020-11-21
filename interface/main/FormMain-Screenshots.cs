@@ -31,17 +31,16 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// Deletes old screenshots and saves new screenshots every five minutes (300000 milliseconds).
-        /// This is for maintenance purposes.
+        /// Saves screenshots and refreshes the calendar every five minutes (300000 milliseconds).
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
-            // Save and delete old screenshots.
-            // This can take about 10 minutes when the application is first started because we initialize
-            // the thread after the first 5 minutes and then save screenshots in the next 5 minutes after that.
-            // Screenshots will then be saved every 5 minutes after this initial 10 minute delay.
+            // Run whatever trigger action is associated with the "Maintenance Timer" trigger condition.
+            RunTriggersOfConditionType(TriggerConditionType.MaintenanceTimer);
+
+            // Save screenshots.
             SaveScreenshots();
 
             // Refresh the calendar.
@@ -177,7 +176,7 @@ namespace AutoScreenCapture
 
         private void RunSaveScreenshots(DoWorkEventArgs e)
         {
-            _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
+            _screenshotCollection.SaveToXmlFile();
         }
 
         /// <summary>

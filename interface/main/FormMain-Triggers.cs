@@ -122,8 +122,6 @@ namespace AutoScreenCapture
 
         private void RunTriggersOfConditionType(TriggerConditionType conditionType)
         {
-            DateTime dtNow = DateTime.Now;
-
             foreach (Trigger trigger in _formTrigger.TriggerCollection)
             {
                 if (!trigger.Active)
@@ -247,6 +245,10 @@ namespace AutoScreenCapture
                 case TriggerActionType.DeactivateTrigger:
                     _formTrigger.TriggerCollection.GetByName(trigger.ModuleItem).Active = false;
                     BuildTriggersModule();
+                    break;
+
+                case TriggerActionType.DeleteScreenshotsOlderThanDays:
+                    _screenshotCollection.DeleteScreenshots(trigger.Days);
                     break;
             }
         }

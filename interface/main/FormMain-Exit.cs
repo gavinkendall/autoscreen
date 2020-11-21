@@ -66,7 +66,7 @@ namespace AutoScreenCapture
                     HideInterface();
 
                     Log.WriteDebugMessage("Saving screenshots on clean application exit");
-                    _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
+                    _screenshotCollection.SaveToXmlFile();
 
                     if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                     {

@@ -293,10 +293,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.RegionsFile))
-                {
-                    FileSystem.DeleteFile(FileSystem.RegionsFile);
-                }
+                FileSystem.DeleteFile(FileSystem.RegionsFile);
 
                 using (XmlWriter xWriter =
                     XmlWriter.Create(FileSystem.RegionsFile, xSettings))

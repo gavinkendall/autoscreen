@@ -377,7 +377,6 @@ namespace AutoScreenCapture
                 User.Add(new Setting("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot));
                 User.Add(new Setting("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon));
                 User.Add(new Setting("Passphrase", DefaultSettings.Passphrase));
-                User.Add(new Setting("KeepScreenshotsForDays", DefaultSettings.KeepScreenshotsForDays));
                 User.Add(new Setting("ScreenshotLabel", DefaultSettings.ScreenshotLabel));
                 User.Add(new Setting("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel));
                 User.Add(new Setting("DefaultEditor", DefaultSettings.DefaultEditor));

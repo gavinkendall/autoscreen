@@ -88,6 +88,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// The condition to check will be if a screenshot is about to be taken.
         /// </summary>
-        BeforeScreenshotTaken = 12
+        BeforeScreenshotTaken = 12,
+
+        MaintenanceTimer = 13
     }
 }

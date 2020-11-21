@@ -378,10 +378,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.ScreensFile))
-                {
-                    FileSystem.DeleteFile(FileSystem.ScreensFile);
-                }
+                FileSystem.DeleteFile(FileSystem.ScreensFile);
 
                 using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ScreensFile, xSettings))
                 {

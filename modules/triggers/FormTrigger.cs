@@ -97,6 +97,8 @@ namespace AutoScreenCapture
                     TriggerObject.Day = "Weekday";
                 }
 
+                numericUpDownDays.Value = TriggerObject.Days;
+
                 comboBoxDay.SelectedIndex = comboBoxDay.Items.IndexOf(TriggerObject.Day);
 
                 if (listBoxModuleItemList.Items.Count > 0 && TriggerObject.ModuleItem != null)
@@ -173,6 +175,7 @@ namespace AutoScreenCapture
                         Date = dateTimePickerDate.Value,
                         Time = dateTimePickerTime.Value,
                         Day = comboBoxDay.Text,
+                        Days = (int)numericUpDownDays.Value,
                         ScreenCaptureInterval = screenCaptureInterval,
                         ModuleItem = listBoxModuleItemList.SelectedItem != null ? listBoxModuleItemList.SelectedItem.ToString() : string.Empty
                     };
@@ -213,6 +216,7 @@ namespace AutoScreenCapture
                         TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
                         TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
                         TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
+                        TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
 
                         if (listBoxModuleItemList.SelectedItem != null)
                         {
@@ -275,6 +279,8 @@ namespace AutoScreenCapture
                 TriggerObject.Active != checkBoxActive.Checked ||
                 TriggerObject.Date != dateTimePickerDate.Value ||
                 TriggerObject.Time != dateTimePickerTime.Value ||
+                !TriggerObject.Day.Equals(comboBoxDay.Text) ||
+                TriggerObject.Days != (int)numericUpDownDays.Value ||
                 !TriggerObject.ScreenCaptureInterval.Equals(screenCaptureInterval)))
             {
                 return true;
@@ -361,6 +367,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateSchedule, "Deactivate Schedule").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Tag").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTrigger, "Deactivate Trigger").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshotsOlderThanDays, "Delete Screenshots Older Than Days").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -462,16 +469,16 @@ namespace AutoScreenCapture
 
         private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EnableOrDisableDateTime();
+            EnableOrDisableControls();
         }
 
         private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EnableOrDisableScreenCaptureInterval();
+            EnableOrDisableControls();
             LoadModuleItems();
         }
 
-        private void EnableOrDisableDateTime()
+        private void EnableOrDisableControls()
         {
             dateTimePickerDate.Enabled = false;
             dateTimePickerTime.Enabled = false;
@@ -489,7 +496,7 @@ namespace AutoScreenCapture
                 labelDate.Enabled = true;
                 labelTime.Enabled = true;
             }
-            
+
             if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
             {
                 dateTimePickerTime.Enabled = true;
@@ -504,10 +511,7 @@ namespace AutoScreenCapture
                 labelTime.Enabled = true;
                 labelDay.Enabled = true;
             }
-        }
 
-        private void EnableOrDisableScreenCaptureInterval()
-        {
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
             {
                 labelInterval.Enabled = true;
@@ -524,6 +528,17 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Enabled = false;
                 numericUpDownMillisecondsInterval.Enabled = false;
             }
+
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsOlderThanDays)
+            {
+                labelDays.Enabled = true;
+                numericUpDownDays.Enabled = true;
+            }
+            else
+            {
+                labelDays.Enabled = false;
+                numericUpDownDays.Enabled = false;
+            }
         }
 
         private void checkBoxActive_MouseHover(object sender, EventArgs e)
@@ -533,7 +548,7 @@ namespace AutoScreenCapture
 
         private void listBoxCondition_MouseHover(object sender, EventArgs e)
         {
-            HelpMessage("A list of available trigger conditions. Select a condition that best represents the event you're interested in (such as Screenshot Taken)");
+            HelpMessage("A list of available trigger conditions. Select a condition that best represents the event you're interested in (such as After Screenshot Taken)");
         }
 
         private void listBoxAction_MouseHover(object sender, EventArgs e)

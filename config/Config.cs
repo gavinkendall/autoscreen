@@ -250,7 +250,7 @@ namespace AutoScreenCapture
                 ScreenCollection screenCollection = new ScreenCollection();
 
                 ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection);
-                screenshotCollection.SaveToXmlFile(0);
+                screenshotCollection.SaveToXmlFile();
             }
 
             if (string.IsNullOrEmpty(FileSystem.EditorsFile))

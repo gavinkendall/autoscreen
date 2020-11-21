@@ -158,7 +158,7 @@ namespace AutoScreenCapture
                 HideInterface();
 
                 Log.WriteDebugMessage("Saving screenshots on forced application exit because Windows is shutting down");
-                _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value);
+                _screenshotCollection.SaveToXmlFile();
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
