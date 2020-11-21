@@ -374,9 +374,11 @@ namespace AutoScreenCapture
 
         private void LoadModuleItems()
         {
-            listBoxModuleItemList.Items.Clear();
+            labelModuleItemList.Text = string.Empty;
+            listBoxModuleItemList.Visible = false;
+            listBoxModuleItemList.SendToBack();
 
-            labelModuleItemList.Text = "Editor, Screen, Region, Schedule, Tag, or Trigger:";
+            listBoxModuleItemList.Items.Clear();
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor)
             {
@@ -389,6 +391,9 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(editor.Name);
                     }
                 }
+
+                listBoxModuleItemList.Visible = true;
+                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
@@ -403,6 +408,9 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(screen.Name);
                     }
                 }
+
+                listBoxModuleItemList.Visible = true;
+                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
@@ -417,6 +425,9 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(region.Name);
                     }
                 }
+
+                listBoxModuleItemList.Visible = true;
+                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
@@ -431,6 +442,9 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(schedule.Name);
                     }
                 }
+
+                listBoxModuleItemList.Visible = true;
+                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
@@ -445,6 +459,9 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(tag.Name);
                     }
                 }
+
+                listBoxModuleItemList.Visible = true;
+                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTrigger ||
@@ -459,6 +476,9 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(trigger.Name);
                     }
                 }
+
+                listBoxModuleItemList.Visible = true;
+                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxModuleItemList.Items.Count > 0)
@@ -484,8 +504,7 @@ namespace AutoScreenCapture
             dateTimePickerTime.Enabled = false;
             comboBoxDay.Enabled = false;
 
-            labelDate.Enabled = false;
-            labelTime.Enabled = false;
+            labelDateTime.Enabled = false;
             labelDay.Enabled = false;
 
             if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
@@ -493,14 +512,12 @@ namespace AutoScreenCapture
                 dateTimePickerDate.Enabled = true;
                 dateTimePickerTime.Enabled = true;
 
-                labelDate.Enabled = true;
-                labelTime.Enabled = true;
+                labelDateTime.Enabled = true;
             }
 
             if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
             {
                 dateTimePickerTime.Enabled = true;
-                labelTime.Enabled = true;
             }
 
             if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DayTime)
@@ -508,13 +525,11 @@ namespace AutoScreenCapture
                 dateTimePickerTime.Enabled = true;
                 comboBoxDay.Enabled = true;
 
-                labelTime.Enabled = true;
                 labelDay.Enabled = true;
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
             {
-                labelInterval.Enabled = true;
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
@@ -522,7 +537,6 @@ namespace AutoScreenCapture
             }
             else
             {
-                labelInterval.Enabled = false;
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
