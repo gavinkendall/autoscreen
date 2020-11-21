@@ -386,7 +386,7 @@ namespace AutoScreenCapture
         /// <returns>The directory name of the given path.</returns>
         public static string GetDirectoryName(string path)
         {
-            if (string.IsNullOrEmpty(path) || !Directory.Exists(path))
+            if (string.IsNullOrEmpty(path))
             {
                 return string.Empty;
             }

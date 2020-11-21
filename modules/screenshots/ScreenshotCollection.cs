@@ -725,8 +725,12 @@ namespace AutoScreenCapture
 
                                             // "Component" was introduced in 2.2 as the new representation for "Screen".
                                             case SCREENSHOT_COMPONENT:
-                                                xReader.Read();
-
+                                                if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                                                {
+                                                    xReader.Read();
+                                                    int component = Convert.ToInt32(xReader.Value);
+                                                    screen = _screenCollection.GetBySourceAndComponent(source: 0, component);
+                                                }
                                                 break;
 
                                             case SCREENSHOT_SLIDENAME:
