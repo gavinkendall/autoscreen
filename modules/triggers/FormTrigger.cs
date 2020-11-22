@@ -64,6 +64,11 @@ namespace AutoScreenCapture
         public TagCollection TagCollection { get; set; }
 
         /// <summary>
+        /// This is to keep track of what "page" we're on when the user clicks through the wizard-style interface.
+        /// </summary>
+        private int _pageIndex;
+
+        /// <summary>
         /// Empty constructor.
         /// </summary>
         public FormTrigger()
@@ -73,9 +78,7 @@ namespace AutoScreenCapture
 
         private void FormTrigger_Load(object sender, EventArgs e)
         {
-            textBoxTriggerName.Focus();
-
-            HelpMessage("An action can be performed based on a specific condition (Screenshot Taken and Run Editor will edit taken screenshots with a chosen editor)");
+            HelpMessage("A trigger is used to perform a certain action based on a specified condition");
 
             LoadActions();
             LoadConditions();
@@ -122,6 +125,7 @@ namespace AutoScreenCapture
 
                 textBoxTriggerName.Text = "Trigger " + (TriggerCollection.Count + 1);
                 checkBoxActive.Checked = true;
+
                 dateTimePickerDate.Value = DateTime.Now;
                 dateTimePickerTime.Value = DateTime.Now;
 
@@ -130,6 +134,10 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
             }
+
+            _pageIndex = 1;
+
+            ShowPage();
         }
 
         private void HelpMessage(string message)
@@ -142,7 +150,7 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void buttonOK_Click(object sender, EventArgs e)
+        private void buttonFinish_Click(object sender, EventArgs e)
         {
             if (TriggerObject != null)
             {
@@ -199,46 +207,39 @@ namespace AutoScreenCapture
         {
             if (InputValid())
             {
-                if (NameChanged() || InputChanged())
+                TrimInput();
+
+                if (TriggerCollection.GetByName(textBoxTriggerName.Text) != null && NameChanged())
                 {
-                    TrimInput();
-
-                    if (TriggerCollection.GetByName(textBoxTriggerName.Text) != null && NameChanged())
-                    {
-                        MessageBox.Show("A trigger with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
-                        TriggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)listBoxCondition.SelectedIndex;
-                        TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)listBoxAction.SelectedIndex;
-                        TriggerCollection.Get(TriggerObject).Active = checkBoxActive.Checked;
-                        TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
-                        TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
-                        TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
-                        TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
-
-                        if (listBoxModuleItemList.SelectedItem != null)
-                        {
-                            TriggerCollection.Get(TriggerObject).ModuleItem = listBoxModuleItemList.SelectedItem.ToString();
-                        }
-                        else
-                        {
-                            TriggerCollection.Get(TriggerObject).ModuleItem = string.Empty;
-                        }
-
-                        int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                            (int)numericUpDownMillisecondsInterval.Value);
-
-                        TriggerCollection.Get(TriggerObject).ScreenCaptureInterval = screenCaptureInterval;
-
-                        Okay();
-                    }
+                    MessageBox.Show("A trigger with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    Close();
+                    TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
+                    TriggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)listBoxCondition.SelectedIndex;
+                    TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)listBoxAction.SelectedIndex;
+                    TriggerCollection.Get(TriggerObject).Active = checkBoxActive.Checked;
+                    TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
+                    TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
+                    TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
+                    TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
+
+                    if (listBoxModuleItemList.SelectedItem != null)
+                    {
+                        TriggerCollection.Get(TriggerObject).ModuleItem = listBoxModuleItemList.SelectedItem.ToString();
+                    }
+                    else
+                    {
+                        TriggerCollection.Get(TriggerObject).ModuleItem = string.Empty;
+                    }
+
+                    int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                        (int)numericUpDownMillisecondsInterval.Value);
+
+                    TriggerCollection.Get(TriggerObject).ScreenCaptureInterval = screenCaptureInterval;
+
+                    Okay();
                 }
             }
             else
@@ -255,33 +256,6 @@ namespace AutoScreenCapture
         private bool InputValid()
         {
             if (!string.IsNullOrEmpty(textBoxTriggerName.Text))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool InputChanged()
-        {
-            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                            (int)numericUpDownMillisecondsInterval.Value);
-
-            if (TriggerObject != null &&
-                ((int)TriggerObject.ConditionType != listBoxCondition.SelectedIndex ||
-                (int)TriggerObject.ActionType != listBoxAction.SelectedIndex ||
-                (listBoxModuleItemList.Items.Count > 0 && TriggerObject.ModuleItem != null &&
-                listBoxModuleItemList.SelectedItem != null &&
-                !TriggerObject.ModuleItem.Equals(listBoxModuleItemList.SelectedItem.ToString())) ||
-                TriggerObject.Active != checkBoxActive.Checked ||
-                TriggerObject.Date != dateTimePickerDate.Value ||
-                TriggerObject.Time != dateTimePickerTime.Value ||
-                !TriggerObject.Day.Equals(comboBoxDay.Text) ||
-                TriggerObject.Days != (int)numericUpDownDays.Value ||
-                !TriggerObject.ScreenCaptureInterval.Equals(screenCaptureInterval)))
             {
                 return true;
             }
@@ -374,16 +348,10 @@ namespace AutoScreenCapture
 
         private void LoadModuleItems()
         {
-            labelModuleItemList.Text = string.Empty;
-            listBoxModuleItemList.Visible = false;
-            listBoxModuleItemList.SendToBack();
-
             listBoxModuleItemList.Items.Clear();
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor)
             {
-                labelModuleItemList.Text = "Editor:";
-
                 foreach (Editor editor in EditorCollection)
                 {
                     if (editor != null && FileSystem.FileExists(editor.Application))
@@ -391,16 +359,11 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(editor.Name);
                     }
                 }
-
-                listBoxModuleItemList.Visible = true;
-                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateScreen)
             {
-                labelModuleItemList.Text = "Screen:";
-
                 foreach (Screen screen in ScreenCollection)
                 {
                     if (screen != null)
@@ -408,16 +371,11 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(screen.Name);
                     }
                 }
-
-                listBoxModuleItemList.Visible = true;
-                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateRegion)
             {
-                labelModuleItemList.Text = "Region:";
-
                 foreach (Region region in RegionCollection)
                 {
                     if (region != null)
@@ -425,16 +383,11 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(region.Name);
                     }
                 }
-
-                listBoxModuleItemList.Visible = true;
-                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateSchedule)
             {
-                labelModuleItemList.Text = "Schedule:";
-
                 foreach (Schedule schedule in ScheduleCollection)
                 {
                     if (schedule != null)
@@ -442,16 +395,11 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(schedule.Name);
                     }
                 }
-
-                listBoxModuleItemList.Visible = true;
-                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag)
             {
-                labelModuleItemList.Text = "Tag:";
-
                 foreach (Tag tag in TagCollection)
                 {
                     if (tag != null)
@@ -459,16 +407,11 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(tag.Name);
                     }
                 }
-
-                listBoxModuleItemList.Visible = true;
-                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTrigger ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTrigger)
             {
-                labelModuleItemList.Text = "Trigger:";
-
                 foreach (Trigger trigger in TriggerCollection)
                 {
                     if (trigger != null)
@@ -476,9 +419,6 @@ namespace AutoScreenCapture
                         listBoxModuleItemList.Items.Add(trigger.Name);
                     }
                 }
-
-                listBoxModuleItemList.Visible = true;
-                listBoxModuleItemList.BringToFront();
             }
 
             if (listBoxModuleItemList.Items.Count > 0)
@@ -487,128 +427,217 @@ namespace AutoScreenCapture
             }
         }
 
-        private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            EnableOrDisableControls();
-        }
-
         private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EnableOrDisableControls();
             LoadModuleItems();
         }
 
-        private void EnableOrDisableControls()
+        private void buttonBack_Click(object sender, EventArgs e)
         {
-            dateTimePickerDate.Enabled = false;
-            dateTimePickerTime.Enabled = false;
-            comboBoxDay.Enabled = false;
+            _pageIndex--;
 
-            labelDateTime.Enabled = false;
-            labelDay.Enabled = false;
-
-            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
-            {
-                dateTimePickerDate.Enabled = true;
-                dateTimePickerTime.Enabled = true;
-
-                labelDateTime.Enabled = true;
-            }
-
-            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
-            {
-                dateTimePickerTime.Enabled = true;
-            }
-
-            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DayTime)
-            {
-                dateTimePickerTime.Enabled = true;
-                comboBoxDay.Enabled = true;
-
-                labelDay.Enabled = true;
-            }
-
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
-            {
-                numericUpDownHoursInterval.Enabled = true;
-                numericUpDownMinutesInterval.Enabled = true;
-                numericUpDownSecondsInterval.Enabled = true;
-                numericUpDownMillisecondsInterval.Enabled = true;
-            }
-            else
-            {
-                numericUpDownHoursInterval.Enabled = false;
-                numericUpDownMinutesInterval.Enabled = false;
-                numericUpDownSecondsInterval.Enabled = false;
-                numericUpDownMillisecondsInterval.Enabled = false;
-            }
-
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsOlderThanDays)
-            {
-                labelDays.Enabled = true;
-                numericUpDownDays.Enabled = true;
-            }
-            else
-            {
-                labelDays.Enabled = false;
-                numericUpDownDays.Enabled = false;
-            }
+            ShowPage();
         }
 
-        private void checkBoxActive_MouseHover(object sender, EventArgs e)
+        private void buttonNext_Click(object sender, EventArgs e)
         {
-            HelpMessage("The trigger's condition will be considered and its associated action will be performed if Active is checked (turned on)");
+            _pageIndex++;
+
+            ShowPage();
         }
 
-        private void listBoxCondition_MouseHover(object sender, EventArgs e)
+        private void ShowPage()
         {
-            HelpMessage("A list of available trigger conditions. Select a condition that best represents the event you're interested in (such as After Screenshot Taken)");
-        }
-
-        private void listBoxAction_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("A list of available trigger actions. Select an action to perform based on the selected condition that occurs (such as Run Editor)");
-        }
-
-        private void listBoxModuleItemList_MouseHover(object sender, EventArgs e)
-        {
-            string moduleItemType = string.Empty;
-
-            switch(listBoxAction.SelectedIndex)
+            switch (_pageIndex)
             {
-                case (int)TriggerActionType.RunEditor:
-                    moduleItemType = "editors";
+                // Page 1 - Condition
+                case 1:
+                    groupBox.Text = "Condition";
+                    buttonBack.Enabled = false;
+                    buttonNext.Enabled = true;
+
+                    // Controls on last page.
+                    buttonFinish.Enabled = false;
+                    listBoxModuleItemList.Visible = false;
+                    labelDays.Visible = false;
+                    labelHoursInterval.Visible = false;
+                    labelMinutesInterval.Visible = false;
+                    labelSecondsInterval.Visible = false;
+                    labelMillisecondsInterval.Visible = false;
+                    numericUpDownDays.Visible = false;
+                    numericUpDownHoursInterval.Visible = false;
+                    numericUpDownMinutesInterval.Visible = false;
+                    numericUpDownSecondsInterval.Visible = false;
+                    numericUpDownMillisecondsInterval.Visible = false;
+
+                    // Controls on this page.
+                    listBoxCondition.Visible = true;
+
+                    // Controls on next page.
+                    labelDate.Visible = false;
+                    labelTime.Visible = false;
+                    labelDay.Visible = false;
+                    dateTimePickerDate.Visible = false;
+                    dateTimePickerTime.Visible = false;
+                    comboBoxDay.Visible = false;
+                    labelDate.Enabled = false;
+                    labelTime.Enabled = false;
+                    labelDay.Enabled = false;
+                    dateTimePickerDate.Enabled = false;
+                    dateTimePickerTime.Enabled = false;
+                    comboBoxDay.Enabled = false;
                     break;
 
-                case (int)TriggerActionType.ActivateScreen:
-                case (int)TriggerActionType.DeactivateScreen:
-                    moduleItemType = "screens";
+                // Page 2 - Date, Time, and Day
+                case 2:
+                    groupBox.Text = string.Empty;
+                    buttonBack.Enabled = true;
+
+                    // Controls on previous page.
+                    listBoxCondition.Visible = false;
+
+                    // Controls on next page.
+                    listBoxAction.Visible = false;
+
+                    // Controls on this page.
+                    if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
+                    {
+                        labelDate.Visible = true;
+                        labelTime.Visible = true;
+                        dateTimePickerDate.Visible = true;
+                        dateTimePickerTime.Visible = true;
+
+                        labelDate.Enabled = true;
+                        labelTime.Enabled = true;
+                        dateTimePickerDate.Enabled = true;
+                        dateTimePickerTime.Enabled = true;
+                    }
+
+                    if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
+                    {
+                        labelDate.Visible = true;
+                        labelTime.Visible = true;
+                        dateTimePickerDate.Visible = true;
+                        dateTimePickerTime.Visible = true;
+
+                        labelDate.Enabled = false;
+                        labelTime.Enabled = true;
+                        dateTimePickerDate.Enabled = false;
+                        dateTimePickerTime.Enabled = true;
+                    }
+
+                    if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DayTime)
+                    {
+                        labelDay.Visible = true;
+                        labelTime.Visible = true;
+                        dateTimePickerTime.Visible = true;
+                        comboBoxDay.Visible = true;
+
+                        labelDay.Enabled = true;
+                        labelTime.Enabled = true;
+                        dateTimePickerTime.Enabled = true;
+                        comboBoxDay.Enabled = true;
+                    }
                     break;
 
-                case (int)TriggerActionType.ActivateRegion:
-                case (int)TriggerActionType.DeactivateRegion:
-                    moduleItemType = "regions";
+                // Page 3 - Action
+                case 3:
+                    groupBox.Text = "Action";
+                    buttonNext.Enabled = true;
+                    buttonFinish.Enabled = false;
+
+                    // Controls on previous page.
+                    labelDate.Visible = false;
+                    labelTime.Visible = false;
+                    labelDay.Visible = false;
+                    dateTimePickerDate.Visible = false;
+                    dateTimePickerTime.Visible = false;
+                    comboBoxDay.Visible = false;
+
+                    // Controls on next page.
+                    listBoxModuleItemList.Visible = false;
+                    labelDays.Visible = false;
+                    labelHoursInterval.Visible = false;
+                    labelMinutesInterval.Visible = false;
+                    labelSecondsInterval.Visible = false;
+                    labelMillisecondsInterval.Visible = false;
+                    numericUpDownDays.Visible = false;
+                    numericUpDownHoursInterval.Visible = false;
+                    numericUpDownMinutesInterval.Visible = false;
+                    numericUpDownSecondsInterval.Visible = false;
+                    numericUpDownMillisecondsInterval.Visible = false;
+                    labelDays.Enabled = false;
+                    labelHoursInterval.Enabled = false;
+                    labelMinutesInterval.Enabled = false;
+                    labelSecondsInterval.Enabled = false;
+                    labelMillisecondsInterval.Enabled = false;
+                    numericUpDownDays.Enabled = false;
+                    numericUpDownHoursInterval.Enabled = false;
+                    numericUpDownMinutesInterval.Enabled = false;
+                    numericUpDownSecondsInterval.Enabled = false;
+                    numericUpDownMillisecondsInterval.Enabled = false;
+
+                    // Controls on this page.
+                    listBoxAction.Visible = true;
                     break;
 
-                case (int)TriggerActionType.ActivateSchedule:
-                case (int)TriggerActionType.DeactivateSchedule:
-                    moduleItemType = "schedules";
-                    break;
+                // Page 4 - Interval and Days
+                case 4:
+                    groupBox.Text = listBoxAction.Text;
+                    buttonNext.Enabled = false;
+                    buttonFinish.Enabled = true;
 
-                case (int)TriggerActionType.ActivateTag:
-                case (int)TriggerActionType.DeactivateTag:
-                    moduleItemType = "tags";
-                    break;
+                    // Controls on previous page.
+                    listBoxAction.Visible = false;
 
-                case (int)TriggerActionType.ActivateTrigger:
-                case (int)TriggerActionType.DeactivateTrigger:
-                    moduleItemType = "triggers";
-                    break;
-            }
+                    // Controls on this page.
+                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTrigger ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateScreen ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateRegion ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateSchedule ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTrigger)
+                    {
+                        listBoxModuleItemList.Visible = true;
+                    }
 
-            if (!string.IsNullOrEmpty(moduleItemType))
-            {
-                HelpMessage("A list of available " + moduleItemType);
+                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
+                    {
+                        labelHoursInterval.Visible = true;
+                        labelMinutesInterval.Visible = true;
+                        labelSecondsInterval.Visible = true;
+                        labelMillisecondsInterval.Visible = true;
+
+                        numericUpDownHoursInterval.Visible = true;
+                        numericUpDownMinutesInterval.Visible = true;
+                        numericUpDownSecondsInterval.Visible = true;
+                        numericUpDownMillisecondsInterval.Visible = true;
+
+                        labelHoursInterval.Enabled = true;
+                        labelMinutesInterval.Enabled = true;
+                        labelSecondsInterval.Enabled = true;
+                        labelMillisecondsInterval.Enabled = true;
+
+                        numericUpDownHoursInterval.Enabled = true;
+                        numericUpDownMinutesInterval.Enabled = true;
+                        numericUpDownSecondsInterval.Enabled = true;
+                        numericUpDownMillisecondsInterval.Enabled = true;
+                    }
+
+                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsOlderThanDays)
+                    {
+                        labelDays.Visible = true;
+                        numericUpDownDays.Visible = true;
+
+                        labelDays.Enabled = true;
+                        numericUpDownDays.Enabled = true;
+                    }
+                    break;
             }
         }
     }
