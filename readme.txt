@@ -1,6 +1,6 @@
 Auto Screen Capture by Gavin Kendall
 
-[The information presented here refers to the latest version of the application (which is currently 2.3.3.2)]
+[The information presented here refers to the latest version of the application (which is currently 2.3.3.3)]
 ========================================================================================================================
 
 
@@ -1142,7 +1142,7 @@ Troubleshooting and Debugging
 -----------------------------
 If things just seem weird or can't be easily explained beyond the normal usage of Auto Screen Capture
 then you can always run the application in its Debug Mode. You can enable Debug Mode by either running
-"autoscreen.exe -debug" from a command prompt or changing the DebugMode application setting to "True".
+"autoscreen.exe -debug=on" from a command prompt or changing the DebugMode application setting to "True".
 While the application is in Debug Mode it will write out logging messages to the logs directory and be
 a lot more verbose with its logging compared to what you usually get with the Logging option enabled.
 
