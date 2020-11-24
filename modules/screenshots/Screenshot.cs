@@ -89,11 +89,6 @@ namespace AutoScreenCapture
         public Bitmap Bitmap { get; set; }
 
         /// <summary>
-        /// The bitmap image associated with the screenshot.
-        /// </summary>
-        public Bitmap Bitmap { get; set; }
-
-        /// <summary>
         /// The hash of the bitmap image associated with the screenshot.
         /// </summary>
         public string Hash { get; set; }
