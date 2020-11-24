@@ -318,7 +318,14 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteErrorMessage("Could not save screenshot with path \"" + screenshot.Path + "\" due to error adding to screenshot collection");
+                    string hash = "hash";
+
+                    if (!string.IsNullOrEmpty(screenshot.Hash))
+                    {
+                        hash = "hash (" + screenshot.Hash + ")";
+                    }
+
+                    Log.WriteDebugMessage("Could not save screenshot with path \"" + screenshot.Path + "\" because its " + hash + " may have matched with a previous hash that has already been used for an earlier screenshot");
                 }
             }
             catch (Exception)

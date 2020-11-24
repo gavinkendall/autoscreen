@@ -169,20 +169,16 @@ namespace AutoScreenCapture
         {
             try
             {
-                // Every screenshot needs a View ID.
-                if (screenshot.ViewId == null)
-                {
-                    Log.WriteErrorMessage("Screenshot being added has no view ID");
-
-                    return false;
-                }
+                bool result = false;
 
                 // If the bitmap image is null then we're loading the screenshot from the screenshots.xml file
-                // and adding it to the collection otherwise we're adding the screenshot to the colection
+                // and adding it to the collection otherwise we're adding the screenshot to the collection
                 // from a screen capture session.
                 if (screenshot.Bitmap == null)
                 {
                     AddScreenshotToCollection(screenshot);
+
+                    result = true;
                 }
                 else
                 {
@@ -198,15 +194,19 @@ namespace AutoScreenCapture
                             AddScreenshotToCollection(screenshot);
 
                             AddedScreenshotHashList.Add(screenshot.Hash);
+
+                            result = true;
                         }
                     }
                     else
                     {
                         AddScreenshotToCollection(screenshot);
+
+                        result = true;
                     }
                 }
 
-                return true;
+                return result;
             }
             catch (Exception ex)
             {
