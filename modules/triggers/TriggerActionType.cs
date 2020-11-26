@@ -26,98 +26,113 @@ namespace AutoScreenCapture
     public enum TriggerActionType
     {
         /// <summary>
-        /// The action to perform will exit the application.
+        /// Exit the application.
         /// </summary>
         ExitApplication = 0,
 
         /// <summary>
-        /// The action to perform will hide the interface.
+        /// Hide the interface.
         /// </summary>
         HideInterface = 1,
 
         /// <summary>
-        /// The action to perform will run a chosen image editor.
+        /// Run a chosen image editor.
         /// </summary>
         RunEditor = 2,
 
         /// <summary>
-        /// The action to perform will show the interface.
+        /// Show the interface.
         /// </summary>
         ShowInterface = 3,
 
         /// <summary>
-        /// The action to perform will start a screen capture session.
+        /// Start a screen capture session.
         /// </summary>
         StartScreenCapture = 4,
 
         /// <summary>
-        /// The action to perform will stop the running screen capture session.
+        /// Stop the running screen capture session.
         /// </summary>
         StopScreenCapture = 5,
 
         /// <summary>
-        /// The action to perform will email the last screenshots captured.
+        /// Email the last screenshots captured.
         /// </summary>
         EmailScreenshot = 6,
 
         /// <summary>
-        /// The action to perform will set the screen capture interval.
+        /// Set the screen capture interval.
         /// </summary>
         SetScreenCaptureInterval = 7,
 
         /// <summary>
-        /// The action to perform will activate a chosen screen.
+        /// Activate a chosen screen.
         /// </summary>
         ActivateScreen = 8,
 
         /// <summary>
-        /// The action to perform will activate a chosen region.
+        /// Activate a chosen region.
         /// </summary>
         ActivateRegion = 9,
 
         /// <summary>
-        /// The action to perform will activate a chosen schedule.
+        /// Activate a chosen schedule.
         /// </summary>
         ActivateSchedule = 10,
 
         /// <summary>
-        /// The action to perform will activate a chosen tag.
+        /// Activate a chosen tag.
         /// </summary>
         ActivateTag = 11,
 
         /// <summary>
-        /// The action to perform will activate a chosen trigger.
+        /// Activate a chosen trigger.
         /// </summary>
         ActivateTrigger = 12,
 
         /// <summary>
-        /// The action to perform will deactivate a chosen screen.
+        /// Deactivate a chosen screen.
         /// </summary>
         DeactivateScreen = 13,
 
         /// <summary>
-        /// The action to perform will deactivate a chosen region.
+        /// Deactivate a chosen region.
         /// </summary>
         DeactivateRegion = 14,
 
         /// <summary>
-        /// The action to perform will deactivate a chosen schedule.
+        /// Deactivate a chosen schedule.
         /// </summary>
         DeactivateSchedule = 15,
 
         /// <summary>
-        /// The action to perform will deactivate a chosen tag.
+        /// Deactivate a chosen tag.
         /// </summary>
         DeactivateTag = 16,
 
         /// <summary>
-        /// The action to perform will deactivate a chosen trigger.
+        /// Deactivate a chosen trigger.
         /// </summary>
         DeactivateTrigger = 17,
 
         /// <summary>
-        /// The action to perform will delete screenshots older than a specifed number of days.
+        /// Delete screenshots.
         /// </summary>
-        DeleteScreenshotsOlderThanDays = 18
+        DeleteScreenshots = 18,
+
+        /// <summary>
+        /// Set the label with the specific text.
+        /// </summary>
+        SetLabel = 19,
+
+        /// <summary>
+        /// Set the active window title with the specified text.
+        /// </summary>
+        SetActiveWindowTitle = 20,
+
+        /// <summary>
+        /// Set the application focus with the specified process name.
+        /// </summary>
+        SetApplicationFocus = 21
     }
 }

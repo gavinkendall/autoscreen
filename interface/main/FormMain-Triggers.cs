@@ -247,7 +247,7 @@ namespace AutoScreenCapture
                     BuildTriggersModule();
                     break;
 
-                case TriggerActionType.DeleteScreenshotsOlderThanDays:
+                case TriggerActionType.DeleteScreenshots:
                     _screenshotCollection.DeleteScreenshots(trigger.Days);
                     break;
             }

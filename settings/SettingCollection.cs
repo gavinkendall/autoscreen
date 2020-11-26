@@ -371,14 +371,17 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion)) return;
+                if (!Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                {
+                    return;
+                }
 
                 Log.WriteMessage("An old version or a fresh version of " + Settings.ApplicationName + " was detected. Attempting upgrade");
 
-                var oldUserSettings = (SettingCollection)this.MemberwiseClone();
-                oldUserSettings._settingList = new List<Setting>(_settingList);
+                var oldSettings = (SettingCollection)this.MemberwiseClone();
+                oldSettings._settingList = new List<Setting>(_settingList);
 
-                Settings.VersionManager.OldUserSettings = oldUserSettings;
+                Settings.VersionManager.OldSettings = oldSettings;
 
                 var versionInConfig = new Version(AppCodename, AppVersion, false);
 

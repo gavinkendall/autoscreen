@@ -310,6 +310,8 @@ namespace AutoScreenCapture
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.Time, "Time").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.DayTime, "Day/Time").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotTaken, "Before Screenshot Taken").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotSaved, "Before Screenshot Saved").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.AfterScreenshotSaved, "After Screenshot Saved").Description);
 
             listBoxCondition.SelectedIndex = 0;
         }
@@ -341,7 +343,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateSchedule, "Deactivate Schedule").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Tag").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTrigger, "Deactivate Trigger").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshotsOlderThanDays, "Delete Screenshots Older Than Days").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshots, "Delete Screenshots").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -629,7 +631,7 @@ namespace AutoScreenCapture
                         numericUpDownMillisecondsInterval.Enabled = true;
                     }
 
-                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsOlderThanDays)
+                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshots)
                     {
                         labelDays.Visible = true;
                         numericUpDownDays.Visible = true;

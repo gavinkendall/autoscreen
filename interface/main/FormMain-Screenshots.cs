@@ -37,11 +37,12 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
-            // Run whatever trigger action is associated with the "Maintenance Timer" trigger condition.
-            RunTriggersOfConditionType(TriggerConditionType.MaintenanceTimer);
+            RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotSaved);
 
             // Save screenshots.
             SaveScreenshots();
+
+            RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotSaved);
 
             // Refresh the calendar.
             SearchDates();

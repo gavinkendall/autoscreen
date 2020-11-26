@@ -26,70 +26,78 @@ namespace AutoScreenCapture
     public enum TriggerConditionType
     {
         /// <summary>
-        /// The condition to check will be if the application has been started.
+        /// When the application has been started.
         /// </summary>
         ApplicationStartup = 0,
 
         /// <summary>
-        /// The condition to check will be if the application is about to exit.
+        /// When the application is about to exit.
         /// </summary>
         ApplicationExit = 1,
 
         /// <summary>
-        /// The condition to check will be if the interface window is closing.
+        /// When the interface window is closing.
         /// </summary>
         InterfaceClosing = 2,
 
         /// <summary>
-        /// The condition to check will be if the interface is being hidden.
+        /// When the interface is being hidden.
         /// </summary>
         InterfaceHiding = 3,
 
         /// <summary>
-        /// The condition to check will be if the interface is being shown.
+        /// When the interface is being shown.
         /// </summary>
         InterfaceShowing = 4,
 
         /// <summary>
-        /// The condition to check will be if the number of capture cycles has reached the specified limit.
+        /// When the number of capture cycles has reached the specified limit.
         /// </summary>
         LimitReached = 5,
 
         /// <summary>
-        /// The condition to check will be if a screen capture session has started.
+        /// When a screen capture session has started.
         /// </summary>
         ScreenCaptureStarted = 6,
 
         /// <summary>
-        /// The condition to check will be if the running screen capture session has stopped.
+        /// When the running screen capture session has stopped.
         /// </summary>
         ScreenCaptureStopped = 7,
 
         /// <summary>
-        /// The condition to check will be if a screenshot was taken successfully.
+        /// When a screenshot was taken successfully.
         /// </summary>
         AfterScreenshotTaken = 8,
 
         /// <summary>
-        /// The condition to check will be if the date and time match with the specified date and time.
+        /// When the current date and time match with the specified date and time.
         /// </summary>
         DateTime = 9,
 
         /// <summary>
-        /// The condition to check will be if the time matches with the specified time.
+        /// When the current time matches with the specified time.
         /// </summary>
         Time = 10,
 
         /// <summary>
-        /// The condition to check will be if the day and time matches with the specified day and time.
+        /// When the current day and time matches with the specified day and time.
         /// </summary>
         DayTime = 11,
 
         /// <summary>
-        /// The condition to check will be if a screenshot is about to be taken.
+        /// When a screenshot is about to be taken.
         /// </summary>
         BeforeScreenshotTaken = 12,
 
-        MaintenanceTimer = 13
+        /// <summary>
+        /// When a screenshot is about to be saved.
+        /// </summary>
+        BeforeScreenshotSaved = 13,
+
+        /// <summary>
+        /// When a screenshot is saved.
+        /// </summary>
+        AfterScreenshotSaved = 14
     }
 }

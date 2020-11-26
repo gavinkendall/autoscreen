@@ -122,7 +122,7 @@ namespace AutoScreenCapture
 
                                         if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                                         {
-                                            Log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected when parsing for trigger condition type");
+                                            Log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected when parsing for trigger condition type");
 
                                             // 2.3.4.0 changes the trigger condition of "ScreenshotTaken" to "AfterScreenshotTaken"
                                             // because of the new condition "BeforeScreenshotTaken" introduced so now we separate those conditions.
@@ -218,6 +218,42 @@ namespace AutoScreenCapture
                         }
                     }
 
+                    if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
+                    {
+                        Log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected");
+                        
+                        int days = 30;
+
+                        if (Settings.VersionManager.OldSettings.KeyExists("DaysOldWhenRemoveSlides"))
+                        {
+                            days = Convert.ToInt32(Settings.VersionManager.OldSettings.GetByKey("DaysOldWhenRemoveSlides", days).Value.ToString());
+                        }
+
+                        if (Settings.VersionManager.OldSettings.KeyExists("IntKeepScreenshotsForDays"))
+                        {
+                            days = Convert.ToInt32(Settings.VersionManager.OldSettings.GetByKey("IntKeepScreenshotsForDays", days).Value.ToString());
+                        }
+
+                        if (Settings.VersionManager.OldSettings.KeyExists("KeepScreenshotsForDays"))
+                        {
+                            days = Convert.ToInt32(Settings.VersionManager.OldSettings.GetByKey("KeepScreenshotsForDays", days).Value.ToString());
+                        }
+
+                        Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
+                        {
+                            Active = true,
+                            Name = $"Keep screenshots for {days} days",
+                            ConditionType = TriggerConditionType.BeforeScreenshotSaved,
+                            ActionType = TriggerActionType.DeleteScreenshots,
+                            Date = DateTime.Now,
+                            Time = DateTime.Now,
+                            ScreenCaptureInterval = 0,
+                            Days = days
+                        };
+
+                        Add(triggerBeforeScreenshotSavedDeleteScreenshots);
+                    }
+
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
                         SaveToXmlFile();
@@ -230,7 +266,7 @@ namespace AutoScreenCapture
                     Trigger triggerApplicationStartShowInterface = new Trigger()
                     {
                         Active = true,
-                        Name = "Application Startup -> Show",
+                        Name = "Show interface at startup",
                         ConditionType = TriggerConditionType.ApplicationStartup,
                         ActionType = TriggerActionType.ShowInterface,
                         Date = DateTime.Now,
@@ -241,7 +277,7 @@ namespace AutoScreenCapture
                     Trigger triggerScreenCaptureStartedHideInterface = new Trigger()
                     {
                         Active = true,
-                        Name = "Capture Started -> Hide",
+                        Name = "Hide interface when starting screen capture",
                         ConditionType = TriggerConditionType.ScreenCaptureStarted,
                         ActionType = TriggerActionType.HideInterface,
                         Date = DateTime.Now,
@@ -252,7 +288,7 @@ namespace AutoScreenCapture
                     Trigger triggerScreenCaptureStoppedShowInterface = new Trigger()
                     {
                         Active = true,
-                        Name = "Capture Stopped -> Show",
+                        Name = "Show interface when screen capture stops",
                         ConditionType = TriggerConditionType.ScreenCaptureStopped,
                         ActionType = TriggerActionType.ShowInterface,
                         Date = DateTime.Now,
@@ -263,7 +299,7 @@ namespace AutoScreenCapture
                     Trigger triggerInterfaceClosingExitApplication = new Trigger()
                     {
                         Active = true,
-                        Name = "Interface Closing -> Exit",
+                        Name = "Exit when interface closing",
                         ConditionType = TriggerConditionType.InterfaceClosing,
                         ActionType = TriggerActionType.ExitApplication,
                         Date = DateTime.Now,
@@ -274,12 +310,24 @@ namespace AutoScreenCapture
                     Trigger triggerLimitReachedStopScreenCapture = new Trigger()
                     {
                         Active = true,
-                        Name = "Limit Reached -> Stop",
+                        Name = "Stop when limit reached",
                         ConditionType = TriggerConditionType.LimitReached,
                         ActionType = TriggerActionType.StopScreenCapture,
                         Date = DateTime.Now,
                         Time = DateTime.Now,
                         ScreenCaptureInterval = 0
+                    };
+
+                    Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
+                    {
+                        Active = true,
+                        Name = "Keep screenshots for 30 days",
+                        ConditionType = TriggerConditionType.BeforeScreenshotSaved,
+                        ActionType = TriggerActionType.DeleteScreenshots,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0,
+                        Days = 30
                     };
 
                     // Setup a few "built in" triggers by default.
@@ -288,6 +336,7 @@ namespace AutoScreenCapture
                     Add(triggerScreenCaptureStoppedShowInterface);
                     Add(triggerInterfaceClosingExitApplication);
                     Add(triggerLimitReachedStopScreenCapture);
+                    Add(triggerBeforeScreenshotSavedDeleteScreenshots);
 
                     SaveToXmlFile();
                 }
