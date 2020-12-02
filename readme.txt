@@ -1166,7 +1166,56 @@ An example of a trigger node in triggers.xml:
 
 
 
-Troubleshooting and Debugging
+Common Setup Scenarios
+----------------------
+You want Auto Screen Capture to not exit when closing its interface window:
+  1. Go to the Triggers module and edit the "Interface Closing -> Exit" trigger
+  2. In the Action list change the action from "Exit Application" to "Hide Interface"
+  3. Change the trigger's name to something like "Hide when interface closing"
+  4. Click OK to apply the changes
+  5. Now when you close its interface window the application will simply hide its interface
+
+You want Auto Screen Capture to not show its interface when it starts:
+  1. Go to the Triggers module
+  2. Click on the green square for the "Application Startup -> Show" trigger to disable the trigger
+  3. The next time you run Auto Screen Capture its interface will no longer appear
+
+You want Auto Screen Capture to start a screen capture session when it starts:
+  1. Go to the Triggers module
+  2. Add a new trigger with the condition "Application Startup" and the action "Start Screen Capture"
+  3. Click OK to create the new trigger
+
+You want Auto Screen Capture to not show its interface when a screen capture session stops:
+  1. Go to the Triggers module
+  2. Click on the green square for the "Capture Stopped -> Show" trigger to disable the trigger
+  3. When a running screen capture session stops the interface will no longer appear
+
+You want Auto Screen Capture to take screenshots only when the active window title has particular text:
+  1. Go to the Setup module
+  2. Scroll down until you see "Active Window Title"
+  3. Check the "Capture only if the title contains ..." option
+  4. Type in the text field the text you want Auto Screen Capture to consider
+
+You want Auto Screen Capture to take screenshots of a cropped area of the screen:
+  1. Click on the "Configure" drop-down menu and select "Add New Region" (or add it from Regions)
+  2. Click on the "Region Select" button and your mouse pointer should turn into crosshairs
+  3. Click and hold from the top-left of the region you want to select and drag to the bottom-right
+  4. Release the left mouse button when you have the desired area selected
+  5. Click OK to add the new region
+
+You want Auto Screen Capture to use a certain application or script when a screenshot is taken:
+  1. Click on the "Edit" drop-down menu and select "Add New Editor ..."
+  2. Choose the application or script for the "Application" field (this would be the path to it)
+  3. Go to the Triggers module
+  4. Add a new trigger
+  5. Select "Screenshot Taken" from the Condition list
+  6. Select "Run Editor" from the Action list
+  7. Select the application or script you want to run when a screenshot is taken
+  8. Click OK to add the new trigger
+
+
+
+Troubleshooting / Debugging
 -----------------------------
 If things just seem weird or can't be easily explained beyond the normal usage of Auto Screen Capture
 then you can always run the application in its Debug Mode. You can enable Debug Mode by either running
