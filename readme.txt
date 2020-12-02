@@ -1,6 +1,4 @@
 Auto Screen Capture by Gavin Kendall
-
-[The information presented here refers to the latest version of the application (which is currently 2.3.3.3)]
 ========================================================================================================================
 
 
@@ -92,6 +90,9 @@ https://youtu.be/HzfMWGQyz5E
 
 Time Range Macro Tag Type
 https://youtu.be/DvK5VI6TnHQ
+
+Application Focus
+https://youtu.be/6-dlhW5e29U
 
 
 
@@ -236,6 +237,8 @@ If any image files are found to be older than 30 days then those files will be a
 Old screenshots will be deleted every five minutes. New screenshots will be saved every five minutes.
 The calendar will also update every five minutes (as of version 2.3.0.0).
 
+(You can find screenshots data in "!autoscreen\screenshots.xml")
+
 
 
 Modules - Screens
@@ -296,6 +299,8 @@ Select the screens you want to remove and then click the button to remove the se
 
 The button with the cog will open the Change Screen window enabling you to change properties.
 
+(The data used for screens can be found in "!autoscreen\screens.xml")
+
 
 
 Modules - Regions
@@ -349,6 +354,8 @@ Select the regions you want to remove and then click the button to remove the se
 
 The button with the cog will open the Change Region window enabling you to change properties.
 
+(The data used for regions can be found in "!autoscreen\regions.xml")
+
 
 
 Modules - Editors
@@ -371,7 +378,7 @@ during the execution of the application. The %filepath% tag represents the filep
 screenshot's image file. This could be the filepath of the screenshot that you're wanting to
 edit via the "Edit" menu of the screenshot you're viewing from the Screenshots module or
 the filepath of the last screenshot that was taken when a Trigger uses a specified Editor
-to open the screenshot in the editor.
+to open the screenshot in the editor. This field is optional so you can leave it empty.
 
 The "Default" checkbox sets the editor as the default editor to be used when you select
 "Capture Now -> Edit" or any of the Region Select options from the system tray icon's menu.
@@ -391,6 +398,8 @@ Name: Take Screenshot and SFTP
 Condition: Screenshot Taken
 Action: Run Editor
 Editor: WinSCP
+
+(The data used for editors can be found in "!autoscreen\editors.xml")
 
 
 
@@ -473,6 +482,8 @@ simply uncheck the "Active" checkbox).
 
 Please do not delete the Special Schedule. You can if you want to but it will be created
 every time you use the -captureat, -startat, and/or -stopat command line arguments.
+
+(The data used for schedules can be found in "!autoscreen\schedules.xml")
 
 
 
@@ -577,8 +588,22 @@ For example ...
 {month-2}      for 2 months ago
 {hour+6}       for 6 hours ahead
 
+You can also specify the date/time format as part of a date/time tag expression for when
+a particular date/time format needs to be used rather than the default date/time format.
+For example ...
+{day-1}
+... returns the value of day ("dd") subtracted by 1 for the previous day
+(so on January 1st 2021 this will return "31") but ...
+{day-1}[yyyyMMdd]
+... returns the entire value of year ("yyyy"), month ("MM"), and day ("dd") subtracted
+by 1 for the previous day in the date/time format of "yyyyMMdd" so you have more context
+as to what the previous day represents in terms of its related month and year
+(so on January 1st 2021 this will return "20201231").
+
 As of version 2.3.0.0, Date/Time Format Function was renamed to Date/Time Format Expression
 to better define its purpose.
+
+(The data used for tags can be found in "!autoscreen\tags.xml")
 
 
 
@@ -639,6 +664,8 @@ Condition = LimitReached -> Action = StopScreenCapture
 You may want to disable/deactivate or remove/delete any triggers that show the interface if you're
 wanting Auto Screen Capture to not show its interface for certain situations.
 
+(The data used for triggers can be found in "!autoscreen\triggers.xml")
+
 
 
 System Tray Icon
@@ -664,6 +691,7 @@ Exit                                  Quits the application
 
 (You can hide the system tray icon with the "-hideSystemTrayIcon" command line argument
 and show it with the "-showSystemTrayIcon" command line argument.)
+
 
 
 Command Line Arguments

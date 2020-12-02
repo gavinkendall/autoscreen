@@ -1,0 +1,87 @@
+Auto Screen Capture by Gavin Kendall
+========================================================================================================================
+
+
+
+Codename "Boombayah"
+2.3.3.4    Bug fix to saving of file when adding screenshot to collection.
+2.3.3.3    An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.
+2.3.3.2    Can now run an Editor without arguments or without %filepath% tag when using Run Editor trigger action. Includes changes to version collection, change to how Application Focus behaves when application not found (so now adds the application to the process list regardless), and bug fix applied to threads.
+2.3.3.1    New command line arguments -activeWindowTitle, -applicationFocus, and -label.
+2.3.3.0    Application Focus moved from Screen to Setup. Fixed Application Focus bug with Active Window Title. Renamed user setting keys. New method for capturing device display resolution.
+2.3.2.9    Application Focus implemented for Screen.
+2.3.2.8    Changelog added to About Auto Screen Capture window. Fixed bug with hidden system tray icon so no notification balloon appears when system tray icon is hidden.
+2.3.2.7    Quarter Year tag implemented so you can have %quarteryear% return "3" if we're currently in the third quarter of the current year.
+2.3.2.6    "Time of Day" Tag is now "Time Range" Tag with Macro 1, Macro 2, Macro 3, and Macro 4 to replace morning, afternoon, evening, and "Evening extends to next morning" fields. Also implemented "Day/Time" Trigger.
+2.3.2.5    Macro tag expressions can now parse date time formats such as yyyy-MM-dd and HH-mm-ss-fff (especially useful for the %yesterday% macro tag).
+2.3.2.4    ListboxScreenshots sorted.
+2.3.2.3    Information Window renamed to Show Screen Capture Status
+2.3.2.2    Information Window implemented.
+2.3.2.1    Fixed bug with inactive schedules that should not perform any actions when inactive.
+2.3.2.0    Region Select Auto Save region is created if the regions.xml file is not found so you can view screenshots taken with Region Select Auto Save.
+2.3.1.9    Schedules can now have their own interval set for them separate from the main interval. Also fixed bug with screen capture duration info.
+2.3.1.8    Region Select implemented for Regions.
+2.3.1.7    OptimizeScreenCapture implemented.
+2.3.1.6    Region Select Edit implemented and fixed bug with ViewId for new Screens and Regions.
+2.3.1.5    Region Select / Auto Save implemented.
+2.3.1.4    ExitOnError set to True by default.
+2.3.1.3    Fixed bug with new Editor throwing null reference exception on changing its properties because Notes was null.
+2.3.1.2    Snagit Editor introduced as a new default image editor if available.
+2.3.1.1    ActiveWindowTitleLengthLimit application setting implemented.
+2.3.1.0    Truncates long file paths.
+2.3.0.9    Removed font changes for DPI Awareness.
+2.3.0.8    Fixed DPI Awareness OS Version check.
+2.3.0.7    Fixed bug with a timed Trigger that needed to reset the timer when changing the screen capture interval.
+2.3.0.6    Fixed interface issues with Windows 10 DPI scaling.
+2.3.0.5    Fixed bug with upgrade path. Changed target profile to be .NET 4 instead of .NET Client 4.
+2.3.0.4    StopOnLowDiskError setting implemented.
+2.3.0.3    Fixed bug when creating a new Trigger.
+2.3.0.2    Keyboard Shortcuts implemented.
+2.3.0.1    Fixed bug with FilenameLengthLimit application setting.
+2.3.0.0    Faster startup, commands can be issued to a running instance, multiple schedules, more trigger conditions and trigger actions, and help tips in the help bar.
+
+Codename "Dalek"
+2.2.5.0    A version that was never released. This was to make startup speed faster but major features implemented for the application (such as Schedules and controlling a running instance of the application from the command line) deserved 2.2.5.0 to become 2.3.0.0! Boombayah!
+2.2.4.6    System tray icon turns green when screen capture session is running. Tags are now user-defined and have their own module.
+2.2.3.2    Apply Label fixed to show labels whenever the system tray icon menu is opened.
+2.2.3.1    Apply Label is made invisible when screen capture session is locked. Fixed bug with parsing command line arguments.
+2.2.3.0    Apply Label system tray icon menu lists available labels.
+2.2.2.9    Double-click system tray icon to show or hide interface. Fixed issue with having backslash characters in name and any invalid Windows characters in path.
+2.2.2.8    Fixed an issue with displaying a screenshot preview.
+2.2.2.7    Make sure we do not check the drive information if the path is a shared network path.
+2.2.2.6    Fixed upgrade system. For real this time.
+2.2.2.5    Fixed bug with upgrade system.
+2.2.2.4    Macro tags %machine% and %user% can now be used in folder paths and all paths of the autoscreen.conf file.
+2.2.2.3    Moved default location of autoscreen.conf file.
+2.2.2.2    Fixed bug with passphrase hash that was being hashed through old version detection by accident.
+2.2.2.1    Fixed a few bugs.
+2.2.2.0    Completed work on Email Screenshot. Also included EmailScreenshot action for Triggers and added confirmation dialog boxes when emailing a screenshot from the interface and removing a screen or region. Email icon image added to Email button.
+2.2.1.2    Fixed a bug with saving passphrase and hiding system tray icon during command line execution.
+2.2.1.1    You can now add Batch Scripts, PowerShell Scripts, and any type of file for an Editor. Also removed the "Show system tray icon" option.
+2.2.1.0    Logging is now an application setting and DebugMode has become verbose logging. I've also fixed a few issues when running -config from the command line.
+2.2.0.22   Fixed scheduled start time when running from command line.
+2.2.0.21   Configure drop down menu implemented.
+2.2.0.20   Tab pages now auto-scroll.
+2.2.0.19   Fixing system tray icon messages when mouse hovers over icon during maintenance. Also attempting to fix bug with collection being modified when browsing screenshots.
+2.2.0.18   Performance improvements when saving screenshot references to screenshots.xml file.
+2.2.0.17   Replaced -lock command line argument with -passphrase and added logic around hashing the passphrase given from the command line.
+2.2.0.16   Maintenance timer is turned on when interface is hidden and turned off when interface is shown.
+2.2.0.15   Strip out backslash if it's in the active window title.
+2.2.0.14   Introduced a new tag that gets the title of the active window. Also added a new method method in MacroParser that strips away characters that are invalid in Windows filenames (except for the backslash character since we use that for the directory path).
+2.2.0.13   Fixed null reference error when multiple application instances are started.
+2.2.0.12   Fixed bug with JPEG quality.
+2.2.0.11   The %screen% tag has been re-introduced to represent the screen number. Fixed bug with taskbar not being captured. Fixed bug with JPEG quality and resolution ratio.
+2.2.0.10   Fixed bug with count value when display is not available.
+2.2.0.9    Fixed upgrade path from older versions.
+2.2.0.8    New macro tags for getting the name of the currently logged in user and the name of the machine being used.
+2.2.0.7    Process Name introduced. Can now filter by an application's process name. Fixed upgrade path from old versions. Removed -debug command line argument. ScreenCapture Count is now reduced whenever there is no image available to capture or active window title is empty to hopefully make the count more accurate when using the count tag. Logging removed in TakeScreenshot and ScreenCapture Save methods to save on disk space when DebugMode enabled.
+2.2.0.6    An existing label can now be selected from a drop down list of available labels and applying a label to each screenshot is now determined by a checkbox value.
+2.2.0.5    Old screenshots are deleted and unsaved screenshots are saved within the same timer.
+2.2.0.4    Expanded scope of lock around screenshot list.
+2.2.0.3    Active window title is retrieved earlier for less chance in having different titles in different screenshot objects despite being in the same screen capture cycle. Some code cleanup. Documentation being added. Fixed a racing condition issue with KeepScreenshotsForDays and Save in ScreenshotCollection.
+2.2.0.2    Application no longer stops current screen capture session if the directory root does not exist or the drive is not ready. This ensures that the current screen capture session will continue even if the drive being referenced is not available for some reason. Useful if you usually save screen images to an external drive but then disconnect from it and want to continue using the laptop's internal drive. Reintroduced the thread for saving screenshots and the lock on xDoc.
+2.2.0.1    Fixed bug with empty window title which resulted in image files remaining after cleanup.
+2.2.0.0    Support for unlimited number of screens. This was a huge release with the most commits ever in the application's history.
+
+Codename "Clara"
+2.1.8.2    The last version in the 2.1 "Macro" series. This includes the large user.xml file fix (2.1.7.9), "the handle is invalid" fix when Windows is locked (2.1.8.0), and the removal of the "start when Windows starts" feature (2.1.8.1); because anti-virus software falsely flags the application as a virus if we do that.

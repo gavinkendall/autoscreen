@@ -95,6 +95,9 @@ https://youtu.be/HzfMWGQyz5E
 Time Range Macro Tag Type
 https://youtu.be/DvK5VI6TnHQ
 
+Application Focus
+https://youtu.be/6-dlhW5e29U
+
 
 
 Introduction to Modules
@@ -245,6 +248,8 @@ If any image files are found to be older than 30 days then those files will be a
 Old screenshots will be deleted every five minutes. New screenshots will be saved every five minutes.
 The calendar will also update every five minutes (as of version 2.3.0.0).
 
+(You can find screenshots data in "!autoscreen\screenshots.xml")
+
 
 
 Modules - Screens
@@ -310,6 +315,8 @@ Select the screens you want to remove and then click the button to remove the se
 
 The button with the cog will open the Change Screen window enabling you to change properties.
 
+(The data used for screens can be found in "!autoscreen\screens.xml")
+
 
 
 Modules - Regions
@@ -363,6 +370,8 @@ Select the regions you want to remove and then click the button to remove the se
 
 The button with the cog will open the Change Region window enabling you to change properties.
 
+(The data used for regions can be found in "!autoscreen\regions.xml")
+
 
 
 Modules - Editors
@@ -385,7 +394,7 @@ during the execution of the application. The %filepath% tag represents the filep
 screenshot's image file. This could be the filepath of the screenshot that you're wanting to
 edit via the "Edit" menu of the screenshot you're viewing from the Screenshots module or
 the filepath of the last screenshot that was taken when a Trigger uses a specified Editor
-to open the screenshot in the editor.
+to open the screenshot in the editor. This field is optional so you can leave it empty.
 
 The "Default" checkbox sets the editor as the default editor to be used when you select
 "Capture Now -> Edit" or any of the Region Select options from the system tray icon's menu.
@@ -409,6 +418,8 @@ Condition: Screenshot Taken
 Action: Run Editor
 Editor: WinSCP
 ```
+
+(The data used for editors can be found in "!autoscreen\editors.xml")
 
 
 Modules - Schedules
@@ -506,6 +517,8 @@ simply uncheck the "Active" checkbox).
 
 Please do not delete the Special Schedule. You can if you want to but it will be created
 every time you use the -captureat, -startat, and/or -stopat command line arguments.
+
+(The data used for schedules can be found in "!autoscreen\schedules.xml")
 
 
 
@@ -624,8 +637,26 @@ For example ...
 {hour+6}       for 6 hours ahead
 ```
 
+You can also specify the date/time format as part of a date/time tag expression for when
+a particular date/time format needs to be used rather than the default date/time format.
+For example ...
+```
+{day-1}
+```
+... returns the value of day ("dd") subtracted by 1 for the previous day
+(so on January 1st 2021 this will return "31") but ...
+```
+{day-1}[yyyyMMdd]
+```
+... returns the entire value of year ("yyyy"), month ("MM"), and day ("dd") subtracted
+by 1 for the previous day in the date/time format of "yyyyMMdd" so you have more context
+as to what the previous day represents in terms of its related month and year
+(so on January 1st 2021 this will return "20201231").
+
 As of version 2.3.0.0, Date/Time Format Function was renamed to Date/Time Format Expression
 to better define its purpose.
+
+(The data used for tags can be found in "!autoscreen\tags.xml")
 
 
 
@@ -695,6 +726,10 @@ Condition = LimitReached -> Action = StopScreenCapture
 You may want to disable/deactivate or remove/delete any triggers that show the interface if you're
 wanting Auto Screen Capture to not show its interface for certain situations.
 
+(The data used for triggers can be found in "!autoscreen\triggers.xml")
+
+
+
 System Tray Icon
 ----------------
 Auto Screen Capture normally runs in your system tray and its icon will be displayed to show
@@ -721,6 +756,7 @@ Exit                                  Quits the application
 
 (You can hide the system tray icon with the "-hideSystemTrayIcon" command line argument
 and show it with the "-showSystemTrayIcon" command line argument.)
+
 
 
 Command Line Arguments
@@ -898,6 +934,7 @@ An issue with parsing command line arguments was accidentally introduced in vers
 whereby user settings were loaded after they were set by command line arguments. This bug was
 fixed in version 2.2.3.1 which loads user settings before being set by command line arguments.
 ```
+
 
 
 Configuration
@@ -1264,7 +1301,7 @@ Troubleshooting and Debugging
 -----------------------------
 If things just seem weird or can't be easily explained beyond the normal usage of Auto Screen Capture
 then you can always run the application in its Debug Mode. You can enable Debug Mode by either running
-"autoscreen.exe -debug" from a command prompt or changing the DebugMode application setting to "True".
+"autoscreen.exe -debug=on" from a command prompt or changing the DebugMode application setting to "True".
 While the application is in Debug Mode it will write out logging messages to the logs directory and be
 a lot more verbose with its logging compared to what you usually get with the Logging option enabled.
 
