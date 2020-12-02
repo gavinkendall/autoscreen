@@ -1206,12 +1206,13 @@ You want Auto Screen Capture to take screenshots of a cropped area of the screen
 You want Auto Screen Capture to use a certain application or script when a screenshot is taken:
   1. Click on the "Edit" drop-down menu and select "Add New Editor ..."
   2. Choose the application or script for the "Application" field (this would be the path to it)
-  3. Go to the Triggers module
-  4. Add a new trigger
-  5. Select "Screenshot Taken" from the Condition list
-  6. Select "Run Editor" from the Action list
-  7. Select the application or script you want to run when a screenshot is taken
-  8. Click OK to add the new trigger
+  3. Click OK to add the new editor
+  4. Go to the Triggers module
+  5. Add a new trigger
+  6. Select "Screenshot Taken" from the Condition list
+  7. Select "Run Editor" from the Action list
+  8. Select the application or script you want to run when a screenshot is taken
+  9. Click OK to add the new trigger
 
 
 
