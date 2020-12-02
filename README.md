@@ -961,43 +961,43 @@ The default configuration file looks like this (the paths, however, might be dif
 # where the executed autoscreen.exe binary is located.
 
 # This is the folder where screenshots will be stored by default.
-ScreenshotsFolder=screenshots
+ScreenshotsFolder=C:\Users\gkendall\Desktop\screenshots
 
 # If any errors are encountered then you will find them in this folder when DebugMode is enabled.
-DebugFolder=!autoscreen\debug
+DebugFolder=C:\Users\gkendall\Desktop\!autoscreen\debug
 
 # Logs are stored in this folder when either Logging or DebugMode is enabled.
-LogsFolder=!autoscreen\logs
+LogsFolder=C:\Users\gkendall\Desktop\!autoscreen\logs
 
 # This file is monitored by the application for commands issued from the command line while it's running.
-CommandFile=!autoscreen\command.txt
+CommandFile=C:\Users\gkendall\Desktop\!autoscreen\command.txt
 
 # The application settings (such as DebugMode).
-ApplicationSettingsFile=!autoscreen\settings\application.xml
+ApplicationSettingsFile=C:\Users\gkendall\Desktop\!autoscreen\settings\application.xml
 
 # Your personal settings.
-UserSettingsFile=!autoscreen\settings\user.xml
+UserSettingsFile=C:\Users\gkendall\Desktop\!autoscreen\settings\user.xml
 
 # References to image editors.
-EditorsFile=!autoscreen\editors.xml
+EditorsFile=C:\Users\gkendall\Desktop\!autoscreen\editors.xml
 
 # References to regions.
-RegionsFile=!autoscreen\regions.xml
+RegionsFile=C:\Users\gkendall\Desktop\!autoscreen\regions.xml
 
 # References to screens.
-ScreensFile=!autoscreen\screens.xml
+ScreensFile=C:\Users\gkendall\Desktop\!autoscreen\screens.xml
 
 # References to triggers.
-TriggersFile=!autoscreen\triggers.xml
+TriggersFile=C:\Users\gkendall\Desktop\!autoscreen\triggers.xml
 
 # References to screenshots.
-ScreenshotsFile=!autoscreen\screenshots.xml
+ScreenshotsFile=C:\Users\gkendall\Desktop\!autoscreen\screenshots.xml
 
 # References to tags.
-TagsFile=!autoscreen\tags.xml
+TagsFile=C:\Users\gkendall\Desktop\!autoscreen\tags.xml
 
 # References to schedules.
-SchedulesFile=C:\autoscreen\bin\Debug\!autoscreen\schedules.xml
+SchedulesFile=C:\Users\gkendall\Desktop\!autoscreen\schedules.xml
 
 =======================================================================================================
 
