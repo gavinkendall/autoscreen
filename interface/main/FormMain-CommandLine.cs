@@ -449,10 +449,9 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                            RefreshApplicationFocusList();
+                        RefreshApplicationFocusList();
 
-                            DoApplicationFocus();
-                        }
+                        DoApplicationFocus();
                     }
 
                     // -label="x"

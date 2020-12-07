@@ -147,7 +147,6 @@ namespace AutoScreenCapture
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.tabPageScreenshots.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).BeginInit();
             this.SuspendLayout();
@@ -1272,7 +1271,6 @@ namespace AutoScreenCapture
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             this.tabPageScreenshots.ResumeLayout(false);
             this.tabPageScreenshots.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).EndInit();
             this.ResumeLayout(false);
