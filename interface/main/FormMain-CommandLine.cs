@@ -157,6 +157,8 @@ namespace AutoScreenCapture
                     // -capture
                     if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CAPTURE))
                     {
+                        RefreshApplicationFocusList();
+
                         TakeScreenshot(captureNow: true);
                     }
 
