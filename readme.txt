@@ -180,6 +180,7 @@ takes screenshots if the active window title contains the defined text.
 This is where you can choose which application (process) will be forced into the foreground as the active
 application when screenshots are taken. Select an application from the list, click "Test" to make sure
 the correct application is brought to the foreground, and use the "Refresh" button to refresh the list.
+You can also specify, in milliseconds, how long a delay should occur before and after the focus.
 
 *Region Select / Auto Save*
 This section defines the path of the folder and the filename pattern ("macro") for when
@@ -796,8 +797,14 @@ Sets the text for Active Window Title so that a screenshot will be taken only if
 matches with the title of the active window.
 
 -applicationFocus="x"
-Sets the name of the application (or process) which will be brought to the foreground
+Sets the process name of the application which will be brought to the foreground
 during a screen capture session.
+
+-applicationFocusDelayBefore=x
+The delay, in milliseconds, to wait before the chosen application is force focused.
+
+-applicationFocusDelayAfter=x
+The delay, in milliseconds, to wait after the chosen application is force focused.
 
 -config="filepath"
 Sets up various paths of the application's folders and files using a specified configuration file.
