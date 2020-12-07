@@ -864,7 +864,7 @@ matches with the title of the active window.
 
 -applicationFocus="x"
 Sets the process name of the application which will be brought to the foreground
-during a screen capture session.
+during a screen capture session. As of 2.3.3.5 this will also bring the specified application into focus.
 
 -applicationFocusDelayBefore=x
 The delay, in milliseconds, to wait before the chosen application is force focused.
