@@ -53,6 +53,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorTools = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemCaptureNowArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCaptureNow = new System.Windows.Forms.ToolStripSeparator();
@@ -66,6 +67,8 @@ namespace AutoScreenCapture
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageSetup = new System.Windows.Forms.TabPage();
             this.groupBoxApplicationFocus = new System.Windows.Forms.GroupBox();
+            this.labelApplicationFocusDelayAfter = new System.Windows.Forms.Label();
+            this.labelApplicationFocusDelayBefore = new System.Windows.Forms.Label();
             this.buttonApplicationFocusTest = new System.Windows.Forms.Button();
             this.buttonApplicationFocusRefresh = new System.Windows.Forms.Button();
             this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
@@ -130,7 +133,8 @@ namespace AutoScreenCapture
             this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
+            this.numericUpDownApplicationFocusDelayBefore = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownApplicationFocusDelayAfter = new System.Windows.Forms.NumericUpDown();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -147,6 +151,8 @@ namespace AutoScreenCapture
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             this.tabPageScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).BeginInit();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -301,7 +307,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(222, 354);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(222, 332);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -364,6 +370,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture.Size = new System.Drawing.Size(221, 22);
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
+            // 
+            // toolStripSeparatorScreenCapture
+            // 
+            this.toolStripSeparatorScreenCapture.Name = "toolStripSeparatorScreenCapture";
+            this.toolStripSeparatorScreenCapture.Size = new System.Drawing.Size(218, 6);
             // 
             // toolStripMenuItemCaptureNowArchive
             // 
@@ -473,19 +484,41 @@ namespace AutoScreenCapture
             // 
             // groupBoxApplicationFocus
             // 
+            this.groupBoxApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayAfter);
+            this.groupBoxApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayBefore);
+            this.groupBoxApplicationFocus.Controls.Add(this.labelApplicationFocusDelayAfter);
+            this.groupBoxApplicationFocus.Controls.Add(this.labelApplicationFocusDelayBefore);
             this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusTest);
             this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusRefresh);
             this.groupBoxApplicationFocus.Controls.Add(this.comboBoxProcessList);
             this.groupBoxApplicationFocus.Location = new System.Drawing.Point(6, 256);
             this.groupBoxApplicationFocus.Name = "groupBoxApplicationFocus";
-            this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 76);
+            this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 128);
             this.groupBoxApplicationFocus.TabIndex = 0;
             this.groupBoxApplicationFocus.TabStop = false;
             this.groupBoxApplicationFocus.Text = "Application Focus";
             // 
+            // labelApplicationFocusDelayAfter
+            // 
+            this.labelApplicationFocusDelayAfter.AutoSize = true;
+            this.labelApplicationFocusDelayAfter.Location = new System.Drawing.Point(6, 75);
+            this.labelApplicationFocusDelayAfter.Name = "labelApplicationFocusDelayAfter";
+            this.labelApplicationFocusDelayAfter.Size = new System.Drawing.Size(127, 13);
+            this.labelApplicationFocusDelayAfter.TabIndex = 2;
+            this.labelApplicationFocusDelayAfter.Text = "Delay After (milliseconds):";
+            // 
+            // labelApplicationFocusDelayBefore
+            // 
+            this.labelApplicationFocusDelayBefore.AutoSize = true;
+            this.labelApplicationFocusDelayBefore.Location = new System.Drawing.Point(6, 49);
+            this.labelApplicationFocusDelayBefore.Name = "labelApplicationFocusDelayBefore";
+            this.labelApplicationFocusDelayBefore.Size = new System.Drawing.Size(136, 13);
+            this.labelApplicationFocusDelayBefore.TabIndex = 1;
+            this.labelApplicationFocusDelayBefore.Text = "Delay Before (milliseconds):";
+            // 
             // buttonApplicationFocusTest
             // 
-            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(5, 46);
+            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(6, 98);
             this.buttonApplicationFocusTest.Name = "buttonApplicationFocusTest";
             this.buttonApplicationFocusTest.Size = new System.Drawing.Size(92, 23);
             this.buttonApplicationFocusTest.TabIndex = 0;
@@ -496,7 +529,7 @@ namespace AutoScreenCapture
             // 
             // buttonApplicationFocusRefresh
             // 
-            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(106, 46);
+            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(107, 98);
             this.buttonApplicationFocusRefresh.Name = "buttonApplicationFocusRefresh";
             this.buttonApplicationFocusRefresh.Size = new System.Drawing.Size(92, 23);
             this.buttonApplicationFocusRefresh.TabIndex = 0;
@@ -522,7 +555,7 @@ namespace AutoScreenCapture
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveFolder);
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveMacro);
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveFolder);
-            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 338);
+            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 390);
             this.groupBoxRegionSelectAutoSave.Name = "groupBoxRegionSelectAutoSave";
             this.groupBoxRegionSelectAutoSave.Size = new System.Drawing.Size(205, 78);
             this.groupBoxRegionSelectAutoSave.TabIndex = 0;
@@ -613,7 +646,7 @@ namespace AutoScreenCapture
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 422);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 474);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -1195,10 +1228,31 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
-            // toolStripSeparatorScreenCapture
+            // numericUpDownApplicationFocusDelayBefore
             // 
-            this.toolStripSeparatorScreenCapture.Name = "toolStripSeparatorScreenCapture";
-            this.toolStripSeparatorScreenCapture.Size = new System.Drawing.Size(218, 6);
+            this.numericUpDownApplicationFocusDelayBefore.Location = new System.Drawing.Point(148, 47);
+            this.numericUpDownApplicationFocusDelayBefore.Maximum = new decimal(new int[] {
+            60000,
+            0,
+            0,
+            0});
+            this.numericUpDownApplicationFocusDelayBefore.Name = "numericUpDownApplicationFocusDelayBefore";
+            this.numericUpDownApplicationFocusDelayBefore.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownApplicationFocusDelayBefore.TabIndex = 0;
+            this.numericUpDownApplicationFocusDelayBefore.TabStop = false;
+            // 
+            // numericUpDownApplicationFocusDelayAfter
+            // 
+            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(147, 71);
+            this.numericUpDownApplicationFocusDelayAfter.Maximum = new decimal(new int[] {
+            60000,
+            0,
+            0,
+            0});
+            this.numericUpDownApplicationFocusDelayAfter.Name = "numericUpDownApplicationFocusDelayAfter";
+            this.numericUpDownApplicationFocusDelayAfter.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownApplicationFocusDelayAfter.TabIndex = 3;
+            this.numericUpDownApplicationFocusDelayAfter.TabStop = false;
             // 
             // FormMain
             // 
@@ -1243,6 +1297,7 @@ namespace AutoScreenCapture
             this.tabPageSetup.ResumeLayout(false);
             this.tabPageSetup.PerformLayout();
             this.groupBoxApplicationFocus.ResumeLayout(false);
+            this.groupBoxApplicationFocus.PerformLayout();
             this.groupBoxRegionSelectAutoSave.ResumeLayout(false);
             this.groupBoxRegionSelectAutoSave.PerformLayout();
             this.groupBoxActiveWindowTitle.ResumeLayout(false);
@@ -1259,6 +1314,8 @@ namespace AutoScreenCapture
             this.tabPageScreenshots.ResumeLayout(false);
             this.tabPageScreenshots.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKeepScreenshotsForDays)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1365,5 +1422,9 @@ namespace AutoScreenCapture
         private Button buttonApplicationFocusTest;
         private Button buttonApplicationFocusRefresh;
         private ToolStripSeparator toolStripSeparatorScreenCapture;
+        private Label labelApplicationFocusDelayAfter;
+        private Label labelApplicationFocusDelayBefore;
+        private NumericUpDown numericUpDownApplicationFocusDelayAfter;
+        private NumericUpDown numericUpDownApplicationFocusDelayBefore;
     }
 }

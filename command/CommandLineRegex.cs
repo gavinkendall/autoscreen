@@ -150,5 +150,15 @@ namespace AutoScreenCapture
         /// Regex for parsing the -label command.
         /// </summary>
         public const string REGEX_COMMAND_LINE_LABEL = "^-label=(?<Label>.+)$";
+
+        /// <summary>
+        /// Regex for parsing the -applicationFocusDelayBefore command.
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE = @"^-applicationFocusDelayBefore=(?<ApplicationFocusDelayBefore>\d{1,5})$";
+
+        /// <summary>
+        /// Regex for parsing the -applicationFocusDelayAfter command.
+        /// </summary>
+        public const string REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER = @"^-applicationFocusDelayAfter=(?<ApplicationFocusDelayAfter>\d{1,5})$";
     }
 }

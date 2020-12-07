@@ -175,6 +175,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.1")); // New command line arguments -activeWindowTitle, -applicationFocus, and -label.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.2")); // Can now run an Editor without arguments or without %filepath% tag when using Run Editor trigger action. Includes changes to version collection, change to how Application Focus behaves when application not found (so now adds the application to the process list regardless), and bug fix applied to threads.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.3")); // An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.4")); // A bug fix for saving of file when adding screenshot to collection.
 
             Application = new SettingCollection
             {
