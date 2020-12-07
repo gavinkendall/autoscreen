@@ -435,12 +435,30 @@ namespace AutoScreenCapture
 
         private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
         {
-            ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+            DoApplicationFocus();
         }
 
         private void buttonApplicationFocusRefresh_Click(object sender, EventArgs e)
         {
             RefreshApplicationFocusList();
+        }
+
+        private void DoApplicationFocus()
+        {
+            int delayBefore = (int)numericUpDownApplicationFocusDelayBefore.Value;
+            int delayAfter = (int)numericUpDownApplicationFocusDelayAfter.Value;
+
+            if (delayBefore > 0)
+            {
+                System.Threading.Thread.Sleep(delayBefore);
+            }
+
+            ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+
+            if (delayAfter > 0)
+            {
+                System.Threading.Thread.Sleep(delayAfter);
+            }
         }
     }
 }

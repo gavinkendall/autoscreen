@@ -172,7 +172,7 @@ namespace AutoScreenCapture
                     _screenCapture.DateTimePreviousCycle = dtNow;
                 }
 
-                ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+                DoApplicationFocus();
 
                 _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
 

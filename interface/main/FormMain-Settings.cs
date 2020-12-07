@@ -240,6 +240,8 @@ namespace AutoScreenCapture
 
                 // Application Focus
                 Settings.User.GetByKey("ApplicationFocus", DefaultSettings.ApplicationFocus).Value = comboBoxProcessList.Text;
+                Settings.User.GetByKey("ApplicationFocusDelayBefore", DefaultSettings.ApplicationFocusDelayBefore).Value = (int)numericUpDownApplicationFocusDelayBefore.Value;
+                Settings.User.GetByKey("ApplicationFocusDelayAfter", DefaultSettings.ApplicationFocusDelayAfter).Value = (int)numericUpDownApplicationFocusDelayAfter.Value;
 
                 // Region Select / Auto Save.
                 Settings.User.GetByKey("AutoSaveFolder", DefaultSettings.AutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
@@ -296,7 +298,10 @@ namespace AutoScreenCapture
                 comboBoxProcessList.Items.Add(applicationFocus);
             }
 
-            comboBoxProcessList.SelectedIndex = comboBoxProcessList.Items.IndexOf(applicationFocus);            
+            comboBoxProcessList.SelectedIndex = comboBoxProcessList.Items.IndexOf(applicationFocus);
+
+            numericUpDownApplicationFocusDelayBefore.Value = Convert.ToInt32(Settings.User.GetByKey("ApplicationFocusDelayBefore", DefaultSettings.ApplicationFocusDelayBefore).Value);
+            numericUpDownApplicationFocusDelayAfter.Value = Convert.ToInt32(Settings.User.GetByKey("ApplicationFocusDelayAfter", DefaultSettings.ApplicationFocusDelayAfter).Value);
         }
     }
 }

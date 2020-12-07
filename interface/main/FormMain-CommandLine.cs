@@ -449,7 +449,10 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        RefreshApplicationFocusList();
+                            RefreshApplicationFocusList();
+
+                            DoApplicationFocus();
+                        }
                     }
 
                     // -label="x"
@@ -475,14 +478,44 @@ namespace AutoScreenCapture
                             Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
                             Settings.User.SetValueByKey("ScreenshotLabel", label);
 
+                            if (!Settings.User.Save())
+                            {
+                                _screenCapture.ApplicationError = true;
+                            }
+
                             checkBoxScreenshotLabel.Checked = true;
                             comboBoxScreenshotLabel.Text = label;
                         }
+                    }
+
+                    // -applicationFocusDelayBefore=x
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE))
+                    {
+                        int delayBefore = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE).Groups["ApplicationFocusDelayBefore"].Value);
+
+                        Settings.User.SetValueByKey("ApplicationFocusDelayBefore", delayBefore);
 
                         if (!Settings.User.Save())
                         {
                             _screenCapture.ApplicationError = true;
                         }
+
+                        numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
+                    }
+
+                    // -applicationFocusDelayAfter=x
+                    if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER))
+                    {
+                        int delayAfter = Convert.ToInt32(Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER).Groups["ApplicationFocusDelayAfter"].Value);
+
+                        Settings.User.SetValueByKey("ApplicationFocusDelayAfter", delayAfter);
+
+                        if (!Settings.User.Save())
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
                     }
                 }
 
