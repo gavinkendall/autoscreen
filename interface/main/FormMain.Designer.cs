@@ -985,7 +985,7 @@ namespace AutoScreenCapture
             // 
             // timerScheduledCapture
             // 
-            this.timerScheduledCapture.Enabled = true;
+            this.timerScheduledCapture.Enabled = false;
             this.timerScheduledCapture.Interval = 1000;
             this.timerScheduledCapture.Tick += new System.EventHandler(this.timerScheduledCapture_Tick);
             // 
