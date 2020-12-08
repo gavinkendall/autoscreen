@@ -450,6 +450,8 @@ namespace AutoScreenCapture
 
         private void ShowPage()
         {
+            labelPage.Text = "Page " + _pageIndex + " of 4";
+
             switch (_pageIndex)
             {
                 // Page 1 - Condition

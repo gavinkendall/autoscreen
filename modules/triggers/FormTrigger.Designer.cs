@@ -58,6 +58,7 @@
             this.buttonBack = new System.Windows.Forms.Button();
             this.buttonNext = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
+            this.labelPage = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
@@ -432,12 +433,21 @@
             this.buttonFinish.UseVisualStyleBackColor = true;
             this.buttonFinish.Click += new System.EventHandler(this.buttonFinish_Click);
             // 
+            // labelPage
+            // 
+            this.labelPage.AutoSize = true;
+            this.labelPage.Location = new System.Drawing.Point(9, 433);
+            this.labelPage.Name = "labelPage";
+            this.labelPage.Size = new System.Drawing.Size(0, 13);
+            this.labelPage.TabIndex = 15;
+            // 
             // FormTrigger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
+            this.Controls.Add(this.labelPage);
             this.Controls.Add(this.buttonFinish);
             this.Controls.Add(this.buttonNext);
             this.Controls.Add(this.buttonBack);
@@ -499,5 +509,6 @@
         private System.Windows.Forms.Label labelDate;
         private System.Windows.Forms.Label labelDays;
         private System.Windows.Forms.Label labelDay;
+        private System.Windows.Forms.Label labelPage;
     }
 }

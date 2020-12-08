@@ -221,6 +221,11 @@ namespace AutoScreenCapture
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
             }
 
+            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Email (SMTP) Settings", null, addScreen_Click);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer (SFTP) Settings", null, addScreen_Click);
+
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
                 Text = "Filename:",
