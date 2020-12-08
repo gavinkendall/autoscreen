@@ -230,6 +230,12 @@ namespace AutoScreenCapture
                         Region region = (Region)selectedTabPage.Tag;
                         selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
                     }
+
+                    // *** Auto Screen Capture - Region Select / Auto Save ***
+                    if (selectedScreenshot.Bitmap == null)
+                    {
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+                    }
                 }
 
                 string path = selectedScreenshot.Path;

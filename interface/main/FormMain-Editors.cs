@@ -139,16 +139,29 @@ namespace AutoScreenCapture
         {
             if (editor != null && slide != null)
             {
+                Screenshot selectedScreenshot = null;
+
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen)tabControlViews.SelectedTab.Tag;
-                    return RunEditor(editor, _screenshotCollection.GetScreenshot(slide.Name, screen.ViewId));
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, screen.ViewId);
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
-                    return RunEditor(editor, _screenshotCollection.GetScreenshot(slide.Name, region.ViewId));
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, region.ViewId);
+                }
+
+                // *** Auto Screen Capture - Region Select / Auto Save ***
+                if (selectedScreenshot != null && selectedScreenshot.Bitmap == null)
+                {
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, Guid.Empty);
+                }
+
+                if (selectedScreenshot != null)
+                {
+                    return RunEditor(editor, selectedScreenshot);
                 }
             }
 
@@ -204,7 +217,7 @@ namespace AutoScreenCapture
             // Execute the chosen image editor. If the %filepath% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
             if (editor != null && editor.Arguments != null && !string.IsNullOrEmpty(editor.Arguments) &&
-                    (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
+                (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
                 FileSystem.FileExists(editor.Application) && FileSystem.FileExists(screenshot.Path)))
             {
                 Log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
