@@ -188,7 +188,7 @@ namespace AutoScreenCapture
                                 region.ViewId = Guid.NewGuid();
 
                                 // Get the screenshots folder path from the old user settings to be used for the region's folder property.
-                                region.Folder = Settings.VersionManager.OldSettings.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+                                region.Folder = Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
 
                                 region.Folder = FileSystem.CorrectScreenshotsFolderPath(region.Folder);
 

@@ -94,6 +94,18 @@
     <Compile Include="interface\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="interface\FormEmailSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormEmailSettings.Designer.cs">
+      <DependentUpon>FormEmailSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="interface\FormFileTransferSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormFileTransferSettings.Designer.cs">
+      <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\FormScreenCaptureStatus.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,6 +281,12 @@
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="interface\FormEmailSettings.resx">
+      <DependentUpon>FormEmailSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\FormFileTransferSettings.resx">
+      <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="interface\FormScreenCaptureStatus.resx">
       <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,7 +356,10 @@
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />
     <Content Include="images\application_add.png" />
+    <None Include="images\exit.png" />
+    <None Include="images\file_transfer.png" />
     <Content Include="images\region_select.png" />
+    <None Include="images\save.png" />
     <Content Include="images\warning.png" />
     <None Include="images\brick.png" />
     <Content Include="images\capture_archive.png" />

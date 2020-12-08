@@ -128,29 +128,36 @@ namespace AutoScreenCapture
 
             toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
-            // Check to see if Email (SMTP) is configured.
-            string host = Settings.Application.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
+            string emailServerHost = Settings.User.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
+            int.TryParse(Settings.User.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int emailServerPort);
+            string emailClientUsername = Settings.User.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
+            string emailClientPassword = Settings.User.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+            string emailMessageFrom = Settings.User.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
+            string emailMessageTo = Settings.User.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
 
-            string username = Settings.Application.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
-            string password = Settings.Application.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
-
-            string from = Settings.Application.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
-            string to = Settings.Application.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
-
-            if (string.IsNullOrEmpty(host) ||
-                string.IsNullOrEmpty(username) ||
-                string.IsNullOrEmpty(password) ||
-                string.IsNullOrEmpty(@from) ||
-                string.IsNullOrEmpty(to))
+            if (string.IsNullOrEmpty(emailServerHost) ||
+                emailServerPort <= 0 ||
+                string.IsNullOrEmpty(emailClientUsername) ||
+                string.IsNullOrEmpty(emailClientPassword) ||
+                string.IsNullOrEmpty(emailMessageFrom) ||
+                string.IsNullOrEmpty(emailMessageTo))
             {
-                toolStripButtonEmail.ToolTipText = "SMTP settings have not been configured for " + Settings.ApplicationName + " to email screenshots";
+                toolStripButtonEmail.ToolTipText = "Email settings have not been configured for " + Settings.ApplicationName + " to email screenshots";
                 toolStripButtonEmail.Enabled = false;
             }
             else
             {
-                toolStripButtonEmail.ToolTipText = "Email this screenshot using the configured SMTP settings";
+                toolStripButtonEmail.ToolTipText = "Email this screenshot using the configured email settings";
                 toolStripButtonEmail.Enabled = true;
             }
+
+            ToolStripButton toolStripButtonFileTransfer = new ToolStripButton
+            {
+                Text = "File Transfer",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.file_transfer
+            };
 
             toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, addEditor_Click);
 
@@ -170,8 +177,19 @@ namespace AutoScreenCapture
                 Image = Resources.configure
             };
 
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Screen", null, addScreen_Click);
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Add New Region", null, addRegion_Click);
+            ToolStripMenuItem toolStripMenuItemAddNew = new ToolStripMenuItem
+            {
+                Text = "Add New"
+            };
+
+            toolStripMenuItemAddNew.DropDown.Items.Add("Screen", null, addScreen_Click);
+            toolStripMenuItemAddNew.DropDown.Items.Add("Region", null, addRegion_Click);
+            toolStripMenuItemAddNew.DropDown.Items.Add("Editor", null, addEditor_Click);
+            toolStripMenuItemAddNew.DropDown.Items.Add("Schedule", null, addSchedule_Click);
+            toolStripMenuItemAddNew.DropDown.Items.Add("Tag", null, addTag_Click);
+            toolStripMenuItemAddNew.DropDown.Items.Add("Trigger", null, addTrigger_Click);
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAddNew);
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
@@ -223,8 +241,8 @@ namespace AutoScreenCapture
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Email (SMTP) Settings", null, addScreen_Click);
-            toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer (SFTP) Settings", null, addScreen_Click);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, addScreen_Click);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, addScreen_Click);
 
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
@@ -257,6 +275,7 @@ namespace AutoScreenCapture
 
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEmail);
+            toolStrip.Items.Add(toolStripButtonFileTransfer);
             toolStrip.Items.Add(toolStripSplitButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
             toolStrip.Items.Add(toolstripButtonOpenFolder);

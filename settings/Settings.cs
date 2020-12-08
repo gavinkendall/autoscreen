@@ -187,6 +187,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.2")); // Can now run an Editor without arguments or without %filepath% tag when using Run Editor trigger action. Includes changes to version collection, change to how Application Focus behaves when application not found (so now adds the application to the process list regardless), and bug fix applied to threads.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.3")); // An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.4")); // A bug fix for saving of file when adding screenshot to collection.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.5")); // Application Focus now has Delay Before and Delay After options.
 
             Application = new SettingCollection
             {
@@ -223,66 +224,6 @@ namespace AutoScreenCapture
                     if (!Application.KeyExists("Logging"))
                     {
                         Application.Add(new Setting("Logging", DefaultSettings.Logging));
-                    }
-
-                    if (!Application.KeyExists("EmailServerHost"))
-                    {
-                        Application.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
-                    }
-
-                    if (!Application.KeyExists("EmailServerPort"))
-                    {
-                        Application.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
-                    }
-
-                    if (!Application.KeyExists("EmailServerEnableSSL"))
-                    {
-                        Application.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
-                    }
-
-                    if (!Application.KeyExists("EmailClientUsername"))
-                    {
-                        Application.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
-                    }
-
-                    if (!Application.KeyExists("EmailClientPassword"))
-                    {
-                        Application.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
-                    }
-
-                    if (!Application.KeyExists("EmailMessageFrom"))
-                    {
-                        Application.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
-                    }
-
-                    if (!Application.KeyExists("EmailMessageTo"))
-                    {
-                        Application.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
-                    }
-
-                    if (!Application.KeyExists("EmailMessageCC"))
-                    {
-                        Application.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
-                    }
-
-                    if (!Application.KeyExists("EmailMessageBCC"))
-                    {
-                        Application.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
-                    }
-
-                    if (!Application.KeyExists("EmailMessageSubject"))
-                    {
-                        Application.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
-                    }
-
-                    if (!Application.KeyExists("EmailMessageBody"))
-                    {
-                        Application.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
-                    }
-
-                    if (!Application.KeyExists("EmailPrompt"))
-                    {
-                        Application.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
                     }
 
                     if (!Application.KeyExists("LowDiskPercentageThreshold"))
@@ -346,18 +287,6 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
                     Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
                     Application.Add(new Setting("Logging", DefaultSettings.Logging));
-                    Application.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
-                    Application.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
-                    Application.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
-                    Application.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
-                    Application.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
-                    Application.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
-                    Application.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
-                    Application.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
-                    Application.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
-                    Application.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
-                    Application.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
-                    Application.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
                     Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
                     Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
                     Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
@@ -410,12 +339,320 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
+                
+                // Version 2.3.4.0 now keeps the email settings in user settings instead of application settings.
+                User.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
+                User.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
+                User.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
+                User.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
+                User.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
+                User.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
+                User.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
+                User.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
+                User.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
+                User.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
+                User.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
+                User.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
 
                 User.Save();
             }
 
             Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
             Log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", DefaultSettings.Logging).Value);
+        }
+
+        /// <summary>
+        /// Attempts an upgrade on a collection of application settings that may have come from an old version of the application. 
+        /// </summary>
+        /// <param name="settingCollection">The collection of settings to upgrade.</param>
+        public static void UpgradeApplicationSettings(SettingCollection settingCollection)
+        {
+            try
+            {
+                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                {
+                    return;
+                }
+
+                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of application settings");
+
+                VersionManager.OldApplicationSettings = settingCollection.Clone();
+
+                // These will be transfered to the user settings collection via the old application settings list.
+                settingCollection.RemoveByKey("EmailServerHost");
+                settingCollection.RemoveByKey("EmailServerPort");
+                settingCollection.RemoveByKey("EmailServerEnableSSL");
+                settingCollection.RemoveByKey("EmailClientUsername");
+                settingCollection.RemoveByKey("EmailClientPassword");
+                settingCollection.RemoveByKey("EmailMessageFrom");
+                settingCollection.RemoveByKey("EmailMessageTo");
+                settingCollection.RemoveByKey("EmailMessageCC");
+                settingCollection.RemoveByKey("EmailMessageBCC");
+                settingCollection.RemoveByKey("EmailMessageSubject");
+                settingCollection.RemoveByKey("EmailMessageBody");
+                settingCollection.RemoveByKey("EmailPrompt");
+
+                Log.WriteMessage("Upgrade of application settings completed.");
+
+                settingCollection.Save();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Settings::UpgradeApplicationSettings", ex);
+            }
+        }
+
+        /// <summary>
+        /// Attempts an upgrade on a collection of user settings that may have come from an old version of the application.
+        /// </summary>
+        /// <param name="settingCollection">The collection of settings to upgrade.</param>
+        public static void UpgradeUserSettings(SettingCollection settingCollection)
+        {
+            try
+            {
+                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                {
+                    return;
+                }
+
+                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of user settings");
+
+                VersionManager.OldUserSettings = settingCollection.Clone();
+
+                var versionInConfig = new Version(settingCollection.AppCodename, settingCollection.AppVersion, false);
+
+                if (versionInConfig.VersionString.Equals("2.2.0.0") ||
+                    versionInConfig.VersionString.Equals("2.2.0.1") ||
+                    versionInConfig.VersionString.Equals("2.2.0.2") ||
+                    versionInConfig.VersionString.Equals("2.2.0.3") ||
+                    versionInConfig.VersionString.Equals("2.2.0.4") ||
+                    versionInConfig.VersionString.Equals("2.2.0.5") ||
+                    versionInConfig.VersionString.Equals("2.2.0.6") ||
+                    versionInConfig.VersionString.Equals("2.2.0.7") ||
+                    versionInConfig.VersionString.Equals("2.2.0.8") ||
+                    versionInConfig.VersionString.Equals("2.2.0.9") ||
+                    versionInConfig.VersionString.Equals("2.2.0.10") ||
+                    versionInConfig.VersionString.Equals("2.2.0.11") ||
+                    versionInConfig.VersionString.Equals("2.2.0.12") ||
+                    versionInConfig.VersionString.Equals("2.2.0.13") ||
+                    versionInConfig.VersionString.Equals("2.2.0.14") ||
+                    versionInConfig.VersionString.Equals("2.2.0.15") ||
+                    versionInConfig.VersionString.Equals("2.2.0.16"))
+                {
+                    if (settingCollection.KeyExists("StringPassphrase"))
+                    {
+                        string passphrase = settingCollection.GetByKey("StringPassphrase", string.Empty, createKeyIfNotFound: false).Value.ToString();
+
+                        passphrase = passphrase.Trim();
+
+                        if (passphrase.Length > 0)
+                        {
+                            // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
+                            // in an older version of the application then make sure to hash it and lock the session before we continue.
+                            settingCollection.SetValueByKey("Passphrase", Security.Hash(passphrase));
+                            ScreenCapture.LockScreenCaptureSession = true;
+                        }
+                    }
+                }
+
+                // Go through the old settings and get the old values from them to be used for the new settings.
+                settingCollection.RenameKey("Interval", "ScreenCaptureInterval");
+                settingCollection.RenameKey("IntScreenCaptureInterval", "ScreenCaptureInterval");
+                settingCollection.RenameKey("IntCaptureLimit", "CaptureLimit");
+                settingCollection.RenameKey("BoolCaptureLimit", "CaptureLimitCheck");
+                settingCollection.RenameKey("BoolTakeInitialScreenshot", "TakeInitialScreenshot");
+                settingCollection.RenameKey("TakeInitialScreenshotCheck", "TakeInitialScreenshot");
+                settingCollection.RenameKey("BoolShowSystemTrayIcon", "ShowSystemTrayIcon");
+                settingCollection.RenameKey("StringPassphrase", "Passphrase");
+                settingCollection.RenameKey("StringScreenshotLabel", "ScreenshotLabel");
+                settingCollection.RenameKey("BoolApplyScreenshotLabel", "ApplyScreenshotLabel");
+                settingCollection.RenameKey("StringDefaultEditor", "DefaultEditor");
+                settingCollection.RenameKey("BoolFirstRun", "FirstRun");
+                settingCollection.RenameKey("IntStartScreenCaptureCount", "StartScreenCaptureCount");
+                settingCollection.RenameKey("BoolActiveWindowTitleCaptureCheck", "ActiveWindowTitleCaptureCheck");
+                settingCollection.RenameKey("StringActiveWindowTitleCaptureText", "ActiveWindowTitleCaptureText");
+                settingCollection.RenameKey("StringAutoSaveFolder", "AutoSaveFolder");
+                settingCollection.RenameKey("StringAutoSaveMacro", "AutoSaveMacro");
+                settingCollection.RenameKey("BoolUseKeyboardShortcuts", "UseKeyboardShortcuts");
+
+                // Keyboard Shortcuts
+                settingCollection.RenameKey("StringKeyboardShortcutStartScreenCaptureModifier1", "KeyboardShortcutStartScreenCaptureModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutStartScreenCaptureModifier2", "KeyboardShortcutStartScreenCaptureModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutStartScreenCaptureKey", "KeyboardShortcutStartScreenCaptureKey");
+                settingCollection.RenameKey("StringKeyboardShortcutStopScreenCaptureModifier1", "KeyboardShortcutStopScreenCaptureModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutStopScreenCaptureModifier2", "KeyboardShortcutStopScreenCaptureModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutStopScreenCaptureKey", "KeyboardShortcutStopScreenCaptureKey");
+                settingCollection.RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier1", "KeyboardShortcutCaptureNowArchiveModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier2", "KeyboardShortcutCaptureNowArchiveModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutCaptureNowArchiveKey", "KeyboardShortcutCaptureNowArchiveKey");
+                settingCollection.RenameKey("StringKeyboardShortcutCaptureNowEditModifier1", "KeyboardShortcutCaptureNowEditModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutCaptureNowEditModifier2", "KeyboardShortcutCaptureNowEditModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutCaptureNowEditKey", "KeyboardShortcutCaptureNowEditKey");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier1", "KeyboardShortcutRegionSelectClipboardModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier2", "KeyboardShortcutRegionSelectClipboardModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectClipboardKey", "KeyboardShortcutRegionSelectClipboardKey");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", "KeyboardShortcutRegionSelectAutoSaveModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", "KeyboardShortcutRegionSelectAutoSaveModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectAutoSaveKey", "KeyboardShortcutRegionSelectAutoSaveKey");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectEditModifier1", "KeyboardShortcutRegionSelectEditModifier1");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectEditModifier2", "KeyboardShortcutRegionSelectEditModifier2");
+                settingCollection.RenameKey("StringKeyboardShortcutRegionSelectEditKey", "KeyboardShortcutRegionSelectEditKey");
+
+                // Remove the old settings.
+                settingCollection.RemoveByKey("BoolLockScreenCaptureSession");
+                settingCollection.RemoveByKey("BoolCaptureStopAt");
+                settingCollection.RemoveByKey("BoolCaptureStartAt");
+                settingCollection.RemoveByKey("BoolCaptureOnSunday");
+                settingCollection.RemoveByKey("BoolCaptureOnMonday");
+                settingCollection.RemoveByKey("BoolCaptureOnTuesday");
+                settingCollection.RemoveByKey("BoolCaptureOnWednesday");
+                settingCollection.RemoveByKey("BoolCaptureOnThursday");
+                settingCollection.RemoveByKey("BoolCaptureOnFriday");
+                settingCollection.RemoveByKey("BoolCaptureOnSaturday");
+                settingCollection.RemoveByKey("BoolCaptureOnTheseDays");
+                settingCollection.RemoveByKey("DateTimeCaptureStopAt");
+                settingCollection.RemoveByKey("DateTimeCaptureStartAt");
+                settingCollection.RemoveByKey("FilepathLimitLength");
+                settingCollection.RemoveByKey("CaptureStopAtCheck");
+                settingCollection.RemoveByKey("CaptureStartAtCheck");
+                settingCollection.RemoveByKey("CaptureOnSundayCheck");
+                settingCollection.RemoveByKey("CaptureOnMondayCheck");
+                settingCollection.RemoveByKey("CaptureOnTuesdayCheck");
+                settingCollection.RemoveByKey("CaptureOnWednesdayCheck");
+                settingCollection.RemoveByKey("CaptureOnThursdayCheck");
+                settingCollection.RemoveByKey("CaptureOnFridayCheck");
+                settingCollection.RemoveByKey("CaptureOnSaturdayCheck");
+                settingCollection.RemoveByKey("CaptureOnTheseDaysCheck");
+                settingCollection.RemoveByKey("CaptureStopAtValue");
+                settingCollection.RemoveByKey("CaptureStartAtValue");
+                settingCollection.RemoveByKey("LockScreenCaptureSession");
+                settingCollection.RemoveByKey("ScreenshotsDirectory");
+                settingCollection.RemoveByKey("ScheduleImageFormat");
+                settingCollection.RemoveByKey("SlideSkip");
+                settingCollection.RemoveByKey("ImageResolutionRatio");
+                settingCollection.RemoveByKey("ImageFormatFilter");
+                settingCollection.RemoveByKey("ImageFormatFilterIndex");
+                settingCollection.RemoveByKey("SlideshowDelay");
+                settingCollection.RemoveByKey("SlideSkipCheck");
+                settingCollection.RemoveByKey("Screen1X");
+                settingCollection.RemoveByKey("Screen1Y");
+                settingCollection.RemoveByKey("Screen1Width");
+                settingCollection.RemoveByKey("Screen1Height");
+                settingCollection.RemoveByKey("Screen2X");
+                settingCollection.RemoveByKey("Screen2Y");
+                settingCollection.RemoveByKey("Screen2Width");
+                settingCollection.RemoveByKey("Screen2Height");
+                settingCollection.RemoveByKey("Screen3X");
+                settingCollection.RemoveByKey("Screen3Y");
+                settingCollection.RemoveByKey("Screen3Width");
+                settingCollection.RemoveByKey("Screen3Height");
+                settingCollection.RemoveByKey("Screen4X");
+                settingCollection.RemoveByKey("Screen4Y");
+                settingCollection.RemoveByKey("Screen4Width");
+                settingCollection.RemoveByKey("Screen4Height");
+                settingCollection.RemoveByKey("Screen1Name");
+                settingCollection.RemoveByKey("Screen2Name");
+                settingCollection.RemoveByKey("Screen3Name");
+                settingCollection.RemoveByKey("Screen4Name");
+                settingCollection.RemoveByKey("Screen5Name");
+                settingCollection.RemoveByKey("Macro");
+                settingCollection.RemoveByKey("JpegQualityLevel");
+                settingCollection.RemoveByKey("CaptureScreen1");
+                settingCollection.RemoveByKey("CaptureScreen2");
+                settingCollection.RemoveByKey("CaptureScreen3");
+                settingCollection.RemoveByKey("CaptureScreen4");
+                settingCollection.RemoveByKey("CaptureActiveWindow");
+                settingCollection.RemoveByKey("AutoReset");
+                settingCollection.RemoveByKey("Mouse");
+                settingCollection.RemoveByKey("StartButtonImageFormat");
+                settingCollection.RemoveByKey("Schedule");
+                settingCollection.RemoveByKey("DeleteScreenshotsOlderThanDays");
+                settingCollection.RemoveByKey("ScreenshotDelay");
+                settingCollection.RemoveByKey("DaysOldWhenRemoveSlides");
+                settingCollection.RemoveByKey("IntKeepScreenshotsForDays");
+                settingCollection.RemoveByKey("KeepScreenshotsForDays");
+
+                // Transfer old application settings from the application settings to the user settings.
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerHost"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerHost"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerHost");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerPort"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerPort"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerPort");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerEnableSSL"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerEnableSSL"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerEnableSSL");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailClientUsername"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailClientUsername"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailClientUsername");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailClientPassword"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailClientPassword"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailClientPassword");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageFrom"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageFrom"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageFrom");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageTo"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageTo"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageTo");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageCC"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageCC"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageCC");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageBCC"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageBCC"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageBCC");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageSubject"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageSubject"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageSubject");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageBody"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageBody"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageBody");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailPrompt"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailPrompt"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailPrompt");
+                }
+
+                Log.WriteMessage("Upgrade of user settings completed.");
+
+                settingCollection.Save();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Settings::UpgradeUserSettings", ex);
+            }
         }
     }
 }

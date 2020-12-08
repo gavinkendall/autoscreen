@@ -257,10 +257,10 @@ namespace AutoScreenCapture
                         Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
-                    if (Settings.VersionManager != null && Settings.VersionManager.OldSettings != null)
+                    if (Settings.VersionManager != null && Settings.VersionManager.OldUserSettings != null)
                     {
                         // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
-                        SettingCollection oldUserSettings = Settings.VersionManager.OldSettings;
+                        SettingCollection oldUserSettings = Settings.VersionManager.OldUserSettings;
 
                         bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", DefaultSettings.BoolCaptureStartAt).Value);
                         bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", DefaultSettings.BoolCaptureStopAt).Value);

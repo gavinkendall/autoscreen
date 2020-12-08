@@ -91,7 +91,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                MessageBox.Show("SMTP settings are configured but no image is available to email.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Email settings are configured but no image is available to email.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -232,7 +232,7 @@ namespace AutoScreenCapture
                     }
 
                     // *** Auto Screen Capture - Region Select / Auto Save ***
-                    if (selectedScreenshot.Bitmap == null)
+                    if (selectedScreenshot.ViewId.Equals(Guid.Empty))
                     {
                         selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
                     }
@@ -401,25 +401,25 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
 
-                string host = Settings.Application.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
+                string host = Settings.User.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
 
                 Log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.Application.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int port);
+                int.TryParse(Settings.User.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int port);
 
                 Log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(Settings.Application.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
+                bool.TryParse(Settings.User.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
 
                 Log.WriteDebugMessage("SSL = " + ssl);
 
                 Log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = Settings.Application.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
+                string username = Settings.User.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
 
                 Log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.Application.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = Settings.User.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -430,27 +430,27 @@ namespace AutoScreenCapture
                     Log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
                 }
 
-                string from = Settings.Application.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
+                string from = Settings.User.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
 
                 Log.WriteDebugMessage("From = " + from);
 
-                string to = Settings.Application.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
+                string to = Settings.User.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
 
                 Log.WriteDebugMessage("To = " + to);
 
-                string cc = Settings.Application.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
+                string cc = Settings.User.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
 
                 Log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = Settings.Application.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
+                string bcc = Settings.User.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
 
                 Log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = Settings.Application.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
+                string subject = Settings.User.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
 
                 Log.WriteDebugMessage("Subject = " + subject);
 
-                string body = Settings.Application.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
+                string body = Settings.User.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
 
                 Log.WriteDebugMessage("Body = " + body);
 

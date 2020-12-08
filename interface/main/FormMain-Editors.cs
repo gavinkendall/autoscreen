@@ -154,7 +154,7 @@ namespace AutoScreenCapture
                 }
 
                 // *** Auto Screen Capture - Region Select / Auto Save ***
-                if (selectedScreenshot != null && selectedScreenshot.Bitmap == null)
+                if (selectedScreenshot != null && selectedScreenshot.ViewId.Equals(Guid.Empty))
                 {
                     selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, Guid.Empty);
                 }

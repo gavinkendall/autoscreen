@@ -35,23 +35,29 @@ namespace AutoScreenCapture
 
             if (ScreenCapture.LockScreenCaptureSession)
             {
-                // Hide the "Screen Capture Status" menu item.
-                toolStripSeparatorTools.Visible = false;
+                // Hide the "Email Settings", "File Transfer Settings", and "Screen Capture Status" menu items.
+                toolStripMenuItemEmailSettings.Visible = false;
+                toolStripMenuItemFileTransferSettings.Visible = false;
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
+                toolStripSeparatorTools.Visible = false;
 
                 // Hide the "Capture Now" memu items.
                 toolStripMenuItemCaptureNowEdit.Visible = false;
                 toolStripMenuItemCaptureNowArchive.Visible = false;
+                toolStripSeparatorCaptureNow.Visible = false;
             }
             else
             {
-                // Show the "Screen Capture Status" menu item.
-                toolStripSeparatorTools.Visible = true;
+                // Show the "Email Settings", "File Transfer Settings", and "Screen Capture Status" menu items.
+                toolStripMenuItemEmailSettings.Visible = true;
+                toolStripMenuItemFileTransferSettings.Visible = true;
                 toolStripMenuItemScreenCaptureStatus.Visible = true;
+                toolStripSeparatorTools.Visible = true;
 
                 // Show the "Capture Now" memu items.
                 toolStripMenuItemCaptureNowEdit.Visible = true;
                 toolStripMenuItemCaptureNowArchive.Visible = true;
+                toolStripSeparatorCaptureNow.Visible = true;
             }
         }
 

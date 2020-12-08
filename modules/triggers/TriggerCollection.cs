@@ -224,19 +224,19 @@ namespace AutoScreenCapture
                         
                         int days = 30;
 
-                        if (Settings.VersionManager.OldSettings.KeyExists("DaysOldWhenRemoveSlides"))
+                        if (Settings.VersionManager.OldUserSettings.KeyExists("DaysOldWhenRemoveSlides"))
                         {
-                            days = Convert.ToInt32(Settings.VersionManager.OldSettings.GetByKey("DaysOldWhenRemoveSlides", days).Value.ToString());
+                            days = Convert.ToInt32(Settings.VersionManager.OldUserSettings.GetByKey("DaysOldWhenRemoveSlides", days).Value.ToString());
                         }
 
-                        if (Settings.VersionManager.OldSettings.KeyExists("IntKeepScreenshotsForDays"))
+                        if (Settings.VersionManager.OldUserSettings.KeyExists("IntKeepScreenshotsForDays"))
                         {
-                            days = Convert.ToInt32(Settings.VersionManager.OldSettings.GetByKey("IntKeepScreenshotsForDays", days).Value.ToString());
+                            days = Convert.ToInt32(Settings.VersionManager.OldUserSettings.GetByKey("IntKeepScreenshotsForDays", days).Value.ToString());
                         }
 
-                        if (Settings.VersionManager.OldSettings.KeyExists("KeepScreenshotsForDays"))
+                        if (Settings.VersionManager.OldUserSettings.KeyExists("KeepScreenshotsForDays"))
                         {
-                            days = Convert.ToInt32(Settings.VersionManager.OldSettings.GetByKey("KeepScreenshotsForDays", days).Value.ToString());
+                            days = Convert.ToInt32(Settings.VersionManager.OldUserSettings.GetByKey("KeepScreenshotsForDays", days).Value.ToString());
                         }
 
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()

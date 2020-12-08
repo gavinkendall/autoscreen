@@ -34,6 +34,12 @@ namespace AutoScreenCapture
         // The "About Auto Screen Capture" form.
         private FormAbout _formAbout = new FormAbout();
 
+        // The "Email Settings" form.
+        private FormEmailSettings _formEmailSettings = new FormEmailSettings();
+
+        // The "File Transfer Settings" form.
+        private FormFileTransferSettings _formFileTransferSettings = new FormFileTransferSettings();
+
         // The various forms that are used for modules.
         private FormTag _formTag = new FormTag();
         private FormRegion _formRegion = new FormRegion();
@@ -433,13 +439,53 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Shows the "Email Settings" window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemEmailSettings_Click(object sender, EventArgs e)
+        {
+            if (!_formEmailSettings.Visible)
+            {
+                _formEmailSettings.ShowDialog(this);
+            }
+            else
+            {
+                _formEmailSettings.Focus();
+                _formEmailSettings.BringToFront();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "File Transfer Settings" window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemFileTransferSettings_Click(object sender, EventArgs e)
+        {
+            if (!_formFileTransferSettings.Visible)
+            {
+                _formFileTransferSettings.ShowDialog(this);
+            }
+            else
+            {
+                _formFileTransferSettings.Focus();
+                _formFileTransferSettings.BringToFront();
+            }
+        }
+
         private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
         {
+            SaveSettings();
+
             DoApplicationFocus();
         }
 
         private void buttonApplicationFocusRefresh_Click(object sender, EventArgs e)
         {
+            SaveSettings();
+
             RefreshApplicationFocusList();
         }
 

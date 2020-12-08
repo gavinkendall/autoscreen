@@ -36,9 +36,14 @@ namespace AutoScreenCapture
         public SettingCollection CurrentUserSettings { get; set; }
 
         /// <summary>
-        /// A collection of old settings.
+        /// A collection of old application settings.
         /// </summary>
-        public SettingCollection OldSettings { get; set; }
+        public SettingCollection OldApplicationSettings { get; set; }
+
+        /// <summary>
+        /// A collection of old user settings.
+        /// </summary>
+        public SettingCollection OldUserSettings { get; set; }
 
         /// <summary>
         /// The constructor of the Version Manager that accepts a version collection and a setting collection.
