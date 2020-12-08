@@ -241,8 +241,8 @@ namespace AutoScreenCapture
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
-            toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, addScreen_Click);
-            toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, addScreen_Click);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, toolStripMenuItemEmailSettings_Click);
+            toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, toolStripMenuItemFileTransferSettings_Click);
 
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {

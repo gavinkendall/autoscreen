@@ -40,7 +40,15 @@ namespace AutoScreenCapture
             _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
             _formTrigger.TagCollection = _formTag.TagCollection;
 
-            _formTrigger.ShowDialog(this);
+            if (!_formTrigger.Visible)
+            {
+                _formTrigger.ShowDialog(this);
+            }
+            else
+            {
+                _formTrigger.Focus();
+                _formTrigger.BringToFront();
+            }
 
             if (_formTrigger.DialogResult == DialogResult.OK)
             {

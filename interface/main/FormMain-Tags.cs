@@ -34,7 +34,15 @@ namespace AutoScreenCapture
         {
             _formTag.TagObject = null;
 
-            _formTag.ShowDialog(this);
+            if (!_formTag.Visible)
+            {
+                _formTag.ShowDialog(this);
+            }
+            else
+            {
+                _formTag.Focus();
+                _formTag.BringToFront();
+            }
 
             if (_formTag.DialogResult == DialogResult.OK)
             {

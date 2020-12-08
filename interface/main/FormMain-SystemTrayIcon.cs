@@ -35,7 +35,8 @@ namespace AutoScreenCapture
 
             if (ScreenCapture.LockScreenCaptureSession)
             {
-                // Hide the "Email Settings", "File Transfer Settings", and "Screen Capture Status" menu items.
+                // Hide the "Add New", "Email Settings", "File Transfer Settings", and "Screen Capture Status" menu items.
+                toolStripMenuItemAddNew.Visible = false;
                 toolStripMenuItemEmailSettings.Visible = false;
                 toolStripMenuItemFileTransferSettings.Visible = false;
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
@@ -48,7 +49,8 @@ namespace AutoScreenCapture
             }
             else
             {
-                // Show the "Email Settings", "File Transfer Settings", and "Screen Capture Status" menu items.
+                // Show the "Add New", "Email Settings", "File Transfer Settings", and "Screen Capture Status" menu items.
+                toolStripMenuItemAddNew.Visible = true;
                 toolStripMenuItemEmailSettings.Visible = true;
                 toolStripMenuItemFileTransferSettings.Visible = true;
                 toolStripMenuItemScreenCaptureStatus.Visible = true;

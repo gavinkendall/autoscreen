@@ -35,7 +35,15 @@ namespace AutoScreenCapture
         {
             _formEditor.EditorObject = null;
 
-            _formEditor.ShowDialog(this);
+            if (!_formEditor.Visible)
+            {
+                _formEditor.ShowDialog(this);
+            }
+            else
+            {
+                _formEditor.Focus();
+                _formEditor.BringToFront();
+            }
 
             if (_formEditor.DialogResult == DialogResult.OK)
             {

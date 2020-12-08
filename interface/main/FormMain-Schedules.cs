@@ -171,7 +171,15 @@ namespace AutoScreenCapture
 
             _formSchedule.ScreenCaptureInterval = screenCaptureInterval;
 
-            _formSchedule.ShowDialog(this);
+            if (!_formSchedule.Visible)
+            {
+                _formSchedule.ShowDialog(this);
+            }
+            else
+            {
+                _formSchedule.Focus();
+                _formSchedule.BringToFront();
+            }
 
             if (_formSchedule.DialogResult == DialogResult.OK)
             {
