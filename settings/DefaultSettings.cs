@@ -42,18 +42,6 @@ namespace AutoScreenCapture
         internal static readonly bool DebugMode = false;
         internal static readonly bool ExitOnError = true;
         internal static readonly bool Logging = false;
-        internal static readonly string EmailServerHost = "smtp.office365.com";
-        internal static readonly int EmailServerPort = 587;
-        internal static readonly bool EmailServerEnableSSL = true;
-        internal static readonly string EmailClientUsername = string.Empty;
-        internal static readonly string EmailClientPassword = string.Empty;
-        internal static readonly string EmailMessageFrom = string.Empty;
-        internal static readonly string EmailMessageTo = string.Empty;
-        internal static readonly string EmailMessageCC = string.Empty;
-        internal static readonly string EmailMessageBCC = string.Empty;
-        internal static readonly string EmailMessageSubject = string.Empty;
-        internal static readonly string EmailMessageBody = string.Empty;
-        internal static readonly bool EmailPrompt = true;
         internal static readonly int LowDiskPercentageThreshold = 1;
         internal static readonly int ScreenshotsLoadLimit = 5000;
         internal static readonly bool AutoStartFromCommandLine = false;
@@ -106,6 +94,26 @@ namespace AutoScreenCapture
         internal static readonly string KeyboardShortcutRegionSelectEditModifier1 = "Control";
         internal static readonly string KeyboardShortcutRegionSelectEditModifier2 = "Shift";
         internal static readonly string KeyboardShortcutRegionSelectEditKey = "E";
+
+        // Email (SMTP) settings.
+        internal static readonly string EmailServerHost = "smtp.office365.com";
+        internal static readonly int EmailServerPort = 587;
+        internal static readonly bool EmailServerEnableSSL = true;
+        internal static readonly string EmailClientUsername = string.Empty;
+        internal static readonly string EmailClientPassword = string.Empty;
+        internal static readonly string EmailMessageFrom = string.Empty;
+        internal static readonly string EmailMessageTo = string.Empty;
+        internal static readonly string EmailMessageCC = string.Empty;
+        internal static readonly string EmailMessageBCC = string.Empty;
+        internal static readonly string EmailMessageSubject = string.Empty;
+        internal static readonly string EmailMessageBody = string.Empty;
+        internal static readonly bool EmailPrompt = true;
+
+        // File Transfer (SFTP) settings.
+        internal static readonly string FileTransferServerHost = string.Empty;
+        internal static readonly int FileTransferServerPort = 22;
+        internal static readonly string FileTransferClientUsername = string.Empty;
+        internal static readonly string FileTransferClientPassword = string.Empty;
 
         // Old default user settings.
         internal static readonly bool BoolCaptureStartAt = false;

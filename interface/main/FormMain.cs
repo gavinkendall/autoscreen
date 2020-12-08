@@ -40,6 +40,9 @@ namespace AutoScreenCapture
         // The "File Transfer Settings" form.
         private FormFileTransferSettings _formFileTransferSettings = new FormFileTransferSettings();
 
+        // SFTP client.
+        private Gavin.Kendall.SFTP.SftpClient _sftpClient = null;
+
         // The various forms that are used for modules.
         private FormTag _formTag = new FormTag();
         private FormRegion _formRegion = new FormRegion();

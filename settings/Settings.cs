@@ -354,6 +354,12 @@ namespace AutoScreenCapture
                 User.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
                 User.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
 
+                // Version 2.3.4.0 introduces File Transfer (SFTP) settings for users.
+                User.Add(new Setting("FileTransferServerHost", DefaultSettings.FileTransferServerHost));
+                User.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
+                User.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
+                User.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
+
                 User.Save();
             }
 

@@ -382,7 +382,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Emails a screenshot using the SMTP settings configured in the application settings file.
+        /// Emails a screenshot using the SMTP settings configured in the user settings file.
         /// </summary>
         /// <param name="screenshot">The screenshot to email.</param>
         /// <param name="prompt">Determines if we should prompt the user with a confirmation dialog box.</param>
@@ -390,7 +390,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage("Emailing screenshots");
+                Log.WriteDebugMessage("Screenshot attempting to be emailed");
 
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
                 {
@@ -427,7 +427,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
+                    Log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
                 }
 
                 string from = Settings.User.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
@@ -572,6 +572,101 @@ namespace AutoScreenCapture
                         EmailScreenshot(lastScreenshotOfThisView, prompt: false);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sends a screenshot to a file server.
+        /// </summary>
+        /// <param name="screenshot">The screenshot to send.</param>
+        /// <returns></returns>
+        private bool FileTransferScreenshot(Screenshot screenshot)
+        {
+            try
+            {
+                Log.WriteDebugMessage("Screenshot attempting to transfer to file server");
+
+                if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
+                {
+                    Log.WriteDebugMessage("Cannot send screenshot to file server because screenshot is either null or path is empty");
+
+                    return false;
+                }
+
+                Log.WriteDebugMessage("Attempting to send screenshot \"" + screenshot.Path + "\" to file server");
+
+                string host = Settings.User.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
+
+                Log.WriteDebugMessage("Host = " + host);
+
+                int.TryParse(Settings.User.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
+
+                Log.WriteDebugMessage("Port = " + port);
+
+                string username = Settings.User.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
+
+                Log.WriteDebugMessage("Username = " + username);
+
+                string password = Settings.User.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+
+                if (string.IsNullOrEmpty(password))
+                {
+                    Log.WriteDebugMessage("Password = [empty]");
+                }
+                else
+                {
+                    Log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
+                }
+
+                if (string.IsNullOrEmpty(host) ||
+                    string.IsNullOrEmpty(username) ||
+                    string.IsNullOrEmpty(password))
+                {
+                    Log.WriteDebugMessage("Host, Username, or Password is empty");
+
+                    return false;
+                }
+
+                if (_sftpClient == null)
+                {
+                    _sftpClient = new Gavin.Kendall.SFTP.SftpClient(host, port, username, password);
+                }
+
+                Log.WriteDebugMessage("Attempting to connect to file server");
+
+                if (_sftpClient.Connect())
+                {
+                    Log.WriteDebugMessage("Connection to file server established");
+
+                    Log.WriteDebugMessage("Attempting to upload screenshot to file server");
+
+                    if (_sftpClient.UploadFile(screenshot.Path))
+                    {
+                        Log.WriteDebugMessage("Successfully uploaded screenshot");
+                    }
+                    else
+                    {
+                        Log.WriteDebugMessage("Failed to upload screenshot");
+
+                        return false;
+                    }
+                }
+                else
+                {
+                    Log.WriteDebugMessage("Could not establish a connection with the file server");
+
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _screenCapture.ApplicationError = true;
+
+                Log.WriteExceptionMessage("FormMain-Screenshots::FileTransferScreenshot", ex);
+
+                return false;
             }
         }
 
