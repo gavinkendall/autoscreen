@@ -26,6 +26,9 @@ namespace Gavin.Kendall.SFTP
             }
         }
 
+        /// <summary>
+        /// Disconnects from the SFTP server.
+        /// </summary>
         public void Disconnect()
         {
             try
@@ -38,13 +41,24 @@ namespace Gavin.Kendall.SFTP
             }
         }
 
-        public bool UploadFile(string path)
+        /// <summary>
+        /// Determines if we are connected to the SFTP server.
+        /// </summary>
+        public bool IsConnected { get { return _sftpClient.IsConnected; } }
+
+        /// <summary>
+        /// Uploads a file to the SFTP server.
+        /// </summary>
+        /// <param name="sourcePath">The local path of the file to read from on the client.</param>
+        /// <param name="destinationPath">The remote path to write to on the server.</param>
+        /// <returns>True if the upload was successful otherwise false if the upload failed.</returns>
+        public bool UploadFile(string sourcePath, string destinationPath)
         {
             try
             {
-                using (var fileStream = File.OpenRead(path))
+                using (var fileStream = File.OpenRead(sourcePath))
                 {
-                    _sftpClient.UploadFile(fileStream, path, true);
+                    _sftpClient.UploadFile(fileStream, destinationPath, true);
                 }
 
                 return true;

@@ -147,7 +147,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                toolStripButtonEmail.ToolTipText = "Email this screenshot using the configured email settings";
+                toolStripButtonEmail.ToolTipText = "Email this screenshot using the configured Email settings";
                 toolStripButtonEmail.Enabled = true;
             }
 
@@ -158,6 +158,27 @@ namespace AutoScreenCapture
                 AutoToolTip = false,
                 Image = Resources.file_transfer
             };
+
+            toolStripButtonFileTransfer.Click += new EventHandler(fileTransferScreenshot_Click);
+
+            string fileTransferServerHost = Settings.User.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
+            int.TryParse(Settings.User.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value.ToString(), out int fileTransferServerPort);
+            string fileTransferClientUsername = Settings.User.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
+            string fileTransferClientPassword = Settings.User.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
+
+            if (string.IsNullOrEmpty(fileTransferServerHost) ||
+                fileTransferServerPort <= 0 ||
+                string.IsNullOrEmpty(fileTransferClientUsername) ||
+                string.IsNullOrEmpty(fileTransferClientPassword))
+            {
+                toolStripButtonFileTransfer.ToolTipText = "File Transfer settings have not been configured for " + Settings.ApplicationName + " to send screenshots to a file server";
+                toolStripButtonFileTransfer.Enabled = false;
+            }
+            else
+            {
+                toolStripButtonFileTransfer.ToolTipText = "Upload this screenshot to the specified file server using the configured File Transfer settings";
+                toolStripButtonFileTransfer.Enabled = true;
+            }
 
             toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, addEditor_Click);
 

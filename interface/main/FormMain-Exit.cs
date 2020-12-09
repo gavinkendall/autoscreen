@@ -57,6 +57,11 @@ namespace AutoScreenCapture
                     DisableStopCapture();
                     EnableStartCapture();
 
+                    if (_sftpClient != null && _sftpClient.IsConnected)
+                    {
+                        _sftpClient.Disconnect();
+                    }
+
                     _screenCapture.Count = 0;
                     _screenCapture.Running = false;
 

@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
+using Gavin.Kendall.SFTP;
 
 namespace AutoScreenCapture
 {
@@ -41,7 +42,7 @@ namespace AutoScreenCapture
         private FormFileTransferSettings _formFileTransferSettings = new FormFileTransferSettings();
 
         // SFTP client.
-        private Gavin.Kendall.SFTP.SftpClient _sftpClient = null;
+        private SftpClient _sftpClient = null;
 
         // The various forms that are used for modules.
         private FormTag _formTag = new FormTag();

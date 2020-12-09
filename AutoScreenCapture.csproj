@@ -70,10 +70,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>autoscreen.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -341,7 +342,6 @@
     </None>
     <Compile Include="ScreenCapture.cs" />
     <Compile Include="modules\slideshow\Slideshow.cs" />
-    <None Include="autoscreen.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="autoscreen.ico" />

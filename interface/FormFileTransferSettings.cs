@@ -9,11 +9,17 @@ using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// File Transfer Settings
+    /// </summary>
     public partial class FormFileTransferSettings : Form
-{
-    public FormFileTransferSettings()
     {
-        InitializeComponent();
+        /// <summary>
+        /// File Transfer Settings
+        /// </summary>
+        public FormFileTransferSettings()
+        {
+            InitializeComponent();
+        }
     }
-}
 }

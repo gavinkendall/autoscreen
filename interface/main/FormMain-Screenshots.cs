@@ -59,7 +59,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Emails screenshots using the EmailSever and EmailMessage settings in application settings.
+        /// Emails screenshots using the EmailSever and EmailMessage settings in user settings.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -87,11 +87,60 @@ namespace AutoScreenCapture
 
                 bool.TryParse(Settings.Application.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
 
-                EmailScreenshot(screenshot, prompt);
+                if (EmailScreenshot(screenshot, prompt))
+                {
+                    MessageBox.Show("Successfully emailed screenshot.", "Email Successfully Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Screenshot was not sent.", "Email Not Sent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
                 MessageBox.Show("Email settings are configured but no image is available to email.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Sends a screenshot to a file server depending on user settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void fileTransferScreenshot_Click(object sender, EventArgs e)
+        {
+            Screenshot screenshot = null;
+
+            Slide selectedSlide = Slideshow.SelectedSlide;
+
+            if (selectedSlide != null && listBoxScreenshots.SelectedIndex > -1)
+            {
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+                {
+                    var screen = (Screen)tabControlViews.SelectedTab.Tag;
+
+                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
+                }
+
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+                {
+                    var region = (Region)tabControlViews.SelectedTab.Tag;
+
+                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
+                }
+
+                if (FileTransferScreenshot(screenshot))
+                {
+                    MessageBox.Show("Successfully uploaded screenshot to file server.", "File Transfer Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Screenshot did not upload to file server.", "File Transfer Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("File Transfer settings are configured but no image is available to send to the file server.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -523,6 +572,12 @@ namespace AutoScreenCapture
 
                         Log.WriteDebugMessage("Email sent");
                     }
+                    else
+                    {
+                        smtpClient.Dispose();
+
+                        return false;
+                    }
                 }
                 else
                 {
@@ -576,10 +631,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Sends a screenshot to a file server.
+        /// Uploads a screenshot to a file server.
         /// </summary>
-        /// <param name="screenshot">The screenshot to send.</param>
-        /// <returns></returns>
+        /// <param name="screenshot">The screenshot to upload.</param>
+        /// <returns>True if the upload was successful otherwise false if the upload failed.</returns>
         private bool FileTransferScreenshot(Screenshot screenshot)
         {
             try
@@ -588,12 +643,12 @@ namespace AutoScreenCapture
 
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
                 {
-                    Log.WriteDebugMessage("Cannot send screenshot to file server because screenshot is either null or path is empty");
+                    Log.WriteDebugMessage("Cannot upload screenshot to file server because screenshot is either null or path is empty");
 
                     return false;
                 }
 
-                Log.WriteDebugMessage("Attempting to send screenshot \"" + screenshot.Path + "\" to file server");
+                Log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.Path + "\" to file server");
 
                 string host = Settings.User.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
 
@@ -607,7 +662,7 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.User.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = Settings.User.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -634,13 +689,30 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("Attempting to connect to file server");
 
-                if (_sftpClient.Connect())
+                if (!_sftpClient.IsConnected)
                 {
-                    Log.WriteDebugMessage("Connection to file server established");
+                    if (_sftpClient.Connect())
+                    {
+                        Log.WriteDebugMessage("Connection to file server established");
+                    }
+                    else
+                    {
+                        Log.WriteDebugMessage("Could not establish a connection with the file server");
 
+                        return false;
+                    }
+                }
+                
+                // Make sure we are connected to the file server. If we were not connected earlier then a connection request would have been sent prior to this check.
+                if (_sftpClient.IsConnected)
+                {
+                    string destinationPath = System.IO.Path.GetFileName(screenshot.Path);
+                    
                     Log.WriteDebugMessage("Attempting to upload screenshot to file server");
+                    Log.WriteDebugMessage("Source: " + screenshot.Path);
+                    Log.WriteDebugMessage("Destination: " + destinationPath);
 
-                    if (_sftpClient.UploadFile(screenshot.Path))
+                    if (_sftpClient.UploadFile(screenshot.Path, destinationPath))
                     {
                         Log.WriteDebugMessage("Successfully uploaded screenshot");
                     }
@@ -650,12 +722,6 @@ namespace AutoScreenCapture
 
                         return false;
                     }
-                }
-                else
-                {
-                    Log.WriteDebugMessage("Could not establish a connection with the file server");
-
-                    return false;
                 }
 
                 return true;

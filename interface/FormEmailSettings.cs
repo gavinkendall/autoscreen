@@ -9,11 +9,17 @@ using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
+    /// <summary>
+    /// Email Settings
+    /// </summary>
     public partial class FormEmailSettings : Form
-{
-    public FormEmailSettings()
     {
-        InitializeComponent();
+        /// <summary>
+        ///  Email Settings
+        /// </summary>
+        public FormEmailSettings()
+        {
+            InitializeComponent();
+        }
     }
-}
 }
