@@ -328,7 +328,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 398);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 420);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -379,42 +379,42 @@ namespace AutoScreenCapture
             // toolStripMenuItemAddNewScreen
             // 
             this.toolStripMenuItemAddNewScreen.Name = "toolStripMenuItemAddNewScreen";
-            this.toolStripMenuItemAddNewScreen.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddNewScreen.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemAddNewScreen.Text = "Screen";
             this.toolStripMenuItemAddNewScreen.Click += new System.EventHandler(this.addScreen_Click);
             // 
             // toolStripMenuItemAddNewRegion
             // 
             this.toolStripMenuItemAddNewRegion.Name = "toolStripMenuItemAddNewRegion";
-            this.toolStripMenuItemAddNewRegion.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddNewRegion.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemAddNewRegion.Text = "Region";
             this.toolStripMenuItemAddNewRegion.Click += new System.EventHandler(this.addRegion_Click);
             // 
             // toolStripMenuItemAddNewEditor
             // 
             this.toolStripMenuItemAddNewEditor.Name = "toolStripMenuItemAddNewEditor";
-            this.toolStripMenuItemAddNewEditor.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddNewEditor.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemAddNewEditor.Text = "Editor";
             this.toolStripMenuItemAddNewEditor.Click += new System.EventHandler(this.addEditor_Click);
             // 
             // toolStripMenuItemAddNewSchedule
             // 
             this.toolStripMenuItemAddNewSchedule.Name = "toolStripMenuItemAddNewSchedule";
-            this.toolStripMenuItemAddNewSchedule.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddNewSchedule.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemAddNewSchedule.Text = "Schedule";
             this.toolStripMenuItemAddNewSchedule.Click += new System.EventHandler(this.addSchedule_Click);
             // 
             // toolStripMenuItemAddNewTag
             // 
             this.toolStripMenuItemAddNewTag.Name = "toolStripMenuItemAddNewTag";
-            this.toolStripMenuItemAddNewTag.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddNewTag.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemAddNewTag.Text = "Tag";
             this.toolStripMenuItemAddNewTag.Click += new System.EventHandler(this.addTag_Click);
             // 
             // toolStripMenuItemAddNewTrigger
             // 
             this.toolStripMenuItemAddNewTrigger.Name = "toolStripMenuItemAddNewTrigger";
-            this.toolStripMenuItemAddNewTrigger.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddNewTrigger.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItemAddNewTrigger.Text = "Trigger";
             this.toolStripMenuItemAddNewTrigger.Click += new System.EventHandler(this.addTrigger_Click);
             // 
@@ -424,6 +424,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemEmailSettings.Name = "toolStripMenuItemEmailSettings";
             this.toolStripMenuItemEmailSettings.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemEmailSettings.Text = "Email Settings";
+            this.toolStripMenuItemEmailSettings.Visible = false;
             this.toolStripMenuItemEmailSettings.Click += new System.EventHandler(this.toolStripMenuItemEmailSettings_Click);
             // 
             // toolStripMenuItemFileTransferSettings
@@ -432,6 +433,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemFileTransferSettings.Name = "toolStripMenuItemFileTransferSettings";
             this.toolStripMenuItemFileTransferSettings.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemFileTransferSettings.Text = "File Transfer Settings";
+            this.toolStripMenuItemFileTransferSettings.Visible = false;
             this.toolStripMenuItemFileTransferSettings.Click += new System.EventHandler(this.toolStripMenuItemFileTransferSettings_Click);
             // 
             // toolStripMenuItemScreenCaptureStatus

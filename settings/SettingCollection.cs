@@ -265,7 +265,7 @@ namespace AutoScreenCapture
                     {
                         FileSystem.DeleteFile(Filepath);
 
-                        Log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
+                        Log.WriteDebugMessage("WARNING: Settings file was too big and needed to be deleted");
 
                         return;
                     }

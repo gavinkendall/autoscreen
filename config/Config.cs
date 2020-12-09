@@ -34,6 +34,8 @@ namespace AutoScreenCapture
 
         private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
+        private const string REGEX_SMTP_SETTINGS_FILE = "^SMTPSettingsFile=(?<Path>.+)$";
+        private const string REGEX_SFTP_SETTINGS_FILE = "^SFTPSettingsFile=(?<Path>.+)$";
         private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
         private const string REGEX_EDITORS_FILE = "^EditorsFile=(?<Path>.+)$";
         private const string REGEX_REGIONS_FILE = "^RegionsFile=(?<Path>.+)$";
@@ -76,6 +78,10 @@ namespace AutoScreenCapture
                         "ApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile, "",
                         "# Your personal settings.",
                         "UserSettingsFile=" + FileSystem.DefaultUserSettingsFile, "",
+                        "# SMTP settings for emailing screenshots using an email server.",
+                        "SMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile, "",
+                        "# SFTP settings for uploading screenshots to a file server.",
+                        "SFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile, "",
                         "# References to image editors.",
                         "EditorsFile=" + FileSystem.DefaultEditorsFile, "",
                         "# References to regions.",
@@ -118,6 +124,12 @@ namespace AutoScreenCapture
 
                     if (GetPath(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
                         FileSystem.ApplicationSettingsFile = path;
+
+                    if (GetPath(line, REGEX_SMTP_SETTINGS_FILE, out path))
+                        FileSystem.SmtpSettingsFile = path;
+
+                    if (GetPath(line, REGEX_SFTP_SETTINGS_FILE, out path))
+                        FileSystem.SftpSettingsFile = path;
 
                     if (GetPath(line, REGEX_USER_SETTINGS_FILE, out path))
                         FileSystem.UserSettingsFile = path;
@@ -220,6 +232,30 @@ namespace AutoScreenCapture
                 }
             }
 
+            if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
+            {
+                FileSystem.SmtpSettingsFile = FileSystem.DefaultSmtpSettingsFile;
+
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile);
+
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                {
+                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                }
+            }
+
+            if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
+            {
+                FileSystem.SftpSettingsFile = FileSystem.DefaultSftpSettingsFile;
+
+                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile);
+
+                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                {
+                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                }
+            }
+
             if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
             {
                 FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
@@ -238,8 +274,22 @@ namespace AutoScreenCapture
             Settings.User.Load();
             Log.WriteDebugMessage("User settings loaded");
 
+            Log.WriteMessage("Loading SMTP settings");
+            Settings.SMTP.Load();
+            Log.WriteDebugMessage("SMTP settings loaded");
+
+            Log.WriteMessage("Loading SFTP settings");
+            Settings.SFTP.Load();
+            Log.WriteDebugMessage("SFTP settings loaded");
+
             Log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
             Settings.UpgradeApplicationSettings(Settings.Application);
+
+            Log.WriteDebugMessage("Attempting upgrade of SMTP settings from old version of application (if needed)");
+            Settings.UpgradeSmtpSettings(Settings.SMTP);
+
+            Log.WriteDebugMessage("Attempting upgrade of SFTP settings from old version of application (if needed)");
+            Settings.UpgradeSftpSettings(Settings.SFTP);
 
             Log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
             Settings.UpgradeUserSettings(Settings.User);

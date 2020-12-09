@@ -50,6 +50,8 @@ namespace AutoScreenCapture
         internal static readonly bool StopOnLowDiskError = true;
         internal static readonly int ActiveWindowTitleLengthLimit = 2000;
         internal static readonly bool OptimizeScreenCapture = true;
+        internal static readonly bool AllowUserToConfigureEmailSettings = true;
+        internal static readonly bool AllowUserToConfigureFileTransferSettings = true;
 
         // Default user settings.
         internal static readonly int ScreenCaptureInterval = 60000;

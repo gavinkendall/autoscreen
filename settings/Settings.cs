@@ -84,6 +84,16 @@ namespace AutoScreenCapture
         public static SettingCollection Application;
 
         /// <summary>
+        /// The SMTP settings collection.
+        /// </summary>
+        public static SettingCollection SMTP;
+
+        /// <summary>
+        /// The SFTP settings collection.
+        /// </summary>
+        public static SettingCollection SFTP;
+
+        /// <summary>
         /// The user settings collection.
         /// </summary>
         public static SettingCollection User;
@@ -194,6 +204,16 @@ namespace AutoScreenCapture
                 Filepath = FileSystem.ApplicationSettingsFile
             };
 
+            SMTP = new SettingCollection
+            {
+                Filepath = FileSystem.SmtpSettingsFile
+            };
+
+            SFTP = new SettingCollection
+            {
+                Filepath = FileSystem.SftpSettingsFile
+            };
+
             User = new SettingCollection
             {
                 Filepath = FileSystem.UserSettingsFile
@@ -279,6 +299,16 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
                     }
+
+                    if (!Application.KeyExists("AllowUserToConfigureEmailSettings"))
+                    {
+                        Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
+                    }
+
+                    if (!Application.KeyExists("AllowUserToConfigureFileTransferSettings"))
+                    {
+                        Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
+                    }
                 }
                 else
                 {
@@ -295,6 +325,8 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
                     Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
                     Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
+                    Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
+                    Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
                 }
 
                 Application.Save();
@@ -339,28 +371,35 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
-                
-                // Version 2.3.4.0 now keeps the email settings in user settings instead of application settings.
-                User.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
-                User.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
-                User.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
-                User.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
-                User.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
-                User.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
-                User.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
-                User.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
-                User.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
-                User.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
-                User.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
-                User.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
-
-                // Version 2.3.4.0 introduces File Transfer (SFTP) settings for users.
-                User.Add(new Setting("FileTransferServerHost", DefaultSettings.FileTransferServerHost));
-                User.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
-                User.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
-                User.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
-
                 User.Save();
+            }
+
+            if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !FileSystem.FileExists(SMTP.Filepath))
+            {
+                // Version 2.3.4.0 now keeps the email settings in its own SMTP settings file instead of application settings.
+                SMTP.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
+                SMTP.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
+                SMTP.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
+                SMTP.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
+                SMTP.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
+                SMTP.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
+                SMTP.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
+                SMTP.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
+                SMTP.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
+                SMTP.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
+                SMTP.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
+                SMTP.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
+                SMTP.Save();
+            }
+
+            if (SFTP != null && !string.IsNullOrEmpty(SFTP.Filepath) && !FileSystem.FileExists(SFTP.Filepath))
+            {
+                // Version 2.3.4.0 introduces File Transfer (SFTP) settings.
+                SFTP.Add(new Setting("FileTransferServerHost", DefaultSettings.FileTransferServerHost));
+                SFTP.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
+                SFTP.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
+                SFTP.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
+                SFTP.Save();
             }
 
             Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
@@ -384,7 +423,7 @@ namespace AutoScreenCapture
 
                 VersionManager.OldApplicationSettings = settingCollection.Clone();
 
-                // These will be transfered to the user settings collection via the old application settings list.
+                // These will be transfered to the SMTP settings collection via the old application settings list.
                 settingCollection.RemoveByKey("EmailServerHost");
                 settingCollection.RemoveByKey("EmailServerPort");
                 settingCollection.RemoveByKey("EmailServerEnableSSL");
@@ -405,6 +444,129 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("Settings::UpgradeApplicationSettings", ex);
+            }
+        }
+
+        /// <summary>
+        /// Attempts an upgrade on a collection of SMTP settings that may have come from an old version of the application. 
+        /// </summary>
+        /// <param name="settingCollection">The collection of settings to upgrade.</param>
+        public static void UpgradeSmtpSettings(SettingCollection settingCollection)
+        {
+            try
+            {
+                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                {
+                    return;
+                }
+
+                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of SMTP settings");
+
+                // Transfer old application settings from the application settings to SMTP settings.
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerHost"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerHost"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerHost");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerPort"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerPort"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerPort");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerEnableSSL"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerEnableSSL"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerEnableSSL");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailClientUsername"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailClientUsername"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailClientUsername");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailClientPassword"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailClientPassword"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailClientPassword");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageFrom"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageFrom"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageFrom");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageTo"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageTo"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageTo");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageCC"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageCC"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageCC");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageBCC"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageBCC"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageBCC");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageSubject"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageSubject"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageSubject");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageBody"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageBody"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageBody");
+                }
+
+                if (VersionManager.OldApplicationSettings.KeyExists("EmailPrompt"))
+                {
+                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailPrompt"));
+                    VersionManager.OldApplicationSettings.RemoveByKey("EmailPrompt");
+                }
+
+                Log.WriteMessage("Upgrade of SMTP settings completed.");
+
+                settingCollection.Save();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Settings::UpgradeSmtpSettings", ex);
+            }
+        }
+
+        /// <summary>
+        /// Attempts an upgrade on a collection of SFTP settings that may have come from an old version of the application. 
+        /// </summary>
+        /// <param name="settingCollection">The collection of settings to upgrade.</param>
+        public static void UpgradeSftpSettings(SettingCollection settingCollection)
+        {
+            try
+            {
+                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                {
+                    return;
+                }
+
+                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of SFTP settings");
+
+                Log.WriteMessage("Upgrade of SFTP settings completed.");
+
+                settingCollection.Save();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Settings::UpgradeSftpSettings", ex);
             }
         }
 
@@ -577,79 +739,6 @@ namespace AutoScreenCapture
                 settingCollection.RemoveByKey("DaysOldWhenRemoveSlides");
                 settingCollection.RemoveByKey("IntKeepScreenshotsForDays");
                 settingCollection.RemoveByKey("KeepScreenshotsForDays");
-
-                // Transfer old application settings from the application settings to the user settings.
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerHost"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerHost"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerHost");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerPort"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerPort"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerPort");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailServerEnableSSL"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailServerEnableSSL"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailServerEnableSSL");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailClientUsername"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailClientUsername"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailClientUsername");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailClientPassword"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailClientPassword"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailClientPassword");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageFrom"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageFrom"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageFrom");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageTo"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageTo"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageTo");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageCC"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageCC"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageCC");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageBCC"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageBCC"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageBCC");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageSubject"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageSubject"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageSubject");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailMessageBody"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailMessageBody"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailMessageBody");
-                }
-
-                if (VersionManager.OldApplicationSettings.KeyExists("EmailPrompt"))
-                {
-                    settingCollection.Add(VersionManager.OldApplicationSettings.GetByKey("EmailPrompt"));
-                    VersionManager.OldApplicationSettings.RemoveByKey("EmailPrompt");
-                }
 
                 Log.WriteMessage("Upgrade of user settings completed.");
 
