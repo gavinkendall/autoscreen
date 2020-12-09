@@ -52,6 +52,9 @@ namespace AutoScreenCapture
         private FormTrigger _formTrigger = new FormTrigger();
         private FormSchedule _formSchedule = new FormSchedule();
 
+        // Screeshot Properties
+        private FormScreenshotProperties _formScreenshotProperties = new FormScreenshotProperties();
+
         // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
         private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
 

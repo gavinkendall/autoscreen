@@ -119,6 +119,12 @@
     <Compile Include="interface\FormKeyboardShortcuts.Designer.cs">
       <DependentUpon>FormKeyboardShortcuts.cs</DependentUpon>
     </Compile>
+    <Compile Include="interface\FormScreenshotProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormScreenshotProperties.Designer.cs">
+      <DependentUpon>FormScreenshotProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\main\FormMain-CommandLine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -296,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormRegionSelectWithMouse.resx">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\FormScreenshotProperties.resx">
+      <DependentUpon>FormScreenshotProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="modules\tags\FormMacroTagsToolWindow.resx">
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>

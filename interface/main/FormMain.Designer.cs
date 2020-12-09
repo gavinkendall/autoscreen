@@ -41,7 +41,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonHelp = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlViews = new System.Windows.Forms.TabControl();
-            this.contextMenuStripScreenshotPreview = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStripScreenshot = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.listBoxScreenshots = new System.Windows.Forms.ListBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripSystemTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -121,25 +121,11 @@ namespace AutoScreenCapture
             this.tabPageTriggers = new System.Windows.Forms.TabPage();
             this.timerScheduledCapture = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
-            this.labelScreenshotTitle = new System.Windows.Forms.Label();
-            this.textBoxScreenshotTitle = new System.Windows.Forms.TextBox();
-            this.labelScreenshotFormat = new System.Windows.Forms.Label();
-            this.textBoxScreenshotFormat = new System.Windows.Forms.TextBox();
-            this.labelScreenshotWidth = new System.Windows.Forms.Label();
-            this.textBoxScreenshotWidth = new System.Windows.Forms.TextBox();
-            this.labelScreenshotHeight = new System.Windows.Forms.Label();
-            this.textBoxScreenshotHeight = new System.Windows.Forms.TextBox();
-            this.labelScreenshotDate = new System.Windows.Forms.Label();
-            this.textBoxScreenshotDate = new System.Windows.Forms.TextBox();
-            this.labelScreenshotTime = new System.Windows.Forms.Label();
-            this.textBoxScreenshotTime = new System.Windows.Forms.TextBox();
             this.comboBoxFilterValue = new System.Windows.Forms.ComboBox();
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonRefreshFilterValues = new System.Windows.Forms.Button();
             this.comboBoxFilterType = new System.Windows.Forms.ComboBox();
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
-            this.textBoxLabel = new System.Windows.Forms.TextBox();
-            this.labelLabel = new System.Windows.Forms.Label();
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
@@ -180,7 +166,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonKeyboardShortcuts,
             this.toolStripSplitButtonHelp,
             this.toolStripInfo});
-            this.statusStrip.Location = new System.Drawing.Point(0, 571);
+            this.statusStrip.Location = new System.Drawing.Point(0, 633);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.statusStrip.Size = new System.Drawing.Size(1001, 22);
@@ -270,15 +256,15 @@ namespace AutoScreenCapture
             this.tabControlViews.Location = new System.Drawing.Point(251, 27);
             this.tabControlViews.Name = "tabControlViews";
             this.tabControlViews.SelectedIndex = 0;
-            this.tabControlViews.Size = new System.Drawing.Size(750, 486);
+            this.tabControlViews.Size = new System.Drawing.Size(750, 600);
             this.tabControlViews.TabIndex = 0;
             this.tabControlViews.TabStop = false;
             this.tabControlViews.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlViews_Selected);
             // 
-            // contextMenuStripScreenshotPreview
+            // contextMenuStripScreenshot
             // 
-            this.contextMenuStripScreenshotPreview.Name = "contextMenuStripScreenshotPreview";
-            this.contextMenuStripScreenshotPreview.Size = new System.Drawing.Size(61, 4);
+            this.contextMenuStripScreenshot.Name = "contextMenuStripScreenshotPreview";
+            this.contextMenuStripScreenshot.Size = new System.Drawing.Size(61, 4);
             // 
             // listBoxScreenshots
             // 
@@ -328,7 +314,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 420);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 398);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -555,7 +541,7 @@ namespace AutoScreenCapture
             this.tabControlModules.Location = new System.Drawing.Point(0, 220);
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
-            this.tabControlModules.Size = new System.Drawing.Size(249, 345);
+            this.tabControlModules.Size = new System.Drawing.Size(249, 407);
             this.tabControlModules.TabIndex = 0;
             this.tabControlModules.TabStop = false;
             // 
@@ -572,7 +558,7 @@ namespace AutoScreenCapture
             this.tabPageSetup.Location = new System.Drawing.Point(4, 22);
             this.tabPageSetup.Name = "tabPageSetup";
             this.tabPageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSetup.Size = new System.Drawing.Size(241, 319);
+            this.tabPageSetup.Size = new System.Drawing.Size(241, 381);
             this.tabPageSetup.TabIndex = 0;
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
@@ -1077,131 +1063,6 @@ namespace AutoScreenCapture
             // 
             this.timerScreenCapture.Tick += new System.EventHandler(this.timerScreenCapture_Tick);
             // 
-            // labelScreenshotTitle
-            // 
-            this.labelScreenshotTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelScreenshotTitle.AutoSize = true;
-            this.labelScreenshotTitle.Location = new System.Drawing.Point(460, 548);
-            this.labelScreenshotTitle.Name = "labelScreenshotTitle";
-            this.labelScreenshotTitle.Size = new System.Drawing.Size(72, 13);
-            this.labelScreenshotTitle.TabIndex = 0;
-            this.labelScreenshotTitle.Text = "Window Title:";
-            // 
-            // textBoxScreenshotTitle
-            // 
-            this.textBoxScreenshotTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScreenshotTitle.Location = new System.Drawing.Point(538, 545);
-            this.textBoxScreenshotTitle.Name = "textBoxScreenshotTitle";
-            this.textBoxScreenshotTitle.ReadOnly = true;
-            this.textBoxScreenshotTitle.Size = new System.Drawing.Size(451, 20);
-            this.textBoxScreenshotTitle.TabIndex = 0;
-            this.textBoxScreenshotTitle.TabStop = false;
-            // 
-            // labelScreenshotFormat
-            // 
-            this.labelScreenshotFormat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelScreenshotFormat.AutoSize = true;
-            this.labelScreenshotFormat.Location = new System.Drawing.Point(258, 522);
-            this.labelScreenshotFormat.Name = "labelScreenshotFormat";
-            this.labelScreenshotFormat.Size = new System.Drawing.Size(74, 13);
-            this.labelScreenshotFormat.TabIndex = 0;
-            this.labelScreenshotFormat.Text = "Image Format:";
-            // 
-            // textBoxScreenshotFormat
-            // 
-            this.textBoxScreenshotFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxScreenshotFormat.Location = new System.Drawing.Point(338, 519);
-            this.textBoxScreenshotFormat.Name = "textBoxScreenshotFormat";
-            this.textBoxScreenshotFormat.ReadOnly = true;
-            this.textBoxScreenshotFormat.Size = new System.Drawing.Size(41, 20);
-            this.textBoxScreenshotFormat.TabIndex = 0;
-            this.textBoxScreenshotFormat.TabStop = false;
-            // 
-            // labelScreenshotWidth
-            // 
-            this.labelScreenshotWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreenshotWidth.AutoSize = true;
-            this.labelScreenshotWidth.Location = new System.Drawing.Point(394, 522);
-            this.labelScreenshotWidth.Name = "labelScreenshotWidth";
-            this.labelScreenshotWidth.Size = new System.Drawing.Size(38, 13);
-            this.labelScreenshotWidth.TabIndex = 0;
-            this.labelScreenshotWidth.Text = "Width:";
-            // 
-            // textBoxScreenshotWidth
-            // 
-            this.textBoxScreenshotWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxScreenshotWidth.Location = new System.Drawing.Point(438, 519);
-            this.textBoxScreenshotWidth.MaximumSize = new System.Drawing.Size(47, 20);
-            this.textBoxScreenshotWidth.Name = "textBoxScreenshotWidth";
-            this.textBoxScreenshotWidth.ReadOnly = true;
-            this.textBoxScreenshotWidth.Size = new System.Drawing.Size(47, 20);
-            this.textBoxScreenshotWidth.TabIndex = 0;
-            this.textBoxScreenshotWidth.TabStop = false;
-            // 
-            // labelScreenshotHeight
-            // 
-            this.labelScreenshotHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreenshotHeight.AutoSize = true;
-            this.labelScreenshotHeight.Location = new System.Drawing.Point(491, 522);
-            this.labelScreenshotHeight.Name = "labelScreenshotHeight";
-            this.labelScreenshotHeight.Size = new System.Drawing.Size(41, 13);
-            this.labelScreenshotHeight.TabIndex = 0;
-            this.labelScreenshotHeight.Text = "Height:";
-            // 
-            // textBoxScreenshotHeight
-            // 
-            this.textBoxScreenshotHeight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxScreenshotHeight.Location = new System.Drawing.Point(538, 519);
-            this.textBoxScreenshotHeight.MaximumSize = new System.Drawing.Size(47, 20);
-            this.textBoxScreenshotHeight.Name = "textBoxScreenshotHeight";
-            this.textBoxScreenshotHeight.ReadOnly = true;
-            this.textBoxScreenshotHeight.Size = new System.Drawing.Size(47, 20);
-            this.textBoxScreenshotHeight.TabIndex = 0;
-            this.textBoxScreenshotHeight.TabStop = false;
-            // 
-            // labelScreenshotDate
-            // 
-            this.labelScreenshotDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreenshotDate.AutoSize = true;
-            this.labelScreenshotDate.Location = new System.Drawing.Point(591, 522);
-            this.labelScreenshotDate.Name = "labelScreenshotDate";
-            this.labelScreenshotDate.Size = new System.Drawing.Size(33, 13);
-            this.labelScreenshotDate.TabIndex = 0;
-            this.labelScreenshotDate.Text = "Date:";
-            // 
-            // textBoxScreenshotDate
-            // 
-            this.textBoxScreenshotDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxScreenshotDate.Location = new System.Drawing.Point(630, 519);
-            this.textBoxScreenshotDate.Name = "textBoxScreenshotDate";
-            this.textBoxScreenshotDate.ReadOnly = true;
-            this.textBoxScreenshotDate.Size = new System.Drawing.Size(73, 20);
-            this.textBoxScreenshotDate.TabIndex = 0;
-            this.textBoxScreenshotDate.TabStop = false;
-            // 
-            // labelScreenshotTime
-            // 
-            this.labelScreenshotTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelScreenshotTime.AutoSize = true;
-            this.labelScreenshotTime.Location = new System.Drawing.Point(709, 522);
-            this.labelScreenshotTime.Name = "labelScreenshotTime";
-            this.labelScreenshotTime.Size = new System.Drawing.Size(33, 13);
-            this.labelScreenshotTime.TabIndex = 0;
-            this.labelScreenshotTime.Text = "Time:";
-            // 
-            // textBoxScreenshotTime
-            // 
-            this.textBoxScreenshotTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxScreenshotTime.Location = new System.Drawing.Point(748, 519);
-            this.textBoxScreenshotTime.Name = "textBoxScreenshotTime";
-            this.textBoxScreenshotTime.ReadOnly = true;
-            this.textBoxScreenshotTime.Size = new System.Drawing.Size(73, 20);
-            this.textBoxScreenshotTime.TabIndex = 0;
-            this.textBoxScreenshotTime.TabStop = false;
-            // 
             // comboBoxFilterValue
             // 
             this.comboBoxFilterValue.DropDownHeight = 300;
@@ -1270,26 +1131,6 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance.Interval = 300000;
             this.timerPerformMaintenance.Tick += new System.EventHandler(this.timerPerformMaintenance_Tick);
             // 
-            // textBoxLabel
-            // 
-            this.textBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxLabel.Location = new System.Drawing.Point(300, 545);
-            this.textBoxLabel.Name = "textBoxLabel";
-            this.textBoxLabel.ReadOnly = true;
-            this.textBoxLabel.Size = new System.Drawing.Size(154, 20);
-            this.textBoxLabel.TabIndex = 4;
-            this.textBoxLabel.TabStop = false;
-            // 
-            // labelLabel
-            // 
-            this.labelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelLabel.AutoSize = true;
-            this.labelLabel.Location = new System.Drawing.Point(258, 548);
-            this.labelLabel.Name = "labelLabel";
-            this.labelLabel.Size = new System.Drawing.Size(36, 13);
-            this.labelLabel.TabIndex = 5;
-            this.labelLabel.Text = "Label:";
-            // 
             // labelHelp
             // 
             this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1316,32 +1157,18 @@ namespace AutoScreenCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 593);
+            this.ClientSize = new System.Drawing.Size(1001, 655);
             this.Controls.Add(this.labelHelp);
-            this.Controls.Add(this.labelLabel);
-            this.Controls.Add(this.textBoxLabel);
             this.Controls.Add(this.comboBoxFilterType);
             this.Controls.Add(this.buttonRefreshFilterValues);
             this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.comboBoxFilterValue);
-            this.Controls.Add(this.textBoxScreenshotTime);
-            this.Controls.Add(this.labelScreenshotTime);
-            this.Controls.Add(this.textBoxScreenshotDate);
-            this.Controls.Add(this.labelScreenshotDate);
-            this.Controls.Add(this.textBoxScreenshotHeight);
-            this.Controls.Add(this.labelScreenshotHeight);
-            this.Controls.Add(this.textBoxScreenshotWidth);
-            this.Controls.Add(this.labelScreenshotWidth);
-            this.Controls.Add(this.textBoxScreenshotFormat);
-            this.Controls.Add(this.labelScreenshotFormat);
-            this.Controls.Add(this.textBoxScreenshotTitle);
-            this.Controls.Add(this.labelScreenshotTitle);
             this.Controls.Add(this.tabControlModules);
             this.Controls.Add(this.tabControlViews);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.monthCalendar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(849, 497);
+            this.MinimumSize = new System.Drawing.Size(1017, 694);
             this.Name = "FormMain";
             this.Opacity = 0D;
             this.ShowInTaskbar = false;
@@ -1388,7 +1215,7 @@ namespace AutoScreenCapture
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStartScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStopScreenCapture;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshotPreview;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripScreenshot;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShowInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorInterface;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHideInterface;
@@ -1418,18 +1245,6 @@ namespace AutoScreenCapture
         private System.Windows.Forms.TabPage tabPageRegions;
         private System.Windows.Forms.TabPage tabPageScreens;
         private System.Windows.Forms.TabPage tabPageTags;
-        private System.Windows.Forms.Label labelScreenshotTitle;
-        private System.Windows.Forms.TextBox textBoxScreenshotTitle;
-        private System.Windows.Forms.Label labelScreenshotFormat;
-        private System.Windows.Forms.TextBox textBoxScreenshotFormat;
-        private System.Windows.Forms.Label labelScreenshotWidth;
-        private System.Windows.Forms.TextBox textBoxScreenshotWidth;
-        private System.Windows.Forms.Label labelScreenshotHeight;
-        private System.Windows.Forms.TextBox textBoxScreenshotHeight;
-        private System.Windows.Forms.Label labelScreenshotDate;
-        private System.Windows.Forms.TextBox textBoxScreenshotDate;
-        private System.Windows.Forms.Label labelScreenshotTime;
-        private System.Windows.Forms.TextBox textBoxScreenshotTime;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStartScreenCapture;
         private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonStopScreenCapture;
         private ComboBox comboBoxFilterValue;
@@ -1446,8 +1261,6 @@ namespace AutoScreenCapture
         private Button buttonSetPassphrase;
         private TextBox textBoxPassphrase;
         private ToolStripStatusLabel toolStripInfo;
-        private TextBox textBoxLabel;
-        private Label labelLabel;
         private TabPage tabPageSchedules;
         private ToolStripMenuItem toolStripMenuItemCaptureNowEdit;
         private ToolStripMenuItem toolStripMenuItemCaptureNowArchive;

@@ -31,6 +31,83 @@ namespace AutoScreenCapture
         {
             tabControlViews.Controls.Clear();
 
+            int dashboardBoxSize = 220;
+
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
+            {
+                Name = "flowLayoutPanel",
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                BackColor = Color.Black,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink
+            };
+
+            int i = 1;
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                GroupBox groupBox = new GroupBox
+                {
+                    Tag = screen,
+                    Text = screen.Name,
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    Location = new Point(0, 0),
+                    Size = new Size(dashboardBoxSize, dashboardBoxSize),
+                };
+
+                PictureBox pictureBox = new PictureBox
+                {
+                    Name = "pictureBox" + i,
+                    BackColor = Color.Black,
+                    BorderStyle = BorderStyle.Fixed3D,
+                    Dock = DockStyle.Fill,
+                    SizeMode = PictureBoxSizeMode.StretchImage
+                };
+
+                groupBox.Controls.Add(pictureBox);
+                flowLayoutPanel.Controls.Add(groupBox);
+
+                i++;
+            }
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                GroupBox groupBox = new GroupBox
+                {
+                    Tag = region,
+                    Text = region.Name,
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    Location = new Point(0, 0),
+                    Size = new Size(dashboardBoxSize, dashboardBoxSize),
+                };
+
+                PictureBox pictureBox = new PictureBox
+                {
+                    Name = "pictureBox" + i,
+                    BackColor = Color.Black,
+                    BorderStyle = BorderStyle.Fixed3D,
+                    Dock = DockStyle.Fill,
+                    SizeMode = PictureBoxSizeMode.StretchImage
+                };
+
+                groupBox.Controls.Add(pictureBox);
+                flowLayoutPanel.Controls.Add(groupBox);
+
+                i++;
+            }
+
+            TabPage tabPageDashboard = new TabPage
+            {
+                Name = "tabPageDashboard",
+                Text = "Dashboard"
+            };
+
+            tabPageDashboard.Controls.Add(flowLayoutPanel);
+
+            tabControlViews.Controls.Add(tabPageDashboard);
+
             foreach (Screen screen in _formScreen.ScreenCollection)
             {
                 ToolStrip toolStripScreen = new ToolStrip
@@ -48,7 +125,7 @@ namespace AutoScreenCapture
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    ContextMenuStrip = contextMenuStripScreenshotPreview,
+                    ContextMenuStrip = contextMenuStripScreenshot,
                     Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
                 };
 
@@ -85,7 +162,7 @@ namespace AutoScreenCapture
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    ContextMenuStrip = contextMenuStripScreenshotPreview,
+                    ContextMenuStrip = contextMenuStripScreenshot,
                     Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
                 };
 
@@ -110,6 +187,16 @@ namespace AutoScreenCapture
 
         private ToolStrip BuildViewTabPageToolStripItems(ToolStrip toolStrip, string name)
         {
+            ToolStripButton toolStripButtonProperties = new ToolStripButton
+            {
+                Text = "Properties",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.about
+            };
+
+            toolStripButtonProperties.Click += new EventHandler(screenshotProperties_Click);
+
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
             {
                 Text = "Edit",
@@ -301,6 +388,7 @@ namespace AutoScreenCapture
 
             toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
 
+            toolStrip.Items.Add(toolStripButtonProperties);
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripButtonFileTransfer);

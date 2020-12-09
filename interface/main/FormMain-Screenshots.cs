@@ -58,6 +58,19 @@ namespace AutoScreenCapture
             ShowScreenshots();
         }
 
+        private void screenshotProperties_Click(object sender, EventArgs e)
+        {
+            if (!_formScreenshotProperties.Visible)
+            {
+                _formScreenshotProperties.Show();
+            }
+            else
+            {
+                _formScreenshotProperties.Focus();
+                _formScreenshotProperties.BringToFront();
+            }
+        }
+
         /// <summary>
         /// Emails screenshots using the EmailSever and EmailMessage settings in user settings.
         /// </summary>
@@ -244,14 +257,66 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
-            textBoxLabel.Text = string.Empty;
-            textBoxScreenshotTitle.Text = string.Empty;
-            textBoxScreenshotFormat.Text = string.Empty;
-            textBoxScreenshotWidth.Text = string.Empty;
-            textBoxScreenshotHeight.Text = string.Empty;
-            textBoxScreenshotDate.Text = string.Empty;
-            textBoxScreenshotTime.Text = string.Empty;
+            _formScreenshotProperties.textBoxLabel.Text = string.Empty;
+            _formScreenshotProperties.textBoxScreenshotTitle.Text = string.Empty;
+            _formScreenshotProperties.textBoxScreenshotFormat.Text = string.Empty;
+            _formScreenshotProperties.textBoxScreenshotWidth.Text = string.Empty;
+            _formScreenshotProperties.textBoxScreenshotHeight.Text = string.Empty;
+            _formScreenshotProperties.textBoxScreenshotDate.Text = string.Empty;
+            _formScreenshotProperties.textBoxScreenshotTime.Text = string.Empty;
 
+            // Dashboard
+            if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
+            {
+                FlowLayoutPanel flowLayoutPanel = (FlowLayoutPanel)tabControlViews.SelectedTab.Controls["flowLayoutPanel"];
+
+                int i = 1;
+
+                foreach (GroupBox groupBox in flowLayoutPanel.Controls)
+                {
+                    Screenshot selectedScreenshot = new Screenshot();
+
+                    if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
+                    {
+                        Slideshow.SelectedSlide = (Slide)listBoxScreenshots.Items[Slideshow.Index];
+
+                        PictureBox pictureBox = (PictureBox)groupBox.Controls["pictureBox" + i];
+
+                        if (groupBox.Tag.GetType() == typeof(Screen))
+                        {
+                            Screen screen = (Screen)groupBox.Tag;
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                        }
+
+                        if (groupBox.Tag.GetType() == typeof(Region))
+                        {
+                            Region region = (Region)groupBox.Tag;
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                        }
+
+                        // *** Auto Screen Capture - Region Select / Auto Save ***
+                        if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                        {
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+                        }
+
+                        if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                        {
+                            pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                        }
+                        else
+                        {
+                            pictureBox.Image = null;
+                        }
+                    }
+
+                    i++;
+                }
+
+                return;
+            }
+
+            // Screens and Regions
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null)
             {
                 TabPage selectedTabPage = tabControlViews.SelectedTab;
@@ -313,15 +378,15 @@ namespace AutoScreenCapture
 
                     if (pictureBox.Image != null)
                     {
-                        textBoxLabel.Text = selectedScreenshot.Label;
-                        textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
-                        textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+                        _formScreenshotProperties.textBoxLabel.Text = selectedScreenshot.Label;
+                        _formScreenshotProperties.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
+                        _formScreenshotProperties.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
-                        textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                        textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
+                        _formScreenshotProperties.textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                        _formScreenshotProperties.textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
 
-                        textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                        textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                        _formScreenshotProperties.textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                        _formScreenshotProperties.textBoxScreenshotTime.Text = selectedScreenshot.Time;
                     }
                 }
                 else
@@ -403,7 +468,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void BuildScreenshotPreviewContextualMenu()
         {
-            contextMenuStripScreenshotPreview.Items.Clear();
+            contextMenuStripScreenshot.Items.Clear();
 
             ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
             showScreenshotLocationToolStripItem.Click +=
@@ -412,9 +477,9 @@ namespace AutoScreenCapture
             ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
             addNewEditorToolStripItem.Click += new EventHandler(addEditor_Click);
 
-            contextMenuStripScreenshotPreview.Items.Add(showScreenshotLocationToolStripItem);
-            contextMenuStripScreenshotPreview.Items.Add(new ToolStripSeparator());
-            contextMenuStripScreenshotPreview.Items.Add(addNewEditorToolStripItem);
+            contextMenuStripScreenshot.Items.Add(showScreenshotLocationToolStripItem);
+            contextMenuStripScreenshot.Items.Add(new ToolStripSeparator());
+            contextMenuStripScreenshot.Items.Add(addNewEditorToolStripItem);
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {
@@ -423,7 +488,7 @@ namespace AutoScreenCapture
                     // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
                     // Add the Editor to the screenshot preview contextual menu.
 
-                    contextMenuStripScreenshotPreview.Items.Add(editor.Name,
+                    contextMenuStripScreenshot.Items.Add(editor.Name,
                         Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
                     // ****************************************************************************
                 }
