@@ -459,6 +459,11 @@ namespace AutoScreenCapture
                 _formEmailSettings.Focus();
                 _formEmailSettings.BringToFront();
             }
+
+            if (_formEmailSettings.DialogResult == DialogResult.OK)
+            {
+                BuildViewTabPages();
+            }
         }
 
         /// <summary>
@@ -476,6 +481,11 @@ namespace AutoScreenCapture
             {
                 _formFileTransferSettings.Focus();
                 _formFileTransferSettings.BringToFront();
+            }
+
+            if (_formFileTransferSettings.DialogResult == DialogResult.OK)
+            {
+                BuildViewTabPages();
             }
         }
 
