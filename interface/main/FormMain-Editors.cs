@@ -149,6 +149,9 @@ namespace AutoScreenCapture
             {
                 Screenshot selectedScreenshot = null;
 
+                // *** Auto Screen Capture - Region Select / Auto Save ***
+                //selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, Guid.Empty);
+
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen)tabControlViews.SelectedTab.Tag;
@@ -159,12 +162,6 @@ namespace AutoScreenCapture
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
                     selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, region.ViewId);
-                }
-
-                // *** Auto Screen Capture - Region Select / Auto Save ***
-                if (selectedScreenshot != null && selectedScreenshot.ViewId.Equals(Guid.Empty))
-                {
-                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, Guid.Empty);
                 }
 
                 if (selectedScreenshot != null)

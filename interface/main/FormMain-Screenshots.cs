@@ -128,6 +128,9 @@ namespace AutoScreenCapture
 
             if (selectedSlide != null && listBoxScreenshots.SelectedIndex > -1)
             {
+                // *** Auto Screen Capture - Region Select / Auto Save ***
+                //screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
+
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     var screen = (Screen)tabControlViews.SelectedTab.Tag;
@@ -282,6 +285,9 @@ namespace AutoScreenCapture
 
                         PictureBox pictureBox = (PictureBox)groupBox.Controls["pictureBox" + i];
 
+                        // *** Auto Screen Capture - Region Select / Auto Save ***
+                        //selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+
                         if (groupBox.Tag.GetType() == typeof(Screen))
                         {
                             Screen screen = (Screen)groupBox.Tag;
@@ -292,12 +298,6 @@ namespace AutoScreenCapture
                         {
                             Region region = (Region)groupBox.Tag;
                             selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
-                        }
-
-                        // *** Auto Screen Capture - Region Select / Auto Save ***
-                        if (selectedScreenshot.ViewId.Equals(Guid.Empty))
-                        {
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
                         }
 
                         if (!string.IsNullOrEmpty(selectedScreenshot.Path))
@@ -333,6 +333,9 @@ namespace AutoScreenCapture
                 {
                     Slideshow.SelectedSlide = (Slide)listBoxScreenshots.Items[Slideshow.Index];
 
+                    // *** Auto Screen Capture - Region Select / Auto Save ***
+                    //selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+
                     if (selectedTabPage.Tag.GetType() == typeof(Screen))
                     {
                         Screen screen = (Screen)selectedTabPage.Tag;
@@ -343,12 +346,6 @@ namespace AutoScreenCapture
                     {
                         Region region = (Region)selectedTabPage.Tag;
                         selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
-                    }
-
-                    // *** Auto Screen Capture - Region Select / Auto Save ***
-                    if (selectedScreenshot.ViewId.Equals(Guid.Empty))
-                    {
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
                     }
                 }
 
@@ -515,25 +512,25 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
 
-                string host = Settings.User.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
+                string host = Settings.SMTP.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
 
                 Log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.User.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int port);
+                int.TryParse(Settings.SMTP.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int port);
 
                 Log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(Settings.User.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
+                bool.TryParse(Settings.SMTP.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
 
                 Log.WriteDebugMessage("SSL = " + ssl);
 
                 Log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = Settings.User.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
+                string username = Settings.SMTP.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
 
                 Log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.User.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = Settings.SMTP.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -544,27 +541,27 @@ namespace AutoScreenCapture
                     Log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
                 }
 
-                string from = Settings.User.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
+                string from = Settings.SMTP.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
 
                 Log.WriteDebugMessage("From = " + from);
 
-                string to = Settings.User.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
+                string to = Settings.SMTP.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
 
                 Log.WriteDebugMessage("To = " + to);
 
-                string cc = Settings.User.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
+                string cc = Settings.SMTP.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
 
                 Log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = Settings.User.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
+                string bcc = Settings.SMTP.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
 
                 Log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = Settings.User.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
+                string subject = Settings.SMTP.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
 
                 Log.WriteDebugMessage("Subject = " + subject);
 
-                string body = Settings.User.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
+                string body = Settings.SMTP.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
 
                 Log.WriteDebugMessage("Body = " + body);
 
@@ -715,19 +712,19 @@ namespace AutoScreenCapture
 
                 Log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.Path + "\" to file server");
 
-                string host = Settings.User.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
+                string host = Settings.SFTP.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
 
                 Log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.User.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
+                int.TryParse(Settings.SFTP.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
 
                 Log.WriteDebugMessage("Port = " + port);
 
-                string username = Settings.User.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
+                string username = Settings.SFTP.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
 
                 Log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.User.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
+                string password = Settings.SFTP.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
