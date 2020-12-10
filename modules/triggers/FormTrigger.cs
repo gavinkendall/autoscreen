@@ -121,7 +121,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Text = "Add New Trigger";
+                Text = "Add Trigger";
 
                 textBoxTriggerName.Text = "Trigger " + (TriggerCollection.Count + 1);
                 checkBoxActive.Checked = true;
@@ -158,11 +158,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewTrigger();
+                AddTrigger();
             }
         }
 
-        private void AddNewTrigger()
+        private void AddTrigger()
         {
             if (InputValid())
             {

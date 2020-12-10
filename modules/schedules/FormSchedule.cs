@@ -108,7 +108,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Text = "Add New Schedule";
+                Text = "Add Schedule";
 
                 textBoxName.Text = "Schedule " + (ScheduleCollection.Count + 1);
                 checkBoxActive.Checked = true;
@@ -168,11 +168,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewSchedule();
+                AddSchedule();
             }
         }
 
-        private void AddNewSchedule()
+        private void AddSchedule()
         {
             if (InputValid())
             {

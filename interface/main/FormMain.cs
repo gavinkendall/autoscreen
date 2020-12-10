@@ -391,13 +391,20 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the interface.
+        /// Shows or hides the interface depending on if the interface is already visible or not.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemShowInterface_Click(object sender, EventArgs e)
+        private void toolStripMenuItemShowHideInterface_Click(object sender, EventArgs e)
         {
-            ShowInterface();
+            if (Visible)
+            {
+                HideInterface();
+            }
+            else
+            {
+                ShowInterface();
+            }
         }
 
         /// <summary>

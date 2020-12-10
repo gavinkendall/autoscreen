@@ -474,12 +474,12 @@ namespace AutoScreenCapture
             showScreenshotLocationToolStripItem.Click +=
                 new EventHandler(showScreenshotLocation_Click);
 
-            ToolStripMenuItem addNewEditorToolStripItem = new ToolStripMenuItem("Add New Editor ...");
-            addNewEditorToolStripItem.Click += new EventHandler(addEditor_Click);
+            ToolStripMenuItem addEditorToolStripItem = new ToolStripMenuItem("Add Editor");
+            addEditorToolStripItem.Click += new EventHandler(addEditor_Click);
 
             contextMenuStripScreenshot.Items.Add(showScreenshotLocationToolStripItem);
             contextMenuStripScreenshot.Items.Add(new ToolStripSeparator());
-            contextMenuStripScreenshot.Items.Add(addNewEditorToolStripItem);
+            contextMenuStripScreenshot.Items.Add(addEditorToolStripItem);
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {

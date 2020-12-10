@@ -109,7 +109,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Text = "Add New Screen";
+                Text = "Add Screen";
 
                 textBoxScreenName.Text = "Screen " + (ScreenCollection.Count + 1);
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
@@ -148,11 +148,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewScreen();
+                AddScreen();
             }
         }
 
-        private void AddNewScreen()
+        private void AddScreen()
         {
             if (InputValid())
             {

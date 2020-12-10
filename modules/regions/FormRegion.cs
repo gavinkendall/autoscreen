@@ -125,7 +125,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Text = "Add New Region";
+                Text = "Add Region";
 
                 textBoxRegionName.Text = "Region " + (RegionCollection.Count + 1);
                 textBoxFolder.Text = FileSystem.ScreenshotsFolder;
@@ -163,11 +163,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewRegion();
+                AddRegion();
             }
         }
 
-        private void AddNewRegion()
+        private void AddRegion()
         {
             if (InputValid())
             {

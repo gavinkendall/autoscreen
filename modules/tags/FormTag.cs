@@ -99,7 +99,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Text = "Add New Tag";
+                Text = "Add Tag";
 
                 Tag tag = new Tag();
 
@@ -151,11 +151,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewTag();
+                AddTag();
             }
         }
 
-        private void AddNewTag()
+        private void AddTag()
         {
             if (InputValid())
             {

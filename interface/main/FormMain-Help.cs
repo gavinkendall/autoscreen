@@ -38,7 +38,7 @@ namespace AutoScreenCapture
             helpTips.Add("The Setup module is used to specify the frequency at which screenshots will be taken and what label to apply to each screenshot");
             helpTips.Add("The Screenshots module displays the list of screenshots taken on the day selected from the calendar");
             helpTips.Add("The Regions module displays a list of regions. Add, remove, or change regions from the Regions module");
-            helpTips.Add("Use the Configure drop-down menu to add, remove, or change a Screen or Region. You can add multiple regions each with its own set of properties");
+            helpTips.Add("Use the Configure drop-down menu to add, remove, or change a Screen or Region. You can add multiple regions each with its own set of attributes");
             helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");
             helpTips.Add("Use the Macro field of a Screen or Region to define the filename pattern for each file. A macro can be very useful for keeping files organized");
             helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Tags module");

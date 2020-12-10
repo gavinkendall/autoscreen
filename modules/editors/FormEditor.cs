@@ -89,7 +89,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                Text = "Add New Editor";
+                Text = "Add Editor";
                 Icon = (Icon)(resources.GetObject("$this.Icon"));
 
                 textBoxName.Text = "Editor " + (EditorCollection.Count + 1);
@@ -123,11 +123,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewEditor();
+                AddEditor();
             }
         }
 
-        private void AddNewEditor()
+        private void AddEditor()
         {
             if (InputValid())
             {

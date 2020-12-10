@@ -30,7 +30,7 @@ namespace AutoScreenCapture
     {
         // A generic method for building a module.
         private void BuildModule<T>(IEnumerable<T> list, TabPage tabPage,
-            EventHandler eventHandlerForAddNew, EventHandler eventHandlerForRemoveSelected, EventHandler eventhandlerForChange)
+            EventHandler eventHandlerForAdd, EventHandler eventHandlerForRemoveSelected, EventHandler eventhandlerForChange)
         {
             int xPos = 5;
             int yPos = 3;
@@ -52,7 +52,7 @@ namespace AutoScreenCapture
             tabPage.Controls.Clear();
 
             // The button for adding a new object (this could be a Screen, Region, Editor, Trigger, or Tag).
-            Button buttonAddNew = new Button
+            Button buttonAdd = new Button
             {
                 Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
                 Location = new Point(xPos, yPos),
@@ -63,8 +63,8 @@ namespace AutoScreenCapture
                 ImageAlign = ContentAlignment.MiddleCenter,
                 TabStop = false
             };
-            buttonAddNew.Click += eventHandlerForAddNew;
-            tabPage.Controls.Add(buttonAddNew);
+            buttonAdd.Click += eventHandlerForAdd;
+            tabPage.Controls.Add(buttonAdd);
 
             // Render the button for removing multiple selected objects.
             Button buttonRemoveSelected = new Button

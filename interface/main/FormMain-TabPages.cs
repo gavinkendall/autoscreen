@@ -33,13 +33,43 @@ namespace AutoScreenCapture
 
             int dashboardBoxSize = 220;
 
+            ToolStrip toolStripDashboard = new ToolStrip
+            {
+                Name = "toolStripDasboard",
+                GripStyle = ToolStripGripStyle.Hidden
+            };
+
+            ToolStripButton toolStripButtonAddScreen = new ToolStripButton
+            {
+                Text = "Add Screen",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.addnew_screen
+            };
+
+            toolStripButtonAddScreen.Click += new EventHandler(addScreen_Click);
+
+            ToolStripButton toolStripButtonAddRegion = new ToolStripButton
+            {
+                Text = "Add Region",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.addnew_region
+            };
+
+            toolStripButtonAddRegion.Click += new EventHandler(addRegion_Click);
+
+            toolStripDashboard.Items.Add(toolStripButtonAddScreen);
+            toolStripDashboard.Items.Add(toolStripButtonAddRegion);
+
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
             {
                 Name = "flowLayoutPanel",
-                Dock = DockStyle.Fill,
                 AutoScroll = true,
                 BackColor = Color.Black,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink
+                Location = new Point(4, 29),
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
             };
 
             int i = 1;
@@ -62,8 +92,11 @@ namespace AutoScreenCapture
                     BackColor = Color.Black,
                     BorderStyle = BorderStyle.Fixed3D,
                     Dock = DockStyle.Fill,
-                    SizeMode = PictureBoxSizeMode.StretchImage
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Tag = i
                 };
+
+                pictureBox.DoubleClick += new EventHandler(dashboardPictureBox_DoubleClick);
 
                 groupBox.Controls.Add(pictureBox);
                 flowLayoutPanel.Controls.Add(groupBox);
@@ -89,8 +122,11 @@ namespace AutoScreenCapture
                     BackColor = Color.Black,
                     BorderStyle = BorderStyle.Fixed3D,
                     Dock = DockStyle.Fill,
-                    SizeMode = PictureBoxSizeMode.StretchImage
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Tag = i
                 };
+
+                pictureBox.DoubleClick += new EventHandler(dashboardPictureBox_DoubleClick);
 
                 groupBox.Controls.Add(pictureBox);
                 flowLayoutPanel.Controls.Add(groupBox);
@@ -104,6 +140,7 @@ namespace AutoScreenCapture
                 Text = "Dashboard"
             };
 
+            tabPageDashboard.Controls.Add(toolStripDashboard);
             tabPageDashboard.Controls.Add(flowLayoutPanel);
 
             tabControlViews.Controls.Add(tabPageDashboard);
@@ -126,7 +163,7 @@ namespace AutoScreenCapture
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     ContextMenuStrip = contextMenuStripScreenshot,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
                 };
 
                 TabPage tabPageScreen = new TabPage
@@ -163,7 +200,7 @@ namespace AutoScreenCapture
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     ContextMenuStrip = contextMenuStripScreenshot,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
                 };
 
                 TabPage tabPageRegion = new TabPage
@@ -187,16 +224,6 @@ namespace AutoScreenCapture
 
         private ToolStrip BuildViewTabPageToolStripItems(ToolStrip toolStrip, string name)
         {
-            ToolStripButton toolStripButtonProperties = new ToolStripButton
-            {
-                Text = "Properties",
-                Alignment = ToolStripItemAlignment.Left,
-                AutoToolTip = false,
-                Image = Resources.about
-            };
-
-            toolStripButtonProperties.Click += new EventHandler(screenshotProperties_Click);
-
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
             {
                 Text = "Edit",
@@ -204,6 +231,16 @@ namespace AutoScreenCapture
                 AutoToolTip = false,
                 Image = Resources.edit
             };
+
+            toolStripSplitButtonEdit.DropDown.Items.Add("Add Editor", null, addEditor_Click);
+
+            foreach (Editor editor in _formEditor.EditorCollection)
+            {
+                if (editor != null && FileSystem.FileExists(editor.Application))
+                {
+                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
+                }
+            }
 
             ToolStripButton toolStripButtonEmail = new ToolStripButton
             {
@@ -267,15 +304,15 @@ namespace AutoScreenCapture
                 toolStripButtonFileTransfer.Enabled = true;
             }
 
-            toolStripSplitButtonEdit.DropDown.Items.Add("Add New Editor ...", null, addEditor_Click);
-
-            foreach (Editor editor in _formEditor.EditorCollection)
+            ToolStripButton toolStripButtonProperties = new ToolStripButton
             {
-                if (editor != null && FileSystem.FileExists(editor.Application))
-                {
-                    toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
-                }
-            }
+                Text = "Properties",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.properties
+            };
+
+            toolStripButtonProperties.Click += new EventHandler(screenshotProperties_Click);
 
             ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
             {
@@ -285,19 +322,19 @@ namespace AutoScreenCapture
                 Image = Resources.configure
             };
 
-            ToolStripMenuItem toolStripMenuItemAddNew = new ToolStripMenuItem
+            ToolStripMenuItem toolStripMenuItemAdd = new ToolStripMenuItem
             {
-                Text = "Add New"
+                Text = "Add"
             };
 
-            toolStripMenuItemAddNew.DropDown.Items.Add("Screen", null, addScreen_Click);
-            toolStripMenuItemAddNew.DropDown.Items.Add("Region", null, addRegion_Click);
-            toolStripMenuItemAddNew.DropDown.Items.Add("Editor", null, addEditor_Click);
-            toolStripMenuItemAddNew.DropDown.Items.Add("Schedule", null, addSchedule_Click);
-            toolStripMenuItemAddNew.DropDown.Items.Add("Tag", null, addTag_Click);
-            toolStripMenuItemAddNew.DropDown.Items.Add("Trigger", null, addTrigger_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Screen", null, addScreen_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Region", null, addRegion_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Editor", null, addEditor_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Schedule", null, addSchedule_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Tag", null, addTag_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Trigger", null, addTrigger_Click);
 
-            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAddNew);
+            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
@@ -388,10 +425,10 @@ namespace AutoScreenCapture
 
             toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
 
-            toolStrip.Items.Add(toolStripButtonProperties);
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripButtonFileTransfer);
+            toolStrip.Items.Add(toolStripButtonProperties);
             toolStrip.Items.Add(toolStripSplitButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
             toolStrip.Items.Add(toolstripButtonOpenFolder);
@@ -400,6 +437,13 @@ namespace AutoScreenCapture
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
 
             return toolStrip;
+        }
+
+        private void dashboardPictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            PictureBox selectedPictureBox = (PictureBox)sender;
+
+            tabControlViews.SelectedIndex = (int)selectedPictureBox.Tag;
         }
     }
 }
