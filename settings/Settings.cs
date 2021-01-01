@@ -176,6 +176,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.2")); // Can now run an Editor without arguments or without %filepath% tag when using Run Editor trigger action. Includes changes to version collection, change to how Application Focus behaves when application not found (so now adds the application to the process list regardless), and bug fix applied to threads.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.3")); // An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.4")); // A bug fix for saving of file when adding screenshot to collection.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.5")); // Application Focus now has Delay Before and Delay After options.
 
             Application = new SettingCollection
             {
@@ -400,6 +401,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
+                User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
 
                 User.Save();
             }

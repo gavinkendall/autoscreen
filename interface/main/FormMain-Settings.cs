@@ -194,9 +194,46 @@ namespace AutoScreenCapture
 
                 checkBoxScreenshotLabel.Checked = Convert.ToBoolean(Settings.User.GetByKey("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel).Value);
 
-                // The user can compare the current Active Window Title text to compare against what the text they've defined.
+                // Active Window Title
                 checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
                 textBoxActiveWindowTitle.Text = Settings.User.GetByKey("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
+
+                if (checkBoxActiveWindowTitle.Checked)
+                {
+                    textBoxActiveWindowTitle.Enabled = true;
+                    radioButtonCaseSensitiveMatch.Enabled = true;
+                    radioButtonCaseInsensitiveMatch.Enabled = true;
+                    radioButtonRegularExpressionMatch.Enabled = true;
+                }
+                else
+                {
+                    textBoxActiveWindowTitle.Enabled = false;
+                    radioButtonCaseSensitiveMatch.Enabled = false;
+                    radioButtonCaseInsensitiveMatch.Enabled = false;
+                    radioButtonRegularExpressionMatch.Enabled = false;
+                }
+
+                radioButtonCaseSensitiveMatch.Checked = false;
+                radioButtonCaseInsensitiveMatch.Checked = false;
+                radioButtonRegularExpressionMatch.Checked = false;
+
+                int activeWindowTitleMatchType = Convert.ToInt32(Settings.User.GetByKey("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType).Value);
+
+                switch (activeWindowTitleMatchType)
+                {
+                    case 1:
+                        radioButtonCaseSensitiveMatch.Checked = true;
+                        break;
+
+                    case 2:
+                        radioButtonCaseInsensitiveMatch.Checked = true;
+                        break;
+
+                    case 3:
+                        radioButtonRegularExpressionMatch.Checked = true;
+                        break;
+                }
+
 
                 // Application Focus
                 RefreshApplicationFocusList();
@@ -235,9 +272,22 @@ namespace AutoScreenCapture
                 Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value = comboBoxScreenshotLabel.Text.Trim();
                 Settings.User.GetByKey("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel).Value = checkBoxScreenshotLabel.Checked;
 
-                // Active Window Title text comparison check.
+                // Active Window Title
                 Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
                 Settings.User.GetByKey("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
+
+                if (radioButtonCaseSensitiveMatch.Checked)
+                {
+                    Settings.User.GetByKey("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType).Value = 1;
+                }
+                else if (radioButtonCaseInsensitiveMatch.Checked)
+                {
+                    Settings.User.GetByKey("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType).Value = 2;
+                }
+                else if (radioButtonRegularExpressionMatch.Checked)
+                {
+                    Settings.User.GetByKey("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType).Value = 3;
+                }
 
                 // Application Focus
                 Settings.User.GetByKey("ApplicationFocus", DefaultSettings.ApplicationFocus).Value = comboBoxProcessList.Text;

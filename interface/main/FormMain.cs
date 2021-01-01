@@ -438,10 +438,16 @@ namespace AutoScreenCapture
             if (checkBoxActiveWindowTitle.Checked)
             {
                 textBoxActiveWindowTitle.Enabled = true;
+                radioButtonCaseSensitiveMatch.Enabled = true;
+                radioButtonCaseInsensitiveMatch.Enabled = true;
+                radioButtonRegularExpressionMatch.Enabled = true;
             }
             else
             {
                 textBoxActiveWindowTitle.Enabled = false;
+                radioButtonCaseSensitiveMatch.Enabled = false;
+                radioButtonCaseInsensitiveMatch.Enabled = false;
+                radioButtonRegularExpressionMatch.Enabled = false;
             }
         }
 
