@@ -72,6 +72,7 @@ namespace AutoScreenCapture
         internal static readonly string AutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
         internal static readonly int ApplicationFocusDelayBefore = 0;
         internal static readonly int ApplicationFocusDelayAfter = 0;
+        internal static readonly int ActiveWindowTitleMatchType = 2;
 
         // Keyboard Shortcuts.
         internal static readonly bool UseKeyboardShortcuts = false;

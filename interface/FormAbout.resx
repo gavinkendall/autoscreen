@@ -323,6 +323,7 @@ END OF TERMS AND CONDITIONS</value>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
 2.3.4.0    SFTP support.
+2.3.3.6    Active Window Title text comparison includes type of match to use during text comparison.
 2.3.3.5    Application Focus now has Delay Before and Delay After options.
 2.3.3.4    A bug fix for saving of file when adding screenshot to collection.
 2.3.3.3    An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.

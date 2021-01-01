@@ -92,6 +92,9 @@ namespace AutoScreenCapture
             this.textBoxAutoSaveMacro = new System.Windows.Forms.TextBox();
             this.textBoxAutoSaveFolder = new System.Windows.Forms.TextBox();
             this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
+            this.radioButtonRegularExpressionMatch = new System.Windows.Forms.RadioButton();
+            this.radioButtonCaseSensitiveMatch = new System.Windows.Forms.RadioButton();
+            this.radioButtonCaseInsensitiveMatch = new System.Windows.Forms.RadioButton();
             this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
             this.checkBoxActiveWindowTitle = new System.Windows.Forms.CheckBox();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
@@ -579,7 +582,7 @@ namespace AutoScreenCapture
             this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusTest);
             this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusRefresh);
             this.groupBoxApplicationFocus.Controls.Add(this.comboBoxProcessList);
-            this.groupBoxApplicationFocus.Location = new System.Drawing.Point(6, 256);
+            this.groupBoxApplicationFocus.Location = new System.Drawing.Point(6, 323);
             this.groupBoxApplicationFocus.Name = "groupBoxApplicationFocus";
             this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 128);
             this.groupBoxApplicationFocus.TabIndex = 0;
@@ -598,7 +601,6 @@ namespace AutoScreenCapture
             this.numericUpDownApplicationFocusDelayAfter.Size = new System.Drawing.Size(51, 20);
             this.numericUpDownApplicationFocusDelayAfter.TabIndex = 3;
             this.numericUpDownApplicationFocusDelayAfter.TabStop = false;
-            this.numericUpDownApplicationFocusDelayAfter.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // numericUpDownApplicationFocusDelayBefore
             // 
@@ -612,7 +614,6 @@ namespace AutoScreenCapture
             this.numericUpDownApplicationFocusDelayBefore.Size = new System.Drawing.Size(51, 20);
             this.numericUpDownApplicationFocusDelayBefore.TabIndex = 0;
             this.numericUpDownApplicationFocusDelayBefore.TabStop = false;
-            this.numericUpDownApplicationFocusDelayBefore.Leave += new System.EventHandler(this.SaveSettings);
             // 
             // labelApplicationFocusDelayAfter
             // 
@@ -671,7 +672,7 @@ namespace AutoScreenCapture
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveFolder);
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveMacro);
             this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveFolder);
-            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 390);
+            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 457);
             this.groupBoxRegionSelectAutoSave.Name = "groupBoxRegionSelectAutoSave";
             this.groupBoxRegionSelectAutoSave.Size = new System.Drawing.Size(205, 78);
             this.groupBoxRegionSelectAutoSave.TabIndex = 0;
@@ -726,14 +727,47 @@ namespace AutoScreenCapture
             // 
             // groupBoxActiveWindowTitle
             // 
+            this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonRegularExpressionMatch);
+            this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonCaseSensitiveMatch);
+            this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonCaseInsensitiveMatch);
             this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
             this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitle);
             this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 178);
             this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
-            this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 72);
+            this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 139);
             this.groupBoxActiveWindowTitle.TabIndex = 0;
             this.groupBoxActiveWindowTitle.TabStop = false;
             this.groupBoxActiveWindowTitle.Text = "Active Window Title";
+            // 
+            // radioButtonRegularExpressionMatch
+            // 
+            this.radioButtonRegularExpressionMatch.AutoSize = true;
+            this.radioButtonRegularExpressionMatch.Location = new System.Drawing.Point(6, 114);
+            this.radioButtonRegularExpressionMatch.Name = "radioButtonRegularExpressionMatch";
+            this.radioButtonRegularExpressionMatch.Size = new System.Drawing.Size(149, 17);
+            this.radioButtonRegularExpressionMatch.TabIndex = 0;
+            this.radioButtonRegularExpressionMatch.Text = "Regular Expression Match";
+            this.radioButtonRegularExpressionMatch.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCaseSensitiveMatch
+            // 
+            this.radioButtonCaseSensitiveMatch.AutoSize = true;
+            this.radioButtonCaseSensitiveMatch.Location = new System.Drawing.Point(6, 68);
+            this.radioButtonCaseSensitiveMatch.Name = "radioButtonCaseSensitiveMatch";
+            this.radioButtonCaseSensitiveMatch.Size = new System.Drawing.Size(128, 17);
+            this.radioButtonCaseSensitiveMatch.TabIndex = 0;
+            this.radioButtonCaseSensitiveMatch.Text = "Case Sensitive Match";
+            this.radioButtonCaseSensitiveMatch.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCaseInsensitiveMatch
+            // 
+            this.radioButtonCaseInsensitiveMatch.AutoSize = true;
+            this.radioButtonCaseInsensitiveMatch.Location = new System.Drawing.Point(6, 91);
+            this.radioButtonCaseInsensitiveMatch.Name = "radioButtonCaseInsensitiveMatch";
+            this.radioButtonCaseInsensitiveMatch.Size = new System.Drawing.Size(135, 17);
+            this.radioButtonCaseInsensitiveMatch.TabIndex = 0;
+            this.radioButtonCaseInsensitiveMatch.Text = "Case Insensitive Match";
+            this.radioButtonCaseInsensitiveMatch.UseVisualStyleBackColor = true;
             // 
             // textBoxActiveWindowTitle
             // 
@@ -755,13 +789,14 @@ namespace AutoScreenCapture
             this.checkBoxActiveWindowTitle.TabStop = false;
             this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
             this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
             // 
             // groupBoxSecurity
             // 
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 474);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 541);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -1310,5 +1345,8 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemAddTrigger;
         private ToolStripMenuItem toolStripMenuItemRegionSelect;
         private ToolStripMenuItem toolStripMenuItemSettings;
+        private RadioButton radioButtonRegularExpressionMatch;
+        private RadioButton radioButtonCaseSensitiveMatch;
+        private RadioButton radioButtonCaseInsensitiveMatch;
     }
 }

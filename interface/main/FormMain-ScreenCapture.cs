@@ -21,6 +21,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace AutoScreenCapture
 {
@@ -66,7 +67,15 @@ namespace AutoScreenCapture
 
                 groupBoxActiveWindowTitle.Enabled = true;
                 checkBoxActiveWindowTitle.Enabled = true;
-                textBoxActiveWindowTitle.Enabled = true;
+
+                groupBoxApplicationFocus.Enabled = true;
+                comboBoxProcessList.Enabled = true;
+                labelApplicationFocusDelayBefore.Enabled = true;
+                labelApplicationFocusDelayAfter.Enabled = true;
+                numericUpDownApplicationFocusDelayBefore.Enabled = true;
+                numericUpDownApplicationFocusDelayAfter.Enabled = true;
+                buttonApplicationFocusTest.Enabled = true;
+                buttonApplicationFocusRefresh.Enabled = true;
             }
             else
             {
@@ -99,7 +108,15 @@ namespace AutoScreenCapture
 
             groupBoxActiveWindowTitle.Enabled = false;
             checkBoxActiveWindowTitle.Enabled = false;
-            textBoxActiveWindowTitle.Enabled = false;
+
+            groupBoxApplicationFocus.Enabled = false;
+            comboBoxProcessList.Enabled = false;
+            labelApplicationFocusDelayBefore.Enabled = false;
+            labelApplicationFocusDelayAfter.Enabled = false;
+            numericUpDownApplicationFocusDelayBefore.Enabled = false;
+            numericUpDownApplicationFocusDelayAfter.Enabled = false;
+            buttonApplicationFocusTest.Enabled = false;
+            buttonApplicationFocusRefresh.Enabled = false;
         }
 
         /// <summary>
@@ -178,15 +195,10 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
-                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
+                // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
+                if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
                 {
-                    // Do not continue if the active window title needs to be checked and the active window title
-                    // does not contain the text defined in "Active Window Title Capture Text".
-                    if (checkBoxActiveWindowTitle.Checked && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text) &&
-                        !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower()))
-                    {
-                        return;
-                    }
+                    return;
                 }
 
                 RunRegionCaptures();
@@ -628,6 +640,36 @@ namespace AutoScreenCapture
             else
             {
                 StopScreenCapture();
+            }
+        }
+
+        private bool ActiveWindowTitleMatchesText()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text))
+                {
+                    if (radioButtonCaseSensitiveMatch.Checked)
+                    {
+                        return _screenCapture.ActiveWindowTitle.Contains(textBoxActiveWindowTitle.Text);
+                    }
+                    else if (radioButtonCaseInsensitiveMatch.Checked)
+                    {
+                        return _screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower());
+                    }
+                    else if (radioButtonRegularExpressionMatch.Checked)
+                    {
+                        return Regex.IsMatch(_screenCapture.ActiveWindowTitle, textBoxActiveWindowTitle.Text);
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("FormMain-ScreenCapture::ActiveWindowTitleMatchesText", ex);
+
+                return false;
             }
         }
     }

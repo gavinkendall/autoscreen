@@ -499,6 +499,24 @@ namespace AutoScreenCapture
             }
         }
 
+        private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxActiveWindowTitle.Checked)
+            {
+                textBoxActiveWindowTitle.Enabled = true;
+                radioButtonCaseSensitiveMatch.Enabled = true;
+                radioButtonCaseInsensitiveMatch.Enabled = true;
+                radioButtonRegularExpressionMatch.Enabled = true;
+            }
+            else
+            {
+                textBoxActiveWindowTitle.Enabled = false;
+                radioButtonCaseSensitiveMatch.Enabled = false;
+                radioButtonCaseInsensitiveMatch.Enabled = false;
+                radioButtonRegularExpressionMatch.Enabled = false;
+            }
+        }
+
         private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
         {
             SaveSettings();
