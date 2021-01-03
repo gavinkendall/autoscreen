@@ -513,7 +513,7 @@
             // 
             // buttonRegionSelect
             // 
-            this.buttonRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region_select;
+            this.buttonRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region;
             this.buttonRegionSelect.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonRegionSelect.Location = new System.Drawing.Point(12, 69);
             this.buttonRegionSelect.Name = "buttonRegionSelect";

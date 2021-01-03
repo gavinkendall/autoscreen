@@ -41,9 +41,10 @@ namespace AutoScreenCapture
 
             ToolStripButton toolStripButtonAddScreen = new ToolStripButton
             {
-                Text = "Add Screen",
+                Text = "Screen",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Adds a new Screen",
                 Image = Resources.screen
             };
 
@@ -51,9 +52,10 @@ namespace AutoScreenCapture
 
             ToolStripButton toolStripButtonAddRegion = new ToolStripButton
             {
-                Text = "Add Region",
+                Text = "Region",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Adds a new Region",
                 Image = Resources.region
             };
 
@@ -61,9 +63,10 @@ namespace AutoScreenCapture
 
             ToolStripButton toolStripButtonAddEditor = new ToolStripButton
             {
-                Text = "Add Editor",
+                Text = "Editor",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Adds a new Editor",
                 Image = Resources.edit
             };
 
@@ -71,9 +74,10 @@ namespace AutoScreenCapture
 
             ToolStripButton toolStripButtonAddSchedule = new ToolStripButton
             {
-                Text = "Add Schedule",
+                Text = "Schedule",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Adds a new Schedule",
                 Image = Resources.schedule
             };
 
@@ -81,19 +85,54 @@ namespace AutoScreenCapture
 
             ToolStripButton toolStripButtonAddMacroTag = new ToolStripButton
             {
-                Text = "Add Macro Tag",
+                Text = "Macro Tag",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Adds a new Macro Tag",
                 Image = Resources.brick
             };
 
             toolStripButtonAddMacroTag.Click += new EventHandler(addMacroTag_Click);
+
+            ToolStripButton toolStripButtonAddTrigger = new ToolStripButton
+            {
+                Text = "Trigger",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                ToolTipText = "Adds a new Trigger",
+                Image = Resources.trigger
+            };
+
+            toolStripButtonAddTrigger.Click += new EventHandler(addTrigger_Click);
+
+            ToolStripButton toolStripButtonEmailSettings = new ToolStripButton
+            {
+                Text = "Email Settings",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.email
+            };
+
+            toolStripButtonEmailSettings.Click += new EventHandler(toolStripMenuItemEmailSettings_Click);
+
+            ToolStripButton toolStripButtonFileTransferSettings = new ToolStripButton
+            {
+                Text = "File Transfer Settings",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.file_transfer
+            };
+
+            toolStripButtonFileTransferSettings.Click += new EventHandler(toolStripMenuItemFileTransferSettings_Click);
 
             toolStripDashboard.Items.Add(toolStripButtonAddScreen);
             toolStripDashboard.Items.Add(toolStripButtonAddRegion);
             toolStripDashboard.Items.Add(toolStripButtonAddEditor);
             toolStripDashboard.Items.Add(toolStripButtonAddSchedule);
             toolStripDashboard.Items.Add(toolStripButtonAddMacroTag);
+            toolStripDashboard.Items.Add(toolStripButtonAddTrigger);
+            toolStripDashboard.Items.Add(toolStripButtonEmailSettings);
+            toolStripDashboard.Items.Add(toolStripButtonFileTransferSettings);
 
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
             {
@@ -257,11 +296,95 @@ namespace AutoScreenCapture
 
         private ToolStrip BuildViewTabPageToolStripItems(ToolStrip toolStrip, string name)
         {
+            ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
+            {
+                Text = "Configure",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                ToolTipText = "Change this component and other settings",
+                Image = Resources.configure
+            };
+
+            ToolStripMenuItem toolStripMenuItemAdd = new ToolStripMenuItem
+            {
+                Text = "Add"
+            };
+
+            toolStripMenuItemAdd.DropDown.Items.Add("Screen", Resources.screen, addScreen_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Region", Resources.region, addRegion_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Editor", Resources.edit, addEditor_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Schedule", Resources.schedule, addSchedule_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Macro Tag", Resources.brick, addMacroTag_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Trigger", Resources.trigger, addTrigger_Click);
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
+
+            if (toolStrip.Tag is Screen)
+            {
+                ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
+                {
+                    Text = "Change Screen",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemChangeScreen.Click += new EventHandler(changeScreen_Click);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemChangeScreen);
+
+                ToolStripMenuItem toolStripMenuItemRemoveScreen = new ToolStripMenuItem
+                {
+                    Text = "Remove Screen",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemRemoveScreen.Click += new EventHandler(removeScreen_Click);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveScreen);
+            }
+
+            if (toolStrip.Tag is Region)
+            {
+                ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
+                {
+                    Text = "Change Region",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemRegion.Click += new EventHandler(changeRegion_Click);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRegion);
+
+                ToolStripMenuItem toolStripMenuItemRemoveRegion = new ToolStripMenuItem
+                {
+                    Text = "Remove Region",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemRemoveRegion.Click += new EventHandler(removeRegion_Click);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
+            }
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
+
+            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+            {
+                toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, toolStripMenuItemEmailSettings_Click);
+            }
+
+            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+            {
+                toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, toolStripMenuItemFileTransferSettings_Click);
+            }
+
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
             {
                 Text = "Edit",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Edit the screenshot with an application or script",
                 Image = Resources.edit
             };
 
@@ -337,97 +460,16 @@ namespace AutoScreenCapture
                 toolStripButtonFileTransfer.Enabled = true;
             }
 
-            ToolStripButton toolStripButtonProperties = new ToolStripButton
+            ToolStripButton toolStripButtonScreenshotProperties = new ToolStripButton
             {
-                Text = "Properties",
+                Text = "Screenshot Properties",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Show screenshot properties (such as width and height)",
                 Image = Resources.properties
             };
 
-            toolStripButtonProperties.Click += new EventHandler(screenshotProperties_Click);
-
-            ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
-            {
-                Text = "Configure",
-                Alignment = ToolStripItemAlignment.Right,
-                AutoToolTip = false,
-                Image = Resources.configure
-            };
-
-            ToolStripMenuItem toolStripMenuItemAdd = new ToolStripMenuItem
-            {
-                Text = "Add"
-            };
-
-            toolStripMenuItemAdd.DropDown.Items.Add("Screen", null, addScreen_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Region", null, addRegion_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Editor", null, addEditor_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Schedule", null, addSchedule_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Macro Tag", null, addMacroTag_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Trigger", null, addTrigger_Click);
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
-
-            if (toolStrip.Tag is Screen)
-            {
-                ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
-                {
-                    Text = "Change Screen",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemChangeScreen.Click += new EventHandler(changeScreen_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemChangeScreen);
-
-                ToolStripMenuItem toolStripMenuItemRemoveScreen = new ToolStripMenuItem
-                {
-                    Text = "Remove Screen",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemRemoveScreen.Click += new EventHandler(removeScreen_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveScreen);
-            }
-
-            if (toolStrip.Tag is Region)
-            {
-                ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
-                {
-                    Text = "Change Region",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemRegion.Click += new EventHandler(changeRegion_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRegion);
-
-                ToolStripMenuItem toolStripMenuItemRemoveRegion = new ToolStripMenuItem
-                {
-                    Text = "Remove Region",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemRemoveRegion.Click += new EventHandler(removeRegion_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
-            }
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
-
-            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
-            {
-                toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, toolStripMenuItemEmailSettings_Click);
-            }
-
-            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
-            {
-                toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, toolStripMenuItemFileTransferSettings_Click);
-            }
+            toolStripButtonScreenshotProperties.Click += new EventHandler(screenshotProperties_Click);
 
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
@@ -452,22 +494,21 @@ namespace AutoScreenCapture
                 Image = Resources.openfolder,
                 Alignment = ToolStripItemAlignment.Right,
                 AutoToolTip = false,
-                ToolTipText = "Show Screenshot Location",
+                ToolTipText = "Show screenshot location",
                 DisplayStyle = ToolStripItemDisplayStyle.Image
             };
 
             toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
 
+            toolStrip.Items.Add(toolStripSplitButtonConfigure);
+            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Left });
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripButtonFileTransfer);
-            toolStrip.Items.Add(toolStripButtonProperties);
-            toolStrip.Items.Add(toolStripSplitButtonConfigure);
-            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
+            toolStrip.Items.Add(toolStripButtonScreenshotProperties);
             toolStrip.Items.Add(toolstripButtonOpenFolder);
             toolStrip.Items.Add(toolstripTextBoxFilename);
             toolStrip.Items.Add(toolStripLabelFilename);
-            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
 
             return toolStrip;
         }

@@ -294,7 +294,7 @@ namespace AutoScreenCapture
             {
                 Log.WriteDebugMessage("Showing interface");
 
-                if (ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
+                if (!Visible && ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
                     Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     _formEnterPassphrase.ShowDialog(this);
