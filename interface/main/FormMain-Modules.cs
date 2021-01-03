@@ -142,7 +142,7 @@ namespace AutoScreenCapture
                     // so we change the color of the label background depending on the value of "Active".
                     if (t.Equals(typeof(Screen)) ||
                         t.Equals(typeof(Region)) ||
-                        t.Equals(typeof(Tag)) ||
+                        t.Equals(typeof(MacroTag)) ||
                         t.Equals(typeof(Schedule)) ||
                         t.Equals(typeof(Trigger)))
                     {
@@ -257,9 +257,9 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (label.Tag.GetType() == typeof(Tag))
+            if (label.Tag.GetType() == typeof(MacroTag))
             {
-                Tag tag = (Tag)label.Tag;
+                MacroTag tag = (MacroTag)label.Tag;
 
                 if (tag.Active)
                 {
@@ -272,7 +272,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formTag.TagCollection.SaveToXmlFile())
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile())
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -310,9 +310,9 @@ namespace AutoScreenCapture
             BuildModule(_formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
         }
 
-        private void BuildTagsModule()
+        private void BuildMacroTagsModule()
         {
-            BuildModule(_formTag.TagCollection, tabPageTags, addTag_Click, removeSelectedTags_Click, changeTag_Click);
+            BuildModule(_formMacroTag.MacroTagCollection, tabPageMacroTags, addMacroTag_Click, removeSelectedMacroTags_Click, changeMacroTag_Click);
         }
 
         private void BuildEditorsModule()

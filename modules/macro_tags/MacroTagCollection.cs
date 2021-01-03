@@ -27,7 +27,7 @@ namespace AutoScreenCapture
     /// <summary>
     /// A collection class to store and manage Tag objects.
     /// </summary>
-    public class TagCollection : CollectionTemplate<Tag>
+    public class MacroTagCollection : CollectionTemplate<MacroTag>
     {
         private const string XML_FILE_INDENT_CHARS = "   ";
         private const string XML_FILE_TAG_NODE = "tag";
@@ -80,7 +80,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor for the tag collection.
         /// </summary>
-        public TagCollection()
+        public MacroTagCollection()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("/");
@@ -97,7 +97,7 @@ namespace AutoScreenCapture
         /// Adds a tag to the tag collection.
         /// </summary>
         /// <param name="tag">The tag to add to the tag collection.</param>
-        public override void Add(Tag tag)
+        public override void Add(MacroTag tag)
         {
             if (string.IsNullOrEmpty(tag.Name)) return;
 
@@ -135,7 +135,7 @@ namespace AutoScreenCapture
 
                     foreach (XmlNode xTag in xTags)
                     {
-                        Tag tag = new Tag();
+                        MacroTag tag = new MacroTag();
                         XmlNodeReader xReader = new XmlNodeReader(xTag);
 
                         while (xReader.Read())
@@ -198,7 +198,7 @@ namespace AutoScreenCapture
                                             }
                                         }
 
-                                        tag.Type = (TagType)Enum.Parse(typeof(TagType), value);
+                                        tag.Type = (MacroTagType)Enum.Parse(typeof(MacroTagType), value);
                                         break;
 
                                     case TAG_DATETIME_FORMAT_VALUE:
@@ -311,43 +311,43 @@ namespace AutoScreenCapture
                                 // "Description" is a new property for Tag that was introduced in 2.3.0.0
                                 switch (tag.Type)
                                 {
-                                    case TagType.ActiveWindowTitle:
+                                    case MacroTagType.ActiveWindowTitle:
                                         tag.Description = "The title of the active window";
                                         break;
 
-                                    case TagType.DateTimeFormat:
+                                    case MacroTagType.DateTimeFormat:
                                         tag.Description = "A value representing either a date, a time, or a combination of the date and time (" + tag.Name + ")";
                                         break;
 
-                                    case TagType.ImageFormat:
+                                    case MacroTagType.ImageFormat:
                                         tag.Description = "The image format of the screenshot (such as jpeg or png)";
                                         break;
 
-                                    case TagType.ScreenCaptureCycleCount:
+                                    case MacroTagType.ScreenCaptureCycleCount:
                                         tag.Description = "The number of capture cycles during a screen capture session";
                                         break;
 
-                                    case TagType.ScreenName:
+                                    case MacroTagType.ScreenName:
                                         tag.Description = "The name of the screen or region";
                                         break;
 
-                                    case TagType.ScreenNumber:
+                                    case MacroTagType.ScreenNumber:
                                         tag.Description = "The screen number. For example, the first display is screen number 1";
                                         break;
 
-                                    case TagType.User:
+                                    case MacroTagType.User:
                                         tag.Description = "The name of the user (" + tag.Name + ")";
                                         break;
 
-                                    case TagType.Machine:
+                                    case MacroTagType.Machine:
                                         tag.Description = "The name of the computer (" + tag.Name + ")";
                                         break;
 
-                                    case TagType.TimeRange:
+                                    case MacroTagType.TimeRange:
                                         tag.Description = "The macro to use for a specific time range";
                                         break;
 
-                                    case TagType.DateTimeFormatExpression:
+                                    case MacroTagType.DateTimeFormatExpression:
                                         tag.Description = "An expression which represents a time that is either ahead or behind the current time (" + tag.Name + ")";
                                         break;
                                 }
@@ -391,30 +391,30 @@ namespace AutoScreenCapture
                     Log.WriteDebugMessage("WARNING: Unable to load tags");
 
                     // Setup a few "built in" tags by default.
-                    Add(new Tag("name", "The name of the screen or region", TagType.ScreenName, active: true));
-                    Add(new Tag("screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", TagType.ScreenNumber, active: true));
-                    Add(new Tag("format", "The image format such as jpeg or png", TagType.ImageFormat, active: true));
-                    Add(new Tag("date", "The current date (%date%)", TagType.DateTimeFormat, MacroParser.DateFormat, active: true));
-                    Add(new Tag("time", "The current time (%time%)", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
-                    Add(new Tag("year", "The current year (%year%)", TagType.DateTimeFormat, MacroParser.YearFormat, active: true));
-                    Add(new Tag("month", "The current month (%month%)", TagType.DateTimeFormat, MacroParser.MonthFormat, active: true));
-                    Add(new Tag("day", "The current day (%day%)", TagType.DateTimeFormat, MacroParser.DayFormat, active: true));
-                    Add(new Tag("hour", "The current hour (%hour%)", TagType.DateTimeFormat, MacroParser.HourFormat, active: true));
-                    Add(new Tag("minute", "The current minute (%minute%)", TagType.DateTimeFormat, MacroParser.MinuteFormat, active: true));
-                    Add(new Tag("second", "The current second (%second%)", TagType.DateTimeFormat, MacroParser.SecondFormat, active: true));
-                    Add(new Tag("millisecond", "The current millisecond (%millisecond%)", TagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
-                    Add(new Tag("lastyear", "The previous year (%lastyear%)", TagType.DateTimeFormatExpression, "{year-1}", active: true));
-                    Add(new Tag("lastmonth", "The previous month (%lastmonth%)", TagType.DateTimeFormatExpression, "{month-1}", active: true));
-                    Add(new Tag("yesterday", "The previous day (%yesterday%)", TagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
-                    Add(new Tag("tomorrow", "The next day (%tomorrow%)", TagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
-                    Add(new Tag("6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", TagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new Tag("6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", TagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new Tag("count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", TagType.ScreenCaptureCycleCount, active: true));
-                    Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
-                    Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
-                    Add(new Tag("title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
-                    Add(new Tag("timerange", "The macro to use during a specific time range. At the moment it is %timerange%", TagType.TimeRange, active: true));
-                    Add(new Tag("quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", TagType.QuarterYear, active: true));
+                    Add(new MacroTag("name", "The name of the screen or region", MacroTagType.ScreenName, active: true));
+                    Add(new MacroTag("screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", MacroTagType.ScreenNumber, active: true));
+                    Add(new MacroTag("format", "The image format such as jpeg or png", MacroTagType.ImageFormat, active: true));
+                    Add(new MacroTag("date", "The current date (%date%)", MacroTagType.DateTimeFormat, MacroParser.DateFormat, active: true));
+                    Add(new MacroTag("time", "The current time (%time%)", MacroTagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
+                    Add(new MacroTag("year", "The current year (%year%)", MacroTagType.DateTimeFormat, MacroParser.YearFormat, active: true));
+                    Add(new MacroTag("month", "The current month (%month%)", MacroTagType.DateTimeFormat, MacroParser.MonthFormat, active: true));
+                    Add(new MacroTag("day", "The current day (%day%)", MacroTagType.DateTimeFormat, MacroParser.DayFormat, active: true));
+                    Add(new MacroTag("hour", "The current hour (%hour%)", MacroTagType.DateTimeFormat, MacroParser.HourFormat, active: true));
+                    Add(new MacroTag("minute", "The current minute (%minute%)", MacroTagType.DateTimeFormat, MacroParser.MinuteFormat, active: true));
+                    Add(new MacroTag("second", "The current second (%second%)", MacroTagType.DateTimeFormat, MacroParser.SecondFormat, active: true));
+                    Add(new MacroTag("millisecond", "The current millisecond (%millisecond%)", MacroTagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
+                    Add(new MacroTag("lastyear", "The previous year (%lastyear%)", MacroTagType.DateTimeFormatExpression, "{year-1}", active: true));
+                    Add(new MacroTag("lastmonth", "The previous month (%lastmonth%)", MacroTagType.DateTimeFormatExpression, "{month-1}", active: true));
+                    Add(new MacroTag("yesterday", "The previous day (%yesterday%)", MacroTagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
+                    Add(new MacroTag("tomorrow", "The next day (%tomorrow%)", MacroTagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
+                    Add(new MacroTag("6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", MacroTagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new MacroTag("6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", MacroTagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new MacroTag("count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", MacroTagType.ScreenCaptureCycleCount, active: true));
+                    Add(new MacroTag("user", "The user using this computer (%user%)", MacroTagType.User, active: true));
+                    Add(new MacroTag("machine", "The name of the computer (%machine%)", MacroTagType.Machine, active: true));
+                    Add(new MacroTag("title", "The title of the active window", MacroTagType.ActiveWindowTitle, active: true));
+                    Add(new MacroTag("timerange", "The macro to use during a specific time range. At the moment it is %timerange%", MacroTagType.TimeRange, active: true));
+                    Add(new MacroTag("quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", MacroTagType.QuarterYear, active: true));
 
                     SaveToXmlFile();
                 }
@@ -467,7 +467,7 @@ namespace AutoScreenCapture
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_TAGS_NODE);
 
-                    foreach (Tag tag in base.Collection)
+                    foreach (MacroTag tag in base.Collection)
                     {
                         xWriter.WriteStartElement(XML_FILE_TAG_NODE);
 

@@ -333,7 +333,7 @@ namespace AutoScreenCapture
             if (string.IsNullOrEmpty(FileSystem.TagsFile))
             {
                 // Loading tags will automatically create the default tags and add them to the collection.
-                TagCollection tagCollection = new TagCollection();
+                MacroTagCollection tagCollection = new MacroTagCollection();
                 tagCollection.LoadXmlFileAndAddTags();
             }
 
@@ -362,9 +362,9 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            TagCollection tagCollection = new TagCollection();
-            tagCollection.Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
-            tagCollection.Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
+            MacroTagCollection tagCollection = new MacroTagCollection();
+            tagCollection.Add(new MacroTag("user", "The user using this computer (%user%)", MacroTagType.User, active: true));
+            tagCollection.Add(new MacroTag("machine", "The name of the computer (%machine%)", MacroTagType.Machine, active: true));
 
             path = MacroParser.ParseTags(config: true, path, tagCollection);
 

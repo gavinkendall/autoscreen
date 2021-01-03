@@ -50,7 +50,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// A collection of tags to be used for macro parsing.
         /// </summary>
-        public TagCollection TagCollection { get; set; }
+        public MacroTagCollection TagCollection { get; set; }
 
         /// <summary>
         /// Access to screen capture methods.

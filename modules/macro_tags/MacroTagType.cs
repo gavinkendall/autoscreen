@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TagType.cs" company="Gavin Kendall">
+// <copyright file="MacroTagType.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>An enum representing a tag type.</summary>
+// <summary>An enum representing a macro tag type.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// A class representing a type of macro tag being used.
+    /// A class representing the type of macro tag being used.
     /// </summary>
-    public enum TagType
+    public enum MacroTagType
     {
         /// <summary>
         /// A macro tag for getting the name of the screen.

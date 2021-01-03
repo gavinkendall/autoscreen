@@ -224,9 +224,9 @@
             this.labelStartScreenCapture.Enabled = false;
             this.labelStartScreenCapture.Location = new System.Drawing.Point(12, 43);
             this.labelStartScreenCapture.Name = "labelStartScreenCapture";
-            this.labelStartScreenCapture.Size = new System.Drawing.Size(106, 13);
+            this.labelStartScreenCapture.Size = new System.Drawing.Size(29, 13);
             this.labelStartScreenCapture.TabIndex = 1;
-            this.labelStartScreenCapture.Text = "Start Screen Capture";
+            this.labelStartScreenCapture.Text = "Start";
             // 
             // labelStopScreenCapture
             // 
@@ -234,9 +234,9 @@
             this.labelStopScreenCapture.Enabled = false;
             this.labelStopScreenCapture.Location = new System.Drawing.Point(12, 70);
             this.labelStopScreenCapture.Name = "labelStopScreenCapture";
-            this.labelStopScreenCapture.Size = new System.Drawing.Size(106, 13);
+            this.labelStopScreenCapture.Size = new System.Drawing.Size(29, 13);
             this.labelStopScreenCapture.TabIndex = 5;
-            this.labelStopScreenCapture.Text = "Stop Screen Capture";
+            this.labelStopScreenCapture.Text = "Stop";
             // 
             // labelCaptureNowArchive
             // 
@@ -264,9 +264,9 @@
             this.labelRegionSelectClipboard.Enabled = false;
             this.labelRegionSelectClipboard.Location = new System.Drawing.Point(12, 151);
             this.labelRegionSelectClipboard.Name = "labelRegionSelectClipboard";
-            this.labelRegionSelectClipboard.Size = new System.Drawing.Size(129, 13);
+            this.labelRegionSelectClipboard.Size = new System.Drawing.Size(133, 13);
             this.labelRegionSelectClipboard.TabIndex = 17;
-            this.labelRegionSelectClipboard.Text = "Region Select / Clipboard";
+            this.labelRegionSelectClipboard.Text = "Region Select -> Clipboard";
             // 
             // buttonOK
             // 
@@ -294,9 +294,9 @@
             this.labelRegionSelectAutoSave.Enabled = false;
             this.labelRegionSelectAutoSave.Location = new System.Drawing.Point(12, 178);
             this.labelRegionSelectAutoSave.Name = "labelRegionSelectAutoSave";
-            this.labelRegionSelectAutoSave.Size = new System.Drawing.Size(135, 13);
+            this.labelRegionSelectAutoSave.Size = new System.Drawing.Size(139, 13);
             this.labelRegionSelectAutoSave.TabIndex = 21;
-            this.labelRegionSelectAutoSave.Text = "Region Select / Auto Save";
+            this.labelRegionSelectAutoSave.Text = "Region Select -> Auto Save";
             // 
             // textBoxKeyboardShortcutRegionSelectAutoSaveKey
             // 
@@ -333,9 +333,9 @@
             this.labelRegionSelectEdit.Enabled = false;
             this.labelRegionSelectEdit.Location = new System.Drawing.Point(12, 205);
             this.labelRegionSelectEdit.Name = "labelRegionSelectEdit";
-            this.labelRegionSelectEdit.Size = new System.Drawing.Size(103, 13);
+            this.labelRegionSelectEdit.Size = new System.Drawing.Size(168, 13);
             this.labelRegionSelectEdit.TabIndex = 25;
-            this.labelRegionSelectEdit.Text = "Region Select / Edit";
+            this.labelRegionSelectEdit.Text = "Region Select -> Auto Save / Edit";
             // 
             // textBoxKeyboardShortcutRegionSelectEditKey
             // 

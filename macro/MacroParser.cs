@@ -177,7 +177,7 @@ namespace AutoScreenCapture
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tag">The macro tag to use during parsing.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        private static string ParseTag(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, Tag tag)
+        private static string ParseTag(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTag tag)
         {
             int count;
             DateTime dt;
@@ -203,44 +203,44 @@ namespace AutoScreenCapture
 
             switch (tag.Type)
             {
-                case TagType.ActiveWindowTitle:
+                case MacroTagType.ActiveWindowTitle:
                     macro = macro.Replace(tag.Name, activeWindowTitle);
                     break;
 
-                case TagType.DateTimeFormat:
+                case MacroTagType.DateTimeFormat:
                     macro = macro.Replace(tag.Name, dt.ToString(tag.DateTimeFormatValue));
                     break;
 
-                case TagType.ImageFormat:
+                case MacroTagType.ImageFormat:
                     macro = format != null && !string.IsNullOrEmpty(format.Name) ? macro.Replace(tag.Name, format.Name.ToLower()) : macro;
                     break;
 
-                case TagType.ScreenCaptureCycleCount:
+                case MacroTagType.ScreenCaptureCycleCount:
                     macro = macro.Replace(tag.Name, count.ToString());
                     break;
 
-                case TagType.ScreenName:
+                case MacroTagType.ScreenName:
                     macro = !string.IsNullOrEmpty(name) ? macro.Replace(tag.Name, name) : macro;
                     break;
 
-                case TagType.ScreenNumber:
+                case MacroTagType.ScreenNumber:
                     macro = macro.Replace(tag.Name, screenNumber.ToString());
                     break;
 
-                case TagType.User:
+                case MacroTagType.User:
                     macro = macro.Replace(tag.Name, Environment.UserName);
                     break;
 
-                case TagType.Machine:
+                case MacroTagType.Machine:
                     macro = macro.Replace(tag.Name, Environment.MachineName);
                     break;
 
-                case TagType.DateTimeFormatExpression:
+                case MacroTagType.DateTimeFormatExpression:
                     macro = macro.Replace(tag.Name,
                         MacroTagExpressionParser.ParseTagExpressionForDateTimeFormat(dt, tag.DateTimeFormatValue));
                     break;
 
-                case TagType.QuarterYear:
+                case MacroTagType.QuarterYear:
                     macro = macro.Replace(tag.Name, ((dt.Month - 1) / 3 + 1).ToString());
                     break;
             }
@@ -260,7 +260,7 @@ namespace AutoScreenCapture
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, TagCollection tagCollection)
+        public static string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTagCollection tagCollection)
         {
             if (!config)
             {
@@ -273,9 +273,9 @@ namespace AutoScreenCapture
                 }
             }
 
-            foreach (Tag tag in tagCollection)
+            foreach (MacroTag tag in tagCollection)
             {
-                if (tag.Type == TagType.TimeRange)
+                if (tag.Type == MacroTagType.TimeRange)
                 {
                     DateTime dt;
 
@@ -295,7 +295,7 @@ namespace AutoScreenCapture
 
                     // Temporarily make this tag a DateTimeFormat type because we're going to recursively call ParseTagsForFilePath
                     // for each macro tag in the macro 1, macro 2, macro 3, and macro 4 fields.
-                    tag.Type = TagType.DateTimeFormat;
+                    tag.Type = MacroTagType.DateTimeFormat;
 
                     // Recursively call the same method we're in to parse each TimeRange macro as if it was a date/time macro tag.
                     macro1Macro = ParseTags(preview, config, name, macro1Macro, screenNumber, format, activeWindowTitle, tagCollection);
@@ -304,7 +304,7 @@ namespace AutoScreenCapture
                     macro4Macro = ParseTags(preview, config, name, macro4Macro, screenNumber, format, activeWindowTitle, tagCollection);
 
                     // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeRange type.
-                    tag.Type = TagType.TimeRange;
+                    tag.Type = MacroTagType.TimeRange;
 
                     if (dt.TimeOfDay >= tag.TimeRangeMacro1Start.TimeOfDay &&
                         dt.TimeOfDay <= tag.TimeRangeMacro1End.TimeOfDay)
@@ -346,7 +346,7 @@ namespace AutoScreenCapture
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(bool config, string macro, TagCollection tagCollection)
+        public static string ParseTags(bool config, string macro, MacroTagCollection tagCollection)
         {
             return ParseTags(preview: true, config, string.Empty, macro, 0,
                 new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG), string.Empty, tagCollection);

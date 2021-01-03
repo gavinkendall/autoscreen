@@ -186,10 +186,10 @@
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
     </Compile>
     <Compile Include="keyboard\HotKeyMap.cs" />
-    <Compile Include="modules\tags\FormMacroTagsToolWindow.cs">
+    <Compile Include="modules\macro_tags\FormMacroTagsToolWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\tags\FormMacroTagsToolWindow.Designer.cs">
+    <Compile Include="modules\macro_tags\FormMacroTagsToolWindow.Designer.cs">
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="macro\MacroTagExpressionParser.cs" />
@@ -246,15 +246,15 @@
     <Compile Include="modules\screens\Screen.cs" />
     <Compile Include="modules\screens\ScreenCollection.cs" />
     <Compile Include="modules\slideshow\Slide.cs" />
-    <Compile Include="modules\tags\FormTag.cs">
+    <Compile Include="modules\macro_tags\FormMacroTag.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\tags\FormTag.Designer.cs">
-      <DependentUpon>FormTag.cs</DependentUpon>
+    <Compile Include="modules\macro_tags\FormMacroTag.Designer.cs">
+      <DependentUpon>FormMacroTag.cs</DependentUpon>
     </Compile>
-    <Compile Include="modules\tags\Tag.cs" />
-    <Compile Include="modules\tags\TagCollection.cs" />
-    <Compile Include="modules\tags\TagType.cs" />
+    <Compile Include="modules\macro_tags\MacroTag.cs" />
+    <Compile Include="modules\macro_tags\MacroTagCollection.cs" />
+    <Compile Include="modules\macro_tags\MacroTagType.cs" />
     <Compile Include="modules\triggers\FormTrigger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,6 +276,11 @@
     <Compile Include="macro\MacroParser.cs" />
     <Compile Include="modules\triggers\Trigger.cs" />
     <Compile Include="modules\triggers\TriggerCollection.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="security\Security.cs" />
     <Compile Include="settings\DefaultSettings.cs" />
     <Compile Include="settings\Setting.cs" />
@@ -306,7 +311,7 @@
     <EmbeddedResource Include="interface\FormScreenshotProperties.resx">
       <DependentUpon>FormScreenshotProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\tags\FormMacroTagsToolWindow.resx">
+    <EmbeddedResource Include="modules\macro_tags\FormMacroTagsToolWindow.resx">
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="modules\editors\FormEditor.resx">
@@ -329,22 +334,17 @@
     <EmbeddedResource Include="modules\screens\FormScreen.resx">
       <DependentUpon>FormScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\tags\FormTag.resx">
-      <DependentUpon>FormTag.cs</DependentUpon>
+    <EmbeddedResource Include="modules\macro_tags\FormMacroTag.resx">
+      <DependentUpon>FormMacroTag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="modules\triggers\FormTrigger.resx">
       <DependentUpon>FormTrigger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="app.config" />
     <None Include="app.manifest">
       <SubType>Designer</SubType>
@@ -364,14 +364,15 @@
     <Content Include="icons\png\autoscreen-warning.png" />
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />
-    <None Include="images\addnew_region.png" />
-    <None Include="images\addnew_screen.png" />
+    <None Include="images\region.png" />
+    <None Include="images\screen.png" />
     <Content Include="images\application_add.png" />
     <None Include="images\exit.png" />
     <None Include="images\file_transfer.png" />
     <None Include="images\properties.png" />
     <Content Include="images\region_select.png" />
     <None Include="images\save.png" />
+    <None Include="images\schedule.png" />
     <Content Include="images\warning.png" />
     <None Include="images\brick.png" />
     <Content Include="images\capture_archive.png" />

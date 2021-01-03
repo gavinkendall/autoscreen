@@ -26,29 +26,31 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// Shows the "Add Tag" window to enable the user to add a chosen Tag.
+        /// Shows the "Add Macro Tag" window to enable the user to add a chosen Macro Tag.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addTag_Click(object sender, EventArgs e)
+        private void addMacroTag_Click(object sender, EventArgs e)
         {
-            _formTag.TagObject = null;
+            ShowInterface();
 
-            if (!_formTag.Visible)
+            _formMacroTag.MacroTagObject = null;
+
+            if (!_formMacroTag.Visible)
             {
-                _formTag.ShowDialog(this);
+                _formMacroTag.ShowDialog(this);
             }
             else
             {
-                _formTag.Focus();
-                _formTag.BringToFront();
+                _formMacroTag.Focus();
+                _formMacroTag.BringToFront();
             }
 
-            if (_formTag.DialogResult == DialogResult.OK)
+            if (_formMacroTag.DialogResult == DialogResult.OK)
             {
-                BuildTagsModule();
+                BuildMacroTagsModule();
 
-                if (!_formTag.TagCollection.SaveToXmlFile())
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile())
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -56,15 +58,15 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Removes the selected Tags from the Tags tab page.
+        /// Removes the selected Macro Tags from the Macro Tags tab page.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void removeSelectedTags_Click(object sender, EventArgs e)
+        private void removeSelectedMacroTags_Click(object sender, EventArgs e)
         {
-            int countBeforeRemoval = _formTag.TagCollection.Count;
+            int countBeforeRemoval = _formMacroTag.MacroTagCollection.Count;
 
-            foreach (Control control in tabPageTags.Controls)
+            foreach (Control control in tabPageMacroTags.Controls)
             {
                 if (control.GetType().Equals(typeof(CheckBox)))
                 {
@@ -72,17 +74,17 @@ namespace AutoScreenCapture
 
                     if (checkBox.Checked)
                     {
-                        Tag trigger = _formTag.TagCollection.Get((Tag)checkBox.Tag);
-                        _formTag.TagCollection.Remove(trigger);
+                        MacroTag trigger = _formMacroTag.MacroTagCollection.Get((MacroTag)checkBox.Tag);
+                        _formMacroTag.MacroTagCollection.Remove(trigger);
                     }
                 }
             }
 
-            if (countBeforeRemoval > _formTag.TagCollection.Count)
+            if (countBeforeRemoval > _formMacroTag.MacroTagCollection.Count)
             {
-                BuildTagsModule();
+                BuildMacroTagsModule();
 
-                if (!_formTag.TagCollection.SaveToXmlFile())
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile())
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -90,25 +92,25 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Tag" window to enable the user to edit a chosen Tag.
+        /// Shows the "Change Macro Tag" window to enable the user to edit a chosen Macro Tag.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeTag_Click(object sender, EventArgs e)
+        private void changeMacroTag_Click(object sender, EventArgs e)
         {
             Button buttonSelected = (Button)sender;
 
             if (buttonSelected.Tag != null)
             {
-                _formTag.TagObject = (Tag)buttonSelected.Tag;
+                _formMacroTag.MacroTagObject = (MacroTag)buttonSelected.Tag;
 
-                _formTag.ShowDialog(this);
+                _formMacroTag.ShowDialog(this);
 
-                if (_formTag.DialogResult == DialogResult.OK)
+                if (_formMacroTag.DialogResult == DialogResult.OK)
                 {
-                    BuildTagsModule();
+                    BuildMacroTagsModule();
 
-                    if (!_formTag.TagCollection.SaveToXmlFile())
+                    if (!_formMacroTag.MacroTagCollection.SaveToXmlFile())
                     {
                         _screenCapture.ApplicationError = true;
                     }

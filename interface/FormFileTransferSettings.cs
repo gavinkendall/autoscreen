@@ -77,11 +77,17 @@ namespace AutoScreenCapture
                     return;
                 }
 
+                buttonTestConnection.Text = "Connecting ...";
+                buttonTestConnection.Enabled = false;
+
                 Gavin.Kendall.SFTP.SftpClient sftpClient = new Gavin.Kendall.SFTP.SftpClient(textBoxHost.Text, (int)numericUpDownPort.Value, textBoxUsername.Text, textBoxPassword.Text);
                 
                 if (!sftpClient.Connect())
                 {
                     MessageBox.Show("A connection could not be established with the file server.", "Connection Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    buttonTestConnection.Text = "Test Connection";
+                    buttonTestConnection.Enabled = true;
 
                     return;
                 }
@@ -92,10 +98,16 @@ namespace AutoScreenCapture
                 }
 
                 sftpClient.Disconnect();
+
+                buttonTestConnection.Text = "Test Connection";
+                buttonTestConnection.Enabled = true;
             }
             catch (Exception)
             {
                 MessageBox.Show("An error was encountered when attempting to establish a connection with the file server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                buttonTestConnection.Text = "Test Connection";
+                buttonTestConnection.Enabled = true;
             }
         }
     }

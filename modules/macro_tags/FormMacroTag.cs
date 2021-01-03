@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FormTag.cs" company="Gavin Kendall">
+// <copyright file="FormMacroTag.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -26,27 +26,27 @@ namespace AutoScreenCapture
     /// <summary>
     /// A form for managing a macro tag.
     /// </summary>
-    public partial class FormTag : Form
+    public partial class FormMacroTag : Form
     {
         /// <summary>
         /// A collection of macro tags.
         /// </summary>
-        public TagCollection TagCollection { get; } = new TagCollection();
+        public MacroTagCollection MacroTagCollection { get; } = new MacroTagCollection();
 
         /// <summary>
         /// The macro tag object we're handling.
         /// </summary>
-        public Tag TagObject { get; set; }
+        public MacroTag MacroTagObject { get; set; }
 
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormTag()
+        public FormMacroTag()
         {
             InitializeComponent();
         }
 
-        private void FormTag_Load(object sender, EventArgs e)
+        private void FormMacroTag_Load(object sender, EventArgs e)
         {
             textBoxName.Focus();
 
@@ -65,45 +65,45 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("Date/Time Format Expression");
             comboBoxType.Items.Add("Quarter Year");
 
-            if (TagObject != null)
+            if (MacroTagObject != null)
             {
-                Text = "Change Tag";
+                Text = "Change Macro Tag";
 
-                textBoxName.Text = TagObject.Name;
+                textBoxName.Text = MacroTagObject.Name;
 
-                textBoxDescription.Text = TagObject.Description;
+                textBoxDescription.Text = MacroTagObject.Description;
 
-                comboBoxType.SelectedIndex = (int)TagObject.Type;
-                textBoxDateTimeFormatValue.Text = TagObject.DateTimeFormatValue;
+                comboBoxType.SelectedIndex = (int)MacroTagObject.Type;
+                textBoxDateTimeFormatValue.Text = MacroTagObject.DateTimeFormatValue;
 
-                dateTimePickerMacro1Start.Value = TagObject.TimeRangeMacro1Start;
-                dateTimePickerMacro1End.Value = TagObject.TimeRangeMacro1End;
+                dateTimePickerMacro1Start.Value = MacroTagObject.TimeRangeMacro1Start;
+                dateTimePickerMacro1End.Value = MacroTagObject.TimeRangeMacro1End;
 
-                dateTimePickerMacro2Start.Value = TagObject.TimeRangeMacro2Start;
-                dateTimePickerMacro2End.Value = TagObject.TimeRangeMacro2End;
+                dateTimePickerMacro2Start.Value = MacroTagObject.TimeRangeMacro2Start;
+                dateTimePickerMacro2End.Value = MacroTagObject.TimeRangeMacro2End;
 
-                dateTimePickerMacro3Start.Value = TagObject.TimeRangeMacro3Start;
-                dateTimePickerMacro3End.Value = TagObject.TimeRangeMacro3End;
+                dateTimePickerMacro3Start.Value = MacroTagObject.TimeRangeMacro3Start;
+                dateTimePickerMacro3End.Value = MacroTagObject.TimeRangeMacro3End;
 
-                dateTimePickerMacro4Start.Value = TagObject.TimeRangeMacro4Start;
-                dateTimePickerMacro4End.Value = TagObject.TimeRangeMacro4End;
+                dateTimePickerMacro4Start.Value = MacroTagObject.TimeRangeMacro4Start;
+                dateTimePickerMacro4End.Value = MacroTagObject.TimeRangeMacro4End;
 
-                textBoxMacro1Macro.Text = TagObject.TimeRangeMacro1Macro;
-                textBoxMacro2Macro.Text = TagObject.TimeRangeMacro2Macro;
-                textBoxMacro3Macro.Text = TagObject.TimeRangeMacro3Macro;
-                textBoxMacro4Macro.Text = TagObject.TimeRangeMacro4Macro;
+                textBoxMacro1Macro.Text = MacroTagObject.TimeRangeMacro1Macro;
+                textBoxMacro2Macro.Text = MacroTagObject.TimeRangeMacro2Macro;
+                textBoxMacro3Macro.Text = MacroTagObject.TimeRangeMacro3Macro;
+                textBoxMacro4Macro.Text = MacroTagObject.TimeRangeMacro4Macro;
 
-                checkBoxActive.Checked = TagObject.Active;
+                checkBoxActive.Checked = MacroTagObject.Active;
 
-                textBoxNotes.Text = TagObject.Notes;
+                textBoxNotes.Text = MacroTagObject.Notes;
             }
             else
             {
-                Text = "Add Tag";
+                Text = "Add Macro Tag";
 
-                Tag tag = new Tag();
+                MacroTag tag = new MacroTag();
 
-                textBoxName.Text = "%tag" + (TagCollection.Count + 1) + "%";
+                textBoxName.Text = "%macrotag" + (MacroTagCollection.Count + 1) + "%";
 
                 textBoxDescription.Text = "Please provide a brief summary for the purpose of this macro tag";
 
@@ -145,27 +145,27 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (TagObject != null)
+            if (MacroTagObject != null)
             {
-                ChangeTag();
+                ChangeMacroTag();
             }
             else
             {
-                AddTag();
+                AddMacroTag();
             }
         }
 
-        private void AddTag()
+        private void AddMacroTag()
         {
             if (InputValid())
             {
                 TrimInput();
 
-                if (TagCollection.GetByName(textBoxName.Text) == null)
+                if (MacroTagCollection.GetByName(textBoxName.Text) == null)
                 {
-                    TagCollection.Add(new Tag(textBoxName.Text,
+                    MacroTagCollection.Add(new MacroTag(textBoxName.Text,
                         textBoxDescription.Text,
-                        (TagType)comboBoxType.SelectedIndex,
+                        (MacroTagType)comboBoxType.SelectedIndex,
                         textBoxDateTimeFormatValue.Text,
                         dateTimePickerMacro1Start.Value,
                         dateTimePickerMacro1End.Value,
@@ -187,7 +187,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    MessageBox.Show("A tag with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("A macro tag with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
@@ -196,7 +196,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void ChangeTag()
+        private void ChangeMacroTag()
         {
             if (InputValid())
             {
@@ -204,30 +204,30 @@ namespace AutoScreenCapture
                 {
                     TrimInput();
 
-                    if (TagCollection.GetByName(textBoxName.Text) != null && NameChanged())
+                    if (MacroTagCollection.GetByName(textBoxName.Text) != null && NameChanged())
                     {
-                        MessageBox.Show("A tag with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("A macro tag with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
                     {
-                        TagCollection.Get(TagObject).Name = textBoxName.Text;
-                        TagCollection.Get(TagObject).Description = textBoxDescription.Text;
-                        TagCollection.Get(TagObject).Type = (TagType)comboBoxType.SelectedIndex;
-                        TagCollection.Get(TagObject).DateTimeFormatValue = textBoxDateTimeFormatValue.Text;
-                        TagCollection.Get(TagObject).TimeRangeMacro1Start = dateTimePickerMacro1Start.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro1End = dateTimePickerMacro1End.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro1Macro = textBoxMacro1Macro.Text;
-                        TagCollection.Get(TagObject).TimeRangeMacro2Start = dateTimePickerMacro2Start.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro2End = dateTimePickerMacro2End.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro2Macro = textBoxMacro2Macro.Text;
-                        TagCollection.Get(TagObject).TimeRangeMacro3Start = dateTimePickerMacro3Start.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro3End = dateTimePickerMacro3End.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro3Macro = textBoxMacro3Macro.Text;
-                        TagCollection.Get(TagObject).TimeRangeMacro4Start = dateTimePickerMacro4Start.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro4End = dateTimePickerMacro4End.Value;
-                        TagCollection.Get(TagObject).TimeRangeMacro4Macro = textBoxMacro4Macro.Text;
-                        TagCollection.Get(TagObject).Active = checkBoxActive.Checked;
-                        TagCollection.Get(TagObject).Notes = textBoxNotes.Text;
+                        MacroTagCollection.Get(MacroTagObject).Name = textBoxName.Text;
+                        MacroTagCollection.Get(MacroTagObject).Description = textBoxDescription.Text;
+                        MacroTagCollection.Get(MacroTagObject).Type = (MacroTagType)comboBoxType.SelectedIndex;
+                        MacroTagCollection.Get(MacroTagObject).DateTimeFormatValue = textBoxDateTimeFormatValue.Text;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro1Start = dateTimePickerMacro1Start.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro1End = dateTimePickerMacro1End.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro1Macro = textBoxMacro1Macro.Text;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro2Start = dateTimePickerMacro2Start.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro2End = dateTimePickerMacro2End.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro2Macro = textBoxMacro2Macro.Text;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro3Start = dateTimePickerMacro3Start.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro3End = dateTimePickerMacro3End.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro3Macro = textBoxMacro3Macro.Text;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4Start = dateTimePickerMacro4Start.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4End = dateTimePickerMacro4End.Value;
+                        MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4Macro = textBoxMacro4Macro.Text;
+                        MacroTagCollection.Get(MacroTagObject).Active = checkBoxActive.Checked;
+                        MacroTagCollection.Get(MacroTagObject).Notes = textBoxNotes.Text;
 
                         Okay();
                     }
@@ -289,36 +289,36 @@ namespace AutoScreenCapture
         {
             bool changed = false;
 
-            if (TagObject != null)
+            if (MacroTagObject != null)
             {
-                if (!TagObject.Description.Equals(textBoxDescription.Text) ||
-                    !TagObject.Notes.Equals(textBoxNotes.Text) ||
-                    TagObject.Active != checkBoxActive.Checked ||
-                    (int)TagObject.Type != comboBoxType.SelectedIndex)
+                if (!MacroTagObject.Description.Equals(textBoxDescription.Text) ||
+                    !MacroTagObject.Notes.Equals(textBoxNotes.Text) ||
+                    MacroTagObject.Active != checkBoxActive.Checked ||
+                    (int)MacroTagObject.Type != comboBoxType.SelectedIndex)
                 {
                     changed = true;
                 }
 
                 if (textBoxDateTimeFormatValue.Enabled &&
                     !string.IsNullOrEmpty(textBoxDateTimeFormatValue.Text) &&
-                    !TagObject.DateTimeFormatValue.Equals(textBoxDateTimeFormatValue.Text))
+                    !MacroTagObject.DateTimeFormatValue.Equals(textBoxDateTimeFormatValue.Text))
                 {
                     changed = true;
                 }
 
                 if (groupBoxTimeRange.Enabled &&
-                    !TagObject.TimeRangeMacro1Start.Equals(dateTimePickerMacro1Start.Value) ||
-                    !TagObject.TimeRangeMacro1End.Equals(dateTimePickerMacro1End.Value) ||
-                    !TagObject.TimeRangeMacro1Macro.Equals(textBoxMacro1Macro.Text) ||
-                    !TagObject.TimeRangeMacro2Start.Equals(dateTimePickerMacro2Start.Value) ||
-                    !TagObject.TimeRangeMacro2End.Equals(dateTimePickerMacro2End.Value) ||
-                    !TagObject.TimeRangeMacro2Macro.Equals(textBoxMacro2Macro.Text) ||
-                    !TagObject.TimeRangeMacro3Start.Equals(dateTimePickerMacro3Start.Value) ||
-                    !TagObject.TimeRangeMacro3End.Equals(dateTimePickerMacro3End.Value) ||
-                    !TagObject.TimeRangeMacro3Macro.Equals(textBoxMacro3Macro.Text) ||
-                    !TagObject.TimeRangeMacro4Start.Equals(dateTimePickerMacro4Start.Value) ||
-                    !TagObject.TimeRangeMacro4End.Equals(dateTimePickerMacro4End.Value) ||
-                    !TagObject.TimeRangeMacro4Macro.Equals(textBoxMacro4Macro.Text))
+                    !MacroTagObject.TimeRangeMacro1Start.Equals(dateTimePickerMacro1Start.Value) ||
+                    !MacroTagObject.TimeRangeMacro1End.Equals(dateTimePickerMacro1End.Value) ||
+                    !MacroTagObject.TimeRangeMacro1Macro.Equals(textBoxMacro1Macro.Text) ||
+                    !MacroTagObject.TimeRangeMacro2Start.Equals(dateTimePickerMacro2Start.Value) ||
+                    !MacroTagObject.TimeRangeMacro2End.Equals(dateTimePickerMacro2End.Value) ||
+                    !MacroTagObject.TimeRangeMacro2Macro.Equals(textBoxMacro2Macro.Text) ||
+                    !MacroTagObject.TimeRangeMacro3Start.Equals(dateTimePickerMacro3Start.Value) ||
+                    !MacroTagObject.TimeRangeMacro3End.Equals(dateTimePickerMacro3End.Value) ||
+                    !MacroTagObject.TimeRangeMacro3Macro.Equals(textBoxMacro3Macro.Text) ||
+                    !MacroTagObject.TimeRangeMacro4Start.Equals(dateTimePickerMacro4Start.Value) ||
+                    !MacroTagObject.TimeRangeMacro4End.Equals(dateTimePickerMacro4End.Value) ||
+                    !MacroTagObject.TimeRangeMacro4Macro.Equals(textBoxMacro4Macro.Text))
                 {
                     changed = true;
                 }
@@ -329,8 +329,8 @@ namespace AutoScreenCapture
 
         private bool NameChanged()
         {
-            if (TagObject != null &&
-                !TagObject.Name.Equals(textBoxName.Text))
+            if (MacroTagObject != null &&
+                !MacroTagObject.Name.Equals(textBoxName.Text))
             {
                 return true;
             }
@@ -374,16 +374,16 @@ namespace AutoScreenCapture
             dateTimePickerMacro4End.Enabled = false;
             textBoxMacro4Macro.Enabled = false;
 
-            TagType tagType = (TagType) comboBoxType.SelectedIndex;
+            MacroTagType tagType = (MacroTagType) comboBoxType.SelectedIndex;
 
-            if (tagType.Equals(TagType.DateTimeFormat) ||
-                tagType.Equals(TagType.DateTimeFormatExpression))
+            if (tagType.Equals(MacroTagType.DateTimeFormat) ||
+                tagType.Equals(MacroTagType.DateTimeFormatExpression))
             {
                 labelDateTimeFormatValue.Enabled = true;
                 textBoxDateTimeFormatValue.Enabled = true;
             }
 
-            if (tagType.Equals(TagType.TimeRange))
+            if (tagType.Equals(MacroTagType.TimeRange))
             {
                 groupBoxTimeRange.Enabled = true;
 

@@ -32,13 +32,15 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addTrigger_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formTrigger.TriggerObject = null;
 
             _formTrigger.EditorCollection = _formEditor.EditorCollection;
             _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
             _formTrigger.RegionCollection = _formRegion.RegionCollection;
             _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
-            _formTrigger.TagCollection = _formTag.TagCollection;
+            _formTrigger.TagCollection = _formMacroTag.MacroTagCollection;
 
             if (!_formTrigger.Visible)
             {
@@ -112,7 +114,7 @@ namespace AutoScreenCapture
                 _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
                 _formTrigger.RegionCollection = _formRegion.RegionCollection;
                 _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
-                _formTrigger.TagCollection = _formTag.TagCollection;
+                _formTrigger.TagCollection = _formMacroTag.MacroTagCollection;
 
                 _formTrigger.ShowDialog(this);
 
@@ -236,13 +238,13 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.ActivateTag:
-                    _formTag.TagCollection.GetByName(trigger.ModuleItem).Active = true;
-                    BuildTagsModule();
+                    _formMacroTag.MacroTagCollection.GetByName(trigger.ModuleItem).Active = true;
+                    BuildMacroTagsModule();
                     break;
 
                 case TriggerActionType.DeactivateTag:
-                    _formTag.TagCollection.GetByName(trigger.ModuleItem).Active = false;
-                    BuildTagsModule();
+                    _formMacroTag.MacroTagCollection.GetByName(trigger.ModuleItem).Active = false;
+                    BuildMacroTagsModule();
                     break;
 
                 case TriggerActionType.ActivateTrigger:

@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         private SftpClient _sftpClient = null;
 
         // The various forms that are used for modules.
-        private FormTag _formTag = new FormTag();
+        private FormMacroTag _formMacroTag = new FormMacroTag();
         private FormRegion _formRegion = new FormRegion();
         private FormScreen _formScreen = new FormScreen();
         private FormEditor _formEditor = new FormEditor();
@@ -444,7 +444,7 @@ namespace AutoScreenCapture
         {
             if (!_formAbout.Visible)
             {
-                _formAbout.ShowDialog(this);
+                _formAbout.Show();
             }
             else
             {
@@ -460,6 +460,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemEmailSettings_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             if (!_formEmailSettings.Visible)
             {
                 _formEmailSettings.ShowDialog(this);
@@ -483,6 +485,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemFileTransferSettings_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             if (!_formFileTransferSettings.Visible)
             {
                 _formFileTransferSettings.ShowDialog(this);

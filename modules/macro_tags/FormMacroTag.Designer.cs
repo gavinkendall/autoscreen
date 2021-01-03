@@ -1,6 +1,6 @@
 ﻿namespace AutoScreenCapture
 {
-    partial class FormTag
+    partial class FormMacroTag
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTag));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMacroTag));
             this.labelEditorName = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.buttonOK = new System.Windows.Forms.Button();
@@ -423,7 +423,7 @@
             this.MinimumSize = new System.Drawing.Size(772, 493);
             this.Name = "FormTag";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Load += new System.EventHandler(this.FormTag_Load);
+            this.Load += new System.EventHandler(this.FormMacroTag_Load);
             this.groupBoxTimeRange.ResumeLayout(false);
             this.groupBoxTimeRange.PerformLayout();
             this.ResumeLayout(false);

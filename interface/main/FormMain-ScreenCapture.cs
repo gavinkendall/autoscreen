@@ -388,7 +388,7 @@ namespace AutoScreenCapture
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken)
             {
                 ViewId = screen.ViewId,
-                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formMacroTag.MacroTagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection),
                 Bitmap = bitmap,
                 Format = screen.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
@@ -419,7 +419,7 @@ namespace AutoScreenCapture
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken)
             {
                 ViewId = region.ViewId,
-                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, region.Folder, _formTag.TagCollection)) + MacroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection),
+                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, region.Folder, _formMacroTag.MacroTagCollection)) + MacroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection),
                 Bitmap = bitmap,
                 Format = region.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",

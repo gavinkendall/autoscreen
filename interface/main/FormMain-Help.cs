@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         private void LoadHelpTips()
         {
             helpTips.Add("Help tips are displayed here in the help bar. You can either click this help bar to show the next tip or wait until the next tip is shown");
-            helpTips.Add("Start Screen Capture begins a session of taking screenshots at the specified interval. The application will run in your system tray");
+            helpTips.Add("The Start button (or menu item) begins a session of taking screenshots at the specified interval. The application will run in your system tray");
             helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day");
             helpTips.Add("Below the calendar are modules such as Setup, Screenshots, Screens, Regions, and Editors. Scroll through the modules to become familiar with them");
             helpTips.Add("The Setup module is used to specify the frequency at which screenshots will be taken and what label to apply to each screenshot");

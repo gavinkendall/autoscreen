@@ -33,10 +33,12 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addRegion_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formRegion.RegionObject = null;
             _formRegion.ImageFormatCollection = _imageFormatCollection;
             _formRegion.ScreenCapture = _screenCapture;
-            _formRegion.TagCollection = _formTag.TagCollection;
+            _formRegion.TagCollection = _formMacroTag.MacroTagCollection;
 
             if (!_formRegion.Visible)
             {
@@ -119,7 +121,7 @@ namespace AutoScreenCapture
             _formRegion.RegionObject = region;
             _formRegion.ImageFormatCollection = _imageFormatCollection;
             _formRegion.ScreenCapture = _screenCapture;
-            _formRegion.TagCollection = _formTag.TagCollection;
+            _formRegion.TagCollection = _formMacroTag.MacroTagCollection;
 
             _formRegion.ShowDialog(this);
 

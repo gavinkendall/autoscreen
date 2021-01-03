@@ -104,12 +104,12 @@ namespace AutoScreenCapture
 
                 Log.WriteMessage("Initializing tag collection");
 
-                if (!_formTag.TagCollection.LoadXmlFileAndAddTags())
+                if (!_formMacroTag.MacroTagCollection.LoadXmlFileAndAddTags())
                 {
                     _screenCapture.ApplicationError = true;
                 }
 
-                Log.WriteDebugMessage("Number of tags loaded = " + _formTag.TagCollection.Count);
+                Log.WriteDebugMessage("Number of tags loaded = " + _formMacroTag.MacroTagCollection.Count);
 
                 Log.WriteMessage("Initializing schedule collection");
 
@@ -133,7 +133,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
 
                 Log.WriteMessage("Building tags module");
-                BuildTagsModule();
+                BuildMacroTagsModule();
 
                 Log.WriteMessage("Building schedules module");
                 BuildSchedulesModule();

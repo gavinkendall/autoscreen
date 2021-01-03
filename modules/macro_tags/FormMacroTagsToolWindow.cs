@@ -28,12 +28,12 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMacroTagsToolWindow : Form
     {
-        private TagCollection _tagCollection;
+        private MacroTagCollection _tagCollection;
 
         /// <summary>
         /// Empty constructor for the Macro Tags tool window.
         /// </summary>
-        public FormMacroTagsToolWindow(TagCollection tagCollection)
+        public FormMacroTagsToolWindow(MacroTagCollection tagCollection)
         {
             InitializeComponent();
 
@@ -44,7 +44,7 @@ namespace AutoScreenCapture
         {
             List<string> macroTags = new List<string>();
 
-            foreach (Tag tag in _tagCollection.Collection)
+            foreach (MacroTag tag in _tagCollection.Collection)
             {
                 macroTags.Add(tag.Name);
             }
@@ -59,7 +59,7 @@ namespace AutoScreenCapture
 
         private void listBoxMacroTags_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            Tag tag = _tagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
+            MacroTag tag = _tagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
 
             labelHelp.Text = MacroParser.ParseTags(config: false, tag.Description, _tagCollection);
         }

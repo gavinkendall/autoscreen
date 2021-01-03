@@ -170,13 +170,13 @@ namespace AutoScreenCapture
         {
             if (checkBoxUseKeyboardShortcuts.Checked)
             {
-                // Start Screen Capture
+                // Start
                 labelStartScreenCapture.Enabled = true;
                 comboBoxKeyboardShortcutStartScreenCaptureModifier1.Enabled = true;
                 comboBoxKeyboardShortcutStartScreenCaptureModifier2.Enabled = true;
                 textBoxKeyboardShortcutStartScreenCaptureKey.Enabled = true;
 
-                // Stop Screen Capture
+                // Stop
                 labelStopScreenCapture.Enabled = true;
                 comboBoxKeyboardShortcutStopScreenCaptureModifier1.Enabled = true;
                 comboBoxKeyboardShortcutStopScreenCaptureModifier2.Enabled = true;
@@ -194,19 +194,19 @@ namespace AutoScreenCapture
                 comboBoxKeyboardShortcutCaptureNowEditModifier2.Enabled = true;
                 textBoxKeyboardShortcutCaptureNowEditKey.Enabled = true;
 
-                // Region Select / Clipboard
+                // Region Select -> Clipboard
                 labelRegionSelectClipboard.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Enabled = true;
                 textBoxKeyboardShortcutRegionSelectClipboardKey.Enabled = true;
 
-                // Region Select / Auto Save
+                // Region Select -> Auto Save
                 labelRegionSelectAutoSave.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Enabled = true;
                 textBoxKeyboardShortcutRegionSelectAutoSaveKey.Enabled = true;
 
-                // Region Select / Edit
+                // Region Select -> Auto Save / Edit
                 labelRegionSelectEdit.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectEditModifier1.Enabled = true;
                 comboBoxKeyboardShortcutRegionSelectEditModifier2.Enabled = true;

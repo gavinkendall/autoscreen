@@ -28,11 +28,17 @@ namespace AutoScreenCapture
     public partial class FormAbout : Form
     {
         /// <summary>
-        /// Empty constructor.
+        /// A form showing information about Auto Screen Capture.
         /// </summary>
         public FormAbout()
         {
             InitializeComponent();
+        }
+
+        private void FormAbout_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
         }
     }
 }

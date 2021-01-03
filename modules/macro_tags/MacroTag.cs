@@ -25,7 +25,7 @@ namespace AutoScreenCapture
     /// <summary>
     /// A class representing a macro tag.
     /// </summary>
-    public class Tag
+    public class MacroTag
     {
         /// <summary>
         /// The name of the macro tag.
@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The type of tag.
         /// </summary>
-        public TagType Type { get; set; }
+        public MacroTagType Type { get; set; }
 
         /// <summary>
         /// The date/time format value of the tag.
@@ -145,7 +145,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The empty constructor for creating a tag.
         /// </summary>
-        public Tag()
+        public MacroTag()
         {
             SetDefaultValues();
         }
@@ -157,7 +157,7 @@ namespace AutoScreenCapture
         /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="active">The status of the tag.</param>
-        public Tag(string name, string description, TagType tagType, bool active)
+        public MacroTag(string name, string description, MacroTagType tagType, bool active)
         {
             SetDefaultValues();
 
@@ -175,7 +175,7 @@ namespace AutoScreenCapture
         /// <param name="tagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="active">The status of the tag.</param>
-        public Tag(string name, string description, TagType tagType, string dateTimeFormatValue, bool active)
+        public MacroTag(string name, string description, MacroTagType tagType, string dateTimeFormatValue, bool active)
         {
             SetDefaultValues();
 
@@ -207,7 +207,7 @@ namespace AutoScreenCapture
         /// <param name="timeRangeMacro4Macro">The macro for Macro 4</param>
         /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
         /// <param name="notes">Notes.</param>
-        public Tag(string name, string description, TagType tagType,
+        public MacroTag(string name, string description, MacroTagType tagType,
             string dateTimeFormatValue,
             DateTime timeRangeMacro1Start,
             DateTime timeRangeMacro1End,

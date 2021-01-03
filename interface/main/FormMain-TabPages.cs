@@ -44,7 +44,7 @@ namespace AutoScreenCapture
                 Text = "Add Screen",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                Image = Resources.addnew_screen
+                Image = Resources.screen
             };
 
             toolStripButtonAddScreen.Click += new EventHandler(addScreen_Click);
@@ -54,13 +54,46 @@ namespace AutoScreenCapture
                 Text = "Add Region",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                Image = Resources.addnew_region
+                Image = Resources.region
             };
 
             toolStripButtonAddRegion.Click += new EventHandler(addRegion_Click);
 
+            ToolStripButton toolStripButtonAddEditor = new ToolStripButton
+            {
+                Text = "Add Editor",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.edit
+            };
+
+            toolStripButtonAddEditor.Click += new EventHandler(addEditor_Click);
+
+            ToolStripButton toolStripButtonAddSchedule = new ToolStripButton
+            {
+                Text = "Add Schedule",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.schedule
+            };
+
+            toolStripButtonAddSchedule.Click += new EventHandler(addSchedule_Click);
+
+            ToolStripButton toolStripButtonAddMacroTag = new ToolStripButton
+            {
+                Text = "Add Macro Tag",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Image = Resources.brick
+            };
+
+            toolStripButtonAddMacroTag.Click += new EventHandler(addMacroTag_Click);
+
             toolStripDashboard.Items.Add(toolStripButtonAddScreen);
             toolStripDashboard.Items.Add(toolStripButtonAddRegion);
+            toolStripDashboard.Items.Add(toolStripButtonAddEditor);
+            toolStripDashboard.Items.Add(toolStripButtonAddSchedule);
+            toolStripDashboard.Items.Add(toolStripButtonAddMacroTag);
 
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
             {
@@ -331,7 +364,7 @@ namespace AutoScreenCapture
             toolStripMenuItemAdd.DropDown.Items.Add("Region", null, addRegion_Click);
             toolStripMenuItemAdd.DropDown.Items.Add("Editor", null, addEditor_Click);
             toolStripMenuItemAdd.DropDown.Items.Add("Schedule", null, addSchedule_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Tag", null, addTag_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Macro Tag", null, addMacroTag_Click);
             toolStripMenuItemAdd.DropDown.Items.Add("Trigger", null, addTrigger_Click);
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);

@@ -61,7 +61,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// A collection of tags.
         /// </summary>
-        public TagCollection TagCollection { get; set; }
+        public MacroTagCollection TagCollection { get; set; }
 
         /// <summary>
         /// This is to keep track of what "page" we're on when the user clicks through the wizard-style interface.
@@ -402,7 +402,7 @@ namespace AutoScreenCapture
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag)
             {
-                foreach (Tag tag in TagCollection)
+                foreach (MacroTag tag in TagCollection)
                 {
                     if (tag != null)
                     {
