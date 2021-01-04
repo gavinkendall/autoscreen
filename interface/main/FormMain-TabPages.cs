@@ -316,7 +316,7 @@ namespace AutoScreenCapture
 
             if (toolStrip.Tag is Screen)
             {
-                toolStripSplitButtonConfigure.Text = "Confgure Screen";
+                toolStripSplitButtonConfigure.Text = "Configure Screen";
 
                 ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
                 {
@@ -341,7 +341,7 @@ namespace AutoScreenCapture
 
             if (toolStrip.Tag is Region)
             {
-                toolStripSplitButtonConfigure.Text = "Confgure Region";
+                toolStripSplitButtonConfigure.Text = "Configure Region";
 
                 ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
                 {
