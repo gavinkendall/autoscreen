@@ -502,7 +502,7 @@
             // buttonMacroTags
             // 
             this.buttonMacroTags.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonMacroTags.Image = global::AutoScreenCapture.Properties.Resources.brick;
+            this.buttonMacroTags.Image = global::AutoScreenCapture.Properties.Resources.lightbulb;
             this.buttonMacroTags.Location = new System.Drawing.Point(723, 420);
             this.buttonMacroTags.Name = "buttonMacroTags";
             this.buttonMacroTags.Size = new System.Drawing.Size(27, 23);

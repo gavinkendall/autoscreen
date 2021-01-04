@@ -308,31 +308,16 @@ namespace AutoScreenCapture
         {
             ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
             {
-                Text = "Configure",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
                 ToolTipText = "Change this component and other settings",
                 Image = Resources.configure
             };
 
-            ToolStripMenuItem toolStripMenuItemAdd = new ToolStripMenuItem
-            {
-                Text = "Add"
-            };
-
-            toolStripMenuItemAdd.DropDown.Items.Add("Screen", Resources.screen, addScreen_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Region", Resources.region, addRegion_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Editor", Resources.edit, addEditor_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Schedule", Resources.schedule, addSchedule_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Macro Tag", Resources.brick, addMacroTag_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Trigger", Resources.trigger, addTrigger_Click);
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
-
             if (toolStrip.Tag is Screen)
             {
+                toolStripSplitButtonConfigure.Text = "Confgure Screen";
+
                 ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
                 {
                     Text = "Change Screen",
@@ -356,6 +341,8 @@ namespace AutoScreenCapture
 
             if (toolStrip.Tag is Region)
             {
+                toolStripSplitButtonConfigure.Text = "Confgure Region";
+
                 ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
                 {
                     Text = "Change Region",
@@ -379,6 +366,22 @@ namespace AutoScreenCapture
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
+            ToolStripMenuItem toolStripMenuItemAdd = new ToolStripMenuItem
+            {
+                Text = "Add"
+            };
+
+            toolStripMenuItemAdd.DropDown.Items.Add("Screen", Resources.screen, addScreen_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Region", Resources.region, addRegion_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Editor", Resources.edit, addEditor_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Schedule", Resources.schedule, addSchedule_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Macro Tag", Resources.brick, addMacroTag_Click);
+            toolStripMenuItemAdd.DropDown.Items.Add("Trigger", Resources.trigger, addTrigger_Click);
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);
+
+            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
+
             if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
                 toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, toolStripMenuItemEmailSettings_Click);
@@ -391,7 +394,7 @@ namespace AutoScreenCapture
 
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
             {
-                Text = "Edit",
+                Text = "Edit Screenshot",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
                 ToolTipText = "Edit the screenshot with an application or script",
@@ -470,20 +473,20 @@ namespace AutoScreenCapture
                 toolStripButtonFileTransfer.Enabled = true;
             }
 
-            ToolStripButton toolStripButtonScreenshotProperties = new ToolStripButton
+            ToolStripButton toolStripButtonScreenshotMetadata = new ToolStripButton
             {
-                Text = "Screenshot Properties",
+                Text = "Metadata",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Show screenshot properties (such as width and height)",
+                ToolTipText = "Show screenshot metadata (such as width and height)",
                 Image = Resources.properties
             };
 
-            toolStripButtonScreenshotProperties.Click += new EventHandler(screenshotProperties_Click);
+            toolStripButtonScreenshotMetadata.Click += new EventHandler(screenshotMetadata_Click);
 
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
-                Text = "Filename:",
+                Text = "File:",
                 Alignment = ToolStripItemAlignment.Right,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left
             };
@@ -515,7 +518,7 @@ namespace AutoScreenCapture
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripButtonFileTransfer);
-            toolStrip.Items.Add(toolStripButtonScreenshotProperties);
+            toolStrip.Items.Add(toolStripButtonScreenshotMetadata);
             toolStrip.Items.Add(toolstripButtonOpenFolder);
             toolStrip.Items.Add(toolstripTextBoxFilename);
             toolStrip.Items.Add(toolStripLabelFilename);

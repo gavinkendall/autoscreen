@@ -58,16 +58,16 @@ namespace AutoScreenCapture
             ShowScreenshots();
         }
 
-        private void screenshotProperties_Click(object sender, EventArgs e)
+        private void screenshotMetadata_Click(object sender, EventArgs e)
         {
-            if (!_formScreenshotProperties.Visible)
+            if (!_formScreenshotMetadata.Visible)
             {
-                _formScreenshotProperties.Show();
+                _formScreenshotMetadata.Show();
             }
             else
             {
-                _formScreenshotProperties.Focus();
-                _formScreenshotProperties.BringToFront();
+                _formScreenshotMetadata.Focus();
+                _formScreenshotMetadata.BringToFront();
             }
         }
 
@@ -260,13 +260,13 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
-            _formScreenshotProperties.textBoxLabel.Text = string.Empty;
-            _formScreenshotProperties.textBoxScreenshotTitle.Text = string.Empty;
-            _formScreenshotProperties.textBoxScreenshotFormat.Text = string.Empty;
-            _formScreenshotProperties.textBoxScreenshotWidth.Text = string.Empty;
-            _formScreenshotProperties.textBoxScreenshotHeight.Text = string.Empty;
-            _formScreenshotProperties.textBoxScreenshotDate.Text = string.Empty;
-            _formScreenshotProperties.textBoxScreenshotTime.Text = string.Empty;
+            _formScreenshotMetadata.textBoxLabel.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotTitle.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotFormat.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotWidth.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotHeight.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotDate.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotTime.Text = string.Empty;
 
             // Dashboard
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
@@ -375,15 +375,15 @@ namespace AutoScreenCapture
 
                     if (pictureBox.Image != null)
                     {
-                        _formScreenshotProperties.textBoxLabel.Text = selectedScreenshot.Label;
-                        _formScreenshotProperties.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
-                        _formScreenshotProperties.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+                        _formScreenshotMetadata.textBoxLabel.Text = selectedScreenshot.Label;
+                        _formScreenshotMetadata.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
+                        _formScreenshotMetadata.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
-                        _formScreenshotProperties.textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                        _formScreenshotProperties.textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
+                        _formScreenshotMetadata.textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                        _formScreenshotMetadata.textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
 
-                        _formScreenshotProperties.textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                        _formScreenshotProperties.textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                        _formScreenshotMetadata.textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                        _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
                     }
                 }
                 else

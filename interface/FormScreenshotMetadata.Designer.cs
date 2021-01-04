@@ -1,6 +1,6 @@
 ﻿namespace AutoScreenCapture
 {
-    partial class FormScreenshotProperties
+    partial class FormScreenshotMetadata
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreenshotProperties));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreenshotMetadata));
             this.labelLabel = new System.Windows.Forms.Label();
             this.textBoxLabel = new System.Windows.Forms.TextBox();
             this.textBoxScreenshotTime = new System.Windows.Forms.TextBox();
@@ -197,9 +197,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormScreenshotProperties";
-            this.Text = "Screenshot Properties";
+            this.Text = "Screenshot Metadata";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreenshotProperties_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreenshotMetadata_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FormScreenshotProperties.cs" company="Gavin Kendall">
+// <copyright file="FormScreenshotMetadata.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -25,17 +25,17 @@ namespace AutoScreenCapture
     /// <summary>
     /// A form showing information about a screenshot.
     /// </summary>
-    public partial class FormScreenshotProperties : Form
+    public partial class FormScreenshotMetadata : Form
     {
         /// <summary>
         /// A form showing information about a screenshot.
         /// </summary>
-        public FormScreenshotProperties()
+        public FormScreenshotMetadata()
         {
             InitializeComponent();
         }
 
-        private void FormScreenshotProperties_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormScreenshotMetadata_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             Hide();
