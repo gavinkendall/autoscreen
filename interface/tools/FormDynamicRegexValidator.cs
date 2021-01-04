@@ -72,6 +72,7 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(textBoxRegularExpression.Text) ||
                     string.IsNullOrEmpty(textBoxTestValue.Text))
                 {
+                    toolStripStatusLabel.Text = "Empty";
                     textBoxRegularExpression.BackColor = System.Drawing.Color.LightYellow;
                     textBoxTestValue.BackColor = System.Drawing.Color.LightYellow;
 
@@ -80,17 +81,20 @@ namespace AutoScreenCapture
 
                 if (Regex.IsMatch(textBoxTestValue.Text, textBoxRegularExpression.Text))
                 {
+                    toolStripStatusLabel.Text = "Match";
                     textBoxRegularExpression.BackColor = System.Drawing.Color.LightGreen;
                     textBoxTestValue.BackColor = System.Drawing.Color.LightGreen;
                 }
                 else
                 {
+                    toolStripStatusLabel.Text = "No Match";
                     textBoxRegularExpression.BackColor = System.Drawing.Color.PaleVioletRed;
                     textBoxTestValue.BackColor = System.Drawing.Color.PaleVioletRed;
                 }
             }
             catch (Exception)
             {
+                toolStripStatusLabel.Text = "Error";
                 textBoxRegularExpression.BackColor = System.Drawing.Color.PaleVioletRed;
                 textBoxTestValue.BackColor = System.Drawing.Color.PaleVioletRed;
             }

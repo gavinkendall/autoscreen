@@ -34,6 +34,9 @@
             this.textBoxRegularExpression = new System.Windows.Forms.TextBox();
             this.textBoxTestValue = new System.Windows.Forms.TextBox();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelRegularExpression
@@ -85,11 +88,28 @@
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 88);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.statusStrip.Size = new System.Drawing.Size(541, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 0;
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // FormDynamicRegexValidator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 93);
+            this.ClientSize = new System.Drawing.Size(541, 110);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.textBoxTestValue);
             this.Controls.Add(this.textBoxRegularExpression);
@@ -105,6 +125,8 @@
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormDynamicRegexValidator_FormClosing);
             this.Load += new System.EventHandler(this.FormDynamicRegexValidator_Load);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -117,5 +139,7 @@
         private System.Windows.Forms.TextBox textBoxRegularExpression;
         private System.Windows.Forms.TextBox textBoxTestValue;
         private System.Windows.Forms.Label labelHelp;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
     }
 }

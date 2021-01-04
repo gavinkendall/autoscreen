@@ -74,7 +74,6 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(546, 20);
             this.textBoxName.TabIndex = 2;
-            this.textBoxName.MouseHover += new System.EventHandler(this.textBoxName_MouseHover);
             // 
             // labelEditorName
             // 
@@ -102,7 +101,6 @@
             this.textBoxApplication.Name = "textBoxApplication";
             this.textBoxApplication.Size = new System.Drawing.Size(634, 20);
             this.textBoxApplication.TabIndex = 5;
-            this.textBoxApplication.MouseHover += new System.EventHandler(this.textBoxApplication_MouseHover);
             // 
             // buttonChooseEditor
             // 
@@ -114,7 +112,6 @@
             this.buttonChooseEditor.TabIndex = 6;
             this.buttonChooseEditor.UseVisualStyleBackColor = true;
             this.buttonChooseEditor.Click += new System.EventHandler(this.buttonChooseEditor_Click);
-            this.buttonChooseEditor.MouseHover += new System.EventHandler(this.buttonChooseEditor_MouseHover);
             // 
             // labelEditorArguments
             // 
@@ -133,7 +130,6 @@
             this.textBoxArguments.Name = "textBoxArguments";
             this.textBoxArguments.Size = new System.Drawing.Size(664, 20);
             this.textBoxArguments.TabIndex = 8;
-            this.textBoxArguments.MouseHover += new System.EventHandler(this.textBoxArguments_MouseHover);
             // 
             // checkBoxMakeDefaultEditor
             // 
@@ -145,7 +141,6 @@
             this.checkBoxMakeDefaultEditor.TabIndex = 3;
             this.checkBoxMakeDefaultEditor.Text = "Default";
             this.checkBoxMakeDefaultEditor.UseVisualStyleBackColor = true;
-            this.checkBoxMakeDefaultEditor.MouseHover += new System.EventHandler(this.checkBoxMakeDefaultEditor_MouseHover);
             // 
             // labelHelp
             // 
@@ -183,7 +178,6 @@
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 265);
             this.textBoxNotes.TabIndex = 10;
-            this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
             // 
             // FormEditor
             // 

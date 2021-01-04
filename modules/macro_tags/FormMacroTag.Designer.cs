@@ -79,7 +79,6 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(546, 20);
             this.textBoxName.TabIndex = 2;
-            this.textBoxName.MouseHover += new System.EventHandler(this.textBoxTagName_MouseHover);
             // 
             // buttonOK
             // 
@@ -122,7 +121,6 @@
             this.comboBoxType.Size = new System.Drawing.Size(243, 21);
             this.comboBoxType.TabIndex = 5;
             this.comboBoxType.SelectedIndexChanged += new System.EventHandler(this.ComboBoxType_SelectedIndexChanged);
-            this.comboBoxType.MouseHover += new System.EventHandler(this.comboBoxType_MouseHover);
             // 
             // labelDateTimeFormatValue
             // 
@@ -142,7 +140,6 @@
             this.textBoxDateTimeFormatValue.Name = "textBoxDateTimeFormatValue";
             this.textBoxDateTimeFormatValue.Size = new System.Drawing.Size(600, 20);
             this.textBoxDateTimeFormatValue.TabIndex = 9;
-            this.textBoxDateTimeFormatValue.MouseHover += new System.EventHandler(this.textBoxDateTimeFormatValue_MouseHover);
             // 
             // groupBoxTimeRange
             // 
@@ -337,7 +334,6 @@
             this.checkBoxActive.TabIndex = 3;
             this.checkBoxActive.Text = "Active";
             this.checkBoxActive.UseVisualStyleBackColor = true;
-            this.checkBoxActive.MouseHover += new System.EventHandler(this.checkBoxActive_MouseHover);
             // 
             // labelHelp
             // 
@@ -366,7 +362,6 @@
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 118);
             this.textBoxNotes.TabIndex = 28;
-            this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
             // 
             // labelNotes
             // 
@@ -395,7 +390,6 @@
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(470, 20);
             this.textBoxDescription.TabIndex = 7;
-            this.textBoxDescription.MouseHover += new System.EventHandler(this.textBoxDescription_MouseHover);
             // 
             // FormTag
             // 

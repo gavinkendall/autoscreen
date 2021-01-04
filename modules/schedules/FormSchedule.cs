@@ -28,6 +28,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormSchedule : Form
     {
+        private ToolTip _toolTip = new ToolTip();
+
         /// <summary>
         /// A collection of schedules.
         /// </summary>
@@ -56,6 +58,11 @@ namespace AutoScreenCapture
             textBoxName.Focus();
 
             HelpMessage("This is where to configure a schedule to determine when screenshots should be taken");
+
+            _toolTip.SetToolTip(checkBoxActive, "The times and days in this schedule will be considered if Active is checked (turned on)");
+            _toolTip.SetToolTip(dateTimePickerCaptureAt, "The time at which screenshots will be taken for a single capture cycle");
+            _toolTip.SetToolTip(dateTimePickerStartAt, "The time at which a screen capture session will start running");
+            _toolTip.SetToolTip(dateTimePickerStopAt, "The time at which a running screen capture session will stop");
 
             if (ScheduleObject != null)
             {
@@ -411,36 +418,6 @@ namespace AutoScreenCapture
                 checkBoxSaturday.Checked = false;
                 checkBoxSunday.Checked = false;
             }
-        }
-
-        private void textBoxName_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The name for the schedule");
-        }
-
-        private void checkBoxActive_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The times and days in this schedule will be considered if Active is checked (turned on)");
-        }
-
-        private void dateTimePickerCaptureAt_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The time at which screenshots will be taken for a single capture cycle");
-        }
-
-        private void dateTimePickerStartAt_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The time at which a screen capture session will start running");
-        }
-
-        private void dateTimePickerStopAt_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The time at which a running screen capture session will stop");
-        }
-
-        private void textBoxNotes_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("An area for you to keep notes about the schedule");
         }
     }
 }

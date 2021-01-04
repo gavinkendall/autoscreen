@@ -28,6 +28,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMacroTag : Form
     {
+        private ToolTip _toolTip = new ToolTip();
+
         /// <summary>
         /// A collection of macro tags.
         /// </summary>
@@ -50,7 +52,10 @@ namespace AutoScreenCapture
         {
             textBoxName.Focus();
 
-            HelpMessage("This is where to configure a macro tag; special text that is replaced by an appropriate value (such as %time% is replaced with the current time)");
+            HelpMessage("This is where to configure a macro tag which will be used when the filepath of a screenshot is parsed");
+
+            _toolTip.SetToolTip(checkBoxActive, "The filepath containing this macro tag will be parsed if Active is checked (turned on)");
+            _toolTip.SetToolTip(comboBoxType, "The type of macro tag depends on what information will be acquired for it");
 
             comboBoxType.Items.Clear();
             comboBoxType.Items.Add("Screen Name");
@@ -407,36 +412,6 @@ namespace AutoScreenCapture
                 dateTimePickerMacro4End.Enabled = true;
                 textBoxMacro4Macro.Enabled = true;
             }
-        }
-
-        private void textBoxTagName_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The name for the macro tag. Please make sure to surround the tag name with % (such as %time%)");
-        }
-
-        private void checkBoxActive_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Filenames containing this macro tag will be parsed if Active is checked (turned on)");
-        }
-
-        private void comboBoxType_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The type of macro tag depends on what information will be acquired for it");
-        }
-
-        private void textBoxDescription_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The macro tag requires a description to summarize the tag's purpose");
-        }
-
-        private void textBoxDateTimeFormatValue_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Parse a date format (yyyy = year, MM = month, dd = day), time format (HH = hour, mm = minute, ss = second, fff = millisecond), or expression ({day+7})");
-        }
-
-        private void textBoxNotes_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("An area for you to keep notes about the macro tag");
         }
     }
 }

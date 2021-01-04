@@ -30,6 +30,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEditor : Form
     {
+        private ToolTip _toolTip = new ToolTip();
+
         /// <summary>
         /// A collection of editors.
         /// </summary>
@@ -56,7 +58,10 @@ namespace AutoScreenCapture
         {
             textBoxName.Focus();
 
-            HelpMessage("This is where to configure an image editor for editing screenshots");
+            HelpMessage("This is where to configure an application or script for editing screenshots. The optional %filepath% argument is the filepath of the screenshot");
+
+            _toolTip.SetToolTip(checkBoxMakeDefaultEditor, "When checked it will make this editor the default editor");
+            _toolTip.SetToolTip(buttonChooseEditor, "Browse for an application or script");
 
             checkBoxMakeDefaultEditor.Checked = false;
 
@@ -291,36 +296,6 @@ namespace AutoScreenCapture
 
                 textBoxApplication.Text = openFileDialog.FileName;
             }
-        }
-
-        private void textBoxName_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The name for the editor");
-        }
-
-        private void checkBoxMakeDefaultEditor_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("When checked it will make this editor the default editor");
-        }
-
-        private void textBoxApplication_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The path of the application or script to use when editing screenshots");
-        }
-
-        private void buttonChooseEditor_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Browse for an application or script");
-        }
-
-        private void textBoxArguments_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The command line arguments of the application. Include the %filepath% argument so the filepath of the screenshot can be passed to the application");
-        }
-
-        private void textBoxNotes_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("An area for you to keep notes about the editor");
         }
     }
 }

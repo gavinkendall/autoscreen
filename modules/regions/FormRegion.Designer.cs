@@ -115,7 +115,6 @@
             this.textBoxMacro.Size = new System.Drawing.Size(444, 20);
             this.textBoxMacro.TabIndex = 33;
             this.textBoxMacro.TextChanged += new System.EventHandler(this.updatePreviewMacro);
-            this.textBoxMacro.MouseHover += new System.EventHandler(this.textBoxMacro_MouseHover);
             // 
             // pictureBoxPreview
             // 
@@ -128,7 +127,6 @@
             this.pictureBoxPreview.TabIndex = 5;
             this.pictureBoxPreview.TabStop = false;
             this.pictureBoxPreview.Click += new System.EventHandler(this.updatePreviewImage);
-            this.pictureBoxPreview.MouseHover += new System.EventHandler(this.pictureBoxPreview_MouseHover);
             // 
             // labelX
             // 
@@ -280,7 +278,6 @@
             this.textBoxFolder.Size = new System.Drawing.Size(444, 20);
             this.textBoxFolder.TabIndex = 30;
             this.textBoxFolder.TextChanged += new System.EventHandler(this.updatePreviewMacro);
-            this.textBoxFolder.MouseHover += new System.EventHandler(this.textBoxFolder_MouseHover);
             // 
             // buttonBrowseFolder
             // 
@@ -292,7 +289,6 @@
             this.buttonBrowseFolder.TabIndex = 31;
             this.buttonBrowseFolder.UseVisualStyleBackColor = true;
             this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonRegionBrowseFolder_Click);
-            this.buttonBrowseFolder.MouseHover += new System.EventHandler(this.buttonBrowseFolder_MouseHover);
             // 
             // comboBoxFormat
             // 
@@ -304,7 +300,6 @@
             this.comboBoxFormat.Size = new System.Drawing.Size(51, 21);
             this.comboBoxFormat.TabIndex = 19;
             this.comboBoxFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionFormat_SelectedIndexChanged);
-            this.comboBoxFormat.MouseHover += new System.EventHandler(this.comboBoxFormat_MouseHover);
             // 
             // labelFormat
             // 
@@ -378,7 +373,6 @@
             this.checkBoxMouse.Text = "Include mouse pointer";
             this.checkBoxMouse.UseVisualStyleBackColor = true;
             this.checkBoxMouse.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
-            this.checkBoxMouse.MouseHover += new System.EventHandler(this.checkBoxMouse_MouseHover);
             // 
             // groupBoxImageAttributes
             // 
@@ -448,7 +442,6 @@
             this.textBoxMacroPreview.Size = new System.Drawing.Size(524, 20);
             this.textBoxMacroPreview.TabIndex = 28;
             this.textBoxMacroPreview.TabStop = false;
-            this.textBoxMacroPreview.MouseHover += new System.EventHandler(this.textBoxMacroPreview_MouseHover);
             // 
             // groupBoxScreenTemplate
             // 
@@ -469,7 +462,6 @@
             this.comboBoxScreenTemplate.Size = new System.Drawing.Size(193, 21);
             this.comboBoxScreenTemplate.TabIndex = 16;
             this.comboBoxScreenTemplate.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegionScreenTemplate_SelectedIndexChanged);
-            this.comboBoxScreenTemplate.MouseHover += new System.EventHandler(this.comboBoxScreenTemplate_MouseHover);
             // 
             // checkBoxActive
             // 
@@ -482,7 +474,6 @@
             this.checkBoxActive.Text = "Active";
             this.checkBoxActive.UseVisualStyleBackColor = true;
             this.checkBoxActive.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
-            this.checkBoxActive.MouseHover += new System.EventHandler(this.checkBoxActive_MouseHover);
             // 
             // labelHelp
             // 
@@ -509,7 +500,6 @@
             this.buttonMacroTags.TabIndex = 34;
             this.buttonMacroTags.UseVisualStyleBackColor = true;
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
-            this.buttonMacroTags.MouseHover += new System.EventHandler(this.buttonMacroTags_MouseHover);
             // 
             // buttonRegionSelect
             // 

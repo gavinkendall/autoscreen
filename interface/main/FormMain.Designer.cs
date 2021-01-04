@@ -574,6 +574,7 @@ namespace AutoScreenCapture
             this.tabControlModules.Controls.Add(this.tabPageMacroTags);
             this.tabControlModules.Controls.Add(this.tabPageTriggers);
             this.tabControlModules.Location = new System.Drawing.Point(0, 220);
+            this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
             this.tabControlModules.Size = new System.Drawing.Size(249, 407);
@@ -590,10 +591,10 @@ namespace AutoScreenCapture
             this.tabPageSetup.Controls.Add(this.checkBoxScreenshotLabel);
             this.tabPageSetup.Controls.Add(this.comboBoxScreenshotLabel);
             this.tabPageSetup.Controls.Add(this.groupBoxCaptureDelay);
-            this.tabPageSetup.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSetup.Location = new System.Drawing.Point(4, 40);
             this.tabPageSetup.Name = "tabPageSetup";
             this.tabPageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSetup.Size = new System.Drawing.Size(241, 381);
+            this.tabPageSetup.Size = new System.Drawing.Size(241, 363);
             this.tabPageSetup.TabIndex = 0;
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
@@ -775,7 +776,6 @@ namespace AutoScreenCapture
             this.buttonDynamicRegexValidator.TabStop = false;
             this.buttonDynamicRegexValidator.UseVisualStyleBackColor = true;
             this.buttonDynamicRegexValidator.Click += new System.EventHandler(this.toolStripMenuItemDynamicRegexValidator_Click);
-            this.buttonDynamicRegexValidator.MouseHover += new System.EventHandler(this.buttonDynamicRegexValidator_MouseHover);
             // 
             // radioButtonRegularExpressionMatch
             // 
@@ -786,7 +786,6 @@ namespace AutoScreenCapture
             this.radioButtonRegularExpressionMatch.TabIndex = 0;
             this.radioButtonRegularExpressionMatch.Text = "Regular Expression Match";
             this.radioButtonRegularExpressionMatch.UseVisualStyleBackColor = true;
-            this.radioButtonRegularExpressionMatch.MouseHover += new System.EventHandler(this.radioButtonRegularExpressionMatch_MouseHover);
             // 
             // radioButtonCaseSensitiveMatch
             // 
@@ -797,7 +796,6 @@ namespace AutoScreenCapture
             this.radioButtonCaseSensitiveMatch.TabIndex = 0;
             this.radioButtonCaseSensitiveMatch.Text = "Case Sensitive Match";
             this.radioButtonCaseSensitiveMatch.UseVisualStyleBackColor = true;
-            this.radioButtonCaseSensitiveMatch.MouseHover += new System.EventHandler(this.radioButtonCaseSensitiveMatch_MouseHover);
             // 
             // radioButtonCaseInsensitiveMatch
             // 
@@ -808,7 +806,6 @@ namespace AutoScreenCapture
             this.radioButtonCaseInsensitiveMatch.TabIndex = 0;
             this.radioButtonCaseInsensitiveMatch.Text = "Case Insensitive Match";
             this.radioButtonCaseInsensitiveMatch.UseVisualStyleBackColor = true;
-            this.radioButtonCaseInsensitiveMatch.MouseHover += new System.EventHandler(this.radioButtonCaseInsensitiveMatch_MouseHover);
             // 
             // textBoxActiveWindowTitle
             // 
@@ -819,7 +816,6 @@ namespace AutoScreenCapture
             this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(193, 20);
             this.textBoxActiveWindowTitle.TabIndex = 0;
             this.textBoxActiveWindowTitle.TabStop = false;
-            this.textBoxActiveWindowTitle.MouseHover += new System.EventHandler(this.textBoxActiveWindowTitle_MouseHover);
             // 
             // checkBoxActiveWindowTitle
             // 
@@ -832,7 +828,6 @@ namespace AutoScreenCapture
             this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
             this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
             this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
-            this.checkBoxActiveWindowTitle.MouseHover += new System.EventHandler(this.checkBoxActiveWindowTitle_MouseHover);
             // 
             // groupBoxSecurity
             // 
@@ -878,7 +873,6 @@ namespace AutoScreenCapture
             this.textBoxPassphrase.TabIndex = 0;
             this.textBoxPassphrase.TabStop = false;
             this.textBoxPassphrase.TextChanged += new System.EventHandler(this.TextChanged_textBoxPassphrase);
-            this.textBoxPassphrase.MouseHover += new System.EventHandler(this.textBoxPassphrase_MouseHover);
             // 
             // checkBoxScreenshotLabel
             // 
@@ -890,7 +884,6 @@ namespace AutoScreenCapture
             this.checkBoxScreenshotLabel.TabStop = false;
             this.checkBoxScreenshotLabel.Text = "Apply this label to each screenshot:";
             this.checkBoxScreenshotLabel.UseVisualStyleBackColor = true;
-            this.checkBoxScreenshotLabel.MouseHover += new System.EventHandler(this.checkBoxScreenshotLabel_MouseHover);
             // 
             // comboBoxScreenshotLabel
             // 
@@ -903,7 +896,6 @@ namespace AutoScreenCapture
             this.comboBoxScreenshotLabel.TabIndex = 0;
             this.comboBoxScreenshotLabel.TabStop = false;
             this.comboBoxScreenshotLabel.SelectedIndexChanged += new System.EventHandler(this.ComboBoxScreenshotLabel_SelectedIndexChanged);
-            this.comboBoxScreenshotLabel.MouseHover += new System.EventHandler(this.comboBoxScreenshotLabel_MouseHover);
             // 
             // groupBoxCaptureDelay
             // 
@@ -947,7 +939,6 @@ namespace AutoScreenCapture
             this.checkBoxInitialScreenshot.UseVisualStyleBackColor = true;
             this.checkBoxInitialScreenshot.Click += new System.EventHandler(this.SaveSettings);
             this.checkBoxInitialScreenshot.Leave += new System.EventHandler(this.SaveSettings);
-            this.checkBoxInitialScreenshot.MouseHover += new System.EventHandler(this.checkBoxInitialScreenshot_MouseHover);
             // 
             // numericUpDownCaptureLimit
             // 
@@ -975,7 +966,6 @@ namespace AutoScreenCapture
             this.checkBoxCaptureLimit.CheckedChanged += new System.EventHandler(this.CheckedChanged_checkBoxCaptureLimit);
             this.checkBoxCaptureLimit.Click += new System.EventHandler(this.SaveSettings);
             this.checkBoxCaptureLimit.Leave += new System.EventHandler(this.SaveSettings);
-            this.checkBoxCaptureLimit.MouseHover += new System.EventHandler(this.checkBoxCaptureLimit_MouseHover);
             // 
             // labelMillisecondsInterval
             // 
@@ -1104,19 +1094,19 @@ namespace AutoScreenCapture
             // tabPageEditors
             // 
             this.tabPageEditors.AutoScroll = true;
-            this.tabPageEditors.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 381);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 363);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
             // 
             // tabPageSchedules
             // 
-            this.tabPageSchedules.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(241, 381);
+            this.tabPageSchedules.Size = new System.Drawing.Size(241, 363);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -1124,9 +1114,9 @@ namespace AutoScreenCapture
             // tabPageMacroTags
             // 
             this.tabPageMacroTags.AutoScroll = true;
-            this.tabPageMacroTags.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMacroTags.Location = new System.Drawing.Point(4, 40);
             this.tabPageMacroTags.Name = "tabPageMacroTags";
-            this.tabPageMacroTags.Size = new System.Drawing.Size(241, 381);
+            this.tabPageMacroTags.Size = new System.Drawing.Size(241, 363);
             this.tabPageMacroTags.TabIndex = 7;
             this.tabPageMacroTags.Text = "Macro Tags";
             this.tabPageMacroTags.UseVisualStyleBackColor = true;
@@ -1134,10 +1124,10 @@ namespace AutoScreenCapture
             // tabPageTriggers
             // 
             this.tabPageTriggers.AutoScroll = true;
-            this.tabPageTriggers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 381);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 363);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
@@ -1165,7 +1155,6 @@ namespace AutoScreenCapture
             this.comboBoxFilterValue.TabIndex = 0;
             this.comboBoxFilterValue.TabStop = false;
             this.comboBoxFilterValue.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterValue_SelectedIndexChanged);
-            this.comboBoxFilterValue.MouseHover += new System.EventHandler(this.comboBoxFilterValue_MouseHover);
             // 
             // labelFilter
             // 
@@ -1190,7 +1179,6 @@ namespace AutoScreenCapture
             this.buttonRefreshFilterValues.TabStop = false;
             this.buttonRefreshFilterValues.UseVisualStyleBackColor = false;
             this.buttonRefreshFilterValues.Click += new System.EventHandler(this.buttonRefreshFilterValues_Click);
-            this.buttonRefreshFilterValues.MouseHover += new System.EventHandler(this.buttonRefreshFilterValues_MouseHover);
             // 
             // comboBoxFilterType
             // 
@@ -1211,7 +1199,6 @@ namespace AutoScreenCapture
             this.comboBoxFilterType.TabIndex = 0;
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);
-            this.comboBoxFilterType.MouseHover += new System.EventHandler(this.comboBoxFilterType_MouseHover);
             // 
             // timerPerformMaintenance
             // 

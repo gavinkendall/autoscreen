@@ -29,6 +29,7 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegion : Form
     {
+        private ToolTip _toolTip = new ToolTip();
         private FormMacroTagsToolWindow _formMacroTags;
         private FormRegionSelectWithMouse _formRegionSelectWithMouse;
 
@@ -72,6 +73,13 @@ namespace AutoScreenCapture
             textBoxRegionName.Focus();
 
             HelpMessage("This is where to configure a region capture. Change the X, Y, Width, and Height properties while watching Preview");
+
+            _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
+            _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this region capture. JPEG is the recommended image format");
+            _toolTip.SetToolTip(comboBoxScreenTemplate, "Acquire the width and height from an available screen to import as the width and height for your region capture");
+            _toolTip.SetToolTip(checkBoxActive, "You can capture this region if Active is checked (turned on)");
+            _toolTip.SetToolTip(buttonBrowseFolder, "Browse for a folder where screenshots of this region capture will be saved to");
+            _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
 
             ScreenDictionary.Clear();
             comboBoxScreenTemplate.Items.Clear();
@@ -409,66 +417,6 @@ namespace AutoScreenCapture
             {
                 _formMacroTags.BringToFront();
             }
-        }
-
-        private void checkBoxMouse_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
-        }
-
-        private void comboBoxFormat_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Change the image format for the screenshots taken by this region capture. JPEG is the recommended image format");
-        }
-
-        private void comboBoxScreenTemplate_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Acquire the width and height from an available screen to import as the width and height for your region capture");
-        }
-
-        private void checkBoxActive_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("You can capture this region if Active is checked (turned on)");
-        }
-
-        private void textBoxFolder_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The folder where to store the files of the screenshots being taken");
-        }
-
-        private void buttonBrowseFolder_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Browse for a folder where screenshots of this region capture will be saved to");
-        }
-
-        private void textBoxMacro_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Macro tags are used for acquiring information associated with a particular tag (such as %date% and %time% for the current date and time)");
-        }
-
-        private void buttonMacroTags_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
-        }
-
-        private void pictureBoxPreview_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("A preview of what will be captured during a running screen capture session. Click to update the preview image");
-        }
-
-        private void textBoxMacroPreview_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("A preview of how your files will be named. Use macro tags (such as %date% and %time%) in the Macro field to customize the filename pattern");
-        }
-
-        private void checkBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("If checked then the text you define will be compared with the active window title");
-        }
-
-        private void textBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The text to compare with the active window title. If it contains the defined text then this region will be captured. An empty field will be ignored");
         }
 
         private void FormRegion_FormClosing(object sender, FormClosingEventArgs e)

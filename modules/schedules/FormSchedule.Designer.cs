@@ -97,7 +97,6 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(546, 20);
             this.textBoxName.TabIndex = 2;
-            this.textBoxName.MouseHover += new System.EventHandler(this.textBoxName_MouseHover);
             // 
             // labelScheduleName
             // 
@@ -118,7 +117,6 @@
             this.checkBoxActive.TabIndex = 3;
             this.checkBoxActive.Text = "Active";
             this.checkBoxActive.UseVisualStyleBackColor = true;
-            this.checkBoxActive.MouseHover += new System.EventHandler(this.checkBoxActive_MouseHover);
             // 
             // dateTimePickerStartAt
             // 
@@ -129,7 +127,6 @@
             this.dateTimePickerStartAt.ShowUpDown = true;
             this.dateTimePickerStartAt.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerStartAt.TabIndex = 9;
-            this.dateTimePickerStartAt.MouseHover += new System.EventHandler(this.dateTimePickerStartAt_MouseHover);
             // 
             // dateTimePickerStopAt
             // 
@@ -140,7 +137,6 @@
             this.dateTimePickerStopAt.ShowUpDown = true;
             this.dateTimePickerStopAt.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerStopAt.TabIndex = 11;
-            this.dateTimePickerStopAt.MouseHover += new System.EventHandler(this.dateTimePickerStopAt_MouseHover);
             // 
             // radioButtonOneTime
             // 
@@ -176,7 +172,6 @@
             this.dateTimePickerCaptureAt.ShowUpDown = true;
             this.dateTimePickerCaptureAt.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerCaptureAt.TabIndex = 6;
-            this.dateTimePickerCaptureAt.MouseHover += new System.EventHandler(this.dateTimePickerCaptureAt_MouseHover);
             // 
             // checkBoxMonday
             // 
@@ -353,7 +348,6 @@
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(735, 160);
             this.textBoxNotes.TabIndex = 28;
-            this.textBoxNotes.MouseHover += new System.EventHandler(this.textBoxNotes_MouseHover);
             // 
             // numericUpDownMillisecondsInterval
             // 
