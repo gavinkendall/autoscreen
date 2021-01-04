@@ -33,8 +33,6 @@ namespace AutoScreenCapture
         public FormScreenCaptureStatus()
         {
             InitializeComponent();
-
-            
         }
 
         private void FormInformationWindow_FormClosing(object sender, FormClosingEventArgs e)

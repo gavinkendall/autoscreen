@@ -224,9 +224,9 @@
             this.labelStartScreenCapture.Enabled = false;
             this.labelStartScreenCapture.Location = new System.Drawing.Point(12, 43);
             this.labelStartScreenCapture.Name = "labelStartScreenCapture";
-            this.labelStartScreenCapture.Size = new System.Drawing.Size(29, 13);
+            this.labelStartScreenCapture.Size = new System.Drawing.Size(106, 13);
             this.labelStartScreenCapture.TabIndex = 1;
-            this.labelStartScreenCapture.Text = "Start";
+            this.labelStartScreenCapture.Text = "Start Screen Capture";
             // 
             // labelStopScreenCapture
             // 
@@ -234,9 +234,9 @@
             this.labelStopScreenCapture.Enabled = false;
             this.labelStopScreenCapture.Location = new System.Drawing.Point(12, 70);
             this.labelStopScreenCapture.Name = "labelStopScreenCapture";
-            this.labelStopScreenCapture.Size = new System.Drawing.Size(29, 13);
+            this.labelStopScreenCapture.Size = new System.Drawing.Size(106, 13);
             this.labelStopScreenCapture.TabIndex = 5;
-            this.labelStopScreenCapture.Text = "Stop";
+            this.labelStopScreenCapture.Text = "Stop Screen Capture";
             // 
             // labelCaptureNowArchive
             // 

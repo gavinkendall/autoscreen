@@ -35,12 +35,13 @@ namespace AutoScreenCapture
 
             if (ScreenCapture.LockScreenCaptureSession)
             {
-                // Hide the "Add", "Settings", and "Screen Capture Status" menu items.
+                // Hide the "Screen Capture Status", "Add", "Settings", and "Tools" menu items.
+                toolStripMenuItemScreenCaptureStatus.Visible = false;
                 toolStripMenuItemAdd.Visible = false;
                 toolStripMenuItemSettings.Visible = false;
                 toolStripMenuItemEmailSettings.Visible = false;
                 toolStripMenuItemFileTransferSettings.Visible = false;
-                toolStripMenuItemScreenCaptureStatus.Visible = false;
+                toolStripMenuItemTools.Visible = false;
                 toolStripSeparatorTools.Visible = false;
 
                 // Hide the "Capture Now" memu items.
@@ -66,6 +67,7 @@ namespace AutoScreenCapture
                 }
 
                 toolStripMenuItemScreenCaptureStatus.Visible = true;
+                toolStripMenuItemTools.Visible = true;
                 toolStripSeparatorTools.Visible = true;
 
                 // Show the "Capture Now" memu items.

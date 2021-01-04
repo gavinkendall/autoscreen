@@ -44,7 +44,7 @@ namespace AutoScreenCapture
                 Text = "Screen",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Adds a new Screen",
+                ToolTipText = "Add a new Screen",
                 Image = Resources.screen
             };
 
@@ -55,7 +55,7 @@ namespace AutoScreenCapture
                 Text = "Region",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Adds a new Region",
+                ToolTipText = "Add a new Region",
                 Image = Resources.region
             };
 
@@ -66,7 +66,7 @@ namespace AutoScreenCapture
                 Text = "Editor",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Adds a new Editor",
+                ToolTipText = "Add a new Editor",
                 Image = Resources.edit
             };
 
@@ -77,7 +77,7 @@ namespace AutoScreenCapture
                 Text = "Schedule",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Adds a new Schedule",
+                ToolTipText = "Add a new Schedule",
                 Image = Resources.schedule
             };
 
@@ -88,7 +88,7 @@ namespace AutoScreenCapture
                 Text = "Macro Tag",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Adds a new Macro Tag",
+                ToolTipText = "Add a new Macro Tag",
                 Image = Resources.brick
             };
 
@@ -99,7 +99,7 @@ namespace AutoScreenCapture
                 Text = "Trigger",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Adds a new Trigger",
+                ToolTipText = "Add a new Trigger",
                 Image = Resources.trigger
             };
 
@@ -110,6 +110,7 @@ namespace AutoScreenCapture
                 Text = "Email Settings",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Configure email (SMTP) settings",
                 Image = Resources.email
             };
 
@@ -120,6 +121,7 @@ namespace AutoScreenCapture
                 Text = "File Transfer Settings",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
+                ToolTipText = "Configure file transfer (SFTP) settings",
                 Image = Resources.file_transfer
             };
 
@@ -131,8 +133,16 @@ namespace AutoScreenCapture
             toolStripDashboard.Items.Add(toolStripButtonAddSchedule);
             toolStripDashboard.Items.Add(toolStripButtonAddMacroTag);
             toolStripDashboard.Items.Add(toolStripButtonAddTrigger);
-            toolStripDashboard.Items.Add(toolStripButtonEmailSettings);
-            toolStripDashboard.Items.Add(toolStripButtonFileTransferSettings);
+
+            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+            {
+                toolStripDashboard.Items.Add(toolStripButtonEmailSettings);
+            }
+
+            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+            {
+                toolStripDashboard.Items.Add(toolStripButtonFileTransferSettings);
+            }
 
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
             {

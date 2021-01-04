@@ -58,8 +58,11 @@ namespace AutoScreenCapture
         // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
         private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
 
-        // A small window is shown when the user selects "Show Screen Capture Status" from the system tray icon menu.
+        // A small window is shown when the user selects "Screen Capture Status" from the system tray icon menu.
         private FormScreenCaptureStatus _formScreenCaptureStatus = new FormScreenCaptureStatus();
+
+        // The Dynamic Regex Validator tool.
+        private FormDynamicRegexValidator _formDynamicRegexValidator = new FormDynamicRegexValidator();
 
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap = new HotKeyMap();
@@ -432,6 +435,24 @@ namespace AutoScreenCapture
             {
                 _formScreenCaptureStatus.Focus();
                 _formScreenCaptureStatus.BringToFront();
+            }
+        }
+
+        /// <summary>
+        /// Shows the Dynamic Regex Validator.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemDynamicRegexValidator_Click(object sender, EventArgs e)
+        {
+            if (!_formDynamicRegexValidator.Visible)
+            {
+                _formDynamicRegexValidator.Show();
+            }
+            else
+            {
+                _formDynamicRegexValidator.Focus();
+                _formDynamicRegexValidator.BringToFront();
             }
         }
 

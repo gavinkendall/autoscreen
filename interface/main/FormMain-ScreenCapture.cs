@@ -51,9 +51,6 @@ namespace AutoScreenCapture
                 toolStripMenuItemStartScreenCapture.Enabled = true;
 
                 groupBoxCaptureDelay.Enabled = true;
-                numericUpDownHoursInterval.Enabled = true;
-                checkBoxInitialScreenshot.Enabled = true;
-                numericUpDownMinutesInterval.Enabled = true;
 
                 labelLimit.Enabled = true;
                 checkBoxCaptureLimit.Enabled = true;
@@ -66,16 +63,8 @@ namespace AutoScreenCapture
                 comboBoxScreenshotLabel.Enabled = true;
 
                 groupBoxActiveWindowTitle.Enabled = true;
-                checkBoxActiveWindowTitle.Enabled = true;
 
                 groupBoxApplicationFocus.Enabled = true;
-                comboBoxProcessList.Enabled = true;
-                labelApplicationFocusDelayBefore.Enabled = true;
-                labelApplicationFocusDelayAfter.Enabled = true;
-                numericUpDownApplicationFocusDelayBefore.Enabled = true;
-                numericUpDownApplicationFocusDelayAfter.Enabled = true;
-                buttonApplicationFocusTest.Enabled = true;
-                buttonApplicationFocusRefresh.Enabled = true;
             }
             else
             {
@@ -92,9 +81,6 @@ namespace AutoScreenCapture
             toolStripMenuItemStopScreenCapture.Enabled = true;
 
             groupBoxCaptureDelay.Enabled = false;
-            numericUpDownHoursInterval.Enabled = false;
-            checkBoxInitialScreenshot.Enabled = false;
-            numericUpDownMinutesInterval.Enabled = false;
 
             labelLimit.Enabled = false;
             checkBoxCaptureLimit.Enabled = false;
@@ -107,16 +93,8 @@ namespace AutoScreenCapture
             comboBoxScreenshotLabel.Enabled = false;
 
             groupBoxActiveWindowTitle.Enabled = false;
-            checkBoxActiveWindowTitle.Enabled = false;
 
             groupBoxApplicationFocus.Enabled = false;
-            comboBoxProcessList.Enabled = false;
-            labelApplicationFocusDelayBefore.Enabled = false;
-            labelApplicationFocusDelayAfter.Enabled = false;
-            numericUpDownApplicationFocusDelayBefore.Enabled = false;
-            numericUpDownApplicationFocusDelayAfter.Enabled = false;
-            buttonApplicationFocusTest.Enabled = false;
-            buttonApplicationFocusRefresh.Enabled = false;
         }
 
         /// <summary>

@@ -138,9 +138,12 @@ namespace AutoScreenCapture
 
                     if (dialogResult == DialogResult.Yes)
                     {
+                        buttonSendTestEmail.Text = "Sending ...";
+                        buttonSendTestEmail.Enabled = false;
+
                         smtpClient.Send(mailMessage);
 
-                        MessageBox.Show($"This email message has been sent from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\".", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"The email message has been sent from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\".", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -151,12 +154,18 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    buttonSendTestEmail.Text = "Sending ...";
+                    buttonSendTestEmail.Enabled = false;
+
                     smtpClient.Send(mailMessage);
 
-                    MessageBox.Show($"This email message has been sent from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\".", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"The email message has been sent from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\".", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 smtpClient.Dispose();
+
+                buttonSendTestEmail.Text = "Send Test Email";
+                buttonSendTestEmail.Enabled = true;
             }
             catch (Exception)
             {

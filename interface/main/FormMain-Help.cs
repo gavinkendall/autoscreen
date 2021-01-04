@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         private void LoadHelpTips()
         {
             helpTips.Add("Help tips are displayed here in the help bar. You can either click this help bar to show the next tip or wait until the next tip is shown");
-            helpTips.Add("The Start button (or menu item) begins a session of taking screenshots at the specified interval. The application will run in your system tray");
+            helpTips.Add("The Start Screen Capture button begins a session of taking screenshots at the specified interval. The application will run in your system tray");
             helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day");
             helpTips.Add("Below the calendar are modules such as Setup, Screenshots, Screens, Regions, and Editors. Scroll through the modules to become familiar with them");
             helpTips.Add("The Setup module is used to specify the frequency at which screenshots will be taken and what label to apply to each screenshot");
@@ -41,7 +41,7 @@ namespace AutoScreenCapture
             helpTips.Add("Use the Configure drop-down menu to add, remove, or change a Screen or Region. You can add multiple regions each with its own set of attributes");
             helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");
             helpTips.Add("Use the Macro field of a Screen or Region to define the filename pattern for each file. A macro can be very useful for keeping files organized");
-            helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Tags module");
+            helpTips.Add("Macro tags can represent the current date and time. You can also acquire the name of the user or computer. Have a look in the Macro Tags module");
             helpTips.Add("There are keyboard shortcuts you can use to manually take screenshots in your own time rather than wait for the next screen capture cycle");
             helpTips.Add("You can change the behaviour of the application by changing the triggers. Each trigger performs a certain action based on a particular condition");
         }
@@ -95,6 +95,12 @@ namespace AutoScreenCapture
             HelpMessage("Applying a label to every screenshot enables you to later filter by that label");
         }
 
+        private void comboBoxScreenshotLabel_MouseHover(object sender, EventArgs e)
+        {
+            RestartHelpTipTimer();
+            HelpMessage("Enter text for a new label or choose from a previously entered label to apply to each screenshot during a screen capture session");
+        }
+
         private void textBoxPassphrase_MouseHover(object sender, EventArgs e)
         {
             RestartHelpTipTimer();
@@ -119,10 +125,40 @@ namespace AutoScreenCapture
             HelpMessage("Click this button to refresh the list of filter values");
         }
 
-        private void labelKeepScreenshots_MouseHover(object sender, EventArgs e)
+        private void checkBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
         {
             RestartHelpTipTimer();
-            HelpMessage("Specify the number of days screenshots should be kept until they are automatically deleted");
+            HelpMessage("You can specify what text should be used for comparing with the title of the active window");
+        }
+
+        private void textBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
+        {
+            RestartHelpTipTimer();
+            HelpMessage("Enter text to use for comparison with the title of the active window during a screen capture session. This can be a regular expression pattern");
+        }
+
+        private void radioButtonCaseSensitiveMatch_MouseHover(object sender, EventArgs e)
+        {
+            RestartHelpTipTimer();
+            HelpMessage("The text comparison will be case sensitive so the active window title will need to match exactly with each lowercase and uppercase character");
+        }
+
+        private void radioButtonCaseInsensitiveMatch_MouseHover(object sender, EventArgs e)
+        {
+            RestartHelpTipTimer();
+            HelpMessage("The text comparison will be case insensitive so the active window title can contain a mixture of lowercase and uppercase characters");
+        }
+
+        private void radioButtonRegularExpressionMatch_MouseHover(object sender, EventArgs e)
+        {
+            RestartHelpTipTimer();
+            HelpMessage("The text comparison will match with the regular expression pattern entered in the above text input field");
+        }
+
+        private void buttonDynamicRegexValidator_MouseHover(object sender, EventArgs e)
+        {
+            RestartHelpTipTimer();
+            HelpMessage("This shows you the Dynamic Regex Validator tool so you can test your regular expression pattern against a test value");
         }
     }
 }

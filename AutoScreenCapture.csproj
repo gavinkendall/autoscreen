@@ -107,10 +107,16 @@
     <Compile Include="interface\FormFileTransferSettings.Designer.cs">
       <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\FormScreenCaptureStatus.cs">
+    <Compile Include="interface\tools\FormDynamicRegexValidator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormScreenCaptureStatus.Designer.cs">
+    <Compile Include="interface\tools\FormDynamicRegexValidator.Designer.cs">
+      <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="interface\tools\FormScreenCaptureStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\tools\FormScreenCaptureStatus.Designer.cs">
       <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\FormKeyboardShortcuts.cs">
@@ -299,7 +305,10 @@
     <EmbeddedResource Include="interface\FormFileTransferSettings.resx">
       <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\FormScreenCaptureStatus.resx">
+    <EmbeddedResource Include="interface\tools\FormDynamicRegexValidator.resx">
+      <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\tools\FormScreenCaptureStatus.resx">
       <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormKeyboardShortcuts.resx">
@@ -370,6 +379,7 @@
     <None Include="images\exit.png" />
     <None Include="images\file_transfer.png" />
     <None Include="images\properties.png" />
+    <Content Include="images\lightbulb.png" />
     <Content Include="images\lock.png" />
     <None Include="images\save.png" />
     <None Include="images\schedule.png" />
