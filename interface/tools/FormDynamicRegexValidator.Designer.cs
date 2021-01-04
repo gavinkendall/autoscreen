@@ -102,6 +102,7 @@
             this.MinimumSize = new System.Drawing.Size(557, 118);
             this.Name = "FormDynamicRegexValidator";
             this.Text = "Dynamic Regex Validator";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormDynamicRegexValidator_FormClosing);
             this.Load += new System.EventHandler(this.FormDynamicRegexValidator_Load);
             this.ResumeLayout(false);
