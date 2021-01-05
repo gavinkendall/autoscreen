@@ -334,6 +334,13 @@ namespace AutoScreenCapture
 
                     Focus();
 
+                    bool firstRun = Convert.ToBoolean(Settings.User.GetByKey("FirstRun", DefaultSettings.FirstRun).Value);
+
+                    if (firstRun)
+                    {
+                        _formHelp.Show();
+                    }
+
                     Log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
                     RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
                 }
@@ -359,12 +366,6 @@ namespace AutoScreenCapture
                 Hide();
                 Visible = false;
                 ShowInTaskbar = false;
-
-                // Show a balloon tip (if necessary) when the interface is being hidden but the current screen capture session isn't running.
-                if (notifyIcon.Visible && !_screenCapture.Running)
-                {
-                    SystemTrayBalloonMessage("The application is available in your system tray. To exit, right-click its system tray icon and select Exit");
-                }
 
                 Log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);

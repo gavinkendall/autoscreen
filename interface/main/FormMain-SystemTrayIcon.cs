@@ -27,8 +27,6 @@ namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
-        private const int BALLOON_TIP_TIMEOUT = 20000;
-
         private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
         {
             PopulateLabelList();
@@ -96,23 +94,6 @@ namespace AutoScreenCapture
             else
             {
                 ShowInterface();
-            }
-        }
-
-        private void SystemTrayBalloonMessage(string message)
-        {
-            SystemTrayBalloonMessage(message, BALLOON_TIP_TIMEOUT);
-        }
-
-        private void SystemTrayBalloonMessage(string message, int balloonTipTimeout)
-        {
-            // Show the balloon tip only if the system tray icon is visible and the "FirstRun" setting returns "True".
-
-            bool.TryParse(Settings.User.GetByKey("FirstRun", DefaultSettings.FirstRun).Value.ToString(), out bool firstRun);
-
-            if (notifyIcon.Visible && firstRun)
-            {
-                notifyIcon.ShowBalloonTip(balloonTipTimeout, Settings.ApplicationName, message, ToolTipIcon.Info);
             }
         }
 

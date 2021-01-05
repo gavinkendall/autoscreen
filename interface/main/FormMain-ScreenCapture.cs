@@ -210,10 +210,11 @@ namespace AutoScreenCapture
                     // Increment the number of times the user has started a screen capture session.
                     int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("StartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount).Value);
                     startScreenCaptureCount++;
+
                     Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
-                    // Turn off "FirstRun" after the first run of a screen capture session so we longer show balloon tips.
-                    if (startScreenCaptureCount > 1)
+                    // Turn off "FirstRun" on the first run.
+                    if (startScreenCaptureCount == 1)
                     {
                         Settings.User.SetValueByKey("FirstRun", false);
                     }
@@ -265,11 +266,6 @@ namespace AutoScreenCapture
                     // Start taking screenshots.
 
                     timerScreenCapture.Interval = screenCaptureInterval;
-
-                    if (notifyIcon.Visible && !_screenCapture.ApplicationError && !checkBoxInitialScreenshot.Checked && screenCaptureInterval > BALLOON_TIP_TIMEOUT)
-                    {
-                        SystemTrayBalloonMessage("The system tray icon turns green when taking screenshots. To stop, right-click on the icon and select Stop Screen Capture");
-                    }
 
                     timerScreenCapture.Enabled = true;
                     timerScreenCapture.Start();
