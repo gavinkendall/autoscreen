@@ -107,6 +107,12 @@
     <Compile Include="interface\FormFileTransferSettings.Designer.cs">
       <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="help\FormHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="help\FormHelp.Designer.cs">
+      <DependentUpon>FormHelp.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\tools\FormDynamicRegexValidator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +311,9 @@
     <EmbeddedResource Include="interface\FormFileTransferSettings.resx">
       <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="help\FormHelp.resx">
+      <DependentUpon>FormHelp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="interface\tools\FormDynamicRegexValidator.resx">
       <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
     </EmbeddedResource>
@@ -364,6 +373,7 @@
   <ItemGroup>
     <Content Include="autoscreen.ico" />
     <Content Include="icons\ico\autoscreen-error.ico" />
+    <None Include="help\help-0-Welcome.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
     <Content Include="icons\ico\autoscreen-warning.png" />
     <Content Include="icons\ico\autoscreen.ico" />

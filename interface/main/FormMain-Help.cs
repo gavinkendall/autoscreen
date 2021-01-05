@@ -92,5 +92,24 @@ namespace AutoScreenCapture
         {
             labelHelp.Text = "       " + message;
         }
+
+        /// <summary>
+        /// Shows the "Auto Screen Capture - Help" form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripSplitButtonHelp_ButtonClick(object sender, EventArgs e)
+        {
+            if (!_formHelp.Visible)
+            {
+                _formHelp.Show();
+            }
+            else
+            {
+                _formHelp.Focus();
+                _formHelp.WindowState = FormWindowState.Normal;
+                _formHelp.BringToFront();
+            }
+        }
     }
 }

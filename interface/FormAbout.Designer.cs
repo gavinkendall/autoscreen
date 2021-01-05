@@ -72,6 +72,7 @@
             // 
             // richTextBoxApplication
             // 
+            this.richTextBoxApplication.BackColor = System.Drawing.Color.White;
             this.richTextBoxApplication.DetectUrls = false;
             this.richTextBoxApplication.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxApplication.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -96,6 +97,7 @@
             // 
             // richTextBoxLicense
             // 
+            this.richTextBoxLicense.BackColor = System.Drawing.Color.White;
             this.richTextBoxLicense.DetectUrls = false;
             this.richTextBoxLicense.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -119,6 +121,7 @@
             // 
             // richTextBoxChangelog
             // 
+            this.richTextBoxChangelog.BackColor = System.Drawing.Color.White;
             this.richTextBoxChangelog.DetectUrls = false;
             this.richTextBoxChangelog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxChangelog.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -143,6 +146,7 @@
             // 
             // richTextBoxDeveloper
             // 
+            this.richTextBoxDeveloper.BackColor = System.Drawing.Color.White;
             this.richTextBoxDeveloper.DetectUrls = false;
             this.richTextBoxDeveloper.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxDeveloper.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

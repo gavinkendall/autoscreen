@@ -239,6 +239,7 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonHelp.Size = new System.Drawing.Size(53, 20);
             this.toolStripSplitButtonHelp.Text = "Help";
             this.toolStripSplitButtonHelp.ToolTipText = "Help";
+            this.toolStripSplitButtonHelp.ButtonClick += new System.EventHandler(this.toolStripSplitButtonHelp_ButtonClick);
             // 
             // toolStripInfo
             // 
@@ -1063,10 +1064,10 @@ namespace AutoScreenCapture
             // 
             this.tabPageScreenshots.AutoScroll = true;
             this.tabPageScreenshots.Controls.Add(this.listBoxScreenshots);
-            this.tabPageScreenshots.Location = new System.Drawing.Point(4, 22);
+            this.tabPageScreenshots.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreenshots.Name = "tabPageScreenshots";
             this.tabPageScreenshots.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageScreenshots.Size = new System.Drawing.Size(241, 381);
+            this.tabPageScreenshots.Size = new System.Drawing.Size(241, 363);
             this.tabPageScreenshots.TabIndex = 1;
             this.tabPageScreenshots.Text = "Screenshots";
             this.tabPageScreenshots.UseVisualStyleBackColor = true;
@@ -1074,9 +1075,9 @@ namespace AutoScreenCapture
             // tabPageScreens
             // 
             this.tabPageScreens.AutoScroll = true;
-            this.tabPageScreens.Location = new System.Drawing.Point(4, 22);
+            this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreens.Name = "tabPageScreens";
-            this.tabPageScreens.Size = new System.Drawing.Size(241, 381);
+            this.tabPageScreens.Size = new System.Drawing.Size(241, 363);
             this.tabPageScreens.TabIndex = 5;
             this.tabPageScreens.Text = "Screens";
             this.tabPageScreens.UseVisualStyleBackColor = true;
@@ -1084,9 +1085,9 @@ namespace AutoScreenCapture
             // tabPageRegions
             // 
             this.tabPageRegions.AutoScroll = true;
-            this.tabPageRegions.Location = new System.Drawing.Point(4, 22);
+            this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
             this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(241, 381);
+            this.tabPageRegions.Size = new System.Drawing.Size(241, 363);
             this.tabPageRegions.TabIndex = 4;
             this.tabPageRegions.Text = "Regions";
             this.tabPageRegions.UseVisualStyleBackColor = true;

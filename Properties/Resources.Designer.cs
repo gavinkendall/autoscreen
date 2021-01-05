@@ -241,6 +241,22 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\qc\b\f0\fs22\lang9 Welcome\par
+        ///\par
+        ///
+        ///\pard\sa200\sl276\slmult1\b0 This is a test to see if this loads into a RichTextBox control.\par
+        ///}
+        ///.
+        /// </summary>
+        internal static string help_0_Welcome {
+            get {
+                return ResourceManager.GetString("help_0_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap keyboard {

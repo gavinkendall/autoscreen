@@ -35,6 +35,9 @@ namespace AutoScreenCapture
         // The "About Auto Screen Capture" form.
         private FormAbout _formAbout = new FormAbout();
 
+        // The "Auto Screen Capture - Help" form.
+        private FormHelp _formHelp = new FormHelp();
+
         // The "Email Settings" form.
         private FormEmailSettings _formEmailSettings = new FormEmailSettings();
 
