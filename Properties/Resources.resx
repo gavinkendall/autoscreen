@@ -214,4 +214,7 @@
   <data name="help_0_Welcome" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\help-0-Welcome.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="help_1_Setup_and_First_Run" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\help-1-Setup-and-First-Run.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

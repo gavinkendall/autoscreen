@@ -374,6 +374,7 @@
     <Content Include="autoscreen.ico" />
     <Content Include="icons\ico\autoscreen-error.ico" />
     <None Include="help\help-0-Welcome.rtf" />
+    <None Include="help\help-1-Setup-and-First-Run.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
     <Content Include="icons\ico\autoscreen-warning.png" />
     <Content Include="icons\ico\autoscreen.ico" />

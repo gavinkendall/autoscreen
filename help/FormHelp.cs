@@ -38,6 +38,7 @@ namespace AutoScreenCapture
         private void FormHelp_Load(object sender, System.EventArgs e)
         {
             listBoxHelpItems.Items.Add("Welcome");
+            listBoxHelpItems.Items.Add("Setup and First Run");
 
             listBoxHelpItems.SelectedIndex = 0;
         }
@@ -56,6 +57,10 @@ namespace AutoScreenCapture
             {
                 case 0:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.help_0_Welcome;
+                    break;
+
+                case 1:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_1_Setup_and_First_Run;
                     break;
             }
         }
