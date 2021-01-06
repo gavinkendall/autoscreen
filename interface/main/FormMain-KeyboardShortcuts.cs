@@ -98,8 +98,8 @@ namespace AutoScreenCapture
                     toolStripMenuItemCaptureNowArchive.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutCaptureNowArchiveModifier1UserSetting, keyboardShortcutCaptureNowArchiveModifier2UserSetting, _keyboardShortcutCaptureNowArchiveKeyUserSetting);
                     toolStripMenuItemCaptureNowEdit.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutCaptureNowEditModifier1UserSetting, keyboardShortcutCaptureNowEditModifier2UserSetting, _keyboardShortcutCaptureNowEditKeyUserSetting);
                     toolStripMenuItemRegionSelectClipboard.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectClipboardModifier1UserSetting, keyboardShortcutRegionSelectClipboardModifier2UserSetting, _keyboardShortcutRegionSelectClipboardKeyUserSetting);
-                    toolStripMenuItemRegionSelectAutoSave.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectAutoSaveModifier1UserSetting, keyboardShortcutRegionSelectAutoSaveModifier2UserSetting, _keyboardShortcutRegionSelectAutoSaveKeyUserSetting);
-                    toolStripMenuItemRegionSelectEdit.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectEditModifier1UserSetting, keyboardShortcutRegionSelectEditModifier2UserSetting, _keyboardShortcutRegionSelectEditKeyUserSetting);
+                    toolStripMenuItemRegionSelectClipboardAutoSave.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectAutoSaveModifier1UserSetting, keyboardShortcutRegionSelectAutoSaveModifier2UserSetting, _keyboardShortcutRegionSelectAutoSaveKeyUserSetting);
+                    toolStripMenuItemRegionSelectClipboardAutoSaveEdit.ShortcutKeys = GetKeysFromUserSettings(keyboardShortcutRegionSelectEditModifier1UserSetting, keyboardShortcutRegionSelectEditModifier2UserSetting, _keyboardShortcutRegionSelectEditKeyUserSetting);
                 }
                 else
                 {
@@ -108,8 +108,8 @@ namespace AutoScreenCapture
                     toolStripMenuItemCaptureNowArchive.ShortcutKeys = Keys.None;
                     toolStripMenuItemCaptureNowEdit.ShortcutKeys = Keys.None;
                     toolStripMenuItemRegionSelectClipboard.ShortcutKeys = Keys.None;
-                    toolStripMenuItemRegionSelectAutoSave.ShortcutKeys = Keys.None;
-                    toolStripMenuItemRegionSelectEdit.ShortcutKeys = Keys.None;
+                    toolStripMenuItemRegionSelectClipboardAutoSave.ShortcutKeys = Keys.None;
+                    toolStripMenuItemRegionSelectClipboardAutoSaveEdit.ShortcutKeys = Keys.None;
                 }
             }
             catch (Exception ex)
@@ -186,12 +186,12 @@ namespace AutoScreenCapture
 
             if (e.Key == GetKeyFromUserSetting(_keyboardShortcutRegionSelectAutoSaveKeyUserSetting))
             {
-                toolStripMenuItemRegionSelectAutoSave_Click(sender, e);
+                toolStripMenuItemRegionSelectClipboardAutoSave_Click(sender, e);
             }
 
             if (e.Key == GetKeyFromUserSetting(_keyboardShortcutRegionSelectEditKeyUserSetting))
             {
-                toolStripMenuItemRegionSelectEdit_Click(sender, e);
+                toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click(sender, e);
             }
         }
     }

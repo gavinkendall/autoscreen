@@ -469,46 +469,46 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows a mouse-driven region selection canvas so you can select a region and then save the captured image to the clipboard.
+        /// Shows a mouse-driven region selection canvas so you can select a region and then have the captured image sent to the clipboard.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboard_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 1); // 1 is for saving the captured image to the clipboard
+            _formRegionSelectWithMouse.LoadCanvas();
         }
 
         /// <summary>
-        /// Shows a mouse-driven region selection canvas so you can select a region and then auto-save the captured image.
+        /// Shows a mouse-driven region selection canvas so you can select a region, have the captured image be sent to the clipboard, and then auto-saved.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemRegionSelectAutoSave_Click(object sender, EventArgs e)
+        private void toolStripMenuItemRegionSelectClipboardAutoSave_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas();
         }
 
         /// <summary>
-        /// Shows a mouse-driven region selection canvas so you can select a region and then edit the captured image with the default image editor.
+        /// Shows a mouse-driven region selection canvas so you can select a region, have the captured image be sent to the clipboard, auto-saved, and then opened with the default image editor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemRegionSelectEdit_Click(object sender, EventArgs e)
+        private void toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas();
         }
 
         /// <summary>
-        /// The event method used by "Region Select / Auto Save".
+        /// The event method used by "Region Select -> Clipboard / Auto Save".
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted(object sender, EventArgs e)
+        private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted(object sender, EventArgs e)
         {
             int x = _formRegionSelectWithMouse.outputX + 1;
             int y = _formRegionSelectWithMouse.outputY + 1;
@@ -542,11 +542,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// The event method for "Region Select / Edit".
+        /// The event method for "Region Select -> Clipboard / Auto Save / Edit".
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted(object sender, EventArgs e)
+        private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted(object sender, EventArgs e)
         {
             // Get the name of the default image editor.
             string defaultEditor = Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value.ToString();
@@ -557,7 +557,7 @@ namespace AutoScreenCapture
             }
 
             // Save the screenshot as an image file using the Auto Save event method.
-            _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted(sender, e);
+            _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted(sender, e);
 
             // Run the default image editor.
             Editor editor = _formEditor.EditorCollection.GetByName(defaultEditor);

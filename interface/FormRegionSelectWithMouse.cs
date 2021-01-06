@@ -71,11 +71,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// The type of output this form should return.
-        /// </summary>
-        private int _outputMode { get; set; }
-
-        /// <summary>
         /// An event handler for handling when the mouse selection has completed for the mouse-driven region capture.
         /// </summary>
         public event EventHandler MouseSelectionCompleted;
@@ -88,10 +83,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// Laods the canvas with the chosen output mode.
         /// </summary>
-        public void LoadCanvas(int outputMode)
+        public void LoadCanvas()
         {
-            _outputMode = outputMode;
-
             Top = 0;
             Left = 0;
 
@@ -169,31 +162,18 @@ namespace AutoScreenCapture
                 pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
             }
 
-            Bitmap bitmap = null;
+            Bitmap bitmap = SelectBitmap();
 
-            switch (_outputMode)
+            if (bitmap != null)
             {
-                case 0:
-                    bitmap = SelectBitmap();
+                SaveToClipboard(bitmap);
 
-                    if (bitmap != null)
-                    {
-                        outputX = _selectX;
-                        outputY = _selectY;
-                        outputWidth = _selectWidth;
-                        outputHeight = _selectHeight;
+                outputX = _selectX;
+                outputY = _selectY;
+                outputWidth = _selectWidth;
+                outputHeight = _selectHeight;
 
-                        CompleteMouseSelection(sender, e);
-                    }
-                    break;
-                case 1:
-                    bitmap = SelectBitmap();
-
-                    if (bitmap != null)
-                    {
-                        SaveToClipboard(bitmap);
-                    }
-                    break;
+                CompleteMouseSelection(sender, e);
             }
 
             Cursor = Cursors.Arrow;
