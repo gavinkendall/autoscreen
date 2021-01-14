@@ -177,6 +177,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.3")); // An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.4")); // A bug fix for saving of file when adding screenshot to collection.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.5")); // Application Focus now has Delay Before and Delay After options.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.6")); // Active Window Title text comparison includes type of match to use during text comparison.
 
             Application = new SettingCollection
             {

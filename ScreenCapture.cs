@@ -39,8 +39,8 @@ namespace AutoScreenCapture
         [StructLayout(LayoutKind.Sequential)]
         private struct CURSORINFO
         {
-            public Int32 cbSize;
-            public Int32 flags;
+            public int cbSize;
+            public int flags;
             public IntPtr hCursor;
             public POINTAPI ptScreenPos;
         }
@@ -70,8 +70,8 @@ namespace AutoScreenCapture
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
 
-        private const Int32 CURSOR_SHOWING = 0x0001;
-        private const Int32 DI_NORMAL = 0x0003;
+        private const int CURSOR_SHOWING = 0x0001;
+        private const int DI_NORMAL = 0x0003;
 
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
@@ -103,56 +103,56 @@ namespace AutoScreenCapture
             public int length;
             public int flags;
             public ShowWindowCommands showCmd;
-            public System.Drawing.Point ptMinPosition;
-            public System.Drawing.Point ptMaxPosition;
-            public System.Drawing.Rectangle rcNormalPosition;
+            public Point ptMinPosition;
+            public Point ptMaxPosition;
+            public Rectangle rcNormalPosition;
         }
 
         [DllImport("user32.dll")]
         private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 
-        public const int ENUM_CURRENT_SETTINGS = -1;
+        private const int ENUM_CURRENT_SETTINGS = -1;
 
         [DllImport("user32.dll")]
-        public static extern bool EnumDisplaySettings(string lpszDeviceName, int iModeNum, ref DEVMODE lpDevMode);
+        private static extern bool EnumDisplaySettings(string lpszDeviceName, int iModeNum, ref DEVMODE lpDevMode);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct DEVMODE
+        private struct DEVMODE
         {
             private const int CCHDEVICENAME = 0x20;
             private const int CCHFORMNAME = 0x20;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
-            public string dmDeviceName;
-            public short dmSpecVersion;
-            public short dmDriverVersion;
-            public short dmSize;
-            public short dmDriverExtra;
-            public int dmFields;
-            public int dmPositionX;
-            public int dmPositionY;
-            public ScreenOrientation dmDisplayOrientation;
-            public int dmDisplayFixedOutput;
-            public short dmColor;
-            public short dmDuplex;
-            public short dmYResolution;
-            public short dmTTOption;
-            public short dmCollate;
+            private string dmDeviceName;
+            private short dmSpecVersion;
+            private short dmDriverVersion;
+            internal short dmSize;
+            private short dmDriverExtra;
+            private int dmFields;
+            private int dmPositionX;
+            private int dmPositionY;
+            private ScreenOrientation dmDisplayOrientation;
+            private int dmDisplayFixedOutput;
+            private short dmColor;
+            private short dmDuplex;
+            private short dmYResolution;
+            private short dmTTOption;
+            private short dmCollate;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
-            public string dmFormName;
-            public short dmLogPixels;
-            public int dmBitsPerPel;
-            public int dmPelsWidth;
-            public int dmPelsHeight;
-            public int dmDisplayFlags;
-            public int dmDisplayFrequency;
-            public int dmICMMethod;
-            public int dmICMIntent;
-            public int dmMediaType;
-            public int dmDitherType;
-            public int dmReserved1;
-            public int dmReserved2;
-            public int dmPanningWidth;
-            public int dmPanningHeight;
+            private string dmFormName;
+            private short dmLogPixels;
+            private int dmBitsPerPel;
+            internal int dmPelsWidth;
+            internal int dmPelsHeight;
+            private int dmDisplayFlags;
+            private int dmDisplayFrequency;
+            private int dmICMMethod;
+            private int dmICMIntent;
+            private int dmMediaType;
+            private int dmDitherType;
+            private int dmReserved1;
+            private int dmReserved2;
+            private int dmPanningWidth;
+            private int dmPanningHeight;
         }
 
         /// <summary>
@@ -356,12 +356,16 @@ namespace AutoScreenCapture
                         bitmap.Save(path, format.Format);
                     }
 
+                    bitmap.Dispose();
+
                     Log.WriteMessage("Screenshot saved to file at path \"" + path + "\"");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Log.WriteExceptionMessage("ScreenCapture::SaveToFile", ex);
+                // We want to write to the error file instead of writing an exception just in case the user
+                // has ExitOnError set and the exception causes the application to exit.
+                Log.WriteErrorMessage("There was an error encountered when saving the screenshot image.");
             }
         }
 
@@ -372,8 +376,11 @@ namespace AutoScreenCapture
         /// <returns>A struct having the screen, display device width, and display device height.</returns>
         public static DeviceResolution GetDeviceResolution(System.Windows.Forms.Screen screen)
         {
-            DEVMODE dm = new DEVMODE();
-            dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
+            DEVMODE dm = new DEVMODE
+            {
+                dmSize = (short)Marshal.SizeOf(typeof(DEVMODE))
+            };
+
             EnumDisplaySettings(screen.DeviceName, ENUM_CURRENT_SETTINGS, ref dm);
 
             DeviceResolution deviceResolution = new DeviceResolution()
@@ -478,7 +485,7 @@ namespace AutoScreenCapture
                     graphicsDestination.Flush();
 
                     CaptureError = false;
-                    
+
                     return bitmapDestination;
                 }
 
@@ -613,7 +620,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Gets the bitmap images for the avaialble screens.
         /// </summary>
-        /// <param name="component">The component to capture. This could be the active window or a screen.</param>
+        /// <param name="component">The component index.</param>
         /// <param name="x">The X value of the bitmap.</param>
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
@@ -669,7 +676,7 @@ namespace AutoScreenCapture
             try
             {
                 int filepathLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit).Value);
-                
+
                 if (!string.IsNullOrEmpty(screenshot.Path))
                 {
                     if (screenshot.Path.Length > filepathLengthLimit)
@@ -709,7 +716,7 @@ namespace AutoScreenCapture
 
                                     return false;
                                 }
-                                
+
                                 ApplicationWarning = true;
                             }
                         }
