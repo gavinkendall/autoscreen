@@ -139,16 +139,29 @@ namespace AutoScreenCapture
         {
             if (editor != null && slide != null)
             {
+                Screenshot selectedScreenshot = null;
+
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen)tabControlViews.SelectedTab.Tag;
-                    return RunEditor(editor, _screenshotCollection.GetScreenshot(slide.Name, screen.ViewId));
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, screen.ViewId);
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
-                    return RunEditor(editor, _screenshotCollection.GetScreenshot(slide.Name, region.ViewId));
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, region.ViewId);
+                }
+
+                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                {
+                    // *** Auto Screen Capture - Region Select / Auto Save ***
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(slide.Name, Guid.Empty);
+                }
+
+                if (selectedScreenshot != null)
+                {
+                    return RunEditor(editor, selectedScreenshot);
                 }
             }
 

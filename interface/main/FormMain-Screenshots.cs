@@ -230,6 +230,12 @@ namespace AutoScreenCapture
                         Region region = (Region)selectedTabPage.Tag;
                         selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                     }
+
+                    if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                    {
+                        // *** Auto Screen Capture - Region Select / Auto Save ***
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
+                    }
                 }
 
                 string path = selectedScreenshot.Path;
@@ -331,6 +337,12 @@ namespace AutoScreenCapture
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                }
+
+                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                {
+                    // *** Auto Screen Capture - Region Select / Auto Save ***
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                 }
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&

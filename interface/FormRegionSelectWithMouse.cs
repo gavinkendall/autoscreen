@@ -196,6 +196,8 @@ namespace AutoScreenCapture
             {
                 Cursor = Cursors.Arrow;
 
+                GC.Collect();
+
                 Close();
             }
         }

@@ -230,29 +230,6 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load regions");
 
-                    Region regionSelectAutoSave = new Region()
-                    {
-                        // Ensures we get an empty GUID of 00000000-0000-0000-0000-000000000000
-                        // since an auto save of a screenshot will also result in an empty GUID
-                        // so, because the GUIDs will match, we can view the auto save screenshot
-                        // from the main interface.
-                        ViewId = new Guid(),
-                        Active = true,
-                        Name = "Region Select / Auto Save",
-                        Folder = MacroParser.DefaultAutoSaveFolder,
-                        Macro = MacroParser.DefaultAutoSaveMacro,
-                        Format = new ImageFormat("JPEG", ".jpeg"),
-                        JpegQuality = 100,
-                        ResolutionRatio = 100,
-                        Mouse = false,
-                        X = 0,
-                        Y = 0,
-                        Width = 0,
-                        Height = 0
-                    };
-
-                    Add(regionSelectAutoSave);
-
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
 
