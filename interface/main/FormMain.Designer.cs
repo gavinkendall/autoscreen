@@ -461,6 +461,7 @@ namespace AutoScreenCapture
             this.tabControlModules.Controls.Add(this.tabPageTags);
             this.tabControlModules.Controls.Add(this.tabPageTriggers);
             this.tabControlModules.Location = new System.Drawing.Point(0, 220);
+            this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
             this.tabControlModules.Size = new System.Drawing.Size(249, 210);
@@ -477,10 +478,10 @@ namespace AutoScreenCapture
             this.tabPageSetup.Controls.Add(this.checkBoxScreenshotLabel);
             this.tabPageSetup.Controls.Add(this.comboBoxScreenshotLabel);
             this.tabPageSetup.Controls.Add(this.groupBoxCaptureDelay);
-            this.tabPageSetup.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSetup.Location = new System.Drawing.Point(4, 40);
             this.tabPageSetup.Name = "tabPageSetup";
             this.tabPageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSetup.Size = new System.Drawing.Size(241, 184);
+            this.tabPageSetup.Size = new System.Drawing.Size(241, 166);
             this.tabPageSetup.TabIndex = 0;
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
@@ -1007,19 +1008,19 @@ namespace AutoScreenCapture
             // tabPageEditors
             // 
             this.tabPageEditors.AutoScroll = true;
-            this.tabPageEditors.Location = new System.Drawing.Point(4, 22);
+            this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 184);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 166);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
             // 
             // tabPageSchedules
             // 
-            this.tabPageSchedules.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(241, 184);
+            this.tabPageSchedules.Size = new System.Drawing.Size(241, 166);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -1027,9 +1028,9 @@ namespace AutoScreenCapture
             // tabPageTags
             // 
             this.tabPageTags.AutoScroll = true;
-            this.tabPageTags.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTags.Location = new System.Drawing.Point(4, 40);
             this.tabPageTags.Name = "tabPageTags";
-            this.tabPageTags.Size = new System.Drawing.Size(241, 184);
+            this.tabPageTags.Size = new System.Drawing.Size(241, 166);
             this.tabPageTags.TabIndex = 7;
             this.tabPageTags.Text = "Tags";
             this.tabPageTags.UseVisualStyleBackColor = true;
@@ -1037,10 +1038,10 @@ namespace AutoScreenCapture
             // tabPageTriggers
             // 
             this.tabPageTriggers.AutoScroll = true;
-            this.tabPageTriggers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 184);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 166);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
