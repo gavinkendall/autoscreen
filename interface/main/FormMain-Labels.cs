@@ -56,7 +56,7 @@ namespace AutoScreenCapture
                 List<string> labels = new List<string>();
                 labels = _screenshotCollection.GetFilterValueList("Label");
 
-                if (ScreenCapture.LockScreenCaptureSession || labels.Count == 0)
+                if (_screenCapture.LockScreenCaptureSession || labels.Count == 0)
                 {
                     toolStripSeparatorApplyLabel.Visible = false;
                     toolStripMenuItemApplyLabel.Visible = false;
@@ -70,7 +70,7 @@ namespace AutoScreenCapture
                 labels.Sort();
 
                 comboBoxScreenshotLabel.DataSource = labels;
-                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value.ToString();
+                comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
 
                 toolStripMenuItemApplyLabel.DropDownItems.Clear();
 
@@ -91,7 +91,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-Labels::PopulateLabelList", ex);
+                _log.WriteExceptionMessage("FormMain-Labels::PopulateLabelList", ex);
             }
         }
     }

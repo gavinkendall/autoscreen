@@ -48,8 +48,8 @@ namespace AutoScreenCapture
 
         private readonly string TRIGGER_XPATH;
 
-        private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }
+        private string AppCodename { get; set; }
+        private string AppVersion { get; set; }
 
         /// <summary>
         /// Empty constructor.
@@ -70,14 +70,14 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the triggers.
         /// </summary>
-        public bool LoadXmlFileAndAddTriggers()
+        public bool LoadXmlFileAndAddTriggers(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (FileSystem.FileExists(FileSystem.TriggersFile))
+                if (fileSystem.FileExists(fileSystem.TriggersFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.TriggersFile);
+                    xDoc.Load(fileSystem.TriggersFile);
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -254,14 +254,14 @@ namespace AutoScreenCapture
                         Add(triggerBeforeScreenshotSavedDeleteScreenshots);
                     }
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        SaveToXmlFile();
+                        SaveToXmlFile(config, fileSystem, log);
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load triggers");
+                    log.WriteDebugMessage("WARNING: Unable to load triggers");
 
                     Trigger triggerApplicationStartShowInterface = new Trigger()
                     {
@@ -338,14 +338,14 @@ namespace AutoScreenCapture
                     Add(triggerLimitReachedStopScreenCapture);
                     Add(triggerBeforeScreenshotSavedDeleteScreenshots);
 
-                    SaveToXmlFile();
+                    SaveToXmlFile(config, fileSystem, log);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
+                log.WriteExceptionMessage("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
 
                 return false;
             }
@@ -354,7 +354,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the triggers.
         /// </summary>
-        public bool SaveToXmlFile()
+        public bool SaveToXmlFile(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -368,25 +368,24 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(FileSystem.TriggersFile))
+                if (string.IsNullOrEmpty(fileSystem.TriggersFile))
                 {
-                    FileSystem.TriggersFile = FileSystem.DefaultTriggersFile;
+                    fileSystem.TriggersFile = fileSystem.DefaultTriggersFile;
 
-                    if (FileSystem.FileExists(FileSystem.ConfigFile))
+                    if (fileSystem.FileExists(fileSystem.ConfigFile))
                     {
-                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nTriggersFile=" + FileSystem.TriggersFile);
+                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nTriggersFile=" + fileSystem.TriggersFile);
                     }
                 }
 
                 FileSystem.DeleteFile(FileSystem.TriggersFile);
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.TriggersFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.TriggersFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, config.Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, config.Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
 
                     foreach (Trigger trigger in base.Collection)
@@ -419,7 +418,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("TriggerCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("TriggerCollection::SaveToXmlFile", ex);
 
                 return false;
             }

@@ -29,6 +29,11 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegion : Form
     {
+        private Log _log;
+        private FileSystem _fileSystem;
+        private MacroParser _macroParser;
+        private ScreenCapture _screenCapture;
+
         private ToolTip _toolTip = new ToolTip();
         private FormMacroTagsToolWindow _formMacroTags;
         private FormRegionSelectWithMouse _formRegionSelectWithMouse;
@@ -53,19 +58,19 @@ namespace AutoScreenCapture
         /// </summary>
         public MacroTagCollection TagCollection { get; set; }
 
-        /// <summary>
-        /// Access to screen capture methods.
-        /// </summary>
-        public ScreenCapture ScreenCapture { get; set; }
-
-        private readonly Dictionary<int, ScreenCapture.DeviceResolution> ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceResolution>();
+        private readonly Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
 
         /// <summary>
         /// Constructor for FormRegion.
         /// </summary>
-        public FormRegion()
+        public FormRegion(ScreenCapture screenCapture, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
+
+            _log = log;
+            _macroParser = macroParser;
+            _screenCapture = screenCapture;
+            _fileSystem = fileSystem;
         }
 
         private void FormRegion_Load(object sender, EventArgs e)
@@ -119,7 +124,7 @@ namespace AutoScreenCapture
                 Text = "Change Region";
 
                 textBoxRegionName.Text = RegionObject.Name;
-                textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(RegionObject.Folder);
+                textBoxFolder.Text = _fileSystem.CorrectScreenshotsFolderPath(RegionObject.Folder);
                 textBoxMacro.Text = RegionObject.Macro;
                 comboBoxFormat.SelectedItem = RegionObject.Format.Name;
                 numericUpDownJpegQuality.Value = RegionObject.JpegQuality;
@@ -136,8 +141,8 @@ namespace AutoScreenCapture
                 Text = "Add Region";
 
                 textBoxRegionName.Text = "Region " + (RegionCollection.Count + 1);
-                textBoxFolder.Text = FileSystem.ScreenshotsFolder;
-                textBoxMacro.Text = MacroParser.DefaultMacro;
+                textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
+                textBoxMacro.Text = _macroParser.DefaultMacro;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 numericUpDownResolutionRatio.Value = 100;
@@ -150,7 +155,7 @@ namespace AutoScreenCapture
             }
 
             UpdatePreviewMacro();
-            UpdatePreviewImage(ScreenCapture);
+            UpdatePreviewImage(_screenCapture);
         }
 
         private void HelpMessage(string message)
@@ -187,7 +192,7 @@ namespace AutoScreenCapture
                     {
                         ViewId = Guid.NewGuid(),
                         Name = textBoxRegionName.Text,
-                        Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
+                        Folder = _fileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         Macro = textBoxMacro.Text,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
@@ -204,14 +209,12 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    MessageBox.Show("A region with this name already exists.", "Duplicate Name Conflict",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("A region with this name already exists.", "Duplicate Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Please enter valid input for each field.", "Invalid Input", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show("Please enter valid input for each field.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -231,7 +234,7 @@ namespace AutoScreenCapture
                     else
                     {
                         RegionCollection.Get(RegionObject).Name = textBoxRegionName.Text;
-                        RegionCollection.Get(RegionObject).Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
+                        RegionCollection.Get(RegionObject).Folder = _fileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
@@ -353,7 +356,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormRegion::UpdatePreview", ex);
+                _log.WriteExceptionMessage("FormRegion::UpdatePreviewImage", ex);
             }
         }
 
@@ -362,9 +365,9 @@ namespace AutoScreenCapture
             textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
-            textBoxMacroPreview.Text = MacroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection) +
-                MacroParser.ParseTags(preview: true, config: false, textBoxRegionName.Text, textBoxMacro.Text, 1,
-                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
+            textBoxMacroPreview.Text = _macroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection, _log) +
+                _macroParser.ParseTags(preview: true, config: false, textBoxRegionName.Text, textBoxMacro.Text, 1,
+                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection, _log);
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
@@ -384,7 +387,7 @@ namespace AutoScreenCapture
 
         private void comboBoxRegionFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
+            if (comboBoxFormat.Text.Equals("JPEG"))
             {
                 numericUpDownJpegQuality.Enabled = true;
             }
@@ -398,7 +401,7 @@ namespace AutoScreenCapture
 
         private void updatePreviewImage(object sender, EventArgs e)
         {
-            UpdatePreviewImage(ScreenCapture);
+            UpdatePreviewImage(_screenCapture);
         }
 
         private void updatePreviewMacro(object sender, EventArgs e)
@@ -410,7 +413,7 @@ namespace AutoScreenCapture
         {
             if (_formMacroTags == null || _formMacroTags.IsDisposed)
             {
-                _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
+                _formMacroTags = new FormMacroTagsToolWindow(TagCollection, _macroParser, _log);
                 _formMacroTags.Show();
             }
             else

@@ -57,10 +57,10 @@ namespace AutoScreenCapture
         /// The name of the "special schedule" that's used when commands are given from the command line
         /// or the old schedule is imported from an old version of Auto Screen Capture (anything before 2.3).
         /// </summary>
-        public static string SpecialScheduleName = "Special Schedule";
+        public string SpecialScheduleName { get; private set; }
 
-        private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }
+        private string AppCodename { get; set; }
+        private string AppVersion { get; set; }
 
         /// <summary>
         /// The empty constructor for the schedule collection.
@@ -76,23 +76,25 @@ namespace AutoScreenCapture
             sb.Append(XML_FILE_SCHEDULE_NODE);
 
             SCHEDULE_XPATH = sb.ToString();
+
+            SpecialScheduleName = "Special Schedule";
         }
 
         /// <summary>
         /// Loads the image schedules from the schedules.xml file.
         /// </summary>
-        public bool LoadXmlFileAndAddSchedules()
+        public bool LoadXmlFileAndAddSchedules(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (FileSystem.FileExists(FileSystem.SchedulesFile))
+                if (fileSystem.FileExists(fileSystem.SchedulesFile))
                 {
-                    Log.WriteDebugMessage("Schedules file \"" + FileSystem.SchedulesFile + "\" found. Attempting to load XML document");
+                    log.WriteDebugMessage("Schedules file \"" + fileSystem.SchedulesFile + "\" found. Attempting to load XML document");
 
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.SchedulesFile);
+                    xDoc.Load(fileSystem.SchedulesFile);
 
-                    Log.WriteDebugMessage("XML document loaded");
+                    log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -197,17 +199,17 @@ namespace AutoScreenCapture
 
                         // Change the data for each Schedule that's being loaded if we've detected that
                         // the XML document is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
-                            Log.WriteDebugMessage("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
+                            log.WriteDebugMessage("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
-                            Version v2319 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.1.9");
-                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                            Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2319 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.1.9");
+                            Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Schedule that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
@@ -216,10 +218,10 @@ namespace AutoScreenCapture
 
                             if (v2319 != null && configVersion != null && configVersion.VersionNumber < v2319.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Boombayah 2.3.1.8 or older detected");
+                                log.WriteDebugMessage("Boombayah 2.3.1.8 or older detected");
 
                                 // A new property for Schedule introduced in 2.3.1.9
-                                schedule.ScreenCaptureInterval = Convert.ToInt32(Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value);
+                                schedule.ScreenCaptureInterval = Convert.ToInt32(config.Settings.User.GetByKey("ScreenCaptureInterval", config.Settings.DefaultSettings.ScreenCaptureInterval).Value);
                             }
                         }
 
@@ -229,18 +231,18 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        Log.WriteDebugMessage("Schedules file detected as an old version");
-                        SaveToXmlFile();
+                        log.WriteDebugMessage("Schedules file detected as an old version");
+                        SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load schedules");
+                    log.WriteDebugMessage("WARNING: Unable to load schedules");
 
                     // If we can't find the schedules.xml file we'll need to have a "Special Schedule" schedule created to be compatible with old commands like -startat and -stopat.
-                    Log.WriteDebugMessage("Creating default Special Schedule for use with command line arguments such as -startat and -stopat");
+                    log.WriteDebugMessage("Creating default Special Schedule for use with command line arguments such as -startat and -stopat");
 
                     DateTime dtNow = DateTime.Now;
 
@@ -253,30 +255,30 @@ namespace AutoScreenCapture
                         CaptureAt = dtNow,
                         StartAt = dtNow,
                         StopAt = dtNow,
-                        ScreenCaptureInterval = DefaultSettings.ScreenCaptureInterval,
+                        ScreenCaptureInterval = config.Settings.DefaultSettings.ScreenCaptureInterval,
                         Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
                     };
 
-                    if (Settings.VersionManager != null && Settings.VersionManager.OldUserSettings != null)
+                    if (config.Settings.VersionManager != null && config.Settings.VersionManager.OldUserSettings != null)
                     {
                         // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
-                        SettingCollection oldUserSettings = Settings.VersionManager.OldUserSettings;
+                        SettingCollection oldUserSettings = config.Settings.VersionManager.OldUserSettings;
 
-                        bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", DefaultSettings.BoolCaptureStartAt).Value);
-                        bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", DefaultSettings.BoolCaptureStopAt).Value);
+                        bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", config.Settings.DefaultSettings.BoolCaptureStartAt).Value);
+                        bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", config.Settings.DefaultSettings.BoolCaptureStopAt).Value);
 
-                        DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", DefaultSettings.DateTimeCaptureStartAt).Value);
-                        DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", DefaultSettings.DateTimeCaptureStopAt).Value);
+                        DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", config.Settings.DefaultSettings.DateTimeCaptureStartAt).Value);
+                        DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", config.Settings.DefaultSettings.DateTimeCaptureStopAt).Value);
 
                         // Days
-                        bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", DefaultSettings.BoolCaptureOnTheseDays).Value);
-                        bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", DefaultSettings.BoolCaptureOnSunday).Value);
-                        bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", DefaultSettings.BoolCaptureOnMonday).Value);
-                        bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", DefaultSettings.BoolCaptureOnTuesday).Value);
-                        bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", DefaultSettings.BoolCaptureOnWednesday).Value);
-                        bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", DefaultSettings.BoolCaptureOnThursday).Value);
-                        bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", DefaultSettings.BoolCaptureOnFriday).Value);
-                        bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", DefaultSettings.BoolCaptureOnSaturday).Value);
+                        bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", config.Settings.DefaultSettings.BoolCaptureOnTheseDays).Value);
+                        bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", config.Settings.DefaultSettings.BoolCaptureOnSunday).Value);
+                        bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", config.Settings.DefaultSettings.BoolCaptureOnMonday).Value);
+                        bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", config.Settings.DefaultSettings.BoolCaptureOnTuesday).Value);
+                        bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", config.Settings.DefaultSettings.BoolCaptureOnWednesday).Value);
+                        bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", config.Settings.DefaultSettings.BoolCaptureOnThursday).Value);
+                        bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", config.Settings.DefaultSettings.BoolCaptureOnFriday).Value);
+                        bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", config.Settings.DefaultSettings.BoolCaptureOnSaturday).Value);
 
                         specialSchedule.ModeOneTime = false;
                         specialSchedule.ModePeriod = true;
@@ -307,14 +309,14 @@ namespace AutoScreenCapture
 
                     Add(specialSchedule);
 
-                    SaveToXmlFile();
+                    SaveToXmlFile(config.Settings, fileSystem, log);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScheduleCollection::LoadXmlFileAndAddSchedules", ex);
+                log.WriteExceptionMessage("ScheduleCollection::LoadXmlFileAndAddSchedules", ex);
 
                 return false;
             }
@@ -323,7 +325,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the image schedules in the collection to the schedules.xml file.
         /// </summary>
-        public bool SaveToXmlFile()
+        public bool SaveToXmlFile(Settings settings, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -339,22 +341,24 @@ namespace AutoScreenCapture
                     ConformanceLevel = ConformanceLevel.Document
                 };
 
-                if (string.IsNullOrEmpty(FileSystem.SchedulesFile))
+                if (string.IsNullOrEmpty(fileSystem.SchedulesFile))
                 {
-                    FileSystem.SchedulesFile = FileSystem.DefaultSchedulesFile;
+                    fileSystem.SchedulesFile = fileSystem.DefaultSchedulesFile;
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSchedulesFile=" + FileSystem.SchedulesFile);
+                    fileSystem.AppendToFile(fileSystem.ConfigFile, "\nSchedulesFile=" + fileSystem.SchedulesFile);
                 }
 
-                FileSystem.DeleteFile(FileSystem.SchedulesFile);
+                if (fileSystem.FileExists(fileSystem.SchedulesFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.SchedulesFile);
+                }
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.SchedulesFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.SchedulesFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_SCHEDULES_NODE);
 
                     foreach (Schedule schedule in base.Collection)
@@ -393,7 +397,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScheduleCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("ScheduleCollection::SaveToXmlFile", ex);
 
                 return false;
             }

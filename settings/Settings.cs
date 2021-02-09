@@ -23,19 +23,24 @@ using System;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// A class for all the application-specific and user-specific settings used by Auto Screen Capture.
+    /// A class for all the application-specific and user-specific settings.
     /// </summary>
-    public static class Settings
+    public class Settings
     {
+        /// <summary>
+        /// The default settings.
+        /// </summary>
+        public DefaultSettings DefaultSettings { get; private set; }
+
         /// <summary>
         /// The name of this application.
         /// </summary>
-        public static readonly string ApplicationName = DefaultSettings.ApplicationName;
+        public string ApplicationName { get; private set; }
 
         /// <summary>
         /// The version of this application. This is acquired from the application's assembly.
         /// </summary>
-        public static readonly string ApplicationVersion = DefaultSettings.ApplicationVersion;
+        public string ApplicationVersion { get; private set; }
 
         // The major versions of Auto Screen Capture.
 
@@ -76,12 +81,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// The codename of this application.
         /// </summary>
-        public static readonly string ApplicationCodename = CODENAME_BOOMBAYAH;
+        public readonly string ApplicationCodename = CODENAME_BOOMBAYAH;
 
         /// <summary>
         /// The application settings collection.
         /// </summary>
-        public static SettingCollection Application;
+        public SettingCollection Application;
 
         /// <summary>
         /// The SMTP settings collection.
@@ -96,23 +101,31 @@ namespace AutoScreenCapture
         /// <summary>
         /// The user settings collection.
         /// </summary>
-        public static SettingCollection User;
+        public SettingCollection User;
 
         /// <summary>
         /// The version manager to take care of what to do when an old version is encountered.
         /// </summary>
-        public static VersionManager VersionManager;
+        public VersionManager VersionManager;
 
         /// <summary>
         /// A collection of Version objects representing the various versions of the application.
         /// </summary>
-        private static VersionCollection _versionCollection;
+        private VersionCollection _versionCollection;
 
         /// <summary>
-        /// Creates a new version collection and populates it with all the various versions of the application.
+        /// A class for handling settings. Also creates a new version collection and populates it with all the various versions of the application.
         /// </summary>
-        public static void Initialize()
+        public Settings(FileSystem fileSystem)
         {
+            DefaultSettings = new DefaultSettings();
+
+            MacroParser macroParser = new MacroParser(this);
+            Log log = new Log(fileSystem, macroParser);
+
+            ApplicationName = DefaultSettings.ApplicationName;
+            ApplicationVersion = DefaultSettings.ApplicationVersion;
+
             _versionCollection = new VersionCollection();
 
             // This version.
@@ -198,10 +211,12 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.3")); // An internal list of image hash values are stored when emailing screenshots so we do not email duplicate images.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.4")); // A bug fix for saving of file when adding screenshot to collection.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.5")); // Application Focus now has Delay Before and Delay After options.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.6")); // Active Window Title text comparison includes type of match to use during text comparison.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.7")); // Memory leak fix.
 
-            Application = new SettingCollection
+            Application = new SettingCollection()
             {
-                Filepath = FileSystem.ApplicationSettingsFile
+                Filepath = fileSystem.ApplicationSettingsFile
             };
 
             SMTP = new SettingCollection
@@ -216,7 +231,7 @@ namespace AutoScreenCapture
 
             User = new SettingCollection
             {
-                Filepath = FileSystem.UserSettingsFile
+                Filepath = fileSystem.UserSettingsFile
             };
 
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
@@ -224,9 +239,9 @@ namespace AutoScreenCapture
 
             if (Application != null && !string.IsNullOrEmpty(Application.Filepath))
             {
-                if (FileSystem.FileExists(Application.Filepath))
+                if (fileSystem.FileExists(Application.Filepath))
                 {
-                    Application.Load();
+                    Application.Load(this, fileSystem);
 
                     Application.GetByKey("Name", DefaultSettings.ApplicationName).Value = ApplicationName;
                     Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value = ApplicationVersion;
@@ -261,9 +276,8 @@ namespace AutoScreenCapture
                         Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
 
                         // If this is a version before 2.3.0.0 then set this setting to true because
-                        // starting a screen capture session was the old behaviour when running autoscreen.exe
-                        // from the command line.
-                        if (VersionManager.IsOldAppVersion(Application.AppCodename, Application.AppVersion))
+                        // starting a screen capture session was the old behaviour when running autoscreen.exe from the command line.
+                        if (VersionManager.IsOldAppVersion(this, Application.AppCodename, Application.AppVersion))
                         {
                             Version v2300 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, CODEVERSION_BOOMBAYAH);
                             Version configVersion = VersionManager.Versions.Get(Application.AppCodename, Application.AppVersion);
@@ -329,10 +343,10 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
                 }
 
-                Application.Save();
+                Application.Save(this, fileSystem, log);
             }
 
-            if (User != null && !string.IsNullOrEmpty(User.Filepath) && !FileSystem.FileExists(User.Filepath))
+            if (User != null && !string.IsNullOrEmpty(User.Filepath) && !fileSystem.FileExists(User.Filepath))
             {
                 User.Add(new Setting("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval));
                 User.Add(new Setting("CaptureLimit", DefaultSettings.CaptureLimit));
@@ -373,7 +387,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
 
-                User.Save();
+                User.Save(this, fileSystem, log);
             }
 
             if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !FileSystem.FileExists(SMTP.Filepath))

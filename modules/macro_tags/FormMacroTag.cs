@@ -30,6 +30,8 @@ namespace AutoScreenCapture
     {
         private ToolTip _toolTip = new ToolTip();
 
+        private MacroParser _macroParser;
+
         /// <summary>
         /// A collection of macro tags.
         /// </summary>
@@ -43,9 +45,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormMacroTag()
+        public FormMacroTag(MacroParser macroParser))
         {
             InitializeComponent();
+
+            _macroParser = macroParser;
         }
 
         private void FormMacroTag_Load(object sender, EventArgs e)
@@ -106,7 +110,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add Macro Tag";
 
-                MacroTag tag = new MacroTag();
+                MacroTag tag = new MacroTag(_macroParser);
 
                 textBoxName.Text = "%macrotag" + (MacroTagCollection.Count + 1) + "%";
 
@@ -168,7 +172,7 @@ namespace AutoScreenCapture
 
                 if (MacroTagCollection.GetByName(textBoxName.Text) == null)
                 {
-                    MacroTagCollection.Add(new MacroTag(textBoxName.Text,
+                    MacroTagCollection.Add(new MacroTag(_macroParser, textBoxName.Text,
                         textBoxDescription.Text,
                         (MacroTagType)comboBoxType.SelectedIndex,
                         textBoxDateTimeFormatValue.Text,

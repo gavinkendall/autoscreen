@@ -32,26 +32,26 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteMessage("Exiting application");
+                _log.WriteMessage("Exiting application");
 
-                if (ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
+                if (_screenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
-                    Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    _log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     _formEnterPassphrase.ShowDialog(this);
                 }
 
                 // This is intentional. Do not rewrite these statements as an if/else
                 // because as soon as lockScreenCaptureSession is set to false we want
                 // to continue with normal functionality.
-                if (!ScreenCapture.LockScreenCaptureSession)
+                if (!_screenCapture.LockScreenCaptureSession)
                 {
-                    Log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
+                    _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                     RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 
                     // This is no longer the first run of the application when exiting.
-                    Settings.User.SetValueByKey("FirstRun", false);
+                    _config.Settings.User.SetValueByKey("FirstRun", false);
 
-                    Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = string.Empty;
+                    _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value = string.Empty;
                     SaveSettings();
 
                     DisableStopCapture();
@@ -67,11 +67,11 @@ namespace AutoScreenCapture
 
                     HideSystemTrayIcon();
 
-                    Log.WriteDebugMessage("Hiding interface on clean application exit");
+                    _log.WriteDebugMessage("Hiding interface on clean application exit");
                     HideInterface();
 
-                    Log.WriteDebugMessage("Saving screenshots on clean application exit");
-                    _screenshotCollection.SaveToXmlFile();
+                    _log.WriteDebugMessage("Saving screenshots on clean application exit");
+                    _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value, _macroParser, _config);
 
                     if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                     {
@@ -83,7 +83,7 @@ namespace AutoScreenCapture
                         runScreenshotSearchThread.CancelAsync();
                     }
 
-                    Log.WriteMessage("Bye!");
+                    _log.WriteMessage("Bye!");
 
                     // Exit.
                     Environment.Exit(0);
@@ -92,7 +92,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-Exit::ExitApplication", ex);
+                _log.WriteExceptionMessage("FormMain-Exit::ExitApplication", ex);
             }
         }
     }

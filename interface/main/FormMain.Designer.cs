@@ -595,7 +595,7 @@ namespace AutoScreenCapture
             this.tabPageSetup.Location = new System.Drawing.Point(4, 40);
             this.tabPageSetup.Name = "tabPageSetup";
             this.tabPageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSetup.Size = new System.Drawing.Size(241, 363);
+            this.tabPageSetup.Size = new System.Drawing.Size(241, 166);
             this.tabPageSetup.TabIndex = 0;
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
@@ -1098,7 +1098,7 @@ namespace AutoScreenCapture
             this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 363);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 166);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
@@ -1107,7 +1107,7 @@ namespace AutoScreenCapture
             // 
             this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(241, 363);
+            this.tabPageSchedules.Size = new System.Drawing.Size(241, 166);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -1128,7 +1128,7 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 363);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 166);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;

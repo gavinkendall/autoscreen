@@ -56,7 +56,7 @@ namespace AutoScreenCapture
             {
                 BuildTriggersModule();
 
-                if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -90,7 +90,7 @@ namespace AutoScreenCapture
             {
                 BuildTriggersModule();
 
-                if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -122,7 +122,7 @@ namespace AutoScreenCapture
                 {
                     BuildTriggersModule();
 
-                    if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                    if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
                     {
                         _screenCapture.ApplicationError = true;
                     }
@@ -140,7 +140,7 @@ namespace AutoScreenCapture
                 }
 
                 // Don't show the interface on startup if AutoStartFromCommandLine is enabled.
-                if (ScreenCapture.AutoStartFromCommandLine &&
+                if (_screenCapture.AutoStartFromCommandLine &&
                     trigger.ConditionType == TriggerConditionType.ApplicationStartup &&
                     trigger.ActionType == TriggerActionType.ShowInterface)
                 {

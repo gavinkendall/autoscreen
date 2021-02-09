@@ -321,6 +321,7 @@ END OF TERMS AND CONDITIONS</value>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
 2.3.4.0    SFTP support.
+2.3.3.7    Memory leak fix.
 2.3.3.6    Active Window Title text comparison includes type of match to use during text comparison. (January 1, 2021)
 2.3.3.5    Application Focus now has Delay Before and Delay After options. (December 7, 2020)
 2.3.3.4    A bug fix for saving of file when adding screenshot to collection. (November 24, 2020)

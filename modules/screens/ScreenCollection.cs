@@ -53,8 +53,8 @@ namespace AutoScreenCapture
 
         private readonly string SCREEN_XPATH;
 
-        private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }
+        private string AppCodename { get; set; }
+        private string AppVersion { get; set; }
 
         private ImageFormatCollection _imageFormatCollection;
 
@@ -130,20 +130,18 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screens.
         /// </summary>
-        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection)
+        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection, Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             try
             {
-                _imageFormatCollection = imageFormatCollection;
-
-                if (FileSystem.FileExists(FileSystem.ScreensFile))
+                if (fileSystem.FileExists(fileSystem.ScreensFile))
                 {
-                    Log.WriteDebugMessage("Screens file \"" + FileSystem.ScreensFile + "\" found. Attempting to load XML document");
+                    log.WriteDebugMessage("Screens file \"" + fileSystem.ScreensFile + "\" found. Attempting to load XML document");
 
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.ScreensFile);
+                    xDoc.Load(fileSystem.ScreensFile);
 
-                    Log.WriteDebugMessage("XML document loaded");
+                    log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -248,9 +246,9 @@ namespace AutoScreenCapture
 
                         // Change the data for each Screen that's being loaded if we've detected that
                         // the XML document is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
-                            Log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
+                            log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                             Version v2340 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
@@ -258,7 +256,7 @@ namespace AutoScreenCapture
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
@@ -296,16 +294,15 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        Log.WriteDebugMessage("Screens file detected as an old version");
-
-                        SaveToXmlFile();
+                        log.WriteDebugMessage("Screens file detected as an old version");
+                        SaveToXmlFile(config, fileSystem, log);
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load screens. Initializing screen collection");
+                    log.WriteDebugMessage("WARNING: Unable to load screens");
 
                     if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
                     {
@@ -338,14 +335,14 @@ namespace AutoScreenCapture
                     
                     AddDefaultScreens();
 
-                    SaveToXmlFile();
+                    SaveToXmlFile(config, fileSystem, log);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCollection::LoadXmlFileAndAddScreens", ex);
+                log.WriteExceptionMessage("ScreenCollection::LoadXmlFileAndAddScreens", ex);
 
                 return false;
             }
@@ -354,7 +351,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the screens.
         /// </summary>
-        public bool SaveToXmlFile()
+        public bool SaveToXmlFile(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -368,24 +365,27 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(FileSystem.ScreensFile))
+                if (string.IsNullOrEmpty(fileSystem.ScreensFile))
                 {
-                    FileSystem.ScreensFile = FileSystem.DefaultScreensFile;
+                    fileSystem.ScreensFile = fileSystem.DefaultScreensFile;
 
-                    if (FileSystem.FileExists(FileSystem.ConfigFile))
+                    if (fileSystem.FileExists(fileSystem.ConfigFile))
                     {
-                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreensFile=" + FileSystem.ScreensFile);
+                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nScreensFile=" + fileSystem.ScreensFile);
                     }
                 }
 
-                FileSystem.DeleteFile(FileSystem.ScreensFile);
+                if (fileSystem.FileExists(fileSystem.ScreensFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.ScreensFile);
+                }
 
-                using (XmlWriter xWriter = XmlWriter.Create(FileSystem.ScreensFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.ScreensFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, config.Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, config.Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
 
                     foreach (Screen screen in base.Collection)
@@ -395,7 +395,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_ACTIVE, screen.Active.ToString());
                         xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                         xWriter.WriteElementString(SCREEN_NAME, screen.Name);
-                        xWriter.WriteElementString(SCREEN_FOLDER, FileSystem.CorrectScreenshotsFolderPath(screen.Folder));
+                        xWriter.WriteElementString(SCREEN_FOLDER, fileSystem.CorrectScreenshotsFolderPath(screen.Folder));
                         xWriter.WriteElementString(SCREEN_MACRO, screen.Macro);
                         xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
                         xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
@@ -424,7 +424,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("ScreenCollection::SaveToXmlFile", ex);
 
                 return false;
             }

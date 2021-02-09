@@ -80,7 +80,7 @@ namespace AutoScreenCapture
         {
             Screenshot screenshot = null;
 
-            Slide selectedSlide = Slideshow.SelectedSlide;
+            Slide selectedSlide = _slideShow.SelectedSlide;
 
             if (selectedSlide != null && listBoxScreenshots.SelectedIndex > -1)
             {
@@ -98,7 +98,7 @@ namespace AutoScreenCapture
                     screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                bool.TryParse(Settings.Application.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
+                bool.TryParse(_config.Settings.Application.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
 
                 if (EmailScreenshot(screenshot, prompt))
                 {
@@ -187,10 +187,10 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchScreenshots()
         {
-            Log.WriteDebugMessage("Searching for screenshots");
+            _log.WriteDebugMessage("Searching for screenshots");
 
-            Slideshow.Index = 0;
-            Slideshow.Count = 0;
+            _slideShow.Index = 0;
+            _slideShow.Count = 0;
 
             listBoxScreenshots.BeginUpdate();
 
@@ -232,7 +232,7 @@ namespace AutoScreenCapture
                     listBoxScreenshots.DisplayMember = "Value";
                     listBoxScreenshots.ValueMember = "Name";
                     listBoxScreenshots.Sorted = true;
-                    listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(MacroParser.DateFormat));
+                    listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(_macroParser.DateFormat), _config);
 
                     // Show the last set of screenshots only if the user is on today's list.
                     if (listBoxScreenshots.Items.Count > 0 && monthCalendar.SelectionStart.Date.Equals(DateTime.Now.Date))
@@ -245,7 +245,7 @@ namespace AutoScreenCapture
 
         private void RunSaveScreenshots(DoWorkEventArgs e)
         {
-            _screenshotCollection.SaveToXmlFile();
+            _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value, _macroParser, _config);
         }
 
         /// <summary>
@@ -255,8 +255,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void SelectedIndexChanged_listBoxScreenshots(object sender, EventArgs e)
         {
-            Slideshow.Index = listBoxScreenshots.SelectedIndex;
-            Slideshow.Count = listBoxScreenshots.Items.Count;
+            _slideShow.Index = listBoxScreenshots.SelectedIndex;
+            _slideShow.Count = listBoxScreenshots.Items.Count;
 
             ShowScreenshotBySlideIndex();
         }
@@ -333,28 +333,28 @@ namespace AutoScreenCapture
 
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
-                Screenshot selectedScreenshot = new Screenshot();
+                Screenshot selectedScreenshot = new Screenshot(_config);
 
-                if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
+                if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
                 {
-                    Slideshow.SelectedSlide = (Slide)listBoxScreenshots.Items[Slideshow.Index];
+                    _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
 
                     if (selectedTabPage.Tag.GetType() == typeof(Screen))
                     {
                         Screen screen = (Screen)selectedTabPage.Tag;
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
                     }
                     
                     if (selectedTabPage.Tag.GetType() == typeof(Region))
                     {
                         Region region = (Region)selectedTabPage.Tag;
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                     }
-                    
+
                     if (selectedScreenshot.ViewId.Equals(Guid.Empty))
                     {
                         // *** Auto Screen Capture - Region Select / Auto Save ***
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                     }
                 }
 
@@ -362,14 +362,14 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(path))
                 {
-                    toolStripTextBox.Text = FileSystem.GetFileName(path);
+                    toolStripTextBox.Text = _fileSystem.GetFileName(path);
                     toolStripTextBox.ToolTipText = path;
 
-                    string dirName = FileSystem.GetDirectoryName(path);
+                    string dirName = _fileSystem.GetDirectoryName(path);
 
                     if (!string.IsNullOrEmpty(dirName))
                     {
-                        if (FileSystem.DirectoryExists(dirName) && FileSystem.FileExists(path))
+                        if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
                         {
                             toolStripTextBox.BackColor = Color.PaleGreen;
                         }
@@ -445,30 +445,30 @@ namespace AutoScreenCapture
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = new Screenshot();
+                Screenshot selectedScreenshot = new Screenshot(_config);
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {
                     Screen screen = (Screen)tabControlViews.SelectedTab.Tag;
-                    selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     Region region = (Region)tabControlViews.SelectedTab.Tag;
-                    selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                 }
 
                 if (selectedScreenshot.ViewId.Equals(Guid.Empty))
                 {
                     // *** Auto Screen Capture - Region Select / Auto Save ***
-                    selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                 }
 
                 if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
-                    FileSystem.FileExists(selectedScreenshot.Path))
+                    _fileSystem.FileExists(selectedScreenshot.Path))
                 {
-                    Process.Start(FileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
+                    Process.Start(_fileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
                 }
             }
         }
@@ -493,7 +493,7 @@ namespace AutoScreenCapture
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {
-                if (editor != null && FileSystem.FileExists(editor.Application))
+                if (editor != null && _fileSystem.FileExists(editor.Application))
                 {
                     // ****************** EDITORS LIST IN CONTEXTUAL MENU *************************
                     // Add the Editor to the screenshot preview contextual menu.
@@ -514,69 +514,69 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage("Screenshot attempting to be emailed");
+                _log.WriteDebugMessage("Emailing screenshots");
 
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
                 {
-                    Log.WriteDebugMessage("Cannot email screenshot because screenshot is either null or path is empty");
+                    _log.WriteDebugMessage("Cannot email screenshot because screenshot is either null or path is empty");
 
                     return false;
                 }
 
-                Log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
+                _log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
 
-                string host = Settings.SMTP.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
+                string host = _config.Settings.Application.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
 
-                Log.WriteDebugMessage("Host = " + host);
+                _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.SMTP.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int port);
+                int.TryParse(_config.Settings.Application.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int port);
 
-                Log.WriteDebugMessage("Port = " + port);
+                _log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(Settings.SMTP.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
+                bool.TryParse(_config.Settings.Application.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
 
-                Log.WriteDebugMessage("SSL = " + ssl);
+                _log.WriteDebugMessage("SSL = " + ssl);
 
-                Log.WriteDebugMessage("Prompt = " + prompt);
+                _log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = Settings.SMTP.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
+                string username = _config.Settings.Application.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
 
-                Log.WriteDebugMessage("Username = " + username);
+                _log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.SMTP.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = _config.Settings.Application.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
-                    Log.WriteDebugMessage("Password = [empty]");
+                    _log.WriteDebugMessage("Password = [empty]");
                 }
                 else
                 {
-                    Log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
+                    _log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
                 }
 
-                string from = Settings.SMTP.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
+                string from = _config.Settings.Application.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
 
-                Log.WriteDebugMessage("From = " + from);
+                _log.WriteDebugMessage("From = " + from);
 
-                string to = Settings.SMTP.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
+                string to = _config.Settings.Application.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
 
-                Log.WriteDebugMessage("To = " + to);
+                _log.WriteDebugMessage("To = " + to);
 
-                string cc = Settings.SMTP.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
+                string cc = _config.Settings.Application.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
 
-                Log.WriteDebugMessage("CC = " + cc);
+                _log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = Settings.SMTP.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
+                string bcc = _config.Settings.Application.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
 
-                Log.WriteDebugMessage("BCC = " + bcc);
+                _log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = Settings.SMTP.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
+                string subject = _config.Settings.Application.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
 
-                Log.WriteDebugMessage("Subject = " + subject);
+                _log.WriteDebugMessage("Subject = " + subject);
 
-                string body = Settings.SMTP.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
+                string body = _config.Settings.Application.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
 
-                Log.WriteDebugMessage("Body = " + body);
+                _log.WriteDebugMessage("Body = " + body);
 
                 if (string.IsNullOrEmpty(host) ||
                     string.IsNullOrEmpty(username) ||
@@ -584,7 +584,7 @@ namespace AutoScreenCapture
                     string.IsNullOrEmpty(@from) ||
                     string.IsNullOrEmpty(to))
                 {
-                    Log.WriteDebugMessage("Host, Username, Password, From, or To is empty");
+                    _log.WriteDebugMessage("Host, Username, Password, From, or To is empty");
 
                     return false;
                 }
@@ -625,7 +625,7 @@ namespace AutoScreenCapture
                     return false;
                 }
 
-                Log.WriteDebugMessage("Added screenshot as attachment");
+                _log.WriteDebugMessage("Added screenshot as attachment");
 
                 var smtpClient = new SmtpClient(host, port)
                 {
@@ -633,7 +633,7 @@ namespace AutoScreenCapture
                     Credentials = new NetworkCredential(username, password)
                 };
 
-                Log.WriteDebugMessage("SMTP client prepared");
+                _log.WriteDebugMessage("SMTP client prepared");
 
                 if (prompt)
                 {
@@ -641,11 +641,11 @@ namespace AutoScreenCapture
 
                     if (dialogResult == DialogResult.Yes)
                     {
-                        Log.WriteDebugMessage("Sending email with prompt confirmation");
+                        _log.WriteDebugMessage("Sending email with prompt confirmation");
 
                         smtpClient.Send(mailMessage);
 
-                        Log.WriteDebugMessage("Email sent");
+                        _log.WriteDebugMessage("Email sent");
                     }
                     else
                     {
@@ -656,16 +656,16 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage("Sending email without prompt confirmation");
+                    _log.WriteDebugMessage("Sending email without prompt confirmation");
 
                     smtpClient.Send(mailMessage);
 
-                    Log.WriteDebugMessage("Email sent");
+                    _log.WriteDebugMessage("Email sent");
                 }
 
                 smtpClient.Dispose();
 
-                Log.WriteDebugMessage("SMTP client disposed");
+                _log.WriteDebugMessage("SMTP client disposed");
 
                 return true;
             }
@@ -673,7 +673,7 @@ namespace AutoScreenCapture
             {
                 _screenCapture.ApplicationError = true;
 
-                Log.WriteExceptionMessage("FormMain-Screenshots::EmailScreenshot", ex);
+                _log.WriteExceptionMessage("FormMain-Screenshots::EmailScreenshot", ex);
 
                 return false;
             }

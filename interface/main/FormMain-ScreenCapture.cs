@@ -150,38 +150,43 @@ namespace AutoScreenCapture
         {
             RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
 
-            // Test to see if we can get images of the screen before continuing.
-            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, 0, false, 100, out _))
+                // Test to see if we can get images of the screen before continuing.
+                if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
+                {
+                    _macroParser.screenCapture = _screenCapture;
+
+                    _screenCapture.Count++;
+                    _screenCapture.CaptureNow = captureNow;
+
+                    DateTime dtNow = DateTime.Now;
+
+                    _screenCapture.DateTimeScreenshotsTaken = dtNow;
+
+                    if (!captureNow)
+                    {
+                        _screenCapture.DateTimePreviousCycle = dtNow;
+                    }
+
+                    DoApplicationFocus();
+
+                    _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
+
+                    _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
+
+                    // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
+                    if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
+                    {
+                        return;
+                    }
+
+                    RunRegionCaptures();
+
+                    RunScreenCaptures();
+                }
+            }
+            finally
             {
-                MacroParser.screenCapture = _screenCapture;
-
-                _screenCapture.Count++;
-                _screenCapture.CaptureNow = captureNow;
-
-                DateTime dtNow = DateTime.Now;
-
-                _screenCapture.DateTimeScreenshotsTaken = dtNow;
-
-                if (!captureNow)
-                {
-                    _screenCapture.DateTimePreviousCycle = dtNow;
-                }
-
-                DoApplicationFocus();
-
-                _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
-
-                _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
-
-                // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
-                if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
-                {
-                    return;
-                }
-
-                RunRegionCaptures();
-
-                RunScreenCaptures();
+                GC.Collect();
             }
         }
 
@@ -203,20 +208,19 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage("Starting a screen capture session");
+                _log.WriteDebugMessage("Starting a screen capture session");
 
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
                     // Increment the number of times the user has started a screen capture session.
-                    int startScreenCaptureCount = Convert.ToInt32(Settings.User.GetByKey("StartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount).Value);
+                    int startScreenCaptureCount = Convert.ToInt32(_config.Settings.User.GetByKey("StartScreenCaptureCount", _config.Settings.DefaultSettings.StartScreenCaptureCount).Value);
                     startScreenCaptureCount++;
-
-                    Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
+                    _config.Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
                     // Turn off "FirstRun" on the first run.
                     if (startScreenCaptureCount == 1)
                     {
-                        Settings.User.SetValueByKey("FirstRun", false);
+                        _config.Settings.User.SetValueByKey("FirstRun", false);
                     }
 
                     SaveSettings();
@@ -240,16 +244,16 @@ namespace AutoScreenCapture
                     _screenCapture.Interval = screenCaptureInterval;
                     _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
 
-                    if (Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value.ToString().Length > 0)
+                    if (_config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString().Length > 0)
                     {
-                        ScreenCapture.LockScreenCaptureSession = true;
+                        _screenCapture.LockScreenCaptureSession = true;
                     }
                     else
                     {
-                        ScreenCapture.LockScreenCaptureSession = false;
+                        _screenCapture.LockScreenCaptureSession = false;
                     }
 
-                    Log.WriteMessage("Starting screen capture");
+                    _log.WriteMessage("Starting screen capture");
 
                     _screenCapture.Running = true;
                     _screenCapture.ApplicationWarning = false;
@@ -258,7 +262,7 @@ namespace AutoScreenCapture
 
                     if (checkBoxInitialScreenshot.Checked)
                     {
-                        Log.WriteMessage("Taking initial screenshots");
+                        _log.WriteMessage("Taking initial screenshots");
 
                         TakeScreenshot(captureNow: false);
                     }
@@ -270,14 +274,14 @@ namespace AutoScreenCapture
                     timerScreenCapture.Enabled = true;
                     timerScreenCapture.Start();
 
-                    Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
+                    _log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStarted");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStarted);
                 }
             }
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-ScreenCapture::StartScreenCapture", ex);
+                _log.WriteExceptionMessage("FormMain-ScreenCapture::StartScreenCapture", ex);
             }
         }
 
@@ -288,20 +292,20 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteMessage("Stopping screen capture");
+                _log.WriteMessage("Stopping screen capture");
 
-                if (ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
+                if (_screenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
-                    Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    _log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     _formEnterPassphrase.ShowDialog(this);
                 }
 
                 // This is intentional. Do not rewrite these statements as an if/else
                 // because as soon as lockScreenCaptureSession is set to false we want
                 // to continue with normal functionality.
-                if (!ScreenCapture.LockScreenCaptureSession)
+                if (!_screenCapture.LockScreenCaptureSession)
                 {
-                    Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = string.Empty;
+                    _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value = string.Empty;
                     SaveSettings();
 
                     DisableStopCapture();
@@ -317,14 +321,14 @@ namespace AutoScreenCapture
                     SearchFilterValues();
                     SearchDates();
 
-                    Log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
+                    _log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
                     RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
             }
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-ScreenCapture::StopScreenCapture", ex);
+                _log.WriteExceptionMessage("FormMain-ScreenCapture::StopScreenCapture", ex);
             }
         }
 
@@ -335,7 +339,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowEdit()
         {
-            string defaultEditor = Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value.ToString();
+            string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {
@@ -359,10 +363,10 @@ namespace AutoScreenCapture
                 return false;
             }
 
-            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken)
+            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
                 ViewId = screen.ViewId,
-                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, screen.Folder, _formMacroTag.MacroTagCollection)) + MacroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection),
+                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection, _log),
                 Bitmap = bitmap,
                 Format = screen.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
@@ -390,10 +394,10 @@ namespace AutoScreenCapture
                 return false;
             }
 
-            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken)
+            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
                 ViewId = region.ViewId,
-                Path = FileSystem.CorrectScreenshotsFolderPath(MacroParser.ParseTags(config: false, region.Folder, _formMacroTag.MacroTagCollection)) + MacroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection),
+                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, region.Folder, _formTag.TagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection, _log),
                 Bitmap = bitmap,
                 Format = region.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
@@ -416,14 +420,14 @@ namespace AutoScreenCapture
 
         private void ScreenshotTakenWithSuccess()
         {
-            Log.WriteDebugMessage("Running triggers of condition type AfterScreenshotTaken");
+            _log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
 
             RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotTaken);
         }
 
         private void ScreenshotTakenWithFailure()
         {
-            Log.WriteMessage("Application encountered error while taking a screenshot. Stopping screen capture");
+            _log.WriteMessage("Application encountered error while taking a screenshot. Stopping screen capture");
 
             StopScreenCapture();
         }
@@ -518,7 +522,7 @@ namespace AutoScreenCapture
             string autoSaveFolder = textBoxAutoSaveFolder.Text;
             string autoSaveMacro = textBoxAutoSaveMacro.Text;
 
-            ImageFormat imageFormat = new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG);
+            ImageFormat imageFormat = new ImageFormat("JPEG", ".jpeg");
 
             if (_screenCapture.GetScreenImages(-1, -1, x, y, width, height, mouse: false, resolutionRatio: 100, out Bitmap bitmap))
             {
@@ -549,7 +553,7 @@ namespace AutoScreenCapture
         private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted(object sender, EventArgs e)
         {
             // Get the name of the default image editor.
-            string defaultEditor = Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value.ToString();
+            string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {
@@ -602,7 +606,7 @@ namespace AutoScreenCapture
 
                     if (_screenCapture.Count == _screenCapture.Limit)
                     {
-                        Log.WriteDebugMessage("Running triggers of condition type LimitReached");
+                        _log.WriteDebugMessage("Running triggers of condition type LimitReached");
                         RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                     }
                 }
@@ -641,7 +645,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormMain-ScreenCapture::ActiveWindowTitleMatchesText", ex);
+                _log.WriteExceptionMessage("FormMain-ScreenCapture::ActiveWindowTitleMatchesText", ex);
 
                 return false;
             }

@@ -33,7 +33,7 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         // The "About Auto Screen Capture" form.
-        private FormAbout _formAbout = new FormAbout();
+        private FormAbout _formAbout;
 
         // The "Auto Screen Capture - Help" form.
         private FormHelp _formHelp = new FormHelp();
@@ -48,28 +48,28 @@ namespace AutoScreenCapture
         private SftpClient _sftpClient = null;
 
         // The various forms that are used for modules.
-        private FormMacroTag _formMacroTag = new FormMacroTag();
-        private FormRegion _formRegion = new FormRegion();
-        private FormScreen _formScreen = new FormScreen();
-        private FormEditor _formEditor = new FormEditor();
-        private FormTrigger _formTrigger = new FormTrigger();
-        private FormSchedule _formSchedule = new FormSchedule();
+        private FormTag _formTag;
+        private FormRegion _formRegion;
+        private FormScreen _formScreen;
+        private FormEditor _formEditor;
+        private FormTrigger _formTrigger;
+        private FormSchedule _formSchedule;
 
         // Screeshot Properties
         private FormScreenshotMetadata _formScreenshotMetadata = new FormScreenshotMetadata();
 
         // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
-        private FormEnterPassphrase _formEnterPassphrase = new FormEnterPassphrase();
+        private FormEnterPassphrase _formEnterPassphrase;
 
-        // A small window is shown when the user selects "Screen Capture Status" from the system tray icon menu.
-        private FormScreenCaptureStatus _formScreenCaptureStatus = new FormScreenCaptureStatus();
+        // A small window is shown when the user selects "Show Screen Capture Status" from the system tray icon menu.
+        private FormScreenCaptureStatus _formScreenCaptureStatus;
 
         // The Dynamic Regex Validator tool.
         private FormDynamicRegexValidator _formDynamicRegexValidator = new FormDynamicRegexValidator();
 
         // Keyboard Shortcuts
-        private HotKeyMap _hotKeyMap = new HotKeyMap();
-        private FormKeyboardShortcuts _formKeyboardShortcuts = new FormKeyboardShortcuts();
+        private HotKeyMap _hotKeyMap;
+        private FormKeyboardShortcuts _formKeyboardShortcuts;
         private string _keyboardShortcutStartScreenCaptureKeyUserSetting;
         private string _keyboardShortcutStopScreenCaptureKeyUserSetting;
         private string _keyboardShortcutCaptureNowArchiveKeyUserSetting;
@@ -78,7 +78,14 @@ namespace AutoScreenCapture
         private string _keyboardShortcutRegionSelectAutoSaveKeyUserSetting;
         private string _keyboardShortcutRegionSelectEditKeyUserSetting;
 
+        private Log _log;
+        private Config _config;
+        private FileSystem _fileSystem;
+        private Security _security;
+        private Slideshow _slideShow;
+        private DataConvert _dataConvert;
         private ScreenCapture _screenCapture;
+        private MacroParser _macroParser;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenshotCollection _screenshotCollection;
 
@@ -107,8 +114,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Constructor for the main form.
         /// </summary>
-        public FormMain()
+        public FormMain(Config config, FileSystem fileSystem, Log log)
         {
+            _config = config;
+            _fileSystem = fileSystem;
+            _log = log;
+
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 AutoScaleMode = AutoScaleMode.Dpi;
@@ -117,12 +128,16 @@ namespace AutoScreenCapture
 
             InitializeComponent();
 
+            _security = new Security();
+            _slideShow = new Slideshow();
+            _dataConvert = new DataConvert();
+
             RegisterKeyboardShortcuts();
             _hotKeyMap.KeyPressed += new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
 
             LoadSettings();
 
-            Text = (string)Settings.Application.GetByKey("Name", DefaultSettings.ApplicationName).Value;
+            Text = (string)_config.Settings.Application.GetByKey("Name", _config.Settings.ApplicationName).Value;
 
             // Get rid of the old "slides" directory that may still remain from an old version of the application.
             DeleteSlides();
@@ -136,8 +151,8 @@ namespace AutoScreenCapture
         private void FormMain_Load(object sender, EventArgs e)
         {
             HelpMessage("Welcome to " +
-                Settings.Application.GetByKey("Name", DefaultSettings.ApplicationName).Value + " " +
-                Settings.Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value);
+                _config.Settings.Application.GetByKey("Name", _config.Settings.ApplicationName).Value + " " +
+                _config.Settings.Application.GetByKey("Version", _config.Settings.ApplicationVersion).Value);
 
             // Start the scheduled capture timer.
             timerScheduledCapture.Interval = 1000;
@@ -152,7 +167,7 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
-            Log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
+            _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
         }
 
@@ -173,11 +188,11 @@ namespace AutoScreenCapture
 
                 HideSystemTrayIcon();
 
-                Log.WriteDebugMessage("Hiding interface on forced application exit because Windows is shutting down");
+                _log.WriteDebugMessage("Hiding interface on forced application exit because Windows is shutting down");
                 HideInterface();
 
-                Log.WriteDebugMessage("Saving screenshots on forced application exit because Windows is shutting down");
-                _screenshotCollection.SaveToXmlFile();
+                _log.WriteDebugMessage("Saving screenshots on forced application exit because Windows is shutting down");
+                _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value, _macroParser, _config);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -189,14 +204,14 @@ namespace AutoScreenCapture
                     runScreenshotSearchThread.CancelAsync();
                 }
 
-                Log.WriteMessage("Bye!");
+                _log.WriteMessage("Bye!");
 
                 // Exit.
                 Environment.Exit(0);
             }
             else
             {
-                Log.WriteDebugMessage("Running triggers of condition type InterfaceClosing");
+                _log.WriteDebugMessage("Running triggers of condition type InterfaceClosing");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceClosing);
 
                 // If there isn't a Trigger for "InterfaceClosing" that performs an action
@@ -211,7 +226,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void SearchDates()
         {
-            Log.WriteDebugMessage("Searching for dates");
+            _log.WriteDebugMessage("Searching for dates");
 
             if (runDateSearchThread == null)
             {
@@ -233,7 +248,7 @@ namespace AutoScreenCapture
 
         private void DeleteSlides()
         {
-            Log.WriteDebugMessage("Deleting slides directory from old version of application (if needed)");
+            _log.WriteDebugMessage("Deleting slides directory from old version of application (if needed)");
 
             if (runDeleteSlidesThread == null)
             {
@@ -288,7 +303,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void RunDeleteSlides(DoWorkEventArgs e)
         {
-            FileSystem.DeleteFilesInDirectory(FileSystem.SlidesFolder);
+            _fileSystem.DeleteFilesInDirectory(_fileSystem.SlidesFolder);
         }
 
         /// <summary>
@@ -298,20 +313,20 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage("Showing interface");
+                _log.WriteDebugMessage("Showing interface");
 
-                if (!Visible && ScreenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
+                if (_screenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
                 {
-                    Log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
+                    _log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
                     _formEnterPassphrase.ShowDialog(this);
                 }
 
                 // This is intentional. Do not rewrite these statements as an if/else
                 // because as soon as lockScreenCaptureSession is set to false we want
                 // to continue with normal functionality.
-                if (!ScreenCapture.LockScreenCaptureSession)
+                if (!_screenCapture.LockScreenCaptureSession)
                 {
-                    Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value = string.Empty;
+                    _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value = string.Empty;
                     SaveSettings();
 
                     Opacity = 100;
@@ -348,7 +363,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain::ShowInterface", ex);
+                _log.WriteExceptionMessage("FormMain::ShowInterface", ex);
             }
         }
 
@@ -359,7 +374,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage("Hiding interface");
+                _log.WriteDebugMessage("Hiding interface");
 
                 Opacity = 0;
 
@@ -373,7 +388,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain::HideInterface", ex);
+                _log.WriteExceptionMessage("FormMain::HideInterface", ex);
             }
         }
 
@@ -570,7 +585,7 @@ namespace AutoScreenCapture
                 System.Threading.Thread.Sleep(delayBefore);
             }
 
-            ScreenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+            _screenCapture.SetApplicationFocus(comboBoxProcessList.Text);
 
             if (delayAfter > 0)
             {

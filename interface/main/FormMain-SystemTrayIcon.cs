@@ -31,7 +31,7 @@ namespace AutoScreenCapture
         {
             PopulateLabelList();
 
-            if (ScreenCapture.LockScreenCaptureSession)
+            if (_screenCapture.LockScreenCaptureSession)
             {
                 // Hide the "Screen Capture Status", "Add", "Settings", and "Tools" menu items.
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
@@ -106,7 +106,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (ScreenCapture.LockScreenCaptureSession)
+                if (_screenCapture.LockScreenCaptureSession)
                 {
                     notifyIcon.Text = string.Empty;
 
@@ -124,7 +124,7 @@ namespace AutoScreenCapture
 
                         labelHelp.Image = Resources.warning;
                         labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
-                        HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
+                        HelpMessage($"Please check \"{ _fileSystem.DebugFolder + _fileSystem.ErrorFile}\"");
                     }
                     else if (_screenCapture.ApplicationWarning)
                     {

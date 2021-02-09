@@ -37,8 +37,7 @@ namespace AutoScreenCapture
 
             _formScreen.ScreenObject = null;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
-            _formScreen.ScreenCapture = _screenCapture;
-            _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
+            _formScreen.TagCollection = _formTag.TagCollection;
 
             if (!_formScreen.Visible)
             {
@@ -55,7 +54,7 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -90,7 +89,7 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -120,8 +119,7 @@ namespace AutoScreenCapture
 
             _formScreen.ScreenObject = screen;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
-            _formScreen.ScreenCapture = _screenCapture;
-            _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
+            _formScreen.TagCollection = _formTag.TagCollection;
 
             _formScreen.ShowDialog(this);
 
@@ -130,7 +128,7 @@ namespace AutoScreenCapture
                 BuildScreensModule();
                 BuildViewTabPages();
 
-                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -154,7 +152,7 @@ namespace AutoScreenCapture
                     BuildScreensModule();
                     BuildViewTabPages();
 
-                    if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                    if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
                     {
                         _screenCapture.ApplicationError = true;
                     }
@@ -210,7 +208,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-Screens::RunScreenCaptures", ex);
+                _log.WriteExceptionMessage("FormMain-Screens::RunScreenCaptures", ex);
             }
         }
     }

@@ -28,20 +28,22 @@ namespace AutoScreenCapture
     /// </summary>
     public class ImageFormatCollection : IEnumerable<ImageFormat>
     {
-        private readonly List<ImageFormat> _imageFormatList = new List<ImageFormat>();
+        private readonly List<ImageFormat> _imageFormatList;
 
         /// <summary>
         /// Adds the default image formats to the ImageFormat collection.
         /// </summary>
         public ImageFormatCollection()
         {
-            Add(new ImageFormat(ImageFormatSpec.NAME_BMP, ImageFormatSpec.EXTENSION_BMP));
-            Add(new ImageFormat(ImageFormatSpec.NAME_EMF, ImageFormatSpec.EXTENSION_EMF));
-            Add(new ImageFormat(ImageFormatSpec.NAME_GIF, ImageFormatSpec.EXTENSION_GIF));
-            Add(new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG));
-            Add(new ImageFormat(ImageFormatSpec.NAME_PNG, ImageFormatSpec.EXTENSION_PNG));
-            Add(new ImageFormat(ImageFormatSpec.NAME_TIFF, ImageFormatSpec.EXTENSION_TIFF));
-            Add(new ImageFormat(ImageFormatSpec.NAME_WMF, ImageFormatSpec.EXTENSION_WMF));
+            _imageFormatList = new List<ImageFormat>();
+
+            Add(new ImageFormat("BMP", ".bmp"));
+            Add(new ImageFormat("EMF", ".emf"));
+            Add(new ImageFormat("GIF", ".gif"));
+            Add(new ImageFormat("JPEG", ".jpeg"));
+            Add(new ImageFormat("PNG", ".png"));
+            Add(new ImageFormat("TIFF", ".tiff"));
+            Add(new ImageFormat("WMF", ".wmf"));
         }
 
         /// <summary>
@@ -70,8 +72,6 @@ namespace AutoScreenCapture
         public void Add(ImageFormat imageFormat)
         {
             _imageFormatList.Add(imageFormat);
-
-            Log.WriteDebugMessage("Image format added: " + imageFormat.Name + " (" + imageFormat.Extension + ")");
         }
 
         /// <summary>

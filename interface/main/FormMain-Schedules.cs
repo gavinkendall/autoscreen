@@ -46,9 +46,9 @@ namespace AutoScreenCapture
                 }
 
                 // Parse commands issued externally via the command line.
-                if (FileSystem.FileExists(FileSystem.CommandFile))
+                if (_fileSystem.FileExists(_fileSystem.CommandFile))
                 {
-                    string[] args = FileSystem.ReadFromFile(FileSystem.CommandFile);
+                    string[] args = _fileSystem.ReadFromFile(_fileSystem.CommandFile);
 
                     if (args.Length > 0)
                     {
@@ -57,7 +57,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    FileSystem.CreateFile(FileSystem.CommandFile);
+                    _fileSystem.CreateFile(_fileSystem.CommandFile);
                 }
 
                 // Displays the next time screenshots are going to be captured
@@ -118,20 +118,20 @@ namespace AutoScreenCapture
                     }
 
                     if (trigger.ConditionType == TriggerConditionType.DateTime &&
-                        trigger.Date.ToString(MacroParser.DateFormat).Equals(dtNow.ToString(MacroParser.DateFormat)) &&
-                        trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                        trigger.Date.ToString(_macroParser.DateFormat).Equals(dtNow.ToString(_macroParser.DateFormat)) &&
+                        trigger.Time.ToString(_macroParser.TimeFormatForTrigger).Equals(dtNow.ToString(_macroParser.TimeFormatForTrigger)))
                     {
                         DoTriggerAction(trigger);
                     }
 
                     if (trigger.ConditionType == TriggerConditionType.Time &&
-                        trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                        trigger.Time.ToString(_macroParser.TimeFormatForTrigger).Equals(dtNow.ToString(_macroParser.TimeFormatForTrigger)))
                     {
                         DoTriggerAction(trigger);
                     }
 
                     if (trigger.ConditionType == TriggerConditionType.DayTime &&
-                        trigger.Time.ToString(MacroParser.TimeFormatForTrigger).Equals(dtNow.ToString(MacroParser.TimeFormatForTrigger)))
+                        trigger.Time.ToString(_macroParser.TimeFormatForTrigger).Equals(dtNow.ToString(_macroParser.TimeFormatForTrigger)))
                     {
                         if (trigger.Day.Equals(dtNow.DayOfWeek.ToString()))
                         {
@@ -157,7 +157,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-Schedules::timerScheduledCapture_Tick", ex);
+                _log.WriteExceptionMessage("FormMain-Schedules::timerScheduledCapture_Tick", ex);
             }
         }
 
@@ -167,7 +167,7 @@ namespace AutoScreenCapture
 
             _formSchedule.ScheduleObject = null;
 
-            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                         (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                         (int)numericUpDownMillisecondsInterval.Value);
 
@@ -187,7 +187,7 @@ namespace AutoScreenCapture
             {
                 BuildSchedulesModule();
 
-                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -216,7 +216,7 @@ namespace AutoScreenCapture
             {
                 BuildSchedulesModule();
 
-                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings,_fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -247,7 +247,7 @@ namespace AutoScreenCapture
             {
                 BuildSchedulesModule();
 
-                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }

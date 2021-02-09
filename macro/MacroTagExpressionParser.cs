@@ -26,7 +26,7 @@ namespace AutoScreenCapture
     /// <summary>
     /// Parses macro tag expressions.
     /// </summary>
-    public static class MacroTagExpressionParser
+    public class MacroTagExpressionParser
     {
         // A macro tag expression is surrounded by curly braces and gets interpreted to return a result.
         // At the moment I'm only interested in implementing date/time format expressions.
@@ -34,7 +34,12 @@ namespace AutoScreenCapture
         // For example ...
         // {year-1}            1 year behind the given DateTime
         // {minute+5}          5 minutes ahead the given DateTime
-        private static readonly string DateTimeFormatTagExpressionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}(?<DateTimeFormat>\[.+\])?$";
+        private readonly string DateTimeFormatTagExpressionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}(?<DateTimeFormat>\[.+\])?$";
+
+        public MacroTagExpressionParser()
+        {
+
+        }
 
         /// <summary>
         /// Parses macro tag expressions for date/time format.
@@ -42,7 +47,7 @@ namespace AutoScreenCapture
         /// <param name="dateTime">The date/time object to parse.</param>
         /// <param name="tagExpression">The tag expression to use on the date/time object.</param>
         /// <returns>A parsed macro string value.</returns>
-        public static string ParseTagExpressionForDateTimeFormat(DateTime dateTime, string tagExpression)
+        public string ParseTagExpressionForDateTimeFormat(DateTime dateTime, string tagExpression, MacroParser macroParser)
         {
             string result = tagExpression;
 
@@ -58,37 +63,37 @@ namespace AutoScreenCapture
                     if (dateTimePart.Equals("year"))
                     {
                         dateTime = dateTime.AddYears(-@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.YearFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.YearFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("month"))
                     {
                         dateTime = dateTime.AddMonths(-@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.MonthFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.MonthFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("day"))
                     {
                         dateTime = dateTime.AddDays(-@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.DayFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.DayFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("hour"))
                     {
                         dateTime = dateTime.AddHours(-@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.HourFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.HourFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("minute"))
                     {
                         dateTime = dateTime.AddMinutes(-@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.MinuteFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.MinuteFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("second"))
                     {
                         dateTime = dateTime.AddSeconds(-@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.SecondFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.SecondFormat) : dateTime.ToString(dateTimeFormat);
                     }
                 }
 
@@ -97,37 +102,37 @@ namespace AutoScreenCapture
                     if (dateTimePart.Equals("year"))
                     {
                         dateTime = dateTime.AddYears(+@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.YearFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.YearFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("month"))
                     {
                         dateTime = dateTime.AddMonths(+@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.MonthFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.MonthFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("day"))
                     {
                         dateTime = dateTime.AddDays(+@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.DayFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.DayFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("hour"))
                     {
                         dateTime = dateTime.AddHours(+@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.HourFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.HourFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("minute"))
                     {
                         dateTime = dateTime.AddMinutes(+@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.MinuteFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.MinuteFormat) : dateTime.ToString(dateTimeFormat);
                     }
 
                     if (dateTimePart.Equals("second"))
                     {
                         dateTime = dateTime.AddSeconds(+@value);
-                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(MacroParser.SecondFormat) : dateTime.ToString(dateTimeFormat);
+                        result = string.IsNullOrEmpty(dateTimeFormat) ? dateTime.ToString(macroParser.SecondFormat) : dateTime.ToString(dateTimeFormat);
                     }
                 }
             }

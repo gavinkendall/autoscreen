@@ -85,7 +85,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="command\CommandLineRegex.cs" />
     <Compile Include="config\Config.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="help\HelpTip.cs" />
@@ -275,7 +274,6 @@
     </Compile>
     <Compile Include="image_format\ImageFormat.cs" />
     <Compile Include="image_format\ImageFormatCollection.cs" />
-    <Compile Include="image_format\ImageFormatSpec.cs" />
     <Compile Include="log\Log.cs" />
     <Compile Include="modules\triggers\TriggerAction.cs" />
     <Compile Include="modules\triggers\TriggerActionType.cs" />

@@ -60,10 +60,11 @@ namespace AutoScreenCapture
         /// Checks to see if we're loading an XML document from an old version of the application.
         /// This is used by the collections for editors, regions, screens, tags, screenshots, triggers, and settings.
         /// </summary>
+        /// <param name="settings"></param>
         /// <param name="appCodenameToCheck">The codename of the application to check.</param>
         /// <param name="appVersionToCheck">The version of the application to check.</param>
         /// <returns>True if we're handling a file from an old version. False if it's the current version or we don't know what version it is.</returns>
-        public bool IsOldAppVersion(string appCodenameToCheck, string appVersionToCheck)
+        public bool IsOldAppVersion(Settings settings, string appCodenameToCheck, string appVersionToCheck)
         {
             if (string.IsNullOrEmpty(appCodenameToCheck) && string.IsNullOrEmpty(appVersionToCheck))
             {
@@ -76,7 +77,7 @@ namespace AutoScreenCapture
             if (!string.IsNullOrEmpty(appCodenameToCheck) && !string.IsNullOrEmpty(appVersionToCheck))
             {
                 Version versionInConfig = Versions.Get(appCodenameToCheck, appVersionToCheck);
-                Version versionHere = Versions.Get(Settings.ApplicationCodename, Settings.ApplicationVersion);
+                Version versionHere = Versions.Get(settings.ApplicationCodename, settings.ApplicationVersion);
 
                 // All of these were a mistake. They should never have had their revision numbers go beyond 9.
                 // So if we find any of these versions then treat them as old versions of the application.

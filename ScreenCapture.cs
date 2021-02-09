@@ -36,6 +36,11 @@ namespace AutoScreenCapture
     /// </summary>
     public class ScreenCapture
     {
+        private Log _log;
+        private Config _config;
+        private MacroParser _macroParser;
+        private FileSystem _fileSystem;
+
         [StructLayout(LayoutKind.Sequential)]
         private struct CURSORINFO
         {
@@ -155,10 +160,12 @@ namespace AutoScreenCapture
             private int dmPanningHeight;
         }
 
+        private DEVMODE _dm;
+
         /// <summary>
         /// A struct containing a Windows Forms screen object, display device width, and display device height.
         /// </summary>
-        public struct DeviceResolution
+        public struct DeviceOptions
         {
             /// <summary>
             /// A Windows Forms screen object.
@@ -176,6 +183,13 @@ namespace AutoScreenCapture
             public int height;
         }
 
+        private DeviceOptions _device;
+
+        private Bitmap _bitmapSource;
+        private Bitmap _bitmapDestination;
+
+        private StringBuilder _sb;
+
         /// <summary>
         /// The minimum capture limit.
         /// </summary>
@@ -189,7 +203,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default image format.
         /// </summary>
-        public const string DefaultImageFormat = ImageFormatSpec.NAME_JPEG;
+        public const string DefaultImageFormat = "JPEG";
 
         private const int MAX_CHARS = 48000;
         private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
@@ -217,12 +231,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Determines if the screen capture session is locked.
         /// </summary>
-        public static bool LockScreenCaptureSession { get; set; }
+        public bool LockScreenCaptureSession { get; set; }
 
         /// <summary>
         /// Determines if we automatically start a screen capture session immediately when command line arguments are used.
         /// </summary>
-        public static bool AutoStartFromCommandLine { get; set; }
+        public bool AutoStartFromCommandLine { get; set; }
 
         /// <summary>
         /// Determines if a screen capture session is currently running.
@@ -286,6 +300,20 @@ namespace AutoScreenCapture
         /// </summary>
         public bool CaptureNow { get; set; }
 
+        /// <summary>
+        /// A class for handling screen capture methods.
+        /// </summary>
+        public ScreenCapture(Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
+        {
+            _log = log;
+            _config = config;
+            _macroParser = macroParser;
+            _fileSystem = fileSystem;
+
+            _dm = new DEVMODE();
+            _device = new DeviceOptions();
+        }
+
         private ImageCodecInfo GetEncoderInfo(string mimeType)
         {
             var encoders = ImageCodecInfo.GetImageEncoders();
@@ -294,22 +322,22 @@ namespace AutoScreenCapture
 
         private void AddScreenshotAndSaveToFile(int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
-            string dirName = FileSystem.GetDirectoryName(screenshot.Path);
+            string dirName = _fileSystem.GetDirectoryName(screenshot.Path);
 
             if (string.IsNullOrEmpty(dirName))
             {
-                Log.WriteDebugMessage("Directory name for screenshot with path \"" + screenshot.Path + "\" could not be found");
+                _log.WriteDebugMessage("Directory name for screenshot with path \"" + screenshot.Path + "\" could not be found");
 
                 return;
             }
 
             try
             {
-                if (!FileSystem.DirectoryExists(dirName))
+                if (!_fileSystem.DirectoryExists(dirName))
                 {
-                    FileSystem.CreateDirectory(dirName);
+                    _fileSystem.CreateDirectory(dirName);
 
-                    Log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
+                    _log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                 }
 
                 if (screenshotCollection.Add(screenshot))
@@ -325,14 +353,14 @@ namespace AutoScreenCapture
                         hash = "hash (" + screenshot.Hash + ")";
                     }
 
-                    Log.WriteDebugMessage("Could not save screenshot with path \"" + screenshot.Path + "\" because its " + hash + " may have matched with a previous hash that has already been used for an earlier screenshot");
+                    _log.WriteDebugMessage("Could not save screenshot with path \"" + screenshot.Path + "\" because its " + hash + " may have matched with a previous hash that has already been used for an earlier screenshot");
                 }
             }
-            catch (Exception)
+            catch
             {
                 // We don't want to stop the screen capture session at this point because there may be other components that
                 // can write to their given paths. If this is a misconfigured path for a particular component then just log an error.
-                Log.WriteErrorMessage($"Cannot write to \"{screenshot.Path}\" because the user may not have the appropriate permissions to access the path");
+                _log.WriteErrorMessage($"Cannot write to \"{screenshot.Path}\" because the user may not have the appropriate permissions to access the path");
             }
         }
 
@@ -342,7 +370,7 @@ namespace AutoScreenCapture
             {
                 if (bitmap != null && format != null && !string.IsNullOrEmpty(path))
                 {
-                    if (format.Name.Equals(ImageFormatSpec.NAME_JPEG))
+                    if (format.Name.Equals("JPEG"))
                     {
                         var encoderParams = new EncoderParameters(1);
                         encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuality);
@@ -358,14 +386,14 @@ namespace AutoScreenCapture
 
                     bitmap.Dispose();
 
-                    Log.WriteMessage("Screenshot saved to file at path \"" + path + "\"");
+                    _log.WriteMessage("Screenshot saved to file at path \"" + path + "\"");
                 }
             }
-            catch (Exception)
+            catch
             {
                 // We want to write to the error file instead of writing an exception just in case the user
                 // has ExitOnError set and the exception causes the application to exit.
-                Log.WriteErrorMessage("There was an error encountered when saving the screenshot image.");
+                _log.WriteErrorMessage("There was an error encountered when saving the screenshot image.");
             }
         }
 
@@ -374,23 +402,17 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="screen">The Windows Forms screen object associated with the display device.</param>
         /// <returns>A struct having the screen, display device width, and display device height.</returns>
-        public static DeviceResolution GetDeviceResolution(System.Windows.Forms.Screen screen)
+        public DeviceOptions GetDevice(System.Windows.Forms.Screen screen)
         {
-            DEVMODE dm = new DEVMODE
-            {
-                dmSize = (short)Marshal.SizeOf(typeof(DEVMODE))
-            };
+            _dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
 
-            EnumDisplaySettings(screen.DeviceName, ENUM_CURRENT_SETTINGS, ref dm);
+            EnumDisplaySettings(screen.DeviceName, ENUM_CURRENT_SETTINGS, ref _dm);
 
-            DeviceResolution deviceResolution = new DeviceResolution()
-            {
-                screen = screen,
-                width = dm.dmPelsWidth,
-                height = dm.dmPelsHeight
-            };
+            _device.screen = screen;
+            _device.width = _dm.dmPelsWidth;
+            _device.height = _dm.dmPelsHeight;
 
-            return deviceResolution;
+            return _device;
         }
 
         /// <summary>
@@ -404,9 +426,9 @@ namespace AutoScreenCapture
             {
                 Image image = null;
 
-                if (!string.IsNullOrEmpty(path) && FileSystem.FileExists(path))
+                if (!string.IsNullOrEmpty(path) && _fileSystem.FileExists(path))
                 {
-                    image = FileSystem.GetImage(path);
+                    image = _fileSystem.GetImage(path);
                 }
 
                 CaptureError = false;
@@ -415,7 +437,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCapture::GetImageByPath", ex);
+                _log.WriteExceptionMessage("ScreenCapture::GetImageByPath", ex);
 
                 CaptureError = true;
 
@@ -455,8 +477,8 @@ namespace AutoScreenCapture
                     int destinationWidth = (int)(width * imageResolutionRatio);
                     int destinationHeight = (int)(height * imageResolutionRatio);
 
-                    Bitmap bitmapSource = new Bitmap(width, height);
-                    Graphics graphicsSource = Graphics.FromImage(bitmapSource);
+                    _bitmapSource = new Bitmap(width, height);
+                    Graphics graphicsSource = Graphics.FromImage(_bitmapSource);
 
                     graphicsSource.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
 
@@ -476,17 +498,19 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    Bitmap bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
+                    _bitmapDestination = new Bitmap(destinationWidth, destinationHeight);
 
-                    Graphics graphicsDestination = Graphics.FromImage(bitmapDestination);
-                    graphicsDestination.DrawImage(bitmapSource, 0, 0, destinationWidth, destinationHeight);
+                    Graphics graphicsDestination = Graphics.FromImage(_bitmapDestination);
+                    graphicsDestination.DrawImage(_bitmapSource, 0, 0, destinationWidth, destinationHeight);
 
                     graphicsSource.Flush();
                     graphicsDestination.Flush();
 
+                    _bitmapSource.Dispose();
+
                     CaptureError = false;
-                    
-                    return bitmapDestination;
+
+                    return _bitmapDestination;
                 }
 
                 CaptureError = true;
@@ -498,7 +522,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    Log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
+                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
                 }
 
                 CaptureError = true;
@@ -526,15 +550,15 @@ namespace AutoScreenCapture
 
                 if (width > 0 && height > 0)
                 {
-                    Bitmap bitmap = new Bitmap(width, height);
+                    _bitmapDestination = new Bitmap(width, height);
 
-                    Graphics graphics = Graphics.FromImage(bitmap);
+                    Graphics graphics = Graphics.FromImage(_bitmapDestination);
 
                     graphics.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
 
                     CaptureError = false;
 
-                    return bitmap;
+                    return _bitmapDestination;
                 }
 
                 CaptureError = true;
@@ -546,7 +570,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    Log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
+                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
                 }
 
                 CaptureError = true;
@@ -588,7 +612,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCapture::GetActiveWindowTitle", ex);
+                _log.WriteExceptionMessage("ScreenCapture::GetActiveWindowTitle", ex);
 
                 CaptureError = true;
 
@@ -611,7 +635,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCapture::GetActiveWindowProcessName", ex);
+                _log.WriteExceptionMessage("ScreenCapture::GetActiveWindowProcessName", ex);
 
                 return null;
             }
@@ -651,7 +675,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCapture::GetScreenImages", ex);
+                _log.WriteExceptionMessage("ScreenCapture::GetScreenImages", ex);
 
                 bitmap = null;
 
@@ -676,27 +700,27 @@ namespace AutoScreenCapture
         {
             try
             {
-                int filepathLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit).Value);
-                
+                int filepathLengthLimit = Convert.ToInt32(_config.Settings.Application.GetByKey("FilepathLengthLimit", _config.Settings.DefaultSettings.FilepathLengthLimit).Value);
+
                 if (!string.IsNullOrEmpty(screenshot.Path))
                 {
                     if (screenshot.Path.Length > filepathLengthLimit)
                     {
-                        Log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
+                        _log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
                         screenshot.Path = screenshot.Path.Substring(0, filepathLengthLimit);
                     }
 
-                    Log.WriteMessage("Attempting to write image to file at path \"" + screenshot.Path + "\"");
+                    _log.WriteMessage("Attempting to write image to file at path \"" + screenshot.Path + "\"");
 
                     // This is a normal path used in Windows (such as "C:\screenshots\").
-                    if (!screenshot.Path.StartsWith(FileSystem.PathDelimiter))
+                    if (!screenshot.Path.StartsWith(_fileSystem.PathDelimiter))
                     {
-                        if (FileSystem.DriveReady(screenshot.Path))
+                        if (_fileSystem.DriveReady(screenshot.Path))
                         {
-                            int lowDiskSpacePercentageThreshold = Convert.ToInt32(Settings.Application.GetByKey("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold).Value);
-                            double freeDiskSpacePercentage = FileSystem.FreeDiskSpacePercentage(screenshot.Path);
+                            int lowDiskSpacePercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold", _config.Settings.DefaultSettings.LowDiskPercentageThreshold).Value);
+                            double freeDiskSpacePercentage = _fileSystem.FreeDiskSpacePercentage(screenshot.Path);
 
-                            Log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.Path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
+                            _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.Path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
 
                             if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                             {
@@ -705,26 +729,26 @@ namespace AutoScreenCapture
                             else
                             {
                                 // There is not enough disk space on the drive so log an error message and change the system tray icon's colour to yellow.
-                                Log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {screenshot.Path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "%");
+                                _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {screenshot.Path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "%");
 
-                                bool stopOnLowDiskError = Convert.ToBoolean(Settings.Application.GetByKey("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError).Value);
+                                bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
 
                                 if (stopOnLowDiskError)
                                 {
-                                    Log.WriteErrorMessage("Running screen capture session has stopped because application setting StopOnLowDiskError was set to True when the available disk space on any drive was lower than the value of LowDiskPercentageThreshold");
+                                    _log.WriteErrorMessage("Running screen capture session has stopped because application setting StopOnLowDiskError was set to True when the available disk space on any drive was lower than the value of LowDiskPercentageThreshold");
 
                                     ApplicationError = true;
 
                                     return false;
                                 }
-                                
+
                                 ApplicationWarning = true;
                             }
                         }
                         else
                         {
                             // Drive isn't ready so log an error message.
-                            Log.WriteErrorMessage($"Unable to save screenshot for \"{screenshot.Path}\" because the drive is not found or not ready");
+                            _log.WriteErrorMessage($"Unable to save screenshot for \"{screenshot.Path}\" because the drive is not found or not ready");
                         }
                     }
                     else
@@ -736,17 +760,17 @@ namespace AutoScreenCapture
 
                 return true;
             }
-            catch (System.IO.PathTooLongException ex)
+            catch (PathTooLongException ex)
             {
-                Log.WriteErrorMessage($"The path is too long. I see the path is \"{screenshot.Path}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
-                Log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
+                _log.WriteErrorMessage($"The path is too long. I see the path is \"{screenshot.Path}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
+                _log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
 
                 // This shouldn't be an error that should stop a screen capture session.
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
+                _log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
 
                 return false;
             }
@@ -756,7 +780,7 @@ namespace AutoScreenCapture
         /// Sets the application focus to the defined application using a given process name.
         /// </summary>
         /// <param name="applicationFocus">The name of the process of the application to focus.</param>
-        public static void SetApplicationFocus(string applicationFocus)
+        public void SetApplicationFocus(string applicationFocus)
         {
             if (string.IsNullOrEmpty(applicationFocus)) return;
 
@@ -784,8 +808,9 @@ namespace AutoScreenCapture
         /// <param name="bitmap">The bitmap to operate on.</param>
         /// <param name="format">The image format to use.</param>
         /// <returns>A hash of the image.</returns>
-        public static string GetMD5Hash(Bitmap bitmap, ImageFormat format)
+        public string GetMD5Hash(Bitmap bitmap, ImageFormat format)
         {
+            byte[] hash = null;
             byte[] bytes = null;
 
             using (MemoryStream ms = new MemoryStream())
@@ -794,18 +819,24 @@ namespace AutoScreenCapture
                 bytes = ms.ToArray();
             }
 
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+            {
+                hash = md5.ComputeHash(bytes);
+            }
 
-            byte[] hash = md5.ComputeHash(bytes);
+            if (hash == null)
+            {
+                return null;
+            }
 
-            StringBuilder sb = new StringBuilder();
+            _sb = new StringBuilder();
 
             foreach (byte b in hash)
             {
-                sb.Append(b.ToString("x2").ToLower());
+                _sb.Append(b.ToString("x2").ToLower());
             }
 
-            return sb.ToString();
+            return _sb.ToString();
         }
     }
 }

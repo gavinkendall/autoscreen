@@ -27,54 +27,67 @@ namespace AutoScreenCapture
     /// <summary>
     /// The Macro Parser is responsible for parsing some given text looking for "macro tags" and responding with the appropriate value for each macro tag.
     /// </summary>
-    public static class MacroParser
+    public class MacroParser
     {
-        private static readonly string WindowsPathRegexPattern = "^(?<DriveOrUNCPrefix>[A-Z]:\\\\{1}|\\\\{1})(?<Path>.+)$";
+        private Settings _settings;
+        private MacroTagExpressionParser _macroTagExpressionParser;
+
+        private readonly string WindowsPathRegexPattern = "^(?<DriveOrUNCPrefix>[A-Z]:\\\\{1}|\\\\{1})(?<Path>.+)$";
 
         /// <summary>
         /// The screen capture class needed for some of the macro tag parsing.
         /// </summary>
-        public static ScreenCapture screenCapture;
+        public ScreenCapture screenCapture;
 
         /// <summary>
         /// The format for years.
         /// </summary>
-        public static readonly string YearFormat = "yyyy";
+        public readonly string YearFormat = "yyyy";
 
         /// <summary>
         /// The format for months.
         /// </summary>
-        public static readonly string MonthFormat = "MM";
+        public readonly string MonthFormat = "MM";
 
         /// <summary>
         /// The format for days.
         /// </summary>
-        public static readonly string DayFormat = "dd";
+        public readonly string DayFormat = "dd";
 
         /// <summary>
         /// The format for hours.
         /// </summary>
-        public static readonly string HourFormat = "HH";
+        public readonly string HourFormat = "HH";
 
         /// <summary>
         /// The format for minutes.
         /// </summary>
-        public static readonly string MinuteFormat = "mm";
+        public readonly string MinuteFormat = "mm";
 
         /// <summary>
         /// The format for seconds.
         /// </summary>
-        public static readonly string SecondFormat = "ss";
+        public readonly string SecondFormat = "ss";
 
         /// <summary>
         /// The format for milliseconds.
         /// </summary>
-        public static readonly string MillisecondFormat = "fff";
+        public readonly string MillisecondFormat = "fff";
+
+        /// <summary>
+        /// The Macro Parser is responsible for parsing some given text looking for "macro tags" and responding with the appropriate value for each macro tag.
+        /// </summary>
+        /// <param name="settings"></param>
+        public MacroParser(Settings settings)
+        {
+            _settings = settings;
+            _macroTagExpressionParser = new MacroTagExpressionParser();
+        }
 
         /// <summary>
         /// Returns a string representation of a date in the format yyyy-MM-dd
         /// </summary>
-        public static string DateFormat
+        public string DateFormat
         {
             get
             {
@@ -93,7 +106,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Returns a string representation of a time in the format HH:mm:ss.fff
         /// </summary>
-        public static string TimeFormat
+        public string TimeFormat
         {
             get
             {
@@ -114,7 +127,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Returns a string representation of a time in the format HH:mm:ss
         /// </summary>
-        public static string TimeFormatForTrigger
+        public string TimeFormatForTrigger
         {
             get
             {
@@ -133,7 +146,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Returns a string representation of a time in the format HH-mm-ss-fff that's safe for filenames in Windows.
         /// </summary>
-        public static string TimeFormatForWindows
+        public string TimeFormatForWindows
         {
             get
             {
@@ -154,7 +167,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default macro to be assigned to the Macro field for a new Screen or Region.
         /// </summary>
-        public static readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
+        public readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
 
         /// <summary>
         /// The default folder used for Region Select / Auto Save.
@@ -237,7 +250,7 @@ namespace AutoScreenCapture
 
                 case MacroTagType.DateTimeFormatExpression:
                     macro = macro.Replace(tag.Name,
-                        MacroTagExpressionParser.ParseTagExpressionForDateTimeFormat(dt, tag.DateTimeFormatValue));
+                        _macroTagExpressionParser.ParseTagExpressionForDateTimeFormat(dt, tag.DateTimeFormatValue, this));
                     break;
 
                 case MacroTagType.QuarterYear:
@@ -259,16 +272,17 @@ namespace AutoScreenCapture
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
+        /// <param name="log"></param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
         public static string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTagCollection tagCollection)
         {
             if (!config)
             {
-                int activeWindowTitleLengthLimit = Convert.ToInt32(Settings.Application.GetByKey("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit).Value);
+                int activeWindowTitleLengthLimit = Convert.ToInt32(_settings.Application.GetByKey("ActiveWindowTitleLengthLimit", _settings.DefaultSettings.ActiveWindowTitleLengthLimit).Value);
 
                 if (!string.IsNullOrEmpty(activeWindowTitle) && activeWindowTitle.Length > activeWindowTitleLengthLimit)
                 {
-                    Log.WriteMessage($"Active Window title length exceeds the configured length of {activeWindowTitleLengthLimit} characters so value was truncated. Correct the value for the ActiveWindowTitleLengthLimit application setting to prevent truncation");
+                    log.WriteMessage($"Active Window title length exceeds the configured length of {activeWindowTitleLengthLimit} characters so value was truncated. Correct the value for the ActiveWindowTitleLengthLimit application setting to prevent truncation");
                     activeWindowTitle = activeWindowTitle.Substring(0, activeWindowTitleLengthLimit);
                 }
             }
@@ -298,10 +312,10 @@ namespace AutoScreenCapture
                     tag.Type = MacroTagType.DateTimeFormat;
 
                     // Recursively call the same method we're in to parse each TimeRange macro as if it was a date/time macro tag.
-                    macro1Macro = ParseTags(preview, config, name, macro1Macro, screenNumber, format, activeWindowTitle, tagCollection);
-                    macro2Macro = ParseTags(preview, config, name, macro2Macro, screenNumber, format, activeWindowTitle, tagCollection);
-                    macro3Macro = ParseTags(preview, config, name, macro3Macro, screenNumber, format, activeWindowTitle, tagCollection);
-                    macro4Macro = ParseTags(preview, config, name, macro4Macro, screenNumber, format, activeWindowTitle, tagCollection);
+                    macro1Macro = ParseTags(preview, config, name, macro1Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
+                    macro2Macro = ParseTags(preview, config, name, macro2Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
+                    macro3Macro = ParseTags(preview, config, name, macro3Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
+                    macro4Macro = ParseTags(preview, config, name, macro4Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
 
                     // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeRange type.
                     tag.Type = MacroTagType.TimeRange;
@@ -345,11 +359,12 @@ namespace AutoScreenCapture
         /// <param name="config">Determines if we are parsing tags from the config file or not.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
+        /// <param name="log"></param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
         public static string ParseTags(bool config, string macro, MacroTagCollection tagCollection)
         {
             return ParseTags(preview: true, config, string.Empty, macro, 0,
-                new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG), string.Empty, tagCollection);
+                new ImageFormat("JPEG", ".jpeg"), string.Empty, tagCollection, log);
         }
 
         /// <summary>
@@ -357,7 +372,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="text">The string to parse.</param>
         /// <returns>A string that no longer contains invalid Windows characters.</returns>
-        private static string StripInvalidWindowsCharacters(string text)
+        private string StripInvalidWindowsCharacters(string text)
         {
             string prefix = string.Empty;
 

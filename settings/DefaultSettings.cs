@@ -26,77 +26,88 @@ namespace AutoScreenCapture
     /// <summary>
     /// The default settings for the application and the user.
     /// </summary>
-    public static class DefaultSettings
+    public class DefaultSettings
     {
         /// <summary>
         /// The name of this application.
         /// </summary>
-        public static readonly string ApplicationName = "Auto Screen Capture";
+        public string ApplicationName = "Auto Screen Capture";
 
         /// <summary>
         /// The version of this application. This is acquired from the application's assembly.
         /// </summary>
-        public static readonly string ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public string ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         // Default application settings.
-        internal static readonly bool DebugMode = false;
-        internal static readonly bool ExitOnError = true;
-        internal static readonly bool Logging = false;
-        internal static readonly int LowDiskPercentageThreshold = 1;
-        internal static readonly int ScreenshotsLoadLimit = 5000;
-        internal static readonly bool AutoStartFromCommandLine = false;
-        internal static readonly bool ShowStartupError = true;
-        internal static readonly int FilepathLengthLimit = 2000;
-        internal static readonly bool StopOnLowDiskError = true;
-        internal static readonly int ActiveWindowTitleLengthLimit = 2000;
-        internal static readonly bool OptimizeScreenCapture = true;
-        internal static readonly bool AllowUserToConfigureEmailSettings = true;
-        internal static readonly bool AllowUserToConfigureFileTransferSettings = true;
+        internal readonly bool DebugMode = false;
+        internal readonly bool ExitOnError = true;
+        internal readonly bool Logging = false;
+        internal readonly string EmailServerHost = "smtp.office365.com";
+        internal readonly int EmailServerPort = 587;
+        internal readonly bool EmailServerEnableSSL = true;
+        internal readonly string EmailClientUsername = string.Empty;
+        internal readonly string EmailClientPassword = string.Empty;
+        internal readonly string EmailMessageFrom = string.Empty;
+        internal readonly string EmailMessageTo = string.Empty;
+        internal readonly string EmailMessageCC = string.Empty;
+        internal readonly string EmailMessageBCC = string.Empty;
+        internal readonly string EmailMessageSubject = string.Empty;
+        internal readonly string EmailMessageBody = string.Empty;
+        internal readonly bool EmailPrompt = true;
+        internal readonly int LowDiskPercentageThreshold = 1;
+        internal readonly int ScreenshotsLoadLimit = 500;
+        internal readonly bool AutoStartFromCommandLine = false;
+        internal readonly bool ShowStartupError = true;
+        internal readonly int FilepathLengthLimit = 2000;
+        internal readonly bool StopOnLowDiskError = true;
+        internal readonly int ActiveWindowTitleLengthLimit = 2000;
+        internal readonly bool OptimizeScreenCapture = true;
 
         // Default user settings.
-        internal static readonly int ScreenCaptureInterval = 60000;
-        internal static readonly int CaptureLimit = 0;
-        internal static readonly bool CaptureLimitCheck = false;
-        internal static readonly bool TakeInitialScreenshot = false;
-        internal static readonly bool ShowSystemTrayIcon = true;
-        internal static readonly string Passphrase = string.Empty;
-        internal static readonly string ScreenshotLabel = string.Empty;
-        internal static readonly bool ApplyScreenshotLabel = false;
-        internal static readonly string DefaultEditor = string.Empty;
-        internal static readonly bool FirstRun = true;
-        internal static readonly int StartScreenCaptureCount = 0;
-        internal static readonly bool ActiveWindowTitleCaptureCheck = false;
-        internal static readonly string ActiveWindowTitleCaptureText = string.Empty;
-        internal static readonly string ApplicationFocus = string.Empty;
-        internal static readonly string AutoSaveFolder = MacroParser.DefaultAutoSaveFolder;
-        internal static readonly string AutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
-        internal static readonly int ApplicationFocusDelayBefore = 0;
-        internal static readonly int ApplicationFocusDelayAfter = 0;
-        internal static readonly int ActiveWindowTitleMatchType = 2;
+        internal readonly int ScreenCaptureInterval = 60000;
+        internal readonly int CaptureLimit = 0;
+        internal readonly bool CaptureLimitCheck = false;
+        internal readonly bool TakeInitialScreenshot = false;
+        internal readonly bool ShowSystemTrayIcon = true;
+        internal readonly string Passphrase = string.Empty;
+        internal readonly int KeepScreenshotsForDays = 30;
+        internal readonly string ScreenshotLabel = string.Empty;
+        internal readonly bool ApplyScreenshotLabel = false;
+        internal readonly string DefaultEditor = string.Empty;
+        internal readonly bool FirstRun = true;
+        internal readonly int StartScreenCaptureCount = 0;
+        internal readonly bool ActiveWindowTitleCaptureCheck = false;
+        internal readonly string ActiveWindowTitleCaptureText = string.Empty;
+        internal readonly string ApplicationFocus = string.Empty;
+        internal readonly string AutoSaveFolder = MacroParser.DefaultAutoSaveFolder;
+        internal readonly string AutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
+        internal readonly int ApplicationFocusDelayBefore = 0;
+        internal readonly int ApplicationFocusDelayAfter = 0;
+        internal readonly int ActiveWindowTitleMatchType = 2;
 
         // Keyboard Shortcuts.
-        internal static readonly bool UseKeyboardShortcuts = false;
-        internal static readonly string KeyboardShortcutStartScreenCaptureModifier1 = "Control";
-        internal static readonly string KeyboardShortcutStartScreenCaptureModifier2 = "Alt";
-        internal static readonly string KeyboardShortcutStartScreenCaptureKey = "Z";
-        internal static readonly string KeyboardShortcutStopScreenCaptureModifier1 = "Control";
-        internal static readonly string KeyboardShortcutStopScreenCaptureModifier2 = "Alt";
-        internal static readonly string KeyboardShortcutStopScreenCaptureKey = "X";
-        internal static readonly string KeyboardShortcutCaptureNowArchiveModifier1 = "Control";
-        internal static readonly string KeyboardShortcutCaptureNowArchiveModifier2 = "Alt";
-        internal static readonly string KeyboardShortcutCaptureNowArchiveKey = "A";
-        internal static readonly string KeyboardShortcutCaptureNowEditModifier1 = "Control";
-        internal static readonly string KeyboardShortcutCaptureNowEditModifier2 = "Alt";
-        internal static readonly string KeyboardShortcutCaptureNowEditKey = "E";
-        internal static readonly string KeyboardShortcutRegionSelectClipboardModifier1 = "Control";
-        internal static readonly string KeyboardShortcutRegionSelectClipboardModifier2 = "Shift";
-        internal static readonly string KeyboardShortcutRegionSelectClipboardKey = "C";
-        internal static readonly string KeyboardShortcutRegionSelectAutoSaveModifier1 = "Control";
-        internal static readonly string KeyboardShortcutRegionSelectAutoSaveModifier2 = "Shift";
-        internal static readonly string KeyboardShortcutRegionSelectAutoSaveKey = "S";
-        internal static readonly string KeyboardShortcutRegionSelectEditModifier1 = "Control";
-        internal static readonly string KeyboardShortcutRegionSelectEditModifier2 = "Shift";
-        internal static readonly string KeyboardShortcutRegionSelectEditKey = "E";
+        internal readonly bool UseKeyboardShortcuts = false;
+        internal readonly string KeyboardShortcutStartScreenCaptureModifier1 = "Control";
+        internal readonly string KeyboardShortcutStartScreenCaptureModifier2 = "Alt";
+        internal readonly string KeyboardShortcutStartScreenCaptureKey = "Z";
+        internal readonly string KeyboardShortcutStopScreenCaptureModifier1 = "Control";
+        internal readonly string KeyboardShortcutStopScreenCaptureModifier2 = "Alt";
+        internal readonly string KeyboardShortcutStopScreenCaptureKey = "X";
+        internal readonly string KeyboardShortcutCaptureNowArchiveModifier1 = "Control";
+        internal readonly string KeyboardShortcutCaptureNowArchiveModifier2 = "Alt";
+        internal readonly string KeyboardShortcutCaptureNowArchiveKey = "A";
+        internal readonly string KeyboardShortcutCaptureNowEditModifier1 = "Control";
+        internal readonly string KeyboardShortcutCaptureNowEditModifier2 = "Alt";
+        internal readonly string KeyboardShortcutCaptureNowEditKey = "E";
+        internal readonly string KeyboardShortcutRegionSelectClipboardModifier1 = "Control";
+        internal readonly string KeyboardShortcutRegionSelectClipboardModifier2 = "Shift";
+        internal readonly string KeyboardShortcutRegionSelectClipboardKey = "C";
+        internal readonly string KeyboardShortcutRegionSelectAutoSaveModifier1 = "Control";
+        internal readonly string KeyboardShortcutRegionSelectAutoSaveModifier2 = "Shift";
+        internal readonly string KeyboardShortcutRegionSelectAutoSaveKey = "S";
+        internal readonly string KeyboardShortcutRegionSelectEditModifier1 = "Control";
+        internal readonly string KeyboardShortcutRegionSelectEditModifier2 = "Shift";
+        internal readonly string KeyboardShortcutRegionSelectEditKey = "E";
 
         // Email (SMTP) settings.
         internal static readonly string EmailServerHost = "smtp.office365.com";
@@ -119,17 +130,17 @@ namespace AutoScreenCapture
         internal static readonly string FileTransferClientPassword = string.Empty;
 
         // Old default user settings.
-        internal static readonly bool BoolCaptureStartAt = false;
-        internal static readonly bool BoolCaptureStopAt = false;
-        internal static readonly DateTime DateTimeCaptureStartAt = DateTime.Now;
-        internal static readonly DateTime DateTimeCaptureStopAt = DateTime.Now;
-        internal static readonly bool BoolCaptureOnTheseDays = false;
-        internal static readonly bool BoolCaptureOnSunday = false;
-        internal static readonly bool BoolCaptureOnMonday = false;
-        internal static readonly bool BoolCaptureOnTuesday = false;
-        internal static readonly bool BoolCaptureOnWednesday = false;
-        internal static readonly bool BoolCaptureOnThursday = false;
-        internal static readonly bool BoolCaptureOnFriday = false;
-        internal static readonly bool BoolCaptureOnSaturday = false;
+        internal readonly bool BoolCaptureStartAt = false;
+        internal readonly bool BoolCaptureStopAt = false;
+        internal readonly DateTime DateTimeCaptureStartAt = DateTime.Now;
+        internal readonly DateTime DateTimeCaptureStopAt = DateTime.Now;
+        internal readonly bool BoolCaptureOnTheseDays = false;
+        internal readonly bool BoolCaptureOnSunday = false;
+        internal readonly bool BoolCaptureOnMonday = false;
+        internal readonly bool BoolCaptureOnTuesday = false;
+        internal readonly bool BoolCaptureOnWednesday = false;
+        internal readonly bool BoolCaptureOnThursday = false;
+        internal readonly bool BoolCaptureOnFriday = false;
+        internal readonly bool BoolCaptureOnSaturday = false;
     }
 }

@@ -94,11 +94,12 @@ namespace AutoScreenCapture
         public string Hash { get; set; }
 
         /// <summary>
-        /// The empty constructor a screenshot object.
+        /// The consructor for creating a screenshot.
         /// </summary>
-        public Screenshot()
+        public Screenshot(Config config)
         {
             Saved = false;
+            Version = config.Settings.ApplicationVersion;
         }
 
         /// <summary>
@@ -106,16 +107,16 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="windowTitle">The title of the active window when the screenshot was taken.</param>
         /// <param name="dateTime">The date/time the screenshot was taken.</param>
-        public Screenshot(string windowTitle, DateTime dateTime)
+        public Screenshot(string windowTitle, DateTime dateTime, MacroParser macroParser, Config config)
         {
             if (string.IsNullOrEmpty(windowTitle)) return;
 
             WindowTitle = windowTitle;
 
-            Date = dateTime.ToString(MacroParser.DateFormat);
-            Time = dateTime.ToString(MacroParser.TimeFormat);
+            Date = dateTime.ToString(macroParser.DateFormat);
+            Time = dateTime.ToString(macroParser.TimeFormat);
             Saved = false;
-            Version = Settings.ApplicationVersion;
+            Version = config.Settings.ApplicationVersion;
 
             Slide = new Slide()
             {

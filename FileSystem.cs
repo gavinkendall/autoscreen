@@ -27,73 +27,73 @@ namespace AutoScreenCapture
     /// <summary>
     /// Anything involving files and folders are defined in this class.
     /// </summary>
-    public static class FileSystem
+    public class FileSystem
     {
         /// <summary>
         /// The path delimiter to use.
         /// </summary>
-        public readonly static string PathDelimiter = Path.DirectorySeparatorChar.ToString();
+        public readonly string PathDelimiter = Path.DirectorySeparatorChar.ToString();
 
         /// <summary>
         /// The file manager to execute whenever the user chooses to open their screenshots folder or edits the selected screenshot.
         /// </summary>
-        public static readonly string FileManager = "explorer";
+        public readonly string FileManager = "explorer";
 
         /// <summary>
         /// The name of the log files that get messages written if logging is enabled. The Log class uses its own file extension so only the name is used here.
         /// </summary>
-        public static string LogFile = "autoscreen-log";
+        public string LogFile = "autoscreen-log";
 
         /// <summary>
         /// The error file containing possible exception error messages when the application encounters an error.
         /// </summary>
-        public static string ErrorFile = "autoscreen-error.txt";
+        public string ErrorFile = "autoscreen-error.txt";
 
         /// <summary>
         /// The name of the Auto Screen Capture Configuration File.
         /// </summary>
-        public static string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.conf";
+        public string ConfigFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen.conf";
 
         /// <summary>
         /// This is to be backwards compatible with an old version of the application that used the "slides" folder.
         /// </summary>
-        public static readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
+        public readonly string SlidesFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\slides\\";
 
         /// <summary>
         /// The file to create when the user runs an instance of autoscreen while existing instances are already running.
         /// </summary>
-        public static readonly string StartupErrorFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen_startup_error.txt";
+        public readonly string StartupErrorFile = AppDomain.CurrentDomain.BaseDirectory + "autoscreen_startup_error.txt";
 
         /// <summary>
         /// Default settings folder.
         /// </summary>
-        public static string DefaultSettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
+        public string DefaultSettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
 
         /// <summary>
         /// Default screenshots folder.
         /// </summary>
-        public static string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
+        public string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
 
         /// <summary>
         /// Default debug folder.
         /// </summary>
-        public static string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+        public string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
 
         /// <summary>
         /// Default logs folder.
         /// </summary>
-        public static string DefaultLogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\logs\\";
+        public string DefaultLogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\logs\\";
 
         /// <summary>
         /// The default command file if the actual command file cannot be found. This will most likely happen with an
         /// older version of Auto Screen Capture so we need to make sure that, since 2.3.0.0, we have a command file.
         /// </summary>
-        public static string DefaultCommandFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command.txt";
+        public string DefaultCommandFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command.txt";
 
         /// <summary>
         /// Default application settings file.
         /// </summary>
-        public static string DefaultApplicationSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\application.xml";
+        public string DefaultApplicationSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\application.xml";
 
         /// <summary>
         /// Default SMTP settings file.
@@ -108,67 +108,67 @@ namespace AutoScreenCapture
         /// <summary>
         /// Default user settings file.
         /// </summary>
-        public static string DefaultUserSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\user.xml";
+        public string DefaultUserSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\user.xml";
 
         /// <summary>
         /// The file containing the references to Editors.
         /// </summary>
-        public static readonly string DefaultEditorsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\editors.xml";
+        public readonly string DefaultEditorsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\editors.xml";
 
         /// <summary>
         /// The file containing the references to Regions.
         /// </summary>
-        public static readonly string DefaultRegionsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\regions.xml";
+        public readonly string DefaultRegionsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\regions.xml";
 
         /// <summary>
         /// The file containing the references to Screens.
         /// </summary>
-        public static readonly string DefaultScreensFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screens.xml";
+        public readonly string DefaultScreensFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screens.xml";
 
         /// <summary>
         /// The file containing the references to Triggers.
         /// </summary>
-        public static readonly string DefaultTriggersFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\triggers.xml";
+        public readonly string DefaultTriggersFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\triggers.xml";
 
         /// <summary>
         /// The file containing the references to Screenshots.
         /// </summary>
-        public static readonly string DefaultScreenshotsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screenshots.xml";
+        public readonly string DefaultScreenshotsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screenshots.xml";
 
         /// <summary>
         /// The file containing the references to Tags.
         /// </summary>
-        public static readonly string DefaultTagsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\tags.xml";
+        public readonly string DefaultTagsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\tags.xml";
 
         /// <summary>
         /// The file containing the references to Schedules.
         /// </summary>
-        public static readonly string DefaultSchedulesFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\schedules.xml";
+        public readonly string DefaultSchedulesFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\schedules.xml";
 
         /// <summary>
         /// Screenshots folder.
         /// </summary>
-        public static string ScreenshotsFolder;
+        public string ScreenshotsFolder;
 
         /// <summary>
         /// Debug folder.
         /// </summary>
-        public static string DebugFolder;
+        public string DebugFolder;
 
         /// <summary>
         /// Logs folder.
         /// </summary>
-        public static string LogsFolder;
+        public string LogsFolder;
 
         /// <summary>
         /// Command file.
         /// </summary>
-        public static string CommandFile;
+        public string CommandFile;
 
         /// <summary>
         /// Application settings file.
         /// </summary>
-        public static string ApplicationSettingsFile;
+        public string ApplicationSettingsFile;
 
         /// <summary>
         /// SMTP settings file.
@@ -183,42 +183,50 @@ namespace AutoScreenCapture
         /// <summary>
         /// User settings file.
         /// </summary>
-        public static string UserSettingsFile;
+        public string UserSettingsFile;
 
         /// <summary>
         /// Editors file.
         /// </summary>
-        public static string EditorsFile;
+        public string EditorsFile;
 
         /// <summary>
         /// Regions file.
         /// </summary>
-        public static string RegionsFile;
+        public string RegionsFile;
 
         /// <summary>
         /// Screens file.
         /// </summary>
-        public static string ScreensFile;
+        public string ScreensFile;
 
         /// <summary>
         /// Triggers file.
         /// </summary>
-        public static string TriggersFile;
+        public string TriggersFile;
 
         /// <summary>
         /// Screenshots file.
         /// </summary>
-        public static string ScreenshotsFile;
+        public string ScreenshotsFile;
 
         /// <summary>
         /// Tags file.
         /// </summary>
-        public static string TagsFile;
+        public string TagsFile;
 
         /// <summary>
         /// Schedules file.
         /// </summary>
-        public static string SchedulesFile;
+        public string SchedulesFile;
+
+        /// <summary>
+        /// A class for handling file system methods.
+        /// </summary>
+        public FileSystem()
+        {
+
+        }
 
         /// <summary>
         /// Just in case the user gives us an empty folder path or forgets
@@ -226,7 +234,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="screenshotsFolderPath">The path of the screenshots folder to correct.</param>
         /// <returns>A corrected version of the screenshots folder path.</returns>
-        public static string CorrectScreenshotsFolderPath(string screenshotsFolderPath)
+        public string CorrectScreenshotsFolderPath(string screenshotsFolderPath)
         {
             if (string.IsNullOrEmpty(screenshotsFolderPath) || screenshotsFolderPath.Length <= 0)
             {
@@ -245,30 +253,23 @@ namespace AutoScreenCapture
         /// Deletes files recursively based on the specified directory.
         /// </summary>
         /// <param name="dirName">The starting "parent" directory (which will also be deleted after everything else inside it is deleted).</param>
-        public static void DeleteFilesInDirectory(string dirName)
+        public void DeleteFilesInDirectory(string dirName)
         {
-            try
+            if (DirectoryExists(dirName))
             {
-                if (DirectoryExists(dirName))
+                DirectoryInfo di = new DirectoryInfo(dirName);
+
+                foreach (FileInfo file in di.EnumerateFiles())
                 {
-                    DirectoryInfo di = new DirectoryInfo(dirName);
-
-                    foreach (FileInfo file in di.EnumerateFiles())
-                    {
-                        file.Delete();
-                    }
-
-                    foreach (DirectoryInfo dir in di.EnumerateDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-
-                    Directory.Delete(dirName, true);
+                    file.Delete();
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.WriteExceptionMessage("FileSystem::DeleteFilesInDirectory", ex);
+
+                foreach (DirectoryInfo dir in di.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
+
+                Directory.Delete(dirName, true);
             }
         }
 
@@ -277,7 +278,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to check if the directory exists.</param>
         /// <returns>True if the directory exists. False if the directory does not exist.</returns>
-        public static bool DirectoryExists(string path)
+        public bool DirectoryExists(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -291,7 +292,7 @@ namespace AutoScreenCapture
         /// Creates a directory for a given path.
         /// </summary>
         /// <param name="path">The path of the directory to create.</param>
-        public static void CreateDirectory(string path)
+        public void CreateDirectory(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -306,7 +307,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path of the file to check.</param>
         /// <returns>True if the file exists. False if the file does not exist.</returns>
-        public static bool FileExists(string path)
+        public bool FileExists(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -321,7 +322,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path of the file to check.</param>
         /// <returns>True if the file has a file extension. False if the file does not have a file extension.</returns>
-        public static bool HasExtension(string path)
+        public bool HasExtension(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -335,7 +336,7 @@ namespace AutoScreenCapture
         /// Creates a new file given the path of the file.
         /// </summary>
         /// <param name="path">The path of the file to create.</param>
-        public static void CreateFile(string path)
+        public void CreateFile(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -350,7 +351,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path of the drive to check.</param>
         /// <returns>The free disk space percentage.</returns>
-        public static double FreeDiskSpacePercentage(string path)
+        public double FreeDiskSpacePercentage(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -368,7 +369,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to check for the drive's status.</param>
         /// <returns>True if the drive is ready. False if the drive is not ready.</returns>
-        public static bool DriveReady(string path)
+        public bool DriveReady(string path)
         {
             if (string.IsNullOrEmpty(path) || path.StartsWith(PathDelimiter))
             {
@@ -386,7 +387,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path of the image file to get the image from.</param>
         /// <returns>The image of an image file.</returns>
-        public static Image GetImage(string path)
+        public Image GetImage(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -404,7 +405,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to get the directory name.</param>
         /// <returns>The directory name of the given path.</returns>
-        public static string GetDirectoryName(string path)
+        public string GetDirectoryName(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -419,7 +420,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to get the filename from.</param>
         /// <returns>The filename of the given path.</returns>
-        public static string GetFileName(string path)
+        public string GetFileName(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -434,7 +435,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to the file to be written.</param>
         /// <param name="line">The line of text to write to the file.</param>
-        public static void WriteToFile(string path, string line)
+        public void WriteToFile(string path, string line)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -449,7 +450,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to the file to be written.</param>
         /// <param name="linesToWrite">The array of lines to write to the file.</param>
-        public static void WriteToFile(string path, string[] linesToWrite)
+        public void WriteToFile(string path, string[] linesToWrite)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -464,7 +465,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to the file to be written.</param>
         /// <param name="line">The line to append to the file.</param>
-        public static void AppendToFile(string path, string line)
+        public void AppendToFile(string path, string line)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -484,7 +485,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to the file to read from.</param>
         /// <returns>An array of lines representing the lines of text in the file.</returns>
-        public static string[] ReadFromFile(string path)
+        public string[] ReadFromFile(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -498,7 +499,7 @@ namespace AutoScreenCapture
         /// Gets the directory separator character.
         /// </summary>
         /// <returns>The directory separator character.</returns>
-        public static char DirectorySeparatorChar()
+        public char DirectorySeparatorChar()
         {
             return Path.DirectorySeparatorChar;
         }
@@ -507,7 +508,7 @@ namespace AutoScreenCapture
         /// Deletes a file.
         /// </summary>
         /// <param name="path">The path of the file to delete.</param>
-        public static void DeleteFile(string path)
+        public void DeleteFile(string path)
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path))
             {
@@ -522,7 +523,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="path">The path to the file to check.</param>
         /// <returns>The number of characters in the file.</returns>
-        public static long FileContentLength(string path)
+        public long FileContentLength(string path)
         {
             if (string.IsNullOrEmpty(path))
             {

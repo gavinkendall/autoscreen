@@ -25,8 +25,13 @@ namespace AutoScreenCapture
     /// <summary>
     /// All the methods for converting data.
     /// </summary>
-    public static class DataConvert
+    public class DataConvert
     {
+        public DataConvert()
+        {
+
+        }
+
         /// <summary>
         /// Converts the given hours, minutes, seconds, and milliseconds into an aggregate milliseconds value.
         /// </summary>
@@ -35,7 +40,7 @@ namespace AutoScreenCapture
         /// <param name="seconds">The number of seconds to be converted.</param>
         /// <param name="milliseconds">The number of milliseconds to be converted.</param>
         /// <returns></returns>
-        public static int ConvertIntoMilliseconds(int hours, int minutes, int seconds, int milliseconds)
+        public int ConvertIntoMilliseconds(int hours, int minutes, int seconds, int milliseconds)
         {
             return 1000 * (hours * 3600 + minutes * 60 + seconds) + milliseconds;
         }
@@ -45,7 +50,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="date">A string representation of a date (such as "2019-02-06").</param>
         /// <returns>A DateTime object based on the provided date string.</returns>
-        public static DateTime ConvertDateStringToDateTime(string date)
+        public DateTime ConvertDateStringToDateTime(string date)
         {
             return new DateTime(System.Convert.ToInt32(date.Substring(0, 4)), System.Convert.ToInt32(date.Substring(5, 2)), System.Convert.ToInt32(date.Substring(8, 2)));
         }

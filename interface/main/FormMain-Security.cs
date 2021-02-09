@@ -36,12 +36,13 @@ namespace AutoScreenCapture
             {
                 textBoxPassphrase.Text = textBoxPassphrase.Text.Trim();
 
-                Settings.User.SetValueByKey("Passphrase", Security.Hash(textBoxPassphrase.Text));
+                _config.Settings.User.SetValueByKey("Passphrase", _security.Hash(textBoxPassphrase.Text));
+
                 SaveSettings();
 
                 textBoxPassphrase.Clear();
 
-                ScreenCapture.LockScreenCaptureSession = true;
+                _screenCapture.LockScreenCaptureSession = true;
 
                 MessageBox.Show("The passphrase you entered has been securely stored as a SHA-512 hash and your session has been locked.", "Passphrase Set", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

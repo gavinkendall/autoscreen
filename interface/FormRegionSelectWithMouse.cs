@@ -31,6 +31,9 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegionSelectWithMouse : Form
     {
+        private Bitmap _bitmapSource;
+        private Bitmap _bitmapDestination;
+
         private int _selectX;
         private int _selectY;
         private int _selectWidth;
@@ -103,14 +106,16 @@ namespace AutoScreenCapture
 
             Hide();
 
-            Bitmap bitmap = new Bitmap(width, height);
+            _bitmapSource = new Bitmap(width, height);
 
-            Graphics graphics = Graphics.FromImage(bitmap as Image);
-            graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
+            Graphics graphics = Graphics.FromImage(_bitmapSource as Image);
+            graphics.CopyFromScreen(0, 0, 0, 0, _bitmapSource.Size);
 
             using (MemoryStream s = new MemoryStream())
             {
-                bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
+                _bitmapSource.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
+                _bitmapSource.Dispose();
+
                 pictureBoxMouseCanvas.Size = new Size(Width, Height);
                 pictureBoxMouseCanvas.Image = Image.FromStream(s);
             }
@@ -150,17 +155,19 @@ namespace AutoScreenCapture
 
         private void pictureBoxMouseCanvas_MouseUp(object sender, MouseEventArgs e)
         {
-            if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
-
-            if (e.Button == MouseButtons.Left)
+            try
             {
-                pictureBoxMouseCanvas.Refresh();
+                if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
 
-                _selectWidth = e.X - _selectX;
-                _selectHeight = e.Y - _selectY;
+                if (e.Button == MouseButtons.Left)
+                {
+                    pictureBoxMouseCanvas.Refresh();
 
-                pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
-            }
+                    _selectWidth = e.X - _selectX;
+                    _selectHeight = e.Y - _selectY;
+
+                    pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
+                }
 
             Bitmap bitmap = SelectBitmap();
 
@@ -176,28 +183,30 @@ namespace AutoScreenCapture
                 CompleteMouseSelection(sender, e);
             }
 
-            Cursor = Cursors.Arrow;
+                GC.Collect();
 
-            Close();
+                Close();
+            }
         }
 
         private Bitmap SelectBitmap()
         {
+
             if (_selectWidth > 0)
             {
                 Rectangle rect = new Rectangle(_selectX, _selectY, _selectWidth, _selectHeight);
-                Bitmap bitmap = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
+                _bitmapDestination = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
 
-                Bitmap img = new Bitmap(_selectWidth, _selectHeight);
+                _bitmapSource = new Bitmap(_selectWidth, _selectHeight);
 
-                Graphics g = Graphics.FromImage(img);
+                Graphics g = Graphics.FromImage(_bitmapSource);
 
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 g.CompositingQuality = CompositingQuality.HighQuality;
-                g.DrawImage(bitmap, 0, 0, rect, GraphicsUnit.Pixel);
+                g.DrawImage(_bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
 
-                return img;
+                return _bitmapSource;
             }
 
             return null;
