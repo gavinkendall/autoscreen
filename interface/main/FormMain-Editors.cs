@@ -43,7 +43,7 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                if (!_formEditor.EditorCollection.SaveToXmlFile())
+                if (!_formEditor.EditorCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -79,7 +79,7 @@ namespace AutoScreenCapture
                 BuildViewTabPages();
                 BuildScreenshotPreviewContextualMenu();
 
-                if (!_formEditor.EditorCollection.SaveToXmlFile())
+                if (!_formEditor.EditorCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -95,7 +95,7 @@ namespace AutoScreenCapture
         {
             Editor editor = _formEditor.EditorCollection.GetByName(sender.ToString());
 
-            if (!RunEditor(editor, Slideshow.SelectedSlide))
+            if (!RunEditor(editor, _slideShow.SelectedSlide))
             {
                 MessageBox.Show("No image is available to edit.", "No Image", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -122,7 +122,7 @@ namespace AutoScreenCapture
                     BuildViewTabPages();
                     BuildScreenshotPreviewContextualMenu();
 
-                    if (!_formEditor.EditorCollection.SaveToXmlFile())
+                    if (!_formEditor.EditorCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                     {
                         _screenCapture.ApplicationError = true;
                     }
@@ -169,15 +169,15 @@ namespace AutoScreenCapture
                 {
                     DateTime dt = _screenCapture.DateTimeScreenshotsTaken;
 
-                    foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dt.ToString(MacroParser.DateFormat), dt.ToString(MacroParser.TimeFormat)))
+                    foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dt.ToString(_macroParser.DateFormat), dt.ToString(_macroParser.TimeFormat)))
                     {
                         if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
                         {
-                            Log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
+                            _log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
 
                             if (!RunEditor(editor, screenshot))
                             {
-                                Log.WriteDebugMessage("Running editor failed. Perhaps the filepath of the screenshot file is no longer available");
+                                _log.WriteDebugMessage("Running editor failed. Perhaps the filepath of the screenshot file is no longer available");
                             }
                         }
                     }
@@ -187,7 +187,7 @@ namespace AutoScreenCapture
                     // Just run the program without passing in the path of the screenshot.
                     if (!RunEditor(editor))
                     {
-                        Log.WriteDebugMessage("Running editor failed.");
+                        _log.WriteDebugMessage("Running editor failed.");
                     }
                 }
             }
@@ -204,12 +204,12 @@ namespace AutoScreenCapture
             // Execute the chosen image editor. If the %filepath% argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
             if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
-                FileSystem.FileExists(editor.Application) && FileSystem.FileExists(screenshot.Path)))
+                _fileSystem.FileExists(editor.Application) && _fileSystem.FileExists(screenshot.Path)))
             {
-                Log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
-                Log.WriteDebugMessage("Application: " + editor.Application);
-                Log.WriteDebugMessage("Arguments before %filepath% tag replacement: " + editor.Arguments);
-                Log.WriteDebugMessage("Arguments after %filepath% tag replacement: " + editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
+                _log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
+                _log.WriteDebugMessage("Application: " + editor.Application);
+                _log.WriteDebugMessage("Arguments before %filepath% tag replacement: " + editor.Arguments);
+                _log.WriteDebugMessage("Arguments after %filepath% tag replacement: " + editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
 
                 _ = Process.Start(editor.Application, editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
 
@@ -230,7 +230,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (editor != null && FileSystem.FileExists(editor.Application))
+                if (editor != null && _fileSystem.FileExists(editor.Application))
                 {
                     if (!string.IsNullOrEmpty(editor.Arguments))
                     {
@@ -248,7 +248,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormMain-Editors::RunEditor", ex);
+                _log.WriteExceptionMessage("FormMain-Editors::RunEditor", ex);
 
                 return false;
             }

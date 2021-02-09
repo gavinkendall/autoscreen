@@ -28,10 +28,12 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormSchedule : Form
     {
+        private DataConvert _dataConvert;
+
         /// <summary>
         /// A collection of schedules.
         /// </summary>
-        public ScheduleCollection ScheduleCollection { get; } = new ScheduleCollection();
+        public ScheduleCollection ScheduleCollection { get; private set; }
 
         /// <summary>
         /// The screen capture interval for the schedule to use for overriding the main screen capture interval.
@@ -49,6 +51,9 @@ namespace AutoScreenCapture
         public FormSchedule()
         {
             InitializeComponent();
+
+            _dataConvert = new DataConvert();
+            ScheduleCollection = new ScheduleCollection();
         }
 
         private void FormSchedule_Load(object sender, EventArgs e)
@@ -180,7 +185,7 @@ namespace AutoScreenCapture
 
                 if (ScheduleCollection.GetByName(textBoxName.Text) == null)
                 {
-                    int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                    int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                         (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                         (int)numericUpDownMillisecondsInterval.Value);
 
@@ -244,7 +249,7 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).StartAt = dateTimePickerStartAt.Value;
                         ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerStopAt.Value;
 
-                        int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                             (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                             (int)numericUpDownMillisecondsInterval.Value);
 
@@ -298,7 +303,7 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
-            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                             (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                             (int)numericUpDownMillisecondsInterval.Value);
 

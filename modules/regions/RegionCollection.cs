@@ -54,7 +54,7 @@ namespace AutoScreenCapture
         private string AppVersion { get; set; }
 
         /// <summary>
-        /// The empty constructor for the region collection.
+        /// Region collection.
         /// </summary>
         public RegionCollection()
         {
@@ -72,18 +72,18 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the regions.
         /// </summary>
-        public bool LoadXmlFileAndAddRegions(ImageFormatCollection imageFormatCollection)
+        public bool LoadXmlFileAndAddRegions(ImageFormatCollection imageFormatCollection, Config config, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (FileSystem.FileExists(FileSystem.RegionsFile))
+                if (fileSystem.FileExists(fileSystem.RegionsFile))
                 {
-                    Log.WriteDebugMessage("Regions file \"" + FileSystem.RegionsFile + "\" found. Attempting to load XML document");
+                    log.WriteDebugMessage("Regions file \"" + fileSystem.RegionsFile + "\" found. Attempting to load XML document");
 
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.RegionsFile);
+                    xDoc.Load(fileSystem.RegionsFile);
 
-                    Log.WriteDebugMessage("XML document loaded");
+                    log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -173,29 +173,29 @@ namespace AutoScreenCapture
 
                         // Change the data for each region that's being loaded if we've detected that
                         // the XML document is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
-                            Log.WriteDebugMessage("An old version of the regions file was detected. Attempting upgrade to new region schema");
+                            log.WriteDebugMessage("An old version of the regions file was detected. Attempting upgrade to new region schema");
 
-                            Version v2182 = Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                            Version v2182 = config.Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
+                            Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2182 != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                             {
-                                Log.WriteDebugMessage("Clara 2.1.8.2 or older detected");
+                                log.WriteDebugMessage("Clara 2.1.8.2 or older detected");
 
                                 region.ViewId = Guid.NewGuid();
 
                                 // Get the screenshots folder path from the old user settings to be used for the region's folder property.
-                                region.Folder = Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory", FileSystem.ScreenshotsFolder).Value.ToString();
+                                region.Folder = config.Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory", fileSystem.ScreenshotsFolder).Value.ToString();
 
-                                region.Folder = FileSystem.CorrectScreenshotsFolderPath(region.Folder);
+                                region.Folder = fileSystem.CorrectScreenshotsFolderPath(region.Folder);
 
                                 // 2.1 used "%region%", but 2.2 uses "%name%" for a region's Macro value.
                                 region.Macro = region.Macro.Replace("%region%", "%name%");
 
-                                region.Format = imageFormatCollection.GetByName(ImageFormatSpec.NAME_JPEG);
+                                region.Format = imageFormatCollection.GetByName("JPEG");
                                 region.JpegQuality = 100;
                                 region.ResolutionRatio = 100;
                                 region.Mouse = true;
@@ -204,7 +204,7 @@ namespace AutoScreenCapture
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
@@ -220,15 +220,15 @@ namespace AutoScreenCapture
 
                     // Write out the regions to the XML document now that we've updated the region objects
                     // with their appropriate property values if it was an old version of the application.
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        Log.WriteDebugMessage("Regions file detected as an old version");
-                        SaveToXmlFile();
+                        log.WriteDebugMessage("Regions file detected as an old version");
+                        SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load regions");
+                    log.WriteDebugMessage("WARNING: Unable to load regions");
 
                     Region regionSelectAutoSave = new Region()
                     {
@@ -241,7 +241,7 @@ namespace AutoScreenCapture
                         Name = "Region Select / Auto Save",
                         Folder = MacroParser.DefaultAutoSaveFolder,
                         Macro = MacroParser.DefaultAutoSaveMacro,
-                        Format = new ImageFormat(ImageFormatSpec.NAME_JPEG, ImageFormatSpec.EXTENSION_JPEG),
+                        Format = new ImageFormat("JPEG", ".jpeg"),
                         JpegQuality = 100,
                         ResolutionRatio = 100,
                         Mouse = false,
@@ -253,14 +253,14 @@ namespace AutoScreenCapture
 
                     Add(regionSelectAutoSave);
 
-                    SaveToXmlFile();
+                    SaveToXmlFile(config.Settings, fileSystem, log);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("RegionCollection::Load", ex);
+                log.WriteExceptionMessage("RegionCollection::Load", ex);
 
                 return false;
             }
@@ -269,7 +269,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the regions.
         /// </summary>
-        public bool SaveToXmlFile()
+        public bool SaveToXmlFile(Settings settings, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -283,28 +283,27 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(FileSystem.RegionsFile))
+                if (string.IsNullOrEmpty(fileSystem.RegionsFile))
                 {
-                    FileSystem.RegionsFile = FileSystem.DefaultRegionsFile;
+                    fileSystem.RegionsFile = fileSystem.DefaultRegionsFile;
 
-                    if (FileSystem.FileExists(FileSystem.ConfigFile))
+                    if (fileSystem.FileExists(fileSystem.ConfigFile))
                     {
-                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nRegionsFile=" + FileSystem.RegionsFile);
+                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nRegionsFile=" + fileSystem.RegionsFile);
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.RegionsFile))
+                if (fileSystem.FileExists(fileSystem.RegionsFile))
                 {
-                    FileSystem.DeleteFile(FileSystem.RegionsFile);
+                    fileSystem.DeleteFile(fileSystem.RegionsFile);
                 }
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.RegionsFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.RegionsFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_REGIONS_NODE);
 
                     foreach (Region region in base.Collection)
@@ -314,7 +313,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_ACTIVE, region.Active.ToString());
                         xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                         xWriter.WriteElementString(REGION_NAME, region.Name);
-                        xWriter.WriteElementString(REGION_FOLDER, FileSystem.CorrectScreenshotsFolderPath(region.Folder));
+                        xWriter.WriteElementString(REGION_FOLDER, fileSystem.CorrectScreenshotsFolderPath(region.Folder));
                         xWriter.WriteElementString(REGION_MACRO, region.Macro);
                         xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
                         xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());
@@ -340,7 +339,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("RegionCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("RegionCollection::SaveToXmlFile", ex);
 
                 return false;
             }

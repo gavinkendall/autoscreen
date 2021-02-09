@@ -26,27 +26,46 @@ namespace AutoScreenCapture
     /// <summary>
     /// A class for logging messages to text files.
     /// </summary>
-    public static class Log
+    public class Log
     {
-        private static Mutex _mutexWriteFile = new Mutex();
+        private FileSystem _fileSystem;
+        private MacroParser _macroParser;
+
+        private readonly string _extension = ".txt";
+        private Mutex _mutexWriteFile = new Mutex();
+
+        private readonly string _dateFormat;
+        private readonly string _timeFormat;
+
+        /// <summary>
+        /// A collection of settings.
+        /// </summary>
+        public Settings Settings { get; set; }
 
         /// <summary>
         /// Debug Mode. This can be controlled from the command line with the -debug command.
         /// </summary>
-        public static bool DebugMode { get; set;}
+        public bool DebugMode { get; set;}
 
         /// <summary>
         /// Logging. This can either be enabled or disabled by the application settings or via the -log command line argument.
         /// </summary>
-        public static bool LoggingEnabled { get; set; }
+        public bool LoggingEnabled { get; set; }
 
-        private static readonly string extension = ".txt";
+        /// <summary>
+        /// A class for logging messages to text files.
+        /// </summary>
+        public Log(FileSystem fileSystem, MacroParser macroParser)
+        {
+            _fileSystem = fileSystem;
+            _macroParser = macroParser;
+        }
 
         /// <summary>
         /// Writes a message to the log files in the logs folder.
         /// </summary>
         /// <param name="message">The message to write.</param>
-        public static void WriteMessage(string message)
+        public void WriteMessage(string message)
         {
             if (LoggingEnabled || DebugMode)
             {
@@ -58,7 +77,7 @@ namespace AutoScreenCapture
         /// Writes a message to the error file in the debug folder.
         /// </summary>
         /// <param name="message">The message to write.</param>
-        public static void WriteErrorMessage(string message)
+        public void WriteErrorMessage(string message)
         {
             Write(message, writeError: true, null);
         }
@@ -68,7 +87,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="message">The message to write.</param>
         /// <param name="ex">The exception received from the .NET Framework.</param>
-        public static void WriteExceptionMessage(string message, Exception ex)
+        public void WriteExceptionMessage(string message, Exception ex)
         {
             Write(message, writeError: false, ex);
         }
@@ -77,7 +96,7 @@ namespace AutoScreenCapture
         /// Writes a debug message to the log files.
         /// </summary>
         /// <param name="message">The message to write.</param>
-        public static void WriteDebugMessage(string message)
+        public void WriteDebugMessage(string message)
         {
             if (DebugMode)
             {
@@ -91,51 +110,51 @@ namespace AutoScreenCapture
         /// <param name="message">The message to write.</param>
         /// <param name="writeError">Determines if we write the message to the error file in the debug folder.</param>
         /// <param name="ex">The exception received from the .NET Framework.</param>
-        private static void Write(string message, bool writeError, Exception ex)
+        private void Write(string message, bool writeError, Exception ex)
         {
             try
             {
                 _mutexWriteFile.WaitOne();
 
-                string appVersion = "[(v" + DefaultSettings.ApplicationVersion + ") ";
+                string appVersion = "[(v" + Settings.ApplicationVersion + ") ";
 
-                if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+                if (string.IsNullOrEmpty(_fileSystem.DebugFolder))
                 {
-                    FileSystem.DebugFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + FileSystem.PathDelimiter + "debug" + FileSystem.PathDelimiter;
+                    _fileSystem.DebugFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + _fileSystem.PathDelimiter + "debug" + _fileSystem.PathDelimiter;
                 }
 
-                if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+                if (string.IsNullOrEmpty(_fileSystem.LogsFolder))
                 {
-                    FileSystem.LogsFolder = FileSystem.DebugFolder + "logs" + FileSystem.PathDelimiter;
+                    _fileSystem.LogsFolder = _fileSystem.DebugFolder + "logs" + _fileSystem.PathDelimiter;
                 }
 
-                if (!FileSystem.DirectoryExists(FileSystem.DebugFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DebugFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DebugFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DebugFolder);
                 }
 
-                if (!FileSystem.DirectoryExists(FileSystem.LogsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.LogsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.LogsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.LogsFolder);
                 }
 
                 // These are just general errors from the application so, if we have one, then write it out to the error file.
                 if (writeError)
                 {
-                    FileSystem.AppendToFile(FileSystem.DebugFolder + FileSystem.ErrorFile, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] ERROR: " + message);
+                    _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, appVersion + DateTime.Now.ToString(_dateFormat + " " + _timeFormat) + "] ERROR: " + message);
                 }
 
                 // Log any exception errors we encounter.
                 if (ex != null)
                 {
-                    string exceptionError = appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message + " - Exception Message: " + ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace;
+                    string exceptionError = appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message + " - Exception Message: " + ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace;
 
-                    FileSystem.AppendToFile(FileSystem.DebugFolder + FileSystem.ErrorFile, exceptionError);
-                    FileSystem.AppendToFile(FileSystem.LogsFolder + FileSystem.LogFile + extension, exceptionError);
+                    _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, exceptionError);
+                    _fileSystem.AppendToFile(_fileSystem.LogsFolder + _fileSystem.LogFile + _extension, exceptionError);
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.
-                    if (Settings.Application == null || Convert.ToBoolean(Settings.Application.GetByKey("ExitOnError", DefaultSettings.ExitOnError).Value))
+                    if (Settings.Application == null || Convert.ToBoolean(Settings.Application.GetByKey("ExitOnError", Settings.DefaultSettings.ExitOnError).Value))
                     {
                         Environment.Exit(1);
                     }
@@ -143,16 +162,16 @@ namespace AutoScreenCapture
                 else
                 {
                     // Write to the main log file.
-                    FileSystem.AppendToFile(FileSystem.LogsFolder + FileSystem.LogFile + extension, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
+                    _fileSystem.AppendToFile(_fileSystem.LogsFolder + _fileSystem.LogFile + _extension, appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message);
 
                     // Create a date-stamped directory if it does not already exist.
-                    if (!FileSystem.DirectoryExists(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat)))
+                    if (!_fileSystem.DirectoryExists(_fileSystem.LogsFolder + DateTime.Now.ToString(_macroParser.DateFormat)))
                     {
-                        FileSystem.CreateDirectory(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat));
+                        _fileSystem.CreateDirectory(_fileSystem.LogsFolder + DateTime.Now.ToString(_macroParser.DateFormat));
                     }
 
                     // Write to a log file within a directory representing the day when the message was logged.
-                    FileSystem.AppendToFile(FileSystem.LogsFolder + DateTime.Now.ToString(MacroParser.DateFormat) + FileSystem.PathDelimiter + FileSystem.LogFile + "_" + DateTime.Now.ToString(MacroParser.DateFormat) + ".txt", appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] " + message);
+                    _fileSystem.AppendToFile(_fileSystem.LogsFolder + DateTime.Now.ToString(_macroParser.DateFormat) + _fileSystem.PathDelimiter + _fileSystem.LogFile + "_" + DateTime.Now.ToString(_macroParser.DateFormat) + ".txt", appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message);
                 }
             }
             finally

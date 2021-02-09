@@ -35,7 +35,7 @@ namespace AutoScreenCapture
         /// <returns></returns>
         private int ConvertIntoMilliseconds(int hours, int minutes, int seconds, int milliseconds)
         {
-            return DataConvert.ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
+            return _dataConvert.ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         /// <returns>A DateTime object based on the provided date string.</returns>
         private DateTime ConvertDateStringToDateTime(string date)
         {
-            return DataConvert.ConvertDateStringToDateTime(date);
+            return _dataConvert.ConvertDateStringToDateTime(date);
         }
     }
 }

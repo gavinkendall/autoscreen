@@ -30,6 +30,11 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormScreen : Form
     {
+        private Log _log;
+        private MacroParser _macroParser;
+        private ScreenCapture _screenCapture;
+        private FileSystem _fileSystem;
+
         private FormMacroTagsToolWindow _formMacroTags;
 
         /// <summary>
@@ -53,21 +58,23 @@ namespace AutoScreenCapture
         public TagCollection TagCollection { get; set; }
 
         /// <summary>
-        /// Access to screen capture methods.
-        /// </summary>
-        public ScreenCapture ScreenCapture { get; set; }
-
-        /// <summary>
         /// A dictionary of available screens by device resolution.
         /// </summary>
-        public Dictionary<int, ScreenCapture.DeviceResolution> ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceResolution>();
+        public Dictionary<int, ScreenCapture.DeviceOptions> ScreenDictionary;
 
         /// <summary>
         /// Constructor for FormScreen.
         /// </summary>
-        public FormScreen()
+        public FormScreen(ScreenCapture screenCapture, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
+
+            _log = log;
+            _macroParser = macroParser;
+            _screenCapture = screenCapture;
+            _fileSystem = fileSystem;
+
+            ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceOptions>();
 
             RefreshScreenDictionary();
         }
@@ -92,8 +99,8 @@ namespace AutoScreenCapture
 
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[i];
-                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceResolution.width + " x " + deviceResolution.height+ ")");
+                ScreenCapture.DeviceOptions deviceOptions = ScreenDictionary[i];
+                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceOptions.width + " x " + deviceOptions.height+ ")");
             }
 
             if (ScreenObject != null)
@@ -101,7 +108,7 @@ namespace AutoScreenCapture
                 Text = "Change Screen";
 
                 textBoxScreenName.Text = ScreenObject.Name;
-                textBoxFolder.Text = FileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
+                textBoxFolder.Text = _fileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
                 textBoxMacro.Text = ScreenObject.Macro;
 
                 if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
@@ -125,8 +132,8 @@ namespace AutoScreenCapture
                 Text = "Add New Screen";
 
                 textBoxScreenName.Text = "Screen " + (ScreenCollection.Count + 1);
-                textBoxFolder.Text = FileSystem.ScreenshotsFolder;
-                textBoxMacro.Text = MacroParser.DefaultMacro;
+                textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
+                textBoxMacro.Text = _macroParser.DefaultMacro;
                 comboBoxScreenComponent.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
@@ -136,7 +143,7 @@ namespace AutoScreenCapture
             }
 
             UpdatePreviewMacro();
-            UpdatePreviewImage(ScreenCapture);
+            UpdatePreviewImage(_screenCapture);
         }
 
         private void HelpMessage(string message)
@@ -172,9 +179,7 @@ namespace AutoScreenCapture
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
-
-                ScreenDictionary.Add(component, deviceResolution);
+                ScreenDictionary.Add(component, _screenCapture.GetDevice(screen));
                 component++;
             }
         }
@@ -191,7 +196,7 @@ namespace AutoScreenCapture
                     {
                         ViewId = Guid.NewGuid(),
                         Name = textBoxScreenName.Text,
-                        Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
+                        Folder = _fileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text),
                         Macro = textBoxMacro.Text,
                         Component = comboBoxScreenComponent.SelectedIndex,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
@@ -232,7 +237,7 @@ namespace AutoScreenCapture
                     else
                     {
                         ScreenCollection.Get(ScreenObject).Name = textBoxScreenName.Text;
-                        ScreenCollection.Get(ScreenObject).Folder = FileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
+                        ScreenCollection.Get(ScreenObject).Folder = _fileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
@@ -359,7 +364,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("FormScreen::UpdatePreview", ex);
+                _log.WriteExceptionMessage("FormScreen::UpdatePreviewImage", ex);
             }
         }
 
@@ -368,16 +373,16 @@ namespace AutoScreenCapture
             textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
-            textBoxMacroPreview.Text = MacroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection) +
-                MacroParser.ParseTags(preview: true, config: false, textBoxScreenName.Text, textBoxMacro.Text, 1,
-                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection);
+            textBoxMacroPreview.Text = _macroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection, _log) +
+                _macroParser.ParseTags(preview: true, config: false, textBoxScreenName.Text, textBoxMacro.Text, 1,
+                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection, _log);
         }
 
         private System.Windows.Forms.Screen GetScreenByIndex(int index)
         {
             try
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[index];
+                ScreenCapture.DeviceOptions deviceResolution = ScreenDictionary[index];
 
                 return deviceResolution.screen;
             }
@@ -389,7 +394,7 @@ namespace AutoScreenCapture
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxFormat.Text.Equals(ImageFormatSpec.NAME_JPEG))
+            if (comboBoxFormat.Text.Equals("JPEG"))
             {
                 numericUpDownJpegQuality.Enabled = true;
             }
@@ -403,7 +408,7 @@ namespace AutoScreenCapture
 
         private void updatePreviewImage(object sender, EventArgs e)
         {
-            UpdatePreviewImage(ScreenCapture);
+            UpdatePreviewImage(_screenCapture);
         }
 
         private void updatePreviewMacro(object sender, EventArgs e)
@@ -415,7 +420,7 @@ namespace AutoScreenCapture
         {
             if (_formMacroTags == null || _formMacroTags.IsDisposed)
             {
-                _formMacroTags = new FormMacroTagsToolWindow(TagCollection);
+                _formMacroTags = new FormMacroTagsToolWindow(TagCollection, _macroParser, _log);
                 _formMacroTags.Show();
             }
             else

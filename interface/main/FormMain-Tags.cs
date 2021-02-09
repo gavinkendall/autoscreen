@@ -40,7 +40,7 @@ namespace AutoScreenCapture
             {
                 BuildTagsModule();
 
-                if (!_formTag.TagCollection.SaveToXmlFile())
+                if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -74,7 +74,7 @@ namespace AutoScreenCapture
             {
                 BuildTagsModule();
 
-                if (!_formTag.TagCollection.SaveToXmlFile())
+                if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -100,7 +100,7 @@ namespace AutoScreenCapture
                 {
                     BuildTagsModule();
 
-                    if (!_formTag.TagCollection.SaveToXmlFile())
+                    if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                     {
                         _screenCapture.ApplicationError = true;
                     }

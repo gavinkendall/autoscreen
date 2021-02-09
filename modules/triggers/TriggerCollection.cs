@@ -47,8 +47,8 @@ namespace AutoScreenCapture
 
         private readonly string TRIGGER_XPATH;
 
-        private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }
+        private string AppCodename { get; set; }
+        private string AppVersion { get; set; }
 
         /// <summary>
         /// Empty constructor.
@@ -69,14 +69,14 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the triggers.
         /// </summary>
-        public bool LoadXmlFileAndAddTriggers()
+        public bool LoadXmlFileAndAddTriggers(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (FileSystem.FileExists(FileSystem.TriggersFile))
+                if (fileSystem.FileExists(fileSystem.TriggersFile))
                 {
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.TriggersFile);
+                    xDoc.Load(fileSystem.TriggersFile);
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -155,16 +155,16 @@ namespace AutoScreenCapture
 
                         // Change the data for each Trigger that's being loaded if we've detected that
                         // the XML document is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
-                            Log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
+                            log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                            Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                 // These are new properties for Trigger that were introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have them during an upgrade.
@@ -181,14 +181,14 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        SaveToXmlFile();
+                        SaveToXmlFile(config, fileSystem, log);
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load triggers");
+                    log.WriteDebugMessage("WARNING: Unable to load triggers");
 
                     Trigger triggerApplicationStartShowInterface = new Trigger()
                     {
@@ -252,14 +252,14 @@ namespace AutoScreenCapture
                     Add(triggerInterfaceClosingExitApplication);
                     Add(triggerLimitReachedStopScreenCapture);
 
-                    SaveToXmlFile();
+                    SaveToXmlFile(config, fileSystem, log);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
+                log.WriteExceptionMessage("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
 
                 return false;
             }
@@ -268,7 +268,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the triggers.
         /// </summary>
-        public bool SaveToXmlFile()
+        public bool SaveToXmlFile(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -282,28 +282,27 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(FileSystem.TriggersFile))
+                if (string.IsNullOrEmpty(fileSystem.TriggersFile))
                 {
-                    FileSystem.TriggersFile = FileSystem.DefaultTriggersFile;
+                    fileSystem.TriggersFile = fileSystem.DefaultTriggersFile;
 
-                    if (FileSystem.FileExists(FileSystem.ConfigFile))
+                    if (fileSystem.FileExists(fileSystem.ConfigFile))
                     {
-                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nTriggersFile=" + FileSystem.TriggersFile);
+                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nTriggersFile=" + fileSystem.TriggersFile);
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.TriggersFile))
+                if (fileSystem.FileExists(fileSystem.TriggersFile))
                 {
-                    FileSystem.DeleteFile(FileSystem.TriggersFile);
+                    fileSystem.DeleteFile(fileSystem.TriggersFile);
                 }
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.TriggersFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.TriggersFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, config.Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, config.Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_TRIGGERS_NODE);
 
                     foreach (Trigger trigger in base.Collection)
@@ -335,7 +334,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("TriggerCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("TriggerCollection::SaveToXmlFile", ex);
 
                 return false;
             }

@@ -52,31 +52,31 @@ namespace AutoScreenCapture
 
             switch (name)
             {
-                case ImageFormatSpec.NAME_BMP:
+                case "BMP":
                     Format = System.Drawing.Imaging.ImageFormat.Bmp;
                     break;
 
-                case ImageFormatSpec.NAME_EMF:
+                case "EMF":
                     Format = System.Drawing.Imaging.ImageFormat.Emf;
                     break;
 
-                case ImageFormatSpec.NAME_GIF:
+                case "GIF":
                     Format = System.Drawing.Imaging.ImageFormat.Gif;
                     break;
 
-                case ImageFormatSpec.NAME_JPEG:
+                case "JPEG":
                     Format = System.Drawing.Imaging.ImageFormat.Jpeg;
                     break;
 
-                case ImageFormatSpec.NAME_PNG:
+                case "PNG":
                     Format = System.Drawing.Imaging.ImageFormat.Png;
                     break;
 
-                case ImageFormatSpec.NAME_TIFF:
+                case "TIFF":
                     Format = System.Drawing.Imaging.ImageFormat.Tiff;
                     break;
 
-                case ImageFormatSpec.NAME_WMF:
+                case "WMF":
                     Format = System.Drawing.Imaging.ImageFormat.Wmf;
                     break;
             }

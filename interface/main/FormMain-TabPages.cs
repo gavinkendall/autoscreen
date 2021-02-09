@@ -129,13 +129,13 @@ namespace AutoScreenCapture
             toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
             // Check to see if Email (SMTP) is configured.
-            string host = Settings.Application.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
+            string host = _config.Settings.Application.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
 
-            string username = Settings.Application.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
-            string password = Settings.Application.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
+            string username = _config.Settings.Application.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
+            string password = _config.Settings.Application.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
 
-            string from = Settings.Application.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
-            string to = Settings.Application.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
+            string from = _config.Settings.Application.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
+            string to = _config.Settings.Application.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
 
             if (string.IsNullOrEmpty(host) ||
                 string.IsNullOrEmpty(username) ||
@@ -143,7 +143,7 @@ namespace AutoScreenCapture
                 string.IsNullOrEmpty(@from) ||
                 string.IsNullOrEmpty(to))
             {
-                toolStripButtonEmail.ToolTipText = "SMTP settings have not been configured for " + Settings.ApplicationName + " to email screenshots";
+                toolStripButtonEmail.ToolTipText = "SMTP settings have not been configured for " + _config.Settings.ApplicationName + " to email screenshots";
                 toolStripButtonEmail.Enabled = false;
             }
             else
@@ -156,7 +156,7 @@ namespace AutoScreenCapture
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {
-                if (editor != null && FileSystem.FileExists(editor.Application))
+                if (editor != null && _fileSystem.FileExists(editor.Application))
                 {
                     toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
                 }

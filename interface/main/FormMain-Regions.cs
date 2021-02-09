@@ -35,7 +35,6 @@ namespace AutoScreenCapture
         {
             _formRegion.RegionObject = null;
             _formRegion.ImageFormatCollection = _imageFormatCollection;
-            _formRegion.ScreenCapture = _screenCapture;
             _formRegion.TagCollection = _formTag.TagCollection;
 
             _formRegion.ShowDialog(this);
@@ -45,7 +44,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                if (!_formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -80,7 +79,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                if (!_formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -110,7 +109,6 @@ namespace AutoScreenCapture
 
             _formRegion.RegionObject = region;
             _formRegion.ImageFormatCollection = _imageFormatCollection;
-            _formRegion.ScreenCapture = _screenCapture;
             _formRegion.TagCollection = _formTag.TagCollection;
 
             _formRegion.ShowDialog(this);
@@ -120,7 +118,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
                 BuildViewTabPages();
 
-                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                if (!_formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -144,7 +142,7 @@ namespace AutoScreenCapture
                     BuildRegionsModule();
                     BuildViewTabPages();
 
-                    if (!_formRegion.RegionCollection.SaveToXmlFile())
+                    if (!_formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                     {
                         _screenCapture.ApplicationError = true;
                     }
@@ -173,7 +171,7 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _screenCapture.ApplicationError = true;
-                Log.WriteExceptionMessage("FormMain-Regions::RunRegionCaptures", ex);
+                _log.WriteExceptionMessage("FormMain-Regions::RunRegionCaptures", ex);
             }
         }
     }

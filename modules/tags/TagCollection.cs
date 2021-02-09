@@ -74,8 +74,8 @@ namespace AutoScreenCapture
 
         private readonly string TAG_XPATH;
 
-        private static string AppCodename { get; set; }
-        private static string AppVersion { get; set; }
+        private string AppCodename { get; set; }
+        private string AppVersion { get; set; }
 
         /// <summary>
         /// Empty constructor for the tag collection.
@@ -113,18 +113,18 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the tags.
         /// </summary>
-        public bool LoadXmlFileAndAddTags()
+        public bool LoadXmlFileAndAddTags(Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (FileSystem.FileExists(FileSystem.TagsFile))
+                if (fileSystem.FileExists(fileSystem.TagsFile))
                 {
-                    Log.WriteDebugMessage("Tags file \"" + FileSystem.TagsFile + "\" found. Attempting to load XML document");
+                    log.WriteDebugMessage("Tags file \"" + fileSystem.TagsFile + "\" found. Attempting to load XML document");
 
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(FileSystem.TagsFile);
+                    xDoc.Load(fileSystem.TagsFile);
 
-                    Log.WriteDebugMessage("XML document loaded");
+                    log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
@@ -135,7 +135,7 @@ namespace AutoScreenCapture
 
                     foreach (XmlNode xTag in xTags)
                     {
-                        Tag tag = new Tag();
+                        Tag tag = new Tag(macroParser);
                         XmlNodeReader xReader = new XmlNodeReader(xTag);
 
                         while (xReader.Read())
@@ -173,17 +173,17 @@ namespace AutoScreenCapture
 
                                         // Change the data for each Tag that's being loaded if we've detected that
                                         // the XML document is from an older version of the application.
-                                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                                         {
-                                            Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+                                            log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
-                                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                                            Version v2326 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
-                                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                                            Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                                            Version v2326 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
+                                            Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                                             {
-                                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                                 // Starting with 2.3.0.0 the DateTimeFormatFunction type became the DateTimeFormatExpression type.
                                                 value = value.Replace("DateTimeFormatFunction", "DateTimeFormatExpression");
@@ -191,7 +191,7 @@ namespace AutoScreenCapture
 
                                             if (v2326 != null && configVersion != null && configVersion.VersionNumber < v2326.VersionNumber)
                                             {
-                                                Log.WriteDebugMessage("Boombayah 2.3.2.5 or older detected");
+                                                log.WriteDebugMessage("Boombayah 2.3.2.5 or older detected");
 
                                                 // Starting with 2.3.2.6 the TimeOfDay type became the TimeRange type.
                                                 value = value.Replace("TimeOfDay", "TimeRange");
@@ -292,17 +292,17 @@ namespace AutoScreenCapture
 
                         // Change the data for each Tag that's being loaded if we've detected that
                         // the XML document is from an older version of the application.
-                        if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
-                            Log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+                            log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version v2326 = Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
-                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                            Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2326 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.2.6");
+                            Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                                 // This is a new property for Tag that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
@@ -380,50 +380,50 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        Log.WriteDebugMessage("Tags file detected as an old version");
-                        SaveToXmlFile();
+                        log.WriteDebugMessage("Tags file detected as an old version");
+                        SaveToXmlFile(config, fileSystem, log);
                     }
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load tags");
+                    log.WriteDebugMessage("WARNING: Unable to load tags");
 
                     // Setup a few "built in" tags by default.
-                    Add(new Tag("name", "The name of the screen or region", TagType.ScreenName, active: true));
-                    Add(new Tag("screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", TagType.ScreenNumber, active: true));
-                    Add(new Tag("format", "The image format such as jpeg or png", TagType.ImageFormat, active: true));
-                    Add(new Tag("date", "The current date (%date%)", TagType.DateTimeFormat, MacroParser.DateFormat, active: true));
-                    Add(new Tag("time", "The current time (%time%)", TagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
-                    Add(new Tag("year", "The current year (%year%)", TagType.DateTimeFormat, MacroParser.YearFormat, active: true));
-                    Add(new Tag("month", "The current month (%month%)", TagType.DateTimeFormat, MacroParser.MonthFormat, active: true));
-                    Add(new Tag("day", "The current day (%day%)", TagType.DateTimeFormat, MacroParser.DayFormat, active: true));
-                    Add(new Tag("hour", "The current hour (%hour%)", TagType.DateTimeFormat, MacroParser.HourFormat, active: true));
-                    Add(new Tag("minute", "The current minute (%minute%)", TagType.DateTimeFormat, MacroParser.MinuteFormat, active: true));
-                    Add(new Tag("second", "The current second (%second%)", TagType.DateTimeFormat, MacroParser.SecondFormat, active: true));
-                    Add(new Tag("millisecond", "The current millisecond (%millisecond%)", TagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
-                    Add(new Tag("lastyear", "The previous year (%lastyear%)", TagType.DateTimeFormatExpression, "{year-1}", active: true));
-                    Add(new Tag("lastmonth", "The previous month (%lastmonth%)", TagType.DateTimeFormatExpression, "{month-1}", active: true));
-                    Add(new Tag("yesterday", "The previous day (%yesterday%)", TagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
-                    Add(new Tag("tomorrow", "The next day (%tomorrow%)", TagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
-                    Add(new Tag("6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", TagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new Tag("6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", TagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new Tag("count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", TagType.ScreenCaptureCycleCount, active: true));
-                    Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
-                    Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
-                    Add(new Tag("title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
-                    Add(new Tag("timerange", "The macro to use during a specific time range. At the moment it is %timerange%", TagType.TimeRange, active: true));
-                    Add(new Tag("quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", TagType.QuarterYear, active: true));
+                    Add(new Tag(macroParser, "name", "The name of the screen or region", TagType.ScreenName, active: true));
+                    Add(new Tag(macroParser, "screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", TagType.ScreenNumber, active: true));
+                    Add(new Tag(macroParser, "format", "The image format such as jpeg or png", TagType.ImageFormat, active: true));
+                    Add(new Tag(macroParser, "date", "The current date (%date%)", TagType.DateTimeFormat, macroParser.DateFormat, active: true));
+                    Add(new Tag(macroParser, "time", "The current time (%time%)", TagType.DateTimeFormat, macroParser.TimeFormatForWindows, active: true));
+                    Add(new Tag(macroParser, "year", "The current year (%year%)", TagType.DateTimeFormat, macroParser.YearFormat, active: true));
+                    Add(new Tag(macroParser, "month", "The current month (%month%)", TagType.DateTimeFormat, macroParser.MonthFormat, active: true));
+                    Add(new Tag(macroParser, "day", "The current day (%day%)", TagType.DateTimeFormat, macroParser.DayFormat, active: true));
+                    Add(new Tag(macroParser, "hour", "The current hour (%hour%)", TagType.DateTimeFormat, macroParser.HourFormat, active: true));
+                    Add(new Tag(macroParser, "minute", "The current minute (%minute%)", TagType.DateTimeFormat, macroParser.MinuteFormat, active: true));
+                    Add(new Tag(macroParser, "second", "The current second (%second%)", TagType.DateTimeFormat, macroParser.SecondFormat, active: true));
+                    Add(new Tag(macroParser, "millisecond", "The current millisecond (%millisecond%)", TagType.DateTimeFormat, macroParser.MillisecondFormat, active: true));
+                    Add(new Tag(macroParser, "lastyear", "The previous year (%lastyear%)", TagType.DateTimeFormatExpression, "{year-1}", active: true));
+                    Add(new Tag(macroParser, "lastmonth", "The previous month (%lastmonth%)", TagType.DateTimeFormatExpression, "{month-1}", active: true));
+                    Add(new Tag(macroParser, "yesterday", "The previous day (%yesterday%)", TagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
+                    Add(new Tag(macroParser, "tomorrow", "The next day (%tomorrow%)", TagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
+                    Add(new Tag(macroParser, "6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", TagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new Tag(macroParser, "6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", TagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new Tag(macroParser, "count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", TagType.ScreenCaptureCycleCount, active: true));
+                    Add(new Tag(macroParser, "user", "The user using this computer (%user%)", TagType.User, active: true));
+                    Add(new Tag(macroParser, "machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
+                    Add(new Tag(macroParser, "title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
+                    Add(new Tag(macroParser, "timerange", "The macro to use during a specific time range. At the moment it is %timerange%", TagType.TimeRange, active: true));
+                    Add(new Tag(macroParser, "quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", TagType.QuarterYear, active: true));
 
-                    SaveToXmlFile();
+                    SaveToXmlFile(config, fileSystem, log);
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("TagCollection::LoadXmlFileAndAddTags", ex);
+                log.WriteExceptionMessage("TagCollection::LoadXmlFileAndAddTags", ex);
 
                 return false;
             }
@@ -432,7 +432,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the tags.
         /// </summary>
-        public bool SaveToXmlFile()
+        public bool SaveToXmlFile(Config config, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -446,28 +446,27 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(FileSystem.TagsFile))
+                if (string.IsNullOrEmpty(fileSystem.TagsFile))
                 {
-                    FileSystem.TagsFile = FileSystem.DefaultTagsFile;
+                    fileSystem.TagsFile = fileSystem.DefaultTagsFile;
 
-                    if (FileSystem.FileExists(FileSystem.ConfigFile))
+                    if (fileSystem.FileExists(fileSystem.ConfigFile))
                     {
-                        FileSystem.AppendToFile(FileSystem.ConfigFile, "\nTagsFile=" + FileSystem.TagsFile);
+                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nTagsFile=" + fileSystem.TagsFile);
                     }
                 }
 
-                if (FileSystem.FileExists(FileSystem.TagsFile))
+                if (fileSystem.FileExists(fileSystem.TagsFile))
                 {
-                    FileSystem.DeleteFile(FileSystem.TagsFile);
+                    fileSystem.DeleteFile(fileSystem.TagsFile);
                 }
 
-                using (XmlWriter xWriter =
-                    XmlWriter.Create(FileSystem.TagsFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.TagsFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, config.Settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, config.Settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_TAGS_NODE);
 
                     foreach (Tag tag in base.Collection)
@@ -508,7 +507,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("TagCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("TagCollection::SaveToXmlFile", ex);
 
                 return false;
             }

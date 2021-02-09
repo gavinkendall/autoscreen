@@ -26,8 +26,11 @@ namespace AutoScreenCapture
     /// <summary>
     /// The configuration file is used to define the folders and files that the application will use.
     /// </summary>
-    public static class Config
+    public class Config
     {
+        private FileSystem _fileSystem;
+        private MacroParser _macroParser;
+
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
         private const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
@@ -44,18 +47,35 @@ namespace AutoScreenCapture
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
         /// <summary>
+        /// A collection of settings.
+        /// </summary>
+        public Settings Settings { get; set; }
+
+        /// <summary>
+        /// A class for handling configuration.
+        /// </summary>
+        /// <param name="filesystem"></param>
+        public Config(FileSystem filesystem, MacroParser macroParser, Settings settings)
+        {
+            _fileSystem = filesystem;
+            _macroParser = macroParser;
+
+            Settings = settings;
+        }
+
+        /// <summary>
         /// Loads the configuration file.
         /// </summary>
-        public static void Load()
+        public void Load(ScreenCapture screenCapture, Log log)
         {
             try
             {
-                if (!FileSystem.DirectoryExists(FileSystem.GetDirectoryName(FileSystem.ConfigFile)))
+                if (!_fileSystem.DirectoryExists(_fileSystem.GetDirectoryName(_fileSystem.ConfigFile)))
                 {
-                    FileSystem.CreateDirectory(FileSystem.GetDirectoryName(FileSystem.ConfigFile));
+                    _fileSystem.CreateDirectory(_fileSystem.GetDirectoryName(_fileSystem.ConfigFile));
                 }
 
-                if (!FileSystem.FileExists(FileSystem.ConfigFile))
+                if (!_fileSystem.FileExists(_fileSystem.ConfigFile))
                 {
                     string[] linesToWrite =
                     {
@@ -65,37 +85,37 @@ namespace AutoScreenCapture
                         "# If only the folder name is given then it will be parsed as the sub-folder of the folder",
                         "# where the executed autoscreen.exe binary is located.", "",
                         "# This is the folder where screenshots will be stored by default.",
-                        "ScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder, "",
+                        "ScreenshotsFolder=" + _fileSystem.DefaultScreenshotsFolder, "",
                         "# If any errors are encountered then you will find them in this folder when DebugMode is enabled.",
-                        "DebugFolder=" + FileSystem.DefaultDebugFolder, "",
+                        "DebugFolder=" + _fileSystem.DefaultDebugFolder, "",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
-                        "LogsFolder=" + FileSystem.DefaultLogsFolder, "",
+                        "LogsFolder=" + _fileSystem.DefaultLogsFolder, "",
                         "# This file is monitored by the application for commands issued from the command line while it's running.",
-                        "CommandFile=" + FileSystem.DefaultCommandFile, "",
+                        "CommandFile=" + _fileSystem.DefaultCommandFile, "",
                         "# The application settings (such as DebugMode).",
-                        "ApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile, "",
+                        "ApplicationSettingsFile=" + _fileSystem.DefaultApplicationSettingsFile, "",
                         "# Your personal settings.",
-                        "UserSettingsFile=" + FileSystem.DefaultUserSettingsFile, "",
+                        "UserSettingsFile=" + _fileSystem.DefaultUserSettingsFile, "",
                         "# References to image editors.",
-                        "EditorsFile=" + FileSystem.DefaultEditorsFile, "",
+                        "EditorsFile=" + _fileSystem.DefaultEditorsFile, "",
                         "# References to regions.",
-                        "RegionsFile=" + FileSystem.DefaultRegionsFile, "",
+                        "RegionsFile=" + _fileSystem.DefaultRegionsFile, "",
                         "# References to screens.",
-                        "ScreensFile=" + FileSystem.DefaultScreensFile, "",
+                        "ScreensFile=" + _fileSystem.DefaultScreensFile, "",
                         "# References to triggers.",
-                        "TriggersFile=" + FileSystem.DefaultTriggersFile, "",
+                        "TriggersFile=" + _fileSystem.DefaultTriggersFile, "",
                         "# References to screenshots.",
-                        "ScreenshotsFile=" + FileSystem.DefaultScreenshotsFile, "",
+                        "ScreenshotsFile=" + _fileSystem.DefaultScreenshotsFile, "",
                         "# References to tags.",
-                        "TagsFile=" + FileSystem.DefaultTagsFile, "",
+                        "TagsFile=" + _fileSystem.DefaultTagsFile, "",
                         "# References to schedules.",
-                        "SchedulesFile=" + FileSystem.DefaultSchedulesFile, ""
+                        "SchedulesFile=" + _fileSystem.DefaultSchedulesFile, ""
                     };
 
-                    FileSystem.WriteToFile(FileSystem.ConfigFile, linesToWrite);
+                    _fileSystem.WriteToFile(_fileSystem.ConfigFile, linesToWrite);
                 }
 
-                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                foreach (string line in _fileSystem.ReadFromFile(_fileSystem.ConfigFile))
                 {
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
@@ -105,193 +125,191 @@ namespace AutoScreenCapture
                     string path;
 
                     if (GetPath(line, REGEX_SCREENSHOTS_FOLDER, out path))
-                        FileSystem.ScreenshotsFolder = path;
+                        _fileSystem.ScreenshotsFolder = path;
 
                     if (GetPath(line, REGEX_DEBUG_FOLDER, out path))
-                        FileSystem.DebugFolder = path;
+                        _fileSystem.DebugFolder = path;
 
                     if (GetPath(line, REGEX_LOGS_FOLDER, out path))
-                        FileSystem.LogsFolder = path;
+                        _fileSystem.LogsFolder = path;
 
                     if (GetPath(line, REGEX_COMMAND_FILE, out path))
-                        FileSystem.CommandFile = path;
+                        _fileSystem.CommandFile = path;
 
                     if (GetPath(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
-                        FileSystem.ApplicationSettingsFile = path;
+                        _fileSystem.ApplicationSettingsFile = path;
 
                     if (GetPath(line, REGEX_USER_SETTINGS_FILE, out path))
-                        FileSystem.UserSettingsFile = path;
+                        _fileSystem.UserSettingsFile = path;
 
                     if (GetPath(line, REGEX_EDITORS_FILE, out path))
-                        FileSystem.EditorsFile = path;
+                        _fileSystem.EditorsFile = path;
 
                     if (GetPath(line, REGEX_REGIONS_FILE, out path))
-                        FileSystem.RegionsFile = path;
+                        _fileSystem.RegionsFile = path;
 
                     if (GetPath(line, REGEX_SCREENS_FILE, out path))
-                        FileSystem.ScreensFile = path;
+                        _fileSystem.ScreensFile = path;
 
                     if (GetPath(line, REGEX_TRIGGERS_FILE, out path))
-                        FileSystem.TriggersFile = path;
+                        _fileSystem.TriggersFile = path;
 
                     if (GetPath(line, REGEX_SCREENSHOTS_FILE, out path))
-                        FileSystem.ScreenshotsFile = path;
+                        _fileSystem.ScreenshotsFile = path;
 
                     if (GetPath(line, REGEX_TAGS_FILE, out path))
-                        FileSystem.TagsFile = path;
+                        _fileSystem.TagsFile = path;
 
                     if (GetPath(line, REGEX_SCHEDULES_FILE, out path))
-                        FileSystem.SchedulesFile = path;
+                        _fileSystem.SchedulesFile = path;
                 }
 
                 CheckAndCreateFolders();
 
-                CheckAndCreateFiles();
+                CheckAndCreateFiles(screenCapture, log);
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("Config::Load", ex);
+                log.WriteExceptionMessage("Config::Load", ex);
             }
         }
 
         // Check the folders to make sure that each folder was included in the config file and the folder exists.
-        private static void CheckAndCreateFolders()
+        private void CheckAndCreateFolders()
         {
-            if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
+            if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFolder))
             {
-                FileSystem.ScreenshotsFolder = FileSystem.DefaultScreenshotsFolder;
+                _fileSystem.ScreenshotsFolder = _fileSystem.DefaultScreenshotsFolder;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nScreenshotsFolder=" + _fileSystem.DefaultScreenshotsFolder);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultScreenshotsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultScreenshotsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultScreenshotsFolder);
                 }
             }
 
-            if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+            if (string.IsNullOrEmpty(_fileSystem.DebugFolder))
             {
-                FileSystem.DebugFolder = FileSystem.DefaultDebugFolder;
+                _fileSystem.DebugFolder = _fileSystem.DefaultDebugFolder;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DefaultDebugFolder);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nDebugFolder=" + _fileSystem.DefaultDebugFolder);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultDebugFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultDebugFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultDebugFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultDebugFolder);
                 }
             }
 
-            if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+            if (string.IsNullOrEmpty(_fileSystem.LogsFolder))
             {
-                FileSystem.LogsFolder = FileSystem.DefaultLogsFolder;
+                _fileSystem.LogsFolder = _fileSystem.DefaultLogsFolder;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.DefaultLogsFolder);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nLogsFolder=" + _fileSystem.DefaultLogsFolder);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultLogsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultLogsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultLogsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultLogsFolder);
                 }
             }
         }
 
-        private static void CheckAndCreateFiles()
+        private void CheckAndCreateFiles(ScreenCapture screenCapture, Log log)
         {
-            if (string.IsNullOrEmpty(FileSystem.CommandFile))
+            if (string.IsNullOrEmpty(_fileSystem.CommandFile))
             {
-                FileSystem.CommandFile = FileSystem.DefaultCommandFile;
+                _fileSystem.CommandFile = _fileSystem.DefaultCommandFile;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.DefaultCommandFile);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nCommandFile=" + _fileSystem.DefaultCommandFile);
 
-                if (!FileSystem.FileExists(FileSystem.DefaultCommandFile))
+                if (!_fileSystem.FileExists(_fileSystem.DefaultCommandFile))
                 {
-                    FileSystem.CreateFile(FileSystem.DefaultCommandFile);
+                    _fileSystem.CreateFile(_fileSystem.DefaultCommandFile);
                 }
             }
 
-            if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
+            if (string.IsNullOrEmpty(_fileSystem.ApplicationSettingsFile))
             {
-                FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;
+                _fileSystem.ApplicationSettingsFile = _fileSystem.DefaultApplicationSettingsFile;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nApplicationSettingsFile=" + _fileSystem.DefaultApplicationSettingsFile);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultSettingsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultSettingsFolder);
                 }
             }
 
-            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
             {
-                FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
+                _fileSystem.UserSettingsFile = _fileSystem.DefaultUserSettingsFile;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nUserSettingsFile=" + _fileSystem.DefaultUserSettingsFile);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultSettingsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultSettingsFolder);
                 }
             }
 
-            Settings.Initialize();
+            log.WriteMessage("Loading user settings");
+            Settings.User.Load(Settings, _fileSystem);
+            log.WriteDebugMessage("User settings loaded");
 
-            Log.WriteMessage("Loading user settings");
-            Settings.User.Load();
-            Log.WriteDebugMessage("User settings loaded");
+            log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
+            Settings.Application.Upgrade(screenCapture, this, _fileSystem, log);
 
-            Log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
-            Settings.Application.Upgrade();
+            log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
+            Settings.User.Upgrade(screenCapture, this, _fileSystem, log);
 
-            Log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
-            Settings.User.Upgrade();
-
-            if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
+            if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))
             {
                 ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
                 ScreenCollection screenCollection = new ScreenCollection();
 
-                ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection);
-                screenshotCollection.SaveToXmlFile(0);
+                ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, _fileSystem, log);
+                screenshotCollection.SaveToXmlFile(0, _macroParser, this);
             }
 
-            if (string.IsNullOrEmpty(FileSystem.EditorsFile))
+            if (string.IsNullOrEmpty(_fileSystem.EditorsFile))
             {
                 // Loading the editor collection will automatically create the default editors and add them to the collection.
                 EditorCollection editorCollection = new EditorCollection();
-                editorCollection.LoadXmlFileAndAddEditors();
+                editorCollection.LoadXmlFileAndAddEditors(this, _fileSystem, log);
             }
 
-            if (string.IsNullOrEmpty(FileSystem.RegionsFile))
+            if (string.IsNullOrEmpty(_fileSystem.RegionsFile))
             {
                 RegionCollection regionCollection = new RegionCollection();
-                regionCollection.SaveToXmlFile();
+                regionCollection.SaveToXmlFile(Settings, _fileSystem, log);
             }
 
-            if (string.IsNullOrEmpty(FileSystem.ScreensFile))
+            if (string.IsNullOrEmpty(_fileSystem.ScreensFile))
             {
                 // Loading the screen collection will automatically create the available screens and add them to the collection.
                 ScreenCollection screenCollection = new ScreenCollection();
-                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection());
+                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, _macroParser, _fileSystem, log);
             }
 
-            if (string.IsNullOrEmpty(FileSystem.TriggersFile))
+            if (string.IsNullOrEmpty(_fileSystem.TriggersFile))
             {
                 // Loading triggers will automatically create the default triggers and add them to the collection.
                 TriggerCollection triggerCollection = new TriggerCollection();
-                triggerCollection.LoadXmlFileAndAddTriggers();
+                triggerCollection.LoadXmlFileAndAddTriggers(this, _fileSystem, log);
             }
 
-            if (string.IsNullOrEmpty(FileSystem.TagsFile))
+            if (string.IsNullOrEmpty(_fileSystem.TagsFile))
             {
                 // Loading tags will automatically create the default tags and add them to the collection.
                 TagCollection tagCollection = new TagCollection();
-                tagCollection.LoadXmlFileAndAddTags();
+                tagCollection.LoadXmlFileAndAddTags(this, _macroParser, _fileSystem, log);
             }
 
-            if (string.IsNullOrEmpty(FileSystem.SchedulesFile))
+            if (string.IsNullOrEmpty(_fileSystem.SchedulesFile))
             {
                 // Loading schedules will automatically create the default schedules and add them to the collection.
                 ScheduleCollection scheduleCollection = new ScheduleCollection();
-                scheduleCollection.LoadXmlFileAndAddSchedules();
+                scheduleCollection.LoadXmlFileAndAddSchedules(this, _fileSystem, log);
             }
         }
 
@@ -302,7 +320,7 @@ namespace AutoScreenCapture
         /// <param name="regex">The regex pattern to use against the line.</param>
         /// <param name="path">The output of the path being returned.</param>
         /// <returns>A boolean to indicate if getting a path was successful or not.</returns>
-        private static bool GetPath(string line, string regex, out string path)
+        private bool GetPath(string line, string regex, out string path)
         {
             if (!Regex.IsMatch(line, regex))
             {
@@ -313,30 +331,30 @@ namespace AutoScreenCapture
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
             TagCollection tagCollection = new TagCollection();
-            tagCollection.Add(new Tag("user", "The user using this computer (%user%)", TagType.User, active: true));
-            tagCollection.Add(new Tag("machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
+            tagCollection.Add(new Tag(_macroParser, "user", "The user using this computer (%user%)", TagType.User, active: true));
+            tagCollection.Add(new Tag(_macroParser, "machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
 
-            path = MacroParser.ParseTags(config: true, path, tagCollection);
+            path = _macroParser.ParseTags(config: true, path, tagCollection, new Log(_fileSystem, _macroParser));
 
-            if (FileSystem.HasExtension(path))
+            if (_fileSystem.HasExtension(path))
             {
-                string dir = FileSystem.GetDirectoryName(path);
+                string dir = _fileSystem.GetDirectoryName(path);
 
-                if (!string.IsNullOrEmpty(dir) && !FileSystem.DirectoryExists(dir))
+                if (!string.IsNullOrEmpty(dir) && !_fileSystem.DirectoryExists(dir))
                 {
-                    FileSystem.CreateDirectory(dir);
+                    _fileSystem.CreateDirectory(dir);
                 }
             }
             else
             {
-                if (!path.EndsWith(FileSystem.DirectorySeparatorChar().ToString()))
+                if (!path.EndsWith(_fileSystem.DirectorySeparatorChar().ToString()))
                 {
-                    path += FileSystem.DirectorySeparatorChar();
+                    path += _fileSystem.DirectorySeparatorChar();
                 }
 
-                if (!string.IsNullOrEmpty(path) && !FileSystem.DirectoryExists(path))
+                if (!string.IsNullOrEmpty(path) && !_fileSystem.DirectoryExists(path))
                 {
-                    FileSystem.CreateDirectory(path);
+                    _fileSystem.CreateDirectory(path);
                 }
             }
 

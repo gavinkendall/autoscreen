@@ -27,6 +27,8 @@ namespace AutoScreenCapture
     /// </summary>
     public class Tag
     {
+        private MacroParser _macroParser;
+
         /// <summary>
         /// The name of the macro tag.
         /// </summary>
@@ -53,53 +55,63 @@ namespace AutoScreenCapture
         public string DateTimeFormatValue { get; set; }
 
         /// <summary>
-        /// The start date/time of the morning for the Time of Day tag type.
+        /// The start date/time of Macro 1.
         /// </summary>
         public DateTime TimeRangeMacro1Start { get; set; }
 
         /// <summary>
-        /// The end date/time of the morning for the Time of Day tag type.
+        /// The end date/time of Macro 1.
         /// </summary>
         public DateTime TimeRangeMacro1End { get; set; }
 
         /// <summary>
-        /// The start date/time of the afternoon for the Time of Day tag type.
+        /// The start date/time of Macro 2.
         /// </summary>
         public DateTime TimeRangeMacro2Start { get; set; }
 
         /// <summary>
-        /// The end date/time of the afternoon for the Time of Day tag type.
+        /// The end date/time of Macro 2.
         /// </summary>
         public DateTime TimeRangeMacro2End { get; set; }
 
         /// <summary>
-        /// The start date/time of the evening for the Time of Day tag type.
+        /// The start date/time of Macro 3.
         /// </summary>
         public DateTime TimeRangeMacro3Start { get; set; }
 
         /// <summary>
-        /// The end date/time of the evening for the Time of Day tag type.
+        /// The end date/time of Macro 3.
         /// </summary>
         public DateTime TimeRangeMacro3End { get; set; }
 
+        /// <summary>
+        /// The start date/time of Macro 4.
+        /// </summary>
         public DateTime TimeRangeMacro4Start { get; set; }
+
+        /// <summary>
+        /// The end date/time of Macro 4.
+        /// </summary>
         public DateTime TimeRangeMacro4End { get; set; }
 
         /// <summary>
-        /// The morning value for the Time of Day tag type.
+        /// The macro value of Macro 1.
         /// </summary>
         public string TimeRangeMacro1Macro { get; set; }
 
         /// <summary>
-        /// The afternoon value for the Time of Day tag type.
+        /// The macro value of Macro 2.
         /// </summary>
         public string TimeRangeMacro2Macro { get; set; }
 
         /// <summary>
-        /// The evening value for the Time of Day tag type.
+        /// The macro value of Macro 3.
         /// </summary>
         public string TimeRangeMacro3Macro { get; set; }
 
+        /// <summary>
+        /// The macro value of Macro 4.
+        /// </summary>
         public string TimeRangeMacro4Macro { get; set; }
 
         /// <summary>
@@ -109,7 +121,7 @@ namespace AutoScreenCapture
 
         private void SetDefaultValues()
         {
-            DateTimeFormatValue = MacroParser.DateFormat + "_" + MacroParser.TimeFormatForWindows;
+            DateTimeFormatValue = _macroParser.DateFormat + "_" + _macroParser.TimeFormatForWindows;
 
             TimeRangeMacro1Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0); // 12am
             TimeRangeMacro1End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 11, 59, 59); // 11:59:59am
@@ -135,8 +147,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// The empty constructor for creating a tag.
         /// </summary>
-        public Tag()
+        public Tag(MacroParser macroParser)
         {
+            _macroParser = macroParser;
+
             SetDefaultValues();
         }
 
@@ -147,8 +161,10 @@ namespace AutoScreenCapture
         /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
         /// <param name="active">The status of the tag.</param>
-        public Tag(string name, string description, TagType tagType, bool active)
+        public Tag(MacroParser macroParser, string name, string description, TagType tagType, bool active)
         {
+            _macroParser = macroParser;
+
             SetDefaultValues();
 
             Name = name;
@@ -165,8 +181,10 @@ namespace AutoScreenCapture
         /// <param name="tagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="active">The status of the tag.</param>
-        public Tag(string name, string description, TagType tagType, string dateTimeFormatValue, bool active)
+        public Tag(MacroParser macroParser, string name, string description, TagType tagType, string dateTimeFormatValue, bool active)
         {
+            _macroParser = macroParser;
+
             SetDefaultValues();
 
             Name = name;
@@ -197,7 +215,7 @@ namespace AutoScreenCapture
         /// <param name="timeRangeMacro4Macro">The macro for Macro 4</param>
         /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
         /// <param name="notes">Notes.</param>
-        public Tag(string name, string description, TagType tagType,
+        public Tag(MacroParser macroParser, string name, string description, TagType tagType,
             string dateTimeFormatValue,
             DateTime timeRangeMacro1Start,
             DateTime timeRangeMacro1End,
@@ -213,6 +231,8 @@ namespace AutoScreenCapture
             string timeRangeMacro4Macro,
             bool active, string notes)
         {
+            _macroParser = macroParser;
+
             Name = name;
             Description = description;
             Type = tagType;

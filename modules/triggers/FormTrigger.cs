@@ -28,6 +28,9 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormTrigger : Form
     {
+        private FileSystem _fileSystem;
+        private DataConvert _dataConvert;
+
         /// <summary>
         /// A collection of triggers.
         /// </summary>
@@ -64,11 +67,14 @@ namespace AutoScreenCapture
         public TagCollection TagCollection { get; set; }
 
         /// <summary>
-        /// Empty constructor.
+        /// A form for Trigger.
         /// </summary>
-        public FormTrigger()
+        public FormTrigger(FileSystem fileSystem)
         {
             InitializeComponent();
+
+            _fileSystem = fileSystem;
+            _dataConvert = new DataConvert();
         }
 
         private void FormTrigger_Load(object sender, EventArgs e)
@@ -160,7 +166,7 @@ namespace AutoScreenCapture
 
                 if (TriggerCollection.GetByName(textBoxTriggerName.Text) == null)
                 {
-                    int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                    int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                         (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                         (int)numericUpDownMillisecondsInterval.Value);
 
@@ -223,7 +229,7 @@ namespace AutoScreenCapture
                             TriggerCollection.Get(TriggerObject).ModuleItem = string.Empty;
                         }
 
-                        int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                             (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                             (int)numericUpDownMillisecondsInterval.Value);
 
@@ -262,7 +268,7 @@ namespace AutoScreenCapture
 
         private bool InputChanged()
         {
-            int screenCaptureInterval = DataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                             (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
                             (int)numericUpDownMillisecondsInterval.Value);
 
@@ -304,7 +310,7 @@ namespace AutoScreenCapture
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.EmailScreenshot)
             {
-                MessageBox.Show("Please ensure that the application's email (SMTP) settings are correctly configured in order to automatically email screenshots to the intended recipient. It is important that you do not use this application to spam people. Thank you.\n\nThe settings are prefixed with \"Email\" and located in the following XML document used for application-wide settings ...\n" + FileSystem.ApplicationSettingsFile, "Check Email Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please ensure that the application's email (SMTP) settings are correctly configured in order to automatically email screenshots to the intended recipient. It is important that you do not use this application to spam people. Thank you.\n\nThe settings are prefixed with \"Email\" and located in the following XML document used for application-wide settings ...\n" + _fileSystem.ApplicationSettingsFile, "Check Email Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             Close();
@@ -376,7 +382,7 @@ namespace AutoScreenCapture
 
                 foreach (Editor editor in EditorCollection)
                 {
-                    if (editor != null && FileSystem.FileExists(editor.Application))
+                    if (editor != null && _fileSystem.FileExists(editor.Application))
                     {
                         listBoxModuleItemList.Items.Add(editor.Name);
                     }

@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         {
             PopulateLabelList();
 
-            if (ScreenCapture.LockScreenCaptureSession)
+            if (_screenCapture.LockScreenCaptureSession)
             {
                 // Hide the "Show Screen Capture Status" menu item.
                 toolStripSeparatorTools.Visible = false;
@@ -86,11 +86,11 @@ namespace AutoScreenCapture
         {
             // Show the balloon tip only if the system tray icon is visible and the "FirstRun" setting returns "True".
 
-            bool.TryParse(Settings.User.GetByKey("FirstRun", DefaultSettings.FirstRun).Value.ToString(), out bool firstRun);
+            bool.TryParse(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value.ToString(), out bool firstRun);
 
             if (notifyIcon.Visible && firstRun)
             {
-                notifyIcon.ShowBalloonTip(balloonTipTimeout, Settings.ApplicationName, message, ToolTipIcon.Info);
+                notifyIcon.ShowBalloonTip(balloonTipTimeout, _config.Settings.ApplicationName, message, ToolTipIcon.Info);
             }
         }
 
@@ -103,7 +103,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (ScreenCapture.LockScreenCaptureSession)
+                if (_screenCapture.LockScreenCaptureSession)
                 {
                     notifyIcon.Text = string.Empty;
 
@@ -121,7 +121,7 @@ namespace AutoScreenCapture
 
                         labelHelp.Image = Resources.warning;
                         labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
-                        HelpMessage($"Please check \"{ FileSystem.DebugFolder + FileSystem.ErrorFile}\"");
+                        HelpMessage($"Please check \"{ _fileSystem.DebugFolder + _fileSystem.ErrorFile}\"");
                     }
                     else if (_screenCapture.ApplicationWarning)
                     {

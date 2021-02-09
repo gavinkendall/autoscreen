@@ -28,6 +28,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormTag : Form
     {
+        private MacroParser _macroParser;
+
         /// <summary>
         /// A collection of macro tags.
         /// </summary>
@@ -41,9 +43,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormTag()
+        public FormTag(MacroParser macroParser)
         {
             InitializeComponent();
+
+            _macroParser = macroParser;
         }
 
         private void FormTag_Load(object sender, EventArgs e)
@@ -101,7 +105,7 @@ namespace AutoScreenCapture
             {
                 Text = "Add New Tag";
 
-                Tag tag = new Tag();
+                Tag tag = new Tag(_macroParser);
 
                 textBoxName.Text = "%tag" + (TagCollection.Count + 1) + "%";
 
@@ -163,7 +167,7 @@ namespace AutoScreenCapture
 
                 if (TagCollection.GetByName(textBoxName.Text) == null)
                 {
-                    TagCollection.Add(new Tag(textBoxName.Text,
+                    TagCollection.Add(new Tag(_macroParser, textBoxName.Text,
                         textBoxDescription.Text,
                         (TagType)comboBoxType.SelectedIndex,
                         textBoxDateTimeFormatValue.Text,

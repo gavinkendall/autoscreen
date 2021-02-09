@@ -31,7 +31,8 @@ namespace AutoScreenCapture
     /// </summary>
     public class SettingCollection : IEnumerable<Setting>
     {
-        private List<Setting> _settingList = new List<Setting>();
+        private Security _security;
+        private List<Setting> _settingList;
 
         private const int MAX_FILE_SIZE = 5242880;
         private const string XML_FILE_INDENT_CHARS = "   ";
@@ -56,10 +57,13 @@ namespace AutoScreenCapture
         internal string Filepath { get; set; }
 
         /// <summary>
-        /// Empty constructor for the SettingCollection. This prepares the XML node path.
+        /// A class for handling a collection of settings.
         /// </summary>
         public SettingCollection()
         {
+            _security = new Security();
+            _settingList = new List<Setting>();
+
             StringBuilder sb = new StringBuilder();
             sb.Append("/");
             sb.Append(XML_FILE_ROOT_NODE);
@@ -235,21 +239,23 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the settings.
         /// </summary>
-        public void Load()
+        public void Load(Settings settings, FileSystem fileSystem)
         {
+            Log log = new Log(fileSystem, new MacroParser(settings));
+
             try
             {
                 if (string.IsNullOrEmpty(Filepath)) return;
 
-                if (FileSystem.FileExists(Filepath))
+                if (fileSystem.FileExists(Filepath))
                 {
                     // Check the size of the settings file.
                     // Delete the file if it's too big so we don't hang.
-                    if (FileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
+                    if (fileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
                     {
-                        FileSystem.DeleteFile(Filepath);
+                        fileSystem.DeleteFile(Filepath);
 
-                        Log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
+                        log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
 
                         return;
                     }
@@ -296,19 +302,19 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Log.WriteDebugMessage("WARNING: Unable to load settings");
+                    log.WriteDebugMessage("WARNING: Unable to load settings");
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("SettingCollection::Load", ex);
+                log.WriteExceptionMessage("SettingCollection::Load", ex);
             }
         }
 
         /// <summary>
         /// Saves the settings.
         /// </summary>
-        public bool Save()
+        public bool Save(Settings settings, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -324,17 +330,17 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (FileSystem.FileExists(Filepath))
+                if (fileSystem.FileExists(Filepath))
                 {
-                    FileSystem.DeleteFile(Filepath);
+                    fileSystem.DeleteFile(Filepath);
                 }
 
                 using (XmlWriter xWriter = XmlWriter.Create(Filepath, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_SETTINGS_NODE);
 
                     foreach (object obj in _settingList)
@@ -361,7 +367,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("SettingCollection::Save", ex);
+                log.WriteExceptionMessage("SettingCollection::Save", ex);
 
                 return false;
             }
@@ -370,18 +376,18 @@ namespace AutoScreenCapture
         /// <summary>
         /// Attempts an upgrade on a collection of settings that may have come from an old version of the application.
         /// </summary>
-        public void Upgrade()
+        public void Upgrade(ScreenCapture screenCapture, Config config, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (!Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion)) return;
+                if (!config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion)) return;
 
-                Log.WriteMessage("An old version or a fresh version of " + Settings.ApplicationName + " was detected. Attempting upgrade");
+                log.WriteMessage("An old version or a fresh version of " + config.Settings.ApplicationName + " was detected. Attempting upgrade");
 
                 var oldUserSettings = (SettingCollection)this.MemberwiseClone();
                 oldUserSettings._settingList = new List<Setting>(_settingList);
 
-                Settings.VersionManager.OldUserSettings = oldUserSettings;
+                config.Settings.VersionManager.OldUserSettings = oldUserSettings;
 
                 var versionInConfig = new Version(AppCodename, AppVersion, false);
 
@@ -413,8 +419,8 @@ namespace AutoScreenCapture
                         {
                             // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
                             // in an older version of the application then make sure to hash it and lock the session before we continue.
-                            SetValueByKey("Passphrase", Security.Hash(passphrase));
-                            ScreenCapture.LockScreenCaptureSession = true;
+                            SetValueByKey("Passphrase", _security.Hash(passphrase));
+                            screenCapture.LockScreenCaptureSession = true;
                         }
                     }
                 }
@@ -535,14 +541,14 @@ namespace AutoScreenCapture
                 RemoveByKey("DeleteScreenshotsOlderThanDays");
                 RemoveByKey("ScreenshotDelay");
 
-                Log.WriteMessage("Upgrade completed.");
+                log.WriteMessage("Upgrade completed.");
 
                 // Now that we've upgraded all the settings we should save them to disk.
-                Save();
+                Save(config.Settings, fileSystem, log);
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("SettingCollection::Upgrade", ex);
+                log.WriteExceptionMessage("SettingCollection::Upgrade", ex);
             }
         }
     }

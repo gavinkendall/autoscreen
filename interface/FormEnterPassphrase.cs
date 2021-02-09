@@ -28,12 +28,22 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEnterPassphrase : Form
     {
+        private Log _log;
+        private Config _config;
+        private ScreenCapture _screenCapture;
+        private Security _security;
+
         /// <summary>
         /// The empty constructor for the form.
         /// </summary>
-        public FormEnterPassphrase()
+        public FormEnterPassphrase(ScreenCapture screenCapture, Config config, Log log)
         {
             InitializeComponent();
+
+            _log = log;
+            _config = config;
+            _screenCapture = screenCapture;
+            _security = new Security();
         }
 
         private void FormEnterPassphrase_Load(object sender, EventArgs e)
@@ -53,16 +63,16 @@ namespace AutoScreenCapture
 
             textBoxPassphrase.Text = textBoxPassphrase.Text.Trim();
 
-            if (Security.Hash(textBoxPassphrase.Text).Equals(Settings.User.GetByKey("Passphrase", DefaultSettings.Passphrase).Value))
+            if (_security.Hash(textBoxPassphrase.Text).Equals(_config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value))
             {
-                Log.WriteDebugMessage("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
+                _log.WriteDebugMessage("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
 
-                ScreenCapture.LockScreenCaptureSession = false;
+                _screenCapture.LockScreenCaptureSession = false;
                 Close();
             }
             else
             {
-                Log.WriteMessage("WARNING: There was an attempt to unlock the running screen capture session! The user was " + Environment.UserName + " on " + Environment.MachineName);
+                _log.WriteMessage("WARNING: There was an attempt to unlock the running screen capture session! The user was " + Environment.UserName + " on " + Environment.MachineName);
 
                 textBoxPassphrase.Clear();
                 textBoxPassphrase.Focus();

@@ -30,6 +30,10 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEditor : Form
     {
+        private Log _log;
+        private Config _config;
+        private FileSystem _fileSystem;
+
         /// <summary>
         /// A collection of editors.
         /// </summary>
@@ -47,9 +51,13 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormEditor()
+        public FormEditor(Config config, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
+
+            _log = log;
+            _config = config;
+            _fileSystem = fileSystem;
         }
 
         private void FormEditor_Load(object sender, EventArgs e)
@@ -65,7 +73,7 @@ namespace AutoScreenCapture
                 Text = "Change Editor";
 
                 if (!string.IsNullOrEmpty(EditorObject.Application) &&
-                    FileSystem.FileExists(EditorObject.Application))
+                    _fileSystem.FileExists(EditorObject.Application))
                 {
                     Icon = Icon.ExtractAssociatedIcon(EditorObject.Application);
                 }
@@ -78,7 +86,7 @@ namespace AutoScreenCapture
                 textBoxApplication.Text = EditorObject.Application;
                 textBoxArguments.Text = EditorObject.Arguments;
 
-                string defaultEditor = Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value.ToString();
+                string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
 
                 if (EditorObject.Name.Equals(defaultEditor))
                 {
@@ -113,8 +121,8 @@ namespace AutoScreenCapture
         {
             if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxName.Text))
             {
-                Settings.User.GetByKey("DefaultEditor", DefaultSettings.DefaultEditor).Value = textBoxName.Text;
-                Settings.User.Save();
+                _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value = textBoxName.Text;
+                _config.Settings.User.Save(_config.Settings, _fileSystem, _log);
             }
 
             if (EditorObject != null)
@@ -250,7 +258,7 @@ namespace AutoScreenCapture
 
         private bool ApplicationExists()
         {
-            if (FileSystem.FileExists(textBoxApplication.Text))
+            if (_fileSystem.FileExists(textBoxApplication.Text))
             {
                 return true;
             }
@@ -280,7 +288,7 @@ namespace AutoScreenCapture
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 if (!string.IsNullOrEmpty(openFileDialog.FileName) &&
-                    FileSystem.FileExists(openFileDialog.FileName))
+                    _fileSystem.FileExists(openFileDialog.FileName))
                 {
                     Icon = Icon.ExtractAssociatedIcon(openFileDialog.FileName);
                 }

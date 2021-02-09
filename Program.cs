@@ -43,6 +43,14 @@ namespace AutoScreenCapture
         [STAThread]
         private static void Main(string[] args)
         {
+            FileSystem fileSystem = new FileSystem();
+            Settings settings = new Settings(fileSystem);
+            MacroParser macroParser = new MacroParser(settings);
+            Log log = new Log(fileSystem, macroParser);
+            Config config = new Config(fileSystem, macroParser, settings);
+
+            ScreenCapture screenCapture = new ScreenCapture(config, macroParser, fileSystem, log);
+
             if (args.Length == 1 && !string.IsNullOrEmpty(args[0]) && args[0].Equals("-kill"))
             {
                 // Find all instances of autoscreen and kill them.
@@ -57,13 +65,13 @@ namespace AutoScreenCapture
                 // such as -debug, -log, -capture, -start, -stop, and -exit to the instance which is already running.
                 if (args.Length > 0)
                 {
-                    ParseCommandLineArguments(args);
+                    ParseCommandLineArguments(args, config, screenCapture, fileSystem, log);
                 }
                 else
                 {
                     // Normally we could use the -config command to specify the configuration file to use, but if we
                     // have no commands to parse then we'll load the settings from the default configuration file.
-                    Config.Load();
+                    config.Load(screenCapture, log);
                 }
 
                 // This block of code figures out if we're already running an instance of the application.
@@ -78,67 +86,66 @@ namespace AutoScreenCapture
                             Environment.OSVersion.Version.Major >= 10)
                         {
                             Application.EnableVisualStyles();
-
-                            Log.WriteMessage("Windows 8.1 or higher detected. Attempting to set DPI awareness");
-
                             SetProcessDpiAwareness(ProcessDPIAwareness.ProcessPerMonitorDPIAware);
                         }
 
                         Application.SetCompatibleTextRenderingDefault(false);
-                        Application.Run(new FormMain());
+                        Application.Run(new FormMain(config, fileSystem, log));
                     }
                     else
                     {
-                        if (args.Length == 0 && Convert.ToBoolean(Settings.Application.GetByKey("ShowStartupError", DefaultSettings.ShowStartupError).Value))
+                        if (args.Length == 0 && Convert.ToBoolean(settings.Application.GetByKey("ShowStartupError", settings.DefaultSettings.ShowStartupError).Value))
                         {
                             // We've determined that an existing instance is already running. We should write out an error message informing the user.
-                            string appVersion = "[(v" + Settings.ApplicationVersion + ") ";
+                            string appVersion = "[(v" + settings.ApplicationVersion + ") ";
 
-                            FileSystem.AppendToFile(FileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(MacroParser.DateFormat + " " + MacroParser.TimeFormat) + "] Cannot start " + Settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + FileSystem.ApplicationSettingsFile + "\"");
+                            fileSystem.AppendToFile(fileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(macroParser.DateFormat + " " + macroParser.TimeFormat) + "] Cannot start " + settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + fileSystem.ApplicationSettingsFile + "\"");
                         }
                     }
                 }
             }
         }
 
-        private static void ParseCommandLineArguments(string[] args)
+        private static void ParseCommandLineArguments(string[] args, Config config, ScreenCapture screenCapture, FileSystem fileSystem, Log log)
         {
             // Because ordering is important I want to make sure that we pick up the configuration file first.
             // This will avoid scenarios like "autoscreen.exe -debug -config" creating all the default folders
             // and files (thanks to -debug being the first argument) before -config is parsed.
 
+            const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
+
             foreach (string arg in args)
             {
-                if (Regex.IsMatch(arg, CommandLineRegex.REGEX_COMMAND_LINE_CONFIG))
+                if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CONFIG))
                 {
-                    string configFile = Regex.Match(arg, CommandLineRegex.REGEX_COMMAND_LINE_CONFIG).Groups["ConfigFile"].Value;
+                    string configFile = Regex.Match(arg, REGEX_COMMAND_LINE_CONFIG).Groups["ConfigFile"].Value;
 
                     if (configFile.Length > 0)
                     {
-                        FileSystem.ConfigFile = configFile;
+                        fileSystem.ConfigFile = configFile;
 
-                        Config.Load();
+                        config.Load(screenCapture, log);
                     }
                 }
             }
 
             // We didn't get a -config command line argument so just load the default config.
-            if (Settings.Application == null)
+            if (config.Settings.Application == null)
             {
-                Config.Load();
+                config.Load(screenCapture, log);
             }
 
             // Load user settings.
-            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+            if (string.IsNullOrEmpty(fileSystem.UserSettingsFile))
             {
-                Config.Load();
+                config.Load(screenCapture, log);
             }
 
             // All of these commands can be externally issued to an already running instance.
             // The current running instance monitors the command file for the commands in the file.
             foreach (string arg in args)
             {
-                FileSystem.AppendToFile(FileSystem.CommandFile, arg);
+                fileSystem.AppendToFile(fileSystem.CommandFile, arg);
             }
         }
     }

@@ -28,15 +28,19 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMacroTagsToolWindow : Form
     {
+        private Log _log;
+        private MacroParser _macroParser;
         private TagCollection _tagCollection;
 
         /// <summary>
         /// Empty constructor for the Macro Tags tool window.
         /// </summary>
-        public FormMacroTagsToolWindow(TagCollection tagCollection)
+        public FormMacroTagsToolWindow(TagCollection tagCollection, MacroParser macroParser, Log log)
         {
             InitializeComponent();
 
+            _log = log;
+            _macroParser = macroParser;
             _tagCollection = tagCollection;
         }
 
@@ -61,7 +65,7 @@ namespace AutoScreenCapture
         {
             Tag tag = _tagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
 
-            labelHelp.Text = MacroParser.ParseTags(config: false, tag.Description, _tagCollection);
+            labelHelp.Text = _macroParser.ParseTags(config: false, tag.Description, _tagCollection, _log);
         }
     }
 }

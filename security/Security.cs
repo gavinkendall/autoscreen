@@ -28,14 +28,19 @@ namespace AutoScreenCapture
     /// <summary>
     /// A class for security-related methods.
     /// </summary>
-    public static class Security
+    public class Security
     {
+        public Security()
+        {
+
+        }
+
         /// <summary>
         /// Accepts plaintext and returns a SHA-512 hash of it.
         /// </summary>
         /// <param name="text">Any text to hash.</param>
         /// <returns>SHA-512 hash of the given text.</returns>
-        public static string Hash(string text)
+        public string Hash(string text)
         {
             var sha512 = new SHA512Managed();
             return Regex.Replace(BitConverter.ToString(sha512.ComputeHash(Encoding.Default.GetBytes(text))), "-", "").ToLower();

@@ -114,7 +114,7 @@ namespace AutoScreenCapture
                         SizeMode = PictureBoxSizeMode.StretchImage
                     };
 
-                    if (FileSystem.FileExists(application))
+                    if (_fileSystem.FileExists(application))
                     {
                         // Add an image showing the application icon of the Editor if we can find the application's path.
                         appIcon.Image = Icon.ExtractAssociatedIcon(application).ToBitmap();
@@ -209,7 +209,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formRegion.RegionCollection.SaveToXmlFile())
+                if (!_formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -230,7 +230,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formSchedule.ScheduleCollection.SaveToXmlFile())
+                if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -251,7 +251,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formScreen.ScreenCollection.SaveToXmlFile())
+                if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -272,7 +272,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formTag.TagCollection.SaveToXmlFile())
+                if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -293,7 +293,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formTrigger.TriggerCollection.SaveToXmlFile())
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
