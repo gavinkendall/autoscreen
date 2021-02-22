@@ -270,7 +270,7 @@ Screen 2 (1920 x 1080)
 Screen 3 (1680 x 1050)
 ... depending on what your screen setup is.
 
-From the Image group of controls you can specify the format, quality, and resolution ratio of the image
+From the Image group of controls you can specify the format and quality of the image
 that will be used when a screenshot is taken for that particular screen.
 
 The following image formats are supported:
@@ -331,7 +331,7 @@ values to adjust the position of the region beyond the boundaries of the availab
 
 Change the Width and Height values in the "Size" section to adjust the region's size.
 
-The "Image" section defines the image format, JPEG quality, and resolution ratio.
+The "Image" section defines the image format and JPEG quality.
 
 The "Include mouse pointer" option, when enabled, will include the mouse pointer in the image of the
 screenshot that will be taken for that particular region.
@@ -1073,13 +1073,12 @@ An example of a screen node in screens.xml:
     <component>1</component>
     <format>JPEG</format>
     <jpeg_quality>100</jpeg_quality>
-    <resolution_ratio>100</resolution_ratio>
     <mouse>True</mouse>
 </screen>
 
 regions.xml
 This file defines the regions you have setup. Like a screen, a region includes a
-folder path, macro, image format, resolution ratio, JPEG quality, and if the mouse
+folder path, macro, image format, JPEG quality, and if the mouse
 should be included in the image. A region also includes the X, Y, Width, and Height
 values to determine the area of the screen it should capture.
 An example of a region node in regions.xml:
@@ -1091,7 +1090,6 @@ An example of a region node in regions.xml:
     <macro>%date%\%name%\%date%_%time%.%format%</macro>
     <format>JPEG</format>
     <jpeg_quality>100</jpeg_quality>
-    <resolution_ratio>100</resolution_ratio>
     <mouse>True</mouse>
     <x>0</x>
     <y>0</y>
