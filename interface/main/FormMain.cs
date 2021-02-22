@@ -349,13 +349,6 @@ namespace AutoScreenCapture
 
                     Focus();
 
-                    bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value);
-
-                    if (firstRun)
-                    {
-                        _formHelp.Show();
-                    }
-
                     _log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
                     RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
                 }
