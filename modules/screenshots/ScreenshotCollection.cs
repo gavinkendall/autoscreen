@@ -229,10 +229,6 @@ namespace AutoScreenCapture
 
                 return false;
             }
-            finally
-            {
-                GC.Collect();
-            }
         }
 
         /// <summary>

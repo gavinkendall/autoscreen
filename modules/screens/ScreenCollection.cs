@@ -41,7 +41,6 @@ namespace AutoScreenCapture
         private const string SCREEN_COMPONENT = "component";
         private const string SCREEN_FORMAT = "format";
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
-        private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ACTIVE = "active";
 
@@ -151,11 +150,6 @@ namespace AutoScreenCapture
                                         screen.JpegQuality = Convert.ToInt32(xReader.Value);
                                         break;
 
-                                    case SCREEN_RESOLUTION_RATIO:
-                                        xReader.Read();
-                                        screen.ResolutionRatio = Convert.ToInt32(xReader.Value);
-                                        break;
-
                                     case SCREEN_MOUSE:
                                         xReader.Read();
                                         screen.Mouse = Convert.ToBoolean(xReader.Value);
@@ -218,7 +212,6 @@ namespace AutoScreenCapture
                             Component = screenNumber,
                             Format = imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                             JpegQuality = 100,
-                            ResolutionRatio = 100,
                             Mouse = true,
                             Active = true
                         };
@@ -293,7 +286,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
                         xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
-                        xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
 
                         xWriter.WriteEndElement();

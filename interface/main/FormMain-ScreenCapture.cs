@@ -178,47 +178,40 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot(bool captureNow)
         {
-            try
-            {
-                _formScreen.RefreshScreenDictionary();
+            _formScreen.RefreshScreenDictionary();
 
-                // Test to see if we can get images of the screen before continuing.
-                if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
+            // Test to see if we can get images of the screen before continuing.
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, out _))
+            {
+                _macroParser.screenCapture = _screenCapture;
+
+                _screenCapture.Count++;
+                _screenCapture.CaptureNow = captureNow;
+
+                DateTime dtNow = DateTime.Now;
+
+                _screenCapture.DateTimeScreenshotsTaken = dtNow;
+
+                if (!captureNow)
                 {
-                    _macroParser.screenCapture = _screenCapture;
-
-                    _screenCapture.Count++;
-                    _screenCapture.CaptureNow = captureNow;
-
-                    DateTime dtNow = DateTime.Now;
-
-                    _screenCapture.DateTimeScreenshotsTaken = dtNow;
-
-                    if (!captureNow)
-                    {
-                        _screenCapture.DateTimePreviousCycle = dtNow;
-                    }
-
-                    DoApplicationFocus();
-
-                    _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
-
-                    _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
-
-                    // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
-                    if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
-                    {
-                        return;
-                    }
-
-                    RunRegionCaptures();
-
-                    RunScreenCaptures();
+                    _screenCapture.DateTimePreviousCycle = dtNow;
                 }
-            }
-            finally
-            {
-                GC.Collect();
+
+                DoApplicationFocus();
+
+                _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
+
+                _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
+
+                // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
+                if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
+                {
+                    return;
+                }
+
+                RunRegionCaptures();
+
+                RunScreenCaptures();
             }
         }
 
@@ -565,7 +558,7 @@ namespace AutoScreenCapture
 
             ImageFormat imageFormat = new ImageFormat("JPEG", ".jpeg");
 
-            if (_screenCapture.GetScreenImages(-1, x, y, width, height, mouse: false, resolutionRatio: 100, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(-1, x, y, width, height, mouse: false, out Bitmap bitmap))
             {
                 DateTime dtNow = DateTime.Now;
 

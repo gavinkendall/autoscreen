@@ -40,7 +40,6 @@ namespace AutoScreenCapture
         private const string REGION_MACRO = "macro";
         private const string REGION_FORMAT = "format";
         private const string REGION_JPEG_QUALITY = "jpeg_quality";
-        private const string REGION_RESOLUTION_RATIO = "resolution_ratio";
         private const string REGION_MOUSE = "mouse";
         private const string REGION_X = "x";
         private const string REGION_Y = "y";
@@ -131,11 +130,6 @@ namespace AutoScreenCapture
                                         region.JpegQuality = Convert.ToInt32(xReader.Value);
                                         break;
 
-                                    case REGION_RESOLUTION_RATIO:
-                                        xReader.Read();
-                                        region.ResolutionRatio = Convert.ToInt32(xReader.Value);
-                                        break;
-
                                     case REGION_MOUSE:
                                         xReader.Read();
                                         region.Mouse = Convert.ToBoolean(xReader.Value);
@@ -197,7 +191,6 @@ namespace AutoScreenCapture
 
                                 region.Format = imageFormatCollection.GetByName("JPEG");
                                 region.JpegQuality = 100;
-                                region.ResolutionRatio = 100;
                                 region.Mouse = true;
                                 region.Active = true;
                             }
@@ -294,7 +287,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_MACRO, region.Macro);
                         xWriter.WriteElementString(REGION_FORMAT, region.Format.Name);
                         xWriter.WriteElementString(REGION_JPEG_QUALITY, region.JpegQuality.ToString());
-                        xWriter.WriteElementString(REGION_RESOLUTION_RATIO, region.ResolutionRatio.ToString());
                         xWriter.WriteElementString(REGION_MOUSE, region.Mouse.ToString());
                         xWriter.WriteElementString(REGION_X, region.X.ToString());
                         xWriter.WriteElementString(REGION_Y, region.Y.ToString());

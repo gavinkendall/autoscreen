@@ -147,59 +147,52 @@ namespace AutoScreenCapture
 
         private void pictureBoxMouseCanvas_MouseUp(object sender, MouseEventArgs e)
         {
-            try
+            if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
+
+            if (e.Button == MouseButtons.Left)
             {
-                if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
+                pictureBoxMouseCanvas.Refresh();
 
-                if (e.Button == MouseButtons.Left)
-                {
-                    pictureBoxMouseCanvas.Refresh();
+                _selectWidth = e.X - _selectX;
+                _selectHeight = e.Y - _selectY;
 
-                    _selectWidth = e.X - _selectX;
-                    _selectHeight = e.Y - _selectY;
-
-                    pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
-                }
-
-                Bitmap bitmap = null;
-
-                switch (_outputMode)
-                {
-                    case 0:
-                        bitmap = SelectBitmap();
-
-                        if (bitmap != null)
-                        {
-                            outputX = _selectX;
-                            outputY = _selectY;
-                            outputWidth = _selectWidth;
-                            outputHeight = _selectHeight;
-
-                            CompleteMouseSelection(sender, e);
-
-                            bitmap.Dispose();
-                        }
-                        break;
-                    case 1:
-                        bitmap = SelectBitmap();
-
-                        if (bitmap != null)
-                        {
-                            SaveToClipboard(bitmap);
-
-                            bitmap.Dispose();
-                        }
-                        break;
-                }
+                pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
             }
-            finally
+
+            Bitmap bitmap = null;
+
+            switch (_outputMode)
             {
-                Cursor = Cursors.Arrow;
+                case 0:
+                    bitmap = SelectBitmap();
 
-                GC.Collect();
+                    if (bitmap != null)
+                    {
+                        outputX = _selectX;
+                        outputY = _selectY;
+                        outputWidth = _selectWidth;
+                        outputHeight = _selectHeight;
 
-                Close();
+                        CompleteMouseSelection(sender, e);
+
+                        bitmap.Dispose();
+                    }
+                    break;
+                case 1:
+                    bitmap = SelectBitmap();
+
+                    if (bitmap != null)
+                    {
+                        SaveToClipboard(bitmap);
+
+                        bitmap.Dispose();
+                    }
+                    break;
             }
+
+            Cursor = Cursors.Arrow;
+
+            Close();
         }
 
         private Bitmap SelectBitmap()

@@ -160,7 +160,7 @@ namespace AutoScreenCapture
                     {
                         if (screen.Component == 0) // Active Window
                         {
-                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, screen.ResolutionRatio, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
                             {
                                 if (!SaveScreenshot(bitmap, screen, ScreenshotType.ActiveWindow))
                                 {
@@ -176,7 +176,7 @@ namespace AutoScreenCapture
                                     _formScreen.ScreenDictionary[screen.Component].screen.Bounds.X,
                                     _formScreen.ScreenDictionary[screen.Component].screen.Bounds.Y,
                                     _formScreen.ScreenDictionary[screen.Component].width,
-                                    _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, screen.ResolutionRatio, out Bitmap bitmap))
+                                    _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, out Bitmap bitmap))
                                 {
                                     if (!SaveScreenshot(bitmap, screen, ScreenshotType.Screen))
                                     {
