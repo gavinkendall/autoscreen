@@ -128,7 +128,6 @@ namespace AutoScreenCapture
                 textBoxMacro.Text = RegionObject.Macro;
                 comboBoxFormat.SelectedItem = RegionObject.Format.Name;
                 numericUpDownJpegQuality.Value = RegionObject.JpegQuality;
-                numericUpDownResolutionRatio.Value = RegionObject.ResolutionRatio;
                 checkBoxMouse.Checked = RegionObject.Mouse;
                 numericUpDownX.Value = RegionObject.X;
                 numericUpDownY.Value = RegionObject.Y;
@@ -145,7 +144,6 @@ namespace AutoScreenCapture
                 textBoxMacro.Text = _macroParser.DefaultMacro;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
-                numericUpDownResolutionRatio.Value = 100;
                 checkBoxMouse.Checked = true;
                 numericUpDownX.Value = 0;
                 numericUpDownY.Value = 0;
@@ -196,7 +194,6 @@ namespace AutoScreenCapture
                         Macro = textBoxMacro.Text,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
-                        ResolutionRatio = (int)numericUpDownResolutionRatio.Value,
                         Mouse = checkBoxMouse.Checked,
                         X = (int)numericUpDownX.Value,
                         Y = (int)numericUpDownY.Value,
@@ -238,7 +235,6 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
-                        RegionCollection.Get(RegionObject).ResolutionRatio = (int) numericUpDownResolutionRatio.Value;
                         RegionCollection.Get(RegionObject).Mouse = checkBoxMouse.Checked;
                         RegionCollection.Get(RegionObject).X = (int) numericUpDownX.Value;
                         RegionCollection.Get(RegionObject).Y = (int) numericUpDownY.Value;
@@ -286,7 +282,6 @@ namespace AutoScreenCapture
                  !RegionObject.Macro.Equals(textBoxMacro.Text) ||
                  !RegionObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  RegionObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
-                 RegionObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
                  !RegionObject.Mouse.Equals(checkBoxMouse.Checked) ||
                  RegionObject.X != (int)numericUpDownX.Value ||
                  RegionObject.Y != (int)numericUpDownY.Value ||
@@ -339,7 +334,6 @@ namespace AutoScreenCapture
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
                         (int)numericUpDownHeight.Value,
-                        (int)numericUpDownResolutionRatio.Value,
                         checkBoxMouse.Checked
                     );
 

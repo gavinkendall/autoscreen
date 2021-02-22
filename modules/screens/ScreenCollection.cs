@@ -41,7 +41,6 @@ namespace AutoScreenCapture
         private const string SCREEN_COMPONENT = "component";
         private const string SCREEN_FORMAT = "format";
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
-        private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
         private const string SCREEN_MOUSE = "mouse";
         private const string SCREEN_ACTIVE = "active";
         private const string SCREEN_X = "x";
@@ -196,11 +195,6 @@ namespace AutoScreenCapture
                                         screen.JpegQuality = Convert.ToInt32(xReader.Value);
                                         break;
 
-                                    case SCREEN_RESOLUTION_RATIO:
-                                        xReader.Read();
-                                        screen.ResolutionRatio = Convert.ToInt32(xReader.Value);
-                                        break;
-
                                     case SCREEN_MOUSE:
                                         xReader.Read();
                                         screen.Mouse = Convert.ToBoolean(xReader.Value);
@@ -306,35 +300,6 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load screens");
 
-                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
-                    {
-                        Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
-                        Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
-
-                        if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)
-                        {
-                            Add(new Screen()
-                            {
-                                ViewId = Guid.NewGuid(),
-                                Name = "Active Window",
-                                Folder = fileSystem.ScreenshotsFolder,
-                                Macro = macroParser.DefaultMacro,
-                                Component = 0,
-                                Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
-                                JpegQuality = 100,
-                                ResolutionRatio = 100,
-                                Mouse = true,
-                                Active = true,
-                                X = 0,
-                                Y = 0,
-                                Width = 0,
-                                Height = 0,
-                                Source = 0,
-                                DeviceName = string.Empty
-                            });
-                        }
-                    }
-
                     AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
 
                     SaveToXmlFile(config, fileSystem, log);
@@ -402,7 +367,6 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_COMPONENT, screen.Component.ToString());
                         xWriter.WriteElementString(SCREEN_FORMAT, screen.Format.Name);
                         xWriter.WriteElementString(SCREEN_JPEG_QUALITY, screen.JpegQuality.ToString());
-                        xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
                         xWriter.WriteElementString(SCREEN_MOUSE, screen.Mouse.ToString());
                         xWriter.WriteElementString(SCREEN_X, screen.X.ToString());
                         xWriter.WriteElementString(SCREEN_Y, screen.Y.ToString());

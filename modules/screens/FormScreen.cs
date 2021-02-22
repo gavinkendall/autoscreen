@@ -132,7 +132,6 @@ namespace AutoScreenCapture
                 comboBoxScreenSource.SelectedIndex = ScreenObject.Source;
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
-                numericUpDownResolutionRatio.Value = ScreenObject.ResolutionRatio;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
                 checkBoxActive.Checked = ScreenObject.Active;
                 numericUpDownX.Value = ScreenObject.X;
@@ -150,7 +149,6 @@ namespace AutoScreenCapture
                 comboBoxScreenComponent.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
-                numericUpDownResolutionRatio.Value = 100;
                 checkBoxMouse.Checked = true;
                 checkBoxActive.Checked = true;
                 numericUpDownX.Value = 0;
@@ -202,7 +200,6 @@ namespace AutoScreenCapture
                         Component = comboBoxScreenComponent.SelectedIndex,
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
-                        ResolutionRatio = (int)numericUpDownResolutionRatio.Value,
                         Mouse = checkBoxMouse.Checked,
                         Active = checkBoxActive.Checked,
                         X = (int)numericUpDownX.Value,
@@ -247,8 +244,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
-                        ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
-                        ScreenCollection.Get(ScreenObject).ResolutionRatio = (int)numericUpDownResolutionRatio.Value;
+                        ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
                         ScreenCollection.Get(ScreenObject).Active = checkBoxActive.Checked;
                         ScreenCollection.Get(ScreenObject).X = (int)numericUpDownX.Value;
@@ -298,7 +294,6 @@ namespace AutoScreenCapture
                  ScreenObject.Component != comboBoxScreenComponent.SelectedIndex ||
                  !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
-                 ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
                  !ScreenObject.Active.Equals(checkBoxActive.Checked) ||
                  ScreenObject.X != (int)numericUpDownX.Value ||
@@ -385,7 +380,6 @@ namespace AutoScreenCapture
                                 (int)numericUpDownY.Value,
                                 (int)numericUpDownWidth.Value,
                                 (int)numericUpDownHeight.Value,
-                                (int)numericUpDownResolutionRatio.Value,
                                 checkBoxMouse.Checked
                             );
                     }

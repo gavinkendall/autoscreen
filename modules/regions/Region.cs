@@ -58,11 +58,6 @@ namespace AutoScreenCapture
         public int JpegQuality { get; set; }
 
         /// <summary>
-        /// The resolution ratio of the region capture.
-        /// </summary>
-        public int ResolutionRatio { get; set; }
-
-        /// <summary>
         /// Determines if we include the mouse pointer in the region capture.
         /// </summary>
         public bool Mouse { get; set; }
