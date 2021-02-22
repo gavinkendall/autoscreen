@@ -151,7 +151,7 @@ namespace AutoScreenCapture
             RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
 
             // Test to see if we can get images of the screen before continuing.
-            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, 0, false, 100, out _))
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, 0, false, out _))
             {
                 _macroParser.screenCapture = _screenCapture;
 
@@ -519,7 +519,7 @@ namespace AutoScreenCapture
 
             ImageFormat imageFormat = new ImageFormat("JPEG", ".jpeg");
 
-            if (_screenCapture.GetScreenImages(-1, -1, x, y, width, height, mouse: false, resolutionRatio: 100, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(-1, -1, x, y, width, height, mouse: false, out Bitmap bitmap))
             {
                 DateTime dtNow = DateTime.Now;
 

@@ -74,7 +74,6 @@ namespace AutoScreenCapture
                     Component = component,
                     Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                     JpegQuality = 100,
-                    ResolutionRatio = 100,
                     Mouse = true,
                     Active = true,
                     X = screen.Bounds.X,

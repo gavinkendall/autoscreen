@@ -177,7 +177,7 @@ namespace AutoScreenCapture
                     {
                         if (screen.Source == 0 && screen.Component == 0) // Active Window
                         {
-                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
                             {
                                 if (!SaveScreenshot(bitmap, screen))
                                 {

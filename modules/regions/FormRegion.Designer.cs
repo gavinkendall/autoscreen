@@ -49,8 +49,6 @@
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
             this.comboBoxFormat = new System.Windows.Forms.ComboBox();
             this.labelFormat = new System.Windows.Forms.Label();
-            this.numericUpDownResolutionRatio = new System.Windows.Forms.NumericUpDown();
-            this.labelResolutionRatio = new System.Windows.Forms.Label();
             this.numericUpDownJpegQuality = new System.Windows.Forms.NumericUpDown();
             this.labelJpegQuality = new System.Windows.Forms.Label();
             this.checkBoxMouse = new System.Windows.Forms.CheckBox();
@@ -70,7 +68,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImageAttributes.SuspendLayout();
             this.groupBoxPosition.SuspendLayout();
@@ -310,33 +307,6 @@
             this.labelFormat.TabIndex = 18;
             this.labelFormat.Text = "Format:";
             // 
-            // numericUpDownResolutionRatio
-            // 
-            this.numericUpDownResolutionRatio.Location = new System.Drawing.Point(148, 75);
-            this.numericUpDownResolutionRatio.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
-            this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 23;
-            this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreviewImage);
-            // 
-            // labelResolutionRatio
-            // 
-            this.labelResolutionRatio.AutoSize = true;
-            this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
-            this.labelResolutionRatio.Name = "labelResolutionRatio";
-            this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 22;
-            this.labelResolutionRatio.Text = "Resolution Ratio:";
-            // 
             // numericUpDownJpegQuality
             // 
             this.numericUpDownJpegQuality.Location = new System.Drawing.Point(148, 49);
@@ -366,7 +336,7 @@
             // checkBoxMouse
             // 
             this.checkBoxMouse.AutoSize = true;
-            this.checkBoxMouse.Location = new System.Drawing.Point(9, 102);
+            this.checkBoxMouse.Location = new System.Drawing.Point(9, 83);
             this.checkBoxMouse.Name = "checkBoxMouse";
             this.checkBoxMouse.Size = new System.Drawing.Size(130, 17);
             this.checkBoxMouse.TabIndex = 24;
@@ -377,8 +347,6 @@
             // groupBoxImageAttributes
             // 
             this.groupBoxImageAttributes.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxImageAttributes.Controls.Add(this.labelResolutionRatio);
-            this.groupBoxImageAttributes.Controls.Add(this.numericUpDownResolutionRatio);
             this.groupBoxImageAttributes.Controls.Add(this.labelFormat);
             this.groupBoxImageAttributes.Controls.Add(this.checkBoxMouse);
             this.groupBoxImageAttributes.Controls.Add(this.labelJpegQuality);
@@ -386,7 +354,7 @@
             this.groupBoxImageAttributes.Controls.Add(this.comboBoxFormat);
             this.groupBoxImageAttributes.Location = new System.Drawing.Point(12, 262);
             this.groupBoxImageAttributes.Name = "groupBoxImageAttributes";
-            this.groupBoxImageAttributes.Size = new System.Drawing.Size(205, 126);
+            this.groupBoxImageAttributes.Size = new System.Drawing.Size(205, 110);
             this.groupBoxImageAttributes.TabIndex = 17;
             this.groupBoxImageAttributes.TabStop = false;
             this.groupBoxImageAttributes.Text = "Image Attributes";
@@ -552,7 +520,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).EndInit();
             this.groupBoxImageAttributes.ResumeLayout(false);
             this.groupBoxImageAttributes.PerformLayout();
@@ -590,8 +557,6 @@
         private System.Windows.Forms.Button buttonBrowseFolder;
         private System.Windows.Forms.ComboBox comboBoxFormat;
         private System.Windows.Forms.Label labelFormat;
-        private System.Windows.Forms.NumericUpDown numericUpDownResolutionRatio;
-        private System.Windows.Forms.Label labelResolutionRatio;
         private System.Windows.Forms.NumericUpDown numericUpDownJpegQuality;
         private System.Windows.Forms.Label labelJpegQuality;
         private System.Windows.Forms.CheckBox checkBoxMouse;
