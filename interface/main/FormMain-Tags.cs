@@ -50,7 +50,7 @@ namespace AutoScreenCapture
             {
                 BuildMacroTagsModule();
 
-                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile())
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -84,7 +84,7 @@ namespace AutoScreenCapture
             {
                 BuildMacroTagsModule();
 
-                if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -110,7 +110,7 @@ namespace AutoScreenCapture
                 {
                     BuildMacroTagsModule();
 
-                    if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
+                    if (!_formMacroTag.MacroTagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                     {
                         _screenCapture.ApplicationError = true;
                     }

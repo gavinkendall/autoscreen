@@ -124,7 +124,7 @@ namespace AutoScreenCapture
         {
             Screenshot screenshot = null;
 
-            Slide selectedSlide = Slideshow.SelectedSlide;
+            Slide selectedSlide = _slideShow.SelectedSlide;
 
             if (selectedSlide != null && listBoxScreenshots.SelectedIndex > -1)
             {
@@ -245,7 +245,7 @@ namespace AutoScreenCapture
 
         private void RunSaveScreenshots(DoWorkEventArgs e)
         {
-            _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value, _macroParser, _config);
+            _screenshotCollection.SaveToXmlFile(_config);
         }
 
         /// <summary>
@@ -282,28 +282,28 @@ namespace AutoScreenCapture
                 {
                     PictureBox pictureBox = (PictureBox)groupBox.Controls["pictureBox" + i];
 
-                    Screenshot selectedScreenshot = new Screenshot();
+                    Screenshot selectedScreenshot = new Screenshot(_config);
 
-                    if (Slideshow.Index >= 0 && Slideshow.Index <= (Slideshow.Count - 1))
+                    if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
                     {
-                        Slideshow.SelectedSlide = (Slide)listBoxScreenshots.Items[Slideshow.Index];
+                        _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
 
                         if (groupBox.Tag.GetType() == typeof(Screen))
                         {
                             Screen screen = (Screen)groupBox.Tag;
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, screen.ViewId);
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
                         }
 
                         if (groupBox.Tag.GetType() == typeof(Region))
                         {
                             Region region = (Region)groupBox.Tag;
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, region.ViewId);
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                         }
 
                         if (selectedScreenshot.ViewId.Equals(Guid.Empty))
                         {
                             // *** Auto Screen Capture - Region Select / Auto Save ***
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(Slideshow.SelectedSlide.Name, Guid.Empty);
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                         }
                     }
 
@@ -714,45 +714,45 @@ namespace AutoScreenCapture
         {
             try
             {
-                Log.WriteDebugMessage("Screenshot attempting to transfer to file server");
+                _log.WriteDebugMessage("Screenshot attempting to transfer to file server");
 
                 if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
                 {
-                    Log.WriteDebugMessage("Cannot upload screenshot to file server because screenshot is either null or path is empty");
+                    _log.WriteDebugMessage("Cannot upload screenshot to file server because screenshot is either null or path is empty");
 
                     return false;
                 }
 
-                Log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.Path + "\" to file server");
+                _log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.Path + "\" to file server");
 
-                string host = Settings.SFTP.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
+                string host = Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
 
-                Log.WriteDebugMessage("Host = " + host);
+                _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.SFTP.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
+                int.TryParse(Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
 
-                Log.WriteDebugMessage("Port = " + port);
+                _log.WriteDebugMessage("Port = " + port);
 
-                string username = Settings.SFTP.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
+                string username = Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
 
-                Log.WriteDebugMessage("Username = " + username);
+                _log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.SFTP.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
+                string password = Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
-                    Log.WriteDebugMessage("Password = [empty]");
+                    _log.WriteDebugMessage("Password = [empty]");
                 }
                 else
                 {
-                    Log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
+                    _log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
                 }
 
                 if (string.IsNullOrEmpty(host) ||
                     string.IsNullOrEmpty(username) ||
                     string.IsNullOrEmpty(password))
                 {
-                    Log.WriteDebugMessage("Host, Username, or Password is empty");
+                    _log.WriteDebugMessage("Host, Username, or Password is empty");
 
                     return false;
                 }
@@ -762,17 +762,17 @@ namespace AutoScreenCapture
                     _sftpClient = new Gavin.Kendall.SFTP.SftpClient(host, port, username, password);
                 }
 
-                Log.WriteDebugMessage("Attempting to connect to file server");
+                _log.WriteDebugMessage("Attempting to connect to file server");
 
                 if (!_sftpClient.IsConnected)
                 {
                     if (_sftpClient.Connect())
                     {
-                        Log.WriteDebugMessage("Connection to file server established");
+                        _log.WriteDebugMessage("Connection to file server established");
                     }
                     else
                     {
-                        Log.WriteDebugMessage("Could not establish a connection with the file server");
+                        _log.WriteDebugMessage("Could not establish a connection with the file server");
 
                         return false;
                     }
@@ -783,17 +783,17 @@ namespace AutoScreenCapture
                 {
                     string destinationPath = System.IO.Path.GetFileName(screenshot.Path);
                     
-                    Log.WriteDebugMessage("Attempting to upload screenshot to file server");
-                    Log.WriteDebugMessage("Source: " + screenshot.Path);
-                    Log.WriteDebugMessage("Destination: " + destinationPath);
+                    _log.WriteDebugMessage("Attempting to upload screenshot to file server");
+                    _log.WriteDebugMessage("Source: " + screenshot.Path);
+                    _log.WriteDebugMessage("Destination: " + destinationPath);
 
                     if (_sftpClient.UploadFile(screenshot.Path, destinationPath))
                     {
-                        Log.WriteDebugMessage("Successfully uploaded screenshot");
+                        _log.WriteDebugMessage("Successfully uploaded screenshot");
                     }
                     else
                     {
-                        Log.WriteDebugMessage("Failed to upload screenshot");
+                        _log.WriteDebugMessage("Failed to upload screenshot");
 
                         return false;
                     }
@@ -805,7 +805,7 @@ namespace AutoScreenCapture
             {
                 _screenCapture.ApplicationError = true;
 
-                Log.WriteExceptionMessage("FormMain-Screenshots::FileTransferScreenshot", ex);
+                _log.WriteExceptionMessage("FormMain-Screenshots::FileTransferScreenshot", ex);
 
                 return false;
             }

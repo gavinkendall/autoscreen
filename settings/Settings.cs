@@ -221,12 +221,12 @@ namespace AutoScreenCapture
 
             SMTP = new SettingCollection
             {
-                Filepath = FileSystem.SmtpSettingsFile
+                Filepath = fileSystem.SmtpSettingsFile
             };
 
             SFTP = new SettingCollection
             {
-                Filepath = FileSystem.SftpSettingsFile
+                Filepath = fileSystem.SftpSettingsFile
             };
 
             User = new SettingCollection
@@ -390,7 +390,7 @@ namespace AutoScreenCapture
                 User.Save(this, fileSystem, log);
             }
 
-            if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !FileSystem.FileExists(SMTP.Filepath))
+            if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !fileSystem.FileExists(SMTP.Filepath))
             {
                 // Version 2.3.4.0 now keeps the email settings in its own SMTP settings file instead of application settings.
                 SMTP.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
@@ -405,37 +405,37 @@ namespace AutoScreenCapture
                 SMTP.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
                 SMTP.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
                 SMTP.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
-                SMTP.Save();
+                SMTP.Save(this, fileSystem, log);
             }
 
-            if (SFTP != null && !string.IsNullOrEmpty(SFTP.Filepath) && !FileSystem.FileExists(SFTP.Filepath))
+            if (SFTP != null && !string.IsNullOrEmpty(SFTP.Filepath) && !fileSystem.FileExists(SFTP.Filepath))
             {
                 // Version 2.3.4.0 introduces File Transfer (SFTP) settings.
                 SFTP.Add(new Setting("FileTransferServerHost", DefaultSettings.FileTransferServerHost));
                 SFTP.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
                 SFTP.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
                 SFTP.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
-                SFTP.Save();
+                SFTP.Save(this, fileSystem, log);
             }
 
-            Log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
-            Log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", DefaultSettings.Logging).Value);
+            log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
+            log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", DefaultSettings.Logging).Value);
         }
 
         /// <summary>
         /// Attempts an upgrade on a collection of application settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        public static void UpgradeApplicationSettings(SettingCollection settingCollection)
+        public void UpgradeApplicationSettings(SettingCollection settingCollection, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
                 {
                     return;
                 }
 
-                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of application settings");
+                log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of application settings");
 
                 VersionManager.OldApplicationSettings = settingCollection.Clone();
 
@@ -453,13 +453,13 @@ namespace AutoScreenCapture
                 settingCollection.RemoveByKey("EmailMessageBody");
                 settingCollection.RemoveByKey("EmailPrompt");
 
-                Log.WriteMessage("Upgrade of application settings completed.");
+                log.WriteMessage("Upgrade of application settings completed.");
 
-                settingCollection.Save();
+                settingCollection.Save(this, fileSystem, log);
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("Settings::UpgradeApplicationSettings", ex);
+                log.WriteExceptionMessage("Settings::UpgradeApplicationSettings", ex);
             }
         }
 
@@ -467,16 +467,16 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of SMTP settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        public static void UpgradeSmtpSettings(SettingCollection settingCollection)
+        public void UpgradeSmtpSettings(SettingCollection settingCollection, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
                 {
                     return;
                 }
 
-                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of SMTP settings");
+                log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of SMTP settings");
 
                 // Transfer old application settings from the application settings to SMTP settings.
                 if (VersionManager.OldApplicationSettings.KeyExists("EmailServerHost"))
@@ -551,13 +551,13 @@ namespace AutoScreenCapture
                     VersionManager.OldApplicationSettings.RemoveByKey("EmailPrompt");
                 }
 
-                Log.WriteMessage("Upgrade of SMTP settings completed.");
+                log.WriteMessage("Upgrade of SMTP settings completed.");
 
-                settingCollection.Save();
+                settingCollection.Save(this, fileSystem, log);
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("Settings::UpgradeSmtpSettings", ex);
+                log.WriteExceptionMessage("Settings::UpgradeSmtpSettings", ex);
             }
         }
 
@@ -565,24 +565,24 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of SFTP settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        public static void UpgradeSftpSettings(SettingCollection settingCollection)
+        public void UpgradeSftpSettings(SettingCollection settingCollection, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
                 {
                     return;
                 }
 
-                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of SFTP settings");
+                log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of SFTP settings");
 
-                Log.WriteMessage("Upgrade of SFTP settings completed.");
+                log.WriteMessage("Upgrade of SFTP settings completed.");
 
-                settingCollection.Save();
+                settingCollection.Save(this, fileSystem, log);
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("Settings::UpgradeSftpSettings", ex);
+                log.WriteExceptionMessage("Settings::UpgradeSftpSettings", ex);
             }
         }
 
@@ -590,16 +590,20 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of user settings that may have come from an old version of the application.
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        public static void UpgradeUserSettings(SettingCollection settingCollection)
+        /// <param name="screenCapture"></param>
+        /// <param name="security"></param>
+        /// <param name="fileSystem"></param>
+        /// <param name="log"></param>
+        public void UpgradeUserSettings(SettingCollection settingCollection, ScreenCapture screenCapture, Security security, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (!VersionManager.IsOldAppVersion(settingCollection.AppCodename, settingCollection.AppVersion))
+                if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
                 {
                     return;
                 }
 
-                Log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of user settings");
+                log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of user settings");
 
                 VersionManager.OldUserSettings = settingCollection.Clone();
 
@@ -633,8 +637,8 @@ namespace AutoScreenCapture
                         {
                             // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
                             // in an older version of the application then make sure to hash it and lock the session before we continue.
-                            settingCollection.SetValueByKey("Passphrase", Security.Hash(passphrase));
-                            ScreenCapture.LockScreenCaptureSession = true;
+                            settingCollection.SetValueByKey("Passphrase", security.Hash(passphrase));
+                            screenCapture.LockScreenCaptureSession = true;
                         }
                     }
                 }
@@ -756,13 +760,13 @@ namespace AutoScreenCapture
                 settingCollection.RemoveByKey("IntKeepScreenshotsForDays");
                 settingCollection.RemoveByKey("KeepScreenshotsForDays");
 
-                Log.WriteMessage("Upgrade of user settings completed.");
+                log.WriteMessage("Upgrade of user settings completed.");
 
-                settingCollection.Save();
+                settingCollection.Save(this, fileSystem, log);
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("Settings::UpgradeUserSettings", ex);
+                log.WriteExceptionMessage("Settings::UpgradeUserSettings", ex);
             }
         }
     }

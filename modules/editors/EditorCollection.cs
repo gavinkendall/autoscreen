@@ -180,12 +180,12 @@ namespace AutoScreenCapture
                     }
 
                     // ShareX Image Editor
-                    if (FileSystem.FileExists(@"C:\Program Files\ShareX\ShareX.exe"))
+                    if (fileSystem.FileExists(@"C:\Program Files\ShareX\ShareX.exe"))
                     {
                         Add(new Editor("ShareX Image Editor", @"C:\Program Files\ShareX\ShareX.exe", "-ImageEditor %filepath%"));
 
                         // If the user has ShareX installed then make the ShareX Image Editor the default editor instead of Microsoft Paint (or Snagit).
-                        Settings.User.SetValueByKey("DefaultEditor", "ShareX Image Editor");
+                        config.Settings.User.SetValueByKey("DefaultEditor", "ShareX Image Editor");
                     }
 
                     // Microsoft Outlook

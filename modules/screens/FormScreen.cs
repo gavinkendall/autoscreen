@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -40,12 +41,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// A collection of screens.
         /// </summary>
-        public ScreenCollection ScreenCollection { get; } = new ScreenCollection();
+        public ScreenCollection ScreenCollection { get; }
 
         /// <summary>
         /// A collection of regions to be used for selecting a source.
         /// </summary>
-        public RegionCollection RegionCollection { get; set; } = new RegionCollection();
+        public RegionCollection RegionCollection { get; set; }
 
         /// <summary>
         /// The current screen object this form handles when creating a new screen or changing a screen.
@@ -63,6 +64,11 @@ namespace AutoScreenCapture
         public MacroTagCollection TagCollection { get; set; }
 
         /// <summary>
+        /// A dictionary of available screens by device resolution.
+        /// </summary>
+        public Dictionary<int, ScreenCapture.DeviceOptions> ScreenDictionary;
+
+        /// <summary>
         /// Access to screen capture methods.
         /// </summary>
         public ScreenCapture ScreenCapture { get; set; }
@@ -78,6 +84,10 @@ namespace AutoScreenCapture
             _macroParser = macroParser;
             _screenCapture = screenCapture;
             _fileSystem = fileSystem;
+
+            ScreenCollection = new ScreenCollection();
+            RegionCollection = new RegionCollection();
+            ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceOptions>();
         }
 
         private void FormScreen_Load(object sender, EventArgs e)
@@ -516,9 +526,9 @@ namespace AutoScreenCapture
             {
                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
                 {
-                    ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screenFromWindows);
+                    ScreenCapture.DeviceOptions deviceOptions = ScreenCapture.GetDevice(screenFromWindows);
 
-                    comboBoxScreenComponent.Items.Add("\"" + deviceResolution.screen.DeviceName + "\" X:" + deviceResolution.screen.Bounds.X + " Y:" + deviceResolution.screen.Bounds.Y + " (" + deviceResolution.width + "x" + deviceResolution.height + ")");
+                    comboBoxScreenComponent.Items.Add("\"" + deviceOptions.screen.DeviceName + "\" X:" + deviceOptions.screen.Bounds.X + " Y:" + deviceOptions.screen.Bounds.Y + " (" + deviceOptions.width + "x" + deviceOptions.height + ")");
                 }
             }
 

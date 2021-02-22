@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Tag.cs" company="Gavin Kendall">
+// <copyright file="MacroTag.cs" company="Gavin Kendall">
 //     Copyright (c) 2020 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
@@ -157,11 +157,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Creates a tag given its name, tag type, and its status (whether it be active or inactive).
         /// </summary>
+        /// <param name="macroParser"></param>
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
-        /// <param name="tagType">The type of tag.</param>
+        /// <param name="macroTagType">The type of tag.</param>
         /// <param name="active">The status of the tag.</param>
-        public MacroTag(MacroParser macroParser, string name, string description, TagType tagType, bool active)
+        public MacroTag(MacroParser macroParser, string name, string description, MacroTagType macroTagType, bool active)
         {
             _macroParser = macroParser;
 
@@ -169,19 +170,20 @@ namespace AutoScreenCapture
 
             Name = name;
             Description = description;
-            Type = tagType;
+            Type = macroTagType;
             Active = active;
         }
 
         /// <summary>
         /// Creates a tag given its name, tag type, date/time format value, and its status.
         /// </summary>
+        /// <param name="macroParser"></param>
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
-        /// <param name="tagType">The type of tag.</param>
+        /// <param name="MacroTagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="active">The status of the tag.</param>
-        public MacroTag(MacroParser macroParser, string name, string description, TagType tagType, string dateTimeFormatValue, bool active)
+        public MacroTag(MacroParser macroParser, string name, string description, MacroTagType MacroTagType, string dateTimeFormatValue, bool active)
         {
             _macroParser = macroParser;
 
@@ -189,7 +191,7 @@ namespace AutoScreenCapture
 
             Name = name;
             Description = description;
-            Type = tagType;
+            Type = MacroTagType;
             DateTimeFormatValue = dateTimeFormatValue;
             Active = active;
         }
@@ -197,9 +199,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// Creates a tag given its name, tag type, and "Time of Day" properties.
         /// </summary>
+        /// <param name="macroParser"></param>
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
-        /// <param name="tagType">The type of tag.</param>
+        /// <param name="macroTagType">The type of tag.</param>
         /// <param name="dateTimeFormatValue">The date/time format value.</param>
         /// <param name="timeRangeMacro1Start">The start time for Macro 1.</param>
         /// <param name="timeRangeMacro1End">The end time for Macro 1.</param>
@@ -215,7 +218,7 @@ namespace AutoScreenCapture
         /// <param name="timeRangeMacro4Macro">The macro for Macro 4</param>
         /// <param name="active">Determines the status of the tag (whether it be active or inactive).</param>
         /// <param name="notes">Notes.</param>
-        public MacroTag(MacroParser macroParser, string name, string description, TagType tagType,
+        public MacroTag(MacroParser macroParser, string name, string description, MacroTagType macroTagType,
             string dateTimeFormatValue,
             DateTime timeRangeMacro1Start,
             DateTime timeRangeMacro1End,
@@ -235,7 +238,7 @@ namespace AutoScreenCapture
 
             Name = name;
             Description = description;
-            Type = tagType;
+            Type = macroTagType;
 
             DateTimeFormatValue = dateTimeFormatValue;
 

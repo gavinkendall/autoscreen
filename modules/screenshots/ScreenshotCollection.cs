@@ -182,7 +182,7 @@ namespace AutoScreenCapture
             {
                 bool result = false;
 
-                screenshot.Version = Settings.ApplicationVersion;
+                screenshot.Version = _config.Settings.ApplicationVersion;
 
                 // If the bitmap image is null then we're loading the screenshot from the screenshots.xml file
                 // and adding it to the collection otherwise we're adding the screenshot to the collection
@@ -231,10 +231,6 @@ namespace AutoScreenCapture
                 _log.WriteExceptionMessage("ScreenshotCollection::Add", ex);
 
                 return false;
-            }
-            finally
-            {
-                GC.Collect();
             }
         }
 
@@ -701,8 +697,8 @@ namespace AutoScreenCapture
 
                                             // 2.1 used "Screen" for its definition of each display/monitor whereas 2.2 uses "Component".
                                             case SCREENSHOT_SCREEN:
-                                                if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion) &&
-                                                    Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA) != null &&
+                                                if (_config.Settings.VersionManager.IsOldAppVersion(_config.Settings, AppCodename, AppVersion) &&
+                                                    _config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA) != null &&
                                                     string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
                                                 {
                                                     xReader.Read();
@@ -757,8 +753,8 @@ namespace AutoScreenCapture
 
                                 xReader.Close();
 
-                                Version v2182 = Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
-                                Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                                Version v2182 = _config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
+                                Version configVersion = _config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                 // Clara 2.1.8.2
                                 if (v2182 != null && configVersion != null && configVersion.VersionNumber == v2182.VersionNumber)
@@ -777,7 +773,7 @@ namespace AutoScreenCapture
                                         screenshot.Date = rgxOldSlidename.Match(screenshot.Slide.Name).Groups["Date"].Value;
                                         screenshot.Time = hour + ":" + minute + ":" + second + "." + millisecond;
 
-                                        screenshot.WindowTitle = Settings.ApplicationName;
+                                        screenshot.WindowTitle = _config.Settings.ApplicationName;
 
                                         screenshot.Slide.Name = "{date=" + screenshot.Date + "}{time=" + screenshot.Time + "}";
                                         screenshot.Slide.Value = screenshot.Time + " [*Screenshot imported from Auto Screen Capture 2.1.8.2*]";
@@ -791,7 +787,7 @@ namespace AutoScreenCapture
 
                                     // Prepare the new XML child nodes for the old XML screenshot ...
                                     XmlElement xVersion = xDoc.CreateElement(SCREENSHOT_VERSION);
-                                    xVersion.InnerText = Settings.ApplicationVersion; // This indicates we've updated the screenshot to the current version.
+                                    xVersion.InnerText = _config.Settings.ApplicationVersion; // This indicates we've updated the screenshot to the current version.
 
                                     XmlElement xViewId = xDoc.CreateElement(SCREENSHOT_VIEWID);
                                     xViewId.InnerText = screenshot.ViewId.ToString();
@@ -885,7 +881,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the screenshots in the collection to the screenshots.xml file.
         /// </summary>
-        public void SaveToXmlFile(MacroParser macroParser, Config config)
+        public void SaveToXmlFile(Config config)
         {
             try
             {
@@ -1033,7 +1029,7 @@ namespace AutoScreenCapture
         /// Deletes screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
         /// </summary>
         /// <param name="days">The number of days to consider.</param>
-        public void DeleteScreenshots(int days)
+        public void DeleteScreenshots(int days, MacroParser macroParser)
         {
             try
             {
@@ -1049,7 +1045,7 @@ namespace AutoScreenCapture
                             _slideList.Remove(screenshot.Slide);
                             _slideNameList.Remove(screenshot.Slide.Name);
 
-                            FileSystem.DeleteFile(screenshot.Path);
+                            _fileSystem.DeleteFile(screenshot.Path);
                         }
 
                         foreach (XmlNode node in xDoc.SelectNodes(SCREENSHOT_XPATH))
@@ -1082,13 +1078,13 @@ namespace AutoScreenCapture
 
                         for (DateTime date = dtMin; date.Date <= dtMax; date = date.AddDays(1))
                         {
-                            XmlNodeList screenshotNodesToDeleteByDate = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + date.ToString(MacroParser.DateFormat) + "']");
+                            XmlNodeList screenshotNodesToDeleteByDate = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + date.ToString(macroParser.DateFormat) + "']");
 
                             foreach (XmlNode node in screenshotNodesToDeleteByDate)
                             {
                                 string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                                FileSystem.DeleteFile(path);
+                                _fileSystem.DeleteFile(path);
 
                                 node.ParentNode.RemoveChild(node);
                             }
@@ -1098,7 +1094,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshots", ex);
+                _log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshots", ex);
             }
         }
     }

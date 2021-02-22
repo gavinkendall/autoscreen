@@ -98,12 +98,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Default SMTP settings file.
         /// </summary>
-        public static string DefaultSmtpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\smtp.xml";
+        public string DefaultSmtpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\smtp.xml";
 
         /// <summary>
         /// Default SFTP settings file.
         /// </summary>
-        public static string DefaultSftpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\sftp.xml";
+        public string DefaultSftpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\sftp.xml";
 
         /// <summary>
         /// Default user settings file.
@@ -173,12 +173,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// SMTP settings file.
         /// </summary>
-        public static string SmtpSettingsFile;
+        public string SmtpSettingsFile;
 
         /// <summary>
         /// SFTP settings file.
         /// </summary>
-        public static string SftpSettingsFile;
+        public string SftpSettingsFile;
 
         /// <summary>
         /// User settings file.

@@ -36,19 +36,19 @@ namespace AutoScreenCapture
         private FormAbout _formAbout;
 
         // The "Auto Screen Capture - Help" form.
-        private FormHelp _formHelp = new FormHelp();
+        private FormHelp _formHelp;
 
         // The "Email Settings" form.
-        private FormEmailSettings _formEmailSettings = new FormEmailSettings();
+        private FormEmailSettings _formEmailSettings;
 
         // The "File Transfer Settings" form.
-        private FormFileTransferSettings _formFileTransferSettings = new FormFileTransferSettings();
+        private FormFileTransferSettings _formFileTransferSettings;
 
         // SFTP client.
         private SftpClient _sftpClient = null;
 
         // The various forms that are used for modules.
-        private FormTag _formTag;
+        private FormMacroTag _formMacroTag;
         private FormRegion _formRegion;
         private FormScreen _formScreen;
         private FormEditor _formEditor;
@@ -192,7 +192,7 @@ namespace AutoScreenCapture
                 HideInterface();
 
                 _log.WriteDebugMessage("Saving screenshots on forced application exit because Windows is shutting down");
-                _screenshotCollection.SaveToXmlFile((int)numericUpDownKeepScreenshotsForDays.Value, _macroParser, _config);
+                _screenshotCollection.SaveToXmlFile(_config);
 
                 if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
@@ -349,14 +349,14 @@ namespace AutoScreenCapture
 
                     Focus();
 
-                    bool firstRun = Convert.ToBoolean(Settings.User.GetByKey("FirstRun", DefaultSettings.FirstRun).Value);
+                    bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value);
 
                     if (firstRun)
                     {
                         _formHelp.Show();
                     }
 
-                    Log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
+                    _log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
                     RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
                 }
             }
@@ -382,7 +382,7 @@ namespace AutoScreenCapture
                 Visible = false;
                 ShowInTaskbar = false;
 
-                Log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
+                _log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
             }
             catch (Exception ex)

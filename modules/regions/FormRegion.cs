@@ -58,7 +58,7 @@ namespace AutoScreenCapture
         /// </summary>
         public MacroTagCollection TagCollection { get; set; }
 
-        private readonly Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
+        private readonly Dictionary<int, System.Windows.Forms.Screen> ScreenDictionary;
 
         /// <summary>
         /// Constructor for FormRegion.
@@ -71,6 +71,8 @@ namespace AutoScreenCapture
             _macroParser = macroParser;
             _screenCapture = screenCapture;
             _fileSystem = fileSystem;
+
+            ScreenDictionary = new Dictionary<int, System.Windows.Forms.Screen>();
         }
 
         private void FormRegion_Load(object sender, EventArgs e)
@@ -93,9 +95,7 @@ namespace AutoScreenCapture
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
-
-                ScreenDictionary.Add(component, deviceResolution);
+                ScreenDictionary.Add(component, screen);
                 component++;
             }
 
@@ -104,9 +104,9 @@ namespace AutoScreenCapture
 
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[i];
+                System.Windows.Forms.Screen screen = ScreenDictionary[i];
 
-                comboBoxScreenTemplate.Items.Add("\"" + deviceResolution.screen.DeviceName + "\" X:" + deviceResolution.screen.Bounds.X + " Y:" + deviceResolution.screen.Bounds.Y + " (" + deviceResolution.width + "x" + deviceResolution.height + ")");
+                comboBoxScreenTemplate.Items.Add("\"" + screen.DeviceName + "\" X:" + screen.Bounds.X + " Y:" + screen.Bounds.Y + " (" + screen.Bounds.Width + "x" + screen.Bounds.Height + ")");
             }
 
             comboBoxScreenTemplate.SelectedIndex = 0;
@@ -374,12 +374,12 @@ namespace AutoScreenCapture
         {
             if (ScreenDictionary.ContainsKey(comboBoxScreenTemplate.SelectedIndex))
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenDictionary[comboBoxScreenTemplate.SelectedIndex];
+                System.Windows.Forms.Screen screen = ScreenDictionary[comboBoxScreenTemplate.SelectedIndex];
 
-                numericUpDownX.Value = deviceResolution.screen.Bounds.X;
-                numericUpDownY.Value = deviceResolution.screen.Bounds.Y;
-                numericUpDownWidth.Value = deviceResolution.width;
-                numericUpDownHeight.Value = deviceResolution.height;
+                numericUpDownX.Value = screen.Bounds.X;
+                numericUpDownY.Value = screen.Bounds.Y;
+                numericUpDownWidth.Value = screen.Bounds.Width;
+                numericUpDownHeight.Value = screen.Bounds.Height;
 
                 comboBoxScreenTemplate.SelectedIndex = 0;
             }

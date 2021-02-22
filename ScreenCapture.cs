@@ -443,10 +443,6 @@ namespace AutoScreenCapture
 
                 return null;
             }
-            finally
-            {
-                GC.Collect();
-            }
         }
 
         /// <summary>
@@ -529,10 +525,6 @@ namespace AutoScreenCapture
 
                 return null;
             }
-            finally
-            {
-                GC.Collect();
-            }
         }
 
         /// <summary>
@@ -576,10 +568,6 @@ namespace AutoScreenCapture
                 CaptureError = true;
 
                 return null;
-            }
-            finally
-            {
-                GC.Collect();
             }
         }
 
@@ -682,10 +670,6 @@ namespace AutoScreenCapture
                 CaptureError = true;
 
                 return false;
-            }
-            finally
-            {
-                GC.Collect();
             }
         }
 

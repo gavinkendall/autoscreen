@@ -57,6 +57,8 @@ namespace AutoScreenCapture
         /// A class for handling configuration.
         /// </summary>
         /// <param name="filesystem"></param>
+        /// <param name="macroParser"></param>
+        /// <param name="settings"></param>
         public Config(FileSystem filesystem, MacroParser macroParser, Settings settings)
         {
             _fileSystem = filesystem;
@@ -146,10 +148,10 @@ namespace AutoScreenCapture
                         _fileSystem.ApplicationSettingsFile = path;
 
                     if (GetPath(line, REGEX_SMTP_SETTINGS_FILE, out path))
-                        FileSystem.SmtpSettingsFile = path;
+                        _fileSystem.SmtpSettingsFile = path;
 
                     if (GetPath(line, REGEX_SFTP_SETTINGS_FILE, out path))
-                        FileSystem.SftpSettingsFile = path;
+                        _fileSystem.SftpSettingsFile = path;
 
                     if (GetPath(line, REGEX_USER_SETTINGS_FILE, out path))
                         _fileSystem.UserSettingsFile = path;
@@ -178,7 +180,9 @@ namespace AutoScreenCapture
 
                 CheckAndCreateFolders();
 
-                CheckAndCreateFiles(screenCapture, log);
+                Security security = new Security();
+
+                CheckAndCreateFiles(security, screenCapture, log);
             }
             catch (Exception ex)
             {
@@ -226,7 +230,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void CheckAndCreateFiles(ScreenCapture screenCapture, Log log)
+        private void CheckAndCreateFiles(Security security, ScreenCapture screenCapture, Log log)
         {
             if (string.IsNullOrEmpty(_fileSystem.CommandFile))
             {
@@ -246,31 +250,31 @@ namespace AutoScreenCapture
 
                 _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nApplicationSettingsFile=" + _fileSystem.DefaultApplicationSettingsFile);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultSettingsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultSettingsFolder);
                 }
             }
 
-            if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
+            if (string.IsNullOrEmpty(_fileSystem.SmtpSettingsFile))
             {
-                FileSystem.SmtpSettingsFile = FileSystem.DefaultSmtpSettingsFile;
+                _fileSystem.SmtpSettingsFile = _fileSystem.DefaultSmtpSettingsFile;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nSMTPSettingsFile=" + _fileSystem.DefaultSmtpSettingsFile);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultSettingsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.DefaultSettingsFolder);
                 }
             }
 
-            if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
+            if (string.IsNullOrEmpty(_fileSystem.SftpSettingsFile))
             {
-                FileSystem.SftpSettingsFile = FileSystem.DefaultSftpSettingsFile;
+                _fileSystem.SftpSettingsFile = _fileSystem.DefaultSftpSettingsFile;
 
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile);
+                _fileSystem.AppendToFile(_fileSystem.ConfigFile, "\nSFTPSettingsFile=" + _fileSystem.DefaultSftpSettingsFile);
 
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.DefaultSettingsFolder))
                 {
                     _fileSystem.CreateDirectory(_fileSystem.DefaultSettingsFolder);
                 }
@@ -292,25 +296,28 @@ namespace AutoScreenCapture
             Settings.User.Load(Settings, _fileSystem);
             log.WriteDebugMessage("User settings loaded");
 
-            Log.WriteMessage("Loading SMTP settings");
-            Settings.SMTP.Load();
-            Log.WriteDebugMessage("SMTP settings loaded");
+            log.WriteMessage("Loading SMTP settings");
+            Settings.SMTP.Load(Settings, _fileSystem);
+            log.WriteDebugMessage("SMTP settings loaded");
 
-            Log.WriteMessage("Loading SFTP settings");
-            Settings.SFTP.Load();
-            Log.WriteDebugMessage("SFTP settings loaded");
+            log.WriteMessage("Loading SFTP settings");
+            Settings.SFTP.Load(Settings, _fileSystem);
+            log.WriteDebugMessage("SFTP settings loaded");
 
-            Log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
-            Settings.UpgradeApplicationSettings(Settings.Application);
+            log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
+            Settings.UpgradeApplicationSettings(Settings.Application, _fileSystem, log);
 
-            Log.WriteDebugMessage("Attempting upgrade of SMTP settings from old version of application (if needed)");
-            Settings.UpgradeSmtpSettings(Settings.SMTP);
+            log.WriteDebugMessage("Attempting upgrade of SMTP settings from old version of application (if needed)");
+            Settings.UpgradeSmtpSettings(Settings.SMTP, _fileSystem, log);
 
-            Log.WriteDebugMessage("Attempting upgrade of SFTP settings from old version of application (if needed)");
-            Settings.UpgradeSftpSettings(Settings.SFTP);
+            log.WriteDebugMessage("Attempting upgrade of SFTP settings from old version of application (if needed)");
+            Settings.UpgradeSftpSettings(Settings.SFTP, _fileSystem, log);
+
+            log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
+            Settings.UpgradeApplicationSettings(Settings.Application, _fileSystem, log);
 
             log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
-            Settings.User.Upgrade(screenCapture, this, _fileSystem, log);
+            Settings.UpgradeUserSettings(Settings.User, screenCapture, security, _fileSystem, log);
 
             if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))
             {
@@ -318,7 +325,7 @@ namespace AutoScreenCapture
                 ScreenCollection screenCollection = new ScreenCollection();
 
                 ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, _fileSystem, log);
-                screenshotCollection.SaveToXmlFile(0, _macroParser, this);
+                screenshotCollection.SaveToXmlFile(this);
             }
 
             if (string.IsNullOrEmpty(_fileSystem.EditorsFile))
@@ -338,7 +345,7 @@ namespace AutoScreenCapture
             {
                 // Loading the screen collection will automatically create the available screens and add them to the collection.
                 ScreenCollection screenCollection = new ScreenCollection();
-                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, _macroParser, _fileSystem, log);
+                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, _macroParser, screenCapture, _fileSystem, log);
             }
 
             if (string.IsNullOrEmpty(_fileSystem.TriggersFile))
@@ -351,7 +358,7 @@ namespace AutoScreenCapture
             if (string.IsNullOrEmpty(_fileSystem.TagsFile))
             {
                 // Loading tags will automatically create the default tags and add them to the collection.
-                TagCollection tagCollection = new TagCollection();
+                MacroTagCollection tagCollection = new MacroTagCollection();
                 tagCollection.LoadXmlFileAndAddTags(this, _macroParser, _fileSystem, log);
             }
 
@@ -380,9 +387,9 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            TagCollection tagCollection = new TagCollection();
-            tagCollection.Add(new Tag(_macroParser, "user", "The user using this computer (%user%)", TagType.User, active: true));
-            tagCollection.Add(new Tag(_macroParser, "machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
+            MacroTagCollection tagCollection = new MacroTagCollection();
+            tagCollection.Add(new MacroTag(_macroParser, "user", "The user using this computer (%user%)", MacroTagType.User, active: true));
+            tagCollection.Add(new MacroTag(_macroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, active: true));
 
             path = _macroParser.ParseTags(config: true, path, tagCollection, new Log(_fileSystem, _macroParser));
 

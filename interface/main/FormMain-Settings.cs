@@ -63,10 +63,14 @@ namespace AutoScreenCapture
                 _screenCapture = new ScreenCapture(_config, _macroParser, _fileSystem, _log);
 
                 _log.WriteMessage("Initializing forms");
-                _formTag = new FormTag(_macroParser);
+                _formAbout = new FormAbout();
+                _formHelp = new FormHelp();
+                _formMacroTag = new FormMacroTag(_macroParser);
                 _formRegion = new FormRegion(_screenCapture, _macroParser, _fileSystem, _log);
                 _formScreen = new FormScreen(_screenCapture, _macroParser, _fileSystem, _log);
                 _formEditor = new FormEditor(_config, _fileSystem, _log);
+                _formEmailSettings = new FormEmailSettings(_config, _fileSystem, _log);
+                _formFileTransferSettings = new FormFileTransferSettings(_config, _fileSystem, _log);
                 _formSchedule = new FormSchedule();
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_screenCapture, _config, _log);
@@ -102,12 +106,11 @@ namespace AutoScreenCapture
 
                 // Add regions to the Screen form so we can select them as a source.
                 _formScreen.RegionCollection = _formRegion.RegionCollection;
-
-                Log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
+                _log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
 
                 _log.WriteMessage("Initializing screen collection");
 
-                if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _fileSystem, _log))
+                if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _screenCapture, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
@@ -116,12 +119,12 @@ namespace AutoScreenCapture
 
                 _log.WriteMessage("Initializing tag collection");
 
-                if (!_formTag.TagCollection.LoadXmlFileAndAddTags(_config, _macroParser, _fileSystem, _log))
+                if (!_formMacroTag.MacroTagCollection.LoadXmlFileAndAddTags(_config, _macroParser, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }
 
-                _log.WriteDebugMessage("Number of tags loaded = " + _formTag.TagCollection.Count);
+                _log.WriteDebugMessage("Number of tags loaded = " + _formMacroTag.MacroTagCollection.Count);
 
                 _log.WriteMessage("Initializing schedule collection");
 
@@ -145,7 +148,7 @@ namespace AutoScreenCapture
                 BuildRegionsModule();
 
                 _log.WriteMessage("Building tags module");
-                BuildTagsModule();
+                BuildMacroTagsModule();
 
                 _log.WriteMessage("Building schedules module");
                 BuildSchedulesModule();
@@ -201,8 +204,8 @@ namespace AutoScreenCapture
                 notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
                 _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
 
-                comboBoxScreenshotLabel.Text = Settings.User.GetByKey("ScreenshotLabel", DefaultSettings.ScreenshotLabel).Value.ToString();
-                Log.WriteDebugMessage("ScreenshotLabel = " + comboBoxScreenshotLabel.Text);
+                comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                _log.WriteDebugMessage("ScreenshotLabel = " + comboBoxScreenshotLabel.Text);
 
                 checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
 
@@ -274,10 +277,10 @@ namespace AutoScreenCapture
         {
             try
             {
-                Settings.User.GetByKey("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval).Value = GetScreenCaptureInterval();
-                Settings.User.GetByKey("CaptureLimit", DefaultSettings.CaptureLimit).Value = numericUpDownCaptureLimit.Value;
-                Settings.User.GetByKey("CaptureLimitCheck", DefaultSettings.CaptureLimitCheck).Value = checkBoxCaptureLimit.Checked;
-                Settings.User.GetByKey("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
+                _config.Settings.User.GetByKey("ScreenCaptureInterval", _config.Settings.DefaultSettings.ScreenCaptureInterval).Value = GetScreenCaptureInterval();
+                _config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value = numericUpDownCaptureLimit.Value;
+                _config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value = checkBoxCaptureLimit.Checked;
+                _config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value = checkBoxInitialScreenshot.Checked;
 
                 // Label.
                 _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value = comboBoxScreenshotLabel.Text.Trim();

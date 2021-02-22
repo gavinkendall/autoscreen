@@ -258,7 +258,7 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.DeleteScreenshots:
-                    _screenshotCollection.DeleteScreenshots(trigger.Days);
+                    _screenshotCollection.DeleteScreenshots(trigger.Days, _macroParser);
                     break;
             }
         }

@@ -190,7 +190,7 @@ namespace AutoScreenCapture
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="tag">The macro tag to use during parsing.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        private static string ParseTag(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTag tag)
+        private string ParseTag(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTag tag)
         {
             int count;
             DateTime dt;
@@ -274,7 +274,7 @@ namespace AutoScreenCapture
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <param name="log"></param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTagCollection tagCollection)
+        public string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTagCollection tagCollection, Log log)
         {
             if (!config)
             {
@@ -361,7 +361,7 @@ namespace AutoScreenCapture
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <param name="log"></param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public static string ParseTags(bool config, string macro, MacroTagCollection tagCollection)
+        public string ParseTags(bool config, string macro, MacroTagCollection tagCollection, Log log)
         {
             return ParseTags(preview: true, config, string.Empty, macro, 0,
                 new ImageFormat("JPEG", ".jpeg"), string.Empty, tagCollection, log);

@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormMacroTag(MacroParser macroParser))
+        public FormMacroTag(MacroParser macroParser)
         {
             InitializeComponent();
 

@@ -155,19 +155,17 @@ namespace AutoScreenCapture
 
         private void pictureBoxMouseCanvas_MouseUp(object sender, MouseEventArgs e)
         {
-            try
+            if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
+
+            if (e.Button == MouseButtons.Left)
             {
-                if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
+                pictureBoxMouseCanvas.Refresh();
 
-                if (e.Button == MouseButtons.Left)
-                {
-                    pictureBoxMouseCanvas.Refresh();
+                _selectWidth = e.X - _selectX;
+                _selectHeight = e.Y - _selectY;
 
-                    _selectWidth = e.X - _selectX;
-                    _selectHeight = e.Y - _selectY;
-
-                    pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
-                }
+                pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
+            }
 
             Bitmap bitmap = SelectBitmap();
 
@@ -183,10 +181,9 @@ namespace AutoScreenCapture
                 CompleteMouseSelection(sender, e);
             }
 
-                GC.Collect();
+            Cursor = Cursors.Arrow;
 
-                Close();
-            }
+            Close();
         }
 
         private Bitmap SelectBitmap()

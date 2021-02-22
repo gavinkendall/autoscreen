@@ -272,7 +272,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formTag.TagCollection.SaveToXmlFile(_config, _fileSystem, _log))
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }

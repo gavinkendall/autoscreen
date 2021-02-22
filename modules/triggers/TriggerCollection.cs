@@ -90,13 +90,13 @@ namespace AutoScreenCapture
 
                     // Change the data for each Trigger that's being loaded if we've detected that
                     // the XML document is from an older version of the application.
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        Log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
+                        log.WriteDebugMessage("An old version of the triggers.xml file was detected. Attempting upgrade to new schema.");
 
-                        v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
-                        v2340 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
-                        configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                        v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                        v2340 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
+                        configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
                     }
 
                     foreach (XmlNode xTrigger in xTriggers)
@@ -122,7 +122,7 @@ namespace AutoScreenCapture
 
                                         if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                                         {
-                                            Log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected when parsing for trigger condition type");
+                                            log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected when parsing for trigger condition type");
 
                                             // 2.3.4.0 changes the trigger condition of "ScreenshotTaken" to "AfterScreenshotTaken"
                                             // because of the new condition "BeforeScreenshotTaken" introduced so now we separate those conditions.
@@ -202,7 +202,7 @@ namespace AutoScreenCapture
 
                         if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                         {
-                            Log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+                            log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
                             // These are new properties for Trigger that were introduced in 2.3.0.0
                             // so any version before 2.3.0.0 needs to have them during an upgrade.
@@ -220,23 +220,23 @@ namespace AutoScreenCapture
 
                     if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                     {
-                        Log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected");
+                        log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected");
                         
                         int days = 30;
 
-                        if (Settings.VersionManager.OldUserSettings.KeyExists("DaysOldWhenRemoveSlides"))
+                        if (config.Settings.VersionManager.OldUserSettings.KeyExists("DaysOldWhenRemoveSlides"))
                         {
-                            days = Convert.ToInt32(Settings.VersionManager.OldUserSettings.GetByKey("DaysOldWhenRemoveSlides", days).Value.ToString());
+                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("DaysOldWhenRemoveSlides", days).Value.ToString());
                         }
 
-                        if (Settings.VersionManager.OldUserSettings.KeyExists("IntKeepScreenshotsForDays"))
+                        if (config.Settings.VersionManager.OldUserSettings.KeyExists("IntKeepScreenshotsForDays"))
                         {
-                            days = Convert.ToInt32(Settings.VersionManager.OldUserSettings.GetByKey("IntKeepScreenshotsForDays", days).Value.ToString());
+                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("IntKeepScreenshotsForDays", days).Value.ToString());
                         }
 
-                        if (Settings.VersionManager.OldUserSettings.KeyExists("KeepScreenshotsForDays"))
+                        if (config.Settings.VersionManager.OldUserSettings.KeyExists("KeepScreenshotsForDays"))
                         {
-                            days = Convert.ToInt32(Settings.VersionManager.OldUserSettings.GetByKey("KeepScreenshotsForDays", days).Value.ToString());
+                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("KeepScreenshotsForDays", days).Value.ToString());
                         }
 
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
@@ -378,7 +378,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                FileSystem.DeleteFile(FileSystem.TriggersFile);
+                fileSystem.DeleteFile(fileSystem.TriggersFile);
 
                 using (XmlWriter xWriter = XmlWriter.Create(fileSystem.TriggersFile, xSettings))
                 {

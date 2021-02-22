@@ -37,7 +37,7 @@ namespace AutoScreenCapture
 
             _formScreen.ScreenObject = null;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
-            _formScreen.TagCollection = _formTag.TagCollection;
+            _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
 
             if (!_formScreen.Visible)
             {
@@ -119,7 +119,7 @@ namespace AutoScreenCapture
 
             _formScreen.ScreenObject = screen;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
-            _formScreen.TagCollection = _formTag.TagCollection;
+            _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
 
             _formScreen.ShowDialog(this);
 
@@ -166,7 +166,7 @@ namespace AutoScreenCapture
             {
                 if (_formScreen.ScreenCollection.Count == 0)
                 {
-                    Log.WriteErrorMessage("The screen collection is empty and needs to be initialized");
+                    _log.WriteErrorMessage("The screen collection is empty and needs to be initialized");
 
                     return;
                 }

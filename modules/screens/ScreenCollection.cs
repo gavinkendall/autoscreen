@@ -58,20 +58,20 @@ namespace AutoScreenCapture
 
         private ImageFormatCollection _imageFormatCollection;
 
-        private void AddDefaultScreens()
+        private void AddDefaultScreens(ScreenCapture screenCapture, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             int component = 1;
 
             foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screen);
+                ScreenCapture.DeviceOptions deviceResolution = screenCapture.GetDevice(screen);
 
                 Add(new Screen()
                 {
                     ViewId = Guid.NewGuid(),
                     Name = "Screen " + component,
-                    Folder = FileSystem.ScreenshotsFolder,
-                    Macro = MacroParser.DefaultMacro,
+                    Folder = fileSystem.ScreenshotsFolder,
+                    Macro = macroParser.DefaultMacro,
                     Component = component,
                     Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                     JpegQuality = 100,
@@ -86,7 +86,7 @@ namespace AutoScreenCapture
                     DeviceName = deviceResolution.screen.DeviceName
                 });
 
-                Log.WriteDebugMessage($"Screen {component} created using \"{FileSystem.ScreenshotsFolder}\" for folder path and \"{MacroParser.DefaultMacro}\" for macro.");
+                log.WriteDebugMessage($"Screen {component} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{macroParser.DefaultMacro}\" for macro.");
 
                 component++;
             }
@@ -97,6 +97,8 @@ namespace AutoScreenCapture
         /// </summary>
         public ScreenCollection()
         {
+            _imageFormatCollection = new ImageFormatCollection();
+
             StringBuilder sb = new StringBuilder();
             sb.Append("/");
             sb.Append(XML_FILE_ROOT_NODE);
@@ -130,7 +132,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screens.
         /// </summary>
-        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection, Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
+        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection, Config config, MacroParser macroParser, ScreenCapture screenCapture, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -250,9 +252,9 @@ namespace AutoScreenCapture
                         {
                             log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
-                            Version v2340 = Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
-                            Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                            Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                            Version v2340 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
+                            Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                             {
@@ -265,22 +267,22 @@ namespace AutoScreenCapture
 
                             if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                             {
-                                Log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected");
+                                log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected");
 
                                 int component = 1;
 
                                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
                                 {
-                                    ScreenCapture.DeviceResolution deviceResolution = ScreenCapture.GetDeviceResolution(screenFromWindows);
+                                    ScreenCapture.DeviceOptions deviceOptions = screenCapture.GetDevice(screenFromWindows);
 
                                     if (screen.Component.Equals(component))
                                     {
                                         screen.X = screenFromWindows.Bounds.X;
                                         screen.Y = screenFromWindows.Bounds.Y;
-                                        screen.Width = deviceResolution.width;
-                                        screen.Height = deviceResolution.height;
+                                        screen.Width = deviceOptions.width;
+                                        screen.Height = deviceOptions.height;
                                         screen.Source = 1;
-                                        screen.DeviceName = deviceResolution.screen.DeviceName;
+                                        screen.DeviceName = deviceOptions.screen.DeviceName;
                                     }
 
                                     component++;
@@ -304,10 +306,10 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load screens");
 
-                    if (Settings.VersionManager.IsOldAppVersion(AppCodename, AppVersion))
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        Version v2182 = Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
-                        Version configVersion = Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+                        Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
+                        Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                         if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)
                         {
@@ -315,8 +317,8 @@ namespace AutoScreenCapture
                             {
                                 ViewId = Guid.NewGuid(),
                                 Name = "Active Window",
-                                Folder = FileSystem.ScreenshotsFolder,
-                                Macro = MacroParser.DefaultMacro,
+                                Folder = fileSystem.ScreenshotsFolder,
+                                Macro = macroParser.DefaultMacro,
                                 Component = 0,
                                 Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                                 JpegQuality = 100,
@@ -332,8 +334,8 @@ namespace AutoScreenCapture
                             });
                         }
                     }
-                    
-                    AddDefaultScreens();
+
+                    AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

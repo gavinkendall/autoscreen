@@ -36,7 +36,6 @@ namespace AutoScreenCapture
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripSplitButtonStartScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonStopScreenCapture = new System.Windows.Forms.ToolStripSplitButton();
-            this.toolStripSplitButtonSaveSettings = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonKeyboardShortcuts = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripSplitButtonHelp = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
@@ -169,7 +168,6 @@ namespace AutoScreenCapture
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripSplitButtonStartScreenCapture,
             this.toolStripSplitButtonStopScreenCapture,
-            this.toolStripSplitButtonSaveSettings,
             this.toolStripSplitButtonKeyboardShortcuts,
             this.toolStripSplitButtonHelp,
             this.toolStripInfo});
@@ -207,16 +205,6 @@ namespace AutoScreenCapture
             this.toolStripSplitButtonStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripSplitButtonStopScreenCapture.ButtonClick += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
-            // toolStripSplitButtonSaveSettings
-            // 
-            this.toolStripSplitButtonSaveSettings.DropDownButtonWidth = 0;
-            this.toolStripSplitButtonSaveSettings.Image = global::AutoScreenCapture.Properties.Resources.save;
-            this.toolStripSplitButtonSaveSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButtonSaveSettings.Name = "toolStripSplitButtonSaveSettings";
-            this.toolStripSplitButtonSaveSettings.Size = new System.Drawing.Size(97, 20);
-            this.toolStripSplitButtonSaveSettings.Text = "Save Settings";
-            this.toolStripSplitButtonSaveSettings.ButtonClick += new System.EventHandler(this.SaveSettings);
-            // 
             // toolStripSplitButtonKeyboardShortcuts
             // 
             this.toolStripSplitButtonKeyboardShortcuts.AutoToolTip = false;
@@ -251,7 +239,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStripInfo.Size = new System.Drawing.Size(474, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(540, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -319,7 +307,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 354);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 332);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -595,7 +583,7 @@ namespace AutoScreenCapture
             this.tabPageSetup.Location = new System.Drawing.Point(4, 40);
             this.tabPageSetup.Name = "tabPageSetup";
             this.tabPageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSetup.Size = new System.Drawing.Size(241, 166);
+            this.tabPageSetup.Size = new System.Drawing.Size(241, 363);
             this.tabPageSetup.TabIndex = 0;
             this.tabPageSetup.Text = "Setup";
             this.tabPageSetup.UseVisualStyleBackColor = true;
@@ -1098,7 +1086,7 @@ namespace AutoScreenCapture
             this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 166);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 363);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
@@ -1107,7 +1095,7 @@ namespace AutoScreenCapture
             // 
             this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(241, 166);
+            this.tabPageSchedules.Size = new System.Drawing.Size(241, 363);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -1128,7 +1116,7 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 166);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 363);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
@@ -1368,7 +1356,6 @@ namespace AutoScreenCapture
         private NumericUpDown numericUpDownApplicationFocusDelayBefore;
         private ToolStripMenuItem toolStripMenuItemEmailSettings;
         private ToolStripMenuItem toolStripMenuItemFileTransferSettings;
-        private ToolStripSplitButton toolStripSplitButtonSaveSettings;
         private ToolStripMenuItem toolStripMenuItemAdd;
         private ToolStripMenuItem toolStripMenuItemAddScreen;
         private ToolStripMenuItem toolStripMenuItemAddRegion;

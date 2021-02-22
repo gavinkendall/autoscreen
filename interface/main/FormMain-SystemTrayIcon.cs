@@ -52,13 +52,13 @@ namespace AutoScreenCapture
                 // Show the "Add", "Settings", and "Screen Capture Status" menu items.
                 toolStripMenuItemAdd.Visible = true;
 
-                if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+                if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
                 {
                     toolStripMenuItemSettings.Visible = true;
                     toolStripMenuItemEmailSettings.Visible = true;
                 }
 
-                if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+                if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
                 {
                     toolStripMenuItemSettings.Visible = true;
                     toolStripMenuItemFileTransferSettings.Visible = true;

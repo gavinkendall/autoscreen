@@ -391,30 +391,30 @@ namespace AutoScreenCapture
                     log.WriteDebugMessage("WARNING: Unable to load tags");
 
                     // Setup a few "built in" tags by default.
-                    Add(new Tag(macroParser, "name", "The name of the screen or region", TagType.ScreenName, active: true));
-                    Add(new Tag(macroParser, "screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", TagType.ScreenNumber, active: true));
-                    Add(new Tag(macroParser, "format", "The image format such as jpeg or png", TagType.ImageFormat, active: true));
-                    Add(new Tag(macroParser, "date", "The current date (%date%)", TagType.DateTimeFormat, macroParser.DateFormat, active: true));
-                    Add(new Tag(macroParser, "time", "The current time (%time%)", TagType.DateTimeFormat, macroParser.TimeFormatForWindows, active: true));
-                    Add(new Tag(macroParser, "year", "The current year (%year%)", TagType.DateTimeFormat, macroParser.YearFormat, active: true));
-                    Add(new Tag(macroParser, "month", "The current month (%month%)", TagType.DateTimeFormat, macroParser.MonthFormat, active: true));
-                    Add(new Tag(macroParser, "day", "The current day (%day%)", TagType.DateTimeFormat, macroParser.DayFormat, active: true));
-                    Add(new Tag(macroParser, "hour", "The current hour (%hour%)", TagType.DateTimeFormat, macroParser.HourFormat, active: true));
-                    Add(new Tag(macroParser, "minute", "The current minute (%minute%)", TagType.DateTimeFormat, macroParser.MinuteFormat, active: true));
-                    Add(new Tag(macroParser, "second", "The current second (%second%)", TagType.DateTimeFormat, macroParser.SecondFormat, active: true));
-                    Add(new Tag(macroParser, "millisecond", "The current millisecond (%millisecond%)", TagType.DateTimeFormat, macroParser.MillisecondFormat, active: true));
-                    Add(new Tag(macroParser, "lastyear", "The previous year (%lastyear%)", TagType.DateTimeFormatExpression, "{year-1}", active: true));
-                    Add(new Tag(macroParser, "lastmonth", "The previous month (%lastmonth%)", TagType.DateTimeFormatExpression, "{month-1}", active: true));
-                    Add(new Tag(macroParser, "yesterday", "The previous day (%yesterday%)", TagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
-                    Add(new Tag(macroParser, "tomorrow", "The next day (%tomorrow%)", TagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
-                    Add(new Tag(macroParser, "6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", TagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new Tag(macroParser, "6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", TagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new Tag(macroParser, "count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", TagType.ScreenCaptureCycleCount, active: true));
-                    Add(new Tag(macroParser, "user", "The user using this computer (%user%)", TagType.User, active: true));
-                    Add(new Tag(macroParser, "machine", "The name of the computer (%machine%)", TagType.Machine, active: true));
-                    Add(new Tag(macroParser, "title", "The title of the active window", TagType.ActiveWindowTitle, active: true));
-                    Add(new Tag(macroParser, "timerange", "The macro to use during a specific time range. At the moment it is %timerange%", TagType.TimeRange, active: true));
-                    Add(new Tag(macroParser, "quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", TagType.QuarterYear, active: true));
+                    Add(new MacroTag(macroParser, "name", "The name of the screen or region", MacroTagType.ScreenName, active: true));
+                    Add(new MacroTag(macroParser, "screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", MacroTagType.ScreenNumber, active: true));
+                    Add(new MacroTag(macroParser, "format", "The image format such as jpeg or png", MacroTagType.ImageFormat, active: true));
+                    Add(new MacroTag(macroParser, "date", "The current date (%date%)", MacroTagType.DateTimeFormat, macroParser.DateFormat, active: true));
+                    Add(new MacroTag(macroParser, "time", "The current time (%time%)", MacroTagType.DateTimeFormat, macroParser.TimeFormatForWindows, active: true));
+                    Add(new MacroTag(macroParser, "year", "The current year (%year%)", MacroTagType.DateTimeFormat, macroParser.YearFormat, active: true));
+                    Add(new MacroTag(macroParser, "month", "The current month (%month%)", MacroTagType.DateTimeFormat, macroParser.MonthFormat, active: true));
+                    Add(new MacroTag(macroParser, "day", "The current day (%day%)", MacroTagType.DateTimeFormat, macroParser.DayFormat, active: true));
+                    Add(new MacroTag(macroParser, "hour", "The current hour (%hour%)", MacroTagType.DateTimeFormat, macroParser.HourFormat, active: true));
+                    Add(new MacroTag(macroParser, "minute", "The current minute (%minute%)", MacroTagType.DateTimeFormat, macroParser.MinuteFormat, active: true));
+                    Add(new MacroTag(macroParser, "second", "The current second (%second%)", MacroTagType.DateTimeFormat, macroParser.SecondFormat, active: true));
+                    Add(new MacroTag(macroParser, "millisecond", "The current millisecond (%millisecond%)", MacroTagType.DateTimeFormat, macroParser.MillisecondFormat, active: true));
+                    Add(new MacroTag(macroParser, "lastyear", "The previous year (%lastyear%)", MacroTagType.DateTimeFormatExpression, "{year-1}", active: true));
+                    Add(new MacroTag(macroParser, "lastmonth", "The previous month (%lastmonth%)", MacroTagType.DateTimeFormatExpression, "{month-1}", active: true));
+                    Add(new MacroTag(macroParser, "yesterday", "The previous day (%yesterday%)", MacroTagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
+                    Add(new MacroTag(macroParser, "tomorrow", "The next day (%tomorrow%)", MacroTagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
+                    Add(new MacroTag(macroParser, "6hoursbehind", "Six hours behind the current hour (%6hoursbehind%)", MacroTagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new MacroTag(macroParser, "6hoursahead", "Six hours ahead the current hour (%6hoursahead%)", MacroTagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
+                    Add(new MacroTag(macroParser, "count", "The number of capture cycles during a running screen capture session. For example, the first round of screenshots taken is the first cycle count or count 1", MacroTagType.ScreenCaptureCycleCount, active: true));
+                    Add(new MacroTag(macroParser, "user", "The user using this computer (%user%)", MacroTagType.User, active: true));
+                    Add(new MacroTag(macroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, active: true));
+                    Add(new MacroTag(macroParser, "title", "The title of the active window", MacroTagType.ActiveWindowTitle, active: true));
+                    Add(new MacroTag(macroParser, "timerange", "The macro to use during a specific time range. At the moment it is %timerange%", MacroTagType.TimeRange, active: true));
+                    Add(new MacroTag(macroParser, "quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", MacroTagType.QuarterYear, active: true));
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

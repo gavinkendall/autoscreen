@@ -30,28 +30,36 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEmailSettings : Form
     {
+        Config _config;
+        FileSystem _fileSystem;
+        Log _log;
+
         /// <summary>
         ///  Email Settings
         /// </summary>
-        public FormEmailSettings()
+        public FormEmailSettings(Config config, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
+
+            _config = config;
+            _fileSystem = fileSystem;
+            _log = log;
         }
 
         private void FormEmailSettings_Load(object sender, EventArgs e)
         {
-            textBoxHost.Text = Settings.SMTP.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
-            numericUpDownPort.Value = Convert.ToInt32(Settings.SMTP.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value);
-            checkBoxEnableSSL.Checked = Convert.ToBoolean(Settings.SMTP.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value);
-            checkBoxPrompt.Checked = Convert.ToBoolean(Settings.SMTP.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value);
-            textBoxUsername.Text = Settings.SMTP.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
-            textBoxPassword.Text = Settings.SMTP.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
-            textBoxFrom.Text = Settings.SMTP.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
-            textBoxTo.Text = Settings.SMTP.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
-            textBoxCC.Text = Settings.SMTP.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value.ToString();
-            textBoxBCC.Text = Settings.SMTP.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value.ToString();
-            textBoxSubject.Text = Settings.SMTP.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value.ToString();
-            textBoxBody.Text = Settings.SMTP.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value.ToString();
+            textBoxHost.Text = Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
+            numericUpDownPort.Value = Convert.ToInt32(Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value);
+            checkBoxEnableSSL.Checked = Convert.ToBoolean(Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value);
+            checkBoxPrompt.Checked = Convert.ToBoolean(Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value);
+            textBoxUsername.Text = Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
+            textBoxPassword.Text = Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
+            textBoxFrom.Text = Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
+            textBoxTo.Text = Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
+            textBoxCC.Text = Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
+            textBoxBCC.Text = Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
+            textBoxSubject.Text = Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
+            textBoxBody.Text = Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -61,20 +69,20 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            Settings.SMTP.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value = textBoxHost.Text;
-            Settings.SMTP.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value = numericUpDownPort.Value;
-            Settings.SMTP.GetByKey("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL).Value = checkBoxEnableSSL.Checked;
-            Settings.SMTP.GetByKey("EmailPrompt", DefaultSettings.EmailPrompt).Value = checkBoxPrompt.Checked;
-            Settings.SMTP.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value = textBoxUsername.Text;
-            Settings.SMTP.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value = textBoxPassword.Text;
-            Settings.SMTP.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value = textBoxFrom.Text;
-            Settings.SMTP.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value = textBoxTo.Text;
-            Settings.SMTP.GetByKey("EmailMessageCC", DefaultSettings.EmailMessageCC).Value = textBoxCC.Text;
-            Settings.SMTP.GetByKey("EmailMessageBCC", DefaultSettings.EmailMessageBCC).Value = textBoxBCC.Text;
-            Settings.SMTP.GetByKey("EmailMessageSubject", DefaultSettings.EmailMessageSubject).Value = textBoxSubject.Text;
-            Settings.SMTP.GetByKey("EmailMessageBody", DefaultSettings.EmailMessageBody).Value = textBoxBody.Text;
+            Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value = textBoxHost.Text;
+            Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value = numericUpDownPort.Value;
+            Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value = checkBoxEnableSSL.Checked;
+            Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value = checkBoxPrompt.Checked;
+            Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value = textBoxUsername.Text;
+            Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value = textBoxPassword.Text;
+            Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value = textBoxFrom.Text;
+            Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value = textBoxTo.Text;
+            Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value = textBoxCC.Text;
+            Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value = textBoxBCC.Text;
+            Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value = textBoxSubject.Text;
+            Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value = textBoxBody.Text;
 
-            Settings.SMTP.Save();
+            Settings.SMTP.Save(_config.Settings, _fileSystem, _log);
 
             DialogResult = DialogResult.OK;
 

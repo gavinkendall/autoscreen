@@ -150,43 +150,38 @@ namespace AutoScreenCapture
         {
             RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
 
-                // Test to see if we can get images of the screen before continuing.
-                if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, 100, out _))
-                {
-                    _macroParser.screenCapture = _screenCapture;
-
-                    _screenCapture.Count++;
-                    _screenCapture.CaptureNow = captureNow;
-
-                    DateTime dtNow = DateTime.Now;
-
-                    _screenCapture.DateTimeScreenshotsTaken = dtNow;
-
-                    if (!captureNow)
-                    {
-                        _screenCapture.DateTimePreviousCycle = dtNow;
-                    }
-
-                    DoApplicationFocus();
-
-                    _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
-
-                    _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
-
-                    // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
-                    if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
-                    {
-                        return;
-                    }
-
-                    RunRegionCaptures();
-
-                    RunScreenCaptures();
-                }
-            }
-            finally
+            // Test to see if we can get images of the screen before continuing.
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, 0, false, 100, out _))
             {
-                GC.Collect();
+                _macroParser.screenCapture = _screenCapture;
+
+                _screenCapture.Count++;
+                _screenCapture.CaptureNow = captureNow;
+
+                DateTime dtNow = DateTime.Now;
+
+                _screenCapture.DateTimeScreenshotsTaken = dtNow;
+
+                if (!captureNow)
+                {
+                    _screenCapture.DateTimePreviousCycle = dtNow;
+                }
+
+                DoApplicationFocus();
+
+                _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
+
+                _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
+
+                // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
+                if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
+                {
+                    return;
+                }
+
+                RunRegionCaptures();
+
+                RunScreenCaptures();
             }
         }
 
@@ -366,7 +361,7 @@ namespace AutoScreenCapture
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
                 ViewId = screen.ViewId,
-                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection, _log),
+                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, screen.Folder, _formMacroTag.MacroTagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection, _log),
                 Bitmap = bitmap,
                 Format = screen.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
@@ -397,7 +392,7 @@ namespace AutoScreenCapture
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
                 ViewId = region.ViewId,
-                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, region.Folder, _formTag.TagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection, _log),
+                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, region.Folder, _formMacroTag.MacroTagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection, _log),
                 Bitmap = bitmap,
                 Format = region.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",

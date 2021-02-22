@@ -30,8 +30,7 @@ namespace AutoScreenCapture
     {
         private Log _log;
         private MacroParser _macroParser;
-        private TagCollection _tagCollection;
-        private MacroTagCollection _tagCollection;
+        private MacroTagCollection _macroTagCollection;
 
         /// <summary>
         /// Empty constructor for the Macro Tags tool window.
@@ -42,21 +41,21 @@ namespace AutoScreenCapture
 
             _log = log;
             _macroParser = macroParser;
-            _tagCollection = tagCollection;
+            _macroTagCollection = tagCollection;
         }
 
         private void FormMacroTagsToolWindow_Load(object sender, System.EventArgs e)
         {
             List<string> macroTags = new List<string>();
 
-            foreach (MacroTag tag in _tagCollection.Collection)
+            foreach (MacroTag tag in _macroTagCollection.Collection)
             {
                 macroTags.Add(tag.Name);
             }
 
             listBoxMacroTags.DataSource = macroTags;
 
-            if (_tagCollection.Collection.Count > 0)
+            if (_macroTagCollection.Collection.Count > 0)
             {
                 listBoxMacroTags.SelectedIndex = 0;
             }
@@ -64,9 +63,9 @@ namespace AutoScreenCapture
 
         private void listBoxMacroTags_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            MacroTag tag = _tagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
+            MacroTag tag = _macroTagCollection.GetByName((string)listBoxMacroTags.SelectedItem);
 
-            labelHelp.Text = _macroParser.ParseTags(config: false, tag.Description, _tagCollection, _log);
+            labelHelp.Text = _macroParser.ParseTags(config: false, tag.Description, _macroTagCollection, _log);
         }
     }
 }

@@ -28,20 +28,28 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormFileTransferSettings : Form
     {
+        Config _config;
+        FileSystem _fileSystem;
+        Log _log;
+
         /// <summary>
         /// File Transfer Settings
         /// </summary>
-        public FormFileTransferSettings()
+        public FormFileTransferSettings(Config config, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
+
+            _config = config;
+            _fileSystem = fileSystem;
+            _log = log;
         }
 
         private void FormFileTransferSettings_Load(object sender, EventArgs e)
         {
-            textBoxHost.Text = Settings.SFTP.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
-            numericUpDownPort.Value = Convert.ToInt32(Settings.SFTP.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value);
-            textBoxUsername.Text = Settings.SFTP.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
-            textBoxPassword.Text = Settings.SFTP.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
+            textBoxHost.Text = Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
+            numericUpDownPort.Value = Convert.ToInt32(Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value);
+            textBoxUsername.Text = Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
+            textBoxPassword.Text = Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -51,12 +59,12 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            Settings.SFTP.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value = textBoxHost.Text;
-            Settings.SFTP.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value = numericUpDownPort.Value;
-            Settings.SFTP.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value = textBoxUsername.Text;
-            Settings.SFTP.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value = textBoxPassword.Text;
+            Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value = textBoxHost.Text;
+            Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value = numericUpDownPort.Value;
+            Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value = textBoxUsername.Text;
+            Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value = textBoxPassword.Text;
 
-            Settings.SFTP.Save();
+            Settings.SFTP.Save(_config.Settings, _fileSystem, _log);
 
             DialogResult = DialogResult.OK;
 

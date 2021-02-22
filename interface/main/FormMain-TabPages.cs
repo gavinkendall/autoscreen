@@ -134,12 +134,12 @@ namespace AutoScreenCapture
             toolStripDashboard.Items.Add(toolStripButtonAddMacroTag);
             toolStripDashboard.Items.Add(toolStripButtonAddTrigger);
 
-            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
                 toolStripDashboard.Items.Add(toolStripButtonEmailSettings);
             }
 
-            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
             {
                 toolStripDashboard.Items.Add(toolStripButtonFileTransferSettings);
             }
@@ -382,12 +382,12 @@ namespace AutoScreenCapture
 
             toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
 
-            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
                 toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, toolStripMenuItemEmailSettings_Click);
             }
 
-            if (Convert.ToBoolean(Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
             {
                 toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, toolStripMenuItemFileTransferSettings_Click);
             }
@@ -405,7 +405,7 @@ namespace AutoScreenCapture
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {
-                if (editor != null && FileSystem.FileExists(editor.Application))
+                if (editor != null && _fileSystem.FileExists(editor.Application))
                 {
                     toolStripSplitButtonEdit.DropDown.Items.Add(editor.Name, Icon.ExtractAssociatedIcon(editor.Application).ToBitmap(), runEditor_Click);
                 }
@@ -421,12 +421,12 @@ namespace AutoScreenCapture
 
             toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
-            string emailServerHost = Settings.SMTP.GetByKey("EmailServerHost", DefaultSettings.EmailServerHost).Value.ToString();
-            int.TryParse(Settings.SMTP.GetByKey("EmailServerPort", DefaultSettings.EmailServerPort).Value.ToString(), out int emailServerPort);
-            string emailClientUsername = Settings.SMTP.GetByKey("EmailClientUsername", DefaultSettings.EmailClientUsername).Value.ToString();
-            string emailClientPassword = Settings.SMTP.GetByKey("EmailClientPassword", DefaultSettings.EmailClientPassword).Value.ToString();
-            string emailMessageFrom = Settings.SMTP.GetByKey("EmailMessageFrom", DefaultSettings.EmailMessageFrom).Value.ToString();
-            string emailMessageTo = Settings.SMTP.GetByKey("EmailMessageTo", DefaultSettings.EmailMessageTo).Value.ToString();
+            string emailServerHost = Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
+            int.TryParse(Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int emailServerPort);
+            string emailClientUsername = Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
+            string emailClientPassword = Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
+            string emailMessageFrom = Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
+            string emailMessageTo = Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
 
             if (string.IsNullOrEmpty(emailServerHost) ||
                 emailServerPort <= 0 ||
@@ -435,7 +435,7 @@ namespace AutoScreenCapture
                 string.IsNullOrEmpty(emailMessageFrom) ||
                 string.IsNullOrEmpty(emailMessageTo))
             {
-                toolStripButtonEmail.ToolTipText = "Email settings have not been configured for " + Settings.ApplicationName + " to email screenshots";
+                toolStripButtonEmail.ToolTipText = "Email settings have not been configured for " + _config.Settings.ApplicationName + " to email screenshots";
                 toolStripButtonEmail.Enabled = false;
             }
             else
@@ -454,17 +454,17 @@ namespace AutoScreenCapture
 
             toolStripButtonFileTransfer.Click += new EventHandler(fileTransferScreenshot_Click);
 
-            string fileTransferServerHost = Settings.SFTP.GetByKey("FileTransferServerHost", DefaultSettings.FileTransferServerHost).Value.ToString();
-            int.TryParse(Settings.SFTP.GetByKey("FileTransferServerPort", DefaultSettings.FileTransferServerPort).Value.ToString(), out int fileTransferServerPort);
-            string fileTransferClientUsername = Settings.SFTP.GetByKey("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername).Value.ToString();
-            string fileTransferClientPassword = Settings.SFTP.GetByKey("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword).Value.ToString();
+            string fileTransferServerHost = Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
+            int.TryParse(Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value.ToString(), out int fileTransferServerPort);
+            string fileTransferClientUsername = Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
+            string fileTransferClientPassword = Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
 
             if (string.IsNullOrEmpty(fileTransferServerHost) ||
                 fileTransferServerPort <= 0 ||
                 string.IsNullOrEmpty(fileTransferClientUsername) ||
                 string.IsNullOrEmpty(fileTransferClientPassword))
             {
-                toolStripButtonFileTransfer.ToolTipText = "File Transfer settings have not been configured for " + Settings.ApplicationName + " to send screenshots to a file server";
+                toolStripButtonFileTransfer.ToolTipText = "File Transfer settings have not been configured for " + _config.Settings.ApplicationName + " to send screenshots to a file server";
                 toolStripButtonFileTransfer.Enabled = false;
             }
             else
