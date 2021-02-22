@@ -322,6 +322,7 @@ END OF TERMS AND CONDITIONS</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.3.8    Refactored code to reduce usage of static classes and static variables. Removed calls to GC Collect. Changed screen capture method. Removed "Resolution Ratio" option for better screen capture performance. Module tab page layout style changed to be multi-line. "Region Select / Auto Save" region is no longer created when application initialized since "Region Select / Auto Save" screenshots are now shown in all screenshot tabs.
 2.3.3.7    Memory leak fix.
 2.3.3.6    Active Window Title text comparison includes type of match to use during text comparison.
 2.3.3.5    Application Focus now has Delay Before and Delay After options.
