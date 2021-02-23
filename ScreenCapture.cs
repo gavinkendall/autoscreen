@@ -666,7 +666,7 @@ namespace AutoScreenCapture
                         screenshot.Path = screenshot.Path.Substring(0, filepathLengthLimit);
                     }
 
-                    _log.WriteMessage("Attempting to write image to file at path \"" + screenshot.Path + "\"");
+                    _log.WriteDebugMessage("Attempting to write image to file at path \"" + screenshot.Path + "\"");
 
                     // This is a normal path used in Windows (such as "C:\screenshots\").
                     if (!screenshot.Path.StartsWith(_fileSystem.PathDelimiter))

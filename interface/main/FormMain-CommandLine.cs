@@ -218,7 +218,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.Application.SetValueByKey("DebugMode", _log.DebugMode);
 
-                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -231,7 +231,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.Application.SetValueByKey("DebugMode", true);
 
-                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -244,7 +244,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.Application.SetValueByKey("DebugMode", false);
                         
-                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -257,7 +257,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.Application.SetValueByKey("Logging", _log.LoggingEnabled);
 
-                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -270,7 +270,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.Application.SetValueByKey("Logging", true);
 
-                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -283,7 +283,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.Application.SetValueByKey("Logging", false);
 
-                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -320,7 +320,7 @@ namespace AutoScreenCapture
                     {
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", true);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -333,7 +333,7 @@ namespace AutoScreenCapture
                     {
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -348,7 +348,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", checkBoxInitialScreenshot.Checked);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -361,7 +361,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", true);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -374,7 +374,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", false);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -420,7 +420,7 @@ namespace AutoScreenCapture
 
                             _config.Settings.User.SetValueByKey("ScreenCaptureInterval", screenCaptureInterval);
 
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                             {
                                 _screenCapture.ApplicationError = true;
                             }
@@ -448,7 +448,7 @@ namespace AutoScreenCapture
 
                             _config.Settings.User.SetValueByKey("Passphrase", _security.Hash(passphrase));
 
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                             {
                                 _screenCapture.ApplicationError = true;
                             }
@@ -540,7 +540,7 @@ namespace AutoScreenCapture
                             _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
                             _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
 
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                             {
                                 _screenCapture.ApplicationError = true;
                             }
@@ -568,7 +568,7 @@ namespace AutoScreenCapture
 
                             _config.Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
 
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                             {
                                 _screenCapture.ApplicationError = true;
                             }
@@ -596,7 +596,7 @@ namespace AutoScreenCapture
                             _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
                             _config.Settings.User.SetValueByKey("ScreenshotLabel", label);
 
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                             {
                                 _screenCapture.ApplicationError = true;
                             }
@@ -613,7 +613,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.User.SetValueByKey("ApplicationFocusDelayBefore", delayBefore);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }
@@ -628,7 +628,7 @@ namespace AutoScreenCapture
 
                         _config.Settings.User.SetValueByKey("ApplicationFocusDelayAfter", delayAfter);
 
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
                         }

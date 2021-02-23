@@ -122,7 +122,7 @@ namespace AutoScreenCapture
             if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxName.Text))
             {
                 _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value = textBoxName.Text;
-                _config.Settings.User.Save(_config.Settings, _fileSystem, _log);
+                _config.Settings.User.Save(_config.Settings, _fileSystem);
             }
 
             if (EditorObject != null)

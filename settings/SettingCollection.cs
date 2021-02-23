@@ -241,84 +241,80 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(Settings settings, FileSystem fileSystem)
         {
-            Log log = new Log(settings, fileSystem, new MacroParser(settings));
-
-            try
+            if (string.IsNullOrEmpty(Filepath))
             {
-                if (string.IsNullOrEmpty(Filepath)) return;
+                return;
+            }
 
-                if (fileSystem.FileExists(Filepath))
+            if (!fileSystem.FileExists(Filepath))
+            {
+                Save(settings, fileSystem);
+            }
+
+            if (fileSystem.FileExists(Filepath))
+            {
+                // Check the size of the settings file.
+                // Delete the file if it's too big so we don't hang.
+                if (fileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
                 {
-                    // Check the size of the settings file.
-                    // Delete the file if it's too big so we don't hang.
-                    if (fileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
+                    fileSystem.DeleteFile(Filepath);
+
+                    return;
+                }
+
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load(Filepath);
+
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
+
+                foreach (XmlNode xSetting in xSettings)
+                {
+                    Setting setting = new Setting();
+                    XmlNodeReader xReader = new XmlNodeReader(xSetting);
+
+                    while (xReader.Read())
                     {
-                        fileSystem.DeleteFile(Filepath);
-
-                        log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
-
-                        return;
-                    }
-
-                    XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(Filepath);
-
-                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                    XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
-
-                    foreach (XmlNode xSetting in xSettings)
-                    {
-                        Setting setting = new Setting();
-                        XmlNodeReader xReader = new XmlNodeReader(xSetting);
-
-                        while (xReader.Read())
+                        if (xReader.IsStartElement())
                         {
-                            if (xReader.IsStartElement())
+                            switch (xReader.Name)
                             {
-                                switch (xReader.Name)
-                                {
-                                    case SETTING_KEY:
-                                        xReader.Read();
-                                        setting.Key = xReader.Value;
-                                        break;
+                                case SETTING_KEY:
+                                    xReader.Read();
+                                    setting.Key = xReader.Value;
+                                    break;
 
-                                    case SETTING_VALUE:
-                                        xReader.Read();
-                                        setting.Value = xReader.Value;
-                                        break;
-                                }
+                                case SETTING_VALUE:
+                                    xReader.Read();
+                                    setting.Value = xReader.Value;
+                                    break;
                             }
                         }
+                    }
 
-                        xReader.Close();
+                    xReader.Close();
 
-                        if (!string.IsNullOrEmpty(setting.Key))
-                        {
-                            Add(setting);
-                        }
+                    if (!string.IsNullOrEmpty(setting.Key))
+                    {
+                        Add(setting);
                     }
                 }
-                else
-                {
-                    log.WriteDebugMessage("WARNING: Unable to load settings");
-                }
-            }
-            catch (Exception ex)
-            {
-                log.WriteExceptionMessage("SettingCollection::Load", ex);
             }
         }
 
         /// <summary>
         /// Saves the settings.
         /// </summary>
-        public bool Save(Settings settings, FileSystem fileSystem, Log log)
+        public bool Save(Settings settings, FileSystem fileSystem)
         {
             try
             {
-                if (string.IsNullOrEmpty(Filepath)) return true;
+                if (string.IsNullOrEmpty(Filepath))
+                {
+                    return true;
+                }
 
                 XmlWriterSettings xSettings = new XmlWriterSettings();
                 xSettings.Indent = true;
@@ -365,10 +361,8 @@ namespace AutoScreenCapture
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                log.WriteExceptionMessage("SettingCollection::Save", ex);
-
                 return false;
             }
         }
@@ -378,178 +372,170 @@ namespace AutoScreenCapture
         /// </summary>
         public void Upgrade(ScreenCapture screenCapture, Config config, FileSystem fileSystem, Log log)
         {
-            try
+            if (!config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
             {
-                if (!config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion)) return;
+                return;
+            }
 
-                log.WriteMessage("An old version or a fresh version of " + config.Settings.ApplicationName + " was detected. Attempting upgrade");
+            var oldUserSettings = (SettingCollection)this.MemberwiseClone();
+            oldUserSettings._settingList = new List<Setting>(_settingList);
 
-                var oldUserSettings = (SettingCollection)this.MemberwiseClone();
-                oldUserSettings._settingList = new List<Setting>(_settingList);
+            config.Settings.VersionManager.OldUserSettings = oldUserSettings;
 
-                config.Settings.VersionManager.OldUserSettings = oldUserSettings;
+            var versionInConfig = new Version(AppCodename, AppVersion, false);
 
-                var versionInConfig = new Version(AppCodename, AppVersion, false);
-
-                if (versionInConfig.VersionString.Equals("2.2.0.0") ||
-                    versionInConfig.VersionString.Equals("2.2.0.1") ||
-                    versionInConfig.VersionString.Equals("2.2.0.2") ||
-                    versionInConfig.VersionString.Equals("2.2.0.3") ||
-                    versionInConfig.VersionString.Equals("2.2.0.4") ||
-                    versionInConfig.VersionString.Equals("2.2.0.5") ||
-                    versionInConfig.VersionString.Equals("2.2.0.6") ||
-                    versionInConfig.VersionString.Equals("2.2.0.7") ||
-                    versionInConfig.VersionString.Equals("2.2.0.8") ||
-                    versionInConfig.VersionString.Equals("2.2.0.9") ||
-                    versionInConfig.VersionString.Equals("2.2.0.10") ||
-                    versionInConfig.VersionString.Equals("2.2.0.11") ||
-                    versionInConfig.VersionString.Equals("2.2.0.12") ||
-                    versionInConfig.VersionString.Equals("2.2.0.13") ||
-                    versionInConfig.VersionString.Equals("2.2.0.14") ||
-                    versionInConfig.VersionString.Equals("2.2.0.15") ||
-                    versionInConfig.VersionString.Equals("2.2.0.16"))
+            if (versionInConfig.VersionString.Equals("2.2.0.0") ||
+                versionInConfig.VersionString.Equals("2.2.0.1") ||
+                versionInConfig.VersionString.Equals("2.2.0.2") ||
+                versionInConfig.VersionString.Equals("2.2.0.3") ||
+                versionInConfig.VersionString.Equals("2.2.0.4") ||
+                versionInConfig.VersionString.Equals("2.2.0.5") ||
+                versionInConfig.VersionString.Equals("2.2.0.6") ||
+                versionInConfig.VersionString.Equals("2.2.0.7") ||
+                versionInConfig.VersionString.Equals("2.2.0.8") ||
+                versionInConfig.VersionString.Equals("2.2.0.9") ||
+                versionInConfig.VersionString.Equals("2.2.0.10") ||
+                versionInConfig.VersionString.Equals("2.2.0.11") ||
+                versionInConfig.VersionString.Equals("2.2.0.12") ||
+                versionInConfig.VersionString.Equals("2.2.0.13") ||
+                versionInConfig.VersionString.Equals("2.2.0.14") ||
+                versionInConfig.VersionString.Equals("2.2.0.15") ||
+                versionInConfig.VersionString.Equals("2.2.0.16"))
+            {
+                if (KeyExists("StringPassphrase"))
                 {
-                    if (KeyExists("StringPassphrase"))
+                    string passphrase = GetByKey("StringPassphrase", string.Empty, createKeyIfNotFound: false).Value.ToString();
+
+                    passphrase = passphrase.Trim();
+
+                    if (passphrase.Length > 0)
                     {
-                        string passphrase = GetByKey("StringPassphrase", string.Empty, createKeyIfNotFound: false).Value.ToString();
-
-                        passphrase = passphrase.Trim();
-
-                        if (passphrase.Length > 0)
-                        {
-                            // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
-                            // in an older version of the application then make sure to hash it and lock the session before we continue.
-                            SetValueByKey("Passphrase", _security.Hash(passphrase));
-                            screenCapture.LockScreenCaptureSession = true;
-                        }
+                        // Starting with version 2.2.0.17 we now hash the passphrase so if we encounter the passphrase
+                        // in an older version of the application then make sure to hash it and lock the session before we continue.
+                        SetValueByKey("Passphrase", _security.Hash(passphrase));
+                        screenCapture.LockScreenCaptureSession = true;
                     }
                 }
-
-                // Go through the old settings and get the old values from them to be used for the new settings.
-                RenameKey("Interval", "ScreenCaptureInterval");
-                RenameKey("IntScreenCaptureInterval", "ScreenCaptureInterval");
-                RenameKey("IntCaptureLimit", "CaptureLimit");
-                RenameKey("BoolCaptureLimit", "CaptureLimitCheck");
-                RenameKey("BoolTakeInitialScreenshot", "TakeInitialScreenshot");
-                RenameKey("TakeInitialScreenshotCheck", "TakeInitialScreenshot");
-                RenameKey("BoolShowSystemTrayIcon", "ShowSystemTrayIcon");
-                RenameKey("DaysOldWhenRemoveSlides", "KeepScreenshotsForDays");
-                RenameKey("IntKeepScreenshotsForDays", "KeepScreenshotsForDays");
-                RenameKey("StringPassphrase", "Passphrase");
-                RenameKey("StringScreenshotLabel", "ScreenshotLabel");
-                RenameKey("BoolApplyScreenshotLabel", "ApplyScreenshotLabel");
-                RenameKey("StringDefaultEditor", "DefaultEditor");
-                RenameKey("BoolFirstRun", "FirstRun");
-                RenameKey("IntStartScreenCaptureCount", "StartScreenCaptureCount");
-                RenameKey("BoolActiveWindowTitleCaptureCheck", "ActiveWindowTitleCaptureCheck");
-                RenameKey("StringActiveWindowTitleCaptureText", "ActiveWindowTitleCaptureText");
-                RenameKey("StringAutoSaveFolder", "AutoSaveFolder");
-                RenameKey("StringAutoSaveMacro", "AutoSaveMacro");
-                RenameKey("BoolUseKeyboardShortcuts", "UseKeyboardShortcuts");
-
-                // Keyboard Shortcuts
-                RenameKey("StringKeyboardShortcutStartScreenCaptureModifier1", "KeyboardShortcutStartScreenCaptureModifier1");
-                RenameKey("StringKeyboardShortcutStartScreenCaptureModifier2", "KeyboardShortcutStartScreenCaptureModifier2");
-                RenameKey("StringKeyboardShortcutStartScreenCaptureKey", "KeyboardShortcutStartScreenCaptureKey");
-                RenameKey("StringKeyboardShortcutStopScreenCaptureModifier1", "KeyboardShortcutStopScreenCaptureModifier1");
-                RenameKey("StringKeyboardShortcutStopScreenCaptureModifier2", "KeyboardShortcutStopScreenCaptureModifier2");
-                RenameKey("StringKeyboardShortcutStopScreenCaptureKey", "KeyboardShortcutStopScreenCaptureKey");
-                RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier1", "KeyboardShortcutCaptureNowArchiveModifier1");
-                RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier2", "KeyboardShortcutCaptureNowArchiveModifier2");
-                RenameKey("StringKeyboardShortcutCaptureNowArchiveKey", "KeyboardShortcutCaptureNowArchiveKey");
-                RenameKey("StringKeyboardShortcutCaptureNowEditModifier1", "KeyboardShortcutCaptureNowEditModifier1");
-                RenameKey("StringKeyboardShortcutCaptureNowEditModifier2", "KeyboardShortcutCaptureNowEditModifier2");
-                RenameKey("StringKeyboardShortcutCaptureNowEditKey", "KeyboardShortcutCaptureNowEditKey");
-                RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier1", "KeyboardShortcutRegionSelectClipboardModifier1");
-                RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier2", "KeyboardShortcutRegionSelectClipboardModifier2");
-                RenameKey("StringKeyboardShortcutRegionSelectClipboardKey", "KeyboardShortcutRegionSelectClipboardKey");
-                RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", "KeyboardShortcutRegionSelectAutoSaveModifier1");
-                RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", "KeyboardShortcutRegionSelectAutoSaveModifier2");
-                RenameKey("StringKeyboardShortcutRegionSelectAutoSaveKey", "KeyboardShortcutRegionSelectAutoSaveKey");
-                RenameKey("StringKeyboardShortcutRegionSelectEditModifier1", "KeyboardShortcutRegionSelectEditModifier1");
-                RenameKey("StringKeyboardShortcutRegionSelectEditModifier2", "KeyboardShortcutRegionSelectEditModifier2");
-                RenameKey("StringKeyboardShortcutRegionSelectEditKey", "KeyboardShortcutRegionSelectEditKey");
-
-                // Remove the old settings.
-                RemoveByKey("BoolLockScreenCaptureSession");
-                RemoveByKey("BoolCaptureStopAt");
-                RemoveByKey("BoolCaptureStartAt");
-                RemoveByKey("BoolCaptureOnSunday");
-                RemoveByKey("BoolCaptureOnMonday");
-                RemoveByKey("BoolCaptureOnTuesday");
-                RemoveByKey("BoolCaptureOnWednesday");
-                RemoveByKey("BoolCaptureOnThursday");
-                RemoveByKey("BoolCaptureOnFriday");
-                RemoveByKey("BoolCaptureOnSaturday");
-                RemoveByKey("BoolCaptureOnTheseDays");
-                RemoveByKey("DateTimeCaptureStopAt");
-                RemoveByKey("DateTimeCaptureStartAt");
-                RemoveByKey("FilepathLimitLength");
-                RemoveByKey("CaptureStopAtCheck");
-                RemoveByKey("CaptureStartAtCheck");
-                RemoveByKey("CaptureOnSundayCheck");
-                RemoveByKey("CaptureOnMondayCheck");
-                RemoveByKey("CaptureOnTuesdayCheck");
-                RemoveByKey("CaptureOnWednesdayCheck");
-                RemoveByKey("CaptureOnThursdayCheck");
-                RemoveByKey("CaptureOnFridayCheck");
-                RemoveByKey("CaptureOnSaturdayCheck");
-                RemoveByKey("CaptureOnTheseDaysCheck");
-                RemoveByKey("CaptureStopAtValue");
-                RemoveByKey("CaptureStartAtValue");
-                RemoveByKey("LockScreenCaptureSession");
-                RemoveByKey("ScreenshotsDirectory");
-                RemoveByKey("ScheduleImageFormat");
-                RemoveByKey("SlideSkip");
-                RemoveByKey("ImageResolutionRatio");
-                RemoveByKey("ImageFormatFilter");
-                RemoveByKey("ImageFormatFilterIndex");
-                RemoveByKey("SlideshowDelay");
-                RemoveByKey("SlideSkipCheck");
-                RemoveByKey("Screen1X");
-                RemoveByKey("Screen1Y");
-                RemoveByKey("Screen1Width");
-                RemoveByKey("Screen1Height");
-                RemoveByKey("Screen2X");
-                RemoveByKey("Screen2Y");
-                RemoveByKey("Screen2Width");
-                RemoveByKey("Screen2Height");
-                RemoveByKey("Screen3X");
-                RemoveByKey("Screen3Y");
-                RemoveByKey("Screen3Width");
-                RemoveByKey("Screen3Height");
-                RemoveByKey("Screen4X");
-                RemoveByKey("Screen4Y");
-                RemoveByKey("Screen4Width");
-                RemoveByKey("Screen4Height");
-                RemoveByKey("Screen1Name");
-                RemoveByKey("Screen2Name");
-                RemoveByKey("Screen3Name");
-                RemoveByKey("Screen4Name");
-                RemoveByKey("Screen5Name");
-                RemoveByKey("Macro");
-                RemoveByKey("JpegQualityLevel");
-                RemoveByKey("CaptureScreen1");
-                RemoveByKey("CaptureScreen2");
-                RemoveByKey("CaptureScreen3");
-                RemoveByKey("CaptureScreen4");
-                RemoveByKey("CaptureActiveWindow");
-                RemoveByKey("AutoReset");
-                RemoveByKey("Mouse");
-                RemoveByKey("StartButtonImageFormat");
-                RemoveByKey("Schedule");
-                RemoveByKey("DeleteScreenshotsOlderThanDays");
-                RemoveByKey("ScreenshotDelay");
-
-                log.WriteMessage("Upgrade completed.");
-
-                // Now that we've upgraded all the settings we should save them to disk.
-                Save(config.Settings, fileSystem, log);
             }
-            catch (Exception ex)
-            {
-                log.WriteExceptionMessage("SettingCollection::Upgrade", ex);
-            }
+
+            // Go through the old settings and get the old values from them to be used for the new settings.
+            RenameKey("Interval", "ScreenCaptureInterval");
+            RenameKey("IntScreenCaptureInterval", "ScreenCaptureInterval");
+            RenameKey("IntCaptureLimit", "CaptureLimit");
+            RenameKey("BoolCaptureLimit", "CaptureLimitCheck");
+            RenameKey("BoolTakeInitialScreenshot", "TakeInitialScreenshot");
+            RenameKey("TakeInitialScreenshotCheck", "TakeInitialScreenshot");
+            RenameKey("BoolShowSystemTrayIcon", "ShowSystemTrayIcon");
+            RenameKey("DaysOldWhenRemoveSlides", "KeepScreenshotsForDays");
+            RenameKey("IntKeepScreenshotsForDays", "KeepScreenshotsForDays");
+            RenameKey("StringPassphrase", "Passphrase");
+            RenameKey("StringScreenshotLabel", "ScreenshotLabel");
+            RenameKey("BoolApplyScreenshotLabel", "ApplyScreenshotLabel");
+            RenameKey("StringDefaultEditor", "DefaultEditor");
+            RenameKey("BoolFirstRun", "FirstRun");
+            RenameKey("IntStartScreenCaptureCount", "StartScreenCaptureCount");
+            RenameKey("BoolActiveWindowTitleCaptureCheck", "ActiveWindowTitleCaptureCheck");
+            RenameKey("StringActiveWindowTitleCaptureText", "ActiveWindowTitleCaptureText");
+            RenameKey("StringAutoSaveFolder", "AutoSaveFolder");
+            RenameKey("StringAutoSaveMacro", "AutoSaveMacro");
+            RenameKey("BoolUseKeyboardShortcuts", "UseKeyboardShortcuts");
+
+            // Keyboard Shortcuts
+            RenameKey("StringKeyboardShortcutStartScreenCaptureModifier1", "KeyboardShortcutStartScreenCaptureModifier1");
+            RenameKey("StringKeyboardShortcutStartScreenCaptureModifier2", "KeyboardShortcutStartScreenCaptureModifier2");
+            RenameKey("StringKeyboardShortcutStartScreenCaptureKey", "KeyboardShortcutStartScreenCaptureKey");
+            RenameKey("StringKeyboardShortcutStopScreenCaptureModifier1", "KeyboardShortcutStopScreenCaptureModifier1");
+            RenameKey("StringKeyboardShortcutStopScreenCaptureModifier2", "KeyboardShortcutStopScreenCaptureModifier2");
+            RenameKey("StringKeyboardShortcutStopScreenCaptureKey", "KeyboardShortcutStopScreenCaptureKey");
+            RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier1", "KeyboardShortcutCaptureNowArchiveModifier1");
+            RenameKey("StringKeyboardShortcutCaptureNowArchiveModifier2", "KeyboardShortcutCaptureNowArchiveModifier2");
+            RenameKey("StringKeyboardShortcutCaptureNowArchiveKey", "KeyboardShortcutCaptureNowArchiveKey");
+            RenameKey("StringKeyboardShortcutCaptureNowEditModifier1", "KeyboardShortcutCaptureNowEditModifier1");
+            RenameKey("StringKeyboardShortcutCaptureNowEditModifier2", "KeyboardShortcutCaptureNowEditModifier2");
+            RenameKey("StringKeyboardShortcutCaptureNowEditKey", "KeyboardShortcutCaptureNowEditKey");
+            RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier1", "KeyboardShortcutRegionSelectClipboardModifier1");
+            RenameKey("StringKeyboardShortcutRegionSelectClipboardModifier2", "KeyboardShortcutRegionSelectClipboardModifier2");
+            RenameKey("StringKeyboardShortcutRegionSelectClipboardKey", "KeyboardShortcutRegionSelectClipboardKey");
+            RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier1", "KeyboardShortcutRegionSelectAutoSaveModifier1");
+            RenameKey("StringKeyboardShortcutRegionSelectAutoSaveModifier2", "KeyboardShortcutRegionSelectAutoSaveModifier2");
+            RenameKey("StringKeyboardShortcutRegionSelectAutoSaveKey", "KeyboardShortcutRegionSelectAutoSaveKey");
+            RenameKey("StringKeyboardShortcutRegionSelectEditModifier1", "KeyboardShortcutRegionSelectEditModifier1");
+            RenameKey("StringKeyboardShortcutRegionSelectEditModifier2", "KeyboardShortcutRegionSelectEditModifier2");
+            RenameKey("StringKeyboardShortcutRegionSelectEditKey", "KeyboardShortcutRegionSelectEditKey");
+
+            // Remove the old settings.
+            RemoveByKey("BoolLockScreenCaptureSession");
+            RemoveByKey("BoolCaptureStopAt");
+            RemoveByKey("BoolCaptureStartAt");
+            RemoveByKey("BoolCaptureOnSunday");
+            RemoveByKey("BoolCaptureOnMonday");
+            RemoveByKey("BoolCaptureOnTuesday");
+            RemoveByKey("BoolCaptureOnWednesday");
+            RemoveByKey("BoolCaptureOnThursday");
+            RemoveByKey("BoolCaptureOnFriday");
+            RemoveByKey("BoolCaptureOnSaturday");
+            RemoveByKey("BoolCaptureOnTheseDays");
+            RemoveByKey("DateTimeCaptureStopAt");
+            RemoveByKey("DateTimeCaptureStartAt");
+            RemoveByKey("FilepathLimitLength");
+            RemoveByKey("CaptureStopAtCheck");
+            RemoveByKey("CaptureStartAtCheck");
+            RemoveByKey("CaptureOnSundayCheck");
+            RemoveByKey("CaptureOnMondayCheck");
+            RemoveByKey("CaptureOnTuesdayCheck");
+            RemoveByKey("CaptureOnWednesdayCheck");
+            RemoveByKey("CaptureOnThursdayCheck");
+            RemoveByKey("CaptureOnFridayCheck");
+            RemoveByKey("CaptureOnSaturdayCheck");
+            RemoveByKey("CaptureOnTheseDaysCheck");
+            RemoveByKey("CaptureStopAtValue");
+            RemoveByKey("CaptureStartAtValue");
+            RemoveByKey("LockScreenCaptureSession");
+            RemoveByKey("ScreenshotsDirectory");
+            RemoveByKey("ScheduleImageFormat");
+            RemoveByKey("SlideSkip");
+            RemoveByKey("ImageResolutionRatio");
+            RemoveByKey("ImageFormatFilter");
+            RemoveByKey("ImageFormatFilterIndex");
+            RemoveByKey("SlideshowDelay");
+            RemoveByKey("SlideSkipCheck");
+            RemoveByKey("Screen1X");
+            RemoveByKey("Screen1Y");
+            RemoveByKey("Screen1Width");
+            RemoveByKey("Screen1Height");
+            RemoveByKey("Screen2X");
+            RemoveByKey("Screen2Y");
+            RemoveByKey("Screen2Width");
+            RemoveByKey("Screen2Height");
+            RemoveByKey("Screen3X");
+            RemoveByKey("Screen3Y");
+            RemoveByKey("Screen3Width");
+            RemoveByKey("Screen3Height");
+            RemoveByKey("Screen4X");
+            RemoveByKey("Screen4Y");
+            RemoveByKey("Screen4Width");
+            RemoveByKey("Screen4Height");
+            RemoveByKey("Screen1Name");
+            RemoveByKey("Screen2Name");
+            RemoveByKey("Screen3Name");
+            RemoveByKey("Screen4Name");
+            RemoveByKey("Screen5Name");
+            RemoveByKey("Macro");
+            RemoveByKey("JpegQualityLevel");
+            RemoveByKey("CaptureScreen1");
+            RemoveByKey("CaptureScreen2");
+            RemoveByKey("CaptureScreen3");
+            RemoveByKey("CaptureScreen4");
+            RemoveByKey("CaptureActiveWindow");
+            RemoveByKey("AutoReset");
+            RemoveByKey("Mouse");
+            RemoveByKey("StartButtonImageFormat");
+            RemoveByKey("Schedule");
+            RemoveByKey("DeleteScreenshotsOlderThanDays");
+            RemoveByKey("ScreenshotDelay");
+
+            // Now that we've upgraded all the settings we should save them to disk.
+            Save(config.Settings, fileSystem);
         }
     }
 }

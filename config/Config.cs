@@ -257,14 +257,10 @@ namespace AutoScreenCapture
                 }
             }
 
-            log.WriteMessage("Loading user settings");
             Settings.User.Load(Settings, _fileSystem);
-            log.WriteDebugMessage("User settings loaded");
 
-            log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
             Settings.Application.Upgrade(screenCapture, this, _fileSystem, log);
 
-            log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
             Settings.User.Upgrade(screenCapture, this, _fileSystem, log);
 
             if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))

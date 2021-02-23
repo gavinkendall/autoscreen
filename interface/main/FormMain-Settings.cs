@@ -37,32 +37,31 @@ namespace AutoScreenCapture
 
                 _log.WriteMessage("*** Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\") ***");
                 _log.WriteMessage("Starting application");
-                _log.WriteDebugMessage("At this point the application should be able to run normally");
-                _log.WriteDebugMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
-                _log.WriteDebugMessage("Your autoscreen.conf file is \"" + _fileSystem.ConfigFile + "\"");
-                _log.WriteDebugMessage("The name and location of it can be changed with the -config command line argument:");
-                _log.WriteDebugMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
-                _log.WriteDebugMessage("Checking what we loaded from your autoscreen.conf file ...");
-                _log.WriteDebugMessage("ApplicationSettingsFile=" + _fileSystem.ApplicationSettingsFile);
-                _log.WriteDebugMessage("UserSettingsFile=" + _fileSystem.UserSettingsFile);
-                _log.WriteDebugMessage("DebugFolder=" + _fileSystem.DebugFolder);
-                _log.WriteDebugMessage("LogsFolder=" + _fileSystem.LogsFolder);
-                _log.WriteDebugMessage("CommandFile=" + _fileSystem.CommandFile);
-                _log.WriteDebugMessage("ScreenshotsFolder=" + _fileSystem.ScreenshotsFolder);
-                _log.WriteDebugMessage("ScreenshotsFile=" + _fileSystem.ScreenshotsFile);
-                _log.WriteDebugMessage("TriggersFile=" + _fileSystem.TriggersFile);
-                _log.WriteDebugMessage("ScreensFile=" + _fileSystem.ScreensFile);
-                _log.WriteDebugMessage("RegionsFile=" + _fileSystem.RegionsFile);
-                _log.WriteDebugMessage("EditorsFile=" + _fileSystem.EditorsFile);
-                _log.WriteDebugMessage("TagsFile = " + _fileSystem.TagsFile);
+                _log.WriteMessage("At this point the application should be able to run normally");
+                _log.WriteMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
+                _log.WriteMessage("Your autoscreen.conf file is \"" + _fileSystem.ConfigFile + "\"");
+                _log.WriteMessage("The name and location of it can be changed with the -config command line argument:");
+                _log.WriteMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
+                _log.WriteMessage("Checking what we loaded from your autoscreen.conf file ...");
+                _log.WriteMessage("ApplicationSettingsFile=" + _fileSystem.ApplicationSettingsFile);
+                _log.WriteMessage("UserSettingsFile=" + _fileSystem.UserSettingsFile);
+                _log.WriteMessage("DebugFolder=" + _fileSystem.DebugFolder);
+                _log.WriteMessage("LogsFolder=" + _fileSystem.LogsFolder);
+                _log.WriteMessage("CommandFile=" + _fileSystem.CommandFile);
+                _log.WriteMessage("ScreenshotsFolder=" + _fileSystem.ScreenshotsFolder);
+                _log.WriteMessage("ScreenshotsFile=" + _fileSystem.ScreenshotsFile);
+                _log.WriteMessage("TriggersFile=" + _fileSystem.TriggersFile);
+                _log.WriteMessage("ScreensFile=" + _fileSystem.ScreensFile);
+                _log.WriteMessage("RegionsFile=" + _fileSystem.RegionsFile);
+                _log.WriteMessage("EditorsFile=" + _fileSystem.EditorsFile);
+                _log.WriteMessage("TagsFile = " + _fileSystem.TagsFile);
 
-                _log.WriteDebugMessage("It looks like I successfully parsed your \"" + _fileSystem.ConfigFile + "\" file.");
-                _log.WriteDebugMessage("I'm now going to attempt to load your personal settings and any screenshots you have taken.");
+                _log.WriteMessage("It looks like I successfully parsed your \"" + _fileSystem.ConfigFile + "\" file.");
 
-                _log.WriteMessage("Initializing screen capture");
+                _log.WriteDebugMessage("Initializing screen capture");
                 _screenCapture = new ScreenCapture(_config, _macroParser, _fileSystem, _log);
 
-                _log.WriteMessage("Initializing forms");
+                _log.WriteDebugMessage("Initializing forms");
                 _formTag = new FormTag(_macroParser);
                 _formRegion = new FormRegion(_screenCapture, _macroParser, _fileSystem, _log);
                 _formScreen = new FormScreen(_screenCapture, _macroParser, _fileSystem, _log);
@@ -72,10 +71,10 @@ namespace AutoScreenCapture
                 _formEnterPassphrase = new FormEnterPassphrase(_screenCapture, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
 
-                _log.WriteMessage("Initializing image format collection");
+                _log.WriteDebugMessage("Initializing image format collection");
                 _imageFormatCollection = new ImageFormatCollection();
 
-                _log.WriteMessage("Initializing editor collection");
+                _log.WriteDebugMessage("Initializing editor collection");
                 
                 if (!_formEditor.EditorCollection.LoadXmlFileAndAddEditors(_config, _fileSystem, _log))
                 {
@@ -84,7 +83,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Number of editors loaded = " + _formEditor.EditorCollection.Count);
 
-                _log.WriteMessage("Initializing trigger collection");
+                _log.WriteDebugMessage("Initializing trigger collection");
 
                 if (!_formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers(_config, _fileSystem, _log))
                 {
@@ -93,7 +92,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
 
-                _log.WriteMessage("Initializing region collection");
+                _log.WriteDebugMessage("Initializing region collection");
 
                 if (!_formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection, _config, _fileSystem, _log))
                 {
@@ -102,7 +101,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
 
-                _log.WriteMessage("Initializing screen collection");
+                _log.WriteDebugMessage("Initializing screen collection");
 
                 if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _screenCapture, _fileSystem, _log))
                 {
@@ -111,7 +110,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Number of screens loaded = " + _formScreen.ScreenCollection.Count);
 
-                _log.WriteMessage("Initializing tag collection");
+                _log.WriteDebugMessage("Initializing tag collection");
 
                 if (!_formTag.TagCollection.LoadXmlFileAndAddTags(_config, _macroParser, _fileSystem, _log))
                 {
@@ -120,7 +119,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Number of tags loaded = " + _formTag.TagCollection.Count);
 
-                _log.WriteMessage("Initializing schedule collection");
+                _log.WriteDebugMessage("Initializing schedule collection");
 
                 if (!_formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules(_config, _fileSystem, _log))
                 {
@@ -129,31 +128,31 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Number of schedules loaded = " + _formSchedule.ScheduleCollection.Count);
 
-                _log.WriteMessage("Building screens module");
+                _log.WriteDebugMessage("Building screens module");
                 BuildScreensModule();
 
-                _log.WriteMessage("Building editors module");
+                _log.WriteDebugMessage("Building editors module");
                 BuildEditorsModule();
 
-                _log.WriteMessage("Building triggers module");
+                _log.WriteDebugMessage("Building triggers module");
                 BuildTriggersModule();
 
-                _log.WriteMessage("Building regions module");
+                _log.WriteDebugMessage("Building regions module");
                 BuildRegionsModule();
 
-                _log.WriteMessage("Building tags module");
+                _log.WriteDebugMessage("Building tags module");
                 BuildTagsModule();
 
-                _log.WriteMessage("Building schedules module");
+                _log.WriteDebugMessage("Building schedules module");
                 BuildSchedulesModule();
 
-                _log.WriteMessage("Building screenshot preview context menu");
+                _log.WriteDebugMessage("Building screenshot preview context menu");
                 BuildScreenshotPreviewContextualMenu();
 
-                _log.WriteMessage("Building view tab pages");
+                _log.WriteDebugMessage("Building view tab pages");
                 BuildViewTabPages();
 
-                _log.WriteMessage("Initializing screenshot collection");
+                _log.WriteDebugMessage("Initializing screenshot collection");
                 _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, _formScreen.ScreenCollection, _screenCapture, _config, _fileSystem, _log);
 
                 _screenshotCollection.LoadXmlFile(_config);
@@ -246,7 +245,6 @@ namespace AutoScreenCapture
                         break;
                 }
 
-
                 // Application Focus
                 RefreshApplicationFocusList();
 
@@ -310,7 +308,7 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
                 _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value = textBoxAutoSaveMacro.Text.Trim();
 
-                if (!_config.Settings.User.Save(_config.Settings, _fileSystem, _log))
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                 {
                     _screenCapture.ApplicationError = true;
                 }

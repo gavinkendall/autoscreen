@@ -107,9 +107,6 @@ namespace AutoScreenCapture
         {
             DefaultSettings = new DefaultSettings();
 
-            MacroParser macroParser = new MacroParser(this);
-            Log log = new Log(this, fileSystem, macroParser);
-
             ApplicationName = DefaultSettings.ApplicationName;
             ApplicationVersion = DefaultSettings.ApplicationVersion;
 
@@ -424,9 +421,6 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
             }
-
-            log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
-            log.LoggingEnabled = Convert.ToBoolean(Application.GetByKey("Logging", DefaultSettings.Logging).Value);
         }
     }
 }
