@@ -189,12 +189,12 @@ namespace AutoScreenCapture
 
             if (e.Key == GetKeyFromUserSetting(_keyboardShortcutRegionSelectAutoSaveKeyUserSetting))
             {
-                toolStripMenuItemRegionSelectAutoSave_Click(sender, e);
+                toolStripMenuItemRegionSelectClipboardAutoSave_Click(sender, e);
             }
 
             if (e.Key == GetKeyFromUserSetting(_keyboardShortcutRegionSelectEditKeyUserSetting))
             {
-                toolStripMenuItemRegionSelectEdit_Click(sender, e);
+                toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click(sender, e);
             }
         }
     }

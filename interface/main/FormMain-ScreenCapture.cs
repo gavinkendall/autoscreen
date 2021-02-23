@@ -51,9 +51,6 @@ namespace AutoScreenCapture
                 toolStripMenuItemStartScreenCapture.Enabled = true;
 
                 groupBoxCaptureDelay.Enabled = true;
-                numericUpDownHoursInterval.Enabled = true;
-                checkBoxInitialScreenshot.Enabled = true;
-                numericUpDownMinutesInterval.Enabled = true;
 
                 labelLimit.Enabled = true;
                 checkBoxCaptureLimit.Enabled = true;
@@ -62,24 +59,12 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
 
-                labelKeepScreenshots.Enabled = true;
-                labelDays.Enabled = true;
-                numericUpDownKeepScreenshotsForDays.Enabled = true;
-
                 checkBoxScreenshotLabel.Enabled = true;
                 comboBoxScreenshotLabel.Enabled = true;
 
                 groupBoxActiveWindowTitle.Enabled = true;
-                checkBoxActiveWindowTitle.Enabled = true;
 
                 groupBoxApplicationFocus.Enabled = true;
-                comboBoxProcessList.Enabled = true;
-                labelApplicationFocusDelayBefore.Enabled = true;
-                labelApplicationFocusDelayAfter.Enabled = true;
-                numericUpDownApplicationFocusDelayBefore.Enabled = true;
-                numericUpDownApplicationFocusDelayAfter.Enabled = true;
-                buttonApplicationFocusTest.Enabled = true;
-                buttonApplicationFocusRefresh.Enabled = true;
             }
             else
             {
@@ -96,9 +81,6 @@ namespace AutoScreenCapture
             toolStripMenuItemStopScreenCapture.Enabled = true;
 
             groupBoxCaptureDelay.Enabled = false;
-            numericUpDownHoursInterval.Enabled = false;
-            checkBoxInitialScreenshot.Enabled = false;
-            numericUpDownMinutesInterval.Enabled = false;
 
             labelLimit.Enabled = false;
             checkBoxCaptureLimit.Enabled = false;
@@ -107,24 +89,12 @@ namespace AutoScreenCapture
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
 
-            labelKeepScreenshots.Enabled = false;
-            labelDays.Enabled = false;
-            numericUpDownKeepScreenshotsForDays.Enabled = false;
-
             checkBoxScreenshotLabel.Enabled = false;
             comboBoxScreenshotLabel.Enabled = false;
 
             groupBoxActiveWindowTitle.Enabled = false;
-            checkBoxActiveWindowTitle.Enabled = false;
 
             groupBoxApplicationFocus.Enabled = false;
-            comboBoxProcessList.Enabled = false;
-            labelApplicationFocusDelayBefore.Enabled = false;
-            labelApplicationFocusDelayAfter.Enabled = false;
-            numericUpDownApplicationFocusDelayBefore.Enabled = false;
-            numericUpDownApplicationFocusDelayAfter.Enabled = false;
-            buttonApplicationFocusTest.Enabled = false;
-            buttonApplicationFocusRefresh.Enabled = false;
         }
 
         /// <summary>
@@ -178,10 +148,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot(bool captureNow)
         {
-            _formScreen.RefreshScreenDictionary();
-
             // Test to see if we can get images of the screen before continuing.
-            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, false, out _))
+            if (_screenCapture.GetScreenImages(0, 0, 0, 0, 0, 0, false, out _))
             {
                 _macroParser.screenCapture = _screenCapture;
 
@@ -242,8 +210,8 @@ namespace AutoScreenCapture
                     startScreenCaptureCount++;
                     _config.Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
-                    // Turn off "FirstRun" after the first run of a screen capture session so we longer show balloon tips.
-                    if (startScreenCaptureCount > 1)
+                    // Turn off "FirstRun" on the first run.
+                    if (startScreenCaptureCount == 1)
                     {
                         _config.Settings.User.SetValueByKey("FirstRun", false);
                     }
@@ -295,11 +263,6 @@ namespace AutoScreenCapture
                     // Start taking screenshots.
 
                     timerScreenCapture.Interval = screenCaptureInterval;
-
-                    if (notifyIcon.Visible && !_screenCapture.ApplicationError && !checkBoxInitialScreenshot.Checked && screenCaptureInterval > BALLOON_TIP_TIMEOUT)
-                    {
-                        SystemTrayBalloonMessage("The system tray icon turns green when taking screenshots. To stop, right-click on the icon and select Stop Screen Capture");
-                    }
 
                     timerScreenCapture.Enabled = true;
                     timerScreenCapture.Start();
@@ -386,7 +349,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool SaveScreenshot(Bitmap bitmap, Screen screen, ScreenshotType screenshotType)
+        private bool SaveScreenshot(Bitmap bitmap, Screen screen)
         {
             if (bitmap == null)
             {
@@ -399,8 +362,6 @@ namespace AutoScreenCapture
                 Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, screen.Folder, _formTag.TagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection, _log),
                 Bitmap = bitmap,
                 Format = screen.Format,
-                Component = screen.Component,
-                ScreenshotType = screenshotType,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
                 Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
             };
@@ -419,7 +380,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool SaveScreenshot(Bitmap bitmap, Region region, ScreenshotType screenshotType)
+        private bool SaveScreenshot(Bitmap bitmap, Region region)
         {
             if (bitmap == null)
             {
@@ -432,8 +393,6 @@ namespace AutoScreenCapture
                 Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, region.Folder, _formTag.TagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formTag.TagCollection, _log),
                 Bitmap = bitmap,
                 Format = region.Format,
-                Component = -1,
-                ScreenshotType = screenshotType,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
                 Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
             };
@@ -507,46 +466,46 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows a mouse-driven region selection canvas so you can select a region and then save the captured image to the clipboard.
+        /// Shows a mouse-driven region selection canvas so you can select a region and then have the captured image sent to the clipboard.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboard_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 1); // 1 is for saving the captured image to the clipboard
+            _formRegionSelectWithMouse.LoadCanvas();
         }
 
         /// <summary>
-        /// Shows a mouse-driven region selection canvas so you can select a region and then auto-save the captured image.
+        /// Shows a mouse-driven region selection canvas so you can select a region, have the captured image be sent to the clipboard, and then auto-saved.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemRegionSelectAutoSave_Click(object sender, EventArgs e)
+        private void toolStripMenuItemRegionSelectClipboardAutoSave_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas();
         }
 
         /// <summary>
-        /// Shows a mouse-driven region selection canvas so you can select a region and then edit the captured image with the default image editor.
+        /// Shows a mouse-driven region selection canvas so you can select a region, have the captured image be sent to the clipboard, auto-saved, and then opened with the default image editor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemRegionSelectEdit_Click(object sender, EventArgs e)
+        private void toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas();
         }
 
         /// <summary>
-        /// The event method used by "Region Select / Auto Save".
+        /// The event method used by "Region Select -> Clipboard / Auto Save".
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted(object sender, EventArgs e)
+        private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted(object sender, EventArgs e)
         {
             int x = _formRegionSelectWithMouse.outputX + 1;
             int y = _formRegionSelectWithMouse.outputY + 1;
@@ -558,7 +517,7 @@ namespace AutoScreenCapture
 
             ImageFormat imageFormat = new ImageFormat("JPEG", ".jpeg");
 
-            if (_screenCapture.GetScreenImages(-1, x, y, width, height, mouse: false, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(-1, -1, x, y, width, height, mouse: false, out Bitmap bitmap))
             {
                 DateTime dtNow = DateTime.Now;
 
@@ -575,16 +534,16 @@ namespace AutoScreenCapture
                     Macro = autoSaveMacro
                 };
 
-                SaveScreenshot(bitmap, region, ScreenshotType.Region);
+                SaveScreenshot(bitmap, region);
             }
         }
 
         /// <summary>
-        /// The event method for "Region Select / Edit".
+        /// The event method for "Region Select -> Clipboard / Auto Save / Edit".
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _formRegionSelectWithMouse_RegionSelectEditMouseSelectionCompleted(object sender, EventArgs e)
+        private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted(object sender, EventArgs e)
         {
             // Get the name of the default image editor.
             string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
@@ -595,7 +554,7 @@ namespace AutoScreenCapture
             }
 
             // Save the screenshot as an image file using the Auto Save event method.
-            _formRegionSelectWithMouse_RegionSelectAutoSaveMouseSelectionCompleted(sender, e);
+            _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted(sender, e);
 
             // Run the default image editor.
             Editor editor = _formEditor.EditorCollection.GetByName(defaultEditor);

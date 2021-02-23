@@ -104,7 +104,7 @@ namespace AutoScreenCapture
 
                 _log.WriteMessage("Initializing screen collection");
 
-                if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _fileSystem, _log))
+                if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _screenCapture, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }

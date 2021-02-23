@@ -477,7 +477,7 @@ namespace AutoScreenCapture
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas(outputMode: 0); // 0 is for acquiring the dimensions and resolution
+            _formRegionSelectWithMouse.LoadCanvas();
 
             Cursor = Cursors.Arrow;
         }

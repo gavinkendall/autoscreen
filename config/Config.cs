@@ -288,7 +288,7 @@ namespace AutoScreenCapture
             {
                 // Loading the screen collection will automatically create the available screens and add them to the collection.
                 ScreenCollection screenCollection = new ScreenCollection();
-                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, _macroParser, _fileSystem, log);
+                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, _macroParser, screenCapture, _fileSystem, log);
             }
 
             if (string.IsNullOrEmpty(_fileSystem.TriggersFile))

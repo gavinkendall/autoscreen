@@ -19,9 +19,9 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
@@ -35,12 +35,18 @@ namespace AutoScreenCapture
         private ScreenCapture _screenCapture;
         private FileSystem _fileSystem;
 
+        private ToolTip _toolTip = new ToolTip();
         private FormMacroTagsToolWindow _formMacroTags;
 
         /// <summary>
         /// A collection of screens.
         /// </summary>
-        public ScreenCollection ScreenCollection { get; } = new ScreenCollection();
+        public ScreenCollection ScreenCollection { get; }
+
+        /// <summary>
+        /// A collection of regions to be used for selecting a source.
+        /// </summary>
+        public RegionCollection RegionCollection { get; set; }
 
         /// <summary>
         /// The current screen object this form handles when creating a new screen or changing a screen.
@@ -74,19 +80,24 @@ namespace AutoScreenCapture
             _screenCapture = screenCapture;
             _fileSystem = fileSystem;
 
+            ScreenCollection = new ScreenCollection();
+            RegionCollection = new RegionCollection();
             ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceOptions>();
-
-            RefreshScreenDictionary();
         }
 
         private void FormScreen_Load(object sender, EventArgs e)
         {
             textBoxScreenName.Focus();
 
-            HelpMessage("This is where to configure a screen capture. Select an available screen from the Component drop-down menu and keep an eye on Preview");
+            HelpMessage("This is where to configure a screen capture. Select a source and a component then change the display properties and image attributes");
+
+            _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
+            _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
+            _toolTip.SetToolTip(checkBoxActive, "You can capture this screen if Active is checked (turned on)");
+            _toolTip.SetToolTip(buttonScreenBrowseFolder, "Browse for a folder where screenshots of this screen capture will be saved to");
+            _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
 
             comboBoxFormat.Items.Clear();
-            comboBoxScreenComponent.Items.Clear();
 
             pictureBoxPreview.Image = null;
 
@@ -95,12 +106,15 @@ namespace AutoScreenCapture
                 comboBoxFormat.Items.Add(imageFormat.Name);
             }
 
-            comboBoxScreenComponent.Items.Add("Active Window");
+            comboBoxScreenSource.Items.Clear();
+            comboBoxScreenSource.Items.Add("Auto Screen Capture");
+            comboBoxScreenSource.Items.Add("Graphics Card");
+            comboBoxScreenSource.Items.Add("Operating System");
 
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
                 ScreenCapture.DeviceOptions deviceOptions = ScreenDictionary[i];
-                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceOptions.width + " x " + deviceOptions.height+ ")");
+                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceOptions.width + " x " + deviceOptions.height + ")");
             }
 
             if (ScreenObject != null)
@@ -110,34 +124,32 @@ namespace AutoScreenCapture
                 textBoxScreenName.Text = ScreenObject.Name;
                 textBoxFolder.Text = _fileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
                 textBoxMacro.Text = ScreenObject.Macro;
-
-                if (ScreenObject.Component < comboBoxScreenComponent.Items.Count)
-                {
-                    comboBoxScreenComponent.SelectedIndex = ScreenObject.Component;
-                }
-                else
-                {
-                    comboBoxScreenComponent.SelectedIndex = 0;
-                    MessageBox.Show("The configured screen component has an invalid index since it is not available on this system. The component has therefore been set to Active Window.", "Invalid Screen Index", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-
+                comboBoxScreenSource.SelectedIndex = ScreenObject.Source;
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
                 checkBoxActive.Checked = ScreenObject.Active;
+                numericUpDownX.Value = ScreenObject.X;
+                numericUpDownY.Value = ScreenObject.Y;
+                numericUpDownWidth.Value = ScreenObject.Width;
+                numericUpDownHeight.Value = ScreenObject.Height;
             }
             else
             {
-                Text = "Add New Screen";
+                Text = "Add Screen";
 
                 textBoxScreenName.Text = "Screen " + (ScreenCollection.Count + 1);
                 textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = _macroParser.DefaultMacro;
-                comboBoxScreenComponent.SelectedIndex = 0;
+                comboBoxScreenSource.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
                 checkBoxActive.Checked = true;
+                numericUpDownX.Value = 0;
+                numericUpDownY.Value = 0;
+                numericUpDownWidth.Value = 0;
+                numericUpDownHeight.Value = 0;
             }
 
             UpdatePreviewMacro();
@@ -162,27 +174,11 @@ namespace AutoScreenCapture
             }
             else
             {
-                AddNewScreen();
+                AddScreen();
             }
         }
 
-        /// <summary>
-        /// Updates the screen dictionary with the available screens.
-        /// </summary>
-        public void RefreshScreenDictionary()
-        {
-            ScreenDictionary.Clear();
-
-            int component = 1;
-
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
-            {
-                ScreenDictionary.Add(component, _screenCapture.GetDevice(screen));
-                component++;
-            }
-        }
-
-        private void AddNewScreen()
+        private void AddScreen()
         {
             if (InputValid())
             {
@@ -200,7 +196,12 @@ namespace AutoScreenCapture
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
                         Mouse = checkBoxMouse.Checked,
-                        Active = checkBoxActive.Checked
+                        Active = checkBoxActive.Checked,
+                        X = (int)numericUpDownX.Value,
+                        Y = (int)numericUpDownY.Value,
+                        Width = (int)numericUpDownWidth.Value,
+                        Height = (int)numericUpDownHeight.Value,
+                        Source = comboBoxScreenSource.SelectedIndex
                     });
 
                     Okay();
@@ -238,9 +239,14 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
-                        ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
+                        ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
                         ScreenCollection.Get(ScreenObject).Active = checkBoxActive.Checked;
+                        ScreenCollection.Get(ScreenObject).X = (int)numericUpDownX.Value;
+                        ScreenCollection.Get(ScreenObject).Y = (int)numericUpDownY.Value;
+                        ScreenCollection.Get(ScreenObject).Width = (int)numericUpDownWidth.Value;
+                        ScreenCollection.Get(ScreenObject).Height = (int)numericUpDownHeight.Value;
+                        ScreenCollection.Get(ScreenObject).Source = comboBoxScreenSource.SelectedIndex;
 
                         Okay();
                     }
@@ -284,7 +290,12 @@ namespace AutoScreenCapture
                  !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
-                 !ScreenObject.Active.Equals(checkBoxActive.Checked)))
+                 !ScreenObject.Active.Equals(checkBoxActive.Checked) ||
+                 ScreenObject.X != (int)numericUpDownX.Value ||
+                 ScreenObject.Y != (int)numericUpDownY.Value ||
+                 ScreenObject.Width != (int)numericUpDownWidth.Value ||
+                 ScreenObject.Height != (int)numericUpDownHeight.Value) ||
+                 ScreenObject.Source != comboBoxScreenSource.SelectedIndex)
             {
                 return true;
             }
@@ -324,25 +335,48 @@ namespace AutoScreenCapture
         {
             try
             {
+                // The Source is "Auto Screen Capture" and the Component is "Active Window".
+                if (comboBoxScreenSource.SelectedIndex == 0 && comboBoxScreenComponent.SelectedIndex == 0)
+                {
+                    labelX.Enabled = false;
+                    labelY.Enabled = false;
+                    labelWidth.Enabled = false;
+                    labelHeight.Enabled = false;
+
+                    numericUpDownX.Enabled = false;
+                    numericUpDownY.Enabled = false;
+                    numericUpDownWidth.Enabled = false;
+                    numericUpDownHeight.Enabled = false;
+                }
+                else
+                {
+                    labelX.Enabled = true;
+                    labelY.Enabled = true;
+                    labelWidth.Enabled = true;
+                    labelHeight.Enabled = true;
+
+                    numericUpDownX.Enabled = true;
+                    numericUpDownY.Enabled = true;
+                    numericUpDownWidth.Enabled = true;
+                    numericUpDownHeight.Enabled = true;
+                }
+
                 if (checkBoxActive.Checked)
                 {
-                    if (comboBoxScreenComponent.SelectedIndex == 0)
+                    // The Source is "Auto Screen Capture" and the Component is "Active Window".
+                    if (comboBoxScreenSource.SelectedIndex == 0 && comboBoxScreenComponent.SelectedIndex == 0)
                     {
                         pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
                     }
                     else
                     {
-                        System.Windows.Forms.Screen screen = GetScreenByIndex(comboBoxScreenComponent.SelectedIndex);
-
-                        pictureBoxPreview.Image = screen != null
-                            ? screenCapture.GetScreenBitmap(
-                                screen.Bounds.X,
-                                screen.Bounds.Y,
-                                screen.Bounds.Width,
-                                screen.Bounds.Height,
+                        pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
+                                (int)numericUpDownX.Value,
+                                (int)numericUpDownY.Value,
+                                (int)numericUpDownWidth.Value,
+                                (int)numericUpDownHeight.Value,
                                 checkBoxMouse.Checked
-                            )
-                            : null;
+                            );
                     }
 
                     UpdatePreviewMacro();
@@ -372,20 +406,6 @@ namespace AutoScreenCapture
                 ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection, _log);
         }
 
-        private System.Windows.Forms.Screen GetScreenByIndex(int index)
-        {
-            try
-            {
-                ScreenCapture.DeviceOptions deviceResolution = ScreenDictionary[index];
-
-                return deviceResolution.screen;
-            }
-            catch (KeyNotFoundException)
-            {
-                return null;
-            }
-        }
-
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxFormat.Text.Equals("JPEG"))
@@ -398,6 +418,25 @@ namespace AutoScreenCapture
             }
 
             updatePreviewMacro(sender, e);
+        }
+
+        private void updatePositionAndSize(object sender, EventArgs e)
+        {
+            string component = comboBoxScreenComponent.Text;
+
+            Regex rgxPosition = new Regex(@"X:(?<X>\d+) Y:(?<Y>\d+)");
+            Regex rgxSize = new Regex(@"\((?<Width>\d+)x(?<Height>\d+)\)");
+
+            if (rgxPosition.IsMatch(component) && rgxSize.IsMatch(component))
+            {
+                numericUpDownX.Value = Convert.ToInt32(rgxPosition.Match(component).Groups["X"].Value);
+                numericUpDownY.Value = Convert.ToInt32(rgxPosition.Match(component).Groups["Y"].Value);
+
+                numericUpDownWidth.Value = Convert.ToInt32(rgxSize.Match(component).Groups["Width"].Value);
+                numericUpDownHeight.Value = Convert.ToInt32(rgxSize.Match(component).Groups["Height"].Value);
+            }
+
+            updatePreviewImage(sender, e);
         }
 
         private void updatePreviewImage(object sender, EventArgs e)
@@ -423,66 +462,81 @@ namespace AutoScreenCapture
             }
         }
 
-        private void checkBoxMouse_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
-        }
-
-        private void comboBoxFormat_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
-        }
-
-        private void checkBoxActive_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("You can capture this screen if Active is checked (turned on)");
-        }
-
-        private void textBoxFolder_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The folder where to store the files of the screenshots being taken");
-        }
-
-        private void buttonScreenBrowseFolder_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Browse for a folder where screenshots of this screen capture will be saved to");
-        }
-
-        private void textBoxMacro_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Macro tags are used for acquiring information associated with a particular tag (such as %date% and %time% for the current date and time)");
-        }
-
-        private void buttonMacroTags_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
-        }
-
-        private void pictureBoxPreview_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("A preview of what will be captured during a running screen capture session. Click to update the preview image");
-        }
-
-        private void textBoxMacroPreview_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("A preview of how your files will be named. Use macro tags (such as %date% and %time%) in the Macro field to customize the filename pattern");
-        }
-
-        private void checkBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("If checked then the text you define will be compared with the active window title");
-        }
-
-        private void textBoxActiveWindowTitle_MouseHover(object sender, EventArgs e)
-        {
-            HelpMessage("The text to compare with the active window title. If it contains the defined text then this screen will be captured. An empty field will be ignored");
-        }
-
         private void FormScreen_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (_formMacroTags != null)
             {
                 _formMacroTags.Close();
+            }
+        }
+
+        private void comboBoxScreenSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxScreenComponent.Items.Clear();
+
+            // Auto Screen Capture
+            if (comboBoxScreenSource.SelectedIndex == 0)
+            {
+                comboBoxScreenComponent.Items.Add("Active Window");
+
+                // Add screens from screens.xml file.
+                foreach (Screen screen in ScreenCollection)
+                {
+                    // We don't want a Screen object that's null.
+                    if (screen == null)
+                    {
+                        continue;
+                    }
+
+                    // We don't care if it's a Screen using Active Window as its Component because that's already available in the list.
+                    if (screen.Component == 0 && screen.Source == 0)
+                    {
+                        continue;
+                    }
+
+                    comboBoxScreenComponent.Items.Add("\"" + screen.Name + "\" X:" + screen.X + " Y:" + screen.Y + " (" + screen.Width + "x" + screen.Height + ")");
+                }
+
+                // Add regions from regions.xml file.
+                foreach (Region region in RegionCollection)
+                {
+                    // We don't want a Region object that's null.
+                    if (region == null)
+                    {
+                        continue;
+                    }
+
+                    comboBoxScreenComponent.Items.Add("\"" + region.Name + "\" X:" + region.X + " Y:" + region.Y + " (" + region.Width + "x" + region.Height + ")");
+                }
+            }
+
+            // Graphics Card
+            if (comboBoxScreenSource.SelectedIndex == 1)
+            {
+                foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
+                {
+                    ScreenCapture.DeviceOptions deviceOptions = _screenCapture.GetDevice(screenFromWindows);
+
+                    comboBoxScreenComponent.Items.Add("\"" + deviceOptions.screen.DeviceName + "\" X:" + deviceOptions.screen.Bounds.X + " Y:" + deviceOptions.screen.Bounds.Y + " (" + deviceOptions.width + "x" + deviceOptions.height + ")");
+                }
+            }
+
+            // Operating System
+            if (comboBoxScreenSource.SelectedIndex == 2)
+            {
+                foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
+                {
+                    comboBoxScreenComponent.Items.Add("\"" + screenFromWindows.DeviceName + "\" X:" + screenFromWindows.Bounds.X + " Y:" + screenFromWindows.Bounds.Y + " (" + screenFromWindows.Bounds.Width + "x" + screenFromWindows.Bounds.Height + ")");
+                }
+            }
+
+            if (ScreenObject != null && ScreenObject.Component < comboBoxScreenComponent.Items.Count)
+            {
+                comboBoxScreenComponent.SelectedIndex = ScreenObject.Component;
+            }
+            else
+            {
+                comboBoxScreenComponent.SelectedIndex = 0;
             }
         }
     }

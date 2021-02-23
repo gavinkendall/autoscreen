@@ -40,9 +40,24 @@ namespace AutoScreenCapture
         private int _selectHeight;
         private Pen _selectPen;
 
+        /// <summary>
+        /// X output
+        /// </summary>
         public int outputX;
+
+        /// <summary>
+        /// Y output
+        /// </summary>
         public int outputY;
+
+        /// <summary>
+        /// Width output
+        /// </summary>
         public int outputWidth;
+
+        /// <summary>
+        /// Height output
+        /// </summary>
         public int outputHeight;
 
         /// <summary>
@@ -59,11 +74,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// The type of output this form should return.
-        /// </summary>
-        private int _outputMode { get; set; }
-
-        /// <summary>
         /// An event handler for handling when the mouse selection has completed for the mouse-driven region capture.
         /// </summary>
         public event EventHandler MouseSelectionCompleted;
@@ -74,12 +84,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Laods the canvas with the chosen output mode.
+        /// Loads the canvas with the chosen output mode.
         /// </summary>
-        public void LoadCanvas(int outputMode)
+        public void LoadCanvas()
         {
-            _outputMode = outputMode;
-
             Top = 0;
             Left = 0;
 
@@ -159,35 +167,18 @@ namespace AutoScreenCapture
                 pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
             }
 
-            Bitmap bitmap = null;
+            Bitmap bitmap = SelectBitmap();
 
-            switch (_outputMode)
+            if (bitmap != null)
             {
-                case 0:
-                    bitmap = SelectBitmap();
+                SaveToClipboard(bitmap);
 
-                    if (bitmap != null)
-                    {
-                        outputX = _selectX;
-                        outputY = _selectY;
-                        outputWidth = _selectWidth;
-                        outputHeight = _selectHeight;
+                outputX = _selectX;
+                outputY = _selectY;
+                outputWidth = _selectWidth;
+                outputHeight = _selectHeight;
 
-                        CompleteMouseSelection(sender, e);
-
-                        bitmap.Dispose();
-                    }
-                    break;
-                case 1:
-                    bitmap = SelectBitmap();
-
-                    if (bitmap != null)
-                    {
-                        SaveToClipboard(bitmap);
-
-                        bitmap.Dispose();
-                    }
-                    break;
+                CompleteMouseSelection(sender, e);
             }
 
             Cursor = Cursors.Arrow;
@@ -205,12 +196,13 @@ namespace AutoScreenCapture
 
                 _bitmapSource = new Bitmap(_selectWidth, _selectHeight);
 
-                Graphics g = Graphics.FromImage(_bitmapSource);
-
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.DrawImage(_bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
+                using (Graphics g = Graphics.FromImage(_bitmapSource))
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.DrawImage(_bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
+                }
 
                 return _bitmapSource;
             }

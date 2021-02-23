@@ -37,7 +37,15 @@ namespace AutoScreenCapture
             _formScreen.ImageFormatCollection = _imageFormatCollection;
             _formScreen.TagCollection = _formTag.TagCollection;
 
-            _formScreen.ShowDialog(this);
+            if (!_formScreen.Visible)
+            {
+                _formScreen.ShowDialog(this);
+            }
+            else
+            {
+                _formScreen.Focus();
+                _formScreen.BringToFront();
+            }
 
             if (_formScreen.DialogResult == DialogResult.OK)
             {
@@ -154,15 +162,22 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (_formScreen.ScreenCollection.Count == 0)
+                {
+                    _log.WriteErrorMessage("The screen collection is empty and needs to be initialized");
+
+                    return;
+                }
+
                 foreach (Screen screen in _formScreen.ScreenCollection)
                 {
                     if (screen.Active)
                     {
-                        if (screen.Component == 0) // Active Window
+                        if (screen.Source == 0 && screen.Component == 0) // Active Window
                         {
-                            if (_screenCapture.GetScreenImages(screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, 0, 0, 0, 0, false, out Bitmap bitmap))
                             {
-                                if (!SaveScreenshot(bitmap, screen, ScreenshotType.ActiveWindow))
+                                if (!SaveScreenshot(bitmap, screen))
                                 {
                                     continue;
                                 }
@@ -170,18 +185,17 @@ namespace AutoScreenCapture
                         }
                         else // Screen (regardless of how many displays there are)
                         {
-                            if (_formScreen.ScreenDictionary.ContainsKey(screen.Component))
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component,
+                                screen.X,
+                                screen.Y,
+                                screen.Width,
+                                screen.Height,
+                                screen.Mouse,
+                                out Bitmap bitmap))
                             {
-                                if (_screenCapture.GetScreenImages(screen.Component,
-                                    _formScreen.ScreenDictionary[screen.Component].screen.Bounds.X,
-                                    _formScreen.ScreenDictionary[screen.Component].screen.Bounds.Y,
-                                    _formScreen.ScreenDictionary[screen.Component].width,
-                                    _formScreen.ScreenDictionary[screen.Component].height, screen.Mouse, out Bitmap bitmap))
+                                if (!SaveScreenshot(bitmap, screen))
                                 {
-                                    if (!SaveScreenshot(bitmap, screen, ScreenshotType.Screen))
-                                    {
-                                        continue;
-                                    }
+                                    continue;
                                 }
                             }
                         }

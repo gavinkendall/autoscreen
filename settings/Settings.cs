@@ -65,7 +65,15 @@ namespace AutoScreenCapture
         // This version also introduces keyboard shortcuts and it populates the Editors module with a list of applications it finds on the user's machine.
         // The startup time is also faster since we no longer initialize the threads in the beginning (that, in turn, reads from the XML documents).
         // New system tray icon menu items such as Region Select / Clipboard, Region Select / Auto Save, and Region Select / Edit also introduced.
-        private const string CODENAME_BOOMBAYAH = "Boombayah";
+        /// <summary>
+        /// The codename for the 2.3 series.
+        /// </summary>
+        public const string CODENAME_BOOMBAYAH = "Boombayah";
+
+        /// <summary>
+        /// The version number of the first version in the 2.3 series.
+        /// </summary>
+        public const string CODEVERSION_BOOMBAYAH = "2.3.0.0";
 
         /// <summary>
         /// The codename of this application.
@@ -195,12 +203,12 @@ namespace AutoScreenCapture
 
             Application = new SettingCollection()
             {
-                Filepath = fileSystem.ApplicationSettingsFile
+                Filepath = fileSystem.DefaultApplicationSettingsFile
             };
 
             User = new SettingCollection()
             {
-                Filepath = fileSystem.UserSettingsFile
+                Filepath = fileSystem.DefaultUserSettingsFile
             };
 
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
@@ -371,8 +379,6 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
                     Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
                 }
-
-                Application.Save(this, fileSystem, log);
             }
 
             if (User != null && !string.IsNullOrEmpty(User.Filepath) && !fileSystem.FileExists(User.Filepath))
@@ -416,8 +422,6 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
-
-                User.Save(this, fileSystem, log);
             }
 
             log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);

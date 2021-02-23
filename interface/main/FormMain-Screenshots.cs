@@ -43,9 +43,6 @@ namespace AutoScreenCapture
             // the thread after the first 5 minutes and then save screenshots in the next 5 minutes after that.
             // Screenshots will then be saved every 5 minutes after this initial 10 minute delay.
             SaveScreenshots();
-
-            // Refresh the calendar.
-            SearchDates();
         }
 
         /// <summary>

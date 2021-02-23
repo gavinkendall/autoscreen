@@ -54,16 +54,6 @@ namespace AutoScreenCapture
         public ImageFormat Format { get; set; }
 
         /// <summary>
-        /// The screen associated with the screenshot.
-        /// </summary>
-        public int Screen { get; set; }
-
-        /// <summary>
-        /// The component associated with the screenshot.
-        /// </summary>
-        public int Component { get; set; }
-
-        /// <summary>
         /// The slide associated with the screenshot.
         /// </summary>
         public Slide Slide { get; set; }
@@ -86,12 +76,7 @@ namespace AutoScreenCapture
         /// <summary>
         ///  The version of Auto Screen Capture that captured this screenshot.
         /// </summary>
-        public string Version { get; private set; }
-
-        /// <summary>
-        /// The type of screenshot.
-        /// </summary>
-        public ScreenshotType ScreenshotType { get; set; }
+        public string Version { get; set; }
 
         /// <summary>
         /// Determines if the screenshot has been written to disk and can be loaded from the "screenshots" XML document.

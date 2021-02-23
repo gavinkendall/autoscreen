@@ -414,7 +414,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectAutoSave.Name = "toolStripMenuItemRegionSelectAutoSave";
             this.toolStripMenuItemRegionSelectAutoSave.Size = new System.Drawing.Size(221, 22);
             this.toolStripMenuItemRegionSelectAutoSave.Text = "Region Select / Auto Save";
-            this.toolStripMenuItemRegionSelectAutoSave.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAutoSave_Click);
+            this.toolStripMenuItemRegionSelectAutoSave.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardAutoSave_Click);
             // 
             // toolStripMenuItemRegionSelectEdit
             // 
@@ -422,7 +422,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectEdit.Name = "toolStripMenuItemRegionSelectEdit";
             this.toolStripMenuItemRegionSelectEdit.Size = new System.Drawing.Size(221, 22);
             this.toolStripMenuItemRegionSelectEdit.Text = "Region Select / Edit";
-            this.toolStripMenuItemRegionSelectEdit.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectEdit_Click);
+            this.toolStripMenuItemRegionSelectEdit.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click);
             // 
             // toolStripSeparatorRegionSelect
             // 
