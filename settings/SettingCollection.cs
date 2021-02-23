@@ -261,7 +261,15 @@ namespace AutoScreenCapture
 
             try
             {
-                if (string.IsNullOrEmpty(Filepath)) return;
+                if (string.IsNullOrEmpty(Filepath))
+                {
+                    return;
+                }
+
+                if (!fileSystem.FileExists(Filepath))
+                {
+                    Save(settings, fileSystem, log);
+                }
 
                 if (fileSystem.FileExists(Filepath))
                 {
@@ -334,7 +342,10 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (string.IsNullOrEmpty(Filepath)) return true;
+                if (string.IsNullOrEmpty(Filepath))
+                {
+                    return true;
+                }
 
                 XmlWriterSettings xSettings = new XmlWriterSettings();
                 xSettings.Indent = true;

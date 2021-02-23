@@ -220,19 +220,19 @@ namespace AutoScreenCapture
                 Filepath = fileSystem.DefaultApplicationSettingsFile
             };
 
+            User = new SettingCollection
+            {
+                Filepath = fileSystem.DefaultUserSettingsFile
+            };
+
             SMTP = new SettingCollection
             {
-                Filepath = fileSystem.SmtpSettingsFile
+                Filepath = fileSystem.DefaultSmtpSettingsFile
             };
 
             SFTP = new SettingCollection
             {
-                Filepath = fileSystem.SftpSettingsFile
-            };
-
-            User = new SettingCollection
-            {
-                Filepath = fileSystem.DefaultUserSettingsFile
+                Filepath = fileSystem.DefaultSftpSettingsFile
             };
 
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
@@ -402,7 +402,6 @@ namespace AutoScreenCapture
                 SMTP.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
                 SMTP.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
                 SMTP.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
-                SMTP.Save(this, fileSystem, log);
             }
 
             if (SFTP != null && !string.IsNullOrEmpty(SFTP.Filepath) && !fileSystem.FileExists(SFTP.Filepath))
@@ -412,7 +411,6 @@ namespace AutoScreenCapture
                 SFTP.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
                 SFTP.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
                 SFTP.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
-                SFTP.Save(this, fileSystem, log);
             }
 
             log.DebugMode = Convert.ToBoolean(Application.GetByKey("DebugMode", DefaultSettings.DebugMode).Value);
@@ -433,8 +431,6 @@ namespace AutoScreenCapture
                 }
 
                 log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of application settings");
-
-                VersionManager.OldApplicationSettings = settingCollection.Clone();
 
                 // These will be transfered to the SMTP settings collection via the old application settings list.
                 settingCollection.RemoveByKey("EmailServerHost");
@@ -601,8 +597,6 @@ namespace AutoScreenCapture
                 }
 
                 log.WriteMessage("An old version or a fresh version of " + ApplicationName + " was detected. Attempting upgrade of user settings");
-
-                VersionManager.OldUserSettings = settingCollection.Clone();
 
                 var versionInConfig = new Version(settingCollection.AppCodename, settingCollection.AppVersion, false);
 
