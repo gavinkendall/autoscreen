@@ -257,88 +257,73 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(Settings settings, FileSystem fileSystem)
         {
-            Log log = new Log(settings, fileSystem, new MacroParser(settings));
-
-            try
+            if (string.IsNullOrEmpty(Filepath))
             {
-                if (string.IsNullOrEmpty(Filepath))
+                return;
+            }
+
+            if (!fileSystem.FileExists(Filepath))
+            {
+                Save(settings, fileSystem);
+            }
+
+            if (fileSystem.FileExists(Filepath))
+            {
+                // Check the size of the settings file.
+                // Delete the file if it's too big so we don't hang.
+                if (fileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
                 {
+                    fileSystem.DeleteFile(Filepath);
+
                     return;
                 }
 
-                if (!fileSystem.FileExists(Filepath))
+                XmlDocument xDoc = new XmlDocument();
+                xDoc.Load(Filepath);
+
+                AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
+                AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
+
+                XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
+
+                foreach (XmlNode xSetting in xSettings)
                 {
-                    Save(settings, fileSystem, log);
-                }
+                    Setting setting = new Setting();
+                    XmlNodeReader xReader = new XmlNodeReader(xSetting);
 
-                if (fileSystem.FileExists(Filepath))
-                {
-                    // Check the size of the settings file.
-                    // Delete the file if it's too big so we don't hang.
-                    if (fileSystem.FileContentLength(Filepath) > MAX_FILE_SIZE)
+                    while (xReader.Read())
                     {
-                        fileSystem.DeleteFile(Filepath);
-
-                        log.WriteDebugMessage("WARNING: User settings file was too big and needed to be deleted");
-
-                        return;
-                    }
-
-                    XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(Filepath);
-
-                    AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
-                    AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
-
-                    XmlNodeList xSettings = xDoc.SelectNodes(SETTING_XPATH);
-
-                    foreach (XmlNode xSetting in xSettings)
-                    {
-                        Setting setting = new Setting();
-                        XmlNodeReader xReader = new XmlNodeReader(xSetting);
-
-                        while (xReader.Read())
+                        if (xReader.IsStartElement())
                         {
-                            if (xReader.IsStartElement())
+                            switch (xReader.Name)
                             {
-                                switch (xReader.Name)
-                                {
-                                    case SETTING_KEY:
-                                        xReader.Read();
-                                        setting.Key = xReader.Value;
-                                        break;
+                                case SETTING_KEY:
+                                    xReader.Read();
+                                    setting.Key = xReader.Value;
+                                    break;
 
-                                    case SETTING_VALUE:
-                                        xReader.Read();
-                                        setting.Value = xReader.Value;
-                                        break;
-                                }
+                                case SETTING_VALUE:
+                                    xReader.Read();
+                                    setting.Value = xReader.Value;
+                                    break;
                             }
                         }
+                    }
 
-                        xReader.Close();
+                    xReader.Close();
 
-                        if (!string.IsNullOrEmpty(setting.Key))
-                        {
-                            Add(setting);
-                        }
+                    if (!string.IsNullOrEmpty(setting.Key))
+                    {
+                        Add(setting);
                     }
                 }
-                else
-                {
-                    log.WriteDebugMessage("WARNING: Unable to load settings");
-                }
-            }
-            catch (Exception ex)
-            {
-                log.WriteExceptionMessage("SettingCollection::Load", ex);
             }
         }
 
         /// <summary>
         /// Saves the settings.
         /// </summary>
-        public bool Save(Settings settings, FileSystem fileSystem, Log log)
+        public bool Save(Settings settings, FileSystem fileSystem)
         {
             try
             {
@@ -392,10 +377,8 @@ namespace AutoScreenCapture
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                log.WriteExceptionMessage("SettingCollection::Save", ex);
-
                 return false;
             }
         }

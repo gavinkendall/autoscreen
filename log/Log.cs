@@ -53,6 +53,9 @@ namespace AutoScreenCapture
             _settings = settings;
             _fileSystem = fileSystem;
             _macroParser = macroParser;
+
+            DebugMode = Convert.ToBoolean(settings.Application.GetByKey("DebugMode", settings.DefaultSettings.DebugMode).Value);
+            LoggingEnabled = Convert.ToBoolean(settings.Application.GetByKey("Logging", settings.DefaultSettings.Logging).Value);
         }
 
         /// <summary>

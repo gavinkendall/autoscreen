@@ -203,8 +203,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                _log.WriteDebugMessage("Starting a screen capture session");
-
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
                     // Increment the number of times the user has started a screen capture session.

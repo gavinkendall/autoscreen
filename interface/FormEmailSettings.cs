@@ -82,7 +82,7 @@ namespace AutoScreenCapture
             Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value = textBoxSubject.Text;
             Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value = textBoxBody.Text;
 
-            Settings.SMTP.Save(_config.Settings, _fileSystem, _log);
+            Settings.SMTP.Save(_config.Settings, _fileSystem);
 
             DialogResult = DialogResult.OK;
 

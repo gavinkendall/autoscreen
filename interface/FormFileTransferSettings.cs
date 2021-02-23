@@ -64,7 +64,7 @@ namespace AutoScreenCapture
             Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value = textBoxUsername.Text;
             Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value = textBoxPassword.Text;
 
-            Settings.SFTP.Save(_config.Settings, _fileSystem, _log);
+            Settings.SFTP.Save(_config.Settings, _fileSystem);
 
             DialogResult = DialogResult.OK;
 

@@ -305,7 +305,7 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("KeyboardShortcutRegionSelectAutoSaveKey", textBoxKeyboardShortcutRegionSelectAutoSaveKey.Text.ToString().ToUpper());
                 _config.Settings.User.SetValueByKey("KeyboardShortcutRegionSelectEditKey", textBoxKeyboardShortcutRegionSelectEditKey.Text.ToString().ToUpper());
 
-                _config.Settings.User.Save(_config.Settings, _fileSystem, _log);
+                _config.Settings.User.Save(_config.Settings, _fileSystem);
 
                 DialogResult = DialogResult.OK;
 

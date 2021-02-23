@@ -552,8 +552,6 @@ namespace AutoScreenCapture
 
                         if (xNodes != null)
                         {
-                            _log.WriteDebugMessage("Number of nodes loaded from XML document = " + xNodes.Count);
-
                             List<string> nodeValues = new List<string>();
 
                             foreach (XmlNode xNode in xNodes)
@@ -578,8 +576,6 @@ namespace AutoScreenCapture
 
                                 xReader.Close();
                             }
-
-                            _log.WriteDebugMessage("Number of unique node values returned = " + xNodes.Count);
 
                             return nodeValues;
                         }
@@ -634,7 +630,7 @@ namespace AutoScreenCapture
 
                         if (xScreenshots != null)
                         {
-                            _log.WriteMessage("Loading " + xScreenshots.Count + " screenshots taken on " + date);
+                            _log.WriteDebugMessage("Loading " + xScreenshots.Count + " screenshots taken on " + date);
 
                             int screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
 

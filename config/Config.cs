@@ -295,32 +295,23 @@ namespace AutoScreenCapture
                 }
             }
 
-            log.WriteMessage("Loading user settings");
             Settings.User.Load(Settings, _fileSystem);
 
-            log.WriteMessage("Loading SMTP settings");
             Settings.SMTP.Load(Settings, _fileSystem);
 
-            log.WriteMessage("Loading SFTP settings");
             Settings.SFTP.Load(Settings, _fileSystem);
 
-            log.WriteDebugMessage("Preparing old application settings for potential upgrade");
             Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
 
-            log.WriteDebugMessage("Preparing old user settings for potential upgrade");
             Settings.VersionManager.OldUserSettings = Settings.User.Clone();
 
-            log.WriteDebugMessage("Attempting upgrade of application settings from old version of application (if needed)");
-            Settings.UpgradeApplicationSettings(Settings.Application, _fileSystem, log);
+            Settings.UpgradeApplicationSettings(Settings.Application, _fileSystem);
 
-            log.WriteDebugMessage("Attempting upgrade of user settings from old version of application (if needed)");
-            Settings.UpgradeUserSettings(Settings.User, screenCapture, security, _fileSystem, log);
+            Settings.UpgradeUserSettings(Settings.User, screenCapture, security, _fileSystem);
 
-            log.WriteDebugMessage("Attempting upgrade of SMTP settings from old version of application (if needed)");
-            Settings.UpgradeSmtpSettings(Settings.SMTP, _fileSystem, log);
+            Settings.UpgradeSmtpSettings(Settings.SMTP, _fileSystem);
 
-            log.WriteDebugMessage("Attempting upgrade of SFTP settings from old version of application (if needed)");
-            Settings.UpgradeSftpSettings(Settings.SFTP, _fileSystem, log);
+            Settings.UpgradeSftpSettings(Settings.SFTP, _fileSystem);
 
             if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))
             {
