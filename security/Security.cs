@@ -30,6 +30,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class Security
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Security()
         {
 

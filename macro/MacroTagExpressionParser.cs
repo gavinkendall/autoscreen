@@ -36,6 +36,9 @@ namespace AutoScreenCapture
         // {minute+5}          5 minutes ahead the given DateTime
         private readonly string DateTimeFormatTagExpressionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}(?<DateTimeFormat>\[.+\])?$";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MacroTagExpressionParser()
         {
 
@@ -46,6 +49,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="dateTime">The date/time object to parse.</param>
         /// <param name="tagExpression">The tag expression to use on the date/time object.</param>
+        /// <param name="macroParser"></param>
         /// <returns>A parsed macro string value.</returns>
         public string ParseTagExpressionForDateTimeFormat(DateTime dateTime, string tagExpression, MacroParser macroParser)
         {

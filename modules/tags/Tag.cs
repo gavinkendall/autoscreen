@@ -157,6 +157,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Creates a tag given its name, tag type, and its status (whether it be active or inactive).
         /// </summary>
+        /// <param name="macroParser"></param>
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
@@ -176,6 +177,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Creates a tag given its name, tag type, date/time format value, and its status.
         /// </summary>
+        /// <param name="macroParser"></param>
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>
@@ -197,6 +199,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Creates a tag given its name, tag type, and "Time of Day" properties.
         /// </summary>
+        /// <param name="macroParser"></param>
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
         /// <param name="tagType">The type of tag.</param>

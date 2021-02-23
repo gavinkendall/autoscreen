@@ -107,6 +107,8 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="windowTitle">The title of the active window when the screenshot was taken.</param>
         /// <param name="dateTime">The date/time the screenshot was taken.</param>
+        /// <param name="macroParser"></param>
+        /// <param name="config"></param>
         public Screenshot(string windowTitle, DateTime dateTime, MacroParser macroParser, Config config)
         {
             if (string.IsNullOrEmpty(windowTitle)) return;

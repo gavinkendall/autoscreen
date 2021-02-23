@@ -325,6 +325,7 @@ namespace AutoScreenCapture
         /// <param name="filterType">The type of filter to use.</param>
         /// <param name="filterValue">The filter value to use.</param>
         /// <param name="date">The date to use.</param>
+        /// <param name="config"></param>
         /// <returns>A list of slides based on the filters being used.</returns>
         public List<Slide> GetSlides(string filterType, string filterValue, string date, Config config)
         {
@@ -604,6 +605,7 @@ namespace AutoScreenCapture
         /// Loads the screenshots taken on a particular day from the screenshots.xml file.
         /// </summary>
         /// <param name="date">The date to load screenshots from.</param>
+        /// <param name="config"></param>
         public int LoadXmlFileAndAddScreenshots(string date, Config config)
         {
             try

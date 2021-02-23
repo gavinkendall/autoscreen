@@ -25,6 +25,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class Slideshow
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Slideshow()
         {
 
