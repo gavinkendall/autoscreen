@@ -119,7 +119,7 @@ namespace AutoScreenCapture
             for (int i = 1; i <= ScreenDictionary.Count; i++)
             {
                 ScreenCapture.DeviceOptions deviceOptions = ScreenDictionary[i];
-                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceOptions.width + " x " + deviceOptions.height+ ")");
+                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceOptions.width + " x " + deviceOptions.height + ")");
             }
 
             if (ScreenObject != null)
@@ -244,7 +244,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Macro = textBoxMacro.Text;
                         ScreenCollection.Get(ScreenObject).Component = comboBoxScreenComponent.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
-                        ScreenCollection.Get(ScreenObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
+                        ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
                         ScreenCollection.Get(ScreenObject).Active = checkBoxActive.Checked;
                         ScreenCollection.Get(ScreenObject).X = (int)numericUpDownX.Value;

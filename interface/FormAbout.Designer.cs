@@ -36,12 +36,15 @@
             this.richTextBoxLicense = new System.Windows.Forms.RichTextBox();
             this.tabPageChangelog = new System.Windows.Forms.TabPage();
             this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
+            this.tabPageWhatsNew = new System.Windows.Forms.TabPage();
+            this.richTextBoxWhatsNew = new System.Windows.Forms.RichTextBox();
             this.tabPageDeveloper = new System.Windows.Forms.TabPage();
             this.richTextBoxDeveloper = new System.Windows.Forms.RichTextBox();
             this.tabControlAbout.SuspendLayout();
             this.tabPageApplication.SuspendLayout();
             this.tabPageLicense.SuspendLayout();
             this.tabPageChangelog.SuspendLayout();
+            this.tabPageWhatsNew.SuspendLayout();
             this.tabPageDeveloper.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,6 +54,7 @@
             this.tabControlAbout.Controls.Add(this.tabPageLicense);
             this.tabControlAbout.Controls.Add(this.tabPageChangelog);
             this.tabControlAbout.Controls.Add(this.tabPageDeveloper);
+            this.tabControlAbout.Controls.Add(this.tabPageWhatsNew);
             this.tabControlAbout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlAbout.Location = new System.Drawing.Point(0, 0);
             this.tabControlAbout.Name = "tabControlAbout";
@@ -158,6 +162,30 @@
             this.richTextBoxDeveloper.TabStop = false;
             this.richTextBoxDeveloper.Text = resources.GetString("richTextBoxDeveloper.Text");
             // 
+            // tabPageWhatsNew
+            // 
+            this.tabPageWhatsNew.Controls.Add(this.richTextBoxWhatsNew);
+            this.tabPageWhatsNew.Location = new System.Drawing.Point(4, 22);
+            this.tabPageWhatsNew.Name = "tabPageWhatsNew";
+            this.tabPageWhatsNew.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageWhatsNew.Size = new System.Drawing.Size(455, 262);
+            this.tabPageWhatsNew.TabIndex = 3;
+            this.tabPageWhatsNew.Text = "What\'s New";
+            this.tabPageWhatsNew.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxWhatsNew
+            // 
+            this.richTextBoxWhatsNew.DetectUrls = false;
+            this.richTextBoxWhatsNew.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxWhatsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxWhatsNew.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxWhatsNew.Name = "richTextBoxWhatsNew";
+            this.richTextBoxWhatsNew.ReadOnly = true;
+            this.richTextBoxWhatsNew.Size = new System.Drawing.Size(449, 256);
+            this.richTextBoxWhatsNew.TabIndex = 1;
+            this.richTextBoxWhatsNew.TabStop = false;
+            this.richTextBoxWhatsNew.Text = resources.GetString("richTextBoxWhatsNew.Text");
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,6 +205,7 @@
             this.tabPageLicense.ResumeLayout(false);
             this.tabPageChangelog.ResumeLayout(false);
             this.tabPageDeveloper.ResumeLayout(false);
+            this.tabPageWhatsNew.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -192,5 +221,7 @@
         private System.Windows.Forms.RichTextBox richTextBoxChangelog;
         private System.Windows.Forms.TabPage tabPageDeveloper;
         private System.Windows.Forms.RichTextBox richTextBoxDeveloper;
+        private System.Windows.Forms.TabPage tabPageWhatsNew;
+        private System.Windows.Forms.RichTextBox richTextBoxWhatsNew;
     }
 }

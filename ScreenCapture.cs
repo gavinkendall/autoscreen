@@ -443,7 +443,6 @@ namespace AutoScreenCapture
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
         /// <param name="height">The Height value of the bitmap.</param>
-        /// <param name="resolutionRatio">The resolution ratio to apply to the bitmap.</param>
         /// <param name="mouse">Determines if the mouse pointer should be included in the bitmap.</param>
         /// <returns>A bitmap image representing what we captured.</returns>
         public Bitmap GetScreenBitmap(int x, int y, int width, int height, bool mouse)

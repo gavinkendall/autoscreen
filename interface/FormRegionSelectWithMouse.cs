@@ -84,7 +84,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Laods the canvas with the chosen output mode.
+        /// Loads the canvas with the chosen output mode.
         /// </summary>
         public void LoadCanvas()
         {
@@ -196,12 +196,13 @@ namespace AutoScreenCapture
 
                 _bitmapSource = new Bitmap(_selectWidth, _selectHeight);
 
-                Graphics g = Graphics.FromImage(_bitmapSource);
-
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.DrawImage(_bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
+                using (Graphics g = Graphics.FromImage(_bitmapSource))
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.DrawImage(_bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
+                }
 
                 return _bitmapSource;
             }

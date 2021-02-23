@@ -321,6 +321,7 @@ END OF TERMS AND CONDITIONS</value>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
 2.3.4.0    SFTP support.
+2.3.3.8    Screen now has Source (such as Graphics Card and Operating System), X, Y, Width, and Height. Removed "Resolution Ratio" option for better screen capture performance. Removed internal screen dictionary refresh from Windows because we now use X, Y, Width, and Height either from Graphics Card or from Operating System and these values can now be adjusted. Module tab page layout style changed to be multi-line. Refactored code to reduce usage of static classes and static variables for better memory management. Removed calls to GC Collect. Changed screen capture method. "Region Select / Auto Save" region is no longer created when application initialized. "Region Select / Auto Save" screenshots are now shown in all screenshot tabs.
 2.3.3.7    Memory leak fix.
 2.3.3.6    Active Window Title text comparison includes type of match to use during text comparison. (January 1, 2021)
 2.3.3.5    Application Focus now has Delay Before and Delay After options. (December 7, 2020)
@@ -427,14 +428,8 @@ Legacy Series
 Prototype
 0.0.0.1    The prototype that simply took screenshots at a defined interval which would run on a timer. (2007)</value>
   </data>
-  <data name="richTextBoxDeveloper.Text" xml:space="preserve">
-    <value>Hi. I'm Gavin Kendall. I've been a professional software developer since 2004 and I work on Auto Screen Capture in my spare time (usually on the weekends) when I'm not watching Star Wars movies or playing my PlayStation. Please feel free to follow me on Twitter and subscribe to my YouTube channel.
-
-Twitter
-https://twitter.com/autoscreen2
-
-YouTube Channel
-https://www.youtube.com/user/gavinkendall/</value>
+  <data name="richTextBoxWhatsNew.Text" xml:space="preserve">
+    <value>Every screen has its own X, Y, Width, and Height values. The application no longer continually gets its display device information from Windows so you can now freely adjust the position and size for each screen.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

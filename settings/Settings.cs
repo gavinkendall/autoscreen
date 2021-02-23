@@ -216,7 +216,7 @@ namespace AutoScreenCapture
 
             Application = new SettingCollection()
             {
-                Filepath = fileSystem.ApplicationSettingsFile
+                Filepath = fileSystem.DefaultApplicationSettingsFile
             };
 
             SMTP = new SettingCollection
@@ -231,7 +231,7 @@ namespace AutoScreenCapture
 
             User = new SettingCollection
             {
-                Filepath = fileSystem.UserSettingsFile
+                Filepath = fileSystem.DefaultUserSettingsFile
             };
 
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
@@ -342,8 +342,6 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
                     Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
                 }
-
-                Application.Save(this, fileSystem, log);
             }
 
             if (User != null && !string.IsNullOrEmpty(User.Filepath) && !fileSystem.FileExists(User.Filepath))
@@ -386,8 +384,6 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
-
-                User.Save(this, fileSystem, log);
             }
 
             if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !fileSystem.FileExists(SMTP.Filepath))

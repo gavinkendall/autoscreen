@@ -43,9 +43,6 @@ namespace AutoScreenCapture
             SaveScreenshots();
 
             RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotSaved);
-
-            // Refresh the calendar.
-            SearchDates();
         }
 
         /// <summary>

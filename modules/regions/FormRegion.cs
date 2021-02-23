@@ -429,6 +429,8 @@ namespace AutoScreenCapture
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas();
+
+            Cursor = Cursors.Arrow;
         }
 
         private void _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted(object sender, EventArgs e)
