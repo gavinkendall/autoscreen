@@ -493,8 +493,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemEmailSettings_Click(object sender, EventArgs e)
         {
-            ShowInterface();
-
             if (!_formEmailSettings.Visible)
             {
                 _formEmailSettings.ShowDialog(this);
@@ -518,8 +516,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemFileTransferSettings_Click(object sender, EventArgs e)
         {
-            ShowInterface();
-
             if (!_formFileTransferSettings.Visible)
             {
                 _formFileTransferSettings.ShowDialog(this);

@@ -32,8 +32,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addMacroTag_Click(object sender, EventArgs e)
         {
-            ShowInterface();
-
             _formMacroTag.MacroTagObject = null;
 
             if (!_formMacroTag.Visible)

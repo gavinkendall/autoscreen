@@ -146,7 +146,7 @@ namespace AutoScreenCapture
                 textBoxScreenName.Text = "Screen " + (ScreenCollection.Count + 1);
                 textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = _macroParser.DefaultMacro;
-                comboBoxScreenComponent.SelectedIndex = 0;
+                comboBoxScreenSource.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
@@ -520,7 +520,7 @@ namespace AutoScreenCapture
             {
                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
                 {
-                    ScreenCapture.DeviceOptions deviceOptions = ScreenCapture.GetDevice(screenFromWindows);
+                    ScreenCapture.DeviceOptions deviceOptions = _screenCapture.GetDevice(screenFromWindows);
 
                     comboBoxScreenComponent.Items.Add("\"" + deviceOptions.screen.DeviceName + "\" X:" + deviceOptions.screen.Bounds.X + " Y:" + deviceOptions.screen.Bounds.Y + " (" + deviceOptions.width + "x" + deviceOptions.height + ")");
                 }

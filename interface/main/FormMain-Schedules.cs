@@ -163,8 +163,6 @@ namespace AutoScreenCapture
 
         private void addSchedule_Click(object sender, EventArgs e)
         {
-            ShowInterface();
-
             _formSchedule.ScheduleObject = null;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,

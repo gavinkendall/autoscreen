@@ -33,8 +33,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addEditor_Click(object sender, EventArgs e)
         {
-            ShowInterface();
-
             _formEditor.EditorObject = null;
 
             if (!_formEditor.Visible)

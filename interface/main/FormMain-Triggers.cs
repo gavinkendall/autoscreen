@@ -32,8 +32,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addTrigger_Click(object sender, EventArgs e)
         {
-            ShowInterface();
-
             _formTrigger.TriggerObject = null;
 
             _formTrigger.EditorCollection = _formEditor.EditorCollection;
