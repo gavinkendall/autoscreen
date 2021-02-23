@@ -28,6 +28,7 @@ namespace AutoScreenCapture
     /// </summary>
     public class Config
     {
+        private Log _log;
         private FileSystem _fileSystem;
         private MacroParser _macroParser;
 
@@ -59,8 +60,10 @@ namespace AutoScreenCapture
         /// <param name="filesystem"></param>
         /// <param name="macroParser"></param>
         /// <param name="settings"></param>
-        public Config(FileSystem filesystem, MacroParser macroParser, Settings settings)
+        /// <param name="log"></param>
+        public Config(FileSystem filesystem, MacroParser macroParser, Settings settings, Log log)
         {
+            _log = log;
             _fileSystem = filesystem;
             _macroParser = macroParser;
 
@@ -391,7 +394,7 @@ namespace AutoScreenCapture
             tagCollection.Add(new MacroTag(_macroParser, "user", "The user using this computer (%user%)", MacroTagType.User, active: true));
             tagCollection.Add(new MacroTag(_macroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, active: true));
 
-            path = _macroParser.ParseTags(config: true, path, tagCollection, new Log(_fileSystem, _macroParser));
+            path = _macroParser.ParseTags(config: true, path, tagCollection, _log);
 
             if (_fileSystem.HasExtension(path))
             {

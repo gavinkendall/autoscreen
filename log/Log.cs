@@ -28,19 +28,12 @@ namespace AutoScreenCapture
     /// </summary>
     public class Log
     {
+        private Settings _settings;
         private FileSystem _fileSystem;
         private MacroParser _macroParser;
 
         private readonly string _extension = ".txt";
         private Mutex _mutexWriteFile = new Mutex();
-
-        private readonly string _dateFormat;
-        private readonly string _timeFormat;
-
-        /// <summary>
-        /// A collection of settings.
-        /// </summary>
-        public Settings Settings { get; set; }
 
         /// <summary>
         /// Debug Mode. This can be controlled from the command line with the -debug command.
@@ -55,8 +48,9 @@ namespace AutoScreenCapture
         /// <summary>
         /// A class for logging messages to text files.
         /// </summary>
-        public Log(FileSystem fileSystem, MacroParser macroParser)
+        public Log(Settings settings, FileSystem fileSystem, MacroParser macroParser)
         {
+            _settings = settings;
             _fileSystem = fileSystem;
             _macroParser = macroParser;
         }
@@ -116,7 +110,7 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
-                string appVersion = "[(v" + Settings.ApplicationVersion + ") ";
+                string appVersion = "[(v" + _settings.ApplicationVersion + ") ";
 
                 if (string.IsNullOrEmpty(_fileSystem.DebugFolder))
                 {
@@ -141,7 +135,7 @@ namespace AutoScreenCapture
                 // These are just general errors from the application so, if we have one, then write it out to the error file.
                 if (writeError)
                 {
-                    _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, appVersion + DateTime.Now.ToString(_dateFormat + " " + _timeFormat) + "] ERROR: " + message);
+                    _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] ERROR: " + message);
                 }
 
                 // Log any exception errors we encounter.
@@ -154,7 +148,7 @@ namespace AutoScreenCapture
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.
-                    if (Settings.Application == null || Convert.ToBoolean(Settings.Application.GetByKey("ExitOnError", Settings.DefaultSettings.ExitOnError).Value))
+                    if (_settings.Application == null || Convert.ToBoolean(_settings.Application.GetByKey("ExitOnError", _settings.DefaultSettings.ExitOnError).Value))
                     {
                         Environment.Exit(1);
                     }
