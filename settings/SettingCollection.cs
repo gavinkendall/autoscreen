@@ -241,7 +241,7 @@ namespace AutoScreenCapture
         /// </summary>
         public void Load(Settings settings, FileSystem fileSystem)
         {
-            Log log = new Log(fileSystem, new MacroParser(settings));
+            Log log = new Log(settings, fileSystem, new MacroParser(settings));
 
             try
             {

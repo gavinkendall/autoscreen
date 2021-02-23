@@ -46,8 +46,8 @@ namespace AutoScreenCapture
             FileSystem fileSystem = new FileSystem();
             Settings settings = new Settings(fileSystem);
             MacroParser macroParser = new MacroParser(settings);
-            Log log = new Log(fileSystem, macroParser);
-            Config config = new Config(fileSystem, macroParser, settings);
+            Log log = new Log(settings, fileSystem, macroParser);
+            Config config = new Config(fileSystem, macroParser, settings, log);
 
             ScreenCapture screenCapture = new ScreenCapture(config, macroParser, fileSystem, log);
 
