@@ -31,6 +31,97 @@ namespace AutoScreenCapture
         {
             tabControlViews.Controls.Clear();
 
+            int dashboardBoxSize = 220;
+
+            ToolStrip toolStripDashboard = new ToolStrip
+            {
+                Name = "toolStripDasboard",
+                GripStyle = ToolStripGripStyle.Hidden
+            };
+
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
+            {
+                Name = "flowLayoutPanel",
+                AutoScroll = true,
+                BackColor = Color.Black,
+                Location = new Point(4, 29),
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
+            };
+
+            int i = 1;
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                GroupBox groupBox = new GroupBox
+                {
+                    Tag = screen,
+                    Text = screen.Name,
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    Location = new Point(0, 0),
+                    Size = new Size(dashboardBoxSize, dashboardBoxSize),
+                };
+
+                PictureBox pictureBox = new PictureBox
+                {
+                    Name = "pictureBox" + i,
+                    BackColor = Color.Black,
+                    BorderStyle = BorderStyle.Fixed3D,
+                    Dock = DockStyle.Fill,
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Tag = i
+                };
+
+                pictureBox.DoubleClick += new EventHandler(dashboardPictureBox_DoubleClick);
+
+                groupBox.Controls.Add(pictureBox);
+                flowLayoutPanel.Controls.Add(groupBox);
+
+                i++;
+            }
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                GroupBox groupBox = new GroupBox
+                {
+                    Tag = region,
+                    Text = region.Name,
+                    BackColor = Color.White,
+                    ForeColor = Color.Black,
+                    Location = new Point(0, 0),
+                    Size = new Size(dashboardBoxSize, dashboardBoxSize),
+                };
+
+                PictureBox pictureBox = new PictureBox
+                {
+                    Name = "pictureBox" + i,
+                    BackColor = Color.Black,
+                    BorderStyle = BorderStyle.Fixed3D,
+                    Dock = DockStyle.Fill,
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    Tag = i
+                };
+
+                pictureBox.DoubleClick += new EventHandler(dashboardPictureBox_DoubleClick);
+
+                groupBox.Controls.Add(pictureBox);
+                flowLayoutPanel.Controls.Add(groupBox);
+
+                i++;
+            }
+
+            TabPage tabPageDashboard = new TabPage
+            {
+                Name = "tabPageDashboard",
+                Text = "Dashboard"
+            };
+
+            tabPageDashboard.Controls.Add(toolStripDashboard);
+            tabPageDashboard.Controls.Add(flowLayoutPanel);
+
+            tabControlViews.Controls.Add(tabPageDashboard);
+
             foreach (Screen screen in _formScreen.ScreenCollection)
             {
                 ToolStrip toolStripScreen = new ToolStrip
@@ -48,8 +139,7 @@ namespace AutoScreenCapture
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    ContextMenuStrip = contextMenuStripScreenshotPreview,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
                 };
 
                 TabPage tabPageScreen = new TabPage
@@ -85,8 +175,7 @@ namespace AutoScreenCapture
                     BackColor = Color.Black,
                     Location = new Point(4, 29),
                     SizeMode = PictureBoxSizeMode.StretchImage,
-                    ContextMenuStrip = contextMenuStripScreenshotPreview,
-                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left
                 };
 
                 TabPage tabPageRegion = new TabPage
@@ -260,6 +349,13 @@ namespace AutoScreenCapture
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
 
             return toolStrip;
+        }
+
+        private void dashboardPictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            PictureBox selectedPictureBox = (PictureBox)sender;
+
+            tabControlViews.SelectedIndex = (int)selectedPictureBox.Tag;
         }
     }
 }

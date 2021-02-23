@@ -192,14 +192,58 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
-            textBoxLabel.Text = string.Empty;
-            textBoxScreenshotTitle.Text = string.Empty;
-            textBoxScreenshotFormat.Text = string.Empty;
-            textBoxScreenshotWidth.Text = string.Empty;
-            textBoxScreenshotHeight.Text = string.Empty;
-            textBoxScreenshotDate.Text = string.Empty;
-            textBoxScreenshotTime.Text = string.Empty;
+            // Dashboard
+            if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
+            {
+                FlowLayoutPanel flowLayoutPanel = (FlowLayoutPanel)tabControlViews.SelectedTab.Controls["flowLayoutPanel"];
 
+                int i = 1;
+
+                foreach (GroupBox groupBox in flowLayoutPanel.Controls)
+                {
+                    PictureBox pictureBox = (PictureBox)groupBox.Controls["pictureBox" + i];
+
+                    Screenshot selectedScreenshot = new Screenshot(_config);
+
+                    if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
+                    {
+                        _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
+
+                        if (groupBox.Tag.GetType() == typeof(Screen))
+                        {
+                            Screen screen = (Screen)groupBox.Tag;
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                        }
+
+                        if (groupBox.Tag.GetType() == typeof(Region))
+                        {
+                            Region region = (Region)groupBox.Tag;
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                        }
+
+                        if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                        {
+                            // *** Auto Screen Capture - Region Select / Auto Save ***
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                    {
+                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                    }
+                    else
+                    {
+                        pictureBox.Image = null;
+                    }
+
+                    i++;
+                }
+
+                return;
+            }
+
+            // Screens and Regions
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null)
             {
                 TabPage selectedTabPage = tabControlViews.SelectedTab;
@@ -258,19 +302,6 @@ namespace AutoScreenCapture
                     }
 
                     pictureBox.Image = _screenCapture.GetImageByPath(path);
-
-                    if (pictureBox.Image != null)
-                    {
-                        textBoxLabel.Text = selectedScreenshot.Label;
-                        textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
-                        textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
-
-                        textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                        textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
-
-                        textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                        textBoxScreenshotTime.Text = selectedScreenshot.Time;
-                    }
                 }
                 else
                 {
