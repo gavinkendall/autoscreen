@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TriggerCondition.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A trigger condition is an event that occurs when the application is in a particular state (such as if the interface window is closing or the running screen capture session is being stopped).</summary>

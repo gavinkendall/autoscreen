@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ScreenCollection.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A collection of screens.</summary>
@@ -246,7 +246,7 @@ namespace AutoScreenCapture
                             log.WriteDebugMessage("An old version of the screens.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
-                            Version v2340 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
+                            Version v2338 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.3.8");
                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -258,9 +258,9 @@ namespace AutoScreenCapture
                                 screen.Active = true;
                             }
 
-                            if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
+                            if (v2338 != null && configVersion != null && configVersion.VersionNumber < v2338.VersionNumber)
                             {
-                                log.WriteDebugMessage("Boombayah 2.3.3.2 or older detected");
+                                log.WriteDebugMessage("Boombayah 2.3.3.7 or older detected");
 
                                 int component = 1;
 

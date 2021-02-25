@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Slideshow.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>This class keeps track of what slide the user is currently on.</summary>
@@ -25,6 +25,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class Slideshow
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Slideshow()
         {
 

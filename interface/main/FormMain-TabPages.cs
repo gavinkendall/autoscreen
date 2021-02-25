@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormMain-TabPages.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>Methods for building the tag pages for screens and regions including the Edit, Email, and Configure controls.</summary>

@@ -255,8 +255,8 @@ namespace AutoScreenCapture.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Setup, Preparation, and First Run\b0\par
-        ///The first thing to do is consider how frequently you want screenshots to be taken. This is defined by a timed interval. You can have screenshots taken every second, every five minutes, or every couple of hours - it&apos;s up to you. The &quot;Interval&quot; section of the Setup module is where you  [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Setup and First Run\b0\par
+        ///The first thing to do is consider how frequently you want screenshots to be taken. This is defined by a timed interval. You can have screenshots taken every second, every five minutes, or every couple of hours - it&apos;s up to you. The &quot;Interval&quot; section of the Setup module is where you specify the ho [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_1_Setup_and_First_Run {
             get {
@@ -320,16 +320,6 @@ namespace AutoScreenCapture.Properties {
         internal static System.Drawing.Bitmap region {
             get {
                 object obj = ResourceManager.GetObject("region", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap save {
-            get {
-                object obj = ResourceManager.GetObject("save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

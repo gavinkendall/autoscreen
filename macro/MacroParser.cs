@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MacroParser.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>Parses text replacing macro tags with the appropriate values.</summary>
@@ -177,7 +177,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default macro used for Region Select / Auto Save.
         /// </summary>
-        public static readonly string DefaultAutoSaveMacro = "%date%_%time%.%format%";
+        public static readonly string DefaultAutoSaveMacro = "Screenshot %date%_%time%.%format%";
 
         /// <summary>
         /// Replaces a tag (such as "%year%") with an appropriate value (such as "2020").

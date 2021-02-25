@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Screenshot.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A screenshot is associated with either a screen or a region and has a date, a time, and filepath.</summary>
@@ -107,6 +107,8 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="windowTitle">The title of the active window when the screenshot was taken.</param>
         /// <param name="dateTime">The date/time the screenshot was taken.</param>
+        /// <param name="macroParser"></param>
+        /// <param name="config"></param>
         public Screenshot(string windowTitle, DateTime dateTime, MacroParser macroParser, Config config)
         {
             if (string.IsNullOrEmpty(windowTitle)) return;

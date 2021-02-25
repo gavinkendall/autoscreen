@@ -390,7 +390,6 @@
     <None Include="images\properties.png" />
     <Content Include="images\lightbulb.png" />
     <Content Include="images\lock.png" />
-    <None Include="images\save.png" />
     <None Include="images\schedule.png" />
     <Content Include="images\trigger.png" />
     <Content Include="images\warning.png" />

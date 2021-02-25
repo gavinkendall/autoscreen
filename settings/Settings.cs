@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Settings.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>The default application settings and default user settings are defined here.</summary>
@@ -415,6 +415,7 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of application settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
+        /// <param name="fileSystem"></param>
         public void UpgradeApplicationSettings(SettingCollection settingCollection, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
@@ -443,6 +444,7 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of SMTP settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
+        /// <param name="fileSystem"></param>
         public void UpgradeSmtpSettings(SettingCollection settingCollection, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
@@ -548,7 +550,6 @@ namespace AutoScreenCapture
         /// <param name="screenCapture"></param>
         /// <param name="security"></param>
         /// <param name="fileSystem"></param>
-        /// <param name="log"></param>
         public void UpgradeUserSettings(SettingCollection settingCollection, ScreenCapture screenCapture, Security security, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))

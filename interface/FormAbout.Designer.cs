@@ -36,25 +36,25 @@
             this.richTextBoxLicense = new System.Windows.Forms.RichTextBox();
             this.tabPageChangelog = new System.Windows.Forms.TabPage();
             this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
-            this.tabPageWhatsNew = new System.Windows.Forms.TabPage();
-            this.richTextBoxWhatsNew = new System.Windows.Forms.RichTextBox();
             this.tabPageDeveloper = new System.Windows.Forms.TabPage();
             this.richTextBoxDeveloper = new System.Windows.Forms.RichTextBox();
+            this.tabPageReleaseNotes = new System.Windows.Forms.TabPage();
+            this.richTextBoxReleaseNotes = new System.Windows.Forms.RichTextBox();
             this.tabControlAbout.SuspendLayout();
             this.tabPageApplication.SuspendLayout();
             this.tabPageLicense.SuspendLayout();
             this.tabPageChangelog.SuspendLayout();
-            this.tabPageWhatsNew.SuspendLayout();
             this.tabPageDeveloper.SuspendLayout();
+            this.tabPageReleaseNotes.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAbout
             // 
             this.tabControlAbout.Controls.Add(this.tabPageApplication);
-            this.tabControlAbout.Controls.Add(this.tabPageLicense);
+            this.tabControlAbout.Controls.Add(this.tabPageReleaseNotes);
             this.tabControlAbout.Controls.Add(this.tabPageChangelog);
+            this.tabControlAbout.Controls.Add(this.tabPageLicense);
             this.tabControlAbout.Controls.Add(this.tabPageDeveloper);
-            this.tabControlAbout.Controls.Add(this.tabPageWhatsNew);
             this.tabControlAbout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlAbout.Location = new System.Drawing.Point(0, 0);
             this.tabControlAbout.Name = "tabControlAbout";
@@ -160,31 +160,32 @@
             this.richTextBoxDeveloper.Size = new System.Drawing.Size(545, 293);
             this.richTextBoxDeveloper.TabIndex = 1;
             this.richTextBoxDeveloper.TabStop = false;
-            this.richTextBoxDeveloper.Text = resources.GetString("richTextBoxDeveloper.Text");
+            this.richTextBoxDeveloper.Text = "";
             // 
-            // tabPageWhatsNew
+            // tabPageReleaseNotes
             // 
-            this.tabPageWhatsNew.Controls.Add(this.richTextBoxWhatsNew);
-            this.tabPageWhatsNew.Location = new System.Drawing.Point(4, 22);
-            this.tabPageWhatsNew.Name = "tabPageWhatsNew";
-            this.tabPageWhatsNew.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageWhatsNew.Size = new System.Drawing.Size(455, 262);
-            this.tabPageWhatsNew.TabIndex = 3;
-            this.tabPageWhatsNew.Text = "What\'s New";
-            this.tabPageWhatsNew.UseVisualStyleBackColor = true;
+            this.tabPageReleaseNotes.Controls.Add(this.richTextBoxReleaseNotes);
+            this.tabPageReleaseNotes.Location = new System.Drawing.Point(4, 22);
+            this.tabPageReleaseNotes.Name = "tabPageReleaseNotes";
+            this.tabPageReleaseNotes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageReleaseNotes.Size = new System.Drawing.Size(545, 293);
+            this.tabPageReleaseNotes.TabIndex = 3;
+            this.tabPageReleaseNotes.Text = "Release Notes";
+            this.tabPageReleaseNotes.UseVisualStyleBackColor = true;
             // 
-            // richTextBoxWhatsNew
+            // richTextBoxReleaseNotes
             // 
-            this.richTextBoxWhatsNew.DetectUrls = false;
-            this.richTextBoxWhatsNew.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxWhatsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxWhatsNew.Location = new System.Drawing.Point(3, 3);
-            this.richTextBoxWhatsNew.Name = "richTextBoxWhatsNew";
-            this.richTextBoxWhatsNew.ReadOnly = true;
-            this.richTextBoxWhatsNew.Size = new System.Drawing.Size(449, 256);
-            this.richTextBoxWhatsNew.TabIndex = 1;
-            this.richTextBoxWhatsNew.TabStop = false;
-            this.richTextBoxWhatsNew.Text = resources.GetString("richTextBoxWhatsNew.Text");
+            this.richTextBoxReleaseNotes.BackColor = System.Drawing.Color.White;
+            this.richTextBoxReleaseNotes.DetectUrls = false;
+            this.richTextBoxReleaseNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxReleaseNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxReleaseNotes.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxReleaseNotes.Name = "richTextBoxReleaseNotes";
+            this.richTextBoxReleaseNotes.ReadOnly = true;
+            this.richTextBoxReleaseNotes.Size = new System.Drawing.Size(539, 287);
+            this.richTextBoxReleaseNotes.TabIndex = 1;
+            this.richTextBoxReleaseNotes.TabStop = false;
+            this.richTextBoxReleaseNotes.Text = "";
             // 
             // FormAbout
             // 
@@ -205,7 +206,7 @@
             this.tabPageLicense.ResumeLayout(false);
             this.tabPageChangelog.ResumeLayout(false);
             this.tabPageDeveloper.ResumeLayout(false);
-            this.tabPageWhatsNew.ResumeLayout(false);
+            this.tabPageReleaseNotes.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -221,7 +222,7 @@
         private System.Windows.Forms.RichTextBox richTextBoxChangelog;
         private System.Windows.Forms.TabPage tabPageDeveloper;
         private System.Windows.Forms.RichTextBox richTextBoxDeveloper;
-        private System.Windows.Forms.TabPage tabPageWhatsNew;
-        private System.Windows.Forms.RichTextBox richTextBoxWhatsNew;
+        private System.Windows.Forms.TabPage tabPageReleaseNotes;
+        private System.Windows.Forms.RichTextBox richTextBoxReleaseNotes;
     }
 }

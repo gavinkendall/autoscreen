@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="DataConvert.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>All the methods for converting data.</summary>
@@ -27,6 +27,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class DataConvert
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public DataConvert()
         {
 

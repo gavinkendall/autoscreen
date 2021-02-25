@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MacroTagExpressionParser.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>Parses a formatted date/time value to figure out what operators to apply (whether it be + or -) for adding or removing time.</summary>
@@ -36,6 +36,9 @@ namespace AutoScreenCapture
         // {minute+5}          5 minutes ahead the given DateTime
         private readonly string DateTimeFormatTagExpressionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}(?<DateTimeFormat>\[.+\])?$";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MacroTagExpressionParser()
         {
 
@@ -46,6 +49,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="dateTime">The date/time object to parse.</param>
         /// <param name="tagExpression">The tag expression to use on the date/time object.</param>
+        /// <param name="macroParser"></param>
         /// <returns>A parsed macro string value.</returns>
         public string ParseTagExpressionForDateTimeFormat(DateTime dateTime, string tagExpression, MacroParser macroParser)
         {

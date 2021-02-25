@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ScreenshotCollection.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>A collection of screenshots.</summary>
@@ -325,6 +325,7 @@ namespace AutoScreenCapture
         /// <param name="filterType">The type of filter to use.</param>
         /// <param name="filterValue">The filter value to use.</param>
         /// <param name="date">The date to use.</param>
+        /// <param name="config"></param>
         /// <returns>A list of slides based on the filters being used.</returns>
         public List<Slide> GetSlides(string filterType, string filterValue, string date, Config config)
         {
@@ -604,6 +605,7 @@ namespace AutoScreenCapture
         /// Loads the screenshots taken on a particular day from the screenshots.xml file.
         /// </summary>
         /// <param name="date">The date to load screenshots from.</param>
+        /// <param name="config"></param>
         public int LoadXmlFileAndAddScreenshots(string date, Config config)
         {
             try
@@ -1025,6 +1027,7 @@ namespace AutoScreenCapture
         /// Deletes screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
         /// </summary>
         /// <param name="days">The number of days to consider.</param>
+        /// <param name="macroParser"></param>
         public void DeleteScreenshots(int days, MacroParser macroParser)
         {
             try

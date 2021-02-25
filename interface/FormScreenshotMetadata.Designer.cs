@@ -207,19 +207,74 @@
 
         #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelLabel;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxLabel;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotTime;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotDate;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotHeight;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotHeight;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotWidth;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotWidth;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotFormat;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotFormat;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotTitle;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotTitle;
     }
 }

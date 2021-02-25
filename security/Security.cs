@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Security.cs" company="Gavin Kendall">
-//     Copyright (c) 2020 Gavin Kendall
+//     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>This class is used for hashing the given passphrase.</summary>
@@ -30,6 +30,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class Security
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Security()
         {
 

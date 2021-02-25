@@ -7,6 +7,8 @@ Summary
 -------
 Auto Screen Capture is a small and portable screen capture utility for gamers, designers, and testers.
 
+The information presented in this README refers to the latest version (2.3.3.9).
+
 The application enables you to automatically take screenshots at a chosen interval. For example, you may
 want to capture the progress of playing through a game's level or track your progress on a long project.
 
@@ -51,6 +53,9 @@ This is where to view the source code, fork from the project, and submit pull re
 Video Tutorials
 ---------------
 There are a number of videos on YouTube which demonstrate the features of Auto Screen Capture.
+
+Getting Started
+https://youtu.be/v6ajwNFIV_s
 
 Quick Demo
 https://youtu.be/0Mv9tb2OLss
@@ -98,8 +103,8 @@ https://youtu.be/6-dlhW5e29U
 
 Introduction to Modules
 -----------------------
-When you open Auto Screen Capture's interface you're going to see a number of tabs on the left side
-which are called Modules:
+When you open Auto Screen Capture's interface you're going to see a Dashboard and
+a number of tabs on the left side which are called Modules:
 Setup
 Screenshots
 Screens
@@ -108,6 +113,9 @@ Editors
 Schedules
 Tags
 Triggers
+
+The Dashboard gives you an overview of all the screens and regions associated with the set
+of screenshots selected from the calendar and listed in the Screenshots module.
 
 
 
@@ -174,7 +182,15 @@ This menu will not be available if the session is locked.
 
 *Active Window Title*
 This is where to specify the text to compare against the active window title so that the application only
-takes screenshots if the active window title contains the defined text.
+takes screenshots if the active window title contains the defined text. There are a few ways for the text
+comparison to match against the active window title:
+Case Sensitive Match
+Case Insensitive Match
+Regular Expression Match
+
+Based on what type of match you use will affect how the text in the text field behaves. For example,
+you can match on exactly the lowercase and uppercase characters in a specific order or do a logical
+comparison with a regular expression (such as black|pink to match on either the words black or pink).
 
 *Application Focus*
 This is where you can choose which application (process) will be forced into the foreground as the active
@@ -233,7 +249,8 @@ knows about for a specified number of days.
 
 For example, "Keep screenshots for 30 days" will keep the image files on disk for 30 days.
 If any image files are found to be older than 30 days then those files will be automatically deleted.
-(Folders containing image files will not be deleted. This is intentional.)
+(Folders containing image files will not be deleted. This is intentional for now; a future version
+of Auto Screen Capture will include this functionality when I have time to develop it further.)
 
 Old screenshots will be deleted every five minutes. New screenshots will be saved every five minutes.
 The calendar will also update every five minutes (as of version 2.3.0.0).
@@ -260,15 +277,29 @@ The value of the Name field can be retrieved with the %name% macro tag so it cou
 as part of the screenshot's filename. Therefore any characters that are invalid to Windows
 will be stripped out of the name (such as /, :, *, ?, \, <, >, and |).
 
-The Component drop down list shows you the Active Window and the available screens with their
-associated dimensions.
+The Source drop down list shows you three sources:
+Auto Screen Capture
+Graphics Card
+Operating System
 
-For example, if you have three displays connected to your computer, then Component might show you ...
-Active Window
+If you need screenshots of the active window then use the Auto Screen Capture source.
+
+The Graphics Card source gives you a list of displays using the resolution properties
+from each display based on what your graphics card provides.
+
+The Operating System source gives you a list of displays using the device information
+provided by Windows. This may or may not be the same as the list from the Graphics Card source.
+
+The Component drop down list shows you the available screens with their associated dimensions.
+
+For example, if you have three displays connected to your computer, then the "Graphics Card"
+source and its Component list might show you ...
 Screen 1 (1920 x 1080)
 Screen 2 (1920 x 1080)
 Screen 3 (1680 x 1050)
 ... depending on what your screen setup is.
+
+You can change the values for X, Y, Width, and Height.
 
 From the Image group of controls you can specify the format and quality of the image
 that will be used when a screenshot is taken for that particular screen.

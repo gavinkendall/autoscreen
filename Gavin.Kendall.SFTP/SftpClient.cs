@@ -1,8 +1,31 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SftpClient.cs" company="Gavin Kendall">
+//     Copyright (c) 2008-2021 Gavin Kendall
+// </copyright>
+// <author>Gavin Kendall</author>
+// <summary>Shows a help system for Auto Screen Capture.</summary>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see <https://www.gnu.org/licenses/>.
+//-----------------------------------------------------------------------
+using System;
 using System.IO;
 
 namespace Gavin.Kendall.SFTP
 {
+    /// <summary>
+    /// An SFTP client to handle SFTP operations.
+    /// </summary>
     public class SftpClient
     {
         private Renci.SshNet.SftpClient _sftpClient;
