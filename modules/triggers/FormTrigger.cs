@@ -355,7 +355,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowInterface, "Show Interface").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartScreenCapture, "Start Screen Capture").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StopScreenCapture, "Stop Screen Capture").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EmailScreenshot, "Email Screenshot").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EmailScreenshot, "Email Screenshot (SMTP)").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetScreenCaptureInterval, "Set Screen Capture Interval").Description);
 
             // All the actions involving activating Screens, Regions, Schedules, Tags, and Triggers.
@@ -377,6 +377,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetLabel, "Apply Label").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitle, "Set Active Window Title").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetApplicationFocus, "Set Application Focus").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.FileTransferScreenshot, "File Transfer Screenshot (SFTP)").Description);
 
             listBoxAction.SelectedIndex = 0;
         }

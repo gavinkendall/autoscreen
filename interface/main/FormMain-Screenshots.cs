@@ -808,6 +808,19 @@ namespace AutoScreenCapture
             }
         }
 
+        private void FileTransferScreenshot(TriggerActionType triggerActionType)
+        {
+            if (triggerActionType == TriggerActionType.FileTransferScreenshot && _screenCapture.Running)
+            {
+                Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
+
+                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path) && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                {
+                    FileTransferScreenshot(lastScreenshotOfThisView);
+                }
+            }
+        }
+
         private void tabControlViews_Selected(object sender, TabControlEventArgs e)
         {
             ShowScreenshotBySlideIndex();

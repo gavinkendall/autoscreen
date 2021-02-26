@@ -133,6 +133,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Set the application focus with the specified process name.
         /// </summary>
-        SetApplicationFocus = 21
+        SetApplicationFocus = 21,
+
+        /// <summary>
+        /// Send a screenshot to a file server with SFTP.
+        /// </summary>
+        FileTransferScreenshot = 22
     }
 }

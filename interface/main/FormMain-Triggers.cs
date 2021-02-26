@@ -283,6 +283,10 @@ namespace AutoScreenCapture
                 case TriggerActionType.SetApplicationFocus:
                     SetApplicationFocus(trigger.Value);
                     break;
+
+                case TriggerActionType.FileTransferScreenshot:
+                    FileTransferScreenshot(TriggerActionType.FileTransferScreenshot);
+                    break;
             }
         }
     }
