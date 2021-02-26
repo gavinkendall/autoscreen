@@ -33,6 +33,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addRegion_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formRegion.RegionObject = null;
             _formRegion.ImageFormatCollection = _imageFormatCollection;
             _formRegion.TagCollection = _formMacroTag.MacroTagCollection;
@@ -101,6 +103,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void changeRegion_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             Region region = new Region();
 
             if (sender is Button)

@@ -33,6 +33,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addEditor_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formEditor.EditorObject = null;
 
             if (!_formEditor.Visible)
@@ -116,24 +118,35 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void changeEditor_Click(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            ShowInterface();
 
-            if (buttonSelected.Tag != null)
+            Editor editor = new Editor();
+
+            if (sender is Button)
             {
-                _formEditor.EditorObject = (Editor)buttonSelected.Tag;
+                Button buttonSelected = (Button)sender;
+                editor = (Editor)buttonSelected.Tag;
+            }
 
-                _formEditor.ShowDialog(this);
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                editor = (Editor)toolStripMenuItemSelected.Tag;
+            }
 
-                if (_formEditor.DialogResult == DialogResult.OK)
+            _formEditor.EditorObject = editor;
+
+            _formEditor.ShowDialog(this);
+
+            if (_formEditor.DialogResult == DialogResult.OK)
+            {
+                BuildEditorsModule();
+                BuildViewTabPages();
+                BuildScreenshotPreviewContextualMenu();
+
+                if (!_formEditor.EditorCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
-                    BuildEditorsModule();
-                    BuildViewTabPages();
-                    BuildScreenshotPreviewContextualMenu();
-
-                    if (!_formEditor.EditorCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
-                    {
-                        _screenCapture.ApplicationError = true;
-                    }
+                    _screenCapture.ApplicationError = true;
                 }
             }
         }

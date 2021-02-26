@@ -32,6 +32,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addTrigger_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formTrigger.TriggerObject = null;
 
             _formTrigger.EditorCollection = _formEditor.EditorCollection;
@@ -102,28 +104,39 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void changeTrigger_Click(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            ShowInterface();
 
-            if (buttonSelected.Tag != null)
+            Trigger trigger = new Trigger();
+
+            if (sender is Button)
             {
-                _formTrigger.TriggerObject = (Trigger)buttonSelected.Tag;
+                Button buttonSelected = (Button)sender;
+                trigger = (Trigger)buttonSelected.Tag;
+            }
 
-                _formTrigger.EditorCollection = _formEditor.EditorCollection;
-                _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
-                _formTrigger.RegionCollection = _formRegion.RegionCollection;
-                _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
-                _formTrigger.TagCollection = _formMacroTag.MacroTagCollection;
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                trigger = (Trigger)toolStripMenuItemSelected.Tag;
+            }
 
-                _formTrigger.ShowDialog(this);
+            _formTrigger.TriggerObject = trigger;
 
-                if (_formTrigger.DialogResult == DialogResult.OK)
+            _formTrigger.EditorCollection = _formEditor.EditorCollection;
+            _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
+            _formTrigger.RegionCollection = _formRegion.RegionCollection;
+            _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
+            _formTrigger.TagCollection = _formMacroTag.MacroTagCollection;
+
+            _formTrigger.ShowDialog(this);
+
+            if (_formTrigger.DialogResult == DialogResult.OK)
+            {
+                BuildTriggersModule();
+
+                if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
-                    BuildTriggersModule();
-
-                    if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
-                    {
-                        _screenCapture.ApplicationError = true;
-                    }
+                    _screenCapture.ApplicationError = true;
                 }
             }
         }

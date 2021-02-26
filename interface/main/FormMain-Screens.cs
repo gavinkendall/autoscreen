@@ -33,6 +33,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addScreen_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formScreen.ScreenObject = null;
             _formScreen.ImageFormatCollection = _imageFormatCollection;
             _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
@@ -101,6 +103,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void changeScreen_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             Screen screen = new Screen();
 
             if (sender is Button)

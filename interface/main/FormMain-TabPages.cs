@@ -39,71 +39,213 @@ namespace AutoScreenCapture
                 GripStyle = ToolStripGripStyle.Hidden
             };
 
-            ToolStripButton toolStripButtonAddScreen = new ToolStripButton
+            ToolStripSplitButton add = new ToolStripSplitButton
             {
-                Text = "Screen",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Add a new Screen",
+                Text = "Add",
+                Image = Resources.add
+            };
+
+            ToolStripMenuItem addScreen = new ToolStripMenuItem
+            {
+                Text = "Screen",
+                AutoToolTip = false,
                 Image = Resources.screen
             };
 
-            toolStripButtonAddScreen.Click += new EventHandler(addScreen_Click);
+            addScreen.Click += new EventHandler(addScreen_Click);
+            add.DropDown.Items.Add(addScreen);
 
-            ToolStripButton toolStripButtonAddRegion = new ToolStripButton
+            ToolStripMenuItem addRegion = new ToolStripMenuItem
             {
                 Text = "Region",
-                Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Add a new Region",
                 Image = Resources.region
             };
 
-            toolStripButtonAddRegion.Click += new EventHandler(addRegion_Click);
+            addRegion.Click += new EventHandler(addRegion_Click);
+            add.DropDown.Items.Add(addRegion);
 
-            ToolStripButton toolStripButtonAddEditor = new ToolStripButton
+            ToolStripMenuItem addEditor = new ToolStripMenuItem
             {
                 Text = "Editor",
-                Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Add a new Editor",
                 Image = Resources.edit
             };
 
-            toolStripButtonAddEditor.Click += new EventHandler(addEditor_Click);
+            addEditor.Click += new EventHandler(addEditor_Click);
+            add.DropDown.Items.Add(addEditor);
 
-            ToolStripButton toolStripButtonAddSchedule = new ToolStripButton
+            ToolStripMenuItem addSchedule = new ToolStripMenuItem
             {
                 Text = "Schedule",
-                Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Add a new Schedule",
                 Image = Resources.schedule
             };
 
-            toolStripButtonAddSchedule.Click += new EventHandler(addSchedule_Click);
+            addSchedule.Click += new EventHandler(addSchedule_Click);
+            add.DropDown.Items.Add(addSchedule);
 
-            ToolStripButton toolStripButtonAddMacroTag = new ToolStripButton
+            ToolStripMenuItem addMacroTag = new ToolStripMenuItem
             {
                 Text = "Macro Tag",
-                Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Add a new Macro Tag",
                 Image = Resources.brick
             };
 
-            toolStripButtonAddMacroTag.Click += new EventHandler(addMacroTag_Click);
+            addMacroTag.Click += new EventHandler(addMacroTag_Click);
+            add.DropDown.Items.Add(addMacroTag);
 
-            ToolStripButton toolStripButtonAddTrigger = new ToolStripButton
+            ToolStripMenuItem addTrigger = new ToolStripMenuItem
             {
                 Text = "Trigger",
-                Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Add a new Trigger",
                 Image = Resources.trigger
             };
 
-            toolStripButtonAddTrigger.Click += new EventHandler(addTrigger_Click);
+            addTrigger.Click += new EventHandler(addTrigger_Click);
+            add.DropDown.Items.Add(addTrigger);
+
+            ToolStripSplitButton change = new ToolStripSplitButton
+            {
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Text = "Change",
+                Image = Resources.configure
+            };
+
+            ToolStripMenuItem changeScreen = new ToolStripMenuItem
+            {
+                Text = "Screen",
+                AutoToolTip = false,
+                Image = Resources.screen
+            };
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                ToolStripMenuItem screenMenuItem = new ToolStripMenuItem
+                {
+                    Text = screen.Name,
+                    Tag = screen
+                };
+
+                screenMenuItem.Click += new EventHandler(changeScreen_Click);
+
+                changeScreen.DropDown.Items.Add(screenMenuItem);
+            }
+
+            change.DropDown.Items.Add(changeScreen);
+
+            ToolStripMenuItem changeRegion = new ToolStripMenuItem
+            {
+                Text = "Region",
+                AutoToolTip = false,
+                Image = Resources.region
+            };
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                ToolStripMenuItem regionMenuItem = new ToolStripMenuItem
+                {
+                    Text = region.Name,
+                    Tag = region
+                };
+
+                regionMenuItem.Click += new EventHandler(changeRegion_Click);
+
+                changeRegion.DropDown.Items.Add(regionMenuItem);
+            }
+
+            change.DropDown.Items.Add(changeRegion);
+
+            ToolStripMenuItem changeEditor = new ToolStripMenuItem
+            {
+                Text = "Editor",
+                AutoToolTip = false,
+                Image = Resources.edit
+            };
+
+            foreach (Editor editor in _formEditor.EditorCollection)
+            {
+                ToolStripMenuItem editorMenuItem = new ToolStripMenuItem
+                {
+                    Text = editor.Name,
+                    Tag = editor
+                };
+
+                editorMenuItem.Click += new EventHandler(changeEditor_Click);
+
+                changeEditor.DropDown.Items.Add(editorMenuItem);
+            }
+
+            change.DropDown.Items.Add(changeEditor);
+
+            ToolStripMenuItem changeSchedule = new ToolStripMenuItem
+            {
+                Text = "Schedule",
+                AutoToolTip = false,
+                Image = Resources.schedule
+            };
+
+            foreach (Schedule schedule in _formSchedule.ScheduleCollection)
+            {
+                ToolStripMenuItem scheduleMenuItem = new ToolStripMenuItem
+                {
+                    Text = schedule.Name,
+                    Tag = schedule
+                };
+
+                scheduleMenuItem.Click += new EventHandler(changeSchedule_Click);
+
+                changeSchedule.DropDown.Items.Add(scheduleMenuItem);
+            }
+
+            change.DropDown.Items.Add(changeSchedule);
+
+            ToolStripMenuItem changeMacroTag = new ToolStripMenuItem
+            {
+                Text = "Macro Tag",
+                AutoToolTip = false,
+                Image = Resources.brick
+            };
+
+            foreach (MacroTag macrotag in _formMacroTag.MacroTagCollection)
+            {
+                ToolStripMenuItem macrotagMenuItem = new ToolStripMenuItem
+                {
+                    Text = macrotag.Name,
+                    Tag = macrotag
+                };
+
+                macrotagMenuItem.Click += new EventHandler(changeMacroTag_Click);
+
+                changeMacroTag.DropDown.Items.Add(macrotagMenuItem);
+            }
+
+            change.DropDown.Items.Add(changeMacroTag);
+
+            ToolStripMenuItem changeTrigger = new ToolStripMenuItem
+            {
+                Text = "Trigger",
+                AutoToolTip = false,
+                Image = Resources.trigger
+            };
+
+            foreach (Trigger trigger in _formTrigger.TriggerCollection)
+            {
+                ToolStripMenuItem triggerMenuItem = new ToolStripMenuItem
+                {
+                    Text = trigger.Name,
+                    Tag = trigger
+                };
+
+                triggerMenuItem.Click += new EventHandler(changeTrigger_Click);
+
+                changeTrigger.DropDown.Items.Add(triggerMenuItem);
+            }
+
+            change.DropDown.Items.Add(changeTrigger);
 
             ToolStripButton toolStripButtonEmailSettings = new ToolStripButton
             {
@@ -127,20 +269,19 @@ namespace AutoScreenCapture
 
             toolStripButtonFileTransferSettings.Click += new EventHandler(toolStripMenuItemFileTransferSettings_Click);
 
-            toolStripDashboard.Items.Add(toolStripButtonAddScreen);
-            toolStripDashboard.Items.Add(toolStripButtonAddRegion);
-            toolStripDashboard.Items.Add(toolStripButtonAddEditor);
-            toolStripDashboard.Items.Add(toolStripButtonAddSchedule);
-            toolStripDashboard.Items.Add(toolStripButtonAddMacroTag);
-            toolStripDashboard.Items.Add(toolStripButtonAddTrigger);
+            toolStripDashboard.Items.Add(add);
+            toolStripDashboard.Items.Add(new ToolStripSeparator());
+            toolStripDashboard.Items.Add(change);
 
             if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
+                toolStripDashboard.Items.Add(new ToolStripSeparator());
                 toolStripDashboard.Items.Add(toolStripButtonEmailSettings);
             }
 
             if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
             {
+                toolStripDashboard.Items.Add(new ToolStripSeparator());
                 toolStripDashboard.Items.Add(toolStripButtonFileTransferSettings);
             }
 
@@ -310,7 +451,7 @@ namespace AutoScreenCapture
             {
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Change this component and other settings",
+                ToolTipText = "Change or remove this component",
                 Image = Resources.configure
             };
 
@@ -362,34 +503,6 @@ namespace AutoScreenCapture
                 toolStripMenuItemRemoveRegion.Click += new EventHandler(removeRegion_Click);
 
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
-            }
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
-
-            ToolStripMenuItem toolStripMenuItemAdd = new ToolStripMenuItem
-            {
-                Text = "Add"
-            };
-
-            toolStripMenuItemAdd.DropDown.Items.Add("Screen", Resources.screen, addScreen_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Region", Resources.region, addRegion_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Editor", Resources.edit, addEditor_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Schedule", Resources.schedule, addSchedule_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Macro Tag", Resources.brick, addMacroTag_Click);
-            toolStripMenuItemAdd.DropDown.Items.Add("Trigger", Resources.trigger, addTrigger_Click);
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAdd);
-
-            toolStripSplitButtonConfigure.DropDown.Items.Add(new ToolStripSeparator());
-
-            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
-            {
-                toolStripSplitButtonConfigure.DropDown.Items.Add("Email Settings", Resources.email, toolStripMenuItemEmailSettings_Click);
-            }
-
-            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
-            {
-                toolStripSplitButtonConfigure.DropDown.Items.Add("File Transfer Settings", Resources.file_transfer, toolStripMenuItemFileTransferSettings_Click);
             }
 
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton

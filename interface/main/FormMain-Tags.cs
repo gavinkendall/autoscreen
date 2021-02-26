@@ -32,6 +32,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void addMacroTag_Click(object sender, EventArgs e)
         {
+            ShowInterface();
+
             _formMacroTag.MacroTagObject = null;
 
             if (!_formMacroTag.Visible)
@@ -96,22 +98,33 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void changeMacroTag_Click(object sender, EventArgs e)
         {
-            Button buttonSelected = (Button)sender;
+            ShowInterface();
 
-            if (buttonSelected.Tag != null)
+            MacroTag macroTag = new MacroTag(_macroParser);
+
+            if (sender is Button)
             {
-                _formMacroTag.MacroTagObject = (MacroTag)buttonSelected.Tag;
+                Button buttonSelected = (Button)sender;
+                macroTag = (MacroTag)buttonSelected.Tag;
+            }
 
-                _formMacroTag.ShowDialog(this);
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
+                macroTag = (MacroTag)toolStripMenuItemSelected.Tag;
+            }
 
-                if (_formMacroTag.DialogResult == DialogResult.OK)
+            _formMacroTag.MacroTagObject = macroTag;
+
+            _formMacroTag.ShowDialog(this);
+
+            if (_formMacroTag.DialogResult == DialogResult.OK)
+            {
+                BuildMacroTagsModule();
+
+                if (!_formMacroTag.MacroTagCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
-                    BuildMacroTagsModule();
-
-                    if (!_formMacroTag.MacroTagCollection.SaveToXmlFile(_config, _fileSystem, _log))
-                    {
-                        _screenCapture.ApplicationError = true;
-                    }
+                    _screenCapture.ApplicationError = true;
                 }
             }
         }

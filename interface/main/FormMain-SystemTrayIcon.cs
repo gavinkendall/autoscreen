@@ -31,11 +31,102 @@ namespace AutoScreenCapture
         {
             PopulateLabelList();
 
+            // Change Screen
+            toolStripMenuItemChangeScreen.DropDown.Items.Clear();
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                ToolStripMenuItem screenMenuItem = new ToolStripMenuItem
+                {
+                    Text = screen.Name,
+                    Tag = screen
+                };
+
+                screenMenuItem.Click += new EventHandler(changeScreen_Click);
+
+                toolStripMenuItemChangeScreen.DropDown.Items.Add(screenMenuItem);
+            }
+
+            // Change Region
+            toolStripMenuItemChangeRegion.DropDown.Items.Clear();
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                ToolStripMenuItem regionMenuItem = new ToolStripMenuItem
+                {
+                    Text = region.Name,
+                    Tag = region
+                };
+
+                regionMenuItem.Click += new EventHandler(changeRegion_Click);
+
+                toolStripMenuItemChangeRegion.DropDown.Items.Add(regionMenuItem);
+            }
+
+            // Change Editor
+            toolStripMenuItemChangeEditor.DropDown.Items.Clear();
+            foreach (Editor editor in _formEditor.EditorCollection)
+            {
+                ToolStripMenuItem editorMenuItem = new ToolStripMenuItem
+                {
+                    Text = editor.Name,
+                    Tag = editor
+                };
+
+                editorMenuItem.Click += new EventHandler(changeEditor_Click);
+
+                toolStripMenuItemChangeEditor.DropDown.Items.Add(editorMenuItem);
+            }
+
+            // Change Schedule
+            toolStripMenuItemChangeSchedule.DropDown.Items.Clear();
+            foreach (Schedule schedule in _formSchedule.ScheduleCollection)
+            {
+                ToolStripMenuItem scheduleMenuItem = new ToolStripMenuItem
+                {
+                    Text = schedule.Name,
+                    Tag = schedule
+                };
+
+                scheduleMenuItem.Click += new EventHandler(changeSchedule_Click);
+
+                toolStripMenuItemChangeSchedule.DropDown.Items.Add(scheduleMenuItem);
+            }
+
+            // Change Macro Tag
+            toolStripMenuItemChangeMacroTag.DropDown.Items.Clear();
+            foreach (MacroTag macrotag in _formMacroTag.MacroTagCollection)
+            {
+                ToolStripMenuItem macrotagMenuItem = new ToolStripMenuItem
+                {
+                    Text = macrotag.Name,
+                    Tag = macrotag
+                };
+
+                macrotagMenuItem.Click += new EventHandler(changeMacroTag_Click);
+
+                toolStripMenuItemChangeMacroTag.DropDown.Items.Add(macrotagMenuItem);
+            }
+
+            // Change Trigger
+            toolStripMenuItemChangeTrigger.DropDown.Items.Clear();
+            foreach (Trigger trigger in _formTrigger.TriggerCollection)
+            {
+                ToolStripMenuItem triggerMenuItem = new ToolStripMenuItem
+                {
+                    Text = trigger.Name,
+                    Tag = trigger
+                };
+
+                triggerMenuItem.Click += new EventHandler(changeTrigger_Click);
+
+                toolStripMenuItemChangeTrigger.DropDown.Items.Add(triggerMenuItem);
+            }
+
             if (_screenCapture.LockScreenCaptureSession)
             {
-                // Hide the "Screen Capture Status", "Add", "Settings", and "Tools" menu items.
+                // Hide the "Screen Capture Status", "Add", "Change", "Settings", and "Tools" menu items.
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
                 toolStripMenuItemAdd.Visible = false;
+                toolStripMenuItemChange.Visible = false;
                 toolStripMenuItemSettings.Visible = false;
                 toolStripMenuItemEmailSettings.Visible = false;
                 toolStripMenuItemFileTransferSettings.Visible = false;
@@ -49,8 +140,9 @@ namespace AutoScreenCapture
             }
             else
             {
-                // Show the "Add", "Settings", and "Screen Capture Status" menu items.
+                // Show the "Add", "Change", "Settings", and "Screen Capture Status" menu items.
                 toolStripMenuItemAdd.Visible = true;
+                toolStripMenuItemChange.Visible = true;
 
                 if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
                 {
