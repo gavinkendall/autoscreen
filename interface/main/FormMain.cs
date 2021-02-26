@@ -114,11 +114,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Constructor for the main form.
         /// </summary>
-        public FormMain(Config config, FileSystem fileSystem, Log log)
+        public FormMain(Config config)
         {
             _config = config;
-            _fileSystem = fileSystem;
-            _log = log;
+            _fileSystem = config.FileSystem;
+            _log = config.Log;
 
             if (Environment.OSVersion.Version.Major >= 6)
             {

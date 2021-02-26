@@ -384,7 +384,7 @@ namespace AutoScreenCapture
             {
                 // We want to write to the error file instead of writing an exception just in case the user
                 // has ExitOnError set and the exception causes the application to exit.
-                _log.WriteErrorMessage("There was an error encountered when saving the screenshot image.");
+                _log.WriteErrorMessage("There was an error encountered when saving the screenshot image");
             }
         }
 

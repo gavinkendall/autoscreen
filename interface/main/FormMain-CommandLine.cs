@@ -441,7 +441,7 @@ namespace AutoScreenCapture
                         {
                             if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                             {
-                                _config.Load(_screenCapture, _log);
+                                _config.Load(_fileSystem);
                             }
 
                             passphrase = passphrase.Trim();
@@ -532,7 +532,7 @@ namespace AutoScreenCapture
                         {
                             if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                             {
-                                _config.Load(_screenCapture, _log);
+                                _config.Load(_fileSystem);
                             }
 
                             if (string.IsNullOrEmpty(activeWindowTitle))
@@ -574,7 +574,7 @@ namespace AutoScreenCapture
                             {
                                 if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                                 {
-                                    _config.Load(_screenCapture, _log);
+                                    _config.Load(_fileSystem);
                                 }
 
                                 if (string.IsNullOrEmpty(applicationFocus))
@@ -609,7 +609,7 @@ namespace AutoScreenCapture
                         {
                             if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                             {
-                                _config.Load(_screenCapture, _log);
+                                _config.Load(_fileSystem);
                             }
 
                             if (string.IsNullOrEmpty(label))

@@ -1044,6 +1044,7 @@ namespace AutoScreenCapture
                             _slideList.Remove(screenshot.Slide);
                             _slideNameList.Remove(screenshot.Slide.Name);
 
+                            _log.WriteDebugMessage($"Deleting \"{screenshot.Path}\"");
                             _fileSystem.DeleteFile(screenshot.Path);
                         }
 
@@ -1083,6 +1084,7 @@ namespace AutoScreenCapture
                             {
                                 string path = node.SelectSingleNode("path").FirstChild.Value;
 
+                                _log.WriteDebugMessage($"Deleting \"{path}\"");
                                 _fileSystem.DeleteFile(path);
 
                                 node.ParentNode.RemoveChild(node);
@@ -1090,6 +1092,10 @@ namespace AutoScreenCapture
                         }
                     }
                 }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                _log.WriteErrorMessage("Access to the file system was denied due to insufficient permissions during screenshot deletion operation");
             }
             catch (Exception ex)
             {

@@ -18,8 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
-using System;
-
 namespace AutoScreenCapture
 {
     /// <summary>
@@ -114,9 +112,18 @@ namespace AutoScreenCapture
         private VersionCollection _versionCollection;
 
         /// <summary>
-        /// A class for handling settings. Also creates a new version collection and populates it with all the various versions of the application.
+        /// A class for storing settings.
         /// </summary>
-        public Settings(FileSystem fileSystem)
+        public Settings()
+        {
+
+        }
+
+        /// <summary>
+        /// Loads the settings and saves settings files based on the given file system.
+        /// </summary>
+        /// <param name="fileSystem">The file system to use.</param>
+        public void Load(FileSystem fileSystem)
         {
             DefaultSettings = new DefaultSettings();
 
@@ -211,25 +218,26 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.6")); // Active Window Title text comparison includes type of match to use during text comparison.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.7")); // Memory leak fix.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.8")); // Screen now has Source (such as Graphics Card and Operating System), X, Y, Width, and Height. Removed "Resolution Ratio" option for better screen capture performance. Removed internal screen dictionary refresh from Windows because we now use X, Y, Width, and Height either from Graphics Card or from Operating System and these values can now be adjusted. Module tab page layout style changed to be multi-line. Refactored code to reduce usage of static classes and static variables for better memory management. Removed calls to GC Collect. Changed screen capture method. "Region Select / Auto Save" region is no longer created when application initialized. "Region Select / Auto Save" screenshots are now shown in all screenshot tabs.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.9")); // Dashboard introduced so you can have an overview of all screens and regions.
 
             Application = new SettingCollection()
             {
-                Filepath = fileSystem.DefaultApplicationSettingsFile
+                Filepath = fileSystem.ApplicationSettingsFile
             };
 
             User = new SettingCollection
             {
-                Filepath = fileSystem.DefaultUserSettingsFile
+                Filepath = fileSystem.UserSettingsFile
             };
 
             SMTP = new SettingCollection
             {
-                Filepath = fileSystem.DefaultSmtpSettingsFile
+                Filepath = fileSystem.SmtpSettingsFile
             };
 
             SFTP = new SettingCollection
             {
-                Filepath = fileSystem.DefaultSftpSettingsFile
+                Filepath = fileSystem.SftpSettingsFile
             };
 
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
@@ -339,6 +347,7 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
                     Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
                     Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
+                    Application.Save(this, fileSystem);
                 }
             }
 
@@ -382,6 +391,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
+                User.Save(this, fileSystem);
             }
 
             if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !fileSystem.FileExists(SMTP.Filepath))
@@ -399,6 +409,7 @@ namespace AutoScreenCapture
                 SMTP.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
                 SMTP.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
                 SMTP.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
+                SMTP.Save(this, fileSystem);
             }
 
             if (SFTP != null && !string.IsNullOrEmpty(SFTP.Filepath) && !fileSystem.FileExists(SFTP.Filepath))
@@ -408,6 +419,7 @@ namespace AutoScreenCapture
                 SFTP.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
                 SFTP.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
                 SFTP.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
+                SFTP.Save(this, fileSystem);
             }
         }
 

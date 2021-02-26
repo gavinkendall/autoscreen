@@ -43,13 +43,8 @@ namespace AutoScreenCapture
         [STAThread]
         private static void Main(string[] args)
         {
+            Config config = new Config();
             FileSystem fileSystem = new FileSystem();
-            Settings settings = new Settings(fileSystem);
-            MacroParser macroParser = new MacroParser(settings);
-            Log log = new Log(settings, fileSystem, macroParser);
-            Config config = new Config(fileSystem, macroParser, settings, log);
-
-            ScreenCapture screenCapture = new ScreenCapture(config, macroParser, fileSystem, log);
 
             if (args.Length == 1 && !string.IsNullOrEmpty(args[0]) && args[0].Equals("-kill"))
             {
@@ -65,13 +60,13 @@ namespace AutoScreenCapture
                 // such as -debug, -log, -capture, -start, -stop, and -exit to the instance which is already running.
                 if (args.Length > 0)
                 {
-                    ParseCommandLineArguments(args, config, screenCapture, fileSystem, log);
+                    ParseCommandLineArguments(args, config);
                 }
                 else
                 {
                     // Normally we could use the -config command to specify the configuration file to use, but if we
                     // have no commands to parse then we'll load the settings from the default configuration file.
-                    config.Load(screenCapture, log);
+                    config.Load(fileSystem);
                 }
 
                 // This block of code figures out if we're already running an instance of the application.
@@ -90,24 +85,26 @@ namespace AutoScreenCapture
                         }
 
                         Application.SetCompatibleTextRenderingDefault(false);
-                        Application.Run(new FormMain(config, fileSystem, log));
+                        Application.Run(new FormMain(config));
                     }
                     else
                     {
-                        if (args.Length == 0 && Convert.ToBoolean(settings.Application.GetByKey("ShowStartupError", settings.DefaultSettings.ShowStartupError).Value))
+                        if (args.Length == 0 && Convert.ToBoolean(config.Settings.Application.GetByKey("ShowStartupError", config.Settings.DefaultSettings.ShowStartupError).Value))
                         {
                             // We've determined that an existing instance is already running. We should write out an error message informing the user.
-                            string appVersion = "[(v" + settings.ApplicationVersion + ") ";
+                            string appVersion = "[(v" + config.Settings.ApplicationVersion + ") ";
 
-                            fileSystem.AppendToFile(fileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(macroParser.DateFormat + " " + macroParser.TimeFormat) + "] Cannot start " + settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + fileSystem.ApplicationSettingsFile + "\"");
+                            fileSystem.AppendToFile(fileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(config.MacroParser.DateFormat + " " + config.MacroParser.TimeFormat) + "] Cannot start " + config.Settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + config.FileSystem.ApplicationSettingsFile + "\"");
                         }
                     }
                 }
             }
         }
 
-        private static void ParseCommandLineArguments(string[] args, Config config, ScreenCapture screenCapture, FileSystem fileSystem, Log log)
+        private static void ParseCommandLineArguments(string[] args, Config config)
         {
+            FileSystem fileSystem = new FileSystem();
+
             // Because ordering is important I want to make sure that we pick up the configuration file first.
             // This will avoid scenarios like "autoscreen.exe -debug -config" creating all the default folders
             // and files (thanks to -debug being the first argument) before -config is parsed.
@@ -123,22 +120,16 @@ namespace AutoScreenCapture
                     if (configFile.Length > 0)
                     {
                         fileSystem.ConfigFile = configFile;
-
-                        config.Load(screenCapture, log);
+                        config.Load(fileSystem);
                     }
                 }
             }
 
-            // We didn't get a -config command line argument so just load the default config.
-            if (config.Settings.Application == null)
+            // We didn't get a -config command line argument so just load the default config
+            // and let the application parse any other command line options.
+            if (config.Settings == null)
             {
-                config.Load(screenCapture, log);
-            }
-
-            // Load user settings.
-            if (string.IsNullOrEmpty(fileSystem.UserSettingsFile))
-            {
-                config.Load(screenCapture, log);
+                config.Load(fileSystem);
             }
 
             // All of these commands can be externally issued to an already running instance.
