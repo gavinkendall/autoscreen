@@ -36,6 +36,8 @@
             this.labelHelp = new System.Windows.Forms.Label();
             this.listBoxCondition = new System.Windows.Forms.ListBox();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.labelTriggerValue = new System.Windows.Forms.Label();
+            this.textBoxTriggerValue = new System.Windows.Forms.TextBox();
             this.labelDay = new System.Windows.Forms.Label();
             this.labelTime = new System.Windows.Forms.Label();
             this.labelDate = new System.Windows.Forms.Label();
@@ -140,6 +142,8 @@
             // 
             this.groupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox.Controls.Add(this.labelTriggerValue);
+            this.groupBox.Controls.Add(this.textBoxTriggerValue);
             this.groupBox.Controls.Add(this.labelDay);
             this.groupBox.Controls.Add(this.labelTime);
             this.groupBox.Controls.Add(this.labelDate);
@@ -164,6 +168,25 @@
             this.groupBox.Size = new System.Drawing.Size(347, 348);
             this.groupBox.TabIndex = 10;
             this.groupBox.TabStop = false;
+            // 
+            // labelTriggerValue
+            // 
+            this.labelTriggerValue.AutoSize = true;
+            this.labelTriggerValue.Location = new System.Drawing.Point(7, 25);
+            this.labelTriggerValue.Name = "labelTriggerValue";
+            this.labelTriggerValue.Size = new System.Drawing.Size(37, 13);
+            this.labelTriggerValue.TabIndex = 28;
+            this.labelTriggerValue.Text = "Value:";
+            this.labelTriggerValue.Visible = false;
+            // 
+            // textBoxTriggerValue
+            // 
+            this.textBoxTriggerValue.Location = new System.Drawing.Point(121, 22);
+            this.textBoxTriggerValue.Name = "textBoxTriggerValue";
+            this.textBoxTriggerValue.Size = new System.Drawing.Size(220, 20);
+            this.textBoxTriggerValue.TabIndex = 27;
+            this.textBoxTriggerValue.TabStop = false;
+            this.textBoxTriggerValue.Visible = false;
             // 
             // labelDay
             // 
@@ -510,5 +533,7 @@
         private System.Windows.Forms.Label labelDays;
         private System.Windows.Forms.Label labelDay;
         private System.Windows.Forms.Label labelPage;
+        private System.Windows.Forms.TextBox textBoxTriggerValue;
+        private System.Windows.Forms.Label labelTriggerValue;
     }
 }

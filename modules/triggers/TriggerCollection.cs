@@ -44,7 +44,12 @@ namespace AutoScreenCapture
         private const string TRIGGER_DAY = "day";
         private const string TRIGGER_DAYS = "days";
         private const string TRIGGER_SCREEN_CAPTURE_INTERVAL = "screen_capture_interval";
+        
+        // 2.3.3.9 and older
         private const string TRIGGER_MODULE_ITEM = "module_item";
+
+        // 2.3.4.0 and newer
+        private const string TRIGGER_VALUE = "value";
 
         private readonly string TRIGGER_XPATH;
 
@@ -157,7 +162,7 @@ namespace AutoScreenCapture
                                     // We no longer use Editor. We use ModuleItem now (since 2.3.0.0).
                                     case TRIGGER_EDITOR:
                                         xReader.Read();
-                                        trigger.ModuleItem = xReader.Value;
+                                        trigger.Value = xReader.Value;
                                         break;
 
                                     case TRIGGER_ACTIVE:
@@ -190,9 +195,16 @@ namespace AutoScreenCapture
                                         trigger.ScreenCaptureInterval = Convert.ToInt32(xReader.Value);
                                         break;
 
+                                        // 2.3.3.9 and older
                                     case TRIGGER_MODULE_ITEM:
                                         xReader.Read();
-                                        trigger.ModuleItem = xReader.Value;
+                                        trigger.Value = xReader.Value;
+                                        break;
+
+                                        // 2.3.4.0 and newer
+                                    case TRIGGER_VALUE:
+                                        xReader.Read();
+                                        trigger.Value = xReader.Value;
                                         break;
                                 }
                             }
@@ -401,7 +413,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_DAY, string.IsNullOrEmpty(trigger.Day) ? "Weekday" : trigger.Day.ToString());
                         xWriter.WriteElementString(TRIGGER_DAYS, trigger.Days.ToString());
                         xWriter.WriteElementString(TRIGGER_SCREEN_CAPTURE_INTERVAL, trigger.ScreenCaptureInterval.ToString());
-                        xWriter.WriteElementString(TRIGGER_MODULE_ITEM, trigger.ModuleItem);
+                        xWriter.WriteElementString(TRIGGER_VALUE, trigger.Value);
 
                         xWriter.WriteEndElement();
                     }

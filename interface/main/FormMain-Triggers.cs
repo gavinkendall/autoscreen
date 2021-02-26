@@ -179,7 +179,7 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.RunEditor:
-                    Editor editor = _formEditor.EditorCollection.GetByName(trigger.ModuleItem);
+                    Editor editor = _formEditor.EditorCollection.GetByName(trigger.Value);
                     RunEditor(editor, TriggerActionType.RunEditor);
                     break;
 
@@ -219,57 +219,69 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.ActivateScreen:
-                    _formScreen.ScreenCollection.GetByName(trigger.ModuleItem).Active = true;
+                    _formScreen.ScreenCollection.GetByName(trigger.Value).Active = true;
                     BuildScreensModule();
                     break;
 
                 case TriggerActionType.DeactivateScreen:
-                    _formScreen.ScreenCollection.GetByName(trigger.ModuleItem).Active = false;
+                    _formScreen.ScreenCollection.GetByName(trigger.Value).Active = false;
                     BuildScreensModule();
                     break;
 
                 case TriggerActionType.ActivateRegion:
-                    _formRegion.RegionCollection.GetByName(trigger.ModuleItem).Active = true;
+                    _formRegion.RegionCollection.GetByName(trigger.Value).Active = true;
                     BuildRegionsModule();
                     break;
 
                 case TriggerActionType.DeactivateRegion:
-                    _formRegion.RegionCollection.GetByName(trigger.ModuleItem).Active = false;
+                    _formRegion.RegionCollection.GetByName(trigger.Value).Active = false;
                     BuildRegionsModule();
                     break;
 
                 case TriggerActionType.ActivateSchedule:
-                    _formSchedule.ScheduleCollection.GetByName(trigger.ModuleItem).Active = true;
+                    _formSchedule.ScheduleCollection.GetByName(trigger.Value).Active = true;
                     BuildSchedulesModule();
                     break;
 
                 case TriggerActionType.DeactivateSchedule:
-                    _formSchedule.ScheduleCollection.GetByName(trigger.ModuleItem).Active = false;
+                    _formSchedule.ScheduleCollection.GetByName(trigger.Value).Active = false;
                     BuildSchedulesModule();
                     break;
 
                 case TriggerActionType.ActivateTag:
-                    _formMacroTag.MacroTagCollection.GetByName(trigger.ModuleItem).Active = true;
+                    _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Active = true;
                     BuildMacroTagsModule();
                     break;
 
                 case TriggerActionType.DeactivateTag:
-                    _formMacroTag.MacroTagCollection.GetByName(trigger.ModuleItem).Active = false;
+                    _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Active = false;
                     BuildMacroTagsModule();
                     break;
 
                 case TriggerActionType.ActivateTrigger:
-                    _formTrigger.TriggerCollection.GetByName(trigger.ModuleItem).Active = true;
+                    _formTrigger.TriggerCollection.GetByName(trigger.Value).Active = true;
                     BuildTriggersModule();
                     break;
 
                 case TriggerActionType.DeactivateTrigger:
-                    _formTrigger.TriggerCollection.GetByName(trigger.ModuleItem).Active = false;
+                    _formTrigger.TriggerCollection.GetByName(trigger.Value).Active = false;
                     BuildTriggersModule();
                     break;
 
                 case TriggerActionType.DeleteScreenshots:
                     _screenshotCollection.DeleteScreenshots(trigger.Days, _macroParser);
+                    break;
+
+                case TriggerActionType.SetLabel:
+                    ApplyLabel(trigger.Value);
+                    break;
+
+                case TriggerActionType.SetActiveWindowTitle:
+                    SetActiveWindowTitle(trigger.Value);
+                    break;
+
+                case TriggerActionType.SetApplicationFocus:
+                    SetApplicationFocus(trigger.Value);
                     break;
             }
         }

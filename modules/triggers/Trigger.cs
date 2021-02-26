@@ -73,10 +73,11 @@ namespace AutoScreenCapture
         public int ScreenCaptureInterval { get; set; }
 
         /// <summary>
-        /// The name of the module item associated with the trigger.
-        /// This could be the name of a Screen, Region, Editor, Schedule, or Tag.
+        /// This could be any value.
+        /// Maybe the name of a Screen, Region, Editor, Schedule, or Macro Tag.
+        /// Maybe the label to use when applying a Label.
         /// </summary>
-        public string ModuleItem { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// The empty constructor for the trigger.

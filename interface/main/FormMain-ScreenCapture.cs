@@ -643,5 +643,32 @@ namespace AutoScreenCapture
                 return false;
             }
         }
+
+        private void SetActiveWindowTitle(string activeWindowTitle)
+        {
+            if (string.IsNullOrEmpty(activeWindowTitle))
+            {
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
+
+                checkBoxActiveWindowTitle.Checked = false;
+            }
+            else
+            {
+                activeWindowTitle = activeWindowTitle.Trim();
+
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
+
+                checkBoxActiveWindowTitle.Checked = true;
+                textBoxActiveWindowTitle.Text = activeWindowTitle;
+
+                _screenCapture.ActiveWindowTitle = activeWindowTitle;
+            }
+
+            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+            {
+                _screenCapture.ApplicationError = true;
+            }
+        }
     }
 }

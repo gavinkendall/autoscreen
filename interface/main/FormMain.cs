@@ -590,5 +590,28 @@ namespace AutoScreenCapture
                 System.Threading.Thread.Sleep(delayAfter);
             }
         }
+
+        private void SetApplicationFocus(string applicationFocus)
+        {
+            if (string.IsNullOrEmpty(applicationFocus))
+            {
+                _config.Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
+            }
+            else
+            {
+                applicationFocus = applicationFocus.Trim();
+
+                _config.Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+            }
+
+            RefreshApplicationFocusList();
+
+            DoApplicationFocus();
+        }
     }
 }

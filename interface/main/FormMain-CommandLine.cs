@@ -243,7 +243,7 @@ namespace AutoScreenCapture
                         _log.DebugMode = false;
 
                         _config.Settings.Application.SetValueByKey("DebugMode", false);
-                        
+
                         if (!_config.Settings.Application.Save(_config.Settings, _fileSystem))
                         {
                             _screenCapture.ApplicationError = true;
@@ -299,14 +299,12 @@ namespace AutoScreenCapture
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_START))
                     {
                         StartScreenCapture();
-                        return;
                     }
 
                     // -stop
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOP))
                     {
                         StopScreenCapture();
-                        return;
                     }
 
                     // -exit
@@ -535,69 +533,24 @@ namespace AutoScreenCapture
                                 _config.Load(_fileSystem);
                             }
 
-                            if (string.IsNullOrEmpty(activeWindowTitle))
-                            {
-                                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
-
-                                checkBoxActiveWindowTitle.Checked = false;
-                            }
-                            else
-                            {
-                                activeWindowTitle = activeWindowTitle.Trim();
-
-                                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
-                                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
-
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
-                                checkBoxActiveWindowTitle.Checked = true;
-                                textBoxActiveWindowTitle.Text = activeWindowTitle;
-
-                                _screenCapture.ActiveWindowTitle = activeWindowTitle;
-                            }
-
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
+                            SetActiveWindowTitle(activeWindowTitle);
                         }
+                    }
 
-                        // -applicationFocus="x"
-                        if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS))
+                    // -applicationFocus="x"
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS))
+                    {
+                        string applicationFocus = Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS).Groups["ApplicationFocus"].Value;
+
+                        if (applicationFocus.Length > 0)
                         {
-                            string applicationFocus = Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS).Groups["ApplicationFocus"].Value;
-
-                            if (applicationFocus.Length > 0)
+                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                             {
-                                if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
-                                {
-                                    _config.Load(_fileSystem);
-                                }
-
-                                if (string.IsNullOrEmpty(applicationFocus))
-                                {
-                                    _config.Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
-                                }
-                                else
-                                {
-                                    applicationFocus = applicationFocus.Trim();
-
-                                    _config.Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
-
-                                    if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                                    {
-                                        _screenCapture.ApplicationError = true;
-                                    }
-                                }
+                                _config.Load(_fileSystem);
                             }
+
+                            SetApplicationFocus(applicationFocus);
                         }
-
-                        RefreshApplicationFocusList();
-
-                        DoApplicationFocus();
                     }
 
                     // -label="x"
@@ -612,64 +565,44 @@ namespace AutoScreenCapture
                                 _config.Load(_fileSystem);
                             }
 
-                            if (string.IsNullOrEmpty(label))
-                            {
-                                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", false);
-
-                                checkBoxScreenshotLabel.Checked = false;
-                            }
-                            else
-                            {
-                                label = label.Trim();
-
-                                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
-                                _config.Settings.User.SetValueByKey("ScreenshotLabel", label);
-
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
-                                checkBoxScreenshotLabel.Checked = true;
-                                comboBoxScreenshotLabel.Text = label;
-                            }
-                        }
-
-                        // -applicationFocusDelayBefore=x
-                        if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE))
-                        {
-                            int delayBefore = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE).Groups["ApplicationFocusDelayBefore"].Value);
-
-                            _config.Settings.User.SetValueByKey("ApplicationFocusDelayBefore", delayBefore);
-
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
-                            numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
-                        }
-
-                        // -applicationFocusDelayAfter=x
-                        if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER))
-                        {
-                            int delayAfter = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER).Groups["ApplicationFocusDelayAfter"].Value);
-
-                            _config.Settings.User.SetValueByKey("ApplicationFocusDelayAfter", delayAfter);
-
-                            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                            {
-                                _screenCapture.ApplicationError = true;
-                            }
-
-                            numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
+                            ApplyLabel(label);
                         }
                     }
 
-                    if (_screenCapture.AutoStartFromCommandLine)
+                    // -applicationFocusDelayBefore=x
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE))
                     {
-                        StartScreenCapture();
+                        int delayBefore = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_BEFORE).Groups["ApplicationFocusDelayBefore"].Value);
+
+                        _config.Settings.User.SetValueByKey("ApplicationFocusDelayBefore", delayBefore);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
                     }
+
+                    // -applicationFocusDelayAfter=x
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER))
+                    {
+                        int delayAfter = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER).Groups["ApplicationFocusDelayAfter"].Value);
+
+                        _config.Settings.User.SetValueByKey("ApplicationFocusDelayAfter", delayAfter);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
+                    }
+                }
+
+                if (_screenCapture.AutoStartFromCommandLine)
+                {
+                    StartScreenCapture();
                 }
             }
             catch (Exception ex)

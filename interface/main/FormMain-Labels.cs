@@ -94,5 +94,30 @@ namespace AutoScreenCapture
                 _log.WriteExceptionMessage("FormMain-Labels::PopulateLabelList", ex);
             }
         }
+
+        private void ApplyLabel(string label)
+        {
+            if (string.IsNullOrEmpty(label))
+            {
+                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", false);
+
+                checkBoxScreenshotLabel.Checked = false;
+            }
+            else
+            {
+                label = label.Trim();
+
+                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
+                _config.Settings.User.SetValueByKey("ScreenshotLabel", label);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+
+                checkBoxScreenshotLabel.Checked = true;
+                comboBoxScreenshotLabel.Text = label;
+            }
+        }
     }
 }

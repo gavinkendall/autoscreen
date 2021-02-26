@@ -110,9 +110,16 @@ namespace AutoScreenCapture
 
                 comboBoxDay.SelectedIndex = comboBoxDay.Items.IndexOf(TriggerObject.Day);
 
-                if (listBoxModuleItemList.Items.Count > 0 && TriggerObject.ModuleItem != null)
+                if (!string.IsNullOrEmpty(TriggerObject.Value))
                 {
-                    listBoxModuleItemList.SelectedIndex = listBoxModuleItemList.Items.IndexOf(TriggerObject.ModuleItem);
+                    if (listBoxModuleItemList.Items.Count > 0)
+                    {
+                        listBoxModuleItemList.SelectedIndex = listBoxModuleItemList.Items.IndexOf(TriggerObject.Value);
+                    }
+                    else
+                    {
+                        textBoxTriggerValue.Text = TriggerObject.Value;
+                    }
                 }
 
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(TriggerObject.ScreenCaptureInterval)).Hours);
@@ -190,9 +197,17 @@ namespace AutoScreenCapture
                         Time = dateTimePickerTime.Value,
                         Day = comboBoxDay.Text,
                         Days = (int)numericUpDownDays.Value,
-                        ScreenCaptureInterval = screenCaptureInterval,
-                        ModuleItem = listBoxModuleItemList.SelectedItem != null ? listBoxModuleItemList.SelectedItem.ToString() : string.Empty
+                        ScreenCaptureInterval = screenCaptureInterval
                     };
+
+                    if (textBoxTriggerValue.Visible)
+                    {
+                        trigger.Value = textBoxTriggerValue.Text.Trim();
+                    }
+                    else
+                    {
+                        trigger.Value = listBoxModuleItemList.SelectedItem != null ? listBoxModuleItemList.SelectedItem.ToString() : string.Empty;
+                    }
 
                     TriggerCollection.Add(trigger);
 
@@ -230,18 +245,25 @@ namespace AutoScreenCapture
                     TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
                     TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
 
-                    if (listBoxModuleItemList.SelectedItem != null)
+                    if (textBoxTriggerValue.Visible)
                     {
-                        TriggerCollection.Get(TriggerObject).ModuleItem = listBoxModuleItemList.SelectedItem.ToString();
+                        TriggerCollection.Get(TriggerObject).Value = textBoxTriggerValue.Text.Trim();
                     }
                     else
                     {
-                        TriggerCollection.Get(TriggerObject).ModuleItem = string.Empty;
+                        if (listBoxModuleItemList.SelectedItem != null)
+                        {
+                            TriggerCollection.Get(TriggerObject).Value = listBoxModuleItemList.SelectedItem.ToString();
+                        }
+                        else
+                        {
+                            TriggerCollection.Get(TriggerObject).Value = string.Empty;
+                        }
                     }
 
-                        int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                            (int)numericUpDownMillisecondsInterval.Value);
+                    int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
+                        (int)numericUpDownMillisecondsInterval.Value);
 
                     TriggerCollection.Get(TriggerObject).ScreenCaptureInterval = screenCaptureInterval;
 
@@ -340,16 +362,21 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateScreen, "Activate Screen").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateRegion, "Activate Region").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateSchedule, "Activate Schedule").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTag, "Activate Tag").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTag, "Activate Macro Tag").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTrigger, "Activate Trigger").Description);
 
             // All the actions involving deactivating Screens, Regions, Schedules, Tags, and Triggers.
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateScreen, "Deactivate Screen").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateRegion, "Deactivate Region").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateSchedule, "Deactivate Schedule").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Tag").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Macro Tag").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTrigger, "Deactivate Trigger").Description);
+
+            // More actions.
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshots, "Delete Screenshots").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetLabel, "Apply Label").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitle, "Set Active Window Title").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetApplicationFocus, "Set Application Focus").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -466,7 +493,7 @@ namespace AutoScreenCapture
                     buttonBack.Enabled = false;
                     buttonNext.Enabled = true;
 
-                    // Controls on last page.
+                    // Controls from the last page that we don't want to appear when this form is loaded again when changing a Trigger.
                     buttonFinish.Enabled = false;
                     listBoxModuleItemList.Visible = false;
                     labelDays.Visible = false;
@@ -479,6 +506,8 @@ namespace AutoScreenCapture
                     numericUpDownMinutesInterval.Visible = false;
                     numericUpDownSecondsInterval.Visible = false;
                     numericUpDownMillisecondsInterval.Visible = false;
+                    labelTriggerValue.Visible = false;
+                    textBoxTriggerValue.Visible = false;
 
                     // Controls on this page.
                     listBoxCondition.Visible = true;
@@ -505,6 +534,8 @@ namespace AutoScreenCapture
 
                     // Controls on previous page.
                     listBoxCondition.Visible = false;
+                    labelTriggerValue.Visible = false;
+                    textBoxTriggerValue.Visible = false;
 
                     // Controls on next page.
                     listBoxAction.Visible = false;
@@ -563,6 +594,8 @@ namespace AutoScreenCapture
                     dateTimePickerDate.Visible = false;
                     dateTimePickerTime.Visible = false;
                     comboBoxDay.Visible = false;
+                    labelTriggerValue.Visible = false;
+                    textBoxTriggerValue.Visible = false;
 
                     // Controls on next page.
                     listBoxModuleItemList.Visible = false;
@@ -646,6 +679,14 @@ namespace AutoScreenCapture
 
                         labelDays.Enabled = true;
                         numericUpDownDays.Enabled = true;
+                    }
+
+                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitle ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
+                    {
+                        labelTriggerValue.Visible = true;
+                        textBoxTriggerValue.Visible = true;
                     }
                     break;
             }
