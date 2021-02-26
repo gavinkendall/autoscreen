@@ -137,6 +137,7 @@
             this.listBoxCondition.TabIndex = 5;
             this.listBoxCondition.TabStop = false;
             this.listBoxCondition.Visible = false;
+            this.listBoxCondition.SelectedIndexChanged += new System.EventHandler(this.listBoxCondition_SelectedIndexChanged);
             // 
             // groupBox
             // 

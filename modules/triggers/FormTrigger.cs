@@ -148,6 +148,8 @@ namespace AutoScreenCapture
                 numericUpDownMillisecondsInterval.Value = 0;
             }
 
+            Text += " (BETA)";
+
             _pageIndex = 1;
 
             ShowPage();
@@ -338,8 +340,8 @@ namespace AutoScreenCapture
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.Time, "Time").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.DayTime, "Day/Time").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotTaken, "Before Screenshot Taken").Description);
-            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotSaved, "Before Screenshot Saved").Description);
-            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.AfterScreenshotSaved, "After Screenshot Saved").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotReferencesSaved, "Before Screenshot References Saved").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.AfterScreenshotReferencesSaved, "After Screenshot References Saved").Description);
 
             listBoxCondition.SelectedIndex = 0;
         }
@@ -463,11 +465,6 @@ namespace AutoScreenCapture
             }
         }
 
-        private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadModuleItems();
-        }
-
         private void buttonBack_Click(object sender, EventArgs e)
         {
             _pageIndex--;
@@ -490,6 +487,8 @@ namespace AutoScreenCapture
             {
                 // Page 1 - Condition
                 case 1:
+                    ShowConditionHelpText();
+
                     groupBox.Text = "Condition";
                     buttonBack.Enabled = false;
                     buttonNext.Enabled = true;
@@ -584,6 +583,8 @@ namespace AutoScreenCapture
 
                 // Page 3 - Action
                 case 3:
+                    ShowActionHelpText();
+
                     groupBox.Text = "Action";
                     buttonNext.Enabled = true;
                     buttonFinish.Enabled = false;
@@ -689,6 +690,220 @@ namespace AutoScreenCapture
                         labelTriggerValue.Visible = true;
                         textBoxTriggerValue.Visible = true;
                     }
+                    break;
+            }
+        }
+
+        private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowConditionHelpText();
+        }
+
+        private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadModuleItems();
+
+            ShowActionHelpText();
+        }
+
+        private void ShowConditionHelpText()
+        {
+            switch (listBoxCondition.SelectedIndex)
+            {
+                // Application Startup
+                case 0:
+                    textBoxHelp.Text = "When the application is started. This could be as a result of Auto Screen Capture being started by double-clicking its icon or running autoscreen.exe from a command line terminal.";
+                    break;
+
+                // Application Exit
+                case 1:
+                    textBoxHelp.Text = "When the application is going to exit or quit.";
+                    break;
+
+                // Interface Closing
+                case 2:
+                    textBoxHelp.Text = "When the application's main interface window is going to close.";
+                    break;
+
+                // Interface Hiding
+                case 3:
+                    textBoxHelp.Text = "When the application's main interface window is about to be hidden.";
+                    break;
+
+                // Interface Showing
+                case 4:
+                    textBoxHelp.Text = "When the application's main interface window is about to be shown.";
+                    break;
+
+                // Limit Reached
+                case 5:
+                    textBoxHelp.Text = "When the number of screen capture cycles reach the specified limit.";
+                    break;
+
+                // Screen Capture Started
+                case 6:
+                    textBoxHelp.Text = "When a screen capture session starts. The Start Screen Capture button is clicked or Start Screen Capture is selected from the system tray icon menu.";
+                    break;
+
+                // Screen Capture Stopped
+                case 7:
+                    textBoxHelp.Text = "When the currently running screen capture session stops. The Stop Screen Capture button is clicked or Stop Screen Capture is selected from the system tray icon menu.";
+                    break;
+
+                // After Screenshot Taken
+                case 8:
+                    textBoxHelp.Text = "When a screenshot has been taken after it has been saved to disk.";
+                    break;
+
+                // Date/Time
+                case 9:
+                    textBoxHelp.Text = "When a specified date and time is encountered.";
+                    break;
+
+                // Time
+                case 10:
+                    textBoxHelp.Text = "When a specified time is encountered.";
+                    break;
+
+                // Day/Time
+                case 11:
+                    textBoxHelp.Text = "When a specified day and time is encountered.";
+                    break;
+
+                // Before Screenshot Taken
+                case 12:
+                    textBoxHelp.Text = "When a screenshot is about to be taken before it has been saved to disk.";
+                    break;
+
+                // Before Screenshot References Saved
+                case 13:
+                    textBoxHelp.Text = "When screenshot references are about to be saved to disk during a recurring five minute maintenance timer.";
+                    break;
+
+                // After Screenshot References Saved
+                case 14:
+                    textBoxHelp.Text = "When screenshot references have been saved to disk during a recurring five minute maintenance timer.";
+                    break;
+            }
+        }
+
+        private void ShowActionHelpText()
+        {
+            switch (listBoxAction.SelectedIndex)
+            {
+                // Exit Application
+                case 0:
+                    textBoxHelp.Text = "Exit the application.";
+                    break;
+
+                // Hide Interface
+                case 1:
+                    textBoxHelp.Text = "Hide the application's main interface window.";
+                    break;
+
+                // Run Editor
+                case 2:
+                    textBoxHelp.Text = "Run a specified Editor.";
+                    break;
+
+                // Show Interface
+                case 3:
+                    textBoxHelp.Text = "Show the application's main interface window.";
+                    break;
+
+                // Start Screen Capture
+                case 4:
+                    textBoxHelp.Text = "Start a screen capture session.";
+                    break;
+
+                // Stop Screen Capture
+                case 5:
+                    textBoxHelp.Text = "Stop the currently running screen capture session.";
+                    break;
+
+                // Email Screenshot (SMTP)
+                case 6:
+                    textBoxHelp.Text = "Email screenshots using the configured email server settings.";
+                    break;
+
+                // Set Screen Capture Interval
+                case 7:
+                    textBoxHelp.Text = "Sets the timer's screen capture interval.";
+                    break;
+
+                // Activate Screen
+                case 8:
+                    textBoxHelp.Text = "Activates a specified Screen.";
+                    break;
+
+                // Activate Region
+                case 9:
+                    textBoxHelp.Text = "Activates a specified Region.";
+                    break;
+
+                // Activate Schedule
+                case 10:
+                    textBoxHelp.Text = "Activates a specified Schedule.";
+                    break;
+
+                // Activate Macro Tag
+                case 11:
+                    textBoxHelp.Text = "Activate a specified Macro Tag.";
+                    break;
+
+                // Activate Trigger
+                case 12:
+                    textBoxHelp.Text = "Activate a specified Trigger.";
+                    break;
+
+                // Deactivate Screen
+                case 13:
+                    textBoxHelp.Text = "Deactivate a specified Screen.";
+                    break;
+
+                // Deactivate Region
+                case 14:
+                    textBoxHelp.Text = "Deactivate a specified Region.";
+                    break;
+
+                // Deactivate Schedule
+                case 15:
+                    textBoxHelp.Text = "Deactivate a specified Schedule.";
+                    break;
+
+                // Deactivate Macro Tag
+                case 16:
+                    textBoxHelp.Text = "Deactivate a specified Macro Tag.";
+                    break;
+
+                // Deactivate Trigger
+                case 17:
+                    textBoxHelp.Text = "Deactivate a specified Trigger.";
+                    break;
+
+                // Delete Screenshots
+                case 18:
+                    textBoxHelp.Text = "Delete a series of screenshots.";
+                    break;
+
+                // Apply Label
+                case 19:
+                    textBoxHelp.Text = "Apply a specified label to each screenshot during a screen capture session.";
+                    break;
+
+                // Set Active Window Title
+                case 20:
+                    textBoxHelp.Text = "Set the text used for comparison against the title of the active window.";
+                    break;
+
+                // Set Application Focus
+                case 21:
+                    textBoxHelp.Text = "Set the name of the process to be forced into focus.";
+                    break;
+
+                // File Transfer Screenshot (SFTP)
+                case 22:
+                    textBoxHelp.Text = "Transfer screenshots to a file server using the configured File Transfer settings.";
                     break;
             }
         }

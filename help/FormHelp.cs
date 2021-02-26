@@ -38,7 +38,7 @@ namespace AutoScreenCapture
         private void FormHelp_Load(object sender, System.EventArgs e)
         {
             listBoxHelpItems.Items.Add("Welcome");
-            listBoxHelpItems.Items.Add("Setup and First Run");
+            //listBoxHelpItems.Items.Add("Setup and First Run");
 
             listBoxHelpItems.SelectedIndex = 0;
         }

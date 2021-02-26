@@ -6,7 +6,7 @@ Summary
 -------
 Auto Screen Capture is a small and portable screen capture utility for gamers, designers, and testers.
 
-The information presented in this README refers to the latest version (2.3.3.9).
+(The information presented in this README refers to version 2.3.3.9)
 
 The application enables you to automatically take screenshots at a chosen interval. For example, you may want to capture the progress of playing through a game's level or track your progress on a long project.
 

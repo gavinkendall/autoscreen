@@ -32,20 +32,20 @@
             this.tabControlAbout = new System.Windows.Forms.TabControl();
             this.tabPageApplication = new System.Windows.Forms.TabPage();
             this.richTextBoxApplication = new System.Windows.Forms.RichTextBox();
-            this.tabPageLicense = new System.Windows.Forms.TabPage();
-            this.richTextBoxLicense = new System.Windows.Forms.RichTextBox();
-            this.tabPageChangelog = new System.Windows.Forms.TabPage();
-            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
-            this.tabPageDeveloper = new System.Windows.Forms.TabPage();
-            this.richTextBoxDeveloper = new System.Windows.Forms.RichTextBox();
             this.tabPageReleaseNotes = new System.Windows.Forms.TabPage();
             this.richTextBoxReleaseNotes = new System.Windows.Forms.RichTextBox();
+            this.tabPageChangelog = new System.Windows.Forms.TabPage();
+            this.richTextBoxChangelog = new System.Windows.Forms.RichTextBox();
+            this.tabPageLicense = new System.Windows.Forms.TabPage();
+            this.richTextBoxLicense = new System.Windows.Forms.RichTextBox();
+            this.tabPageDeveloper = new System.Windows.Forms.TabPage();
+            this.richTextBoxDeveloper = new System.Windows.Forms.RichTextBox();
             this.tabControlAbout.SuspendLayout();
             this.tabPageApplication.SuspendLayout();
-            this.tabPageLicense.SuspendLayout();
-            this.tabPageChangelog.SuspendLayout();
-            this.tabPageDeveloper.SuspendLayout();
             this.tabPageReleaseNotes.SuspendLayout();
+            this.tabPageChangelog.SuspendLayout();
+            this.tabPageLicense.SuspendLayout();
+            this.tabPageDeveloper.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAbout
@@ -88,30 +88,30 @@
             this.richTextBoxApplication.TabStop = false;
             this.richTextBoxApplication.Text = resources.GetString("richTextBoxApplication.Text");
             // 
-            // tabPageLicense
+            // tabPageReleaseNotes
             // 
-            this.tabPageLicense.Controls.Add(this.richTextBoxLicense);
-            this.tabPageLicense.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLicense.Name = "tabPageLicense";
-            this.tabPageLicense.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLicense.Size = new System.Drawing.Size(545, 293);
-            this.tabPageLicense.TabIndex = 1;
-            this.tabPageLicense.Text = "License";
-            this.tabPageLicense.UseVisualStyleBackColor = true;
+            this.tabPageReleaseNotes.Controls.Add(this.richTextBoxReleaseNotes);
+            this.tabPageReleaseNotes.Location = new System.Drawing.Point(4, 22);
+            this.tabPageReleaseNotes.Name = "tabPageReleaseNotes";
+            this.tabPageReleaseNotes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageReleaseNotes.Size = new System.Drawing.Size(545, 293);
+            this.tabPageReleaseNotes.TabIndex = 3;
+            this.tabPageReleaseNotes.Text = "Release Notes";
+            this.tabPageReleaseNotes.UseVisualStyleBackColor = true;
             // 
-            // richTextBoxLicense
+            // richTextBoxReleaseNotes
             // 
-            this.richTextBoxLicense.BackColor = System.Drawing.Color.White;
-            this.richTextBoxLicense.DetectUrls = false;
-            this.richTextBoxLicense.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxLicense.Location = new System.Drawing.Point(3, 3);
-            this.richTextBoxLicense.Name = "richTextBoxLicense";
-            this.richTextBoxLicense.ReadOnly = true;
-            this.richTextBoxLicense.Size = new System.Drawing.Size(539, 287);
-            this.richTextBoxLicense.TabIndex = 0;
-            this.richTextBoxLicense.TabStop = false;
-            this.richTextBoxLicense.Text = resources.GetString("richTextBoxLicense.Text");
+            this.richTextBoxReleaseNotes.BackColor = System.Drawing.Color.White;
+            this.richTextBoxReleaseNotes.DetectUrls = false;
+            this.richTextBoxReleaseNotes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxReleaseNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxReleaseNotes.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxReleaseNotes.Name = "richTextBoxReleaseNotes";
+            this.richTextBoxReleaseNotes.ReadOnly = true;
+            this.richTextBoxReleaseNotes.Size = new System.Drawing.Size(539, 287);
+            this.richTextBoxReleaseNotes.TabIndex = 1;
+            this.richTextBoxReleaseNotes.TabStop = false;
+            this.richTextBoxReleaseNotes.Text = resources.GetString("richTextBoxReleaseNotes.Text");
             // 
             // tabPageChangelog
             // 
@@ -138,6 +138,31 @@
             this.richTextBoxChangelog.Text = resources.GetString("richTextBoxChangelog.Text");
             this.richTextBoxChangelog.WordWrap = false;
             // 
+            // tabPageLicense
+            // 
+            this.tabPageLicense.Controls.Add(this.richTextBoxLicense);
+            this.tabPageLicense.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLicense.Name = "tabPageLicense";
+            this.tabPageLicense.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLicense.Size = new System.Drawing.Size(545, 293);
+            this.tabPageLicense.TabIndex = 1;
+            this.tabPageLicense.Text = "License";
+            this.tabPageLicense.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxLicense
+            // 
+            this.richTextBoxLicense.BackColor = System.Drawing.Color.White;
+            this.richTextBoxLicense.DetectUrls = false;
+            this.richTextBoxLicense.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxLicense.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxLicense.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxLicense.Name = "richTextBoxLicense";
+            this.richTextBoxLicense.ReadOnly = true;
+            this.richTextBoxLicense.Size = new System.Drawing.Size(539, 287);
+            this.richTextBoxLicense.TabIndex = 0;
+            this.richTextBoxLicense.TabStop = false;
+            this.richTextBoxLicense.Text = resources.GetString("richTextBoxLicense.Text");
+            // 
             // tabPageDeveloper
             // 
             this.tabPageDeveloper.Controls.Add(this.richTextBoxDeveloper);
@@ -160,32 +185,7 @@
             this.richTextBoxDeveloper.Size = new System.Drawing.Size(545, 293);
             this.richTextBoxDeveloper.TabIndex = 1;
             this.richTextBoxDeveloper.TabStop = false;
-            this.richTextBoxDeveloper.Text = "";
-            // 
-            // tabPageReleaseNotes
-            // 
-            this.tabPageReleaseNotes.Controls.Add(this.richTextBoxReleaseNotes);
-            this.tabPageReleaseNotes.Location = new System.Drawing.Point(4, 22);
-            this.tabPageReleaseNotes.Name = "tabPageReleaseNotes";
-            this.tabPageReleaseNotes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageReleaseNotes.Size = new System.Drawing.Size(545, 293);
-            this.tabPageReleaseNotes.TabIndex = 3;
-            this.tabPageReleaseNotes.Text = "Release Notes";
-            this.tabPageReleaseNotes.UseVisualStyleBackColor = true;
-            // 
-            // richTextBoxReleaseNotes
-            // 
-            this.richTextBoxReleaseNotes.BackColor = System.Drawing.Color.White;
-            this.richTextBoxReleaseNotes.DetectUrls = false;
-            this.richTextBoxReleaseNotes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBoxReleaseNotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBoxReleaseNotes.Location = new System.Drawing.Point(3, 3);
-            this.richTextBoxReleaseNotes.Name = "richTextBoxReleaseNotes";
-            this.richTextBoxReleaseNotes.ReadOnly = true;
-            this.richTextBoxReleaseNotes.Size = new System.Drawing.Size(539, 287);
-            this.richTextBoxReleaseNotes.TabIndex = 1;
-            this.richTextBoxReleaseNotes.TabStop = false;
-            this.richTextBoxReleaseNotes.Text = "";
+            this.richTextBoxDeveloper.Text = resources.GetString("richTextBoxDeveloper.Text");
             // 
             // FormAbout
             // 
@@ -203,10 +203,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAbout_FormClosing);
             this.tabControlAbout.ResumeLayout(false);
             this.tabPageApplication.ResumeLayout(false);
-            this.tabPageLicense.ResumeLayout(false);
-            this.tabPageChangelog.ResumeLayout(false);
-            this.tabPageDeveloper.ResumeLayout(false);
             this.tabPageReleaseNotes.ResumeLayout(false);
+            this.tabPageChangelog.ResumeLayout(false);
+            this.tabPageLicense.ResumeLayout(false);
+            this.tabPageDeveloper.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

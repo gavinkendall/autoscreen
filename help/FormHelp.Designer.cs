@@ -73,7 +73,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(704, 433);
             this.Name = "FormHelp";
-            this.Text = "Auto Screen Capture - Help";
+            this.Text = "Auto Screen Capture - Help (BETA)";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormHelp_FormClosing);
             this.Load += new System.EventHandler(this.FormHelp_Load);

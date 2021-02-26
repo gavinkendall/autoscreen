@@ -31,18 +31,18 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// Saves screenshots and refreshes the calendar every five minutes (300000 milliseconds).
+        /// Saves screenshot references every five minutes (300000 milliseconds).
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerPerformMaintenance_Tick(object sender, EventArgs e)
         {
-            RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotSaved);
+            RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotReferencesSaved);
 
-            // Save screenshots.
-            SaveScreenshots();
+            // Save screenshot references.
+            SaveScreenshotReferences();
 
-            RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotSaved);
+            RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotReferencesSaved);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SaveScreenshots()
+        private void SaveScreenshotReferences()
         {
             if (runSaveScreenshotsThread == null)
             {

@@ -255,7 +255,7 @@ namespace AutoScreenCapture
                         {
                             Active = true,
                             Name = $"Keep screenshots for {days} days",
-                            ConditionType = TriggerConditionType.BeforeScreenshotSaved,
+                            ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                             ActionType = TriggerActionType.DeleteScreenshots,
                             Date = DateTime.Now,
                             Time = DateTime.Now,
@@ -334,7 +334,7 @@ namespace AutoScreenCapture
                     {
                         Active = true,
                         Name = "Keep screenshots for 30 days",
-                        ConditionType = TriggerConditionType.BeforeScreenshotSaved,
+                        ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                         ActionType = TriggerActionType.DeleteScreenshots,
                         Date = DateTime.Now,
                         Time = DateTime.Now,

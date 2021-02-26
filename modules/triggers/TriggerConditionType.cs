@@ -91,13 +91,13 @@ namespace AutoScreenCapture
         BeforeScreenshotTaken = 12,
 
         /// <summary>
-        /// When a screenshot is about to be saved.
+        /// When screenshot references are about to be saved.
         /// </summary>
-        BeforeScreenshotSaved = 13,
+        BeforeScreenshotReferencesSaved = 13,
 
         /// <summary>
-        /// When a screenshot is saved.
+        /// When screenshot references are saved.
         /// </summary>
-        AfterScreenshotSaved = 14
+        AfterScreenshotReferencesSaved = 14
     }
 }
