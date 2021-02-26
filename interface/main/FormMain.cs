@@ -150,9 +150,19 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            HelpMessage("Welcome to " +
-                _config.Settings.Application.GetByKey("Name", _config.Settings.ApplicationName).Value + " " +
-                _config.Settings.Application.GetByKey("Version", _config.Settings.ApplicationVersion).Value);
+            string name = _config.Settings.Application.GetByKey("Name", _config.Settings.ApplicationName).Value.ToString();
+            string version = _config.Settings.Application.GetByKey("Version", _config.Settings.ApplicationVersion).Value.ToString();
+
+            bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value);
+
+            string welcome = "Welcome to " + name + " (" + version + ")";
+
+            if (firstRun)
+            {
+                welcome += " - Please click the Help button to learn how to use the application";
+            }
+
+            HelpMessage(welcome);
 
             // Start the scheduled capture timer.
             timerScheduledCapture.Interval = 1000;
