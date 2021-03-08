@@ -4,6 +4,7 @@ Auto Screen Capture by Gavin Kendall
 
 
 Codename "Boombayah"
+2.3.4.4    Fix to Screen Capture method.
 2.3.4.3    Fix to Screen Capture method.
 2.3.4.2    Fix to Screen form for preview image.
 2.3.4.1    Does not capture image of screen if screen does not exist.

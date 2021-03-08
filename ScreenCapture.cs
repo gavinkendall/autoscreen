@@ -449,55 +449,55 @@ namespace AutoScreenCapture
         /// <returns>A bitmap image representing what we captured.</returns>
         public Bitmap GetScreenBitmap(int source, int component, int x, int y, int width, int height, bool mouse)
         {
-            try
+            if (width > 0 && height > 0)
             {
-                if (width > 0 && height > 0)
+                if (source > 0 && component > -1)
                 {
-                    if (source > 0 && component > -1)
+                    try
                     {
                         // Test if we can acquire the actual screen from Windows and if we can't just let this
                         // method catch the out of bounds exception error.
                         System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.AllScreens[component];
                     }
-
-                    Size blockRegionSize = new Size(width, height);
-
-                    Bitmap bmp = new Bitmap(width, height);
-
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    catch
                     {
-                        g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+                        return null;
+                    }
+                }
 
-                        if (mouse)
+                Size blockRegionSize = new Size(width, height);
+
+                Bitmap bmp = new Bitmap(width, height);
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                    if (mouse)
+                    {
+                        CURSORINFO pci;
+                        pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                        if (GetCursorInfo(out pci))
                         {
-                            CURSORINFO pci;
-                            pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
-
-                            if (GetCursorInfo(out pci))
+                            if (pci.flags == CURSOR_SHOWING)
                             {
-                                if (pci.flags == CURSOR_SHOWING)
-                                {
-                                    var hdc = g.GetHdc();
-                                    DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                                    g.ReleaseHdc();
-                                }
+                                var hdc = g.GetHdc();
+                                DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                                g.ReleaseHdc();
                             }
                         }
                     }
-
-                    CaptureError = false;
-
-                    return bmp;
                 }
 
-                CaptureError = true;
+                CaptureError = false;
 
-                return null;
+                return bmp;
             }
-            catch
-            {
-                return null;
-            }
+
+            CaptureError = true;
+
+            return null;
         }
 
         /// <summary>
@@ -619,18 +619,16 @@ namespace AutoScreenCapture
         {
             try
             {
+                CaptureError = false;
+
                 bitmap = source == 0 && component == 0
                     ? GetActiveWindowBitmap()
                     : GetScreenBitmap(source, component, x, y, width, height, mouse);
 
                 if (bitmap != null)
                 {
-                    CaptureError = false;
-
                     return true;
                 }
-
-                CaptureError = true;
 
                 return false;
             }
