@@ -496,8 +496,6 @@ namespace AutoScreenCapture
             }
             catch
             {
-                CaptureError = true;
-
                 return null;
             }
         }
