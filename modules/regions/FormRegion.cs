@@ -330,6 +330,8 @@ namespace AutoScreenCapture
                 if (checkBoxActive.Checked)
                 {
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
+                        -1,
+                        -1,
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,

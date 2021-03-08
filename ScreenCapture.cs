@@ -439,18 +439,27 @@ namespace AutoScreenCapture
         /// <summary>
         /// Gets the bitmap image of the screen based on X, Y, Width, and Height. This is used by Screens and Regions.
         /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="component">The component of the source.</param>
         /// <param name="x">The X value of the bitmap.</param>
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
         /// <param name="height">The Height value of the bitmap.</param>
         /// <param name="mouse">Determines if the mouse pointer should be included in the bitmap.</param>
         /// <returns>A bitmap image representing what we captured.</returns>
-        public Bitmap GetScreenBitmap(int x, int y, int width, int height, bool mouse)
+        public Bitmap GetScreenBitmap(int source, int component, int x, int y, int width, int height, bool mouse)
         {
             try
             {
                 if (width > 0 && height > 0)
                 {
+                    if (source > 0 && component > -1)
+                    {
+                        // Test if we can acquire the actual screen from Windows and if we can't just let this
+                        // method catch the out of bounds exception error.
+                        System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.AllScreens[component];
+                    }
+
                     Size blockRegionSize = new Size(width, height);
 
                     Bitmap bmp = new Bitmap(width, height);
@@ -485,14 +494,8 @@ namespace AutoScreenCapture
 
                 return null;
             }
-            catch (Exception ex)
+            catch
             {
-                // Don't log an error if Windows is locked at the time a screenshot was taken.
-                if (!ex.Message.Equals("The handle is invalid"))
-                {
-                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
-                }
-
                 CaptureError = true;
 
                 return null;
@@ -620,7 +623,7 @@ namespace AutoScreenCapture
             {
                 bitmap = source == 0 && component == 0
                     ? GetActiveWindowBitmap()
-                    : GetScreenBitmap(x, y, width, height, mouse);
+                    : GetScreenBitmap(source, component, x, y, width, height, mouse);
 
                 if (bitmap != null)
                 {

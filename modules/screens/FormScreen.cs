@@ -376,12 +376,14 @@ namespace AutoScreenCapture
                     else
                     {
                         pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
-                                (int)numericUpDownX.Value,
-                                (int)numericUpDownY.Value,
-                                (int)numericUpDownWidth.Value,
-                                (int)numericUpDownHeight.Value,
-                                checkBoxMouse.Checked
-                            );
+                            comboBoxScreenSource.SelectedIndex,
+                            comboBoxScreenComponent.SelectedIndex,
+                            (int)numericUpDownX.Value,
+                            (int)numericUpDownY.Value,
+                            (int)numericUpDownWidth.Value,
+                            (int)numericUpDownHeight.Value,
+                            checkBoxMouse.Checked
+                        );
                     }
 
                     UpdatePreviewMacro();
