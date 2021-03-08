@@ -431,7 +431,7 @@ namespace AutoScreenCapture
         {
             string component = comboBoxScreenComponent.Text;
 
-            Regex rgxPosition = new Regex(@"X:(?<X>\d+) Y:(?<Y>\d+)");
+            Regex rgxPosition = new Regex(@"X:(?<X>-?\d+) Y:(?<Y>-?\d+)");
             Regex rgxSize = new Regex(@"\((?<Width>\d+)x(?<Height>\d+)\)");
 
             if (rgxPosition.IsMatch(component) && rgxSize.IsMatch(component))

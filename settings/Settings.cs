@@ -219,6 +219,8 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.7")); // Memory leak fix.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.8")); // Screen now has Source (such as Graphics Card and Operating System), X, Y, Width, and Height. Removed "Resolution Ratio" option for better screen capture performance. Removed internal screen dictionary refresh from Windows because we now use X, Y, Width, and Height either from Graphics Card or from Operating System and these values can now be adjusted. Module tab page layout style changed to be multi-line. Refactored code to reduce usage of static classes and static variables for better memory management. Removed calls to GC Collect. Changed screen capture method. "Region Select / Auto Save" region is no longer created when application initialized. "Region Select / Auto Save" screenshots are now shown in all screenshot tabs.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.3.9")); // Dashboard introduced so you can have an overview of all screens and regions.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.0")); // Screenshots can be sent to a file server either from the main interface window or with a Trigger. The SMTP and SFTP settings are in their own XML files and can be configured. Help system is available but still early in development.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.1")); // Does not capture image of screen if screen does not exist.
 
             Application = new SettingCollection()
             {
