@@ -253,7 +253,7 @@ namespace AutoScreenCapture
 
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
                         {
-                            Active = true,
+                            Active = false,
                             Name = $"Keep screenshots for {days} days",
                             ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                             ActionType = TriggerActionType.DeleteScreenshots,
@@ -332,7 +332,7 @@ namespace AutoScreenCapture
 
                     Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
                     {
-                        Active = true,
+                        Active = false,
                         Name = "Keep screenshots for 30 days",
                         ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                         ActionType = TriggerActionType.DeleteScreenshots,
