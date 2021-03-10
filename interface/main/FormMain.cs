@@ -427,7 +427,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemShowHideInterface_Click(object sender, EventArgs e)
         {
-            if (Visible)
+            if (ShowInTaskbar)
             {
                 HideInterface();
             }

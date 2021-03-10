@@ -4,8 +4,9 @@ Auto Screen Capture by Gavin Kendall
 
 
 Codename "Boombayah"
+2.3.4.6    Fixed Show/Hide Interface bug so you no longer need to select the option twice to show the interface on initial startup. AutoStartFromCommandLine is temporarily disabled when command line options -stop, -exit, -startat, -stopat, or -captureat are provided.
 2.3.4.5    "Keep screenshots for X days" trigger is now inactive by default to avoid potential data loss.
-2.3.4.4    Fix to Screen Capture method.
+2.3.4.4    Fix to Screen Capture method (again).
 2.3.4.3    Fix to Screen Capture method.
 2.3.4.2    Fix to Screen form for preview image.
 2.3.4.1    Does not capture image of screen if screen does not exist.

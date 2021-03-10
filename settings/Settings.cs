@@ -222,7 +222,9 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.0")); // Screenshots can be sent to a file server either from the main interface window or with a Trigger. The SMTP and SFTP settings are in their own XML files and can be configured. Help system is available but still early in development.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.1")); // Does not capture image of screen if screen does not exist.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.2")); // Fix to Screen form for preview image.
-            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.3")); // Fix to Screen form for preview image.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.3")); // Fix to Screen Capture method.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.4")); // Fix to Screen Capture method (again).
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.5")); // "Keep screenshots for X days" trigger is now inactive by default to avoid potential data loss.
 
             Application = new SettingCollection()
             {

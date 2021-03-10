@@ -179,14 +179,7 @@ namespace AutoScreenCapture
 
         private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (Visible)
-            {
-                HideInterface();
-            }
-            else
-            {
-                ShowInterface();
-            }
+            toolStripMenuItemShowHideInterface_Click(sender, e);
         }
 
         private void HideSystemTrayIcon()

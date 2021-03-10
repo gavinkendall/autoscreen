@@ -304,12 +304,16 @@ namespace AutoScreenCapture
                     // -stop
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOP))
                     {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
                         StopScreenCapture();
                     }
 
                     // -exit
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_EXIT))
                     {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
                         ExitApplication();
                     }
 
@@ -458,6 +462,8 @@ namespace AutoScreenCapture
                     // -startat=hh:mm:ss
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STARTAT))
                     {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
@@ -480,6 +486,8 @@ namespace AutoScreenCapture
                     // -stopat=hh:mm:ss
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOPAT))
                     {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
@@ -502,6 +510,8 @@ namespace AutoScreenCapture
                     // -captureat=hh:mm:ss
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CAPTUREAT))
                     {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Seconds"].Value);
