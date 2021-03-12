@@ -883,6 +883,13 @@ namespace AutoScreenCapture
         {
             try
             {
+                bool saveScreenshotRefs = Convert.ToBoolean(config.Settings.User.GetByKey("SaveScreenshotRefs", config.Settings.DefaultSettings.SaveScreenshotRefs).Value);
+
+                if (!saveScreenshotRefs)
+                {
+                    return;
+                }
+
                 _mutexWriteFile.WaitOne();
 
                 if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))

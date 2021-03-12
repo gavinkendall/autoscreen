@@ -162,6 +162,16 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_APPLICATION_FOCUS_DELAY_AFTER = @"^-applicationFocusDelayAfter=(?<ApplicationFocusDelayAfter>\d{1,5})$";
 
         /// <summary>
+        /// Regex for parsing the -saveScreenshotRefs=on command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_SAVE_SCREENSHOT_REFS_ON = "^-saveScreenshotRefs=on$";
+
+        /// <summary>
+        /// Regex for parsing the -saveScreenshotRefs=off command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_SAVE_SCREENSHOT_REFS_OFF = "^-saveScreenshotRefs=off$";
+
+        /// <summary>
         /// Parses the command line and processes the commands the user has chosen from the command line.
         /// </summary>
         /// <param name="args"></param>
@@ -607,6 +617,28 @@ namespace AutoScreenCapture
                         }
 
                         numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
+                    }
+
+                    // -saveScreenshotRefs=on
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_SAVE_SCREENSHOT_REFS_ON))
+                    {
+                        _config.Settings.User.SetValueByKey("SaveScreenshotRefs", true);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+                    }
+
+                    // -saveScreenshotRefs=off
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_SAVE_SCREENSHOT_REFS_OFF))
+                    {
+                        _config.Settings.User.SetValueByKey("SaveScreenshotRefs", false);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
                     }
                 }
 

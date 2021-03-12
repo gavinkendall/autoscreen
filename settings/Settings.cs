@@ -225,6 +225,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.3")); // Fix to Screen Capture method.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.4")); // Fix to Screen Capture method (again).
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.5")); // "Keep screenshots for X days" trigger is now inactive by default to avoid potential data loss.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.6")); // Fixed Show/Hide Interface bug so you no longer need to select the option twice to show the interface on initial startup. AutoStartFromCommandLine is temporarily disabled when command line options -stop, -exit, -startat, -stopat, or -captureat are provided.
 
             Application = new SettingCollection()
             {
@@ -397,6 +398,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
+                User.Add(new Setting("SaveScreenshotRefs", DefaultSettings.SaveScreenshotRefs));
                 User.Save(this, fileSystem);
             }
 
@@ -576,24 +578,31 @@ namespace AutoScreenCapture
             }
 
             var versionInConfig = new Version(settingCollection.AppCodename, settingCollection.AppVersion, false);
+            Version v2346 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, "2.3.4.6");
+
+            // SaveScreenshotRefs is a new user setting as of 2.3.4.7 so make sure to add it for older versions.
+            if (v2346 != null && versionInConfig != null && versionInConfig.VersionNumber <= v2346.VersionNumber)
+            {
+                User.Add(new Setting("SaveScreenshotRefs", DefaultSettings.SaveScreenshotRefs));
+            }
 
             if (versionInConfig.VersionString.Equals("2.2.0.0") ||
-                versionInConfig.VersionString.Equals("2.2.0.1") ||
-                versionInConfig.VersionString.Equals("2.2.0.2") ||
-                versionInConfig.VersionString.Equals("2.2.0.3") ||
-                versionInConfig.VersionString.Equals("2.2.0.4") ||
-                versionInConfig.VersionString.Equals("2.2.0.5") ||
-                versionInConfig.VersionString.Equals("2.2.0.6") ||
-                versionInConfig.VersionString.Equals("2.2.0.7") ||
-                versionInConfig.VersionString.Equals("2.2.0.8") ||
-                versionInConfig.VersionString.Equals("2.2.0.9") ||
-                versionInConfig.VersionString.Equals("2.2.0.10") ||
-                versionInConfig.VersionString.Equals("2.2.0.11") ||
-                versionInConfig.VersionString.Equals("2.2.0.12") ||
-                versionInConfig.VersionString.Equals("2.2.0.13") ||
-                versionInConfig.VersionString.Equals("2.2.0.14") ||
-                versionInConfig.VersionString.Equals("2.2.0.15") ||
-                versionInConfig.VersionString.Equals("2.2.0.16"))
+            versionInConfig.VersionString.Equals("2.2.0.1") ||
+            versionInConfig.VersionString.Equals("2.2.0.2") ||
+            versionInConfig.VersionString.Equals("2.2.0.3") ||
+            versionInConfig.VersionString.Equals("2.2.0.4") ||
+            versionInConfig.VersionString.Equals("2.2.0.5") ||
+            versionInConfig.VersionString.Equals("2.2.0.6") ||
+            versionInConfig.VersionString.Equals("2.2.0.7") ||
+            versionInConfig.VersionString.Equals("2.2.0.8") ||
+            versionInConfig.VersionString.Equals("2.2.0.9") ||
+            versionInConfig.VersionString.Equals("2.2.0.10") ||
+            versionInConfig.VersionString.Equals("2.2.0.11") ||
+            versionInConfig.VersionString.Equals("2.2.0.12") ||
+            versionInConfig.VersionString.Equals("2.2.0.13") ||
+            versionInConfig.VersionString.Equals("2.2.0.14") ||
+            versionInConfig.VersionString.Equals("2.2.0.15") ||
+            versionInConfig.VersionString.Equals("2.2.0.16"))
             {
                 if (settingCollection.KeyExists("StringPassphrase"))
                 {

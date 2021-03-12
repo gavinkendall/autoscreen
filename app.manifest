@@ -3,7 +3,7 @@
   <assemblyIdentity
     type="win32"
     name="GavinKendall.AutoScreenCapture"
-    version="2.3.4.6"/>
+    version="2.3.4.7"/>
   <asmv3:application>
     <asmv3:windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
       <dpiAware>True/PM</dpiAware>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.4.6 ("Boombayah")
+    <value>Auto Screen Capture 2.3.4.7 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -140,6 +140,7 @@ Triggers have been rewritten. I haven't spent much time on the new wizard-style 
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.4.7    SaveScreenshotRefs user setting introduced. Implemented command line options -saveScreenshotRefs=on and -saveScreenshotRefs=off.
 2.3.4.6    Fixed Show/Hide Interface bug so you no longer need to select the option twice to show the interface on initial startup. AutoStartFromCommandLine is temporarily disabled when command line options -stop, -exit, -startat, -stopat, or -captureat are provided.
 2.3.4.5    "Keep screenshots for X days" trigger is now inactive by default to avoid potential data loss.
 2.3.4.4    Fix to Screen Capture method (again).
