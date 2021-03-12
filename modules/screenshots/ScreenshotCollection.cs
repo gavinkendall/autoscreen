@@ -883,14 +883,9 @@ namespace AutoScreenCapture
         {
             try
             {
-                bool saveScreenshotRefs = Convert.ToBoolean(config.Settings.User.GetByKey("SaveScreenshotRefs", config.Settings.DefaultSettings.SaveScreenshotRefs).Value);
-
-                if (!saveScreenshotRefs)
-                {
-                    return;
-                }
-
                 _mutexWriteFile.WaitOne();
+
+                bool saveScreenshotRefs = Convert.ToBoolean(config.Settings.User.GetByKey("SaveScreenshotRefs", config.Settings.DefaultSettings.SaveScreenshotRefs).Value);
 
                 if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))
                 {
@@ -916,7 +911,10 @@ namespace AutoScreenCapture
 
                         xDoc.AppendChild(rootElement);
 
-                        xDoc.Save(_fileSystem.ScreenshotsFile);
+                        if (saveScreenshotRefs)
+                        {
+                            xDoc.Save(_fileSystem.ScreenshotsFile);
+                        }
                     }
 
                     if (_fileSystem.FileExists(_fileSystem.ConfigFile))
@@ -1019,7 +1017,10 @@ namespace AutoScreenCapture
                     {
                         lock (xDoc)
                         {
-                            xDoc.Save(_fileSystem.ScreenshotsFile);
+                            if (saveScreenshotRefs)
+                            {
+                                xDoc.Save(_fileSystem.ScreenshotsFile);
+                            }
                         }
                     }
                 }

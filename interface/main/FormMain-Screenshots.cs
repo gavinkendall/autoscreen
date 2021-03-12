@@ -682,11 +682,11 @@ namespace AutoScreenCapture
             {
                 Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
-                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path) && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path))
                 {
                     if (_screenshotCollection.OptimizeScreenCapture)
                     {
-                        if (!_screenshotCollection.EmailedScreenshotHashList.Contains(lastScreenshotOfThisView.Hash))
+                        if (!string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) && !_screenshotCollection.EmailedScreenshotHashList.Contains(lastScreenshotOfThisView.Hash))
                         {
                             if (EmailScreenshot(lastScreenshotOfThisView, prompt: false))
                             {
@@ -814,7 +814,7 @@ namespace AutoScreenCapture
             {
                 Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
-                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path) && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path))
                 {
                     FileTransferScreenshot(lastScreenshotOfThisView);
                 }
