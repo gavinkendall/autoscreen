@@ -10,3 +10,4 @@ del ..\bin\Release\Gavin.Kendall.SFTP.dll
 del ..\bin\Release\Gavin.Kendall.SFTP.pdb
 del ..\bin\Release\Renci.SshNet.dll
 del ..\bin\Release\Renci.SshNet.xml
+signtool sign /f ..\autoscreen.pfx /p Sonic2020! /fd SHA256 ..\bin\Release\autoscreen.exe

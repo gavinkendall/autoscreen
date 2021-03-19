@@ -15,50 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_3AA56A3A35EFFB4E47484F80E684169A"
-        "OwnerKey" = "8:_63A3AB0972FF40CD81A0449CCD1D47D4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_63A3AB0972FF40CD81A0449CCD1D47D4"
+        "MsmKey" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8C82FD330CF86280868C093E1C2D87C1"
-        "OwnerKey" = "8:_3AA56A3A35EFFB4E47484F80E684169A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8C82FD330CF86280868C093E1C2D87C1"
-        "OwnerKey" = "8:_63A3AB0972FF40CD81A0449CCD1D47D4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9451091AC0DE4CE1BEAFB7F297546CC7"
+        "MsmKey" = "8:_F5D35A4CE885407C967C5246831CE10C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8C82FD330CF86280868C093E1C2D87C1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_63A3AB0972FF40CD81A0449CCD1D47D4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3AA56A3A35EFFB4E47484F80E684169A"
+        "OwnerKey" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -140,20 +110,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3AA56A3A35EFFB4E47484F80E684169A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9ACC9C115A4F4BCABA938B9FF9F2199F"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Gavin.Kendall.SFTP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3ff3a874efb34357, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.3.4.8, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3AA56A3A35EFFB4E47484F80E684169A"
+                    "_9ACC9C115A4F4BCABA938B9FF9F2199F"
                     {
-                    "Name" = "8:Gavin.Kendall.SFTP.dll"
+                    "Name" = "8:autoscreen.exe"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Gavin.Kendall.SFTP.dll"
+            "SourcePath" = "8:..\\bin\\Release\\autoscreen.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
@@ -168,41 +138,10 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C82FD330CF86280868C093E1C2D87C1"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8C82FD330CF86280868C093E1C2D87C1"
-                    {
-                    "Name" = "8:Renci.SshNet.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Renci.SshNet.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9451091AC0DE4CE1BEAFB7F297546CC7"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F5D35A4CE885407C967C5246831CE10C"
             {
             "SourcePath" = "8:..\\autoscreen.ico"
             "TargetName" = "8:autoscreen.ico"
@@ -290,7 +229,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
         "ProductCode" = "8:{6016760D-8388-4771-8F0C-E0C5B64A7A37}"
-        "PackageCode" = "8:{3F0B96D2-9DE3-47EC-B301-3BF80DB2BDE7}"
+        "PackageCode" = "8:{324990D1-E715-481E-B411-9AABAA0A290F}"
         "UpgradeCode" = "8:{5A52167C-788C-412D-B0A1-ED40B962A74F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -307,7 +246,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Automated screen capture utility for gamers, designers, and testers"
         "ARPURLINFOABOUT" = "8:https://sourceforge.net/projects/autoscreen/"
-        "ARPPRODUCTICON" = "8:_9451091AC0DE4CE1BEAFB7F297546CC7"
+        "ARPPRODUCTICON" = "8:_F5D35A4CE885407C967C5246831CE10C"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -410,7 +349,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_93298F583AD245C7B4BE3A9D2D1F6D42"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_554DEA7002B144C4AE046AE8591270DA"
             {
             "Name" = "8:Auto Screen Capture"
             "Arguments" = "8:"
@@ -418,24 +357,24 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_63A3AB0972FF40CD81A0449CCD1D47D4"
-            "Folder" = "8:_78D75DC2F80F481C8A0886AA0CEFCBBF"
-            "WorkingFolder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
-            "Icon" = "8:_9451091AC0DE4CE1BEAFB7F297546CC7"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A786615579ED4CF6BA60435506533617"
-            {
-            "Name" = "8:Auto Screen Capture"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_63A3AB0972FF40CD81A0449CCD1D47D4"
+            "Target" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
             "Folder" = "8:_FCA2E1CC41974EE59078A70D21490803"
             "WorkingFolder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
-            "Icon" = "8:_9451091AC0DE4CE1BEAFB7F297546CC7"
+            "Icon" = "8:_F5D35A4CE885407C967C5246831CE10C"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7EF8B80465784E32AB5897FB75F15CF2"
+            {
+            "Name" = "8:Auto Screen Capture"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
+            "Folder" = "8:_78D75DC2F80F481C8A0886AA0CEFCBBF"
+            "WorkingFolder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
+            "Icon" = "8:_F5D35A4CE885407C967C5246831CE10C"
             "Feature" = "8:"
             }
         }
@@ -837,34 +776,6 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_63A3AB0972FF40CD81A0449CCD1D47D4"
-            {
-            "SourcePath" = "8:..\\obj\\Release\\AutoScreenCapture.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Any CPU"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{0D508AFE-3F53-4832-A051-D8B1BDE0035C}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
         }
     }
 }
