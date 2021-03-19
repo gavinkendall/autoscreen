@@ -67,10 +67,7 @@ namespace AutoScreenCapture
 
                     HideSystemTrayIcon();
 
-                    _log.WriteDebugMessage("Hiding interface on clean application exit");
-                    HideInterface();
-
-                    _log.WriteDebugMessage("Saving screenshots on clean application exit");
+                    _log.WriteDebugMessage("Saving screenshot references on clean application exit");
                     _screenshotCollection.SaveToXmlFile(_config);
 
                     if (runDateSearchThread != null && runDateSearchThread.IsBusy)

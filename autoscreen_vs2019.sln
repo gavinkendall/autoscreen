@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoScreenCapture", "AutoSc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{814A85E5-1B92-42D3-83D1-CC99132B1C62}"
 	ProjectSection(SolutionItems) = preProject
+		build-and-release.txt = build-and-release.txt
 		changelog.txt = changelog.txt
 		license.txt = license.txt
 		README.md = README.md
@@ -14,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gavin.Kendall.SFTP", "Gavin.Kendall.SFTP\Gavin.Kendall.SFTP.csproj", "{0C6E9617-7386-4D38-BEA9-F71F48226FAC}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AutoScreenCaptureSetup", "AutoScreenCaptureSetup\AutoScreenCaptureSetup.vdproj", "{4AD61299-A941-4F09-8234-38D146806AE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +32,8 @@ Global
 		{0C6E9617-7386-4D38-BEA9-F71F48226FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C6E9617-7386-4D38-BEA9-F71F48226FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C6E9617-7386-4D38-BEA9-F71F48226FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AD61299-A941-4F09-8234-38D146806AE9}.Debug|Any CPU.ActiveCfg = Debug
+		{4AD61299-A941-4F09-8234-38D146806AE9}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

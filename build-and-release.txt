@@ -1,0 +1,29 @@
+*** Building Auto Screen Capture ***
+There's a "build.bat" script in the "autoscreen\build" directory that does a Release build and uses ILMerge to
+merge the assemblies into a single executable named "autoscreen.exe" (renamed from AutoScreenCapture.exe during the build).
+
+====== build.bat ======
+del /s /q ..\bin\Release\*.*
+rmdir /s /q ..\bin\Release\!autoscreen
+rmdir /s /q ..\bin\Release\screenshots
+msbuild ..\autoscreen_vs2019.sln /p:Configuration=Release -restore
+ILMerge ..\bin\Release\AutoScreenCapture.exe /out:..\bin\Release\autoscreen.exe ..\bin\Release\Renci.SshNet.dll ..\bin\Release\Gavin.Kendall.SFTP.dll
+del ..\bin\Release\AutoScreenCapture.exe
+del ..\bin\Release\autoscreen.pdb
+del ..\bin\Release\AutoScreenCapture.exe.config
+del ..\bin\Release\Gavin.Kendall.SFTP.dll
+del ..\bin\Release\Gavin.Kendall.SFTP.pdb
+del ..\bin\Release\Renci.SshNet.dll
+del ..\bin\Release\Renci.SshNet.xml
+=======================
+
+*** Release of autoscreen.exe ***
+The portable executable "autoscreen.exe" in "autoscreen\bin\Release" is produced by running the "build.bat" script.
+It is then uploaded to SourceForge and it usually takes a few days for software distribution sites to pick up the latest version.
+
+*** Release of AutoScreenCaptureSetup.msi ***
+For those who want an installer simply build the solution in Release mode to
+produce the AutoScreenCapture.exe binary and its dependent libraries then build
+the "AutoScreenCaptureSetup" project in Release mode to make "AutoScreenCaptureSetup.msi"
+in "autoscreen\AutoScreenCaptureSetup\Release" using AutoScreenCapture.exe from "autoscreen\bin\Release".
+Upload the AutoScreenCaptureSetup.msi installer from "autoscreen\AutoScreenCaptureSetup\Release".
