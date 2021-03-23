@@ -61,6 +61,9 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Initializing screen capture");
                 _screenCapture = new ScreenCapture(_config, _macroParser, _fileSystem, _log);
 
+                _log.WriteDebugMessage("Initializing image format collection");
+                _imageFormatCollection = new ImageFormatCollection();
+
                 _log.WriteDebugMessage("Initializing forms");
                 _formAbout = new FormAbout();
                 _formHelp = new FormHelp();
@@ -70,13 +73,11 @@ namespace AutoScreenCapture
                 _formEditor = new FormEditor(_config, _fileSystem, _log);
                 _formEmailSettings = new FormEmailSettings(_config, _fileSystem, _log);
                 _formFileTransferSettings = new FormFileTransferSettings(_config, _fileSystem, _log);
+                _formRegionSelectOptions = new FormRegionSelectOptions(_config, _fileSystem, _imageFormatCollection);
                 _formSchedule = new FormSchedule();
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_screenCapture, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-
-                _log.WriteDebugMessage("Initializing image format collection");
-                _imageFormatCollection = new ImageFormatCollection();
 
                 _log.WriteDebugMessage("Initializing editor collection");
                 
@@ -251,10 +252,6 @@ namespace AutoScreenCapture
                 // Application Focus
                 RefreshApplicationFocusList();
 
-                // Region Select / Auto Save
-                textBoxAutoSaveFolder.Text = _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value.ToString();
-                textBoxAutoSaveMacro.Text = _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value.ToString();
-
                 EnableStartCapture();
 
                 CaptureLimitCheck();
@@ -305,10 +302,6 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = comboBoxProcessList.Text;
                 _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)numericUpDownApplicationFocusDelayBefore.Value;
                 _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)numericUpDownApplicationFocusDelayAfter.Value;
-
-                // Region Select / Auto Save.
-                _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
-                _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value = textBoxAutoSaveMacro.Text.Trim();
 
                 if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                 {

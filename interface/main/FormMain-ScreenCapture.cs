@@ -466,6 +466,45 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Shows the Region Select Options form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectOptions_Click(object sender, EventArgs e)
+        {
+            if (!_formRegionSelectOptions.Visible)
+            {
+                _formRegionSelectOptions.ShowDialog(this);
+            }
+            else
+            {
+                _formRegionSelectOptions.Focus();
+                _formRegionSelectOptions.BringToFront();
+            }
+        }
+
+        /// <summary>
+        /// Gets the bitmap image from the Region Select canvas.
+        /// </summary>
+        /// <returns>The bitmap image from the Region Select canvas.</returns>
+        private Bitmap GetBitmapFromRegionSelect()
+        {
+            int x = _formRegionSelectWithMouse.outputX + 1;
+            int y = _formRegionSelectWithMouse.outputY + 1;
+            int width = _formRegionSelectWithMouse.outputWidth - 2;
+            int height = _formRegionSelectWithMouse.outputHeight - 2;
+
+            if (_screenCapture.GetScreenImages(-1, -1, x, y, width, height, mouse: false, out Bitmap bitmap))
+            {
+                return bitmap;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Shows a mouse-driven region selection canvas so you can select a region and then have the captured image sent to the clipboard.
         /// </summary>
         /// <param name="sender"></param>
@@ -501,24 +540,34 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Shows a mouse-driven region selection canvas so you can select a region, have the captured image be sent to the clipboard, and then shown in a floating window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardFloatingScreenshotMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas();
+        }
+
+        /// <summary>
         /// The event method used by "Region Select -> Clipboard / Auto Save".
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted(object sender, EventArgs e)
         {
-            int x = _formRegionSelectWithMouse.outputX + 1;
-            int y = _formRegionSelectWithMouse.outputY + 1;
-            int width = _formRegionSelectWithMouse.outputWidth - 2;
-            int height = _formRegionSelectWithMouse.outputHeight - 2;
+            Bitmap bitmap = GetBitmapFromRegionSelect();
 
-            string autoSaveFolder = textBoxAutoSaveFolder.Text;
-            string autoSaveMacro = textBoxAutoSaveMacro.Text;
-
-            ImageFormat imageFormat = new ImageFormat("JPEG", ".jpeg");
-
-            if (_screenCapture.GetScreenImages(-1, -1, x, y, width, height, mouse: false, out Bitmap bitmap))
+            if (bitmap != null)
             {
+                string autoSaveFolder = _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value.ToString();
+                string autoSaveMacro = _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value.ToString();
+                string autoSaveFormat = _config.Settings.User.GetByKey("AutoSaveFormat", _config.Settings.DefaultSettings.AutoSaveFormat).Value.ToString();
+
+                ImageFormat imageFormat = new ImageFormat(autoSaveFormat, "." + autoSaveFormat.ToLower());
+
                 DateTime dtNow = DateTime.Now;
 
                 _screenCapture.DateTimeScreenshotsTaken = dtNow;
@@ -566,17 +615,18 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows a folder selection dialog box for "Region Select / Auto Save".
+        /// The event method for "Region Select -> Clipboard / Floating Screenshot".
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void buttonBrowseFolder_Click(object sender, EventArgs e)
+        private void _formRegionSelectWithMouse_RegionSelectClipboardFloatingScreenshotMouseSelectionCompleted(object sender, EventArgs e)
         {
-            FolderBrowserDialog browser = new FolderBrowserDialog();
+            Bitmap bitmap = GetBitmapFromRegionSelect();
 
-            if (browser.ShowDialog() == DialogResult.OK)
+            if (bitmap != null)
             {
-                textBoxAutoSaveFolder.Text = browser.SelectedPath;
+                FormFloatingScreenshot formFloatingScreenshot = new FormFloatingScreenshot(bitmap);
+                formFloatingScreenshot.Show();
             }
         }
 

@@ -59,6 +59,13 @@ namespace AutoScreenCapture
             this.toolStripMenuItemAddSchedule = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddMacroTag = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddTrigger = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeScreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeRegion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeSchedule = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeMacroTag = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemChangeTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileTransferSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,9 +76,12 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorCaptureNow = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemRegionSelect = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRegionSelectOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorRegionSelectOptions = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemRegionSelectClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectClipboardAutoSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorRegionSelect = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
@@ -86,12 +96,6 @@ namespace AutoScreenCapture
             this.buttonApplicationFocusTest = new System.Windows.Forms.Button();
             this.buttonApplicationFocusRefresh = new System.Windows.Forms.Button();
             this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
-            this.groupBoxRegionSelectAutoSave = new System.Windows.Forms.GroupBox();
-            this.buttonBrowseFolder = new System.Windows.Forms.Button();
-            this.labelAutoSaveMacro = new System.Windows.Forms.Label();
-            this.labelAutoSaveFolder = new System.Windows.Forms.Label();
-            this.textBoxAutoSaveMacro = new System.Windows.Forms.TextBox();
-            this.textBoxAutoSaveFolder = new System.Windows.Forms.TextBox();
             this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
             this.buttonDynamicRegexValidator = new System.Windows.Forms.Button();
             this.radioButtonRegularExpressionMatch = new System.Windows.Forms.RadioButton();
@@ -134,13 +138,6 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItemChange = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeScreen = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeRegion = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeEditor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeSchedule = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeMacroTag = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChangeTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -148,7 +145,6 @@ namespace AutoScreenCapture
             this.groupBoxApplicationFocus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
-            this.groupBoxRegionSelectAutoSave.SuspendLayout();
             this.groupBoxActiveWindowTitle.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
@@ -389,7 +385,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemAddScreen.Image = global::AutoScreenCapture.Properties.Resources.screen;
             this.toolStripMenuItemAddScreen.Name = "toolStripMenuItemAddScreen";
-            this.toolStripMenuItemAddScreen.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddScreen.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItemAddScreen.Text = "Screen";
             this.toolStripMenuItemAddScreen.Click += new System.EventHandler(this.addScreen_Click);
             // 
@@ -397,7 +393,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemAddRegion.Image = global::AutoScreenCapture.Properties.Resources.region;
             this.toolStripMenuItemAddRegion.Name = "toolStripMenuItemAddRegion";
-            this.toolStripMenuItemAddRegion.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddRegion.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItemAddRegion.Text = "Region";
             this.toolStripMenuItemAddRegion.Click += new System.EventHandler(this.addRegion_Click);
             // 
@@ -405,7 +401,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemAddEditor.Image = global::AutoScreenCapture.Properties.Resources.edit;
             this.toolStripMenuItemAddEditor.Name = "toolStripMenuItemAddEditor";
-            this.toolStripMenuItemAddEditor.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddEditor.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItemAddEditor.Text = "Editor";
             this.toolStripMenuItemAddEditor.Click += new System.EventHandler(this.addEditor_Click);
             // 
@@ -413,7 +409,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemAddSchedule.Image = global::AutoScreenCapture.Properties.Resources.schedule;
             this.toolStripMenuItemAddSchedule.Name = "toolStripMenuItemAddSchedule";
-            this.toolStripMenuItemAddSchedule.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddSchedule.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItemAddSchedule.Text = "Schedule";
             this.toolStripMenuItemAddSchedule.Click += new System.EventHandler(this.addSchedule_Click);
             // 
@@ -421,7 +417,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemAddMacroTag.Image = global::AutoScreenCapture.Properties.Resources.brick;
             this.toolStripMenuItemAddMacroTag.Name = "toolStripMenuItemAddMacroTag";
-            this.toolStripMenuItemAddMacroTag.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddMacroTag.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItemAddMacroTag.Text = "Macro Tag";
             this.toolStripMenuItemAddMacroTag.Click += new System.EventHandler(this.addMacroTag_Click);
             // 
@@ -429,9 +425,64 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemAddTrigger.Image = global::AutoScreenCapture.Properties.Resources.trigger;
             this.toolStripMenuItemAddTrigger.Name = "toolStripMenuItemAddTrigger";
-            this.toolStripMenuItemAddTrigger.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemAddTrigger.Size = new System.Drawing.Size(130, 22);
             this.toolStripMenuItemAddTrigger.Text = "Trigger";
             this.toolStripMenuItemAddTrigger.Click += new System.EventHandler(this.addTrigger_Click);
+            // 
+            // toolStripMenuItemChange
+            // 
+            this.toolStripMenuItemChange.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemChangeScreen,
+            this.toolStripMenuItemChangeRegion,
+            this.toolStripMenuItemChangeEditor,
+            this.toolStripMenuItemChangeSchedule,
+            this.toolStripMenuItemChangeMacroTag,
+            this.toolStripMenuItemChangeTrigger});
+            this.toolStripMenuItemChange.Name = "toolStripMenuItemChange";
+            this.toolStripMenuItemChange.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemChange.Text = "Change";
+            // 
+            // toolStripMenuItemChangeScreen
+            // 
+            this.toolStripMenuItemChangeScreen.Image = global::AutoScreenCapture.Properties.Resources.screen;
+            this.toolStripMenuItemChangeScreen.Name = "toolStripMenuItemChangeScreen";
+            this.toolStripMenuItemChangeScreen.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuItemChangeScreen.Text = "Screen";
+            // 
+            // toolStripMenuItemChangeRegion
+            // 
+            this.toolStripMenuItemChangeRegion.Image = global::AutoScreenCapture.Properties.Resources.region;
+            this.toolStripMenuItemChangeRegion.Name = "toolStripMenuItemChangeRegion";
+            this.toolStripMenuItemChangeRegion.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuItemChangeRegion.Text = "Region";
+            // 
+            // toolStripMenuItemChangeEditor
+            // 
+            this.toolStripMenuItemChangeEditor.Image = global::AutoScreenCapture.Properties.Resources.edit;
+            this.toolStripMenuItemChangeEditor.Name = "toolStripMenuItemChangeEditor";
+            this.toolStripMenuItemChangeEditor.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuItemChangeEditor.Text = "Editor";
+            // 
+            // toolStripMenuItemChangeSchedule
+            // 
+            this.toolStripMenuItemChangeSchedule.Image = global::AutoScreenCapture.Properties.Resources.schedule;
+            this.toolStripMenuItemChangeSchedule.Name = "toolStripMenuItemChangeSchedule";
+            this.toolStripMenuItemChangeSchedule.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuItemChangeSchedule.Text = "Schedule";
+            // 
+            // toolStripMenuItemChangeMacroTag
+            // 
+            this.toolStripMenuItemChangeMacroTag.Image = global::AutoScreenCapture.Properties.Resources.brick;
+            this.toolStripMenuItemChangeMacroTag.Name = "toolStripMenuItemChangeMacroTag";
+            this.toolStripMenuItemChangeMacroTag.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuItemChangeMacroTag.Text = "Macro Tag";
+            // 
+            // toolStripMenuItemChangeTrigger
+            // 
+            this.toolStripMenuItemChangeTrigger.Image = global::AutoScreenCapture.Properties.Resources.trigger;
+            this.toolStripMenuItemChangeTrigger.Name = "toolStripMenuItemChangeTrigger";
+            this.toolStripMenuItemChangeTrigger.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuItemChangeTrigger.Text = "Trigger";
             // 
             // toolStripMenuItemSettings
             // 
@@ -504,34 +555,56 @@ namespace AutoScreenCapture
             // toolStripMenuItemRegionSelect
             // 
             this.toolStripMenuItemRegionSelect.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemRegionSelectOptions,
+            this.toolStripSeparatorRegionSelectOptions,
             this.toolStripMenuItemRegionSelectClipboard,
             this.toolStripMenuItemRegionSelectClipboardAutoSave,
-            this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit});
+            this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit,
+            this.toolStripMenuItemFloatingScreenshot});
             this.toolStripMenuItemRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region;
             this.toolStripMenuItemRegionSelect.Name = "toolStripMenuItemRegionSelect";
             this.toolStripMenuItemRegionSelect.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemRegionSelect.Text = "Region Select";
             // 
+            // toolStripMenuItemRegionSelectOptions
+            // 
+            this.toolStripMenuItemRegionSelectOptions.Name = "toolStripMenuItemRegionSelectOptions";
+            this.toolStripMenuItemRegionSelectOptions.Size = new System.Drawing.Size(241, 22);
+            this.toolStripMenuItemRegionSelectOptions.Text = "Region Select Options ...";
+            this.toolStripMenuItemRegionSelectOptions.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectOptions_Click);
+            // 
+            // toolStripSeparatorRegionSelectOptions
+            // 
+            this.toolStripSeparatorRegionSelectOptions.Name = "toolStripSeparatorRegionSelectOptions";
+            this.toolStripSeparatorRegionSelectOptions.Size = new System.Drawing.Size(238, 6);
+            // 
             // toolStripMenuItemRegionSelectClipboard
             // 
             this.toolStripMenuItemRegionSelectClipboard.Name = "toolStripMenuItemRegionSelectClipboard";
-            this.toolStripMenuItemRegionSelectClipboard.Size = new System.Drawing.Size(221, 22);
+            this.toolStripMenuItemRegionSelectClipboard.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItemRegionSelectClipboard.Text = "Clipboard";
             this.toolStripMenuItemRegionSelectClipboard.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboard_Click);
             // 
             // toolStripMenuItemRegionSelectClipboardAutoSave
             // 
             this.toolStripMenuItemRegionSelectClipboardAutoSave.Name = "toolStripMenuItemRegionSelectClipboardAutoSave";
-            this.toolStripMenuItemRegionSelectClipboardAutoSave.Size = new System.Drawing.Size(221, 22);
+            this.toolStripMenuItemRegionSelectClipboardAutoSave.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItemRegionSelectClipboardAutoSave.Text = "Clipboard / Auto Save";
             this.toolStripMenuItemRegionSelectClipboardAutoSave.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardAutoSave_Click);
             // 
             // toolStripMenuItemRegionSelectClipboardAutoSaveEdit
             // 
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Name = "toolStripMenuItemRegionSelectClipboardAutoSaveEdit";
-            this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Size = new System.Drawing.Size(221, 22);
+            this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Text = "Clipboard / Auto Save / Edit";
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click);
+            // 
+            // toolStripMenuItemFloatingScreenshot
+            // 
+            this.toolStripMenuItemFloatingScreenshot.Name = "toolStripMenuItemFloatingScreenshot";
+            this.toolStripMenuItemFloatingScreenshot.Size = new System.Drawing.Size(241, 22);
+            this.toolStripMenuItemFloatingScreenshot.Text = "Clipboard / Floating Screenshot";
+            this.toolStripMenuItemFloatingScreenshot.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click);
             // 
             // toolStripSeparatorRegionSelect
             // 
@@ -582,7 +655,6 @@ namespace AutoScreenCapture
             // 
             this.tabPageSetup.AutoScroll = true;
             this.tabPageSetup.Controls.Add(this.groupBoxApplicationFocus);
-            this.tabPageSetup.Controls.Add(this.groupBoxRegionSelectAutoSave);
             this.tabPageSetup.Controls.Add(this.groupBoxActiveWindowTitle);
             this.tabPageSetup.Controls.Add(this.groupBoxSecurity);
             this.tabPageSetup.Controls.Add(this.checkBoxScreenshotLabel);
@@ -622,7 +694,7 @@ namespace AutoScreenCapture
             0});
             this.numericUpDownApplicationFocusDelayAfter.Name = "numericUpDownApplicationFocusDelayAfter";
             this.numericUpDownApplicationFocusDelayAfter.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownApplicationFocusDelayAfter.TabIndex = 3;
+            this.numericUpDownApplicationFocusDelayAfter.TabIndex = 0;
             this.numericUpDownApplicationFocusDelayAfter.TabStop = false;
             // 
             // numericUpDownApplicationFocusDelayBefore
@@ -644,7 +716,7 @@ namespace AutoScreenCapture
             this.labelApplicationFocusDelayAfter.Location = new System.Drawing.Point(6, 75);
             this.labelApplicationFocusDelayAfter.Name = "labelApplicationFocusDelayAfter";
             this.labelApplicationFocusDelayAfter.Size = new System.Drawing.Size(127, 13);
-            this.labelApplicationFocusDelayAfter.TabIndex = 2;
+            this.labelApplicationFocusDelayAfter.TabIndex = 0;
             this.labelApplicationFocusDelayAfter.Text = "Delay After (milliseconds):";
             // 
             // labelApplicationFocusDelayBefore
@@ -653,7 +725,7 @@ namespace AutoScreenCapture
             this.labelApplicationFocusDelayBefore.Location = new System.Drawing.Point(6, 49);
             this.labelApplicationFocusDelayBefore.Name = "labelApplicationFocusDelayBefore";
             this.labelApplicationFocusDelayBefore.Size = new System.Drawing.Size(136, 13);
-            this.labelApplicationFocusDelayBefore.TabIndex = 1;
+            this.labelApplicationFocusDelayBefore.TabIndex = 0;
             this.labelApplicationFocusDelayBefore.Text = "Delay Before (milliseconds):";
             // 
             // buttonApplicationFocusTest
@@ -687,66 +759,6 @@ namespace AutoScreenCapture
             this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
             this.comboBoxProcessList.TabIndex = 0;
             this.comboBoxProcessList.TabStop = false;
-            // 
-            // groupBoxRegionSelectAutoSave
-            // 
-            this.groupBoxRegionSelectAutoSave.Controls.Add(this.buttonBrowseFolder);
-            this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveMacro);
-            this.groupBoxRegionSelectAutoSave.Controls.Add(this.labelAutoSaveFolder);
-            this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveMacro);
-            this.groupBoxRegionSelectAutoSave.Controls.Add(this.textBoxAutoSaveFolder);
-            this.groupBoxRegionSelectAutoSave.Location = new System.Drawing.Point(6, 457);
-            this.groupBoxRegionSelectAutoSave.Name = "groupBoxRegionSelectAutoSave";
-            this.groupBoxRegionSelectAutoSave.Size = new System.Drawing.Size(205, 78);
-            this.groupBoxRegionSelectAutoSave.TabIndex = 0;
-            this.groupBoxRegionSelectAutoSave.TabStop = false;
-            this.groupBoxRegionSelectAutoSave.Text = "Region Select / Auto Save";
-            // 
-            // buttonBrowseFolder
-            // 
-            this.buttonBrowseFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowseFolder.Image = global::AutoScreenCapture.Properties.Resources.openfolder;
-            this.buttonBrowseFolder.Location = new System.Drawing.Point(172, 21);
-            this.buttonBrowseFolder.Name = "buttonBrowseFolder";
-            this.buttonBrowseFolder.Size = new System.Drawing.Size(27, 23);
-            this.buttonBrowseFolder.TabIndex = 0;
-            this.buttonBrowseFolder.TabStop = false;
-            this.buttonBrowseFolder.UseVisualStyleBackColor = true;
-            this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
-            // 
-            // labelAutoSaveMacro
-            // 
-            this.labelAutoSaveMacro.AutoSize = true;
-            this.labelAutoSaveMacro.Location = new System.Drawing.Point(3, 52);
-            this.labelAutoSaveMacro.Name = "labelAutoSaveMacro";
-            this.labelAutoSaveMacro.Size = new System.Drawing.Size(40, 13);
-            this.labelAutoSaveMacro.TabIndex = 0;
-            this.labelAutoSaveMacro.Text = "Macro:";
-            // 
-            // labelAutoSaveFolder
-            // 
-            this.labelAutoSaveFolder.AutoSize = true;
-            this.labelAutoSaveFolder.Location = new System.Drawing.Point(3, 26);
-            this.labelAutoSaveFolder.Name = "labelAutoSaveFolder";
-            this.labelAutoSaveFolder.Size = new System.Drawing.Size(39, 13);
-            this.labelAutoSaveFolder.TabIndex = 0;
-            this.labelAutoSaveFolder.Text = "Folder:";
-            // 
-            // textBoxAutoSaveMacro
-            // 
-            this.textBoxAutoSaveMacro.Location = new System.Drawing.Point(49, 49);
-            this.textBoxAutoSaveMacro.Name = "textBoxAutoSaveMacro";
-            this.textBoxAutoSaveMacro.Size = new System.Drawing.Size(150, 20);
-            this.textBoxAutoSaveMacro.TabIndex = 0;
-            this.textBoxAutoSaveMacro.TabStop = false;
-            // 
-            // textBoxAutoSaveFolder
-            // 
-            this.textBoxAutoSaveFolder.Location = new System.Drawing.Point(49, 23);
-            this.textBoxAutoSaveFolder.Name = "textBoxAutoSaveFolder";
-            this.textBoxAutoSaveFolder.Size = new System.Drawing.Size(117, 20);
-            this.textBoxAutoSaveFolder.TabIndex = 0;
-            this.textBoxAutoSaveFolder.TabStop = false;
             // 
             // groupBoxActiveWindowTitle
             // 
@@ -831,7 +843,7 @@ namespace AutoScreenCapture
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 541);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(6, 457);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
             this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
             this.groupBoxSecurity.TabIndex = 0;
@@ -921,7 +933,7 @@ namespace AutoScreenCapture
             this.labelLimit.Location = new System.Drawing.Point(171, 47);
             this.labelLimit.Name = "labelLimit";
             this.labelLimit.Size = new System.Drawing.Size(24, 13);
-            this.labelLimit.TabIndex = 26;
+            this.labelLimit.TabIndex = 0;
             this.labelLimit.Text = "limit";
             // 
             // checkBoxInitialScreenshot
@@ -1225,61 +1237,6 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
-            // toolStripMenuItemChange
-            // 
-            this.toolStripMenuItemChange.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemChangeScreen,
-            this.toolStripMenuItemChangeRegion,
-            this.toolStripMenuItemChangeEditor,
-            this.toolStripMenuItemChangeSchedule,
-            this.toolStripMenuItemChangeMacroTag,
-            this.toolStripMenuItemChangeTrigger});
-            this.toolStripMenuItemChange.Name = "toolStripMenuItemChange";
-            this.toolStripMenuItemChange.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemChange.Text = "Change";
-            // 
-            // toolStripMenuItemChangeScreen
-            // 
-            this.toolStripMenuItemChangeScreen.Image = global::AutoScreenCapture.Properties.Resources.screen;
-            this.toolStripMenuItemChangeScreen.Name = "toolStripMenuItemChangeScreen";
-            this.toolStripMenuItemChangeScreen.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeScreen.Text = "Screen";
-            // 
-            // toolStripMenuItemChangeRegion
-            // 
-            this.toolStripMenuItemChangeRegion.Image = global::AutoScreenCapture.Properties.Resources.region;
-            this.toolStripMenuItemChangeRegion.Name = "toolStripMenuItemChangeRegion";
-            this.toolStripMenuItemChangeRegion.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeRegion.Text = "Region";
-            // 
-            // toolStripMenuItemChangeEditor
-            // 
-            this.toolStripMenuItemChangeEditor.Image = global::AutoScreenCapture.Properties.Resources.edit;
-            this.toolStripMenuItemChangeEditor.Name = "toolStripMenuItemChangeEditor";
-            this.toolStripMenuItemChangeEditor.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeEditor.Text = "Editor";
-            // 
-            // toolStripMenuItemChangeSchedule
-            // 
-            this.toolStripMenuItemChangeSchedule.Image = global::AutoScreenCapture.Properties.Resources.schedule;
-            this.toolStripMenuItemChangeSchedule.Name = "toolStripMenuItemChangeSchedule";
-            this.toolStripMenuItemChangeSchedule.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeSchedule.Text = "Schedule";
-            // 
-            // toolStripMenuItemChangeMacroTag
-            // 
-            this.toolStripMenuItemChangeMacroTag.Image = global::AutoScreenCapture.Properties.Resources.brick;
-            this.toolStripMenuItemChangeMacroTag.Name = "toolStripMenuItemChangeMacroTag";
-            this.toolStripMenuItemChangeMacroTag.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeMacroTag.Text = "Macro Tag";
-            // 
-            // toolStripMenuItemChangeTrigger
-            // 
-            this.toolStripMenuItemChangeTrigger.Image = global::AutoScreenCapture.Properties.Resources.trigger;
-            this.toolStripMenuItemChangeTrigger.Name = "toolStripMenuItemChangeTrigger";
-            this.toolStripMenuItemChangeTrigger.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemChangeTrigger.Text = "Trigger";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1312,8 +1269,6 @@ namespace AutoScreenCapture
             this.groupBoxApplicationFocus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).EndInit();
-            this.groupBoxRegionSelectAutoSave.ResumeLayout(false);
-            this.groupBoxRegionSelectAutoSave.PerformLayout();
             this.groupBoxActiveWindowTitle.ResumeLayout(false);
             this.groupBoxActiveWindowTitle.PerformLayout();
             this.groupBoxSecurity.ResumeLayout(false);
@@ -1398,12 +1353,6 @@ namespace AutoScreenCapture
         private TextBox textBoxActiveWindowTitle;
         private CheckBox checkBoxActiveWindowTitle;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboard;
-        private GroupBox groupBoxRegionSelectAutoSave;
-        private Label labelAutoSaveMacro;
-        private Label labelAutoSaveFolder;
-        private TextBox textBoxAutoSaveMacro;
-        private TextBox textBoxAutoSaveFolder;
-        private Button buttonBrowseFolder;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboardAutoSave;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboardAutoSaveEdit;
         private ToolStripSeparator toolStripSeparatorRegionSelect;
@@ -1442,5 +1391,8 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemChangeSchedule;
         private ToolStripMenuItem toolStripMenuItemChangeMacroTag;
         private ToolStripMenuItem toolStripMenuItemChangeTrigger;
+        private ToolStripMenuItem toolStripMenuItemRegionSelectOptions;
+        private ToolStripSeparator toolStripSeparatorRegionSelectOptions;
+        private ToolStripMenuItem toolStripMenuItemFloatingScreenshot;
     }
 }

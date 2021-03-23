@@ -111,6 +111,18 @@
     <Compile Include="help\FormHelp.Designer.cs">
       <DependentUpon>FormHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="interface\FormFloatingScreenshot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormFloatingScreenshot.Designer.cs">
+      <DependentUpon>FormFloatingScreenshot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="interface\FormRegionSelectOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\FormRegionSelectOptions.Designer.cs">
+      <DependentUpon>FormRegionSelectOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\tools\FormDynamicRegexValidator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,6 +322,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="help\FormHelp.resx">
       <DependentUpon>FormHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\FormFloatingScreenshot.resx">
+      <DependentUpon>FormFloatingScreenshot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\FormRegionSelectOptions.resx">
+      <DependentUpon>FormRegionSelectOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\tools\FormDynamicRegexValidator.resx">
       <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
