@@ -314,7 +314,7 @@ namespace AutoScreenCapture
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.EmailScreenshot)
             {
-                MessageBox.Show("Please ensure that the application's email (SMTP) settings are correctly configured in order to automatically email screenshots to the intended recipient. It is important that you do not use this application to spam people. Thank you.\n\nThe settings are prefixed with \"Email\" and located in the following XML document used for application-wide settings ...\n" + _fileSystem.ApplicationSettingsFile, "Check Email Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please ensure that the application's email (SMTP) settings are correctly configured in order to automatically email screenshots to the intended recipient. It is important that you do not use this application to spam people. Thank you.\n\nThe settings are located in " + _fileSystem.SmtpSettingsFile, "Check Email Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             Close();

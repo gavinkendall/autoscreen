@@ -522,25 +522,25 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
 
-                string host = _config.Settings.Application.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
+                string host = Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
 
                 _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(_config.Settings.Application.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int port);
+                int.TryParse(Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int port);
 
                 _log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(_config.Settings.Application.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
+                bool.TryParse(Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
 
                 _log.WriteDebugMessage("SSL = " + ssl);
 
                 _log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = _config.Settings.Application.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
+                string username = Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
 
                 _log.WriteDebugMessage("Username = " + username);
 
-                string password = _config.Settings.Application.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -551,27 +551,27 @@ namespace AutoScreenCapture
                     _log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
                 }
 
-                string from = _config.Settings.Application.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
+                string from = Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
 
                 _log.WriteDebugMessage("From = " + from);
 
-                string to = _config.Settings.Application.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
+                string to = Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
 
                 _log.WriteDebugMessage("To = " + to);
 
-                string cc = _config.Settings.Application.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
+                string cc = Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
 
                 _log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = _config.Settings.Application.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
+                string bcc = Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
 
                 _log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = _config.Settings.Application.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
+                string subject = Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
 
                 _log.WriteDebugMessage("Subject = " + subject);
 
-                string body = _config.Settings.Application.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
+                string body = Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
 
                 _log.WriteDebugMessage("Body = " + body);
 

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.4.9 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.0 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -140,6 +140,7 @@ Triggers have been rewritten. I haven't spent much time on the new wizard-style 
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.0    Fix to SMTP.
 2.3.4.9    Region Select Options and Region Select / Clipboard / Floating Screenshot implemented.
 2.3.4.8    Signed assembly in attempt to satisfy anti-virus software. Fixed weird Exit bug.
 2.3.4.7    SaveScreenshotRefs user setting introduced. Implemented command line options -saveScreenshotRefs=on and -saveScreenshotRefs=off.
