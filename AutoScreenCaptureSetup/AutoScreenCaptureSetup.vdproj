@@ -56,6 +56,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -122,7 +130,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.3.4.9, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.3.6.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9ACC9C115A4F4BCABA938B9FF9F2199F"
@@ -236,15 +244,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
-        "ProductCode" = "8:{D2F17E48-C50D-46B9-AFCC-33581FF363D4}"
-        "PackageCode" = "8:{EAC197C6-12BF-4C22-987E-D61E4327760C}"
+        "ProductCode" = "8:{DB8135DA-1745-4BFA-ACFD-E7CC5A10FA4B}"
+        "PackageCode" = "8:{25A0AC59-EA0B-44A2-AA80-AF38BC3C8AFD}"
         "UpgradeCode" = "8:{5A52167C-788C-412D-B0A1-ED40B962A74F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.3.5"
+        "ProductVersion" = "8:2.3.6"
         "Manufacturer" = "8:Gavin Kendall"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://sourceforge.net/p/autoscreen/tickets/"
