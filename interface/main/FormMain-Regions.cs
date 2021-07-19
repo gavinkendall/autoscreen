@@ -113,6 +113,12 @@ namespace AutoScreenCapture
                 region = (Region)buttonSelected.Tag;
             }
 
+            if (sender is ToolStripSplitButton)
+            {
+                ToolStripSplitButton buttonSelected = (ToolStripSplitButton)sender;
+                region = (Region)buttonSelected.Tag;
+            }
+
             if (sender is ToolStripMenuItem)
             {
                 ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;

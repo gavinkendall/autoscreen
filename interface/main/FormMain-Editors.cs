@@ -103,7 +103,14 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void runEditor_Click(object sender, EventArgs e)
         {
-            Editor editor = _formEditor.EditorCollection.GetByName(sender.ToString());
+            string editorName = sender.ToString();
+
+            if (editorName.Equals("Edit"))
+            {
+                editorName = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
+            }
+
+            Editor editor = _formEditor.EditorCollection.GetByName(editorName);
 
             if (!RunEditor(editor, _slideShow.SelectedSlide))
             {

@@ -123,7 +123,8 @@ namespace AutoScreenCapture
 
             if (_screenCapture.LockScreenCaptureSession)
             {
-                // Hide the "Screen Capture Status", "Add", "Change", "Settings", and "Tools" menu items.
+                // Hide the menu items that need to be hidden when a screen capture session is locked.
+                toolStripMenuItemCommandLine.Visible = false;
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
                 toolStripMenuItemAdd.Visible = false;
                 toolStripMenuItemChange.Visible = false;
@@ -140,7 +141,9 @@ namespace AutoScreenCapture
             }
             else
             {
-                // Show the "Add", "Change", "Settings", and "Screen Capture Status" menu items.
+                // Show the menu items that need to be shown when a screen capture session is unlocked.
+                toolStripMenuItemCommandLine.Visible = true;
+                toolStripMenuItemScreenCaptureStatus.Visible = true;
                 toolStripMenuItemAdd.Visible = true;
                 toolStripMenuItemChange.Visible = true;
 
@@ -156,7 +159,6 @@ namespace AutoScreenCapture
                     toolStripMenuItemFileTransferSettings.Visible = true;
                 }
 
-                toolStripMenuItemScreenCaptureStatus.Visible = true;
                 toolStripMenuItemTools.Visible = true;
                 toolStripSeparatorTools.Visible = true;
 
@@ -198,7 +200,11 @@ namespace AutoScreenCapture
                     return;
                 }
 
-                notifyIcon.Text = "Ready to start taking screenshots";
+                notifyIcon.Text = "Ready to start taking screenshots (" +
+                    _formInterval.numericUpDownHoursInterval.Value.ToString("00") + ":" +
+                    _formInterval.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
+                    _formInterval.numericUpDownSecondsInterval.Value.ToString("00") + "." +
+                    _formInterval.numericUpDownMillisecondsInterval.Value.ToString("000") + ")";
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {

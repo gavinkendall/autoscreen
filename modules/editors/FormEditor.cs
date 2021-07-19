@@ -30,7 +30,6 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEditor : Form
     {
-        private Log _log;
         private Config _config;
         private FileSystem _fileSystem;
 
@@ -53,11 +52,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormEditor(Config config, FileSystem fileSystem, Log log)
+        public FormEditor(Config config, FileSystem fileSystem)
         {
             InitializeComponent();
 
-            _log = log;
             _config = config;
             _fileSystem = fileSystem;
         }
@@ -84,7 +82,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Icon = (Icon)(resources.GetObject("$this.Icon"));
+                    Icon = (Icon)resources.GetObject("$this.Icon");
                 }
 
                 textBoxName.Text = EditorObject.Name;
@@ -103,7 +101,7 @@ namespace AutoScreenCapture
             else
             {
                 Text = "Add Editor";
-                Icon = (Icon)(resources.GetObject("$this.Icon"));
+                Icon = (Icon)resources.GetObject("$this.Icon");
 
                 textBoxName.Text = "Editor " + (EditorCollection.Count + 1);
                 textBoxApplication.Text = string.Empty;
@@ -299,7 +297,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Icon = (Icon)(resources.GetObject("$this.Icon"));
+                    Icon = (Icon)resources.GetObject("$this.Icon");
                 }
 
                 textBoxApplication.Text = openFileDialog.FileName;

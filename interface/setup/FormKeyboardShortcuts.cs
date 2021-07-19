@@ -28,18 +28,16 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormKeyboardShortcuts : Form
     {
-        private Log _log;
         private Config _config;
         private FileSystem _fileSystem;
 
         /// <summary>
         /// 
         /// </summary>
-        public FormKeyboardShortcuts(Config config, FileSystem fileSystem, Log log)
+        public FormKeyboardShortcuts(Config config, FileSystem fileSystem)
         {
             InitializeComponent();
 
-            _log = log;
             _config = config;
             _fileSystem = fileSystem;
         }

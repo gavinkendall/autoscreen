@@ -214,4 +214,10 @@
   <data name="help_1_Setup_and_First_Run" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\help-1-Setup-and-First-Run.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="command_line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\command_line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="setup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

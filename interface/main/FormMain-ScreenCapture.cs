@@ -35,9 +35,9 @@ namespace AutoScreenCapture
         /// <returns></returns>
         private int GetScreenCaptureInterval()
         {
-            return ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                (int)numericUpDownMillisecondsInterval.Value);
+            return ConvertIntoMilliseconds((int)_formInterval.numericUpDownHoursInterval.Value,
+                (int)_formInterval.numericUpDownMinutesInterval.Value, (int)_formInterval.numericUpDownSecondsInterval.Value,
+                (int)_formInterval.numericUpDownMillisecondsInterval.Value);
         }
 
         /// <summary>
@@ -47,24 +47,24 @@ namespace AutoScreenCapture
         {
             if (GetScreenCaptureInterval() > 0)
             {
-                toolStripSplitButtonStartScreenCapture.Enabled = true;
+                toolStripDropDownButtonStartScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = true;
 
-                groupBoxCaptureDelay.Enabled = true;
+                //groupBoxCaptureDelay.Enabled = true;
 
-                labelLimit.Enabled = true;
-                checkBoxCaptureLimit.Enabled = true;
+                //labelLimit.Enabled = true;
+                //checkBoxCaptureLimit.Enabled = true;
 
-                numericUpDownCaptureLimit.Enabled = true;
-                numericUpDownSecondsInterval.Enabled = true;
-                numericUpDownMillisecondsInterval.Enabled = true;
+                //numericUpDownCaptureLimit.Enabled = true;
+                //numericUpDownSecondsInterval.Enabled = true;
+                //numericUpDownMillisecondsInterval.Enabled = true;
 
-                checkBoxScreenshotLabel.Enabled = true;
-                comboBoxScreenshotLabel.Enabled = true;
+                //checkBoxScreenshotLabel.Enabled = true;
+                //comboBoxScreenshotLabel.Enabled = true;
 
-                groupBoxActiveWindowTitle.Enabled = true;
+                //groupBoxActiveWindowTitle.Enabled = true;
 
-                groupBoxApplicationFocus.Enabled = true;
+                //groupBoxApplicationFocus.Enabled = true;
             }
             else
             {
@@ -77,24 +77,24 @@ namespace AutoScreenCapture
         /// </summary>
         private void EnableStopScreenCapture()
         {
-            toolStripSplitButtonStopScreenCapture.Enabled = true;
+            toolStripDropDownButtonStopScreenCapture.Enabled = true;
             toolStripMenuItemStopScreenCapture.Enabled = true;
 
-            groupBoxCaptureDelay.Enabled = false;
+            //groupBoxCaptureDelay.Enabled = false;
 
-            labelLimit.Enabled = false;
-            checkBoxCaptureLimit.Enabled = false;
+            //labelLimit.Enabled = false;
+            //checkBoxCaptureLimit.Enabled = false;
 
-            numericUpDownCaptureLimit.Enabled = false;
-            numericUpDownSecondsInterval.Enabled = false;
-            numericUpDownMillisecondsInterval.Enabled = false;
+            //numericUpDownCaptureLimit.Enabled = false;
+            //numericUpDownSecondsInterval.Enabled = false;
+            //numericUpDownMillisecondsInterval.Enabled = false;
 
-            checkBoxScreenshotLabel.Enabled = false;
-            comboBoxScreenshotLabel.Enabled = false;
+            //checkBoxScreenshotLabel.Enabled = false;
+            //comboBoxScreenshotLabel.Enabled = false;
 
-            groupBoxActiveWindowTitle.Enabled = false;
+            //groupBoxActiveWindowTitle.Enabled = false;
 
-            groupBoxApplicationFocus.Enabled = false;
+            //groupBoxApplicationFocus.Enabled = false;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStopCapture()
         {
-            toolStripSplitButtonStopScreenCapture.Enabled = false;
+            toolStripDropDownButtonStopScreenCapture.Enabled = false;
             toolStripMenuItemStopScreenCapture.Enabled = false;
         }
 
@@ -111,7 +111,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void DisableStartCapture()
         {
-            toolStripSplitButtonStartScreenCapture.Enabled = false;
+            toolStripDropDownButtonStartScreenCapture.Enabled = false;
             toolStripMenuItemStartScreenCapture.Enabled = false;
         }
 
@@ -130,17 +130,17 @@ namespace AutoScreenCapture
         /// </summary>
         private void CaptureLimitCheck()
         {
-            if (checkBoxCaptureLimit.Checked)
+            if (_formInterval.checkBoxCaptureLimit.Checked)
             {
-                numericUpDownCaptureLimit.Enabled = true;
+                //numericUpDownCaptureLimit.Enabled = true;
 
                 _screenCapture.Count = 0;
-                _screenCapture.Limit = (int)numericUpDownCaptureLimit.Value;
+                _screenCapture.Limit = (int)_formInterval.numericUpDownCaptureLimit.Value;
             }
-            else
-            {
-                numericUpDownCaptureLimit.Enabled = false;
-            }
+            //else
+            //{
+            //    numericUpDownCaptureLimit.Enabled = false;
+            //}
         }
 
         /// <summary>
@@ -167,14 +167,14 @@ namespace AutoScreenCapture
                     _screenCapture.DateTimePreviousCycle = dtNow;
                 }
 
-                DoApplicationFocus();
+                _formApplicationFocus.DoApplicationFocus();
 
                 _screenCapture.ActiveWindowTitle = _screenCapture.GetActiveWindowTitle();
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
                 // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
-                if (checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
+                if (_formActiveWindowTitle.checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
                 {
                     return;
                 }
@@ -235,7 +235,7 @@ namespace AutoScreenCapture
 
                     // Setup the properties for the screen capture class.
                     _screenCapture.Interval = screenCaptureInterval;
-                    _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
+                    _screenCapture.Limit = _formInterval.checkBoxCaptureLimit.Checked ? (int)_formInterval.numericUpDownCaptureLimit.Value : 0;
 
                     if (_config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString().Length > 0)
                     {
@@ -253,7 +253,7 @@ namespace AutoScreenCapture
 
                     _screenCapture.DateTimeStartCapture = DateTime.Now;
 
-                    if (checkBoxInitialScreenshot.Checked)
+                    if (_formInterval.checkBoxInitialScreenshot.Checked)
                     {
                         _log.WriteMessage("Taking initial screenshots");
 
@@ -363,7 +363,7 @@ namespace AutoScreenCapture
                 Bitmap = bitmap,
                 Format = screen.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
+                Label = _formLabels.checkBoxScreenshotLabel.Checked ? _formLabels.comboBoxScreenshotLabel.Text : string.Empty
             };
 
             if (_screenCapture.SaveScreenshot(screen.JpegQuality, screenshot, _screenshotCollection))
@@ -394,7 +394,7 @@ namespace AutoScreenCapture
                 Bitmap = bitmap,
                 Format = region.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = checkBoxScreenshotLabel.Checked ? comboBoxScreenshotLabel.Text : string.Empty
+                Label = _formLabels.checkBoxScreenshotLabel.Checked ? _formLabels.comboBoxScreenshotLabel.Text : string.Empty
             };
 
             if (_screenCapture.SaveScreenshot(region.JpegQuality, screenshot, _screenshotCollection))
@@ -668,19 +668,19 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text))
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(_formActiveWindowTitle.textBoxActiveWindowTitle.Text))
                 {
-                    if (radioButtonCaseSensitiveMatch.Checked)
+                    if (_formActiveWindowTitle.radioButtonCaseSensitiveMatch.Checked)
                     {
-                        return _screenCapture.ActiveWindowTitle.Contains(textBoxActiveWindowTitle.Text);
+                        return _screenCapture.ActiveWindowTitle.Contains(_formActiveWindowTitle.textBoxActiveWindowTitle.Text);
                     }
-                    else if (radioButtonCaseInsensitiveMatch.Checked)
+                    else if (_formActiveWindowTitle.radioButtonCaseInsensitiveMatch.Checked)
                     {
-                        return _screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower());
+                        return _screenCapture.ActiveWindowTitle.ToLower().Contains(_formActiveWindowTitle.textBoxActiveWindowTitle.Text.ToLower());
                     }
-                    else if (radioButtonRegularExpressionMatch.Checked)
+                    else if (_formActiveWindowTitle.radioButtonRegularExpressionMatch.Checked)
                     {
-                        return Regex.IsMatch(_screenCapture.ActiveWindowTitle, textBoxActiveWindowTitle.Text);
+                        return Regex.IsMatch(_screenCapture.ActiveWindowTitle, _formActiveWindowTitle.textBoxActiveWindowTitle.Text);
                     }
                 }
 
@@ -700,7 +700,7 @@ namespace AutoScreenCapture
             {
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
 
-                checkBoxActiveWindowTitle.Checked = false;
+                _formActiveWindowTitle.checkBoxActiveWindowTitle.Checked = false;
             }
             else
             {
@@ -709,8 +709,8 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
 
-                checkBoxActiveWindowTitle.Checked = true;
-                textBoxActiveWindowTitle.Text = activeWindowTitle;
+                _formActiveWindowTitle.checkBoxActiveWindowTitle.Checked = true;
+                _formActiveWindowTitle.textBoxActiveWindowTitle.Text = activeWindowTitle;
 
                 _screenCapture.ActiveWindowTitle = activeWindowTitle;
             }

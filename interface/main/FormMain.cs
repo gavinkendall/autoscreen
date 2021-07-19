@@ -58,6 +58,14 @@ namespace AutoScreenCapture
         private FormTrigger _formTrigger;
         private FormSchedule _formSchedule;
 
+        // Forms used for Setup.
+        private FormActiveWindowTitle _formActiveWindowTitle;
+        private FormApplicationFocus _formApplicationFocus;
+        private FormInterval _formInterval;
+        private FormKeyboardShortcuts _formKeyboardShortcuts;
+        private FormLabels _formLabels;
+        private FormSecurity _formSecurity;
+
         // Screeshot Properties
         private FormScreenshotMetadata _formScreenshotMetadata = new FormScreenshotMetadata();
 
@@ -72,7 +80,6 @@ namespace AutoScreenCapture
 
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
-        private FormKeyboardShortcuts _formKeyboardShortcuts;
         private string _keyboardShortcutStartScreenCaptureKeyUserSetting;
         private string _keyboardShortcutStopScreenCaptureKeyUserSetting;
         private string _keyboardShortcutCaptureNowArchiveKeyUserSetting;
@@ -352,6 +359,10 @@ namespace AutoScreenCapture
 
                     PopulateLabelList();
 
+                    // To maintain compatibility with WinXP
+                    Show();
+                    Visible = true;
+
                     Opacity = 100;
                     ShowInTaskbar = true;
 
@@ -380,6 +391,10 @@ namespace AutoScreenCapture
             try
             {
                 _log.WriteDebugMessage("Hiding interface");
+
+                // To maintain compatibility with WinXP
+                Hide();
+                Visible = false;
 
                 Opacity = 0;
                 ShowInTaskbar = false;
@@ -545,77 +560,29 @@ namespace AutoScreenCapture
             }
         }
 
-        private void checkBoxActiveWindowTitle_CheckedChanged(object sender, EventArgs e)
+        private void toolStripMenuItemActiveWindowTitle_Click(object sender, EventArgs e)
         {
-            if (checkBoxActiveWindowTitle.Checked)
-            {
-                textBoxActiveWindowTitle.Enabled = true;
-                radioButtonCaseSensitiveMatch.Enabled = true;
-                radioButtonCaseInsensitiveMatch.Enabled = true;
-                radioButtonRegularExpressionMatch.Enabled = true;
-            }
-            else
-            {
-                textBoxActiveWindowTitle.Enabled = false;
-                radioButtonCaseSensitiveMatch.Enabled = false;
-                radioButtonCaseInsensitiveMatch.Enabled = false;
-                radioButtonRegularExpressionMatch.Enabled = false;
-            }
+            _formActiveWindowTitle.ShowDialog();
         }
 
-        private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
+        private void toolStripMenuItemApplicationFocus_Click(object sender, EventArgs e)
         {
-            SaveSettings();
-
-            DoApplicationFocus();
+            _formApplicationFocus.ShowDialog();
         }
 
-        private void buttonApplicationFocusRefresh_Click(object sender, EventArgs e)
+        private void toolStripMenuItemInterval_Click(object sender, EventArgs e)
         {
-            SaveSettings();
-
-            RefreshApplicationFocusList();
+            _formInterval.ShowDialog();
         }
 
-        private void DoApplicationFocus()
+        private void toolStripMenuItemLabels_Click(object sender, EventArgs e)
         {
-            int delayBefore = (int)numericUpDownApplicationFocusDelayBefore.Value;
-            int delayAfter = (int)numericUpDownApplicationFocusDelayAfter.Value;
-
-            if (delayBefore > 0)
-            {
-                System.Threading.Thread.Sleep(delayBefore);
-            }
-
-            _screenCapture.SetApplicationFocus(comboBoxProcessList.Text);
-
-            if (delayAfter > 0)
-            {
-                System.Threading.Thread.Sleep(delayAfter);
-            }
+            _formLabels.ShowDialog();
         }
 
-        private void SetApplicationFocus(string applicationFocus)
+        private void toolStripMenuItemSecurity_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(applicationFocus))
-            {
-                _config.Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
-            }
-            else
-            {
-                applicationFocus = applicationFocus.Trim();
-
-                _config.Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
-
-                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                {
-                    _screenCapture.ApplicationError = true;
-                }
-            }
-
-            RefreshApplicationFocusList();
-
-            DoApplicationFocus();
+            _formSecurity.ShowDialog();
         }
     }
 }

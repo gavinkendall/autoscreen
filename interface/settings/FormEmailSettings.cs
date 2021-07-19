@@ -32,18 +32,16 @@ namespace AutoScreenCapture
     {
         Config _config;
         FileSystem _fileSystem;
-        Log _log;
 
         /// <summary>
         ///  Email Settings
         /// </summary>
-        public FormEmailSettings(Config config, FileSystem fileSystem, Log log)
+        public FormEmailSettings(Config config, FileSystem fileSystem)
         {
             InitializeComponent();
 
             _config = config;
             _fileSystem = fileSystem;
-            _log = log;
         }
 
         private void FormEmailSettings_Load(object sender, EventArgs e)

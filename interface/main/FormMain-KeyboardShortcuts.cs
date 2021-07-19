@@ -25,7 +25,7 @@ namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
-        private void toolStripSplitButtonKeyboardShortcuts_ButtonClick(object sender, EventArgs e)
+        private void toolStripMenuItemKeyboardShortcuts_Click(object sender, EventArgs e)
         {
             _formKeyboardShortcuts.ShowDialog(this);
 
@@ -40,7 +40,7 @@ namespace AutoScreenCapture
             try
             {
                 _hotKeyMap = new HotKeyMap();
-                _formKeyboardShortcuts = new FormKeyboardShortcuts(_config, _fileSystem, _log);
+                _formKeyboardShortcuts = new FormKeyboardShortcuts(_config, _fileSystem);
 
                 _hotKeyMap.UnregisterHotKeys();
 

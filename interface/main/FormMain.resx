@@ -409,25 +409,6 @@
         Ee0aPArc
 </value>
   </data>
-  <data name="buttonSetPassphrase.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAL0SURBVDhPZZJbSJNhGMcLkiwkiAiii7qoi04XFnS4
-        qAsLhKis6ECakF50E9GBUhR0NRuYZjqZObfQPMyYiaNzNg/DuVbZSsvUysOa5mGom2baPp39ejda63Dx
-        /97ve/j+v+f/vO87B/hL5eXlYWVlZfLi4mJjYWGhTavV2tRqtTEvL0+uVCrD/v3/rw+dThdeWlraU1tb
-        S1NTEzabzb+azWaqqqrIysrqycjICP/T86c5rKSkpNNisVBfX494Jz8/H5VKhUiAwWDwS6FQdMrl8gX/
-        AYQhwWg0YjKZKCgo6BaRV+bm5oZkZ2eHZGZmrkxPT+/X6/UUFRWRmpqa8B9AzGvwdfd1Fl3XBuoBpaWl
-        rRXxqaioIDk52RCo//5Bo9E0Wq1WRGdycnJCA/WAZDJZqOhMZWUliYmJjYG6/+FojEdffBURGRGZrqcx
-        2KuP0PPoIN339tFVtZsOfSRJSUk+M9dlJ/mg2SisAYA5Du/ES2YnXvFj6j1MdcC3D+D5LGSHyU94x18z
-        PWpmerjOr3bV+iDgsylWAF4g2ROYHciAwRvQrwXXHRjVQ58Gqe0iE7Zoxl/sZ9pZQ9v11UGAveaY6PAc
-        qessozVHcdfFC8hNem9vxqHbA71KnGKMPt02xiy7kYaqeX91RRDQ8+QQ3jErno+nmO1NgSElODXYb23i
-        /rXDApCJ1HKK8WcHGGuIRBp8TOuVZUFA9/0oZtyNeNpPMvJ4r0gQA8M36FaHU5m2DxwKnBUROATQXb8T
-        qf8h72RLggDfLs+4GvjeegJv52kx/yUxew58VYtVBfYUPLbjwhyJy7gdqe8Bb5MXBQGd+l3MjJiYbI5m
-        5G4EbmMUbnMMbmscbkssbpFqoHwrDu06XNXb8PTdoyXBd5t/AT6V7RBHU4tX6IfLJI7QKo7vDUy3irVF
-        JHmO12lE+vIAT+9dv5rPhwQBHwu3+C9GR94G2pVraMta5d/lVsVy3l1eytuUxf7ILYkLab4wn+Zz83hz
-        Zq6wMucnSE/zB9mh3QgAAAAASUVORK5CYII=
-</value>
-  </data>
   <metadata name="timerScheduledCapture.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 56</value>
   </metadata>

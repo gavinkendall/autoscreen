@@ -34,20 +34,20 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(toolStripDropDownItem.Text))
                 {
-                    checkBoxScreenshotLabel.Checked = true;
-                    comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
+                    _formLabels.checkBoxScreenshotLabel.Checked = true;
+                    _formLabels.comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
                     SaveSettings();
                 }
             }
         }
 
-        private void ComboBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (ToolStripMenuItem label in toolStripMenuItemApplyLabel.DropDownItems)
-            {
-                label.Checked = label.Text.Equals(comboBoxScreenshotLabel.Text);
-            }
-        }
+        //private void ComboBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    foreach (ToolStripMenuItem label in toolStripMenuItemApplyLabel.DropDownItems)
+        //    {
+        //        label.Checked = label.Text.Equals(comboBoxScreenshotLabel.Text);
+        //    }
+        //}
 
         private void PopulateLabelList()
         {
@@ -69,8 +69,8 @@ namespace AutoScreenCapture
 
                 labels.Sort();
 
-                comboBoxScreenshotLabel.DataSource = labels;
-                comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                _formLabels.comboBoxScreenshotLabel.DataSource = labels;
+                _formLabels.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
 
                 toolStripMenuItemApplyLabel.DropDownItems.Clear();
 
@@ -79,7 +79,7 @@ namespace AutoScreenCapture
                     ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
                     {
                         Text = label,
-                        Checked = label.Equals(comboBoxScreenshotLabel.Text),
+                        Checked = label.Equals(_formLabels.comboBoxScreenshotLabel.Text),
                         CheckOnClick = true
                     };
 
@@ -101,7 +101,7 @@ namespace AutoScreenCapture
             {
                 _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", false);
 
-                checkBoxScreenshotLabel.Checked = false;
+                _formLabels.checkBoxScreenshotLabel.Checked = false;
             }
             else
             {
@@ -115,8 +115,8 @@ namespace AutoScreenCapture
                     _screenCapture.ApplicationError = true;
                 }
 
-                checkBoxScreenshotLabel.Checked = true;
-                comboBoxScreenshotLabel.Text = label;
+                _formLabels.checkBoxScreenshotLabel.Checked = true;
+                _formLabels.comboBoxScreenshotLabel.Text = label;
             }
         }
     }

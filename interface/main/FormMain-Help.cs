@@ -47,19 +47,19 @@ namespace AutoScreenCapture
             _helpTips.Add("You can change the behaviour of the application by changing the triggers. Each trigger performs a certain action based on a particular condition");
 
             // Tool tips for various controls.
-            _toolTip.SetToolTip(checkBoxInitialScreenshot, "Initial Capture takes screenshots immediately before the timer has begun when a screen capture session has started");
-            _toolTip.SetToolTip(checkBoxCaptureLimit, "The limit option stops a running screen capture session once a specified number of screen capture cycles has been reached");
-            _toolTip.SetToolTip(checkBoxScreenshotLabel, "Applying a label to every screenshot enables you to later filter by that label");
-            _toolTip.SetToolTip(comboBoxScreenshotLabel, "Enter text for a new label or choose from a previously entered label to apply to each screenshot during a screen capture session");
+            //_toolTip.SetToolTip(checkBoxInitialScreenshot, "Initial Capture takes screenshots immediately before the timer has begun when a screen capture session has started");
+            //_toolTip.SetToolTip(checkBoxCaptureLimit, "The limit option stops a running screen capture session once a specified number of screen capture cycles has been reached");
+            //_toolTip.SetToolTip(checkBoxScreenshotLabel, "Applying a label to every screenshot enables you to later filter by that label");
+            //_toolTip.SetToolTip(comboBoxScreenshotLabel, "Enter text for a new label or choose from a previously entered label to apply to each screenshot during a screen capture session");
             _toolTip.SetToolTip(comboBoxFilterType, "Choose a type of filter. This could be a label or the title of an active window from an application that was captured during a session");
             _toolTip.SetToolTip(comboBoxFilterValue, "Select a filter value based on the chosen filter type. This will show you what days in the calendar are associated with the filter value");
             _toolTip.SetToolTip(buttonRefreshFilterValues, "Click this button to refresh the list of filter values");
-            _toolTip.SetToolTip(checkBoxActiveWindowTitle, "You can specify what text should be used for comparing with the title of the active window");
-            _toolTip.SetToolTip(radioButtonCaseSensitiveMatch, "The text comparison will be case sensitive so the active window title will need to match exactly with each lowercase and uppercase character");
-            _toolTip.SetToolTip(radioButtonCaseInsensitiveMatch, "The text comparison will be case insensitive so the active window title can contain a mixture of lowercase and uppercase characters");
-            _toolTip.SetToolTip(radioButtonRegularExpressionMatch, "The text comparison will match with the regular expression pattern entered in the above text input field");
-            _toolTip.SetToolTip(buttonDynamicRegexValidator, "This shows you the Dynamic Regex Validator tool so you can test your regular expression pattern against a test value");
-            _toolTip.SetToolTip(comboBoxProcessList, "Select a process from this list to force focus on it during a running screen capture session");
+            //_toolTip.SetToolTip(checkBoxActiveWindowTitle, "You can specify what text should be used for comparing with the title of the active window");
+            //_toolTip.SetToolTip(radioButtonCaseSensitiveMatch, "The text comparison will be case sensitive so the active window title will need to match exactly with each lowercase and uppercase character");
+            //_toolTip.SetToolTip(radioButtonCaseInsensitiveMatch, "The text comparison will be case insensitive so the active window title can contain a mixture of lowercase and uppercase characters");
+            //_toolTip.SetToolTip(radioButtonRegularExpressionMatch, "The text comparison will match with the regular expression pattern entered in the above text input field");
+            //_toolTip.SetToolTip(buttonDynamicRegexValidator, "This shows you the Dynamic Regex Validator tool so you can test your regular expression pattern against a test value");
+            //_toolTip.SetToolTip(comboBoxProcessList, "Select a process from this list to force focus on it during a running screen capture session");
         }
 
         private void timerShowNextHelpTip_Tick(object sender, EventArgs e)
@@ -98,7 +98,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripSplitButtonHelp_ButtonClick(object sender, EventArgs e)
+        private void toolStripDropDownButtonHelp_Click(object sender, EventArgs e)
         {
             if (!_formHelp.Visible)
             {

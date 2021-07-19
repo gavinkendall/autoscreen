@@ -459,6 +459,10 @@ namespace AutoScreenCapture
             {
                 toolStripSplitButtonConfigure.Text = "Configure Screen";
 
+                toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
+
+                toolStripSplitButtonConfigure.ButtonClick += changeScreen_Click;
+
                 ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
                 {
                     Text = "Change Screen",
@@ -484,6 +488,10 @@ namespace AutoScreenCapture
             {
                 toolStripSplitButtonConfigure.Text = "Configure Region";
 
+                toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
+
+                toolStripSplitButtonConfigure.ButtonClick += changeRegion_Click;
+
                 ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
                 {
                     Text = "Change Region",
@@ -507,12 +515,14 @@ namespace AutoScreenCapture
 
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
             {
-                Text = "Edit Screenshot",
+                Text = "Edit",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
                 ToolTipText = "Edit the screenshot with an application or script",
                 Image = Resources.edit
             };
+
+            toolStripSplitButtonEdit.ButtonClick += runEditor_Click;
 
             toolStripSplitButtonEdit.DropDown.Items.Add("Add Editor", null, addEditor_Click);
 
@@ -637,6 +647,16 @@ namespace AutoScreenCapture
             toolStrip.Items.Add(toolStripLabelFilename);
 
             return toolStrip;
+        }
+
+        private void ToolStripSplitButtonConfigure_ButtonClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ToolStripSplitButtonEdit_ButtonClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void dashboardPictureBox_DoubleClick(object sender, EventArgs e)

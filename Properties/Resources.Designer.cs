@@ -173,6 +173,16 @@ namespace AutoScreenCapture.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap command_line {
+            get {
+                object obj = ResourceManager.GetObject("command_line", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap configure {
             get {
                 object obj = ResourceManager.GetObject("configure", resourceCulture);
@@ -241,10 +251,11 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Welcome\par
-        ///\b0 Auto Screen Capture is a portable automated screen capture utility developed by Gavin Kendall that runs in your system tray while it takes screenshots of multiple screens and regions based on a timed interval. It enables you to schedule when screenshots are taken and can be contro [rest of string was truncated]&quot;;.
+        ///\b0 Auto Screen Capture is a portable automated screen capture utility developed by Gavin Kendall that runs in your system tray while it takes screenshots of multiple screens and regions based on a timed interval. It enables you to schedule when screenshots are taken and can b [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_0_Welcome {
             get {
@@ -340,6 +351,16 @@ namespace AutoScreenCapture.Properties {
         internal static System.Drawing.Bitmap screen {
             get {
                 object obj = ResourceManager.GetObject("screen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap setup {
+            get {
+                object obj = ResourceManager.GetObject("setup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

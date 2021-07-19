@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -170,6 +171,31 @@ namespace AutoScreenCapture
         /// Regex for parsing the -saveScreenshotRefs=off command.
         /// </summary>
         internal const string REGEX_COMMAND_LINE_SAVE_SCREENSHOT_REFS_OFF = "^-saveScreenshotRefs=off$";
+
+        /// <summary>
+        /// Shows a command line terminal at the location of the application's executable.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripDropDownButtonCommandLine_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo("cmd.exe");
+                processStartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                Process process = new Process
+                {
+                    StartInfo = processStartInfo
+                };
+
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                _log.WriteExceptionMessage("Unable to start command line", ex);
+            }
+        }
 
         /// <summary>
         /// Parses the command line and processes the commands the user has chosen from the command line.
@@ -356,9 +382,9 @@ namespace AutoScreenCapture
                     // -initial
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL))
                     {
-                        checkBoxInitialScreenshot.Checked = !checkBoxInitialScreenshot.Checked;
+                        _formInterval.checkBoxInitialScreenshot.Checked = !_formInterval.checkBoxInitialScreenshot.Checked;
 
-                        _config.Settings.User.SetValueByKey("TakeInitialScreenshot", checkBoxInitialScreenshot.Checked);
+                        _config.Settings.User.SetValueByKey("TakeInitialScreenshot", _formInterval.checkBoxInitialScreenshot.Checked);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
@@ -369,7 +395,7 @@ namespace AutoScreenCapture
                     // -initial=on
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL_ON))
                     {
-                        checkBoxInitialScreenshot.Checked = true;
+                        _formInterval.checkBoxInitialScreenshot.Checked = true;
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", true);
 
@@ -382,7 +408,7 @@ namespace AutoScreenCapture
                     // -initial=off
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL_OFF))
                     {
-                        checkBoxInitialScreenshot.Checked = false;
+                        _formInterval.checkBoxInitialScreenshot.Checked = false;
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", false);
 
@@ -399,10 +425,10 @@ namespace AutoScreenCapture
 
                         if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
                         {
-                            numericUpDownCaptureLimit.Value = cmdLimit;
-                            checkBoxCaptureLimit.Checked = true;
+                            _formInterval.numericUpDownCaptureLimit.Value = cmdLimit;
+                            _formInterval.checkBoxCaptureLimit.Checked = true;
 
-                            _screenCapture.Limit = checkBoxCaptureLimit.Checked ? (int)numericUpDownCaptureLimit.Value : 0;
+                            _screenCapture.Limit = _formInterval.checkBoxCaptureLimit.Checked ? (int)_formInterval.numericUpDownCaptureLimit.Value : 0;
                         }
                     }
 
@@ -414,10 +440,10 @@ namespace AutoScreenCapture
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
                         int milliseconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
 
-                        numericUpDownHoursInterval.Value = hours;
-                        numericUpDownMinutesInterval.Value = minutes;
-                        numericUpDownSecondsInterval.Value = seconds;
-                        numericUpDownMillisecondsInterval.Value = milliseconds;
+                        _formInterval.numericUpDownHoursInterval.Value = hours;
+                        _formInterval.numericUpDownMinutesInterval.Value = minutes;
+                        _formInterval.numericUpDownSecondsInterval.Value = seconds;
+                        _formInterval.numericUpDownMillisecondsInterval.Value = milliseconds;
 
                         int screenCaptureInterval = GetScreenCaptureInterval();
 
@@ -569,7 +595,7 @@ namespace AutoScreenCapture
                                 _config.Load(_fileSystem);
                             }
 
-                            SetApplicationFocus(applicationFocus);
+                            _formApplicationFocus.SetApplicationFocus(applicationFocus);
                         }
                     }
 
@@ -601,7 +627,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
+                        _formApplicationFocus.numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
                     }
 
                     // -applicationFocusDelayAfter=x
@@ -616,7 +642,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
+                        _formApplicationFocus.numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
                     }
 
                     // -saveScreenshotRefs=on

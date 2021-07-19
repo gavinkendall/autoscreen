@@ -30,18 +30,16 @@ namespace AutoScreenCapture
     {
         Config _config;
         FileSystem _fileSystem;
-        Log _log;
 
         /// <summary>
         /// File Transfer Settings
         /// </summary>
-        public FormFileTransferSettings(Config config, FileSystem fileSystem, Log log)
+        public FormFileTransferSettings(Config config, FileSystem fileSystem)
         {
             InitializeComponent();
 
             _config = config;
             _fileSystem = fileSystem;
-            _log = log;
         }
 
         private void FormFileTransferSettings_Load(object sender, EventArgs e)
