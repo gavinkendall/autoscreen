@@ -34,8 +34,8 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(toolStripDropDownItem.Text))
                 {
-                    _formLabels.checkBoxScreenshotLabel.Checked = true;
-                    _formLabels.comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
+                    _formSetup.checkBoxScreenshotLabel.Checked = true;
+                    _formSetup.comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
                     SaveSettings();
                 }
             }
@@ -69,8 +69,8 @@ namespace AutoScreenCapture
 
                 labels.Sort();
 
-                _formLabels.comboBoxScreenshotLabel.DataSource = labels;
-                _formLabels.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                _formSetup.comboBoxScreenshotLabel.DataSource = labels;
+                _formSetup.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
 
                 toolStripMenuItemApplyLabel.DropDownItems.Clear();
 
@@ -79,7 +79,7 @@ namespace AutoScreenCapture
                     ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
                     {
                         Text = label,
-                        Checked = label.Equals(_formLabels.comboBoxScreenshotLabel.Text),
+                        Checked = label.Equals(_formSetup.comboBoxScreenshotLabel.Text),
                         CheckOnClick = true
                     };
 
@@ -101,7 +101,7 @@ namespace AutoScreenCapture
             {
                 _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", false);
 
-                _formLabels.checkBoxScreenshotLabel.Checked = false;
+                _formSetup.checkBoxScreenshotLabel.Checked = false;
             }
             else
             {
@@ -115,8 +115,8 @@ namespace AutoScreenCapture
                     _screenCapture.ApplicationError = true;
                 }
 
-                _formLabels.checkBoxScreenshotLabel.Checked = true;
-                _formLabels.comboBoxScreenshotLabel.Text = label;
+                _formSetup.checkBoxScreenshotLabel.Checked = true;
+                _formSetup.comboBoxScreenshotLabel.Text = label;
             }
         }
     }

@@ -1,24 +1,11 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="FormKeyboardShortcuts.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2021 Gavin Kendall
-// </copyright>
-// <author>Gavin Kendall</author>
-// <summary>All the methods for handling labels.</summary>
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program. If not, see <https://www.gnu.org/licenses/>.
-//-----------------------------------------------------------------------
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -26,28 +13,31 @@ namespace AutoScreenCapture
     /// <summary>
     /// 
     /// </summary>
-    public partial class FormKeyboardShortcuts : Form
+    public partial class FormSetup : Form
     {
         private Config _config;
         private FileSystem _fileSystem;
+        private ScreenCapture _screenCapture;
 
         /// <summary>
         /// 
         /// </summary>
-        public FormKeyboardShortcuts(Config config, FileSystem fileSystem)
+        /// <param name="config"></param>
+        /// <param name="fileSystem"></param>
+        /// <param name="screenCapture"></param>
+        public FormSetup(Config config, FileSystem fileSystem, ScreenCapture screenCapture)
         {
             InitializeComponent();
 
             _config = config;
             _fileSystem = fileSystem;
+            _screenCapture = screenCapture;
         }
 
-        private void FormKeyboardShortcuts_Load(object sender, EventArgs e)
+        private void FormSetup_Load(object sender, EventArgs e)
         {
-            checkBoxUseKeyboardShortcuts.Focus();
-
             checkBoxUseKeyboardShortcuts.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts", _config.Settings.DefaultSettings.UseKeyboardShortcuts).Value);
-            
+
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.Items.Clear();
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.Items.Add(AutoScreenCapture.ModifierKeys.Alt.ToString());
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.Items.Add(AutoScreenCapture.ModifierKeys.Control.ToString());
@@ -143,127 +133,6 @@ namespace AutoScreenCapture
             textBoxKeyboardShortcutRegionSelectEditKey.Text = _config.Settings.User.GetByKey("KeyboardShortcutRegionSelectEditKey", _config.Settings.DefaultSettings.KeyboardShortcutRegionSelectEditKey).Value.ToString().ToUpper();
         }
 
-        private int MapModifierKeyFromUserSetting(ComboBox comboBox, string userSetting)
-        {
-            AutoScreenCapture.ModifierKeys modifierKey = GetModifierKeyFromUserSetting(userSetting);
-
-            if (modifierKey != AutoScreenCapture.ModifierKeys.None)
-            {
-                return GetComboBoxIndex(comboBox, userSetting);
-            }
-
-            return 0;
-        }
-
-        private AutoScreenCapture.ModifierKeys GetModifierKeyFromUserSetting(string userSetting)
-        {
-            AutoScreenCapture.ModifierKeys parsedModifierKey;
-
-            if (Enum.TryParse(userSetting, false, out parsedModifierKey))
-            {
-                return parsedModifierKey;
-            }
-
-            return AutoScreenCapture.ModifierKeys.None;
-        }
-
-        private int GetComboBoxIndex(ComboBox comboBox, string userSetting)
-        {
-            return comboBox.Items.IndexOf(userSetting);
-        }
-
-        private void checkBoxUseKeyboardShortcuts_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxUseKeyboardShortcuts.Checked)
-            {
-                // Start
-                labelStartScreenCapture.Enabled = true;
-                comboBoxKeyboardShortcutStartScreenCaptureModifier1.Enabled = true;
-                comboBoxKeyboardShortcutStartScreenCaptureModifier2.Enabled = true;
-                textBoxKeyboardShortcutStartScreenCaptureKey.Enabled = true;
-
-                // Stop
-                labelStopScreenCapture.Enabled = true;
-                comboBoxKeyboardShortcutStopScreenCaptureModifier1.Enabled = true;
-                comboBoxKeyboardShortcutStopScreenCaptureModifier2.Enabled = true;
-                textBoxKeyboardShortcutStopScreenCaptureKey.Enabled = true;
-
-                // Capture Now / Archive
-                labelCaptureNowArchive.Enabled = true;
-                comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Enabled = true;
-                comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Enabled = true;
-                textBoxKeyboardShortcutCaptureNowArchiveKey.Enabled = true;
-
-                // Capture Now / Edit
-                labelCaptureNowEdit.Enabled = true;
-                comboBoxKeyboardShortcutCaptureNowEditModifier1.Enabled = true;
-                comboBoxKeyboardShortcutCaptureNowEditModifier2.Enabled = true;
-                textBoxKeyboardShortcutCaptureNowEditKey.Enabled = true;
-
-                // Region Select -> Clipboard
-                labelRegionSelectClipboard.Enabled = true;
-                comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Enabled = true;
-                comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Enabled = true;
-                textBoxKeyboardShortcutRegionSelectClipboardKey.Enabled = true;
-
-                // Region Select -> Auto Save
-                labelRegionSelectAutoSave.Enabled = true;
-                comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Enabled = true;
-                comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Enabled = true;
-                textBoxKeyboardShortcutRegionSelectAutoSaveKey.Enabled = true;
-
-                // Region Select -> Auto Save / Edit
-                labelRegionSelectEdit.Enabled = true;
-                comboBoxKeyboardShortcutRegionSelectEditModifier1.Enabled = true;
-                comboBoxKeyboardShortcutRegionSelectEditModifier2.Enabled = true;
-                textBoxKeyboardShortcutRegionSelectEditKey.Enabled = true;
-            }
-            else
-            {
-                // Start Screen Capture
-                labelStartScreenCapture.Enabled = false;
-                comboBoxKeyboardShortcutStartScreenCaptureModifier1.Enabled = false;
-                comboBoxKeyboardShortcutStartScreenCaptureModifier2.Enabled = false;
-                textBoxKeyboardShortcutStartScreenCaptureKey.Enabled = false;
-
-                // Stop Screen Capture
-                labelStopScreenCapture.Enabled = false;
-                comboBoxKeyboardShortcutStopScreenCaptureModifier1.Enabled = false;
-                comboBoxKeyboardShortcutStopScreenCaptureModifier2.Enabled = false;
-                textBoxKeyboardShortcutStopScreenCaptureKey.Enabled = false;
-
-                // Capture Now / Archive
-                labelCaptureNowArchive.Enabled = false;
-                comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Enabled = false;
-                comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Enabled = false;
-                textBoxKeyboardShortcutCaptureNowArchiveKey.Enabled = false;
-
-                // Capture Now / Edit
-                labelCaptureNowEdit.Enabled = false;
-                comboBoxKeyboardShortcutCaptureNowEditModifier1.Enabled = false;
-                comboBoxKeyboardShortcutCaptureNowEditModifier2.Enabled = false;
-                textBoxKeyboardShortcutCaptureNowEditKey.Enabled = false;
-
-                // Region Select / Clipboard
-                labelRegionSelectClipboard.Enabled = false;
-                comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Enabled = false;
-                comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Enabled = false;
-                textBoxKeyboardShortcutRegionSelectClipboardKey.Enabled = false;
-
-                // Region Select / Auto Save
-                labelRegionSelectAutoSave.Enabled = false;
-                comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Enabled = false;
-                comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Enabled = false;
-                textBoxKeyboardShortcutRegionSelectAutoSaveKey.Enabled = false;
-
-                // Region Select / Edit
-                labelRegionSelectEdit.Enabled = false;
-                comboBoxKeyboardShortcutRegionSelectEditModifier1.Enabled = false;
-                comboBoxKeyboardShortcutRegionSelectEditModifier2.Enabled = false;
-                textBoxKeyboardShortcutRegionSelectEditKey.Enabled = false;
-            }
-        }
-
         private void buttonOK_Click(object sender, EventArgs e)
         {
             if (comboBoxKeyboardShortcutStartScreenCaptureModifier1.Text.Equals(comboBoxKeyboardShortcutStartScreenCaptureModifier2.Text) ||
@@ -309,6 +178,156 @@ namespace AutoScreenCapture
 
                 Close();
             }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private int MapModifierKeyFromUserSetting(ComboBox comboBox, string userSetting)
+        {
+            AutoScreenCapture.ModifierKeys modifierKey = GetModifierKeyFromUserSetting(userSetting);
+
+            if (modifierKey != AutoScreenCapture.ModifierKeys.None)
+            {
+                return GetComboBoxIndex(comboBox, userSetting);
+            }
+
+            return 0;
+        }
+
+        private AutoScreenCapture.ModifierKeys GetModifierKeyFromUserSetting(string userSetting)
+        {
+            AutoScreenCapture.ModifierKeys parsedModifierKey;
+
+            if (Enum.TryParse(userSetting, false, out parsedModifierKey))
+            {
+                return parsedModifierKey;
+            }
+
+            return AutoScreenCapture.ModifierKeys.None;
+        }
+
+        private int GetComboBoxIndex(ComboBox comboBox, string userSetting)
+        {
+            return comboBox.Items.IndexOf(userSetting);
+        }
+
+        private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
+        {
+            //SaveSettings();
+
+            DoApplicationFocus();
+        }
+
+        private void buttonApplicationFocusRefresh_Click(object sender, EventArgs e)
+        {
+            //SaveSettings();
+
+            RefreshApplicationFocusList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tabPageToShow"></param>
+        public void ShowTabPage(string tabPageToShow)
+        {
+            for (int i = 0; i < tabControlSetup.TabPages.Count; i++)
+            {
+                if (tabControlSetup.TabPages[i].Text.Equals(tabPageToShow))
+                {
+                    tabControlSetup.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RefreshApplicationFocusList()
+        {
+            comboBoxProcessList.Items.Clear();
+            comboBoxProcessList.Sorted = true;
+
+            comboBoxProcessList.Items.Add(string.Empty);
+
+            foreach (Process process in Process.GetProcesses())
+            {
+                if (!comboBoxProcessList.Items.Contains(process.ProcessName))
+                {
+                    comboBoxProcessList.Items.Add(process.ProcessName);
+                }
+            }
+
+            string applicationFocus = _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value.ToString();
+
+            if (string.IsNullOrEmpty(applicationFocus))
+            {
+                comboBoxProcessList.SelectedIndex = 0;
+
+                return;
+            }
+
+            if (!comboBoxProcessList.Items.Contains(applicationFocus))
+            {
+                comboBoxProcessList.Items.Add(applicationFocus);
+            }
+
+            comboBoxProcessList.SelectedIndex = comboBoxProcessList.Items.IndexOf(applicationFocus);
+
+            numericUpDownApplicationFocusDelayBefore.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value);
+            numericUpDownApplicationFocusDelayAfter.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void DoApplicationFocus()
+        {
+            int delayBefore = (int)numericUpDownApplicationFocusDelayBefore.Value;
+            int delayAfter = (int)numericUpDownApplicationFocusDelayAfter.Value;
+
+            if (delayBefore > 0)
+            {
+                System.Threading.Thread.Sleep(delayBefore);
+            }
+
+            _screenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+
+            if (delayAfter > 0)
+            {
+                System.Threading.Thread.Sleep(delayAfter);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="applicationFocus"></param>
+        public void SetApplicationFocus(string applicationFocus)
+        {
+            if (string.IsNullOrEmpty(applicationFocus))
+            {
+                _config.Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
+            }
+            else
+            {
+                applicationFocus = applicationFocus.Trim();
+
+                _config.Settings.User.SetValueByKey("ApplicationFocus", applicationFocus);
+
+                if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                {
+                    _screenCapture.ApplicationError = true;
+                }
+            }
+
+            RefreshApplicationFocusList();
+
+            DoApplicationFocus();
         }
     }
 }

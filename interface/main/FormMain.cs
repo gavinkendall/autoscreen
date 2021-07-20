@@ -58,13 +58,8 @@ namespace AutoScreenCapture
         private FormTrigger _formTrigger;
         private FormSchedule _formSchedule;
 
-        // Forms used for Setup.
-        private FormActiveWindowTitle _formActiveWindowTitle;
-        private FormApplicationFocus _formApplicationFocus;
-        private FormInterval _formInterval;
-        private FormKeyboardShortcuts _formKeyboardShortcuts;
-        private FormLabels _formLabels;
-        private FormSecurity _formSecurity;
+        // Setup.
+        private FormSetup _formSetup;
 
         // Screeshot Properties
         private FormScreenshotMetadata _formScreenshotMetadata = new FormScreenshotMetadata();
@@ -88,6 +83,7 @@ namespace AutoScreenCapture
         private string _keyboardShortcutRegionSelectAutoSaveKeyUserSetting;
         private string _keyboardShortcutRegionSelectEditKeyUserSetting;
 
+        // Classes
         private Log _log;
         private Config _config;
         private FileSystem _fileSystem;
@@ -142,6 +138,7 @@ namespace AutoScreenCapture
             _slideShow = new Slideshow();
             _dataConvert = new DataConvert();
 
+            _hotKeyMap = new HotKeyMap();
             RegisterKeyboardShortcuts();
             _hotKeyMap.KeyPressed += new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
 
@@ -560,29 +557,18 @@ namespace AutoScreenCapture
             }
         }
 
-        private void toolStripMenuItemActiveWindowTitle_Click(object sender, EventArgs e)
+        private void toolStripMenuItemSetup_Click(object sender, EventArgs e)
         {
-            _formActiveWindowTitle.ShowDialog();
-        }
+            ToolStripMenuItem selectedMenuItem = (ToolStripMenuItem)sender;
 
-        private void toolStripMenuItemApplicationFocus_Click(object sender, EventArgs e)
-        {
-            _formApplicationFocus.ShowDialog();
-        }
+            _formSetup.ShowTabPage(selectedMenuItem.Text);
 
-        private void toolStripMenuItemInterval_Click(object sender, EventArgs e)
-        {
-            _formInterval.ShowDialog();
-        }
+            _formSetup.ShowDialog(this);
 
-        private void toolStripMenuItemLabels_Click(object sender, EventArgs e)
-        {
-            _formLabels.ShowDialog();
-        }
-
-        private void toolStripMenuItemSecurity_Click(object sender, EventArgs e)
-        {
-            _formSecurity.ShowDialog();
+            if (_formSetup.DialogResult == DialogResult.OK)
+            {
+                RegisterKeyboardShortcuts();
+            }
         }
     }
 }

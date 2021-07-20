@@ -201,10 +201,10 @@ namespace AutoScreenCapture
                 }
 
                 notifyIcon.Text = "Ready to start taking screenshots (" +
-                    _formInterval.numericUpDownHoursInterval.Value.ToString("00") + ":" +
-                    _formInterval.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
-                    _formInterval.numericUpDownSecondsInterval.Value.ToString("00") + "." +
-                    _formInterval.numericUpDownMillisecondsInterval.Value.ToString("000") + ")";
+                    _formSetup.numericUpDownHoursInterval.Value.ToString("00") + ":" +
+                    _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
+                    _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "." +
+                    _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + ")";
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {

@@ -93,18 +93,6 @@
     <Compile Include="interface\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\setup\FormActiveWindowTitle.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="interface\setup\FormActiveWindowTitle.Designer.cs">
-      <DependentUpon>FormActiveWindowTitle.cs</DependentUpon>
-    </Compile>
-    <Compile Include="interface\setup\FormApplicationFocus.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="interface\setup\FormApplicationFocus.Designer.cs">
-      <DependentUpon>FormApplicationFocus.cs</DependentUpon>
-    </Compile>
     <Compile Include="interface\settings\FormEmailSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,29 +117,17 @@
     <Compile Include="interface\FormFloatingScreenshot.Designer.cs">
       <DependentUpon>FormFloatingScreenshot.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\setup\FormInterval.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="interface\setup\FormInterval.Designer.cs">
-      <DependentUpon>FormInterval.cs</DependentUpon>
-    </Compile>
-    <Compile Include="interface\setup\FormLabels.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="interface\setup\FormLabels.Designer.cs">
-      <DependentUpon>FormLabels.cs</DependentUpon>
-    </Compile>
     <Compile Include="interface\FormRegionSelectOptions.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="interface\FormRegionSelectOptions.Designer.cs">
       <DependentUpon>FormRegionSelectOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\setup\FormSecurity.cs">
+    <Compile Include="interface\setup\FormSetup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\setup\FormSecurity.Designer.cs">
-      <DependentUpon>FormSecurity.cs</DependentUpon>
+    <Compile Include="interface\setup\FormSetup.Designer.cs">
+      <DependentUpon>FormSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\tools\FormDynamicRegexValidator.cs">
       <SubType>Form</SubType>
@@ -159,17 +135,11 @@
     <Compile Include="interface\tools\FormDynamicRegexValidator.Designer.cs">
       <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\tools\FormScreenCaptureStatus.cs">
+    <Compile Include="interface\FormScreenCaptureStatus.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\tools\FormScreenCaptureStatus.Designer.cs">
+    <Compile Include="interface\FormScreenCaptureStatus.Designer.cs">
       <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="interface\setup\FormKeyboardShortcuts.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="interface\setup\FormKeyboardShortcuts.Designer.cs">
-      <DependentUpon>FormKeyboardShortcuts.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\FormScreenshotMetadata.cs">
       <SubType>Form</SubType>
@@ -344,9 +314,6 @@
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormActiveWindowTitle.resx">
-      <DependentUpon>FormActiveWindowTitle.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="interface\settings\FormEmailSettings.resx">
       <DependentUpon>FormEmailSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -359,29 +326,17 @@
     <EmbeddedResource Include="interface\FormFloatingScreenshot.resx">
       <DependentUpon>FormFloatingScreenshot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormApplicationFocus.resx">
-      <DependentUpon>FormApplicationFocus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormInterval.resx">
-      <DependentUpon>FormInterval.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="interface\FormRegionSelectOptions.resx">
       <DependentUpon>FormRegionSelectOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormLabels.resx">
-      <DependentUpon>FormLabels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormSecurity.resx">
-      <DependentUpon>FormSecurity.cs</DependentUpon>
+    <EmbeddedResource Include="interface\setup\FormSetup.resx">
+      <DependentUpon>FormSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\tools\FormDynamicRegexValidator.resx">
       <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\tools\FormScreenCaptureStatus.resx">
+    <EmbeddedResource Include="interface\FormScreenCaptureStatus.resx">
       <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormKeyboardShortcuts.resx">
-      <DependentUpon>FormKeyboardShortcuts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormRegionSelectWithMouse.resx">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>

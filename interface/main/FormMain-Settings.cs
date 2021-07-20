@@ -78,12 +78,8 @@ namespace AutoScreenCapture
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_screenCapture, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-                _formActiveWindowTitle = new FormActiveWindowTitle();
-                _formApplicationFocus = new FormApplicationFocus(_config, _fileSystem, _screenCapture);
-                _formInterval = new FormInterval();
                 // The Keyboard Shortcuts form gets initialized in FormMain-KeyboardShortcuts
-                _formLabels = new FormLabels();
-                _formSecurity = new FormSecurity(_config, _screenCapture, _security);
+                _formSetup = new FormSetup(_config, _fileSystem, _screenCapture);
 
                 _log.WriteDebugMessage("Initializing editor collection");
                 
@@ -193,70 +189,70 @@ namespace AutoScreenCapture
                 decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
                 _log.WriteDebugMessage("Milliseconds = " + screenCaptureIntervalMilliseconds);
 
-                _formInterval.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
-                _formInterval.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
-                _formInterval.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
-                _formInterval.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+                _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
-                _formInterval.numericUpDownCaptureLimit.Value = Convert.ToInt32(_config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value);
-                _log.WriteDebugMessage("CaptureLimit = " + _formInterval.numericUpDownCaptureLimit.Value);
+                _formSetup.numericUpDownCaptureLimit.Value = Convert.ToInt32(_config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value);
+                _log.WriteDebugMessage("CaptureLimit = " + _formSetup.numericUpDownCaptureLimit.Value);
 
-                _formInterval.checkBoxCaptureLimit.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value);
-                _log.WriteDebugMessage("CaptureLimitCheck = " + _formInterval.checkBoxCaptureLimit.Checked);
+                _formSetup.checkBoxCaptureLimit.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value);
+                _log.WriteDebugMessage("CaptureLimitCheck = " + _formSetup.checkBoxCaptureLimit.Checked);
 
-                _formInterval.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value);
-                _log.WriteDebugMessage("TakeInitialScreenshot = " + _formInterval.checkBoxInitialScreenshot.Checked);
+                _formSetup.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value);
+                _log.WriteDebugMessage("TakeInitialScreenshot = " + _formSetup.checkBoxInitialScreenshot.Checked);
 
                 notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
                 _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
 
-                _formLabels.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
-                _log.WriteDebugMessage("ScreenshotLabel = " + _formLabels.comboBoxScreenshotLabel.Text);
+                _formSetup.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                _log.WriteDebugMessage("ScreenshotLabel = " + _formSetup.comboBoxScreenshotLabel.Text);
 
-                _formLabels.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
+                _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
 
                 // Active Window Title
-                _formActiveWindowTitle.checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
-                _formActiveWindowTitle.textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
+                _formSetup.checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
+                _formSetup.textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
 
-                if (_formActiveWindowTitle.checkBoxActiveWindowTitle.Checked)
+                if (_formSetup.checkBoxActiveWindowTitle.Checked)
                 {
-                    _formActiveWindowTitle.textBoxActiveWindowTitle.Enabled = true;
-                    _formActiveWindowTitle.radioButtonCaseSensitiveMatch.Enabled = true;
-                    _formActiveWindowTitle.radioButtonCaseInsensitiveMatch.Enabled = true;
-                    _formActiveWindowTitle.radioButtonRegularExpressionMatch.Enabled = true;
+                    _formSetup.textBoxActiveWindowTitle.Enabled = true;
+                    _formSetup.radioButtonCaseSensitiveMatch.Enabled = true;
+                    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = true;
+                    _formSetup.radioButtonRegularExpressionMatch.Enabled = true;
                 }
                 else
                 {
-                    _formActiveWindowTitle.textBoxActiveWindowTitle.Enabled = false;
-                    _formActiveWindowTitle.radioButtonCaseSensitiveMatch.Enabled = false;
-                    _formActiveWindowTitle.radioButtonCaseInsensitiveMatch.Enabled = false;
-                    _formActiveWindowTitle.radioButtonRegularExpressionMatch.Enabled = false;
+                    _formSetup.textBoxActiveWindowTitle.Enabled = false;
+                    _formSetup.radioButtonCaseSensitiveMatch.Enabled = false;
+                    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = false;
+                    _formSetup.radioButtonRegularExpressionMatch.Enabled = false;
                 }
 
-                _formActiveWindowTitle.radioButtonCaseSensitiveMatch.Checked = false;
-                _formActiveWindowTitle.radioButtonCaseInsensitiveMatch.Checked = false;
-                _formActiveWindowTitle.radioButtonRegularExpressionMatch.Checked = false;
+                _formSetup.radioButtonCaseSensitiveMatch.Checked = false;
+                _formSetup.radioButtonCaseInsensitiveMatch.Checked = false;
+                _formSetup.radioButtonRegularExpressionMatch.Checked = false;
 
                 int activeWindowTitleMatchType = Convert.ToInt32(_config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value);
 
                 switch (activeWindowTitleMatchType)
                 {
                     case 1:
-                        _formActiveWindowTitle.radioButtonCaseSensitiveMatch.Checked = true;
+                        _formSetup.radioButtonCaseSensitiveMatch.Checked = true;
                         break;
 
                     case 2:
-                        _formActiveWindowTitle.radioButtonCaseInsensitiveMatch.Checked = true;
+                        _formSetup.radioButtonCaseInsensitiveMatch.Checked = true;
                         break;
 
                     case 3:
-                        _formActiveWindowTitle.radioButtonRegularExpressionMatch.Checked = true;
+                        _formSetup.radioButtonRegularExpressionMatch.Checked = true;
                         break;
                 }
 
                 // Application Focus
-                _formApplicationFocus.RefreshApplicationFocusList();
+                _formSetup.RefreshApplicationFocusList();
 
                 EnableStartCapture();
 
@@ -279,35 +275,35 @@ namespace AutoScreenCapture
             try
             {
                 _config.Settings.User.GetByKey("ScreenCaptureInterval", _config.Settings.DefaultSettings.ScreenCaptureInterval).Value = GetScreenCaptureInterval();
-                _config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value = _formInterval.numericUpDownCaptureLimit.Value;
-                _config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value = _formInterval.checkBoxCaptureLimit.Checked;
-                _config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value = _formInterval.checkBoxInitialScreenshot.Checked;
+                _config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value = _formSetup.numericUpDownCaptureLimit.Value;
+                _config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value = _formSetup.checkBoxCaptureLimit.Checked;
+                _config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value = _formSetup.checkBoxInitialScreenshot.Checked;
 
                 // Label.
-                _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value = _formLabels.comboBoxScreenshotLabel.Text.Trim();
-                _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = _formLabels.checkBoxScreenshotLabel.Checked;
+                _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value = _formSetup.comboBoxScreenshotLabel.Text.Trim();
+                _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = _formSetup.checkBoxScreenshotLabel.Checked;
 
                 // Active Window Title
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = _formActiveWindowTitle.checkBoxActiveWindowTitle.Checked;
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value = _formActiveWindowTitle.textBoxActiveWindowTitle.Text.Trim();
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = _formSetup.checkBoxActiveWindowTitle.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value = _formSetup.textBoxActiveWindowTitle.Text.Trim();
 
-                if (_formActiveWindowTitle.radioButtonCaseSensitiveMatch.Checked)
+                if (_formSetup.radioButtonCaseSensitiveMatch.Checked)
                 {
                     _config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value = 1;
                 }
-                else if (_formActiveWindowTitle.radioButtonCaseInsensitiveMatch.Checked)
+                else if (_formSetup.radioButtonCaseInsensitiveMatch.Checked)
                 {
                     _config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value = 2;
                 }
-                else if (_formActiveWindowTitle.radioButtonRegularExpressionMatch.Checked)
+                else if (_formSetup.radioButtonRegularExpressionMatch.Checked)
                 {
                     _config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value = 3;
                 }
 
                 // Application Focus
-                _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = _formApplicationFocus.comboBoxProcessList.Text;
-                _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)_formApplicationFocus.numericUpDownApplicationFocusDelayBefore.Value;
-                _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)_formApplicationFocus.numericUpDownApplicationFocusDelayAfter.Value;
+                _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = _formSetup.comboBoxProcessList.Text;
+                _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)_formSetup.numericUpDownApplicationFocusDelayBefore.Value;
+                _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)_formSetup.numericUpDownApplicationFocusDelayAfter.Value;
 
                 if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                 {

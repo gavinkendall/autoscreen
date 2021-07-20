@@ -167,9 +167,9 @@ namespace AutoScreenCapture
 
             _formSchedule.ScheduleObject = null;
 
-            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)_formInterval.numericUpDownHoursInterval.Value,
-                        (int)_formInterval.numericUpDownMinutesInterval.Value, (int)_formInterval.numericUpDownSecondsInterval.Value,
-                        (int)_formInterval.numericUpDownMillisecondsInterval.Value);
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)_formSetup.numericUpDownHoursInterval.Value,
+                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value,
+                        (int)_formSetup.numericUpDownMillisecondsInterval.Value);
 
             _formSchedule.ScreenCaptureInterval = screenCaptureInterval;
 

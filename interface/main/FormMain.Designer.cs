@@ -163,21 +163,21 @@ namespace AutoScreenCapture
             this.toolStripMenuItemActiveWindowTitle.Name = "toolStripMenuItemActiveWindowTitle";
             this.toolStripMenuItemActiveWindowTitle.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemActiveWindowTitle.Text = "Active Window Title";
-            this.toolStripMenuItemActiveWindowTitle.Click += new System.EventHandler(this.toolStripMenuItemActiveWindowTitle_Click);
+            this.toolStripMenuItemActiveWindowTitle.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemApplicationFocus
             // 
             this.toolStripMenuItemApplicationFocus.Name = "toolStripMenuItemApplicationFocus";
             this.toolStripMenuItemApplicationFocus.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemApplicationFocus.Text = "Application Focus";
-            this.toolStripMenuItemApplicationFocus.Click += new System.EventHandler(this.toolStripMenuItemApplicationFocus_Click);
+            this.toolStripMenuItemApplicationFocus.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemInterval
             // 
             this.toolStripMenuItemInterval.Name = "toolStripMenuItemInterval";
             this.toolStripMenuItemInterval.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemInterval.Text = "Interval";
-            this.toolStripMenuItemInterval.Click += new System.EventHandler(this.toolStripMenuItemInterval_Click);
+            this.toolStripMenuItemInterval.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemKeyboardShortcuts
             // 
@@ -185,21 +185,21 @@ namespace AutoScreenCapture
             this.toolStripMenuItemKeyboardShortcuts.Name = "toolStripMenuItemKeyboardShortcuts";
             this.toolStripMenuItemKeyboardShortcuts.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemKeyboardShortcuts.Text = "Keyboard Shortcuts";
-            this.toolStripMenuItemKeyboardShortcuts.Click += new System.EventHandler(this.toolStripMenuItemKeyboardShortcuts_Click);
+            this.toolStripMenuItemKeyboardShortcuts.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemLabels
             // 
             this.toolStripMenuItemLabels.Name = "toolStripMenuItemLabels";
             this.toolStripMenuItemLabels.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemLabels.Text = "Labels";
-            this.toolStripMenuItemLabels.Click += new System.EventHandler(this.toolStripMenuItemLabels_Click);
+            this.toolStripMenuItemLabels.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemSecurity
             // 
             this.toolStripMenuItemSecurity.Name = "toolStripMenuItemSecurity";
             this.toolStripMenuItemSecurity.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuItemSecurity.Text = "Security";
-            this.toolStripMenuItemSecurity.Click += new System.EventHandler(this.toolStripMenuItemSecurity_Click);
+            this.toolStripMenuItemSecurity.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripDropDownButtonStartScreenCapture
             // 

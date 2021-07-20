@@ -210,10 +210,10 @@ namespace AutoScreenCapture
                     decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Seconds);
                     decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Milliseconds);
 
-                    _formInterval.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
-                    _formInterval.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
-                    _formInterval.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
-                    _formInterval.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+                    _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
+                    _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
+                    _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
+                    _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                     timerScreenCapture.Start();
                     break;
@@ -281,7 +281,7 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.SetApplicationFocus:
-                    _formApplicationFocus.SetApplicationFocus(trigger.Value);
+                    _formSetup.SetApplicationFocus(trigger.Value);
                     break;
 
                 case TriggerActionType.FileTransferScreenshot:

@@ -382,9 +382,9 @@ namespace AutoScreenCapture
                     // -initial
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL))
                     {
-                        _formInterval.checkBoxInitialScreenshot.Checked = !_formInterval.checkBoxInitialScreenshot.Checked;
+                        _formSetup.checkBoxInitialScreenshot.Checked = !_formSetup.checkBoxInitialScreenshot.Checked;
 
-                        _config.Settings.User.SetValueByKey("TakeInitialScreenshot", _formInterval.checkBoxInitialScreenshot.Checked);
+                        _config.Settings.User.SetValueByKey("TakeInitialScreenshot", _formSetup.checkBoxInitialScreenshot.Checked);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                         {
@@ -395,7 +395,7 @@ namespace AutoScreenCapture
                     // -initial=on
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL_ON))
                     {
-                        _formInterval.checkBoxInitialScreenshot.Checked = true;
+                        _formSetup.checkBoxInitialScreenshot.Checked = true;
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", true);
 
@@ -408,7 +408,7 @@ namespace AutoScreenCapture
                     // -initial=off
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_INITIAL_OFF))
                     {
-                        _formInterval.checkBoxInitialScreenshot.Checked = false;
+                        _formSetup.checkBoxInitialScreenshot.Checked = false;
 
                         _config.Settings.User.SetValueByKey("TakeInitialScreenshot", false);
 
@@ -425,10 +425,10 @@ namespace AutoScreenCapture
 
                         if (cmdLimit >= CAPTURE_LIMIT_MIN && cmdLimit <= CAPTURE_LIMIT_MAX)
                         {
-                            _formInterval.numericUpDownCaptureLimit.Value = cmdLimit;
-                            _formInterval.checkBoxCaptureLimit.Checked = true;
+                            _formSetup.numericUpDownCaptureLimit.Value = cmdLimit;
+                            _formSetup.checkBoxCaptureLimit.Checked = true;
 
-                            _screenCapture.Limit = _formInterval.checkBoxCaptureLimit.Checked ? (int)_formInterval.numericUpDownCaptureLimit.Value : 0;
+                            _screenCapture.Limit = _formSetup.checkBoxCaptureLimit.Checked ? (int)_formSetup.numericUpDownCaptureLimit.Value : 0;
                         }
                     }
 
@@ -440,10 +440,10 @@ namespace AutoScreenCapture
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Seconds"].Value);
                         int milliseconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_INTERVAL).Groups["Milliseconds"].Value);
 
-                        _formInterval.numericUpDownHoursInterval.Value = hours;
-                        _formInterval.numericUpDownMinutesInterval.Value = minutes;
-                        _formInterval.numericUpDownSecondsInterval.Value = seconds;
-                        _formInterval.numericUpDownMillisecondsInterval.Value = milliseconds;
+                        _formSetup.numericUpDownHoursInterval.Value = hours;
+                        _formSetup.numericUpDownMinutesInterval.Value = minutes;
+                        _formSetup.numericUpDownSecondsInterval.Value = seconds;
+                        _formSetup.numericUpDownMillisecondsInterval.Value = milliseconds;
 
                         int screenCaptureInterval = GetScreenCaptureInterval();
 
@@ -595,7 +595,7 @@ namespace AutoScreenCapture
                                 _config.Load(_fileSystem);
                             }
 
-                            _formApplicationFocus.SetApplicationFocus(applicationFocus);
+                            _formSetup.SetApplicationFocus(applicationFocus);
                         }
                     }
 
@@ -627,7 +627,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        _formApplicationFocus.numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
+                        _formSetup.numericUpDownApplicationFocusDelayBefore.Value = delayBefore;
                     }
 
                     // -applicationFocusDelayAfter=x
@@ -642,7 +642,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        _formApplicationFocus.numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
+                        _formSetup.numericUpDownApplicationFocusDelayAfter.Value = delayAfter;
                     }
 
                     // -saveScreenshotRefs=on

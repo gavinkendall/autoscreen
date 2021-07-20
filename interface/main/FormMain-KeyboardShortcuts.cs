@@ -25,23 +25,10 @@ namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
-        private void toolStripMenuItemKeyboardShortcuts_Click(object sender, EventArgs e)
-        {
-            _formKeyboardShortcuts.ShowDialog(this);
-
-            if (_formKeyboardShortcuts.DialogResult == DialogResult.OK)
-            {
-                RegisterKeyboardShortcuts();
-            }
-        }
-
         private void RegisterKeyboardShortcuts()
         {
             try
             {
-                _hotKeyMap = new HotKeyMap();
-                _formKeyboardShortcuts = new FormKeyboardShortcuts(_config, _fileSystem);
-
                 _hotKeyMap.UnregisterHotKeys();
 
                 if (Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts", _config.Settings.DefaultSettings.UseKeyboardShortcuts).Value.ToString()))
