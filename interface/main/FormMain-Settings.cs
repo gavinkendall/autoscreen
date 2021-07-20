@@ -19,7 +19,6 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -157,6 +156,10 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Building screenshot preview context menu");
                 BuildScreenshotPreviewContextualMenu();
+
+                // Preview
+                _preview = Convert.ToBoolean(_config.Settings.User.GetByKey("Preview", _config.Settings.DefaultSettings.Preview).Value);
+                _log.WriteDebugMessage("Preview = " + _preview.ToString());
 
                 _log.WriteDebugMessage("Building view tab pages");
                 BuildViewTabPages();

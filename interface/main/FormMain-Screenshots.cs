@@ -260,9 +260,15 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
-            if (!Visible)
+            if (_preview)
             {
-                return;
+                toolStripDropDownButtonPreview.BackColor = Color.Black;
+                toolStripDropDownButtonPreview.ForeColor = Color.White;
+            }
+            else
+            {
+                toolStripDropDownButtonPreview.BackColor = Color.White;
+                toolStripDropDownButtonPreview.ForeColor = Color.Black;
             }
 
             _formScreenshotMetadata.textBoxLabel.Text = string.Empty;

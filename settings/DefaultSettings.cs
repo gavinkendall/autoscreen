@@ -60,7 +60,6 @@ namespace AutoScreenCapture
         internal readonly bool TakeInitialScreenshot = false;
         internal readonly bool ShowSystemTrayIcon = true;
         internal readonly string Passphrase = string.Empty;
-        internal readonly int KeepScreenshotsForDays = 30;
         internal readonly string ScreenshotLabel = string.Empty;
         internal readonly bool ApplyScreenshotLabel = false;
         internal readonly string DefaultEditor = string.Empty;
@@ -76,6 +75,7 @@ namespace AutoScreenCapture
         internal readonly int ApplicationFocusDelayAfter = 0;
         internal readonly int ActiveWindowTitleMatchType = 2;
         internal readonly bool SaveScreenshotRefs = true;
+        internal readonly bool Preview = true;
 
         // Keyboard Shortcuts.
         internal readonly bool UseKeyboardShortcuts = false;

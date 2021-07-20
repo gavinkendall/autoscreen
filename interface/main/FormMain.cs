@@ -578,18 +578,11 @@ namespace AutoScreenCapture
         {
             _preview = !_preview;
 
-            if (_preview)
-            {
-                toolStripDropDownButtonPreview.BackColor = Color.Black;
-                toolStripDropDownButtonPreview.ForeColor = Color.White;
-            }
-            else
-            {
-                toolStripDropDownButtonPreview.BackColor = Color.White;
-                toolStripDropDownButtonPreview.ForeColor = Color.Black;
-            }
+            _config.Settings.User.SetValueByKey("Preview", _preview);
 
             ShowScreenshotBySlideIndex();
+
+            SaveSettings();
         }
     }
 }

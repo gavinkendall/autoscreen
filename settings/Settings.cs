@@ -401,6 +401,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
                 User.Add(new Setting("SaveScreenshotRefs", DefaultSettings.SaveScreenshotRefs));
+                User.Add(new Setting("Preview", DefaultSettings.Preview));
                 User.Save(this, fileSystem);
             }
 
