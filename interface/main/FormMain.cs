@@ -32,6 +32,9 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMain : Form
     {
+        // Preview
+        bool _preview = false;
+
         // The "About Auto Screen Capture" form.
         private FormAbout _formAbout;
 
@@ -569,6 +572,24 @@ namespace AutoScreenCapture
             {
                 RegisterKeyboardShortcuts();
             }
+        }
+
+        private void toolStripDropDownButtonPreview_Click(object sender, EventArgs e)
+        {
+            _preview = !_preview;
+
+            if (_preview)
+            {
+                toolStripDropDownButtonPreview.BackColor = Color.Black;
+                toolStripDropDownButtonPreview.ForeColor = Color.White;
+            }
+            else
+            {
+                toolStripDropDownButtonPreview.BackColor = Color.White;
+                toolStripDropDownButtonPreview.ForeColor = Color.Black;
+            }
+
+            ShowScreenshotBySlideIndex();
         }
     }
 }

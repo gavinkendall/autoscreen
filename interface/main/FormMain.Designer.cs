@@ -41,6 +41,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemKeyboardShortcuts = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemLabels = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSecurity = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButtonPreview = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonStartScreenCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonStopScreenCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonCommandLine = new System.Windows.Forms.ToolStripDropDownButton();
@@ -131,6 +132,7 @@ namespace AutoScreenCapture
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButtonSetup,
+            this.toolStripDropDownButtonPreview,
             this.toolStripDropDownButtonStartScreenCapture,
             this.toolStripDropDownButtonStopScreenCapture,
             this.toolStripDropDownButtonCommandLine,
@@ -145,6 +147,7 @@ namespace AutoScreenCapture
             // toolStripDropDownButtonSetup
             // 
             this.toolStripDropDownButtonSetup.AutoToolTip = false;
+            this.toolStripDropDownButtonSetup.BackColor = System.Drawing.Color.White;
             this.toolStripDropDownButtonSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemActiveWindowTitle,
             this.toolStripMenuItemApplicationFocus,
@@ -152,6 +155,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemKeyboardShortcuts,
             this.toolStripMenuItemLabels,
             this.toolStripMenuItemSecurity});
+            this.toolStripDropDownButtonSetup.ForeColor = System.Drawing.Color.Black;
             this.toolStripDropDownButtonSetup.Image = global::AutoScreenCapture.Properties.Resources.setup;
             this.toolStripDropDownButtonSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonSetup.Name = "toolStripDropDownButtonSetup";
@@ -201,10 +205,27 @@ namespace AutoScreenCapture
             this.toolStripMenuItemSecurity.Text = "Security";
             this.toolStripMenuItemSecurity.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
+            // toolStripDropDownButtonPreview
+            // 
+            this.toolStripDropDownButtonPreview.AutoToolTip = false;
+            this.toolStripDropDownButtonPreview.BackColor = System.Drawing.Color.White;
+            this.toolStripDropDownButtonPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButtonPreview.ForeColor = System.Drawing.Color.Black;
+            this.toolStripDropDownButtonPreview.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonPreview.Image")));
+            this.toolStripDropDownButtonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonPreview.Name = "toolStripDropDownButtonPreview";
+            this.toolStripDropDownButtonPreview.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.toolStripDropDownButtonPreview.ShowDropDownArrow = false;
+            this.toolStripDropDownButtonPreview.Size = new System.Drawing.Size(52, 20);
+            this.toolStripDropDownButtonPreview.Text = "Preview";
+            this.toolStripDropDownButtonPreview.Click += new System.EventHandler(this.toolStripDropDownButtonPreview_Click);
+            // 
             // toolStripDropDownButtonStartScreenCapture
             // 
             this.toolStripDropDownButtonStartScreenCapture.AutoToolTip = false;
+            this.toolStripDropDownButtonStartScreenCapture.BackColor = System.Drawing.Color.White;
             this.toolStripDropDownButtonStartScreenCapture.Enabled = false;
+            this.toolStripDropDownButtonStartScreenCapture.ForeColor = System.Drawing.Color.Black;
             this.toolStripDropDownButtonStartScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
             this.toolStripDropDownButtonStartScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonStartScreenCapture.Name = "toolStripDropDownButtonStartScreenCapture";
@@ -217,7 +238,9 @@ namespace AutoScreenCapture
             // toolStripDropDownButtonStopScreenCapture
             // 
             this.toolStripDropDownButtonStopScreenCapture.AutoToolTip = false;
+            this.toolStripDropDownButtonStopScreenCapture.BackColor = System.Drawing.Color.White;
             this.toolStripDropDownButtonStopScreenCapture.Enabled = false;
+            this.toolStripDropDownButtonStopScreenCapture.ForeColor = System.Drawing.Color.Black;
             this.toolStripDropDownButtonStopScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.stop_screen_capture;
             this.toolStripDropDownButtonStopScreenCapture.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonStopScreenCapture.Name = "toolStripDropDownButtonStopScreenCapture";
@@ -230,6 +253,8 @@ namespace AutoScreenCapture
             // toolStripDropDownButtonCommandLine
             // 
             this.toolStripDropDownButtonCommandLine.AutoToolTip = false;
+            this.toolStripDropDownButtonCommandLine.BackColor = System.Drawing.Color.White;
+            this.toolStripDropDownButtonCommandLine.ForeColor = System.Drawing.Color.Black;
             this.toolStripDropDownButtonCommandLine.Image = global::AutoScreenCapture.Properties.Resources.command_line;
             this.toolStripDropDownButtonCommandLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonCommandLine.Name = "toolStripDropDownButtonCommandLine";
@@ -242,6 +267,8 @@ namespace AutoScreenCapture
             // toolStripDropDownButtonHelp
             // 
             this.toolStripDropDownButtonHelp.AutoToolTip = false;
+            this.toolStripDropDownButtonHelp.BackColor = System.Drawing.Color.White;
+            this.toolStripDropDownButtonHelp.ForeColor = System.Drawing.Color.Black;
             this.toolStripDropDownButtonHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
             this.toolStripDropDownButtonHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonHelp.Name = "toolStripDropDownButtonHelp";
@@ -262,7 +289,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(530, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(478, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -961,5 +988,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemInterval;
         private ToolStripMenuItem toolStripMenuItemCommandLine;
         private ToolStripMenuItem toolStripMenuItemKeyboardShortcuts;
+        private ToolStripDropDownButton toolStripDropDownButtonPreview;
     }
 }

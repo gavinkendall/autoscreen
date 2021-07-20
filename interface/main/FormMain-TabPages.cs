@@ -38,8 +38,8 @@ namespace AutoScreenCapture
                 Name = "toolStripDasboard",
                 GripStyle = ToolStripGripStyle.Hidden
             };
-
-            ToolStripSplitButton add = new ToolStripSplitButton
+            
+            ToolStripDropDownButton add = new ToolStripDropDownButton
             {
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
@@ -107,7 +107,7 @@ namespace AutoScreenCapture
             addTrigger.Click += new EventHandler(addTrigger_Click);
             add.DropDown.Items.Add(addTrigger);
 
-            ToolStripSplitButton change = new ToolStripSplitButton
+            ToolStripDropDownButton change = new ToolStripDropDownButton
             {
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
@@ -647,16 +647,6 @@ namespace AutoScreenCapture
             toolStrip.Items.Add(toolStripLabelFilename);
 
             return toolStrip;
-        }
-
-        private void ToolStripSplitButtonConfigure_ButtonClick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ToolStripSplitButtonEdit_ButtonClick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void dashboardPictureBox_DoubleClick(object sender, EventArgs e)

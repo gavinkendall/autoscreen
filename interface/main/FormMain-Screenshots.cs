@@ -260,6 +260,11 @@ namespace AutoScreenCapture
 
         private void ShowScreenshotBySlideIndex()
         {
+            if (!Visible)
+            {
+                return;
+            }
+
             _formScreenshotMetadata.textBoxLabel.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotTitle.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotFormat.Text = string.Empty;
@@ -279,38 +284,56 @@ namespace AutoScreenCapture
                 {
                     PictureBox pictureBox = (PictureBox)groupBox.Controls["pictureBox" + i];
 
-                    Screenshot selectedScreenshot = new Screenshot(_config);
-
-                    if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
+                    // Preview
+                    if (_preview)
                     {
-                        _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
-
                         if (groupBox.Tag.GetType() == typeof(Screen))
                         {
                             Screen screen = (Screen)groupBox.Tag;
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                            pictureBox.Image = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, screen.X, screen.Y, screen.Width, screen.Height, screen.Mouse);
                         }
 
                         if (groupBox.Tag.GetType() == typeof(Region))
                         {
                             Region region = (Region)groupBox.Tag;
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                            pictureBox.Image = _screenCapture.GetScreenBitmap(-1, -1, region.X, region.Y, region.Width, region.Height, region.Mouse);
                         }
-
-                        if (selectedScreenshot.ViewId.Equals(Guid.Empty))
-                        {
-                            // *** Auto Screen Capture - Region Select / Auto Save ***
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(selectedScreenshot.Path))
-                    {
-                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
                     }
                     else
                     {
-                        pictureBox.Image = null;
+                        Screenshot selectedScreenshot = new Screenshot(_config);
+
+                        if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
+                        {
+                            _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
+
+                            if (groupBox.Tag.GetType() == typeof(Screen))
+                            {
+                                Screen screen = (Screen)groupBox.Tag;
+                                selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                            }
+
+                            if (groupBox.Tag.GetType() == typeof(Region))
+                            {
+                                Region region = (Region)groupBox.Tag;
+                                selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                            }
+
+                            if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                            {
+                                // *** Auto Screen Capture - Region Select / Auto Save ***
+                                selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                        {
+                            pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                        }
+                        else
+                        {
+                            pictureBox.Image = null;
+                        }
                     }
 
                     i++;
@@ -330,75 +353,93 @@ namespace AutoScreenCapture
 
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
-                Screenshot selectedScreenshot = new Screenshot(_config);
-
-                if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
+                // Preview
+                if (_preview)
                 {
-                    _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
-
                     if (selectedTabPage.Tag.GetType() == typeof(Screen))
                     {
                         Screen screen = (Screen)selectedTabPage.Tag;
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                        pictureBox.Image = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, screen.X, screen.Y, screen.Width, screen.Height, screen.Mouse);
                     }
-                    
+
                     if (selectedTabPage.Tag.GetType() == typeof(Region))
                     {
                         Region region = (Region)selectedTabPage.Tag;
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
-                    }
-
-                    if (selectedScreenshot.ViewId.Equals(Guid.Empty))
-                    {
-                        // *** Auto Screen Capture - Region Select / Auto Save ***
-                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
-                    }
-                }
-
-                string path = selectedScreenshot.Path;
-
-                if (!string.IsNullOrEmpty(path))
-                {
-                    toolStripTextBox.Text = _fileSystem.GetFileName(path);
-                    toolStripTextBox.ToolTipText = path;
-
-                    string dirName = _fileSystem.GetDirectoryName(path);
-
-                    if (!string.IsNullOrEmpty(dirName))
-                    {
-                        if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
-                        {
-                            toolStripTextBox.BackColor = Color.PaleGreen;
-                        }
-                        else
-                        {
-                            toolStripTextBox.BackColor = Color.PaleVioletRed;
-                            toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
-                        }
-                    }
-
-                    pictureBox.Image = _screenCapture.GetImageByPath(path);
-
-                    if (pictureBox.Image != null)
-                    {
-                        _formScreenshotMetadata.textBoxLabel.Text = selectedScreenshot.Label;
-                        _formScreenshotMetadata.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
-                        _formScreenshotMetadata.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
-
-                        _formScreenshotMetadata.textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
-                        _formScreenshotMetadata.textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
-
-                        _formScreenshotMetadata.textBoxScreenshotDate.Text = selectedScreenshot.Date;
-                        _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                        pictureBox.Image = _screenCapture.GetScreenBitmap(-1, -1, region.X, region.Y, region.Width, region.Height, region.Mouse);
                     }
                 }
                 else
                 {
-                    toolStripTextBox.Text = string.Empty;
-                    toolStripTextBox.BackColor = Color.LightYellow;
-                    toolStripTextBox.ToolTipText = string.Empty;
+                    Screenshot selectedScreenshot = new Screenshot(_config);
 
-                    pictureBox.Image = null;
+                    if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
+                    {
+                        _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
+
+                        if (selectedTabPage.Tag.GetType() == typeof(Screen))
+                        {
+                            Screen screen = (Screen)selectedTabPage.Tag;
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                        }
+
+                        if (selectedTabPage.Tag.GetType() == typeof(Region))
+                        {
+                            Region region = (Region)selectedTabPage.Tag;
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                        }
+
+                        if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                        {
+                            // *** Auto Screen Capture - Region Select / Auto Save ***
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
+                        }
+                    }
+
+                    string path = selectedScreenshot.Path;
+
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        toolStripTextBox.Text = _fileSystem.GetFileName(path);
+                        toolStripTextBox.ToolTipText = path;
+
+                        string dirName = _fileSystem.GetDirectoryName(path);
+
+                        if (!string.IsNullOrEmpty(dirName))
+                        {
+                            if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
+                            {
+                                toolStripTextBox.BackColor = Color.PaleGreen;
+                            }
+                            else
+                            {
+                                toolStripTextBox.BackColor = Color.PaleVioletRed;
+                                toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+                            }
+                        }
+
+                        pictureBox.Image = _screenCapture.GetImageByPath(path);
+
+                        if (pictureBox.Image != null)
+                        {
+                            _formScreenshotMetadata.textBoxLabel.Text = selectedScreenshot.Label;
+                            _formScreenshotMetadata.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
+                            _formScreenshotMetadata.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
+
+                            _formScreenshotMetadata.textBoxScreenshotWidth.Text = pictureBox.Image.Width.ToString();
+                            _formScreenshotMetadata.textBoxScreenshotHeight.Text = pictureBox.Image.Height.ToString();
+
+                            _formScreenshotMetadata.textBoxScreenshotDate.Text = selectedScreenshot.Date;
+                            _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
+                        }
+                    }
+                    else
+                    {
+                        toolStripTextBox.Text = string.Empty;
+                        toolStripTextBox.BackColor = Color.LightYellow;
+                        toolStripTextBox.ToolTipText = string.Empty;
+
+                        pictureBox.Image = null;
+                    }
                 }
             }
         }

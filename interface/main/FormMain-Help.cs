@@ -74,6 +74,11 @@ namespace AutoScreenCapture
             {
                 _helpTipIndex = 0;
             }
+
+            if (_preview)
+            {
+                ShowScreenshotBySlideIndex();
+            }
         }
 
         private void labelHelp_Click(object sender, EventArgs e)

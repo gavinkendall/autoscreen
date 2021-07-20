@@ -299,34 +299,6 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load screens");
 
-                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
-                    {
-                        Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
-                        Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
-
-                        if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)
-                        {
-                            Add(new Screen()
-                            {
-                                ViewId = Guid.NewGuid(),
-                                Name = "Active Window",
-                                Folder = fileSystem.ScreenshotsFolder,
-                                Macro = macroParser.DefaultMacro,
-                                Component = 0,
-                                Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
-                                JpegQuality = 100,
-                                Mouse = true,
-                                Active = true,
-                                X = 0,
-                                Y = 0,
-                                Width = 0,
-                                Height = 0,
-                                Source = 0,
-                                DeviceName = string.Empty
-                            });
-                        }
-                    }
-
                     AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
 
                     SaveToXmlFile(config, fileSystem, log);
