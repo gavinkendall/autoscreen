@@ -103,6 +103,14 @@ namespace AutoScreenCapture
         public string DeviceName { get; set; }
 
         /// <summary>
+        /// "Automatically adapt to display setup".
+        /// The position and size will automatically adjust based on the selected component so
+        /// when you connect a different display then Auto Screen Capture will use it immediately
+        /// instead of using the defined X, Y, Width, and Height values.
+        /// </summary>
+        public bool AutoAdapt { get; set; }
+
+        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()

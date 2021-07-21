@@ -101,6 +101,7 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(checkBoxActive, "You can capture this screen if Active is checked (turned on)");
             _toolTip.SetToolTip(buttonScreenBrowseFolder, "Browse for a folder where screenshots of this screen capture will be saved to");
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
+            _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on the component and adapt to changes with your display setup");
 
             comboBoxFormat.Items.Clear();
 
@@ -138,6 +139,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = ScreenObject.Y;
                 numericUpDownWidth.Value = ScreenObject.Width;
                 numericUpDownHeight.Value = ScreenObject.Height;
+                checkBoxAutoAdapt.Checked = ScreenObject.AutoAdapt;
             }
             else
             {
@@ -155,6 +157,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = 0;
                 numericUpDownWidth.Value = 0;
                 numericUpDownHeight.Value = 0;
+                checkBoxAutoAdapt.Checked = false;
             }
 
             UpdatePreviewMacro();
@@ -206,7 +209,8 @@ namespace AutoScreenCapture
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
-                        Source = comboBoxScreenSource.SelectedIndex
+                        Source = comboBoxScreenSource.SelectedIndex,
+                        AutoAdapt = checkBoxAutoAdapt.Checked
                     });
 
                     Okay();
@@ -252,6 +256,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Width = (int)numericUpDownWidth.Value;
                         ScreenCollection.Get(ScreenObject).Height = (int)numericUpDownHeight.Value;
                         ScreenCollection.Get(ScreenObject).Source = comboBoxScreenSource.SelectedIndex;
+                        ScreenCollection.Get(ScreenObject).AutoAdapt = checkBoxAutoAdapt.Checked;
 
                         Okay();
                     }
@@ -300,7 +305,8 @@ namespace AutoScreenCapture
                  ScreenObject.Y != (int)numericUpDownY.Value ||
                  ScreenObject.Width != (int)numericUpDownWidth.Value ||
                  ScreenObject.Height != (int)numericUpDownHeight.Value) ||
-                 ScreenObject.Source != comboBoxScreenSource.SelectedIndex)
+                 ScreenObject.Source != comboBoxScreenSource.SelectedIndex ||
+                 ScreenObject.AutoAdapt != checkBoxAutoAdapt.Checked)
             {
                 return true;
             }
@@ -352,18 +358,37 @@ namespace AutoScreenCapture
                     numericUpDownY.Enabled = false;
                     numericUpDownWidth.Enabled = false;
                     numericUpDownHeight.Enabled = false;
+
+                    checkBoxAutoAdapt.Enabled = false;
                 }
                 else
                 {
-                    labelX.Enabled = true;
-                    labelY.Enabled = true;
-                    labelWidth.Enabled = true;
-                    labelHeight.Enabled = true;
+                    checkBoxAutoAdapt.Enabled = true;
 
-                    numericUpDownX.Enabled = true;
-                    numericUpDownY.Enabled = true;
-                    numericUpDownWidth.Enabled = true;
-                    numericUpDownHeight.Enabled = true;
+                    if (checkBoxAutoAdapt.Checked)
+                    {
+                        labelX.Enabled = false;
+                        labelY.Enabled = false;
+                        labelWidth.Enabled = false;
+                        labelHeight.Enabled = false;
+
+                        numericUpDownX.Enabled = false;
+                        numericUpDownY.Enabled = false;
+                        numericUpDownWidth.Enabled = false;
+                        numericUpDownHeight.Enabled = false;
+                    }
+                    else
+                    {
+                        labelX.Enabled = true;
+                        labelY.Enabled = true;
+                        labelWidth.Enabled = true;
+                        labelHeight.Enabled = true;
+
+                        numericUpDownX.Enabled = true;
+                        numericUpDownY.Enabled = true;
+                        numericUpDownWidth.Enabled = true;
+                        numericUpDownHeight.Enabled = true;
+                    }
                 }
 
                 if (checkBoxActive.Checked)
@@ -544,6 +569,36 @@ namespace AutoScreenCapture
             else
             {
                 comboBoxScreenComponent.SelectedIndex = 0;
+            }
+        }
+
+        private void checkBoxAutoAdapt_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAutoAdapt.Checked)
+            {
+                updatePositionAndSize(sender, e);
+
+                labelX.Enabled = false;
+                labelY.Enabled = false;
+                labelWidth.Enabled = false;
+                labelHeight.Enabled = false;
+
+                numericUpDownX.Enabled = false;
+                numericUpDownY.Enabled = false;
+                numericUpDownWidth.Enabled = false;
+                numericUpDownHeight.Enabled = false;
+            }
+            else
+            {
+                labelX.Enabled = true;
+                labelY.Enabled = true;
+                labelWidth.Enabled = true;
+                labelHeight.Enabled = true;
+
+                numericUpDownX.Enabled = true;
+                numericUpDownY.Enabled = true;
+                numericUpDownWidth.Enabled = true;
+                numericUpDownHeight.Enabled = true;
             }
         }
     }

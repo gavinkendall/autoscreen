@@ -38,7 +38,6 @@ namespace AutoScreenCapture
     {
         private Log _log;
         private Config _config;
-        private MacroParser _macroParser;
         private FileSystem _fileSystem;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -294,11 +293,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// A class for handling screen capture methods.
         /// </summary>
-        public ScreenCapture(Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
+        public ScreenCapture(Config config, FileSystem fileSystem, Log log)
         {
             _log = log;
             _config = config;
-            _macroParser = macroParser;
             _fileSystem = fileSystem;
 
             _dm = new DEVMODE();

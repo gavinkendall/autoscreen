@@ -64,6 +64,7 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
+            this.checkBoxAutoAdapt = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImageAttributes.SuspendLayout();
@@ -243,7 +244,7 @@
             this.groupBoxImageAttributes.Controls.Add(this.labelJpegQuality);
             this.groupBoxImageAttributes.Controls.Add(this.numericUpDownJpegQuality);
             this.groupBoxImageAttributes.Controls.Add(this.comboBoxFormat);
-            this.groupBoxImageAttributes.Location = new System.Drawing.Point(12, 262);
+            this.groupBoxImageAttributes.Location = new System.Drawing.Point(12, 283);
             this.groupBoxImageAttributes.Name = "groupBoxImageAttributes";
             this.groupBoxImageAttributes.Size = new System.Drawing.Size(205, 106);
             this.groupBoxImageAttributes.TabIndex = 18;
@@ -252,6 +253,7 @@
             // 
             // groupBoxDisplayProperties
             // 
+            this.groupBoxDisplayProperties.Controls.Add(this.checkBoxAutoAdapt);
             this.groupBoxDisplayProperties.Controls.Add(this.labelPositionAndSize);
             this.groupBoxDisplayProperties.Controls.Add(this.labelWidth);
             this.groupBoxDisplayProperties.Controls.Add(this.numericUpDownHeight);
@@ -267,7 +269,7 @@
             this.groupBoxDisplayProperties.Controls.Add(this.comboBoxScreenComponent);
             this.groupBoxDisplayProperties.Location = new System.Drawing.Point(12, 58);
             this.groupBoxDisplayProperties.Name = "groupBoxDisplayProperties";
-            this.groupBoxDisplayProperties.Size = new System.Drawing.Size(205, 198);
+            this.groupBoxDisplayProperties.Size = new System.Drawing.Size(205, 219);
             this.groupBoxDisplayProperties.TabIndex = 4;
             this.groupBoxDisplayProperties.TabStop = false;
             this.groupBoxDisplayProperties.Text = "Display Properties";
@@ -491,6 +493,17 @@
             this.buttonMacroTags.UseVisualStyleBackColor = true;
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
             // 
+            // checkBoxAutoAdapt
+            // 
+            this.checkBoxAutoAdapt.AutoSize = true;
+            this.checkBoxAutoAdapt.Location = new System.Drawing.Point(6, 196);
+            this.checkBoxAutoAdapt.Name = "checkBoxAutoAdapt";
+            this.checkBoxAutoAdapt.Size = new System.Drawing.Size(194, 17);
+            this.checkBoxAutoAdapt.TabIndex = 18;
+            this.checkBoxAutoAdapt.Text = "Automatically adapt to display setup";
+            this.checkBoxAutoAdapt.UseVisualStyleBackColor = true;
+            this.checkBoxAutoAdapt.CheckedChanged += new System.EventHandler(this.checkBoxAutoAdapt_CheckedChanged);
+            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonOK;
@@ -576,5 +589,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownX;
         private System.Windows.Forms.NumericUpDown numericUpDownY;
         private System.Windows.Forms.Label labelPositionAndSize;
+        private System.Windows.Forms.CheckBox checkBoxAutoAdapt;
     }
 }

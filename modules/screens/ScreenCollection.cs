@@ -49,6 +49,7 @@ namespace AutoScreenCapture
         private const string SCREEN_HEIGHT = "height";
         private const string SCREEN_SOURCE = "source";
         private const string SCREEN_DEVICE_NAME = "device_name";
+        private const string SCREEN_AUTO_ADAPT = "auto_adapt";
 
         private readonly string SCREEN_XPATH;
 
@@ -233,6 +234,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.DeviceName = xReader.Value;
                                         break;
+
+                                    case SCREEN_AUTO_ADAPT:
+                                        xReader.Read();
+                                        screen.AutoAdapt = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -373,6 +379,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_HEIGHT, screen.Height.ToString());
                         xWriter.WriteElementString(SCREEN_SOURCE, screen.Source.ToString());
                         xWriter.WriteElementString(SCREEN_DEVICE_NAME, screen.DeviceName);
+                        xWriter.WriteElementString(SCREEN_AUTO_ADAPT, screen.AutoAdapt.ToString());
 
                         xWriter.WriteEndElement();
                     }

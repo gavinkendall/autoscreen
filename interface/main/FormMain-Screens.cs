@@ -195,11 +195,34 @@ namespace AutoScreenCapture
                         }
                         else // Screen (regardless of how many displays there are)
                         {
+                            int x = screen.X;
+                            int y = screen.Y;
+                            int width = screen.Width;
+                            int height = screen.Height;
+
+                            if (screen.AutoAdapt)
+                            {
+                                for (int i = 0; i < System.Windows.Forms.Screen.AllScreens.Length; i++)
+                                {
+                                    System.Windows.Forms.Screen windowsScreen = System.Windows.Forms.Screen.AllScreens[i];
+
+                                    if ((screen.Source == 0 && i == (screen.Component - 1)) || (screen.Source > 0 && i == screen.Component))
+                                    {
+                                        x = windowsScreen.Bounds.X;
+                                        y = windowsScreen.Bounds.Y;
+                                        width = windowsScreen.Bounds.Width;
+                                        height = windowsScreen.Bounds.Height;
+
+                                        break;
+                                    }
+                                }
+                            }
+
                             if (_screenCapture.GetScreenImages(screen.Source, screen.Component,
-                                screen.X,
-                                screen.Y,
-                                screen.Width,
-                                screen.Height,
+                                x,
+                                y,
+                                width,
+                                height,
                                 screen.Mouse,
                                 out Bitmap bitmap))
                             {

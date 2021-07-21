@@ -58,7 +58,7 @@ namespace AutoScreenCapture
                 _log.WriteMessage("It looks like I successfully parsed your \"" + _fileSystem.ConfigFile + "\" file.");
 
                 _log.WriteDebugMessage("Initializing screen capture");
-                _screenCapture = new ScreenCapture(_config, _macroParser, _fileSystem, _log);
+                _screenCapture = new ScreenCapture(_config, _fileSystem, _log);
 
                 _log.WriteDebugMessage("Initializing image format collection");
                 _imageFormatCollection = new ImageFormatCollection();

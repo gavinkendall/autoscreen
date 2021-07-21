@@ -200,7 +200,7 @@ namespace AutoScreenCapture
 
                 Settings.Load(FileSystem);
                 Log = new Log(Settings, FileSystem, MacroParser);
-                ScreenCapture = new ScreenCapture(this, MacroParser, FileSystem, Log);
+                ScreenCapture = new ScreenCapture(this, FileSystem, Log);
 
                 Security security = new Security();
                 CheckAndCreateFiles(security, ScreenCapture, Log);
