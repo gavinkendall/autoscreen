@@ -293,17 +293,7 @@ namespace AutoScreenCapture
                     // Preview
                     if (_preview)
                     {
-                        if (groupBox.Tag.GetType() == typeof(Screen))
-                        {
-                            Screen screen = (Screen)groupBox.Tag;
-                            pictureBox.Image = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, screen.X, screen.Y, screen.Width, screen.Height, screen.Mouse);
-                        }
-
-                        if (groupBox.Tag.GetType() == typeof(Region))
-                        {
-                            Region region = (Region)groupBox.Tag;
-                            pictureBox.Image = _screenCapture.GetScreenBitmap(-1, -1, region.X, region.Y, region.Width, region.Height, region.Mouse);
-                        }
+                        pictureBox.Image = DoPreview(groupBox.Tag);
                     }
                     else
                     {
@@ -362,17 +352,7 @@ namespace AutoScreenCapture
                 // Preview
                 if (_preview)
                 {
-                    if (selectedTabPage.Tag.GetType() == typeof(Screen))
-                    {
-                        Screen screen = (Screen)selectedTabPage.Tag;
-                        pictureBox.Image = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, screen.X, screen.Y, screen.Width, screen.Height, screen.Mouse);
-                    }
-
-                    if (selectedTabPage.Tag.GetType() == typeof(Region))
-                    {
-                        Region region = (Region)selectedTabPage.Tag;
-                        pictureBox.Image = _screenCapture.GetScreenBitmap(-1, -1, region.X, region.Y, region.Width, region.Height, region.Mouse);
-                    }
+                    pictureBox.Image = DoPreview(selectedTabPage.Tag);
                 }
                 else
                 {
@@ -887,6 +867,47 @@ namespace AutoScreenCapture
             SearchFilterValues();
             SearchDates();
             ShowScreenshots();
+        }
+
+        /// <summary>
+        /// Returns the appropriate bitmap image based on the given object.
+        /// </summary>
+        /// <param name="tag">This sould be the tag from a TabPage, Screen, or Region.</param>
+        /// <returns>A bitmap image representing a preview of the given object.</returns>
+        private Bitmap DoPreview(object tag)
+        {
+            Bitmap returnedBitmap = null;
+
+            if (tag.GetType() == typeof(Screen))
+            {
+                Screen screen = (Screen)tag;
+
+                // We need to show the position and size of the currently selected component
+                // if the AutoAdapt option is enabled for the screen. This could be the X, Y, Width, and Height
+                // values of the screen provided by Windows (.NET Framework implementation with AllScreens) or
+                // the user-defined values of X, Y, Width, and Height based on the AutoAdapt option.
+                AutoAdapt(screen, out int x, out int y, out int width, out int height);
+
+                // Active Window
+                if (screen.Source == 0 && screen.Component == 0)
+                {
+                    returnedBitmap = _screenCapture.GetActiveWindowBitmap();
+                }
+                else
+                {
+                    // Screen
+                    returnedBitmap = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, x, y, width, height, screen.Mouse);
+                }
+            }
+
+            if (tag.GetType() == typeof(Region))
+            {
+                Region region = (Region)tag;
+
+                returnedBitmap = _screenCapture.GetScreenBitmap(-1, -1, region.X, region.Y, region.Width, region.Height, region.Mouse);
+            }
+
+            return returnedBitmap;
         }
     }
 }

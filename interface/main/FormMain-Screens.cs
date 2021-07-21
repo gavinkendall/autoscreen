@@ -195,28 +195,9 @@ namespace AutoScreenCapture
                         }
                         else // Screen (regardless of how many displays there are)
                         {
-                            int x = screen.X;
-                            int y = screen.Y;
-                            int width = screen.Width;
-                            int height = screen.Height;
-
-                            if (screen.AutoAdapt)
-                            {
-                                for (int i = 0; i < System.Windows.Forms.Screen.AllScreens.Length; i++)
-                                {
-                                    System.Windows.Forms.Screen windowsScreen = System.Windows.Forms.Screen.AllScreens[i];
-
-                                    if ((screen.Source == 0 && i == (screen.Component - 1)) || (screen.Source > 0 && i == screen.Component))
-                                    {
-                                        x = windowsScreen.Bounds.X;
-                                        y = windowsScreen.Bounds.Y;
-                                        width = windowsScreen.Bounds.Width;
-                                        height = windowsScreen.Bounds.Height;
-
-                                        break;
-                                    }
-                                }
-                            }
+                            // Check to see if we need to get the position and size of whatever
+                            // available screen is being used at this time.
+                            AutoAdapt(screen, out int x, out int y, out int width, out int height);
 
                             if (_screenCapture.GetScreenImages(screen.Source, screen.Component,
                                 x,
@@ -239,6 +220,52 @@ namespace AutoScreenCapture
             {
                 _screenCapture.ApplicationError = true;
                 _log.WriteExceptionMessage("FormMain-Screens::RunScreenCaptures", ex);
+            }
+        }
+
+        /// <summary>
+        /// Adjusts the position and size based on the selected component if AutoAdapt is enabled.
+        /// This is useful for when your display setup changes over time while a screen capture session is running.
+        /// </summary>
+        /// <param name="screen">The screen to use.</param>
+        /// <param name="x">The X value.</param>
+        /// <param name="y">The Y value.</param>
+        /// <param name="width">The Width value.</param>
+        /// <param name="height">The Height value.</param>
+        private void AutoAdapt(Screen screen, out int x, out int y, out int width, out int height)
+        {
+            x = screen.X;
+            y = screen.Y;
+            width = screen.Width;
+            height = screen.Height;
+
+            if (screen.AutoAdapt)
+            {
+                // We rely on the available screens provided by Windows so if we have a component that
+                // is outside the bounds of the array then this functionality isn't going to work (and that's okay).
+                // This is only going to work if the component index is within the index of the AllScreens array.
+
+                // For example, if we have a Screen with a Component that represented a third display but now we're
+                // handling an environment where only one display is available then the resulting position and size is
+                // going to be based on the given Screen rather than the display since the third display no longer exists.
+                for (int i = 0; i < System.Windows.Forms.Screen.AllScreens.Length; i++)
+                {
+                    System.Windows.Forms.Screen windowsScreen = System.Windows.Forms.Screen.AllScreens[i];
+
+                    // We want to avoid the "Auto Screen Capture / Active Window" problem. We could have selected "Auto Screen Capture"
+                    // as the Source and "Active Window" as the Component and that's a problem when determining the index of the Component
+                    // so we actually want (Component - 1) in order to match with "i" for this particular situation otherwise we simply match
+                    // the Component's index with "i" as normal.
+                    if ((screen.Source == 0 && i == (screen.Component - 1)) || (screen.Source > 0 && i == screen.Component))
+                    {
+                        x = windowsScreen.Bounds.X;
+                        y = windowsScreen.Bounds.Y;
+                        width = windowsScreen.Bounds.Width;
+                        height = windowsScreen.Bounds.Height;
+
+                        break;
+                    }
+                }
             }
         }
     }

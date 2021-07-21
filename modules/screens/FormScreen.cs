@@ -349,6 +349,9 @@ namespace AutoScreenCapture
                 // The Source is "Auto Screen Capture" and the Component is "Active Window".
                 if (comboBoxScreenSource.SelectedIndex == 0 && comboBoxScreenComponent.SelectedIndex == 0)
                 {
+                    checkBoxAutoAdapt.Checked = false;
+                    checkBoxAutoAdapt.Enabled = false;
+
                     labelX.Enabled = false;
                     labelY.Enabled = false;
                     labelWidth.Enabled = false;
@@ -358,8 +361,6 @@ namespace AutoScreenCapture
                     numericUpDownY.Enabled = false;
                     numericUpDownWidth.Enabled = false;
                     numericUpDownHeight.Enabled = false;
-
-                    checkBoxAutoAdapt.Enabled = false;
                 }
                 else
                 {
@@ -400,13 +401,41 @@ namespace AutoScreenCapture
                     }
                     else
                     {
+                        int x = (int)numericUpDownX.Value;
+                        int y = (int)numericUpDownY.Value;
+                        int width = (int)numericUpDownWidth.Value;
+                        int height = (int)numericUpDownHeight.Value;
+
+                        // This is for when the option "Automatically adapt to display setup" is enabled.
+                        // We need to show the position and size based on what Windows provides.
+                        // This will only work if the component index matches with the index of the
+                        // available screen provided by Windows during the time of updating the preview.
+                        if (checkBoxAutoAdapt.Checked)
+                        {
+                            for (int i = 0; i < System.Windows.Forms.Screen.AllScreens.Length; i++)
+                            {
+                                System.Windows.Forms.Screen windowsScreen = System.Windows.Forms.Screen.AllScreens[i];
+
+                                if ((comboBoxScreenSource.SelectedIndex == 0 && i == (comboBoxScreenComponent.SelectedIndex - 1)) ||
+                                    (comboBoxScreenSource.SelectedIndex > 0 && i == comboBoxScreenComponent.SelectedIndex))
+                                {
+                                    x = windowsScreen.Bounds.X;
+                                    y = windowsScreen.Bounds.Y;
+                                    width = windowsScreen.Bounds.Width;
+                                    height = windowsScreen.Bounds.Height;
+
+                                    break;
+                                }
+                            }
+                        }
+
                         pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                             comboBoxScreenSource.SelectedIndex,
                             comboBoxScreenComponent.SelectedIndex,
-                            (int)numericUpDownX.Value,
-                            (int)numericUpDownY.Value,
-                            (int)numericUpDownWidth.Value,
-                            (int)numericUpDownHeight.Value,
+                            x,
+                            y,
+                            width,
+                            height,
                             checkBoxMouse.Checked
                         );
                     }
