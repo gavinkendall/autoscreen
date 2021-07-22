@@ -303,26 +303,37 @@ namespace AutoScreenCapture
                         {
                             _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
 
+                            Guid viewId = Guid.Empty;
+
                             if (groupBox.Tag.GetType() == typeof(Screen))
                             {
                                 Screen screen = (Screen)groupBox.Tag;
-                                selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                                viewId = screen.ViewId;
                             }
 
                             if (groupBox.Tag.GetType() == typeof(Region))
                             {
                                 Region region = (Region)groupBox.Tag;
-                                selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                                viewId = region.ViewId;
                             }
+
+                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
                             if (selectedScreenshot.ViewId.Equals(Guid.Empty))
                             {
                                 // *** Auto Screen Capture - Region Select / Auto Save ***
                                 selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                             }
+
+                            // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
+                            // So get the last screenshot of this view so we can still show something.
+                            if (selectedScreenshot.Slide == null)
+                            {
+                                selectedScreenshot = _screenshotCollection.GetLastScreenshotOfView(viewId);
+                            }
                         }
 
-                        if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                        if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.Path : string.Empty))
                         {
                             pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
                         }
@@ -362,26 +373,38 @@ namespace AutoScreenCapture
                     {
                         _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[_slideShow.Index];
 
+                        Guid viewId = Guid.Empty;
+
                         if (selectedTabPage.Tag.GetType() == typeof(Screen))
                         {
                             Screen screen = (Screen)selectedTabPage.Tag;
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                            viewId = screen.ViewId;
                         }
 
                         if (selectedTabPage.Tag.GetType() == typeof(Region))
                         {
                             Region region = (Region)selectedTabPage.Tag;
-                            selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                            viewId = region.ViewId;
+                            
                         }
 
-                        if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
+
+                        if (selectedScreenshot != null && selectedScreenshot.ViewId.Equals(Guid.Empty))
                         {
                             // *** Auto Screen Capture - Region Select / Auto Save ***
                             selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                         }
+
+                        // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
+                        // So get the last screenshot of this view so we can still show something.
+                        if (selectedScreenshot.Slide == null)
+                        {
+                            selectedScreenshot = _screenshotCollection.GetLastScreenshotOfView(viewId);
+                        }
                     }
 
-                    string path = selectedScreenshot.Path;
+                    string path = selectedScreenshot != null ? selectedScreenshot.Path : string.Empty;
 
                     if (!string.IsNullOrEmpty(path))
                     {
