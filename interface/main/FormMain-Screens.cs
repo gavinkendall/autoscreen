@@ -233,10 +233,10 @@ namespace AutoScreenCapture
         /// <param name="height">The Height value.</param>
         private void AutoAdapt(Screen screen, out int x, out int y, out int width, out int height)
         {
-            x = screen.X;
-            y = screen.Y;
-            width = screen.Width;
-            height = screen.Height;
+            x = 0;
+            y = 0;
+            width = 0;
+            height = 0;
 
             if (screen.AutoAdapt)
             {
@@ -255,6 +255,13 @@ namespace AutoScreenCapture
                         break;
                     }
                 }
+            }
+            else
+            {
+                x = screen.X;
+                y = screen.Y;
+                width = screen.Width;
+                height = screen.Height;
             }
         }
     }
