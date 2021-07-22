@@ -180,7 +180,17 @@ namespace AutoScreenCapture
                 numericUpDownHeight.Value = 0;
 
                 // AutoAdapt
-                _autoAdaptIndex = ScreenCollection.Count;
+                int nextAdaptIndexToUseForNewScreen = 0;
+
+                foreach (Screen screen in ScreenCollection)
+                {
+                    if (screen.AutoAdapt)
+                    {
+                        nextAdaptIndexToUseForNewScreen++;
+                    }
+                }
+
+                _autoAdaptIndex = nextAdaptIndexToUseForNewScreen;
                 checkBoxAutoAdapt.Checked = false;
             }
 

@@ -885,7 +885,7 @@ namespace AutoScreenCapture
                 AutoAdapt(screen, out int x, out int y, out int width, out int height);
 
                 // Active Window
-                if (screen.Source == 0 && screen.Component == 0)
+                if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt)
                 {
                     returnedBitmap = _screenCapture.GetActiveWindowBitmap();
                 }
