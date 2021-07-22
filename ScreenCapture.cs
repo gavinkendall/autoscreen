@@ -606,6 +606,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="source">The source index.</param>
         /// <param name="component">The component index.</param>
+        /// <param name="autoAdapt">Determines if this is an AutoAdapt screen.</param>
         /// <param name="x">The X value of the bitmap.</param>
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
@@ -613,13 +614,13 @@ namespace AutoScreenCapture
         /// <param name="mouse">Determines if we include the mouse pointer in the captured bitmap.</param>
         /// <param name="bitmap">The bitmap to operate on.</param>
         /// <returns>A boolean to indicate if we were successful in getting a bitmap.</returns>
-        public bool GetScreenImages(int source, int component, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
+        public bool GetScreenImages(int source, int component, bool autoAdapt, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
         {
             try
             {
                 CaptureError = false;
 
-                bitmap = source == 0 && component == 0
+                bitmap = source == 0 && component == 0 && !autoAdapt
                     ? GetActiveWindowBitmap()
                     : GetScreenBitmap(source, component, x, y, width, height, mouse);
 
