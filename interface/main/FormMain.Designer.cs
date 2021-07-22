@@ -112,6 +112,8 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItemSetupWizard = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorSetupWizard = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -149,6 +151,8 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.AutoToolTip = false;
             this.toolStripDropDownButtonSetup.BackColor = System.Drawing.Color.White;
             this.toolStripDropDownButtonSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemSetupWizard,
+            this.toolStripSeparatorSetupWizard,
             this.toolStripMenuItemActiveWindowTitle,
             this.toolStripMenuItemApplicationFocus,
             this.toolStripMenuItemInterval,
@@ -875,6 +879,18 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
+            // toolStripMenuItemSetupWizard
+            // 
+            this.toolStripMenuItemSetupWizard.Name = "toolStripMenuItemSetupWizard";
+            this.toolStripMenuItemSetupWizard.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSetupWizard.Text = "Setup Wizard";
+            this.toolStripMenuItemSetupWizard.Click += new System.EventHandler(this.toolStripMenuItemSetupWizard_Click);
+            // 
+            // toolStripSeparatorSetupWizard
+            // 
+            this.toolStripSeparatorSetupWizard.Name = "toolStripSeparatorSetupWizard";
+            this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(177, 6);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -989,5 +1005,7 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemCommandLine;
         private ToolStripMenuItem toolStripMenuItemKeyboardShortcuts;
         private ToolStripDropDownButton toolStripDropDownButtonPreview;
+        private ToolStripMenuItem toolStripMenuItemSetupWizard;
+        private ToolStripSeparator toolStripSeparatorSetupWizard;
     }
 }

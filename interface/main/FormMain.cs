@@ -63,6 +63,7 @@ namespace AutoScreenCapture
 
         // Setup.
         private FormSetup _formSetup;
+        private FormSetupWizard _formSetupWizard;
 
         // Screeshot Properties
         private FormScreenshotMetadata _formScreenshotMetadata = new FormScreenshotMetadata();
@@ -167,11 +168,6 @@ namespace AutoScreenCapture
 
             string welcome = "Welcome to " + name + " (" + version + ")";
 
-            if (firstRun)
-            {
-                welcome += " - Please click the Help button to learn how to use the application";
-            }
-
             HelpMessage(welcome);
 
             // Start the scheduled capture timer.
@@ -189,6 +185,11 @@ namespace AutoScreenCapture
 
             _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
+
+            if (firstRun)
+            {
+                _formSetupWizard.ShowDialog(this);
+            }
         }
 
         /// <summary>
@@ -583,6 +584,11 @@ namespace AutoScreenCapture
             ShowScreenshotBySlideIndex();
 
             SaveSettings();
+        }
+
+        private void toolStripMenuItemSetupWizard_Click(object sender, EventArgs e)
+        {
+            _formSetupWizard.ShowDialog(this);
         }
     }
 }

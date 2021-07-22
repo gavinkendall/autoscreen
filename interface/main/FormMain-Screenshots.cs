@@ -882,10 +882,6 @@ namespace AutoScreenCapture
             {
                 Screen screen = (Screen)tag;
 
-                // We need to show the position and size of the currently selected component
-                // if the AutoAdapt option is enabled for the screen. This could be the X, Y, Width, and Height
-                // values of the screen provided by Windows (.NET Framework implementation with AllScreens) or
-                // the user-defined values of X, Y, Width, and Height based on the AutoAdapt option.
                 AutoAdapt(screen, out int x, out int y, out int width, out int height);
 
                 // Active Window

@@ -104,11 +104,16 @@ namespace AutoScreenCapture
 
         /// <summary>
         /// "Automatically adapt to display setup".
-        /// The position and size will automatically adjust based on the selected component so
-        /// when you connect a different display then Auto Screen Capture will use it immediately
-        /// instead of using the defined X, Y, Width, and Height values.
+        /// The position and size will automatically adjust based on your display setup.
+        /// Each screen that has AutoAdapt enabled will be part of the AutoAdapt group and
+        /// will have an AutoAdaptIndex associated with it (applied by the BuildViewTabPages method).
         /// </summary>
         public bool AutoAdapt { get; set; }
+
+        /// <summary>
+        /// The index of the screen participating in the AutoAdapt group of screens (which is any screen with AutoAdapt enabled).
+        /// </summary>
+        public int AutoAdaptIndex { get; set; }
 
         /// <summary>
         /// The empty constructor of the screen.

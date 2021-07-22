@@ -122,8 +122,16 @@ namespace AutoScreenCapture
                 Image = Resources.screen
             };
 
+            int autoAdaptIndex = 0;
+
             foreach (Screen screen in _formScreen.ScreenCollection)
             {
+                if (screen.AutoAdapt)
+                {
+                    screen.AutoAdaptIndex = autoAdaptIndex;
+                    autoAdaptIndex++;
+                }
+
                 ToolStripMenuItem screenMenuItem = new ToolStripMenuItem
                 {
                     Text = screen.Name,

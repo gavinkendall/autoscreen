@@ -62,9 +62,9 @@ namespace AutoScreenCapture
         {
             int component = 1;
 
-            foreach (System.Windows.Forms.Screen screen in System.Windows.Forms.Screen.AllScreens)
+            foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenCapture.DeviceOptions deviceResolution = screenCapture.GetDevice(screen);
+                ScreenCapture.DeviceOptions deviceResolution = screenCapture.GetDevice(screenFromWindows);
 
                 Add(new Screen()
                 {
@@ -77,8 +77,8 @@ namespace AutoScreenCapture
                     JpegQuality = 100,
                     Mouse = true,
                     Active = true,
-                    X = screen.Bounds.X,
-                    Y = screen.Bounds.Y,
+                    X = screenFromWindows.Bounds.X,
+                    Y = screenFromWindows.Bounds.Y,
                     Width = deviceResolution.width,
                     Height = deviceResolution.height,
                     Source = 0,

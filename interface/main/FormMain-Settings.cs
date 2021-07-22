@@ -77,8 +77,8 @@ namespace AutoScreenCapture
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_screenCapture, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-                // The Keyboard Shortcuts form gets initialized in FormMain-KeyboardShortcuts
                 _formSetup = new FormSetup(_config, _fileSystem, _screenCapture);
+                _formSetupWizard = new FormSetupWizard();
 
                 _log.WriteDebugMessage("Initializing editor collection");
                 

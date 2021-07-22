@@ -502,7 +502,7 @@
             this.checkBoxAutoAdapt.TabIndex = 18;
             this.checkBoxAutoAdapt.Text = "Automatically adapt to display setup";
             this.checkBoxAutoAdapt.UseVisualStyleBackColor = true;
-            this.checkBoxAutoAdapt.CheckedChanged += new System.EventHandler(this.checkBoxAutoAdapt_CheckedChanged);
+            this.checkBoxAutoAdapt.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // FormScreen
             // 
