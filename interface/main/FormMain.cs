@@ -135,6 +135,7 @@ namespace AutoScreenCapture
             _slideShow = new Slideshow();
             _dataConvert = new DataConvert();
 
+            _hotKeyMap = new HotKeyMap();
             RegisterKeyboardShortcuts();
             _hotKeyMap.KeyPressed += new EventHandler<KeyPressedEventArgs>(hotKey_KeyPressed);
 

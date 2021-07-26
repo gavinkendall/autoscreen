@@ -228,6 +228,8 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.6")); // Fixed Show/Hide Interface bug so you no longer need to select the option twice to show the interface on initial startup. AutoStartFromCommandLine is temporarily disabled when command line options -stop, -exit, -startat, -stopat, or -captureat are provided.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.7")); // SaveScreenshotRefs user setting introduced. Implemented command line options -saveScreenshotRefs=on and -saveScreenshotRefs=off.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.8")); // Signed assembly in attempt to satisfy anti-virus software.Fixed weird Exit bug.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.9")); // Region Select Options and Region Select / Clipboard / Floating Screenshot implemented.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.0")); // Fix to SMTP.
 
             Application = new SettingCollection()
             {

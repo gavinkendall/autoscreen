@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.6.0 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.1 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -128,18 +128,15 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.4.0
+    <value>2.3.6.1
 
-You can now configure Auto Screen Capture to email screenshots with SMTP (without having to edit the application.xml file) and/or transfer them to a file server with SFTP. These settings are stored in their own XML files named smtp.xml and sftp.xml respectively so you can configure them to be in different locations with autoscreen.conf if you prefer.
+There was a bug with Keyboard Shortcuts that caused the application to crash. It's been fixed.
 
-I fixed the -config, -applicationFocusDelayBefore, and -applicationFocusDelayAfter command line options. These became screwed up in 2.3.3.8 after I merged in code from an optimization initiative.
-
-The Help button is finally usable, but I still have to write all the documentation for it so at this time there's only the "Welcome" page available.
-
-Triggers have been rewritten. I haven't spent much time on the new wizard-style interface for them but their functionality remains the same. I've introduced a new Trigger for File Transfer (SFTP).</value>
+Also, by default, closing the application's main interface window will now hide the interface and keep the application running in the system tray so if you need to exit simply select the Exit option from the system tray icon menu.</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.1    Fix to Keyboard Shortcuts. Changed default trigger for closing window so interface will now hide on closing window instead of exiting to keep application running in system tray until Exit is selected from system tray icon menu.
 2.3.6.0    Fix to SMTP.
 2.3.4.9    Region Select Options and Region Select / Clipboard / Floating Screenshot implemented.
 2.3.4.8    Signed assembly in attempt to satisfy anti-virus software. Fixed weird Exit bug.
@@ -457,7 +454,7 @@ Twitter
 https://twitter.com/autoscreen2
 
 YouTube Channel
-https://www.youtube.com/user/gavinkendall/</value>
+https://www.youtube.com/c/gavinkendall/</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

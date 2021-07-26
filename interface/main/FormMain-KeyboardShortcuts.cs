@@ -39,7 +39,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                _hotKeyMap = new HotKeyMap();
                 _formKeyboardShortcuts = new FormKeyboardShortcuts(_config, _fileSystem, _log);
 
                 _hotKeyMap.UnregisterHotKeys();

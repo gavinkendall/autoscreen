@@ -88,8 +88,7 @@ namespace AutoScreenCapture
         {
             _currentId += 1;
 
-            if (!RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
-                throw new InvalidOperationException("Unable to register hot key");
+            RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key);
         }
 
         /// <summary>

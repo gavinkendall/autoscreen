@@ -311,9 +311,9 @@ namespace AutoScreenCapture
                     Trigger triggerInterfaceClosingExitApplication = new Trigger()
                     {
                         Active = true,
-                        Name = "Exit when interface closing",
+                        Name = "Hide when interface closing",
                         ConditionType = TriggerConditionType.InterfaceClosing,
-                        ActionType = TriggerActionType.ExitApplication,
+                        ActionType = TriggerActionType.HideInterface,
                         Date = DateTime.Now,
                         Time = DateTime.Now,
                         ScreenCaptureInterval = 0
