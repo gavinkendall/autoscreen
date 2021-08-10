@@ -174,7 +174,7 @@ namespace AutoScreenCapture
             {
                 foreach (Region region in _formRegion.RegionCollection)
                 {
-                    if (region.Active)
+                    if (region.Enable)
                     {
                         if (_screenCapture.GetScreenImages(-1, -1, autoAdapt: false, region.X, region.Y, region.Width, region.Height, region.Mouse, out Bitmap bitmap))
                         {

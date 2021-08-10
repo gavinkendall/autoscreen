@@ -36,14 +36,14 @@ namespace AutoScreenCapture
         public string ApplicationName { get; private set; }
 
         /// <summary>
-        /// The version of this application. This is acquired from the application's assembly.
+        /// The version of this application.
         /// </summary>
         public string ApplicationVersion { get; private set; }
 
         // The major versions of Auto Screen Capture.
 
         /// <summary>
-        /// Any version that is older than "Clara" or a version cannot be determined is considered as "Clara".
+        /// Any version that is older than "Clara" or a version that cannot be determined is considered as "Clara".
         /// </summary>
         public const string CODENAME_CLARA = "Clara"; // Clara introduced the Macro field for customizing the filename pattern of image files when writing them to disk.
 
@@ -116,7 +116,8 @@ namespace AutoScreenCapture
         /// </summary>
         public Settings()
         {
-
+            ApplicationName = System.Windows.Forms.Application.ProductName;
+            ApplicationVersion = System.Windows.Forms.Application.ProductVersion;
         }
 
         /// <summary>
@@ -126,9 +127,6 @@ namespace AutoScreenCapture
         public void Load(FileSystem fileSystem)
         {
             DefaultSettings = new DefaultSettings();
-
-            ApplicationName = DefaultSettings.ApplicationName;
-            ApplicationVersion = DefaultSettings.ApplicationVersion;
 
             _versionCollection = new VersionCollection();
 
@@ -230,6 +228,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.8")); // Signed assembly in attempt to satisfy anti-virus software.Fixed weird Exit bug.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.9")); // Region Select Options and Region Select / Clipboard / Floating Screenshot implemented.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.0")); // Fix to SMTP.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.1")); // Fix to Keyboard Shortcuts. Changed default trigger for closing window so interface will now hide on closing window instead of exiting to keep application running in system tray until Exit is selected from system tray icon menu.
 
             Application = new SettingCollection()
             {
@@ -259,9 +258,6 @@ namespace AutoScreenCapture
                 if (fileSystem.FileExists(Application.Filepath))
                 {
                     Application.Load(this, fileSystem);
-
-                    Application.GetByKey("Name", DefaultSettings.ApplicationName).Value = ApplicationName;
-                    Application.GetByKey("Version", DefaultSettings.ApplicationVersion).Value = ApplicationVersion;
 
                     if (!Application.KeyExists("DebugMode"))
                     {
@@ -343,8 +339,6 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    Application.Add(new Setting("Name", ApplicationName));
-                    Application.Add(new Setting("Version", ApplicationVersion));
                     Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
                     Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
                     Application.Add(new Setting("Logging", DefaultSettings.Logging));
@@ -461,6 +455,10 @@ namespace AutoScreenCapture
             settingCollection.RemoveByKey("EmailMessageSubject");
             settingCollection.RemoveByKey("EmailMessageBody");
             settingCollection.RemoveByKey("EmailPrompt");
+
+            // Removed in 2.3.7.0
+            settingCollection.RemoveByKey("Name");
+            settingCollection.RemoveByKey("Version");
 
             settingCollection.Save(this, fileSystem);
         }

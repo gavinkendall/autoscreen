@@ -46,6 +46,7 @@
             this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.groupBoxImageAttributes = new System.Windows.Forms.GroupBox();
             this.groupBoxDisplayProperties = new System.Windows.Forms.GroupBox();
+            this.checkBoxAutoAdapt = new System.Windows.Forms.CheckBox();
             this.labelPositionAndSize = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
             this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
@@ -64,7 +65,6 @@
             this.checkBoxActive = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
-            this.checkBoxAutoAdapt = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImageAttributes.SuspendLayout();
@@ -274,6 +274,17 @@
             this.groupBoxDisplayProperties.TabStop = false;
             this.groupBoxDisplayProperties.Text = "Display Properties";
             // 
+            // checkBoxAutoAdapt
+            // 
+            this.checkBoxAutoAdapt.AutoSize = true;
+            this.checkBoxAutoAdapt.Location = new System.Drawing.Point(6, 196);
+            this.checkBoxAutoAdapt.Name = "checkBoxAutoAdapt";
+            this.checkBoxAutoAdapt.Size = new System.Drawing.Size(194, 17);
+            this.checkBoxAutoAdapt.TabIndex = 18;
+            this.checkBoxAutoAdapt.Text = "Automatically adapt to display setup";
+            this.checkBoxAutoAdapt.UseVisualStyleBackColor = true;
+            this.checkBoxAutoAdapt.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
+            // 
             // labelPositionAndSize
             // 
             this.labelPositionAndSize.AutoSize = true;
@@ -459,11 +470,11 @@
             // 
             this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxActive.AutoSize = true;
-            this.checkBoxActive.Location = new System.Drawing.Point(691, 34);
+            this.checkBoxActive.Location = new System.Drawing.Point(688, 34);
             this.checkBoxActive.Name = "checkBoxActive";
-            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActive.Size = new System.Drawing.Size(59, 17);
             this.checkBoxActive.TabIndex = 3;
-            this.checkBoxActive.Text = "Active";
+            this.checkBoxActive.Text = "Enable";
             this.checkBoxActive.UseVisualStyleBackColor = true;
             this.checkBoxActive.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             // 
@@ -492,17 +503,6 @@
             this.buttonMacroTags.TabIndex = 34;
             this.buttonMacroTags.UseVisualStyleBackColor = true;
             this.buttonMacroTags.Click += new System.EventHandler(this.buttonMacroTags_Click);
-            // 
-            // checkBoxAutoAdapt
-            // 
-            this.checkBoxAutoAdapt.AutoSize = true;
-            this.checkBoxAutoAdapt.Location = new System.Drawing.Point(6, 196);
-            this.checkBoxAutoAdapt.Name = "checkBoxAutoAdapt";
-            this.checkBoxAutoAdapt.Size = new System.Drawing.Size(194, 17);
-            this.checkBoxAutoAdapt.TabIndex = 18;
-            this.checkBoxAutoAdapt.Text = "Automatically adapt to display setup";
-            this.checkBoxAutoAdapt.UseVisualStyleBackColor = true;
-            this.checkBoxAutoAdapt.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // FormScreen
             // 

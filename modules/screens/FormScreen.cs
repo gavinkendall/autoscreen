@@ -100,7 +100,7 @@ namespace AutoScreenCapture
 
             _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
             _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
-            _toolTip.SetToolTip(checkBoxActive, "You can capture this screen if Active is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxActive, "You can capture this screen if Enable is checked (turned on)");
             _toolTip.SetToolTip(buttonScreenBrowseFolder, "Browse for a folder where screenshots of this screen capture will be saved to");
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
             _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on changes to your display setup");
@@ -152,7 +152,7 @@ namespace AutoScreenCapture
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
-                checkBoxActive.Checked = ScreenObject.Active;
+                checkBoxActive.Checked = ScreenObject.Enable;
                 numericUpDownX.Value = ScreenObject.X;
                 numericUpDownY.Value = ScreenObject.Y;
                 numericUpDownWidth.Value = ScreenObject.Width;
@@ -238,7 +238,7 @@ namespace AutoScreenCapture
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
                         Mouse = checkBoxMouse.Checked,
-                        Active = checkBoxActive.Checked,
+                        Enable = checkBoxActive.Checked,
                         X = (int)numericUpDownX.Value,
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
@@ -284,7 +284,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
-                        ScreenCollection.Get(ScreenObject).Active = checkBoxActive.Checked;
+                        ScreenCollection.Get(ScreenObject).Enable = checkBoxActive.Checked;
                         ScreenCollection.Get(ScreenObject).X = (int)numericUpDownX.Value;
                         ScreenCollection.Get(ScreenObject).Y = (int)numericUpDownY.Value;
                         ScreenCollection.Get(ScreenObject).Width = (int)numericUpDownWidth.Value;
@@ -334,7 +334,7 @@ namespace AutoScreenCapture
                  !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
-                 !ScreenObject.Active.Equals(checkBoxActive.Checked) ||
+                 !ScreenObject.Enable.Equals(checkBoxActive.Checked) ||
                  ScreenObject.X != (int)numericUpDownX.Value ||
                  ScreenObject.Y != (int)numericUpDownY.Value ||
                  ScreenObject.Width != (int)numericUpDownWidth.Value ||
@@ -497,7 +497,7 @@ namespace AutoScreenCapture
                 {
                     textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
                     textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
-                    textBoxMacroPreview.Text = "[Active option is off. No screenshots of this screen will be taken during a running screen capture session]";
+                    textBoxMacroPreview.Text = "[Enable option is off. No screenshots of this screen will be taken during a running screen capture session]";
                 }
             }
             catch (Exception ex)

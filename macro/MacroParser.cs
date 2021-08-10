@@ -209,7 +209,7 @@ namespace AutoScreenCapture
             // Strip out any backslash characters from the name so we avoid creating unnecessary directories based on the name.
             name = name.Replace("\\", string.Empty);
 
-            if (!tag.Active)
+            if (!tag.Enable)
             {
                 return macro;
             }

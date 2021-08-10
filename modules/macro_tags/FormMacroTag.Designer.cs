@@ -328,11 +328,11 @@
             // 
             this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxActive.AutoSize = true;
-            this.checkBoxActive.Location = new System.Drawing.Point(691, 34);
+            this.checkBoxActive.Location = new System.Drawing.Point(688, 34);
             this.checkBoxActive.Name = "checkBoxActive";
-            this.checkBoxActive.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActive.Size = new System.Drawing.Size(59, 17);
             this.checkBoxActive.TabIndex = 3;
-            this.checkBoxActive.Text = "Active";
+            this.checkBoxActive.Text = "Enable";
             this.checkBoxActive.UseVisualStyleBackColor = true;
             // 
             // labelHelp
@@ -391,7 +391,7 @@
             this.textBoxDescription.Size = new System.Drawing.Size(470, 20);
             this.textBoxDescription.TabIndex = 7;
             // 
-            // FormTag
+            // FormMacroTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -415,7 +415,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(772, 493);
-            this.Name = "FormTag";
+            this.Name = "FormMacroTag";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormMacroTag_Load);
             this.groupBoxTimeRange.ResumeLayout(false);

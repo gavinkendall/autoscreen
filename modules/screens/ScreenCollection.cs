@@ -42,7 +42,7 @@ namespace AutoScreenCapture
         private const string SCREEN_FORMAT = "format";
         private const string SCREEN_JPEG_QUALITY = "jpeg_quality";
         private const string SCREEN_MOUSE = "mouse";
-        private const string SCREEN_ACTIVE = "active";
+        private const string SCREEN_ENABLE = "enable";
         private const string SCREEN_X = "x";
         private const string SCREEN_Y = "y";
         private const string SCREEN_WIDTH = "width";
@@ -76,7 +76,7 @@ namespace AutoScreenCapture
                     Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                     JpegQuality = 100,
                     Mouse = true,
-                    Active = true,
+                    Enable = true,
                     X = screenFromWindows.Bounds.X,
                     Y = screenFromWindows.Bounds.Y,
                     Width = deviceResolution.width,
@@ -200,9 +200,10 @@ namespace AutoScreenCapture
                                         screen.Mouse = Convert.ToBoolean(xReader.Value);
                                         break;
 
-                                    case SCREEN_ACTIVE:
+                                    case SCREEN_ENABLE:
+                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
                                         xReader.Read();
-                                        screen.Active = Convert.ToBoolean(xReader.Value);
+                                        screen.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
 
                                     case SCREEN_X:
@@ -261,7 +262,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                screen.Active = true;
+                                screen.Enable = true;
                             }
 
                             if (v2338 != null && configVersion != null && configVersion.VersionNumber < v2338.VersionNumber)
@@ -301,14 +302,14 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
-                else
-                {
-                    log.WriteDebugMessage("WARNING: Unable to load screens");
+                //else
+                //{
+                //    log.WriteDebugMessage("WARNING: Unable to load screens");
 
-                    AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
+                //    AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
 
-                    SaveToXmlFile(config, fileSystem, log);
-                }
+                //    SaveToXmlFile(config, fileSystem, log);
+                //}
 
                 return true;
             }
@@ -364,7 +365,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_SCREEN_NODE);
 
-                        xWriter.WriteElementString(SCREEN_ACTIVE, screen.Active.ToString());
+                        xWriter.WriteElementString(SCREEN_ENABLE, screen.Enable.ToString());
                         xWriter.WriteElementString(SCREEN_VIEWID, screen.ViewId.ToString());
                         xWriter.WriteElementString(SCREEN_NAME, screen.Name);
                         xWriter.WriteElementString(SCREEN_FOLDER, fileSystem.CorrectScreenshotsFolderPath(screen.Folder));

@@ -38,7 +38,7 @@ namespace AutoScreenCapture
         private const string TRIGGER_CONDITION = "condition";
         private const string TRIGGER_ACTION = "action";
         private const string TRIGGER_EDITOR = "editor";
-        private const string TRIGGER_ACTIVE = "active";
+        private const string TRIGGER_ENABLE = "enable";
         private const string TRIGGER_DATE = "date";
         private const string TRIGGER_TIME = "time";
         private const string TRIGGER_DAY = "day";
@@ -165,9 +165,10 @@ namespace AutoScreenCapture
                                         trigger.Value = xReader.Value;
                                         break;
 
-                                    case TRIGGER_ACTIVE:
+                                    case TRIGGER_ENABLE:
+                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
                                         xReader.Read();
-                                        trigger.Active = Convert.ToBoolean(xReader.Value);
+                                        trigger.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
 
                                     case TRIGGER_DATE:
@@ -218,7 +219,7 @@ namespace AutoScreenCapture
 
                             // These are new properties for Trigger that were introduced in 2.3.0.0
                             // so any version before 2.3.0.0 needs to have them during an upgrade.
-                            trigger.Active = true;
+                            trigger.Enable = true;
                             trigger.Date = DateTime.Now;
                             trigger.Time = DateTime.Now;
                             trigger.ScreenCaptureInterval = 0;
@@ -253,7 +254,7 @@ namespace AutoScreenCapture
 
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
                         {
-                            Active = false,
+                            Enable = false,
                             Name = $"Keep screenshots for {days} days",
                             ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                             ActionType = TriggerActionType.DeleteScreenshots,
@@ -271,6 +272,7 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
+                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load triggers");
@@ -352,6 +354,7 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
+                */
 
                 return true;
             }
@@ -404,7 +407,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_TRIGGER_NODE);
 
-                        xWriter.WriteElementString(TRIGGER_ACTIVE, trigger.Active.ToString());
+                        xWriter.WriteElementString(TRIGGER_ENABLE, trigger.Enable.ToString());
                         xWriter.WriteElementString(TRIGGER_NAME, trigger.Name);
                         xWriter.WriteElementString(TRIGGER_CONDITION, trigger.ConditionType.ToString());
                         xWriter.WriteElementString(TRIGGER_ACTION, trigger.ActionType.ToString());

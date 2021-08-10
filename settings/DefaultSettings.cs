@@ -19,7 +19,6 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Reflection;
 
 namespace AutoScreenCapture
 {
@@ -28,16 +27,6 @@ namespace AutoScreenCapture
     /// </summary>
     public class DefaultSettings
     {
-        /// <summary>
-        /// The name of this application.
-        /// </summary>
-        public string ApplicationName = "Auto Screen Capture";
-
-        /// <summary>
-        /// The version of this application. This is acquired from the application's assembly.
-        /// </summary>
-        public string ApplicationVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
         // Default application settings.
         internal readonly bool DebugMode = false;
         internal readonly bool ExitOnError = true;
@@ -58,7 +47,7 @@ namespace AutoScreenCapture
         internal readonly int CaptureLimit = 0;
         internal readonly bool CaptureLimitCheck = false;
         internal readonly bool TakeInitialScreenshot = false;
-        internal readonly bool ShowSystemTrayIcon = true;
+        internal readonly bool ShowSystemTrayIcon = false;
         internal readonly string Passphrase = string.Empty;
         internal readonly string ScreenshotLabel = string.Empty;
         internal readonly bool ApplyScreenshotLabel = false;

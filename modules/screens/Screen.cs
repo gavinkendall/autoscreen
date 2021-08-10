@@ -68,9 +68,9 @@ namespace AutoScreenCapture
         public bool Mouse { get; set; }
 
         /// <summary>
-        /// Determines if the screen is active or inactive.
+        /// Determines if the screen is enabled or disabled.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Enable { get; set; }
 
         /// <summary>
         /// The X coordinate value for the screen's "left" (horizontal) position.

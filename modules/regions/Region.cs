@@ -83,9 +83,9 @@ namespace AutoScreenCapture
         public int Height { get; set; }
 
         /// <summary>
-        /// Determines if the region is active or inactive.
+        /// Determines if the region is enabled or disabled.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Enable { get; set; }
 
         /// <summary>
         /// The empty constructor of the region.

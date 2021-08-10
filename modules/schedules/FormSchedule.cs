@@ -74,7 +74,7 @@ namespace AutoScreenCapture
                 Text = "Change Schedule";
 
                 textBoxName.Text = ScheduleObject.Name;
-                checkBoxActive.Checked = ScheduleObject.Active;
+                checkBoxActive.Checked = ScheduleObject.Enable;
 
                 radioButtonOneTime.Checked = ScheduleObject.ModeOneTime;
                 radioButtonPeriod.Checked = ScheduleObject.ModePeriod;
@@ -199,7 +199,7 @@ namespace AutoScreenCapture
                     Schedule schedule = new Schedule()
                     {
                         Name = textBoxName.Text,
-                        Active = checkBoxActive.Checked,
+                        Enable = checkBoxActive.Checked,
                         ModeOneTime = radioButtonOneTime.Checked,
                         ModePeriod = radioButtonPeriod.Checked,
                         CaptureAt = dateTimePickerCaptureAt.Value,
@@ -249,7 +249,7 @@ namespace AutoScreenCapture
                     else
                     {
                         ScheduleCollection.Get(ScheduleObject).Name = textBoxName.Text;
-                        ScheduleCollection.Get(ScheduleObject).Active = checkBoxActive.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Enable = checkBoxActive.Checked;
                         ScheduleCollection.Get(ScheduleObject).ModeOneTime = radioButtonOneTime.Checked;
                         ScheduleCollection.Get(ScheduleObject).ModePeriod = radioButtonPeriod.Checked;
                         ScheduleCollection.Get(ScheduleObject).CaptureAt = dateTimePickerCaptureAt.Value;
@@ -315,7 +315,7 @@ namespace AutoScreenCapture
                             (int)numericUpDownMillisecondsInterval.Value);
 
             if (ScheduleObject != null &&
-                (!ScheduleObject.Active.Equals(checkBoxActive.Checked) ||
+                (!ScheduleObject.Enable.Equals(checkBoxActive.Checked) ||
                 !ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
                 !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
                 !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value) ||

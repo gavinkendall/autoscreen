@@ -181,7 +181,7 @@ namespace AutoScreenCapture
 
                 foreach (Screen screen in _formScreen.ScreenCollection)
                 {
-                    if (screen.Active)
+                    if (screen.Enable)
                     {
                         if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt) // Active Window
                         {

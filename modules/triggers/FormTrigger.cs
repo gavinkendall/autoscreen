@@ -96,7 +96,7 @@ namespace AutoScreenCapture
                 textBoxTriggerName.Text = TriggerObject.Name;
                 listBoxCondition.SelectedIndex = (int)TriggerObject.ConditionType;
                 listBoxAction.SelectedIndex = (int)TriggerObject.ActionType;
-                checkBoxActive.Checked = TriggerObject.Active;
+                checkBoxActive.Checked = TriggerObject.Enable;
 
                 dateTimePickerDate.Value = TriggerObject.Date;
                 dateTimePickerTime.Value = TriggerObject.Time;
@@ -194,7 +194,7 @@ namespace AutoScreenCapture
                         Name = textBoxTriggerName.Text,
                         ConditionType = (TriggerConditionType)listBoxCondition.SelectedIndex,
                         ActionType = (TriggerActionType)listBoxAction.SelectedIndex,
-                        Active = checkBoxActive.Checked,
+                        Enable = checkBoxActive.Checked,
                         Date = dateTimePickerDate.Value,
                         Time = dateTimePickerTime.Value,
                         Day = comboBoxDay.Text,
@@ -241,7 +241,7 @@ namespace AutoScreenCapture
                     TriggerCollection.Get(TriggerObject).Name = textBoxTriggerName.Text;
                     TriggerCollection.Get(TriggerObject).ConditionType = (TriggerConditionType)listBoxCondition.SelectedIndex;
                     TriggerCollection.Get(TriggerObject).ActionType = (TriggerActionType)listBoxAction.SelectedIndex;
-                    TriggerCollection.Get(TriggerObject).Active = checkBoxActive.Checked;
+                    TriggerCollection.Get(TriggerObject).Enable = checkBoxActive.Checked;
                     TriggerCollection.Get(TriggerObject).Date = dateTimePickerDate.Value;
                     TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
                     TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;

@@ -146,7 +146,7 @@ namespace AutoScreenCapture
                         t.Equals(typeof(Schedule)) ||
                         t.Equals(typeof(Trigger)))
                     {
-                        bool enabled = (bool)t.GetProperty("Active").GetValue(@object, null);
+                        bool enabled = (bool)t.GetProperty("Enable").GetValue(@object, null);
                         labelEnabledStatus.BackColor = enabled ? Color.PaleGreen : Color.PaleVioletRed;
                     }
 
@@ -198,14 +198,14 @@ namespace AutoScreenCapture
             {
                 Region region = (Region)label.Tag;
                 
-                if (region.Active)
+                if (region.Enable)
                 {
-                    region.Active = false;
+                    region.Enable = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    region.Active = true;
+                    region.Enable = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -219,14 +219,14 @@ namespace AutoScreenCapture
             {
                 Schedule schedule = (Schedule)label.Tag;
 
-                if (schedule.Active)
+                if (schedule.Enable)
                 {
-                    schedule.Active = false;
+                    schedule.Enable = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    schedule.Active = true;
+                    schedule.Enable = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -240,14 +240,14 @@ namespace AutoScreenCapture
             {
                 Screen screen = (Screen)label.Tag;
 
-                if (screen.Active)
+                if (screen.Enable)
                 {
-                    screen.Active = false;
+                    screen.Enable = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    screen.Active = true;
+                    screen.Enable = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -261,14 +261,14 @@ namespace AutoScreenCapture
             {
                 MacroTag tag = (MacroTag)label.Tag;
 
-                if (tag.Active)
+                if (tag.Enable)
                 {
-                    tag.Active = false;
+                    tag.Enable = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    tag.Active = true;
+                    tag.Enable = true;
                     label.BackColor = Color.PaleGreen;
                 }
 
@@ -282,14 +282,14 @@ namespace AutoScreenCapture
             {
                 Trigger trigger = (Trigger)label.Tag;
 
-                if (trigger.Active)
+                if (trigger.Enable)
                 {
-                    trigger.Active = false;
+                    trigger.Enable = false;
                     label.BackColor = Color.PaleVioletRed;
                 }
                 else
                 {
-                    trigger.Active = true;
+                    trigger.Enable = true;
                     label.BackColor = Color.PaleGreen;
                 }
 

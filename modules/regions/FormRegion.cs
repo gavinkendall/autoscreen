@@ -84,7 +84,7 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
             _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this region capture. JPEG is the recommended image format");
             _toolTip.SetToolTip(comboBoxScreenTemplate, "Acquire the width and height from an available screen to import as the width and height for your region capture");
-            _toolTip.SetToolTip(checkBoxActive, "You can capture this region if Active is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxActive, "You can capture this region if Enable is checked (turned on)");
             _toolTip.SetToolTip(buttonBrowseFolder, "Browse for a folder where screenshots of this region capture will be saved to");
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
 
@@ -133,7 +133,7 @@ namespace AutoScreenCapture
                 numericUpDownY.Value = RegionObject.Y;
                 numericUpDownWidth.Value = RegionObject.Width;
                 numericUpDownHeight.Value = RegionObject.Height;
-                checkBoxActive.Checked = RegionObject.Active;
+                checkBoxActive.Checked = RegionObject.Enable;
             }
             else
             {
@@ -199,7 +199,7 @@ namespace AutoScreenCapture
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
-                        Active = checkBoxActive.Checked
+                        Enable = checkBoxActive.Checked
                     });
 
                     Okay();
@@ -240,7 +240,7 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Y = (int) numericUpDownY.Value;
                         RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
                         RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
-                        RegionCollection.Get(RegionObject).Active = checkBoxActive.Checked;
+                        RegionCollection.Get(RegionObject).Enable = checkBoxActive.Checked;
 
                         Okay();
                     }
@@ -287,7 +287,7 @@ namespace AutoScreenCapture
                  RegionObject.Y != (int)numericUpDownY.Value ||
                  RegionObject.Width != (int)numericUpDownWidth.Value ||
                  RegionObject.Height != (int)numericUpDownHeight.Value ||
-                 RegionObject.Active.Equals(checkBoxActive.Checked)))
+                 RegionObject.Enable.Equals(checkBoxActive.Checked)))
             {
                 return true;
             }
@@ -347,7 +347,7 @@ namespace AutoScreenCapture
 
                     textBoxMacroPreview.ForeColor = System.Drawing.Color.White;
                     textBoxMacroPreview.BackColor = System.Drawing.Color.Black;
-                    textBoxMacroPreview.Text = "[Active option is off. No screenshots of this region will be taken during a running screen capture session]";
+                    textBoxMacroPreview.Text = "[Enable option is off. No screenshots of this region will be taken during a running screen capture session]";
                 }
             }
             catch (Exception ex)

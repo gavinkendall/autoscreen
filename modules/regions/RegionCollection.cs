@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         private const string REGION_Y = "y";
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
-        private const string REGION_ACTIVE = "active";
+        private const string REGION_ENABLE = "enable";
 
         private readonly string REGION_XPATH;
 
@@ -155,9 +155,10 @@ namespace AutoScreenCapture
                                         region.Height = Convert.ToInt32(xReader.Value);
                                         break;
 
-                                    case REGION_ACTIVE:
+                                    case REGION_ENABLE:
+                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
                                         xReader.Read();
-                                        region.Active = Convert.ToBoolean(xReader.Value);
+                                        region.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
                                 }
                             }
@@ -192,7 +193,7 @@ namespace AutoScreenCapture
                                 region.Format = imageFormatCollection.GetByName("JPEG");
                                 region.JpegQuality = 100;
                                 region.Mouse = true;
-                                region.Active = true;
+                                region.Enable = true;
                             }
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -201,7 +202,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                region.Active = true;
+                                region.Enable = true;
                             }
                         }
 
@@ -219,12 +220,14 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
+                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load regions");
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
+                */
 
                 return true;
             }
@@ -280,7 +283,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_REGION_NODE);
 
-                        xWriter.WriteElementString(REGION_ACTIVE, region.Active.ToString());
+                        xWriter.WriteElementString(REGION_ENABLE, region.Enable.ToString());
                         xWriter.WriteElementString(REGION_VIEWID, region.ViewId.ToString());
                         xWriter.WriteElementString(REGION_NAME, region.Name);
                         xWriter.WriteElementString(REGION_FOLDER, fileSystem.CorrectScreenshotsFolderPath(region.Folder));

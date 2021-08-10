@@ -148,7 +148,7 @@ namespace AutoScreenCapture
 
             LoadSettings();
 
-            Text = (string)_config.Settings.Application.GetByKey("Name", _config.Settings.ApplicationName).Value;
+            Text = _config.Settings.ApplicationName;
 
             // Get rid of the old "slides" directory that may still remain from an old version of the application.
             DeleteSlides();
@@ -161,12 +161,9 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            string name = _config.Settings.Application.GetByKey("Name", _config.Settings.ApplicationName).Value.ToString();
-            string version = _config.Settings.Application.GetByKey("Version", _config.Settings.ApplicationVersion).Value.ToString();
-
             bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value);
 
-            string welcome = "Welcome to " + name + " (" + version + ")";
+            string welcome = "Welcome to " + _config.Settings.ApplicationName + " (" + _config.Settings.ApplicationVersion + ")";
 
             HelpMessage(welcome);
 

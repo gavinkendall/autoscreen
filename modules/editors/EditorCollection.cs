@@ -154,6 +154,7 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
+                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load editors");
@@ -227,6 +228,7 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
+                */
 
                 return true;
             }

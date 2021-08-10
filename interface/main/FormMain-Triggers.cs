@@ -145,7 +145,7 @@ namespace AutoScreenCapture
         {
             foreach (Trigger trigger in _formTrigger.TriggerCollection)
             {
-                if (!trigger.Active)
+                if (!trigger.Enable)
                 {
                     continue;
                 }
@@ -219,52 +219,52 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.ActivateScreen:
-                    _formScreen.ScreenCollection.GetByName(trigger.Value).Active = true;
+                    _formScreen.ScreenCollection.GetByName(trigger.Value).Enable = true;
                     BuildScreensModule();
                     break;
 
                 case TriggerActionType.DeactivateScreen:
-                    _formScreen.ScreenCollection.GetByName(trigger.Value).Active = false;
+                    _formScreen.ScreenCollection.GetByName(trigger.Value).Enable = false;
                     BuildScreensModule();
                     break;
 
                 case TriggerActionType.ActivateRegion:
-                    _formRegion.RegionCollection.GetByName(trigger.Value).Active = true;
+                    _formRegion.RegionCollection.GetByName(trigger.Value).Enable = true;
                     BuildRegionsModule();
                     break;
 
                 case TriggerActionType.DeactivateRegion:
-                    _formRegion.RegionCollection.GetByName(trigger.Value).Active = false;
+                    _formRegion.RegionCollection.GetByName(trigger.Value).Enable = false;
                     BuildRegionsModule();
                     break;
 
                 case TriggerActionType.ActivateSchedule:
-                    _formSchedule.ScheduleCollection.GetByName(trigger.Value).Active = true;
+                    _formSchedule.ScheduleCollection.GetByName(trigger.Value).Enable = true;
                     BuildSchedulesModule();
                     break;
 
                 case TriggerActionType.DeactivateSchedule:
-                    _formSchedule.ScheduleCollection.GetByName(trigger.Value).Active = false;
+                    _formSchedule.ScheduleCollection.GetByName(trigger.Value).Enable = false;
                     BuildSchedulesModule();
                     break;
 
                 case TriggerActionType.ActivateTag:
-                    _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Active = true;
+                    _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Enable = true;
                     BuildMacroTagsModule();
                     break;
 
                 case TriggerActionType.DeactivateTag:
-                    _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Active = false;
+                    _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Enable = false;
                     BuildMacroTagsModule();
                     break;
 
                 case TriggerActionType.ActivateTrigger:
-                    _formTrigger.TriggerCollection.GetByName(trigger.Value).Active = true;
+                    _formTrigger.TriggerCollection.GetByName(trigger.Value).Enable = true;
                     BuildTriggersModule();
                     break;
 
                 case TriggerActionType.DeactivateTrigger:
-                    _formTrigger.TriggerCollection.GetByName(trigger.Value).Active = false;
+                    _formTrigger.TriggerCollection.GetByName(trigger.Value).Enable = false;
                     BuildTriggersModule();
                     break;
 

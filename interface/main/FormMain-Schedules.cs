@@ -67,7 +67,7 @@ namespace AutoScreenCapture
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
-                    if (!schedule.Active)
+                    if (!schedule.Enable)
                     {
                         continue;
                     }
@@ -112,7 +112,7 @@ namespace AutoScreenCapture
                 // Process the list of triggers of condition type Date/Time, condition type Time, and condition type Day/Time.
                 foreach (Trigger trigger in _formTrigger.TriggerCollection)
                 {
-                    if (!trigger.Active)
+                    if (!trigger.Enable)
                     {
                         continue;
                     }

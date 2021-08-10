@@ -35,7 +35,7 @@ namespace AutoScreenCapture
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
         private const string SCHEDULE_NAME = "name";
-        private const string SCHEDULE_ACTIVE = "active";
+        private const string SCHEDULE_ENABLE = "enable";
         private const string SCHEDULE_MODE_ONETIME = "mode_onetime";
         private const string SCHEDULE_MODE_PERIOD = "mode_period";
         private const string SCHEDULE_CAPTUREAT = "captureat";
@@ -117,9 +117,10 @@ namespace AutoScreenCapture
                                         schedule.Name = xReader.Value;
                                         break;
 
-                                    case SCHEDULE_ACTIVE:
+                                    case SCHEDULE_ENABLE:
+                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
                                         xReader.Read();
-                                        schedule.Active = Convert.ToBoolean(xReader.Value);
+                                        schedule.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
 
                                     case SCHEDULE_MODE_ONETIME:
@@ -213,7 +214,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Schedule that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                schedule.Active = true;
+                                schedule.Enable = true;
                             }
 
                             if (v2319 != null && configVersion != null && configVersion.VersionNumber < v2319.VersionNumber)
@@ -237,6 +238,7 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
+                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load schedules");
@@ -311,6 +313,7 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
+                */
 
                 return true;
             }
@@ -365,7 +368,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_SCHEDULE_NODE);
 
-                        xWriter.WriteElementString(SCHEDULE_ACTIVE, schedule.Active.ToString());
+                        xWriter.WriteElementString(SCHEDULE_ENABLE, schedule.Enable.ToString());
                         xWriter.WriteElementString(SCHEDULE_NAME, schedule.Name);
                         xWriter.WriteElementString(SCHEDULE_MODE_ONETIME, schedule.ModeOneTime.ToString());
                         xWriter.WriteElementString(SCHEDULE_MODE_PERIOD, schedule.ModePeriod.ToString());

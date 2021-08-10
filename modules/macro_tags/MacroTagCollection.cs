@@ -70,7 +70,7 @@ namespace AutoScreenCapture
         private const string TAG_TIME_OF_DAY_EVENING_VALUE = "time_of_day_evening_value";
         private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
 
-        private const string TAG_ACTIVE = "active";
+        private const string TAG_ENABLE = "enable";
 
         private readonly string TAG_XPATH;
 
@@ -280,9 +280,10 @@ namespace AutoScreenCapture
                                         eveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
                                         break;
 
-                                    case TAG_ACTIVE:
+                                    case TAG_ENABLE:
+                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
                                         xReader.Read();
-                                        tag.Active = Convert.ToBoolean(xReader.Value);
+                                        tag.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
                                 }
                             }
@@ -306,7 +307,7 @@ namespace AutoScreenCapture
 
                                 // This is a new property for Tag that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
-                                tag.Active = true;
+                                tag.Enable = true;
 
                                 // "Description" is a new property for Tag that was introduced in 2.3.0.0
                                 switch (tag.Type)
@@ -386,6 +387,7 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
+                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load tags");
@@ -418,6 +420,7 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
+                */
 
                 return true;
             }
@@ -473,7 +476,7 @@ namespace AutoScreenCapture
                     {
                         xWriter.WriteStartElement(XML_FILE_TAG_NODE);
 
-                        xWriter.WriteElementString(TAG_ACTIVE, tag.Active.ToString());
+                        xWriter.WriteElementString(TAG_ENABLE, tag.Enable.ToString());
                         xWriter.WriteElementString(TAG_NAME, tag.Name);
                         xWriter.WriteElementString(TAG_DESCRIPTION, tag.Description);
                         xWriter.WriteElementString(TAG_NOTES, tag.Notes);

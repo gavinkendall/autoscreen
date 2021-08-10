@@ -225,7 +225,7 @@ namespace AutoScreenCapture
                     Schedule specialSchedule = new Schedule()
                     {
                         Name = _formSchedule.ScheduleCollection.SpecialScheduleName,
-                        Active = false,
+                        Enable = false,
                         ModeOneTime = true,
                         ModePeriod = false,
                         CaptureAt = dtNow,
@@ -504,7 +504,7 @@ namespace AutoScreenCapture
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Active = true;
+                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Enable = true;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModeOneTime = false;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModePeriod = true;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
@@ -528,7 +528,7 @@ namespace AutoScreenCapture
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Active = true;
+                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Enable = true;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModeOneTime = false;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModePeriod = true;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).StopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
@@ -552,7 +552,7 @@ namespace AutoScreenCapture
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Active = true;
+                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Enable = true;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModeOneTime = true;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModePeriod = false;
                         _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).CaptureAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);

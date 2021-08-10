@@ -99,8 +99,8 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(772, 493);
             this.Name = "FormSetupWizard";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Setup Wizard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Auto Screen Capture - Setup Wizard";
             this.ResumeLayout(false);
 
     }

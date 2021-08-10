@@ -115,9 +115,9 @@ namespace AutoScreenCapture
         public string TimeRangeMacro4Macro { get; set; }
 
         /// <summary>
-        /// Determines if a tag is active or inactive.
+        /// Determines if a macro tag is enabled or disabled.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Enable { get; set; }
 
         private void SetDefaultValues()
         {
@@ -139,7 +139,7 @@ namespace AutoScreenCapture
             TimeRangeMacro4End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
             TimeRangeMacro4Macro = string.Empty;
 
-            Active = false;
+            Enable = false;
 
             Notes = string.Empty;
         }
@@ -171,7 +171,7 @@ namespace AutoScreenCapture
             Name = name;
             Description = description;
             Type = macroTagType;
-            Active = active;
+            Enable = active;
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace AutoScreenCapture
             Description = description;
             Type = MacroTagType;
             DateTimeFormatValue = dateTimeFormatValue;
-            Active = active;
+            Enable = active;
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace AutoScreenCapture
             TimeRangeMacro3Macro = timeRangeMacro3Macro;
             TimeRangeMacro4Macro = timeRangeMacro4Macro;
 
-            Active = active;
+            Enable = active;
 
             Notes = notes;
         }

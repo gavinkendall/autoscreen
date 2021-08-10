@@ -43,9 +43,9 @@ namespace AutoScreenCapture
         public TriggerActionType ActionType { get; set; }
 
         /// <summary>
-        /// Determines if the trigger is active or inactive.
+        /// Determines if the trigger is enabled or disabled.
         /// </summary>
-        public bool Active { get; set; }
+        public bool Enable { get; set; }
 
         /// <summary>
         /// The date value based on the Date/Time condition.

@@ -102,7 +102,7 @@ namespace AutoScreenCapture
                 textBoxMacro3Macro.Text = MacroTagObject.TimeRangeMacro3Macro;
                 textBoxMacro4Macro.Text = MacroTagObject.TimeRangeMacro4Macro;
 
-                checkBoxActive.Checked = MacroTagObject.Active;
+                checkBoxActive.Checked = MacroTagObject.Enable;
 
                 textBoxNotes.Text = MacroTagObject.Notes;
             }
@@ -114,7 +114,7 @@ namespace AutoScreenCapture
 
                 textBoxName.Text = "%macrotag" + (MacroTagCollection.Count + 1) + "%";
 
-                textBoxDescription.Text = "Please provide a brief summary for the purpose of this macro tag";
+                textBoxDescription.Text = string.Empty;
 
                 comboBoxType.SelectedIndex = 0;
                 textBoxDateTimeFormatValue.Text = tag.DateTimeFormatValue;
@@ -235,7 +235,7 @@ namespace AutoScreenCapture
                         MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4Start = dateTimePickerMacro4Start.Value;
                         MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4End = dateTimePickerMacro4End.Value;
                         MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4Macro = textBoxMacro4Macro.Text;
-                        MacroTagCollection.Get(MacroTagObject).Active = checkBoxActive.Checked;
+                        MacroTagCollection.Get(MacroTagObject).Enable = checkBoxActive.Checked;
                         MacroTagCollection.Get(MacroTagObject).Notes = textBoxNotes.Text;
 
                         Okay();
@@ -302,7 +302,7 @@ namespace AutoScreenCapture
             {
                 if (!MacroTagObject.Description.Equals(textBoxDescription.Text) ||
                     !MacroTagObject.Notes.Equals(textBoxNotes.Text) ||
-                    MacroTagObject.Active != checkBoxActive.Checked ||
+                    MacroTagObject.Enable != checkBoxActive.Checked ||
                     (int)MacroTagObject.Type != comboBoxType.SelectedIndex)
                 {
                     changed = true;

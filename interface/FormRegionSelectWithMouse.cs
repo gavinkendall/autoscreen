@@ -173,6 +173,8 @@ namespace AutoScreenCapture
             {
                 SaveToClipboard(bitmap);
 
+                bitmap.Dispose();
+
                 outputX = _selectX;
                 outputY = _selectY;
                 outputWidth = _selectWidth;
