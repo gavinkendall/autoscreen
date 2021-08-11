@@ -218,52 +218,52 @@ namespace AutoScreenCapture
                     timerScreenCapture.Start();
                     break;
 
-                case TriggerActionType.ActivateScreen:
+                case TriggerActionType.EnableScreen:
                     _formScreen.ScreenCollection.GetByName(trigger.Value).Enable = true;
                     BuildScreensModule();
                     break;
 
-                case TriggerActionType.DeactivateScreen:
+                case TriggerActionType.DisableScreen:
                     _formScreen.ScreenCollection.GetByName(trigger.Value).Enable = false;
                     BuildScreensModule();
                     break;
 
-                case TriggerActionType.ActivateRegion:
+                case TriggerActionType.EnableRegion:
                     _formRegion.RegionCollection.GetByName(trigger.Value).Enable = true;
                     BuildRegionsModule();
                     break;
 
-                case TriggerActionType.DeactivateRegion:
+                case TriggerActionType.DisableRegion:
                     _formRegion.RegionCollection.GetByName(trigger.Value).Enable = false;
                     BuildRegionsModule();
                     break;
 
-                case TriggerActionType.ActivateSchedule:
+                case TriggerActionType.EnableSchedule:
                     _formSchedule.ScheduleCollection.GetByName(trigger.Value).Enable = true;
                     BuildSchedulesModule();
                     break;
 
-                case TriggerActionType.DeactivateSchedule:
+                case TriggerActionType.DisableSchedule:
                     _formSchedule.ScheduleCollection.GetByName(trigger.Value).Enable = false;
                     BuildSchedulesModule();
                     break;
 
-                case TriggerActionType.ActivateTag:
+                case TriggerActionType.EnableMacroTag:
                     _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Enable = true;
                     BuildMacroTagsModule();
                     break;
 
-                case TriggerActionType.DeactivateTag:
+                case TriggerActionType.DisableMacroTag:
                     _formMacroTag.MacroTagCollection.GetByName(trigger.Value).Enable = false;
                     BuildMacroTagsModule();
                     break;
 
-                case TriggerActionType.ActivateTrigger:
+                case TriggerActionType.EnableTrigger:
                     _formTrigger.TriggerCollection.GetByName(trigger.Value).Enable = true;
                     BuildTriggersModule();
                     break;
 
-                case TriggerActionType.DeactivateTrigger:
+                case TriggerActionType.DisableTrigger:
                     _formTrigger.TriggerCollection.GetByName(trigger.Value).Enable = false;
                     BuildTriggersModule();
                     break;

@@ -218,20 +218,20 @@ namespace AutoScreenCapture
                 _formSetup.checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
                 _formSetup.textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
 
-                if (_formSetup.checkBoxActiveWindowTitle.Checked)
-                {
-                    _formSetup.textBoxActiveWindowTitle.Enabled = true;
-                    _formSetup.radioButtonCaseSensitiveMatch.Enabled = true;
-                    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = true;
-                    _formSetup.radioButtonRegularExpressionMatch.Enabled = true;
-                }
-                else
-                {
-                    _formSetup.textBoxActiveWindowTitle.Enabled = false;
-                    _formSetup.radioButtonCaseSensitiveMatch.Enabled = false;
-                    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = false;
-                    _formSetup.radioButtonRegularExpressionMatch.Enabled = false;
-                }
+                //if (_formSetup.checkBoxActiveWindowTitle.Checked)
+                //{
+                //    _formSetup.textBoxActiveWindowTitle.Enabled = true;
+                //    _formSetup.radioButtonCaseSensitiveMatch.Enabled = true;
+                //    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = true;
+                //    _formSetup.radioButtonRegularExpressionMatch.Enabled = true;
+                //}
+                //else
+                //{
+                //    _formSetup.textBoxActiveWindowTitle.Enabled = false;
+                //    _formSetup.radioButtonCaseSensitiveMatch.Enabled = false;
+                //    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = false;
+                //    _formSetup.radioButtonRegularExpressionMatch.Enabled = false;
+                //}
 
                 _formSetup.radioButtonCaseSensitiveMatch.Checked = false;
                 _formSetup.radioButtonCaseInsensitiveMatch.Checked = false;

@@ -332,6 +332,7 @@ namespace AutoScreenCapture
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                         -1,
                         -1,
+                        0,
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,

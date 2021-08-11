@@ -360,19 +360,19 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EmailScreenshot, "Email Screenshot (SMTP)").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetScreenCaptureInterval, "Set Screen Capture Interval").Description);
 
-            // All the actions involving activating Screens, Regions, Schedules, Tags, and Triggers.
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateScreen, "Activate Screen").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateRegion, "Activate Region").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateSchedule, "Activate Schedule").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTag, "Activate Macro Tag").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ActivateTrigger, "Activate Trigger").Description);
+            // All the actions involving enabling Screens, Regions, Schedules, Tags, and Triggers.
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableScreen, "Enable Screen").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableRegion, "Enable Region").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableSchedule, "Enable Schedule").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableMacroTag, "Enable Macro Tag").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.EnableTrigger, "Enable Trigger").Description);
 
-            // All the actions involving deactivating Screens, Regions, Schedules, Tags, and Triggers.
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateScreen, "Deactivate Screen").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateRegion, "Deactivate Region").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateSchedule, "Deactivate Schedule").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTag, "Deactivate Macro Tag").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeactivateTrigger, "Deactivate Trigger").Description);
+            // All the actions involving disabling Screens, Regions, Schedules, Tags, and Triggers.
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableScreen, "Disable Screen").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableRegion, "Disable Region").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableSchedule, "Disable Schedule").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableMacroTag, "Disable Macro Tag").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableTrigger, "Disable Trigger").Description);
 
             // More actions.
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshots, "Delete Screenshots").Description);
@@ -399,8 +399,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
-                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateScreen)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EnableScreen ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DisableScreen)
             {
                 foreach (Screen screen in ScreenCollection)
                 {
@@ -411,8 +411,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
-                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateRegion)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EnableRegion ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DisableRegion)
             {
                 foreach (Region region in RegionCollection)
                 {
@@ -423,8 +423,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
-                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateSchedule)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EnableSchedule ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DisableSchedule)
             {
                 foreach (Schedule schedule in ScheduleCollection)
                 {
@@ -435,8 +435,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
-                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EnableMacroTag ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DisableMacroTag)
             {
                 foreach (MacroTag tag in TagCollection)
                 {
@@ -447,8 +447,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTrigger ||
-                listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTrigger)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EnableTrigger ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.DisableTrigger)
             {
                 foreach (Trigger trigger in TriggerCollection)
                 {
@@ -637,16 +637,16 @@ namespace AutoScreenCapture
 
                     // Controls on this page.
                     if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTag ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateTrigger ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateScreen ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateRegion ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateSchedule ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTrigger)
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.EnableScreen ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.EnableRegion ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.EnableSchedule ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.EnableMacroTag ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.EnableTrigger ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DisableScreen ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DisableRegion ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DisableSchedule ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DisableMacroTag ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.DisableTrigger)
                     {
                         listBoxModuleItemList.Visible = true;
                     }
@@ -831,54 +831,54 @@ namespace AutoScreenCapture
                     textBoxHelp.Text = "Sets the timer's screen capture interval.";
                     break;
 
-                // Activate Screen
+                // Enable Screen
                 case 8:
-                    textBoxHelp.Text = "Activates a specified Screen.";
+                    textBoxHelp.Text = "Enable a specified Screen.";
                     break;
 
-                // Activate Region
+                // Enable Region
                 case 9:
-                    textBoxHelp.Text = "Activates a specified Region.";
+                    textBoxHelp.Text = "Enable a specified Region.";
                     break;
 
-                // Activate Schedule
+                // Enable Schedule
                 case 10:
-                    textBoxHelp.Text = "Activates a specified Schedule.";
+                    textBoxHelp.Text = "Enable a specified Schedule.";
                     break;
 
-                // Activate Macro Tag
+                // Enable Macro Tag
                 case 11:
-                    textBoxHelp.Text = "Activate a specified Macro Tag.";
+                    textBoxHelp.Text = "Enable a specified Macro Tag.";
                     break;
 
-                // Activate Trigger
+                // Enable Trigger
                 case 12:
-                    textBoxHelp.Text = "Activate a specified Trigger.";
+                    textBoxHelp.Text = "Enable a specified Trigger.";
                     break;
 
-                // Deactivate Screen
+                // Disable Screen
                 case 13:
-                    textBoxHelp.Text = "Deactivate a specified Screen.";
+                    textBoxHelp.Text = "Disable a specified Screen.";
                     break;
 
-                // Deactivate Region
+                // Disable Region
                 case 14:
-                    textBoxHelp.Text = "Deactivate a specified Region.";
+                    textBoxHelp.Text = "Disable a specified Region.";
                     break;
 
-                // Deactivate Schedule
+                // Disable Schedule
                 case 15:
-                    textBoxHelp.Text = "Deactivate a specified Schedule.";
+                    textBoxHelp.Text = "Disable a specified Schedule.";
                     break;
 
-                // Deactivate Macro Tag
+                // Disable Macro Tag
                 case 16:
-                    textBoxHelp.Text = "Deactivate a specified Macro Tag.";
+                    textBoxHelp.Text = "Disable a specified Macro Tag.";
                     break;
 
-                // Deactivate Trigger
+                // Disable Trigger
                 case 17:
-                    textBoxHelp.Text = "Deactivate a specified Trigger.";
+                    textBoxHelp.Text = "Disable a specified Trigger.";
                     break;
 
                 // Delete Screenshots

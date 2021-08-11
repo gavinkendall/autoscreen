@@ -113,7 +113,7 @@ namespace AutoScreenCapture
             RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
 
             // Test to see if we can get images of the screen before continuing.
-            if (_screenCapture.GetScreenImages(0, 0, autoAdapt: false, 0, 0, 0, 0, false, out _))
+            if (_screenCapture.GetScreenImages(0, 0, 0, autoAdapt: false, 0, 0, 0, 0, false, out _))
             {
                 _macroParser.screenCapture = _screenCapture;
 
@@ -456,7 +456,7 @@ namespace AutoScreenCapture
             int width = _formRegionSelectWithMouse.outputWidth - 2;
             int height = _formRegionSelectWithMouse.outputHeight - 2;
 
-            if (_screenCapture.GetScreenImages(-1, -1, autoAdapt: false, x, y, width, height, mouse: false, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(-1, -1, 0, autoAdapt: false, x, y, width, height, mouse: false, out Bitmap bitmap))
             {
                 return bitmap;
             }

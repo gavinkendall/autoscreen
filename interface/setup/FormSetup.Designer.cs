@@ -70,6 +70,7 @@
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.tabPageKeyboardShortcuts = new System.Windows.Forms.TabPage();
+            this.checkBoxUseKeyboardShortcuts = new System.Windows.Forms.CheckBox();
             this.tabControlKeyboardShortcuts = new System.Windows.Forms.TabControl();
             this.tabPageScreenCapture = new System.Windows.Forms.TabPage();
             this.labelStopScreenCapture = new System.Windows.Forms.Label();
@@ -105,7 +106,6 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.checkBoxUseKeyboardShortcuts = new System.Windows.Forms.CheckBox();
             this.tabControlSetup.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
@@ -409,7 +409,6 @@
             // 
             // textBoxActiveWindowTitle
             // 
-            this.textBoxActiveWindowTitle.Enabled = false;
             this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 42);
             this.textBoxActiveWindowTitle.MaxLength = 500;
             this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
@@ -595,6 +594,16 @@
             this.tabPageKeyboardShortcuts.Text = "Keyboard Shortcuts";
             this.tabPageKeyboardShortcuts.UseVisualStyleBackColor = true;
             // 
+            // checkBoxUseKeyboardShortcuts
+            // 
+            this.checkBoxUseKeyboardShortcuts.AutoSize = true;
+            this.checkBoxUseKeyboardShortcuts.Location = new System.Drawing.Point(532, 232);
+            this.checkBoxUseKeyboardShortcuts.Name = "checkBoxUseKeyboardShortcuts";
+            this.checkBoxUseKeyboardShortcuts.Size = new System.Drawing.Size(138, 17);
+            this.checkBoxUseKeyboardShortcuts.TabIndex = 1;
+            this.checkBoxUseKeyboardShortcuts.Text = "Use keyboard shortcuts";
+            this.checkBoxUseKeyboardShortcuts.UseVisualStyleBackColor = true;
+            // 
             // tabControlKeyboardShortcuts
             // 
             this.tabControlKeyboardShortcuts.Controls.Add(this.tabPageScreenCapture);
@@ -711,7 +720,7 @@
             this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1);
             this.tabPageRegionSelect.Location = new System.Drawing.Point(4, 22);
             this.tabPageRegionSelect.Name = "tabPageRegionSelect";
-            this.tabPageRegionSelect.Size = new System.Drawing.Size(663, 183);
+            this.tabPageRegionSelect.Size = new System.Drawing.Size(663, 197);
             this.tabPageRegionSelect.TabIndex = 2;
             this.tabPageRegionSelect.Text = "Region Select";
             this.tabPageRegionSelect.UseVisualStyleBackColor = true;
@@ -834,7 +843,7 @@
             this.tabPageCaptureNow.Location = new System.Drawing.Point(4, 22);
             this.tabPageCaptureNow.Name = "tabPageCaptureNow";
             this.tabPageCaptureNow.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCaptureNow.Size = new System.Drawing.Size(663, 183);
+            this.tabPageCaptureNow.Size = new System.Drawing.Size(663, 197);
             this.tabPageCaptureNow.TabIndex = 1;
             this.tabPageCaptureNow.Text = "Capture Now";
             this.tabPageCaptureNow.UseVisualStyleBackColor = true;
@@ -946,16 +955,6 @@
             this.labelHelp.Size = new System.Drawing.Size(685, 17);
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // checkBoxUseKeyboardShortcuts
-            // 
-            this.checkBoxUseKeyboardShortcuts.AutoSize = true;
-            this.checkBoxUseKeyboardShortcuts.Location = new System.Drawing.Point(532, 232);
-            this.checkBoxUseKeyboardShortcuts.Name = "checkBoxUseKeyboardShortcuts";
-            this.checkBoxUseKeyboardShortcuts.Size = new System.Drawing.Size(138, 17);
-            this.checkBoxUseKeyboardShortcuts.TabIndex = 1;
-            this.checkBoxUseKeyboardShortcuts.Text = "Use keyboard shortcuts";
-            this.checkBoxUseKeyboardShortcuts.UseVisualStyleBackColor = true;
             // 
             // FormSetup
             // 

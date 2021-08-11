@@ -103,6 +103,11 @@ namespace AutoScreenCapture
         public string DeviceName { get; set; }
 
         /// <summary>
+        /// The capture method.
+        /// </summary>
+        public int CaptureMethod { get; set; }
+
+        /// <summary>
         /// "Automatically adapt to display setup".
         /// The position and size will automatically adjust based on your display setup.
         /// Each screen that has AutoAdapt enabled will be part of the AutoAdapt group and

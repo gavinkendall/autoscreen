@@ -185,7 +185,7 @@ namespace AutoScreenCapture
                     {
                         if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt) // Active Window
                         {
-                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, autoAdapt: false, 0, 0, 0, 0, false, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, autoAdapt: false, 0, 0, 0, 0, false, out Bitmap bitmap))
                             {
                                 if (!SaveScreenshot(bitmap, screen))
                                 {
@@ -198,7 +198,7 @@ namespace AutoScreenCapture
                             // Check to see if we need to get the position and size of whatever available screen is being used at this time.
                             AutoAdapt(screen, out int x, out int y, out int width, out int height);
 
-                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.AutoAdapt,
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, screen.AutoAdapt,
                                 x,
                                 y,
                                 width,

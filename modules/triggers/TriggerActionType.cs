@@ -66,54 +66,54 @@ namespace AutoScreenCapture
         SetScreenCaptureInterval = 7,
 
         /// <summary>
-        /// Activate a chosen screen.
+        /// Enable a chosen screen.
         /// </summary>
-        ActivateScreen = 8,
+        EnableScreen = 8,
 
         /// <summary>
-        /// Activate a chosen region.
+        /// Enable a chosen region.
         /// </summary>
-        ActivateRegion = 9,
+        EnableRegion = 9,
 
         /// <summary>
-        /// Activate a chosen schedule.
+        /// Enable a chosen schedule.
         /// </summary>
-        ActivateSchedule = 10,
+        EnableSchedule = 10,
 
         /// <summary>
-        /// Activate a chosen tag.
+        /// Enable a chosen macro tag.
         /// </summary>
-        ActivateTag = 11,
+        EnableMacroTag = 11,
 
         /// <summary>
-        /// Activate a chosen trigger.
+        /// Enable a chosen trigger.
         /// </summary>
-        ActivateTrigger = 12,
+        EnableTrigger = 12,
 
         /// <summary>
-        /// Deactivate a chosen screen.
+        /// Disable a chosen screen.
         /// </summary>
-        DeactivateScreen = 13,
+        DisableScreen = 13,
 
         /// <summary>
-        /// Deactivate a chosen region.
+        /// Disable a chosen region.
         /// </summary>
-        DeactivateRegion = 14,
+        DisableRegion = 14,
 
         /// <summary>
-        /// Deactivate a chosen schedule.
+        /// Disable a chosen schedule.
         /// </summary>
-        DeactivateSchedule = 15,
+        DisableSchedule = 15,
 
         /// <summary>
-        /// Deactivate a chosen tag.
+        /// Disable a chosen macro tag.
         /// </summary>
-        DeactivateTag = 16,
+        DisableMacroTag = 16,
 
         /// <summary>
-        /// Deactivate a chosen trigger.
+        /// Disable a chosen trigger.
         /// </summary>
-        DeactivateTrigger = 17,
+        DisableTrigger = 17,
 
         /// <summary>
         /// Delete screenshots.

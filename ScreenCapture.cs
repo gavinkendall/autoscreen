@@ -56,8 +56,29 @@ namespace AutoScreenCapture
             public int y;
         }
 
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
+
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteDC(IntPtr hDC);
+
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteObject(IntPtr hObject);
+
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetDesktopWindow();
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetWindowDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         private static extern void GetWindowRect(IntPtr hWnd, out Rectangle rect);
@@ -79,6 +100,12 @@ namespace AutoScreenCapture
 
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("gdi32.dll")]
+        private static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, CopyPixelOperation dwRop);
+
+        [DllImport("user32.dll")]
+        private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
         private static WINDOWPLACEMENT GetPlacement(IntPtr hwnd)
         {
@@ -439,14 +466,17 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="component">The component of the source.</param>
+        /// <param name="captureMethod">The screen capture method to use.</param>
         /// <param name="x">The X value of the bitmap.</param>
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
         /// <param name="height">The Height value of the bitmap.</param>
         /// <param name="mouse">Determines if the mouse pointer should be included in the bitmap.</param>
         /// <returns>A bitmap image representing what we captured.</returns>
-        public Bitmap GetScreenBitmap(int source, int component, int x, int y, int width, int height, bool mouse)
+        public Bitmap GetScreenBitmap(int source, int component, int captureMethod, int x, int y, int width, int height, bool mouse)
         {
+            Bitmap bmp = null;
+
             if (width > 0 && height > 0)
             {
                 if (source > 0 && component > -1)
@@ -463,13 +493,44 @@ namespace AutoScreenCapture
                     }
                 }
 
-                Size blockRegionSize = new Size(width, height);
-
-                Bitmap bmp = new Bitmap(width, height);
-
-                using (Graphics g = Graphics.FromImage(bmp))
+                if (captureMethod == 0) // System.Drawing.Graphics.CopyFromScreen (.NET)
                 {
-                    g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+                    Size blockRegionSize = new Size(width, height);
+
+                    bmp = new Bitmap(width, height);
+
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                        if (mouse)
+                        {
+                            CURSORINFO pci;
+                            pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                            if (GetCursorInfo(out pci))
+                            {
+                                if (pci.flags == CURSOR_SHOWING)
+                                {
+                                    var hdc = g.GetHdc();
+                                    DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                                    g.ReleaseHdc();
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (captureMethod == 1) // BitBlt (gdi32.dll)
+                {
+                    IntPtr handle = GetDesktopWindow();
+                    GetWindowRect(handle, out Rectangle rect);
+
+                    IntPtr hdcSrc = GetWindowDC(handle);
+                    IntPtr hdcDest = CreateCompatibleDC(hdcSrc);
+                    IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
+                    IntPtr hOld = SelectObject(hdcDest, hBitmap);
+
+                    BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
 
                     if (mouse)
                     {
@@ -480,12 +541,18 @@ namespace AutoScreenCapture
                         {
                             if (pci.flags == CURSOR_SHOWING)
                             {
-                                var hdc = g.GetHdc();
-                                DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                                g.ReleaseHdc();
+                                DrawIconEx(hdcDest, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
                             }
                         }
                     }
+
+                    SelectObject(hdcDest, hOld);
+                    DeleteDC(hdcDest);
+                    ReleaseDC(handle, hdcSrc);
+
+                    bmp = Image.FromHbitmap(hBitmap);
+
+                    DeleteObject(hBitmap);
                 }
 
                 CaptureError = false;
@@ -606,6 +673,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="source">The source index.</param>
         /// <param name="component">The component index.</param>
+        /// <param name="captureMethod">The screen capture method to use.</param>
         /// <param name="autoAdapt">Determines if this is an AutoAdapt screen.</param>
         /// <param name="x">The X value of the bitmap.</param>
         /// <param name="y">The Y value of the bitmap.</param>
@@ -614,7 +682,7 @@ namespace AutoScreenCapture
         /// <param name="mouse">Determines if we include the mouse pointer in the captured bitmap.</param>
         /// <param name="bitmap">The bitmap to operate on.</param>
         /// <returns>A boolean to indicate if we were successful in getting a bitmap.</returns>
-        public bool GetScreenImages(int source, int component, bool autoAdapt, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
+        public bool GetScreenImages(int source, int component, int captureMethod, bool autoAdapt, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
         {
             try
             {
@@ -622,7 +690,7 @@ namespace AutoScreenCapture
 
                 bitmap = source == 0 && component == 0 && !autoAdapt
                     ? GetActiveWindowBitmap()
-                    : GetScreenBitmap(source, component, x, y, width, height, mouse);
+                    : GetScreenBitmap(source, component, captureMethod, x, y, width, height, mouse);
 
                 if (bitmap != null)
                 {

@@ -66,11 +66,6 @@ namespace AutoScreenCapture
         public MacroTagCollection TagCollection { get; set; }
 
         /// <summary>
-        /// A dictionary of available screens by device resolution.
-        /// </summary>
-        public Dictionary<int, ScreenCapture.DeviceOptions> ScreenDictionary;
-
-        /// <summary>
         /// Access to screen capture methods.
         /// </summary>
         public ScreenCapture ScreenCapture { get; set; }
@@ -89,7 +84,6 @@ namespace AutoScreenCapture
 
             ScreenCollection = new ScreenCollection();
             RegionCollection = new RegionCollection();
-            ScreenDictionary = new Dictionary<int, ScreenCapture.DeviceOptions>();
         }
 
         private void FormScreen_Load(object sender, EventArgs e)
@@ -132,14 +126,12 @@ namespace AutoScreenCapture
 
             comboBoxScreenSource.Items.Clear();
             comboBoxScreenSource.Items.Add("Auto Screen Capture");
-            comboBoxScreenSource.Items.Add("Graphics Card");
-            comboBoxScreenSource.Items.Add("Operating System");
+            comboBoxScreenSource.Items.Add("EnumDisplaySettings (user32.dll)");
+            comboBoxScreenSource.Items.Add("System.Windows.Forms.Screen (.NET)");
 
-            for (int i = 1; i <= ScreenDictionary.Count; i++)
-            {
-                ScreenCapture.DeviceOptions deviceOptions = ScreenDictionary[i];
-                comboBoxScreenComponent.Items.Add("Screen " + i + " (" + deviceOptions.width + " x " + deviceOptions.height + ")");
-            }
+            comboBoxScreenCaptureMethod.Items.Clear();
+            comboBoxScreenCaptureMethod.Items.Add("System.Drawing.Graphics.CopyFromScreen (.NET)");
+            comboBoxScreenCaptureMethod.Items.Add("BitBlt (gdi32.dll)");
 
             if (ScreenObject != null)
             {
@@ -149,6 +141,7 @@ namespace AutoScreenCapture
                 textBoxFolder.Text = _fileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);
                 textBoxMacro.Text = ScreenObject.Macro;
                 comboBoxScreenSource.SelectedIndex = ScreenObject.Source;
+                comboBoxScreenCaptureMethod.SelectedIndex = ScreenObject.CaptureMethod;
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
@@ -170,6 +163,7 @@ namespace AutoScreenCapture
                 textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = _macroParser.DefaultMacro;
                 comboBoxScreenSource.SelectedIndex = 0;
+                comboBoxScreenCaptureMethod.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
@@ -244,7 +238,8 @@ namespace AutoScreenCapture
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
                         Source = comboBoxScreenSource.SelectedIndex,
-                        AutoAdapt = checkBoxAutoAdapt.Checked
+                        AutoAdapt = checkBoxAutoAdapt.Checked,
+                        CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex
                     });
 
                     Okay();
@@ -291,6 +286,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Height = (int)numericUpDownHeight.Value;
                         ScreenCollection.Get(ScreenObject).Source = comboBoxScreenSource.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).AutoAdapt = checkBoxAutoAdapt.Checked;
+                        ScreenCollection.Get(ScreenObject).CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex;
 
                         Okay();
                     }
@@ -463,6 +459,7 @@ namespace AutoScreenCapture
                         pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                             comboBoxScreenSource.SelectedIndex,
                             comboBoxScreenComponent.SelectedIndex,
+                            comboBoxScreenCaptureMethod.SelectedIndex,
                             x,
                             y,
                             width,
@@ -482,6 +479,7 @@ namespace AutoScreenCapture
                             pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                                 comboBoxScreenSource.SelectedIndex,
                                 comboBoxScreenComponent.SelectedIndex,
+                                comboBoxScreenCaptureMethod.SelectedIndex,
                                 (int)numericUpDownX.Value,
                                 (int)numericUpDownY.Value,
                                 (int)numericUpDownWidth.Value,
@@ -620,7 +618,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            // Graphics Card
+            // EnumDisplaySettings (user32.dll)
             if (comboBoxScreenSource.SelectedIndex == 1)
             {
                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
@@ -631,7 +629,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            // Operating System
+            // System.Windows.Forms.Screen (.NET)
             if (comboBoxScreenSource.SelectedIndex == 2)
             {
                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)

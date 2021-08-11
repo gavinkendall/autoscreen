@@ -46,6 +46,8 @@
             this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.groupBoxImageAttributes = new System.Windows.Forms.GroupBox();
             this.groupBoxDisplayProperties = new System.Windows.Forms.GroupBox();
+            this.comboBoxScreenCaptureMethod = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.checkBoxAutoAdapt = new System.Windows.Forms.CheckBox();
             this.labelPositionAndSize = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
@@ -253,6 +255,8 @@
             // 
             // groupBoxDisplayProperties
             // 
+            this.groupBoxDisplayProperties.Controls.Add(this.comboBoxScreenCaptureMethod);
+            this.groupBoxDisplayProperties.Controls.Add(this.label1);
             this.groupBoxDisplayProperties.Controls.Add(this.checkBoxAutoAdapt);
             this.groupBoxDisplayProperties.Controls.Add(this.labelPositionAndSize);
             this.groupBoxDisplayProperties.Controls.Add(this.labelWidth);
@@ -273,6 +277,26 @@
             this.groupBoxDisplayProperties.TabIndex = 4;
             this.groupBoxDisplayProperties.TabStop = false;
             this.groupBoxDisplayProperties.Text = "Display Properties";
+            // 
+            // comboBoxScreenCaptureMethod
+            // 
+            this.comboBoxScreenCaptureMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxScreenCaptureMethod.DropDownWidth = 250;
+            this.comboBoxScreenCaptureMethod.FormattingEnabled = true;
+            this.comboBoxScreenCaptureMethod.Location = new System.Drawing.Point(98, 79);
+            this.comboBoxScreenCaptureMethod.Name = "comboBoxScreenCaptureMethod";
+            this.comboBoxScreenCaptureMethod.Size = new System.Drawing.Size(101, 21);
+            this.comboBoxScreenCaptureMethod.TabIndex = 9;
+            this.comboBoxScreenCaptureMethod.SelectedIndexChanged += new System.EventHandler(this.updatePositionAndSize);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 82);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Capture Method:";
             // 
             // checkBoxAutoAdapt
             // 
@@ -369,7 +393,7 @@
             // labelScreenComponent
             // 
             this.labelScreenComponent.AutoSize = true;
-            this.labelScreenComponent.Location = new System.Drawing.Point(6, 63);
+            this.labelScreenComponent.Location = new System.Drawing.Point(6, 55);
             this.labelScreenComponent.Name = "labelScreenComponent";
             this.labelScreenComponent.Size = new System.Drawing.Size(64, 13);
             this.labelScreenComponent.TabIndex = 7;
@@ -396,7 +420,7 @@
             // labelScreenSource
             // 
             this.labelScreenSource.AutoSize = true;
-            this.labelScreenSource.Location = new System.Drawing.Point(6, 19);
+            this.labelScreenSource.Location = new System.Drawing.Point(6, 28);
             this.labelScreenSource.Name = "labelScreenSource";
             this.labelScreenSource.Size = new System.Drawing.Size(44, 13);
             this.labelScreenSource.TabIndex = 5;
@@ -423,20 +447,22 @@
             // comboBoxScreenSource
             // 
             this.comboBoxScreenSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxScreenSource.DropDownWidth = 250;
             this.comboBoxScreenSource.FormattingEnabled = true;
-            this.comboBoxScreenSource.Location = new System.Drawing.Point(6, 35);
+            this.comboBoxScreenSource.Location = new System.Drawing.Point(98, 25);
             this.comboBoxScreenSource.Name = "comboBoxScreenSource";
-            this.comboBoxScreenSource.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxScreenSource.Size = new System.Drawing.Size(101, 21);
             this.comboBoxScreenSource.TabIndex = 6;
             this.comboBoxScreenSource.SelectedIndexChanged += new System.EventHandler(this.comboBoxScreenSource_SelectedIndexChanged);
             // 
             // comboBoxScreenComponent
             // 
             this.comboBoxScreenComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxScreenComponent.DropDownWidth = 250;
             this.comboBoxScreenComponent.FormattingEnabled = true;
-            this.comboBoxScreenComponent.Location = new System.Drawing.Point(6, 79);
+            this.comboBoxScreenComponent.Location = new System.Drawing.Point(98, 52);
             this.comboBoxScreenComponent.Name = "comboBoxScreenComponent";
-            this.comboBoxScreenComponent.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxScreenComponent.Size = new System.Drawing.Size(101, 21);
             this.comboBoxScreenComponent.TabIndex = 8;
             this.comboBoxScreenComponent.SelectedIndexChanged += new System.EventHandler(this.updatePositionAndSize);
             // 
@@ -590,5 +616,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownY;
         private System.Windows.Forms.Label labelPositionAndSize;
         private System.Windows.Forms.CheckBox checkBoxAutoAdapt;
+        private System.Windows.Forms.ComboBox comboBoxScreenCaptureMethod;
+        private System.Windows.Forms.Label label1;
     }
 }
