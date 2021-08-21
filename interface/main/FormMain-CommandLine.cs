@@ -172,6 +172,37 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_SAVE_SCREENSHOT_REFS_OFF = "^-saveScreenshotRefs=off$";
 
         /// <summary>
+        /// Regex for parsing the -show command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_SHOW = "^-show$";
+
+        /// <summary>
+        /// Regex for parsing the -hide command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_HIDE = "^-hide$";
+
+        /// <summary>
+        /// Parse commands issued externally via the command line.
+        /// </summary>
+        private void ParseCommandLineArguments()
+        {
+            // Parse commands issued externally via the command line.
+            if (_fileSystem.FileExists(_fileSystem.CommandFile))
+            {
+                string[] args = _fileSystem.ReadFromFile(_fileSystem.CommandFile);
+
+                if (args.Length > 0)
+                {
+                    ParseCommandLineArguments(args);
+                }
+            }
+            else
+            {
+                _fileSystem.CreateFile(_fileSystem.CommandFile);
+            }
+        }
+
+        /// <summary>
         /// Parses the command line and processes the commands the user has chosen from the command line.
         /// </summary>
         /// <param name="args"></param>
@@ -636,6 +667,66 @@ namespace AutoScreenCapture
                         _config.Settings.User.SetValueByKey("SaveScreenshotRefs", false);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+                    }
+
+                    // -show
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_SHOW))
+                    {
+                        _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", true);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        notifyIcon.Visible = true;
+
+                        ShowInterface();
+
+                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                        {
+                            if (trigger.ActionType == TriggerActionType.ShowInterface)
+                            {
+                                trigger.Active = true;
+                            }
+                        }
+
+                        BuildTriggersModule();
+
+                        if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+                    }
+
+                    // -hide
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
+                    {
+                        _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        notifyIcon.Visible = false;
+
+                        HideInterface();
+
+                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                        {
+                            if (trigger.ActionType == TriggerActionType.ShowInterface)
+                            {
+                                trigger.Active = false;
+                            }
+                        }
+
+                        BuildTriggersModule();
+
+                        if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
                         {
                             _screenCapture.ApplicationError = true;
                         }

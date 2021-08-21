@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.6.1 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.2 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -128,14 +128,13 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.6.1
+    <value>2.3.6.2
 
-There was a bug with Keyboard Shortcuts that caused the application to crash. It's been fixed.
-
-Also, by default, closing the application's main interface window will now hide the interface and keep the application running in the system tray so if you need to exit simply select the Exit option from the system tray icon menu.</value>
+New command line option -show for showing the interface, enabling triggers with the ShowInterface action, and showing the system tray icon. New command line option -hide for hiding the interface, disabling triggers with the ShowInterface action, and hiding the system tray icon. The application will no longer appear in Alt+Tab when interface is hidden.</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.2    New command line options -show and -hide. The application will no longer appear in Alt+Tab when interface is hidden.
 2.3.6.1    Fix to Keyboard Shortcuts. Changed default trigger for closing window so interface will now hide on closing window instead of exiting to keep application running in system tray until Exit is selected from system tray icon menu.
 2.3.6.0    Fix to SMTP.
 2.3.4.9    Region Select Options and Region Select / Clipboard / Floating Screenshot implemented.

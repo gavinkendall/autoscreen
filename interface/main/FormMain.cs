@@ -32,6 +32,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMain : Form
     {
+        private bool _loaded = false;
+
         // The "About Auto Screen Capture" form.
         private FormAbout _formAbout;
 
@@ -168,6 +170,11 @@ namespace AutoScreenCapture
 
             HelpMessage(welcome);
 
+            ParseCommandLineArguments();
+
+            notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
+            _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
+
             // Start the scheduled capture timer.
             timerScheduledCapture.Interval = 1000;
             timerScheduledCapture.Enabled = true;
@@ -183,6 +190,29 @@ namespace AutoScreenCapture
 
             _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
             RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
+        }
+
+        /// <summary>
+        /// Set opacity to the appropriate value and taskbar appearance based on visibility.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            if (_loaded && Visible)
+            {
+                Show();
+                Opacity = 100;
+                ShowInTaskbar = true;
+                Focus();
+            }
+            else
+            {
+                Hide();
+                Opacity = 0;
+                ShowInTaskbar = false;
+            }
+
+            base.OnVisibleChanged(e);
         }
 
         /// <summary>
@@ -353,8 +383,8 @@ namespace AutoScreenCapture
 
                     PopulateLabelList();
 
-                    Opacity = 100;
-                    ShowInTaskbar = true;
+                    _loaded = true;
+                    Visible = true;
 
                     // If the window is mimimized then show it when the user wants to open the window.
                     if (WindowState == FormWindowState.Minimized)
@@ -382,8 +412,7 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Hiding interface");
 
-                Opacity = 0;
-                ShowInTaskbar = false;
+                Visible = false;
 
                 _log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);

@@ -230,6 +230,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.8")); // Signed assembly in attempt to satisfy anti-virus software.Fixed weird Exit bug.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.4.9")); // Region Select Options and Region Select / Clipboard / Floating Screenshot implemented.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.0")); // Fix to SMTP.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.1")); // Fix to Keyboard Shortcuts. Changed default trigger for closing window so interface will now hide on closing window instead of exiting to keep application running in system tray until Exit is selected from system tray icon menu.
 
             Application = new SettingCollection()
             {
