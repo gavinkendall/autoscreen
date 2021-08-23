@@ -206,9 +206,6 @@ namespace AutoScreenCapture
                 _formSetup.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value);
                 _log.WriteDebugMessage("TakeInitialScreenshot = " + _formSetup.checkBoxInitialScreenshot.Checked);
 
-                notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
-                _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
-
                 _formSetup.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
                 _log.WriteDebugMessage("ScreenshotLabel = " + _formSetup.comboBoxScreenshotLabel.Text);
 

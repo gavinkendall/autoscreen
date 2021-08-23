@@ -45,20 +45,7 @@ namespace AutoScreenCapture
                     HelpTip.Message = string.Empty;
                 }
 
-                // Parse commands issued externally via the command line.
-                if (_fileSystem.FileExists(_fileSystem.CommandFile))
-                {
-                    string[] args = _fileSystem.ReadFromFile(_fileSystem.CommandFile);
-
-                    if (args.Length > 0)
-                    {
-                        ParseCommandLineArguments(args);
-                    }
-                }
-                else
-                {
-                    _fileSystem.CreateFile(_fileSystem.CommandFile);
-                }
+                ParseCommandLineArguments();
 
                 // Displays the next time screenshots are going to be captured
                 // in the system tray icon's tool tip, the main interface, and information window.
