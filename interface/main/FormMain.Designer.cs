@@ -97,12 +97,13 @@ namespace AutoScreenCapture
             this.buttonApplicationFocusRefresh = new System.Windows.Forms.Button();
             this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
+            this.checkBoxActiveWindowTitleComparisonCheckReverse = new System.Windows.Forms.CheckBox();
             this.buttonDynamicRegexValidator = new System.Windows.Forms.Button();
             this.radioButtonRegularExpressionMatch = new System.Windows.Forms.RadioButton();
             this.radioButtonCaseSensitiveMatch = new System.Windows.Forms.RadioButton();
             this.radioButtonCaseInsensitiveMatch = new System.Windows.Forms.RadioButton();
             this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
-            this.checkBoxActiveWindowTitle = new System.Windows.Forms.CheckBox();
+            this.checkBoxActiveWindowTitleComparisonCheck = new System.Windows.Forms.CheckBox();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.labelPasswordDescription = new System.Windows.Forms.Label();
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
@@ -311,7 +312,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 376);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 354);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -762,18 +763,31 @@ namespace AutoScreenCapture
             // 
             // groupBoxActiveWindowTitle
             // 
+            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitleComparisonCheckReverse);
             this.groupBoxActiveWindowTitle.Controls.Add(this.buttonDynamicRegexValidator);
             this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonRegularExpressionMatch);
             this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonCaseSensitiveMatch);
             this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonCaseInsensitiveMatch);
             this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitle);
+            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitleComparisonCheck);
             this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 178);
             this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
             this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 139);
             this.groupBoxActiveWindowTitle.TabIndex = 0;
             this.groupBoxActiveWindowTitle.TabStop = false;
             this.groupBoxActiveWindowTitle.Text = "Active Window Title";
+            // 
+            // checkBoxActiveWindowTitleComparisonCheckReverse
+            // 
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.AutoSize = true;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Location = new System.Drawing.Point(68, 19);
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Name = "checkBoxActiveWindowTitleComparisonCheckReverse";
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabIndex = 1;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabStop = false;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Text = "No Match";
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitleComparisonCheckReverse_CheckedChanged);
             // 
             // buttonDynamicRegexValidator
             // 
@@ -826,17 +840,17 @@ namespace AutoScreenCapture
             this.textBoxActiveWindowTitle.TabIndex = 0;
             this.textBoxActiveWindowTitle.TabStop = false;
             // 
-            // checkBoxActiveWindowTitle
+            // checkBoxActiveWindowTitleComparisonCheck
             // 
-            this.checkBoxActiveWindowTitle.AutoSize = true;
-            this.checkBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 19);
-            this.checkBoxActiveWindowTitle.Name = "checkBoxActiveWindowTitle";
-            this.checkBoxActiveWindowTitle.Size = new System.Drawing.Size(185, 17);
-            this.checkBoxActiveWindowTitle.TabIndex = 0;
-            this.checkBoxActiveWindowTitle.TabStop = false;
-            this.checkBoxActiveWindowTitle.Text = "Capture only if the title contains ...";
-            this.checkBoxActiveWindowTitle.UseVisualStyleBackColor = true;
-            this.checkBoxActiveWindowTitle.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitle_CheckedChanged);
+            this.checkBoxActiveWindowTitleComparisonCheck.AutoSize = true;
+            this.checkBoxActiveWindowTitleComparisonCheck.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxActiveWindowTitleComparisonCheck.Name = "checkBoxActiveWindowTitleComparisonCheck";
+            this.checkBoxActiveWindowTitleComparisonCheck.Size = new System.Drawing.Size(56, 17);
+            this.checkBoxActiveWindowTitleComparisonCheck.TabIndex = 0;
+            this.checkBoxActiveWindowTitleComparisonCheck.TabStop = false;
+            this.checkBoxActiveWindowTitleComparisonCheck.Text = "Match";
+            this.checkBoxActiveWindowTitleComparisonCheck.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitleComparisonCheck.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitleComparisonCheck_CheckedChanged);
             // 
             // groupBoxSecurity
             // 
@@ -1255,7 +1269,6 @@ namespace AutoScreenCapture
             this.MinimumSize = new System.Drawing.Size(1056, 694);
             this.Name = "FormMain";
             this.Opacity = 0D;
-            this.Visible = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormViewer_FormClosing);
@@ -1352,7 +1365,7 @@ namespace AutoScreenCapture
         private ToolStripSplitButton toolStripSplitButtonHelp;
         private GroupBox groupBoxActiveWindowTitle;
         private TextBox textBoxActiveWindowTitle;
-        private CheckBox checkBoxActiveWindowTitle;
+        private CheckBox checkBoxActiveWindowTitleComparisonCheck;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboard;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboardAutoSave;
         private ToolStripMenuItem toolStripMenuItemRegionSelectClipboardAutoSaveEdit;
@@ -1395,5 +1408,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemRegionSelectOptions;
         private ToolStripSeparator toolStripSeparatorRegionSelectOptions;
         private ToolStripMenuItem toolStripMenuItemFloatingScreenshot;
+        private CheckBox checkBoxActiveWindowTitleComparisonCheckReverse;
     }
 }

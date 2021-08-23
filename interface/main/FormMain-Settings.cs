@@ -207,10 +207,11 @@ namespace AutoScreenCapture
                 checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
 
                 // Active Window Title
-                checkBoxActiveWindowTitle.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
+                checkBoxActiveWindowTitleComparisonCheck.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
+                checkBoxActiveWindowTitleComparisonCheckReverse.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value);
                 textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
 
-                if (checkBoxActiveWindowTitle.Checked)
+                if (checkBoxActiveWindowTitleComparisonCheck.Checked || checkBoxActiveWindowTitleComparisonCheckReverse.Checked)
                 {
                     textBoxActiveWindowTitle.Enabled = true;
                     radioButtonCaseSensitiveMatch.Enabled = true;
@@ -279,7 +280,8 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = checkBoxScreenshotLabel.Checked;
 
                 // Active Window Title
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitle.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = checkBoxActiveWindowTitleComparisonCheck.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value = checkBoxActiveWindowTitleComparisonCheckReverse.Checked;
                 _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value = textBoxActiveWindowTitle.Text.Trim();
 
                 if (radioButtonCaseSensitiveMatch.Checked)

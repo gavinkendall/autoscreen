@@ -67,6 +67,7 @@ namespace AutoScreenCapture
         internal readonly bool FirstRun = true;
         internal readonly int StartScreenCaptureCount = 0;
         internal readonly bool ActiveWindowTitleCaptureCheck = false;
+        internal readonly bool ActiveWindowTitleNoMatchCheck = false;
         internal readonly string ActiveWindowTitleCaptureText = string.Empty;
         internal readonly string ApplicationFocus = string.Empty;
         internal readonly string AutoSaveFolder = MacroParser.DefaultAutoSaveFolder;

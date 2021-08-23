@@ -377,6 +377,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("FirstRun", DefaultSettings.FirstRun));
                 User.Add(new Setting("StartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount));
                 User.Add(new Setting("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck));
+                User.Add(new Setting("ActiveWindowTitleNoMatchCheck", DefaultSettings.ActiveWindowTitleNoMatchCheck));
                 User.Add(new Setting("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText));
                 User.Add(new Setting("UseKeyboardShortcuts", DefaultSettings.UseKeyboardShortcuts));
                 User.Add(new Setting("KeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier1));

@@ -54,7 +54,8 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(comboBoxFilterType, "Choose a type of filter. This could be a label or the title of an active window from an application that was captured during a session");
             _toolTip.SetToolTip(comboBoxFilterValue, "Select a filter value based on the chosen filter type. This will show you what days in the calendar are associated with the filter value");
             _toolTip.SetToolTip(buttonRefreshFilterValues, "Click this button to refresh the list of filter values");
-            _toolTip.SetToolTip(checkBoxActiveWindowTitle, "You can specify what text should be used for comparing with the title of the active window");
+            _toolTip.SetToolTip(checkBoxActiveWindowTitleComparisonCheck, "Compare the given text with the title of the active window and they should match");
+            _toolTip.SetToolTip(checkBoxActiveWindowTitleComparisonCheckReverse, "Compare the given text with the title of the active window and they should not match");
             _toolTip.SetToolTip(radioButtonCaseSensitiveMatch, "The text comparison will be case sensitive so the active window title will need to match exactly with each lowercase and uppercase character");
             _toolTip.SetToolTip(radioButtonCaseInsensitiveMatch, "The text comparison will be case insensitive so the active window title can contain a mixture of lowercase and uppercase characters");
             _toolTip.SetToolTip(radioButtonRegularExpressionMatch, "The text comparison will match with the regular expression pattern entered in the above text input field");

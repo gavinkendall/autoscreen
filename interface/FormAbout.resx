@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.6.2 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.3 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -128,12 +128,13 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.6.2
+    <value>2.3.6.3
 
-New command line option -show for showing the interface, enabling triggers with the ShowInterface action, and showing the system tray icon. New command line option -hide for hiding the interface, disabling triggers with the ShowInterface action, and hiding the system tray icon. The application will no longer appear in Alt+Tab when interface is hidden.</value>
+You can now do a "No Match" when comparing the provided text with the active window title. This comes with its own Trigger Action (Set Active Window Title As No Match) and command line option (-activeWindowTitleNoMatch).</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.3    No Match option implemented for Active Window Title. Fixed visibility bug when no Triggers are available on startup.
 2.3.6.2    New command line options -show and -hide. The application will no longer appear in Alt+Tab when interface is hidden.
 2.3.6.1    Fix to Keyboard Shortcuts. Changed default trigger for closing window so interface will now hide on closing window instead of exiting to keep application running in system tray until Exit is selected from system tray icon menu.
 2.3.6.0    Fix to SMTP.
@@ -453,7 +454,7 @@ Twitter
 https://twitter.com/autoscreen2
 
 YouTube Channel
-https://www.youtube.com/c/gavinkendall/</value>
+https://www.youtube.com/gavinkendall/</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

@@ -142,6 +142,21 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE = "^-activeWindowTitle=(?<ActiveWindowTitle>.+)$";
 
         /// <summary>
+        /// Regex for parsing the -activeWindowTitleMatch command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH = "^-activeWindowTitleMatch=(?<ActiveWindowTitleMatch>.+)$"; // The command line option -activeWindowTitleMatch is the same as -activeWindowTitle (to maintain backwards compatibility with previous versions since -activeWindowTitle is the old command line option)
+
+        /// <summary>
+        /// Regex for parsing the -activeWindowTitleNoMatch command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_NO_MATCH = "^-activeWindowTitleNoMatch=(?<ActiveWindowTitleNoMatch>.+)$";
+
+        /// <summary>
+        /// Regex for parsing the -activeWindowTitleMatchType command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH_TYPE = @"^-activeWindowTitleMatchType=(?<ActiveWindowTitleMatchType>\d{1})$";
+
+        /// <summary>
         /// Regex for parsing the -applicationFocus command.
         /// </summary>
         internal const string REGEX_COMMAND_LINE_APPLICATION_FOCUS = "^-applicationFocus=(?<ApplicationFocus>.+)$";
@@ -186,6 +201,11 @@ namespace AutoScreenCapture
         /// </summary>
         private void ParseCommandLineArguments()
         {
+            if (!_fileSystem.FileExists(_fileSystem.CommandFile))
+            {
+                _fileSystem.CreateFile(_fileSystem.CommandFile);
+            }
+
             // Parse commands issued externally via the command line.
             if (_fileSystem.FileExists(_fileSystem.CommandFile))
             {
@@ -195,10 +215,6 @@ namespace AutoScreenCapture
                 {
                     ParseCommandLineArguments(args);
                 }
-            }
-            else
-            {
-                _fileSystem.CreateFile(_fileSystem.CommandFile);
             }
         }
 
@@ -584,7 +600,59 @@ namespace AutoScreenCapture
                                 _config.Load(_fileSystem);
                             }
 
-                            SetActiveWindowTitle(activeWindowTitle);
+                            SetActiveWindowTitleAsMatch(activeWindowTitle);
+                        }
+                    }
+
+                    // -activeWindowTitleMatch="x"
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH))
+                    {
+                        string activeWindowTitle = Regex.Match(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH).Groups["ActiveWindowTitleMatch"].Value;
+
+                        if (activeWindowTitle.Length > 0)
+                        {
+                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
+                            {
+                                _config.Load(_fileSystem);
+                            }
+
+                            SetActiveWindowTitleAsMatch(activeWindowTitle);
+                        }
+                    }
+
+                    // -activeWindowTitleNoMatch="x"
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_NO_MATCH))
+                    {
+                        string activeWindowTitle = Regex.Match(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_NO_MATCH).Groups["ActiveWindowTitleNoMatch"].Value;
+
+                        if (activeWindowTitle.Length > 0)
+                        {
+                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
+                            {
+                                _config.Load(_fileSystem);
+                            }
+
+                            SetActiveWindowTitleAsNoMatch(activeWindowTitle);
+                        }
+                    }
+
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH_TYPE))
+                    {
+                        int.TryParse(Regex.Match(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH_TYPE).Groups["ActiveWindowTitleMatchType"].Value, out int activeWindowTitleMatchType);
+
+                        switch (activeWindowTitleMatchType)
+                        {
+                            case 1:
+                                radioButtonCaseSensitiveMatch.Checked = true;
+                                break;
+
+                            case 2:
+                                radioButtonCaseInsensitiveMatch.Checked = true;
+                                break;
+
+                            case 3:
+                                radioButtonRegularExpressionMatch.Checked = true;
+                                break;
                         }
                     }
 
