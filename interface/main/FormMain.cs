@@ -32,10 +32,16 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormMain : Form
     {
+        // Determines if the application has started so it can run any trigger
+        // with the ApplicationStartup condition. This is so we don't accidentally
+        // run these types of triggers before command line options get a chance to be parsed.
+        private bool _appStarted = false;
+
         // Preview
         bool _preview = false;
 
-        private bool _loaded = false;
+        // Determines if we should show or hide the application's interface.
+        private bool _initialVisibilitySet = false;
 
         // The "About Auto Screen Capture" form.
         private FormAbout _formAbout;
@@ -169,16 +175,6 @@ namespace AutoScreenCapture
 
             HelpMessage(welcome);
 
-            ParseCommandLineArguments();
-
-            notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
-            _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
-
-            // Start the scheduled capture timer.
-            timerScheduledCapture.Interval = 1000;
-            timerScheduledCapture.Enabled = true;
-            timerScheduledCapture.Start();
-
             LoadHelpTips();
 
             ShowInfo();
@@ -187,8 +183,15 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
-            _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
-            RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
+            // Start the scheduled capture timer.
+            timerScheduledCapture.Interval = 1000;
+            timerScheduledCapture.Enabled = true;
+            timerScheduledCapture.Start();
+
+            // Set this to true so anything that needs to be processed at startup will be done in the
+            // first tick of the scheduled capture timer. This is when using -hide and -start command line options
+            // so we avoid having to show the interface and/or the system tray icon too early during application startup.
+            _appStarted = true;
 
             if (firstRun)
             {
@@ -202,18 +205,28 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         protected override void OnVisibleChanged(EventArgs e)
         {
-            if (_loaded && Visible)
+            // Annoyingly, WinForms likes to show the main form even if Visible is set to false in the Designer code
+            // so we have to make sure we only consider the visibility of the main form if either the methods
+            // ShowInterface or HideInterface have been called and therefore the _initialVisibilitySet bool variable
+            // has been flagged as true by those methods. This fixes a situation where the user could have no Triggers at all so
+            // we want to keep the main form invisible if there are no Triggers to trigger either ShowInterface or HideInterface.
+            if (!_initialVisibilitySet)
             {
-                Show();
+                return;
+            }
+
+            if (Visible)
+            {
                 Opacity = 100;
                 ShowInTaskbar = true;
+                Show();
                 Focus();
             }
             else
             {
-                Hide();
                 Opacity = 0;
                 ShowInTaskbar = false;
+                Hide();
             }
 
             base.OnVisibleChanged(e);
@@ -226,7 +239,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormViewer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.WindowsShutDown)
+            if (e.CloseReason == CloseReason.WindowsShutDown ||
+                e.CloseReason == CloseReason.ApplicationExitCall)
             {
                 DisableStopCapture();
                 EnableStartCapture();
@@ -361,11 +375,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (ShowInTaskbar)
-                {
-                    return;
-                }
-
                 _log.WriteDebugMessage("Showing interface");
 
                 if (_screenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
@@ -387,8 +396,13 @@ namespace AutoScreenCapture
 
                     PopulateLabelList();
 
-                    _loaded = true;
+                    _initialVisibilitySet = true;
                     Visible = true;
+
+                    Opacity = 100;
+                    ShowInTaskbar = true;
+                    Show();
+                    Focus();
 
                     // If the window is mimimized then show it when the user wants to open the window.
                     if (WindowState == FormWindowState.Minimized)
@@ -416,7 +430,12 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Hiding interface");
 
+                _initialVisibilitySet = true;
                 Visible = false;
+
+                Opacity = 0;
+                ShowInTaskbar = false;
+                Hide();
 
                 _log.WriteDebugMessage("Running triggers of condition type InterfaceHiding");
                 RunTriggersOfConditionType(TriggerConditionType.InterfaceHiding);
@@ -455,7 +474,17 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemShowHideInterface_Click(object sender, EventArgs e)
         {
-            if (ShowInTaskbar)
+            // This is to check if we're in the weird condition whereby the main form is considered Visible
+            // but we haven't set the visibility ourselves yet. We can help the user by setting Visible to false
+            // and setting _initialVisibilitySet to true so they don't have to select this option twice on initial load.
+            // See OnVisibleChanged method for more information; especially if the user doesn't have any Triggers setup.
+            if (!_initialVisibilitySet && Visible)
+            {
+                Visible = false;
+                _initialVisibilitySet = true;
+            }
+
+            if (Visible)
             {
                 HideInterface();
             }

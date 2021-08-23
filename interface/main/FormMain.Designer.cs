@@ -363,7 +363,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 376);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 354);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -909,7 +909,6 @@ namespace AutoScreenCapture
             this.MinimumSize = new System.Drawing.Size(1056, 694);
             this.Name = "FormMain";
             this.Opacity = 0D;
-            this.Visible = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormViewer_FormClosing);

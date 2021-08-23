@@ -276,8 +276,8 @@ namespace AutoScreenCapture
                     ApplyLabel(trigger.Value);
                     break;
 
-                case TriggerActionType.SetActiveWindowTitle:
-                    SetActiveWindowTitle(trigger.Value);
+                case TriggerActionType.SetActiveWindowTitleAsMatch:
+                    SetActiveWindowTitleAsMatch(trigger.Value);
                     break;
 
                 case TriggerActionType.SetApplicationFocus:
@@ -286,6 +286,10 @@ namespace AutoScreenCapture
 
                 case TriggerActionType.FileTransferScreenshot:
                     FileTransferScreenshot(TriggerActionType.FileTransferScreenshot);
+                    break;
+
+                case TriggerActionType.SetActiveWindowTitleAsNoMatch:
+                    SetActiveWindowTitleAsNoMatch(trigger.Value);
                     break;
             }
         }

@@ -135,8 +135,12 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
-                // Do not continue if the active window title needs to be checked and the active window title does not contain the defined text or regex pattern.
-                if (_formSetup.checkBoxActiveWindowTitle.Checked && !ActiveWindowTitleMatchesText())
+                if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                {
+                    return;
+                }
+
+                if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
                 {
                     return;
                 }
@@ -626,7 +630,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool ActiveWindowTitleMatchesText()
+        private bool ActiveWindowTitleMatchText()
         {
             try
             {
@@ -650,19 +654,51 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                _log.WriteExceptionMessage("FormMain-ScreenCapture::ActiveWindowTitleMatchesText", ex);
+                _log.WriteExceptionMessage("FormMain-ScreenCapture::ActiveWindowTitleMatchText", ex);
 
                 return false;
             }
         }
 
-        private void SetActiveWindowTitle(string activeWindowTitle)
+        private bool ActiveWindowTitleDoesNotMatchText()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text))
+                {
+                    textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
+
+                    if (radioButtonCaseSensitiveMatch.Checked)
+                    {
+                        return !_screenCapture.ActiveWindowTitle.Contains(textBoxActiveWindowTitle.Text);
+                    }
+                    else if (radioButtonCaseInsensitiveMatch.Checked)
+                    {
+                        return !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower());
+                    }
+                    else if (radioButtonRegularExpressionMatch.Checked)
+                    {
+                        return !Regex.IsMatch(_screenCapture.ActiveWindowTitle, textBoxActiveWindowTitle.Text);
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _log.WriteExceptionMessage("FormMain-ScreenCapture::ActiveWindowTitleDoesNotMatchText", ex);
+
+                return false;
+            }
+        }
+
+        private void SetActiveWindowTitleAsMatch(string activeWindowTitle)
         {
             if (string.IsNullOrEmpty(activeWindowTitle))
             {
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
 
-                _formSetup.checkBoxActiveWindowTitle.Checked = false;
+                _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = false;
             }
             else
             {
@@ -671,8 +707,35 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
 
-                _formSetup.checkBoxActiveWindowTitle.Checked = true;
-                _formSetup.textBoxActiveWindowTitle.Text = activeWindowTitle;
+                checkBoxActiveWindowTitleComparisonCheck.Checked = true;
+                textBoxActiveWindowTitle.Text = activeWindowTitle;
+
+                _screenCapture.ActiveWindowTitle = activeWindowTitle;
+            }
+
+            if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+            {
+                _screenCapture.ApplicationError = true;
+            }
+        }
+
+        private void SetActiveWindowTitleAsNoMatch(string activeWindowTitle)
+        {
+            if (string.IsNullOrEmpty(activeWindowTitle))
+            {
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleNoMatchCheck", false);
+
+                _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = false;
+            }
+            else
+            {
+                activeWindowTitle = activeWindowTitle.Trim();
+
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleNoMatchCheck", true);
+                _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
+
+                _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = true;
+                //textBoxActiveWindowTitle.Text = activeWindowTitle;
 
                 _screenCapture.ActiveWindowTitle = activeWindowTitle;
             }

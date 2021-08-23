@@ -377,9 +377,10 @@ namespace AutoScreenCapture
             // More actions.
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshots, "Delete Screenshots").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetLabel, "Apply Label").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitle, "Set Active Window Title").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitleAsMatch, "Set Active Window Title As Match").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetApplicationFocus, "Set Application Focus").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.FileTransferScreenshot, "File Transfer Screenshot (SFTP)").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitleAsNoMatch, "Set Active Window Title As No Match").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -684,7 +685,8 @@ namespace AutoScreenCapture
                     }
 
                     if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitle ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsMatch ||
+                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsNoMatch ||
                         listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
                     {
                         labelTriggerValue.Visible = true;
@@ -891,9 +893,9 @@ namespace AutoScreenCapture
                     textBoxHelp.Text = "Apply a specified label to each screenshot during a screen capture session.";
                     break;
 
-                // Set Active Window Title
+                // Set Active Window Title As Match
                 case 20:
-                    textBoxHelp.Text = "Set the text used for comparison against the title of the active window.";
+                    textBoxHelp.Text = "Set the text used for comparison against the title of the active window and match on the given text.";
                     break;
 
                 // Set Application Focus
@@ -904,6 +906,11 @@ namespace AutoScreenCapture
                 // File Transfer Screenshot (SFTP)
                 case 22:
                     textBoxHelp.Text = "Transfer screenshots to a file server using the configured File Transfer settings.";
+                    break;
+
+                // Set Active Window Title As No Match
+                case 23:
+                    textBoxHelp.Text = "Set the text used for comparison against the title of the active window and do not match on the given text.";
                     break;
             }
         }

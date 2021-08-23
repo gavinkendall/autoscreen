@@ -126,9 +126,9 @@ namespace AutoScreenCapture
         SetLabel = 19,
 
         /// <summary>
-        /// Set the active window title with the specified text.
+        /// Set the active window title with the specified text and use "Match".
         /// </summary>
-        SetActiveWindowTitle = 20,
+        SetActiveWindowTitleAsMatch = 20,
 
         /// <summary>
         /// Set the application focus with the specified process name.
@@ -138,6 +138,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Send a screenshot to a file server with SFTP.
         /// </summary>
-        FileTransferScreenshot = 22
+        FileTransferScreenshot = 22,
+
+        /// <summary>
+        /// Set the active window title with the specified text and use "No Match".
+        /// </summary>
+        SetActiveWindowTitleAsNoMatch = 23
     }
 }
