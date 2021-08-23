@@ -135,15 +135,15 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
-                if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
-                {
-                    return;
-                }
+                //if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                //{
+                //    return;
+                //}
 
-                if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
-                {
-                    return;
-                }
+                //if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
+                //{
+                //    return;
+                //}
 
                 RunRegionCaptures();
 
@@ -664,6 +664,7 @@ namespace AutoScreenCapture
         {
             try
             {
+                /*
                 if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text))
                 {
                     textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
@@ -680,7 +681,9 @@ namespace AutoScreenCapture
                     {
                         return !Regex.IsMatch(_screenCapture.ActiveWindowTitle, textBoxActiveWindowTitle.Text);
                     }
+                    
                 }
+                */
 
                 return false;
             }
@@ -694,6 +697,7 @@ namespace AutoScreenCapture
 
         private void SetActiveWindowTitleAsMatch(string activeWindowTitle)
         {
+            /*
             if (string.IsNullOrEmpty(activeWindowTitle))
             {
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
@@ -712,6 +716,7 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowTitle = activeWindowTitle;
             }
+            */
 
             if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
             {
@@ -721,6 +726,7 @@ namespace AutoScreenCapture
 
         private void SetActiveWindowTitleAsNoMatch(string activeWindowTitle)
         {
+            /*
             if (string.IsNullOrEmpty(activeWindowTitle))
             {
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleNoMatchCheck", false);
@@ -739,6 +745,7 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowTitle = activeWindowTitle;
             }
+            */
 
             if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
             {

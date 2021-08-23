@@ -658,7 +658,7 @@ namespace AutoScreenCapture
                                 _config.Load(_fileSystem);
                             }
 
-                            SetActiveWindowTitleAsNoMatch(activeWindowTitle);
+                            //SetActiveWindowTitleAsNoMatch(activeWindowTitle);
                         }
                     }
 
@@ -669,15 +669,15 @@ namespace AutoScreenCapture
                         switch (activeWindowTitleMatchType)
                         {
                             case 1:
-                                radioButtonCaseSensitiveMatch.Checked = true;
+                                _formSetup.radioButtonCaseSensitiveMatch.Checked = true;
                                 break;
 
                             case 2:
-                                radioButtonCaseInsensitiveMatch.Checked = true;
+                                _formSetup.radioButtonCaseInsensitiveMatch.Checked = true;
                                 break;
 
                             case 3:
-                                radioButtonRegularExpressionMatch.Checked = true;
+                                _formSetup.radioButtonRegularExpressionMatch.Checked = true;
                                 break;
                         }
                     }
