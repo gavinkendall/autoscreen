@@ -67,11 +67,6 @@ namespace AutoScreenCapture
         public MacroTagCollection TagCollection { get; set; }
 
         /// <summary>
-        /// This is to keep track of what "page" we're on when the user clicks through the wizard-style interface.
-        /// </summary>
-        private int _pageIndex;
-
-        /// <summary>
         /// Empty constructor.
         /// </summary>
         public FormTrigger(FileSystem fileSystem)
@@ -147,12 +142,6 @@ namespace AutoScreenCapture
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
             }
-
-            Text += " (BETA)";
-
-            _pageIndex = 1;
-
-            ShowPage();
         }
 
         private void HelpMessage(string message)
@@ -202,7 +191,7 @@ namespace AutoScreenCapture
                         ScreenCaptureInterval = screenCaptureInterval
                     };
 
-                    if (textBoxTriggerValue.Visible)
+                    if (textBoxTriggerValue.Enabled)
                     {
                         trigger.Value = textBoxTriggerValue.Text.Trim();
                     }
@@ -247,7 +236,7 @@ namespace AutoScreenCapture
                     TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
                     TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
 
-                    if (textBoxTriggerValue.Visible)
+                    if (textBoxTriggerValue.Enabled)
                     {
                         TriggerCollection.Get(TriggerObject).Value = textBoxTriggerValue.Text.Trim();
                     }
@@ -466,178 +455,103 @@ namespace AutoScreenCapture
             }
         }
 
-        private void buttonBack_Click(object sender, EventArgs e)
+        private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _pageIndex--;
+            ShowConditionHelpText();
 
-            ShowPage();
-        }
+            labelDate.Enabled = false;
+            labelTime.Enabled = false;
+            labelDay.Enabled = false;
+            dateTimePickerDate.Enabled = false;
+            dateTimePickerTime.Enabled = false;
+            comboBoxDay.Enabled = false;
 
-        private void buttonNext_Click(object sender, EventArgs e)
-        {
-            _pageIndex++;
-
-            ShowPage();
-        }
-
-        private void ShowPage()
-        {
-            labelPage.Text = "Page " + _pageIndex + " of 4";
-
-            switch (_pageIndex)
+            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
             {
-                // Page 1 - Condition
-                case 1:
-                    ShowConditionHelpText();
+                labelDate.Enabled = true;
+                labelTime.Enabled = true;
+                dateTimePickerDate.Enabled = true;
+                dateTimePickerTime.Enabled = true;
+            }
 
-                    groupBox.Text = "Condition";
-                    buttonBack.Enabled = false;
-                    buttonNext.Enabled = true;
+            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
+            {
+                labelTime.Enabled = true;
+                dateTimePickerTime.Enabled = true;
+            }
 
-                    // Controls from the last page that we don't want to appear when this form is loaded again when changing a Trigger.
-                    buttonFinish.Enabled = false;
-                    listBoxModuleItemList.Visible = false;
-                    labelDays.Visible = false;
-                    labelHoursInterval.Visible = false;
-                    labelMinutesInterval.Visible = false;
-                    labelSecondsInterval.Visible = false;
-                    labelMillisecondsInterval.Visible = false;
-                    numericUpDownDays.Visible = false;
-                    numericUpDownHoursInterval.Visible = false;
-                    numericUpDownMinutesInterval.Visible = false;
-                    numericUpDownSecondsInterval.Visible = false;
-                    numericUpDownMillisecondsInterval.Visible = false;
-                    labelTriggerValue.Visible = false;
-                    textBoxTriggerValue.Visible = false;
+            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DayTime)
+            {
+                labelDay.Enabled = true;
+                labelTime.Enabled = true;
+                dateTimePickerTime.Enabled = true;
+                comboBoxDay.Enabled = true;
+            }
+        }
 
-                    // Controls on this page.
-                    listBoxCondition.Visible = true;
+        private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadModuleItems();
 
-                    // Controls on next page.
-                    labelDate.Visible = false;
-                    labelTime.Visible = false;
-                    labelDay.Visible = false;
-                    dateTimePickerDate.Visible = false;
-                    dateTimePickerTime.Visible = false;
-                    comboBoxDay.Visible = false;
-                    labelDate.Enabled = false;
-                    labelTime.Enabled = false;
-                    labelDay.Enabled = false;
-                    dateTimePickerDate.Enabled = false;
-                    dateTimePickerTime.Enabled = false;
-                    comboBoxDay.Enabled = false;
-                    break;
+            ShowActionHelpText();
 
-                // Page 2 - Date, Time, and Day
-                case 2:
-                    groupBox.Text = string.Empty;
-                    buttonBack.Enabled = true;
+            labelDays.Enabled = false;
+            labelInterval.Enabled = false;
+            labelTriggerValue.Enabled = false;
+            textBoxTriggerValue.Enabled = false;
 
-                    // Controls on previous page.
-                    listBoxCondition.Visible = false;
-                    labelTriggerValue.Visible = false;
-                    textBoxTriggerValue.Visible = false;
+            numericUpDownHoursInterval.Enabled = false;
+            numericUpDownMinutesInterval.Enabled = false;
+            numericUpDownSecondsInterval.Enabled = false;
+            numericUpDownMillisecondsInterval.Enabled = false;
+            numericUpDownDays.Enabled = false;
 
-                    // Controls on next page.
-                    listBoxAction.Visible = false;
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
+            {
+                labelInterval.Enabled = true;
+                numericUpDownHoursInterval.Enabled = true;
+                numericUpDownMinutesInterval.Enabled = true;
+                numericUpDownSecondsInterval.Enabled = true;
+                numericUpDownMillisecondsInterval.Enabled = true;
+            }
 
-                    // Controls on this page.
-                    if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
-                    {
-                        labelDate.Visible = true;
-                        labelTime.Visible = true;
-                        dateTimePickerDate.Visible = true;
-                        dateTimePickerTime.Visible = true;
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshots)
+            {
+                labelDays.Enabled = true;
+                numericUpDownDays.Enabled = true;
+            }
 
-                        labelDate.Enabled = true;
-                        labelTime.Enabled = true;
-                        dateTimePickerDate.Enabled = true;
-                        dateTimePickerTime.Enabled = true;
-                    }
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsMatch ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsNoMatch ||
+                listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
+            {
+                labelTriggerValue.Enabled = true;
+                textBoxTriggerValue.Enabled = true;
 
-                    if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.Time)
-                    {
-                        labelDate.Visible = true;
-                        labelTime.Visible = true;
-                        dateTimePickerDate.Visible = true;
-                        dateTimePickerTime.Visible = true;
+                if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel)
+                {
+                    labelTriggerValue.Text = "Label:";
+                }
 
-                        labelDate.Enabled = false;
-                        labelTime.Enabled = true;
-                        dateTimePickerDate.Enabled = false;
-                        dateTimePickerTime.Enabled = true;
-                    }
+                if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsMatch ||
+                    listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsNoMatch)
+                {
+                    labelTriggerValue.Text = "Active Window Title:";
+                }
 
-                    if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DayTime)
-                    {
-                        labelDay.Visible = true;
-                        labelTime.Visible = true;
-                        dateTimePickerTime.Visible = true;
-                        comboBoxDay.Visible = true;
+                if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
+                {
+                    labelTriggerValue.Text = "Application Focus:";
+                }
+            }
 
-                        labelDay.Enabled = true;
-                        labelTime.Enabled = true;
-                        dateTimePickerTime.Enabled = true;
-                        comboBoxDay.Enabled = true;
-                    }
-                    break;
+            DetermineModuleListEnable();
+        }
 
-                // Page 3 - Action
-                case 3:
-                    ShowActionHelpText();
-
-                    groupBox.Text = "Action";
-                    buttonNext.Enabled = true;
-                    buttonFinish.Enabled = false;
-
-                    // Controls on previous page.
-                    labelDate.Visible = false;
-                    labelTime.Visible = false;
-                    labelDay.Visible = false;
-                    dateTimePickerDate.Visible = false;
-                    dateTimePickerTime.Visible = false;
-                    comboBoxDay.Visible = false;
-                    labelTriggerValue.Visible = false;
-                    textBoxTriggerValue.Visible = false;
-
-                    // Controls on next page.
-                    listBoxModuleItemList.Visible = false;
-                    labelDays.Visible = false;
-                    labelHoursInterval.Visible = false;
-                    labelMinutesInterval.Visible = false;
-                    labelSecondsInterval.Visible = false;
-                    labelMillisecondsInterval.Visible = false;
-                    numericUpDownDays.Visible = false;
-                    numericUpDownHoursInterval.Visible = false;
-                    numericUpDownMinutesInterval.Visible = false;
-                    numericUpDownSecondsInterval.Visible = false;
-                    numericUpDownMillisecondsInterval.Visible = false;
-                    labelDays.Enabled = false;
-                    labelHoursInterval.Enabled = false;
-                    labelMinutesInterval.Enabled = false;
-                    labelSecondsInterval.Enabled = false;
-                    labelMillisecondsInterval.Enabled = false;
-                    numericUpDownDays.Enabled = false;
-                    numericUpDownHoursInterval.Enabled = false;
-                    numericUpDownMinutesInterval.Enabled = false;
-                    numericUpDownSecondsInterval.Enabled = false;
-                    numericUpDownMillisecondsInterval.Enabled = false;
-
-                    // Controls on this page.
-                    listBoxAction.Visible = true;
-                    break;
-
-                // Page 4 - Interval and Days
-                case 4:
-                    groupBox.Text = listBoxAction.Text;
-                    buttonNext.Enabled = false;
-                    buttonFinish.Enabled = true;
-
-                    // Controls on previous page.
-                    listBoxAction.Visible = false;
-
-                    // Controls on this page.
-                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor ||
+        private void DetermineModuleListEnable()
+        {
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor ||
                         listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateScreen ||
                         listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateRegion ||
                         listBoxAction.SelectedIndex == (int)TriggerActionType.ActivateSchedule ||
@@ -648,64 +562,13 @@ namespace AutoScreenCapture
                         listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateSchedule ||
                         listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTag ||
                         listBoxAction.SelectedIndex == (int)TriggerActionType.DeactivateTrigger)
-                    {
-                        listBoxModuleItemList.Visible = true;
-                    }
-
-                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
-                    {
-                        labelHoursInterval.Visible = true;
-                        labelMinutesInterval.Visible = true;
-                        labelSecondsInterval.Visible = true;
-                        labelMillisecondsInterval.Visible = true;
-
-                        numericUpDownHoursInterval.Visible = true;
-                        numericUpDownMinutesInterval.Visible = true;
-                        numericUpDownSecondsInterval.Visible = true;
-                        numericUpDownMillisecondsInterval.Visible = true;
-
-                        labelHoursInterval.Enabled = true;
-                        labelMinutesInterval.Enabled = true;
-                        labelSecondsInterval.Enabled = true;
-                        labelMillisecondsInterval.Enabled = true;
-
-                        numericUpDownHoursInterval.Enabled = true;
-                        numericUpDownMinutesInterval.Enabled = true;
-                        numericUpDownSecondsInterval.Enabled = true;
-                        numericUpDownMillisecondsInterval.Enabled = true;
-                    }
-
-                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshots)
-                    {
-                        labelDays.Visible = true;
-                        numericUpDownDays.Visible = true;
-
-                        labelDays.Enabled = true;
-                        numericUpDownDays.Enabled = true;
-                    }
-
-                    if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsMatch ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsNoMatch ||
-                        listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
-                    {
-                        labelTriggerValue.Visible = true;
-                        textBoxTriggerValue.Visible = true;
-                    }
-                    break;
+            {
+                listBoxModuleItemList.Enabled = true;
             }
-        }
-
-        private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ShowConditionHelpText();
-        }
-
-        private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadModuleItems();
-
-            ShowActionHelpText();
+            else
+            {
+                listBoxModuleItemList.Enabled = false;
+            }
         }
 
         private void ShowConditionHelpText()
@@ -714,77 +577,77 @@ namespace AutoScreenCapture
             {
                 // Application Startup
                 case 0:
-                    textBoxHelp.Text = "When the application is started. This could be as a result of Auto Screen Capture being started by double-clicking its icon or running autoscreen.exe from a command line terminal.";
+                    textBoxConditionHelp.Text = "When the application is started.";
                     break;
 
                 // Application Exit
                 case 1:
-                    textBoxHelp.Text = "When the application is going to exit or quit.";
+                    textBoxConditionHelp.Text = "When the application is going to exit.";
                     break;
 
                 // Interface Closing
                 case 2:
-                    textBoxHelp.Text = "When the application's main interface window is going to close.";
+                    textBoxConditionHelp.Text = "When the application's main interface window is going to close.";
                     break;
 
                 // Interface Hiding
                 case 3:
-                    textBoxHelp.Text = "When the application's main interface window is about to be hidden.";
+                    textBoxConditionHelp.Text = "When the application's main interface window is about to be hidden.";
                     break;
 
                 // Interface Showing
                 case 4:
-                    textBoxHelp.Text = "When the application's main interface window is about to be shown.";
+                    textBoxConditionHelp.Text = "When the application's main interface window is about to be shown.";
                     break;
 
                 // Limit Reached
                 case 5:
-                    textBoxHelp.Text = "When the number of screen capture cycles reach the specified limit.";
+                    textBoxConditionHelp.Text = "When the number of screen capture cycles reach the specified limit.";
                     break;
 
                 // Screen Capture Started
                 case 6:
-                    textBoxHelp.Text = "When a screen capture session starts. The Start Screen Capture button is clicked or Start Screen Capture is selected from the system tray icon menu.";
+                    textBoxConditionHelp.Text = "When a screen capture session starts.";
                     break;
 
                 // Screen Capture Stopped
                 case 7:
-                    textBoxHelp.Text = "When the currently running screen capture session stops. The Stop Screen Capture button is clicked or Stop Screen Capture is selected from the system tray icon menu.";
+                    textBoxConditionHelp.Text = "When the currently running screen capture session stops.";
                     break;
 
                 // After Screenshot Taken
                 case 8:
-                    textBoxHelp.Text = "When a screenshot has been taken after it has been saved to disk.";
+                    textBoxConditionHelp.Text = "When a screenshot has been taken after it has been saved to disk.";
                     break;
 
                 // Date/Time
                 case 9:
-                    textBoxHelp.Text = "When a specified date and time is encountered.";
+                    textBoxConditionHelp.Text = "When a specified date and time is encountered.";
                     break;
 
                 // Time
                 case 10:
-                    textBoxHelp.Text = "When a specified time is encountered.";
+                    textBoxConditionHelp.Text = "When a specified time is encountered.";
                     break;
 
                 // Day/Time
                 case 11:
-                    textBoxHelp.Text = "When a specified day and time is encountered.";
+                    textBoxConditionHelp.Text = "When a specified day and time is encountered.";
                     break;
 
                 // Before Screenshot Taken
                 case 12:
-                    textBoxHelp.Text = "When a screenshot is about to be taken before it has been saved to disk.";
+                    textBoxConditionHelp.Text = "When a screenshot is about to be taken before it has been saved to disk.";
                     break;
 
                 // Before Screenshot References Saved
                 case 13:
-                    textBoxHelp.Text = "When screenshot references are about to be saved to disk during a recurring five minute maintenance timer.";
+                    textBoxConditionHelp.Text = "When screenshot references are about to be saved to disk during a recurring five minute maintenance timer.";
                     break;
 
                 // After Screenshot References Saved
                 case 14:
-                    textBoxHelp.Text = "When screenshot references have been saved to disk during a recurring five minute maintenance timer.";
+                    textBoxConditionHelp.Text = "When screenshot references have been saved to disk during a recurring five minute maintenance timer.";
                     break;
             }
         }
@@ -795,122 +658,122 @@ namespace AutoScreenCapture
             {
                 // Exit Application
                 case 0:
-                    textBoxHelp.Text = "Exit the application.";
+                    textBoxActionHelp.Text = "Exit the application.";
                     break;
 
                 // Hide Interface
                 case 1:
-                    textBoxHelp.Text = "Hide the application's main interface window.";
+                    textBoxActionHelp.Text = "Hide the application's main interface window.";
                     break;
 
                 // Run Editor
                 case 2:
-                    textBoxHelp.Text = "Run a specified Editor.";
+                    textBoxActionHelp.Text = "Run a specified Editor.";
                     break;
 
                 // Show Interface
                 case 3:
-                    textBoxHelp.Text = "Show the application's main interface window.";
+                    textBoxActionHelp.Text = "Show the application's main interface window.";
                     break;
 
                 // Start Screen Capture
                 case 4:
-                    textBoxHelp.Text = "Start a screen capture session.";
+                    textBoxActionHelp.Text = "Start a screen capture session.";
                     break;
 
                 // Stop Screen Capture
                 case 5:
-                    textBoxHelp.Text = "Stop the currently running screen capture session.";
+                    textBoxActionHelp.Text = "Stop the currently running screen capture session.";
                     break;
 
                 // Email Screenshot (SMTP)
                 case 6:
-                    textBoxHelp.Text = "Email screenshots using the configured email server settings.";
+                    textBoxActionHelp.Text = "Email screenshots using the configured email server settings.";
                     break;
 
                 // Set Screen Capture Interval
                 case 7:
-                    textBoxHelp.Text = "Sets the timer's screen capture interval.";
+                    textBoxActionHelp.Text = "Sets the timer's screen capture interval.";
                     break;
 
                 // Activate Screen
                 case 8:
-                    textBoxHelp.Text = "Activates a specified Screen.";
+                    textBoxActionHelp.Text = "Activates a specified Screen.";
                     break;
 
                 // Activate Region
                 case 9:
-                    textBoxHelp.Text = "Activates a specified Region.";
+                    textBoxActionHelp.Text = "Activates a specified Region.";
                     break;
 
                 // Activate Schedule
                 case 10:
-                    textBoxHelp.Text = "Activates a specified Schedule.";
+                    textBoxActionHelp.Text = "Activates a specified Schedule.";
                     break;
 
                 // Activate Macro Tag
                 case 11:
-                    textBoxHelp.Text = "Activate a specified Macro Tag.";
+                    textBoxActionHelp.Text = "Activate a specified Macro Tag.";
                     break;
 
                 // Activate Trigger
                 case 12:
-                    textBoxHelp.Text = "Activate a specified Trigger.";
+                    textBoxActionHelp.Text = "Activate a specified Trigger.";
                     break;
 
                 // Deactivate Screen
                 case 13:
-                    textBoxHelp.Text = "Deactivate a specified Screen.";
+                    textBoxActionHelp.Text = "Deactivate a specified Screen.";
                     break;
 
                 // Deactivate Region
                 case 14:
-                    textBoxHelp.Text = "Deactivate a specified Region.";
+                    textBoxActionHelp.Text = "Deactivate a specified Region.";
                     break;
 
                 // Deactivate Schedule
                 case 15:
-                    textBoxHelp.Text = "Deactivate a specified Schedule.";
+                    textBoxActionHelp.Text = "Deactivate a specified Schedule.";
                     break;
 
                 // Deactivate Macro Tag
                 case 16:
-                    textBoxHelp.Text = "Deactivate a specified Macro Tag.";
+                    textBoxActionHelp.Text = "Deactivate a specified Macro Tag.";
                     break;
 
                 // Deactivate Trigger
                 case 17:
-                    textBoxHelp.Text = "Deactivate a specified Trigger.";
+                    textBoxActionHelp.Text = "Deactivate a specified Trigger.";
                     break;
 
                 // Delete Screenshots
                 case 18:
-                    textBoxHelp.Text = "Delete a series of screenshots.";
+                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days.";
                     break;
 
                 // Apply Label
                 case 19:
-                    textBoxHelp.Text = "Apply a specified label to each screenshot during a screen capture session.";
+                    textBoxActionHelp.Text = "Apply a specified label to each screenshot during a screen capture session.";
                     break;
 
                 // Set Active Window Title As Match
                 case 20:
-                    textBoxHelp.Text = "Set the text used for comparison against the title of the active window and match on the given text.";
+                    textBoxActionHelp.Text = "Set the text used for comparison against the title of the active window and match on the given text.";
                     break;
 
                 // Set Application Focus
                 case 21:
-                    textBoxHelp.Text = "Set the name of the process to be forced into focus.";
+                    textBoxActionHelp.Text = "Set the name of the process to be forced into focus.";
                     break;
 
                 // File Transfer Screenshot (SFTP)
                 case 22:
-                    textBoxHelp.Text = "Transfer screenshots to a file server using the configured File Transfer settings.";
+                    textBoxActionHelp.Text = "Transfer screenshots to a file server using the configured File Transfer settings.";
                     break;
 
                 // Set Active Window Title As No Match
                 case 23:
-                    textBoxHelp.Text = "Set the text used for comparison against the title of the active window and do not match on the given text.";
+                    textBoxActionHelp.Text = "Set the text used for comparison against the title of the active window and do not match on the given text.";
                     break;
             }
         }

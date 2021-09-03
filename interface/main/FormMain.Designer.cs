@@ -687,7 +687,7 @@ namespace AutoScreenCapture
             // 
             // numericUpDownApplicationFocusDelayAfter
             // 
-            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(147, 71);
+            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(148, 71);
             this.numericUpDownApplicationFocusDelayAfter.Maximum = new decimal(new int[] {
             60000,
             0,
