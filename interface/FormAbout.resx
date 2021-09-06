@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.6.4 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.5 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -128,12 +128,13 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.6.4
+    <value>2.3.6.5
 
-The Trigger form looks better.</value>
+Execution level changed from requireAdministrator to highestAvailable.</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.5    Execution level changed from requireAdministrator to highestAvailable.
 2.3.6.4    The Trigger form looks better.
 2.3.6.3    No Match option implemented for Active Window Title. Fixed visibility bug when no Triggers are available on startup.
 2.3.6.2    New command line options -show and -hide. The application will no longer appear in Alt+Tab when interface is hidden.
