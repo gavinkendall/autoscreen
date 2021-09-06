@@ -234,6 +234,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.2")); // New command line options -show and -hide. The application will no longer appear in Alt+Tab when interface is hidden.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.3")); // No Match option implemented for Active Window Title. Fixed visibility bug when no Triggers are available on startup.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.4")); // The Trigger form looks better.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.5")); // Execution level changed from requireAdministrator to highestAvailable.
 
             Application = new SettingCollection()
             {
