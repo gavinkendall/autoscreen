@@ -218,7 +218,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_BFEF860BA1F440C4925C3DAA085A020E"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[LocalAppDataFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -244,8 +244,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
-        "ProductCode" = "8:{F276817F-1310-44F6-88CF-79B63F0A9836}"
-        "PackageCode" = "8:{931B756A-A29F-49DE-AB82-15E1C09B1F1C}"
+        "ProductCode" = "8:{B3105AF7-032C-447B-A3DC-3373FEEC2726}"
+        "PackageCode" = "8:{0875329A-8072-4AED-9191-5855E07F01E4}"
         "UpgradeCode" = "8:{5A52167C-788C-412D-B0A1-ED40B962A74F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
