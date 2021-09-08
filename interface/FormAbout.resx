@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.6.6 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.7 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -128,12 +128,13 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.6.6
+    <value>2.3.6.7
 
-Execution level changed from highestAvailable to asInvoker.</value>
+Fixed bug with emailing screenshots from a one time schedule.</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.7    Fixed bug with emailing screenshots from a one time schedule.
 2.3.6.6    Execution level changed from highestAvailable to asInvoker.
 2.3.6.5    Execution level changed from requireAdministrator to highestAvailable.
 2.3.6.4    The Trigger form looks better.

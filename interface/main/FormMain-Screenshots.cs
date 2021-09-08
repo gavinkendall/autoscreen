@@ -678,7 +678,7 @@ namespace AutoScreenCapture
 
         private void EmailScreenshot(TriggerActionType triggerActionType)
         {
-            if (triggerActionType == TriggerActionType.EmailScreenshot && _screenCapture.Running)
+            if (triggerActionType == TriggerActionType.EmailScreenshot)
             {
                 Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
