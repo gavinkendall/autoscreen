@@ -128,12 +128,16 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.6.3
+    <value>2.3.6.7
 
-You can now do a "No Match" when comparing the provided text with the active window title. This comes with its own Trigger Action (Set Active Window Title As No Match) and command line option (-activeWindowTitleNoMatch).</value>
+Fixed bug with emailing screenshots from a one time schedule.</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.7    Fixed bug with emailing screenshots from a one time schedule.
+2.3.6.6    Execution level changed from highestAvailable to asInvoker.
+2.3.6.5    Execution level changed from requireAdministrator to highestAvailable.
+2.3.6.4    The Trigger form looks better.
 2.3.6.3    No Match option implemented for Active Window Title. Fixed visibility bug when no Triggers are available on startup.
 2.3.6.2    New command line options -show and -hide. The application will no longer appear in Alt+Tab when interface is hidden.
 2.3.6.1    Fix to Keyboard Shortcuts. Changed default trigger for closing window so interface will now hide on closing window instead of exiting to keep application running in system tray until Exit is selected from system tray icon menu.

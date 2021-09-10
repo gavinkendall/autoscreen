@@ -94,7 +94,7 @@ namespace AutoScreenCapture
 
             _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
             _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
-            _toolTip.SetToolTip(checkBoxActive, "You can capture this screen if Enable is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxEnable, "You can capture this screen if Enable is checked (turned on)");
             _toolTip.SetToolTip(buttonScreenBrowseFolder, "Browse for a folder where screenshots of this screen capture will be saved to");
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
             _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on changes to your display setup");
@@ -145,7 +145,7 @@ namespace AutoScreenCapture
                 comboBoxFormat.SelectedItem = ScreenObject.Format.Name;
                 numericUpDownJpegQuality.Value = ScreenObject.JpegQuality;
                 checkBoxMouse.Checked = ScreenObject.Mouse;
-                checkBoxActive.Checked = ScreenObject.Enable;
+                checkBoxEnable.Checked = ScreenObject.Enable;
                 numericUpDownX.Value = ScreenObject.X;
                 numericUpDownY.Value = ScreenObject.Y;
                 numericUpDownWidth.Value = ScreenObject.Width;
@@ -167,7 +167,7 @@ namespace AutoScreenCapture
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
-                checkBoxActive.Checked = true;
+                checkBoxEnable.Checked = true;
                 numericUpDownX.Value = 0;
                 numericUpDownY.Value = 0;
                 numericUpDownWidth.Value = 0;
@@ -232,7 +232,7 @@ namespace AutoScreenCapture
                         Format = ImageFormatCollection.GetByName(comboBoxFormat.Text),
                         JpegQuality = (int)numericUpDownJpegQuality.Value,
                         Mouse = checkBoxMouse.Checked,
-                        Enable = checkBoxActive.Checked,
+                        Enable = checkBoxEnable.Checked,
                         X = (int)numericUpDownX.Value,
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
@@ -279,7 +279,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
                         ScreenCollection.Get(ScreenObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
                         ScreenCollection.Get(ScreenObject).Mouse = checkBoxMouse.Checked;
-                        ScreenCollection.Get(ScreenObject).Enable = checkBoxActive.Checked;
+                        ScreenCollection.Get(ScreenObject).Enable = checkBoxEnable.Checked;
                         ScreenCollection.Get(ScreenObject).X = (int)numericUpDownX.Value;
                         ScreenCollection.Get(ScreenObject).Y = (int)numericUpDownY.Value;
                         ScreenCollection.Get(ScreenObject).Width = (int)numericUpDownWidth.Value;
@@ -330,7 +330,7 @@ namespace AutoScreenCapture
                  !ScreenObject.Format.Equals(comboBoxFormat.SelectedItem) ||
                  ScreenObject.JpegQuality != (int)numericUpDownJpegQuality.Value ||
                  !ScreenObject.Mouse.Equals(checkBoxMouse.Checked) ||
-                 !ScreenObject.Enable.Equals(checkBoxActive.Checked) ||
+                 !ScreenObject.Enable.Equals(checkBoxEnable.Checked) ||
                  ScreenObject.X != (int)numericUpDownX.Value ||
                  ScreenObject.Y != (int)numericUpDownY.Value ||
                  ScreenObject.Width != (int)numericUpDownWidth.Value ||
@@ -429,7 +429,7 @@ namespace AutoScreenCapture
 
                 pictureBoxPreview.Image = null;
 
-                if (checkBoxActive.Checked)
+                if (checkBoxEnable.Checked)
                 {
                     // This is for when the option "Automatically adapt to display setup" is enabled.
                     // We need to show the position and size based on what Windows provides.

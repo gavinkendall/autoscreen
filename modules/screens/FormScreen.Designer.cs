@@ -64,7 +64,7 @@
             this.comboBoxScreenComponent = new System.Windows.Forms.ComboBox();
             this.groupBoxPreview = new System.Windows.Forms.GroupBox();
             this.textBoxMacroPreview = new System.Windows.Forms.TextBox();
-            this.checkBoxActive = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnable = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.buttonMacroTags = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
@@ -492,17 +492,17 @@
             this.textBoxMacroPreview.TabIndex = 28;
             this.textBoxMacroPreview.TabStop = false;
             // 
-            // checkBoxActive
+            // checkBoxEnable
             // 
-            this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxActive.AutoSize = true;
-            this.checkBoxActive.Location = new System.Drawing.Point(688, 34);
-            this.checkBoxActive.Name = "checkBoxActive";
-            this.checkBoxActive.Size = new System.Drawing.Size(59, 17);
-            this.checkBoxActive.TabIndex = 3;
-            this.checkBoxActive.Text = "Enable";
-            this.checkBoxActive.UseVisualStyleBackColor = true;
-            this.checkBoxActive.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
+            this.checkBoxEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxEnable.AutoSize = true;
+            this.checkBoxEnable.Location = new System.Drawing.Point(688, 34);
+            this.checkBoxEnable.Name = "checkBoxEnable";
+            this.checkBoxEnable.Size = new System.Drawing.Size(59, 17);
+            this.checkBoxEnable.TabIndex = 3;
+            this.checkBoxEnable.Text = "Enable";
+            this.checkBoxEnable.UseVisualStyleBackColor = true;
+            this.checkBoxEnable.CheckedChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // labelHelp
             // 
@@ -538,7 +538,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
-            this.Controls.Add(this.checkBoxActive);
+            this.Controls.Add(this.checkBoxEnable);
             this.Controls.Add(this.textBoxScreenName);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.buttonMacroTags);
@@ -599,7 +599,7 @@
         private System.Windows.Forms.GroupBox groupBoxDisplayProperties;
         private System.Windows.Forms.GroupBox groupBoxPreview;
         private System.Windows.Forms.ComboBox comboBoxScreenComponent;
-        private System.Windows.Forms.CheckBox checkBoxActive;
+        private System.Windows.Forms.CheckBox checkBoxEnable;
         private System.Windows.Forms.TextBox textBoxMacroPreview;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Button buttonMacroTags;

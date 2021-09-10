@@ -135,15 +135,15 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
-                //if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
-                //{
-                //    return;
-                //}
+                if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                {
+                    return;
+                }
 
-                //if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
-                //{
-                //    return;
-                //}
+                if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
+                {
+                    return;
+                }
 
                 RunRegionCaptures();
 
@@ -664,26 +664,24 @@ namespace AutoScreenCapture
         {
             try
             {
-                /*
-                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(textBoxActiveWindowTitle.Text))
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(_formSetup.textBoxActiveWindowTitle.Text))
                 {
-                    textBoxActiveWindowTitle.Text = textBoxActiveWindowTitle.Text.Trim();
+                    _formSetup.textBoxActiveWindowTitle.Text = _formSetup.textBoxActiveWindowTitle.Text.Trim();
 
-                    if (radioButtonCaseSensitiveMatch.Checked)
+                    if (_formSetup.radioButtonCaseSensitiveMatch.Checked)
                     {
-                        return !_screenCapture.ActiveWindowTitle.Contains(textBoxActiveWindowTitle.Text);
+                        return !_screenCapture.ActiveWindowTitle.Contains(_formSetup.textBoxActiveWindowTitle.Text);
                     }
-                    else if (radioButtonCaseInsensitiveMatch.Checked)
+                    else if (_formSetup.radioButtonCaseInsensitiveMatch.Checked)
                     {
-                        return !_screenCapture.ActiveWindowTitle.ToLower().Contains(textBoxActiveWindowTitle.Text.ToLower());
+                        return !_screenCapture.ActiveWindowTitle.ToLower().Contains(_formSetup.textBoxActiveWindowTitle.Text.ToLower());
                     }
-                    else if (radioButtonRegularExpressionMatch.Checked)
+                    else if (_formSetup.radioButtonRegularExpressionMatch.Checked)
                     {
-                        return !Regex.IsMatch(_screenCapture.ActiveWindowTitle, textBoxActiveWindowTitle.Text);
+                        return !Regex.IsMatch(_screenCapture.ActiveWindowTitle, _formSetup.textBoxActiveWindowTitle.Text);
                     }
                     
                 }
-                */
 
                 return false;
             }

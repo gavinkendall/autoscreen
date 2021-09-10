@@ -238,7 +238,6 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
-                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load schedules");
@@ -251,7 +250,7 @@ namespace AutoScreenCapture
                     Schedule specialSchedule = new Schedule()
                     {
                         Name = SpecialScheduleName,
-                        Active = false,
+                        Enable = false,
                         ModeOneTime = true,
                         ModePeriod = false,
                         CaptureAt = dtNow,
@@ -287,13 +286,13 @@ namespace AutoScreenCapture
 
                         if (captureStartAt)
                         {
-                            specialSchedule.Active = true;
+                            specialSchedule.Enable = true;
                             specialSchedule.StartAt = dtStartAt;
                         }
 
                         if (captureStopAt)
                         {
-                            specialSchedule.Active = true;
+                            specialSchedule.Enable = true;
                             specialSchedule.StopAt = dtStopAt;
                         }
 
@@ -313,7 +312,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
-                */
 
                 return true;
             }

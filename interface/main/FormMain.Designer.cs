@@ -35,6 +35,8 @@ namespace AutoScreenCapture
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonSetup = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItemSetupWizard = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparatorSetupWizard = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemActiveWindowTitle = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemApplicationFocus = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInterval = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,8 +114,6 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItemSetupWizard = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparatorSetupWizard = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -165,6 +165,20 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.Name = "toolStripDropDownButtonSetup";
             this.toolStripDropDownButtonSetup.Size = new System.Drawing.Size(66, 20);
             this.toolStripDropDownButtonSetup.Text = "Setup";
+            // 
+            // toolStripMenuItemSetupWizard
+            // 
+            this.toolStripMenuItemSetupWizard.Name = "toolStripMenuItemSetupWizard";
+            this.toolStripMenuItemSetupWizard.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSetupWizard.Text = "Setup Wizard";
+            this.toolStripMenuItemSetupWizard.Visible = false;
+            this.toolStripMenuItemSetupWizard.Click += new System.EventHandler(this.toolStripMenuItemSetupWizard_Click);
+            // 
+            // toolStripSeparatorSetupWizard
+            // 
+            this.toolStripSeparatorSetupWizard.Name = "toolStripSeparatorSetupWizard";
+            this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparatorSetupWizard.Visible = false;
             // 
             // toolStripMenuItemActiveWindowTitle
             // 
@@ -363,7 +377,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 354);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 376);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -878,18 +892,6 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Enabled = true;
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
-            // 
-            // toolStripMenuItemSetupWizard
-            // 
-            this.toolStripMenuItemSetupWizard.Name = "toolStripMenuItemSetupWizard";
-            this.toolStripMenuItemSetupWizard.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemSetupWizard.Text = "Setup Wizard";
-            this.toolStripMenuItemSetupWizard.Click += new System.EventHandler(this.toolStripMenuItemSetupWizard_Click);
-            // 
-            // toolStripSeparatorSetupWizard
-            // 
-            this.toolStripSeparatorSetupWizard.Name = "toolStripSeparatorSetupWizard";
-            this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(177, 6);
             // 
             // FormMain
             // 

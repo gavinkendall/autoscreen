@@ -58,7 +58,7 @@ namespace AutoScreenCapture
 
             HelpMessage("This is where to configure a macro tag which will be used when the filepath of a screenshot is parsed");
 
-            _toolTip.SetToolTip(checkBoxActive, "The filepath containing this macro tag will be parsed if Active is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxEnable, "The filepath containing this macro tag will be parsed if Active is checked (turned on)");
             _toolTip.SetToolTip(comboBoxType, "The type of macro tag depends on what information will be acquired for it");
 
             comboBoxType.Items.Clear();
@@ -102,7 +102,7 @@ namespace AutoScreenCapture
                 textBoxMacro3Macro.Text = MacroTagObject.TimeRangeMacro3Macro;
                 textBoxMacro4Macro.Text = MacroTagObject.TimeRangeMacro4Macro;
 
-                checkBoxActive.Checked = MacroTagObject.Enable;
+                checkBoxEnable.Checked = MacroTagObject.Enable;
 
                 textBoxNotes.Text = MacroTagObject.Notes;
             }
@@ -136,7 +136,7 @@ namespace AutoScreenCapture
                 textBoxMacro3Macro.Text = tag.TimeRangeMacro3Macro;
                 textBoxMacro4Macro.Text = tag.TimeRangeMacro4Macro;
 
-                checkBoxActive.Checked = true;
+                checkBoxEnable.Checked = true;
 
                 textBoxNotes.Text = string.Empty;
             }
@@ -188,7 +188,7 @@ namespace AutoScreenCapture
                         dateTimePickerMacro4Start.Value,
                         dateTimePickerMacro4End.Value,
                         textBoxMacro4Macro.Text,
-                        checkBoxActive.Checked,
+                        checkBoxEnable.Checked,
                         textBoxNotes.Text
                         ));
 
@@ -235,7 +235,7 @@ namespace AutoScreenCapture
                         MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4Start = dateTimePickerMacro4Start.Value;
                         MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4End = dateTimePickerMacro4End.Value;
                         MacroTagCollection.Get(MacroTagObject).TimeRangeMacro4Macro = textBoxMacro4Macro.Text;
-                        MacroTagCollection.Get(MacroTagObject).Enable = checkBoxActive.Checked;
+                        MacroTagCollection.Get(MacroTagObject).Enable = checkBoxEnable.Checked;
                         MacroTagCollection.Get(MacroTagObject).Notes = textBoxNotes.Text;
 
                         Okay();
@@ -302,7 +302,7 @@ namespace AutoScreenCapture
             {
                 if (!MacroTagObject.Description.Equals(textBoxDescription.Text) ||
                     !MacroTagObject.Notes.Equals(textBoxNotes.Text) ||
-                    MacroTagObject.Enable != checkBoxActive.Checked ||
+                    MacroTagObject.Enable != checkBoxEnable.Checked ||
                     (int)MacroTagObject.Type != comboBoxType.SelectedIndex)
                 {
                     changed = true;

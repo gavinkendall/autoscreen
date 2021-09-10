@@ -387,7 +387,6 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
-                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load tags");
@@ -420,7 +419,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
-                */
 
                 return true;
             }

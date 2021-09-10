@@ -64,7 +64,7 @@ namespace AutoScreenCapture
 
             HelpMessage("This is where to configure a schedule to determine when screenshots should be taken");
 
-            _toolTip.SetToolTip(checkBoxActive, "The times and days in this schedule will be considered if Active is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxEnable, "The times and days in this schedule will be considered if Active is checked (turned on)");
             _toolTip.SetToolTip(dateTimePickerCaptureAt, "The time at which screenshots will be taken for a single capture cycle");
             _toolTip.SetToolTip(dateTimePickerStartAt, "The time at which a screen capture session will start running");
             _toolTip.SetToolTip(dateTimePickerStopAt, "The time at which a running screen capture session will stop");
@@ -74,7 +74,7 @@ namespace AutoScreenCapture
                 Text = "Change Schedule";
 
                 textBoxName.Text = ScheduleObject.Name;
-                checkBoxActive.Checked = ScheduleObject.Enable;
+                checkBoxEnable.Checked = ScheduleObject.Enable;
 
                 radioButtonOneTime.Checked = ScheduleObject.ModeOneTime;
                 radioButtonPeriod.Checked = ScheduleObject.ModePeriod;
@@ -123,7 +123,7 @@ namespace AutoScreenCapture
                 Text = "Add Schedule";
 
                 textBoxName.Text = "Schedule " + (ScheduleCollection.Count + 1);
-                checkBoxActive.Checked = true;
+                checkBoxEnable.Checked = true;
 
                 dateTimePickerCaptureAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
                 dateTimePickerStartAt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
@@ -199,7 +199,7 @@ namespace AutoScreenCapture
                     Schedule schedule = new Schedule()
                     {
                         Name = textBoxName.Text,
-                        Enable = checkBoxActive.Checked,
+                        Enable = checkBoxEnable.Checked,
                         ModeOneTime = radioButtonOneTime.Checked,
                         ModePeriod = radioButtonPeriod.Checked,
                         CaptureAt = dateTimePickerCaptureAt.Value,
@@ -249,7 +249,7 @@ namespace AutoScreenCapture
                     else
                     {
                         ScheduleCollection.Get(ScheduleObject).Name = textBoxName.Text;
-                        ScheduleCollection.Get(ScheduleObject).Enable = checkBoxActive.Checked;
+                        ScheduleCollection.Get(ScheduleObject).Enable = checkBoxEnable.Checked;
                         ScheduleCollection.Get(ScheduleObject).ModeOneTime = radioButtonOneTime.Checked;
                         ScheduleCollection.Get(ScheduleObject).ModePeriod = radioButtonPeriod.Checked;
                         ScheduleCollection.Get(ScheduleObject).CaptureAt = dateTimePickerCaptureAt.Value;
@@ -315,7 +315,7 @@ namespace AutoScreenCapture
                             (int)numericUpDownMillisecondsInterval.Value);
 
             if (ScheduleObject != null &&
-                (!ScheduleObject.Enable.Equals(checkBoxActive.Checked) ||
+                (!ScheduleObject.Enable.Equals(checkBoxEnable.Checked) ||
                 !ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
                 !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
                 !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value) ||

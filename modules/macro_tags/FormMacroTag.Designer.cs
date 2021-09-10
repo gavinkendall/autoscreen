@@ -54,7 +54,7 @@
             this.dateTimePickerMacro1End = new System.Windows.Forms.DateTimePicker();
             this.labelMacro1 = new System.Windows.Forms.Label();
             this.dateTimePickerMacro1Start = new System.Windows.Forms.DateTimePicker();
-            this.checkBoxActive = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnable = new System.Windows.Forms.CheckBox();
             this.labelHelp = new System.Windows.Forms.Label();
             this.textBoxNotes = new System.Windows.Forms.TextBox();
             this.labelNotes = new System.Windows.Forms.Label();
@@ -324,16 +324,16 @@
             this.dateTimePickerMacro1Start.Size = new System.Drawing.Size(68, 20);
             this.dateTimePickerMacro1Start.TabIndex = 12;
             // 
-            // checkBoxActive
+            // checkBoxEnable
             // 
-            this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxActive.AutoSize = true;
-            this.checkBoxActive.Location = new System.Drawing.Point(688, 34);
-            this.checkBoxActive.Name = "checkBoxActive";
-            this.checkBoxActive.Size = new System.Drawing.Size(59, 17);
-            this.checkBoxActive.TabIndex = 3;
-            this.checkBoxActive.Text = "Enable";
-            this.checkBoxActive.UseVisualStyleBackColor = true;
+            this.checkBoxEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxEnable.AutoSize = true;
+            this.checkBoxEnable.Location = new System.Drawing.Point(688, 34);
+            this.checkBoxEnable.Name = "checkBoxEnable";
+            this.checkBoxEnable.Size = new System.Drawing.Size(59, 17);
+            this.checkBoxEnable.TabIndex = 3;
+            this.checkBoxEnable.Text = "Enable";
+            this.checkBoxEnable.UseVisualStyleBackColor = true;
             // 
             // labelHelp
             // 
@@ -402,7 +402,7 @@
             this.Controls.Add(this.labelNotes);
             this.Controls.Add(this.textBoxNotes);
             this.Controls.Add(this.labelHelp);
-            this.Controls.Add(this.checkBoxActive);
+            this.Controls.Add(this.checkBoxEnable);
             this.Controls.Add(this.groupBoxTimeRange);
             this.Controls.Add(this.textBoxDateTimeFormatValue);
             this.Controls.Add(this.labelDateTimeFormatValue);
@@ -448,7 +448,7 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerMacro1End;
         private System.Windows.Forms.Label labelMacro1;
         private System.Windows.Forms.DateTimePicker dateTimePickerMacro1Start;
-        private System.Windows.Forms.CheckBox checkBoxActive;
+        private System.Windows.Forms.CheckBox checkBoxEnable;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.TextBox textBoxNotes;
         private System.Windows.Forms.Label labelNotes;

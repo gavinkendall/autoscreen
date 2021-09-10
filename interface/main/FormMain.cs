@@ -193,10 +193,11 @@ namespace AutoScreenCapture
             // so we avoid having to show the interface and/or the system tray icon too early during application startup.
             _appStarted = true;
 
-            if (firstRun)
-            {
-                _formSetupWizard.ShowDialog(this);
-            }
+            // To be figured out later. I want to have a "Setup Wizard" opened on the first run.
+            //if (firstRun)
+            //{
+            //    _formSetupWizard.ShowDialog(this);
+            //}
         }
 
         /// <summary>

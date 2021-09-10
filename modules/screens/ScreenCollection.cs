@@ -308,14 +308,14 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
-                //else
-                //{
-                //    log.WriteDebugMessage("WARNING: Unable to load screens");
+                else
+                {
+                    log.WriteDebugMessage("WARNING: Unable to load screens");
 
-                //    AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
+                    AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
 
-                //    SaveToXmlFile(config, fileSystem, log);
-                //}
+                    SaveToXmlFile(config, fileSystem, log);
+                }
 
                 return true;
             }

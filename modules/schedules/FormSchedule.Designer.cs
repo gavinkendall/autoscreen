@@ -33,7 +33,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelScheduleName = new System.Windows.Forms.Label();
-            this.checkBoxActive = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnable = new System.Windows.Forms.CheckBox();
             this.dateTimePickerStartAt = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerStopAt = new System.Windows.Forms.DateTimePicker();
             this.radioButtonOneTime = new System.Windows.Forms.RadioButton();
@@ -107,16 +107,16 @@
             this.labelScheduleName.TabIndex = 1;
             this.labelScheduleName.Text = "Name:";
             // 
-            // checkBoxActive
+            // checkBoxEnable
             // 
-            this.checkBoxActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxActive.AutoSize = true;
-            this.checkBoxActive.Location = new System.Drawing.Point(688, 34);
-            this.checkBoxActive.Name = "checkBoxActive";
-            this.checkBoxActive.Size = new System.Drawing.Size(59, 17);
-            this.checkBoxActive.TabIndex = 3;
-            this.checkBoxActive.Text = "Enable";
-            this.checkBoxActive.UseVisualStyleBackColor = true;
+            this.checkBoxEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxEnable.AutoSize = true;
+            this.checkBoxEnable.Location = new System.Drawing.Point(688, 34);
+            this.checkBoxEnable.Name = "checkBoxEnable";
+            this.checkBoxEnable.Size = new System.Drawing.Size(59, 17);
+            this.checkBoxEnable.TabIndex = 3;
+            this.checkBoxEnable.Text = "Enable";
+            this.checkBoxEnable.UseVisualStyleBackColor = true;
             // 
             // dateTimePickerStartAt
             // 
@@ -434,7 +434,7 @@
             this.Controls.Add(this.radioButtonOneTime);
             this.Controls.Add(this.dateTimePickerStopAt);
             this.Controls.Add(this.dateTimePickerStartAt);
-            this.Controls.Add(this.checkBoxActive);
+            this.Controls.Add(this.checkBoxEnable);
             this.Controls.Add(this.labelScheduleName);
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.buttonOK);
@@ -462,7 +462,7 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label labelScheduleName;
-        private System.Windows.Forms.CheckBox checkBoxActive;
+        private System.Windows.Forms.CheckBox checkBoxEnable;
         private System.Windows.Forms.DateTimePicker dateTimePickerStartAt;
         private System.Windows.Forms.DateTimePicker dateTimePickerStopAt;
         private System.Windows.Forms.RadioButton radioButtonOneTime;

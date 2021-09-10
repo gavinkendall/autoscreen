@@ -220,14 +220,12 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
-                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load regions");
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
-                */
 
                 return true;
             }

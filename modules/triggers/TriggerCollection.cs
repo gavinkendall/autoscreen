@@ -272,14 +272,13 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
-                /*
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load triggers");
 
                     Trigger triggerApplicationStartShowInterface = new Trigger()
                     {
-                        Active = true,
+                        Enable = true,
                         Name = "Show interface at startup",
                         ConditionType = TriggerConditionType.ApplicationStartup,
                         ActionType = TriggerActionType.ShowInterface,
@@ -290,7 +289,7 @@ namespace AutoScreenCapture
 
                     Trigger triggerScreenCaptureStartedHideInterface = new Trigger()
                     {
-                        Active = true,
+                        Enable = true,
                         Name = "Hide interface when starting screen capture",
                         ConditionType = TriggerConditionType.ScreenCaptureStarted,
                         ActionType = TriggerActionType.HideInterface,
@@ -301,7 +300,7 @@ namespace AutoScreenCapture
 
                     Trigger triggerScreenCaptureStoppedShowInterface = new Trigger()
                     {
-                        Active = true,
+                        Enable = true,
                         Name = "Show interface when screen capture stops",
                         ConditionType = TriggerConditionType.ScreenCaptureStopped,
                         ActionType = TriggerActionType.ShowInterface,
@@ -312,7 +311,7 @@ namespace AutoScreenCapture
 
                     Trigger triggerInterfaceClosingHideInterface = new Trigger()
                     {
-                        Active = true,
+                        Enable = true,
                         Name = "Hide when interface closing",
                         ConditionType = TriggerConditionType.InterfaceClosing,
                         ActionType = TriggerActionType.HideInterface,
@@ -323,7 +322,7 @@ namespace AutoScreenCapture
 
                     Trigger triggerLimitReachedStopScreenCapture = new Trigger()
                     {
-                        Active = true,
+                        Enable = true,
                         Name = "Stop when limit reached",
                         ConditionType = TriggerConditionType.LimitReached,
                         ActionType = TriggerActionType.StopScreenCapture,
@@ -334,7 +333,7 @@ namespace AutoScreenCapture
 
                     Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
                     {
-                        Active = false,
+                        Enable = false,
                         Name = "Keep screenshots for 30 days",
                         ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                         ActionType = TriggerActionType.DeleteScreenshots,
@@ -354,7 +353,6 @@ namespace AutoScreenCapture
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
-                */
 
                 return true;
             }
