@@ -376,44 +376,60 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (_initialVisibilitySet && Visible)
+                {
+                    return;
+                }
+
                 _log.WriteDebugMessage("Showing interface");
 
-                if (_screenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
+                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+
+                if (!string.IsNullOrEmpty(passphrase))
                 {
-                    _log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                    _formEnterPassphrase.ShowDialog(this);
-                }
+                    _screenCapture.LockScreenCaptureSession = true;
 
-                // This is intentional. Do not rewrite these statements as an if/else
-                // because as soon as lockScreenCaptureSession is set to false we want
-                // to continue with normal functionality.
-                if (!_screenCapture.LockScreenCaptureSession)
-                {
-                    _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value = string.Empty;
-                    SaveSettings();
-
-                    SearchDates();
-                    SearchScreenshots();
-
-                    PopulateLabelList();
-
-                    _initialVisibilitySet = true;
-                    Visible = true;
-
-                    Opacity = 100;
-                    ShowInTaskbar = true;
-                    Show();
-                    Focus();
-
-                    // If the window is mimimized then show it when the user wants to open the window.
-                    if (WindowState == FormWindowState.Minimized)
+                    if (!_formEnterPassphrase.Visible)
                     {
-                        WindowState = FormWindowState.Normal;
+                        _formEnterPassphrase.ShowDialog(this);
+                    }
+                    else
+                    {
+                        _formEnterPassphrase.Focus();
+                        _formEnterPassphrase.BringToFront();
                     }
 
-                    _log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
-                    RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
+                    if (_formEnterPassphrase.DialogResult != DialogResult.OK)
+                    {
+                        _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot show interface. Screen capture session is locked");
+
+                        return;
+                    }
+
+                    _screenCapture.LockScreenCaptureSession = false;
                 }
+
+                SearchDates();
+                SearchScreenshots();
+
+                PopulateLabelList();
+
+                _initialVisibilitySet = true;
+                Visible = true;
+
+                Opacity = 100;
+                ShowInTaskbar = true;
+                Show();
+                Focus();
+
+                // If the window is mimimized then show it when the user wants to open the window.
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    WindowState = FormWindowState.Normal;
+                }
+
+                _log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");
+                RunTriggersOfConditionType(TriggerConditionType.InterfaceShowing);
             }
             catch (Exception ex)
             {
@@ -430,6 +446,17 @@ namespace AutoScreenCapture
             try
             {
                 _log.WriteDebugMessage("Hiding interface");
+
+                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+
+                if (!string.IsNullOrEmpty(passphrase))
+                {
+                    _screenCapture.LockScreenCaptureSession = true;
+                }
+                else
+                {
+                    _screenCapture.LockScreenCaptureSession = false;
+                }
 
                 _initialVisibilitySet = true;
                 Visible = false;

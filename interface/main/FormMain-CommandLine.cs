@@ -537,8 +537,6 @@ namespace AutoScreenCapture
                             {
                                 _screenCapture.ApplicationError = true;
                             }
-
-                            _screenCapture.LockScreenCaptureSession = true;
                         }
                     }
 

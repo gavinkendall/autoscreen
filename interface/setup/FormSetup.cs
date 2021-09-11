@@ -29,6 +29,7 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormSetup : Form
     {
+        private Security _security;
         private Config _config;
         private FileSystem _fileSystem;
         private ScreenCapture _screenCapture;
@@ -36,13 +37,15 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="security"></param>
         /// <param name="config"></param>
         /// <param name="fileSystem"></param>
         /// <param name="screenCapture"></param>
-        public FormSetup(Config config, FileSystem fileSystem, ScreenCapture screenCapture)
+        public FormSetup(Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture)
         {
             InitializeComponent();
 
+            _security = security;
             _config = config;
             _fileSystem = fileSystem;
             _screenCapture = screenCapture;
@@ -342,6 +345,11 @@ namespace AutoScreenCapture
             RefreshApplicationFocusList();
 
             DoApplicationFocus();
+        }
+
+        private void buttonSetPassphrase_Click(object sender, EventArgs e)
+        {
+            _config.Settings.User.SetValueByKey("Passphrase", _security.Hash(textBoxPassphrase.Text));
         }
     }
 }

@@ -34,57 +34,42 @@ namespace AutoScreenCapture
             {
                 _log.WriteMessage("Exiting application");
 
-                if (_screenCapture.LockScreenCaptureSession && !_formEnterPassphrase.Visible)
+                _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
+                RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
+
+                // This is no longer the first run of the application when exiting.
+                _config.Settings.User.SetValueByKey("FirstRun", false);
+
+                DisableStopCapture();
+                EnableStartCapture();
+
+                if (_sftpClient != null && _sftpClient.IsConnected)
                 {
-                    _log.WriteDebugMessage("Screen capture session is locked. Challenging user to enter correct passphrase to unlock");
-                    _formEnterPassphrase.ShowDialog(this);
+                    _sftpClient.Disconnect();
                 }
 
-                // This is intentional. Do not rewrite these statements as an if/else
-                // because as soon as lockScreenCaptureSession is set to false we want
-                // to continue with normal functionality.
-                if (!_screenCapture.LockScreenCaptureSession)
+                _screenCapture.Count = 0;
+                _screenCapture.Running = false;
+
+                HideSystemTrayIcon();
+
+                _log.WriteDebugMessage("Saving screenshot references on clean application exit");
+                _screenshotCollection.SaveToXmlFile(_config);
+
+                if (runDateSearchThread != null && runDateSearchThread.IsBusy)
                 {
-                    _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
-                    RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
-
-                    // This is no longer the first run of the application when exiting.
-                    _config.Settings.User.SetValueByKey("FirstRun", false);
-
-                    _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value = string.Empty;
-                    SaveSettings();
-
-                    DisableStopCapture();
-                    EnableStartCapture();
-
-                    if (_sftpClient != null && _sftpClient.IsConnected)
-                    {
-                        _sftpClient.Disconnect();
-                    }
-
-                    _screenCapture.Count = 0;
-                    _screenCapture.Running = false;
-
-                    HideSystemTrayIcon();
-
-                    _log.WriteDebugMessage("Saving screenshot references on clean application exit");
-                    _screenshotCollection.SaveToXmlFile(_config);
-
-                    if (runDateSearchThread != null && runDateSearchThread.IsBusy)
-                    {
-                        runDateSearchThread.CancelAsync();
-                    }
-
-                    if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
-                    {
-                        runScreenshotSearchThread.CancelAsync();
-                    }
-
-                    _log.WriteMessage("Bye!");
-
-                    // Exit.
-                    Environment.Exit(0);
+                    runDateSearchThread.CancelAsync();
                 }
+
+                if (runScreenshotSearchThread != null && runScreenshotSearchThread.IsBusy)
+                {
+                    runScreenshotSearchThread.CancelAsync();
+                }
+
+                _log.WriteMessage("Bye!");
+
+                // Exit.
+                Environment.Exit(0);
             }
             catch (Exception ex)
             {

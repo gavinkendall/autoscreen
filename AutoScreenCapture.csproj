@@ -87,10 +87,10 @@
     <Compile Include="config\Config.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="help\HelpTip.cs" />
-    <Compile Include="interface\FormAbout.cs">
+    <Compile Include="interface\about\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormAbout.Designer.cs">
+    <Compile Include="interface\about\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\settings\FormEmailSettings.cs">
@@ -105,10 +105,10 @@
     <Compile Include="interface\settings\FormFileTransferSettings.Designer.cs">
       <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="help\FormHelp.cs">
+    <Compile Include="interface\help\FormHelp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="help\FormHelp.Designer.cs">
+    <Compile Include="interface\help\FormHelp.Designer.cs">
       <DependentUpon>FormHelp.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\FormFloatingScreenshot.cs">
@@ -117,10 +117,10 @@
     <Compile Include="interface\FormFloatingScreenshot.Designer.cs">
       <DependentUpon>FormFloatingScreenshot.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\FormRegionSelectOptions.cs">
+    <Compile Include="interface\region_select\FormRegionSelectOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormRegionSelectOptions.Designer.cs">
+    <Compile Include="interface\region_select\FormRegionSelectOptions.Designer.cs">
       <DependentUpon>FormRegionSelectOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\setup\FormSetup.cs">
@@ -207,17 +207,17 @@
     <Compile Include="interface\main\FormMain-TabPages.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormRegionSelectWithMouse.cs">
+    <Compile Include="interface\region_select\FormRegionSelectWithMouse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormRegionSelectWithMouse.Designer.cs">
+    <Compile Include="interface\region_select\FormRegionSelectWithMouse.Designer.cs">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
     </Compile>
     <Compile Include="keyboard\HotKeyMap.cs" />
-    <Compile Include="modules\macro_tags\FormMacroTagsToolWindow.cs">
+    <Compile Include="interface\macro_tag\FormMacroTagsToolWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\macro_tags\FormMacroTagsToolWindow.Designer.cs">
+    <Compile Include="interface\macro_tag\FormMacroTagsToolWindow.Designer.cs">
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="macro\MacroTagExpressionParser.cs" />
@@ -231,24 +231,24 @@
     <Compile Include="modules\editors\Editor.cs" />
     <Compile Include="modules\editors\EditorCollection.cs" />
     <Compile Include="FileSystem.cs" />
-    <Compile Include="modules\editors\FormEditor.cs">
+    <Compile Include="interface\editor\FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\editors\FormEditor.Designer.cs">
+    <Compile Include="interface\editor\FormEditor.Designer.cs">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\schedules\ScheduleCollection.cs" />
-    <Compile Include="modules\schedules\FormSchedule.cs">
+    <Compile Include="interface\schedule\FormSchedule.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\schedules\FormSchedule.Designer.cs">
+    <Compile Include="interface\schedule\FormSchedule.Designer.cs">
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\schedules\Schedule.cs" />
-    <Compile Include="interface\FormEnterPassphrase.cs">
+    <Compile Include="interface\security\FormEnterPassphrase.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="interface\FormEnterPassphrase.Designer.cs">
+    <Compile Include="interface\security\FormEnterPassphrase.Designer.cs">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </Compile>
     <Compile Include="interface\main\FormMain.cs">
@@ -257,36 +257,36 @@
     <Compile Include="interface\main\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="modules\regions\FormRegion.cs">
+    <Compile Include="interface\region\FormRegion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\regions\FormRegion.Designer.cs">
+    <Compile Include="interface\region\FormRegion.Designer.cs">
       <DependentUpon>FormRegion.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\regions\Region.cs" />
     <Compile Include="modules\regions\RegionCollection.cs" />
-    <Compile Include="modules\screens\FormScreen.cs">
+    <Compile Include="interface\screen\FormScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\screens\FormScreen.Designer.cs">
+    <Compile Include="interface\screen\FormScreen.Designer.cs">
       <DependentUpon>FormScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\screens\Screen.cs" />
     <Compile Include="modules\screens\ScreenCollection.cs" />
     <Compile Include="modules\slideshow\Slide.cs" />
-    <Compile Include="modules\macro_tags\FormMacroTag.cs">
+    <Compile Include="interface\macro_tag\FormMacroTag.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\macro_tags\FormMacroTag.Designer.cs">
+    <Compile Include="interface\macro_tag\FormMacroTag.Designer.cs">
       <DependentUpon>FormMacroTag.cs</DependentUpon>
     </Compile>
     <Compile Include="modules\macro_tags\MacroTag.cs" />
     <Compile Include="modules\macro_tags\MacroTagCollection.cs" />
     <Compile Include="modules\macro_tags\MacroTagType.cs" />
-    <Compile Include="modules\triggers\FormTrigger.cs">
+    <Compile Include="interface\trigger\FormTrigger.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="modules\triggers\FormTrigger.Designer.cs">
+    <Compile Include="interface\trigger\FormTrigger.Designer.cs">
       <DependentUpon>FormTrigger.cs</DependentUpon>
     </Compile>
     <Compile Include="image_format\ImageFormat.cs" />
@@ -316,7 +316,7 @@
     <Compile Include="versioning\VersionCollection.cs" />
     <Compile Include="versioning\Version.cs" />
     <Compile Include="versioning\VersionManager.cs" />
-    <EmbeddedResource Include="interface\FormAbout.resx">
+    <EmbeddedResource Include="interface\about\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -326,13 +326,13 @@
     <EmbeddedResource Include="interface\settings\FormFileTransferSettings.resx">
       <DependentUpon>FormFileTransferSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="help\FormHelp.resx">
+    <EmbeddedResource Include="interface\help\FormHelp.resx">
       <DependentUpon>FormHelp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormFloatingScreenshot.resx">
       <DependentUpon>FormFloatingScreenshot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\FormRegionSelectOptions.resx">
+    <EmbeddedResource Include="interface\region_select\FormRegionSelectOptions.resx">
       <DependentUpon>FormRegionSelectOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\setup\FormSetup.resx">
@@ -347,39 +347,39 @@
     <EmbeddedResource Include="interface\FormScreenCaptureStatus.resx">
       <DependentUpon>FormScreenCaptureStatus.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\FormRegionSelectWithMouse.resx">
+    <EmbeddedResource Include="interface\region_select\FormRegionSelectWithMouse.resx">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\FormScreenshotMetadata.resx">
       <DependentUpon>FormScreenshotMetadata.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\macro_tags\FormMacroTagsToolWindow.resx">
+    <EmbeddedResource Include="interface\macro_tag\FormMacroTagsToolWindow.resx">
       <DependentUpon>FormMacroTagsToolWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\editors\FormEditor.resx">
+    <EmbeddedResource Include="interface\editor\FormEditor.resx">
       <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\schedules\FormSchedule.resx">
+    <EmbeddedResource Include="interface\schedule\FormSchedule.resx">
       <DependentUpon>FormSchedule.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="interface\formEnterPassphrase.resx">
+    <EmbeddedResource Include="interface\security\formEnterPassphrase.resx">
       <DependentUpon>FormEnterPassphrase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\main\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\regions\FormRegion.resx">
+    <EmbeddedResource Include="interface\region\FormRegion.resx">
       <DependentUpon>FormRegion.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\screens\FormScreen.resx">
+    <EmbeddedResource Include="interface\screen\FormScreen.resx">
       <DependentUpon>FormScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\macro_tags\FormMacroTag.resx">
+    <EmbeddedResource Include="interface\macro_tag\FormMacroTag.resx">
       <DependentUpon>FormMacroTag.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="modules\triggers\FormTrigger.resx">
+    <EmbeddedResource Include="interface\trigger\FormTrigger.resx">
       <DependentUpon>FormTrigger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -455,6 +455,7 @@
       <Name>Gavin.Kendall.SFTP</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

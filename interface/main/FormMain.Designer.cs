@@ -153,12 +153,12 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemSetupWizard,
             this.toolStripSeparatorSetupWizard,
+            this.toolStripMenuItemInterval,
+            this.toolStripMenuItemLabels,
             this.toolStripMenuItemActiveWindowTitle,
             this.toolStripMenuItemApplicationFocus,
-            this.toolStripMenuItemInterval,
-            this.toolStripMenuItemKeyboardShortcuts,
-            this.toolStripMenuItemLabels,
-            this.toolStripMenuItemSecurity});
+            this.toolStripMenuItemSecurity,
+            this.toolStripMenuItemKeyboardShortcuts});
             this.toolStripDropDownButtonSetup.ForeColor = System.Drawing.Color.Black;
             this.toolStripDropDownButtonSetup.Image = global::AutoScreenCapture.Properties.Resources.setup;
             this.toolStripDropDownButtonSetup.ImageTransparentColor = System.Drawing.Color.Magenta;

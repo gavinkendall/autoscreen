@@ -49,6 +49,7 @@
             this.comboBoxScreenshotLabel = new System.Windows.Forms.ComboBox();
             this.tabPageActiveWindowTitle = new System.Windows.Forms.TabPage();
             this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
+            this.checkBoxActiveWindowTitleComparisonCheckReverse = new System.Windows.Forms.CheckBox();
             this.buttonDynamicRegexValidator = new System.Windows.Forms.Button();
             this.radioButtonRegularExpressionMatch = new System.Windows.Forms.RadioButton();
             this.radioButtonCaseSensitiveMatch = new System.Windows.Forms.RadioButton();
@@ -106,7 +107,6 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.checkBoxActiveWindowTitleComparisonCheckReverse = new System.Windows.Forms.CheckBox();
             this.tabControlSetup.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
             this.groupBoxCaptureDelay.SuspendLayout();
@@ -369,6 +369,17 @@
             this.groupBoxActiveWindowTitle.TabStop = false;
             this.groupBoxActiveWindowTitle.Text = "Active Window Title";
             // 
+            // checkBoxActiveWindowTitleComparisonCheckReverse
+            // 
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.AutoSize = true;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Location = new System.Drawing.Point(110, 19);
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Name = "checkBoxActiveWindowTitleComparisonCheckReverse";
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabIndex = 1;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabStop = false;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Text = "No Match";
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.UseVisualStyleBackColor = true;
+            // 
             // buttonDynamicRegexValidator
             // 
             this.buttonDynamicRegexValidator.Image = global::AutoScreenCapture.Properties.Resources.lightbulb;
@@ -547,9 +558,9 @@
             this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
             this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
             this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(236, 71);
+            this.groupBoxSecurity.Location = new System.Drawing.Point(36, 24);
             this.groupBoxSecurity.Name = "groupBoxSecurity";
-            this.groupBoxSecurity.Size = new System.Drawing.Size(205, 110);
+            this.groupBoxSecurity.Size = new System.Drawing.Size(450, 190);
             this.groupBoxSecurity.TabIndex = 2;
             this.groupBoxSecurity.TabStop = false;
             this.groupBoxSecurity.Text = "Security";
@@ -565,23 +576,22 @@
             // 
             // buttonSetPassphrase
             // 
-            this.buttonSetPassphrase.Enabled = false;
-            this.buttonSetPassphrase.Image = ((System.Drawing.Image)(resources.GetObject("buttonSetPassphrase.Image")));
             this.buttonSetPassphrase.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSetPassphrase.Location = new System.Drawing.Point(131, 80);
+            this.buttonSetPassphrase.Location = new System.Drawing.Point(220, 135);
             this.buttonSetPassphrase.Name = "buttonSetPassphrase";
-            this.buttonSetPassphrase.Size = new System.Drawing.Size(68, 23);
+            this.buttonSetPassphrase.Size = new System.Drawing.Size(179, 23);
             this.buttonSetPassphrase.TabIndex = 0;
             this.buttonSetPassphrase.TabStop = false;
-            this.buttonSetPassphrase.Text = "Lock";
+            this.buttonSetPassphrase.Text = "Set Passphrase";
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
+            this.buttonSetPassphrase.Click += new System.EventHandler(this.buttonSetPassphrase_Click);
             // 
             // textBoxPassphrase
             // 
             this.textBoxPassphrase.Location = new System.Drawing.Point(6, 82);
             this.textBoxPassphrase.MaxLength = 30;
             this.textBoxPassphrase.Name = "textBoxPassphrase";
-            this.textBoxPassphrase.Size = new System.Drawing.Size(119, 20);
+            this.textBoxPassphrase.Size = new System.Drawing.Size(363, 20);
             this.textBoxPassphrase.TabIndex = 0;
             this.textBoxPassphrase.TabStop = false;
             // 
@@ -957,17 +967,6 @@
             this.labelHelp.Size = new System.Drawing.Size(685, 17);
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // checkBoxActiveWindowTitleComparisonCheckReverse
-            // 
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.AutoSize = true;
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.Location = new System.Drawing.Point(110, 19);
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.Name = "checkBoxActiveWindowTitleComparisonCheckReverse";
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabIndex = 1;
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabStop = false;
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.Text = "No Match";
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.UseVisualStyleBackColor = true;
             // 
             // FormSetup
             // 

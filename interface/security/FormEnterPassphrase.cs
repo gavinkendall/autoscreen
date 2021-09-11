@@ -30,20 +30,18 @@ namespace AutoScreenCapture
     {
         private Log _log;
         private Config _config;
-        private ScreenCapture _screenCapture;
         private Security _security;
 
         /// <summary>
         /// The empty constructor for the form.
         /// </summary>
-        public FormEnterPassphrase(ScreenCapture screenCapture, Config config, Log log)
+        public FormEnterPassphrase(Security security, Config config, Log log)
         {
             InitializeComponent();
 
             _log = log;
             _config = config;
-            _screenCapture = screenCapture;
-            _security = new Security();
+            _security = security;
         }
 
         private void FormEnterPassphrase_Load(object sender, EventArgs e)
@@ -57,7 +55,7 @@ namespace AutoScreenCapture
             Close();
         }
 
-        private void buttonUnlock_Click(object sender, EventArgs e)
+        private void buttonOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxPassphrase.Text)) return;
 
@@ -65,23 +63,21 @@ namespace AutoScreenCapture
 
             if (_security.Hash(textBoxPassphrase.Text).Equals(_config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value))
             {
-                _log.WriteDebugMessage("Screen capture session was successfully unlocked by " + Environment.UserName + " on " + Environment.MachineName);
+                _log.WriteDebugMessage("User successfully accessed Auto Screen Capture by " + Environment.UserName + " on " + Environment.MachineName);
 
-                _screenCapture.LockScreenCaptureSession = false;
-                Close();
+                DialogResult = DialogResult.OK;
             }
             else
             {
-                _log.WriteMessage("WARNING: There was an attempt to unlock the running screen capture session! The user was " + Environment.UserName + " on " + Environment.MachineName);
-
-                textBoxPassphrase.Clear();
-                textBoxPassphrase.Focus();
+                _log.WriteMessage("WARNING: There was an unauthorized access attempt for Auto Screen Capture! The user was " + Environment.UserName + " on " + Environment.MachineName);
             }
+
+            Close();
         }
 
         private void TextChanged_textBoxPassphrase(object sender, EventArgs e)
         {
-            buttonUnlock.Enabled = textBoxPassphrase.Text.Length > 0;
+            buttonOK.Enabled = textBoxPassphrase.Text.Length > 0;
         }
     }
 }

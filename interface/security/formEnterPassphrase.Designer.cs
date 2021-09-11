@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEnterPassphrase));
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonUnlock = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxPassphrase
@@ -56,26 +56,26 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // buttonUnlock
+            // buttonOK
             // 
-            this.buttonUnlock.Enabled = false;
-            this.buttonUnlock.Location = new System.Drawing.Point(42, 38);
-            this.buttonUnlock.Name = "buttonUnlock";
-            this.buttonUnlock.Size = new System.Drawing.Size(75, 23);
-            this.buttonUnlock.TabIndex = 3;
-            this.buttonUnlock.TabStop = false;
-            this.buttonUnlock.Text = "Unlock";
-            this.buttonUnlock.UseVisualStyleBackColor = true;
-            this.buttonUnlock.Click += new System.EventHandler(this.buttonUnlock_Click);
+            this.buttonOK.Enabled = false;
+            this.buttonOK.Location = new System.Drawing.Point(42, 38);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(75, 23);
+            this.buttonOK.TabIndex = 3;
+            this.buttonOK.TabStop = false;
+            this.buttonOK.Text = "OK";
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // FormEnterPassphrase
             // 
-            this.AcceptButton = this.buttonUnlock;
+            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(210, 68);
-            this.Controls.Add(this.buttonUnlock);
+            this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.textBoxPassphrase);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -96,6 +96,6 @@
 
         private System.Windows.Forms.TextBox textBoxPassphrase;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonUnlock;
+        private System.Windows.Forms.Button buttonOK;
     }
 }

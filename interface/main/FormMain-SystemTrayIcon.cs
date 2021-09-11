@@ -124,6 +124,9 @@ namespace AutoScreenCapture
             if (_screenCapture.LockScreenCaptureSession)
             {
                 // Hide the menu items that need to be hidden when a screen capture session is locked.
+                toolStripMenuItemStartScreenCapture.Visible = false;
+                toolStripMenuItemStopScreenCapture.Visible = false;
+                toolStripSeparatorScreenCapture.Visible = false;
                 toolStripMenuItemCommandLine.Visible = false;
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
                 toolStripMenuItemAdd.Visible = false;
@@ -138,10 +141,16 @@ namespace AutoScreenCapture
                 toolStripMenuItemCaptureNowEdit.Visible = false;
                 toolStripMenuItemCaptureNowArchive.Visible = false;
                 toolStripSeparatorCaptureNow.Visible = false;
+
+                toolStripSeparatorRegionSelect.Visible = false;
+                toolStripMenuItemExit.Visible = false;
             }
             else
             {
                 // Show the menu items that need to be shown when a screen capture session is unlocked.
+                toolStripMenuItemStartScreenCapture.Visible = true;
+                toolStripMenuItemStopScreenCapture.Visible = true;
+                toolStripSeparatorScreenCapture.Visible = true;
                 toolStripMenuItemCommandLine.Visible = true;
                 toolStripMenuItemScreenCaptureStatus.Visible = true;
                 toolStripMenuItemAdd.Visible = true;
@@ -166,6 +175,9 @@ namespace AutoScreenCapture
                 toolStripMenuItemCaptureNowEdit.Visible = true;
                 toolStripMenuItemCaptureNowArchive.Visible = true;
                 toolStripSeparatorCaptureNow.Visible = true;
+
+                toolStripSeparatorRegionSelect.Visible = true;
+                toolStripMenuItemExit.Visible = true;
             }
         }
 

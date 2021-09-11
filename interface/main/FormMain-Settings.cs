@@ -75,9 +75,9 @@ namespace AutoScreenCapture
                 _formRegionSelectOptions = new FormRegionSelectOptions(_config, _fileSystem, _imageFormatCollection);
                 _formSchedule = new FormSchedule();
                 _formTrigger = new FormTrigger(_fileSystem);
-                _formEnterPassphrase = new FormEnterPassphrase(_screenCapture, _config, _log);
+                _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-                _formSetup = new FormSetup(_config, _fileSystem, _screenCapture);
+                _formSetup = new FormSetup(_security, _config, _fileSystem, _screenCapture);
                 _formSetupWizard = new FormSetupWizard();
 
                 _log.WriteDebugMessage("Initializing editor collection");

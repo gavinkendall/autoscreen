@@ -234,6 +234,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.4")); // The Trigger form looks better.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.5")); // Execution level changed from requireAdministrator to highestAvailable.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.6")); // Execution level changed from highestAvailable to asInvoker.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.7")); // Fixed bug with emailing screenshots from a one time schedule.
 
             Application = new SettingCollection()
             {
