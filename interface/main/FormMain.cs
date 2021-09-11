@@ -401,7 +401,9 @@ namespace AutoScreenCapture
 
                     if (_formEnterPassphrase.DialogResult != DialogResult.OK)
                     {
-                        _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot show interface. Screen capture session is locked");
+                        _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot show interface. Screen capture session has been locked. Interface is now hidden");
+
+                        HideInterface();
 
                         return;
                     }

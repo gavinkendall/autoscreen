@@ -98,6 +98,8 @@ namespace AutoScreenCapture
         /// </summary>
         public bool Encrypted { get; set; }
 
+        public string Key { get; set; }
+
         /// <summary>
         /// The consructor for creating a screenshot.
         /// </summary>

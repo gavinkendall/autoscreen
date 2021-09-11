@@ -533,6 +533,8 @@ namespace AutoScreenCapture
 
                             _config.Settings.User.SetValueByKey("Passphrase", _security.Hash(passphrase));
 
+                            _screenCapture.LockScreenCaptureSession = true;
+
                             if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                             {
                                 _screenCapture.ApplicationError = true;

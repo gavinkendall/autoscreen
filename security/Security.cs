@@ -120,8 +120,8 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="source">The filepath of the encrypted file.</param>
         /// <param name="destination">The filepath of the file that has been decrypted.</param>
-        /// <param name="key">The key to use for decrypting the encrypted file.</param>
-        /// <returns></returns>
+        /// <param name="key">The key to use to decrypt the file.</param>
+        /// <returns>Returns true if decryption succeeded. Returns false if decryption failed.</returns>
         public bool DecryptFile(string source, string destination, string key)
         {
             try

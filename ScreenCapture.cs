@@ -336,7 +336,7 @@ namespace AutoScreenCapture
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);
         }
 
-        private void AddScreenshotAndSaveToFile(int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
+        private void AddScreenshotAndSaveToFile(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             string dirName = _fileSystem.GetDirectoryName(screenshot.Path);
 
@@ -358,7 +358,7 @@ namespace AutoScreenCapture
 
                 if (screenshotCollection.Add(screenshot))
                 {
-                    SaveToFile(screenshot, jpegQuality);
+                    SaveToFile(screenshot, security, jpegQuality);
                 }
                 else
                 {
@@ -380,7 +380,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SaveToFile(Screenshot screenshot, int jpegQuality)
+        private void SaveToFile(Screenshot screenshot, Security security, int jpegQuality)
         {
             try
             {
@@ -393,24 +393,27 @@ namespace AutoScreenCapture
 
                         var encoderInfo = GetEncoderInfo("image/jpeg");
 
-                        if (screenshot.Encrypted)
-                        {
-                            // Save the encrypted version of the screenshot to disk.
-                        }
-                        else
-                        {
-                            screenshot.Bitmap.Save(screenshot.Path, encoderInfo, encoderParams);
-                        }
+                        screenshot.Bitmap.Save(screenshot.Path, encoderInfo, encoderParams);
                     }
                     else
                     {
-                        if (screenshot.Encrypted)
+                        screenshot.Bitmap.Save(screenshot.Path, screenshot.Format.Format);
+                    }
+
+                    if (screenshot.Encrypted)
+                    {
+                        string key = security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+
+                        if (!string.IsNullOrEmpty(key))
                         {
-                            // Save the encrypted version of the screenshot to disk.
-                        }
-                        else
-                        {
-                            screenshot.Bitmap.Save(screenshot.Path, screenshot.Format.Format);
+                            screenshot.Key = key;
+
+                            if (_fileSystem.FileExists(screenshot.Path))
+                            {
+                                _fileSystem.DeleteFile(screenshot.Path);
+                            }
+
+                            _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
                         }
                     }
 
@@ -728,11 +731,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the captured bitmap image as a screenshot to an image file.
         /// </summary>
+        /// <param name="security">The security class.</param>
         /// <param name="jpegQuality">The JPEG quality setting for JPEG images being saved.</param>
         /// <param name="screenshot">The screenshot to save.</param>
         /// <param name="screenshotCollection">A collection of screenshot objects.</param>
         /// <returns>A boolean to determine if we successfully saved the screenshot.</returns>
-        public bool SaveScreenshot(int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
+        public bool SaveScreenshot(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             try
             {
@@ -760,7 +764,7 @@ namespace AutoScreenCapture
 
                             if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                             {
-                                AddScreenshotAndSaveToFile(jpegQuality, screenshot, screenshotCollection);
+                                AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
                             }
                             else
                             {
@@ -790,7 +794,7 @@ namespace AutoScreenCapture
                     else
                     {
                         // This is a UNC network share path (such as "\\SERVER\screenshots\").
-                        AddScreenshotAndSaveToFile(jpegQuality, screenshot, screenshotCollection);
+                        AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
                     }
                 }
 

@@ -66,9 +66,13 @@
             this.buttonApplicationFocusRefresh = new System.Windows.Forms.Button();
             this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
-            this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
-            this.labelPasswordDescription = new System.Windows.Forms.Label();
+            this.labelPassphrase = new System.Windows.Forms.Label();
+            this.labelHash = new System.Windows.Forms.Label();
+            this.textBoxPassphraseHash = new System.Windows.Forms.TextBox();
+            this.labelLastUpdated = new System.Windows.Forms.Label();
+            this.buttonClearPassphrase = new System.Windows.Forms.Button();
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
+            this.labelPasswordDescription = new System.Windows.Forms.Label();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.tabPageKeyboardShortcuts = new System.Windows.Forms.TabPage();
             this.checkBoxUseKeyboardShortcuts = new System.Windows.Forms.CheckBox();
@@ -123,7 +127,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
-            this.groupBoxSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
             this.tabControlKeyboardShortcuts.SuspendLayout();
             this.tabPageScreenCapture.SuspendLayout();
@@ -544,7 +547,14 @@
             // 
             // tabPageSecurity
             // 
-            this.tabPageSecurity.Controls.Add(this.groupBoxSecurity);
+            this.tabPageSecurity.Controls.Add(this.labelPassphrase);
+            this.tabPageSecurity.Controls.Add(this.labelHash);
+            this.tabPageSecurity.Controls.Add(this.textBoxPassphraseHash);
+            this.tabPageSecurity.Controls.Add(this.labelLastUpdated);
+            this.tabPageSecurity.Controls.Add(this.buttonClearPassphrase);
+            this.tabPageSecurity.Controls.Add(this.buttonSetPassphrase);
+            this.tabPageSecurity.Controls.Add(this.labelPasswordDescription);
+            this.tabPageSecurity.Controls.Add(this.textBoxPassphrase);
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
             this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(3);
@@ -553,31 +563,59 @@
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
             // 
-            // groupBoxSecurity
+            // labelPassphrase
             // 
-            this.groupBoxSecurity.Controls.Add(this.labelPasswordDescription);
-            this.groupBoxSecurity.Controls.Add(this.buttonSetPassphrase);
-            this.groupBoxSecurity.Controls.Add(this.textBoxPassphrase);
-            this.groupBoxSecurity.Location = new System.Drawing.Point(36, 24);
-            this.groupBoxSecurity.Name = "groupBoxSecurity";
-            this.groupBoxSecurity.Size = new System.Drawing.Size(450, 190);
-            this.groupBoxSecurity.TabIndex = 2;
-            this.groupBoxSecurity.TabStop = false;
-            this.groupBoxSecurity.Text = "Security";
+            this.labelPassphrase.AutoSize = true;
+            this.labelPassphrase.Location = new System.Drawing.Point(6, 66);
+            this.labelPassphrase.Name = "labelPassphrase";
+            this.labelPassphrase.Size = new System.Drawing.Size(106, 13);
+            this.labelPassphrase.TabIndex = 5;
+            this.labelPassphrase.Text = "Passphrase (hidden):";
             // 
-            // labelPasswordDescription
+            // labelHash
             // 
-            this.labelPasswordDescription.Location = new System.Drawing.Point(7, 21);
-            this.labelPasswordDescription.Name = "labelPasswordDescription";
-            this.labelPasswordDescription.Size = new System.Drawing.Size(186, 55);
-            this.labelPasswordDescription.TabIndex = 0;
-            this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this inter" +
-    "face is shown, or the application is exiting:";
+            this.labelHash.AutoSize = true;
+            this.labelHash.Location = new System.Drawing.Point(6, 40);
+            this.labelHash.Name = "labelHash";
+            this.labelHash.Size = new System.Drawing.Size(87, 13);
+            this.labelHash.TabIndex = 4;
+            this.labelHash.Text = "Hash (SHA-512):";
+            // 
+            // textBoxPassphraseHash
+            // 
+            this.textBoxPassphraseHash.Location = new System.Drawing.Point(121, 37);
+            this.textBoxPassphraseHash.MaxLength = 30;
+            this.textBoxPassphraseHash.Name = "textBoxPassphraseHash";
+            this.textBoxPassphraseHash.ReadOnly = true;
+            this.textBoxPassphraseHash.Size = new System.Drawing.Size(550, 20);
+            this.textBoxPassphraseHash.TabIndex = 3;
+            this.textBoxPassphraseHash.TabStop = false;
+            // 
+            // labelLastUpdated
+            // 
+            this.labelLastUpdated.AutoSize = true;
+            this.labelLastUpdated.Location = new System.Drawing.Point(6, 94);
+            this.labelLastUpdated.Name = "labelLastUpdated";
+            this.labelLastUpdated.Size = new System.Drawing.Size(72, 13);
+            this.labelLastUpdated.TabIndex = 2;
+            this.labelLastUpdated.Text = "Last updated:";
+            // 
+            // buttonClearPassphrase
+            // 
+            this.buttonClearPassphrase.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonClearPassphrase.Location = new System.Drawing.Point(492, 89);
+            this.buttonClearPassphrase.Name = "buttonClearPassphrase";
+            this.buttonClearPassphrase.Size = new System.Drawing.Size(179, 23);
+            this.buttonClearPassphrase.TabIndex = 1;
+            this.buttonClearPassphrase.TabStop = false;
+            this.buttonClearPassphrase.Text = "Clear Passphrase";
+            this.buttonClearPassphrase.UseVisualStyleBackColor = true;
+            this.buttonClearPassphrase.Click += new System.EventHandler(this.buttonClearPassphrase_Click);
             // 
             // buttonSetPassphrase
             // 
             this.buttonSetPassphrase.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSetPassphrase.Location = new System.Drawing.Point(220, 135);
+            this.buttonSetPassphrase.Location = new System.Drawing.Point(307, 89);
             this.buttonSetPassphrase.Name = "buttonSetPassphrase";
             this.buttonSetPassphrase.Size = new System.Drawing.Size(179, 23);
             this.buttonSetPassphrase.TabIndex = 0;
@@ -586,12 +624,21 @@
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
             this.buttonSetPassphrase.Click += new System.EventHandler(this.buttonSetPassphrase_Click);
             // 
+            // labelPasswordDescription
+            // 
+            this.labelPasswordDescription.Location = new System.Drawing.Point(6, 13);
+            this.labelPasswordDescription.Name = "labelPasswordDescription";
+            this.labelPasswordDescription.Size = new System.Drawing.Size(665, 21);
+            this.labelPasswordDescription.TabIndex = 0;
+            this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this inter" +
+    "face is shown, or the application is exiting:";
+            // 
             // textBoxPassphrase
             // 
-            this.textBoxPassphrase.Location = new System.Drawing.Point(6, 82);
+            this.textBoxPassphrase.Location = new System.Drawing.Point(121, 63);
             this.textBoxPassphrase.MaxLength = 30;
             this.textBoxPassphrase.Name = "textBoxPassphrase";
-            this.textBoxPassphrase.Size = new System.Drawing.Size(363, 20);
+            this.textBoxPassphrase.Size = new System.Drawing.Size(550, 20);
             this.textBoxPassphrase.TabIndex = 0;
             this.textBoxPassphrase.TabStop = false;
             // 
@@ -1007,8 +1054,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).EndInit();
             this.tabPageSecurity.ResumeLayout(false);
-            this.groupBoxSecurity.ResumeLayout(false);
-            this.groupBoxSecurity.PerformLayout();
+            this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
             this.tabControlKeyboardShortcuts.ResumeLayout(false);
@@ -1040,7 +1086,6 @@
         private System.Windows.Forms.GroupBox groupBoxActiveWindowTitle;
         private System.Windows.Forms.Button buttonDynamicRegexValidator;
         private System.Windows.Forms.GroupBox groupBoxApplicationFocus;
-        private System.Windows.Forms.GroupBox groupBoxSecurity;
         private System.Windows.Forms.Label labelPasswordDescription;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.Button buttonOK;
@@ -1274,5 +1319,10 @@
         public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowArchiveModifier1;
         private System.Windows.Forms.CheckBox checkBoxUseKeyboardShortcuts;
         public System.Windows.Forms.CheckBox checkBoxActiveWindowTitleComparisonCheckReverse;
+        private System.Windows.Forms.Button buttonClearPassphrase;
+        private System.Windows.Forms.Label labelLastUpdated;
+        private System.Windows.Forms.Label labelHash;
+        public System.Windows.Forms.TextBox textBoxPassphraseHash;
+        private System.Windows.Forms.Label labelPassphrase;
     }
 }

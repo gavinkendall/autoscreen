@@ -244,6 +244,32 @@ namespace AutoScreenCapture
             {
                 _log.WriteMessage("Stopping screen capture");
 
+                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+
+                if (!string.IsNullOrEmpty(passphrase))
+                {
+                    _screenCapture.LockScreenCaptureSession = true;
+
+                    if (!_formEnterPassphrase.Visible)
+                    {
+                        _formEnterPassphrase.ShowDialog(this);
+                    }
+                    else
+                    {
+                        _formEnterPassphrase.Focus();
+                        _formEnterPassphrase.BringToFront();
+                    }
+
+                    if (_formEnterPassphrase.DialogResult != DialogResult.OK)
+                    {
+                        _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot stop screen capture session. Screen capture session has been locked. Interface is now hidden");
+
+                        return;
+                    }
+
+                    _screenCapture.LockScreenCaptureSession = false;
+                }
+
                 DisableStopCapture();
                 EnableStartCapture();
 
@@ -305,10 +331,11 @@ namespace AutoScreenCapture
                 Bitmap = bitmap,
                 Format = screen.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty
+                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty,
+                Encrypted = screen.Encrypt
             };
 
-            if (_screenCapture.SaveScreenshot(screen.JpegQuality, screenshot, _screenshotCollection))
+            if (_screenCapture.SaveScreenshot(_security, screen.JpegQuality, screenshot, _screenshotCollection))
             {
                 ScreenshotTakenWithSuccess();
 
@@ -340,7 +367,7 @@ namespace AutoScreenCapture
                 Encrypted = region.Encrypt
             };
 
-            if (_screenCapture.SaveScreenshot(region.JpegQuality, screenshot, _screenshotCollection))
+            if (_screenCapture.SaveScreenshot(_security, region.JpegQuality, screenshot, _screenshotCollection))
             {
                 ScreenshotTakenWithSuccess();
 

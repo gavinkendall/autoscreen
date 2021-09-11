@@ -148,6 +148,10 @@ namespace AutoScreenCapture
             textBoxKeyboardShortcutRegionSelectClipboardKey.Text = _config.Settings.User.GetByKey("KeyboardShortcutRegionSelectClipboardKey", _config.Settings.DefaultSettings.KeyboardShortcutRegionSelectClipboardKey).Value.ToString().ToUpper();
             textBoxKeyboardShortcutRegionSelectAutoSaveKey.Text = _config.Settings.User.GetByKey("KeyboardShortcutRegionSelectAutoSaveKey", _config.Settings.DefaultSettings.KeyboardShortcutRegionSelectAutoSaveKey).Value.ToString().ToUpper();
             textBoxKeyboardShortcutRegionSelectEditKey.Text = _config.Settings.User.GetByKey("KeyboardShortcutRegionSelectEditKey", _config.Settings.DefaultSettings.KeyboardShortcutRegionSelectEditKey).Value.ToString().ToUpper();
+
+            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase", string.Empty).Value.ToString();
+            string passphraseLastUpdated = _config.Settings.User.GetByKey("PassphraseLastUpdated", string.Empty).Value.ToString();
+            labelLastUpdated.Text = "Last updated: " + passphraseLastUpdated;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -349,7 +353,45 @@ namespace AutoScreenCapture
 
         private void buttonSetPassphrase_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBoxPassphrase.Text))
+            {
+                MessageBox.Show("Passphrase cannot be empty.", "Empty Passphrase", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            string passphraseLastUpdated = DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss");
+
             _config.Settings.User.SetValueByKey("Passphrase", _security.Hash(textBoxPassphrase.Text));
+            _config.Settings.User.SetValueByKey("PassphraseLastUpdated", passphraseLastUpdated);
+
+            _config.Settings.User.Save(_config.Settings, _fileSystem);
+
+            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase", string.Empty).Value.ToString();
+
+            //_security.Key = textBoxPassphrase.Text;
+            textBoxPassphrase.Clear();
+
+            labelLastUpdated.Text = "Last updated: " + passphraseLastUpdated;
+        }
+
+        private void buttonClearPassphrase_Click(object sender, EventArgs e)
+        {
+            string passphraseLastUpdated = DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss");
+
+            _config.Settings.User.SetValueByKey("Passphrase", string.Empty);
+            _config.Settings.User.SetValueByKey("PassphraseLastUpdated", passphraseLastUpdated);
+
+            _config.Settings.User.Save(_config.Settings, _fileSystem);
+
+            textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase", string.Empty).Value.ToString();
+
+            //_security.Key = string.Empty;
+            textBoxPassphrase.Clear();
+
+            labelLastUpdated.Text = "Last updated: " + passphraseLastUpdated;
+
+            textBoxPassphrase.Text = string.Empty;
         }
     }
 }

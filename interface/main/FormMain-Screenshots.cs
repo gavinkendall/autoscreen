@@ -335,7 +335,25 @@ namespace AutoScreenCapture
 
                         if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.Path : string.Empty))
                         {
-                            pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                            if (selectedScreenshot.Encrypted)
+                            {
+                                if (_fileSystem.FileExists(selectedScreenshot.Path))
+                                {
+                                    if (_security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key))
+                                    {
+                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path + "-decrypted");
+
+                                        if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
+                                        {
+                                            _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                            }
                         }
                         else
                         {
@@ -426,7 +444,28 @@ namespace AutoScreenCapture
                             }
                         }
 
-                        pictureBox.Image = _screenCapture.GetImageByPath(path);
+                        if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.Path : string.Empty))
+                        {
+                            if (selectedScreenshot.Encrypted)
+                            {
+                                if (_fileSystem.FileExists(selectedScreenshot.Path))
+                                {
+                                    if (_security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key))
+                                    {
+                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path + "-decrypted");
+
+                                        if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
+                                        {
+                                            _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                            }
+                        }
 
                         if (pictureBox.Image != null)
                         {

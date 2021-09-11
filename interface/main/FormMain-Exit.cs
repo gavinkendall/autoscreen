@@ -34,6 +34,32 @@ namespace AutoScreenCapture
             {
                 _log.WriteMessage("Exiting application");
 
+                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+
+                if (!string.IsNullOrEmpty(passphrase))
+                {
+                    _screenCapture.LockScreenCaptureSession = true;
+
+                    if (!_formEnterPassphrase.Visible)
+                    {
+                        _formEnterPassphrase.ShowDialog(this);
+                    }
+                    else
+                    {
+                        _formEnterPassphrase.Focus();
+                        _formEnterPassphrase.BringToFront();
+                    }
+
+                    if (_formEnterPassphrase.DialogResult != DialogResult.OK)
+                    {
+                        _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot exit application. Screen capture session has been locked. Interface is now hidden");
+
+                        HideInterface();
+
+                        return;
+                    }
+                }
+
                 _log.WriteDebugMessage("Running triggers of condition type ApplicationExit");
                 RunTriggersOfConditionType(TriggerConditionType.ApplicationExit);
 

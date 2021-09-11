@@ -519,6 +519,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Moves a file.
+        /// </summary>
+        /// <param name="source">The source filepath.</param>
+        /// <param name="destination">The destination filepath.</param>
+        public void MoveFile(string source, string destination)
+        {
+            File.Move(source, destination);
+        }
+
+        /// <summary>
         /// Gets the length of a file's contents.
         /// </summary>
         /// <param name="path">The path to the file to check.</param>
