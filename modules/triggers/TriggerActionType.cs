@@ -143,6 +143,16 @@ namespace AutoScreenCapture
         /// <summary>
         /// Set the active window title with the specified text and use "No Match".
         /// </summary>
-        SetActiveWindowTitleAsNoMatch = 23
+        SetActiveWindowTitleAsNoMatch = 23,
+
+        /// <summary>
+        /// Show the system tray icon.
+        /// </summary>
+        ShowSystemTrayIcon = 24,
+
+        /// <summary>
+        /// Hide the system tray icon.
+        /// </summary>
+        HideSystemTrayIcon = 25
     }
 }

@@ -410,7 +410,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        notifyIcon.Visible = true;
+                        ShowSystemTrayIcon();
                     }
 
                     // -hideSystemTrayIcon
@@ -423,7 +423,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        notifyIcon.Visible = false;
+                        HideSystemTrayIcon();
                     }
 
                     // -initial
@@ -776,7 +776,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        notifyIcon.Visible = true;
+                        ShowSystemTrayIcon();
 
                         ShowInterface();
 
@@ -806,7 +806,7 @@ namespace AutoScreenCapture
                             _screenCapture.ApplicationError = true;
                         }
 
-                        notifyIcon.Visible = false;
+                        HideSystemTrayIcon();
 
                         HideInterface();
 

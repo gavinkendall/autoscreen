@@ -291,6 +291,14 @@ namespace AutoScreenCapture
                 case TriggerActionType.SetActiveWindowTitleAsNoMatch:
                     SetActiveWindowTitleAsNoMatch(trigger.Value);
                     break;
+
+                case TriggerActionType.ShowSystemTrayIcon:
+                    ShowSystemTrayIcon();
+                    break;
+
+                case TriggerActionType.HideSystemTrayIcon:
+                    HideSystemTrayIcon();
+                    break;
             }
         }
     }

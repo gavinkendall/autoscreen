@@ -154,6 +154,8 @@ namespace AutoScreenCapture
                 // AutoAdapt
                 _autoAdaptIndex = ScreenObject.AutoAdaptIndex;
                 checkBoxAutoAdapt.Checked = ScreenObject.AutoAdapt;
+
+                checkBoxEncrypt.Checked = ScreenObject.Encrypt;
             }
             else
             {
@@ -186,6 +188,8 @@ namespace AutoScreenCapture
 
                 _autoAdaptIndex = nextAdaptIndexToUseForNewScreen;
                 checkBoxAutoAdapt.Checked = false;
+
+                checkBoxEncrypt.Checked = false;
             }
 
             UpdatePreviewMacro();
@@ -239,7 +243,8 @@ namespace AutoScreenCapture
                         Height = (int)numericUpDownHeight.Value,
                         Source = comboBoxScreenSource.SelectedIndex,
                         AutoAdapt = checkBoxAutoAdapt.Checked,
-                        CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex
+                        CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex,
+                        Encrypt = checkBoxEncrypt.Checked
                     });
 
                     Okay();
@@ -287,6 +292,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).Source = comboBoxScreenSource.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).AutoAdapt = checkBoxAutoAdapt.Checked;
                         ScreenCollection.Get(ScreenObject).CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex;
+                        ScreenCollection.Get(ScreenObject).Encrypt = checkBoxEncrypt.Checked;
 
                         Okay();
                     }
@@ -336,7 +342,8 @@ namespace AutoScreenCapture
                  ScreenObject.Width != (int)numericUpDownWidth.Value ||
                  ScreenObject.Height != (int)numericUpDownHeight.Value) ||
                  ScreenObject.Source != comboBoxScreenSource.SelectedIndex ||
-                 ScreenObject.AutoAdapt != checkBoxAutoAdapt.Checked)
+                 ScreenObject.AutoAdapt != checkBoxAutoAdapt.Checked ||
+                 !ScreenObject.Encrypt.Equals(checkBoxEncrypt.Checked))
             {
                 return true;
             }

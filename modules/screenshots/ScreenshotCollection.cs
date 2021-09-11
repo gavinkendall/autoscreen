@@ -66,6 +66,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_LABEL = "label";
         private const string SCREENSHOT_VERSION = "version";
         private const string SCREENSHOT_HASH = "hash";
+        private const string SCREENSHOT_ENCRYPTED = "encrypted";
 
         // This is used for backwards compatibility with a very old version of the application.
         private const string SCREENSHOT_SCREEN = "screen";
@@ -745,6 +746,11 @@ namespace AutoScreenCapture
                                                 xReader.Read();
                                                 screenshot.Hash = xReader.Value;
                                                 break;
+
+                                            case SCREENSHOT_ENCRYPTED:
+                                                xReader.Read();
+                                                screenshot.Encrypted = Convert.ToBoolean(xReader.Value);
+                                                break;
                                         }
                                     }
                                 }
@@ -820,6 +826,8 @@ namespace AutoScreenCapture
                                     XmlElement xHash = xDoc.CreateElement(SCREENSHOT_HASH);
                                     xHash.InnerText = screenshot.Hash;
 
+                                    XmlElement xEncrypted = xDoc.CreateElement(SCREENSHOT_ENCRYPTED);
+
                                     // Create the new XML child nodes for the old XML screenshot so that it's now in the format of the new XML screenshot.
                                     xScreenshot.AppendChild(xVersion);
                                     xScreenshot.AppendChild(xViewId);
@@ -833,6 +841,7 @@ namespace AutoScreenCapture
                                     xScreenshot.AppendChild(xProcessName);
                                     xScreenshot.AppendChild(xLabel);
                                     xScreenshot.AppendChild(xHash);
+                                    xScreenshot.AppendChild(xEncrypted);
                                 }
 
                                 if (!string.IsNullOrEmpty(screenshot.Date) &&
@@ -979,6 +988,9 @@ namespace AutoScreenCapture
                             XmlElement xHash = xDoc.CreateElement(SCREENSHOT_HASH);
                             xHash.InnerText = screenshot.Hash;
 
+                            XmlElement xEncrypted = xDoc.CreateElement(SCREENSHOT_ENCRYPTED);
+                            xEncrypted.InnerText = screenshot.Encrypted.ToString();
+
                             xScreenshot.AppendChild(xVersion);
                             xScreenshot.AppendChild(xViedId);
                             xScreenshot.AppendChild(xDate);
@@ -991,6 +1003,7 @@ namespace AutoScreenCapture
                             xScreenshot.AppendChild(xProcessName);
                             xScreenshot.AppendChild(xLabel);
                             xScreenshot.AppendChild(xHash);
+                            xScreenshot.AppendChild(xEncrypted);
 
                             XmlNode xScreenshots = xDoc.SelectSingleNode(SCREENSHOTS_XPATH);
 

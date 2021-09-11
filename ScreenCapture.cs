@@ -358,7 +358,7 @@ namespace AutoScreenCapture
 
                 if (screenshotCollection.Add(screenshot))
                 {
-                    SaveToFile(screenshot.Path, screenshot.Format, jpegQuality, screenshot.Bitmap);
+                    SaveToFile(screenshot, jpegQuality);
                 }
                 else
                 {
@@ -380,29 +380,43 @@ namespace AutoScreenCapture
             }
         }
 
-        private void SaveToFile(string path, ImageFormat format, int jpegQuality, Bitmap bitmap)
+        private void SaveToFile(Screenshot screenshot, int jpegQuality)
         {
             try
             {
-                if (bitmap != null && format != null && !string.IsNullOrEmpty(path))
+                if (screenshot.Bitmap != null && screenshot.Format != null && !string.IsNullOrEmpty(screenshot.Path))
                 {
-                    if (format.Name.Equals("JPEG"))
+                    if (screenshot.Format.Name.Equals("JPEG"))
                     {
                         var encoderParams = new EncoderParameters(1);
                         encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, jpegQuality);
 
                         var encoderInfo = GetEncoderInfo("image/jpeg");
 
-                        bitmap.Save(path, encoderInfo, encoderParams);
+                        if (screenshot.Encrypted)
+                        {
+                            // Save the encrypted version of the screenshot to disk.
+                        }
+                        else
+                        {
+                            screenshot.Bitmap.Save(screenshot.Path, encoderInfo, encoderParams);
+                        }
                     }
                     else
                     {
-                        bitmap.Save(path, format.Format);
+                        if (screenshot.Encrypted)
+                        {
+                            // Save the encrypted version of the screenshot to disk.
+                        }
+                        else
+                        {
+                            screenshot.Bitmap.Save(screenshot.Path, screenshot.Format.Format);
+                        }
                     }
 
-                    bitmap.Dispose();
+                    screenshot.Bitmap.Dispose();
 
-                    _log.WriteMessage("Screenshot saved to file at path \"" + path + "\"");
+                    _log.WriteMessage("Screenshot saved to file at screenshot.Path \"" + screenshot.Path + "\"");
                 }
             }
             catch

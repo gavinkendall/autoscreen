@@ -94,6 +94,11 @@ namespace AutoScreenCapture
         public string Hash { get; set; }
 
         /// <summary>
+        /// Determines if the screenshot is encrypted.
+        /// </summary>
+        public bool Encrypted { get; set; }
+
+        /// <summary>
         /// The consructor for creating a screenshot.
         /// </summary>
         public Screenshot(Config config)

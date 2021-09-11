@@ -360,7 +360,8 @@ namespace AutoScreenCapture
                 Bitmap = bitmap,
                 Format = region.Format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty
+                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty,
+                Encrypted = region.Encrypt
             };
 
             if (_screenCapture.SaveScreenshot(region.JpegQuality, screenshot, _screenshotCollection))

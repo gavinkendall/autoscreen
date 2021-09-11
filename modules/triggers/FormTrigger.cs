@@ -370,6 +370,8 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetApplicationFocus, "Set Application Focus").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.FileTransferScreenshot, "File Transfer Screenshot (SFTP)").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitleAsNoMatch, "Set Active Window Title As No Match").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowSystemTrayIcon, "Show System Tray Icon").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.HideSystemTrayIcon, "Hide System Tray Icon").Description);
 
             listBoxAction.SelectedIndex = 0;
         }

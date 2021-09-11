@@ -184,6 +184,11 @@ namespace AutoScreenCapture
             toolStripMenuItemShowHideInterface_Click(sender, e);
         }
 
+        private void ShowSystemTrayIcon()
+        {
+            notifyIcon.Visible = true;
+        }
+
         private void HideSystemTrayIcon()
         {
             notifyIcon.Visible = false;

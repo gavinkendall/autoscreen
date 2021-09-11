@@ -46,6 +46,7 @@ namespace AutoScreenCapture
         private const string REGION_WIDTH = "width";
         private const string REGION_HEIGHT = "height";
         private const string REGION_ENABLE = "enable";
+        private const string REGION_ENCRYPT = "encrypt";
 
         private readonly string REGION_XPATH;
 
@@ -160,6 +161,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         region.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case REGION_ENCRYPT:
+                                        xReader.Read();
+                                        region.Encrypt = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -194,6 +200,7 @@ namespace AutoScreenCapture
                                 region.JpegQuality = 100;
                                 region.Mouse = true;
                                 region.Enable = true;
+                                region.Encrypt = false;
                             }
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -203,6 +210,9 @@ namespace AutoScreenCapture
                                 // This is a new property for Screen that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 region.Enable = true;
+
+                                // Introduced in 2.3.7.0
+                                region.Encrypt = false;
                             }
                         }
 
@@ -293,6 +303,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_Y, region.Y.ToString());
                         xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
                         xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
+                        xWriter.WriteElementString(REGION_ENCRYPT, region.Encrypt.ToString());
 
                         xWriter.WriteEndElement();
                     }

@@ -134,6 +134,7 @@ namespace AutoScreenCapture
                 numericUpDownWidth.Value = RegionObject.Width;
                 numericUpDownHeight.Value = RegionObject.Height;
                 checkBoxEnable.Checked = RegionObject.Enable;
+                checkBoxEncrypt.Checked = RegionObject.Encrypt;
             }
             else
             {
@@ -150,6 +151,7 @@ namespace AutoScreenCapture
                 numericUpDownWidth.Value = 800;
                 numericUpDownHeight.Value = 600;
                 checkBoxEnable.Checked = true;
+                checkBoxEncrypt.Checked = false;
             }
 
             UpdatePreviewMacro();
@@ -199,7 +201,8 @@ namespace AutoScreenCapture
                         Y = (int)numericUpDownY.Value,
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
-                        Enable = checkBoxEnable.Checked
+                        Enable = checkBoxEnable.Checked,
+                        Encrypt = checkBoxEncrypt.Checked
                     });
 
                     Okay();
@@ -241,6 +244,7 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
                         RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
                         RegionCollection.Get(RegionObject).Enable = checkBoxEnable.Checked;
+                        RegionCollection.Get(RegionObject).Encrypt = checkBoxEncrypt.Checked;
 
                         Okay();
                     }
@@ -287,7 +291,8 @@ namespace AutoScreenCapture
                  RegionObject.Y != (int)numericUpDownY.Value ||
                  RegionObject.Width != (int)numericUpDownWidth.Value ||
                  RegionObject.Height != (int)numericUpDownHeight.Value ||
-                 RegionObject.Enable.Equals(checkBoxEnable.Checked)))
+                 RegionObject.Enable.Equals(checkBoxEnable.Checked) ||
+                 !RegionObject.Encrypt.Equals(checkBoxEncrypt.Checked)))
             {
                 return true;
             }

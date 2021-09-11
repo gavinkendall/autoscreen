@@ -121,6 +121,11 @@ namespace AutoScreenCapture
         public int AutoAdaptIndex { get; set; }
 
         /// <summary>
+        /// Determines if the screen should encrypt its screenshots.
+        /// </summary>
+        public bool Encrypt { get; set; }
+
+        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()

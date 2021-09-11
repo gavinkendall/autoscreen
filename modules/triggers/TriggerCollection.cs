@@ -276,7 +276,18 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load triggers");
 
-                    Trigger triggerApplicationStartShowInterface = new Trigger()
+                    Trigger triggerApplicationStartupShowSystemTrayIcon = new Trigger()
+                    {
+                        Enable = true,
+                        Name = "Show system tray icon at startup",
+                        ConditionType = TriggerConditionType.ApplicationStartup,
+                        ActionType = TriggerActionType.ShowSystemTrayIcon,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
+                    };
+
+                    Trigger triggerApplicationStartupShowInterface = new Trigger()
                     {
                         Enable = true,
                         Name = "Show interface at startup",
@@ -331,7 +342,7 @@ namespace AutoScreenCapture
                         ScreenCaptureInterval = 0
                     };
 
-                    Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
+                    Trigger triggerBeforeScreenshotReferencesSavedDeleteScreenshots = new Trigger()
                     {
                         Enable = false,
                         Name = "Keep screenshots for 30 days",
@@ -344,12 +355,13 @@ namespace AutoScreenCapture
                     };
 
                     // Setup a few "built in" triggers by default.
-                    Add(triggerApplicationStartShowInterface);
+                    Add(triggerApplicationStartupShowSystemTrayIcon);
+                    Add(triggerApplicationStartupShowInterface);
                     Add(triggerScreenCaptureStartedHideInterface);
                     Add(triggerScreenCaptureStoppedShowInterface);
                     Add(triggerInterfaceClosingHideInterface);
                     Add(triggerLimitReachedStopScreenCapture);
-                    Add(triggerBeforeScreenshotSavedDeleteScreenshots);
+                    Add(triggerBeforeScreenshotReferencesSavedDeleteScreenshots);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

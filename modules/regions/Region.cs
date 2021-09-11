@@ -88,6 +88,11 @@ namespace AutoScreenCapture
         public bool Enable { get; set; }
 
         /// <summary>
+        /// Determines if the region should encrypt its screenshots.
+        /// </summary>
+        public bool Encrypt { get; set; }
+
+        /// <summary>
         /// The empty constructor of the region.
         /// </summary>
         public Region()

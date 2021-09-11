@@ -51,6 +51,7 @@ namespace AutoScreenCapture
         private const string SCREEN_DEVICE_NAME = "device_name";
         private const string SCREEN_AUTO_ADAPT = "auto_adapt";
         private const string SCREEN_CAPTURE_METHOD = "capture_method";
+        private const string SCREEN_ENCRYPT = "encrypt";
 
         private readonly string SCREEN_XPATH;
 
@@ -83,7 +84,8 @@ namespace AutoScreenCapture
                     Width = deviceResolution.width,
                     Height = deviceResolution.height,
                     Source = 0,
-                    DeviceName = deviceResolution.screen.DeviceName
+                    DeviceName = deviceResolution.screen.DeviceName,
+                    Encrypt = false
                 });
 
                 log.WriteDebugMessage($"Screen {component} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{macroParser.DefaultMacro}\" for macro.");
@@ -246,6 +248,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.CaptureMethod = Convert.ToInt32(xReader.Value);
                                         break;
+
+                                    case SCREEN_ENCRYPT:
+                                        xReader.Read();
+                                        screen.Encrypt = Convert.ToBoolean(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -311,6 +318,35 @@ namespace AutoScreenCapture
                 else
                 {
                     log.WriteDebugMessage("WARNING: Unable to load screens");
+
+                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
+                    {
+                        Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
+                        Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
+
+                        if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)
+                        {
+                            Add(new Screen()
+                            {
+                                ViewId = Guid.NewGuid(),
+                                Name = "Active Window",
+                                Folder = fileSystem.ScreenshotsFolder,
+                                Macro = macroParser.DefaultMacro,
+                                Component = 0,
+                                Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
+                                JpegQuality = 100,
+                                Mouse = true,
+                                Enable = true,
+                                X = 0,
+                                Y = 0,
+                                Width = 0,
+                                Height = 0,
+                                Source = 0,
+                                DeviceName = string.Empty,
+                                Encrypt = false
+                            });
+                        }
+                    }
 
                     AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
 
@@ -388,6 +424,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_DEVICE_NAME, screen.DeviceName);
                         xWriter.WriteElementString(SCREEN_AUTO_ADAPT, screen.AutoAdapt.ToString());
                         xWriter.WriteElementString(SCREEN_CAPTURE_METHOD, screen.CaptureMethod.ToString());
+                        xWriter.WriteElementString(SCREEN_ENCRYPT, screen.Encrypt.ToString());
 
                         xWriter.WriteEndElement();
                     }
