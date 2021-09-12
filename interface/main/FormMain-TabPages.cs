@@ -455,6 +455,8 @@ namespace AutoScreenCapture
 
         private ToolStrip BuildViewTabPageToolStripItems(ToolStrip toolStrip, string name)
         {
+            Screenshot selectedScreenshot = new Screenshot(_config);
+
             ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
             {
                 Alignment = ToolStripItemAlignment.Left,
@@ -463,9 +465,14 @@ namespace AutoScreenCapture
                 Image = Resources.configure
             };
 
-            if (toolStrip.Tag is Screen)
+            if (toolStrip.Tag is Screen screen)
             {
-                toolStripSplitButtonConfigure.Text = "Configure Screen";
+                if (_slideShow.SelectedSlide != null)
+                {
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
+                }
+
+                toolStripSplitButtonConfigure.Text = "Configure";
 
                 toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
 
@@ -492,9 +499,14 @@ namespace AutoScreenCapture
                 toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveScreen);
             }
 
-            if (toolStrip.Tag is Region)
+            if (toolStrip.Tag is Region region)
             {
-                toolStripSplitButtonConfigure.Text = "Configure Region";
+                if (_slideShow.SelectedSlide != null)
+                {
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
+                }
+
+                toolStripSplitButtonConfigure.Text = "Configure";
 
                 toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
 
@@ -533,6 +545,13 @@ namespace AutoScreenCapture
             toolStripSplitButtonEdit.ButtonClick += runEditor_Click;
 
             toolStripSplitButtonEdit.DropDown.Items.Add("Add Editor", null, addEditor_Click);
+
+            ToolStripButton toolStripButtonEncryptDecrypt = new ToolStripButton
+            {
+                Name = name + "toolStripButtonEncryptDecrypt",
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false
+            };
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {
@@ -617,12 +636,13 @@ namespace AutoScreenCapture
 
             ToolStripItem toolStripLabelFilename = new ToolStripLabel
             {
+                Name = name + "toolStripLabelFilename",
                 Text = "File:",
                 Alignment = ToolStripItemAlignment.Right,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left
             };
 
-            ToolStripItem toolstripTextBoxFilename = new ToolStripTextBox
+            ToolStripItem toolStripTextBoxFilename = new ToolStripTextBox
             {
                 Name = name + "toolStripTextBoxFilename",
                 Alignment = ToolStripItemAlignment.Right,
@@ -647,12 +667,14 @@ namespace AutoScreenCapture
             toolStrip.Items.Add(toolStripSplitButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Left });
             toolStrip.Items.Add(toolStripSplitButtonEdit);
+            toolStrip.Items.Add(toolStripButtonEncryptDecrypt);
             toolStrip.Items.Add(toolStripButtonEmail);
             toolStrip.Items.Add(toolStripButtonFileTransfer);
             toolStrip.Items.Add(toolStripButtonScreenshotMetadata);
             toolStrip.Items.Add(toolstripButtonOpenFolder);
-            toolStrip.Items.Add(toolstripTextBoxFilename);
+            toolStrip.Items.Add(toolStripTextBoxFilename);
             toolStrip.Items.Add(toolStripLabelFilename);
+            toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Right });
 
             return toolStrip;
         }

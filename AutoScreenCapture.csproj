@@ -421,6 +421,7 @@
     <None Include="images\schedule.png" />
     <Content Include="images\setup.png" />
     <Content Include="images\trigger.png" />
+    <Content Include="images\unlock.png" />
     <Content Include="images\warning.png" />
     <None Include="images\brick.png" />
     <Content Include="images\capture_archive.png" />

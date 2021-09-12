@@ -374,7 +374,11 @@ namespace AutoScreenCapture
 
                 ToolStrip toolStrip = (ToolStrip)selectedTabPage.Controls[selectedTabPage.Name + "toolStrip"];
 
+                ToolStripLabel toolStripLabel = (ToolStripLabel)toolStrip.Items[selectedTabPage.Name + "toolStripLabelFilename"];
+
                 ToolStripTextBox toolStripTextBox = (ToolStripTextBox)toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
+
+                ToolStripButton toolStripButtonEncryptDecrypt = (ToolStripButton)toolStrip.Items[selectedTabPage.Name + "toolStripButtonEncryptDecrypt"];
 
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
@@ -431,23 +435,31 @@ namespace AutoScreenCapture
 
                         string dirName = _fileSystem.GetDirectoryName(path);
 
-                        if (!string.IsNullOrEmpty(dirName))
-                        {
-                            if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
-                            {
-                                toolStripTextBox.BackColor = Color.PaleGreen;
-                            }
-                            else
-                            {
-                                toolStripTextBox.BackColor = Color.PaleVioletRed;
-                                toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
-                            }
-                        }
-
                         if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.Path : string.Empty))
                         {
                             if (selectedScreenshot.Encrypted)
                             {
+                                toolStripLabel.Text = "File (encrypted):";
+
+                                toolStripTextBox.ForeColor = Color.White;
+
+                                if (!string.IsNullOrEmpty(dirName))
+                                {
+                                    if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
+                                    {
+                                        toolStripTextBox.BackColor = Color.Black;
+                                    }
+                                    else
+                                    {
+                                        toolStripTextBox.BackColor = Color.PaleVioletRed;
+                                        toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+                                    }
+                                }
+
+                                toolStripButtonEncryptDecrypt.Text = "Decrypt";
+                                toolStripButtonEncryptDecrypt.ToolTipText = "Decrypt the screenshot";
+                                toolStripButtonEncryptDecrypt.Image = Properties.Resources.unlock;
+
                                 if (_fileSystem.FileExists(selectedScreenshot.Path))
                                 {
                                     if (_security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key))
@@ -463,6 +475,27 @@ namespace AutoScreenCapture
                             }
                             else
                             {
+                                toolStripLabel.Text = "File:";
+
+                                toolStripTextBox.ForeColor = Color.Black;
+
+                                if (!string.IsNullOrEmpty(dirName))
+                                {
+                                    if (_fileSystem.DirectoryExists(dirName) && _fileSystem.FileExists(path))
+                                    {
+                                        toolStripTextBox.BackColor = Color.PaleGreen;
+                                    }
+                                    else
+                                    {
+                                        toolStripTextBox.BackColor = Color.PaleVioletRed;
+                                        toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+                                    }
+                                }
+
+                                toolStripButtonEncryptDecrypt.Text = "Encrypt";
+                                toolStripButtonEncryptDecrypt.ToolTipText = "Encrypt the screenshot";
+                                toolStripButtonEncryptDecrypt.Image = Properties.Resources._lock;
+
                                 pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
                             }
                         }
