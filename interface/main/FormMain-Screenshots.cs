@@ -601,6 +601,12 @@ namespace AutoScreenCapture
                             toolStripSplitButtonEdit.Enabled = true;
                             toolStripButtonEncryptDecrypt.Enabled = true;
 
+                            // We can't encrypt/decrypt screenshots from Auto Save so disable the button.
+                            if (selectedScreenshot.WindowTitle.Equals("*** Auto Screen Capture - Region Select / Auto Save ***"))
+                            {
+                                toolStripButtonEncryptDecrypt.Enabled = false;
+                            }
+
                             _formScreenshotMetadata.textBoxLabel.Text = selectedScreenshot.Label;
                             _formScreenshotMetadata.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
                             _formScreenshotMetadata.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
