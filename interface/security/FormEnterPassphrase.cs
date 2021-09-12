@@ -46,6 +46,8 @@ namespace AutoScreenCapture
 
         private void FormEnterPassphrase_Load(object sender, EventArgs e)
         {
+            labelHelp.Text = "       An incorrect passphrase will hide the interface and lock this session";
+
             textBoxPassphrase.Text = string.Empty;
             textBoxPassphrase.Focus();
         }

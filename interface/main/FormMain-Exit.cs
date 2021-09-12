@@ -42,6 +42,7 @@ namespace AutoScreenCapture
 
                     if (!_formEnterPassphrase.Visible)
                     {
+                        _formEnterPassphrase.Text = "Auto Screen Capture - Enter Passphrase (Exit Application)";
                         _formEnterPassphrase.ShowDialog(this);
                     }
                     else

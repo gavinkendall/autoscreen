@@ -566,7 +566,7 @@
             // labelPassphrase
             // 
             this.labelPassphrase.AutoSize = true;
-            this.labelPassphrase.Location = new System.Drawing.Point(6, 66);
+            this.labelPassphrase.Location = new System.Drawing.Point(6, 85);
             this.labelPassphrase.Name = "labelPassphrase";
             this.labelPassphrase.Size = new System.Drawing.Size(106, 13);
             this.labelPassphrase.TabIndex = 5;
@@ -575,7 +575,7 @@
             // labelHash
             // 
             this.labelHash.AutoSize = true;
-            this.labelHash.Location = new System.Drawing.Point(6, 40);
+            this.labelHash.Location = new System.Drawing.Point(6, 59);
             this.labelHash.Name = "labelHash";
             this.labelHash.Size = new System.Drawing.Size(87, 13);
             this.labelHash.TabIndex = 4;
@@ -583,7 +583,7 @@
             // 
             // textBoxPassphraseHash
             // 
-            this.textBoxPassphraseHash.Location = new System.Drawing.Point(121, 37);
+            this.textBoxPassphraseHash.Location = new System.Drawing.Point(121, 56);
             this.textBoxPassphraseHash.MaxLength = 30;
             this.textBoxPassphraseHash.Name = "textBoxPassphraseHash";
             this.textBoxPassphraseHash.ReadOnly = true;
@@ -594,7 +594,7 @@
             // labelLastUpdated
             // 
             this.labelLastUpdated.AutoSize = true;
-            this.labelLastUpdated.Location = new System.Drawing.Point(6, 94);
+            this.labelLastUpdated.Location = new System.Drawing.Point(6, 113);
             this.labelLastUpdated.Name = "labelLastUpdated";
             this.labelLastUpdated.Size = new System.Drawing.Size(72, 13);
             this.labelLastUpdated.TabIndex = 2;
@@ -603,7 +603,7 @@
             // buttonClearPassphrase
             // 
             this.buttonClearPassphrase.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonClearPassphrase.Location = new System.Drawing.Point(492, 89);
+            this.buttonClearPassphrase.Location = new System.Drawing.Point(492, 108);
             this.buttonClearPassphrase.Name = "buttonClearPassphrase";
             this.buttonClearPassphrase.Size = new System.Drawing.Size(179, 23);
             this.buttonClearPassphrase.TabIndex = 1;
@@ -615,7 +615,7 @@
             // buttonSetPassphrase
             // 
             this.buttonSetPassphrase.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonSetPassphrase.Location = new System.Drawing.Point(307, 89);
+            this.buttonSetPassphrase.Location = new System.Drawing.Point(307, 108);
             this.buttonSetPassphrase.Name = "buttonSetPassphrase";
             this.buttonSetPassphrase.Size = new System.Drawing.Size(179, 23);
             this.buttonSetPassphrase.TabIndex = 0;
@@ -626,16 +626,16 @@
             // 
             // labelPasswordDescription
             // 
+            this.labelPasswordDescription.BackColor = System.Drawing.Color.LightYellow;
             this.labelPasswordDescription.Location = new System.Drawing.Point(6, 13);
             this.labelPasswordDescription.Name = "labelPasswordDescription";
-            this.labelPasswordDescription.Size = new System.Drawing.Size(665, 21);
+            this.labelPasswordDescription.Size = new System.Drawing.Size(665, 32);
             this.labelPasswordDescription.TabIndex = 0;
-            this.labelPasswordDescription.Text = "This passphrase will be required whenever screen capturing is stopped, this inter" +
-    "face is shown, or the application is exiting:";
+            this.labelPasswordDescription.Text = resources.GetString("labelPasswordDescription.Text");
             // 
             // textBoxPassphrase
             // 
-            this.textBoxPassphrase.Location = new System.Drawing.Point(121, 63);
+            this.textBoxPassphrase.Location = new System.Drawing.Point(121, 82);
             this.textBoxPassphrase.MaxLength = 30;
             this.textBoxPassphrase.Name = "textBoxPassphrase";
             this.textBoxPassphrase.Size = new System.Drawing.Size(550, 20);

@@ -32,14 +32,16 @@
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
+            this.labelPassphrase = new System.Windows.Forms.Label();
+            this.labelHelp = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxPassphrase
             // 
-            this.textBoxPassphrase.Location = new System.Drawing.Point(12, 12);
+            this.textBoxPassphrase.Location = new System.Drawing.Point(83, 12);
             this.textBoxPassphrase.MaxLength = 30;
             this.textBoxPassphrase.Name = "textBoxPassphrase";
-            this.textBoxPassphrase.Size = new System.Drawing.Size(187, 20);
+            this.textBoxPassphrase.Size = new System.Drawing.Size(444, 20);
             this.textBoxPassphrase.TabIndex = 1;
             this.textBoxPassphrase.TabStop = false;
             this.textBoxPassphrase.TextChanged += new System.EventHandler(this.TextChanged_textBoxPassphrase);
@@ -47,7 +49,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(123, 38);
+            this.buttonCancel.Location = new System.Drawing.Point(452, 38);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -59,7 +61,7 @@
             // buttonOK
             // 
             this.buttonOK.Enabled = false;
-            this.buttonOK.Location = new System.Drawing.Point(42, 38);
+            this.buttonOK.Location = new System.Drawing.Point(371, 38);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 3;
@@ -68,13 +70,39 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
+            // labelPassphrase
+            // 
+            this.labelPassphrase.AutoSize = true;
+            this.labelPassphrase.Location = new System.Drawing.Point(12, 15);
+            this.labelPassphrase.Name = "labelPassphrase";
+            this.labelPassphrase.Size = new System.Drawing.Size(65, 13);
+            this.labelPassphrase.TabIndex = 4;
+            this.labelPassphrase.Text = "Passphrase:";
+            // 
+            // labelHelp
+            // 
+            this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelHelp.AutoEllipsis = true;
+            this.labelHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelHelp.Image = global::AutoScreenCapture.Properties.Resources.about;
+            this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelHelp.Location = new System.Drawing.Point(12, 41);
+            this.labelHelp.Name = "labelHelp";
+            this.labelHelp.Size = new System.Drawing.Size(345, 17);
+            this.labelHelp.TabIndex = 34;
+            this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormEnterPassphrase
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(210, 68);
+            this.ClientSize = new System.Drawing.Size(539, 68);
+            this.Controls.Add(this.labelHelp);
+            this.Controls.Add(this.labelPassphrase);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.textBoxPassphrase);
@@ -97,5 +125,7 @@
         private System.Windows.Forms.TextBox textBoxPassphrase;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Label labelPassphrase;
+        private System.Windows.Forms.Label labelHelp;
     }
 }

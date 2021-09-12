@@ -531,6 +531,10 @@ namespace AutoScreenCapture
 
                             passphrase = passphrase.Trim();
 
+                            string passphraseLastUpdated = DateTime.Now.ToString("yyyy-MM-dd") + " " + DateTime.Now.ToString("HH:mm:ss");
+
+                            _config.Settings.User.SetValueByKey("PassphraseLastUpdated", passphraseLastUpdated);
+
                             _config.Settings.User.SetValueByKey("Passphrase", _security.Hash(passphrase));
 
                             _screenCapture.LockScreenCaptureSession = true;

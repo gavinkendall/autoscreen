@@ -252,6 +252,7 @@ namespace AutoScreenCapture
 
                     if (!_formEnterPassphrase.Visible)
                     {
+                        _formEnterPassphrase.Text = "Auto Screen Capture - Enter Passphrase (Stop Screen Capture)";
                         _formEnterPassphrase.ShowDialog(this);
                     }
                     else
