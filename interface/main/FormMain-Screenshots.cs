@@ -392,12 +392,12 @@ namespace AutoScreenCapture
                             }
 
                             // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
-                            // So get the earliest screenshot of this view that has a valid path so we can still show something.
-                            if (selectedScreenshot.Slide == null && _slideShow.Index > 0)
+                            // So get the earliest screenshot of this view (working backwards from the current index) that has a valid path so we can still show something.
+                            if (selectedScreenshot.Slide == null)
                             {
-                                for (int j = (_slideShow.Count - 1); j >= 0; j--)
+                                for (int j = 0; (_slideShow.Index - j) >= 0; j++)
                                 {
-                                    _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[j];
+                                    _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[(_slideShow.Index - j)];
 
                                     if (_slideShow.SelectedSlide != null)
                                     {
@@ -503,16 +503,16 @@ namespace AutoScreenCapture
 
                         // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
                         // So get the earliest screenshot of this view that has a valid path so we can still show something.
-                        if (selectedScreenshot.Slide == null && _slideShow.Index > 0)
+                        if (selectedScreenshot.Slide == null)
                         {
-                            for (int j = (_slideShow.Count - 1); j >= 0; j--)
+                            for (int j = 0; (_slideShow.Index - j) >= 0; j++)
                             {
-                                _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[j];
+                                _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[(_slideShow.Index - j)];
 
                                 if (_slideShow.SelectedSlide != null)
                                 {
                                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
-                                    
+
                                     if (!string.IsNullOrEmpty(selectedScreenshot.Path))
                                     {
                                         break;
