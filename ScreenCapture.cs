@@ -468,6 +468,13 @@ namespace AutoScreenCapture
 
                 return image;
             }
+            catch (ArgumentException)
+            {
+                // This is likely an image associated with an encrypted screenshot
+                // which was determined as being "normal" but it's actually encrypted
+                // because the screenshot references weren't saved properly.
+                return null;
+            }
             catch (Exception ex)
             {
                 _log.WriteExceptionMessage("ScreenCapture::GetImageByPath", ex);
