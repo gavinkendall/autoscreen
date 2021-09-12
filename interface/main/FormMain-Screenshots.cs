@@ -359,7 +359,15 @@ namespace AutoScreenCapture
                     // Preview
                     if (_preview)
                     {
-                        pictureBox.Image = DoPreview(groupBox.Tag);
+                        if ((groupBox.Tag is Screen screen && screen.Enable) ||
+                            (groupBox.Tag is Region region && region.Enable))
+                        {
+                            pictureBox.Image = DoPreview(groupBox.Tag);
+                        }
+                        else
+                        {
+                            pictureBox.Image = null;
+                        }
                     }
                     else
                     {
