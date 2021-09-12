@@ -371,6 +371,8 @@ namespace AutoScreenCapture
                     }
                     else
                     {
+                        groupBox.ForeColor = Color.Black;
+
                         Screenshot selectedScreenshot = new Screenshot(_config);
 
                         if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
@@ -413,6 +415,9 @@ namespace AutoScreenCapture
 
                                         if (!string.IsNullOrEmpty(selectedScreenshot.Path))
                                         {
+                                            // Change the font color to maroon to indicate that this is an outdated screenshot we're showing.
+                                            groupBox.ForeColor = Color.Maroon;
+
                                             break;
                                         }
                                     }
@@ -480,6 +485,8 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    toolStrip.ForeColor = Color.Black;
+
                     Screenshot selectedScreenshot = new Screenshot(_config);
 
                     if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
@@ -523,6 +530,9 @@ namespace AutoScreenCapture
 
                                     if (!string.IsNullOrEmpty(selectedScreenshot.Path))
                                     {
+                                        // Change the font color to maroon to indicate that this is an outdated screenshot we're showing.
+                                        toolStrip.ForeColor = Color.Maroon;
+
                                         break;
                                     }
                                 }
@@ -543,7 +553,7 @@ namespace AutoScreenCapture
                         {
                             if (selectedScreenshot.Encrypted)
                             {
-                                toolStripLabel.Text = "File (encrypted):";
+                                toolStripLabel.Text = "File [encrypted]:";
 
                                 toolStripTextBox.ForeColor = Color.White;
 
