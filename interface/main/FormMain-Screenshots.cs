@@ -461,6 +461,8 @@ namespace AutoScreenCapture
 
                 ToolStripButton toolStripButtonEncryptDecrypt = (ToolStripButton)toolStrip.Items[selectedTabPage.Name + "toolStripButtonEncryptDecrypt"];
 
+                ToolStripItem toolstripButtonOpenFolder = (ToolStripItem)toolStrip.Items[selectedTabPage.Name + "toolstripButtonOpenFolder"];
+
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
                 // Preview
@@ -609,6 +611,8 @@ namespace AutoScreenCapture
                             _formScreenshotMetadata.textBoxScreenshotDate.Text = selectedScreenshot.Date;
                             _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
                         }
+
+                        toolstripButtonOpenFolder.Enabled = true;
                     }
                     else
                     {
@@ -618,6 +622,7 @@ namespace AutoScreenCapture
                         toolStripTextBox.Text = string.Empty;
                         toolStripTextBox.BackColor = Color.LightYellow;
                         toolStripTextBox.ToolTipText = string.Empty;
+                        toolstripButtonOpenFolder.Enabled = false;
 
                         pictureBox.Image = null;
                     }

@@ -310,8 +310,8 @@ namespace AutoScreenCapture
                 GroupBox groupBox = new GroupBox
                 {
                     Tag = screen,
-                    Text = screen.Name,
-                    BackColor = Color.White,
+                    Text = screen.AutoAdapt ? "[" + (screen.AutoAdaptIndex + 1).ToString() + "] " + screen.Name : screen.Name,
+                    BackColor = Color.LightCyan,
                     ForeColor = Color.Black,
                     Location = new Point(0, 0),
                     Size = new Size(dashboardBoxSize, dashboardBoxSize),
@@ -341,7 +341,7 @@ namespace AutoScreenCapture
                 {
                     Tag = region,
                     Text = region.Name,
-                    BackColor = Color.White,
+                    BackColor = Color.LightPink,
                     ForeColor = Color.Black,
                     Location = new Point(0, 0),
                     Size = new Size(dashboardBoxSize, dashboardBoxSize),
@@ -400,7 +400,7 @@ namespace AutoScreenCapture
                 TabPage tabPageScreen = new TabPage
                 {
                     Name = screen.Name,
-                    Text = screen.Name,
+                    Text = screen.AutoAdapt ? "[" + (screen.AutoAdaptIndex + 1).ToString() + "] " + screen.Name : screen.Name,
                     Tag = screen
                 };
 
@@ -686,6 +686,7 @@ namespace AutoScreenCapture
 
             ToolStripItem toolstripButtonOpenFolder = new ToolStripButton
             {
+                Name = name + "toolstripButtonOpenFolder",
                 Image = Resources.openfolder,
                 Alignment = ToolStripItemAlignment.Right,
                 AutoToolTip = false,
