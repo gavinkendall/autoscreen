@@ -1318,11 +1318,21 @@
         /// </summary>
         public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowArchiveModifier1;
         private System.Windows.Forms.CheckBox checkBoxUseKeyboardShortcuts;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.CheckBox checkBoxActiveWindowTitleComparisonCheckReverse;
+
         private System.Windows.Forms.Button buttonClearPassphrase;
         private System.Windows.Forms.Label labelLastUpdated;
         private System.Windows.Forms.Label labelHash;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.TextBox textBoxPassphraseHash;
+
         private System.Windows.Forms.Label labelPassphrase;
     }
 }

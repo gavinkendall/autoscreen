@@ -535,6 +535,7 @@ namespace AutoScreenCapture
 
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
             {
+                Name = name + "toolStripSplitButtonEdit",
                 Text = "Edit",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
@@ -552,6 +553,36 @@ namespace AutoScreenCapture
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false
             };
+
+            toolStripButtonEncryptDecrypt.Click += new EventHandler(encryptDecryptScreenshot_Click);
+
+            if (toolStrip.Tag is Region regionEncryptDecrypt)
+            {
+                if (regionEncryptDecrypt.Encrypt)
+                {
+                    toolStripButtonEncryptDecrypt.Text = "Decrypt";
+                    toolStripButtonEncryptDecrypt.Image = Resources.unlock;
+                }
+                else
+                {
+                    toolStripButtonEncryptDecrypt.Text = "Encrypt";
+                    toolStripButtonEncryptDecrypt.Image = Resources._lock;
+                }
+            }
+
+            if (toolStrip.Tag is Screen screenEncryptDecrypt)
+            {
+                if (screenEncryptDecrypt.Encrypt)
+                {
+                    toolStripButtonEncryptDecrypt.Text = "Decrypt";
+                    toolStripButtonEncryptDecrypt.Image = Resources.unlock;
+                }
+                else
+                {
+                    toolStripButtonEncryptDecrypt.Text = "Encrypt";
+                    toolStripButtonEncryptDecrypt.Image = Resources._lock;
+                }
+            }
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {

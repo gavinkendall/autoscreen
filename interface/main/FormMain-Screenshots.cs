@@ -69,6 +69,72 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Encrypts/Decrypts screenshot.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void encryptDecryptScreenshot_Click(object sender, EventArgs e)
+        {
+            Screenshot screenshot = null;
+
+            Slide selectedSlide = _slideShow.SelectedSlide;
+
+            if (selectedSlide != null && listBoxScreenshots.SelectedIndex > -1)
+            {
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
+                {
+                    var screen = (Screen)tabControlViews.SelectedTab.Tag;
+
+                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
+                }
+
+                if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
+                {
+                    var region = (Region)tabControlViews.SelectedTab.Tag;
+
+                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
+                }
+
+                if (!_fileSystem.FileExists(screenshot.Path))
+                {
+                    return;
+                }
+
+                if (screenshot.Encrypted)
+                {
+                    if (_security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key))
+                    {
+                        if (_fileSystem.FileExists(screenshot.Path))
+                        {
+                            _fileSystem.DeleteFile(screenshot.Path);
+                        }
+
+                        _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
+
+                        screenshot.Key = string.Empty;
+                        screenshot.Encrypted = false;
+                    }
+                }
+                else
+                {
+                    string key = _security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+
+                    if (_fileSystem.FileExists(screenshot.Path))
+                    {
+                        _fileSystem.DeleteFile(screenshot.Path);
+                    }
+
+                    _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+
+                    screenshot.Key = key;
+                    screenshot.Encrypted = true;
+                }
+
+                ShowScreenshotBySlideIndex();
+            }
+        }
+
+        /// <summary>
         /// Emails screenshots using the EmailSever and EmailMessage settings in user settings.
         /// </summary>
         /// <param name="sender"></param>
@@ -326,10 +392,23 @@ namespace AutoScreenCapture
                             }
 
                             // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
-                            // So get the last screenshot of this view so we can still show something.
-                            if (selectedScreenshot.Slide == null)
+                            // So get the earliest screenshot of this view that has a valid path so we can still show something.
+                            if (selectedScreenshot.Slide == null && _slideShow.Index > 0)
                             {
-                                selectedScreenshot = _screenshotCollection.GetLastScreenshotOfView(viewId);
+                                for (int j = (_slideShow.Count - 1); j >= 0; j--)
+                                {
+                                    _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[j];
+
+                                    if (_slideShow.SelectedSlide != null)
+                                    {
+                                        selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
+
+                                        if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
 
@@ -378,6 +457,8 @@ namespace AutoScreenCapture
 
                 ToolStripTextBox toolStripTextBox = (ToolStripTextBox)toolStrip.Items[selectedTabPage.Name + "toolStripTextBoxFilename"];
 
+                ToolStripSplitButton toolStripSplitButtonEdit = (ToolStripSplitButton)toolStrip.Items[selectedTabPage.Name + "toolStripSplitButtonEdit"];
+
                 ToolStripButton toolStripButtonEncryptDecrypt = (ToolStripButton)toolStrip.Items[selectedTabPage.Name + "toolStripButtonEncryptDecrypt"];
 
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
@@ -419,10 +500,23 @@ namespace AutoScreenCapture
                         }
 
                         // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
-                        // So get the last screenshot of this view so we can still show something.
-                        if (selectedScreenshot.Slide == null)
+                        // So get the earliest screenshot of this view that has a valid path so we can still show something.
+                        if (selectedScreenshot.Slide == null && _slideShow.Index > 0)
                         {
-                            selectedScreenshot = _screenshotCollection.GetLastScreenshotOfView(viewId);
+                            for (int j = (_slideShow.Count - 1); j >= 0; j--)
+                            {
+                                _slideShow.SelectedSlide = (Slide)listBoxScreenshots.Items[j];
+
+                                if (_slideShow.SelectedSlide != null)
+                                {
+                                    selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
+                                    
+                                    if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -502,6 +596,9 @@ namespace AutoScreenCapture
 
                         if (pictureBox.Image != null)
                         {
+                            toolStripSplitButtonEdit.Enabled = true;
+                            toolStripButtonEncryptDecrypt.Enabled = true;
+
                             _formScreenshotMetadata.textBoxLabel.Text = selectedScreenshot.Label;
                             _formScreenshotMetadata.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
                             _formScreenshotMetadata.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
@@ -515,6 +612,9 @@ namespace AutoScreenCapture
                     }
                     else
                     {
+                        toolStripSplitButtonEdit.Enabled = false;
+                        toolStripButtonEncryptDecrypt.Enabled = false;
+
                         toolStripTextBox.Text = string.Empty;
                         toolStripTextBox.BackColor = Color.LightYellow;
                         toolStripTextBox.ToolTipText = string.Empty;
