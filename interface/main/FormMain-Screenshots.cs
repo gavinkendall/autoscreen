@@ -102,18 +102,24 @@ namespace AutoScreenCapture
 
                 if (screenshot.Encrypted)
                 {
-                    if (_security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key))
+                    try
                     {
-                        if (_fileSystem.FileExists(screenshot.Path))
-                        {
-                            _fileSystem.DeleteFile(screenshot.Path);
-                        }
-
-                        _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
-
-                        screenshot.Key = string.Empty;
-                        screenshot.Encrypted = false;
+                        _security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key);
                     }
+                    catch (Exception ex)
+                    {
+                        _log.WriteMessage("WARNING: Error with file decryption. Exception is " + ex);
+                    }
+
+                    if (_fileSystem.FileExists(screenshot.Path))
+                    {
+                        _fileSystem.DeleteFile(screenshot.Path);
+                    }
+
+                    _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
+
+                    screenshot.Key = string.Empty;
+                    screenshot.Encrypted = false;
                 }
                 else
                 {
@@ -356,6 +362,8 @@ namespace AutoScreenCapture
                 {
                     PictureBox pictureBox = (PictureBox)groupBox.Controls["pictureBox" + i];
 
+                    pictureBox.Image = null;
+
                     // Preview
                     if (_preview)
                     {
@@ -363,10 +371,6 @@ namespace AutoScreenCapture
                             (groupBox.Tag is Region region && region.Enable))
                         {
                             pictureBox.Image = DoPreview(groupBox.Tag);
-                        }
-                        else
-                        {
-                            pictureBox.Image = null;
                         }
                     }
                     else
@@ -431,14 +435,21 @@ namespace AutoScreenCapture
                             {
                                 if (_fileSystem.FileExists(selectedScreenshot.Path))
                                 {
-                                    if (_security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key))
+                                    try
                                     {
+                                        _security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key);
                                         pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path + "-decrypted");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // Write an error to the error file in th debug directory regardless if debug mode or logging is enabled or disabled.
+                                        // We want to force write this error out to the error file. The image will remain black to indicate that an error was encountered.
+                                        _log.Write($"Decryption failed for \"{selectedScreenshot.Path}\". Exception: {ex}", writeError: true, null);
+                                    }
 
-                                        if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
-                                        {
-                                            _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
-                                        }
+                                    if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
+                                    {
+                                        _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
                                     }
                                 }
                             }
@@ -446,10 +457,6 @@ namespace AutoScreenCapture
                             {
                                 pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
                             }
-                        }
-                        else
-                        {
-                            pictureBox.Image = null;
                         }
                     }
 
@@ -478,10 +485,16 @@ namespace AutoScreenCapture
 
                 PictureBox pictureBox = (PictureBox)selectedTabPage.Controls[selectedTabPage.Name + "pictureBox"];
 
+                pictureBox.Image = null;
+
                 // Preview
                 if (_preview)
                 {
-                    pictureBox.Image = DoPreview(selectedTabPage.Tag);
+                    if ((selectedTabPage.Tag is Screen screen && screen.Enable) ||
+                        (selectedTabPage.Tag is Region region && region.Enable))
+                    {
+                        pictureBox.Image = DoPreview(selectedTabPage.Tag);
+                    }
                 }
                 else
                 {
@@ -505,7 +518,6 @@ namespace AutoScreenCapture
                         {
                             Region region = (Region)selectedTabPage.Tag;
                             viewId = region.ViewId;
-                            
                         }
 
                         selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
@@ -576,14 +588,21 @@ namespace AutoScreenCapture
 
                                 if (_fileSystem.FileExists(selectedScreenshot.Path))
                                 {
-                                    if (_security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key))
+                                    try
                                     {
+                                        _security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key);
                                         pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path + "-decrypted");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // Write an error to the error file in th debug directory regardless if debug mode or logging is enabled or disabled.
+                                        // We want to force write this error out to the error file. The image will remain black to indicate that an error was encountered.
+                                        _log.Write($"Decryption failed for \"{selectedScreenshot.Path}\". Exception: {ex}", writeError: true, null);
+                                    }
 
-                                        if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
-                                        {
-                                            _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
-                                        }
+                                    if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
+                                    {
+                                        _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
                                     }
                                 }
                             }
@@ -647,8 +666,6 @@ namespace AutoScreenCapture
                         toolStripTextBox.BackColor = Color.LightYellow;
                         toolStripTextBox.ToolTipText = string.Empty;
                         toolstripButtonOpenFolder.Enabled = false;
-
-                        pictureBox.Image = null;
                     }
                 }
             }

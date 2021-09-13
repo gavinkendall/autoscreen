@@ -93,6 +93,8 @@ namespace AutoScreenCapture
                     {
                         using (var provider = new AesCryptoServiceProvider())
                         {
+                            provider.Padding = PaddingMode.PKCS7;
+
                             using (var cryptoTransform = provider.CreateEncryptor())
                             {
                                 using (var cryptoStream = new CryptoStream(destinationStream, cryptoTransform, CryptoStreamMode.Write))
@@ -121,8 +123,7 @@ namespace AutoScreenCapture
         /// <param name="source">The filepath of the encrypted file.</param>
         /// <param name="destination">The filepath of the file that has been decrypted.</param>
         /// <param name="key">The key to use to decrypt the file.</param>
-        /// <returns>Returns true if decryption succeeded. Returns false if decryption failed.</returns>
-        public bool DecryptFile(string source, string destination, string key)
+        public void DecryptFile(string source, string destination, string key)
         {
             try
             {
@@ -134,6 +135,8 @@ namespace AutoScreenCapture
                     {
                         using (var provider = new AesCryptoServiceProvider())
                         {
+                            provider.Padding = PaddingMode.PKCS7;
+
                             var IV = new byte[provider.IV.Length];
                             sourceStream.Read(IV, 0, IV.Length);
 
@@ -147,12 +150,10 @@ namespace AutoScreenCapture
                         }
                     }
                 }
-
-                return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
         }
 

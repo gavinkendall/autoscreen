@@ -107,7 +107,7 @@ namespace AutoScreenCapture
         /// <param name="message">The message to write.</param>
         /// <param name="writeError">Determines if we write the message to the error file in the debug folder.</param>
         /// <param name="ex">The exception received from the .NET Framework.</param>
-        private void Write(string message, bool writeError, Exception ex)
+        public void Write(string message, bool writeError, Exception ex)
         {
             try
             {
