@@ -207,11 +207,12 @@ namespace AutoScreenCapture
                     return;
                 }
 
-                notifyIcon.Text = "Ready to start taking screenshots (" +
+                notifyIcon.Text = "Ready [" +
                     _formSetup.numericUpDownHoursInterval.Value.ToString("00") + ":" +
                     _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
                     _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "." +
-                    _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + ")";
+                    _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + "] " +
+                    (_screenshotCollection.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -234,11 +235,24 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.Running)
                     {
-                        notifyIcon.Icon = Resources.autoscreen_running;
+                        string takingScreenshotsMessage;
+
+                        if (_screenshotCollection.OptimizeScreenCapture)
+                        {
+                            // System tray icon is green if taking optimized screenshots.
+                            takingScreenshotsMessage = "Taking screenshots [optimized]";
+                            notifyIcon.Icon = Resources.autoscreen_running;
+                        }
+                        else
+                        {
+                            // System tray icon is blue if not taking optimized screenshots.
+                            takingScreenshotsMessage = "Taking screenshots [not optimized]";
+                            notifyIcon.Icon = Resources.autoscreen_running_not_optimized;
+                        }
 
                         if (!_screenCapture.CaptureError)
                         {
-                            string remainingTimeStr = "Taking screenshots";
+                            string remainingTimeStr = takingScreenshotsMessage;
 
                             int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
                             int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
