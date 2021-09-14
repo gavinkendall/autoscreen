@@ -241,7 +241,7 @@ namespace AutoScreenCapture
                         {
                             // System tray icon is green if taking optimized screenshots.
                             takingScreenshotsMessage = "Taking screenshots [optimized]";
-                            notifyIcon.Icon = Resources.autoscreen_running;
+                            notifyIcon.Icon = Resources.autoscreen_running_optimized;
                         }
                         else
                         {

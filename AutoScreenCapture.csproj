@@ -401,12 +401,12 @@
     <None Include="help\help-0-Welcome.rtf" />
     <None Include="help\help-1-Setup-and-First-Run.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
-    <Content Include="icons\ico\autoscreen-running-not-optimized.ico" />
+    <Content Include="icons\ico\autoscreen-running-optimized.ico" />
     <Content Include="icons\ico\autoscreen.ico" />
-    <Content Include="icons\ico\autoscreen_running.ico" />
+    <Content Include="icons\ico\autoscreen-running-not-optimized.ico" />
     <Content Include="icons\png\autoscreen-error.png" />
+    <Content Include="icons\png\autoscreen-running-optimized.png" />
     <Content Include="icons\png\autoscreen-running-not-optimized.png" />
-    <Content Include="icons\png\autoscreen-running.png" />
     <Content Include="icons\png\autoscreen-warning.png" />
     <Content Include="icons\png\autoscreen.png" />
     <Content Include="images\add.png" />
