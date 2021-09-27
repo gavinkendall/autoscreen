@@ -31,19 +31,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSetup));
             this.tabControlSetup = new System.Windows.Forms.TabControl();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
-            this.groupBoxCaptureDelay = new System.Windows.Forms.GroupBox();
-            this.labelLimit = new System.Windows.Forms.Label();
+            this.labelIntervalHelp = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
-            this.numericUpDownCaptureLimit = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxCaptureLimit = new System.Windows.Forms.CheckBox();
-            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
-            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
-            this.labelSecondsInterval = new System.Windows.Forms.Label();
-            this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelHoursInterval = new System.Windows.Forms.Label();
-            this.numericUpDownSecondsInterval = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownCaptureLimit = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxCaptureLimit = new System.Windows.Forms.CheckBox();
+            this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
+            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
+            this.numericUpDownSecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
+            this.labelMinutesInterval = new System.Windows.Forms.Label();
+            this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
             this.checkBoxScreenshotLabel = new System.Windows.Forms.CheckBox();
             this.comboBoxScreenshotLabel = new System.Windows.Forms.ComboBox();
@@ -57,7 +56,6 @@
             this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
             this.checkBoxActiveWindowTitleComparisonCheck = new System.Windows.Forms.CheckBox();
             this.tabPageApplicationFocus = new System.Windows.Forms.TabPage();
-            this.groupBoxApplicationFocus = new System.Windows.Forms.GroupBox();
             this.numericUpDownApplicationFocusDelayAfter = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownApplicationFocusDelayBefore = new System.Windows.Forms.NumericUpDown();
             this.labelApplicationFocusDelayAfter = new System.Windows.Forms.Label();
@@ -72,7 +70,7 @@
             this.labelLastUpdated = new System.Windows.Forms.Label();
             this.buttonClearPassphrase = new System.Windows.Forms.Button();
             this.buttonSetPassphrase = new System.Windows.Forms.Button();
-            this.labelPasswordDescription = new System.Windows.Forms.Label();
+            this.labelSecurityHelp = new System.Windows.Forms.Label();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.tabPageKeyboardShortcuts = new System.Windows.Forms.TabPage();
             this.checkBoxUseKeyboardShortcuts = new System.Windows.Forms.CheckBox();
@@ -111,19 +109,20 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.labelInitialCaptureHelp = new System.Windows.Forms.Label();
+            this.labelLimitHelp = new System.Windows.Forms.Label();
+            this.labelLimit = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
-            this.groupBoxCaptureDelay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
             this.groupBoxActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
-            this.groupBoxApplicationFocus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
@@ -151,7 +150,21 @@
             // 
             // tabPageInterval
             // 
-            this.tabPageInterval.Controls.Add(this.groupBoxCaptureDelay);
+            this.tabPageInterval.Controls.Add(this.labelLimit);
+            this.tabPageInterval.Controls.Add(this.labelLimitHelp);
+            this.tabPageInterval.Controls.Add(this.labelInitialCaptureHelp);
+            this.tabPageInterval.Controls.Add(this.labelIntervalHelp);
+            this.tabPageInterval.Controls.Add(this.checkBoxInitialScreenshot);
+            this.tabPageInterval.Controls.Add(this.labelHoursInterval);
+            this.tabPageInterval.Controls.Add(this.numericUpDownCaptureLimit);
+            this.tabPageInterval.Controls.Add(this.numericUpDownHoursInterval);
+            this.tabPageInterval.Controls.Add(this.checkBoxCaptureLimit);
+            this.tabPageInterval.Controls.Add(this.numericUpDownMinutesInterval);
+            this.tabPageInterval.Controls.Add(this.labelMillisecondsInterval);
+            this.tabPageInterval.Controls.Add(this.numericUpDownSecondsInterval);
+            this.tabPageInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
+            this.tabPageInterval.Controls.Add(this.labelMinutesInterval);
+            this.tabPageInterval.Controls.Add(this.labelSecondsInterval);
             this.tabPageInterval.Location = new System.Drawing.Point(4, 22);
             this.tabPageInterval.Name = "tabPageInterval";
             this.tabPageInterval.Padding = new System.Windows.Forms.Padding(3);
@@ -160,40 +173,19 @@
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
             // 
-            // groupBoxCaptureDelay
+            // labelIntervalHelp
             // 
-            this.groupBoxCaptureDelay.Controls.Add(this.labelLimit);
-            this.groupBoxCaptureDelay.Controls.Add(this.checkBoxInitialScreenshot);
-            this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownCaptureLimit);
-            this.groupBoxCaptureDelay.Controls.Add(this.checkBoxCaptureLimit);
-            this.groupBoxCaptureDelay.Controls.Add(this.labelMillisecondsInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownMillisecondsInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.labelSecondsInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.labelMinutesInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.labelHoursInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownSecondsInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownMinutesInterval);
-            this.groupBoxCaptureDelay.Controls.Add(this.numericUpDownHoursInterval);
-            this.groupBoxCaptureDelay.Location = new System.Drawing.Point(84, 50);
-            this.groupBoxCaptureDelay.Name = "groupBoxCaptureDelay";
-            this.groupBoxCaptureDelay.Size = new System.Drawing.Size(205, 122);
-            this.groupBoxCaptureDelay.TabIndex = 2;
-            this.groupBoxCaptureDelay.TabStop = false;
-            this.groupBoxCaptureDelay.Text = "Interval";
-            // 
-            // labelLimit
-            // 
-            this.labelLimit.AutoSize = true;
-            this.labelLimit.Location = new System.Drawing.Point(171, 47);
-            this.labelLimit.Name = "labelLimit";
-            this.labelLimit.Size = new System.Drawing.Size(24, 13);
-            this.labelLimit.TabIndex = 0;
-            this.labelLimit.Text = "limit";
+            this.labelIntervalHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelIntervalHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelIntervalHelp.Name = "labelIntervalHelp";
+            this.labelIntervalHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelIntervalHelp.TabIndex = 1;
+            this.labelIntervalHelp.Text = resources.GetString("labelIntervalHelp.Text");
             // 
             // checkBoxInitialScreenshot
             // 
             this.checkBoxInitialScreenshot.AutoSize = true;
-            this.checkBoxInitialScreenshot.Location = new System.Drawing.Point(110, 20);
+            this.checkBoxInitialScreenshot.Location = new System.Drawing.Point(9, 130);
             this.checkBoxInitialScreenshot.Name = "checkBoxInitialScreenshot";
             this.checkBoxInitialScreenshot.Size = new System.Drawing.Size(90, 17);
             this.checkBoxInitialScreenshot.TabIndex = 0;
@@ -201,9 +193,18 @@
             this.checkBoxInitialScreenshot.Text = "Initial Capture";
             this.checkBoxInitialScreenshot.UseVisualStyleBackColor = true;
             // 
+            // labelHoursInterval
+            // 
+            this.labelHoursInterval.AutoSize = true;
+            this.labelHoursInterval.Location = new System.Drawing.Point(57, 50);
+            this.labelHoursInterval.Name = "labelHoursInterval";
+            this.labelHoursInterval.Size = new System.Drawing.Size(33, 13);
+            this.labelHoursInterval.TabIndex = 0;
+            this.labelHoursInterval.Text = "hours";
+            // 
             // numericUpDownCaptureLimit
             // 
-            this.numericUpDownCaptureLimit.Location = new System.Drawing.Point(127, 45);
+            this.numericUpDownCaptureLimit.Location = new System.Drawing.Point(26, 204);
             this.numericUpDownCaptureLimit.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -214,81 +215,32 @@
             this.numericUpDownCaptureLimit.TabIndex = 0;
             this.numericUpDownCaptureLimit.TabStop = false;
             // 
+            // numericUpDownHoursInterval
+            // 
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(9, 48);
+            this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.numericUpDownHoursInterval.Name = "numericUpDownHoursInterval";
+            this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownHoursInterval.TabIndex = 0;
+            this.numericUpDownHoursInterval.TabStop = false;
+            // 
             // checkBoxCaptureLimit
             // 
             this.checkBoxCaptureLimit.AutoSize = true;
-            this.checkBoxCaptureLimit.Location = new System.Drawing.Point(110, 47);
+            this.checkBoxCaptureLimit.Location = new System.Drawing.Point(9, 206);
             this.checkBoxCaptureLimit.Name = "checkBoxCaptureLimit";
             this.checkBoxCaptureLimit.Size = new System.Drawing.Size(15, 14);
             this.checkBoxCaptureLimit.TabIndex = 0;
             this.checkBoxCaptureLimit.TabStop = false;
             this.checkBoxCaptureLimit.UseVisualStyleBackColor = true;
             // 
-            // labelMillisecondsInterval
-            // 
-            this.labelMillisecondsInterval.AutoSize = true;
-            this.labelMillisecondsInterval.Location = new System.Drawing.Point(54, 99);
-            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
-            this.labelMillisecondsInterval.Size = new System.Drawing.Size(63, 13);
-            this.labelMillisecondsInterval.TabIndex = 0;
-            this.labelMillisecondsInterval.Text = "milliseconds";
-            // 
-            // numericUpDownMillisecondsInterval
-            // 
-            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(6, 97);
-            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
-            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownMillisecondsInterval.TabIndex = 0;
-            this.numericUpDownMillisecondsInterval.TabStop = false;
-            // 
-            // labelSecondsInterval
-            // 
-            this.labelSecondsInterval.AutoSize = true;
-            this.labelSecondsInterval.Location = new System.Drawing.Point(54, 73);
-            this.labelSecondsInterval.Name = "labelSecondsInterval";
-            this.labelSecondsInterval.Size = new System.Drawing.Size(47, 13);
-            this.labelSecondsInterval.TabIndex = 0;
-            this.labelSecondsInterval.Text = "seconds";
-            // 
-            // labelMinutesInterval
-            // 
-            this.labelMinutesInterval.AutoSize = true;
-            this.labelMinutesInterval.Location = new System.Drawing.Point(54, 47);
-            this.labelMinutesInterval.Name = "labelMinutesInterval";
-            this.labelMinutesInterval.Size = new System.Drawing.Size(43, 13);
-            this.labelMinutesInterval.TabIndex = 0;
-            this.labelMinutesInterval.Text = "minutes";
-            // 
-            // labelHoursInterval
-            // 
-            this.labelHoursInterval.AutoSize = true;
-            this.labelHoursInterval.Location = new System.Drawing.Point(54, 21);
-            this.labelHoursInterval.Name = "labelHoursInterval";
-            this.labelHoursInterval.Size = new System.Drawing.Size(33, 13);
-            this.labelHoursInterval.TabIndex = 0;
-            this.labelHoursInterval.Text = "hours";
-            // 
-            // numericUpDownSecondsInterval
-            // 
-            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(6, 71);
-            this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.numericUpDownSecondsInterval.Name = "numericUpDownSecondsInterval";
-            this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSecondsInterval.TabIndex = 0;
-            this.numericUpDownSecondsInterval.TabStop = false;
-            // 
             // numericUpDownMinutesInterval
             // 
-            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(6, 45);
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(127, 48);
             this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -299,18 +251,58 @@
             this.numericUpDownMinutesInterval.TabIndex = 0;
             this.numericUpDownMinutesInterval.TabStop = false;
             // 
-            // numericUpDownHoursInterval
+            // labelMillisecondsInterval
             // 
-            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(6, 19);
-            this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
-            23,
+            this.labelMillisecondsInterval.AutoSize = true;
+            this.labelMillisecondsInterval.Location = new System.Drawing.Point(444, 50);
+            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
+            this.labelMillisecondsInterval.Size = new System.Drawing.Size(63, 13);
+            this.labelMillisecondsInterval.TabIndex = 0;
+            this.labelMillisecondsInterval.Text = "milliseconds";
+            // 
+            // numericUpDownSecondsInterval
+            // 
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(258, 48);
+            this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
+            59,
             0,
             0,
             0});
-            this.numericUpDownHoursInterval.Name = "numericUpDownHoursInterval";
-            this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownHoursInterval.TabIndex = 0;
-            this.numericUpDownHoursInterval.TabStop = false;
+            this.numericUpDownSecondsInterval.Name = "numericUpDownSecondsInterval";
+            this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownSecondsInterval.TabIndex = 0;
+            this.numericUpDownSecondsInterval.TabStop = false;
+            // 
+            // numericUpDownMillisecondsInterval
+            // 
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(396, 48);
+            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
+            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMillisecondsInterval.TabIndex = 0;
+            this.numericUpDownMillisecondsInterval.TabStop = false;
+            // 
+            // labelMinutesInterval
+            // 
+            this.labelMinutesInterval.AutoSize = true;
+            this.labelMinutesInterval.Location = new System.Drawing.Point(175, 50);
+            this.labelMinutesInterval.Name = "labelMinutesInterval";
+            this.labelMinutesInterval.Size = new System.Drawing.Size(43, 13);
+            this.labelMinutesInterval.TabIndex = 0;
+            this.labelMinutesInterval.Text = "minutes";
+            // 
+            // labelSecondsInterval
+            // 
+            this.labelSecondsInterval.AutoSize = true;
+            this.labelSecondsInterval.Location = new System.Drawing.Point(306, 50);
+            this.labelSecondsInterval.Name = "labelSecondsInterval";
+            this.labelSecondsInterval.Size = new System.Drawing.Size(47, 13);
+            this.labelSecondsInterval.TabIndex = 0;
+            this.labelSecondsInterval.Text = "seconds";
             // 
             // tabPageLabels
             // 
@@ -445,7 +437,13 @@
             // 
             // tabPageApplicationFocus
             // 
-            this.tabPageApplicationFocus.Controls.Add(this.groupBoxApplicationFocus);
+            this.tabPageApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayAfter);
+            this.tabPageApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayBefore);
+            this.tabPageApplicationFocus.Controls.Add(this.comboBoxProcessList);
+            this.tabPageApplicationFocus.Controls.Add(this.labelApplicationFocusDelayAfter);
+            this.tabPageApplicationFocus.Controls.Add(this.labelApplicationFocusDelayBefore);
+            this.tabPageApplicationFocus.Controls.Add(this.buttonApplicationFocusTest);
+            this.tabPageApplicationFocus.Controls.Add(this.buttonApplicationFocusRefresh);
             this.tabPageApplicationFocus.Location = new System.Drawing.Point(4, 22);
             this.tabPageApplicationFocus.Name = "tabPageApplicationFocus";
             this.tabPageApplicationFocus.Size = new System.Drawing.Size(677, 253);
@@ -453,25 +451,9 @@
             this.tabPageApplicationFocus.Text = "Application Focus";
             this.tabPageApplicationFocus.UseVisualStyleBackColor = true;
             // 
-            // groupBoxApplicationFocus
-            // 
-            this.groupBoxApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayAfter);
-            this.groupBoxApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayBefore);
-            this.groupBoxApplicationFocus.Controls.Add(this.labelApplicationFocusDelayAfter);
-            this.groupBoxApplicationFocus.Controls.Add(this.labelApplicationFocusDelayBefore);
-            this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusTest);
-            this.groupBoxApplicationFocus.Controls.Add(this.buttonApplicationFocusRefresh);
-            this.groupBoxApplicationFocus.Controls.Add(this.comboBoxProcessList);
-            this.groupBoxApplicationFocus.Location = new System.Drawing.Point(236, 62);
-            this.groupBoxApplicationFocus.Name = "groupBoxApplicationFocus";
-            this.groupBoxApplicationFocus.Size = new System.Drawing.Size(205, 128);
-            this.groupBoxApplicationFocus.TabIndex = 2;
-            this.groupBoxApplicationFocus.TabStop = false;
-            this.groupBoxApplicationFocus.Text = "Application Focus";
-            // 
             // numericUpDownApplicationFocusDelayAfter
             // 
-            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(147, 71);
+            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(551, 75);
             this.numericUpDownApplicationFocusDelayAfter.Maximum = new decimal(new int[] {
             60000,
             0,
@@ -484,7 +466,7 @@
             // 
             // numericUpDownApplicationFocusDelayBefore
             // 
-            this.numericUpDownApplicationFocusDelayBefore.Location = new System.Drawing.Point(148, 47);
+            this.numericUpDownApplicationFocusDelayBefore.Location = new System.Drawing.Point(551, 49);
             this.numericUpDownApplicationFocusDelayBefore.Maximum = new decimal(new int[] {
             60000,
             0,
@@ -498,7 +480,7 @@
             // labelApplicationFocusDelayAfter
             // 
             this.labelApplicationFocusDelayAfter.AutoSize = true;
-            this.labelApplicationFocusDelayAfter.Location = new System.Drawing.Point(6, 75);
+            this.labelApplicationFocusDelayAfter.Location = new System.Drawing.Point(409, 77);
             this.labelApplicationFocusDelayAfter.Name = "labelApplicationFocusDelayAfter";
             this.labelApplicationFocusDelayAfter.Size = new System.Drawing.Size(127, 13);
             this.labelApplicationFocusDelayAfter.TabIndex = 0;
@@ -507,7 +489,7 @@
             // labelApplicationFocusDelayBefore
             // 
             this.labelApplicationFocusDelayBefore.AutoSize = true;
-            this.labelApplicationFocusDelayBefore.Location = new System.Drawing.Point(6, 49);
+            this.labelApplicationFocusDelayBefore.Location = new System.Drawing.Point(409, 51);
             this.labelApplicationFocusDelayBefore.Name = "labelApplicationFocusDelayBefore";
             this.labelApplicationFocusDelayBefore.Size = new System.Drawing.Size(136, 13);
             this.labelApplicationFocusDelayBefore.TabIndex = 0;
@@ -515,7 +497,7 @@
             // 
             // buttonApplicationFocusTest
             // 
-            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(6, 98);
+            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(424, 195);
             this.buttonApplicationFocusTest.Name = "buttonApplicationFocusTest";
             this.buttonApplicationFocusTest.Size = new System.Drawing.Size(92, 23);
             this.buttonApplicationFocusTest.TabIndex = 0;
@@ -526,7 +508,7 @@
             // 
             // buttonApplicationFocusRefresh
             // 
-            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(107, 98);
+            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(525, 195);
             this.buttonApplicationFocusRefresh.Name = "buttonApplicationFocusRefresh";
             this.buttonApplicationFocusRefresh.Size = new System.Drawing.Size(92, 23);
             this.buttonApplicationFocusRefresh.TabIndex = 0;
@@ -539,7 +521,7 @@
             // 
             this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProcessList.FormattingEnabled = true;
-            this.comboBoxProcessList.Location = new System.Drawing.Point(5, 19);
+            this.comboBoxProcessList.Location = new System.Drawing.Point(37, 43);
             this.comboBoxProcessList.Name = "comboBoxProcessList";
             this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
             this.comboBoxProcessList.TabIndex = 0;
@@ -553,7 +535,7 @@
             this.tabPageSecurity.Controls.Add(this.labelLastUpdated);
             this.tabPageSecurity.Controls.Add(this.buttonClearPassphrase);
             this.tabPageSecurity.Controls.Add(this.buttonSetPassphrase);
-            this.tabPageSecurity.Controls.Add(this.labelPasswordDescription);
+            this.tabPageSecurity.Controls.Add(this.labelSecurityHelp);
             this.tabPageSecurity.Controls.Add(this.textBoxPassphrase);
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
@@ -624,14 +606,14 @@
             this.buttonSetPassphrase.UseVisualStyleBackColor = true;
             this.buttonSetPassphrase.Click += new System.EventHandler(this.buttonSetPassphrase_Click);
             // 
-            // labelPasswordDescription
+            // labelSecurityHelp
             // 
-            this.labelPasswordDescription.BackColor = System.Drawing.Color.LightYellow;
-            this.labelPasswordDescription.Location = new System.Drawing.Point(6, 13);
-            this.labelPasswordDescription.Name = "labelPasswordDescription";
-            this.labelPasswordDescription.Size = new System.Drawing.Size(665, 32);
-            this.labelPasswordDescription.TabIndex = 0;
-            this.labelPasswordDescription.Text = resources.GetString("labelPasswordDescription.Text");
+            this.labelSecurityHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelSecurityHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelSecurityHelp.Name = "labelSecurityHelp";
+            this.labelSecurityHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelSecurityHelp.TabIndex = 0;
+            this.labelSecurityHelp.Text = resources.GetString("labelSecurityHelp.Text");
             // 
             // textBoxPassphrase
             // 
@@ -1015,6 +997,33 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // labelInitialCaptureHelp
+            // 
+            this.labelInitialCaptureHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelInitialCaptureHelp.Location = new System.Drawing.Point(6, 95);
+            this.labelInitialCaptureHelp.Name = "labelInitialCaptureHelp";
+            this.labelInitialCaptureHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelInitialCaptureHelp.TabIndex = 2;
+            this.labelInitialCaptureHelp.Text = resources.GetString("labelInitialCaptureHelp.Text");
+            // 
+            // labelLimitHelp
+            // 
+            this.labelLimitHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelLimitHelp.Location = new System.Drawing.Point(6, 169);
+            this.labelLimitHelp.Name = "labelLimitHelp";
+            this.labelLimitHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelLimitHelp.TabIndex = 3;
+            this.labelLimitHelp.Text = resources.GetString("labelLimitHelp.Text");
+            // 
+            // labelLimit
+            // 
+            this.labelLimit.AutoSize = true;
+            this.labelLimit.Location = new System.Drawing.Point(74, 206);
+            this.labelLimit.Name = "labelLimit";
+            this.labelLimit.Size = new System.Drawing.Size(24, 13);
+            this.labelLimit.TabIndex = 4;
+            this.labelLimit.Text = "limit";
+            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1036,21 +1045,19 @@
             this.Load += new System.EventHandler(this.FormSetup_Load);
             this.tabControlSetup.ResumeLayout(false);
             this.tabPageInterval.ResumeLayout(false);
-            this.groupBoxCaptureDelay.ResumeLayout(false);
-            this.groupBoxCaptureDelay.PerformLayout();
+            this.tabPageInterval.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
             this.groupBoxActiveWindowTitle.ResumeLayout(false);
             this.groupBoxActiveWindowTitle.PerformLayout();
             this.tabPageApplicationFocus.ResumeLayout(false);
-            this.groupBoxApplicationFocus.ResumeLayout(false);
-            this.groupBoxApplicationFocus.PerformLayout();
+            this.tabPageApplicationFocus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).EndInit();
             this.tabPageSecurity.ResumeLayout(false);
@@ -1076,8 +1083,6 @@
         private System.Windows.Forms.TabPage tabPageActiveWindowTitle;
         private System.Windows.Forms.TabPage tabPageApplicationFocus;
         private System.Windows.Forms.TabPage tabPageSecurity;
-        private System.Windows.Forms.GroupBox groupBoxCaptureDelay;
-        private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.TabPage tabPageKeyboardShortcuts;
         private System.Windows.Forms.Label labelMillisecondsInterval;
         private System.Windows.Forms.Label labelSecondsInterval;
@@ -1085,8 +1090,7 @@
         private System.Windows.Forms.Label labelHoursInterval;
         private System.Windows.Forms.GroupBox groupBoxActiveWindowTitle;
         private System.Windows.Forms.Button buttonDynamicRegexValidator;
-        private System.Windows.Forms.GroupBox groupBoxApplicationFocus;
-        private System.Windows.Forms.Label labelPasswordDescription;
+        private System.Windows.Forms.Label labelSecurityHelp;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
@@ -1334,5 +1338,9 @@
         public System.Windows.Forms.TextBox textBoxPassphraseHash;
 
         private System.Windows.Forms.Label labelPassphrase;
+        private System.Windows.Forms.Label labelIntervalHelp;
+        private System.Windows.Forms.Label labelInitialCaptureHelp;
+        private System.Windows.Forms.Label labelLimitHelp;
+        private System.Windows.Forms.Label labelLimit;
     }
 }

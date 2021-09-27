@@ -29,7 +29,7 @@ namespace AutoScreenCapture
     {
         // Default application settings.
         internal readonly bool DebugMode = false;
-        internal readonly bool ExitOnError = true;
+        internal readonly bool ExitOnError = false;
         internal readonly bool Logging = false;
         internal readonly int LowDiskPercentageThreshold = 1;
         internal readonly int ScreenshotsLoadLimit = 5000;

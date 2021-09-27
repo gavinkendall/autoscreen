@@ -281,7 +281,7 @@ namespace AutoScreenCapture
                                         break;
 
                                     case TAG_ENABLE:
-                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
+                                    case "active": // Any version older than 2.4.0.0 used "active" instead of "enable".
                                         xReader.Read();
                                         tag.Enable = Convert.ToBoolean(xReader.Value);
                                         break;

@@ -147,7 +147,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void emailScreenshot_Click(object sender, EventArgs e)
         {
-            Screenshot screenshot = null;
+            Screenshot selectedScreenshot = null;
 
             Slide selectedSlide = _slideShow.SelectedSlide;
 
@@ -157,19 +157,25 @@ namespace AutoScreenCapture
                 {
                     var screen = (Screen)tabControlViews.SelectedTab.Tag;
 
-                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     var region = (Region)tabControlViews.SelectedTab.Tag;
 
-                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
+                }
+
+                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                {
+                    // *** Auto Screen Capture - Region Select / Auto Save ***
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
                 }
 
                 bool.TryParse(_config.Settings.Application.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
 
-                if (EmailScreenshot(screenshot, prompt))
+                if (EmailScreenshot(selectedScreenshot, prompt))
                 {
                     MessageBox.Show("Successfully emailed screenshot.", "Email Successfully Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -191,7 +197,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void fileTransferScreenshot_Click(object sender, EventArgs e)
         {
-            Screenshot screenshot = null;
+            Screenshot selectedScreenshot = null;
 
             Slide selectedSlide = _slideShow.SelectedSlide;
 
@@ -201,23 +207,23 @@ namespace AutoScreenCapture
                 {
                     var screen = (Screen)tabControlViews.SelectedTab.Tag;
 
-                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, screen.ViewId);
                 }
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Region))
                 {
                     var region = (Region)tabControlViews.SelectedTab.Tag;
 
-                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                if (screenshot.ViewId.Equals(Guid.Empty))
+                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
                 {
                     // *** Auto Screen Capture - Region Select / Auto Save ***
-                    screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
+                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
                 }
 
-                if (FileTransferScreenshot(screenshot))
+                if (FileTransferScreenshot(selectedScreenshot))
                 {
                     MessageBox.Show("Successfully uploaded screenshot to file server.", "File Transfer Succeeded", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -419,8 +425,8 @@ namespace AutoScreenCapture
 
                                         if (!string.IsNullOrEmpty(selectedScreenshot.Path))
                                         {
-                                            // Change the font color to maroon to indicate that this is an outdated screenshot we're showing.
-                                            groupBox.ForeColor = Color.Maroon;
+                                            // Change the font color to dark red to indicate that this is an outdated screenshot we're showing.
+                                            groupBox.ForeColor = Color.DarkRed;
 
                                             break;
                                         }
@@ -542,8 +548,8 @@ namespace AutoScreenCapture
 
                                     if (!string.IsNullOrEmpty(selectedScreenshot.Path))
                                     {
-                                        // Change the font color to maroon to indicate that this is an outdated screenshot we're showing.
-                                        toolStrip.ForeColor = Color.Maroon;
+                                        // Change the font color to dark red to indicate that this is an outdated screenshot we're showing.
+                                        toolStrip.ForeColor = Color.DarkRed;
 
                                         break;
                                     }

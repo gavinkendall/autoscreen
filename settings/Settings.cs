@@ -463,7 +463,7 @@ namespace AutoScreenCapture
             settingCollection.RemoveByKey("EmailMessageBody");
             settingCollection.RemoveByKey("EmailPrompt");
 
-            // Removed in 2.3.7.0
+            // Removed in 2.4.0.0
             settingCollection.RemoveByKey("Name");
             settingCollection.RemoveByKey("Version");
 

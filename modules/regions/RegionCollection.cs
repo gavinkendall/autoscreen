@@ -157,7 +157,7 @@ namespace AutoScreenCapture
                                         break;
 
                                     case REGION_ENABLE:
-                                    case "active": // Any version older than 2.3.7.0 used "active" instead of "enable".
+                                    case "active": // Any version older than 2.4.0.0 used "active" instead of "enable".
                                         xReader.Read();
                                         region.Enable = Convert.ToBoolean(xReader.Value);
                                         break;
@@ -211,7 +211,7 @@ namespace AutoScreenCapture
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 region.Enable = true;
 
-                                // Introduced in 2.3.7.0
+                                // Introduced in 2.4.0.0
                                 region.Encrypt = false;
                             }
                         }

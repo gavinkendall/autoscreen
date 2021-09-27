@@ -102,7 +102,7 @@ namespace AutoScreenCapture
                                     destinationStream.Write(provider.IV, 0, provider.IV.Length);
                                     sourceStream.CopyTo(cryptoStream);
 
-                                    keyBase64Encoded = System.Convert.ToBase64String(provider.Key);
+                                    keyBase64Encoded = Convert.ToBase64String(provider.Key);
                                 }
                             }
                         }

@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="labelPasswordDescription.Text" xml:space="preserve">
+  <data name="labelLimitHelp.Text" xml:space="preserve">
+    <value>Sets a limit on the number of screen capture cycles. For example, with this option enabled and the numeric value set to 5, you will have screenshots taken five times based on the interval. By default the running screen capture session will stop when it reaches the limit.</value>
+  </data>
+  <data name="labelInitialCaptureHelp.Text" xml:space="preserve">
+    <value>When this option is enabled an initial set of screenshots will be taken before the first cycle of screenshots so that screenshots are taken immediately when a screen capture session starts. Disabling this option will wait for the first cycle of screenshots at the set interval.</value>
+  </data>
+  <data name="labelIntervalHelp.Text" xml:space="preserve">
+    <value>Define the interval at which screenshots should be taken. This can be as fast or as slow as you want. The timer starts when the Start Screen Capture button is clicked, the Start Screen Capture menu option is selected, or a scheduled start time is encountered.</value>
+  </data>
+  <data name="labelSecurityHelp.Text" xml:space="preserve">
     <value>This passphrase will be required for Show Interface, Stop Screen Capture, and Exit Application. The system tray icon menus will also be limited. Enter a passphrase and click Set Passphrase. Click on Clear Passphrase to not use a passphrase and remove all restrictions.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
