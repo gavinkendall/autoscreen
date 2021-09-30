@@ -29,6 +29,25 @@ namespace AutoScreenCapture
     {
         private void ContextMenuStripSystemTrayIcon_Opening(object sender, CancelEventArgs e)
         {
+            // This is to check if we're in the weird condition whereby the main form is considered Visible
+            // but we haven't set the visibility ourselves yet. We can help the user by setting Visible to false
+            // and setting _initialVisibilitySet to true so they don't have to select this option twice on initial load.
+            // See OnVisibleChanged method for more information; especially if the user doesn't have any Triggers setup.
+            if (!_initialVisibilitySet && Visible)
+            {
+                Visible = false;
+                _initialVisibilitySet = true;
+            }
+
+            if (Visible)
+            {
+                toolStripMenuItemShowHideInterface.Text = "Hide Interface";
+            }
+            else
+            {
+                toolStripMenuItemShowHideInterface.Text = "Show Interface";
+            }
+
             PopulateLabelList();
 
             // Change Screen
