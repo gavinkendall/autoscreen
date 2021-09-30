@@ -257,8 +257,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        _formEnterPassphrase.Focus();
-                        _formEnterPassphrase.BringToFront();
+                        _formEnterPassphrase.Activate();
                     }
 
                     if (_formEnterPassphrase.DialogResult != DialogResult.OK)
@@ -449,8 +448,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formRegionSelectOptions.Focus();
-                _formRegionSelectOptions.BringToFront();
+                _formRegionSelectOptions.Activate();
             }
         }
 

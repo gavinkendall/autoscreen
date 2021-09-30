@@ -48,8 +48,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formTrigger.Focus();
-                _formTrigger.BringToFront();
+                _formTrigger.Activate();
             }
 
             if (_formTrigger.DialogResult == DialogResult.OK)

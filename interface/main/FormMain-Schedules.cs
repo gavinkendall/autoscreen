@@ -183,8 +183,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formSchedule.Focus();
-                _formSchedule.BringToFront();
+                _formSchedule.Activate();
             }
 
             if (_formSchedule.DialogResult == DialogResult.OK)

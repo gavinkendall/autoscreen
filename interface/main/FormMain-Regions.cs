@@ -45,8 +45,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formRegion.Focus();
-                _formRegion.BringToFront();
+                _formRegion.Activate();
             }
 
             if (_formRegion.DialogResult == DialogResult.OK)

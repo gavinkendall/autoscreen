@@ -396,8 +396,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        _formEnterPassphrase.Focus();
-                        _formEnterPassphrase.BringToFront();
+                        _formEnterPassphrase.Activate();
                     }
 
                     if (_formEnterPassphrase.DialogResult != DialogResult.OK)
@@ -423,7 +422,7 @@ namespace AutoScreenCapture
                 Opacity = 100;
                 ShowInTaskbar = true;
                 Show();
-                Focus();
+                Activate();
 
                 // If the window is mimimized then show it when the user wants to open the window.
                 if (WindowState == FormWindowState.Minimized)
@@ -548,8 +547,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formScreenCaptureStatus.Focus();
-                _formScreenCaptureStatus.BringToFront();
+                _formScreenCaptureStatus.Activate();
             }
         }
 
@@ -566,8 +564,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formDynamicRegexValidator.Focus();
-                _formDynamicRegexValidator.BringToFront();
+                _formDynamicRegexValidator.Activate();
             }
         }
 
@@ -584,8 +581,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formAbout.Focus();
-                _formAbout.BringToFront();
+                _formAbout.Activate();
             }
         }
 
@@ -604,8 +600,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formEmailSettings.Focus();
-                _formEmailSettings.BringToFront();
+                _formEmailSettings.Activate();
             }
 
             if (_formEmailSettings.DialogResult == DialogResult.OK)
@@ -629,8 +624,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formFileTransferSettings.Focus();
-                _formFileTransferSettings.BringToFront();
+                _formFileTransferSettings.Activate();
             }
 
             if (_formFileTransferSettings.DialogResult == DialogResult.OK)

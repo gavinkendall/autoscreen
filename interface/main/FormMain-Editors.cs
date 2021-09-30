@@ -43,8 +43,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formEditor.Focus();
-                _formEditor.BringToFront();
+                _formEditor.Activate();
             }
 
             if (_formEditor.DialogResult == DialogResult.OK)

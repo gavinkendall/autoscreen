@@ -100,9 +100,8 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formHelp.Focus();
                 _formHelp.WindowState = FormWindowState.Normal;
-                _formHelp.BringToFront();
+                _formHelp.Activate();
             }
         }
     }

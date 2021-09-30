@@ -42,8 +42,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formMacroTag.Focus();
-                _formMacroTag.BringToFront();
+                _formMacroTag.Activate();
             }
 
             if (_formMacroTag.DialogResult == DialogResult.OK)

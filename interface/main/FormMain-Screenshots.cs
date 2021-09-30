@@ -63,8 +63,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                _formScreenshotMetadata.Focus();
-                _formScreenshotMetadata.BringToFront();
+                _formScreenshotMetadata.Activate();
             }
         }
 

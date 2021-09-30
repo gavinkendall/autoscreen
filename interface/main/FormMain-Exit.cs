@@ -47,8 +47,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        _formEnterPassphrase.Focus();
-                        _formEnterPassphrase.BringToFront();
+                        _formEnterPassphrase.Activate();
                     }
 
                     if (_formEnterPassphrase.DialogResult != DialogResult.OK)
