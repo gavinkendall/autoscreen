@@ -313,7 +313,7 @@ namespace AutoScreenCapture
 
             if (editor != null)
             {
-                RunEditor(editor, TriggerActionType.RunEditor);
+                RunEditor(editor, _screenCapture.DateTimeScreenshotsTaken);
             }
         }
 
@@ -579,7 +579,7 @@ namespace AutoScreenCapture
 
             if (editor != null)
             {
-                RunEditor(editor, TriggerActionType.RunEditor);
+                RunEditor(editor, _screenshotCollection.GetLastScreenshot());
             }
         }
 

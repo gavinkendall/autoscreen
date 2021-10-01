@@ -196,38 +196,26 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Executes a chosen image editor from a Trigger to open the last set of screenshots taken with the image editor.
+        /// Runs the editor for each screenshot taken at a specified date and time.
         /// </summary>
-        /// <param name="editor">The image editor to execute.</param>
-        /// <param name="triggerActionType">The trigger's action type.</param>
-        private void RunEditor(Editor editor, TriggerActionType triggerActionType)
+        /// <param name="editor">The editor to run.</param>
+        /// <param name="dateTime">The date and time to use in finding the screenshots that match with that date and time.</param>
+        private void RunEditor(Editor editor, DateTime dateTime)
         {
-            if (editor != null && triggerActionType == TriggerActionType.RunEditor)
+            if (editor != null)
             {
-                // Assume we're going to be passing in the path of the screenshot image to the program.
-                if (editor.Arguments != null && editor.Arguments.Contains("%filepath%"))
-                {
-                    DateTime dt = _screenCapture.DateTimeScreenshotsTaken;
+                System.Collections.Generic.List<Screenshot> screenshots = _screenshotCollection.GetScreenshots(dateTime.ToString(_macroParser.DateFormat), dateTime.ToString(_macroParser.TimeFormat));
 
-                    foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dt.ToString(_macroParser.DateFormat), dt.ToString(_macroParser.TimeFormat)))
+                foreach (Screenshot screenshot in screenshots)
+                {
+                    if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
                     {
-                        if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
+                        _log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
+
+                        if (!RunEditor(editor, screenshot))
                         {
-                            _log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
-
-                            if (!RunEditor(editor, screenshot))
-                            {
-                                _log.WriteDebugMessage("Running editor failed. Perhaps the filepath of the screenshot file is no longer available");
-                            }
+                            _log.WriteDebugMessage("Running editor failed. Perhaps the filepath of the screenshot file is no longer available");
                         }
-                    }
-                }
-                else
-                {
-                    // Just run the program without passing in the path of the screenshot.
-                    if (!RunEditor(editor))
-                    {
-                        _log.WriteDebugMessage("Running editor failed.");
                     }
                 }
             }

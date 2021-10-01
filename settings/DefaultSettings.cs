@@ -38,7 +38,7 @@ namespace AutoScreenCapture
         internal readonly int FilepathLengthLimit = 2000;
         internal readonly bool StopOnLowDiskError = true;
         internal readonly int ActiveWindowTitleLengthLimit = 2000;
-        internal readonly bool OptimizeScreenCapture = true;
+        internal readonly bool OptimizeScreenCapture = false;
         internal readonly bool AllowUserToConfigureEmailSettings = true;
         internal readonly bool AllowUserToConfigureFileTransferSettings = true;
 

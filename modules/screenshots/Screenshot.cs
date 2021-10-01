@@ -79,9 +79,14 @@ namespace AutoScreenCapture
         public string Version { get; set; }
 
         /// <summary>
-        /// Determines if the screenshot has been written to disk and can be loaded from the "screenshots" XML document.
+        /// Determines if the screenshot has been saved to disk.
         /// </summary>
-        public bool Saved { get; set; }
+        public bool SavedToDisk { get; set; }
+
+        /// <summary>
+        /// Determines if the screenshot reference has been saved to the "screenshots" XML file.
+        /// </summary>
+        public bool ReferenceSaved { get; set; }
 
         /// <summary>
         /// The bitmap image associated with the screenshot.
@@ -108,7 +113,7 @@ namespace AutoScreenCapture
         /// </summary>
         public Screenshot(Config config)
         {
-            Saved = false;
+            ReferenceSaved = false;
             Version = config.Settings.ApplicationVersion;
         }
 
@@ -127,7 +132,7 @@ namespace AutoScreenCapture
 
             Date = dateTime.ToString(macroParser.DateFormat);
             Time = dateTime.ToString(macroParser.TimeFormat);
-            Saved = false;
+            ReferenceSaved = false;
             Version = config.Settings.ApplicationVersion;
 
             Slide = new Slide()

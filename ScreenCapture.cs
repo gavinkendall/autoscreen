@@ -419,6 +419,8 @@ namespace AutoScreenCapture
 
                     screenshot.Bitmap.Dispose();
 
+                    screenshot.SavedToDisk = true;
+
                     _log.WriteMessage("Screenshot saved to file at screenshot.Path \"" + screenshot.Path + "\"");
                 }
             }
