@@ -73,6 +73,11 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("Time Range");
             comboBoxType.Items.Add("Date/Time Format Expression");
             comboBoxType.Items.Add("Quarter Year");
+            comboBoxType.Items.Add("X");
+            comboBoxType.Items.Add("Y");
+            comboBoxType.Items.Add("Width");
+            comboBoxType.Items.Add("Height");
+            comboBoxType.Items.Add("Process Name");
 
             if (MacroTagObject != null)
             {
@@ -268,6 +273,8 @@ namespace AutoScreenCapture
 
             if (!textBoxName.Text.EndsWith("%"))
                 textBoxName.Text += "%";
+
+            textBoxName.Text = textBoxName.Text.ToLower();
         }
 
         private bool InputValid()

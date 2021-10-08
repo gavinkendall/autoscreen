@@ -161,8 +161,8 @@ namespace AutoScreenCapture
         /// <param name="name">The name of the tag.</param>
         /// <param name="description">The description of the tag.</param>
         /// <param name="macroTagType">The type of tag.</param>
-        /// <param name="active">The status of the tag.</param>
-        public MacroTag(MacroParser macroParser, string name, string description, MacroTagType macroTagType, bool active)
+        /// <param name="enable">The status of the tag.</param>
+        public MacroTag(MacroParser macroParser, string name, string description, MacroTagType macroTagType, bool enable)
         {
             _macroParser = macroParser;
 
@@ -171,7 +171,7 @@ namespace AutoScreenCapture
             Name = name;
             Description = description;
             Type = macroTagType;
-            Enable = active;
+            Enable = enable;
         }
 
         /// <summary>

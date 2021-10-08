@@ -19,7 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -516,9 +516,18 @@ namespace AutoScreenCapture
             textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
-            textBoxMacroPreview.Text = _macroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection, _log) +
-                _macroParser.ParseTags(preview: true, config: false, textBoxScreenName.Text, textBoxMacro.Text, 1,
-                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection, _log);
+            Screen screen = new Screen
+            {
+                Name = textBoxScreenName.Text,
+                X = (int)numericUpDownX.Value,
+                Y = (int)numericUpDownY.Value,
+                Width = (int)numericUpDownWidth.Value,
+                Height = (int)numericUpDownHeight.Value,
+                Format = ImageFormatCollection.GetByName(comboBoxFormat.Text)
+            };
+
+            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, config: false, textBoxFolder.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log) +
+                _macroParser.ParseTags(preview: true, config: false, textBoxMacro.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log);
         }
 
         private void comboBoxFormat_SelectedIndexChanged(object sender, EventArgs e)

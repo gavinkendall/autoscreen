@@ -108,7 +108,7 @@ namespace AutoScreenCapture
                                         string value = xReader.Value;
 
                                         // Change the data for each Tag that's being loaded if we've detected that
-                                        // the XML document is from an older version of the application.
+                                        // the XML document is from an older version of the application. This is to retain backwards compatibility with older versions.
                                         if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                                         {
                                             log.WriteDebugMessage("An old version of the editors.xml file was detected. Attempting upgrade to new schema.");
@@ -191,6 +191,7 @@ namespace AutoScreenCapture
                     // Microsoft Outlook
                     if (fileSystem.FileExists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
                     {
+                        // This is for making a screenshot an attachment to a new email message in Outlook.
                         Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a %filepath%"));
                     }
 

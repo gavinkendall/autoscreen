@@ -21,6 +21,7 @@
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace AutoScreenCapture
 {
@@ -367,9 +368,18 @@ namespace AutoScreenCapture
             textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
-            textBoxMacroPreview.Text = _macroParser.ParseTags(config: false, textBoxFolder.Text, TagCollection, _log) +
-                _macroParser.ParseTags(preview: true, config: false, textBoxRegionName.Text, textBoxMacro.Text, 1,
-                ImageFormatCollection.GetByName(comboBoxFormat.Text), Text, TagCollection, _log);
+            Region region = new Region
+            {
+                Name = textBoxRegionName.Text,
+                X = (int)numericUpDownX.Value,
+                Y = (int)numericUpDownY.Value,
+                Width = (int)numericUpDownWidth.Value,
+                Height = (int)numericUpDownHeight.Value,
+                Format = ImageFormatCollection.GetByName(comboBoxFormat.Text)
+            };
+
+            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, config: false, textBoxFolder.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log) +
+                _macroParser.ParseTags(preview: true, config: false, textBoxMacro.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log);
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)

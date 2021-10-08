@@ -28,10 +28,12 @@ namespace AutoScreenCapture
     /// </summary>
     public class Config
     {
+        // Folders
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
         private const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
 
+        // Files
         private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
         private const string REGEX_SMTP_SETTINGS_FILE = "^SMTPSettingsFile=(?<Path>.+)$";
@@ -199,10 +201,11 @@ namespace AutoScreenCapture
                 CheckAndCreateFolders();
 
                 Settings.Load(FileSystem);
+
                 Log = new Log(Settings, FileSystem, MacroParser);
                 ScreenCapture = new ScreenCapture(this, FileSystem, Log);
-
                 Security security = new Security();
+
                 CheckAndCreateFiles(security, ScreenCapture, Log);
             }
             catch (Exception ex)
@@ -211,174 +214,197 @@ namespace AutoScreenCapture
             }
         }
 
-        // Check the folders to make sure that each folder was included in the config file and the folder exists.
+        /// <summary>
+        /// Check the folders to make sure that each folder was included in the config file and the folder exists.
+        /// </summary>
         private void CheckAndCreateFolders()
         {
-            if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
+            try
             {
-                FileSystem.ScreenshotsFolder = FileSystem.DefaultScreenshotsFolder;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultScreenshotsFolder))
+                if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
                 {
-                    FileSystem.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
+                    FileSystem.ScreenshotsFolder = FileSystem.DefaultScreenshotsFolder;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultScreenshotsFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+                {
+                    FileSystem.DebugFolder = FileSystem.DefaultDebugFolder;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DefaultDebugFolder);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultDebugFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultDebugFolder);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.LogsFolder))
+                {
+                    FileSystem.LogsFolder = FileSystem.DefaultLogsFolder;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.DefaultLogsFolder);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultLogsFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultLogsFolder);
+                    }
                 }
             }
-
-            if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+            catch (Exception ex)
             {
-                FileSystem.DebugFolder = FileSystem.DefaultDebugFolder;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DefaultDebugFolder);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultDebugFolder))
-                {
-                    FileSystem.CreateDirectory(FileSystem.DefaultDebugFolder);
-                }
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.LogsFolder))
-            {
-                FileSystem.LogsFolder = FileSystem.DefaultLogsFolder;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.DefaultLogsFolder);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultLogsFolder))
-                {
-                    FileSystem.CreateDirectory(FileSystem.DefaultLogsFolder);
-                }
+                Log.WriteExceptionMessage("Config::CheckAndCreateFolders", ex);
             }
         }
 
+        /// <summary>
+        /// Check to see if the configured files exist and, if they don't, create them.
+        /// There might be a permissions issue if these files are attempting to be created in folders that don't have the correct permissions.
+        /// </summary>
+        /// <param name="security">The security class to use.</param>
+        /// <param name="screenCapture">The screen capture class to use.</param>
+        /// <param name="log">The logging class to use.</param>
         private void CheckAndCreateFiles(Security security, ScreenCapture screenCapture, Log log)
         {
-            if (string.IsNullOrEmpty(FileSystem.CommandFile))
+            try
             {
-                FileSystem.CommandFile = FileSystem.DefaultCommandFile;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.DefaultCommandFile);
-
-                if (!FileSystem.FileExists(FileSystem.DefaultCommandFile))
+                if (string.IsNullOrEmpty(FileSystem.CommandFile))
                 {
-                    FileSystem.CreateFile(FileSystem.DefaultCommandFile);
+                    FileSystem.CommandFile = FileSystem.DefaultCommandFile;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.DefaultCommandFile);
+
+                    if (!FileSystem.FileExists(FileSystem.DefaultCommandFile))
+                    {
+                        FileSystem.CreateFile(FileSystem.DefaultCommandFile);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
+                {
+                    FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
+                {
+                    FileSystem.SmtpSettingsFile = FileSystem.DefaultSmtpSettingsFile;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
+                {
+                    FileSystem.SftpSettingsFile = FileSystem.DefaultSftpSettingsFile;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
+                {
+                    FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
+
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
+
+                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
+                    {
+                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
+                    }
+                }
+
+                Settings.User.Load(Settings, FileSystem);
+
+                Settings.SMTP.Load(Settings, FileSystem);
+
+                Settings.SFTP.Load(Settings, FileSystem);
+
+                Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
+
+                Settings.VersionManager.OldUserSettings = Settings.User.Clone();
+
+                Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
+
+                Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
+
+                Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
+
+                Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
+
+                if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
+                {
+                    ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
+                    ScreenCollection screenCollection = new ScreenCollection();
+
+                    ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, FileSystem, log);
+                    screenshotCollection.SaveToXmlFile(this);
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.EditorsFile))
+                {
+                    // Loading the editor collection will automatically create the default editors and add them to the collection.
+                    EditorCollection editorCollection = new EditorCollection();
+                    editorCollection.LoadXmlFileAndAddEditors(this, FileSystem, log);
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.RegionsFile))
+                {
+                    RegionCollection regionCollection = new RegionCollection();
+                    regionCollection.SaveToXmlFile(Settings, FileSystem, log);
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.ScreensFile))
+                {
+                    // Loading the screen collection will automatically create the available screens and add them to the collection.
+                    ScreenCollection screenCollection = new ScreenCollection();
+                    screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, MacroParser, FileSystem, log);
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.TriggersFile))
+                {
+                    // Loading triggers will automatically create the default triggers and add them to the collection.
+                    TriggerCollection triggerCollection = new TriggerCollection();
+                    triggerCollection.LoadXmlFileAndAddTriggers(this, FileSystem, log);
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.TagsFile))
+                {
+                    // Loading tags will automatically create the default tags and add them to the collection.
+                    MacroTagCollection tagCollection = new MacroTagCollection();
+                    tagCollection.LoadXmlFileAndAddTags(this, MacroParser, FileSystem, log);
+                }
+
+                if (string.IsNullOrEmpty(FileSystem.SchedulesFile))
+                {
+                    // Loading schedules will automatically create the default schedules and add them to the collection.
+                    ScheduleCollection scheduleCollection = new ScheduleCollection();
+                    scheduleCollection.LoadXmlFileAndAddSchedules(this, FileSystem, log);
                 }
             }
-
-            if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
+            catch (Exception ex)
             {
-                FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                }
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
-            {
-                FileSystem.SmtpSettingsFile = FileSystem.DefaultSmtpSettingsFile;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                }
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
-            {
-                FileSystem.SftpSettingsFile = FileSystem.DefaultSftpSettingsFile;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                }
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
-            {
-                FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
-
-                FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
-
-                if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                {
-                    FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                }
-            }
-
-            Settings.User.Load(Settings, FileSystem);
-
-            Settings.SMTP.Load(Settings, FileSystem);
-
-            Settings.SFTP.Load(Settings, FileSystem);
-
-            Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
-
-            Settings.VersionManager.OldUserSettings = Settings.User.Clone();
-
-            Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
-
-            Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
-
-            Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
-
-            Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
-
-            if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
-            {
-                ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
-                ScreenCollection screenCollection = new ScreenCollection();
-
-                ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, FileSystem, log);
-                screenshotCollection.SaveToXmlFile(this);
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.EditorsFile))
-            {
-                // Loading the editor collection will automatically create the default editors and add them to the collection.
-                EditorCollection editorCollection = new EditorCollection();
-                editorCollection.LoadXmlFileAndAddEditors(this, FileSystem, log);
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.RegionsFile))
-            {
-                RegionCollection regionCollection = new RegionCollection();
-                regionCollection.SaveToXmlFile(Settings, FileSystem, log);
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.ScreensFile))
-            {
-                // Loading the screen collection will automatically create the available screens and add them to the collection.
-                ScreenCollection screenCollection = new ScreenCollection();
-                screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, MacroParser, screenCapture, FileSystem, log);
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.TriggersFile))
-            {
-                // Loading triggers will automatically create the default triggers and add them to the collection.
-                TriggerCollection triggerCollection = new TriggerCollection();
-                triggerCollection.LoadXmlFileAndAddTriggers(this, FileSystem, log);
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.TagsFile))
-            {
-                // Loading tags will automatically create the default tags and add them to the collection.
-                MacroTagCollection tagCollection = new MacroTagCollection();
-                tagCollection.LoadXmlFileAndAddTags(this, MacroParser, FileSystem, log);
-            }
-
-            if (string.IsNullOrEmpty(FileSystem.SchedulesFile))
-            {
-                // Loading schedules will automatically create the default schedules and add them to the collection.
-                ScheduleCollection scheduleCollection = new ScheduleCollection();
-                scheduleCollection.LoadXmlFileAndAddSchedules(this, FileSystem, log);
+                Log.WriteExceptionMessage("Config::CheckAndCreateFiles", ex);
             }
         }
 
@@ -401,10 +427,10 @@ namespace AutoScreenCapture
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
             MacroTagCollection tagCollection = new MacroTagCollection();
-            tagCollection.Add(new MacroTag(MacroParser, "user", "The user using this computer (%user%)", MacroTagType.User, active: true));
-            tagCollection.Add(new MacroTag(MacroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, active: true));
+            tagCollection.Add(new MacroTag(MacroParser, "user", "The user using this computer (%user%)", MacroTagType.User, enable: true));
+            tagCollection.Add(new MacroTag(MacroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, enable: true));
 
-            path = MacroParser.ParseTags(config: true, path, tagCollection, Log);
+            path = MacroParser.ParseTags(preview: false, config: true, path, null, string.Empty, string.Empty, tagCollection, Log);
 
             if (FileSystem.HasExtension(path))
             {

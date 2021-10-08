@@ -180,6 +180,7 @@ namespace AutoScreenCapture
 
                             Version v2182 = config.Settings.VersionManager.Versions.Get("Clara", "2.1.8.2");
                             Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
+                            Version v2338 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.3.8");
                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2182 != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
@@ -213,6 +214,18 @@ namespace AutoScreenCapture
 
                                 // Introduced in 2.4.0.0
                                 region.Encrypt = false;
+                            }
+
+                            if (v2338 != null && configVersion != null && configVersion.VersionNumber < v2338.VersionNumber)
+                            {
+                                log.WriteDebugMessage("Boombayah 2.3.3.7 or older detected");
+
+                                // We don't want to include the old "Region Select / Auto Save" region that's found in 2.3.3.7 (or older)
+                                // since 2.3.3.8 replaced it with a more dynamic solution when selecting a screenshot that was saved by using "Region Select -> Clipboard / Auto Save".
+                                if (region.Name.Equals("Region Select / Auto Save"))
+                                {
+                                    region.Name = string.Empty;
+                                }
                             }
                         }
 

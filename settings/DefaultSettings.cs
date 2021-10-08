@@ -65,7 +65,7 @@ namespace AutoScreenCapture
         internal readonly int ApplicationFocusDelayAfter = 0;
         internal readonly int ActiveWindowTitleMatchType = 2;
         internal readonly bool SaveScreenshotRefs = true;
-        internal readonly bool Preview = false;
+        internal readonly bool Preview = true;
 
         // Keyboard Shortcuts.
         internal readonly bool UseKeyboardShortcuts = false;

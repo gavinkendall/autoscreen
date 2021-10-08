@@ -186,11 +186,16 @@ namespace AutoScreenCapture
         /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
         /// <param name="screenNumber">The screen number. For example, if this is the second display then the screen number is 2.</param>
+        /// <param name="x">The current X value.</param>
+        /// <param name="y">The current Y value.</param>
+        /// <param name="width">The current Width value.</param>
+        /// <param name="height">The current Height value.</param>
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
+        /// <param name="processName">The name of the current process.</param>
         /// <param name="tag">The macro tag to use during parsing.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        private string ParseTag(bool preview, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTag tag)
+        private string ParseTag(bool preview, string name, string macro, int screenNumber, int x, int y, int width, int height, ImageFormat format, string activeWindowTitle, string processName, MacroTag tag)
         {
             int count;
             DateTime dt;
@@ -256,6 +261,26 @@ namespace AutoScreenCapture
                 case MacroTagType.QuarterYear:
                     macro = macro.Replace(tag.Name, ((dt.Month - 1) / 3 + 1).ToString());
                     break;
+
+                case MacroTagType.X:
+                    macro = macro.Replace(tag.Name, x.ToString());
+                    break;
+
+                case MacroTagType.Y:
+                    macro = macro.Replace(tag.Name, y.ToString());
+                    break;
+
+                case MacroTagType.Width:
+                    macro = macro.Replace(tag.Name, width.ToString());
+                    break;
+
+                case MacroTagType.Height:
+                    macro = macro.Replace(tag.Name, height.ToString());
+                    break;
+
+                case MacroTagType.Process:
+                    macro = macro.Replace(tag.Name, processName);
+                    break;
             }
 
             return StripInvalidWindowsCharacters(macro);
@@ -266,16 +291,45 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="preview">Determines if this is a preview of a macro. We either use screen capture date/time or DateTime.Now depending on this boolean.</param>
         /// <param name="config">Determines if we are parsing tags from the config file or not.</param>
-        /// <param name="name">The name of a region or screen when parsing the %name% tag.</param>
         /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
-        /// <param name="screenNumber">The screen number. For example, if this is the second display then the screen number is 2.</param>
-        /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
+        /// <param name="screenOrRegion">The screen or region to use when parsing macro tags.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
+        /// <param name="processName">The name of the current process.</param>
         /// <param name="tagCollection">A collection of macro tags to parse.</param>
         /// <param name="log"></param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public string ParseTags(bool preview, bool config, string name, string macro, int screenNumber, ImageFormat format, string activeWindowTitle, MacroTagCollection tagCollection, Log log)
+        public string ParseTags(bool preview, bool config, string macro, object screenOrRegion, string activeWindowTitle, string processName, MacroTagCollection tagCollection, Log log)
         {
+            string name = string.Empty; // The name of a region or screen when parsing the %name% tag.
+            int screenNumber = 0; // The screen number. For example, if this is the second display then the screen number is 2.
+            int x = 0;
+            int y = 0;
+            int width = 0;
+            int height = 0;
+            ImageFormat format = new ImageFormat("JPEG", ".jpeg"); // The image format to use as an image file extension when parsing the %format% tag.
+
+            if (screenOrRegion != null && screenOrRegion is Screen screen)
+            {
+                name = screen.Name;
+                screenNumber = screen.Component;
+                x = screen.X;
+                y = screen.Y;
+                width = screen.Width;
+                height = screen.Height;
+                format = screen.Format;
+            }
+
+            if (screenOrRegion != null && screenOrRegion is Region region)
+            {
+                name = region.Name;
+                screenNumber = -1;
+                x = region.X;
+                y = region.Y;
+                width = region.Width;
+                height = region.Height;
+                format = region.Format;
+            }
+
             if (!config)
             {
                 int activeWindowTitleLengthLimit = Convert.ToInt32(_settings.Application.GetByKey("ActiveWindowTitleLengthLimit", _settings.DefaultSettings.ActiveWindowTitleLengthLimit).Value);
@@ -312,10 +366,10 @@ namespace AutoScreenCapture
                     tag.Type = MacroTagType.DateTimeFormat;
 
                     // Recursively call the same method we're in to parse each TimeRange macro as if it was a date/time macro tag.
-                    macro1Macro = ParseTags(preview, config, name, macro1Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
-                    macro2Macro = ParseTags(preview, config, name, macro2Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
-                    macro3Macro = ParseTags(preview, config, name, macro3Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
-                    macro4Macro = ParseTags(preview, config, name, macro4Macro, screenNumber, format, activeWindowTitle, tagCollection, log);
+                    macro1Macro = ParseTags(preview, config, macro1Macro, screenOrRegion, activeWindowTitle, processName, tagCollection, log);
+                    macro2Macro = ParseTags(preview, config, macro2Macro, screenOrRegion, activeWindowTitle, processName, tagCollection, log);
+                    macro3Macro = ParseTags(preview, config, macro3Macro, screenOrRegion, activeWindowTitle, processName, tagCollection, log);
+                    macro4Macro = ParseTags(preview, config, macro4Macro, screenOrRegion, activeWindowTitle, processName, tagCollection, log);
 
                     // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeRange type.
                     tag.Type = MacroTagType.TimeRange;
@@ -346,25 +400,11 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    macro = ParseTag(preview, name, macro, screenNumber, format, activeWindowTitle, tag);
+                    macro = ParseTag(preview, name, macro, screenNumber, x, y, width, height, format, activeWindowTitle, processName, tag);
                 }
             }
 
             return StripInvalidWindowsCharacters(macro);
-        }
-
-        /// <summary>
-        /// Replaces a series of tags with appropriate values. Assumes you are either parsing a folder path or just need a preview of the returned values.
-        /// </summary>
-        /// <param name="config">Determines if we are parsing tags from the config file or not.</param>
-        /// <param name="macro">The macro to parse. A macro usually includes tags such as %count% and %date%.</param>
-        /// <param name="tagCollection">A collection of macro tags to parse.</param>
-        /// <param name="log"></param>
-        /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public string ParseTags(bool config, string macro, MacroTagCollection tagCollection, Log log)
-        {
-            return ParseTags(preview: true, config, string.Empty, macro, 0,
-                new ImageFormat("JPEG", ".jpeg"), string.Empty, tagCollection, log);
         }
 
         /// <summary>

@@ -317,25 +317,62 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool SaveScreenshot(Bitmap bitmap, Screen screen)
+        /// <summary>
+        /// Saves the screenshot.
+        /// </summary>
+        /// <param name="bitmap">The bitmap image to use.</param>
+        /// <param name="screenOrRegion">The screen or the region to use.</param>
+        /// <returns>Returns true if we were successful at saving the screenshot. Returns false if we were unsuccessful at saving the screenshot.</returns>
+        private bool SaveScreenshot(Bitmap bitmap, object screenOrRegion)
         {
-            if (bitmap == null)
+            if (bitmap == null || screenOrRegion == null)
             {
                 return false;
             }
 
+            Guid viewId = Guid.Empty;
+            string folder = string.Empty;
+            string macro = string.Empty;
+            ImageFormat format = new ImageFormat("JPEG", "jpeg");
+            int jpegQuality = 100;
+            bool encrypt = false;
+
+            if (screenOrRegion is Screen screen)
+            {
+                viewId = screen.ViewId;
+                folder = screen.Folder;
+                macro = screen.Macro;
+                format = screen.Format;
+                jpegQuality = screen.JpegQuality;
+                encrypt = screen.Encrypt;
+            }
+
+            if (screenOrRegion is Region region)
+            {
+                viewId = region.ViewId;
+                folder = region.Folder;
+                macro = region.Macro;
+                format = region.Format;
+                jpegQuality = region.JpegQuality;
+                encrypt = region.Encrypt;
+            }
+
+            // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
+            string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, config: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log)) + // Folder path
+                _macroParser.ParseTags(preview: false, config: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log); // Filename path
+
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
-                ViewId = screen.ViewId,
-                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, screen.Folder, _formMacroTag.MacroTagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, screen.Name, screen.Macro, screen.Component, screen.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection, _log),
+                ViewId = viewId,
+                Path = path,
                 Bitmap = bitmap,
-                Format = screen.Format,
+                Format = format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
                 Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty,
-                Encrypted = screen.Encrypt
+                Encrypted = encrypt
             };
 
-            if (_screenCapture.SaveScreenshot(_security, screen.JpegQuality, screenshot, _screenshotCollection))
+            if (_screenCapture.SaveScreenshot(_security, jpegQuality, screenshot, _screenshotCollection))
             {
                 ScreenshotTakenWithSuccess();
 
@@ -349,38 +386,9 @@ namespace AutoScreenCapture
             }
         }
 
-        private bool SaveScreenshot(Bitmap bitmap, Region region)
-        {
-            if (bitmap == null)
-            {
-                return false;
-            }
-
-            Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
-            {
-                ViewId = region.ViewId,
-                Path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(config: false, region.Folder, _formMacroTag.MacroTagCollection, _log)) + _macroParser.ParseTags(preview: false, config: false, region.Name, region.Macro, -1, region.Format, _screenCapture.ActiveWindowTitle, _formMacroTag.MacroTagCollection, _log),
-                Bitmap = bitmap,
-                Format = region.Format,
-                ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty,
-                Encrypted = region.Encrypt
-            };
-
-            if (_screenCapture.SaveScreenshot(_security, region.JpegQuality, screenshot, _screenshotCollection))
-            {
-                ScreenshotTakenWithSuccess();
-
-                return true;
-            }
-            else
-            {
-                ScreenshotTakenWithFailure();
-
-                return false;
-            }
-        }
-
+        /// <summary>
+        /// The screenshot was successfully taken and saved.
+        /// </summary>
         private void ScreenshotTakenWithSuccess()
         {
             _log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
@@ -388,6 +396,9 @@ namespace AutoScreenCapture
             RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotTaken);
         }
 
+        /// <summary>
+        /// The screenshot was unsucessfully taken and saved.
+        /// </summary>
         private void ScreenshotTakenWithFailure()
         {
             _log.WriteMessage("Application encountered error while taking a screenshot. Stopping screen capture");

@@ -78,6 +78,31 @@ namespace AutoScreenCapture
         /// <summary>
         /// A macro tag to represent the quarter of the current year.
         /// </summary>
-        QuarterYear = 10
+        QuarterYear = 10,
+
+        /// <summary>
+        /// A macro tag for the current X value.
+        /// </summary>
+        X = 11,
+
+        /// <summary>
+        /// A macro tag for the current Y value.
+        /// </summary>
+        Y = 12,
+
+        /// <summary>
+        /// A macro tag for the current width value.
+        /// </summary>
+        Width = 13,
+
+        /// <summary>
+        /// A macro tag for the current height value.
+        /// </summary>
+        Height = 14,
+
+        /// <summary>
+        /// A macro tag for the current process name.
+        /// </summary>
+        Process = 15
     }
 }

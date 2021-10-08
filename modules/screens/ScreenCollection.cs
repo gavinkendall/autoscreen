@@ -60,37 +60,43 @@ namespace AutoScreenCapture
 
         private ImageFormatCollection _imageFormatCollection;
 
-        private void AddDefaultScreens(ScreenCapture screenCapture, MacroParser macroParser, FileSystem fileSystem, Log log)
+        /// <summary>
+        /// Adds the available screens to the screen collection based on the current display setup while Auto Screen Capture is starting up for the first time.
+        /// </summary>
+        /// <param name="macroParser">The macro parser class to use.</param>
+        /// <param name="fileSystem">The file system class to use.</param>
+        /// <param name="log">The logging class to use.</param>
+        private void AddDefaultScreens(MacroParser macroParser, FileSystem fileSystem, Log log)
         {
-            int component = 1;
+            int screenNumber = 1;
 
             foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
             {
-                ScreenCapture.DeviceOptions deviceResolution = screenCapture.GetDevice(screenFromWindows);
-
                 Add(new Screen()
                 {
                     ViewId = Guid.NewGuid(),
-                    Name = "Screen " + component,
+                    Name = "Screen " + screenNumber,
                     Folder = fileSystem.ScreenshotsFolder,
                     Macro = macroParser.DefaultMacro,
-                    Component = component,
+                    Component = 0,
                     Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                     JpegQuality = 100,
                     Mouse = true,
                     Enable = true,
-                    X = screenFromWindows.Bounds.X,
-                    Y = screenFromWindows.Bounds.Y,
-                    Width = deviceResolution.width,
-                    Height = deviceResolution.height,
+                    X = 0,
+                    Y = 0,
+                    Width = 0,
+                    Height = 0,
                     Source = 0,
-                    DeviceName = deviceResolution.screen.DeviceName,
+                    DeviceName = string.Empty,
+                    AutoAdapt = true, // 2.4.0.0 has a new "Auto Adapt" feature which will automatically figure out the position and resolution for each screen.
+                    CaptureMethod = 1,
                     Encrypt = false
                 });
 
-                log.WriteDebugMessage($"Screen {component} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{macroParser.DefaultMacro}\" for macro.");
+                log.WriteDebugMessage($"Screen {screenNumber} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{macroParser.DefaultMacro}\" for macro.");
 
-                component++;
+                screenNumber++;
             }
         }
 
@@ -134,7 +140,13 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the screens.
         /// </summary>
-        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection, Config config, MacroParser macroParser, ScreenCapture screenCapture, FileSystem fileSystem, Log log)
+        /// <param name="imageFormatCollection">The image format collection to use.</param>
+        /// <param name="config">The configuration to use.</param>
+        /// <param name="macroParser">The macro parser to use.</param>
+        /// <param name="fileSystem">The file system to use.</param>
+        /// <param name="log">The logging class to use.</param>
+        /// <returns>Returns true if we were able to load the screens.xml file and add all the available screens otherwise returns false.</returns>
+        public bool LoadXmlFileAndAddScreens(ImageFormatCollection imageFormatCollection, Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -282,23 +294,24 @@ namespace AutoScreenCapture
                             {
                                 log.WriteDebugMessage("Boombayah 2.3.3.7 or older detected");
 
-                                int component = 1;
+                                int screenIndex = 0;
 
                                 foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
                                 {
-                                    ScreenCapture.DeviceOptions deviceOptions = screenCapture.GetDevice(screenFromWindows);
-
-                                    if (screen.Component.Equals(component))
+                                    if (screen.Component.Equals(screenIndex + 1))
                                     {
-                                        screen.X = screenFromWindows.Bounds.X;
-                                        screen.Y = screenFromWindows.Bounds.Y;
-                                        screen.Width = deviceOptions.width;
-                                        screen.Height = deviceOptions.height;
-                                        screen.Source = 1;
-                                        screen.DeviceName = deviceOptions.screen.DeviceName;
+                                        screen.X = 0;
+                                        screen.Y = 0;
+                                        screen.Width = 0;
+                                        screen.Height = 0;
+                                        screen.Source = 0;
+                                        screen.DeviceName = string.Empty;
+                                        screen.CaptureMethod = 1;
+                                        screen.AutoAdapt = true; // 2.4.0.0 has a new "Auto Adapt" feature which will automatically figure out the position and resolution for each screen.
+                                        screen.Encrypt = false;
                                     }
 
-                                    component++;
+                                    screenIndex++;
                                 }
                             }
                         }
@@ -343,12 +356,15 @@ namespace AutoScreenCapture
                                 Height = 0,
                                 Source = 0,
                                 DeviceName = string.Empty,
+                                AutoAdapt = false,
+                                CaptureMethod = 1,
                                 Encrypt = false
                             });
                         }
                     }
 
-                    AddDefaultScreens(screenCapture, macroParser, fileSystem, log);
+                    // Since we're creating the screens.xml file for the first time we'll need to add all the available screens we can find with the current display setup.
+                    AddDefaultScreens(macroParser, fileSystem, log);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
