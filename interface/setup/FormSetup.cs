@@ -393,5 +393,29 @@ namespace AutoScreenCapture
 
             textBoxPassphrase.Text = string.Empty;
         }
+
+        private void buttonAddScreenshotLabelToList_Click(object sender, EventArgs e)
+        {
+            string labelToAdd = textBoxScreenshotLabel.Text.Trim();
+
+            if (string.IsNullOrEmpty(labelToAdd))
+            {
+                return;
+            }
+
+            textBoxScreenshotLabel.Clear();
+
+            if (!listBoxScreenshotLabel.Items.Contains(labelToAdd))
+            {
+                listBoxScreenshotLabel.Items.Add(labelToAdd);
+            }
+
+            listBoxScreenshotLabel.SelectedItem = labelToAdd;
+        }
+
+        private void listBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _config.Settings.User.SetValueByKey("ScreenshotLabel", listBoxScreenshotLabel.SelectedItem.ToString());
+        }
     }
 }

@@ -3,7 +3,7 @@
 //     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>The default application settings and default user settings are defined here.</summary>
+// <summary>The default settings are defined here.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ namespace AutoScreenCapture
         internal readonly int FilepathLengthLimit = 2000;
         internal readonly bool StopOnLowDiskError = true;
         internal readonly int ActiveWindowTitleLengthLimit = 2000;
-        internal readonly bool OptimizeScreenCapture = false;
         internal readonly bool AllowUserToConfigureEmailSettings = true;
         internal readonly bool AllowUserToConfigureFileTransferSettings = true;
 
@@ -66,6 +65,7 @@ namespace AutoScreenCapture
         internal readonly int ActiveWindowTitleMatchType = 2;
         internal readonly bool SaveScreenshotRefs = true;
         internal readonly bool Preview = true;
+        internal readonly bool OptimizeScreenCapture = false;
 
         // Keyboard Shortcuts.
         internal readonly bool UseKeyboardShortcuts = false;

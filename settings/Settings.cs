@@ -328,11 +328,6 @@ namespace AutoScreenCapture
                         Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
                     }
 
-                    if (!Application.KeyExists("OptimizeScreenCapture"))
-                    {
-                        Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
-                    }
-
                     if (!Application.KeyExists("AllowUserToConfigureEmailSettings"))
                     {
                         Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
@@ -355,7 +350,6 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
                     Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
                     Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
-                    Application.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
                     Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
                     Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
                     Application.Save(this, fileSystem);
@@ -405,6 +399,7 @@ namespace AutoScreenCapture
                 User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
                 User.Add(new Setting("SaveScreenshotRefs", DefaultSettings.SaveScreenshotRefs));
                 User.Add(new Setting("Preview", DefaultSettings.Preview));
+                User.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
                 User.Save(this, fileSystem);
             }
 

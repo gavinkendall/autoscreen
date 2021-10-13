@@ -368,7 +368,7 @@ namespace AutoScreenCapture
                 Bitmap = bitmap,
                 Format = format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.comboBoxScreenshotLabel.Text : string.Empty,
+                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.listBoxScreenshotLabel.SelectedItem.ToString() : string.Empty,
                 Encrypted = encrypt
             };
 

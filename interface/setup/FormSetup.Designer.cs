@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSetup));
             this.tabControlSetup = new System.Windows.Forms.TabControl();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
+            this.labelLimit = new System.Windows.Forms.Label();
+            this.labelLimitHelp = new System.Windows.Forms.Label();
+            this.labelInitialCaptureHelp = new System.Windows.Forms.Label();
             this.labelIntervalHelp = new System.Windows.Forms.Label();
             this.checkBoxInitialScreenshot = new System.Windows.Forms.CheckBox();
             this.labelHoursInterval = new System.Windows.Forms.Label();
@@ -43,9 +46,14 @@
             this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
+            this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
+            this.buttonAddScreenshotLabelToList = new System.Windows.Forms.Button();
+            this.labelScreenshotLabel = new System.Windows.Forms.Label();
+            this.textBoxScreenshotLabel = new System.Windows.Forms.TextBox();
+            this.labelScreenshotLabelHelp = new System.Windows.Forms.Label();
+            this.listBoxScreenshotLabel = new System.Windows.Forms.ListBox();
             this.checkBoxScreenshotLabel = new System.Windows.Forms.CheckBox();
-            this.comboBoxScreenshotLabel = new System.Windows.Forms.ComboBox();
             this.tabPageActiveWindowTitle = new System.Windows.Forms.TabPage();
             this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
             this.checkBoxActiveWindowTitleComparisonCheckReverse = new System.Windows.Forms.CheckBox();
@@ -58,11 +66,11 @@
             this.tabPageApplicationFocus = new System.Windows.Forms.TabPage();
             this.numericUpDownApplicationFocusDelayAfter = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownApplicationFocusDelayBefore = new System.Windows.Forms.NumericUpDown();
+            this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             this.labelApplicationFocusDelayAfter = new System.Windows.Forms.Label();
             this.labelApplicationFocusDelayBefore = new System.Windows.Forms.Label();
             this.buttonApplicationFocusTest = new System.Windows.Forms.Button();
             this.buttonApplicationFocusRefresh = new System.Windows.Forms.Button();
-            this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.labelPassphrase = new System.Windows.Forms.Label();
             this.labelHash = new System.Windows.Forms.Label();
@@ -109,9 +117,6 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.labelInitialCaptureHelp = new System.Windows.Forms.Label();
-            this.labelLimitHelp = new System.Windows.Forms.Label();
-            this.labelLimit = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
@@ -136,6 +141,7 @@
             // tabControlSetup
             // 
             this.tabControlSetup.Controls.Add(this.tabPageInterval);
+            this.tabControlSetup.Controls.Add(this.tabPageOptimizeScreenCapture);
             this.tabControlSetup.Controls.Add(this.tabPageLabels);
             this.tabControlSetup.Controls.Add(this.tabPageActiveWindowTitle);
             this.tabControlSetup.Controls.Add(this.tabPageApplicationFocus);
@@ -172,6 +178,33 @@
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
+            // 
+            // labelLimit
+            // 
+            this.labelLimit.AutoSize = true;
+            this.labelLimit.Location = new System.Drawing.Point(74, 206);
+            this.labelLimit.Name = "labelLimit";
+            this.labelLimit.Size = new System.Drawing.Size(24, 13);
+            this.labelLimit.TabIndex = 4;
+            this.labelLimit.Text = "limit";
+            // 
+            // labelLimitHelp
+            // 
+            this.labelLimitHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelLimitHelp.Location = new System.Drawing.Point(6, 169);
+            this.labelLimitHelp.Name = "labelLimitHelp";
+            this.labelLimitHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelLimitHelp.TabIndex = 3;
+            this.labelLimitHelp.Text = resources.GetString("labelLimitHelp.Text");
+            // 
+            // labelInitialCaptureHelp
+            // 
+            this.labelInitialCaptureHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelInitialCaptureHelp.Location = new System.Drawing.Point(6, 95);
+            this.labelInitialCaptureHelp.Name = "labelInitialCaptureHelp";
+            this.labelInitialCaptureHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelInitialCaptureHelp.TabIndex = 2;
+            this.labelInitialCaptureHelp.Text = resources.GetString("labelInitialCaptureHelp.Text");
             // 
             // labelIntervalHelp
             // 
@@ -304,10 +337,24 @@
             this.labelSecondsInterval.TabIndex = 0;
             this.labelSecondsInterval.Text = "seconds";
             // 
+            // tabPageOptimizeScreenCapture
+            // 
+            this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
+            this.tabPageOptimizeScreenCapture.Name = "tabPageOptimizeScreenCapture";
+            this.tabPageOptimizeScreenCapture.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOptimizeScreenCapture.Size = new System.Drawing.Size(677, 253);
+            this.tabPageOptimizeScreenCapture.TabIndex = 6;
+            this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
+            this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
+            // 
             // tabPageLabels
             // 
+            this.tabPageLabels.Controls.Add(this.buttonAddScreenshotLabelToList);
+            this.tabPageLabels.Controls.Add(this.labelScreenshotLabel);
+            this.tabPageLabels.Controls.Add(this.textBoxScreenshotLabel);
+            this.tabPageLabels.Controls.Add(this.labelScreenshotLabelHelp);
+            this.tabPageLabels.Controls.Add(this.listBoxScreenshotLabel);
             this.tabPageLabels.Controls.Add(this.checkBoxScreenshotLabel);
-            this.tabPageLabels.Controls.Add(this.comboBoxScreenshotLabel);
             this.tabPageLabels.Location = new System.Drawing.Point(4, 22);
             this.tabPageLabels.Name = "tabPageLabels";
             this.tabPageLabels.Padding = new System.Windows.Forms.Padding(3);
@@ -316,27 +363,64 @@
             this.tabPageLabels.Text = "Labels";
             this.tabPageLabels.UseVisualStyleBackColor = true;
             // 
+            // buttonAddScreenshotLabelToList
+            // 
+            this.buttonAddScreenshotLabelToList.Location = new System.Drawing.Point(596, 49);
+            this.buttonAddScreenshotLabelToList.Name = "buttonAddScreenshotLabelToList";
+            this.buttonAddScreenshotLabelToList.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddScreenshotLabelToList.TabIndex = 8;
+            this.buttonAddScreenshotLabelToList.TabStop = false;
+            this.buttonAddScreenshotLabelToList.Text = "Add To List";
+            this.buttonAddScreenshotLabelToList.UseVisualStyleBackColor = true;
+            this.buttonAddScreenshotLabelToList.Click += new System.EventHandler(this.buttonAddScreenshotLabelToList_Click);
+            // 
+            // labelScreenshotLabel
+            // 
+            this.labelScreenshotLabel.AutoSize = true;
+            this.labelScreenshotLabel.Location = new System.Drawing.Point(6, 54);
+            this.labelScreenshotLabel.Name = "labelScreenshotLabel";
+            this.labelScreenshotLabel.Size = new System.Drawing.Size(93, 13);
+            this.labelScreenshotLabel.TabIndex = 7;
+            this.labelScreenshotLabel.Text = "Screenshot Label:";
+            // 
+            // textBoxScreenshotLabel
+            // 
+            this.textBoxScreenshotLabel.Location = new System.Drawing.Point(105, 51);
+            this.textBoxScreenshotLabel.Name = "textBoxScreenshotLabel";
+            this.textBoxScreenshotLabel.Size = new System.Drawing.Size(485, 20);
+            this.textBoxScreenshotLabel.TabIndex = 6;
+            this.textBoxScreenshotLabel.TabStop = false;
+            // 
+            // labelScreenshotLabelHelp
+            // 
+            this.labelScreenshotLabelHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelScreenshotLabelHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelScreenshotLabelHelp.Name = "labelScreenshotLabelHelp";
+            this.labelScreenshotLabelHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelScreenshotLabelHelp.TabIndex = 5;
+            this.labelScreenshotLabelHelp.Text = resources.GetString("labelScreenshotLabelHelp.Text");
+            // 
+            // listBoxScreenshotLabel
+            // 
+            this.listBoxScreenshotLabel.FormattingEnabled = true;
+            this.listBoxScreenshotLabel.Location = new System.Drawing.Point(6, 102);
+            this.listBoxScreenshotLabel.Name = "listBoxScreenshotLabel";
+            this.listBoxScreenshotLabel.Size = new System.Drawing.Size(665, 147);
+            this.listBoxScreenshotLabel.Sorted = true;
+            this.listBoxScreenshotLabel.TabIndex = 4;
+            this.listBoxScreenshotLabel.TabStop = false;
+            this.listBoxScreenshotLabel.SelectedIndexChanged += new System.EventHandler(this.listBoxScreenshotLabel_SelectedIndexChanged);
+            // 
             // checkBoxScreenshotLabel
             // 
             this.checkBoxScreenshotLabel.AutoSize = true;
-            this.checkBoxScreenshotLabel.Location = new System.Drawing.Point(236, 107);
+            this.checkBoxScreenshotLabel.Location = new System.Drawing.Point(6, 79);
             this.checkBoxScreenshotLabel.Name = "checkBoxScreenshotLabel";
             this.checkBoxScreenshotLabel.Size = new System.Drawing.Size(193, 17);
             this.checkBoxScreenshotLabel.TabIndex = 3;
             this.checkBoxScreenshotLabel.TabStop = false;
             this.checkBoxScreenshotLabel.Text = "Apply this label to each screenshot:";
             this.checkBoxScreenshotLabel.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxScreenshotLabel
-            // 
-            this.comboBoxScreenshotLabel.FormattingEnabled = true;
-            this.comboBoxScreenshotLabel.Location = new System.Drawing.Point(236, 125);
-            this.comboBoxScreenshotLabel.MaxDropDownItems = 10;
-            this.comboBoxScreenshotLabel.MaxLength = 500;
-            this.comboBoxScreenshotLabel.Name = "comboBoxScreenshotLabel";
-            this.comboBoxScreenshotLabel.Size = new System.Drawing.Size(205, 21);
-            this.comboBoxScreenshotLabel.TabIndex = 4;
-            this.comboBoxScreenshotLabel.TabStop = false;
             // 
             // tabPageActiveWindowTitle
             // 
@@ -477,6 +561,16 @@
             this.numericUpDownApplicationFocusDelayBefore.TabIndex = 0;
             this.numericUpDownApplicationFocusDelayBefore.TabStop = false;
             // 
+            // comboBoxProcessList
+            // 
+            this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcessList.FormattingEnabled = true;
+            this.comboBoxProcessList.Location = new System.Drawing.Point(37, 43);
+            this.comboBoxProcessList.Name = "comboBoxProcessList";
+            this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
+            this.comboBoxProcessList.TabIndex = 0;
+            this.comboBoxProcessList.TabStop = false;
+            // 
             // labelApplicationFocusDelayAfter
             // 
             this.labelApplicationFocusDelayAfter.AutoSize = true;
@@ -516,16 +610,6 @@
             this.buttonApplicationFocusRefresh.Text = "Refresh";
             this.buttonApplicationFocusRefresh.UseVisualStyleBackColor = true;
             this.buttonApplicationFocusRefresh.Click += new System.EventHandler(this.buttonApplicationFocusRefresh_Click);
-            // 
-            // comboBoxProcessList
-            // 
-            this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProcessList.FormattingEnabled = true;
-            this.comboBoxProcessList.Location = new System.Drawing.Point(37, 43);
-            this.comboBoxProcessList.Name = "comboBoxProcessList";
-            this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxProcessList.TabIndex = 0;
-            this.comboBoxProcessList.TabStop = false;
             // 
             // tabPageSecurity
             // 
@@ -997,33 +1081,6 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelInitialCaptureHelp
-            // 
-            this.labelInitialCaptureHelp.BackColor = System.Drawing.Color.LightYellow;
-            this.labelInitialCaptureHelp.Location = new System.Drawing.Point(6, 95);
-            this.labelInitialCaptureHelp.Name = "labelInitialCaptureHelp";
-            this.labelInitialCaptureHelp.Size = new System.Drawing.Size(665, 32);
-            this.labelInitialCaptureHelp.TabIndex = 2;
-            this.labelInitialCaptureHelp.Text = resources.GetString("labelInitialCaptureHelp.Text");
-            // 
-            // labelLimitHelp
-            // 
-            this.labelLimitHelp.BackColor = System.Drawing.Color.LightYellow;
-            this.labelLimitHelp.Location = new System.Drawing.Point(6, 169);
-            this.labelLimitHelp.Name = "labelLimitHelp";
-            this.labelLimitHelp.Size = new System.Drawing.Size(665, 32);
-            this.labelLimitHelp.TabIndex = 3;
-            this.labelLimitHelp.Text = resources.GetString("labelLimitHelp.Text");
-            // 
-            // labelLimit
-            // 
-            this.labelLimit.AutoSize = true;
-            this.labelLimit.Location = new System.Drawing.Point(74, 206);
-            this.labelLimit.Name = "labelLimit";
-            this.labelLimit.Size = new System.Drawing.Size(24, 13);
-            this.labelLimit.TabIndex = 4;
-            this.labelLimit.Text = "limit";
-            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1146,11 +1203,6 @@
         /// 
         /// </summary>
         public System.Windows.Forms.CheckBox checkBoxScreenshotLabel;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxScreenshotLabel;
 
         /// <summary>
         /// 
@@ -1333,7 +1385,7 @@
         private System.Windows.Forms.Label labelHash;
 
         /// <summary>
-        /// 
+        /// The passphrase hash used for a password-protected screen capture session.
         /// </summary>
         public System.Windows.Forms.TextBox textBoxPassphraseHash;
 
@@ -1342,5 +1394,16 @@
         private System.Windows.Forms.Label labelInitialCaptureHelp;
         private System.Windows.Forms.Label labelLimitHelp;
         private System.Windows.Forms.Label labelLimit;
+        private System.Windows.Forms.TabPage tabPageOptimizeScreenCapture;
+
+        /// <summary>
+        /// A list of screenshot labels.
+        /// </summary>
+        public System.Windows.Forms.ListBox listBoxScreenshotLabel;
+
+        private System.Windows.Forms.Button buttonAddScreenshotLabelToList;
+        private System.Windows.Forms.Label labelScreenshotLabel;
+        private System.Windows.Forms.TextBox textBoxScreenshotLabel;
+        private System.Windows.Forms.Label labelScreenshotLabelHelp;
     }
 }

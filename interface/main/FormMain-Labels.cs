@@ -34,29 +34,48 @@ namespace AutoScreenCapture
 
                 if (!string.IsNullOrEmpty(toolStripDropDownItem.Text))
                 {
+                    string label = toolStripDropDownItem.Text;
+
+                    _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
+                    _config.Settings.User.SetValueByKey("ScreenshotLabel", label);
+
+                    if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
                     _formSetup.checkBoxScreenshotLabel.Checked = true;
-                    _formSetup.comboBoxScreenshotLabel.Text = toolStripDropDownItem.Text;
-                    SaveSettings();
+
+                    if (!_formSetup.listBoxScreenshotLabel.Items.Contains(label))
+                    {
+                        _formSetup.listBoxScreenshotLabel.Items.Add(label);
+                    }
+
+                    _formSetup.listBoxScreenshotLabel.SelectedItem = label;
                 }
             }
         }
-
-        //private void ComboBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    foreach (ToolStripMenuItem label in toolStripMenuItemApplyLabel.DropDownItems)
-        //    {
-        //        label.Checked = label.Text.Equals(comboBoxScreenshotLabel.Text);
-        //    }
-        //}
 
         private void PopulateLabelList()
         {
             try
             {
-                List<string> labels = new List<string>();
-                labels = _screenshotCollection.GetFilterValueList("Label");
+                // Get labels from screenshots that have already had their references saved.
+                List<string> labelsFromSavedScreenshots = new List<string>();
+                labelsFromSavedScreenshots = _screenshotCollection.GetFilterValueList("Label");
+                labelsFromSavedScreenshots.Sort();
 
-                if (_screenCapture.LockScreenCaptureSession || labels.Count == 0)
+                foreach (string label in labelsFromSavedScreenshots)
+                {
+                    if (!_formSetup.listBoxScreenshotLabel.Items.Contains(label))
+                    {
+                        _formSetup.listBoxScreenshotLabel.Items.Add(label);
+                    }
+                }
+
+                _formSetup.listBoxScreenshotLabel.SelectedItem = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+
+                if (_screenCapture.LockScreenCaptureSession || _formSetup.listBoxScreenshotLabel.Items.Count == 0)
                 {
                     toolStripSeparatorApplyLabel.Visible = false;
                     toolStripMenuItemApplyLabel.Visible = false;
@@ -67,19 +86,14 @@ namespace AutoScreenCapture
                 toolStripSeparatorApplyLabel.Visible = true;
                 toolStripMenuItemApplyLabel.Visible = true;
 
-                labels.Sort();
-
-                _formSetup.comboBoxScreenshotLabel.DataSource = labels;
-                _formSetup.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
-
                 toolStripMenuItemApplyLabel.DropDownItems.Clear();
 
-                foreach (string label in labels)
+                foreach (string label in _formSetup.listBoxScreenshotLabel.Items)
                 {
                     ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
                     {
                         Text = label,
-                        Checked = label.Equals(_formSetup.comboBoxScreenshotLabel.Text),
+                        Checked = label.Equals(_formSetup.listBoxScreenshotLabel.SelectedItem),
                         CheckOnClick = true
                     };
 
@@ -116,7 +130,13 @@ namespace AutoScreenCapture
                 }
 
                 _formSetup.checkBoxScreenshotLabel.Checked = true;
-                _formSetup.comboBoxScreenshotLabel.Text = label;
+
+                if (!_formSetup.listBoxScreenshotLabel.Items.Contains(label))
+                {
+                    _formSetup.listBoxScreenshotLabel.Items.Add(label);
+                }
+
+                _formSetup.listBoxScreenshotLabel.SelectedItem = label;
             }
         }
     }

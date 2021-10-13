@@ -206,9 +206,6 @@ namespace AutoScreenCapture
                 _formSetup.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value);
                 _log.WriteDebugMessage("TakeInitialScreenshot = " + _formSetup.checkBoxInitialScreenshot.Checked);
 
-                _formSetup.comboBoxScreenshotLabel.Text = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
-                _log.WriteDebugMessage("ScreenshotLabel = " + _formSetup.comboBoxScreenshotLabel.Text);
-
                 _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
 
                 // Active Window Title
@@ -280,8 +277,11 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value = _formSetup.checkBoxCaptureLimit.Checked;
                 _config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value = _formSetup.checkBoxInitialScreenshot.Checked;
 
-                // Label.
-                _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value = _formSetup.comboBoxScreenshotLabel.Text.Trim();
+                if (_formSetup.listBoxScreenshotLabel.SelectedItem != null)
+                {
+                    _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value = _formSetup.listBoxScreenshotLabel.SelectedItem.ToString();
+                }
+
                 _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = _formSetup.checkBoxScreenshotLabel.Checked;
 
                 // Active Window Title
