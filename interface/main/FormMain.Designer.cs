@@ -114,6 +114,7 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItemOptimizeScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -154,6 +155,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemSetupWizard,
             this.toolStripSeparatorSetupWizard,
             this.toolStripMenuItemInterval,
+            this.toolStripMenuItemOptimizeScreenCapture,
             this.toolStripMenuItemLabels,
             this.toolStripMenuItemActiveWindowTitle,
             this.toolStripMenuItemApplicationFocus,
@@ -169,7 +171,7 @@ namespace AutoScreenCapture
             // toolStripMenuItemSetupWizard
             // 
             this.toolStripMenuItemSetupWizard.Name = "toolStripMenuItemSetupWizard";
-            this.toolStripMenuItemSetupWizard.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSetupWizard.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemSetupWizard.Text = "Setup Wizard";
             this.toolStripMenuItemSetupWizard.Visible = false;
             this.toolStripMenuItemSetupWizard.Click += new System.EventHandler(this.toolStripMenuItemSetupWizard_Click);
@@ -177,48 +179,48 @@ namespace AutoScreenCapture
             // toolStripSeparatorSetupWizard
             // 
             this.toolStripSeparatorSetupWizard.Name = "toolStripSeparatorSetupWizard";
-            this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(202, 6);
             this.toolStripSeparatorSetupWizard.Visible = false;
             // 
             // toolStripMenuItemInterval
             // 
             this.toolStripMenuItemInterval.Name = "toolStripMenuItemInterval";
-            this.toolStripMenuItemInterval.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemInterval.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemInterval.Text = "Interval";
             this.toolStripMenuItemInterval.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemLabels
             // 
             this.toolStripMenuItemLabels.Name = "toolStripMenuItemLabels";
-            this.toolStripMenuItemLabels.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemLabels.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemLabels.Text = "Labels";
             this.toolStripMenuItemLabels.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemActiveWindowTitle
             // 
             this.toolStripMenuItemActiveWindowTitle.Name = "toolStripMenuItemActiveWindowTitle";
-            this.toolStripMenuItemActiveWindowTitle.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemActiveWindowTitle.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemActiveWindowTitle.Text = "Active Window Title";
             this.toolStripMenuItemActiveWindowTitle.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemApplicationFocus
             // 
             this.toolStripMenuItemApplicationFocus.Name = "toolStripMenuItemApplicationFocus";
-            this.toolStripMenuItemApplicationFocus.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemApplicationFocus.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemApplicationFocus.Text = "Application Focus";
             this.toolStripMenuItemApplicationFocus.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemSecurity
             // 
             this.toolStripMenuItemSecurity.Name = "toolStripMenuItemSecurity";
-            this.toolStripMenuItemSecurity.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemSecurity.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemSecurity.Text = "Security";
             this.toolStripMenuItemSecurity.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemKeyboardShortcuts
             // 
             this.toolStripMenuItemKeyboardShortcuts.Name = "toolStripMenuItemKeyboardShortcuts";
-            this.toolStripMenuItemKeyboardShortcuts.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemKeyboardShortcuts.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemKeyboardShortcuts.Text = "Keyboard Shortcuts";
             this.toolStripMenuItemKeyboardShortcuts.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
@@ -892,6 +894,13 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
+            // toolStripMenuItemOptimizeScreenCapture
+            // 
+            this.toolStripMenuItemOptimizeScreenCapture.Name = "toolStripMenuItemOptimizeScreenCapture";
+            this.toolStripMenuItemOptimizeScreenCapture.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMenuItemOptimizeScreenCapture.Text = "Optimize Screen Capture";
+            this.toolStripMenuItemOptimizeScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1008,5 +1017,6 @@ namespace AutoScreenCapture
         private ToolStripDropDownButton toolStripDropDownButtonPreview;
         private ToolStripMenuItem toolStripMenuItemSetupWizard;
         private ToolStripSeparator toolStripSeparatorSetupWizard;
+        private ToolStripMenuItem toolStripMenuItemOptimizeScreenCapture;
     }
 }

@@ -51,7 +51,7 @@
             // labelTestValue
             // 
             this.labelTestValue.AutoSize = true;
-            this.labelTestValue.Location = new System.Drawing.Point(12, 64);
+            this.labelTestValue.Location = new System.Drawing.Point(12, 68);
             this.labelTestValue.Name = "labelTestValue";
             this.labelTestValue.Size = new System.Drawing.Size(61, 13);
             this.labelTestValue.TabIndex = 1;
@@ -59,17 +59,19 @@
             // 
             // textBoxRegularExpression
             // 
+            this.textBoxRegularExpression.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxRegularExpression.Location = new System.Drawing.Point(119, 33);
             this.textBoxRegularExpression.Name = "textBoxRegularExpression";
-            this.textBoxRegularExpression.Size = new System.Drawing.Size(410, 20);
+            this.textBoxRegularExpression.Size = new System.Drawing.Size(410, 25);
             this.textBoxRegularExpression.TabIndex = 1;
             this.textBoxRegularExpression.TextChanged += new System.EventHandler(this.textBoxRegularExpression_TextChanged);
             // 
             // textBoxTestValue
             // 
-            this.textBoxTestValue.Location = new System.Drawing.Point(119, 61);
+            this.textBoxTestValue.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxTestValue.Location = new System.Drawing.Point(119, 63);
             this.textBoxTestValue.Name = "textBoxTestValue";
-            this.textBoxTestValue.Size = new System.Drawing.Size(410, 20);
+            this.textBoxTestValue.Size = new System.Drawing.Size(410, 25);
             this.textBoxTestValue.TabIndex = 2;
             this.textBoxTestValue.TextChanged += new System.EventHandler(this.textBoxText_TextChanged);
             // 
@@ -92,7 +94,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 88);
+            this.statusStrip.Location = new System.Drawing.Point(0, 95);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.statusStrip.Size = new System.Drawing.Size(541, 22);
@@ -108,7 +110,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 110);
+            this.ClientSize = new System.Drawing.Size(541, 117);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.textBoxTestValue);

@@ -47,6 +47,7 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.checkBoxOptimizeScreenCapture = new System.Windows.Forms.CheckBox();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
             this.buttonAddScreenshotLabelToList = new System.Windows.Forms.Button();
             this.labelScreenshotLabel = new System.Windows.Forms.Label();
@@ -55,14 +56,19 @@
             this.listBoxScreenshotLabel = new System.Windows.Forms.ListBox();
             this.checkBoxScreenshotLabel = new System.Windows.Forms.CheckBox();
             this.tabPageActiveWindowTitle = new System.Windows.Forms.TabPage();
-            this.groupBoxActiveWindowTitle = new System.Windows.Forms.GroupBox();
+            this.textBoxRegularExpressionHelp = new System.Windows.Forms.TextBox();
+            this.labelMatchHelp = new System.Windows.Forms.Label();
+            this.labelMatchTestResult = new System.Windows.Forms.Label();
+            this.labelActiveWindowTitleTest = new System.Windows.Forms.Label();
+            this.textBoxActiveWindowTitleTest = new System.Windows.Forms.TextBox();
+            this.labelActiveWindowTitle = new System.Windows.Forms.Label();
+            this.labelActiveWindowTitleHelp = new System.Windows.Forms.Label();
             this.checkBoxActiveWindowTitleComparisonCheckReverse = new System.Windows.Forms.CheckBox();
-            this.buttonDynamicRegexValidator = new System.Windows.Forms.Button();
             this.radioButtonRegularExpressionMatch = new System.Windows.Forms.RadioButton();
-            this.radioButtonCaseSensitiveMatch = new System.Windows.Forms.RadioButton();
-            this.radioButtonCaseInsensitiveMatch = new System.Windows.Forms.RadioButton();
-            this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
             this.checkBoxActiveWindowTitleComparisonCheck = new System.Windows.Forms.CheckBox();
+            this.radioButtonCaseSensitiveMatch = new System.Windows.Forms.RadioButton();
+            this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
+            this.radioButtonCaseInsensitiveMatch = new System.Windows.Forms.RadioButton();
             this.tabPageApplicationFocus = new System.Windows.Forms.TabPage();
             this.numericUpDownApplicationFocusDelayAfter = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownApplicationFocusDelayBefore = new System.Windows.Forms.NumericUpDown();
@@ -124,9 +130,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
+            this.tabPageOptimizeScreenCapture.SuspendLayout();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
-            this.groupBoxActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
@@ -339,6 +345,7 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.checkBoxOptimizeScreenCapture);
             this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
             this.tabPageOptimizeScreenCapture.Name = "tabPageOptimizeScreenCapture";
             this.tabPageOptimizeScreenCapture.Padding = new System.Windows.Forms.Padding(3);
@@ -346,6 +353,17 @@
             this.tabPageOptimizeScreenCapture.TabIndex = 6;
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOptimizeScreenCapture
+            // 
+            this.checkBoxOptimizeScreenCapture.AutoSize = true;
+            this.checkBoxOptimizeScreenCapture.Location = new System.Drawing.Point(121, 73);
+            this.checkBoxOptimizeScreenCapture.Name = "checkBoxOptimizeScreenCapture";
+            this.checkBoxOptimizeScreenCapture.Size = new System.Drawing.Size(140, 17);
+            this.checkBoxOptimizeScreenCapture.TabIndex = 0;
+            this.checkBoxOptimizeScreenCapture.Text = "Optimize screen capture";
+            this.checkBoxOptimizeScreenCapture.UseVisualStyleBackColor = true;
+            this.checkBoxOptimizeScreenCapture.CheckedChanged += new System.EventHandler(this.checkBoxOptimizeScreenCapture_CheckedChanged);
             // 
             // tabPageLabels
             // 
@@ -424,7 +442,19 @@
             // 
             // tabPageActiveWindowTitle
             // 
-            this.tabPageActiveWindowTitle.Controls.Add(this.groupBoxActiveWindowTitle);
+            this.tabPageActiveWindowTitle.Controls.Add(this.textBoxRegularExpressionHelp);
+            this.tabPageActiveWindowTitle.Controls.Add(this.labelMatchHelp);
+            this.tabPageActiveWindowTitle.Controls.Add(this.labelMatchTestResult);
+            this.tabPageActiveWindowTitle.Controls.Add(this.labelActiveWindowTitleTest);
+            this.tabPageActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitleTest);
+            this.tabPageActiveWindowTitle.Controls.Add(this.labelActiveWindowTitle);
+            this.tabPageActiveWindowTitle.Controls.Add(this.labelActiveWindowTitleHelp);
+            this.tabPageActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitleComparisonCheckReverse);
+            this.tabPageActiveWindowTitle.Controls.Add(this.radioButtonRegularExpressionMatch);
+            this.tabPageActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitleComparisonCheck);
+            this.tabPageActiveWindowTitle.Controls.Add(this.radioButtonCaseSensitiveMatch);
+            this.tabPageActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
+            this.tabPageActiveWindowTitle.Controls.Add(this.radioButtonCaseInsensitiveMatch);
             this.tabPageActiveWindowTitle.Location = new System.Drawing.Point(4, 22);
             this.tabPageActiveWindowTitle.Name = "tabPageActiveWindowTitle";
             this.tabPageActiveWindowTitle.Size = new System.Drawing.Size(677, 253);
@@ -432,92 +462,145 @@
             this.tabPageActiveWindowTitle.Text = "Active Window Title";
             this.tabPageActiveWindowTitle.UseVisualStyleBackColor = true;
             // 
-            // groupBoxActiveWindowTitle
+            // textBoxRegularExpressionHelp
             // 
-            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitleComparisonCheckReverse);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.buttonDynamicRegexValidator);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonRegularExpressionMatch);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonCaseSensitiveMatch);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.radioButtonCaseInsensitiveMatch);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.textBoxActiveWindowTitle);
-            this.groupBoxActiveWindowTitle.Controls.Add(this.checkBoxActiveWindowTitleComparisonCheck);
-            this.groupBoxActiveWindowTitle.Location = new System.Drawing.Point(236, 57);
-            this.groupBoxActiveWindowTitle.Name = "groupBoxActiveWindowTitle";
-            this.groupBoxActiveWindowTitle.Size = new System.Drawing.Size(205, 139);
-            this.groupBoxActiveWindowTitle.TabIndex = 2;
-            this.groupBoxActiveWindowTitle.TabStop = false;
-            this.groupBoxActiveWindowTitle.Text = "Active Window Title";
+            this.textBoxRegularExpressionHelp.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxRegularExpressionHelp.Location = new System.Drawing.Point(436, 121);
+            this.textBoxRegularExpressionHelp.Multiline = true;
+            this.textBoxRegularExpressionHelp.Name = "textBoxRegularExpressionHelp";
+            this.textBoxRegularExpressionHelp.ReadOnly = true;
+            this.textBoxRegularExpressionHelp.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxRegularExpressionHelp.Size = new System.Drawing.Size(235, 129);
+            this.textBoxRegularExpressionHelp.TabIndex = 0;
+            this.textBoxRegularExpressionHelp.TabStop = false;
+            this.textBoxRegularExpressionHelp.Text = resources.GetString("textBoxRegularExpressionHelp.Text");
+            this.textBoxRegularExpressionHelp.WordWrap = false;
+            // 
+            // labelMatchHelp
+            // 
+            this.labelMatchHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelMatchHelp.Location = new System.Drawing.Point(3, 121);
+            this.labelMatchHelp.Name = "labelMatchHelp";
+            this.labelMatchHelp.Size = new System.Drawing.Size(157, 63);
+            this.labelMatchHelp.TabIndex = 12;
+            this.labelMatchHelp.Text = "The \"Match\" option tests if your text matches with the active window title. The \"" +
+    "No Match\" option is the opposite test.";
+            // 
+            // labelMatchTestResult
+            // 
+            this.labelMatchTestResult.BackColor = System.Drawing.Color.LightYellow;
+            this.labelMatchTestResult.Location = new System.Drawing.Point(6, 234);
+            this.labelMatchTestResult.Name = "labelMatchTestResult";
+            this.labelMatchTestResult.Size = new System.Drawing.Size(408, 14);
+            this.labelMatchTestResult.TabIndex = 11;
+            this.labelMatchTestResult.Text = "Test Result: (empty)";
+            // 
+            // labelActiveWindowTitleTest
+            // 
+            this.labelActiveWindowTitleTest.AutoSize = true;
+            this.labelActiveWindowTitleTest.Location = new System.Drawing.Point(6, 188);
+            this.labelActiveWindowTitleTest.Name = "labelActiveWindowTitleTest";
+            this.labelActiveWindowTitleTest.Size = new System.Drawing.Size(408, 13);
+            this.labelActiveWindowTitleTest.TabIndex = 10;
+            this.labelActiveWindowTitleTest.Text = "Test your comparison text and matching options with this example active window ti" +
+    "tle:";
+            // 
+            // textBoxActiveWindowTitleTest
+            // 
+            this.textBoxActiveWindowTitleTest.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxActiveWindowTitleTest.Location = new System.Drawing.Point(6, 204);
+            this.textBoxActiveWindowTitleTest.Name = "textBoxActiveWindowTitleTest";
+            this.textBoxActiveWindowTitleTest.Size = new System.Drawing.Size(408, 25);
+            this.textBoxActiveWindowTitleTest.TabIndex = 0;
+            this.textBoxActiveWindowTitleTest.TabStop = false;
+            this.textBoxActiveWindowTitleTest.TextChanged += new System.EventHandler(this.textBoxActiveWindowTitleTest_TextChanged);
+            // 
+            // labelActiveWindowTitle
+            // 
+            this.labelActiveWindowTitle.AutoSize = true;
+            this.labelActiveWindowTitle.Location = new System.Drawing.Point(6, 74);
+            this.labelActiveWindowTitle.Name = "labelActiveWindowTitle";
+            this.labelActiveWindowTitle.Size = new System.Drawing.Size(580, 13);
+            this.labelActiveWindowTitle.TabIndex = 7;
+            this.labelActiveWindowTitle.Text = "Text or regular expression pattern to compare against the active window title to " +
+    "determine if a screenshot should be taken:";
+            // 
+            // labelActiveWindowTitleHelp
+            // 
+            this.labelActiveWindowTitleHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelActiveWindowTitleHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelActiveWindowTitleHelp.Name = "labelActiveWindowTitleHelp";
+            this.labelActiveWindowTitleHelp.Size = new System.Drawing.Size(665, 60);
+            this.labelActiveWindowTitleHelp.TabIndex = 6;
+            this.labelActiveWindowTitleHelp.Text = resources.GetString("labelActiveWindowTitleHelp.Text");
             // 
             // checkBoxActiveWindowTitleComparisonCheckReverse
             // 
             this.checkBoxActiveWindowTitleComparisonCheckReverse.AutoSize = true;
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.Location = new System.Drawing.Point(110, 19);
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.Location = new System.Drawing.Point(174, 144);
             this.checkBoxActiveWindowTitleComparisonCheckReverse.Name = "checkBoxActiveWindowTitleComparisonCheckReverse";
             this.checkBoxActiveWindowTitleComparisonCheckReverse.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabIndex = 1;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.TabIndex = 0;
             this.checkBoxActiveWindowTitleComparisonCheckReverse.TabStop = false;
             this.checkBoxActiveWindowTitleComparisonCheckReverse.Text = "No Match";
             this.checkBoxActiveWindowTitleComparisonCheckReverse.UseVisualStyleBackColor = true;
-            // 
-            // buttonDynamicRegexValidator
-            // 
-            this.buttonDynamicRegexValidator.Image = global::AutoScreenCapture.Properties.Resources.lightbulb;
-            this.buttonDynamicRegexValidator.Location = new System.Drawing.Point(176, 111);
-            this.buttonDynamicRegexValidator.Name = "buttonDynamicRegexValidator";
-            this.buttonDynamicRegexValidator.Size = new System.Drawing.Size(23, 23);
-            this.buttonDynamicRegexValidator.TabIndex = 0;
-            this.buttonDynamicRegexValidator.TabStop = false;
-            this.buttonDynamicRegexValidator.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitleComparisonCheckReverse.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitleComparisonCheckReverse_CheckedChanged);
             // 
             // radioButtonRegularExpressionMatch
             // 
             this.radioButtonRegularExpressionMatch.AutoSize = true;
-            this.radioButtonRegularExpressionMatch.Location = new System.Drawing.Point(6, 114);
+            this.radioButtonRegularExpressionMatch.Location = new System.Drawing.Point(265, 167);
             this.radioButtonRegularExpressionMatch.Name = "radioButtonRegularExpressionMatch";
             this.radioButtonRegularExpressionMatch.Size = new System.Drawing.Size(149, 17);
             this.radioButtonRegularExpressionMatch.TabIndex = 0;
             this.radioButtonRegularExpressionMatch.Text = "Regular Expression Match";
             this.radioButtonRegularExpressionMatch.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonCaseSensitiveMatch
-            // 
-            this.radioButtonCaseSensitiveMatch.AutoSize = true;
-            this.radioButtonCaseSensitiveMatch.Location = new System.Drawing.Point(6, 68);
-            this.radioButtonCaseSensitiveMatch.Name = "radioButtonCaseSensitiveMatch";
-            this.radioButtonCaseSensitiveMatch.Size = new System.Drawing.Size(128, 17);
-            this.radioButtonCaseSensitiveMatch.TabIndex = 0;
-            this.radioButtonCaseSensitiveMatch.Text = "Case Sensitive Match";
-            this.radioButtonCaseSensitiveMatch.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonCaseInsensitiveMatch
-            // 
-            this.radioButtonCaseInsensitiveMatch.AutoSize = true;
-            this.radioButtonCaseInsensitiveMatch.Location = new System.Drawing.Point(6, 91);
-            this.radioButtonCaseInsensitiveMatch.Name = "radioButtonCaseInsensitiveMatch";
-            this.radioButtonCaseInsensitiveMatch.Size = new System.Drawing.Size(135, 17);
-            this.radioButtonCaseInsensitiveMatch.TabIndex = 0;
-            this.radioButtonCaseInsensitiveMatch.Text = "Case Insensitive Match";
-            this.radioButtonCaseInsensitiveMatch.UseVisualStyleBackColor = true;
-            // 
-            // textBoxActiveWindowTitle
-            // 
-            this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 42);
-            this.textBoxActiveWindowTitle.MaxLength = 500;
-            this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
-            this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(193, 20);
-            this.textBoxActiveWindowTitle.TabIndex = 0;
-            this.textBoxActiveWindowTitle.TabStop = false;
+            this.radioButtonRegularExpressionMatch.CheckedChanged += new System.EventHandler(this.radioButtonRegularExpressionMatch_CheckedChanged);
             // 
             // checkBoxActiveWindowTitleComparisonCheck
             // 
             this.checkBoxActiveWindowTitleComparisonCheck.AutoSize = true;
-            this.checkBoxActiveWindowTitleComparisonCheck.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxActiveWindowTitleComparisonCheck.Location = new System.Drawing.Point(174, 121);
             this.checkBoxActiveWindowTitleComparisonCheck.Name = "checkBoxActiveWindowTitleComparisonCheck";
             this.checkBoxActiveWindowTitleComparisonCheck.Size = new System.Drawing.Size(56, 17);
             this.checkBoxActiveWindowTitleComparisonCheck.TabIndex = 0;
             this.checkBoxActiveWindowTitleComparisonCheck.TabStop = false;
             this.checkBoxActiveWindowTitleComparisonCheck.Text = "Match";
             this.checkBoxActiveWindowTitleComparisonCheck.UseVisualStyleBackColor = true;
+            this.checkBoxActiveWindowTitleComparisonCheck.CheckedChanged += new System.EventHandler(this.checkBoxActiveWindowTitleComparisonCheck_CheckedChanged);
+            // 
+            // radioButtonCaseSensitiveMatch
+            // 
+            this.radioButtonCaseSensitiveMatch.AutoSize = true;
+            this.radioButtonCaseSensitiveMatch.Location = new System.Drawing.Point(265, 121);
+            this.radioButtonCaseSensitiveMatch.Name = "radioButtonCaseSensitiveMatch";
+            this.radioButtonCaseSensitiveMatch.Size = new System.Drawing.Size(128, 17);
+            this.radioButtonCaseSensitiveMatch.TabIndex = 0;
+            this.radioButtonCaseSensitiveMatch.Text = "Case Sensitive Match";
+            this.radioButtonCaseSensitiveMatch.UseVisualStyleBackColor = true;
+            this.radioButtonCaseSensitiveMatch.CheckedChanged += new System.EventHandler(this.radioButtonCaseSensitiveMatch_CheckedChanged);
+            // 
+            // textBoxActiveWindowTitle
+            // 
+            this.textBoxActiveWindowTitle.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(6, 90);
+            this.textBoxActiveWindowTitle.MaxLength = 500;
+            this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
+            this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(665, 25);
+            this.textBoxActiveWindowTitle.TabIndex = 0;
+            this.textBoxActiveWindowTitle.TabStop = false;
+            this.textBoxActiveWindowTitle.TextChanged += new System.EventHandler(this.textBoxActiveWindowTitle_TextChanged);
+            // 
+            // radioButtonCaseInsensitiveMatch
+            // 
+            this.radioButtonCaseInsensitiveMatch.AutoSize = true;
+            this.radioButtonCaseInsensitiveMatch.Location = new System.Drawing.Point(265, 144);
+            this.radioButtonCaseInsensitiveMatch.Name = "radioButtonCaseInsensitiveMatch";
+            this.radioButtonCaseInsensitiveMatch.Size = new System.Drawing.Size(135, 17);
+            this.radioButtonCaseInsensitiveMatch.TabIndex = 0;
+            this.radioButtonCaseInsensitiveMatch.Text = "Case Insensitive Match";
+            this.radioButtonCaseInsensitiveMatch.UseVisualStyleBackColor = true;
+            this.radioButtonCaseInsensitiveMatch.CheckedChanged += new System.EventHandler(this.radioButtonCaseInsensitiveMatch_CheckedChanged);
             // 
             // tabPageApplicationFocus
             // 
@@ -1108,11 +1191,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
+            this.tabPageOptimizeScreenCapture.ResumeLayout(false);
+            this.tabPageOptimizeScreenCapture.PerformLayout();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
-            this.groupBoxActiveWindowTitle.ResumeLayout(false);
-            this.groupBoxActiveWindowTitle.PerformLayout();
+            this.tabPageActiveWindowTitle.PerformLayout();
             this.tabPageApplicationFocus.ResumeLayout(false);
             this.tabPageApplicationFocus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayAfter)).EndInit();
@@ -1145,8 +1229,6 @@
         private System.Windows.Forms.Label labelSecondsInterval;
         private System.Windows.Forms.Label labelMinutesInterval;
         private System.Windows.Forms.Label labelHoursInterval;
-        private System.Windows.Forms.GroupBox groupBoxActiveWindowTitle;
-        private System.Windows.Forms.Button buttonDynamicRegexValidator;
         private System.Windows.Forms.Label labelSecurityHelp;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.Button buttonOK;
@@ -1405,5 +1487,21 @@
         private System.Windows.Forms.Label labelScreenshotLabel;
         private System.Windows.Forms.TextBox textBoxScreenshotLabel;
         private System.Windows.Forms.Label labelScreenshotLabelHelp;
+        private System.Windows.Forms.Label labelActiveWindowTitle;
+        private System.Windows.Forms.Label labelActiveWindowTitleHelp;
+        private System.Windows.Forms.Label labelActiveWindowTitleTest;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxActiveWindowTitleTest;
+        private System.Windows.Forms.Label labelMatchTestResult;
+        private System.Windows.Forms.Label labelMatchHelp;
+        private System.Windows.Forms.TextBox textBoxRegularExpressionHelp;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxOptimizeScreenCapture;
     }
 }

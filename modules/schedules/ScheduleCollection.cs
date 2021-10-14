@@ -204,8 +204,8 @@ namespace AutoScreenCapture
                         {
                             log.WriteDebugMessage("An old version of the schedules.xml file was detected. Attempting upgrade to new schema.");
 
-                            Version v2300 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.0.0");
-                            Version v2319 = config.Settings.VersionManager.Versions.Get("Boombayah", "2.3.1.9");
+                            Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                            Version v2319 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.1.9");
                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)

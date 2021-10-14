@@ -84,11 +84,6 @@ namespace AutoScreenCapture
         public Guid LastViewId { get; set; }
 
         /// <summary>
-        /// Determines if we compare the hash of the latest screenshot with the previous screeenshot before saving and collect the hash of each screenshot for comparison before emailing from trigger.
-        /// </summary>
-        public bool OptimizeScreenCapture { get; set; }
-
-        /// <summary>
         /// A list of screenshot hash values to be used when adding screenshots so we do not add duplicate screenshots while running and when OptimizeScreenCapture is set.
         /// </summary>
         public List<string> AddedScreenshotHashList { get; set; }
@@ -168,7 +163,7 @@ namespace AutoScreenCapture
             _slideNameList = new List<string>();
             _log.WriteDebugMessage("Initialized slide name list");
 
-            OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture", config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
+            _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture", config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
 
             AddedScreenshotHashList = new List<string>();
             EmailedScreenshotHashList = new List<string>();
@@ -197,7 +192,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    if (OptimizeScreenCapture)
+                    if (_screenCapture.OptimizeScreenCapture)
                     {
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 

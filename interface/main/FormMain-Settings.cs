@@ -209,28 +209,10 @@ namespace AutoScreenCapture
                 _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
 
                 // Active Window Title
-                //_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
-                //_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value);
-                //textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
-
-                //if (_formSetup.checkBoxActiveWindowTitle.Checked)
-                //{
-                //    _formSetup.textBoxActiveWindowTitle.Enabled = true;
-                //    _formSetup.radioButtonCaseSensitiveMatch.Enabled = true;
-                //    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = true;
-                //    _formSetup.radioButtonRegularExpressionMatch.Enabled = true;
-                //}
-                //else
-                //{
-                //    _formSetup.textBoxActiveWindowTitle.Enabled = false;
-                //    _formSetup.radioButtonCaseSensitiveMatch.Enabled = false;
-                //    _formSetup.radioButtonCaseInsensitiveMatch.Enabled = false;
-                //    _formSetup.radioButtonRegularExpressionMatch.Enabled = false;
-                //}
-
-                _formSetup.radioButtonCaseSensitiveMatch.Checked = false;
-                _formSetup.radioButtonCaseInsensitiveMatch.Checked = false;
-                _formSetup.radioButtonRegularExpressionMatch.Checked = false;
+                _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
+                _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value);
+                _formSetup.textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
+                _formSetup.textBoxActiveWindowTitleTest.Text = _config.Settings.User.GetByKey("ActiveWindowTitleSampleText", _config.Settings.DefaultSettings.ActiveWindowTitleSampleText).Value.ToString();
 
                 int activeWindowTitleMatchType = Convert.ToInt32(_config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value);
 
@@ -285,9 +267,10 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = _formSetup.checkBoxScreenshotLabel.Checked;
 
                 // Active Window Title
-                //_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked;
-                //_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value = _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked;
-                //_config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value = _formSetup.textBoxActiveWindowTitle.Text.Trim();
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value = _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value = _formSetup.textBoxActiveWindowTitle.Text.Trim();
+                _config.Settings.User.GetByKey("ActiveWindowTitleSampleText", _config.Settings.DefaultSettings.ActiveWindowTitleSampleText).Value = _formSetup.textBoxActiveWindowTitleTest.Text.Trim();
 
                 if (_formSetup.radioButtonCaseSensitiveMatch.Checked)
                 {
@@ -307,6 +290,9 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)_formSetup.numericUpDownApplicationFocusDelayBefore.Value;
                 _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)_formSetup.numericUpDownApplicationFocusDelayAfter.Value;
 
+                // Optimize Screen Capture
+                _config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value = _formSetup.checkBoxOptimizeScreenCapture.Checked;
+
                 if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                 {
                     _screenCapture.ApplicationError = true;
@@ -317,16 +303,6 @@ namespace AutoScreenCapture
                 _screenCapture.ApplicationError = true;
                 _log.WriteExceptionMessage("FormMain-Settings::SaveSettings", ex);
             }
-        }
-
-        /// <summary>
-        /// Saves the user's settings.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaveSettings(object sender, EventArgs e)
-        {
-            SaveSettings();
         }
     }
 }

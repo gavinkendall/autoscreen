@@ -231,7 +231,7 @@ namespace AutoScreenCapture
                     _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
                     _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "." +
                     _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + "] " +
-                    (_screenshotCollection.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
+                    (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -256,7 +256,7 @@ namespace AutoScreenCapture
                     {
                         string takingScreenshotsMessage;
 
-                        if (_screenshotCollection.OptimizeScreenCapture)
+                        if (_screenCapture.OptimizeScreenCapture)
                         {
                             // System tray icon is green if taking optimized screenshots.
                             takingScreenshotsMessage = "Taking screenshots [optimized]";

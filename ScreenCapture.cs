@@ -236,6 +236,11 @@ namespace AutoScreenCapture
         public int Interval { get; set; }
 
         /// <summary>
+        /// Determines if we compare the hash of the latest screenshot with the previous screeenshot before saving and collect the hash of each screenshot for comparison before emailing from trigger.
+        /// </summary>
+        public bool OptimizeScreenCapture { get; set; }
+
+        /// <summary>
         /// The limit on how many screen capture cycles we go through during a screen capture session.
         /// </summary>
         public int Limit { get; set; }

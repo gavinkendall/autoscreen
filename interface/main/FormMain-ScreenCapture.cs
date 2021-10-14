@@ -135,14 +135,17 @@ namespace AutoScreenCapture
 
                 _screenCapture.ActiveWindowProcessName = _screenCapture.GetActiveWindowProcessName();
 
-                if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                if (!string.IsNullOrEmpty(_formSetup.textBoxActiveWindowTitle.Text))
                 {
-                    return;
-                }
+                    if (_formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked && !ActiveWindowTitleMatchText())
+                    {
+                        return;
+                    }
 
-                if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
-                {
-                    return;
+                    if (_formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked && !ActiveWindowTitleDoesNotMatchText())
+                    {
+                        return;
+                    }
                 }
 
                 RunRegionCaptures();
@@ -648,7 +651,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(_formSetup.textBoxActiveWindowTitle.Text))
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                 {
                     if (_formSetup.radioButtonCaseSensitiveMatch.Checked)
                     {
@@ -678,7 +681,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle) && !string.IsNullOrEmpty(_formSetup.textBoxActiveWindowTitle.Text))
+                if (!string.IsNullOrEmpty(_screenCapture.ActiveWindowTitle))
                 {
                     _formSetup.textBoxActiveWindowTitle.Text = _formSetup.textBoxActiveWindowTitle.Text.Trim();
 

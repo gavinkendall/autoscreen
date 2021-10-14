@@ -129,6 +129,32 @@
   <data name="labelScreenshotLabelHelp.Text" xml:space="preserve">
     <value>You can apply a label to each screenshot taken so that you can filter by that label when reviewing screenshots. Type your label in the text field "Screenshot Label", click the "Add To List" button, and ensure the "Apply this label to each screenshot" option is enabled.</value>
   </data>
+  <data name="textBoxRegularExpressionHelp.Text" xml:space="preserve">
+    <value>Regular Expression Help
+
+[abc] A single character of a, b, or c
+[^abc] A character except a, b, or c
+[a-z] A character in the range a-z
+[a-zA-Z] A character in the range a-z or A-Z
+a|b Match either a or b
+a? Zero or one instance of a
+a* Zero or more instances of a
+a+ One or more instances of a
+a{3} Exactly 3 of a
+a{3,6} Between 3 and 6 of a
+^ Start of text
+$ End of text
+
+Examples
+^.{3}$ will match any 3 characters
+^(A|a)pple$ will match "Apple" or "apple"
+^colou?r$ matches "color" or "colour"
+^\(\d{3}\)-\d{3}-\d{4}$ is a phone number in Canada using the format (xxx)-xxx-xxxx
+^[\w.\-]{1,25}@(yahoo|hotmail|gmail)\.com$ will match any email address using Yahoo, Hotmail, or Gmail</value>
+  </data>
+  <data name="labelActiveWindowTitleHelp.Text" xml:space="preserve">
+    <value>Compare the provided text with the active window title. You can choose to either have the text match against the active window title or not match with the active window title. There are case sensitive match and case insensitive match options. Using a "Case Sensitive Match" will consider lowercase and uppercase characters in the exact order. Using a "Case Insensitive Match" considers characters in the exact order but not necessarily using the exact case. A "Regular Expression Match" uses a regex pattern for the comparison instead of text.</value>
+  </data>
   <data name="labelSecurityHelp.Text" xml:space="preserve">
     <value>This passphrase will be required for Show Interface, Stop Screen Capture, and Exit Application. The system tray icon menus will also be limited. Enter a passphrase and click Set Passphrase. Click on Clear Passphrase to not use a passphrase and remove all restrictions.</value>
   </data>

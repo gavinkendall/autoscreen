@@ -59,7 +59,7 @@ namespace AutoScreenCapture
         {
             if (!_formScreenshotMetadata.Visible)
             {
-                _formScreenshotMetadata.Show();
+                _formScreenshotMetadata.Show(this);
             }
             else
             {
@@ -957,7 +957,7 @@ namespace AutoScreenCapture
 
                 if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path))
                 {
-                    if (_screenshotCollection.OptimizeScreenCapture)
+                    if (_screenCapture.OptimizeScreenCapture)
                     {
                         if (!string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) && !_screenshotCollection.EmailedScreenshotHashList.Contains(lastScreenshotOfThisView.Hash))
                         {

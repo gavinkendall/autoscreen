@@ -20,6 +20,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -149,9 +150,13 @@ namespace AutoScreenCapture
             textBoxKeyboardShortcutRegionSelectAutoSaveKey.Text = _config.Settings.User.GetByKey("KeyboardShortcutRegionSelectAutoSaveKey", _config.Settings.DefaultSettings.KeyboardShortcutRegionSelectAutoSaveKey).Value.ToString().ToUpper();
             textBoxKeyboardShortcutRegionSelectEditKey.Text = _config.Settings.User.GetByKey("KeyboardShortcutRegionSelectEditKey", _config.Settings.DefaultSettings.KeyboardShortcutRegionSelectEditKey).Value.ToString().ToUpper();
 
+            // Security
             textBoxPassphraseHash.Text = _config.Settings.User.GetByKey("Passphrase", string.Empty).Value.ToString();
             string passphraseLastUpdated = _config.Settings.User.GetByKey("PassphraseLastUpdated", string.Empty).Value.ToString();
             labelLastUpdated.Text = "Last updated: " + passphraseLastUpdated;
+
+            // Optimize Screen Capture
+            checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -416,6 +421,172 @@ namespace AutoScreenCapture
         private void listBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
         {
             _config.Settings.User.SetValueByKey("ScreenshotLabel", listBoxScreenshotLabel.SelectedItem.ToString());
+        }
+
+        private void checkBoxActiveWindowTitleComparisonCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxActiveWindowTitleComparisonCheck.Checked)
+            {
+                checkBoxActiveWindowTitleComparisonCheckReverse.Checked = false;
+            }
+            else
+            {
+                checkBoxActiveWindowTitleComparisonCheckReverse.Checked = true;
+            }
+
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void checkBoxActiveWindowTitleComparisonCheckReverse_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxActiveWindowTitleComparisonCheckReverse.Checked)
+            {
+                checkBoxActiveWindowTitleComparisonCheck.Checked = false;
+            }
+            else
+            {
+                checkBoxActiveWindowTitleComparisonCheck.Checked = true;
+            }
+
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void textBoxActiveWindowTitle_TextChanged(object sender, EventArgs e)
+        {
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void textBoxActiveWindowTitleTest_TextChanged(object sender, EventArgs e)
+        {
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void radioButtonCaseSensitiveMatch_CheckedChanged(object sender, EventArgs e)
+        {
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void radioButtonCaseInsensitiveMatch_CheckedChanged(object sender, EventArgs e)
+        {
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void radioButtonRegularExpressionMatch_CheckedChanged(object sender, EventArgs e)
+        {
+            TestMatchOptionsForActiveWindowTitle();
+        }
+
+        private void TestMatchOptionsForActiveWindowTitle()
+        {
+            if (string.IsNullOrEmpty(textBoxActiveWindowTitle.Text) || string.IsNullOrEmpty(textBoxActiveWindowTitleTest.Text))
+            {
+                labelMatchTestResult.BackColor = System.Drawing.Color.LightYellow;
+                labelMatchTestResult.Text = "Test Result: (empty)";
+
+                return;
+            }
+
+            if (checkBoxActiveWindowTitleComparisonCheck.Checked)
+            {
+                if (ActiveWindowTitleMatchText())
+                {
+                    labelMatchTestResult.BackColor = System.Drawing.Color.LightGreen;
+                    labelMatchTestResult.Text = "Test Result: Match Succeeded";
+                }
+                else
+                {
+                    labelMatchTestResult.BackColor = System.Drawing.Color.PaleVioletRed;
+                    labelMatchTestResult.Text = "Test Result: Match Failed";
+                }
+            }
+
+            if (checkBoxActiveWindowTitleComparisonCheckReverse.Checked)
+            {
+                if (ActiveWindowTitleDoesNotMatchText())
+                {
+                    labelMatchTestResult.BackColor = System.Drawing.Color.LightGreen;
+                    labelMatchTestResult.Text = "Test Result: No Match Succeeded";
+                }
+                else
+                {
+                    labelMatchTestResult.BackColor = System.Drawing.Color.PaleVioletRed;
+                    labelMatchTestResult.Text = "Test Result: No Match Failed";
+                }
+            }
+        }
+
+        private bool ActiveWindowTitleMatchText()
+        {
+            try
+            {
+                string activeWindowTitleComparisonText = textBoxActiveWindowTitle.Text;
+                string activeWindowTitleTestText = textBoxActiveWindowTitleTest.Text;
+
+                activeWindowTitleComparisonText = activeWindowTitleComparisonText.Trim();
+                activeWindowTitleTestText = activeWindowTitleTestText.Trim();
+
+                if (!string.IsNullOrEmpty(activeWindowTitleTestText) && !string.IsNullOrEmpty(activeWindowTitleComparisonText))
+                {
+                    if (radioButtonCaseSensitiveMatch.Checked)
+                    {
+                        return activeWindowTitleTestText.Contains(activeWindowTitleComparisonText);
+                    }
+                    else if (radioButtonCaseInsensitiveMatch.Checked)
+                    {
+                        return activeWindowTitleTestText.ToLower().Contains(activeWindowTitleComparisonText.ToLower());
+                    }
+                    else if (radioButtonRegularExpressionMatch.Checked)
+                    {
+                        return Regex.IsMatch(activeWindowTitleTestText, activeWindowTitleComparisonText);
+                    }
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool ActiveWindowTitleDoesNotMatchText()
+        {
+            try
+            {
+                string activeWindowTitleComparisonText = textBoxActiveWindowTitle.Text;
+                string activeWindowTitleTestText = textBoxActiveWindowTitleTest.Text;
+
+                activeWindowTitleComparisonText = activeWindowTitleComparisonText.Trim();
+                activeWindowTitleTestText = activeWindowTitleTestText.Trim();
+
+                if (!string.IsNullOrEmpty(activeWindowTitleTestText) && !string.IsNullOrEmpty(activeWindowTitleComparisonText))
+                {
+                    if (radioButtonCaseSensitiveMatch.Checked)
+                    {
+                        return !activeWindowTitleTestText.Contains(activeWindowTitleComparisonText);
+                    }
+                    else if (radioButtonCaseInsensitiveMatch.Checked)
+                    {
+                        return !activeWindowTitleTestText.ToLower().Contains(activeWindowTitleComparisonText.ToLower());
+                    }
+                    else if (radioButtonRegularExpressionMatch.Checked)
+                    {
+                        return !Regex.IsMatch(activeWindowTitleTestText, activeWindowTitleComparisonText);
+                    }
+
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void checkBoxOptimizeScreenCapture_CheckedChanged(object sender, EventArgs e)
+        {
+            _screenCapture.OptimizeScreenCapture = checkBoxOptimizeScreenCapture.Checked;
         }
     }
 }

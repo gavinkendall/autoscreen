@@ -460,6 +460,62 @@ namespace AutoScreenCapture
                     _screenCapture.LockScreenCaptureSession = false;
                 }
 
+                // Close all the sub forms that may still be open.
+                if (_formAbout.Visible)
+                {
+                    _formAbout.Close();
+                }
+
+                if (_formEmailSettings.Visible)
+                {
+                    _formEmailSettings.Close();
+                }
+
+                if (_formFileTransferSettings.Visible)
+                {
+                    _formFileTransferSettings.Close();
+                }
+
+                if (_formMacroTag.Visible)
+                {
+                    _formMacroTag.Close();
+                }
+
+                if (_formRegion.Visible)
+                {
+                    _formRegion.Close();
+                }
+
+                if (_formScreen.Visible)
+                {
+                    _formScreen.Close();
+                }
+
+                if (_formEditor.Visible)
+                {
+                    _formEditor.Close();
+                }
+
+                if (_formTrigger.Visible)
+                {
+                    _formTrigger.Close();
+                }
+
+                if (_formSchedule.Visible)
+                {
+                    _formSchedule.Close();
+                }
+
+                if (_formSetup.Visible)
+                {
+                    _formSetup.Close();
+                }
+
+                if (_formEnterPassphrase.Visible)
+                {
+                    _formEnterPassphrase.Close();
+                }
+
                 _initialVisibilitySet = true;
                 Visible = false;
 
@@ -533,7 +589,7 @@ namespace AutoScreenCapture
         {
             if (!_formScreenCaptureStatus.Visible)
             {
-                _formScreenCaptureStatus.Show();
+                _formScreenCaptureStatus.Show(this);
             }
             else
             {
@@ -550,7 +606,7 @@ namespace AutoScreenCapture
         {
             if (!_formDynamicRegexValidator.Visible)
             {
-                _formDynamicRegexValidator.Show();
+                _formDynamicRegexValidator.Show(this);
             }
             else
             {
@@ -567,7 +623,7 @@ namespace AutoScreenCapture
         {
             if (!_formAbout.Visible)
             {
-                _formAbout.Show();
+                _formAbout.Show(this);
             }
             else
             {
@@ -633,6 +689,8 @@ namespace AutoScreenCapture
 
             if (_formSetup.DialogResult == DialogResult.OK)
             {
+                SaveSettings();
+
                 RegisterKeyboardShortcuts();
             }
         }
