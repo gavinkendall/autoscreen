@@ -1,0 +1,8 @@
+.vs/
+AutoScreenCaptureSetup/Debug
+AutoScreenCaptureSetup/Release
+Gavin.Kendall.SFTP/bin
+Gavin.Kendall.SFTP/obj
+bin/
+obj/
+packages/
