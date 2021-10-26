@@ -255,42 +255,26 @@ namespace AutoScreenCapture
 
             change.DropDown.Items.Add(changeTrigger);
 
-            ToolStripButton toolStripButtonEmailSettings = new ToolStripButton
-            {
-                Text = "Email Settings",
-                Alignment = ToolStripItemAlignment.Left,
-                AutoToolTip = false,
-                ToolTipText = "Configure email (SMTP) settings",
-                Image = Resources.email
-            };
-
-            toolStripButtonEmailSettings.Click += new EventHandler(toolStripMenuItemEmailSettings_Click);
-
-            ToolStripButton toolStripButtonFileTransferSettings = new ToolStripButton
-            {
-                Text = "File Transfer Settings",
-                Alignment = ToolStripItemAlignment.Left,
-                AutoToolTip = false,
-                ToolTipText = "Configure file transfer (SFTP) settings",
-                Image = Resources.file_transfer
-            };
-
-            toolStripButtonFileTransferSettings.Click += new EventHandler(toolStripMenuItemFileTransferSettings_Click);
-
             toolStripDashboard.Items.Add(add);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(change);
 
             if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
-                toolStripDashboard.Items.Add(new ToolStripSeparator());
-                toolStripDashboard.Items.Add(toolStripButtonEmailSettings);
+                toolStripDropDownButtonEmailSettings.Enabled = true;
+            }
+            else
+            {
+                toolStripDropDownButtonEmailSettings.Enabled = false;
             }
 
             if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
             {
-                toolStripDashboard.Items.Add(new ToolStripSeparator());
-                toolStripDashboard.Items.Add(toolStripButtonFileTransferSettings);
+                toolStripDropDownButtonFileTransferSettings.Enabled = true;
+            }
+            else
+            {
+                toolStripDropDownButtonFileTransferSettings.Enabled = false;
             }
 
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel

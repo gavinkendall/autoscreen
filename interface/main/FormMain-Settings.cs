@@ -286,7 +286,7 @@ namespace AutoScreenCapture
                 }
 
                 // Application Focus
-                _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = _formSetup.comboBoxProcessList.Text;
+                _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = _formSetup.listBoxProcessList.Text;
                 _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)_formSetup.numericUpDownApplicationFocusDelayBefore.Value;
                 _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)_formSetup.numericUpDownApplicationFocusDelayAfter.Value;
 

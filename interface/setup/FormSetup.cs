@@ -157,6 +157,20 @@ namespace AutoScreenCapture
 
             // Optimize Screen Capture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
+
+            // Application Focus
+            string applicationFocus = _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value.ToString();
+
+            if (string.IsNullOrEmpty(applicationFocus))
+            {
+                checkBoxEnableApplicationFocus.Checked = false;
+            }
+            else
+            {
+                checkBoxEnableApplicationFocus.Checked = true;
+            }
+
+            RefreshApplicationFocusList();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -242,15 +256,11 @@ namespace AutoScreenCapture
 
         private void buttonApplicationFocusTest_Click(object sender, EventArgs e)
         {
-            //SaveSettings();
-
             DoApplicationFocus();
         }
 
         private void buttonApplicationFocusRefresh_Click(object sender, EventArgs e)
         {
-            //SaveSettings();
-
             RefreshApplicationFocusList();
         }
 
@@ -275,16 +285,14 @@ namespace AutoScreenCapture
         /// </summary>
         public void RefreshApplicationFocusList()
         {
-            comboBoxProcessList.Items.Clear();
-            comboBoxProcessList.Sorted = true;
-
-            comboBoxProcessList.Items.Add(string.Empty);
+            listBoxProcessList.Items.Clear();
+            listBoxProcessList.Sorted = true;
 
             foreach (Process process in Process.GetProcesses())
             {
-                if (!comboBoxProcessList.Items.Contains(process.ProcessName))
+                if (!listBoxProcessList.Items.Contains(process.ProcessName))
                 {
-                    comboBoxProcessList.Items.Add(process.ProcessName);
+                    listBoxProcessList.Items.Add(process.ProcessName);
                 }
             }
 
@@ -292,17 +300,15 @@ namespace AutoScreenCapture
 
             if (string.IsNullOrEmpty(applicationFocus))
             {
-                comboBoxProcessList.SelectedIndex = 0;
-
                 return;
             }
 
-            if (!comboBoxProcessList.Items.Contains(applicationFocus))
+            if (!listBoxProcessList.Items.Contains(applicationFocus))
             {
-                comboBoxProcessList.Items.Add(applicationFocus);
+                listBoxProcessList.Items.Add(applicationFocus);
             }
 
-            comboBoxProcessList.SelectedIndex = comboBoxProcessList.Items.IndexOf(applicationFocus);
+            listBoxProcessList.SelectedIndex = listBoxProcessList.Items.IndexOf(applicationFocus);
 
             numericUpDownApplicationFocusDelayBefore.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value);
             numericUpDownApplicationFocusDelayAfter.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value);
@@ -313,6 +319,11 @@ namespace AutoScreenCapture
         /// </summary>
         public void DoApplicationFocus()
         {
+            if (!checkBoxEnableApplicationFocus.Checked || listBoxProcessList.SelectedItem == null)
+            {
+                return;
+            }
+
             int delayBefore = (int)numericUpDownApplicationFocusDelayBefore.Value;
             int delayAfter = (int)numericUpDownApplicationFocusDelayAfter.Value;
 
@@ -321,7 +332,7 @@ namespace AutoScreenCapture
                 System.Threading.Thread.Sleep(delayBefore);
             }
 
-            _screenCapture.SetApplicationFocus(comboBoxProcessList.Text);
+            _screenCapture.SetApplicationFocus(listBoxProcessList.SelectedItem.ToString());
 
             if (delayAfter > 0)
             {
@@ -338,6 +349,8 @@ namespace AutoScreenCapture
             if (string.IsNullOrEmpty(applicationFocus))
             {
                 _config.Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
+
+                checkBoxEnableApplicationFocus.Checked = false;
             }
             else
             {
@@ -349,6 +362,8 @@ namespace AutoScreenCapture
                 {
                     _screenCapture.ApplicationError = true;
                 }
+
+                checkBoxEnableApplicationFocus.Checked = true;
             }
 
             RefreshApplicationFocusList();
@@ -587,6 +602,52 @@ namespace AutoScreenCapture
         private void checkBoxOptimizeScreenCapture_CheckedChanged(object sender, EventArgs e)
         {
             _screenCapture.OptimizeScreenCapture = checkBoxOptimizeScreenCapture.Checked;
+        }
+
+        private void checkBoxEnableApplicationFocus_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxEnableApplicationFocus.Checked)
+            {
+                listBoxProcessList.Enabled = true;
+
+                labelApplicationFocusDelayBefore.Enabled = true;
+                labelApplicationFocusDelayAfter.Enabled = true;
+
+                numericUpDownApplicationFocusDelayBefore.Enabled = true;
+                numericUpDownApplicationFocusDelayAfter.Enabled = true;
+
+                buttonApplicationFocusTest.Enabled = true;
+                buttonApplicationFocusRefresh.Enabled = true;
+            }
+            else
+            {
+                listBoxProcessList.Enabled = false;
+
+                labelApplicationFocusDelayBefore.Enabled = false;
+                labelApplicationFocusDelayAfter.Enabled = false;
+
+                numericUpDownApplicationFocusDelayBefore.Enabled = false;
+                numericUpDownApplicationFocusDelayAfter.Enabled = false;
+
+                buttonApplicationFocusTest.Enabled = false;
+                buttonApplicationFocusRefresh.Enabled = false;
+
+                listBoxProcessList.SelectedItem = null;
+
+                _config.Settings.User.SetValueByKey("ApplicationFocus", string.Empty);
+            }
+        }
+
+        private void listBoxProcessList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxProcessList.SelectedItem == null)
+            {
+                return;
+            }
+
+            _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = listBoxProcessList.SelectedItem.ToString();
+            _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)numericUpDownApplicationFocusDelayBefore.Value;
+            _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)numericUpDownApplicationFocusDelayAfter.Value;
         }
     }
 }

@@ -155,6 +155,9 @@ Examples
   <data name="labelActiveWindowTitleHelp.Text" xml:space="preserve">
     <value>Compare the provided text with the active window title. You can choose to either have the text match against the active window title or not match with the active window title. There are case sensitive match and case insensitive match options. Using a "Case Sensitive Match" will consider lowercase and uppercase characters in the exact order. Using a "Case Insensitive Match" considers characters in the exact order but not necessarily using the exact case. A "Regular Expression Match" uses a regex pattern for the comparison instead of text.</value>
   </data>
+  <data name="labelApplicationFocusHelp.Text" xml:space="preserve">
+    <value>When enabled, you can have an application's process be focused on during the time a screenshot is taken. Select a process from the list then adjust the delay before and after the focus is set (in milliseconds). Use the "Test" button to test the application focus functionality. Use the "Refresh" button to refresh the list with the currently running processes.</value>
+  </data>
   <data name="labelSecurityHelp.Text" xml:space="preserve">
     <value>This passphrase will be required for Show Interface, Stop Screen Capture, and Exit Application. The system tray icon menus will also be limited. Enter a passphrase and click Set Passphrase. Click on Clear Passphrase to not use a passphrase and remove all restrictions.</value>
   </data>

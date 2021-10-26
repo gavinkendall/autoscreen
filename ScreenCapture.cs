@@ -789,7 +789,7 @@ namespace AutoScreenCapture
 
                                 if (stopOnLowDiskError)
                                 {
-                                    _log.WriteErrorMessage("Running screen capture session has stopped because application setting StopOnLowDiskError was set to True when the available disk space on any drive was lower than the value of LowDiskPercentageThreshold");
+                                    _log.WriteErrorMessage("Running screen capture session has stopped because application setting StopOnLowDiskError is set to True when the available disk space on any drive is lower than the value of LowDiskPercentageThreshold");
 
                                     ApplicationError = true;
 
@@ -836,7 +836,10 @@ namespace AutoScreenCapture
         /// <param name="applicationFocus">The name of the process of the application to focus.</param>
         public void SetApplicationFocus(string applicationFocus)
         {
-            if (string.IsNullOrEmpty(applicationFocus)) return;
+            if (string.IsNullOrEmpty(applicationFocus))
+            {
+                return;
+            }
 
             Process[] process = Process.GetProcessesByName(applicationFocus);
 

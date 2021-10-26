@@ -683,11 +683,6 @@ namespace AutoScreenCapture
         {
             SearchScreenshots();
 
-            if (!tabControlModules.SelectedTab.Name.Equals("tabPageScreenshots"))
-            {
-                tabControlModules.SelectedTab = tabControlModules.TabPages["tabPageScreenshots"];
-            }
-
             ShowScreenshotBySlideIndex();
         }
 

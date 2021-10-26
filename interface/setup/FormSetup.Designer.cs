@@ -70,9 +70,11 @@
             this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
             this.radioButtonCaseInsensitiveMatch = new System.Windows.Forms.RadioButton();
             this.tabPageApplicationFocus = new System.Windows.Forms.TabPage();
+            this.checkBoxEnableApplicationFocus = new System.Windows.Forms.CheckBox();
+            this.labelApplicationFocusHelp = new System.Windows.Forms.Label();
+            this.listBoxProcessList = new System.Windows.Forms.ListBox();
             this.numericUpDownApplicationFocusDelayAfter = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownApplicationFocusDelayBefore = new System.Windows.Forms.NumericUpDown();
-            this.comboBoxProcessList = new System.Windows.Forms.ComboBox();
             this.labelApplicationFocusDelayAfter = new System.Windows.Forms.Label();
             this.labelApplicationFocusDelayBefore = new System.Windows.Forms.Label();
             this.buttonApplicationFocusTest = new System.Windows.Forms.Button();
@@ -604,9 +606,11 @@
             // 
             // tabPageApplicationFocus
             // 
+            this.tabPageApplicationFocus.Controls.Add(this.checkBoxEnableApplicationFocus);
+            this.tabPageApplicationFocus.Controls.Add(this.labelApplicationFocusHelp);
+            this.tabPageApplicationFocus.Controls.Add(this.listBoxProcessList);
             this.tabPageApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayAfter);
             this.tabPageApplicationFocus.Controls.Add(this.numericUpDownApplicationFocusDelayBefore);
-            this.tabPageApplicationFocus.Controls.Add(this.comboBoxProcessList);
             this.tabPageApplicationFocus.Controls.Add(this.labelApplicationFocusDelayAfter);
             this.tabPageApplicationFocus.Controls.Add(this.labelApplicationFocusDelayBefore);
             this.tabPageApplicationFocus.Controls.Add(this.buttonApplicationFocusTest);
@@ -618,9 +622,42 @@
             this.tabPageApplicationFocus.Text = "Application Focus";
             this.tabPageApplicationFocus.UseVisualStyleBackColor = true;
             // 
+            // checkBoxEnableApplicationFocus
+            // 
+            this.checkBoxEnableApplicationFocus.AutoSize = true;
+            this.checkBoxEnableApplicationFocus.Location = new System.Drawing.Point(6, 60);
+            this.checkBoxEnableApplicationFocus.Name = "checkBoxEnableApplicationFocus";
+            this.checkBoxEnableApplicationFocus.Size = new System.Drawing.Size(347, 17);
+            this.checkBoxEnableApplicationFocus.TabIndex = 0;
+            this.checkBoxEnableApplicationFocus.TabStop = false;
+            this.checkBoxEnableApplicationFocus.Text = "Focus on selected application in process list when screenshot taken";
+            this.checkBoxEnableApplicationFocus.UseVisualStyleBackColor = true;
+            this.checkBoxEnableApplicationFocus.CheckedChanged += new System.EventHandler(this.checkBoxEnableApplicationFocus_CheckedChanged);
+            // 
+            // labelApplicationFocusHelp
+            // 
+            this.labelApplicationFocusHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelApplicationFocusHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelApplicationFocusHelp.Name = "labelApplicationFocusHelp";
+            this.labelApplicationFocusHelp.Size = new System.Drawing.Size(665, 44);
+            this.labelApplicationFocusHelp.TabIndex = 7;
+            this.labelApplicationFocusHelp.Text = resources.GetString("labelApplicationFocusHelp.Text");
+            // 
+            // listBoxProcessList
+            // 
+            this.listBoxProcessList.Enabled = false;
+            this.listBoxProcessList.FormattingEnabled = true;
+            this.listBoxProcessList.Location = new System.Drawing.Point(6, 83);
+            this.listBoxProcessList.Name = "listBoxProcessList";
+            this.listBoxProcessList.Size = new System.Drawing.Size(451, 160);
+            this.listBoxProcessList.TabIndex = 0;
+            this.listBoxProcessList.TabStop = false;
+            this.listBoxProcessList.SelectedIndexChanged += new System.EventHandler(this.listBoxProcessList_SelectedIndexChanged);
+            // 
             // numericUpDownApplicationFocusDelayAfter
             // 
-            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(551, 75);
+            this.numericUpDownApplicationFocusDelayAfter.Enabled = false;
+            this.numericUpDownApplicationFocusDelayAfter.Location = new System.Drawing.Point(620, 109);
             this.numericUpDownApplicationFocusDelayAfter.Maximum = new decimal(new int[] {
             60000,
             0,
@@ -633,7 +670,8 @@
             // 
             // numericUpDownApplicationFocusDelayBefore
             // 
-            this.numericUpDownApplicationFocusDelayBefore.Location = new System.Drawing.Point(551, 49);
+            this.numericUpDownApplicationFocusDelayBefore.Enabled = false;
+            this.numericUpDownApplicationFocusDelayBefore.Location = new System.Drawing.Point(620, 83);
             this.numericUpDownApplicationFocusDelayBefore.Maximum = new decimal(new int[] {
             60000,
             0,
@@ -644,20 +682,11 @@
             this.numericUpDownApplicationFocusDelayBefore.TabIndex = 0;
             this.numericUpDownApplicationFocusDelayBefore.TabStop = false;
             // 
-            // comboBoxProcessList
-            // 
-            this.comboBoxProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProcessList.FormattingEnabled = true;
-            this.comboBoxProcessList.Location = new System.Drawing.Point(37, 43);
-            this.comboBoxProcessList.Name = "comboBoxProcessList";
-            this.comboBoxProcessList.Size = new System.Drawing.Size(193, 21);
-            this.comboBoxProcessList.TabIndex = 0;
-            this.comboBoxProcessList.TabStop = false;
-            // 
             // labelApplicationFocusDelayAfter
             // 
             this.labelApplicationFocusDelayAfter.AutoSize = true;
-            this.labelApplicationFocusDelayAfter.Location = new System.Drawing.Point(409, 77);
+            this.labelApplicationFocusDelayAfter.Enabled = false;
+            this.labelApplicationFocusDelayAfter.Location = new System.Drawing.Point(463, 111);
             this.labelApplicationFocusDelayAfter.Name = "labelApplicationFocusDelayAfter";
             this.labelApplicationFocusDelayAfter.Size = new System.Drawing.Size(127, 13);
             this.labelApplicationFocusDelayAfter.TabIndex = 0;
@@ -666,7 +695,8 @@
             // labelApplicationFocusDelayBefore
             // 
             this.labelApplicationFocusDelayBefore.AutoSize = true;
-            this.labelApplicationFocusDelayBefore.Location = new System.Drawing.Point(409, 51);
+            this.labelApplicationFocusDelayBefore.Enabled = false;
+            this.labelApplicationFocusDelayBefore.Location = new System.Drawing.Point(463, 85);
             this.labelApplicationFocusDelayBefore.Name = "labelApplicationFocusDelayBefore";
             this.labelApplicationFocusDelayBefore.Size = new System.Drawing.Size(136, 13);
             this.labelApplicationFocusDelayBefore.TabIndex = 0;
@@ -674,9 +704,10 @@
             // 
             // buttonApplicationFocusTest
             // 
-            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(424, 195);
+            this.buttonApplicationFocusTest.Enabled = false;
+            this.buttonApplicationFocusTest.Location = new System.Drawing.Point(466, 220);
             this.buttonApplicationFocusTest.Name = "buttonApplicationFocusTest";
-            this.buttonApplicationFocusTest.Size = new System.Drawing.Size(92, 23);
+            this.buttonApplicationFocusTest.Size = new System.Drawing.Size(96, 23);
             this.buttonApplicationFocusTest.TabIndex = 0;
             this.buttonApplicationFocusTest.TabStop = false;
             this.buttonApplicationFocusTest.Text = "Test";
@@ -685,9 +716,10 @@
             // 
             // buttonApplicationFocusRefresh
             // 
-            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(525, 195);
+            this.buttonApplicationFocusRefresh.Enabled = false;
+            this.buttonApplicationFocusRefresh.Location = new System.Drawing.Point(575, 220);
             this.buttonApplicationFocusRefresh.Name = "buttonApplicationFocusRefresh";
-            this.buttonApplicationFocusRefresh.Size = new System.Drawing.Size(92, 23);
+            this.buttonApplicationFocusRefresh.Size = new System.Drawing.Size(96, 23);
             this.buttonApplicationFocusRefresh.TabIndex = 0;
             this.buttonApplicationFocusRefresh.TabStop = false;
             this.buttonApplicationFocusRefresh.Text = "Refresh";
@@ -1340,11 +1372,6 @@
         /// 
         /// </summary>
         public System.Windows.Forms.Button buttonApplicationFocusRefresh;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxProcessList;
  
         /// <summary>
         /// 
@@ -1503,5 +1530,12 @@
         /// 
         /// </summary>
         public System.Windows.Forms.CheckBox checkBoxOptimizeScreenCapture;
+        private System.Windows.Forms.CheckBox checkBoxEnableApplicationFocus;
+        private System.Windows.Forms.Label labelApplicationFocusHelp;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.ListBox listBoxProcessList;
     }
 }
