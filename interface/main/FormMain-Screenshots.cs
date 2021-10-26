@@ -135,6 +135,10 @@ namespace AutoScreenCapture
                     screenshot.Encrypted = true;
                 }
 
+                // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
+                // property to false whenever a screenshot has been encrypted or decrypted (because its data has changed).
+                screenshot.ReferenceSaved = false;
+
                 ShowScreenshotBySlideIndex();
             }
         }

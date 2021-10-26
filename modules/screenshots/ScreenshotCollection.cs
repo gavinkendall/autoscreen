@@ -97,16 +97,19 @@ namespace AutoScreenCapture
         {
             lock (_screenshotList)
             {
+                if (!_screenshotList.Contains(screenshot))
+                {
+                    _screenshotList.Add(screenshot);
+
+                    LastViewId = screenshot.ViewId;
+                }
+
                 if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
                 {
                     if (!_slideNameList.Contains(screenshot.Slide.Name))
                     {
                         _slideNameList.Add(screenshot.Slide.Name);
                         _slideList.Add(screenshot.Slide);
-
-                        _screenshotList.Add(screenshot);
-
-                        LastViewId = screenshot.ViewId;
                     }
                 }
             }
@@ -1051,7 +1054,7 @@ namespace AutoScreenCapture
                                     xScreenshots.AppendChild(xScreenshot);
                                 }
 
-                                // Make sure to set this property to "true" so we only write out new screenshots (those with "Saved" set to "false").
+                                // Make sure to set this property to "true" so we only write out new screenshots (those with "ReferenceSaved" set to "false").
                                 screenshot.ReferenceSaved = true;
 
                                 _screenshotList[i] = screenshot;
