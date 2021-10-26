@@ -97,19 +97,16 @@ namespace AutoScreenCapture
         {
             lock (_screenshotList)
             {
-                if (!_screenshotList.Contains(screenshot))
-                {
-                    _screenshotList.Add(screenshot);
-
-                    LastViewId = screenshot.ViewId;
-                }
-
                 if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
                 {
                     if (!_slideNameList.Contains(screenshot.Slide.Name))
                     {
                         _slideNameList.Add(screenshot.Slide.Name);
                         _slideList.Add(screenshot.Slide);
+
+                        _screenshotList.Add(screenshot);
+
+                        LastViewId = screenshot.ViewId;
                     }
                 }
             }
