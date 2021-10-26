@@ -143,10 +143,10 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonFileTransferSettings,
             this.toolStripDropDownButtonHelp,
             this.toolStripInfo});
-            this.statusStrip.Location = new System.Drawing.Point(0, 685);
+            this.statusStrip.Location = new System.Drawing.Point(0, 712);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(1283, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1330, 22);
             this.statusStrip.TabIndex = 3;
             // 
             // toolStripDropDownButtonSetup
@@ -343,7 +343,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(454, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(532, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -356,7 +356,7 @@ namespace AutoScreenCapture
             this.tabControlViews.Location = new System.Drawing.Point(251, 27);
             this.tabControlViews.Name = "tabControlViews";
             this.tabControlViews.SelectedIndex = 0;
-            this.tabControlViews.Size = new System.Drawing.Size(779, 655);
+            this.tabControlViews.Size = new System.Drawing.Size(826, 682);
             this.tabControlViews.TabIndex = 0;
             this.tabControlViews.TabStop = false;
             this.tabControlViews.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlViews_Selected);
@@ -376,7 +376,7 @@ namespace AutoScreenCapture
             this.listBoxScreenshots.Location = new System.Drawing.Point(0, 219);
             this.listBoxScreenshots.Name = "listBoxScreenshots";
             this.listBoxScreenshots.ScrollAlwaysVisible = true;
-            this.listBoxScreenshots.Size = new System.Drawing.Size(249, 463);
+            this.listBoxScreenshots.Size = new System.Drawing.Size(249, 490);
             this.listBoxScreenshots.TabIndex = 0;
             this.listBoxScreenshots.TabStop = false;
             this.listBoxScreenshots.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged_listBoxScreenshots);
@@ -751,11 +751,11 @@ namespace AutoScreenCapture
             this.tabControlModules.Controls.Add(this.tabPageSchedules);
             this.tabControlModules.Controls.Add(this.tabPageMacroTags);
             this.tabControlModules.Controls.Add(this.tabPageTriggers);
-            this.tabControlModules.Location = new System.Drawing.Point(1032, 27);
+            this.tabControlModules.Location = new System.Drawing.Point(1079, 27);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
-            this.tabControlModules.Size = new System.Drawing.Size(249, 655);
+            this.tabControlModules.Size = new System.Drawing.Size(249, 682);
             this.tabControlModules.TabIndex = 0;
             this.tabControlModules.TabStop = false;
             // 
@@ -764,7 +764,7 @@ namespace AutoScreenCapture
             this.tabPageScreens.AutoScroll = true;
             this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreens.Name = "tabPageScreens";
-            this.tabPageScreens.Size = new System.Drawing.Size(241, 611);
+            this.tabPageScreens.Size = new System.Drawing.Size(241, 638);
             this.tabPageScreens.TabIndex = 5;
             this.tabPageScreens.Text = "Screens";
             this.tabPageScreens.UseVisualStyleBackColor = true;
@@ -905,7 +905,7 @@ namespace AutoScreenCapture
             this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelHelp.Location = new System.Drawing.Point(2, 4);
             this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(1279, 17);
+            this.labelHelp.Size = new System.Drawing.Size(1326, 17);
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelHelp.Click += new System.EventHandler(this.labelHelp_Click);
@@ -920,7 +920,7 @@ namespace AutoScreenCapture
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 707);
+            this.ClientSize = new System.Drawing.Size(1330, 734);
             this.Controls.Add(this.listBoxScreenshots);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.comboBoxFilterType);
@@ -932,7 +932,7 @@ namespace AutoScreenCapture
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.monthCalendar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1299, 746);
+            this.MinimumSize = new System.Drawing.Size(1346, 773);
             this.Name = "FormMain";
             this.Opacity = 0D;
             this.ShowInTaskbar = false;
