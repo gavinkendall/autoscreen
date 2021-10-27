@@ -40,6 +40,7 @@ namespace AutoScreenCapture
         private List<Slide> _slideList;
         private List<string> _slideNameList;
         private List<Screenshot> _screenshotList;
+        private List<string> _screenshotPathList;
         private ImageFormatCollection _imageFormatCollection;
 
         private FileSystem _fileSystem;
@@ -97,20 +98,28 @@ namespace AutoScreenCapture
         {
             lock (_screenshotList)
             {
-                if (!_screenshotList.Contains(screenshot))
+                // Add the screenshot to the screenshot collection only if the path hasn't been encountered before.
+                // This is to prevent having too many screenshot objects in the collection when the user clicks on a day in the calendar.
+                // It's assumed that the screenshot's filepath can safely be used as a unique key.
+                if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && !_screenshotPathList.Contains(screenshot.Path))
                 {
+                    _screenshotPathList.Add(screenshot.Path);
+
                     _screenshotList.Add(screenshot);
 
-                    LastViewId = screenshot.ViewId;
-                }
-
-                if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
-                {
-                    if (!_slideNameList.Contains(screenshot.Slide.Name))
+                    // Slides are a little different because a single slide can potentially have many screenshots associated with it
+                    // depending on the number of screens and regions that were used when screenshots were taken at the time.
+                    // So you're likely going to see multiple screenshots with the same "slide name".
+                    if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
                     {
-                        _slideNameList.Add(screenshot.Slide.Name);
-                        _slideList.Add(screenshot.Slide);
+                        if (!_slideNameList.Contains(screenshot.Slide.Name))
+                        {
+                            _slideNameList.Add(screenshot.Slide.Name);
+                            _slideList.Add(screenshot.Slide);
+                        }
                     }
+
+                    LastViewId = screenshot.ViewId;
                 }
             }
         }
@@ -156,6 +165,9 @@ namespace AutoScreenCapture
 
             _screenshotList = new List<Screenshot>();
             _log.WriteDebugMessage("Initialized screenshot list");
+
+            _screenshotPathList = new List<string>();
+            _log.WriteDebugMessage("Initialized screenshot path list");
 
             _slideList = new List<Slide>();
             _log.WriteDebugMessage("Initialized slide list");
