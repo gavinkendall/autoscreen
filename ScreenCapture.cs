@@ -506,33 +506,64 @@ namespace AutoScreenCapture
         /// <returns>A bitmap image representing what we captured.</returns>
         public Bitmap GetScreenBitmap(int source, int component, int captureMethod, int x, int y, int width, int height, bool mouse)
         {
-            Bitmap bmp = null;
-
-            if (width > 0 && height > 0)
+            try
             {
-                if (source > 0 && component > -1)
+                Bitmap bmp = null;
+
+                if (width > 0 && height > 0)
                 {
-                    try
+                    if (source > 0 && component > -1)
                     {
-                        // Test if we can acquire the actual screen from Windows and if we can't just let this
-                        // method catch the out of bounds exception error.
-                        System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.AllScreens[component];
+                        try
+                        {
+                            // Test if we can acquire the actual screen from Windows and if we can't just let this
+                            // method catch the out of bounds exception error.
+                            System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.AllScreens[component];
+                        }
+                        catch
+                        {
+                            return null;
+                        }
                     }
-                    catch
+
+                    if (captureMethod == 0) // System.Drawing.Graphics.CopyFromScreen (.NET)
                     {
-                        return null;
+                        Size blockRegionSize = new Size(width, height);
+
+                        bmp = new Bitmap(width, height);
+
+                        using (Graphics g = Graphics.FromImage(bmp))
+                        {
+                            g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                            if (mouse)
+                            {
+                                CURSORINFO pci;
+                                pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                                if (GetCursorInfo(out pci))
+                                {
+                                    if (pci.flags == CURSOR_SHOWING)
+                                    {
+                                        var hdc = g.GetHdc();
+                                        DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                                        g.ReleaseHdc();
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
-
-                if (captureMethod == 0) // System.Drawing.Graphics.CopyFromScreen (.NET)
-                {
-                    Size blockRegionSize = new Size(width, height);
-
-                    bmp = new Bitmap(width, height);
-
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    else if (captureMethod == 1) // BitBlt (gdi32.dll)
                     {
-                        g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+                        IntPtr handle = GetDesktopWindow();
+                        GetWindowRect(handle, out Rectangle rect);
+
+                        IntPtr hdcSrc = GetWindowDC(handle);
+                        IntPtr hdcDest = CreateCompatibleDC(hdcSrc);
+                        IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
+                        IntPtr hOld = SelectObject(hdcDest, hBitmap);
+
+                        BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
 
                         if (mouse)
                         {
@@ -543,57 +574,41 @@ namespace AutoScreenCapture
                             {
                                 if (pci.flags == CURSOR_SHOWING)
                                 {
-                                    var hdc = g.GetHdc();
-                                    DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                                    g.ReleaseHdc();
+                                    DrawIconEx(hdcDest, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
                                 }
                             }
                         }
-                    }
-                }
-                else if (captureMethod == 1) // BitBlt (gdi32.dll)
-                {
-                    IntPtr handle = GetDesktopWindow();
-                    GetWindowRect(handle, out Rectangle rect);
 
-                    IntPtr hdcSrc = GetWindowDC(handle);
-                    IntPtr hdcDest = CreateCompatibleDC(hdcSrc);
-                    IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
-                    IntPtr hOld = SelectObject(hdcDest, hBitmap);
+                        SelectObject(hdcDest, hOld);
+                        DeleteDC(hdcDest);
+                        ReleaseDC(handle, hdcSrc);
 
-                    BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+                        bmp = Image.FromHbitmap(hBitmap);
 
-                    if (mouse)
-                    {
-                        CURSORINFO pci;
-                        pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
-
-                        if (GetCursorInfo(out pci))
-                        {
-                            if (pci.flags == CURSOR_SHOWING)
-                            {
-                                DrawIconEx(hdcDest, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                            }
-                        }
+                        DeleteObject(hBitmap);
                     }
 
-                    SelectObject(hdcDest, hOld);
-                    DeleteDC(hdcDest);
-                    ReleaseDC(handle, hdcSrc);
+                    CaptureError = false;
 
-                    bmp = Image.FromHbitmap(hBitmap);
-
-                    DeleteObject(hBitmap);
+                    return bmp;
                 }
 
-                CaptureError = false;
+                CaptureError = true;
 
-                return bmp;
+                return null;
             }
+            catch (Exception ex)
+            {
+                // Don't log an error if Windows is locked at the time a screenshot was taken.
+                if (!ex.Message.Equals("The handle is invalid"))
+                {
+                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
+                }
 
-            CaptureError = true;
+                CaptureError = true;
 
-            return null;
+                return null;
+            }
         }
 
         /// <summary>
@@ -632,7 +647,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
+                    _log.WriteExceptionMessage("ScreenCapture::GetActiveWindowBitmap", ex);
                 }
 
                 CaptureError = true;
