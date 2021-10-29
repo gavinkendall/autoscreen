@@ -283,30 +283,119 @@ namespace AutoScreenCapture
 
                     if (config.Settings.VersionManager != null && config.Settings.VersionManager.OldUserSettings != null)
                     {
-                        // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to update the "Special Schedule" and enable it.
-                        SettingCollection oldUserSettings = config.Settings.VersionManager.OldUserSettings;
+                        string oldAppCodename = config.Settings.VersionManager.OldUserSettings.AppCodename;
+                        string oldAppVersion = config.Settings.VersionManager.OldUserSettings.AppVersion;
 
-                        bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", config.Settings.DefaultSettings.BoolCaptureStartAt).Value);
-                        bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", config.Settings.DefaultSettings.BoolCaptureStopAt).Value);
-
-                        DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", config.Settings.DefaultSettings.DateTimeCaptureStartAt).Value);
-                        DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", config.Settings.DefaultSettings.DateTimeCaptureStopAt).Value);
-
-                        SpecialScheduleModeOneTime = false;
-                        SpecialScheduleModePeriod = true;
-
-                        if (captureStartAt)
+                        if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, oldAppCodename, oldAppVersion))
                         {
-                            SpecialScheduleEnabled = true;
-                            SpecialScheduleStartAt = dtStartAt;
-                        }
+                            Version configVersion = config.Settings.VersionManager.Versions.Get(oldAppCodename, oldAppVersion);
+                            Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
 
-                        if (captureStopAt)
-                        {
-                            SpecialScheduleEnabled = true;
-                            SpecialScheduleStopAt = dtStopAt;
+                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
+                            {
+                                log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
+
+                                // If we're importing the schedule settings from a previous version of Auto Screen Capture we'll need to create a "Schedule 1" and enable it.
+                                SettingCollection oldUserSettings = config.Settings.VersionManager.OldUserSettings;
+
+                                Schedule schedule1 = new Schedule()
+                                {
+                                    Name = "Schedule 1",
+                                    Enable = false,
+                                    ModeOneTime = true,
+                                    ModePeriod = false,
+                                    CaptureAt = dtNow,
+                                    StartAt = dtNow,
+                                    StopAt = dtNow,
+                                    ScreenCaptureInterval = Convert.ToInt32(oldUserSettings.GetByKey("IntScreenCaptureInterval", config.Settings.DefaultSettings.ScreenCaptureInterval).Value),
+                                    Notes = "This schedule was imported from an old version of Auto Screen Capture."
+                                };
+
+                                bool captureStartAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStartAt", config.Settings.DefaultSettings.BoolCaptureStartAt).Value);
+                                bool captureStopAt = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureStopAt", config.Settings.DefaultSettings.BoolCaptureStopAt).Value);
+
+                                DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", config.Settings.DefaultSettings.DateTimeCaptureStartAt).Value);
+                                DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", config.Settings.DefaultSettings.DateTimeCaptureStopAt).Value);
+
+                                // Days
+                                bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", config.Settings.DefaultSettings.BoolCaptureOnTheseDays).Value);
+                                bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", config.Settings.DefaultSettings.BoolCaptureOnSunday).Value);
+                                bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", config.Settings.DefaultSettings.BoolCaptureOnMonday).Value);
+                                bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", config.Settings.DefaultSettings.BoolCaptureOnTuesday).Value);
+                                bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", config.Settings.DefaultSettings.BoolCaptureOnWednesday).Value);
+                                bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", config.Settings.DefaultSettings.BoolCaptureOnThursday).Value);
+                                bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", config.Settings.DefaultSettings.BoolCaptureOnFriday).Value);
+                                bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", config.Settings.DefaultSettings.BoolCaptureOnSaturday).Value);
+
+                                schedule1.ModeOneTime = false;
+                                schedule1.ModePeriod = true;
+
+                                if (captureStartAt)
+                                {
+                                    schedule1.Enable = true;
+                                    schedule1.StartAt = dtStartAt;
+                                }
+
+                                if (captureStopAt)
+                                {
+                                    schedule1.Enable = true;
+                                    schedule1.StopAt = dtStopAt;
+                                }
+
+                                if (captureOnTheseDays)
+                                {
+                                    schedule1.Sunday = sunday;
+                                    schedule1.Monday = monday;
+                                    schedule1.Tuesday = tuesday;
+                                    schedule1.Wednesday = wednesday;
+                                    schedule1.Thursday = thursday;
+                                    schedule1.Friday = friday;
+                                    schedule1.Saturday = saturday;
+                                }
+
+                                Add(schedule1);
+                            }
                         }
                     }
+
+                    Schedule workScheduleMorning = new Schedule()
+                    {
+                        Name = "Work Schedule - Morning",
+                        Enable = false,
+                        ModeOneTime = false,
+                        ModePeriod = true,
+                        CaptureAt = dtNow,
+                        StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0),
+                        StopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 12, 0, 0),
+                        ScreenCaptureInterval = config.Settings.DefaultSettings.ScreenCaptureInterval,
+                        Notes = "This schedule was created by Auto Screen Capture and is disabled by default.",
+                        Monday = true,
+                        Tuesday = true,
+                        Wednesday = true,
+                        Thursday = true,
+                        Friday = true
+                    };
+
+                    Schedule workScheduleAfternoon = new Schedule()
+                    {
+                        Name = "Work Schedule - Afternoon",
+                        Enable = false,
+                        ModeOneTime = false,
+                        ModePeriod = true,
+                        CaptureAt = dtNow,
+                        StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 13, 0, 0),
+                        StopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0),
+                        ScreenCaptureInterval = config.Settings.DefaultSettings.ScreenCaptureInterval,
+                        Notes = "This schedule was created by Auto Screen Capture and is disabled by default.",
+                        Monday = true,
+                        Tuesday = true,
+                        Wednesday = true,
+                        Thursday = true,
+                        Friday = true
+                    };
+
+                    Add(workScheduleMorning);
+                    Add(workScheduleAfternoon);
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }
