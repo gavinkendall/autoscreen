@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.3.6.7 ("Boombayah")
+    <value>Auto Screen Capture 2.3.6.8 ("Boombayah")
 Developed by Gavin Kendall (2008 - 2021)
 
 SourceForge Project Site
@@ -128,12 +128,13 @@ GitHub Project Site
 https://github.com/gavinkendall/autoscreen/</value>
   </data>
   <data name="richTextBoxReleaseNotes.Text" xml:space="preserve">
-    <value>2.3.6.7
+    <value>2.3.6.8
 
-Fixed bug with emailing screenshots from a one time schedule.</value>
+This version should no longer crash when Windows is locked while a screenshot is being taken.</value>
   </data>
   <data name="richTextBoxChangelog.Text" xml:space="preserve">
     <value>Codename "Boombayah"
+2.3.6.8    Fixed bug with "the handle is invalid" to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.
 2.3.6.7    Fixed bug with emailing screenshots from a one time schedule.
 2.3.6.6    Execution level changed from highestAvailable to asInvoker.
 2.3.6.5    Execution level changed from requireAdministrator to highestAvailable.

@@ -449,55 +449,70 @@ namespace AutoScreenCapture
         /// <returns>A bitmap image representing what we captured.</returns>
         public Bitmap GetScreenBitmap(int source, int component, int x, int y, int width, int height, bool mouse)
         {
-            if (width > 0 && height > 0)
+            try
             {
-                if (source > 0 && component > -1)
+                if (width > 0 && height > 0)
                 {
-                    try
+                    if (source > 0 && component > -1)
                     {
-                        // Test if we can acquire the actual screen from Windows and if we can't just let this
-                        // method catch the out of bounds exception error.
-                        System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.AllScreens[component];
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                }
-
-                Size blockRegionSize = new Size(width, height);
-
-                Bitmap bmp = new Bitmap(width, height);
-
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
-
-                    if (mouse)
-                    {
-                        CURSORINFO pci;
-                        pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
-
-                        if (GetCursorInfo(out pci))
+                        try
                         {
-                            if (pci.flags == CURSOR_SHOWING)
+                            // Test if we can acquire the actual screen from Windows and if we can't just let this
+                            // method catch the out of bounds exception error.
+                            System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.AllScreens[component];
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                    }
+
+                    Size blockRegionSize = new Size(width, height);
+
+                    Bitmap bmp = new Bitmap(width, height);
+
+                    using (Graphics g = Graphics.FromImage(bmp))
+                    {
+                        g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                        if (mouse)
+                        {
+                            CURSORINFO pci;
+                            pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                            if (GetCursorInfo(out pci))
                             {
-                                var hdc = g.GetHdc();
-                                DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                                g.ReleaseHdc();
+                                if (pci.flags == CURSOR_SHOWING)
+                                {
+                                    var hdc = g.GetHdc();
+                                    DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                                    g.ReleaseHdc();
+                                }
                             }
                         }
                     }
+
+                    CaptureError = false;
+
+                    return bmp;
                 }
 
-                CaptureError = false;
+                CaptureError = true;
 
-                return bmp;
+                return null;
             }
+            catch (Exception ex)
+            {
+                // Don't log an error if Windows is locked at the time a screenshot was taken.
+                if (!ex.Message.Equals("The handle is invalid"))
+                {
+                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
+                }
 
-            CaptureError = true;
+                CaptureError = true;
 
-            return null;
+                return null;
+            }
         }
 
         /// <summary>
@@ -536,7 +551,7 @@ namespace AutoScreenCapture
                 // Don't log an error if Windows is locked at the time a screenshot was taken.
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
-                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
+                    _log.WriteExceptionMessage("ScreenCapture::GetActiveWindowBitmap", ex);
                 }
 
                 CaptureError = true;
