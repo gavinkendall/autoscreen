@@ -184,18 +184,18 @@ namespace AutoScreenCapture
         /// <summary>
         /// Adds a screenshot to the collection.
         /// </summary>
-        /// <param name="screenshot"></param>
+        /// <param name="screenshot">The screenshot to add to the collection.</param>
         public bool Add(Screenshot screenshot)
         {
             try
             {
                 bool result = false;
 
+                // We want to keep track of what version of the application this screenshot is associated with.
                 screenshot.Version = _config.Settings.ApplicationVersion;
 
-                // If the bitmap image is null then we're loading the screenshot from the screenshots.xml file
-                // and adding it to the collection otherwise we're adding the screenshot to the collection
-                // from a screen capture session.
+                // If the bitmap image is null then we've loaded the screenshot from the screenshots.xml file
+                // and adding it to the collection otherwise we're adding the screenshot to the collection from a screen capture session.
                 if (screenshot.Bitmap == null)
                 {
                     AddScreenshotToCollection(screenshot);
@@ -204,10 +204,12 @@ namespace AutoScreenCapture
                 }
                 else
                 {
+                    // This is actually really cool ...
                     if (_screenCapture.OptimizeScreenCapture)
                     {
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
+                        // We generate an MD5 hash for the screenshot.
                         screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
 
                         if (string.IsNullOrEmpty(screenshot.Hash))
@@ -215,6 +217,10 @@ namespace AutoScreenCapture
                             return result;
                         }
 
+                        // Then we compare that hash we just generated with the list of hashes we already have and if that list of hashes
+                        // has no knowledge of the new hash then we know it's a new image. So we can add the screenshot to the collection.
+                        // This ensures we only care about screenshots that are actually different from each other and ignore screenshots
+                        // that are exactly the same as what we've already captured. This is the magic of using MD5 hashes.
                         if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
                             !AddedScreenshotHashList.Contains(screenshot.Hash))
                         {
@@ -227,6 +233,8 @@ namespace AutoScreenCapture
                     }
                     else
                     {
+                        // This is for when we don't care about comparing hashes. We simply add the screenshot
+                        // to the collection regardless if it's the exact same image as an image we've already captured.
                         AddScreenshotToCollection(screenshot);
 
                         result = true;
@@ -244,10 +252,56 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Removes a screenshot from the screenshot collection and the internal XML document.
+        /// </summary>
+        /// <param name="screenshot">The screenshot to remove.</param>
+        public void Remove(Screenshot screenshot)
+        {
+            try
+            {
+                if (xDoc == null || _screenshotList == null)
+                {
+                    return;
+                }
+
+                lock (_screenshotList)
+                {
+                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && _screenshotPathList.Contains(screenshot.Path))
+                    {
+                        // Remove the screenshot's path from the list of screenshot paths.
+                        _screenshotPathList.Remove(screenshot.Path);
+
+                        // Remove the screenshot object from the screenshot collection.
+                        _screenshotList.Remove(screenshot);
+
+                        // Get the "screenshots" node which will be used as the parent node.
+                        XmlNode xScreenshots = xDoc.SelectSingleNode(SCREENSHOTS_XPATH);
+
+                        // Get the individual screenshot to remove from the parent node by using the path provided.
+                        // This keeps backwards compatibility with older versions of the application that don't have the "Id" property.
+                        XmlNode xScreenshotToRemove = xScreenshots.SelectSingleNode(SCREENSHOT_XPATH + "[path='" + screenshot.Path + "']");
+
+                        // We could be attempting to remove a screenshot that hasn't had its reference saved
+                        // to the "screenshots.xml" file yet so that's why this check is necessary.
+                        if (xScreenshotToRemove != null)
+                        {
+                            // Remove the child node (the individual screenshot) from the parent node (the "screenshots" node).
+                            xScreenshots.RemoveChild(xScreenshotToRemove);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.WriteExceptionMessage("ScreenshotCollection::Remove", ex);
+            }
+        }
+
+        /// <summary>
         /// Gets the filter values. We first try to get the filter values from internal memory and, if we can't, we'll get them from the XML document instead.
         /// </summary>
-        /// <param name="filterType"></param>
-        /// <returns></returns>
+        /// <param name="filterType">The type of filter to use.</param>
+        /// <returns>A list of values depending on the filter that was used.</returns>
         public List<string> GetFilterValueList(string filterType)
         {
             List<string> filterValues = new List<string>();
@@ -284,9 +338,9 @@ namespace AutoScreenCapture
         /// <summary>
         /// Gets the dates for the calendar. We first try to get the dates from internal memory and, if we can't, we'll get them from the XML document instead.
         /// </summary>
-        /// <param name="filterType"></param>
-        /// <param name="filterValue"></param>
-        /// <returns></returns>
+        /// <param name="filterType">The filter type to use.</param>
+        /// <param name="filterValue">The filter value to use.</param>
+        /// <returns>A list of dates depending on the filter type and filter value.</returns>
         public List<string> GetDatesByFilter(string filterType, string filterValue)
         {
             List<string> dates = new List<string>();
@@ -334,7 +388,7 @@ namespace AutoScreenCapture
         /// <param name="filterType">The type of filter to use.</param>
         /// <param name="filterValue">The filter value to use.</param>
         /// <param name="date">The date to use.</param>
-        /// <param name="config"></param>
+        /// <param name="config">The configuration file to use.</param>
         /// <returns>A list of slides based on the filters being used.</returns>
         public List<Slide> GetSlides(string filterType, string filterValue, string date, Config config)
         {
@@ -388,7 +442,7 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public Screenshot GetScreenshot(string slideName, Guid viewId)
         {
-            Screenshot foundScreenshot = new Screenshot(_config);
+            Screenshot foundScreenshot = new Screenshot();
 
             if (_screenshotList != null)
             {
@@ -416,7 +470,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Screenshot foundScreenshot = new Screenshot(_config);
+                Screenshot foundScreenshot = new Screenshot();
 
                 if (_screenshotList != null)
                 {
@@ -443,7 +497,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                Screenshot foundScreenshot = new Screenshot(_config);
+                Screenshot foundScreenshot = new Screenshot();
 
                 if (_screenshotList != null)
                 {
@@ -686,10 +740,25 @@ namespace AutoScreenCapture
                                 // and need to update the screenshot reference data appropriately.
                                 Screen screen = null;
 
-                                Screenshot screenshot = new Screenshot(config);
-                                screenshot.Slide = new Slide();
+                                Screenshot screenshot = new Screenshot
+                                {
+                                    Slide = new Slide()
+                                };
 
                                 XmlNodeReader xReader = new XmlNodeReader(xScreenshot);
+
+                                // Introduced in 2.4 each screenshot has a unique id so we need to consider
+                                // if this screenshot is from 2.4 otherwise an id will be given to it.
+                                if (xScreenshot.Attributes != null &&
+                                    xScreenshot.Attributes["id"] != null &&
+                                    !string.IsNullOrEmpty(xScreenshot.Attributes["id"].InnerText))
+                                {
+                                    screenshot.Id = new Guid(xScreenshot.Attributes["id"].InnerText);
+                                }
+                                else
+                                {
+                                    screenshot.Id = Guid.NewGuid();
+                                }
 
                                 while (xReader.Read())
                                 {
@@ -986,6 +1055,9 @@ namespace AutoScreenCapture
                         if (!screenshot.ReferenceSaved && xDoc != null && screenshot?.Format != null && !string.IsNullOrEmpty(screenshot.Format.Name))
                         {
                             XmlElement xScreenshot = xDoc.CreateElement(XML_FILE_SCREENSHOT_NODE);
+
+                            // Version 2.4 introduced the Id property for each screenshot.
+                            xScreenshot.SetAttribute("id", screenshot.Id.ToString());
 
                             // Starting from version 2.3.0.0 we're going to save the version number of the application
                             // with every screenshot that gets saved so, when looking at the screenshots XML document,

@@ -374,7 +374,7 @@ namespace AutoScreenCapture
                         hash = "hash (" + screenshot.Hash + ")";
                     }
 
-                    _log.WriteDebugMessage("Could not save screenshot with path \"" + screenshot.Path + "\" because its " + hash + " may have matched with a previous hash that has already been used for an earlier screenshot");
+                    _log.WriteDebugMessage("Could not save screenshot with ID \"" + screenshot.Id + "\" and path \"" + screenshot.Path + "\" because its hash (" + hash + ") may have matched with a previous hash that has already been used for an earlier screenshot");
                 }
             }
             catch
@@ -426,7 +426,7 @@ namespace AutoScreenCapture
 
                     screenshot.SavedToDisk = true;
 
-                    _log.WriteMessage("Screenshot saved to file at screenshot.Path \"" + screenshot.Path + "\"");
+                    _log.WriteMessage("Screenshot (with ID \"" + screenshot.Id + "\") saved to file at \"" + screenshot.Path + "\"");
                 }
             }
             catch

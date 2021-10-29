@@ -57,7 +57,6 @@ namespace AutoScreenCapture
         /// </summary>
         public const string CODENAME_DALEK = "Dalek"; // Dalek made it possible to have an unlimited number of screens, apply labels to screenshots, and create user-defined macro tags.
 
-        // The current major version.
         // Boombayah (named after Blackpink's "Boombayah" - https://www.youtube.com/watch?v=bwmSjveL3Lc)
         // introduces new commands to execute from a command line terminal, the ability to issue commands for a running instance of the application,
         // the Schedules module for managing multiple schedules, and a user-friendly dynamic interface that offers help tips in a help bar at the top.
@@ -71,6 +70,12 @@ namespace AutoScreenCapture
         /// </summary>
         public const string CODENAME_BOOMBAYAH = "Boombayah";
 
+        // The current major version.
+        /// <summary>
+        /// Auto Screen Capture "Blade"; named after the superhero vampire movie with Wesley Snipes. Also, the track "Confusion" by New Order is still amazing.
+        /// </summary>
+        public const string CODENAME_BLADE = "Blade";
+
         /// <summary>
         /// The version number of the first version in the 2.3 series.
         /// </summary>
@@ -79,7 +84,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The codename of this application.
         /// </summary>
-        public readonly string ApplicationCodename = CODENAME_BOOMBAYAH;
+        public readonly string ApplicationCodename = CODENAME_BLADE;
 
         /// <summary>
         /// The application settings collection.
@@ -235,6 +240,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.5")); // Execution level changed from requireAdministrator to highestAvailable.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.6")); // Execution level changed from highestAvailable to asInvoker.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.7")); // Fixed bug with emailing screenshots from a one time schedule.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.8")); // Fixed bug with "the handle is invalid" to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.
 
             Application = new SettingCollection()
             {

@@ -439,7 +439,7 @@ namespace AutoScreenCapture
 
         private ToolStrip BuildViewTabPageToolStripItems(ToolStrip toolStrip, string name)
         {
-            Screenshot selectedScreenshot = new Screenshot(_config);
+            Screenshot selectedScreenshot = new Screenshot();
 
             ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
             {

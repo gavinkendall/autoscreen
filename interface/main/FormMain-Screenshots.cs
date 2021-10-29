@@ -139,6 +139,16 @@ namespace AutoScreenCapture
                 // property to false whenever a screenshot has been encrypted or decrypted (because its data has changed).
                 screenshot.ReferenceSaved = false;
 
+                // Because this screenshot's data has changed there's a collection and an internal XML document that needs to be updated so the best way
+                // to do this is by removing the "old" screenshot from the collection and then adding the "new" screenshot (with the updated data) back in.
+                // There are XML nodes to manage and a few other things to take care of. It's not a simple operation.
+
+                // Remove the screenshot from the screenshot collection.
+                _screenshotCollection.Remove(screenshot);
+
+                // Add it back in.
+                _screenshotCollection.Add(screenshot);
+
                 ShowScreenshotBySlideIndex();
             }
         }
@@ -386,7 +396,7 @@ namespace AutoScreenCapture
                     {
                         groupBox.ForeColor = Color.Black;
 
-                        Screenshot selectedScreenshot = new Screenshot(_config);
+                        Screenshot selectedScreenshot = new Screenshot();
 
                         if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
                         {
@@ -509,7 +519,7 @@ namespace AutoScreenCapture
                 {
                     toolStrip.ForeColor = Color.Black;
 
-                    Screenshot selectedScreenshot = new Screenshot(_config);
+                    Screenshot selectedScreenshot = new Screenshot();
 
                     if (_slideShow.Index >= 0 && _slideShow.Index <= (_slideShow.Count - 1))
                     {
@@ -714,7 +724,7 @@ namespace AutoScreenCapture
         {
             if (listBoxScreenshots.SelectedIndex > -1)
             {
-                Screenshot selectedScreenshot = new Screenshot(_config);
+                Screenshot selectedScreenshot = new Screenshot();
 
                 if (tabControlViews.SelectedTab.Tag.GetType() == typeof(Screen))
                 {

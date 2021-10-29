@@ -29,6 +29,11 @@ namespace AutoScreenCapture
     public class Screenshot
     {
         /// <summary>
+        /// The unique identifier for the individual screenshot object.
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
         /// The unique identifier to associate this screenshot with either a region or a screen.
         /// </summary>
         public Guid ViewId { get; set; }
@@ -111,10 +116,9 @@ namespace AutoScreenCapture
         /// <summary>
         /// The consructor for creating a screenshot.
         /// </summary>
-        public Screenshot(Config config)
+        public Screenshot()
         {
-            ReferenceSaved = false;
-            Version = config.Settings.ApplicationVersion;
+
         }
 
         /// <summary>
@@ -126,7 +130,13 @@ namespace AutoScreenCapture
         /// <param name="config"></param>
         public Screenshot(string windowTitle, DateTime dateTime, MacroParser macroParser, Config config)
         {
-            if (string.IsNullOrEmpty(windowTitle)) return;
+            if (string.IsNullOrEmpty(windowTitle))
+            {
+                return;
+            }
+
+            // Each screenshot has a unique identifier (since version 2.4) just in case we need a reference to it.
+            Id = Guid.NewGuid();
 
             WindowTitle = windowTitle;
 

@@ -171,7 +171,7 @@ namespace AutoScreenCapture
         {
             bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value);
 
-            string welcome = "Welcome to " + _config.Settings.ApplicationName + " (" + _config.Settings.ApplicationVersion + ")";
+            string welcome = "Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\")";
 
             HelpMessage(welcome);
 
