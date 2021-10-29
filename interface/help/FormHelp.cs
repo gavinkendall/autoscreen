@@ -56,11 +56,11 @@ namespace AutoScreenCapture
             switch (listBoxHelpItems.SelectedIndex)
             {
                 case 0:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_0_Welcome;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_0;
                     break;
 
                 case 1:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_1_Setup_and_First_Run;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_1;
                     break;
             }
         }

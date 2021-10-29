@@ -110,7 +110,7 @@ namespace AutoScreenCapture
                         "# where the executed autoscreen.exe binary is located.", "",
                         "# This is the folder where screenshots will be stored by default.",
                         "ScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder, "",
-                        "# If any errors are encountered then you will find them in this folder when DebugMode is enabled.",
+                        "# If any errors are encountered then you will find them in this folder.",
                         "DebugFolder=" + FileSystem.DefaultDebugFolder, "",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
                         "LogsFolder=" + FileSystem.DefaultLogsFolder, "",

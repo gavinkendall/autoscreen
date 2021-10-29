@@ -53,14 +53,47 @@ namespace AutoScreenCapture
 
         private readonly string SCHEDULE_XPATH;
 
-        /// <summary>
-        /// The name of the "special schedule" that's used when commands are given from the command line
-        /// or the old schedule is imported from an old version of Auto Screen Capture (anything before 2.3).
-        /// </summary>
-        public string SpecialScheduleName { get; private set; }
-
         private string AppCodename { get; set; }
         private string AppVersion { get; set; }
+
+        // Special Schedule (which was previously an actual Schedule but now it's internal)
+        // These are used for the -startat, -stopat, and -captureat command line options.
+
+        /// <summary>
+        /// Determines if the Special Schedule is enabled.
+        /// </summary>
+        public bool SpecialScheduleEnabled { get; set; }
+
+        /// <summary>
+        /// Determines if we're doing a single capture.
+        /// </summary>
+        public bool SpecialScheduleModeOneTime { get; set; }
+
+        /// <summary>
+        /// Determines if we're doing a capture session during a period of time.
+        /// </summary>
+        public bool SpecialScheduleModePeriod { get; set; }
+
+        /// <summary>
+        /// The time when the Special Schedule should start taking screenshots as defined by the -startat command line option.
+        /// </summary>
+        public DateTime SpecialScheduleStartAt { get; set; }
+
+        /// <summary>
+        /// The time when the Special Schedule should stop taking screenshots as defined by the -stopat command line option.
+        /// </summary>
+        public DateTime SpecialScheduleStopAt { get; set; }
+
+        /// <summary>
+        /// The time when screenshots should be taken (only once) as defined by the -captureat command line option.
+        /// </summary>
+        public DateTime SpecialScheduleCaptureAt { get; set; }
+
+        /// <summary>
+        /// The interval at which the Special Schedule will run at when taking screenshots between the start time and the stop time.
+        /// </summary>
+        public int SpecialScheduleScreenCaptureInterval { get; set; }
+
 
         /// <summary>
         /// The empty constructor for the schedule collection.
@@ -76,8 +109,6 @@ namespace AutoScreenCapture
             sb.Append(XML_FILE_SCHEDULE_NODE);
 
             SCHEDULE_XPATH = sb.ToString();
-
-            SpecialScheduleName = "Special Schedule";
         }
 
         /// <summary>
@@ -224,6 +255,12 @@ namespace AutoScreenCapture
                                 // A new property for Schedule introduced in 2.3.1.9
                                 schedule.ScreenCaptureInterval = Convert.ToInt32(config.Settings.User.GetByKey("ScreenCaptureInterval", config.Settings.DefaultSettings.ScreenCaptureInterval).Value);
                             }
+
+                            // 2.4 removes "Special Schedule" that was used in previous versions because 2.4 uses an internal special schedule going forward.
+                            if (schedule.Name.Equals("Special Schedule"))
+                            {
+                                schedule.Name = string.Empty;
+                            }
                         }
 
                         if (!string.IsNullOrEmpty(schedule.Name))
@@ -242,23 +279,7 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load schedules");
 
-                    // If we can't find the schedules.xml file we'll need to have a "Special Schedule" schedule created to be compatible with old commands like -startat and -stopat.
-                    log.WriteDebugMessage("Creating default Special Schedule for use with command line arguments such as -startat and -stopat");
-
                     DateTime dtNow = DateTime.Now;
-
-                    Schedule specialSchedule = new Schedule()
-                    {
-                        Name = SpecialScheduleName,
-                        Enable = false,
-                        ModeOneTime = true,
-                        ModePeriod = false,
-                        CaptureAt = dtNow,
-                        StartAt = dtNow,
-                        StopAt = dtNow,
-                        ScreenCaptureInterval = config.Settings.DefaultSettings.ScreenCaptureInterval,
-                        Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
-                    };
 
                     if (config.Settings.VersionManager != null && config.Settings.VersionManager.OldUserSettings != null)
                     {
@@ -271,44 +292,21 @@ namespace AutoScreenCapture
                         DateTime dtStartAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStartAt", config.Settings.DefaultSettings.DateTimeCaptureStartAt).Value);
                         DateTime dtStopAt = Convert.ToDateTime(oldUserSettings.GetByKey("DateTimeCaptureStopAt", config.Settings.DefaultSettings.DateTimeCaptureStopAt).Value);
 
-                        // Days
-                        bool captureOnTheseDays = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTheseDays", config.Settings.DefaultSettings.BoolCaptureOnTheseDays).Value);
-                        bool sunday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSunday", config.Settings.DefaultSettings.BoolCaptureOnSunday).Value);
-                        bool monday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnMonday", config.Settings.DefaultSettings.BoolCaptureOnMonday).Value);
-                        bool tuesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnTuesday", config.Settings.DefaultSettings.BoolCaptureOnTuesday).Value);
-                        bool wednesday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnWednesday", config.Settings.DefaultSettings.BoolCaptureOnWednesday).Value);
-                        bool thursday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnThursday", config.Settings.DefaultSettings.BoolCaptureOnThursday).Value);
-                        bool friday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnFriday", config.Settings.DefaultSettings.BoolCaptureOnFriday).Value);
-                        bool saturday = Convert.ToBoolean(oldUserSettings.GetByKey("BoolCaptureOnSaturday", config.Settings.DefaultSettings.BoolCaptureOnSaturday).Value);
-
-                        specialSchedule.ModeOneTime = false;
-                        specialSchedule.ModePeriod = true;
+                        SpecialScheduleModeOneTime = false;
+                        SpecialScheduleModePeriod = true;
 
                         if (captureStartAt)
                         {
-                            specialSchedule.Enable = true;
-                            specialSchedule.StartAt = dtStartAt;
+                            SpecialScheduleEnabled = true;
+                            SpecialScheduleStartAt = dtStartAt;
                         }
 
                         if (captureStopAt)
                         {
-                            specialSchedule.Enable = true;
-                            specialSchedule.StopAt = dtStopAt;
-                        }
-
-                        if (captureOnTheseDays)
-                        {
-                            specialSchedule.Sunday = sunday;
-                            specialSchedule.Monday = monday;
-                            specialSchedule.Tuesday = tuesday;
-                            specialSchedule.Wednesday = wednesday;
-                            specialSchedule.Thursday = thursday;
-                            specialSchedule.Friday = friday;
-                            specialSchedule.Saturday = saturday;
+                            SpecialScheduleEnabled = true;
+                            SpecialScheduleStopAt = dtStopAt;
                         }
                     }
-
-                    Add(specialSchedule);
 
                     SaveToXmlFile(config.Settings, fileSystem, log);
                 }

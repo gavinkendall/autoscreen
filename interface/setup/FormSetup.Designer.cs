@@ -47,6 +47,19 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBoxBladeNewImageCaptured = new System.Windows.Forms.PictureBox();
+            this.groupBoxEnabled = new System.Windows.Forms.GroupBox();
+            this.labelBladeEnabled2 = new System.Windows.Forms.Label();
+            this.labelBladeEnabled1 = new System.Windows.Forms.Label();
+            this.pictureBoxBladeEnabled2 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBladeEnabled1 = new System.Windows.Forms.PictureBox();
+            this.groupBoxNotEnabled = new System.Windows.Forms.GroupBox();
+            this.labelBladeNotEnabled2 = new System.Windows.Forms.Label();
+            this.labelBladeNotEnabled1 = new System.Windows.Forms.Label();
+            this.pictureBoxBladeNotEnabled2 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBladeNotEnabled1 = new System.Windows.Forms.PictureBox();
+            this.labelOptimizeScreenCaptureHelp = new System.Windows.Forms.Label();
             this.checkBoxOptimizeScreenCapture = new System.Windows.Forms.CheckBox();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
             this.buttonAddScreenshotLabelToList = new System.Windows.Forms.Button();
@@ -89,39 +102,35 @@
             this.labelSecurityHelp = new System.Windows.Forms.Label();
             this.textBoxPassphrase = new System.Windows.Forms.TextBox();
             this.tabPageKeyboardShortcuts = new System.Windows.Forms.TabPage();
-            this.checkBoxUseKeyboardShortcuts = new System.Windows.Forms.CheckBox();
-            this.tabControlKeyboardShortcuts = new System.Windows.Forms.TabControl();
-            this.tabPageScreenCapture = new System.Windows.Forms.TabPage();
-            this.labelStopScreenCapture = new System.Windows.Forms.Label();
-            this.labelStartScreenCapture = new System.Windows.Forms.Label();
-            this.textBoxKeyboardShortcutStopScreenCaptureKey = new System.Windows.Forms.TextBox();
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2 = new System.Windows.Forms.ComboBox();
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1 = new System.Windows.Forms.ComboBox();
-            this.textBoxKeyboardShortcutStartScreenCaptureKey = new System.Windows.Forms.TextBox();
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2 = new System.Windows.Forms.ComboBox();
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1 = new System.Windows.Forms.ComboBox();
-            this.tabPageRegionSelect = new System.Windows.Forms.TabPage();
             this.labelRegionSelectEdit = new System.Windows.Forms.Label();
+            this.labelStopScreenCapture = new System.Windows.Forms.Label();
             this.textBoxKeyboardShortcutRegionSelectEditKey = new System.Windows.Forms.TextBox();
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2 = new System.Windows.Forms.ComboBox();
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1 = new System.Windows.Forms.ComboBox();
-            this.labelRegionSelectAutoSave = new System.Windows.Forms.Label();
-            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey = new System.Windows.Forms.TextBox();
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2 = new System.Windows.Forms.ComboBox();
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1 = new System.Windows.Forms.ComboBox();
-            this.labelRegionSelectClipboard = new System.Windows.Forms.Label();
-            this.textBoxKeyboardShortcutRegionSelectClipboardKey = new System.Windows.Forms.TextBox();
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2 = new System.Windows.Forms.ComboBox();
             this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1 = new System.Windows.Forms.ComboBox();
-            this.tabPageCaptureNow = new System.Windows.Forms.TabPage();
+            this.labelStartScreenCapture = new System.Windows.Forms.Label();
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1 = new System.Windows.Forms.ComboBox();
             this.labelCaptureNowEdit = new System.Windows.Forms.Label();
+            this.textBoxKeyboardShortcutRegionSelectClipboardKey = new System.Windows.Forms.TextBox();
+            this.textBoxKeyboardShortcutStopScreenCaptureKey = new System.Windows.Forms.TextBox();
+            this.labelRegionSelectAutoSave = new System.Windows.Forms.Label();
             this.labelCaptureNowArchive = new System.Windows.Forms.Label();
+            this.labelRegionSelectClipboard = new System.Windows.Forms.Label();
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey = new System.Windows.Forms.TextBox();
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2 = new System.Windows.Forms.ComboBox();
             this.textBoxKeyboardShortcutCaptureNowEditKey = new System.Windows.Forms.TextBox();
+            this.textBoxKeyboardShortcutStartScreenCaptureKey = new System.Windows.Forms.TextBox();
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1 = new System.Windows.Forms.ComboBox();
+            this.checkBoxUseKeyboardShortcuts = new System.Windows.Forms.CheckBox();
             this.comboBoxKeyboardShortcutCaptureNowEditModifier2 = new System.Windows.Forms.ComboBox();
             this.comboBoxKeyboardShortcutCaptureNowEditModifier1 = new System.Windows.Forms.ComboBox();
             this.textBoxKeyboardShortcutCaptureNowArchiveKey = new System.Windows.Forms.TextBox();
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
@@ -133,6 +142,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.tabPageOptimizeScreenCapture.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNewImageCaptured)).BeginInit();
+            this.groupBoxEnabled.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled1)).BeginInit();
+            this.groupBoxNotEnabled.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled1)).BeginInit();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
@@ -140,10 +157,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
-            this.tabControlKeyboardShortcuts.SuspendLayout();
-            this.tabPageScreenCapture.SuspendLayout();
-            this.tabPageRegionSelect.SuspendLayout();
-            this.tabPageCaptureNow.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -347,6 +360,10 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBox1);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBoxEnabled);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBoxNotEnabled);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.labelOptimizeScreenCaptureHelp);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.checkBoxOptimizeScreenCapture);
             this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
             this.tabPageOptimizeScreenCapture.Name = "tabPageOptimizeScreenCapture";
@@ -356,13 +373,149 @@
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox1.Controls.Add(this.pictureBoxBladeNewImageCaptured);
+            this.groupBox1.Location = new System.Drawing.Point(3, 90);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(180, 157);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "New Image Captured";
+            // 
+            // pictureBoxBladeNewImageCaptured
+            // 
+            this.pictureBoxBladeNewImageCaptured.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNewImageCaptured.Image")));
+            this.pictureBoxBladeNewImageCaptured.Location = new System.Drawing.Point(37, 43);
+            this.pictureBoxBladeNewImageCaptured.Name = "pictureBoxBladeNewImageCaptured";
+            this.pictureBoxBladeNewImageCaptured.Size = new System.Drawing.Size(101, 82);
+            this.pictureBoxBladeNewImageCaptured.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBladeNewImageCaptured.TabIndex = 3;
+            this.pictureBoxBladeNewImageCaptured.TabStop = false;
+            // 
+            // groupBoxEnabled
+            // 
+            this.groupBoxEnabled.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBoxEnabled.Controls.Add(this.labelBladeEnabled2);
+            this.groupBoxEnabled.Controls.Add(this.labelBladeEnabled1);
+            this.groupBoxEnabled.Controls.Add(this.pictureBoxBladeEnabled2);
+            this.groupBoxEnabled.Controls.Add(this.pictureBoxBladeEnabled1);
+            this.groupBoxEnabled.Location = new System.Drawing.Point(433, 48);
+            this.groupBoxEnabled.Name = "groupBoxEnabled";
+            this.groupBoxEnabled.Size = new System.Drawing.Size(238, 199);
+            this.groupBoxEnabled.TabIndex = 0;
+            this.groupBoxEnabled.TabStop = false;
+            this.groupBoxEnabled.Text = "When Optimized";
+            // 
+            // labelBladeEnabled2
+            // 
+            this.labelBladeEnabled2.AutoSize = true;
+            this.labelBladeEnabled2.Location = new System.Drawing.Point(6, 180);
+            this.labelBladeEnabled2.Name = "labelBladeEnabled2";
+            this.labelBladeEnabled2.Size = new System.Drawing.Size(122, 13);
+            this.labelBladeEnabled2.TabIndex = 5;
+            this.labelBladeEnabled2.Text = "[08:01] Image not saved";
+            // 
+            // labelBladeEnabled1
+            // 
+            this.labelBladeEnabled1.AutoSize = true;
+            this.labelBladeEnabled1.Location = new System.Drawing.Point(6, 88);
+            this.labelBladeEnabled1.Name = "labelBladeEnabled1";
+            this.labelBladeEnabled1.Size = new System.Drawing.Size(104, 13);
+            this.labelBladeEnabled1.TabIndex = 4;
+            this.labelBladeEnabled1.Text = "[08:00] Image saved";
+            // 
+            // pictureBoxBladeEnabled2
+            // 
+            this.pictureBoxBladeEnabled2.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxBladeEnabled2.Location = new System.Drawing.Point(131, 111);
+            this.pictureBoxBladeEnabled2.Name = "pictureBoxBladeEnabled2";
+            this.pictureBoxBladeEnabled2.Size = new System.Drawing.Size(101, 82);
+            this.pictureBoxBladeEnabled2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBladeEnabled2.TabIndex = 3;
+            this.pictureBoxBladeEnabled2.TabStop = false;
+            // 
+            // pictureBoxBladeEnabled1
+            // 
+            this.pictureBoxBladeEnabled1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeEnabled1.Image")));
+            this.pictureBoxBladeEnabled1.Location = new System.Drawing.Point(131, 19);
+            this.pictureBoxBladeEnabled1.Name = "pictureBoxBladeEnabled1";
+            this.pictureBoxBladeEnabled1.Size = new System.Drawing.Size(101, 82);
+            this.pictureBoxBladeEnabled1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBladeEnabled1.TabIndex = 2;
+            this.pictureBoxBladeEnabled1.TabStop = false;
+            // 
+            // groupBoxNotEnabled
+            // 
+            this.groupBoxNotEnabled.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBoxNotEnabled.Controls.Add(this.labelBladeNotEnabled2);
+            this.groupBoxNotEnabled.Controls.Add(this.labelBladeNotEnabled1);
+            this.groupBoxNotEnabled.Controls.Add(this.pictureBoxBladeNotEnabled2);
+            this.groupBoxNotEnabled.Controls.Add(this.pictureBoxBladeNotEnabled1);
+            this.groupBoxNotEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBoxNotEnabled.Location = new System.Drawing.Point(189, 48);
+            this.groupBoxNotEnabled.Name = "groupBoxNotEnabled";
+            this.groupBoxNotEnabled.Size = new System.Drawing.Size(238, 199);
+            this.groupBoxNotEnabled.TabIndex = 0;
+            this.groupBoxNotEnabled.TabStop = false;
+            this.groupBoxNotEnabled.Text = "When Not Optimized";
+            // 
+            // labelBladeNotEnabled2
+            // 
+            this.labelBladeNotEnabled2.AutoSize = true;
+            this.labelBladeNotEnabled2.Location = new System.Drawing.Point(6, 180);
+            this.labelBladeNotEnabled2.Name = "labelBladeNotEnabled2";
+            this.labelBladeNotEnabled2.Size = new System.Drawing.Size(104, 13);
+            this.labelBladeNotEnabled2.TabIndex = 5;
+            this.labelBladeNotEnabled2.Text = "[08:01] Image saved";
+            // 
+            // labelBladeNotEnabled1
+            // 
+            this.labelBladeNotEnabled1.AutoSize = true;
+            this.labelBladeNotEnabled1.Location = new System.Drawing.Point(6, 88);
+            this.labelBladeNotEnabled1.Name = "labelBladeNotEnabled1";
+            this.labelBladeNotEnabled1.Size = new System.Drawing.Size(104, 13);
+            this.labelBladeNotEnabled1.TabIndex = 4;
+            this.labelBladeNotEnabled1.Text = "[08:00] Image saved";
+            // 
+            // pictureBoxBladeNotEnabled2
+            // 
+            this.pictureBoxBladeNotEnabled2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNotEnabled2.Image")));
+            this.pictureBoxBladeNotEnabled2.Location = new System.Drawing.Point(131, 111);
+            this.pictureBoxBladeNotEnabled2.Name = "pictureBoxBladeNotEnabled2";
+            this.pictureBoxBladeNotEnabled2.Size = new System.Drawing.Size(101, 82);
+            this.pictureBoxBladeNotEnabled2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBladeNotEnabled2.TabIndex = 3;
+            this.pictureBoxBladeNotEnabled2.TabStop = false;
+            // 
+            // pictureBoxBladeNotEnabled1
+            // 
+            this.pictureBoxBladeNotEnabled1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNotEnabled1.Image")));
+            this.pictureBoxBladeNotEnabled1.Location = new System.Drawing.Point(131, 19);
+            this.pictureBoxBladeNotEnabled1.Name = "pictureBoxBladeNotEnabled1";
+            this.pictureBoxBladeNotEnabled1.Size = new System.Drawing.Size(101, 82);
+            this.pictureBoxBladeNotEnabled1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBladeNotEnabled1.TabIndex = 2;
+            this.pictureBoxBladeNotEnabled1.TabStop = false;
+            // 
+            // labelOptimizeScreenCaptureHelp
+            // 
+            this.labelOptimizeScreenCaptureHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelOptimizeScreenCaptureHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelOptimizeScreenCaptureHelp.Name = "labelOptimizeScreenCaptureHelp";
+            this.labelOptimizeScreenCaptureHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelOptimizeScreenCaptureHelp.TabIndex = 0;
+            this.labelOptimizeScreenCaptureHelp.Text = resources.GetString("labelOptimizeScreenCaptureHelp.Text");
+            // 
             // checkBoxOptimizeScreenCapture
             // 
             this.checkBoxOptimizeScreenCapture.AutoSize = true;
-            this.checkBoxOptimizeScreenCapture.Location = new System.Drawing.Point(121, 73);
+            this.checkBoxOptimizeScreenCapture.Location = new System.Drawing.Point(6, 52);
             this.checkBoxOptimizeScreenCapture.Name = "checkBoxOptimizeScreenCapture";
             this.checkBoxOptimizeScreenCapture.Size = new System.Drawing.Size(140, 17);
             this.checkBoxOptimizeScreenCapture.TabIndex = 0;
+            this.checkBoxOptimizeScreenCapture.TabStop = false;
             this.checkBoxOptimizeScreenCapture.Text = "Optimize screen capture";
             this.checkBoxOptimizeScreenCapture.UseVisualStyleBackColor = true;
             this.checkBoxOptimizeScreenCapture.CheckedChanged += new System.EventHandler(this.checkBoxOptimizeScreenCapture_CheckedChanged);
@@ -825,8 +978,35 @@
             // 
             // tabPageKeyboardShortcuts
             // 
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelRegionSelectEdit);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelStopScreenCapture);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutRegionSelectEditKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelStartScreenCapture);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectEditModifier2);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutStartScreenCaptureModifier1);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectEditModifier1);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelCaptureNowEdit);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutRegionSelectClipboardKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutStopScreenCaptureKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelRegionSelectAutoSave);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelCaptureNowArchive);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.labelRegionSelectClipboard);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutRegionSelectAutoSaveKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutStartScreenCaptureModifier2);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutStopScreenCaptureModifier2);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutCaptureNowEditKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutStartScreenCaptureKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutStopScreenCaptureModifier1);
             this.tabPageKeyboardShortcuts.Controls.Add(this.checkBoxUseKeyboardShortcuts);
-            this.tabPageKeyboardShortcuts.Controls.Add(this.tabControlKeyboardShortcuts);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowEditModifier2);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowEditModifier1);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.textBoxKeyboardShortcutCaptureNowArchiveKey);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1);
+            this.tabPageKeyboardShortcuts.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2);
             this.tabPageKeyboardShortcuts.Location = new System.Drawing.Point(4, 22);
             this.tabPageKeyboardShortcuts.Name = "tabPageKeyboardShortcuts";
             this.tabPageKeyboardShortcuts.Size = new System.Drawing.Size(677, 253);
@@ -834,291 +1014,222 @@
             this.tabPageKeyboardShortcuts.Text = "Keyboard Shortcuts";
             this.tabPageKeyboardShortcuts.UseVisualStyleBackColor = true;
             // 
+            // labelRegionSelectEdit
+            // 
+            this.labelRegionSelectEdit.AutoSize = true;
+            this.labelRegionSelectEdit.Location = new System.Drawing.Point(200, 225);
+            this.labelRegionSelectEdit.Name = "labelRegionSelectEdit";
+            this.labelRegionSelectEdit.Size = new System.Drawing.Size(223, 13);
+            this.labelRegionSelectEdit.TabIndex = 37;
+            this.labelRegionSelectEdit.Text = "Region Select -> Clipboard / Auto Save / Edit";
+            // 
+            // labelStopScreenCapture
+            // 
+            this.labelStopScreenCapture.AutoSize = true;
+            this.labelStopScreenCapture.Location = new System.Drawing.Point(200, 90);
+            this.labelStopScreenCapture.Name = "labelStopScreenCapture";
+            this.labelStopScreenCapture.Size = new System.Drawing.Size(106, 13);
+            this.labelStopScreenCapture.TabIndex = 13;
+            this.labelStopScreenCapture.Text = "Stop Screen Capture";
+            // 
+            // textBoxKeyboardShortcutRegionSelectEditKey
+            // 
+            this.textBoxKeyboardShortcutRegionSelectEditKey.Location = new System.Drawing.Point(624, 222);
+            this.textBoxKeyboardShortcutRegionSelectEditKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutRegionSelectEditKey.Name = "textBoxKeyboardShortcutRegionSelectEditKey";
+            this.textBoxKeyboardShortcutRegionSelectEditKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutRegionSelectEditKey.TabIndex = 40;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectClipboardModifier1
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Location = new System.Drawing.Point(438, 168);
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Name = "comboBoxKeyboardShortcutRegionSelectClipboardModifier1";
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.TabIndex = 30;
+            // 
+            // labelStartScreenCapture
+            // 
+            this.labelStartScreenCapture.AutoSize = true;
+            this.labelStartScreenCapture.Location = new System.Drawing.Point(200, 63);
+            this.labelStartScreenCapture.Name = "labelStartScreenCapture";
+            this.labelStartScreenCapture.Size = new System.Drawing.Size(106, 13);
+            this.labelStartScreenCapture.TabIndex = 9;
+            this.labelStartScreenCapture.Text = "Start Screen Capture";
+            // 
+            // comboBoxKeyboardShortcutRegionSelectEditModifier2
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.Location = new System.Drawing.Point(531, 222);
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.Name = "comboBoxKeyboardShortcutRegionSelectEditModifier2";
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.TabIndex = 39;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectClipboardModifier2
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Location = new System.Drawing.Point(531, 168);
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Name = "comboBoxKeyboardShortcutRegionSelectClipboardModifier2";
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.TabIndex = 31;
+            // 
+            // comboBoxKeyboardShortcutStartScreenCaptureModifier1
+            // 
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.Location = new System.Drawing.Point(438, 60);
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.Name = "comboBoxKeyboardShortcutStartScreenCaptureModifier1";
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.TabIndex = 10;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectEditModifier1
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.Location = new System.Drawing.Point(438, 222);
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.Name = "comboBoxKeyboardShortcutRegionSelectEditModifier1";
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.TabIndex = 38;
+            // 
+            // labelCaptureNowEdit
+            // 
+            this.labelCaptureNowEdit.AutoSize = true;
+            this.labelCaptureNowEdit.Location = new System.Drawing.Point(200, 144);
+            this.labelCaptureNowEdit.Name = "labelCaptureNowEdit";
+            this.labelCaptureNowEdit.Size = new System.Drawing.Size(98, 13);
+            this.labelCaptureNowEdit.TabIndex = 21;
+            this.labelCaptureNowEdit.Text = "Capture Now / Edit";
+            // 
+            // textBoxKeyboardShortcutRegionSelectClipboardKey
+            // 
+            this.textBoxKeyboardShortcutRegionSelectClipboardKey.Location = new System.Drawing.Point(624, 168);
+            this.textBoxKeyboardShortcutRegionSelectClipboardKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutRegionSelectClipboardKey.Name = "textBoxKeyboardShortcutRegionSelectClipboardKey";
+            this.textBoxKeyboardShortcutRegionSelectClipboardKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutRegionSelectClipboardKey.TabIndex = 32;
+            // 
+            // textBoxKeyboardShortcutStopScreenCaptureKey
+            // 
+            this.textBoxKeyboardShortcutStopScreenCaptureKey.Location = new System.Drawing.Point(624, 87);
+            this.textBoxKeyboardShortcutStopScreenCaptureKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutStopScreenCaptureKey.Name = "textBoxKeyboardShortcutStopScreenCaptureKey";
+            this.textBoxKeyboardShortcutStopScreenCaptureKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutStopScreenCaptureKey.TabIndex = 16;
+            // 
+            // labelRegionSelectAutoSave
+            // 
+            this.labelRegionSelectAutoSave.AutoSize = true;
+            this.labelRegionSelectAutoSave.Location = new System.Drawing.Point(200, 198);
+            this.labelRegionSelectAutoSave.Name = "labelRegionSelectAutoSave";
+            this.labelRegionSelectAutoSave.Size = new System.Drawing.Size(194, 13);
+            this.labelRegionSelectAutoSave.TabIndex = 33;
+            this.labelRegionSelectAutoSave.Text = "Region Select -> Clipboard / Auto Save";
+            // 
+            // labelCaptureNowArchive
+            // 
+            this.labelCaptureNowArchive.AutoSize = true;
+            this.labelCaptureNowArchive.Location = new System.Drawing.Point(200, 117);
+            this.labelCaptureNowArchive.Name = "labelCaptureNowArchive";
+            this.labelCaptureNowArchive.Size = new System.Drawing.Size(116, 13);
+            this.labelCaptureNowArchive.TabIndex = 17;
+            this.labelCaptureNowArchive.Text = "Capture Now / Archive";
+            // 
+            // labelRegionSelectClipboard
+            // 
+            this.labelRegionSelectClipboard.AutoSize = true;
+            this.labelRegionSelectClipboard.Location = new System.Drawing.Point(200, 171);
+            this.labelRegionSelectClipboard.Name = "labelRegionSelectClipboard";
+            this.labelRegionSelectClipboard.Size = new System.Drawing.Size(133, 13);
+            this.labelRegionSelectClipboard.TabIndex = 29;
+            this.labelRegionSelectClipboard.Text = "Region Select -> Clipboard";
+            // 
+            // textBoxKeyboardShortcutRegionSelectAutoSaveKey
+            // 
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Location = new System.Drawing.Point(624, 195);
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Name = "textBoxKeyboardShortcutRegionSelectAutoSaveKey";
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.TabIndex = 36;
+            // 
+            // comboBoxKeyboardShortcutStartScreenCaptureModifier2
+            // 
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.Location = new System.Drawing.Point(531, 60);
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.Name = "comboBoxKeyboardShortcutStartScreenCaptureModifier2";
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.TabIndex = 11;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Location = new System.Drawing.Point(438, 195);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Name = "comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1";
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.TabIndex = 34;
+            // 
+            // comboBoxKeyboardShortcutStopScreenCaptureModifier2
+            // 
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.Location = new System.Drawing.Point(531, 87);
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.Name = "comboBoxKeyboardShortcutStopScreenCaptureModifier2";
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.TabIndex = 15;
+            // 
+            // comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2
+            // 
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Location = new System.Drawing.Point(531, 195);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Name = "comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2";
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.TabIndex = 35;
+            // 
+            // textBoxKeyboardShortcutCaptureNowEditKey
+            // 
+            this.textBoxKeyboardShortcutCaptureNowEditKey.Location = new System.Drawing.Point(624, 141);
+            this.textBoxKeyboardShortcutCaptureNowEditKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutCaptureNowEditKey.Name = "textBoxKeyboardShortcutCaptureNowEditKey";
+            this.textBoxKeyboardShortcutCaptureNowEditKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutCaptureNowEditKey.TabIndex = 24;
+            // 
+            // textBoxKeyboardShortcutStartScreenCaptureKey
+            // 
+            this.textBoxKeyboardShortcutStartScreenCaptureKey.Location = new System.Drawing.Point(624, 60);
+            this.textBoxKeyboardShortcutStartScreenCaptureKey.MaxLength = 1;
+            this.textBoxKeyboardShortcutStartScreenCaptureKey.Name = "textBoxKeyboardShortcutStartScreenCaptureKey";
+            this.textBoxKeyboardShortcutStartScreenCaptureKey.Size = new System.Drawing.Size(40, 20);
+            this.textBoxKeyboardShortcutStartScreenCaptureKey.TabIndex = 12;
+            // 
+            // comboBoxKeyboardShortcutStopScreenCaptureModifier1
+            // 
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.Location = new System.Drawing.Point(438, 87);
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.Name = "comboBoxKeyboardShortcutStopScreenCaptureModifier1";
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.TabIndex = 14;
+            // 
             // checkBoxUseKeyboardShortcuts
             // 
             this.checkBoxUseKeyboardShortcuts.AutoSize = true;
-            this.checkBoxUseKeyboardShortcuts.Location = new System.Drawing.Point(532, 232);
+            this.checkBoxUseKeyboardShortcuts.Location = new System.Drawing.Point(11, 13);
             this.checkBoxUseKeyboardShortcuts.Name = "checkBoxUseKeyboardShortcuts";
             this.checkBoxUseKeyboardShortcuts.Size = new System.Drawing.Size(138, 17);
             this.checkBoxUseKeyboardShortcuts.TabIndex = 1;
             this.checkBoxUseKeyboardShortcuts.Text = "Use keyboard shortcuts";
             this.checkBoxUseKeyboardShortcuts.UseVisualStyleBackColor = true;
             // 
-            // tabControlKeyboardShortcuts
-            // 
-            this.tabControlKeyboardShortcuts.Controls.Add(this.tabPageScreenCapture);
-            this.tabControlKeyboardShortcuts.Controls.Add(this.tabPageRegionSelect);
-            this.tabControlKeyboardShortcuts.Controls.Add(this.tabPageCaptureNow);
-            this.tabControlKeyboardShortcuts.Location = new System.Drawing.Point(3, 3);
-            this.tabControlKeyboardShortcuts.Name = "tabControlKeyboardShortcuts";
-            this.tabControlKeyboardShortcuts.SelectedIndex = 0;
-            this.tabControlKeyboardShortcuts.Size = new System.Drawing.Size(671, 223);
-            this.tabControlKeyboardShortcuts.TabIndex = 0;
-            this.tabControlKeyboardShortcuts.TabStop = false;
-            // 
-            // tabPageScreenCapture
-            // 
-            this.tabPageScreenCapture.Controls.Add(this.labelStopScreenCapture);
-            this.tabPageScreenCapture.Controls.Add(this.labelStartScreenCapture);
-            this.tabPageScreenCapture.Controls.Add(this.textBoxKeyboardShortcutStopScreenCaptureKey);
-            this.tabPageScreenCapture.Controls.Add(this.comboBoxKeyboardShortcutStopScreenCaptureModifier2);
-            this.tabPageScreenCapture.Controls.Add(this.comboBoxKeyboardShortcutStopScreenCaptureModifier1);
-            this.tabPageScreenCapture.Controls.Add(this.textBoxKeyboardShortcutStartScreenCaptureKey);
-            this.tabPageScreenCapture.Controls.Add(this.comboBoxKeyboardShortcutStartScreenCaptureModifier2);
-            this.tabPageScreenCapture.Controls.Add(this.comboBoxKeyboardShortcutStartScreenCaptureModifier1);
-            this.tabPageScreenCapture.Location = new System.Drawing.Point(4, 22);
-            this.tabPageScreenCapture.Name = "tabPageScreenCapture";
-            this.tabPageScreenCapture.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageScreenCapture.Size = new System.Drawing.Size(663, 197);
-            this.tabPageScreenCapture.TabIndex = 0;
-            this.tabPageScreenCapture.Text = "Screen Capture";
-            this.tabPageScreenCapture.UseVisualStyleBackColor = true;
-            // 
-            // labelStopScreenCapture
-            // 
-            this.labelStopScreenCapture.AutoSize = true;
-            this.labelStopScreenCapture.Location = new System.Drawing.Point(42, 114);
-            this.labelStopScreenCapture.Name = "labelStopScreenCapture";
-            this.labelStopScreenCapture.Size = new System.Drawing.Size(106, 13);
-            this.labelStopScreenCapture.TabIndex = 13;
-            this.labelStopScreenCapture.Text = "Stop Screen Capture";
-            // 
-            // labelStartScreenCapture
-            // 
-            this.labelStartScreenCapture.AutoSize = true;
-            this.labelStartScreenCapture.Location = new System.Drawing.Point(42, 87);
-            this.labelStartScreenCapture.Name = "labelStartScreenCapture";
-            this.labelStartScreenCapture.Size = new System.Drawing.Size(106, 13);
-            this.labelStartScreenCapture.TabIndex = 9;
-            this.labelStartScreenCapture.Text = "Start Screen Capture";
-            // 
-            // textBoxKeyboardShortcutStopScreenCaptureKey
-            // 
-            this.textBoxKeyboardShortcutStopScreenCaptureKey.Location = new System.Drawing.Point(400, 111);
-            this.textBoxKeyboardShortcutStopScreenCaptureKey.MaxLength = 1;
-            this.textBoxKeyboardShortcutStopScreenCaptureKey.Name = "textBoxKeyboardShortcutStopScreenCaptureKey";
-            this.textBoxKeyboardShortcutStopScreenCaptureKey.Size = new System.Drawing.Size(40, 20);
-            this.textBoxKeyboardShortcutStopScreenCaptureKey.TabIndex = 16;
-            // 
-            // comboBoxKeyboardShortcutStopScreenCaptureModifier2
-            // 
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.Location = new System.Drawing.Point(307, 111);
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.Name = "comboBoxKeyboardShortcutStopScreenCaptureModifier2";
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier2.TabIndex = 15;
-            // 
-            // comboBoxKeyboardShortcutStopScreenCaptureModifier1
-            // 
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.Location = new System.Drawing.Point(214, 111);
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.Name = "comboBoxKeyboardShortcutStopScreenCaptureModifier1";
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutStopScreenCaptureModifier1.TabIndex = 14;
-            // 
-            // textBoxKeyboardShortcutStartScreenCaptureKey
-            // 
-            this.textBoxKeyboardShortcutStartScreenCaptureKey.Location = new System.Drawing.Point(400, 84);
-            this.textBoxKeyboardShortcutStartScreenCaptureKey.MaxLength = 1;
-            this.textBoxKeyboardShortcutStartScreenCaptureKey.Name = "textBoxKeyboardShortcutStartScreenCaptureKey";
-            this.textBoxKeyboardShortcutStartScreenCaptureKey.Size = new System.Drawing.Size(40, 20);
-            this.textBoxKeyboardShortcutStartScreenCaptureKey.TabIndex = 12;
-            // 
-            // comboBoxKeyboardShortcutStartScreenCaptureModifier2
-            // 
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.Location = new System.Drawing.Point(307, 84);
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.Name = "comboBoxKeyboardShortcutStartScreenCaptureModifier2";
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier2.TabIndex = 11;
-            // 
-            // comboBoxKeyboardShortcutStartScreenCaptureModifier1
-            // 
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.Location = new System.Drawing.Point(214, 84);
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.Name = "comboBoxKeyboardShortcutStartScreenCaptureModifier1";
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutStartScreenCaptureModifier1.TabIndex = 10;
-            // 
-            // tabPageRegionSelect
-            // 
-            this.tabPageRegionSelect.Controls.Add(this.labelRegionSelectEdit);
-            this.tabPageRegionSelect.Controls.Add(this.textBoxKeyboardShortcutRegionSelectEditKey);
-            this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectEditModifier2);
-            this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectEditModifier1);
-            this.tabPageRegionSelect.Controls.Add(this.labelRegionSelectAutoSave);
-            this.tabPageRegionSelect.Controls.Add(this.textBoxKeyboardShortcutRegionSelectAutoSaveKey);
-            this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2);
-            this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1);
-            this.tabPageRegionSelect.Controls.Add(this.labelRegionSelectClipboard);
-            this.tabPageRegionSelect.Controls.Add(this.textBoxKeyboardShortcutRegionSelectClipboardKey);
-            this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2);
-            this.tabPageRegionSelect.Controls.Add(this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1);
-            this.tabPageRegionSelect.Location = new System.Drawing.Point(4, 22);
-            this.tabPageRegionSelect.Name = "tabPageRegionSelect";
-            this.tabPageRegionSelect.Size = new System.Drawing.Size(663, 197);
-            this.tabPageRegionSelect.TabIndex = 2;
-            this.tabPageRegionSelect.Text = "Region Select";
-            this.tabPageRegionSelect.UseVisualStyleBackColor = true;
-            // 
-            // labelRegionSelectEdit
-            // 
-            this.labelRegionSelectEdit.AutoSize = true;
-            this.labelRegionSelectEdit.Location = new System.Drawing.Point(132, 118);
-            this.labelRegionSelectEdit.Name = "labelRegionSelectEdit";
-            this.labelRegionSelectEdit.Size = new System.Drawing.Size(168, 13);
-            this.labelRegionSelectEdit.TabIndex = 37;
-            this.labelRegionSelectEdit.Text = "Region Select -> Auto Save / Edit";
-            // 
-            // textBoxKeyboardShortcutRegionSelectEditKey
-            // 
-            this.textBoxKeyboardShortcutRegionSelectEditKey.Location = new System.Drawing.Point(490, 115);
-            this.textBoxKeyboardShortcutRegionSelectEditKey.MaxLength = 1;
-            this.textBoxKeyboardShortcutRegionSelectEditKey.Name = "textBoxKeyboardShortcutRegionSelectEditKey";
-            this.textBoxKeyboardShortcutRegionSelectEditKey.Size = new System.Drawing.Size(40, 20);
-            this.textBoxKeyboardShortcutRegionSelectEditKey.TabIndex = 40;
-            // 
-            // comboBoxKeyboardShortcutRegionSelectEditModifier2
-            // 
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.Location = new System.Drawing.Point(397, 115);
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.Name = "comboBoxKeyboardShortcutRegionSelectEditModifier2";
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier2.TabIndex = 39;
-            // 
-            // comboBoxKeyboardShortcutRegionSelectEditModifier1
-            // 
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.Location = new System.Drawing.Point(304, 115);
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.Name = "comboBoxKeyboardShortcutRegionSelectEditModifier1";
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutRegionSelectEditModifier1.TabIndex = 38;
-            // 
-            // labelRegionSelectAutoSave
-            // 
-            this.labelRegionSelectAutoSave.AutoSize = true;
-            this.labelRegionSelectAutoSave.Location = new System.Drawing.Point(132, 91);
-            this.labelRegionSelectAutoSave.Name = "labelRegionSelectAutoSave";
-            this.labelRegionSelectAutoSave.Size = new System.Drawing.Size(139, 13);
-            this.labelRegionSelectAutoSave.TabIndex = 33;
-            this.labelRegionSelectAutoSave.Text = "Region Select -> Auto Save";
-            // 
-            // textBoxKeyboardShortcutRegionSelectAutoSaveKey
-            // 
-            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Location = new System.Drawing.Point(490, 88);
-            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.MaxLength = 1;
-            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Name = "textBoxKeyboardShortcutRegionSelectAutoSaveKey";
-            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.Size = new System.Drawing.Size(40, 20);
-            this.textBoxKeyboardShortcutRegionSelectAutoSaveKey.TabIndex = 36;
-            // 
-            // comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2
-            // 
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Location = new System.Drawing.Point(397, 88);
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Name = "comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2";
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2.TabIndex = 35;
-            // 
-            // comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1
-            // 
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Location = new System.Drawing.Point(304, 88);
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Name = "comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1";
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1.TabIndex = 34;
-            // 
-            // labelRegionSelectClipboard
-            // 
-            this.labelRegionSelectClipboard.AutoSize = true;
-            this.labelRegionSelectClipboard.Location = new System.Drawing.Point(132, 64);
-            this.labelRegionSelectClipboard.Name = "labelRegionSelectClipboard";
-            this.labelRegionSelectClipboard.Size = new System.Drawing.Size(133, 13);
-            this.labelRegionSelectClipboard.TabIndex = 29;
-            this.labelRegionSelectClipboard.Text = "Region Select -> Clipboard";
-            // 
-            // textBoxKeyboardShortcutRegionSelectClipboardKey
-            // 
-            this.textBoxKeyboardShortcutRegionSelectClipboardKey.Location = new System.Drawing.Point(490, 61);
-            this.textBoxKeyboardShortcutRegionSelectClipboardKey.MaxLength = 1;
-            this.textBoxKeyboardShortcutRegionSelectClipboardKey.Name = "textBoxKeyboardShortcutRegionSelectClipboardKey";
-            this.textBoxKeyboardShortcutRegionSelectClipboardKey.Size = new System.Drawing.Size(40, 20);
-            this.textBoxKeyboardShortcutRegionSelectClipboardKey.TabIndex = 32;
-            // 
-            // comboBoxKeyboardShortcutRegionSelectClipboardModifier2
-            // 
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Location = new System.Drawing.Point(397, 61);
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Name = "comboBoxKeyboardShortcutRegionSelectClipboardModifier2";
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier2.TabIndex = 31;
-            // 
-            // comboBoxKeyboardShortcutRegionSelectClipboardModifier1
-            // 
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Location = new System.Drawing.Point(304, 61);
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Name = "comboBoxKeyboardShortcutRegionSelectClipboardModifier1";
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutRegionSelectClipboardModifier1.TabIndex = 30;
-            // 
-            // tabPageCaptureNow
-            // 
-            this.tabPageCaptureNow.Controls.Add(this.labelCaptureNowEdit);
-            this.tabPageCaptureNow.Controls.Add(this.labelCaptureNowArchive);
-            this.tabPageCaptureNow.Controls.Add(this.textBoxKeyboardShortcutCaptureNowEditKey);
-            this.tabPageCaptureNow.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowEditModifier2);
-            this.tabPageCaptureNow.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowEditModifier1);
-            this.tabPageCaptureNow.Controls.Add(this.textBoxKeyboardShortcutCaptureNowArchiveKey);
-            this.tabPageCaptureNow.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2);
-            this.tabPageCaptureNow.Controls.Add(this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1);
-            this.tabPageCaptureNow.Location = new System.Drawing.Point(4, 22);
-            this.tabPageCaptureNow.Name = "tabPageCaptureNow";
-            this.tabPageCaptureNow.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCaptureNow.Size = new System.Drawing.Size(663, 197);
-            this.tabPageCaptureNow.TabIndex = 1;
-            this.tabPageCaptureNow.Text = "Capture Now";
-            this.tabPageCaptureNow.UseVisualStyleBackColor = true;
-            // 
-            // labelCaptureNowEdit
-            // 
-            this.labelCaptureNowEdit.AutoSize = true;
-            this.labelCaptureNowEdit.Location = new System.Drawing.Point(132, 104);
-            this.labelCaptureNowEdit.Name = "labelCaptureNowEdit";
-            this.labelCaptureNowEdit.Size = new System.Drawing.Size(98, 13);
-            this.labelCaptureNowEdit.TabIndex = 21;
-            this.labelCaptureNowEdit.Text = "Capture Now / Edit";
-            // 
-            // labelCaptureNowArchive
-            // 
-            this.labelCaptureNowArchive.AutoSize = true;
-            this.labelCaptureNowArchive.Location = new System.Drawing.Point(132, 77);
-            this.labelCaptureNowArchive.Name = "labelCaptureNowArchive";
-            this.labelCaptureNowArchive.Size = new System.Drawing.Size(116, 13);
-            this.labelCaptureNowArchive.TabIndex = 17;
-            this.labelCaptureNowArchive.Text = "Capture Now / Archive";
-            // 
-            // textBoxKeyboardShortcutCaptureNowEditKey
-            // 
-            this.textBoxKeyboardShortcutCaptureNowEditKey.Location = new System.Drawing.Point(490, 101);
-            this.textBoxKeyboardShortcutCaptureNowEditKey.MaxLength = 1;
-            this.textBoxKeyboardShortcutCaptureNowEditKey.Name = "textBoxKeyboardShortcutCaptureNowEditKey";
-            this.textBoxKeyboardShortcutCaptureNowEditKey.Size = new System.Drawing.Size(40, 20);
-            this.textBoxKeyboardShortcutCaptureNowEditKey.TabIndex = 24;
-            // 
             // comboBoxKeyboardShortcutCaptureNowEditModifier2
             // 
             this.comboBoxKeyboardShortcutCaptureNowEditModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxKeyboardShortcutCaptureNowEditModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutCaptureNowEditModifier2.Location = new System.Drawing.Point(397, 101);
+            this.comboBoxKeyboardShortcutCaptureNowEditModifier2.Location = new System.Drawing.Point(531, 141);
             this.comboBoxKeyboardShortcutCaptureNowEditModifier2.Name = "comboBoxKeyboardShortcutCaptureNowEditModifier2";
             this.comboBoxKeyboardShortcutCaptureNowEditModifier2.Size = new System.Drawing.Size(87, 21);
             this.comboBoxKeyboardShortcutCaptureNowEditModifier2.TabIndex = 23;
@@ -1127,36 +1238,36 @@
             // 
             this.comboBoxKeyboardShortcutCaptureNowEditModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxKeyboardShortcutCaptureNowEditModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutCaptureNowEditModifier1.Location = new System.Drawing.Point(304, 101);
+            this.comboBoxKeyboardShortcutCaptureNowEditModifier1.Location = new System.Drawing.Point(438, 141);
             this.comboBoxKeyboardShortcutCaptureNowEditModifier1.Name = "comboBoxKeyboardShortcutCaptureNowEditModifier1";
             this.comboBoxKeyboardShortcutCaptureNowEditModifier1.Size = new System.Drawing.Size(87, 21);
             this.comboBoxKeyboardShortcutCaptureNowEditModifier1.TabIndex = 22;
             // 
             // textBoxKeyboardShortcutCaptureNowArchiveKey
             // 
-            this.textBoxKeyboardShortcutCaptureNowArchiveKey.Location = new System.Drawing.Point(490, 74);
+            this.textBoxKeyboardShortcutCaptureNowArchiveKey.Location = new System.Drawing.Point(624, 114);
             this.textBoxKeyboardShortcutCaptureNowArchiveKey.MaxLength = 1;
             this.textBoxKeyboardShortcutCaptureNowArchiveKey.Name = "textBoxKeyboardShortcutCaptureNowArchiveKey";
             this.textBoxKeyboardShortcutCaptureNowArchiveKey.Size = new System.Drawing.Size(40, 20);
             this.textBoxKeyboardShortcutCaptureNowArchiveKey.TabIndex = 20;
             // 
-            // comboBoxKeyboardShortcutCaptureNowArchiveModifier2
-            // 
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Location = new System.Drawing.Point(397, 74);
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Name = "comboBoxKeyboardShortcutCaptureNowArchiveModifier2";
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Size = new System.Drawing.Size(87, 21);
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.TabIndex = 19;
-            // 
             // comboBoxKeyboardShortcutCaptureNowArchiveModifier1
             // 
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.FormattingEnabled = true;
-            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Location = new System.Drawing.Point(304, 74);
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Location = new System.Drawing.Point(438, 114);
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Name = "comboBoxKeyboardShortcutCaptureNowArchiveModifier1";
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.Size = new System.Drawing.Size(87, 21);
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1.TabIndex = 18;
+            // 
+            // comboBoxKeyboardShortcutCaptureNowArchiveModifier2
+            // 
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.FormattingEnabled = true;
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Location = new System.Drawing.Point(531, 114);
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Name = "comboBoxKeyboardShortcutCaptureNowArchiveModifier2";
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2.TabIndex = 19;
             // 
             // buttonOK
             // 
@@ -1225,6 +1336,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.tabPageOptimizeScreenCapture.ResumeLayout(false);
             this.tabPageOptimizeScreenCapture.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNewImageCaptured)).EndInit();
+            this.groupBoxEnabled.ResumeLayout(false);
+            this.groupBoxEnabled.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled1)).EndInit();
+            this.groupBoxNotEnabled.ResumeLayout(false);
+            this.groupBoxNotEnabled.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled1)).EndInit();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
@@ -1237,13 +1358,6 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
-            this.tabControlKeyboardShortcuts.ResumeLayout(false);
-            this.tabPageScreenCapture.ResumeLayout(false);
-            this.tabPageScreenCapture.PerformLayout();
-            this.tabPageRegionSelect.ResumeLayout(false);
-            this.tabPageRegionSelect.PerformLayout();
-            this.tabPageCaptureNow.ResumeLayout(false);
-            this.tabPageCaptureNow.PerformLayout();
             this.ResumeLayout(false);
 
     }
@@ -1266,10 +1380,6 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelHelp;
-        private System.Windows.Forms.TabControl tabControlKeyboardShortcuts;
-        private System.Windows.Forms.TabPage tabPageScreenCapture;
-        private System.Windows.Forms.TabPage tabPageCaptureNow;
-        private System.Windows.Forms.TabPage tabPageRegionSelect;
         private System.Windows.Forms.Label labelStopScreenCapture;
         private System.Windows.Forms.Label labelStartScreenCapture;
         private System.Windows.Forms.Label labelRegionSelectEdit;
@@ -1537,5 +1647,18 @@
         /// 
         /// </summary>
         public System.Windows.Forms.ListBox listBoxProcessList;
+        private System.Windows.Forms.Label labelOptimizeScreenCaptureHelp;
+        private System.Windows.Forms.GroupBox groupBoxEnabled;
+        private System.Windows.Forms.Label labelBladeEnabled2;
+        private System.Windows.Forms.Label labelBladeEnabled1;
+        private System.Windows.Forms.PictureBox pictureBoxBladeEnabled2;
+        private System.Windows.Forms.PictureBox pictureBoxBladeEnabled1;
+        private System.Windows.Forms.GroupBox groupBoxNotEnabled;
+        private System.Windows.Forms.Label labelBladeNotEnabled2;
+        private System.Windows.Forms.Label labelBladeNotEnabled1;
+        private System.Windows.Forms.PictureBox pictureBoxBladeNotEnabled2;
+        private System.Windows.Forms.PictureBox pictureBoxBladeNotEnabled1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.PictureBox pictureBoxBladeNewImageCaptured;
     }
 }

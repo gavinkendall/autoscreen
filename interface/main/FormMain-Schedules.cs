@@ -51,6 +51,41 @@ namespace AutoScreenCapture
                 // in the system tray icon's tool tip, the main interface, and information window.
                 ShowInfo();
 
+                // Special Schedule
+                if (_formSchedule.ScheduleCollection.SpecialScheduleEnabled)
+                {
+                    if (_formSchedule.ScheduleCollection.SpecialScheduleModeOneTime)
+                    {
+                        if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Hour) &&
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Minute) &&
+                            (dtNow.Second == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Second))
+                        {
+                            TakeScreenshot(captureNow: true);
+
+                            _formSchedule.ScheduleCollection.SpecialScheduleEnabled = false;
+                        }
+                    }
+
+                    if (_formSchedule.ScheduleCollection.SpecialScheduleModePeriod)
+                    {
+                        if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Hour) &&
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Minute) &&
+                            (dtNow.Second == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Second))
+                        {
+                            StartScreenCapture(_formSchedule.ScheduleCollection.SpecialScheduleScreenCaptureInterval);
+                        }
+
+                        if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Hour) &&
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Minute) &&
+                            (dtNow.Second == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Second))
+                        {
+                            StopScreenCapture();
+
+                            _formSchedule.ScheduleCollection.SpecialScheduleEnabled = false;
+                        }
+                    }
+                }
+
                 // Process the list of schedules we need to consider.
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {

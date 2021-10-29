@@ -188,6 +188,11 @@ namespace AutoScreenCapture
 
                 if (selectedScreenshot != null)
                 {
+                    if (selectedScreenshot.Encrypted)
+                    {
+                        MessageBox.Show("This screenshot was encrypted by Auto Screen Capture.\n\nThe application you have selected to open this screenshot with may have a problem trying to read the screenshot.", "Encrypted Screenshot", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
                     return RunEditor(editor, selectedScreenshot);
                 }
             }
@@ -247,39 +252,6 @@ namespace AutoScreenCapture
 
             // We failed to open the editor with the given screenshot path.
             return false;
-        }
-
-        /// <summary>
-        /// Runs an editor.
-        /// </summary>
-        /// <param name="editor">The editor to run.</param>
-        /// <returns>Determines if the editor was executed successfully or not.</returns>
-        private bool RunEditor(Editor editor)
-        {
-            try
-            {
-                if (editor != null && _fileSystem.FileExists(editor.Application))
-                {
-                    if (editor.Arguments != null && !string.IsNullOrEmpty(editor.Arguments))
-                    {
-                        _ = Process.Start(editor.Application, editor.Arguments);
-                    }
-                    else
-                    {
-                        _ = Process.Start(editor.Application);
-                    }
-
-                    return true;
-                }
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                _log.WriteExceptionMessage("FormMain-Editors::RunEditor", ex);
-
-                return false;
-            }
         }
     }
 }

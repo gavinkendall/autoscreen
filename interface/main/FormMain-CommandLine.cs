@@ -264,34 +264,6 @@ namespace AutoScreenCapture
 
                 _screenCapture.AutoStartFromCommandLine = Convert.ToBoolean(_config.Settings.Application.GetByKey("AutoStartFromCommandLine", _config.Settings.DefaultSettings.AutoStartFromCommandLine).Value);
 
-                // Create the "Special Schedule" if it doesn't already exist.
-                if (_formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName) == null)
-                {
-                    DateTime dtNow = DateTime.Now;
-
-                    Schedule specialSchedule = new Schedule()
-                    {
-                        Name = _formSchedule.ScheduleCollection.SpecialScheduleName,
-                        Enable = false,
-                        ModeOneTime = true,
-                        ModePeriod = false,
-                        CaptureAt = dtNow,
-                        StartAt = dtNow,
-                        StopAt = dtNow,
-                        ScreenCaptureInterval = _config.Settings.DefaultSettings.ScreenCaptureInterval,
-                        Notes = "This schedule is used for the command line arguments -captureat, -startat, and -stopat."
-                    };
-
-                    _formSchedule.ScheduleCollection.Add(specialSchedule);
-
-                    BuildSchedulesModule();
-
-                    if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
-                    {
-                        _screenCapture.ApplicationError = true;
-                    }
-                }
-
                 foreach (string arg in args)
                 {
                     // -debug
@@ -513,7 +485,7 @@ namespace AutoScreenCapture
                             timerScreenCapture.Enabled = true;
                             timerScreenCapture.Start();
 
-                            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ScreenCaptureInterval = screenCaptureInterval;
+                            _formSchedule.ScheduleCollection.SpecialScheduleScreenCaptureInterval = screenCaptureInterval;
                         }
                     }
 
@@ -555,19 +527,10 @@ namespace AutoScreenCapture
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Enable = true;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModeOneTime = false;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModePeriod = true;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).StartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                        ApplyDayForSpecialSchedule();
-
-                        BuildSchedulesModule();
-
-                        if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
-                        {
-                            _screenCapture.ApplicationError = true;
-                        }
+                        _formSchedule.ScheduleCollection.SpecialScheduleEnabled = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleModeOneTime = false;
+                        _formSchedule.ScheduleCollection.SpecialScheduleModePeriod = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleStartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
                     }
 
                     // -stopat=hh:mm:ss
@@ -579,19 +542,10 @@ namespace AutoScreenCapture
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Enable = true;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModeOneTime = false;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModePeriod = true;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).StopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                        ApplyDayForSpecialSchedule();
-
-                        BuildSchedulesModule();
-
-                        if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
-                        {
-                            _screenCapture.ApplicationError = true;
-                        }
+                        _formSchedule.ScheduleCollection.SpecialScheduleEnabled = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleModeOneTime = false;
+                        _formSchedule.ScheduleCollection.SpecialScheduleModePeriod = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleStopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
                     }
 
                     // -captureat=hh:mm:ss
@@ -603,19 +557,10 @@ namespace AutoScreenCapture
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Minutes"].Value);
                         int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Enable = true;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModeOneTime = true;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).ModePeriod = false;
-                        _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).CaptureAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
-
-                        ApplyDayForSpecialSchedule();
-
-                        BuildSchedulesModule();
-
-                        if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
-                        {
-                            _screenCapture.ApplicationError = true;
-                        }
+                        _formSchedule.ScheduleCollection.SpecialScheduleEnabled = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleModeOneTime = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleModePeriod = false;
+                        _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
                     }
 
                     // -activeWindowTitle="x"
@@ -840,52 +785,6 @@ namespace AutoScreenCapture
             {
                 _screenCapture.ApplicationError = true;
                 _log.WriteExceptionMessage("FormMain-CommandLine::ParseCommandLineArguments", ex);
-            }
-        }
-
-        private void ApplyDayForSpecialSchedule()
-        {
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Monday = false;
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Tuesday = false;
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Wednesday = false;
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Thursday = false;
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Friday = false;
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Saturday = false;
-            _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Sunday = false;
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Monday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Monday = true;
-            }
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Tuesday = true;
-            }
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Wednesday = true;
-            }
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Thursday = true;
-            }
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Friday = true;
-            }
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Saturday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Saturday = true;
-            }
-
-            if (DateTime.Now.DayOfWeek == DayOfWeek.Sunday)
-            {
-                _formSchedule.ScheduleCollection.GetByName(_formSchedule.ScheduleCollection.SpecialScheduleName).Sunday = true;
             }
         }
     }

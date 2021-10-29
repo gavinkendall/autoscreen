@@ -267,9 +267,9 @@ namespace AutoScreenCapture.Properties {
         ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Welcome\par
         ///\b0 Auto Screen Capture is a portable automated screen capture utility developed by Gavin Kendall that runs in your system tray while it takes screenshots of multiple screens and regions based on a timed interval. It enables you to schedule when screenshots are taken and can b [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string help_0_Welcome {
+        internal static string help_0 {
             get {
-                return ResourceManager.GetString("help_0_Welcome", resourceCulture);
+                return ResourceManager.GetString("help_0", resourceCulture);
             }
         }
         
@@ -279,9 +279,9 @@ namespace AutoScreenCapture.Properties {
         ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Setup and First Run\b0\par
         ///The first thing to do is consider how frequently you want screenshots to be taken. This is defined by a timed interval. You can have screenshots taken every second, every five minutes, or every couple of hours - it&apos;s up to you. The &quot;Interval&quot; section of the Setup module is where you specify the ho [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string help_1_Setup_and_First_Run {
+        internal static string help_1 {
             get {
-                return ResourceManager.GetString("help_1_Setup_and_First_Run", resourceCulture);
+                return ResourceManager.GetString("help_1", resourceCulture);
             }
         }
         
