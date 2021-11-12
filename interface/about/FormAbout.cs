@@ -18,6 +18,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
+using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -28,6 +29,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormAbout : Form
     {
+        private int _currentBanner = 0;
+
         /// <summary>
         /// A form showing information about Auto Screen Capture.
         /// </summary>
@@ -38,6 +41,12 @@ namespace AutoScreenCapture
 
         private void FormAbout_FormClosing(object sender, FormClosingEventArgs e)
         {
+            _currentBanner = 0;
+
+            pictureBoxBanner.Image = Properties.Resources.blade;
+
+            richTextBoxContributors.BringToFront();
+
             e.Cancel = true;
             Hide();
         }
@@ -45,6 +54,50 @@ namespace AutoScreenCapture
         private void richTextBoxApplication_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             Process.Start(e.LinkText);
+        }
+
+        private void pictureBoxBanner_Click(object sender, System.EventArgs e)
+        {
+            richTextBoxBladeDetails.Text = "\"Blade\"" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Release Date: August 21, 1998" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Rating: R (strong violence)" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Genres: Action, Horror, Sci-Fi" + Environment.NewLine +Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Director: Stephen Norrington" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Writer: David S. Goyer" + Environment.NewLine + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Starring:" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Wesley Snipes (Blade)" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Kris Kristofferson (Whistler)" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Stephen Dorff (Deacon Frost)" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "N'Bushe Wright (Karen)" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Donal Logue (Quinn)" + Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Udo Kier (Dragonetti)" + Environment.NewLine;
+
+            richTextBoxBladeDetails.BringToFront();
+
+            switch (_currentBanner)
+            {
+                case 0:
+                    pictureBoxBanner.Image = Properties.Resources.blade0;
+                    break;
+
+                case 1:
+                    pictureBoxBanner.Image = Properties.Resources.blade1;
+                    break;
+
+                case 2:
+                    pictureBoxBanner.Image = Properties.Resources.blade2;
+                    break;
+
+                case 3:
+                    pictureBoxBanner.Image = Properties.Resources.blade3;
+                    break;
+
+                default:
+                    pictureBoxBanner.Image = Properties.Resources.blade;
+                    break;
+            }
+
+            _currentBanner++;
         }
     }
 }

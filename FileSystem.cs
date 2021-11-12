@@ -508,14 +508,23 @@ namespace AutoScreenCapture
         /// Deletes a file.
         /// </summary>
         /// <param name="path">The path of the file to delete.</param>
-        public void DeleteFile(string path)
+        public bool DeleteFile(string path)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            try
             {
-                return;
-            }
+                if (string.IsNullOrEmpty(path) || !File.Exists(path))
+                {
+                    return false;
+                }
 
-            File.Delete(path);
+                File.Delete(path);
+
+                return true;
+            }
+            catch (IOException)
+            {
+                return false;
+            }
         }
 
         /// <summary>

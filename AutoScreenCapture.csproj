@@ -417,6 +417,10 @@
     <None Include="images\file_transfer.png" />
     <None Include="images\properties.png" />
     <Content Include="images\blade.jpg" />
+    <None Include="images\blade0.jpg" />
+    <Content Include="images\blade1.jpg" />
+    <Content Include="images\blade2.jpg" />
+    <Content Include="images\blade3.jpg" />
     <Content Include="images\command_line.png" />
     <Content Include="images\lightbulb.png" />
     <Content Include="images\lock.png" />

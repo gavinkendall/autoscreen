@@ -112,13 +112,20 @@ namespace AutoScreenCapture
 
                     if (_fileSystem.FileExists(screenshot.Path))
                     {
-                        _fileSystem.DeleteFile(screenshot.Path);
+                        if (_fileSystem.DeleteFile(screenshot.Path))
+                        {
+                            _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
+
+                            screenshot.Key = string.Empty;
+                            screenshot.Encrypted = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cannot decrypt the file. It may be in use by another process.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            return;
+                        }
                     }
-
-                    _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
-
-                    screenshot.Key = string.Empty;
-                    screenshot.Encrypted = false;
                 }
                 else
                 {
@@ -126,13 +133,20 @@ namespace AutoScreenCapture
 
                     if (_fileSystem.FileExists(screenshot.Path))
                     {
-                        _fileSystem.DeleteFile(screenshot.Path);
+                        if (_fileSystem.DeleteFile(screenshot.Path))
+                        {
+                            _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+
+                            screenshot.Key = key;
+                            screenshot.Encrypted = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cannot encrypt the file. It may be in use by another process.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                            return;
+                        }
                     }
-
-                    _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
-
-                    screenshot.Key = key;
-                    screenshot.Encrypted = true;
                 }
 
                 // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
