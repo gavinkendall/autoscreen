@@ -589,7 +589,7 @@ namespace AutoScreenCapture
         {
             if (!_formScreenCaptureStatus.Visible)
             {
-                _formScreenCaptureStatus.Show(this);
+                _formScreenCaptureStatus.Show();
             }
             else
             {
