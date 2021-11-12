@@ -375,7 +375,16 @@ namespace AutoScreenCapture
                 Encrypted = encrypt
             };
 
-            if (_screenCapture.SaveScreenshot(_security, jpegQuality, screenshot, _screenshotCollection))
+            int errorLevel = _screenCapture.SaveScreenshot(_security, jpegQuality, screenshot, _screenshotCollection);
+
+            // ScreenSavingErrorLevels enum written by Oskars Grauzis (https://github.com/grauziitisos)
+            bool screenSaved = errorLevel == (int)ScreenSavingErrorLevels.None ||
+                    // Here we list the error levels that should not stop the capturing session. Writing !=0 is shorther than == flag
+                    (errorLevel & (int)ScreenSavingErrorLevels.HashDuplicate) != 0 ||
+                    (errorLevel & (int)ScreenSavingErrorLevels.PathLengthExceeded) != 0 ||
+                    (errorLevel & (int)ScreenSavingErrorLevels.DriveNotReady) != 0;
+
+            if (screenSaved)
             {
                 ScreenshotTakenWithSuccess();
 
@@ -712,7 +721,6 @@ namespace AutoScreenCapture
 
         private void SetActiveWindowTitleAsMatch(string activeWindowTitle)
         {
-            /*
             if (string.IsNullOrEmpty(activeWindowTitle))
             {
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", false);
@@ -726,12 +734,11 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureCheck", true);
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
 
-                checkBoxActiveWindowTitleComparisonCheck.Checked = true;
-                textBoxActiveWindowTitle.Text = activeWindowTitle;
+                _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = true;
+                _formSetup.textBoxActiveWindowTitle.Text = activeWindowTitle;
 
                 _screenCapture.ActiveWindowTitle = activeWindowTitle;
             }
-            */
 
             if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
             {
@@ -741,7 +748,6 @@ namespace AutoScreenCapture
 
         private void SetActiveWindowTitleAsNoMatch(string activeWindowTitle)
         {
-            /*
             if (string.IsNullOrEmpty(activeWindowTitle))
             {
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleNoMatchCheck", false);
@@ -756,11 +762,10 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("ActiveWindowTitleCaptureText", activeWindowTitle);
 
                 _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = true;
-                //textBoxActiveWindowTitle.Text = activeWindowTitle;
+                _formSetup.textBoxActiveWindowTitle.Text = activeWindowTitle;
 
                 _screenCapture.ActiveWindowTitle = activeWindowTitle;
             }
-            */
 
             if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
             {

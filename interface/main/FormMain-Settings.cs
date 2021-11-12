@@ -234,6 +234,9 @@ namespace AutoScreenCapture
                         break;
                 }
 
+                // Labels
+                PopulateLabelList();
+
                 // Application Focus
                 _formSetup.RefreshApplicationFocusList();
 

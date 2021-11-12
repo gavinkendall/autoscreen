@@ -18,6 +18,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -39,6 +40,11 @@ namespace AutoScreenCapture
         {
             e.Cancel = true;
             Hide();
+        }
+
+        private void richTextBoxApplication_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
     }
 }
