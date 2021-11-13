@@ -902,9 +902,9 @@
             this.labelPassphrase.AutoSize = true;
             this.labelPassphrase.Location = new System.Drawing.Point(6, 85);
             this.labelPassphrase.Name = "labelPassphrase";
-            this.labelPassphrase.Size = new System.Drawing.Size(106, 13);
+            this.labelPassphrase.Size = new System.Drawing.Size(65, 13);
             this.labelPassphrase.TabIndex = 5;
-            this.labelPassphrase.Text = "Passphrase (hidden):";
+            this.labelPassphrase.Text = "Passphrase:";
             // 
             // labelHash
             // 

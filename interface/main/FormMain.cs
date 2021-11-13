@@ -461,10 +461,6 @@ namespace AutoScreenCapture
                 }
 
                 // Close all the sub forms that may still be open.
-                if (_formAbout.Visible)
-                {
-                    _formAbout.Close();
-                }
 
                 if (_formEmailSettings.Visible)
                 {

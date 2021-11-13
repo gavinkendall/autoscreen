@@ -421,6 +421,9 @@
     <Content Include="images\blade1.jpg" />
     <Content Include="images\blade2.jpg" />
     <Content Include="images\blade3.jpg" />
+    <Content Include="images\blade4.jpg" />
+    <Content Include="images\blade5.jpg" />
+    <Content Include="images\blade6.jpg" />
     <Content Include="images\command_line.png" />
     <Content Include="images\lightbulb.png" />
     <Content Include="images\lock.png" />

@@ -29,7 +29,7 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormAbout : Form
     {
-        private int _currentBanner = 0;
+        private int _currentBanner = -1;
 
         /// <summary>
         /// A form showing information about Auto Screen Capture.
@@ -41,7 +41,7 @@ namespace AutoScreenCapture
 
         private void FormAbout_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _currentBanner = 0;
+            _currentBanner = -1;
 
             pictureBoxBanner.Image = Properties.Resources.blade;
 
@@ -74,6 +74,8 @@ namespace AutoScreenCapture
 
             richTextBoxBladeDetails.BringToFront();
 
+            _currentBanner++;
+
             switch (_currentBanner)
             {
                 case 0:
@@ -92,12 +94,23 @@ namespace AutoScreenCapture
                     pictureBoxBanner.Image = Properties.Resources.blade3;
                     break;
 
+                case 4:
+                    pictureBoxBanner.Image = Properties.Resources.blade4;
+                    break;
+
+                case 5:
+                    pictureBoxBanner.Image = Properties.Resources.blade5;
+                    break;
+
+                case 6:
+                    pictureBoxBanner.Image = Properties.Resources.blade6;
+                    break;
+
                 default:
                     pictureBoxBanner.Image = Properties.Resources.blade;
+                    _currentBanner = -1;
                     break;
             }
-
-            _currentBanner++;
         }
     }
 }

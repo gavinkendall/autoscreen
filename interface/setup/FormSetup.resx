@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="labelLimitHelp.Text" xml:space="preserve">
+    <value>Sets a limit on the number of screen capture cycles. For example, with this option enabled and the numeric value set to 5, you will have screenshots taken five times based on the interval. By default the running screen capture session will stop when it reaches the limit.</value>
+  </data>
+  <data name="labelInitialCaptureHelp.Text" xml:space="preserve">
+    <value>When this option is enabled an initial set of screenshots will be taken before the first cycle of screenshots so that screenshots are taken immediately when a screen capture session starts. Disabling this option will wait for the first cycle of screenshots at the set interval.</value>
+  </data>
+  <data name="labelIntervalHelp.Text" xml:space="preserve">
+    <value>Define the interval at which screenshots should be taken. This can be as fast or as slow as you want. The timer starts when the Start Screen Capture button is clicked, the Start Screen Capture menu option is selected, or a scheduled start time is encountered.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBoxBladeEnabled1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pictureBoxBladeNewImageCaptured.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEAAAAAAAD/2wBDAAoHCBYWFRgWFhYYGRgaHRwcGhoaHBohHBocGiEaHBwaHCEc
         IS4lHiErIRghJzgmKy8xNTU1HiU7QDs0Py40NTH/2wBDAQwMDBAPDxoSERg0HRgdMTE0NDE0MTExNDQ0
@@ -248,19 +257,7 @@
         J7zUHsPimOp5HXy61aW8SCBVXhdmr1j3RQf/2Q==
 </value>
   </data>
-  <data name="labelOptimizeScreenCaptureHelp.Text" xml:space="preserve">
-    <value>Determine if the screen capture session should be optimized. If it is optimized then the new image captured is compared with any previous image captured and, if the image is exactly the same, then the screenshot will not be saved so we only write to disk when necessary.</value>
-  </data>
-  <data name="labelLimitHelp.Text" xml:space="preserve">
-    <value>Sets a limit on the number of screen capture cycles. For example, with this option enabled and the numeric value set to 5, you will have screenshots taken five times based on the interval. By default the running screen capture session will stop when it reaches the limit.</value>
-  </data>
-  <data name="labelInitialCaptureHelp.Text" xml:space="preserve">
-    <value>When this option is enabled an initial set of screenshots will be taken before the first cycle of screenshots so that screenshots are taken immediately when a screen capture session starts. Disabling this option will wait for the first cycle of screenshots at the set interval.</value>
-  </data>
-  <data name="labelIntervalHelp.Text" xml:space="preserve">
-    <value>Define the interval at which screenshots should be taken. This can be as fast or as slow as you want. The timer starts when the Start Screen Capture button is clicked, the Start Screen Capture menu option is selected, or a scheduled start time is encountered.</value>
-  </data>
-  <data name="pictureBoxBladeNewImageCaptured.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pictureBoxBladeEnabled1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         /9j/4AAQSkZJRgABAQEAAAAAAAD/2wBDAAoHCBYWFRgWFhYYGRgaHRwcGhoaHBohHBocGiEaHBwaHCEc
         IS4lHiErIRghJzgmKy8xNTU1HiU7QDs0Py40NTH/2wBDAQwMDBAPDxoSERg0HRgdMTE0NDE0MTExNDQ0
@@ -649,6 +646,9 @@
         H4Ve8NvDQVnbf4VZcL94eddKrVWgCKfnCiore1Q4jesIs7T5tRSXEqPB7US1AK5iq2+xDSD5x41Y3+VA
         J7zUHsPimOp5HXy61aW8SCBVXhdmr1j3RQf/2Q==
 </value>
+  </data>
+  <data name="labelOptimizeScreenCaptureHelp.Text" xml:space="preserve">
+    <value>Determine if the screen capture session should be optimized. If it is optimized then the new image captured is compared with any previous image captured and, if the image is exactly the same, then the screenshot will not be saved so we only write to disk when necessary.</value>
   </data>
   <data name="labelScreenshotLabelHelp.Text" xml:space="preserve">
     <value>You can apply a label to each screenshot taken so that you can filter by that label when reviewing screenshots. Type your label in the text field "Screenshot Label", click the "Add To List" button, and ensure the "Apply this label to each screenshot" option is enabled.</value>
