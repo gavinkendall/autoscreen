@@ -80,12 +80,14 @@
             // 
             // richTextBoxBladeDetails
             // 
+            this.richTextBoxBladeDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBoxBladeDetails.BackColor = System.Drawing.Color.White;
             this.richTextBoxBladeDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxBladeDetails.Location = new System.Drawing.Point(2, 211);
             this.richTextBoxBladeDetails.Name = "richTextBoxBladeDetails";
             this.richTextBoxBladeDetails.ReadOnly = true;
-            this.richTextBoxBladeDetails.Size = new System.Drawing.Size(215, 276);
+            this.richTextBoxBladeDetails.Size = new System.Drawing.Size(215, 328);
             this.richTextBoxBladeDetails.TabIndex = 4;
             this.richTextBoxBladeDetails.TabStop = false;
             this.richTextBoxBladeDetails.Text = "";
