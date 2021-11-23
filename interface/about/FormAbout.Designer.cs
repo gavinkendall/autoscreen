@@ -38,12 +38,15 @@
             // 
             // richTextBoxApplication
             // 
+            this.richTextBoxApplication.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxApplication.BackColor = System.Drawing.Color.White;
             this.richTextBoxApplication.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxApplication.Location = new System.Drawing.Point(223, 1);
             this.richTextBoxApplication.Name = "richTextBoxApplication";
             this.richTextBoxApplication.ReadOnly = true;
-            this.richTextBoxApplication.Size = new System.Drawing.Size(542, 486);
+            this.richTextBoxApplication.Size = new System.Drawing.Size(585, 538);
             this.richTextBoxApplication.TabIndex = 1;
             this.richTextBoxApplication.TabStop = false;
             this.richTextBoxApplication.Text = resources.GetString("richTextBoxApplication.Text");
@@ -63,12 +66,14 @@
             // 
             // richTextBoxContributors
             // 
+            this.richTextBoxContributors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBoxContributors.BackColor = System.Drawing.Color.White;
             this.richTextBoxContributors.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxContributors.Location = new System.Drawing.Point(2, 211);
             this.richTextBoxContributors.Name = "richTextBoxContributors";
             this.richTextBoxContributors.ReadOnly = true;
-            this.richTextBoxContributors.Size = new System.Drawing.Size(215, 276);
+            this.richTextBoxContributors.Size = new System.Drawing.Size(215, 328);
             this.richTextBoxContributors.TabIndex = 3;
             this.richTextBoxContributors.TabStop = false;
             this.richTextBoxContributors.Text = resources.GetString("richTextBoxContributors.Text");
@@ -89,7 +94,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(765, 487);
+            this.ClientSize = new System.Drawing.Size(808, 539);
             this.Controls.Add(this.richTextBoxContributors);
             this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.richTextBoxApplication);
