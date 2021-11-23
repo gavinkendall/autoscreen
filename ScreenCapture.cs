@@ -940,33 +940,40 @@ namespace AutoScreenCapture
         /// <returns>A hash of the image.</returns>
         public string GetMD5Hash(Bitmap bitmap, ImageFormat format)
         {
-            byte[] hash = null;
-            byte[] bytes = null;
-
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                bitmap.Save(ms, format.Format);
-                bytes = ms.ToArray();
-            }
+                byte[] hash = null;
+                byte[] bytes = null;
 
-            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
-            {
-                hash = md5.ComputeHash(bytes);
-            }
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitmap.Save(ms, format.Format);
+                    bytes = ms.ToArray();
+                }
 
-            if (hash == null)
+                using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
+                {
+                    hash = md5.ComputeHash(bytes);
+                }
+
+                if (hash == null)
+                {
+                    return null;
+                }
+
+                _sb = new StringBuilder();
+
+                foreach (byte b in hash)
+                {
+                    _sb.Append(b.ToString("x2").ToLower());
+                }
+
+                return _sb.ToString();
+            }
+            catch
             {
                 return null;
             }
-
-            _sb = new StringBuilder();
-
-            foreach (byte b in hash)
-            {
-                _sb.Append(b.ToString("x2").ToLower());
-            }
-
-            return _sb.ToString();
         }
     }
 }

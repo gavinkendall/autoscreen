@@ -204,17 +204,30 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    // This is actually really cool ...
                     if (_screenCapture.OptimizeScreenCapture)
                     {
+                        // If the screenshot already has a hash then just add it to the collection
+                        // and return true because it doesn't need to be hashed again. This could happen
+                        // when we're attemping to encrypt an optimized screenshot. We don't want to hash it again
+                        // while it's being added back into the collection.
+                        if (!string.IsNullOrEmpty(screenshot.Hash))
+                        {
+                            AddScreenshotToCollection(screenshot);
+
+                            return true;
+                        }
+
+                        // This is actually really cool ...
+
+                        // We get the last screenshot of this view.
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
-                        // We generate an MD5 hash for the screenshot.
+                        // We generate an MD5 hash for the screenshot we're currently handling.
                         screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
 
                         if (string.IsNullOrEmpty(screenshot.Hash))
                         {
-                            return result;
+                            return false; // (just in case something went wrong with the hashing)
                         }
 
                         // Then we compare that hash we just generated with the list of hashes we already have and if that list of hashes

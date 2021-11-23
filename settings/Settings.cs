@@ -343,6 +343,21 @@ namespace AutoScreenCapture
                     {
                         Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
                     }
+
+                    // We need to import the value of the OptimizeScreenCapture key and use it as a user setting if we find it as an application setting.
+                    // This is because 2.4 now uses the key as a user setting instead of an application setting.
+                    if (Application.KeyExists("OptimizeScreenCapture"))
+                    {
+                        if (User != null && !string.IsNullOrEmpty(User.Filepath) && fileSystem.FileExists(User.Filepath))
+                        {
+                            Setting optimizeScreenCapture = Application.GetByKey("OptimizeScreenCapture");
+
+                            if (optimizeScreenCapture != null)
+                            {
+                                User.Add(optimizeScreenCapture);
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -467,6 +482,7 @@ namespace AutoScreenCapture
             // Removed in 2.4.0.0
             settingCollection.RemoveByKey("Name");
             settingCollection.RemoveByKey("Version");
+            settingCollection.RemoveByKey("OptimizeScreenCapture");
 
             settingCollection.Save(this, fileSystem);
         }

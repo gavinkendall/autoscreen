@@ -1,6 +1,27 @@
 Auto Screen Capture by Gavin Kendall
 
 
+2.4.0.0
+- Interface redesigned to separate the list of screenshots from setup and configuration elements so you can always see what set of screenshots are selected while you're changing things
+- Setup module changed to be a multi-tab dialog box with helpful explanations on how to use the various setup options
+- Preview button introduced so you can toggle on and off a preview of your displays before you decide to start a screen capture session (since sometimes your display setup can change so this is a quick and easy way to check)
+- Command Line button and system tray icon menu option introduced to open a command line terminal at the location where Auto Screen Capture is running
+- Password protection for always requiring a passphrase to be entered whenever Auto Screen Capture is showing its interface, a running screen capture session is stopped, or the application is going to exit; no more "locking" and "unlocking" as you will always require to enter the correct passphrase until that passphrase has been cleared
+- Screenshots can be encrypted during a screen capture session; such screenshots can only be viewed within Auto Screen Capture and not readable by any other application so if someone grabs a copy of the image file and tries to open it, well ... good luck!
+- Encrypt/Decrypt button introduced for individual screenshots to be encrypted and decrypted
+- Screens can adapt to changes in display setup so a running screen capture session will continue to take screenshots of whatever displays are currently available (which is especially useful for those times you're taking your laptop away from your desk and want the primary display to continue being captured then later return to your desk and want all of your displays captured again)
+- Capture Method option introduced for the Screen form so you can choose between the .NET way of doing a screen capture or the GDI32 way of doing a screen capture depending on what works for you
+- Optimize Screen Capture can be enabled or disabled from the Setup form; it is no longer required to change the setting in the application.xml file as this setting is now part of the interface and saved to the user.xml file
+- System tray icon is green when a screen capture session is running and not being optimized or blue when being optimized
+- New macro tags %x%, %y%, %width%, %height%, and %process% ...
+    %x%        The X value of the screen or region
+    %y%        The Y value of the screen or region
+    %width%    The Width value of the screen or region
+    %height%   The Height value of the screen or region
+    %process%  The name of the active process
+- "Special Schedule" is now an internal schedule instead of an actual schedule that gets created on startup
+- New schedules "Work Schedule - Morning" and "Work Schedule - Afternoon" created on startup just in case people find them useful; they're disabled by default
+- Any sub-forms that are currently open when a screen capture session is about to start will now close
 
 Codename "Boombayah"
 2.3.6.8    Fixed bug with "the handle is invalid" to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.
