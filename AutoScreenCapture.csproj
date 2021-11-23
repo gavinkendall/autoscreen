@@ -400,6 +400,7 @@
     <None Include="autoscreen.pfx" />
     <None Include="help\help-0.rtf" />
     <None Include="help\help-1.rtf" />
+    <None Include="help\help-2.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
     <Content Include="icons\ico\autoscreen-running-optimized.ico" />
     <Content Include="icons\ico\autoscreen.ico" />

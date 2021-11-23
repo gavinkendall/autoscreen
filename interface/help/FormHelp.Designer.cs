@@ -41,7 +41,7 @@
             this.listBoxHelpItems.IntegralHeight = false;
             this.listBoxHelpItems.Location = new System.Drawing.Point(12, 12);
             this.listBoxHelpItems.Name = "listBoxHelpItems";
-            this.listBoxHelpItems.Size = new System.Drawing.Size(165, 368);
+            this.listBoxHelpItems.Size = new System.Drawing.Size(165, 477);
             this.listBoxHelpItems.TabIndex = 0;
             this.listBoxHelpItems.TabStop = false;
             this.listBoxHelpItems.SelectedIndexChanged += new System.EventHandler(this.listBoxHelpItems_SelectedIndexChanged);
@@ -58,7 +58,7 @@
             this.richTextBoxHelpText.Location = new System.Drawing.Point(183, 12);
             this.richTextBoxHelpText.Name = "richTextBoxHelpText";
             this.richTextBoxHelpText.ReadOnly = true;
-            this.richTextBoxHelpText.Size = new System.Drawing.Size(493, 368);
+            this.richTextBoxHelpText.Size = new System.Drawing.Size(651, 477);
             this.richTextBoxHelpText.TabIndex = 0;
             this.richTextBoxHelpText.TabStop = false;
             this.richTextBoxHelpText.Text = "";
@@ -67,13 +67,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(688, 394);
+            this.ClientSize = new System.Drawing.Size(846, 503);
             this.Controls.Add(this.richTextBoxHelpText);
             this.Controls.Add(this.listBoxHelpItems);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(704, 433);
             this.Name = "FormHelp";
-            this.Text = "Auto Screen Capture - Help (BETA)";
+            this.Text = "Auto Screen Capture - Help";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormHelp_FormClosing);
             this.Load += new System.EventHandler(this.FormHelp_Load);

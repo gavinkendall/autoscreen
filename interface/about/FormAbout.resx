@@ -290,13 +290,14 @@ Gavin Kendall
 Guillermo Ruffino
 Tom Pittenger
 
-
 .:: Special Thanks ::.
 Dean Roskell (Lead Designer, BioWare) for providing feedback many years ago
 
-Steve Neunhoffer (Royal Geelong Yacht Club, Australia) who initiated the discussion that eventually became "Application Focus"
+Steve Neunhoffer (Royal Geelong Yacht Club, Australia) who initiated the discussion that eventually became the Application Focus feature
 
-"Cmdr Vex" (@CmdrVex [Twitter]) for testing displays in various resolutions</value>
+"Cmdr Vex" (@CmdrVex [Twitter]) for testing displays in various resolutions
+
+Anik for the suggestion of including encrypted screenshots</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

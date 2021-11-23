@@ -354,14 +354,33 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Setup and First Run\b0\par
-        ///The first thing to do is consider how frequently you want screenshots to be taken. This is defined by a timed interval. You can have screenshots taken every second, every five minutes, or every couple of hours - it&apos;s up to you. The &quot;Interval&quot; section of the Setup module is where you specify the ho [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl276\slmult1\f0\fs22\lang9                     GNU GENERAL PUBLIC LICENSE\par
+        ///                       Version 3, 29 June 2007\par
+        ///\par
+        /// Copyright (C) 2007 Free Software Foundation, Inc. &lt;{{\field{\*\fldinst{HYPERLINK &quot;https://fsf.org/&quot;}}{\fldrslt{https://fsf.org/\ul0\cf0}}}}\f0\fs22 &gt;\par
+        /// Everyone is permitted to copy and distribute verb [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_1 {
             get {
                 return ResourceManager.GetString("help_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Changelog\b0\par
+        ///\par
+        ///\i Codename &quot;Boombayah&quot;\i0\par
+        ///2.3.6.8    Fixed bug with &quot;the handle is invalid&quot; to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.\par
+        ///2.3.6.7    Fixed bug with emailing screenshots from a one t [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_2 {
+            get {
+                return ResourceManager.GetString("help_2", resourceCulture);
             }
         }
         
