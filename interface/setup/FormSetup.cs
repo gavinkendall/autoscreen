@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="FormRegionSelectOptions.cs" company="Gavin Kendall">
+// <copyright file="FormSetup.cs" company="Gavin Kendall">
 //     Copyright (c) 2008-2021 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>The form to manage Region Select options.</summary>
+// <summary>The form to manage Setup options.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -171,6 +171,13 @@ namespace AutoScreenCapture
             }
 
             RefreshApplicationFocusList();
+
+            HelpMessage("This is where to configure your screen capture settings");
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -218,11 +225,6 @@ namespace AutoScreenCapture
 
                 Close();
             }
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private int MapModifierKeyFromUserSetting(ComboBox comboBox, string userSetting)

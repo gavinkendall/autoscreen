@@ -132,7 +132,6 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier1 = new System.Windows.Forms.ComboBox();
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
@@ -1280,18 +1279,6 @@
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // buttonCancel
-            // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(117, 311);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 32;
-            this.buttonCancel.Text = "Cancel";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
             // labelHelp
             // 
             this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -1312,11 +1299,9 @@
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(689, 346);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.tabControlSetup);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1378,7 +1363,6 @@
         private System.Windows.Forms.Label labelSecurityHelp;
         private System.Windows.Forms.Button buttonSetPassphrase;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelHelp;
         private System.Windows.Forms.Label labelStopScreenCapture;
         private System.Windows.Forms.Label labelStartScreenCapture;
