@@ -102,9 +102,9 @@
             this.labelMacro.AutoSize = true;
             this.labelMacro.Location = new System.Drawing.Point(229, 472);
             this.labelMacro.Name = "labelMacro";
-            this.labelMacro.Size = new System.Drawing.Size(40, 13);
+            this.labelMacro.Size = new System.Drawing.Size(26, 13);
             this.labelMacro.TabIndex = 32;
-            this.labelMacro.Text = "Macro:";
+            this.labelMacro.Text = "File:";
             // 
             // textBoxMacro
             // 

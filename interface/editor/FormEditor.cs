@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         /// </summary>
         public Editor EditorObject { get; set; }
 
-        private readonly string defaultArguments = "%filepath%";
+        private readonly string defaultArguments = "$filepath$";
 
         private ComponentResourceManager resources = new ComponentResourceManager(typeof(FormEditor));
 
@@ -64,7 +64,7 @@ namespace AutoScreenCapture
         {
             textBoxName.Focus();
 
-            HelpMessage("This is where to configure an application or script for editing screenshots. The optional %filepath% argument is the filepath of the screenshot");
+            HelpMessage("This is where to configure an application or script for editing screenshots. The optional $filepath$ argument is the filepath of the screenshot");
 
             _toolTip.SetToolTip(checkBoxMakeDefaultEditor, "When checked it will make this editor the default editor");
             _toolTip.SetToolTip(buttonChooseEditor, "Browse for an application or script");

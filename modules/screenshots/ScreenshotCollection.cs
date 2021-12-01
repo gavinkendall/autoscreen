@@ -1246,21 +1246,36 @@ namespace AutoScreenCapture
 
                                 node.ParentNode.RemoveChild(node);
                             }
+
+                            // Delete the specified folder. It's assumed this is the path of the directory to delete.
+                            // We will delete every directory and every file in "deleteFolder" and then delete the specified "deleteFolder" based on its path.
+                            if (!string.IsNullOrEmpty(deleteFolder))
+                            {
+                                // Parse for the special $date$ variable that's used to figure out what folder to delete.
+                                // For example "$date[yyyy-MM-dd]$" will be replaced by the value of "date" (from whatever date is in the current iteration of the loop) in the format yyyy-MM-dd.
+                                string dateVariableRegex = @"(?<Date>\$date\[(?<DateFormat>[dMy\-]+)\]\$)";
+
+                                // Thanks to some regex magic we can accept date formats such as yyyy-MM-dd, dd-MM-yy, ddMMyy, yyMMdd, ddMMyyyy.
+
+                                if (Regex.IsMatch(deleteFolder, dateVariableRegex))
+                                {
+                                    string dateVariable = Regex.Match(deleteFolder, dateVariableRegex).Groups["Date"].Value;
+                                    string dateTimeFormat = Regex.Match(deleteFolder, dateVariableRegex).Groups["DateFormat"].Value;
+
+                                    // Get the date in the specified date format from the date variable.
+                                    // For example if the date is December 1, 2021 then all instances of "$date[yyyy-MM-dd]$" will return "2021-12-01".
+                                    deleteFolder = deleteFolder.Replace(dateVariable, date.ToString(dateTimeFormat));
+                                }
+
+                                // It's possible to use macro tags in the folder path for "deleteFolder" so make sure we parse them.
+                                deleteFolder = macroParser.ParseTags(deleteFolder, macroTagCollection, log);
+
+                                // Once the macro tags were parsed (if any were found) then we delete the folder and everything inside it.
+                                _fileSystem.DeleteDirectory(deleteFolder);
+                                _log.WriteDebugMessage($"Deleted directory \"{deleteFolder}\"");
+                            }
                         }
                     }
-                }
-
-                // Delete the specified folder. It's assumed this is the path of the directory to delete.
-                // We will delete every directory and every file in "deleteFolder" and then delete the specified "deleteFolder" based on its path.
-                // By default the trigger named "Keep screenshots for 30 days" uses the %30daysbehind% macro tag in the folder's path.
-                if (!string.IsNullOrEmpty(deleteFolder))
-                {
-                    // It's possible to use macro tags in the folder path for "deleteFolder" so make sure we parse them.
-                    deleteFolder = macroParser.ParseTags(deleteFolder, macroTagCollection, log);
-
-                    // Once the macro tags were parsed (if any were found) then we delete the folder and everything inside it.
-                    _fileSystem.DeleteDirectory(deleteFolder);
-                    _log.WriteDebugMessage($"Deleted directory \"{deleteFolder}\"");
                 }
             }
             catch (UnauthorizedAccessException)

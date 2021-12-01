@@ -114,17 +114,26 @@ namespace AutoScreenCapture
                                             log.WriteDebugMessage("An old version of the editors.xml file was detected. Attempting upgrade to new schema.");
 
                                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
+                                            Version v2400 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, Settings.CODEVERSION_BLADE);
                                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
                                             {
                                                 log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                                                // Starting with 2.3.0.0 the %screenshot% argument tag became the %filepath% argument tag.
-                                                value = value.Replace("%screenshot%", "%filepath%");
+                                                // Starting with 2.3.0.0 the %screenshot% argument tag became the $filepath$ argument tag.
+                                                value = value.Replace("%screenshot%", "$filepath$");
 
                                                 // Set this editor as the default editor. Version 2.3 requires at least one editor to be the default editor.
                                                 config.Settings.User.SetValueByKey("DefaultEditor", editor.Name);
+                                            }
+
+                                            if (v2400 != null && configVersion != null && configVersion.VersionNumber < v2400.VersionNumber)
+                                            {
+                                                log.WriteDebugMessage("Boombayah 2.3.6.8 or older detected");
+
+                                                // 2.4 uses $filepath$ instead of %filepath%
+                                                value = value.Replace("%filepath%", "$filepath$");
                                             }
                                         }
 
@@ -164,7 +173,7 @@ namespace AutoScreenCapture
                     // Microsoft Paint
                     if (fileSystem.FileExists(@"C:\Windows\System32\mspaint.exe"))
                     {
-                        Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "%filepath%"));
+                        Add(new Editor("Microsoft Paint", @"C:\Windows\System32\mspaint.exe", "$filepath$"));
 
                         // We'll make Microsoft Paint the default image editor because usually everyone has it already.
                         config.Settings.User.SetValueByKey("DefaultEditor", "Microsoft Paint");
@@ -173,7 +182,7 @@ namespace AutoScreenCapture
                     // Snagit Editor
                     if (fileSystem.FileExists(@"C:\Program Files\TechSmith\Snagit 2020\SnagitEditor.exe"))
                     {
-                        Add(new Editor("Snagit Editor", @"C:\Program Files\TechSmith\Snagit 2020\SnagitEditor.exe", "%filepath%"));
+                        Add(new Editor("Snagit Editor", @"C:\Program Files\TechSmith\Snagit 2020\SnagitEditor.exe", "$filepath$"));
 
                         // If the user has Snagit installed then make the Snagit Editor the default editor.
                         config.Settings.User.SetValueByKey("DefaultEditor", "Snagit Editor");
@@ -182,7 +191,7 @@ namespace AutoScreenCapture
                     // ShareX Image Editor
                     if (fileSystem.FileExists(@"C:\Program Files\ShareX\ShareX.exe"))
                     {
-                        Add(new Editor("ShareX Image Editor", @"C:\Program Files\ShareX\ShareX.exe", "-ImageEditor %filepath%"));
+                        Add(new Editor("ShareX Image Editor", @"C:\Program Files\ShareX\ShareX.exe", "-ImageEditor $filepath$"));
 
                         // If the user has ShareX installed then make the ShareX Image Editor the default editor instead of Microsoft Paint (or Snagit).
                         config.Settings.User.SetValueByKey("DefaultEditor", "ShareX Image Editor");
@@ -192,38 +201,38 @@ namespace AutoScreenCapture
                     if (fileSystem.FileExists(@"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"))
                     {
                         // This is for making a screenshot an attachment to a new email message in Outlook.
-                        Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a %filepath%"));
+                        Add(new Editor("Microsoft Outlook", @"C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE", "/c ipm.note /a $filepath$"));
                     }
 
                     // Chrome
                     if (fileSystem.FileExists(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"))
                     {
-                        Add(new Editor("Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "%filepath%"));
+                        Add(new Editor("Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "$filepath$"));
                     }
 
                     // Firefox
                     if (fileSystem.FileExists(@"C:\Program Files\Mozilla Firefox\firefox.exe"))
                     {
-                        Add(new Editor("Firefox", @"C:\Program Files\Mozilla Firefox\firefox.exe", "%filepath%"));
+                        Add(new Editor("Firefox", @"C:\Program Files\Mozilla Firefox\firefox.exe", "$filepath$"));
                     }
 
                     // GIMP
                     // We assume GIMP will be in the default location available for all users on 64-bit systems.
                     if (fileSystem.FileExists(@"C:\Program Files\GIMP 2\bin\gimp-2.10.exe"))
                     {
-                        Add(new Editor("GIMP", @"C:\Program Files\GIMP 2\bin\gimp-2.10.exe", "%filepath%"));
+                        Add(new Editor("GIMP", @"C:\Program Files\GIMP 2\bin\gimp-2.10.exe", "$filepath$"));
                     }
 
                     // Glimpse
                     if (fileSystem.FileExists(@"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe"))
                     {
-                        Add(new Editor("Glimpse", @"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe", "%filepath%"));
+                        Add(new Editor("Glimpse", @"C:\Program Files (x86)\Glimpse Image Editor\Glimpse 0.1.2\bin\Glimpse.exe", "$filepath$"));
                     }
 
                     // Clip Studio Paint
                     if (fileSystem.FileExists(@"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe"))
                     {
-                        Add(new Editor("Clip Studio Paint", @"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe", "%filepath%"));
+                        Add(new Editor("Clip Studio Paint", @"C:\Program Files\CELSYS\CLIP STUDIO 1.5\CLIP STUDIO PAINT\CLIPStudioPaint.exe", "$filepath$"));
                     }
 
                     SaveToXmlFile(config.Settings, fileSystem, log);

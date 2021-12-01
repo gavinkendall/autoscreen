@@ -77,6 +77,11 @@ namespace AutoScreenCapture
         public const string CODENAME_BLADE = "Blade";
 
         /// <summary>
+        /// The version number of the first version in the 2.4 series.
+        /// </summary>
+        public const string CODEVERSION_BLADE = "2.4.0.0";
+
+        /// <summary>
         /// The version number of the first version in the 2.3 series.
         /// </summary>
         public const string CODEVERSION_BOOMBAYAH = "2.3.0.0";

@@ -234,17 +234,16 @@ namespace AutoScreenCapture
         /// <returns>Determines if the editor was executed successfully or not.</returns>
         private bool RunEditor(Editor editor, Screenshot screenshot)
         {
-            // Execute the chosen image editor. If the %filepath% argument happens to be included
+            // Execute the chosen image editor. If the $filepath$ argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
             if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
                 _fileSystem.FileExists(editor.Application) && _fileSystem.FileExists(screenshot.Path)))
             {
                 _log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
                 _log.WriteDebugMessage("Application: " + editor.Application);
-                _log.WriteDebugMessage("Arguments before %filepath% tag replacement: " + editor.Arguments);
-                _log.WriteDebugMessage("Arguments after %filepath% tag replacement: " + editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
+                _log.WriteDebugMessage("Arguments: " + editor.Arguments.Replace("$filepath$", "\"" + screenshot.Path + "\""));
 
-                _ = Process.Start(editor.Application, editor.Arguments.Replace("%filepath%", "\"" + screenshot.Path + "\""));
+                _ = Process.Start(editor.Application, editor.Arguments.Replace("$filepath$", "\"" + screenshot.Path + "\""));
 
                 // We successfully opened the editor with the given screenshot path.
                 return true;

@@ -421,7 +421,6 @@ namespace AutoScreenCapture
                     Add(new MacroTag(macroParser, "width", "The Width value of the screen or region", MacroTagType.Width, enable: true));
                     Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
                     Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
-                    Add(new MacroTag(macroParser, "30daysbehind", "30 days behind the current date (%30daysbehind%)", MacroTagType.DateTimeFormatExpression, "{day-30}[yyyy-MM-dd]", active: true));
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
