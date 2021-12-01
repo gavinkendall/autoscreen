@@ -1259,12 +1259,15 @@ namespace AutoScreenCapture
 
                                 if (Regex.IsMatch(deleteFolder, dateVariableRegex))
                                 {
-                                    string dateVariable = Regex.Match(deleteFolder, dateVariableRegex).Groups["Date"].Value;
-                                    string dateTimeFormat = Regex.Match(deleteFolder, dateVariableRegex).Groups["DateFormat"].Value;
+                                    foreach (Match match in Regex.Matches(deleteFolder, dateVariableRegex))
+                                    {
+                                        string dateVariable = match.Groups["Date"].Value;
+                                        string dateTimeFormat = match.Groups["DateFormat"].Value;
 
-                                    // Get the date in the specified date format from the date variable.
-                                    // For example if the date is December 1, 2021 then all instances of "$date[yyyy-MM-dd]$" will return "2021-12-01".
-                                    deleteFolder = deleteFolder.Replace(dateVariable, date.ToString(dateTimeFormat));
+                                        // Get the date in the specified date format from the date variable.
+                                        // For example if the date is December 1, 2021 then all instances of "$date[yyyy-MM-dd]$" will return "2021-12-01".
+                                        deleteFolder = deleteFolder.Replace(dateVariable, date.ToString(dateTimeFormat));
+                                    }
                                 }
 
                                 // It's possible to use macro tags in the folder path for "deleteFolder" so make sure we parse them.
