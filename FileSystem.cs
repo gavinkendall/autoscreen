@@ -72,7 +72,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Default screenshots folder.
         /// </summary>
-        public string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\%date%\\";
+        public string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
 
         /// <summary>
         /// Default debug folder.

@@ -361,8 +361,8 @@ namespace AutoScreenCapture
             }
 
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
-            string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, config: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log)) + // Folder path
-                _macroParser.ParseTags(preview: false, config: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log); // Filename path
+            string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log)) + // Folder path
+                _macroParser.ParseTags(preview: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log); // Filename path
 
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {

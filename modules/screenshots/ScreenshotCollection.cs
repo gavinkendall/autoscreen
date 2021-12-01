@@ -1201,8 +1201,15 @@ namespace AutoScreenCapture
                             _slideList.Remove(screenshot.Slide);
                             _slideNameList.Remove(screenshot.Slide.Name);
 
-                            _log.WriteDebugMessage($"Deleting \"{screenshot.Path}\"");
-                            _fileSystem.DeleteFile(screenshot.Path);
+                            if (_fileSystem.FileExists(screenshot.Path))
+                            {
+                                _fileSystem.DeleteFile(screenshot.Path);
+                                _log.WriteDebugMessage($"Deleted file \"{screenshot.Path}\"");
+                            }
+                            else
+                            {
+                                _log.WriteDebugMessage($"File \"{screenshot.Path}\" not found");
+                            }
                         }
 
                         foreach (XmlNode node in xDoc.SelectNodes(SCREENSHOT_XPATH))
@@ -1241,8 +1248,15 @@ namespace AutoScreenCapture
                             {
                                 string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                                _fileSystem.DeleteFile(path);
-                                _log.WriteDebugMessage($"Deleted file \"{path}\"");
+                                if (_fileSystem.FileExists(path))
+                                {
+                                    _fileSystem.DeleteFile(path);
+                                    _log.WriteDebugMessage($"Deleted file \"{path}\"");
+                                }
+                                else
+                                {
+                                    _log.WriteDebugMessage($"File \"{path}\" not found");
+                                }
 
                                 node.ParentNode.RemoveChild(node);
                             }
@@ -1262,11 +1276,11 @@ namespace AutoScreenCapture
                                     foreach (Match match in Regex.Matches(deleteFolder, dateVariableRegex))
                                     {
                                         string dateVariable = match.Groups["Date"].Value;
-                                        string dateTimeFormat = match.Groups["DateFormat"].Value;
+                                        string dateFormat = match.Groups["DateFormat"].Value;
 
                                         // Get the date in the specified date format from the date variable.
                                         // For example if the date is December 1, 2021 then all instances of "$date[yyyy-MM-dd]$" will return "2021-12-01".
-                                        deleteFolder = deleteFolder.Replace(dateVariable, date.ToString(dateTimeFormat));
+                                        deleteFolder = deleteFolder.Replace(dateVariable, date.ToString(dateFormat));
                                     }
                                 }
 
@@ -1274,8 +1288,15 @@ namespace AutoScreenCapture
                                 deleteFolder = macroParser.ParseTags(deleteFolder, macroTagCollection, log);
 
                                 // Once the macro tags were parsed (if any were found) then we delete the folder and everything inside it.
-                                _fileSystem.DeleteDirectory(deleteFolder);
-                                _log.WriteDebugMessage($"Deleted directory \"{deleteFolder}\"");
+                                if (_fileSystem.DirectoryExists(deleteFolder))
+                                {
+                                    _fileSystem.DeleteDirectory(deleteFolder);
+                                    _log.WriteDebugMessage($"Deleted directory \"{deleteFolder}\"");
+                                }
+                                else
+                                {
+                                    _log.WriteDebugMessage($"Directory \"{deleteFolder}\" not found");
+                                }
                             }
                         }
                     }

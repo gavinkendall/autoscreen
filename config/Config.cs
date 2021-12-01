@@ -48,6 +48,11 @@ namespace AutoScreenCapture
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
         /// <summary>
+        /// A collection of macro tags.
+        /// </summary>
+        private MacroTagCollection _macroTagCollection { get; set; }
+
+        /// <summary>
         /// The log file to use.
         /// </summary>
         public Log Log { get; set; }
@@ -91,6 +96,19 @@ namespace AutoScreenCapture
 
                 Settings = new Settings();
                 MacroParser = new MacroParser(Settings);
+
+                _macroTagCollection = new MacroTagCollection();
+                _macroTagCollection.Add(new MacroTag(MacroParser, "date", "The current date (%date%)", MacroTagType.DateTimeFormat, MacroParser.DateFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "time", "The current time (%time%)", MacroTagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "year", "The current year (%year%)", MacroTagType.DateTimeFormat, MacroParser.YearFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "month", "The current month (%month%)", MacroTagType.DateTimeFormat, MacroParser.MonthFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "day", "The current day (%day%)", MacroTagType.DateTimeFormat, MacroParser.DayFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "hour", "The current hour (%hour%)", MacroTagType.DateTimeFormat, MacroParser.HourFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "minute", "The current minute (%minute%)", MacroTagType.DateTimeFormat, MacroParser.MinuteFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "second", "The current second (%second%)", MacroTagType.DateTimeFormat, MacroParser.SecondFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "millisecond", "The current millisecond (%millisecond%)", MacroTagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "user", "The user using this computer (%user%)", MacroTagType.User, enable: true));
+                _macroTagCollection.Add(new MacroTag(MacroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, enable: true));
 
                 string configDirectory = FileSystem.GetDirectoryName(FileSystem.ConfigFile);
 
@@ -223,37 +241,37 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
                 {
-                    FileSystem.ScreenshotsFolder = FileSystem.DefaultScreenshotsFolder;
+                    FileSystem.ScreenshotsFolder = MacroParser.ParseTags(FileSystem.DefaultScreenshotsFolder, _macroTagCollection, Log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
 
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultScreenshotsFolder))
+                    if (!FileSystem.DirectoryExists(FileSystem.ScreenshotsFolder))
                     {
-                        FileSystem.CreateDirectory(FileSystem.DefaultScreenshotsFolder);
+                        FileSystem.CreateDirectory(FileSystem.ScreenshotsFolder);
                     }
                 }
 
                 if (string.IsNullOrEmpty(FileSystem.DebugFolder))
                 {
-                    FileSystem.DebugFolder = FileSystem.DefaultDebugFolder;
+                    FileSystem.DebugFolder = MacroParser.ParseTags(FileSystem.DefaultDebugFolder, _macroTagCollection, Log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DefaultDebugFolder);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DebugFolder);
 
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultDebugFolder))
+                    if (!FileSystem.DirectoryExists(FileSystem.DebugFolder))
                     {
-                        FileSystem.CreateDirectory(FileSystem.DefaultDebugFolder);
+                        FileSystem.CreateDirectory(FileSystem.DebugFolder);
                     }
                 }
 
                 if (string.IsNullOrEmpty(FileSystem.LogsFolder))
                 {
-                    FileSystem.LogsFolder = FileSystem.DefaultLogsFolder;
+                    FileSystem.LogsFolder = MacroParser.ParseTags(FileSystem.DefaultLogsFolder, _macroTagCollection, Log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.DefaultLogsFolder);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.LogsFolder);
 
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultLogsFolder))
+                    if (!FileSystem.DirectoryExists(FileSystem.LogsFolder))
                     {
-                        FileSystem.CreateDirectory(FileSystem.DefaultLogsFolder);
+                        FileSystem.CreateDirectory(FileSystem.LogsFolder);
                     }
                 }
             }
@@ -276,21 +294,21 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(FileSystem.CommandFile))
                 {
-                    FileSystem.CommandFile = FileSystem.DefaultCommandFile;
+                    FileSystem.CommandFile = MacroParser.ParseTags(FileSystem.DefaultCommandFile, _macroTagCollection, log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.DefaultCommandFile);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.CommandFile);
 
-                    if (!FileSystem.FileExists(FileSystem.DefaultCommandFile))
+                    if (!FileSystem.FileExists(FileSystem.CommandFile))
                     {
-                        FileSystem.CreateFile(FileSystem.DefaultCommandFile);
+                        FileSystem.CreateFile(FileSystem.CommandFile);
                     }
                 }
 
                 if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
                 {
-                    FileSystem.ApplicationSettingsFile = FileSystem.DefaultApplicationSettingsFile;
+                    FileSystem.ApplicationSettingsFile = MacroParser.ParseTags(FileSystem.DefaultApplicationSettingsFile, _macroTagCollection, log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
 
                     if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
                     {
@@ -300,9 +318,9 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
                 {
-                    FileSystem.SmtpSettingsFile = FileSystem.DefaultSmtpSettingsFile;
+                    FileSystem.SmtpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSmtpSettingsFile, _macroTagCollection, log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.SmtpSettingsFile);
 
                     if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
                     {
@@ -312,9 +330,9 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
                 {
-                    FileSystem.SftpSettingsFile = FileSystem.DefaultSftpSettingsFile;
+                    FileSystem.SftpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSftpSettingsFile, _macroTagCollection, log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.SftpSettingsFile);
 
                     if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
                     {
@@ -324,9 +342,9 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                 {
-                    FileSystem.UserSettingsFile = FileSystem.DefaultUserSettingsFile;
+                    FileSystem.UserSettingsFile = MacroParser.ParseTags(FileSystem.DefaultUserSettingsFile, _macroTagCollection, log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.DefaultUserSettingsFile);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.UserSettingsFile);
 
                     if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
                     {
@@ -426,11 +444,7 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            MacroTagCollection tagCollection = new MacroTagCollection();
-            tagCollection.Add(new MacroTag(MacroParser, "user", "The user using this computer (%user%)", MacroTagType.User, enable: true));
-            tagCollection.Add(new MacroTag(MacroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, enable: true));
-
-            path = MacroParser.ParseTags(preview: false, config: true, path, null, string.Empty, string.Empty, tagCollection, Log);
+            path = MacroParser.ParseTags(path, _macroTagCollection, Log);
 
             if (FileSystem.HasExtension(path))
             {

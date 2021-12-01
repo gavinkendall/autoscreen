@@ -378,8 +378,8 @@ namespace AutoScreenCapture
                 Format = ImageFormatCollection.GetByName(comboBoxFormat.Text)
             };
 
-            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, config: false, textBoxFolder.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log) +
-                _macroParser.ParseTags(preview: true, config: false, textBoxMacro.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log);
+            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFolder.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log) +
+                _macroParser.ParseTags(preview: true, textBoxMacro.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log);
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
