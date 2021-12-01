@@ -530,8 +530,11 @@ namespace AutoScreenCapture
                 numericUpDownDays.Enabled = true;
 
                 // Suggest some values to help out the user. These are the default values used by the "Keep screenshots for 30 days" trigger.
-                numericUpDownDays.Value = 30;
-                textBoxTriggerValue.Text = _fileSystem.DefaultScreenshotsFolder + "$date[yyyy-MM-dd]$";
+                if (TriggerObject == null)
+                {
+                    numericUpDownDays.Value = 30;
+                    textBoxTriggerValue.Text = _fileSystem.DefaultScreenshotsFolder + "$date[yyyy-MM-dd]$";
+                }
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
@@ -761,7 +764,7 @@ namespace AutoScreenCapture
 
                 // Delete Screenshots
                 case 18:
-                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days (30 days is the suggested default). It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete old date-stamped folders.";
+                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. Use \"Days 0\" for today's date. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete old date-stamped folders.";
                     break;
 
                 // Apply Label

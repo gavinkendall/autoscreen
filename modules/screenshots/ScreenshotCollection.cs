@@ -1181,11 +1181,11 @@ namespace AutoScreenCapture
         /// Deletes screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
         /// </summary>
         /// <param name="days">The number of days to consider.</param>
-        /// <param name="deleteFolder">The folder to delete. This value can contain macro tags.</param>
+        /// <param name="folder">The folder to delete. The folder path may contain macro tags.</param>
         /// <param name="macroParser">The macro tag parser to use.</param>
         /// <param name="macroTagCollection">A collectino of macro tags.</param>
         /// <param name="log">The log to use.</param>
-        public void DeleteScreenshots(int days, string deleteFolder, MacroParser macroParser, MacroTagCollection macroTagCollection, Log log)
+        public void DeleteScreenshots(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Log log)
         {
             try
             {
@@ -1216,6 +1216,9 @@ namespace AutoScreenCapture
                         {
                             node.ParentNode.RemoveChild(node);
                         }
+
+                        // Delete everything in the specified folder and delete the folder itself.
+                        DeleteFolderByDate(folder, DateTime.Now, macroParser, macroTagCollection, log);
                     }
                 }
                 else
@@ -1261,43 +1264,8 @@ namespace AutoScreenCapture
                                 node.ParentNode.RemoveChild(node);
                             }
 
-                            // Delete the specified folder. It's assumed this is the path of the directory to delete.
-                            // We will delete every directory and every file in "deleteFolder" and then delete the specified "deleteFolder" based on its path.
-                            if (!string.IsNullOrEmpty(deleteFolder))
-                            {
-                                // Parse for the special $date$ variable that's used to figure out what folder to delete.
-                                // For example "$date[yyyy-MM-dd]$" will be replaced by the value of "date" (from whatever date is in the current iteration of the loop) in the format yyyy-MM-dd.
-                                string dateVariableRegex = @"(?<Date>\$date\[(?<DateFormat>[dMy\-]+)\]\$)";
-
-                                // Thanks to some regex magic we can accept date formats such as yyyy-MM-dd, dd-MM-yy, ddMMyy, yyMMdd, ddMMyyyy.
-
-                                if (Regex.IsMatch(deleteFolder, dateVariableRegex))
-                                {
-                                    foreach (Match match in Regex.Matches(deleteFolder, dateVariableRegex))
-                                    {
-                                        string dateVariable = match.Groups["Date"].Value;
-                                        string dateFormat = match.Groups["DateFormat"].Value;
-
-                                        // Get the date in the specified date format from the date variable.
-                                        // For example if the date is December 1, 2021 then all instances of "$date[yyyy-MM-dd]$" will return "2021-12-01".
-                                        deleteFolder = deleteFolder.Replace(dateVariable, date.ToString(dateFormat));
-                                    }
-                                }
-
-                                // It's possible to use macro tags in the folder path for "deleteFolder" so make sure we parse them.
-                                deleteFolder = macroParser.ParseTags(deleteFolder, macroTagCollection, log);
-
-                                // Once the macro tags were parsed (if any were found) then we delete the folder and everything inside it.
-                                if (_fileSystem.DirectoryExists(deleteFolder))
-                                {
-                                    _fileSystem.DeleteDirectory(deleteFolder);
-                                    _log.WriteDebugMessage($"Deleted directory \"{deleteFolder}\"");
-                                }
-                                else
-                                {
-                                    _log.WriteDebugMessage($"Directory \"{deleteFolder}\" not found");
-                                }
-                            }
+                            // Let's see if we can delete the folder by the date of the current iteration if a folder path has been provided.
+                            DeleteFolderByDate(folder, date, macroParser, macroTagCollection, log);
                         }
                     }
                 }
@@ -1309,6 +1277,55 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 _log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshots", ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a folder based on a given date.
+        /// </summary>
+        /// <param name="folder">The path of the folder to delete.</param>
+        /// <param name="date">The date to consider when deleting the folder and its contents.</param>
+        /// <param name="macroParser">The macro parser to use.</param>
+        /// <param name="macroTagCollection">The macro tag collection to use.</param>
+        /// <param name="log">The log to use.</param>
+        private void DeleteFolderByDate(string folder, DateTime date, MacroParser macroParser, MacroTagCollection macroTagCollection, Log log)
+        {
+            // Delete the specified folder. It's assumed this is the path of the directory to delete.
+            // We will delete every directory and every file in "folder" and then delete the specified "folder" based on its path.
+            if (!string.IsNullOrEmpty(folder))
+            {
+                // Parse for the special $date$ variable that's used to figure out what folder to delete.
+                // For example "$date[yyyy-MM-dd]$" will be replaced by the value of "date" in the format yyyy-MM-dd.
+                string dateVariableRegex = @"(?<Date>\$date\[(?<DateFormat>[dMy\-]+)\]\$)";
+
+                // Thanks to some regex magic we can accept date formats such as yyyy-MM-dd, dd-MM-yy, ddMMyy, yyMMdd, ddMMyyyy.
+
+                if (Regex.IsMatch(folder, dateVariableRegex))
+                {
+                    foreach (Match match in Regex.Matches(folder, dateVariableRegex))
+                    {
+                        string dateVariable = match.Groups["Date"].Value;
+                        string dateFormat = match.Groups["DateFormat"].Value;
+
+                        // Get the date in the specified date format from the date variable.
+                        // For example if the date is December 1, 2021 then all instances of "$date[yyyy-MM-dd]$" will return "2021-12-01".
+                        folder = folder.Replace(dateVariable, date.ToString(dateFormat));
+                    }
+                }
+
+                // It's possible to use macro tags in the folder path for "folder" so make sure we parse them.
+                folder = macroParser.ParseTags(folder, macroTagCollection, log);
+
+                // Once the macro tags were parsed (if any were found) then we delete the folder and everything inside it.
+                if (_fileSystem.DirectoryExists(folder))
+                {
+                    _fileSystem.DeleteDirectory(folder);
+                    _log.WriteDebugMessage($"Deleted directory \"{folder}\"");
+                }
+                else
+                {
+                    _log.WriteDebugMessage($"Directory \"{folder}\" not found");
+                }
             }
         }
     }
