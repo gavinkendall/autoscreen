@@ -1181,8 +1181,11 @@ namespace AutoScreenCapture
         /// Deletes screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
         /// </summary>
         /// <param name="days">The number of days to consider.</param>
-        /// <param name="macroParser"></param>
-        public void DeleteScreenshots(int days, MacroParser macroParser)
+        /// <param name="deleteFolder">The folder to delete. This value can contain macro tags.</param>
+        /// <param name="macroParser">The macro tag parser to use.</param>
+        /// <param name="macroTagCollection">A collectino of macro tags.</param>
+        /// <param name="log">The log to use.</param>
+        public void DeleteScreenshots(int days, string deleteFolder, MacroParser macroParser, MacroTagCollection macroTagCollection, Log log)
         {
             try
             {
@@ -1238,13 +1241,26 @@ namespace AutoScreenCapture
                             {
                                 string path = node.SelectSingleNode("path").FirstChild.Value;
 
-                                _log.WriteDebugMessage($"Deleting \"{path}\"");
                                 _fileSystem.DeleteFile(path);
+                                _log.WriteDebugMessage($"Deleted file \"{path}\"");
 
                                 node.ParentNode.RemoveChild(node);
                             }
                         }
                     }
+                }
+
+                // Delete the specified folder. It's assumed this is the path of the directory to delete.
+                // We will delete every directory and every file in "deleteFolder" and then delete the specified "deleteFolder" based on its path.
+                // By default the trigger named "Keep screenshots for 30 days" uses the %30daysbehind% macro tag in the folder's path.
+                if (!string.IsNullOrEmpty(deleteFolder))
+                {
+                    // It's possible to use macro tags in the folder path for "deleteFolder" so make sure we parse them.
+                    deleteFolder = macroParser.ParseTags(deleteFolder, macroTagCollection, log);
+
+                    // Once the macro tags were parsed (if any were found) then we delete the folder and everything inside it.
+                    _fileSystem.DeleteDirectory(deleteFolder);
+                    _log.WriteDebugMessage($"Deleted directory \"{deleteFolder}\"");
                 }
             }
             catch (UnauthorizedAccessException)

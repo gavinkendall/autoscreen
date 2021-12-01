@@ -366,7 +366,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void RunDeleteSlides(DoWorkEventArgs e)
         {
-            _fileSystem.DeleteFilesInDirectory(_fileSystem.SlidesFolder);
+            _fileSystem.DeleteDirectory(_fileSystem.SlidesFolder);
         }
 
         /// <summary>

@@ -372,6 +372,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitleAsNoMatch, "Set Active Window Title As No Match").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowSystemTrayIcon, "Show System Tray Icon").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.HideSystemTrayIcon, "Hide System Tray Icon").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.TakeScreenshot, "Take Screenshot").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -500,7 +501,9 @@ namespace AutoScreenCapture
             labelDays.Enabled = false;
             labelInterval.Enabled = false;
             labelTriggerValue.Enabled = false;
+
             textBoxTriggerValue.Enabled = false;
+            textBoxTriggerValue.Text = string.Empty;
 
             numericUpDownHoursInterval.Enabled = false;
             numericUpDownMinutesInterval.Enabled = false;
@@ -519,8 +522,16 @@ namespace AutoScreenCapture
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshots)
             {
+                labelTriggerValue.Text = "Delete Folder";
+                labelTriggerValue.Enabled = true;
+                textBoxTriggerValue.Enabled = true;
+
                 labelDays.Enabled = true;
                 numericUpDownDays.Enabled = true;
+
+                // Suggest some values to help out the user. These are the default values used by the "Keep screenshots for 30 days" trigger.
+                numericUpDownDays.Value = 30;
+                textBoxTriggerValue.Text = _fileSystem.DefaultScreenshotsFolder + "%30daysbehind%";
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
@@ -695,62 +706,62 @@ namespace AutoScreenCapture
 
                 // Set Screen Capture Interval
                 case 7:
-                    textBoxActionHelp.Text = "Sets the timer's screen capture interval.";
+                    textBoxActionHelp.Text = "Set the timer's screen capture interval.";
                     break;
 
-                // Activate Screen
+                // Enable Screen
                 case 8:
-                    textBoxActionHelp.Text = "Activates a specified Screen.";
+                    textBoxActionHelp.Text = "Enable a specified Screen.";
                     break;
 
-                // Activate Region
+                // Enable Region
                 case 9:
-                    textBoxActionHelp.Text = "Activates a specified Region.";
+                    textBoxActionHelp.Text = "Enable a specified Region.";
                     break;
 
-                // Activate Schedule
+                // Enable Schedule
                 case 10:
-                    textBoxActionHelp.Text = "Activates a specified Schedule.";
+                    textBoxActionHelp.Text = "Enable a specified Schedule.";
                     break;
 
-                // Activate Macro Tag
+                // Enable Macro Tag
                 case 11:
-                    textBoxActionHelp.Text = "Activate a specified Macro Tag.";
+                    textBoxActionHelp.Text = "Enable a specified Macro Tag.";
                     break;
 
-                // Activate Trigger
+                // Enable Trigger
                 case 12:
-                    textBoxActionHelp.Text = "Activate a specified Trigger.";
+                    textBoxActionHelp.Text = "Enable a specified Trigger.";
                     break;
 
-                // Deactivate Screen
+                // Disable Screen
                 case 13:
-                    textBoxActionHelp.Text = "Deactivate a specified Screen.";
+                    textBoxActionHelp.Text = "Disable a specified Screen.";
                     break;
 
-                // Deactivate Region
+                // Disable Region
                 case 14:
-                    textBoxActionHelp.Text = "Deactivate a specified Region.";
+                    textBoxActionHelp.Text = "Disable a specified Region.";
                     break;
 
-                // Deactivate Schedule
+                // Disable Schedule
                 case 15:
-                    textBoxActionHelp.Text = "Deactivate a specified Schedule.";
+                    textBoxActionHelp.Text = "Disable a specified Schedule.";
                     break;
 
-                // Deactivate Macro Tag
+                // Disable Macro Tag
                 case 16:
-                    textBoxActionHelp.Text = "Deactivate a specified Macro Tag.";
+                    textBoxActionHelp.Text = "Disable a specified Macro Tag.";
                     break;
 
-                // Deactivate Trigger
+                // Disable Trigger
                 case 17:
-                    textBoxActionHelp.Text = "Deactivate a specified Trigger.";
+                    textBoxActionHelp.Text = "Disable a specified Trigger.";
                     break;
 
                 // Delete Screenshots
                 case 18:
-                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days.";
+                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. By default 30 days are suggested. It is also recommended to use the %30daysbehind% macro tag in the Delete Folder value to delete old folders.";
                     break;
 
                 // Apply Label
@@ -776,6 +787,21 @@ namespace AutoScreenCapture
                 // Set Active Window Title As No Match
                 case 23:
                     textBoxActionHelp.Text = "Set the text used for comparison against the title of the active window and do not match on the given text.";
+                    break;
+
+                // Show System Tray Icon
+                case 24:
+                    textBoxActionHelp.Text = "Show the system tray icon.";
+                    break;
+
+                // Hide System Tray Icon
+                case 25:
+                    textBoxActionHelp.Text = "Hide the system tray icon.";
+                    break;
+
+                // Take Screenshot
+                case 26:
+                    textBoxActionHelp.Text = "Take a set of screenshots.";
                     break;
             }
         }

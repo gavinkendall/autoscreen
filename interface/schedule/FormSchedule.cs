@@ -64,7 +64,7 @@ namespace AutoScreenCapture
 
             HelpMessage("This is where to configure a schedule to determine when screenshots should be taken");
 
-            _toolTip.SetToolTip(checkBoxEnable, "The times and days in this schedule will be considered if Active is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxEnable, "The day and time values in this schedule will be considered if Enable is checked (turned on)");
             _toolTip.SetToolTip(dateTimePickerCaptureAt, "The time at which screenshots will be taken for a single capture cycle");
             _toolTip.SetToolTip(dateTimePickerStartAt, "The time at which a screen capture session will start running");
             _toolTip.SetToolTip(dateTimePickerStopAt, "The time at which a running screen capture session will stop");

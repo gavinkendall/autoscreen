@@ -35,8 +35,7 @@ namespace AutoScreenCapture
             _helpTips.Add("Help tips are displayed here in the help bar. You can either click this help bar to show the next tip or wait until the next tip is shown");
             _helpTips.Add("The Start Screen Capture button begins a session of taking screenshots at the specified interval. The application will run in your system tray");
             _helpTips.Add("The calendar shows you which days screenshots were taken. Any date shown in bold indicates screenshots were taken on that day");
-            _helpTips.Add("Below the calendar are modules such as Screenshots, Screens, and Regions");
-            _helpTips.Add("The Screenshots module displays the list of screenshots taken on the day selected from the calendar");
+            _helpTips.Add("Below the calendar are the list of screenshots taken on the day selected from the calendar organized in chronological order");
             _helpTips.Add("The Regions module displays a list of regions. Add, remove, or change regions from the Regions module");
             _helpTips.Add("Use the Configure drop-down menu to add, remove, or change a Screen or Region. You can add multiple regions each with its own set of attributes");
             _helpTips.Add("You can add as many editors as you want but only one editor can be set as the default editor");

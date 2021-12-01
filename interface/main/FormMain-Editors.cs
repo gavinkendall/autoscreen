@@ -190,7 +190,7 @@ namespace AutoScreenCapture
                 {
                     if (selectedScreenshot.Encrypted)
                     {
-                        MessageBox.Show("This screenshot was encrypted by Auto Screen Capture.\n\nThe application you have selected to open this screenshot with may have a problem trying to read the screenshot.", "Encrypted Screenshot", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("This screenshot was encrypted by Auto Screen Capture.\n\nThe application you have selected to open this screenshot may have a problem reading the file.", "Encrypted Screenshot", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                     return RunEditor(editor, selectedScreenshot);

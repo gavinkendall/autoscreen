@@ -351,7 +351,8 @@ namespace AutoScreenCapture
                         Date = DateTime.Now,
                         Time = DateTime.Now,
                         ScreenCaptureInterval = 0,
-                        Days = 30
+                        Days = 30, // Check if screenshots were created 30 days ago
+                        Value = fileSystem.DefaultScreenshotsFolder + "%30daysbehind%" // We use the %30daysbehind% macro tag to delete the directory of screenshots from 30 days ago
                     };
 
                     // Setup a few "built in" triggers by default.

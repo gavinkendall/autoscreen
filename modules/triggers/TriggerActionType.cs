@@ -153,6 +153,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Hide the system tray icon.
         /// </summary>
-        HideSystemTrayIcon = 25
+        HideSystemTrayIcon = 25,
+
+        /// <summary>
+        /// Take a set of screenshots.
+        /// </summary>
+        TakeScreenshot = 26
     }
 }

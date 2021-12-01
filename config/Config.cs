@@ -134,7 +134,7 @@ namespace AutoScreenCapture
                         "TriggersFile=" + FileSystem.DefaultTriggersFile, "",
                         "# References to screenshots.",
                         "ScreenshotsFile=" + FileSystem.DefaultScreenshotsFile, "",
-                        "# References to tags.",
+                        "# References to macro tags.",
                         "TagsFile=" + FileSystem.DefaultTagsFile, "",
                         "# References to schedules.",
                         "SchedulesFile=" + FileSystem.DefaultSchedulesFile, ""

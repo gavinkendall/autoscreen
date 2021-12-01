@@ -268,7 +268,7 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.DeleteScreenshots:
-                    _screenshotCollection.DeleteScreenshots(trigger.Days, _macroParser);
+                    _screenshotCollection.DeleteScreenshots(trigger.Days, trigger.Value, _macroParser, _formMacroTag.MacroTagCollection, _log);
                     break;
 
                 case TriggerActionType.SetLabel:
@@ -297,6 +297,10 @@ namespace AutoScreenCapture
 
                 case TriggerActionType.HideSystemTrayIcon:
                     HideSystemTrayIcon();
+                    break;
+
+                case TriggerActionType.TakeScreenshot:
+                    TakeScreenshot(captureNow: true);
                     break;
             }
         }

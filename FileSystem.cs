@@ -250,10 +250,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Deletes files recursively based on the specified directory.
+        /// Deletes directories and files recursively in a specified directory and deletes the specified directory.
         /// </summary>
         /// <param name="dirName">The starting "parent" directory (which will also be deleted after everything else inside it is deleted).</param>
-        public void DeleteFilesInDirectory(string dirName)
+        public void DeleteDirectory(string dirName)
         {
             if (DirectoryExists(dirName))
             {
