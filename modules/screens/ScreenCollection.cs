@@ -69,8 +69,9 @@ namespace AutoScreenCapture
         private void AddDefaultScreens(MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             int screenNumber = 1;
+            const int MAX_DEFAULT_SCREENS = 5;
 
-            foreach (System.Windows.Forms.Screen screenFromWindows in System.Windows.Forms.Screen.AllScreens)
+            for (int i = 0; i < MAX_DEFAULT_SCREENS; i++)
             {
                 Add(new Screen()
                 {
@@ -332,6 +333,9 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load screens");
 
+                    // Since we're creating the screens.xml file for the first time we'll need to add a default number of screens and have them all part of the "Auto Adapt" group.
+                    AddDefaultScreens(macroParser, fileSystem, log);
+
                     if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
                         Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
@@ -362,9 +366,6 @@ namespace AutoScreenCapture
                             });
                         }
                     }
-
-                    // Since we're creating the screens.xml file for the first time we'll need to add all the available screens we can find with the current display setup.
-                    AddDefaultScreens(macroParser, fileSystem, log);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }
