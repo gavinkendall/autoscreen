@@ -87,7 +87,7 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(comboBoxScreenTemplate, "Acquire the width and height from an available screen to import as the width and height for your region capture");
             _toolTip.SetToolTip(checkBoxEnable, "You can capture this region if Enable is checked (turned on)");
             _toolTip.SetToolTip(buttonBrowseFolder, "Browse for a folder where screenshots of this region capture will be saved to");
-            _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
+            _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your filename pattern in the File field");
 
             ScreenDictionary.Clear();
             comboBoxScreenTemplate.Items.Clear();

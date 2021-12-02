@@ -96,7 +96,7 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
             _toolTip.SetToolTip(checkBoxEnable, "You can capture this screen if Enable is checked (turned on)");
             _toolTip.SetToolTip(buttonScreenBrowseFolder, "Browse for a folder where screenshots of this screen capture will be saved to");
-            _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your macro");
+            _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your filename pattern in the File field");
             _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on changes to your display setup");
 
             comboBoxFormat.Items.Clear();

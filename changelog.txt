@@ -134,7 +134,7 @@ Macro Series
 2.1.7.6    The application became portable with its own "!autoscreen" directory containing application data and user settings.
 2.1.7.5    Regions could now be captured. (December 7, 2018)
 2.1.6.2    Triggers were implemented so you could perform an action based on a condition to change the application's behaviour.
-2.1.5.2    The -hideSystemTrayIcon command line option ia introduced.
+2.1.5.2    The -hideSystemTrayIcon command line option is introduced.
 2.1.5.0    The mouse pointer is captured. (June 15, 2018)
 2.1.4.0    Memory leak fix. (May 11, 2018)
 2.1.2.0    Editors module implemented. (April 10, 2018)
