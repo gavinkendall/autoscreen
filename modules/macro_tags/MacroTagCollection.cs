@@ -384,6 +384,44 @@ namespace AutoScreenCapture
                     if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
                         log.WriteDebugMessage("Tags file detected as an old version");
+
+                        // Go through the macro tags we want to add. If we can't find them then add them to the collection.
+
+                        if (GetByName("timerange") == null)
+                        {
+                            Add(new MacroTag(macroParser, "timerange", "The macro to use during a specific time range. At the moment it is %timerange%", MacroTagType.TimeRange, enable: true));
+                        }
+
+                        if (GetByName("quarteryear") == null)
+                        {
+                            Add(new MacroTag(macroParser, "quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", MacroTagType.QuarterYear, enable: true));
+                        }
+
+                        if (GetByName("x") == null)
+                        {
+                            Add(new MacroTag(macroParser, "x", "The X value of the screen or region", MacroTagType.X, enable: true));
+                        }
+
+                        if (GetByName("y") == null)
+                        {
+                            Add(new MacroTag(macroParser, "y", "The Y value of the screen or region", MacroTagType.Y, enable: true));
+                        }
+
+                        if (GetByName("width") == null)
+                        {
+                            Add(new MacroTag(macroParser, "width", "The Width value of the screen or region", MacroTagType.Width, enable: true));
+                        }
+
+                        if (GetByName("height") == null)
+                        {
+                            Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
+                        }
+
+                        if (GetByName("process") == null)
+                        {
+                            Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
+                        }
+
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
