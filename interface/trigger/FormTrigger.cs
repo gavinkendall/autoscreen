@@ -509,6 +509,8 @@ namespace AutoScreenCapture
             numericUpDownMinutesInterval.Enabled = false;
             numericUpDownSecondsInterval.Enabled = false;
             numericUpDownMillisecondsInterval.Enabled = false;
+
+            numericUpDownDays.Value = 30;
             numericUpDownDays.Enabled = false;
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
@@ -535,6 +537,11 @@ namespace AutoScreenCapture
                     numericUpDownDays.Value = 30;
                     textBoxTriggerValue.Text = _fileSystem.DefaultScreenshotsFolder + "$date[yyyy-MM-dd]$";
                 }
+                else if (TriggerObject.ActionType == TriggerActionType.DeleteScreenshots)
+                {
+                    numericUpDownDays.Value = TriggerObject.Days;
+                    textBoxTriggerValue.Text = TriggerObject.Value;
+                }
             }
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel ||
@@ -559,6 +566,16 @@ namespace AutoScreenCapture
                 if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
                 {
                     labelTriggerValue.Text = "Application Focus:";
+                }
+
+                if (TriggerObject != null &&
+                    (TriggerObject.ActionType == TriggerActionType.SetLabel ||
+                    TriggerObject.ActionType == TriggerActionType.SetActiveWindowTitleAsMatch ||
+                    TriggerObject.ActionType == TriggerActionType.SetActiveWindowTitleAsNoMatch ||
+                    TriggerObject.ActionType == TriggerActionType.SetApplicationFocus))
+                {
+                    numericUpDownDays.Value = TriggerObject.Days;
+                    textBoxTriggerValue.Text = TriggerObject.Value;
                 }
             }
 

@@ -333,9 +333,7 @@ namespace AutoScreenCapture
                 {
                     log.WriteDebugMessage("WARNING: Unable to load screens");
 
-                    // Since we're creating the screens.xml file for the first time we'll need to add a default number of screens and have them all part of the "Auto Adapt" group.
-                    AddDefaultScreens(macroParser, fileSystem, log);
-
+                    // Active Window
                     if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
                         Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
@@ -361,11 +359,14 @@ namespace AutoScreenCapture
                                 Source = 0,
                                 DeviceName = string.Empty,
                                 AutoAdapt = false,
-                                CaptureMethod = 1,
+                                CaptureMethod = 1, // BitBlt
                                 Encrypt = false
                             });
                         }
                     }
+
+                    // Since we're creating the screens.xml file for the first time we'll need to add a default number of screens and have them all part of the "Auto Adapt" group.
+                    AddDefaultScreens(macroParser, fileSystem, log);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

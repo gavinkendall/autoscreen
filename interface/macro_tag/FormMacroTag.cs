@@ -58,7 +58,7 @@ namespace AutoScreenCapture
 
             HelpMessage("This is where to configure a macro tag which will be used when the filepath of a screenshot is parsed");
 
-            _toolTip.SetToolTip(checkBoxEnable, "The filepath containing this macro tag will be parsed if Active is checked (turned on)");
+            _toolTip.SetToolTip(checkBoxEnable, "The filepath containing this macro tag will be parsed if Enable is checked (turned on)");
             _toolTip.SetToolTip(comboBoxType, "The type of macro tag depends on what information will be acquired for it");
 
             comboBoxType.Items.Clear();
