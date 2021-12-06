@@ -27,11 +27,16 @@ namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        private FlowLayoutPanel flowLayoutPanel;
+
+        const int MIN_DASHBOARD_GROUPBOX_SIZE = 100;
+        const int MAX_DASHBOARD_GROUPBOX_SIZE = 900;
+
+        int dashboardGroupBoxSize = 200;
+
         private void BuildViewTabPages()
         {
             tabControlViews.Controls.Clear();
-
-            int dashboardBoxSize = 220;
 
             ToolStrip toolStripDashboard = new ToolStrip
             {
@@ -255,9 +260,25 @@ namespace AutoScreenCapture
 
             change.DropDown.Items.Add(changeTrigger);
 
+            ToolStripButton zoomIn = new ToolStripButton
+            {
+                Image = Properties.Resources.zoom_in
+            };
+
+            ToolStripButton zoomOut = new ToolStripButton
+            {
+                Image = Properties.Resources.zoom_out
+            };
+
+            zoomIn.Click += dashboardZoomIn_Click;
+            zoomOut.Click += dashboardZoomOut_Click;
+
             toolStripDashboard.Items.Add(add);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(change);
+            toolStripDashboard.Items.Add(new ToolStripSeparator());
+            toolStripDashboard.Items.Add(zoomIn);
+            toolStripDashboard.Items.Add(zoomOut);
 
             if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
@@ -277,7 +298,7 @@ namespace AutoScreenCapture
                 toolStripDropDownButtonFileTransferSettings.Enabled = false;
             }
 
-            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
+            flowLayoutPanel = new FlowLayoutPanel
             {
                 Name = "flowLayoutPanel",
                 AutoScroll = true,
@@ -293,12 +314,13 @@ namespace AutoScreenCapture
             {
                 GroupBox groupBox = new GroupBox
                 {
+                    Name = "groupBox" + i,
                     Tag = screen,
                     Text = screen.AutoAdapt ? "[" + (screen.AutoAdaptIndex + 1).ToString() + "] " + screen.Name : screen.Name,
                     BackColor = Color.LightCyan,
                     ForeColor = Color.Black,
                     Location = new Point(0, 0),
-                    Size = new Size(dashboardBoxSize, dashboardBoxSize),
+                    Size = new Size(dashboardGroupBoxSize, dashboardGroupBoxSize),
                 };
 
                 PictureBox pictureBox = new PictureBox
@@ -323,12 +345,13 @@ namespace AutoScreenCapture
             {
                 GroupBox groupBox = new GroupBox
                 {
+                    Name = "groupBox" + i,
                     Tag = region,
                     Text = region.Name,
                     BackColor = Color.LightPink,
                     ForeColor = Color.Black,
                     Location = new Point(0, 0),
-                    Size = new Size(dashboardBoxSize, dashboardBoxSize),
+                    Size = new Size(dashboardGroupBoxSize, dashboardGroupBoxSize),
                 };
 
                 PictureBox pictureBox = new PictureBox
@@ -700,6 +723,60 @@ namespace AutoScreenCapture
             PictureBox selectedPictureBox = (PictureBox)sender;
 
             tabControlViews.SelectedIndex = (int)selectedPictureBox.Tag;
+        }
+
+        private void dashboardZoomIn_Click(object sender, EventArgs e)
+        {
+            ResizeGroupBoxes(zoomIn: true);
+        }
+
+        private void dashboardZoomOut_Click(object sender, EventArgs e)
+        {
+            ResizeGroupBoxes(zoomIn: false);
+        }
+
+        /// <summary>
+        /// Resizes the group boxes on the dashboard.
+        /// </summary>
+        /// <param name="zoomIn">Determines if we increase the size for a "zoom in" or decrease the size for a "zoom out".</param>
+        private void ResizeGroupBoxes(bool zoomIn)
+        {
+            int sizeStep = 50;
+
+            if (flowLayoutPanel != null)
+            {
+                if (zoomIn)
+                {
+                    dashboardGroupBoxSize += sizeStep;
+                }
+                else
+                {
+                    dashboardGroupBoxSize -= sizeStep;
+                }
+
+                if (dashboardGroupBoxSize < MIN_DASHBOARD_GROUPBOX_SIZE)
+                {
+                    dashboardGroupBoxSize = MIN_DASHBOARD_GROUPBOX_SIZE;
+                }
+
+                if (dashboardGroupBoxSize > MAX_DASHBOARD_GROUPBOX_SIZE)
+                {
+                    dashboardGroupBoxSize = MAX_DASHBOARD_GROUPBOX_SIZE;
+                }
+
+                int maxGroupBoxCount = _formScreen.ScreenCollection.Count + _formRegion.RegionCollection.Count;
+
+                for (int i = 1; i <= maxGroupBoxCount; i++)
+                {
+                    Control[] groupBoxes = flowLayoutPanel.Controls.Find("groupBox" + i, true);
+
+                    foreach (GroupBox groupBox in groupBoxes)
+                    {
+                        groupBox.Width = dashboardGroupBoxSize;
+                        groupBox.Height = dashboardGroupBoxSize;
+                    }
+                }
+            }
         }
     }
 }
