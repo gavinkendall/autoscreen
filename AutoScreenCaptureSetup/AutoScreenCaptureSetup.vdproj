@@ -130,7 +130,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.3.6.8, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.3.6.9, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9ACC9C115A4F4BCABA938B9FF9F2199F"
@@ -244,15 +244,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
-        "ProductCode" = "8:{B71BD1B1-7D92-4C4C-AB8B-55BC2E37E9C3}"
-        "PackageCode" = "8:{4D72DB5D-489B-4543-9625-AF0A25475A7C}"
+        "ProductCode" = "8:{64BC79F6-9838-4D6E-AD76-3D2CB74F72A7}"
+        "PackageCode" = "8:{68F4F087-E3B6-4592-894F-953DF4788D5A}"
         "UpgradeCode" = "8:{5A52167C-788C-412D-B0A1-ED40B962A74F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.3.68"
+        "ProductVersion" = "8:2.3.69"
         "Manufacturer" = "8:Gavin Kendall"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://sourceforge.net/p/autoscreen/tickets/"
