@@ -236,6 +236,8 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.4")); // The Trigger form looks better.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.5")); // Execution level changed from requireAdministrator to highestAvailable.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.6")); // Execution level changed from highestAvailable to asInvoker.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.7")); // Fixed bug with emailing screenshots from a one time schedule.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.8")); // Fixed bug with "the handle is invalid" to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.
 
             Application = new SettingCollection()
             {
