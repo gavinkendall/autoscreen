@@ -118,8 +118,8 @@ namespace AutoScreenCapture
 
             _bitmapSource = new Bitmap(width, height);
 
-            Graphics graphics = Graphics.FromImage(_bitmapSource as Image);
-            graphics.CopyFromScreen(Top, Left, Top, Left, _bitmapSource.Size);
+            Graphics graphics = Graphics.FromImage(_bitmapSource);
+            graphics.CopyFromScreen(0, 0, 0, 0, _bitmapSource.Size, CopyPixelOperation.SourceCopy);
 
             using (MemoryStream s = new MemoryStream())
             {

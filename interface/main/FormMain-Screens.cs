@@ -166,13 +166,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (_formScreen.ScreenCollection.Count == 0)
-                {
-                    _log.WriteErrorMessage("The screen collection is empty and needs to be initialized");
-
-                    return;
-                }
-
                 foreach (Screen screen in _formScreen.ScreenCollection)
                 {
                     if (screen.Active)
