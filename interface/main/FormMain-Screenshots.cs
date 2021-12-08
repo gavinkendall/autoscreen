@@ -1119,6 +1119,8 @@ namespace AutoScreenCapture
 
         private void tabControlViews_Selected(object sender, TabControlEventArgs e)
         {
+            _config.Settings.User.SetValueByKey("SelectedTabPageIndex", tabControlViews.SelectedIndex);
+
             ShowScreenshotBySlideIndex();
         }
 

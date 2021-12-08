@@ -92,6 +92,8 @@ namespace AutoScreenCapture
                     runScreenshotSearchThread.CancelAsync();
                 }
 
+                SaveSettings();
+
                 _log.WriteMessage("Bye!");
 
                 // Exit.

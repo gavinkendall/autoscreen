@@ -103,13 +103,13 @@ namespace AutoScreenCapture
 
         private static void ParseCommandLineArguments(string[] args, Config config)
         {
+            bool cleanStartup = false;
             FileSystem fileSystem = new FileSystem();
 
-            // Because ordering is important I want to make sure that we pick up the configuration file first.
-            // This will avoid scenarios like "autoscreen.exe -debug -config" creating all the default folders
-            // and files (thanks to -debug being the first argument) before -config is parsed.
+            // Make sure we parse for the most important command line options here.
 
             const string REGEX_COMMAND_LINE_CONFIG = "^-config=(?<ConfigFile>.+)$";
+            const string REGEX_COMMAND_LINE_CLEAN_STARTUP = "^-cleanStartup$";
 
             foreach (string arg in args)
             {
@@ -123,13 +123,18 @@ namespace AutoScreenCapture
                         config.Load(fileSystem);
                     }
                 }
+
+                if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CLEAN_STARTUP))
+                {
+                    cleanStartup = true;
+                }
             }
 
             // We didn't get a -config command line argument so just load the default config
             // and let the application parse any other command line options.
             if (config.Settings == null)
             {
-                config.Load(fileSystem);
+                config.Load(fileSystem, cleanStartup);
             }
 
             // All of these commands can be externally issued to an already running instance.

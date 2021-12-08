@@ -706,5 +706,10 @@ namespace AutoScreenCapture
         {
             _formSetupWizard.ShowDialog(this);
         }
+
+        private void toolStripDropDownButtonExit_Click(object sender, EventArgs e)
+        {
+            ExitApplication();
+        }
     }
 }

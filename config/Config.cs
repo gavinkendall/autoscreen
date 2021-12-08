@@ -50,7 +50,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// A collection of macro tags.
         /// </summary>
-        private MacroTagCollection _macroTagCollection { get; set; }
+        private MacroTagCollection _macroTagCollection;
+
+        /// <summary>
+        /// Determines if we do a clean startup. This means we do not load the XML data files. By default we load the XML data files.
+        /// </summary>
+        public bool CleanStartup { get; set; }
 
         /// <summary>
         /// The log file to use.
@@ -88,10 +93,14 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the configuration file.
         /// </summary>
-        public void Load(FileSystem fileSystem)
+        /// <param name="fileSystem">The file system to use.</param>
+        /// <param name="cleanStartup">Determines if we do a clean startup. This means we do not load the XML data files. By default we load the XML data files.</param>
+        public void Load(FileSystem fileSystem, bool cleanStartup = false)
         {
             try
             {
+                CleanStartup = cleanStartup;
+
                 FileSystem = fileSystem;
 
                 Settings = new Settings();

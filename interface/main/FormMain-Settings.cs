@@ -80,61 +80,68 @@ namespace AutoScreenCapture
                 _formSetup = new FormSetup(_security, _config, _fileSystem, _screenCapture);
                 _formSetupWizard = new FormSetupWizard();
 
-                _log.WriteDebugMessage("Initializing editor collection");
-                
-                if (!_formEditor.EditorCollection.LoadXmlFileAndAddEditors(_config, _fileSystem, _log))
+                if (_config.CleanStartup)
                 {
-                    _screenCapture.ApplicationError = true;
+                    _log.WriteDebugMessage("CleanStartup detected so we will not load XML data");
                 }
-
-                _log.WriteDebugMessage("Number of editors loaded = " + _formEditor.EditorCollection.Count);
-
-                _log.WriteDebugMessage("Initializing trigger collection");
-
-                if (!_formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers(_config, _fileSystem, _log))
+                else
                 {
-                    _screenCapture.ApplicationError = true;
+                    _log.WriteDebugMessage("Initializing editor collection");
+
+                    if (!_formEditor.EditorCollection.LoadXmlFileAndAddEditors(_config, _fileSystem, _log))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
+                    _log.WriteDebugMessage("Number of editors loaded = " + _formEditor.EditorCollection.Count);
+
+                    _log.WriteDebugMessage("Initializing trigger collection");
+
+                    if (!_formTrigger.TriggerCollection.LoadXmlFileAndAddTriggers(_config, _fileSystem, _log))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
+                    _log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
+
+                    _log.WriteDebugMessage("Initializing region collection");
+
+                    if (!_formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection, _config, _fileSystem, _log))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
+                    // Add regions to the Screen form so we can select them as a source.
+                    _formScreen.RegionCollection = _formRegion.RegionCollection;
+                    _log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
+
+                    _log.WriteDebugMessage("Initializing screen collection");
+
+                    if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _fileSystem, _log))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
+                    _log.WriteDebugMessage("Number of screens loaded = " + _formScreen.ScreenCollection.Count);
+
+                    _log.WriteDebugMessage("Initializing tag collection");
+
+                    if (!_formMacroTag.MacroTagCollection.LoadXmlFileAndAddTags(_config, _macroParser, _fileSystem, _log))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
+                    _log.WriteDebugMessage("Number of tags loaded = " + _formMacroTag.MacroTagCollection.Count);
+
+                    _log.WriteDebugMessage("Initializing schedule collection");
+
+                    if (!_formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules(_config, _fileSystem, _log))
+                    {
+                        _screenCapture.ApplicationError = true;
+                    }
+
+                    _log.WriteDebugMessage("Number of schedules loaded = " + _formSchedule.ScheduleCollection.Count);
                 }
-
-                _log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
-
-                _log.WriteDebugMessage("Initializing region collection");
-
-                if (!_formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection, _config, _fileSystem, _log))
-                {
-                    _screenCapture.ApplicationError = true;
-                }
-
-                // Add regions to the Screen form so we can select them as a source.
-                _formScreen.RegionCollection = _formRegion.RegionCollection;
-                _log.WriteDebugMessage("Number of regions loaded = " + _formRegion.RegionCollection.Count);
-
-                _log.WriteDebugMessage("Initializing screen collection");
-
-                if (!_formScreen.ScreenCollection.LoadXmlFileAndAddScreens(_imageFormatCollection, _config, _macroParser, _fileSystem, _log))
-                {
-                    _screenCapture.ApplicationError = true;
-                }
-
-                _log.WriteDebugMessage("Number of screens loaded = " + _formScreen.ScreenCollection.Count);
-
-                _log.WriteDebugMessage("Initializing tag collection");
-
-                if (!_formMacroTag.MacroTagCollection.LoadXmlFileAndAddTags(_config, _macroParser, _fileSystem, _log))
-                {
-                    _screenCapture.ApplicationError = true;
-                }
-
-                _log.WriteDebugMessage("Number of tags loaded = " + _formMacroTag.MacroTagCollection.Count);
-
-                _log.WriteDebugMessage("Initializing schedule collection");
-
-                if (!_formSchedule.ScheduleCollection.LoadXmlFileAndAddSchedules(_config, _fileSystem, _log))
-                {
-                    _screenCapture.ApplicationError = true;
-                }
-
-                _log.WriteDebugMessage("Number of schedules loaded = " + _formSchedule.ScheduleCollection.Count);
 
                 _log.WriteDebugMessage("Building screens module");
                 BuildScreensModule();
@@ -161,6 +168,8 @@ namespace AutoScreenCapture
                 _preview = Convert.ToBoolean(_config.Settings.User.GetByKey("Preview", _config.Settings.DefaultSettings.Preview).Value);
                 _log.WriteDebugMessage("Preview = " + _preview.ToString());
 
+                _dashboardGroupBoxSize = Convert.ToInt32(_config.Settings.User.GetByKey("DashboardGroupBoxSize", _config.Settings.DefaultSettings.DashboardGroupBoxSize).Value);
+                _log.WriteDebugMessage("DashboardGroupBoxSize = " + _dashboardGroupBoxSize);
                 _log.WriteDebugMessage("Building view tab pages");
                 BuildViewTabPages();
 
@@ -246,6 +255,9 @@ namespace AutoScreenCapture
                 EnableStartCapture();
 
                 CaptureLimitCheck();
+
+                // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
+                tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
 
                 _log.WriteDebugMessage("Settings loaded");
             }

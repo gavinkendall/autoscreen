@@ -29,10 +29,9 @@ namespace AutoScreenCapture
     {
         private FlowLayoutPanel flowLayoutPanel;
 
+        int _dashboardGroupBoxSize;
         const int MIN_DASHBOARD_GROUPBOX_SIZE = 100;
         const int MAX_DASHBOARD_GROUPBOX_SIZE = 900;
-
-        int dashboardGroupBoxSize = 200;
 
         private void BuildViewTabPages()
         {
@@ -262,12 +261,14 @@ namespace AutoScreenCapture
 
             ToolStripButton zoomIn = new ToolStripButton
             {
-                Image = Properties.Resources.zoom_in
+                Image = Properties.Resources.zoom_in,
+                ToolTipText = "Zoom In"
             };
 
             ToolStripButton zoomOut = new ToolStripButton
             {
-                Image = Properties.Resources.zoom_out
+                Image = Properties.Resources.zoom_out,
+                ToolTipText = "Zoom Out"
             };
 
             zoomIn.Click += dashboardZoomIn_Click;
@@ -320,7 +321,7 @@ namespace AutoScreenCapture
                     BackColor = Color.LightCyan,
                     ForeColor = Color.Black,
                     Location = new Point(0, 0),
-                    Size = new Size(dashboardGroupBoxSize, dashboardGroupBoxSize),
+                    Size = new Size(_dashboardGroupBoxSize, _dashboardGroupBoxSize),
                 };
 
                 PictureBox pictureBox = new PictureBox
@@ -351,7 +352,7 @@ namespace AutoScreenCapture
                     BackColor = Color.LightPink,
                     ForeColor = Color.Black,
                     Location = new Point(0, 0),
-                    Size = new Size(dashboardGroupBoxSize, dashboardGroupBoxSize),
+                    Size = new Size(_dashboardGroupBoxSize, _dashboardGroupBoxSize),
                 };
 
                 PictureBox pictureBox = new PictureBox
@@ -747,21 +748,21 @@ namespace AutoScreenCapture
             {
                 if (zoomIn)
                 {
-                    dashboardGroupBoxSize += sizeStep;
+                    _dashboardGroupBoxSize += sizeStep;
                 }
                 else
                 {
-                    dashboardGroupBoxSize -= sizeStep;
+                    _dashboardGroupBoxSize -= sizeStep;
                 }
 
-                if (dashboardGroupBoxSize < MIN_DASHBOARD_GROUPBOX_SIZE)
+                if (_dashboardGroupBoxSize < MIN_DASHBOARD_GROUPBOX_SIZE)
                 {
-                    dashboardGroupBoxSize = MIN_DASHBOARD_GROUPBOX_SIZE;
+                    _dashboardGroupBoxSize = MIN_DASHBOARD_GROUPBOX_SIZE;
                 }
 
-                if (dashboardGroupBoxSize > MAX_DASHBOARD_GROUPBOX_SIZE)
+                if (_dashboardGroupBoxSize > MAX_DASHBOARD_GROUPBOX_SIZE)
                 {
-                    dashboardGroupBoxSize = MAX_DASHBOARD_GROUPBOX_SIZE;
+                    _dashboardGroupBoxSize = MAX_DASHBOARD_GROUPBOX_SIZE;
                 }
 
                 int maxGroupBoxCount = _formScreen.ScreenCollection.Count + _formRegion.RegionCollection.Count;
@@ -772,10 +773,12 @@ namespace AutoScreenCapture
 
                     foreach (GroupBox groupBox in groupBoxes)
                     {
-                        groupBox.Width = dashboardGroupBoxSize;
-                        groupBox.Height = dashboardGroupBoxSize;
+                        groupBox.Width = _dashboardGroupBoxSize;
+                        groupBox.Height = _dashboardGroupBoxSize;
                     }
                 }
+
+                _config.Settings.User.SetValueByKey("DashboardGroupBoxSize", _dashboardGroupBoxSize);
             }
         }
     }

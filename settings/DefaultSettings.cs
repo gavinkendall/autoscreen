@@ -67,6 +67,8 @@ namespace AutoScreenCapture
         internal readonly bool SaveScreenshotRefs = true;
         internal readonly bool Preview = true;
         internal readonly bool OptimizeScreenCapture = false;
+        internal readonly int DashboardGroupBoxSize = 250;
+        internal readonly int SelectedTabPageIndex = 0;
 
         // Keyboard Shortcuts.
         internal readonly bool UseKeyboardShortcuts = false;

@@ -377,9 +377,9 @@
             this.labelDescription.AutoSize = true;
             this.labelDescription.Location = new System.Drawing.Point(268, 61);
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(63, 13);
+            this.labelDescription.Size = new System.Drawing.Size(110, 13);
             this.labelDescription.TabIndex = 6;
-            this.labelDescription.Text = "Description:";
+            this.labelDescription.Text = "Description (required):";
             // 
             // textBoxDescription
             // 
