@@ -130,7 +130,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.3.6.8, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9ACC9C115A4F4BCABA938B9FF9F2199F"
@@ -244,9 +244,9 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
-        "ProductCode" = "8:{D8455EEA-4DBA-4506-B41D-8D1B4777AAD9}"
+        "ProductCode" = "8:{A0484066-38B3-4818-B07A-6DE7A704637C}"
         "PackageCode" = "8:{F8513E76-278E-4CBC-BD83-2471AA433B1D}"
-        "UpgradeCode" = "8:{5A52167C-788C-412D-B0A1-ED40B962A74F}"
+        "UpgradeCode" = "8:{6B29B7BC-0101-4495-B28C-26B6D3CDCC02}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
