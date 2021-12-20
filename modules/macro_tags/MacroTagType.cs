@@ -103,6 +103,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// A macro tag for the current process name.
         /// </summary>
-        Process = 15
+        Process = 15,
+
+        /// <summary>
+        /// The label that is applied to the saved screenshot.
+        /// </summary>
+        Label = 16
     }
 }

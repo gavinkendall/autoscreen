@@ -422,6 +422,11 @@ namespace AutoScreenCapture
                             Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
                         }
 
+                        if (GetByName("label") == null)
+                        {
+                            Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
+                        }
+
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
@@ -459,6 +464,7 @@ namespace AutoScreenCapture
                     Add(new MacroTag(macroParser, "width", "The Width value of the screen or region", MacroTagType.Width, enable: true));
                     Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
                     Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
+                    Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

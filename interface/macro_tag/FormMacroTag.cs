@@ -78,6 +78,7 @@ namespace AutoScreenCapture
             comboBoxType.Items.Add("Width");
             comboBoxType.Items.Add("Height");
             comboBoxType.Items.Add("Process Name");
+            comboBoxType.Items.Add("Label");
 
             if (MacroTagObject != null)
             {

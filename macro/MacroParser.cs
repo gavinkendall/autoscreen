@@ -193,9 +193,10 @@ namespace AutoScreenCapture
         /// <param name="format">The image format to use as an image file extension when parsing the %format% tag.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="processName">The name of the current process.</param>
+        /// <param name="label">The label that is applied to the saved screenshot.</param>
         /// <param name="tag">The macro tag to use during parsing.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        private string ParseTag(bool preview, string name, string macro, int screenNumber, int x, int y, int width, int height, ImageFormat format, string activeWindowTitle, string processName, MacroTag tag)
+        private string ParseTag(bool preview, string name, string macro, int screenNumber, int x, int y, int width, int height, ImageFormat format, string activeWindowTitle, string processName, string label, MacroTag tag)
         {
             int count;
             DateTime dt;
@@ -281,6 +282,10 @@ namespace AutoScreenCapture
                 case MacroTagType.Process:
                     macro = macro.Replace(tag.Name, processName);
                     break;
+
+                case MacroTagType.Label:
+                    macro = macro.Replace(tag.Name, label);
+                    break;
             }
 
             return StripInvalidWindowsCharacters(macro);
@@ -295,7 +300,7 @@ namespace AutoScreenCapture
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
         public string ParseTags(string macro, MacroTagCollection macroTagCollection, Log log)
         {
-            return ParseTags(preview: false, macro, null, null, null, macroTagCollection, log);
+            return ParseTags(preview: false, macro, null, null, null, string.Empty, macroTagCollection, log);
         }
 
         /// <summary>
@@ -306,10 +311,11 @@ namespace AutoScreenCapture
         /// <param name="screenOrRegion">The screen or region to use when parsing macro tags.</param>
         /// <param name="activeWindowTitle">The title of the active window.</param>
         /// <param name="processName">The name of the current process.</param>
+        /// <param name="label">The label that is applied to the saved screenshot.</param>
         /// <param name="macroTagCollection">A collection of macro tags to parse.</param>
         /// <param name="log">The log to use.</param>
         /// <returns>A parsed macro containing the appropriate values of respective tags in the provided macro.</returns>
-        public string ParseTags(bool preview, string macro, object screenOrRegion, string activeWindowTitle, string processName, MacroTagCollection macroTagCollection, Log log)
+        public string ParseTags(bool preview, string macro, object screenOrRegion, string activeWindowTitle, string processName, string label, MacroTagCollection macroTagCollection, Log log)
         {
             string name = string.Empty; // The name of a region or screen when parsing the %name% tag.
             int screenNumber = 0; // The screen number. For example, if this is the second display then the screen number is 2.
@@ -377,10 +383,10 @@ namespace AutoScreenCapture
                     tag.Type = MacroTagType.DateTimeFormat;
 
                     // Recursively call the same method we're in to parse each TimeRange macro as if it was a date/time macro tag.
-                    macro1Macro = ParseTags(preview, macro1Macro, screenOrRegion, activeWindowTitle, processName, macroTagCollection, log);
-                    macro2Macro = ParseTags(preview, macro2Macro, screenOrRegion, activeWindowTitle, processName, macroTagCollection, log);
-                    macro3Macro = ParseTags(preview, macro3Macro, screenOrRegion, activeWindowTitle, processName, macroTagCollection, log);
-                    macro4Macro = ParseTags(preview, macro4Macro, screenOrRegion, activeWindowTitle, processName, macroTagCollection, log);
+                    macro1Macro = ParseTags(preview, macro1Macro, screenOrRegion, activeWindowTitle, processName, label, macroTagCollection, log);
+                    macro2Macro = ParseTags(preview, macro2Macro, screenOrRegion, activeWindowTitle, processName, label, macroTagCollection, log);
+                    macro3Macro = ParseTags(preview, macro3Macro, screenOrRegion, activeWindowTitle, processName, label, macroTagCollection, log);
+                    macro4Macro = ParseTags(preview, macro4Macro, screenOrRegion, activeWindowTitle, processName, label, macroTagCollection, log);
 
                     // Now that we have the new parsed values based on date/time macro tags we can set this tag back to its TimeRange type.
                     tag.Type = MacroTagType.TimeRange;
@@ -411,7 +417,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    macro = ParseTag(preview, name, macro, screenNumber, x, y, width, height, format, activeWindowTitle, processName, tag);
+                    macro = ParseTag(preview, name, macro, screenNumber, x, y, width, height, format, activeWindowTitle, processName, label, tag);
                 }
             }
 

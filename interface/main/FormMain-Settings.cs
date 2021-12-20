@@ -67,8 +67,8 @@ namespace AutoScreenCapture
                 _formAbout = new FormAbout();
                 _formHelp = new FormHelp();
                 _formMacroTag = new FormMacroTag(_macroParser);
-                _formRegion = new FormRegion(_screenCapture, _macroParser, _fileSystem, _log);
-                _formScreen = new FormScreen(_screenCapture, _macroParser, _fileSystem, _log);
+                _formRegion = new FormRegion(_screenCapture, _macroParser, _fileSystem, _config, _log);
+                _formScreen = new FormScreen(_screenCapture, _macroParser, _fileSystem, _config, _log);
                 _formEditor = new FormEditor(_config, _fileSystem);
                 _formEmailSettings = new FormEmailSettings(_config, _fileSystem);
                 _formFileTransferSettings = new FormFileTransferSettings(_config, _fileSystem);

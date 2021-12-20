@@ -43,6 +43,8 @@
             this.labelScreenshotFormat = new System.Windows.Forms.Label();
             this.textBoxScreenshotTitle = new System.Windows.Forms.TextBox();
             this.labelScreenshotTitle = new System.Windows.Forms.Label();
+            this.textBoxScreenshotPath = new System.Windows.Forms.TextBox();
+            this.labelScreenshotPath = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelLabel
@@ -173,11 +175,31 @@
             this.labelScreenshotTitle.TabIndex = 17;
             this.labelScreenshotTitle.Text = "Window Title:";
             // 
-            // FormScreenshotProperties
+            // textBoxScreenshotPath
+            // 
+            this.textBoxScreenshotPath.Location = new System.Drawing.Point(92, 88);
+            this.textBoxScreenshotPath.Name = "textBoxScreenshotPath";
+            this.textBoxScreenshotPath.ReadOnly = true;
+            this.textBoxScreenshotPath.Size = new System.Drawing.Size(517, 20);
+            this.textBoxScreenshotPath.TabIndex = 0;
+            this.textBoxScreenshotPath.TabStop = false;
+            // 
+            // labelScreenshotPath
+            // 
+            this.labelScreenshotPath.AutoSize = true;
+            this.labelScreenshotPath.Location = new System.Drawing.Point(13, 91);
+            this.labelScreenshotPath.Name = "labelScreenshotPath";
+            this.labelScreenshotPath.Size = new System.Drawing.Size(32, 13);
+            this.labelScreenshotPath.TabIndex = 21;
+            this.labelScreenshotPath.Text = "Path:";
+            // 
+            // FormScreenshotMetadata
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 92);
+            this.ClientSize = new System.Drawing.Size(621, 117);
+            this.Controls.Add(this.labelScreenshotPath);
+            this.Controls.Add(this.textBoxScreenshotPath);
             this.Controls.Add(this.labelLabel);
             this.Controls.Add(this.textBoxLabel);
             this.Controls.Add(this.textBoxScreenshotTime);
@@ -196,7 +218,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormScreenshotProperties";
+            this.Name = "FormScreenshotMetadata";
             this.Text = "Screenshot Metadata";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreenshotMetadata_FormClosing);
@@ -275,6 +297,12 @@
         /// <summary>
         /// 
         /// </summary>
+        public System.Windows.Forms.TextBox textBoxScreenshotPath;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenshotTitle;
+        private System.Windows.Forms.Label labelScreenshotPath;
     }
 }

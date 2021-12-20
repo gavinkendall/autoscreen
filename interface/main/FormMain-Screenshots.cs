@@ -686,6 +686,8 @@ namespace AutoScreenCapture
 
                             _formScreenshotMetadata.textBoxScreenshotDate.Text = selectedScreenshot.Date;
                             _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
+
+                            _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.Path;
                         }
 
                         toolstripButtonOpenFolder.Enabled = true;

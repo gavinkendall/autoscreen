@@ -360,9 +360,11 @@ namespace AutoScreenCapture
                 encrypt = region.Encrypt;
             }
 
+            string label = _formSetup.checkBoxScreenshotLabel.Checked && _formSetup.listBoxScreenshotLabel.SelectedItem != null ? _formSetup.listBoxScreenshotLabel.SelectedItem.ToString() : string.Empty;
+
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
-            string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log)) + // Folder path
-                _macroParser.ParseTags(preview: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, _formMacroTag.MacroTagCollection, _log); // Filename path
+            string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log)) + // Folder path
+                _macroParser.ParseTags(preview: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log); // Filename path
 
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
@@ -371,7 +373,7 @@ namespace AutoScreenCapture
                 Bitmap = bitmap,
                 Format = format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
-                Label = _formSetup.checkBoxScreenshotLabel.Checked ? _formSetup.listBoxScreenshotLabel.SelectedItem.ToString() : string.Empty,
+                Label = label,
                 Encrypted = encrypt
             };
 

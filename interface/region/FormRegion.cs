@@ -31,6 +31,7 @@ namespace AutoScreenCapture
     public partial class FormRegion : Form
     {
         private Log _log;
+        private Config _config;
         private FileSystem _fileSystem;
         private MacroParser _macroParser;
         private ScreenCapture _screenCapture;
@@ -64,11 +65,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Constructor for FormRegion.
         /// </summary>
-        public FormRegion(ScreenCapture screenCapture, MacroParser macroParser, FileSystem fileSystem, Log log)
+        public FormRegion(ScreenCapture screenCapture, MacroParser macroParser, FileSystem fileSystem, Config config, Log log)
         {
             InitializeComponent();
 
             _log = log;
+            _config = config;
             _macroParser = macroParser;
             _screenCapture = screenCapture;
             _fileSystem = fileSystem;
@@ -378,8 +380,10 @@ namespace AutoScreenCapture
                 Format = ImageFormatCollection.GetByName(comboBoxFormat.Text)
             };
 
-            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFolder.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log) +
-                _macroParser.ParseTags(preview: true, textBoxMacro.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, TagCollection, _log);
+            string label = _config.Settings.User.GetByKey("ScreenshotLabel", string.Empty).Value.ToString();
+
+            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFolder.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, label, TagCollection, _log) +
+                _macroParser.ParseTags(preview: true, textBoxMacro.Text, region, Text, Assembly.GetExecutingAssembly().GetName().Name, label, TagCollection, _log);
         }
 
         private void comboBoxRegionScreenTemplate_SelectedIndexChanged(object sender, EventArgs e)
