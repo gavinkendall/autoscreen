@@ -51,6 +51,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonEmailSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonFileTransferSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonHelp = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButtonExit = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControlViews = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshot = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -116,7 +117,6 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
-            this.toolStripDropDownButtonExit = new System.Windows.Forms.ToolStripDropDownButton();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -334,6 +334,17 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonHelp.Text = "Help";
             this.toolStripDropDownButtonHelp.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
+            // toolStripDropDownButtonExit
+            // 
+            this.toolStripDropDownButtonExit.AutoToolTip = false;
+            this.toolStripDropDownButtonExit.Image = global::AutoScreenCapture.Properties.Resources.exit;
+            this.toolStripDropDownButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonExit.Name = "toolStripDropDownButtonExit";
+            this.toolStripDropDownButtonExit.ShowDropDownArrow = false;
+            this.toolStripDropDownButtonExit.Size = new System.Drawing.Size(45, 20);
+            this.toolStripDropDownButtonExit.Text = "Exit";
+            this.toolStripDropDownButtonExit.Click += new System.EventHandler(this.toolStripDropDownButtonExit_Click);
+            // 
             // toolStripInfo
             // 
             this.toolStripInfo.AutoSize = false;
@@ -345,7 +356,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(456, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(487, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -760,6 +771,7 @@ namespace AutoScreenCapture
             this.tabControlModules.Size = new System.Drawing.Size(249, 682);
             this.tabControlModules.TabIndex = 0;
             this.tabControlModules.TabStop = false;
+            this.tabControlModules.SelectedIndexChanged += new System.EventHandler(this.tabControlModules_SelectedIndexChanged);
             // 
             // tabPageScreens
             // 
@@ -917,17 +929,6 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Enabled = true;
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
-            // 
-            // toolStripDropDownButtonExit
-            // 
-            this.toolStripDropDownButtonExit.AutoToolTip = false;
-            this.toolStripDropDownButtonExit.Image = global::AutoScreenCapture.Properties.Resources.exit;
-            this.toolStripDropDownButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonExit.Name = "toolStripDropDownButtonExit";
-            this.toolStripDropDownButtonExit.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonExit.Size = new System.Drawing.Size(45, 20);
-            this.toolStripDropDownButtonExit.Text = "Exit";
-            this.toolStripDropDownButtonExit.Click += new System.EventHandler(this.toolStripDropDownButtonExit_Click);
             // 
             // FormMain
             // 

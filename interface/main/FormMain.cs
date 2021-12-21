@@ -173,6 +173,14 @@ namespace AutoScreenCapture
 
             string welcome = "Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\")";
 
+            if (firstRun)
+            {
+                welcome += " - Please click on Help to get started with the application";
+
+                // To be figured out later. I want to have a "Setup Wizard" opened on the first run.
+                //_formSetupWizard.ShowDialog(this);
+            }
+
             HelpMessage(welcome);
 
             LoadHelpTips();
@@ -192,12 +200,6 @@ namespace AutoScreenCapture
             // first tick of the scheduled capture timer. This is when using -hide and -start command line options
             // so we avoid having to show the interface and/or the system tray icon too early during application startup.
             _appStarted = true;
-
-            // To be figured out later. I want to have a "Setup Wizard" opened on the first run.
-            //if (firstRun)
-            //{
-            //    _formSetupWizard.ShowDialog(this);
-            //}
         }
 
         /// <summary>
@@ -705,6 +707,11 @@ namespace AutoScreenCapture
         private void toolStripMenuItemSetupWizard_Click(object sender, EventArgs e)
         {
             _formSetupWizard.ShowDialog(this);
+        }
+
+        private void tabControlModules_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _config.Settings.User.SetValueByKey("SelectedModuleIndex", tabControlModules.SelectedIndex);
         }
 
         private void toolStripDropDownButtonExit_Click(object sender, EventArgs e)

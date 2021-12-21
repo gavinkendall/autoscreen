@@ -562,6 +562,8 @@ namespace AutoScreenCapture
         {
             try
             {
+                CaptureError = false;
+
                 Bitmap bmp = null;
 
                 if (width > 0 && height > 0)
@@ -642,12 +644,8 @@ namespace AutoScreenCapture
                         DeleteObject(hBitmap);
                     }
 
-                    CaptureError = false;
-
                     return bmp;
                 }
-
-                CaptureError = true;
 
                 return null;
             }

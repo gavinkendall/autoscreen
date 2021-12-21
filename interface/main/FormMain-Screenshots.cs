@@ -383,6 +383,7 @@ namespace AutoScreenCapture
             _formScreenshotMetadata.textBoxScreenshotHeight.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotDate.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotTime.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotPath.Text = string.Empty;
 
             // Dashboard
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))

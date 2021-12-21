@@ -259,6 +259,9 @@ namespace AutoScreenCapture
                 // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
                 tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
 
+                // Set the module we want to look at.
+                tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex", _config.Settings.DefaultSettings.SelectedModuleIndex).Value);
+
                 _log.WriteDebugMessage("Settings loaded");
             }
             catch (Exception ex)
