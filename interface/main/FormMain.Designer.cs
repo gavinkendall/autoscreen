@@ -117,6 +117,7 @@ namespace AutoScreenCapture
             this.timerPerformMaintenance = new System.Windows.Forms.Timer(this.components);
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
+            this.labelModuleHelp = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -764,11 +765,11 @@ namespace AutoScreenCapture
             this.tabControlModules.Controls.Add(this.tabPageSchedules);
             this.tabControlModules.Controls.Add(this.tabPageMacroTags);
             this.tabControlModules.Controls.Add(this.tabPageTriggers);
-            this.tabControlModules.Location = new System.Drawing.Point(1079, 27);
+            this.tabControlModules.Location = new System.Drawing.Point(1079, 100);
             this.tabControlModules.Multiline = true;
             this.tabControlModules.Name = "tabControlModules";
             this.tabControlModules.SelectedIndex = 0;
-            this.tabControlModules.Size = new System.Drawing.Size(249, 682);
+            this.tabControlModules.Size = new System.Drawing.Size(249, 609);
             this.tabControlModules.TabIndex = 0;
             this.tabControlModules.TabStop = false;
             this.tabControlModules.SelectedIndexChanged += new System.EventHandler(this.tabControlModules_SelectedIndexChanged);
@@ -778,7 +779,7 @@ namespace AutoScreenCapture
             this.tabPageScreens.AutoScroll = true;
             this.tabPageScreens.Location = new System.Drawing.Point(4, 40);
             this.tabPageScreens.Name = "tabPageScreens";
-            this.tabPageScreens.Size = new System.Drawing.Size(241, 638);
+            this.tabPageScreens.Size = new System.Drawing.Size(241, 565);
             this.tabPageScreens.TabIndex = 5;
             this.tabPageScreens.Text = "Screens";
             this.tabPageScreens.UseVisualStyleBackColor = true;
@@ -788,7 +789,7 @@ namespace AutoScreenCapture
             this.tabPageRegions.AutoScroll = true;
             this.tabPageRegions.Location = new System.Drawing.Point(4, 40);
             this.tabPageRegions.Name = "tabPageRegions";
-            this.tabPageRegions.Size = new System.Drawing.Size(241, 638);
+            this.tabPageRegions.Size = new System.Drawing.Size(241, 565);
             this.tabPageRegions.TabIndex = 4;
             this.tabPageRegions.Text = "Regions";
             this.tabPageRegions.UseVisualStyleBackColor = true;
@@ -799,7 +800,7 @@ namespace AutoScreenCapture
             this.tabPageEditors.Location = new System.Drawing.Point(4, 40);
             this.tabPageEditors.Name = "tabPageEditors";
             this.tabPageEditors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEditors.Size = new System.Drawing.Size(241, 638);
+            this.tabPageEditors.Size = new System.Drawing.Size(241, 565);
             this.tabPageEditors.TabIndex = 2;
             this.tabPageEditors.Text = "Editors";
             this.tabPageEditors.UseVisualStyleBackColor = true;
@@ -808,7 +809,7 @@ namespace AutoScreenCapture
             // 
             this.tabPageSchedules.Location = new System.Drawing.Point(4, 40);
             this.tabPageSchedules.Name = "tabPageSchedules";
-            this.tabPageSchedules.Size = new System.Drawing.Size(241, 638);
+            this.tabPageSchedules.Size = new System.Drawing.Size(241, 565);
             this.tabPageSchedules.TabIndex = 8;
             this.tabPageSchedules.Text = "Schedules";
             this.tabPageSchedules.UseVisualStyleBackColor = true;
@@ -818,7 +819,7 @@ namespace AutoScreenCapture
             this.tabPageMacroTags.AutoScroll = true;
             this.tabPageMacroTags.Location = new System.Drawing.Point(4, 40);
             this.tabPageMacroTags.Name = "tabPageMacroTags";
-            this.tabPageMacroTags.Size = new System.Drawing.Size(241, 638);
+            this.tabPageMacroTags.Size = new System.Drawing.Size(241, 565);
             this.tabPageMacroTags.TabIndex = 7;
             this.tabPageMacroTags.Text = "Macro Tags";
             this.tabPageMacroTags.UseVisualStyleBackColor = true;
@@ -829,7 +830,7 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Location = new System.Drawing.Point(4, 40);
             this.tabPageTriggers.Name = "tabPageTriggers";
             this.tabPageTriggers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTriggers.Size = new System.Drawing.Size(241, 638);
+            this.tabPageTriggers.Size = new System.Drawing.Size(241, 565);
             this.tabPageTriggers.TabIndex = 3;
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
@@ -930,11 +931,27 @@ namespace AutoScreenCapture
             this.timerShowNextHelpTip.Interval = 20000;
             this.timerShowNextHelpTip.Tick += new System.EventHandler(this.timerShowNextHelpTip_Tick);
             // 
+            // labelModuleHelp
+            // 
+            this.labelModuleHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelModuleHelp.AutoEllipsis = true;
+            this.labelModuleHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelModuleHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelModuleHelp.Location = new System.Drawing.Point(1083, 30);
+            this.labelModuleHelp.Name = "labelModuleHelp";
+            this.labelModuleHelp.Size = new System.Drawing.Size(241, 67);
+            this.labelModuleHelp.TabIndex = 4;
+            this.labelModuleHelp.Text = "Screens are listed here. Each screen represents a display. Have the Preview butto" +
+    "n enabled while viewing the Dashboard to see what would be captured when startin" +
+    "g a screen capture session.";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1330, 734);
+            this.Controls.Add(this.labelModuleHelp);
             this.Controls.Add(this.listBoxScreenshots);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.comboBoxFilterType);
@@ -953,6 +970,7 @@ namespace AutoScreenCapture
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormViewer_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
@@ -1054,5 +1072,6 @@ namespace AutoScreenCapture
         private ToolStripDropDownButton toolStripDropDownButtonEmailSettings;
         private ToolStripDropDownButton toolStripDropDownButtonFileTransferSettings;
         private ToolStripDropDownButton toolStripDropDownButtonExit;
+        private Label labelModuleHelp;
     }
 }

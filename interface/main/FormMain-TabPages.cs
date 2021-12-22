@@ -486,6 +486,16 @@ namespace AutoScreenCapture
 
                 toolStripSplitButtonConfigure.ButtonClick += changeScreen_Click;
 
+                ToolStripMenuItem toolStripMenuItemAddScreen = new ToolStripMenuItem
+                {
+                    Text = "Add Screen",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemAddScreen.Click += new EventHandler(addScreen_Click);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAddScreen);
+
                 ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
                 {
                     Text = "Change Screen",
@@ -519,6 +529,16 @@ namespace AutoScreenCapture
                 toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
 
                 toolStripSplitButtonConfigure.ButtonClick += changeRegion_Click;
+
+                ToolStripMenuItem toolStripMenuItemAddRegion = new ToolStripMenuItem
+                {
+                    Text = "Add Region",
+                    Tag = toolStrip.Tag
+                };
+
+                toolStripMenuItemAddRegion.Click += new EventHandler(addRegion_Click);
+
+                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAddRegion);
 
                 ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
                 {

@@ -100,6 +100,7 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(buttonScreenBrowseFolder, "Browse for a folder where screenshots of this screen capture will be saved to");
             _toolTip.SetToolTip(buttonMacroTags, "Open a list of available macro tags. You can keep the Macro Tags window open while you modify your filename pattern in the File field");
             _toolTip.SetToolTip(checkBoxAutoAdapt, "The position and size will automatically adjust based on changes to your display setup");
+            _toolTip.SetToolTip(checkBoxEncrypt, "Screenshots can be encrypted so only you can view each screenshot with Auto Screen Capture");
 
             comboBoxFormat.Items.Clear();
 

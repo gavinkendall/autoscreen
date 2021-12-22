@@ -202,6 +202,15 @@ namespace AutoScreenCapture
             _appStarted = true;
         }
 
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+            // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
+            tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
+
+            // Set the module we want to look at.
+            tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex", _config.Settings.DefaultSettings.SelectedModuleIndex).Value);
+        }
+
         /// <summary>
         /// Set opacity to the appropriate value and taskbar appearance based on visibility.
         /// </summary>
@@ -712,6 +721,39 @@ namespace AutoScreenCapture
         private void tabControlModules_SelectedIndexChanged(object sender, EventArgs e)
         {
             _config.Settings.User.SetValueByKey("SelectedModuleIndex", tabControlModules.SelectedIndex);
+
+            switch (tabControlModules.SelectedIndex)
+            {
+                // Screens
+                case 0:
+                    labelModuleHelp.Text = "Screens are listed here. Each screen represents a display. Have the Preview button enabled while viewing the Dashboard to see what would be captured when starting a screen capture session.";
+                    break;
+
+                // Regions
+                case 1:
+                    labelModuleHelp.Text = "Add, change, or remove a region. Each region has its own X, Y, Width, and Height values to define an area of a screen. You can either enter these values or use the Region Select button and select the region you want.";
+                    break;
+
+                // Editors
+                case 2:
+                    labelModuleHelp.Text = "An \"Editor\" is an application or script that can open or edit a screenshot. You can add as many applications or scripts as needed. Make sure to use $filepath$ as an argument to represent the filepath of the screenshot being used.";
+                    break;
+
+                // Schedules
+                case 3:
+                    labelModuleHelp.Text = "Create a schedule to take screenshots at a particular time or between a start time and an end time on certain days of the week. Each schedule can also have its own screen capture interval.";
+                    break;
+
+                // Macro Tags
+                case 4:
+                    labelModuleHelp.Text = "A macro tag is included in the filepath for each screenshot so that a certain value (such as the current date and time) is parsed when the screenshot is saved. For example, the %date% macro tag is parsed as the current date.";
+                    break;
+
+                // Triggers
+                case 5:
+                    labelModuleHelp.Text = "Triggers control the behaviour of the application. Each trigger reacts to a defined condition and performs a defined action based on that condition. You could run an editor after each screenshot is taken to edit that screenshot.";
+                    break;
+            }
         }
 
         private void toolStripDropDownButtonExit_Click(object sender, EventArgs e)
