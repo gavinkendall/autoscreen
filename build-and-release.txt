@@ -1,14 +1,13 @@
-*** Building Auto Screen Capture ***
 There's a "build.bat" script in the "autoscreen\build" directory that does a Release build and uses ILMerge to
 merge the assemblies into a single executable named "autoscreen.exe" (renamed from AutoScreenCapture.exe during the build).
-It also signs the assembly with a key file.
 
-*** Release of autoscreen.exe ***
-The portable executable "autoscreen.exe" in "autoscreen\bin\Release" is produced by running the "build.bat" script.
-It is then uploaded to SourceForge and it usually takes a few days for software distribution sites to pick up the latest version.
+The setup/installer "AutoScreenCaptureSetup.msi" will be compiled using the "autoscreen.exe" executable from bin\Release.
 
-*** Release of AutoScreenCaptureSetup.msi ***
-For those who want an installer run the build.bat script and then build the
-"AutoScreenCaptureSetup" project in Release mode to make "AutoScreenCaptureSetup.msi"
-in "autoscreen\AutoScreenCaptureSetup\Release" using autoscreen.exe from "autoscreen\bin\Release".
-Upload the AutoScreenCaptureSetup.msi installer from "autoscreen\AutoScreenCaptureSetup\Release".
+The Release folders for the AutoScreenCapture and AutoScreenCaptureSetup projects will be cleaned up by the batch script.
+
+When you look in the "autoscreen\build" directory you should see "autoscreen.exe" and "AutoScreenCaptureSetup.msi".
+Both are signed using the certificate named "autoscreen.pfx" found in the autoscreen directory.
+
+SourceForge has a directory structure where you simply upload the EXE and the MSI. I usually put them in a folder
+named after the version number. GitHub requires the branch you're targeting and a version number when drafting a release.
+You can also upload the EXE and MSI to GitHub but it's not necessary. I think most people download from SourceForge anyway.
