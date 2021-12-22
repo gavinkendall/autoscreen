@@ -118,17 +118,20 @@ namespace AutoScreenCapture
 
             _bitmapSource = new Bitmap(width, height);
 
-            Graphics graphics = Graphics.FromImage(_bitmapSource);
-            graphics.CopyFromScreen(0, 0, 0, 0, _bitmapSource.Size, CopyPixelOperation.SourceCopy);
-
-            using (MemoryStream s = new MemoryStream())
+            using (Graphics graphics = Graphics.FromImage(_bitmapSource))
             {
-                _bitmapSource.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
-                _bitmapSource.Dispose();
+                graphics.CopyFromScreen(0, 0, 0, 0, _bitmapSource.Size, CopyPixelOperation.SourceCopy);
 
-                pictureBoxMouseCanvas.Size = new Size(Width, Height);
-                pictureBoxMouseCanvas.Image = Image.FromStream(s);
+                using (MemoryStream s = new MemoryStream())
+                {
+                    _bitmapSource.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
+
+                    pictureBoxMouseCanvas.Size = new Size(Width, Height);
+                    pictureBoxMouseCanvas.Image = Image.FromStream(s);
+                }
             }
+
+            _bitmapSource.Dispose();
 
             Show();
 
