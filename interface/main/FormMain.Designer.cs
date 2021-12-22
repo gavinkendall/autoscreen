@@ -933,8 +933,7 @@ namespace AutoScreenCapture
             // 
             // labelModuleHelp
             // 
-            this.labelModuleHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelModuleHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelModuleHelp.AutoEllipsis = true;
             this.labelModuleHelp.BackColor = System.Drawing.Color.LightYellow;
             this.labelModuleHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

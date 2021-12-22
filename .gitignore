@@ -6,3 +6,4 @@ Gavin.Kendall.SFTP/obj
 bin/
 obj/
 packages/
+build/
