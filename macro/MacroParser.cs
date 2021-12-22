@@ -177,7 +177,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default macro used for Region Select / Auto Save.
         /// </summary>
-        public static readonly string DefaultAutoSaveMacro = "Screenshot %date%_%time%.%format%";
+        public static readonly string DefaultAutoSaveMacro = "screenshot_%date%_%time%.%format%";
 
         /// <summary>
         /// Replaces a tag (such as "%year%") with an appropriate value (such as "2020").

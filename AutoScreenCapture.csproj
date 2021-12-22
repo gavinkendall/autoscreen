@@ -397,6 +397,7 @@
   <ItemGroup>
     <Content Include="autoscreen.ico" />
     <Content Include="icons\ico\autoscreen-error.ico" />
+    <Content Include="images\tools.png" />
     <Content Include="images\zoom_in.png" />
     <Content Include="images\zoom_out.png" />
     <None Include="autoscreen.pfx" />

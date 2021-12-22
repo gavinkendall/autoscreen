@@ -427,7 +427,7 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 376);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 398);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -639,6 +639,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemDynamicRegexValidator});
+            this.toolStripMenuItemTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             this.toolStripMenuItemTools.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemTools.Text = "Tools";

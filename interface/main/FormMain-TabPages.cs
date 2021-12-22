@@ -259,6 +259,24 @@ namespace AutoScreenCapture
 
             change.DropDown.Items.Add(changeTrigger);
 
+            ToolStripDropDownButton tools = new ToolStripDropDownButton
+            {
+                Alignment = ToolStripItemAlignment.Left,
+                AutoToolTip = false,
+                Text = "Tools",
+                Image = Resources.tools
+            };
+
+            ToolStripMenuItem toolsDynamicRegexValidator = new ToolStripMenuItem
+            {
+                Text = "Dynamic Regex Validator",
+                AutoToolTip = false
+            };
+
+            toolsDynamicRegexValidator.Click += new EventHandler(toolStripMenuItemDynamicRegexValidator_Click);
+
+            tools.DropDown.Items.Add(toolsDynamicRegexValidator);
+
             ToolStripButton zoomIn = new ToolStripButton
             {
                 Image = Properties.Resources.zoom_in,
@@ -277,6 +295,8 @@ namespace AutoScreenCapture
             toolStripDashboard.Items.Add(add);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(change);
+            toolStripDashboard.Items.Add(new ToolStripSeparator());
+            toolStripDashboard.Items.Add(tools);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(zoomIn);
             toolStripDashboard.Items.Add(zoomOut);
