@@ -68,6 +68,10 @@ namespace AutoScreenCapture
                 case 2:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.help_2;
                     break;
+
+                case 3:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_3;
+                    break;
             }
         }
     }

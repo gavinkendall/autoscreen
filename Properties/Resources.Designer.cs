@@ -345,7 +345,8 @@ namespace AutoScreenCapture.Properties {
         ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Welcome\par
-        ///\b0 Auto Screen Capture is a portable automated screen capture utility developed by Gavin Kendall that runs in your system tray while it takes screenshots of multiple screens and regions based on a timed interval. It enables you to schedule when screenshots are taken and can b [rest of string was truncated]&quot;;.
+        ///\b0 Auto Screen Capture is a portable automated screen capture utility that runs in your system tray while it takes screenshots of multiple screens and regions based on a timed interval.\par
+        ///The system tray icon, when the application is idle, looks like a multi-coloured squar [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_0 {
             get {
@@ -370,14 +371,29 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
+        ///{\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Changelog\b0\par
-        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0), Macro (2.1), Dalek (2.2), Boombayah (2.3), and Blade (2.4). Auto Screen Capture has a long development hist [rest of string was truncated]&quot;;.
+        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0), Macro (2.1), Dalek (2.2), Boomba [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_2 {
             get {
                 return ResourceManager.GetString("help_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Getting Started\par
+        ///\b0 Based on what you see with Preview enabled you probably will need to configure the Screens module. On the first run you will see the following screens available to you (whether they are plugged in or not):\par
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6482\pich7567 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_3 {
+            get {
+                return ResourceManager.GetString("help_3", resourceCulture);
             }
         }
         
