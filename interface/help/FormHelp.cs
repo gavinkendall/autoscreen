@@ -40,6 +40,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Welcome");
             listBoxHelpItems.Items.Add("License");
             listBoxHelpItems.Items.Add("Changelog");
+            listBoxHelpItems.Items.Add("Getting Started");
 
             listBoxHelpItems.SelectedIndex = 0;
         }

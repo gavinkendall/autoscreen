@@ -246,6 +246,8 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.6")); // Execution level changed from highestAvailable to asInvoker.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.7")); // Fixed bug with emailing screenshots from a one time schedule.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.8")); // Fixed bug with "the handle is invalid" to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.6.9")); // Maybe fixed the bug with region select not working on multiple displays. Maybe. I haven't had multiple displays to test this properly for myself due to working from a laptop since March 2020.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.7.0")); // Attempting to fix bug with region select not working on multiple displays.
 
             Application = new SettingCollection()
             {
