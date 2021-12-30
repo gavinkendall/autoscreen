@@ -60,7 +60,7 @@ namespace AutoScreenCapture
                     Tag = screen
                 };
 
-                screenMenuItem.Click += new EventHandler(changeScreen_Click);
+                screenMenuItem.Click += new EventHandler(configureScreen_Click);
 
                 toolStripMenuItemChangeScreen.DropDown.Items.Add(screenMenuItem);
             }
@@ -75,7 +75,7 @@ namespace AutoScreenCapture
                     Tag = region
                 };
 
-                regionMenuItem.Click += new EventHandler(changeRegion_Click);
+                regionMenuItem.Click += new EventHandler(configureRegion_Click);
 
                 toolStripMenuItemChangeRegion.DropDown.Items.Add(regionMenuItem);
             }
@@ -145,14 +145,16 @@ namespace AutoScreenCapture
                 // Hide the menu items that need to be hidden when a screen capture session is locked.
                 toolStripSeparatorScreenCapture.Visible = false;
                 toolStripMenuItemCommandLine.Visible = false;
+                toolStripMenuItemOpenProgramFolder.Visible = false;
                 toolStripMenuItemScreenCaptureStatus.Visible = false;
                 toolStripMenuItemAdd.Visible = false;
-                toolStripMenuItemChange.Visible = false;
+                toolStripMenuItemConfigure.Visible = false;
                 toolStripMenuItemSettings.Visible = false;
                 toolStripMenuItemEmailSettings.Visible = false;
                 toolStripMenuItemFileTransferSettings.Visible = false;
                 toolStripMenuItemTools.Visible = false;
                 toolStripSeparatorTools.Visible = false;
+                toolStripMenuItemHelp.Visible = false;
 
                 // Hide the "Capture Now" memu items.
                 toolStripMenuItemCaptureNowEdit.Visible = false;
@@ -164,9 +166,11 @@ namespace AutoScreenCapture
                 // Show the menu items that need to be shown when a screen capture session is unlocked.
                 toolStripSeparatorScreenCapture.Visible = true;
                 toolStripMenuItemCommandLine.Visible = true;
+                toolStripMenuItemOpenProgramFolder.Visible = true;
                 toolStripMenuItemScreenCaptureStatus.Visible = true;
                 toolStripMenuItemAdd.Visible = true;
-                toolStripMenuItemChange.Visible = true;
+                toolStripMenuItemConfigure.Visible = true;
+                toolStripMenuItemHelp.Visible = true;
 
                 if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
                 {

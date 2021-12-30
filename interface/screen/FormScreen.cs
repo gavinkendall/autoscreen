@@ -138,7 +138,7 @@ namespace AutoScreenCapture
 
             if (ScreenObject != null)
             {
-                Text = "Change Screen";
+                Text = "Configure Screen";
 
                 textBoxScreenName.Text = ScreenObject.Name;
                 textBoxFolder.Text = _fileSystem.CorrectScreenshotsFolderPath(ScreenObject.Folder);

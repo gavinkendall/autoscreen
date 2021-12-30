@@ -47,6 +47,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonPreview = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonStartScreenCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonStopScreenCapture = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButtonOpenProgramFolder = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonCommandLine = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonEmailSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonFileTransferSettings = new System.Windows.Forms.ToolStripDropDownButton();
@@ -64,8 +65,9 @@ namespace AutoScreenCapture
             this.toolStripSeparatorInterface = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemStartScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemStopScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemCommandLine = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemScreenCaptureStatus = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemOpenProgramFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCommandLine = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorScreenCapture = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddScreen = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +76,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemAddSchedule = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddMacroTag = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAddTrigger = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemConfigure = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemChangeScreen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemChangeRegion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemChangeEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +103,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreens = new System.Windows.Forms.TabPage();
             this.tabPageRegions = new System.Windows.Forms.TabPage();
@@ -140,6 +143,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonPreview,
             this.toolStripDropDownButtonStartScreenCapture,
             this.toolStripDropDownButtonStopScreenCapture,
+            this.toolStripDropDownButtonOpenProgramFolder,
             this.toolStripDropDownButtonCommandLine,
             this.toolStripDropDownButtonEmailSettings,
             this.toolStripDropDownButtonFileTransferSettings,
@@ -281,6 +285,18 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripDropDownButtonStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
+            // toolStripDropDownButtonOpenProgramFolder
+            // 
+            this.toolStripDropDownButtonOpenProgramFolder.AutoToolTip = false;
+            this.toolStripDropDownButtonOpenProgramFolder.Image = global::AutoScreenCapture.Properties.Resources.openfolder;
+            this.toolStripDropDownButtonOpenProgramFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonOpenProgramFolder.Name = "toolStripDropDownButtonOpenProgramFolder";
+            this.toolStripDropDownButtonOpenProgramFolder.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.toolStripDropDownButtonOpenProgramFolder.ShowDropDownArrow = false;
+            this.toolStripDropDownButtonOpenProgramFolder.Size = new System.Drawing.Size(141, 20);
+            this.toolStripDropDownButtonOpenProgramFolder.Text = "Open Program Folder";
+            this.toolStripDropDownButtonOpenProgramFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenProgramFolder_Click);
+            // 
             // toolStripDropDownButtonCommandLine
             // 
             this.toolStripDropDownButtonCommandLine.AutoToolTip = false;
@@ -357,7 +373,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(487, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(346, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -410,11 +426,12 @@ namespace AutoScreenCapture
             this.toolStripSeparatorInterface,
             this.toolStripMenuItemStartScreenCapture,
             this.toolStripMenuItemStopScreenCapture,
-            this.toolStripMenuItemCommandLine,
             this.toolStripMenuItemScreenCaptureStatus,
+            this.toolStripMenuItemOpenProgramFolder,
+            this.toolStripMenuItemCommandLine,
             this.toolStripSeparatorScreenCapture,
             this.toolStripMenuItemAdd,
-            this.toolStripMenuItemChange,
+            this.toolStripMenuItemConfigure,
             this.toolStripMenuItemSettings,
             this.toolStripMenuItemTools,
             this.toolStripSeparatorTools,
@@ -425,9 +442,10 @@ namespace AutoScreenCapture
             this.toolStripSeparatorRegionSelect,
             this.toolStripMenuItemApplyLabel,
             this.toolStripSeparatorApplyLabel,
+            this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 398);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -472,6 +490,21 @@ namespace AutoScreenCapture
             this.toolStripMenuItemStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripMenuItemStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
+            // toolStripMenuItemScreenCaptureStatus
+            // 
+            this.toolStripMenuItemScreenCaptureStatus.Name = "toolStripMenuItemScreenCaptureStatus";
+            this.toolStripMenuItemScreenCaptureStatus.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemScreenCaptureStatus.Text = "Screen Capture Status";
+            this.toolStripMenuItemScreenCaptureStatus.Click += new System.EventHandler(this.toolStripMenuItemScreenCaptureStatus_Click);
+            // 
+            // toolStripMenuItemOpenProgramFolder
+            // 
+            this.toolStripMenuItemOpenProgramFolder.Image = global::AutoScreenCapture.Properties.Resources.openfolder;
+            this.toolStripMenuItemOpenProgramFolder.Name = "toolStripMenuItemOpenProgramFolder";
+            this.toolStripMenuItemOpenProgramFolder.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemOpenProgramFolder.Text = "Open Program Folder";
+            this.toolStripMenuItemOpenProgramFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenProgramFolder_Click);
+            // 
             // toolStripMenuItemCommandLine
             // 
             this.toolStripMenuItemCommandLine.Image = global::AutoScreenCapture.Properties.Resources.command_line;
@@ -479,13 +512,6 @@ namespace AutoScreenCapture
             this.toolStripMenuItemCommandLine.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemCommandLine.Text = "Command Line";
             this.toolStripMenuItemCommandLine.Click += new System.EventHandler(this.toolStripDropDownButtonCommandLine_Click);
-            // 
-            // toolStripMenuItemScreenCaptureStatus
-            // 
-            this.toolStripMenuItemScreenCaptureStatus.Name = "toolStripMenuItemScreenCaptureStatus";
-            this.toolStripMenuItemScreenCaptureStatus.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemScreenCaptureStatus.Text = "Screen Capture Status";
-            this.toolStripMenuItemScreenCaptureStatus.Click += new System.EventHandler(this.toolStripMenuItemScreenCaptureStatus_Click);
             // 
             // toolStripSeparatorScreenCapture
             // 
@@ -553,18 +579,18 @@ namespace AutoScreenCapture
             this.toolStripMenuItemAddTrigger.Text = "Trigger";
             this.toolStripMenuItemAddTrigger.Click += new System.EventHandler(this.addTrigger_Click);
             // 
-            // toolStripMenuItemChange
+            // toolStripMenuItemConfigure
             // 
-            this.toolStripMenuItemChange.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemConfigure.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemChangeScreen,
             this.toolStripMenuItemChangeRegion,
             this.toolStripMenuItemChangeEditor,
             this.toolStripMenuItemChangeSchedule,
             this.toolStripMenuItemChangeMacroTag,
             this.toolStripMenuItemChangeTrigger});
-            this.toolStripMenuItemChange.Name = "toolStripMenuItemChange";
-            this.toolStripMenuItemChange.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemChange.Text = "Change";
+            this.toolStripMenuItemConfigure.Name = "toolStripMenuItemConfigure";
+            this.toolStripMenuItemConfigure.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemConfigure.Text = "Configure";
             // 
             // toolStripMenuItemChangeScreen
             // 
@@ -755,6 +781,14 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
+            // 
+            // toolStripMenuItemHelp
+            // 
+            this.toolStripMenuItemHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
+            this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
+            this.toolStripMenuItemHelp.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemHelp.Text = "Help";
+            this.toolStripMenuItemHelp.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
             // tabControlModules
             // 
@@ -970,7 +1004,6 @@ namespace AutoScreenCapture
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormViewer_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
-            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
@@ -1043,7 +1076,7 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemTools;
         private ToolStripMenuItem toolStripMenuItemDynamicRegexValidator;
         private ToolStripMenuItem toolStripMenuItemScreenCaptureStatus;
-        private ToolStripMenuItem toolStripMenuItemChange;
+        private ToolStripMenuItem toolStripMenuItemConfigure;
         private ToolStripMenuItem toolStripMenuItemChangeScreen;
         private ToolStripMenuItem toolStripMenuItemChangeRegion;
         private ToolStripMenuItem toolStripMenuItemChangeEditor;
@@ -1073,5 +1106,8 @@ namespace AutoScreenCapture
         private ToolStripDropDownButton toolStripDropDownButtonFileTransferSettings;
         private ToolStripDropDownButton toolStripDropDownButtonExit;
         private Label labelModuleHelp;
+        private ToolStripDropDownButton toolStripDropDownButtonOpenProgramFolder;
+        private ToolStripMenuItem toolStripMenuItemOpenProgramFolder;
+        private ToolStripMenuItem toolStripMenuItemHelp;
     }
 }

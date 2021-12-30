@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
 using Gavin.Kendall.SFTP;
+using System.Diagnostics;
 
 namespace AutoScreenCapture
 {
@@ -200,15 +201,6 @@ namespace AutoScreenCapture
             // first tick of the scheduled capture timer. This is when using -hide and -start command line options
             // so we avoid having to show the interface and/or the system tray icon too early during application startup.
             _appStarted = true;
-        }
-
-        private void FormMain_Shown(object sender, EventArgs e)
-        {
-            // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
-            tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
-
-            // Set the module we want to look at.
-            tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex", _config.Settings.DefaultSettings.SelectedModuleIndex).Value);
         }
 
         /// <summary>
@@ -753,6 +745,27 @@ namespace AutoScreenCapture
                 case 5:
                     labelModuleHelp.Text = "Triggers control the behaviour of the application. Each trigger reacts to a defined condition and performs a defined action based on that condition. You could run an editor after each screenshot is taken to edit that screenshot.";
                     break;
+            }
+        }
+
+        private void toolStripMenuItemOpenProgramFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo("explorer.exe");
+                processStartInfo.Arguments = AppDomain.CurrentDomain.BaseDirectory;
+                processStartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                Process process = new Process
+                {
+                    StartInfo = processStartInfo,
+                };
+
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                _log.WriteExceptionMessage("Unable to open program folder", ex);
             }
         }
 

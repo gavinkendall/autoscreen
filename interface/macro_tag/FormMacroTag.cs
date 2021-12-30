@@ -82,7 +82,7 @@ namespace AutoScreenCapture
 
             if (MacroTagObject != null)
             {
-                Text = "Change Macro Tag";
+                Text = "Configure Macro Tag";
 
                 textBoxName.Text = MacroTagObject.Name;
 

@@ -125,7 +125,7 @@ namespace AutoScreenCapture
 
             if (RegionObject != null)
             {
-                Text = "Change Region";
+                Text = "Configure Region";
 
                 textBoxRegionName.Text = RegionObject.Name;
                 textBoxFolder.Text = _fileSystem.CorrectScreenshotsFolderPath(RegionObject.Folder);

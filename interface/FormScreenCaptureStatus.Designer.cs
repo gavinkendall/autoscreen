@@ -36,12 +36,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(334, 0);
+            this.ClientSize = new System.Drawing.Size(384, 0);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(350, 39);
+            this.MaximumSize = new System.Drawing.Size(400, 39);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(350, 39);
+            this.MinimumSize = new System.Drawing.Size(400, 39);
             this.Name = "FormScreenCaptureStatus";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

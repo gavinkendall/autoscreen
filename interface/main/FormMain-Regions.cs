@@ -100,7 +100,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeRegion_Click(object sender, EventArgs e)
+        private void configureRegion_Click(object sender, EventArgs e)
         {
             ShowInterface();
 
@@ -112,9 +112,9 @@ namespace AutoScreenCapture
                 region = (Region)buttonSelected.Tag;
             }
 
-            if (sender is ToolStripSplitButton)
+            if (sender is ToolStripButton)
             {
-                ToolStripSplitButton buttonSelected = (ToolStripSplitButton)sender;
+                ToolStripButton buttonSelected = (ToolStripButton)sender;
                 region = (Region)buttonSelected.Tag;
             }
 

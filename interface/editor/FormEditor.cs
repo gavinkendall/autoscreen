@@ -73,7 +73,7 @@ namespace AutoScreenCapture
 
             if (EditorObject != null)
             {
-                Text = "Change Editor";
+                Text = "Configure Editor";
 
                 if (!string.IsNullOrEmpty(EditorObject.Application) &&
                     _fileSystem.FileExists(EditorObject.Application))

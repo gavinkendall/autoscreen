@@ -86,7 +86,7 @@ namespace AutoScreenCapture
 
             if (TriggerObject != null)
             {
-                Text = "Change Trigger";
+                Text = "Configure Trigger";
 
                 textBoxTriggerName.Text = TriggerObject.Name;
                 listBoxCondition.SelectedIndex = (int)TriggerObject.ConditionType;

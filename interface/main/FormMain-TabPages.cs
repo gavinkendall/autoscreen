@@ -111,15 +111,15 @@ namespace AutoScreenCapture
             addTrigger.Click += new EventHandler(addTrigger_Click);
             add.DropDown.Items.Add(addTrigger);
 
-            ToolStripDropDownButton change = new ToolStripDropDownButton
+            ToolStripDropDownButton configure = new ToolStripDropDownButton
             {
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                Text = "Change",
+                Text = "Configure",
                 Image = Resources.configure
             };
 
-            ToolStripMenuItem changeScreen = new ToolStripMenuItem
+            ToolStripMenuItem configureScreen = new ToolStripMenuItem
             {
                 Text = "Screen",
                 AutoToolTip = false,
@@ -142,14 +142,14 @@ namespace AutoScreenCapture
                     Tag = screen
                 };
 
-                screenMenuItem.Click += new EventHandler(changeScreen_Click);
+                screenMenuItem.Click += new EventHandler(configureScreen_Click);
 
-                changeScreen.DropDown.Items.Add(screenMenuItem);
+                configureScreen.DropDown.Items.Add(screenMenuItem);
             }
 
-            change.DropDown.Items.Add(changeScreen);
+            configure.DropDown.Items.Add(configureScreen);
 
-            ToolStripMenuItem changeRegion = new ToolStripMenuItem
+            ToolStripMenuItem configureRegion = new ToolStripMenuItem
             {
                 Text = "Region",
                 AutoToolTip = false,
@@ -164,14 +164,14 @@ namespace AutoScreenCapture
                     Tag = region
                 };
 
-                regionMenuItem.Click += new EventHandler(changeRegion_Click);
+                regionMenuItem.Click += new EventHandler(configureRegion_Click);
 
-                changeRegion.DropDown.Items.Add(regionMenuItem);
+                configureRegion.DropDown.Items.Add(regionMenuItem);
             }
 
-            change.DropDown.Items.Add(changeRegion);
+            configure.DropDown.Items.Add(configureRegion);
 
-            ToolStripMenuItem changeEditor = new ToolStripMenuItem
+            ToolStripMenuItem configureEditor = new ToolStripMenuItem
             {
                 Text = "Editor",
                 AutoToolTip = false,
@@ -188,12 +188,12 @@ namespace AutoScreenCapture
 
                 editorMenuItem.Click += new EventHandler(changeEditor_Click);
 
-                changeEditor.DropDown.Items.Add(editorMenuItem);
+                configureEditor.DropDown.Items.Add(editorMenuItem);
             }
 
-            change.DropDown.Items.Add(changeEditor);
+            configure.DropDown.Items.Add(configureEditor);
 
-            ToolStripMenuItem changeSchedule = new ToolStripMenuItem
+            ToolStripMenuItem configureSchedule = new ToolStripMenuItem
             {
                 Text = "Schedule",
                 AutoToolTip = false,
@@ -210,12 +210,12 @@ namespace AutoScreenCapture
 
                 scheduleMenuItem.Click += new EventHandler(changeSchedule_Click);
 
-                changeSchedule.DropDown.Items.Add(scheduleMenuItem);
+                configureSchedule.DropDown.Items.Add(scheduleMenuItem);
             }
 
-            change.DropDown.Items.Add(changeSchedule);
+            configure.DropDown.Items.Add(configureSchedule);
 
-            ToolStripMenuItem changeMacroTag = new ToolStripMenuItem
+            ToolStripMenuItem configureMacroTag = new ToolStripMenuItem
             {
                 Text = "Macro Tag",
                 AutoToolTip = false,
@@ -232,12 +232,12 @@ namespace AutoScreenCapture
 
                 macrotagMenuItem.Click += new EventHandler(changeMacroTag_Click);
 
-                changeMacroTag.DropDown.Items.Add(macrotagMenuItem);
+                configureMacroTag.DropDown.Items.Add(macrotagMenuItem);
             }
 
-            change.DropDown.Items.Add(changeMacroTag);
+            configure.DropDown.Items.Add(configureMacroTag);
 
-            ToolStripMenuItem changeTrigger = new ToolStripMenuItem
+            ToolStripMenuItem configureTrigger = new ToolStripMenuItem
             {
                 Text = "Trigger",
                 AutoToolTip = false,
@@ -254,10 +254,10 @@ namespace AutoScreenCapture
 
                 triggerMenuItem.Click += new EventHandler(changeTrigger_Click);
 
-                changeTrigger.DropDown.Items.Add(triggerMenuItem);
+                configureTrigger.DropDown.Items.Add(triggerMenuItem);
             }
 
-            change.DropDown.Items.Add(changeTrigger);
+            configure.DropDown.Items.Add(configureTrigger);
 
             ToolStripDropDownButton tools = new ToolStripDropDownButton
             {
@@ -279,13 +279,13 @@ namespace AutoScreenCapture
 
             ToolStripButton zoomIn = new ToolStripButton
             {
-                Image = Properties.Resources.zoom_in,
+                Image = Resources.zoom_in,
                 ToolTipText = "Zoom In"
             };
 
             ToolStripButton zoomOut = new ToolStripButton
             {
-                Image = Properties.Resources.zoom_out,
+                Image = Resources.zoom_out,
                 ToolTipText = "Zoom Out"
             };
 
@@ -294,7 +294,7 @@ namespace AutoScreenCapture
 
             toolStripDashboard.Items.Add(add);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
-            toolStripDashboard.Items.Add(change);
+            toolStripDashboard.Items.Add(configure);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(tools);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
@@ -478,6 +478,13 @@ namespace AutoScreenCapture
                 tabControlViews.Controls.Add(tabPageRegion);
             }
 
+            tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
+
+            if (tabControlViews.SelectedIndex >= tabControlViews.TabCount)
+            {
+                tabControlViews.SelectedIndex = (tabControlViews.TabCount - 1);
+            }
+
             ShowScreenshotBySlideIndex();
         }
 
@@ -485,11 +492,11 @@ namespace AutoScreenCapture
         {
             Screenshot selectedScreenshot = new Screenshot();
 
-            ToolStripSplitButton toolStripSplitButtonConfigure = new ToolStripSplitButton
+            ToolStripButton toolStripButtonConfigure = new ToolStripButton
             {
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Change or remove this component",
+                ToolTipText = "Configure this component to change image attributes, folder path, and filename pattern",
                 Image = Resources.configure
             };
 
@@ -500,41 +507,11 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, screen.ViewId);
                 }
 
-                toolStripSplitButtonConfigure.Text = "Configure";
+                toolStripButtonConfigure.Text = "Configure";
 
-                toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
+                toolStripButtonConfigure.Tag = toolStrip.Tag;
 
-                toolStripSplitButtonConfigure.ButtonClick += changeScreen_Click;
-
-                ToolStripMenuItem toolStripMenuItemAddScreen = new ToolStripMenuItem
-                {
-                    Text = "Add Screen",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemAddScreen.Click += new EventHandler(addScreen_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAddScreen);
-
-                ToolStripMenuItem toolStripMenuItemChangeScreen = new ToolStripMenuItem
-                {
-                    Text = "Change Screen",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemChangeScreen.Click += new EventHandler(changeScreen_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemChangeScreen);
-
-                ToolStripMenuItem toolStripMenuItemRemoveScreen = new ToolStripMenuItem
-                {
-                    Text = "Remove Screen",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemRemoveScreen.Click += new EventHandler(removeScreen_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveScreen);
+                toolStripButtonConfigure.Click += configureScreen_Click;
             }
 
             if (toolStrip.Tag is Region region)
@@ -544,41 +521,11 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                 }
 
-                toolStripSplitButtonConfigure.Text = "Configure";
+                toolStripButtonConfigure.Text = "Configure";
 
-                toolStripSplitButtonConfigure.Tag = toolStrip.Tag;
+                toolStripButtonConfigure.Tag = toolStrip.Tag;
 
-                toolStripSplitButtonConfigure.ButtonClick += changeRegion_Click;
-
-                ToolStripMenuItem toolStripMenuItemAddRegion = new ToolStripMenuItem
-                {
-                    Text = "Add Region",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemAddRegion.Click += new EventHandler(addRegion_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemAddRegion);
-
-                ToolStripMenuItem toolStripMenuItemRegion = new ToolStripMenuItem
-                {
-                    Text = "Change Region",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemRegion.Click += new EventHandler(changeRegion_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRegion);
-
-                ToolStripMenuItem toolStripMenuItemRemoveRegion = new ToolStripMenuItem
-                {
-                    Text = "Remove Region",
-                    Tag = toolStrip.Tag
-                };
-
-                toolStripMenuItemRemoveRegion.Click += new EventHandler(removeRegion_Click);
-
-                toolStripSplitButtonConfigure.DropDown.Items.Add(toolStripMenuItemRemoveRegion);
+                toolStripButtonConfigure.Click += configureRegion_Click;
             }
 
             ToolStripSplitButton toolStripSplitButtonEdit = new ToolStripSplitButton
@@ -592,8 +539,6 @@ namespace AutoScreenCapture
             };
 
             toolStripSplitButtonEdit.ButtonClick += runEditor_Click;
-
-            toolStripSplitButtonEdit.DropDown.Items.Add("Add Editor", null, addEditor_Click);
 
             ToolStripButton toolStripButtonEncryptDecrypt = new ToolStripButton
             {
@@ -707,7 +652,7 @@ namespace AutoScreenCapture
                 Text = "Metadata",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Show screenshot metadata (such as width and height)",
+                ToolTipText = "Show screenshot metadata (such as width, height, and filepath)",
                 Image = Resources.properties
             };
 
@@ -744,7 +689,7 @@ namespace AutoScreenCapture
 
             toolstripButtonOpenFolder.Click += new EventHandler(showScreenshotLocation_Click);
 
-            toolStrip.Items.Add(toolStripSplitButtonConfigure);
+            toolStrip.Items.Add(toolStripButtonConfigure);
             toolStrip.Items.Add(new ToolStripSeparator { Alignment = ToolStripItemAlignment.Left });
             toolStrip.Items.Add(toolStripSplitButtonEdit);
             toolStrip.Items.Add(toolStripButtonEncryptDecrypt);

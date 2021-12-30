@@ -30,7 +30,7 @@ namespace AutoScreenCapture
     {
         // A generic method for building a module.
         private void BuildModule<T>(IEnumerable<T> list, TabPage tabPage,
-            EventHandler eventHandlerForAdd, EventHandler eventHandlerForRemoveSelected, EventHandler eventhandlerForChange)
+            EventHandler eventHandlerForAdd, EventHandler eventHandlerForRemoveSelected, EventHandler eventhandlerForConfigure)
         {
             int xPos = 5;
             int yPos = 3;
@@ -169,8 +169,8 @@ namespace AutoScreenCapture
 
                 tabPage.Controls.Add(textBoxObjectName);
 
-                // Add a button so that the user can change the object.
-                Button buttonChange = new Button
+                // Add a button so that the user can configure the object.
+                Button buttonConfigure = new Button
                 {
                     Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
                     Location = new Point(xPos + X_POS_BUTTON, yPos),
@@ -182,8 +182,13 @@ namespace AutoScreenCapture
                     Tag = @object,
                     TabStop = false
                 };
-                buttonChange.Click += eventhandlerForChange;
-                tabPage.Controls.Add(buttonChange);
+
+                buttonConfigure.Click += eventhandlerForConfigure;
+
+                tabPage.Controls.Add(buttonConfigure);
+
+                //ToolTip _toolTipConfigure = new ToolTip();
+                //_toolTipConfigure.SetToolTip(buttonConfigure, "");
 
                 // Move down the tab page so we're ready to loop around again and add the next object to it.
                 yPos += Y_POS_INCREMENT;
@@ -302,12 +307,12 @@ namespace AutoScreenCapture
 
         private void BuildScreensModule()
         {
-            BuildModule(_formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, changeScreen_Click);
+            BuildModule(_formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, configureScreen_Click);
         }
 
         private void BuildRegionsModule()
         {
-            BuildModule(_formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, changeRegion_Click);
+            BuildModule(_formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, configureRegion_Click);
         }
 
         private void BuildMacroTagsModule()

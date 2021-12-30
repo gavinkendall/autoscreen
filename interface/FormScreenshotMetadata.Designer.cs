@@ -45,6 +45,9 @@
             this.labelScreenshotTitle = new System.Windows.Forms.Label();
             this.textBoxScreenshotPath = new System.Windows.Forms.TextBox();
             this.labelScreenshotPath = new System.Windows.Forms.Label();
+            this.statusStripScreenshotMetadata = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelScreenshotMetadata = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripScreenshotMetadata.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelLabel
@@ -193,11 +196,30 @@
             this.labelScreenshotPath.TabIndex = 21;
             this.labelScreenshotPath.Text = "Path:";
             // 
+            // statusStripScreenshotMetadata
+            // 
+            this.statusStripScreenshotMetadata.BackColor = System.Drawing.Color.LightYellow;
+            this.statusStripScreenshotMetadata.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelScreenshotMetadata});
+            this.statusStripScreenshotMetadata.Location = new System.Drawing.Point(0, 115);
+            this.statusStripScreenshotMetadata.Name = "statusStripScreenshotMetadata";
+            this.statusStripScreenshotMetadata.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.statusStripScreenshotMetadata.Size = new System.Drawing.Size(621, 22);
+            this.statusStripScreenshotMetadata.SizingGrip = false;
+            this.statusStripScreenshotMetadata.TabIndex = 22;
+            // 
+            // toolStripStatusLabelScreenshotMetadata
+            // 
+            this.toolStripStatusLabelScreenshotMetadata.Name = "toolStripStatusLabelScreenshotMetadata";
+            this.toolStripStatusLabelScreenshotMetadata.Size = new System.Drawing.Size(177, 17);
+            this.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot is not encrypted";
+            // 
             // FormScreenshotMetadata
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 117);
+            this.ClientSize = new System.Drawing.Size(621, 137);
+            this.Controls.Add(this.statusStripScreenshotMetadata);
             this.Controls.Add(this.labelScreenshotPath);
             this.Controls.Add(this.textBoxScreenshotPath);
             this.Controls.Add(this.labelLabel);
@@ -222,6 +244,8 @@
             this.Text = "Screenshot Metadata";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreenshotMetadata_FormClosing);
+            this.statusStripScreenshotMetadata.ResumeLayout(false);
+            this.statusStripScreenshotMetadata.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,6 +327,13 @@
         /// 
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotTitle;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScreenshotMetadata;
+
         private System.Windows.Forms.Label labelScreenshotPath;
+        private System.Windows.Forms.StatusStrip statusStripScreenshotMetadata;
     }
 }

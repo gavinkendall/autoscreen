@@ -100,7 +100,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeScreen_Click(object sender, EventArgs e)
+        private void configureScreen_Click(object sender, EventArgs e)
         {
             ShowInterface();
 
@@ -112,9 +112,9 @@ namespace AutoScreenCapture
                 screen = (Screen)buttonSelected.Tag;
             }
 
-            if (sender is ToolStripSplitButton)
+            if (sender is ToolStripButton)
             {
-                ToolStripSplitButton buttonSelected = (ToolStripSplitButton)sender;
+                ToolStripButton buttonSelected = (ToolStripButton)sender;
                 screen = (Screen)buttonSelected.Tag;
             }
 
@@ -138,31 +138,6 @@ namespace AutoScreenCapture
                 if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
-                }
-            }
-        }
-
-        private void removeScreen_Click(object sender, EventArgs e)
-        {
-            if (sender is ToolStripMenuItem)
-            {
-                ToolStripMenuItem toolStripMenuItemSelected = (ToolStripMenuItem)sender;
-                Screen screenSelected = (Screen)toolStripMenuItemSelected.Tag;
-
-                DialogResult dialogResult = MessageBox.Show("Do you want to remove the screen named \"" + screenSelected.Name + "\"?", "Remove Screen", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (dialogResult == DialogResult.Yes)
-                {
-                    Screen screen = _formScreen.ScreenCollection.Get(screenSelected);
-                    _formScreen.ScreenCollection.Remove(screen);
-
-                    BuildScreensModule();
-                    BuildViewTabPages();
-
-                    if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
-                    {
-                        _screenCapture.ApplicationError = true;
-                    }
                 }
             }
         }

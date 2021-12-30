@@ -384,6 +384,7 @@ namespace AutoScreenCapture
             _formScreenshotMetadata.textBoxScreenshotDate.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotTime.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotPath.Text = string.Empty;
+            _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "A screenshot could not be found. Perhaps a screenshot has yet to be captured for this component.";
 
             // Dashboard
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
@@ -613,6 +614,9 @@ namespace AutoScreenCapture
                                     {
                                         toolStripTextBox.BackColor = Color.PaleVioletRed;
                                         toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+
+                                        _formScreenshotMetadata.textBoxScreenshotPath.Text = path;
+                                        _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot could not be found. Perhaps it was deleted or the reference is incorrect.";
                                     }
                                 }
 
@@ -656,6 +660,9 @@ namespace AutoScreenCapture
                                     {
                                         toolStripTextBox.BackColor = Color.PaleVioletRed;
                                         toolStripTextBox.ToolTipText = $"Could not find or access image file at path \"{path}\"";
+
+                                        _formScreenshotMetadata.textBoxScreenshotPath.Text = path;
+                                        _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot could not be found. Perhaps it was deleted or the reference is incorrect.";
                                     }
                                 }
 
@@ -689,6 +696,15 @@ namespace AutoScreenCapture
                             _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
 
                             _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.Path;
+
+                            if (selectedScreenshot.Encrypted)
+                            {
+                                _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot is encrypted. It will be difficult for other applications to use it.";
+                            }
+                            else
+                            {
+                                _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot is not encrypted. You can use this screenshot in other applications.";
+                            }
                         }
 
                         toolstripButtonOpenFolder.Enabled = true;
@@ -1122,6 +1138,12 @@ namespace AutoScreenCapture
 
         private void tabControlViews_Selected(object sender, TabControlEventArgs e)
         {
+            // There's no point saving the value if the tab control view was cleared.
+            if (tabControlViews.SelectedIndex <= 0)
+            {
+                return;
+            }
+
             _config.Settings.User.SetValueByKey("SelectedTabPageIndex", tabControlViews.SelectedIndex);
 
             ShowScreenshotBySlideIndex();

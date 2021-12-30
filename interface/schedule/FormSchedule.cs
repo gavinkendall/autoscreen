@@ -71,7 +71,7 @@ namespace AutoScreenCapture
 
             if (ScheduleObject != null)
             {
-                Text = "Change Schedule";
+                Text = "Configure Schedule";
 
                 textBoxName.Text = ScheduleObject.Name;
                 checkBoxEnable.Checked = ScheduleObject.Enable;

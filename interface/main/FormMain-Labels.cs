@@ -60,6 +60,11 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (_screenshotCollection == null)
+                {
+                    return;
+                }
+
                 // Get labels from screenshots that have already had their references saved.
                 List<string> labelsFromSavedScreenshots = new List<string>();
                 labelsFromSavedScreenshots = _screenshotCollection.GetFilterValueList("Label");

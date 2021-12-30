@@ -164,6 +164,17 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Building screenshot preview context menu");
                 BuildScreenshotPreviewContextualMenu();
 
+                // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
+                tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
+
+                if (tabControlViews.SelectedIndex < 0)
+                {
+                    tabControlViews.SelectedIndex = 0;
+                }
+
+                // Set the module we want to look at.
+                tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex", _config.Settings.DefaultSettings.SelectedModuleIndex).Value);
+
                 // Preview
                 _preview = Convert.ToBoolean(_config.Settings.User.GetByKey("Preview", _config.Settings.DefaultSettings.Preview).Value);
                 _log.WriteDebugMessage("Preview = " + _preview.ToString());
