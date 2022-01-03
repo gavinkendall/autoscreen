@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormMain-Modules.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2021 Gavin Kendall
+//     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>All the methods for handling modules. This uses generics so we can build modules without having separate methods specifically for each type of module. Each module shared common interface elements so it made sense to use generics. Any changes applied here will affect every module being built.</summary>

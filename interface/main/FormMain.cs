@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="FormMain.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2021 Gavin Kendall
+//     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>The main interface form for setting up sub-forms, showing the interface, hiding the interface, displaying dates in the calendar, and searching for screenshots.</summary>

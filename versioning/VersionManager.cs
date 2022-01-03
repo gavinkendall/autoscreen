@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="VersionManager.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2021 Gavin Kendall
+//     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>The version manager figures out if we're handling an old version of the application and stores the old user settings just in case we need to update them to be used with a newer settings schema.</summary>

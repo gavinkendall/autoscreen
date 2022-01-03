@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TriggerActionType.cs" company="Gavin Kendall">
-//     Copyright (c) 2008-2021 Gavin Kendall
+//     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
 // <summary>There are various types of trigger actions that the application can use to perform a particular action based on the action type.</summary>
