@@ -279,7 +279,7 @@ namespace AutoScreenCapture
 
             ToolStripMenuItem toolsLabelSwitcher = new ToolStripMenuItem
             {
-                Text = "Label Switcher",
+                Text = "Screen Capture Status With Label Switcher",
                 AutoToolTip = false
             };
 

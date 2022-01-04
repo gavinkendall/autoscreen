@@ -1004,7 +1004,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemLabelSwitcher.Name = "toolStripMenuItemLabelSwitcher";
             this.toolStripMenuItemLabelSwitcher.Size = new System.Drawing.Size(204, 22);
-            this.toolStripMenuItemLabelSwitcher.Text = "Label Switcher";
+            this.toolStripMenuItemLabelSwitcher.Text = "Screen Capture Status With Label Switcher";
             this.toolStripMenuItemLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
             // 
             // FormMain
