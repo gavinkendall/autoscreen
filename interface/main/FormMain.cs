@@ -75,7 +75,7 @@ namespace AutoScreenCapture
         private FormSetupWizard _formSetupWizard;
 
         // Screeshot Properties
-        private FormScreenshotMetadata _formScreenshotMetadata = new FormScreenshotMetadata();
+        private FormScreenshotMetadata _formScreenshotMetadata;
 
         // The form to display when challenging the user for the passphrase in order to unlock the running screen capture session.
         private FormEnterPassphrase _formEnterPassphrase;
@@ -84,7 +84,10 @@ namespace AutoScreenCapture
         private FormScreenCaptureStatus _formScreenCaptureStatus;
 
         // The Dynamic Regex Validator tool.
-        private FormDynamicRegexValidator _formDynamicRegexValidator = new FormDynamicRegexValidator();
+        private FormDynamicRegexValidator _formDynamicRegexValidator;
+
+        // The Label Switcher tool.
+        private FormLabelSwitcher _formLabelSwitcher;
 
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
@@ -465,6 +468,11 @@ namespace AutoScreenCapture
 
                 // Close all the sub forms that may still be open.
 
+                if (_formScreenshotMetadata.Visible)
+                {
+                    _formScreenshotMetadata.Close();
+                }
+
                 if (_formEmailSettings.Visible)
                 {
                     _formEmailSettings.Close();
@@ -597,7 +605,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the Dynamic Regex Validator.
+        /// Shows the Dynamic Regex Validator tool.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -610,6 +618,25 @@ namespace AutoScreenCapture
             else
             {
                 _formDynamicRegexValidator.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Shows the Label Switcher tool.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemLabelSwitcher_Click(object sender, EventArgs e)
+        {
+            PopulateLabelList();
+
+            if (!_formLabelSwitcher.Visible)
+            {
+                _formLabelSwitcher.Show(this);
+            }
+            else
+            {
+                _formLabelSwitcher.Activate();
             }
         }
 
@@ -723,7 +750,7 @@ namespace AutoScreenCapture
 
                 // Regions
                 case 1:
-                    labelModuleHelp.Text = "Add, change, or remove a region. Each region has its own X, Y, Width, and Height values to define an area of a screen. You can either enter these values or use the Region Select button and select the region you want.";
+                    labelModuleHelp.Text = "Add, configure, or remove a region. Each region has its own X, Y, Width, and Height values to define an area of a screen. You can either enter these values or use the Region Select button and select the region you want.";
                     break;
 
                 // Editors

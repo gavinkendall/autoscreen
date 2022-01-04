@@ -120,7 +120,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(557, 118);
             this.Name = "FormDynamicRegexValidator";
             this.Text = "Dynamic Regex Validator";

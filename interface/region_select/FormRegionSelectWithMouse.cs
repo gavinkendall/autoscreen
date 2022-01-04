@@ -31,6 +31,8 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegionSelectWithMouse : Form
     {
+        private bool _sendToClipboard;
+
         private Bitmap _bitmapSource;
         private Bitmap _bitmapDestination;
 
@@ -78,6 +80,11 @@ namespace AutoScreenCapture
         /// </summary>
         public event EventHandler MouseSelectionCompleted;
 
+        /// <summary>
+        /// Invokes the mouse selection completed event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompleteMouseSelection(object sender, EventArgs e)
         {
             MouseSelectionCompleted?.Invoke(sender, e);
@@ -86,8 +93,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Loads the canvas with the chosen output mode.
         /// </summary>
-        public void LoadCanvas()
+        /// <param name="sendToClipboard">Determines if we want to send the captured image to the clipboard.</param>
+        public void LoadCanvas(bool sendToClipboard)
         {
+            _sendToClipboard = sendToClipboard;
+
             Rectangle canvas = SystemInformation.VirtualScreen;
 
             WindowState = FormWindowState.Normal;
@@ -123,6 +133,11 @@ namespace AutoScreenCapture
             Cursor = Cursors.Cross;
         }
 
+        /// <summary>
+        /// Handles what happens when the user is moving the mouse pointer on the screen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBoxMouseCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
@@ -135,6 +150,11 @@ namespace AutoScreenCapture
             pictureBoxMouseCanvas.CreateGraphics().DrawRectangle(_selectPen, _selectX, _selectY, _selectWidth, _selectHeight);
         }
 
+        /// <summary>
+        /// Handles what happens when the user has the mouse button held down while dragging the mouse selection on the screen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBoxMouseCanvas_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -151,6 +171,11 @@ namespace AutoScreenCapture
             pictureBoxMouseCanvas.Refresh();
         }
 
+        /// <summary>
+        /// Selects a bitmap image that represents a selected area of the screen and calls the CompleteMouseSelection event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBoxMouseCanvas_MouseUp(object sender, MouseEventArgs e)
         {
             if (pictureBoxMouseCanvas.Image == null || _selectPen == null) return;
@@ -169,7 +194,10 @@ namespace AutoScreenCapture
 
             if (bitmap != null)
             {
-                SaveToClipboard(bitmap);
+                if (_sendToClipboard)
+                {
+                    SendToClipboard(bitmap);
+                }
 
                 bitmap.Dispose();
 
@@ -186,6 +214,10 @@ namespace AutoScreenCapture
             Close();
         }
 
+        /// <summary>
+        /// Gets a bitmap image from an area of the screen based on X, Y, Width, and Height.
+        /// </summary>
+        /// <returns>Returns a bitmap image based on X, Y, Width, and Height.</returns>
         private Bitmap SelectBitmap()
         {
             if (_selectWidth > 0)
@@ -209,7 +241,11 @@ namespace AutoScreenCapture
             return null;
         }
 
-        private void SaveToClipboard(Bitmap bitmap)
+        /// <summary>
+        /// Sends the provided bitmap image to the clipboard.
+        /// </summary>
+        /// <param name="bitmap">A bitmap image to send to the clipboard.</param>
+        private void SendToClipboard(Bitmap bitmap)
         {
             if (bitmap != null)
             {

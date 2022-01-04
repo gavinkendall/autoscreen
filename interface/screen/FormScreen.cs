@@ -92,7 +92,7 @@ namespace AutoScreenCapture
         {
             textBoxScreenName.Focus();
 
-            HelpMessage("This is where to configure a screen capture. Select a source and a component then change the display properties and image attributes");
+            HelpMessage("This is where to configure a screen capture. Select a source and a component then adjust the display properties and image attributes");
 
             _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
             _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
@@ -374,11 +374,11 @@ namespace AutoScreenCapture
 
         private void buttonBrowseFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog browser = new FolderBrowserDialog();
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
 
-            if (browser.ShowDialog() == DialogResult.OK)
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
             {
-                textBoxFolder.Text = browser.SelectedPath;
+                textBoxFolder.Text = folderBrowser.SelectedPath;
             }
         }
 

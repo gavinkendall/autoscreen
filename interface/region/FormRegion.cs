@@ -324,11 +324,11 @@ namespace AutoScreenCapture
 
         private void buttonRegionBrowseFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog browser = new FolderBrowserDialog();
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
 
-            if (browser.ShowDialog() == DialogResult.OK)
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
             {
-                textBoxFolder.Text = browser.SelectedPath;
+                textBoxFolder.Text = folderBrowser.SelectedPath;
             }
         }
 
@@ -451,7 +451,7 @@ namespace AutoScreenCapture
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas();
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
 
             Cursor = Cursors.Arrow;
         }

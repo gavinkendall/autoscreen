@@ -167,7 +167,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default macro to be assigned to the Macro field for a new Screen or Region.
         /// </summary>
-        public readonly string DefaultMacro = @"%date%\%name%\%date%_%time%.%format%";
+        public readonly string DefaultMacro = @"%date%\%name%\%process% (%date% %time%).%format%";
 
         /// <summary>
         /// The default folder used for Region Select / Auto Save.
@@ -177,7 +177,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default macro used for Region Select / Auto Save.
         /// </summary>
-        public static readonly string DefaultAutoSaveMacro = "screenshot_%date%_%time%.%format%";
+        public static readonly string DefaultAutoSaveMacro = "Screenshot on %date% at %time%.%format%";
 
         /// <summary>
         /// Replaces a tag (such as "%year%") with an appropriate value (such as "2020").

@@ -277,6 +277,16 @@ namespace AutoScreenCapture
 
             tools.DropDown.Items.Add(toolsDynamicRegexValidator);
 
+            ToolStripMenuItem toolsLabelSwitcher = new ToolStripMenuItem
+            {
+                Text = "Label Switcher",
+                AutoToolTip = false
+            };
+
+            toolsLabelSwitcher.Click += new EventHandler(toolStripMenuItemLabelSwitcher_Click);
+
+            tools.DropDown.Items.Add(toolsLabelSwitcher);
+
             ToolStripButton zoomIn = new ToolStripButton
             {
                 Image = Resources.zoom_in,
@@ -652,7 +662,7 @@ namespace AutoScreenCapture
                 Text = "Metadata",
                 Alignment = ToolStripItemAlignment.Left,
                 AutoToolTip = false,
-                ToolTipText = "Show screenshot metadata (such as width, height, and filepath)",
+                ToolTipText = "Show screenshot metadata (such as image format, width, height, date, time, and filepath)",
                 Image = Resources.properties
             };
 

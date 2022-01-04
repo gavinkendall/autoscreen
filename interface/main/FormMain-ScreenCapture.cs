@@ -360,7 +360,12 @@ namespace AutoScreenCapture
                 encrypt = region.Encrypt;
             }
 
-            string label = _formSetup.checkBoxScreenshotLabel.Checked && _formSetup.listBoxScreenshotLabel.SelectedItem != null ? _formSetup.listBoxScreenshotLabel.SelectedItem.ToString() : string.Empty;
+            string label = string.Empty;
+
+            if (_formSetup.checkBoxScreenshotLabel.Checked)
+            {
+                label = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
+            }
 
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
             string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log)) + // Folder path
@@ -506,7 +511,7 @@ namespace AutoScreenCapture
         private void toolStripMenuItemRegionSelectClipboard_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
-            _formRegionSelectWithMouse.LoadCanvas();
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
 
         /// <summary>
@@ -518,7 +523,7 @@ namespace AutoScreenCapture
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas();
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
 
         /// <summary>
@@ -530,7 +535,7 @@ namespace AutoScreenCapture
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas();
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
 
         /// <summary>
@@ -542,7 +547,19 @@ namespace AutoScreenCapture
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardFloatingScreenshotMouseSelectionCompleted;
-            _formRegionSelectWithMouse.LoadCanvas();
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
+        }
+
+        /// <summary>
+        /// Shows a mouse-driven region selection canvas so you can select a region and have the captured image shown in a floating window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectFloatingScreenshot_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectFloatingScreenshotMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
         }
 
         /// <summary>
@@ -614,6 +631,22 @@ namespace AutoScreenCapture
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void _formRegionSelectWithMouse_RegionSelectClipboardFloatingScreenshotMouseSelectionCompleted(object sender, EventArgs e)
+        {
+            Bitmap bitmap = GetBitmapFromRegionSelect();
+
+            if (bitmap != null)
+            {
+                FormFloatingScreenshot formFloatingScreenshot = new FormFloatingScreenshot(bitmap);
+                formFloatingScreenshot.Show();
+            }
+        }
+
+        /// <summary>
+        /// The event method for "Region Select -> Floating Screenshot".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _formRegionSelectWithMouse_RegionSelectFloatingScreenshotMouseSelectionCompleted(object sender, EventArgs e)
         {
             Bitmap bitmap = GetBitmapFromRegionSelect();
 

@@ -376,15 +376,7 @@ namespace AutoScreenCapture
                 toolStripDropDownButtonPreview.ForeColor = Color.Black;
             }
 
-            _formScreenshotMetadata.textBoxLabel.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotTitle.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotFormat.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotWidth.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotHeight.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotDate.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotTime.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotPath.Text = string.Empty;
-            _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "A screenshot could not be found. Perhaps a screenshot has yet to be captured for this component.";
+            ClearScreenshotMetadataFields();
 
             // Dashboard
             if (tabControlViews.TabCount > 0 && tabControlViews.SelectedTab != null && tabControlViews.SelectedTab.Name.Equals("tabPageDashboard"))
@@ -530,6 +522,8 @@ namespace AutoScreenCapture
                     {
                         pictureBox.Image = DoPreview(selectedTabPage.Tag);
                     }
+
+                    _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "Preview is on. There is no saved screenshot to show until Preview is turned off.";
                 }
                 else
                 {
@@ -633,7 +627,7 @@ namespace AutoScreenCapture
                                     }
                                     catch (Exception ex)
                                     {
-                                        // Write an error to the error file in th debug directory regardless if debug mode or logging is enabled or disabled.
+                                        // Write an error to the error file in the debug directory regardless if debug mode or logging is enabled or disabled.
                                         // We want to force write this error out to the error file. The image will remain black to indicate that an error was encountered.
                                         _log.Write($"Decryption failed for \"{selectedScreenshot.Path}\". Exception: {ex}", writeError: true, null);
                                     }
@@ -685,7 +679,7 @@ namespace AutoScreenCapture
                                 toolStripButtonEncryptDecrypt.Enabled = false;
                             }
 
-                            _formScreenshotMetadata.textBoxLabel.Text = selectedScreenshot.Label;
+                            _formScreenshotMetadata.textBoxScreenshotLabel.Text = selectedScreenshot.Label;
                             _formScreenshotMetadata.textBoxScreenshotTitle.Text = selectedScreenshot.WindowTitle;
                             _formScreenshotMetadata.textBoxScreenshotFormat.Text = selectedScreenshot.Format.Name;
 
@@ -697,8 +691,11 @@ namespace AutoScreenCapture
 
                             _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.Path;
 
+                            _formScreenshotMetadata.textBoxScreenshotProcessName.Text = selectedScreenshot.ProcessName;
+
                             if (selectedScreenshot.Encrypted)
                             {
+                                _formScreenshotMetadata.textBoxScreenshotKey.Text = selectedScreenshot.Key;
                                 _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "This screenshot is encrypted. It will be difficult for other applications to use it.";
                             }
                             else
@@ -718,9 +715,30 @@ namespace AutoScreenCapture
                         toolStripTextBox.BackColor = Color.LightYellow;
                         toolStripTextBox.ToolTipText = string.Empty;
                         toolstripButtonOpenFolder.Enabled = false;
+                        
+                        _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "A screenshot could not be found. Perhaps a screenshot has yet to be captured for this component.";
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Clears all the read-only text fields and status strip text in Screenshot Metadata.
+        /// </summary>
+        private void ClearScreenshotMetadataFields()
+        {
+            _formScreenshotMetadata.textBoxScreenshotLabel.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotTitle.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotFormat.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotWidth.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotHeight.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotDate.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotTime.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotKey.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotPath.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotProcessName.Text = string.Empty;
+
+            _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = string.Empty;
         }
 
         /// <summary>
@@ -793,15 +811,10 @@ namespace AutoScreenCapture
             contextMenuStripScreenshot.Items.Clear();
 
             ToolStripMenuItem showScreenshotLocationToolStripItem = new ToolStripMenuItem("Show Screenshot Location");
-            showScreenshotLocationToolStripItem.Click +=
-                new EventHandler(showScreenshotLocation_Click);
-
-            ToolStripMenuItem addEditorToolStripItem = new ToolStripMenuItem("Add Editor");
-            addEditorToolStripItem.Click += new EventHandler(addEditor_Click);
+            showScreenshotLocationToolStripItem.Click += new EventHandler(showScreenshotLocation_Click);
 
             contextMenuStripScreenshot.Items.Add(showScreenshotLocationToolStripItem);
             contextMenuStripScreenshot.Items.Add(new ToolStripSeparator());
-            contextMenuStripScreenshot.Items.Add(addEditorToolStripItem);
 
             foreach (Editor editor in _formEditor.EditorCollection)
             {
@@ -1138,6 +1151,8 @@ namespace AutoScreenCapture
 
         private void tabControlViews_Selected(object sender, TabControlEventArgs e)
         {
+            ClearScreenshotMetadataFields();
+
             // There's no point saving the value if the tab control view was cleared.
             if (tabControlViews.SelectedIndex <= 0)
             {

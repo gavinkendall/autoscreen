@@ -21,13 +21,17 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
     public partial class FormMain
     {
+        private ToolTip _toolTipButtonAdd = new ToolTip();
+        private ToolTip _toolTipButtonConfigure = new ToolTip();
+        private ToolTip _toolTipLabelEnabledStatus = new ToolTip();
+        private ToolTip _toolTipButtonRemoveSelected = new ToolTip();
+
         // A generic method for building a module.
         private void BuildModule<T>(IEnumerable<T> list, TabPage tabPage,
             EventHandler eventHandlerForAdd, EventHandler eventHandlerForRemoveSelected, EventHandler eventhandlerForConfigure)
@@ -65,6 +69,7 @@ namespace AutoScreenCapture
             };
             buttonAdd.Click += eventHandlerForAdd;
             tabPage.Controls.Add(buttonAdd);
+            _toolTipButtonAdd.SetToolTip(buttonAdd, "Add a new item to the list");
 
             // Render the button for removing multiple selected objects.
             Button buttonRemoveSelected = new Button
@@ -80,6 +85,7 @@ namespace AutoScreenCapture
             };
             buttonRemoveSelected.Click += eventHandlerForRemoveSelected;
             tabPage.Controls.Add(buttonRemoveSelected);
+            _toolTipButtonRemoveSelected.SetToolTip(buttonRemoveSelected, "Remove selected items from the list");
 
             // Move down a bit.
             yPos += 28;
@@ -148,6 +154,15 @@ namespace AutoScreenCapture
                     {
                         bool enabled = (bool)t.GetProperty("Enable").GetValue(@object, null);
                         labelEnabledStatus.BackColor = enabled ? Color.PaleGreen : Color.PaleVioletRed;
+
+                        if (enabled)
+                        {
+                            _toolTipLabelEnabledStatus.SetToolTip(labelEnabledStatus, "This is enabled. Click to disable");
+                        }
+                        else
+                        {
+                            _toolTipLabelEnabledStatus.SetToolTip(labelEnabledStatus, "This is disabled. Click to enable");
+                        }
                     }
 
                     labelEnabledStatus.Click += enabledStatus_Click;
@@ -166,7 +181,6 @@ namespace AutoScreenCapture
                     ReadOnly = true,
                     TabStop = false
                 };
-
                 tabPage.Controls.Add(textBoxObjectName);
 
                 // Add a button so that the user can configure the object.
@@ -182,13 +196,9 @@ namespace AutoScreenCapture
                     Tag = @object,
                     TabStop = false
                 };
-
                 buttonConfigure.Click += eventhandlerForConfigure;
-
                 tabPage.Controls.Add(buttonConfigure);
-
-                //ToolTip _toolTipConfigure = new ToolTip();
-                //_toolTipConfigure.SetToolTip(buttonConfigure, "");
+                _toolTipButtonConfigure.SetToolTip(buttonConfigure, "Configure this item");
 
                 // Move down the tab page so we're ready to loop around again and add the next object to it.
                 yPos += Y_POS_INCREMENT;
@@ -256,7 +266,7 @@ namespace AutoScreenCapture
                     label.BackColor = Color.PaleGreen;
                 }
 
-                if (!_formScreen.ScreenCollection.SaveToXmlFile(_config, _fileSystem, _log))
+                if (!_formScreen.ScreenCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))
                 {
                     _screenCapture.ApplicationError = true;
                 }

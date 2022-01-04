@@ -46,12 +46,21 @@ namespace AutoScreenCapture
 
                     _formSetup.checkBoxScreenshotLabel.Checked = true;
 
+                    // The list of labels on the Setup form.
                     if (!_formSetup.listBoxScreenshotLabel.Items.Contains(label))
                     {
                         _formSetup.listBoxScreenshotLabel.Items.Add(label);
                     }
 
                     _formSetup.listBoxScreenshotLabel.SelectedItem = label;
+
+                    // The list of labels on the Label Switcher tool.
+                    if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(label))
+                    {
+                        _formLabelSwitcher.comboBoxLabels.Items.Add(label);
+                    }
+
+                    _formLabelSwitcher.comboBoxLabels.SelectedItem = label;
                 }
             }
         }
@@ -76,9 +85,20 @@ namespace AutoScreenCapture
                     {
                         _formSetup.listBoxScreenshotLabel.Items.Add(label);
                     }
+
+                    if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(label))
+                    {
+                        _formLabelSwitcher.comboBoxLabels.Items.Add(label);
+                    }
                 }
 
-                _formSetup.listBoxScreenshotLabel.SelectedItem = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                string screenshotlabel = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+
+                if (!string.IsNullOrEmpty(screenshotlabel))
+                {
+                    _formSetup.listBoxScreenshotLabel.SelectedItem = screenshotlabel;
+                    _formLabelSwitcher.comboBoxLabels.SelectedItem = screenshotlabel;
+                }
 
                 if (_screenCapture.LockScreenCaptureSession || _formSetup.listBoxScreenshotLabel.Items.Count == 0)
                 {
@@ -136,12 +156,21 @@ namespace AutoScreenCapture
 
                 _formSetup.checkBoxScreenshotLabel.Checked = true;
 
+                // The list of labels on the Setup form.
                 if (!_formSetup.listBoxScreenshotLabel.Items.Contains(label))
                 {
                     _formSetup.listBoxScreenshotLabel.Items.Add(label);
                 }
 
                 _formSetup.listBoxScreenshotLabel.SelectedItem = label;
+
+                // The list of labels on the Label Switcher tool.
+                if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(label))
+                {
+                    _formLabelSwitcher.comboBoxLabels.Items.Add(label);
+                }
+
+                _formLabelSwitcher.comboBoxLabels.SelectedItem = label;
             }
         }
     }

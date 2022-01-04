@@ -37,6 +37,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemSetupWizard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorSetupWizard = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemScreenshotsFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInterval = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOptimizeScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemLabels = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,12 +99,13 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectClipboardAutoSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRegionSelectFloatingScreenshot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorRegionSelect = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemApplyLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorApplyLabel = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlModules = new System.Windows.Forms.TabControl();
             this.tabPageScreens = new System.Windows.Forms.TabPage();
             this.tabPageRegions = new System.Windows.Forms.TabPage();
@@ -121,6 +123,7 @@ namespace AutoScreenCapture
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.labelModuleHelp = new System.Windows.Forms.Label();
+            this.toolStripMenuItemLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -163,6 +166,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemSetupWizard,
             this.toolStripSeparatorSetupWizard,
+            this.toolStripMenuItemScreenshotsFolder,
             this.toolStripMenuItemInterval,
             this.toolStripMenuItemOptimizeScreenCapture,
             this.toolStripMenuItemLabels,
@@ -190,6 +194,13 @@ namespace AutoScreenCapture
             this.toolStripSeparatorSetupWizard.Name = "toolStripSeparatorSetupWizard";
             this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(202, 6);
             this.toolStripSeparatorSetupWizard.Visible = false;
+            // 
+            // toolStripMenuItemScreenshotsFolder
+            // 
+            this.toolStripMenuItemScreenshotsFolder.Name = "toolStripMenuItemScreenshotsFolder";
+            this.toolStripMenuItemScreenshotsFolder.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMenuItemScreenshotsFolder.Text = "Screenshots Folder";
+            this.toolStripMenuItemScreenshotsFolder.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemInterval
             // 
@@ -664,7 +675,8 @@ namespace AutoScreenCapture
             // toolStripMenuItemTools
             // 
             this.toolStripMenuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemDynamicRegexValidator});
+            this.toolStripMenuItemDynamicRegexValidator,
+            this.toolStripMenuItemLabelSwitcher});
             this.toolStripMenuItemTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             this.toolStripMenuItemTools.Size = new System.Drawing.Size(219, 22);
@@ -711,7 +723,8 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectClipboard,
             this.toolStripMenuItemRegionSelectClipboardAutoSave,
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit,
-            this.toolStripMenuItemFloatingScreenshot});
+            this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot,
+            this.toolStripMenuItemRegionSelectFloatingScreenshot});
             this.toolStripMenuItemRegionSelect.Image = global::AutoScreenCapture.Properties.Resources.region;
             this.toolStripMenuItemRegionSelect.Name = "toolStripMenuItemRegionSelect";
             this.toolStripMenuItemRegionSelect.Size = new System.Drawing.Size(219, 22);
@@ -750,12 +763,19 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Text = "Clipboard / Auto Save / Edit";
             this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click);
             // 
-            // toolStripMenuItemFloatingScreenshot
+            // toolStripMenuItemRegionSelectClipboardFloatingScreenshot
             // 
-            this.toolStripMenuItemFloatingScreenshot.Name = "toolStripMenuItemFloatingScreenshot";
-            this.toolStripMenuItemFloatingScreenshot.Size = new System.Drawing.Size(241, 22);
-            this.toolStripMenuItemFloatingScreenshot.Text = "Clipboard / Floating Screenshot";
-            this.toolStripMenuItemFloatingScreenshot.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click);
+            this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot.Name = "toolStripMenuItemRegionSelectClipboardFloatingScreenshot";
+            this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot.Size = new System.Drawing.Size(241, 22);
+            this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot.Text = "Clipboard / Floating Screenshot";
+            this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click);
+            // 
+            // toolStripMenuItemRegionSelectFloatingScreenshot
+            // 
+            this.toolStripMenuItemRegionSelectFloatingScreenshot.Name = "toolStripMenuItemRegionSelectFloatingScreenshot";
+            this.toolStripMenuItemRegionSelectFloatingScreenshot.Size = new System.Drawing.Size(241, 22);
+            this.toolStripMenuItemRegionSelectFloatingScreenshot.Text = "Floating Screenshot";
+            this.toolStripMenuItemRegionSelectFloatingScreenshot.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectFloatingScreenshot_Click);
             // 
             // toolStripSeparatorRegionSelect
             // 
@@ -773,6 +793,14 @@ namespace AutoScreenCapture
             this.toolStripSeparatorApplyLabel.Name = "toolStripSeparatorApplyLabel";
             this.toolStripSeparatorApplyLabel.Size = new System.Drawing.Size(216, 6);
             // 
+            // toolStripMenuItemHelp
+            // 
+            this.toolStripMenuItemHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
+            this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
+            this.toolStripMenuItemHelp.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMenuItemHelp.Text = "Help";
+            this.toolStripMenuItemHelp.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
+            // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Image = global::AutoScreenCapture.Properties.Resources.exit;
@@ -781,14 +809,6 @@ namespace AutoScreenCapture
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemExit.Text = "Exit";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
-            // 
-            // toolStripMenuItemHelp
-            // 
-            this.toolStripMenuItemHelp.Image = global::AutoScreenCapture.Properties.Resources.help;
-            this.toolStripMenuItemHelp.Name = "toolStripMenuItemHelp";
-            this.toolStripMenuItemHelp.Size = new System.Drawing.Size(219, 22);
-            this.toolStripMenuItemHelp.Text = "Help";
-            this.toolStripMenuItemHelp.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
             // tabControlModules
             // 
@@ -980,6 +1000,13 @@ namespace AutoScreenCapture
     "n enabled while viewing the Dashboard to see what would be captured when startin" +
     "g a screen capture session.";
             // 
+            // toolStripMenuItemLabelSwitcher
+            // 
+            this.toolStripMenuItemLabelSwitcher.Name = "toolStripMenuItemLabelSwitcher";
+            this.toolStripMenuItemLabelSwitcher.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemLabelSwitcher.Text = "Label Switcher";
+            this.toolStripMenuItemLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1085,7 +1112,7 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemChangeTrigger;
         private ToolStripMenuItem toolStripMenuItemRegionSelectOptions;
         private ToolStripSeparator toolStripSeparatorRegionSelectOptions;
-        private ToolStripMenuItem toolStripMenuItemFloatingScreenshot;
+        private ToolStripMenuItem toolStripMenuItemRegionSelectClipboardFloatingScreenshot;
         private ToolStripDropDownButton toolStripDropDownButtonSetup;
         private ToolStripDropDownButton toolStripDropDownButtonStartScreenCapture;
         private ToolStripDropDownButton toolStripDropDownButtonStopScreenCapture;
@@ -1109,5 +1136,8 @@ namespace AutoScreenCapture
         private ToolStripDropDownButton toolStripDropDownButtonOpenProgramFolder;
         private ToolStripMenuItem toolStripMenuItemOpenProgramFolder;
         private ToolStripMenuItem toolStripMenuItemHelp;
+        private ToolStripMenuItem toolStripMenuItemRegionSelectFloatingScreenshot;
+        private ToolStripMenuItem toolStripMenuItemScreenshotsFolder;
+        private ToolStripMenuItem toolStripMenuItemLabelSwitcher;
     }
 }

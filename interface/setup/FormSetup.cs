@@ -30,30 +30,45 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormSetup : Form
     {
+        private Log _log;
         private Security _security;
         private Config _config;
         private FileSystem _fileSystem;
         private ScreenCapture _screenCapture;
+        private FormLabelSwitcher _formLabelSwitcher;
+        private FormScreen _formScreen;
+        private FormRegion _formRegion;
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="log"></param>
         /// <param name="security"></param>
         /// <param name="config"></param>
         /// <param name="fileSystem"></param>
         /// <param name="screenCapture"></param>
-        public FormSetup(Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture)
+        /// <param name="formLabelSwitcher"></param>
+        /// <param name="formScreen"></param>
+        /// <param name="formRegion"></param>
+        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion)
         {
             InitializeComponent();
 
+            _log = log;
             _security = security;
             _config = config;
             _fileSystem = fileSystem;
             _screenCapture = screenCapture;
+            _formLabelSwitcher = formLabelSwitcher;
+            _formScreen = formScreen;
+            _formRegion = formRegion;
         }
 
         private void FormSetup_Load(object sender, EventArgs e)
         {
+            // Screenshots Folder
+            textBoxScreenshotsFolder.Text = _fileSystem.ScreenshotsFolder;
+
             checkBoxUseKeyboardShortcuts.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts", _config.Settings.DefaultSettings.UseKeyboardShortcuts).Value);
 
             comboBoxKeyboardShortcutStartScreenCaptureModifier1.Items.Clear();
@@ -218,6 +233,9 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("KeyboardShortcutRegionSelectClipboardKey", textBoxKeyboardShortcutRegionSelectClipboardKey.Text.ToString().ToUpper());
                 _config.Settings.User.SetValueByKey("KeyboardShortcutRegionSelectAutoSaveKey", textBoxKeyboardShortcutRegionSelectAutoSaveKey.Text.ToString().ToUpper());
                 _config.Settings.User.SetValueByKey("KeyboardShortcutRegionSelectEditKey", textBoxKeyboardShortcutRegionSelectEditKey.Text.ToString().ToUpper());
+
+                _fileSystem.ScreenshotsFolder = textBoxScreenshotsFolder.Text;
+                _config.Settings.User.SetValueByKey("ScreenshotsFolder", textBoxScreenshotsFolder.Text);
 
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
 
@@ -433,11 +451,20 @@ namespace AutoScreenCapture
             }
 
             listBoxScreenshotLabel.SelectedItem = labelToAdd;
+
+            if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(labelToAdd))
+            {
+                _formLabelSwitcher.comboBoxLabels.Items.Add(labelToAdd);
+            }
+
+            _formLabelSwitcher.comboBoxLabels.SelectedItem = labelToAdd;
         }
 
         private void listBoxScreenshotLabel_SelectedIndexChanged(object sender, EventArgs e)
         {
             _config.Settings.User.SetValueByKey("ScreenshotLabel", listBoxScreenshotLabel.SelectedItem.ToString());
+
+            _formLabelSwitcher.comboBoxLabels.SelectedItem = listBoxScreenshotLabel.SelectedItem;
         }
 
         private void checkBoxActiveWindowTitleComparisonCheck_CheckedChanged(object sender, EventArgs e)
@@ -650,6 +677,50 @@ namespace AutoScreenCapture
             _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = listBoxProcessList.SelectedItem.ToString();
             _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)numericUpDownApplicationFocusDelayBefore.Value;
             _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)numericUpDownApplicationFocusDelayAfter.Value;
+        }
+
+        private void buttonScreenshotsFolderBrowseFolder_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                textBoxScreenshotsFolder.Text = folderBrowser.SelectedPath;
+            }
+        }
+
+        private void buttonScreenshotsFolderApplyToAllScreens_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxScreenshotsFolder.Text))
+            {
+                return;
+            }
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                screen.Folder = textBoxScreenshotsFolder.Text;
+            }
+
+            _formScreen.ScreenCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All screens are now using the folder path \"" + textBoxScreenshotsFolder.Text + "\"", "Folder Path Applied To All Screens", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonScreenshotsFolderApplyToAllRegions_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxScreenshotsFolder.Text))
+            {
+                return;
+            }
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                region.Folder = textBoxScreenshotsFolder.Text;
+            }
+
+            _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All regions are now using the folder path \"" + textBoxScreenshotsFolder.Text + "\"", "Folder Path Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

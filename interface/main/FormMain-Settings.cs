@@ -36,26 +36,45 @@ namespace AutoScreenCapture
 
                 _log.WriteMessage("*** Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\") ***");
                 _log.WriteMessage("Starting application");
-                _log.WriteMessage("At this point the application should be able to run normally");
-                _log.WriteMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
-                _log.WriteMessage("Your autoscreen.conf file is \"" + _fileSystem.ConfigFile + "\"");
-                _log.WriteMessage("The name and location of it can be changed with the -config command line argument:");
-                _log.WriteMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
-                _log.WriteMessage("Checking what we loaded from your autoscreen.conf file ...");
-                _log.WriteMessage("ApplicationSettingsFile=" + _fileSystem.ApplicationSettingsFile);
-                _log.WriteMessage("UserSettingsFile=" + _fileSystem.UserSettingsFile);
-                _log.WriteMessage("DebugFolder=" + _fileSystem.DebugFolder);
-                _log.WriteMessage("LogsFolder=" + _fileSystem.LogsFolder);
-                _log.WriteMessage("CommandFile=" + _fileSystem.CommandFile);
-                _log.WriteMessage("ScreenshotsFolder=" + _fileSystem.ScreenshotsFolder);
-                _log.WriteMessage("ScreenshotsFile=" + _fileSystem.ScreenshotsFile);
-                _log.WriteMessage("TriggersFile=" + _fileSystem.TriggersFile);
-                _log.WriteMessage("ScreensFile=" + _fileSystem.ScreensFile);
-                _log.WriteMessage("RegionsFile=" + _fileSystem.RegionsFile);
-                _log.WriteMessage("EditorsFile=" + _fileSystem.EditorsFile);
-                _log.WriteMessage("TagsFile = " + _fileSystem.TagsFile);
+                _log.WriteDebugMessage("At this point the application should be able to run normally");
+                _log.WriteDebugMessage("but it would be a good idea to check what we found in your autoscreen.conf file");
+                _log.WriteDebugMessage("Your autoscreen.conf file is \"" + _fileSystem.ConfigFile + "\"");
+                _log.WriteDebugMessage("The name and location of it can be changed with the -config command line argument:");
+                _log.WriteDebugMessage("autoscreen.exe -config=C:\\MyAutoScreenCapture.conf");
+                _log.WriteDebugMessage("Checking what we loaded from your autoscreen.conf file ...");
+                _log.WriteDebugMessage("ApplicationSettingsFile=" + _fileSystem.ApplicationSettingsFile);
+                _log.WriteDebugMessage("UserSettingsFile=" + _fileSystem.UserSettingsFile);
+                _log.WriteDebugMessage("DebugFolder=" + _fileSystem.DebugFolder);
+                _log.WriteDebugMessage("LogsFolder=" + _fileSystem.LogsFolder);
+                _log.WriteDebugMessage("CommandFile=" + _fileSystem.CommandFile);
+                _log.WriteDebugMessage("ScreenshotsFolder=" + _fileSystem.ScreenshotsFolder);
+                _log.WriteDebugMessage("ScreenshotsFile=" + _fileSystem.ScreenshotsFile);
+                _log.WriteDebugMessage("TriggersFile=" + _fileSystem.TriggersFile);
+                _log.WriteDebugMessage("ScreensFile=" + _fileSystem.ScreensFile);
+                _log.WriteDebugMessage("RegionsFile=" + _fileSystem.RegionsFile);
+                _log.WriteDebugMessage("EditorsFile=" + _fileSystem.EditorsFile);
+                _log.WriteDebugMessage("TagsFile = " + _fileSystem.TagsFile);
 
-                _log.WriteMessage("It looks like I successfully parsed your \"" + _fileSystem.ConfigFile + "\" file.");
+                _log.WriteDebugMessage("It looks like the application successfully parsed your \"" + _fileSystem.ConfigFile + "\" file");
+
+                _log.WriteDebugMessage("Checking for a user-defined screenshots folder path in user settings and if it differs from the path set by autoscreen.conf");
+
+                // Let's see if the user has their own screenshots folder they would like to use. Check user settings.
+                // If they have defined a screenshots folder in user settings then use that folder path otherwise keep using the path from the config file.
+                Setting screenshotsFolderDefinedByUser = _config.Settings.User.GetByKey("ScreenshotsFolder", _fileSystem.ScreenshotsFolder, createKeyIfNotFound: false);
+
+                // Set the screenshots folder path to be the user-defined screenshots folder path if it's different from the path used by the configuration file.
+                if (screenshotsFolderDefinedByUser != null && !screenshotsFolderDefinedByUser.Value.ToString().Equals(_fileSystem.ScreenshotsFolder))
+                {
+                    _fileSystem.ScreenshotsFolder = screenshotsFolderDefinedByUser.Value.ToString();
+
+                    _log.WriteDebugMessage("WARNING! A user-defined screenshots folder path was found in user settings and this path is different from what was set in the autoscreen.conf file so the application will be using this path instead!");
+                    _log.WriteDebugMessage("The screenshots folder path that will be used is \"" + _fileSystem.ScreenshotsFolder + "\"");
+                }
+                else
+                {
+                    _log.WriteDebugMessage("No difference in folder path found. Screenshots folder path from autoscreen.conf file will be used (\"" + _fileSystem.ScreenshotsFolder + "\")");
+                }
 
                 _log.WriteDebugMessage("Initializing screen capture");
                 _screenCapture = new ScreenCapture(_config, _fileSystem, _log);
@@ -66,6 +85,9 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Initializing forms");
                 _formAbout = new FormAbout();
                 _formHelp = new FormHelp();
+                _formDynamicRegexValidator = new FormDynamicRegexValidator();
+                _formScreenshotMetadata = new FormScreenshotMetadata();
+                _formLabelSwitcher = new FormLabelSwitcher(_config, _fileSystem);
                 _formMacroTag = new FormMacroTag(_macroParser);
                 _formRegion = new FormRegion(_screenCapture, _macroParser, _fileSystem, _config, _log);
                 _formScreen = new FormScreen(_screenCapture, _macroParser, _fileSystem, _config, _log);
@@ -77,7 +99,7 @@ namespace AutoScreenCapture
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-                _formSetup = new FormSetup(_security, _config, _fileSystem, _screenCapture);
+                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion);
                 _formSetupWizard = new FormSetupWizard();
 
                 if (_config.CleanStartup)

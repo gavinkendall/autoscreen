@@ -326,7 +326,7 @@ namespace AutoScreenCapture
                     if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
                         log.WriteDebugMessage("Screens file detected as an old version");
-                        SaveToXmlFile(config, fileSystem, log);
+                        SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
                 else
@@ -368,7 +368,7 @@ namespace AutoScreenCapture
                     // Since we're creating the screens.xml file for the first time we'll need to add a default number of screens and have them all part of the "Auto Adapt" group.
                     AddDefaultScreens(macroParser, fileSystem, log);
 
-                    SaveToXmlFile(config, fileSystem, log);
+                    SaveToXmlFile(config.Settings, fileSystem, log);
                 }
 
                 return true;
@@ -384,7 +384,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Saves the screens.
         /// </summary>
-        public bool SaveToXmlFile(Config config, FileSystem fileSystem, Log log)
+        public bool SaveToXmlFile(Settings settings, FileSystem fileSystem, Log log)
         {
             try
             {
@@ -417,8 +417,8 @@ namespace AutoScreenCapture
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
-                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, config.Settings.ApplicationVersion);
-                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, config.Settings.ApplicationCodename);
+                    xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, settings.ApplicationVersion);
+                    xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, settings.ApplicationCodename);
                     xWriter.WriteStartElement(XML_FILE_SCREENS_NODE);
 
                     foreach (Screen screen in base.Collection)
