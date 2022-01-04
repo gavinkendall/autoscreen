@@ -1,3 +1,5 @@
+@echo off
+set build_dir=%cd%
 rmdir /s /q !autoscreen
 rmdir /s /q screenshots
 del /s /q autoscreen.conf
@@ -18,6 +20,13 @@ del ..\bin\Release\Gavin.Kendall.SFTP.dll
 del ..\bin\Release\Gavin.Kendall.SFTP.pdb
 del ..\bin\Release\Renci.SshNet.dll
 del ..\bin\Release\Renci.SshNet.xml
+
+if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\VSI\DisableOutOfProcBuild\DisableOutOfProcBuild.exe" (
+    cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\VSI\DisableOutOfProcBuild\"
+    DisableOutOfProcBuild.exe
+    cd %build_dir%
+)
+
 devenv ..\autoscreen_vs2019.sln /Project ..\AutoScreenCaptureSetup\AutoScreenCaptureSetup.vdproj /Build Release
 move ..\bin\Release\autoscreen.exe .
 move ..\AutoScreenCaptureSetup\Release\AutoScreenCaptureSetup.msi .
