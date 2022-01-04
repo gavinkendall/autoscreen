@@ -6,5 +6,6 @@ Gavin.Kendall.SFTP/obj
 bin/
 obj/
 packages/
-build/
 images/Thumbs.db
+build/autoscreen.exe
+build/AutoScreenCaptureSetup.msi
