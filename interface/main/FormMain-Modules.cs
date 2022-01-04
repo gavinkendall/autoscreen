@@ -155,14 +155,7 @@ namespace AutoScreenCapture
                         bool enabled = (bool)t.GetProperty("Enable").GetValue(@object, null);
                         labelEnabledStatus.BackColor = enabled ? Color.PaleGreen : Color.PaleVioletRed;
 
-                        if (enabled)
-                        {
-                            _toolTipLabelEnabledStatus.SetToolTip(labelEnabledStatus, "This is enabled. Click to disable");
-                        }
-                        else
-                        {
-                            _toolTipLabelEnabledStatus.SetToolTip(labelEnabledStatus, "This is disabled. Click to enable");
-                        }
+                        _toolTipLabelEnabledStatus.SetToolTip(labelEnabledStatus, "Green is enabled. Red is disabled. Click to toggle");
                     }
 
                     labelEnabledStatus.Click += enabledStatus_Click;

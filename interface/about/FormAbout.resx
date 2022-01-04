@@ -120,7 +120,7 @@
   <data name="richTextBoxApplication.Text" xml:space="preserve">
     <value>Auto Screen Capture 2.4.0.0 ("Blade")
 An automated screen capture utility for Windows
-Copyright © 2008-2021 Gavin Kendall
+Copyright © 2008-2022 Gavin Kendall
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -286,10 +286,9 @@ https://youtube.com/gavinkendall/
   <data name="richTextBoxContributors.Text" xml:space="preserve">
     <value>.:: Development ::.
 Gavin Kendall
-Oskars Grauzis
 
-.:: Technical Documentation ::.
-Gavin Kendall
+.:: Contributors ::.
+Oskars Grauzis
 Guillermo Ruffino
 Tom Pittenger
 
