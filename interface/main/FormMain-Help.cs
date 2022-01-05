@@ -96,7 +96,7 @@ namespace AutoScreenCapture
         {
             if (!_formHelp.Visible)
             {
-                _formHelp.Show(this);
+                _formHelp.Show();
             }
             else
             {

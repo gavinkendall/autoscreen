@@ -129,12 +129,6 @@
     <Compile Include="interface\setup\FormSetup.Designer.cs">
       <DependentUpon>FormSetup.cs</DependentUpon>
     </Compile>
-    <Compile Include="interface\setup\FormSetupWizard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="interface\setup\FormSetupWizard.Designer.cs">
-      <DependentUpon>FormSetupWizard.cs</DependentUpon>
-    </Compile>
     <Compile Include="interface\tools\FormDynamicRegexValidator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -343,9 +337,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="interface\setup\FormSetup.resx">
       <DependentUpon>FormSetup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="interface\setup\FormSetupWizard.resx">
-      <DependentUpon>FormSetupWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\tools\FormDynamicRegexValidator.resx">
       <DependentUpon>FormDynamicRegexValidator.cs</DependentUpon>

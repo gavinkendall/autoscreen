@@ -35,8 +35,6 @@ namespace AutoScreenCapture
             this.monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonSetup = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItemSetupWizard = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparatorSetupWizard = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemScreenshotsFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInterval = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOptimizeScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,6 +87,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemFileTransferSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemTools = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorTools = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemCaptureNowArchive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCaptureNowEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +122,6 @@ namespace AutoScreenCapture
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.labelModuleHelp = new System.Windows.Forms.Label();
-            this.toolStripMenuItemLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -164,8 +162,6 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.AutoToolTip = false;
             this.toolStripDropDownButtonSetup.BackColor = System.Drawing.Color.White;
             this.toolStripDropDownButtonSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemSetupWizard,
-            this.toolStripSeparatorSetupWizard,
             this.toolStripMenuItemScreenshotsFolder,
             this.toolStripMenuItemInterval,
             this.toolStripMenuItemOptimizeScreenCapture,
@@ -180,20 +176,6 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.Name = "toolStripDropDownButtonSetup";
             this.toolStripDropDownButtonSetup.Size = new System.Drawing.Size(66, 20);
             this.toolStripDropDownButtonSetup.Text = "Setup";
-            // 
-            // toolStripMenuItemSetupWizard
-            // 
-            this.toolStripMenuItemSetupWizard.Name = "toolStripMenuItemSetupWizard";
-            this.toolStripMenuItemSetupWizard.Size = new System.Drawing.Size(205, 22);
-            this.toolStripMenuItemSetupWizard.Text = "Setup Wizard";
-            this.toolStripMenuItemSetupWizard.Visible = false;
-            this.toolStripMenuItemSetupWizard.Click += new System.EventHandler(this.toolStripMenuItemSetupWizard_Click);
-            // 
-            // toolStripSeparatorSetupWizard
-            // 
-            this.toolStripSeparatorSetupWizard.Name = "toolStripSeparatorSetupWizard";
-            this.toolStripSeparatorSetupWizard.Size = new System.Drawing.Size(202, 6);
-            this.toolStripSeparatorSetupWizard.Visible = false;
             // 
             // toolStripMenuItemScreenshotsFolder
             // 
@@ -456,7 +438,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 420);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -685,9 +667,16 @@ namespace AutoScreenCapture
             // toolStripMenuItemDynamicRegexValidator
             // 
             this.toolStripMenuItemDynamicRegexValidator.Name = "toolStripMenuItemDynamicRegexValidator";
-            this.toolStripMenuItemDynamicRegexValidator.Size = new System.Drawing.Size(204, 22);
+            this.toolStripMenuItemDynamicRegexValidator.Size = new System.Drawing.Size(296, 22);
             this.toolStripMenuItemDynamicRegexValidator.Text = "Dynamic Regex Validator";
             this.toolStripMenuItemDynamicRegexValidator.Click += new System.EventHandler(this.toolStripMenuItemDynamicRegexValidator_Click);
+            // 
+            // toolStripMenuItemLabelSwitcher
+            // 
+            this.toolStripMenuItemLabelSwitcher.Name = "toolStripMenuItemLabelSwitcher";
+            this.toolStripMenuItemLabelSwitcher.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMenuItemLabelSwitcher.Text = "Screen Capture Status With Label Switcher";
+            this.toolStripMenuItemLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
             // 
             // toolStripSeparatorTools
             // 
@@ -1000,13 +989,6 @@ namespace AutoScreenCapture
     "n enabled while viewing the Dashboard to see what would be captured when startin" +
     "g a screen capture session.";
             // 
-            // toolStripMenuItemLabelSwitcher
-            // 
-            this.toolStripMenuItemLabelSwitcher.Name = "toolStripMenuItemLabelSwitcher";
-            this.toolStripMenuItemLabelSwitcher.Size = new System.Drawing.Size(204, 22);
-            this.toolStripMenuItemLabelSwitcher.Text = "Screen Capture Status With Label Switcher";
-            this.toolStripMenuItemLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1126,8 +1108,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemCommandLine;
         private ToolStripMenuItem toolStripMenuItemKeyboardShortcuts;
         private ToolStripDropDownButton toolStripDropDownButtonPreview;
-        private ToolStripMenuItem toolStripMenuItemSetupWizard;
-        private ToolStripSeparator toolStripSeparatorSetupWizard;
         private ToolStripMenuItem toolStripMenuItemOptimizeScreenCapture;
         private ToolStripDropDownButton toolStripDropDownButtonEmailSettings;
         private ToolStripDropDownButton toolStripDropDownButtonFileTransferSettings;

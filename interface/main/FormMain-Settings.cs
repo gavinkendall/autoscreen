@@ -100,7 +100,6 @@ namespace AutoScreenCapture
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
                 _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion);
-                _formSetupWizard = new FormSetupWizard();
 
                 if (_config.CleanStartup)
                 {

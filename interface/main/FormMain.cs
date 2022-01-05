@@ -72,7 +72,6 @@ namespace AutoScreenCapture
 
         // Setup.
         private FormSetup _formSetup;
-        private FormSetupWizard _formSetupWizard;
 
         // Screeshot Properties
         private FormScreenshotMetadata _formScreenshotMetadata;
@@ -613,7 +612,7 @@ namespace AutoScreenCapture
         {
             if (!_formDynamicRegexValidator.Visible)
             {
-                _formDynamicRegexValidator.Show(this);
+                _formDynamicRegexValidator.Show();
             }
             else
             {
@@ -632,7 +631,7 @@ namespace AutoScreenCapture
 
             if (!_formLabelSwitcher.Visible)
             {
-                _formLabelSwitcher.Show(this);
+                _formLabelSwitcher.Show();
             }
             else
             {
@@ -649,7 +648,7 @@ namespace AutoScreenCapture
         {
             if (!_formAbout.Visible)
             {
-                _formAbout.Show(this);
+                _formAbout.Show();
             }
             else
             {
@@ -730,11 +729,6 @@ namespace AutoScreenCapture
             ShowScreenshotBySlideIndex();
 
             SaveSettings();
-        }
-
-        private void toolStripMenuItemSetupWizard_Click(object sender, EventArgs e)
-        {
-            _formSetupWizard.ShowDialog(this);
         }
 
         private void tabControlModules_SelectedIndexChanged(object sender, EventArgs e)
