@@ -265,4 +265,7 @@
   <data name="help_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\help\help-3.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="help_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\help-4.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

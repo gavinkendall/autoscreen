@@ -342,11 +342,12 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\colortbl ;\red0\green0\blue255;}
+        ///{\colortbl ;\red0\green0\blue255;\red0\green77\blue187;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Welcome\par
-        ///\b0 Auto Screen Capture is a portable automated screen capture utility that runs in your system tray while it takes screenshots of multiple screens and regions based on a timed interval.\par
-        ///The system tray icon, when the application is idle, looks like a multi-coloured squar [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Welcome\fs22\par
+        ///\b0 You made it!\par
+        ///Auto Screen Capture is like a bottle of scotch that sits on the top shelf collecting dust over the years; it&apos;s not popular, but it proves to be unique and special once you understand it.\par
+        ///This application is a portable autom [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_0 {
             get {
@@ -372,10 +373,11 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
-        ///{\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
+        ///{\colortbl ;\red0\green77\blue187;\red0\green0\blue255;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Changelog\b0\par
-        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0), Macro (2.1), Dalek (2.2), Boomba [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
+        ///Who reads these things?\par
+        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legac [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_2 {
             get {
@@ -384,16 +386,29 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Getting Started\par
-        ///\b0 Based on what you see with Preview enabled you probably will need to configure the Screens module. On the first run you will see the following screens available to you (whether they are plugged in or not):\par
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Getting Started\fs22\par
         ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6482\pich7567 [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl240\slmult1\b0 Check what will be captured before starting a screen capture session by making sure that the Preview button is enabled.\par
+        ///You should see a real-time preview when looking at the tab named &quot;Dashboard&quot; or any of the tabs to the right of the Dashboard tab.\par
+        ///The Preview button c [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_3 {
             get {
                 return ResourceManager.GetString("help_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl240\slmult1\b\f0\fs28\lang9 Screens\b0\fs22\par
+        ///The &quot;Screens&quot; module shows you what displays you may have available. Each &quot;Screen&quot; that is created on the first run of Auto Screen Capture will be configured to adapt to your display setup and may not be an accurate representation of your current display setup. For example, if you see five screens listed [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_4 {
+            get {
+                return ResourceManager.GetString("help_4", resourceCulture);
             }
         }
         

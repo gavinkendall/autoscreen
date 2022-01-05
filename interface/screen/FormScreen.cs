@@ -618,7 +618,8 @@ namespace AutoScreenCapture
                     }
 
                     // We don't care if it's a Screen using Active Window as its Component because that's already available in the list.
-                    if (screen.Component == 0 && screen.Source == 0)
+                    // We also don't care if it's a Screen that's using AutoAdapt.
+                    if ((screen.Component == 0 && screen.Source == 0) || screen.AutoAdapt)
                     {
                         continue;
                     }

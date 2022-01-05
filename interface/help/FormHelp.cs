@@ -41,6 +41,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("License");
             listBoxHelpItems.Items.Add("Changelog");
             listBoxHelpItems.Items.Add("Getting Started");
+            listBoxHelpItems.Items.Add("Screens");
 
             listBoxHelpItems.SelectedIndex = 0;
         }
@@ -71,6 +72,10 @@ namespace AutoScreenCapture
 
                 case 3:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.help_3;
+                    break;
+
+                case 4:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_4;
                     break;
             }
         }
