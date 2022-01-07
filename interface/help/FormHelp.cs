@@ -45,6 +45,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Regions");
             listBoxHelpItems.Items.Add("Editors");
             listBoxHelpItems.Items.Add("Schedules");
+            listBoxHelpItems.Items.Add("Macro Tags");
 
             listBoxHelpItems.SelectedIndex = 0;
         }
@@ -91,6 +92,10 @@ namespace AutoScreenCapture
 
                 case 7:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.help_7;
+                    break;
+
+                case 8:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_8;
                     break;
             }
         }

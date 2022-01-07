@@ -460,6 +460,18 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Macro Tags\b0\fs22\par
+        ///The &quot;Macro Tags&quot; module gives you the ability to add, configure, and remove macro tags. A macro tag can be included in the filename and acquires certain information based on what type of macro tag is being used. You could, for example, acquire the current time with the %time% macro tag. When the % [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_8 {
+            get {
+                return ResourceManager.GetString("help_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap keyboard {

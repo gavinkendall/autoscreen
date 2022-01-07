@@ -328,7 +328,7 @@ namespace AutoScreenCapture
             if (screenOrRegion != null && screenOrRegion is Screen screen)
             {
                 name = screen.Name;
-                screenNumber = screen.Component;
+                screenNumber = (screen.Source == 0 && screen.Component == 0) ? 0 : (screen.Component + 1);
                 x = screen.X;
                 y = screen.Y;
                 width = screen.Width;
