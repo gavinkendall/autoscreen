@@ -44,6 +44,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Screens");
             listBoxHelpItems.Items.Add("Regions");
             listBoxHelpItems.Items.Add("Editors");
+            listBoxHelpItems.Items.Add("Schedules");
 
             listBoxHelpItems.SelectedIndex = 0;
         }
@@ -86,6 +87,10 @@ namespace AutoScreenCapture
 
                 case 6:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.help_6;
+                    break;
+
+                case 7:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_7;
                     break;
             }
         }

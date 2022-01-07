@@ -429,11 +429,33 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1}.
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Editors\b0\fs22\par
+        ///The &quot;Editors&quot; module gives you the ability to add, configure, and remove applications and/or scripts that are used by Auto Screen Capture to edit or open screenshots. For example, you could have a screenshot opened by a PowerShell script or an application (such as Clip Studio Paint or GIMP).\par
+        ///\par
+        ///\b Adding Edi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_6 {
             get {
                 return ResourceManager.GetString("help_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Schedules\b0\fs22\par
+        ///The &quot;Schedules&quot; module gives you the ability to add, configure, and remove schedules that define when screenshots should be taken between a time period.\par
+        ///\par
+        ///\b Adding Schedules\b0\par
+        ///To add a new Schedule click on the green plus button:\par
+        ///{\pict{\*\picprop}\wmetafile8\picw529\pich529\picwgoal300\pichgoal300 
+        ///0100 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_7 {
+            get {
+                return ResourceManager.GetString("help_7", resourceCulture);
             }
         }
         
