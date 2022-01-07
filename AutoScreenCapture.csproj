@@ -406,6 +406,8 @@
     <None Include="help\help-2.rtf" />
     <None Include="help\help-3.rtf" />
     <None Include="help\help-4.rtf" />
+    <None Include="help\help-5.rtf" />
+    <None Include="help\help-6.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
     <Content Include="icons\ico\autoscreen-running-optimized.ico" />
     <Content Include="icons\ico\autoscreen.ico" />

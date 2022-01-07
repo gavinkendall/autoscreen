@@ -413,6 +413,31 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Regions\b0\fs22\par
+        ///The &quot;Regions&quot; module gives you the ability to add, configure, and remove multiple regions. A region represents an area of a screen and will always be defined by its X, Y, Width, and Height values.\par
+        ///\par
+        ///\b Adding Regions\b0\par
+        ///To add a new Region click on the green plus button:\par
+        ///{\pict{\*\picprop}\wmetafi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_5 {
+            get {
+                return ResourceManager.GetString("help_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1}.
+        /// </summary>
+        internal static string help_6 {
+            get {
+                return ResourceManager.GetString("help_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap keyboard {
