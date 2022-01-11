@@ -373,11 +373,11 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
-        ///{\colortbl ;\red0\green77\blue187;\red0\green0\blue255;\red0\green0\blue0;}
+        ///{\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
         ///Who reads these things?\par
-        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legac [rest of string was truncated]&quot;;.
+        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0) [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_2 {
             get {
@@ -417,10 +417,9 @@ namespace AutoScreenCapture.Properties {
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Regions\b0\fs22\par
         ///The &quot;Regions&quot; module gives you the ability to add, configure, and remove multiple regions. A region represents an area of a screen and will always be defined by its X, Y, Width, and Height values.\par
-        ///\par
-        ///\b Adding Regions\b0\par
-        ///To add a new Region click on the green plus button:\par
-        ///{\pict{\*\picprop}\wmetafi [rest of string was truncated]&quot;;.
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6509\pich4763\picwgoal3690\pichgoal2700 
+        ///010009000003 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_5 {
             get {
@@ -433,8 +432,8 @@ namespace AutoScreenCapture.Properties {
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Editors\b0\fs22\par
         ///The &quot;Editors&quot; module gives you the ability to add, configure, and remove applications and/or scripts that are used by Auto Screen Capture to edit or open screenshots. For example, you could have a screenshot opened by a PowerShell script or an application (such as Clip Studio Paint or GIMP).\par
-        ///\par
-        ///\b Adding Edi [rest of string was truncated]&quot;;.
+        ///
+        ///\pard\sa200\sl240 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_6 {
             get {
@@ -443,15 +442,13 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Schedules\b0\fs22\par
         ///The &quot;Schedules&quot; module gives you the ability to add, configure, and remove schedules that define when screenshots should be taken between a time period.\par
-        ///\par
-        ///\b Adding Schedules\b0\par
-        ///To add a new Schedule click on the green plus button:\par
-        ///{\pict{\*\picprop}\wmetafile8\picw529\pich529\picwgoal300\pichgoal300 
-        ///0100 [rest of string was truncated]&quot;;.
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6456\pich5159\picwgoal3660\pichgoal2925 
+        ///010009000003021701000000ec1601000000050000000b02000000 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_7 {
             get {
@@ -460,14 +457,30 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Macro Tags\b0\fs22\par
-        ///The &quot;Macro Tags&quot; module gives you the ability to add, configure, and remove macro tags. A macro tag can be included in the filename and acquires certain information based on what type of macro tag is being used. You could, for example, acquire the current time with the %time% macro tag. When the % [rest of string was truncated]&quot;;.
+        ///The &quot;Macro Tags&quot; module gives you the ability to add, configure, and remove macro tags.\par
+        ///A macro tag can be included in the filename and acquires certain information based on what type of macro tag is being used. You could, for example, acquire the current time with the %time% macr [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_8 {
             get {
                 return ResourceManager.GetString("help_8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Triggers\b0\fs22\par
+        ///The &quot;Triggers&quot; module gives you the ability to add, configure, and remove triggers.\par
+        ///A trigger controls the behaviour of Auto Screen Capture by having the application perform a specified action based on a specified condition.\par
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6403 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_9 {
+            get {
+                return ResourceManager.GetString("help_9", resourceCulture);
             }
         }
         

@@ -46,9 +46,9 @@
             // buttonStartStopScreenCapture
             // 
             this.buttonStartStopScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
-            this.buttonStartStopScreenCapture.Location = new System.Drawing.Point(2, 4);
+            this.buttonStartStopScreenCapture.Location = new System.Drawing.Point(2, 2);
             this.buttonStartStopScreenCapture.Name = "buttonStartStopScreenCapture";
-            this.buttonStartStopScreenCapture.Size = new System.Drawing.Size(37, 21);
+            this.buttonStartStopScreenCapture.Size = new System.Drawing.Size(37, 24);
             this.buttonStartStopScreenCapture.TabIndex = 1;
             this.buttonStartStopScreenCapture.TabStop = false;
             this.buttonStartStopScreenCapture.UseVisualStyleBackColor = true;

@@ -19,9 +19,11 @@ Auto Screen Capture by Gavin Kendall
     %width%    The Width value of the screen or region
     %height%   The Height value of the screen or region
     %process%  The name of the active process
+    %label%    The label being applied to the saved screenshot
 - "Special Schedule" is now an internal schedule instead of an actual schedule that gets created on startup
 - New schedules "Work Schedule - Morning" and "Work Schedule - Afternoon" created on startup just in case people find them useful; they're disabled by default
 - Any sub-forms that are currently open when a screen capture session is about to start will now close
+- Screen Capture Status With Label Switcher tool introduced so you can keep an eye on when the next set of screenshots are going to be taken, what label will currently be applied to each screenshot, and have the ability to change the label from the tool instead of needing to open the Apply Label menu from the system tray icon. You can also start and stop a screen capture session from the tool
 
 Codename "Boombayah"
 2.3.7.0    Attempting to fix bug with region select not working on multiple displays.
