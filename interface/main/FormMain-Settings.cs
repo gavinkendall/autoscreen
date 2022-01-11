@@ -279,6 +279,7 @@ namespace AutoScreenCapture
                 }
 
                 // Labels
+                _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
                 PopulateLabelList();
 
                 // Application Focus

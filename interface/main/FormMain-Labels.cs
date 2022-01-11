@@ -94,6 +94,16 @@ namespace AutoScreenCapture
 
                 string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
 
+                if (!_formSetup.listBoxScreenshotLabel.Items.Contains(screenshotLabel))
+                {
+                    _formSetup.listBoxScreenshotLabel.Items.Add(screenshotLabel);
+                }
+
+                if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(screenshotLabel))
+                {
+                    _formLabelSwitcher.comboBoxLabels.Items.Add(screenshotLabel);
+                }
+
                 if (!string.IsNullOrEmpty(screenshotLabel))
                 {
                     _formSetup.listBoxScreenshotLabel.SelectedItem = screenshotLabel;

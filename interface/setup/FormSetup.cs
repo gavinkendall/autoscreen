@@ -199,6 +199,16 @@ namespace AutoScreenCapture
 
             if (!string.IsNullOrEmpty(screenshotLabel))
             {
+                if (!listBoxScreenshotLabel.Items.Contains(screenshotLabel))
+                {
+                    listBoxScreenshotLabel.Items.Add(screenshotLabel);
+                }
+
+                if (!_formLabelSwitcher.comboBoxLabels.Items.Contains(screenshotLabel))
+                {
+                    _formLabelSwitcher.comboBoxLabels.Items.Add(screenshotLabel);
+                }
+
                 listBoxScreenshotLabel.SelectedItem = screenshotLabel;
             }
         }
