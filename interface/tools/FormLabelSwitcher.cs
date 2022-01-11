@@ -54,6 +54,7 @@ namespace AutoScreenCapture
         {
             if (comboBoxLabels.SelectedItem != null)
             {
+                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", true);
                 _config.Settings.User.SetValueByKey("ScreenshotLabel", comboBoxLabels.SelectedItem);
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
             }

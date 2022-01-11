@@ -101,6 +101,8 @@ namespace AutoScreenCapture
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
                 _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion);
 
+                _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click;
+
                 if (_config.CleanStartup)
                 {
                     _log.WriteDebugMessage("CleanStartup detected so we will not load XML data");
@@ -253,8 +255,6 @@ namespace AutoScreenCapture
                 _formSetup.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value);
                 _log.WriteDebugMessage("TakeInitialScreenshot = " + _formSetup.checkBoxInitialScreenshot.Checked);
 
-                _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
-
                 // Active Window Title
                 _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
                 _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value);
@@ -308,11 +308,6 @@ namespace AutoScreenCapture
                 _config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value = _formSetup.numericUpDownCaptureLimit.Value;
                 _config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value = _formSetup.checkBoxCaptureLimit.Checked;
                 _config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value = _formSetup.checkBoxInitialScreenshot.Checked;
-
-                if (_formSetup.listBoxScreenshotLabel.SelectedItem != null)
-                {
-                    _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value = _formSetup.listBoxScreenshotLabel.SelectedItem.ToString();
-                }
 
                 _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = _formSetup.checkBoxScreenshotLabel.Checked;
 

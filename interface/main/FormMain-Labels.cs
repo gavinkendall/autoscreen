@@ -92,12 +92,12 @@ namespace AutoScreenCapture
                     }
                 }
 
-                string screenshotlabel = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
 
-                if (!string.IsNullOrEmpty(screenshotlabel))
+                if (!string.IsNullOrEmpty(screenshotLabel))
                 {
-                    _formSetup.listBoxScreenshotLabel.SelectedItem = screenshotlabel;
-                    _formLabelSwitcher.comboBoxLabels.SelectedItem = screenshotlabel;
+                    _formSetup.listBoxScreenshotLabel.SelectedItem = screenshotLabel;
+                    _formLabelSwitcher.comboBoxLabels.SelectedItem = screenshotLabel;
                 }
 
                 if (_screenCapture.LockScreenCaptureSession || _formSetup.listBoxScreenshotLabel.Items.Count == 0)
@@ -118,7 +118,7 @@ namespace AutoScreenCapture
                     ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem()
                     {
                         Text = label,
-                        Checked = label.Equals(_formSetup.listBoxScreenshotLabel.SelectedItem),
+                        Checked = label.Equals(screenshotLabel),
                         CheckOnClick = true
                     };
 

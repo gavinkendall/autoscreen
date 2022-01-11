@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSetup));
             this.tabControlSetup = new System.Windows.Forms.TabControl();
             this.tabPageScreenshotsFolder = new System.Windows.Forms.TabPage();
+            this.labelScreenshotsFolderApplyToAllRegions = new System.Windows.Forms.Label();
+            this.labelScreenshotsFolderApplyToAllScreens = new System.Windows.Forms.Label();
             this.buttonScreenshotsFolderApplyToAllRegions = new System.Windows.Forms.Button();
             this.buttonScreenshotsFolderApplyToAllScreens = new System.Windows.Forms.Button();
             this.labelScreenshotsFolderHelp = new System.Windows.Forms.Label();
@@ -139,8 +141,6 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.labelScreenshotsFolderApplyToAllScreens = new System.Windows.Forms.Label();
-            this.labelScreenshotsFolderApplyToAllRegions = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
@@ -199,6 +199,24 @@
             this.tabPageScreenshotsFolder.TabIndex = 7;
             this.tabPageScreenshotsFolder.Text = "Screenshots Folder";
             this.tabPageScreenshotsFolder.UseVisualStyleBackColor = true;
+            // 
+            // labelScreenshotsFolderApplyToAllRegions
+            // 
+            this.labelScreenshotsFolderApplyToAllRegions.BackColor = System.Drawing.Color.LightYellow;
+            this.labelScreenshotsFolderApplyToAllRegions.Location = new System.Drawing.Point(6, 166);
+            this.labelScreenshotsFolderApplyToAllRegions.Name = "labelScreenshotsFolderApplyToAllRegions";
+            this.labelScreenshotsFolderApplyToAllRegions.Size = new System.Drawing.Size(665, 17);
+            this.labelScreenshotsFolderApplyToAllRegions.TabIndex = 37;
+            this.labelScreenshotsFolderApplyToAllRegions.Text = "Clicking this button will apply the folder path to all existing Regions.";
+            // 
+            // labelScreenshotsFolderApplyToAllScreens
+            // 
+            this.labelScreenshotsFolderApplyToAllScreens.BackColor = System.Drawing.Color.LightYellow;
+            this.labelScreenshotsFolderApplyToAllScreens.Location = new System.Drawing.Point(6, 97);
+            this.labelScreenshotsFolderApplyToAllScreens.Name = "labelScreenshotsFolderApplyToAllScreens";
+            this.labelScreenshotsFolderApplyToAllScreens.Size = new System.Drawing.Size(665, 17);
+            this.labelScreenshotsFolderApplyToAllScreens.TabIndex = 36;
+            this.labelScreenshotsFolderApplyToAllScreens.Text = "Clicking this button will apply the folder path to all existing Screens.";
             // 
             // buttonScreenshotsFolderApplyToAllRegions
             // 
@@ -1371,24 +1389,6 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelScreenshotsFolderApplyToAllScreens
-            // 
-            this.labelScreenshotsFolderApplyToAllScreens.BackColor = System.Drawing.Color.LightYellow;
-            this.labelScreenshotsFolderApplyToAllScreens.Location = new System.Drawing.Point(6, 97);
-            this.labelScreenshotsFolderApplyToAllScreens.Name = "labelScreenshotsFolderApplyToAllScreens";
-            this.labelScreenshotsFolderApplyToAllScreens.Size = new System.Drawing.Size(665, 17);
-            this.labelScreenshotsFolderApplyToAllScreens.TabIndex = 36;
-            this.labelScreenshotsFolderApplyToAllScreens.Text = "Clicking this button will apply the folder path to all existing Screens.";
-            // 
-            // labelScreenshotsFolderApplyToAllRegions
-            // 
-            this.labelScreenshotsFolderApplyToAllRegions.BackColor = System.Drawing.Color.LightYellow;
-            this.labelScreenshotsFolderApplyToAllRegions.Location = new System.Drawing.Point(6, 166);
-            this.labelScreenshotsFolderApplyToAllRegions.Name = "labelScreenshotsFolderApplyToAllRegions";
-            this.labelScreenshotsFolderApplyToAllRegions.Size = new System.Drawing.Size(665, 17);
-            this.labelScreenshotsFolderApplyToAllRegions.TabIndex = 37;
-            this.labelScreenshotsFolderApplyToAllRegions.Text = "Clicking this button will apply the folder path to all existing Regions.";
-            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1406,6 +1406,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Setup";
             this.Load += new System.EventHandler(this.FormSetup_Load);
+            this.Shown += new System.EventHandler(this.FormSetup_Shown);
             this.tabControlSetup.ResumeLayout(false);
             this.tabPageScreenshotsFolder.ResumeLayout(false);
             this.tabPageScreenshotsFolder.PerformLayout();

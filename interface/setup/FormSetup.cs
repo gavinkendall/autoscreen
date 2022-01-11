@@ -190,6 +190,19 @@ namespace AutoScreenCapture
             HelpMessage("This is where to configure your screen capture settings");
         }
 
+        private void FormSetup_Shown(object sender, EventArgs e)
+        {
+            bool applyScreenshotLabel = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
+            string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+
+            checkBoxScreenshotLabel.Checked = applyScreenshotLabel;
+
+            if (!string.IsNullOrEmpty(screenshotLabel))
+            {
+                listBoxScreenshotLabel.SelectedItem = screenshotLabel;
+            }
+        }
+
         private void HelpMessage(string message)
         {
             labelHelp.Text = "       " + message;
@@ -236,6 +249,8 @@ namespace AutoScreenCapture
 
                 _fileSystem.ScreenshotsFolder = textBoxScreenshotsFolder.Text;
                 _config.Settings.User.SetValueByKey("ScreenshotsFolder", textBoxScreenshotsFolder.Text);
+
+                _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", checkBoxScreenshotLabel.Checked);
 
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
 

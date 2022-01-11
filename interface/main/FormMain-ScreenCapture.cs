@@ -211,6 +211,8 @@ namespace AutoScreenCapture
                     _screenCapture.Running = true;
                     _screenCapture.ApplicationWarning = false;
 
+                    _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
+
                     _screenCapture.DateTimeStartCapture = DateTime.Now;
 
                     if (_formSetup.checkBoxInitialScreenshot.Checked)
@@ -282,6 +284,8 @@ namespace AutoScreenCapture
 
                 timerScreenCapture.Stop();
                 timerScreenCapture.Enabled = false;
+
+                _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
 
                 SearchFilterValues();
                 SearchDates();
@@ -361,10 +365,11 @@ namespace AutoScreenCapture
             }
 
             string label = string.Empty;
+            bool applyScreenshotLabel = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
 
-            if (_formSetup.checkBoxScreenshotLabel.Checked)
+            if (applyScreenshotLabel)
             {
-                label = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
+                label = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
             }
 
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
@@ -805,6 +810,18 @@ namespace AutoScreenCapture
             if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
             {
                 _screenCapture.ApplicationError = true;
+            }
+        }
+
+        private void _formLabelSwitcher_buttonStartStopScreenCapture_Click(object sender, EventArgs e)
+        {
+            if (_screenCapture.Running)
+            {
+                StopScreenCapture();
+            }
+            else
+            {
+                StartScreenCapture();
             }
         }
     }
