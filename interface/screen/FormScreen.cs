@@ -166,7 +166,7 @@ namespace AutoScreenCapture
 
                 textBoxScreenName.Text = "Screen " + (ScreenCollection.Count + 1);
                 textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
-                textBoxMacro.Text = _macroParser.DefaultMacro;
+                textBoxMacro.Text = _fileSystem.FilenamePattern;
                 comboBoxScreenSource.SelectedIndex = 0;
                 comboBoxScreenCaptureMethod.SelectedIndex = 0;
                 comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;

@@ -78,7 +78,7 @@ namespace AutoScreenCapture
                     ViewId = Guid.NewGuid(),
                     Name = "Screen " + screenNumber,
                     Folder = fileSystem.ScreenshotsFolder,
-                    Macro = macroParser.DefaultMacro,
+                    Macro = fileSystem.FilenamePattern,
                     Component = 0,
                     Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                     JpegQuality = 100,
@@ -95,7 +95,7 @@ namespace AutoScreenCapture
                     Encrypt = false
                 });
 
-                log.WriteDebugMessage($"Screen {screenNumber} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{macroParser.DefaultMacro}\" for macro.");
+                log.WriteDebugMessage($"Screen {screenNumber} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{fileSystem.FilenamePattern}\" for macro.");
 
                 screenNumber++;
             }
@@ -346,7 +346,7 @@ namespace AutoScreenCapture
                                 ViewId = Guid.NewGuid(),
                                 Name = "Active Window",
                                 Folder = fileSystem.ScreenshotsFolder,
-                                Macro = macroParser.DefaultMacro,
+                                Macro = fileSystem.FilenamePattern,
                                 Component = 0,
                                 Format = _imageFormatCollection.GetByName(ScreenCapture.DefaultImageFormat),
                                 JpegQuality = 100,

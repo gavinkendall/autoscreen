@@ -165,11 +165,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// The default macro to be assigned to the Macro field for a new Screen or Region.
-        /// </summary>
-        public readonly string DefaultMacro = @"%date%\%name%\%process% (%date% %time%).%format%";
-
-        /// <summary>
         /// The default folder used for Region Select / Auto Save.
         /// </summary>
         public static readonly string DefaultAutoSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

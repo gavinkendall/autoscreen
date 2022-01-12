@@ -179,7 +179,10 @@ namespace AutoScreenCapture
                         continue;
                     }
 
-                    FileSystem.FilenamePattern = Regex.Match(line, "^FilenamePattern=(?<FilenamePattern>.+)$").Groups["FilenamePattern"].Value;
+                    if (string.IsNullOrEmpty(FileSystem.FilenamePattern))
+                    {
+                        FileSystem.FilenamePattern = Regex.Match(line, "^FilenamePattern=(?<FilenamePattern>.+)$").Groups["FilenamePattern"].Value;
+                    }
 
                     string path;
 

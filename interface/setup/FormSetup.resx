@@ -121,7 +121,7 @@
     <value>This folder path will be used for the location of where screenshots will be saved. It will have initially been defined by the configuration file but you can change it here for your own purposes. A new Screen or Region that you add will use this folder path by default.</value>
   </data>
   <data name="labelFilenamePatternHelp.Text" xml:space="preserve">
-    <value>This filename pattern will be used when screenshots are saved. It will have initially been defined by the configuration file but you can change it here for your own purposes. You can use macro tags in the filename pattern.</value>
+    <value>This filename pattern will be used when screenshots are saved. It will have initially been defined by the configuration file but you can change it here for your own purposes. You can use macro tags but some macro tags may not parse correctly in the preview shown here.</value>
   </data>
   <data name="labelLimitHelp.Text" xml:space="preserve">
     <value>Sets a limit on the number of screen capture cycles. For example, with this option enabled and the numeric value set to 5, you will have screenshots taken five times based on the interval. By default the running screen capture session will stop when it reaches the limit.</value>

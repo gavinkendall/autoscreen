@@ -53,6 +53,8 @@ namespace AutoScreenCapture
         /// <param name="formLabelSwitcher"></param>
         /// <param name="formScreen"></param>
         /// <param name="formRegion"></param>
+        /// <param name="macroTagCollection"></param>
+        /// <param name="macroParser"></param>
         public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser)
         {
             InitializeComponent();
@@ -76,6 +78,14 @@ namespace AutoScreenCapture
 
             // Filename Pattern
             textBoxFilenamePattern.Text = _fileSystem.FilenamePattern;
+
+            // Macro Tags
+            listBoxMacroTags.Items.Clear();
+
+            foreach (MacroTag macroTag in _macroTagCollection)
+            {
+                listBoxMacroTags.Items.Add(macroTag.Name + " (" + macroTag.Description + ")");
+            }
 
             checkBoxUseKeyboardShortcuts.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts", _config.Settings.DefaultSettings.UseKeyboardShortcuts).Value);
 
@@ -765,6 +775,40 @@ namespace AutoScreenCapture
             textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
 
             textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFilenamePattern.Text, null, Text, Assembly.GetExecutingAssembly().GetName().Name, null, _macroTagCollection, _log);
+        }
+
+        private void buttonFilenamePatternApplyToAllScreens_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxFilenamePattern.Text))
+            {
+                return;
+            }
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                screen.Macro = textBoxFilenamePattern.Text;
+            }
+
+            _formScreen.ScreenCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All screens are now using the filename pattern \"" + textBoxFilenamePattern.Text + "\"", "Filename Pattern Applied To All Screens", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonFilenamePatternApplyToAllRegions_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxFilenamePattern.Text))
+            {
+                return;
+            }
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                region.Macro = textBoxFilenamePattern.Text;
+            }
+
+            _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All regions are now using the filename pattern \"" + textBoxFilenamePattern.Text + "\"", "Filename Pattern Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

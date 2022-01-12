@@ -39,6 +39,10 @@
             this.buttonScreenshotsFolderBrowseFolder = new System.Windows.Forms.Button();
             this.textBoxScreenshotsFolder = new System.Windows.Forms.TextBox();
             this.tabPageFilenamePattern = new System.Windows.Forms.TabPage();
+            this.labelFilenamePatternApplyHelp = new System.Windows.Forms.Label();
+            this.listBoxMacroTags = new System.Windows.Forms.ListBox();
+            this.buttonFilenamePatternApplyToAllRegions = new System.Windows.Forms.Button();
+            this.buttonFilenamePatternApplyToAllScreens = new System.Windows.Forms.Button();
             this.textBoxMacroPreview = new System.Windows.Forms.TextBox();
             this.textBoxFilenamePattern = new System.Windows.Forms.TextBox();
             this.labelFilenamePatternHelp = new System.Windows.Forms.Label();
@@ -279,6 +283,10 @@
             // 
             // tabPageFilenamePattern
             // 
+            this.tabPageFilenamePattern.Controls.Add(this.labelFilenamePatternApplyHelp);
+            this.tabPageFilenamePattern.Controls.Add(this.listBoxMacroTags);
+            this.tabPageFilenamePattern.Controls.Add(this.buttonFilenamePatternApplyToAllRegions);
+            this.tabPageFilenamePattern.Controls.Add(this.buttonFilenamePatternApplyToAllScreens);
             this.tabPageFilenamePattern.Controls.Add(this.textBoxMacroPreview);
             this.tabPageFilenamePattern.Controls.Add(this.textBoxFilenamePattern);
             this.tabPageFilenamePattern.Controls.Add(this.labelFilenamePatternHelp);
@@ -288,6 +296,46 @@
             this.tabPageFilenamePattern.TabIndex = 8;
             this.tabPageFilenamePattern.Text = "Filename Pattern";
             this.tabPageFilenamePattern.UseVisualStyleBackColor = true;
+            // 
+            // labelFilenamePatternApplyHelp
+            // 
+            this.labelFilenamePatternApplyHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelFilenamePatternApplyHelp.Location = new System.Drawing.Point(6, 105);
+            this.labelFilenamePatternApplyHelp.Name = "labelFilenamePatternApplyHelp";
+            this.labelFilenamePatternApplyHelp.Size = new System.Drawing.Size(335, 23);
+            this.labelFilenamePatternApplyHelp.TabIndex = 40;
+            this.labelFilenamePatternApplyHelp.Text = "The macro tags that can be used are listed below.";
+            // 
+            // listBoxMacroTags
+            // 
+            this.listBoxMacroTags.FormattingEnabled = true;
+            this.listBoxMacroTags.Location = new System.Drawing.Point(6, 134);
+            this.listBoxMacroTags.Name = "listBoxMacroTags";
+            this.listBoxMacroTags.Size = new System.Drawing.Size(665, 108);
+            this.listBoxMacroTags.TabIndex = 39;
+            this.listBoxMacroTags.TabStop = false;
+            // 
+            // buttonFilenamePatternApplyToAllRegions
+            // 
+            this.buttonFilenamePatternApplyToAllRegions.Location = new System.Drawing.Point(512, 105);
+            this.buttonFilenamePatternApplyToAllRegions.Name = "buttonFilenamePatternApplyToAllRegions";
+            this.buttonFilenamePatternApplyToAllRegions.Size = new System.Drawing.Size(159, 23);
+            this.buttonFilenamePatternApplyToAllRegions.TabIndex = 38;
+            this.buttonFilenamePatternApplyToAllRegions.TabStop = false;
+            this.buttonFilenamePatternApplyToAllRegions.Text = "Apply To All Regions";
+            this.buttonFilenamePatternApplyToAllRegions.UseVisualStyleBackColor = true;
+            this.buttonFilenamePatternApplyToAllRegions.Click += new System.EventHandler(this.buttonFilenamePatternApplyToAllRegions_Click);
+            // 
+            // buttonFilenamePatternApplyToAllScreens
+            // 
+            this.buttonFilenamePatternApplyToAllScreens.Location = new System.Drawing.Point(347, 105);
+            this.buttonFilenamePatternApplyToAllScreens.Name = "buttonFilenamePatternApplyToAllScreens";
+            this.buttonFilenamePatternApplyToAllScreens.Size = new System.Drawing.Size(159, 23);
+            this.buttonFilenamePatternApplyToAllScreens.TabIndex = 37;
+            this.buttonFilenamePatternApplyToAllScreens.TabStop = false;
+            this.buttonFilenamePatternApplyToAllScreens.Text = "Apply To All Screens";
+            this.buttonFilenamePatternApplyToAllScreens.UseVisualStyleBackColor = true;
+            this.buttonFilenamePatternApplyToAllScreens.Click += new System.EventHandler(this.buttonFilenamePatternApplyToAllScreens_Click);
             // 
             // textBoxMacroPreview
             // 
@@ -1814,5 +1862,9 @@
         private System.Windows.Forms.TextBox textBoxFilenamePattern;
         private System.Windows.Forms.Label labelFilenamePatternHelp;
         private System.Windows.Forms.TextBox textBoxMacroPreview;
+        private System.Windows.Forms.Button buttonFilenamePatternApplyToAllRegions;
+        private System.Windows.Forms.Button buttonFilenamePatternApplyToAllScreens;
+        private System.Windows.Forms.ListBox listBoxMacroTags;
+        private System.Windows.Forms.Label labelFilenamePatternApplyHelp;
     }
 }
