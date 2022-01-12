@@ -75,6 +75,11 @@ namespace AutoScreenCapture
         public string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
 
         /// <summary>
+        /// Default filename pattern.
+        /// </summary>
+        public string DefaultFilenamePattern = @"%date%\%name%\%process% (%date% %time%).%format%";
+
+        /// <summary>
         /// Default debug folder.
         /// </summary>
         public string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
@@ -149,6 +154,11 @@ namespace AutoScreenCapture
         /// Screenshots folder.
         /// </summary>
         public string ScreenshotsFolder;
+
+        /// <summary>
+        /// Filename pattern.
+        /// </summary>
+        public string FilenamePattern;
 
         /// <summary>
         /// Debug folder.

@@ -20,6 +20,7 @@
 //-----------------------------------------------------------------------
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -38,6 +39,8 @@ namespace AutoScreenCapture
         private FormLabelSwitcher _formLabelSwitcher;
         private FormScreen _formScreen;
         private FormRegion _formRegion;
+        private MacroTagCollection _macroTagCollection;
+        private MacroParser _macroParser;
 
         /// <summary>
         /// 
@@ -50,7 +53,7 @@ namespace AutoScreenCapture
         /// <param name="formLabelSwitcher"></param>
         /// <param name="formScreen"></param>
         /// <param name="formRegion"></param>
-        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion)
+        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser)
         {
             InitializeComponent();
 
@@ -62,12 +65,17 @@ namespace AutoScreenCapture
             _formLabelSwitcher = formLabelSwitcher;
             _formScreen = formScreen;
             _formRegion = formRegion;
+            _macroTagCollection = macroTagCollection;
+            _macroParser = macroParser;
         }
 
         private void FormSetup_Load(object sender, EventArgs e)
         {
             // Screenshots Folder
             textBoxScreenshotsFolder.Text = _fileSystem.ScreenshotsFolder;
+
+            // Filename Pattern
+            textBoxFilenamePattern.Text = _fileSystem.FilenamePattern;
 
             checkBoxUseKeyboardShortcuts.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("UseKeyboardShortcuts", _config.Settings.DefaultSettings.UseKeyboardShortcuts).Value);
 
@@ -259,6 +267,9 @@ namespace AutoScreenCapture
 
                 _fileSystem.ScreenshotsFolder = textBoxScreenshotsFolder.Text;
                 _config.Settings.User.SetValueByKey("ScreenshotsFolder", textBoxScreenshotsFolder.Text);
+
+                _fileSystem.FilenamePattern = textBoxFilenamePattern.Text;
+                _config.Settings.User.SetValueByKey("FilenamePattern", textBoxFilenamePattern.Text);
 
                 _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", checkBoxScreenshotLabel.Checked);
 
@@ -746,6 +757,14 @@ namespace AutoScreenCapture
             _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
 
             MessageBox.Show("All regions are now using the folder path \"" + textBoxScreenshotsFolder.Text + "\"", "Folder Path Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void textBoxFilenamePattern_TextChanged(object sender, EventArgs e)
+        {
+            textBoxMacroPreview.ForeColor = System.Drawing.Color.Black;
+            textBoxMacroPreview.BackColor = System.Drawing.Color.LightYellow;
+
+            textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFilenamePattern.Text, null, Text, Assembly.GetExecutingAssembly().GetName().Name, null, _macroTagCollection, _log);
         }
     }
 }

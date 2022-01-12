@@ -76,6 +76,22 @@ namespace AutoScreenCapture
                     _log.WriteDebugMessage("No difference in folder path found. Screenshots folder path from autoscreen.conf file will be used (\"" + _fileSystem.ScreenshotsFolder + "\")");
                 }
 
+                // Let's see if the user has their own filename pattern they would like to use. Check user settings.
+                // If they have defined a filename pattern in user settings then use that filename pattern otherwise keep using the filename pattern from the config file.
+                Setting filenamePatternDefinedByUser = _config.Settings.User.GetByKey("FilenamePattern", _fileSystem.FilenamePattern, createKeyIfNotFound: false);
+
+                if (filenamePatternDefinedByUser != null && !filenamePatternDefinedByUser.Value.ToString().Equals(_fileSystem.FilenamePattern))
+                {
+                    _fileSystem.FilenamePattern = filenamePatternDefinedByUser.Value.ToString();
+
+                    _log.WriteDebugMessage("WARNING! A user-defined filename pattern was found in user settings and it is different from what was set in the autoscreen.conf file so the application will be using the user-defined filename pattern instead!");
+                    _log.WriteDebugMessage("The filename pattern that will be used is \"" + _fileSystem.FilenamePattern + "\"");
+                }
+                else
+                {
+                    _log.WriteDebugMessage("No difference in filename pattern found. Filename pattern in autoscreen.conf file will be used (\"" + _fileSystem.FilenamePattern + "\")");
+                }
+
                 _log.WriteDebugMessage("Initializing screen capture");
                 _screenCapture = new ScreenCapture(_config, _fileSystem, _log);
 
@@ -99,7 +115,7 @@ namespace AutoScreenCapture
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion);
+                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser);
 
                 _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click;
 

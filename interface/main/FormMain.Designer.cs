@@ -36,6 +36,8 @@ namespace AutoScreenCapture
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripDropDownButtonSetup = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemScreenshotsFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFilenamePattern = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemImageFormat = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInterval = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemOptimizeScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemLabels = new System.Windows.Forms.ToolStripMenuItem();
@@ -163,6 +165,8 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.BackColor = System.Drawing.Color.White;
             this.toolStripDropDownButtonSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemScreenshotsFolder,
+            this.toolStripMenuItemFilenamePattern,
+            this.toolStripMenuItemImageFormat,
             this.toolStripMenuItemInterval,
             this.toolStripMenuItemOptimizeScreenCapture,
             this.toolStripMenuItemLabels,
@@ -183,6 +187,20 @@ namespace AutoScreenCapture
             this.toolStripMenuItemScreenshotsFolder.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItemScreenshotsFolder.Text = "Screenshots Folder";
             this.toolStripMenuItemScreenshotsFolder.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
+            // 
+            // toolStripMenuItemFilenamePattern
+            // 
+            this.toolStripMenuItemFilenamePattern.Name = "toolStripMenuItemFilenamePattern";
+            this.toolStripMenuItemFilenamePattern.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMenuItemFilenamePattern.Text = "Filename Pattern";
+            this.toolStripMenuItemFilenamePattern.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
+            // 
+            // toolStripMenuItemImageFormat
+            // 
+            this.toolStripMenuItemImageFormat.Name = "toolStripMenuItemImageFormat";
+            this.toolStripMenuItemImageFormat.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMenuItemImageFormat.Text = "Image Format";
+            this.toolStripMenuItemImageFormat.Click += new System.EventHandler(this.toolStripMenuItemSetup_Click);
             // 
             // toolStripMenuItemInterval
             // 
@@ -1119,5 +1137,7 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemRegionSelectFloatingScreenshot;
         private ToolStripMenuItem toolStripMenuItemScreenshotsFolder;
         private ToolStripMenuItem toolStripMenuItemLabelSwitcher;
+        private ToolStripMenuItem toolStripMenuItemFilenamePattern;
+        private ToolStripMenuItem toolStripMenuItemImageFormat;
     }
 }

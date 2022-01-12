@@ -38,6 +38,11 @@
             this.labelScreenshotsFolderHelp = new System.Windows.Forms.Label();
             this.buttonScreenshotsFolderBrowseFolder = new System.Windows.Forms.Button();
             this.textBoxScreenshotsFolder = new System.Windows.Forms.TextBox();
+            this.tabPageFilenamePattern = new System.Windows.Forms.TabPage();
+            this.textBoxMacroPreview = new System.Windows.Forms.TextBox();
+            this.textBoxFilenamePattern = new System.Windows.Forms.TextBox();
+            this.labelFilenamePatternHelp = new System.Windows.Forms.Label();
+            this.tabPageImageFormat = new System.Windows.Forms.TabPage();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
             this.labelLimit = new System.Windows.Forms.Label();
             this.labelLimitHelp = new System.Windows.Forms.Label();
@@ -143,6 +148,7 @@
             this.labelHelp = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
+            this.tabPageFilenamePattern.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
@@ -170,6 +176,8 @@
             // tabControlSetup
             // 
             this.tabControlSetup.Controls.Add(this.tabPageScreenshotsFolder);
+            this.tabControlSetup.Controls.Add(this.tabPageFilenamePattern);
+            this.tabControlSetup.Controls.Add(this.tabPageImageFormat);
             this.tabControlSetup.Controls.Add(this.tabPageInterval);
             this.tabControlSetup.Controls.Add(this.tabPageOptimizeScreenCapture);
             this.tabControlSetup.Controls.Add(this.tabPageLabels);
@@ -268,6 +276,55 @@
             this.textBoxScreenshotsFolder.Size = new System.Drawing.Size(632, 25);
             this.textBoxScreenshotsFolder.TabIndex = 7;
             this.textBoxScreenshotsFolder.TabStop = false;
+            // 
+            // tabPageFilenamePattern
+            // 
+            this.tabPageFilenamePattern.Controls.Add(this.textBoxMacroPreview);
+            this.tabPageFilenamePattern.Controls.Add(this.textBoxFilenamePattern);
+            this.tabPageFilenamePattern.Controls.Add(this.labelFilenamePatternHelp);
+            this.tabPageFilenamePattern.Location = new System.Drawing.Point(4, 22);
+            this.tabPageFilenamePattern.Name = "tabPageFilenamePattern";
+            this.tabPageFilenamePattern.Size = new System.Drawing.Size(677, 253);
+            this.tabPageFilenamePattern.TabIndex = 8;
+            this.tabPageFilenamePattern.Text = "Filename Pattern";
+            this.tabPageFilenamePattern.UseVisualStyleBackColor = true;
+            // 
+            // textBoxMacroPreview
+            // 
+            this.textBoxMacroPreview.Location = new System.Drawing.Point(6, 79);
+            this.textBoxMacroPreview.Name = "textBoxMacroPreview";
+            this.textBoxMacroPreview.ReadOnly = true;
+            this.textBoxMacroPreview.Size = new System.Drawing.Size(665, 20);
+            this.textBoxMacroPreview.TabIndex = 36;
+            this.textBoxMacroPreview.TabStop = false;
+            // 
+            // textBoxFilenamePattern
+            // 
+            this.textBoxFilenamePattern.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.textBoxFilenamePattern.Location = new System.Drawing.Point(6, 48);
+            this.textBoxFilenamePattern.Name = "textBoxFilenamePattern";
+            this.textBoxFilenamePattern.Size = new System.Drawing.Size(665, 25);
+            this.textBoxFilenamePattern.TabIndex = 35;
+            this.textBoxFilenamePattern.TabStop = false;
+            this.textBoxFilenamePattern.TextChanged += new System.EventHandler(this.textBoxFilenamePattern_TextChanged);
+            // 
+            // labelFilenamePatternHelp
+            // 
+            this.labelFilenamePatternHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelFilenamePatternHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelFilenamePatternHelp.Name = "labelFilenamePatternHelp";
+            this.labelFilenamePatternHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelFilenamePatternHelp.TabIndex = 34;
+            this.labelFilenamePatternHelp.Text = resources.GetString("labelFilenamePatternHelp.Text");
+            // 
+            // tabPageImageFormat
+            // 
+            this.tabPageImageFormat.Location = new System.Drawing.Point(4, 22);
+            this.tabPageImageFormat.Name = "tabPageImageFormat";
+            this.tabPageImageFormat.Size = new System.Drawing.Size(677, 253);
+            this.tabPageImageFormat.TabIndex = 9;
+            this.tabPageImageFormat.Text = "Image Format";
+            this.tabPageImageFormat.UseVisualStyleBackColor = true;
             // 
             // tabPageInterval
             // 
@@ -1410,6 +1467,8 @@
             this.tabControlSetup.ResumeLayout(false);
             this.tabPageScreenshotsFolder.ResumeLayout(false);
             this.tabPageScreenshotsFolder.PerformLayout();
+            this.tabPageFilenamePattern.ResumeLayout(false);
+            this.tabPageFilenamePattern.PerformLayout();
             this.tabPageInterval.ResumeLayout(false);
             this.tabPageInterval.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
@@ -1750,5 +1809,10 @@
         private System.Windows.Forms.Button buttonScreenshotsFolderApplyToAllScreens;
         private System.Windows.Forms.Label labelScreenshotsFolderApplyToAllRegions;
         private System.Windows.Forms.Label labelScreenshotsFolderApplyToAllScreens;
+        private System.Windows.Forms.TabPage tabPageFilenamePattern;
+        private System.Windows.Forms.TabPage tabPageImageFormat;
+        private System.Windows.Forms.TextBox textBoxFilenamePattern;
+        private System.Windows.Forms.Label labelFilenamePatternHelp;
+        private System.Windows.Forms.TextBox textBoxMacroPreview;
     }
 }

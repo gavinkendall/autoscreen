@@ -137,6 +137,8 @@ namespace AutoScreenCapture
                         "# where the executed autoscreen.exe binary is located.", "",
                         "# This is the folder where screenshots will be stored by default.",
                         "ScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder, "",
+                        "# This is the filename pattern that will be used.",
+                        "FilenamePattern=" + FileSystem.DefaultFilenamePattern, "",
                         "# If any errors are encountered then you will find them in this folder.",
                         "DebugFolder=" + FileSystem.DefaultDebugFolder, "",
                         "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
@@ -176,6 +178,8 @@ namespace AutoScreenCapture
                     {
                         continue;
                     }
+
+                    FileSystem.FilenamePattern = Regex.Match(line, "^FilenamePattern=(?<FilenamePattern>.+)$").Groups["FilenamePattern"].Value;
 
                     string path;
 
@@ -223,6 +227,15 @@ namespace AutoScreenCapture
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SCHEDULES_FILE, out path))
                         FileSystem.SchedulesFile = path;
+                }
+
+                // This is for when we didn't find an entry for FilenamePattern.
+                // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
+                if (string.IsNullOrEmpty(FileSystem.FilenamePattern))
+                {
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nFilenamePattern=" + FileSystem.DefaultFilenamePattern);
+
+                    FileSystem.FilenamePattern = FileSystem.DefaultFilenamePattern;
                 }
 
                 CheckAndCreateFolders();
