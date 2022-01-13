@@ -206,6 +206,14 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.OptimizeScreenCapture)
                     {
+                        // Apparently we can't hash EMF and WMF images so just add the screenshot to the collection and return true.
+                        if (screenshot.Format.Name.Equals("EMF") || screenshot.Format.Name.Equals("WMF"))
+                        {
+                            AddScreenshotToCollection(screenshot);
+
+                            return true;
+                        }
+
                         // If the screenshot already has a hash then just add it to the collection
                         // and return true because it doesn't need to be hashed again. This could happen
                         // when we're attemping to encrypt an optimized screenshot. We don't want to hash it again
@@ -514,9 +522,12 @@ namespace AutoScreenCapture
 
                 if (_screenshotList != null)
                 {
-                    lock (_screenshotList)
+                    if (_screenshotList.Count > 0)
                     {
-                        foundScreenshot = _screenshotList.Last(x => x.ViewId.Equals(viewId));
+                        lock (_screenshotList)
+                        {
+                            foundScreenshot = _screenshotList.Last(x => x.ViewId.Equals(viewId));
+                        }
                     }
                 }
 

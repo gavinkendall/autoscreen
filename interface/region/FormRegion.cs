@@ -147,7 +147,7 @@ namespace AutoScreenCapture
                 textBoxRegionName.Text = "Region " + (RegionCollection.Count + 1);
                 textBoxFolder.Text = _fileSystem.ScreenshotsFolder;
                 textBoxMacro.Text = _fileSystem.FilenamePattern;
-                comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
+                comboBoxFormat.SelectedItem = ScreenCapture.ImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
                 numericUpDownX.Value = 0;

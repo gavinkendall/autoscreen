@@ -30,49 +30,49 @@ namespace AutoScreenCapture
     public class MacroTagCollection : CollectionTemplate<MacroTag>
     {
         private const string XML_FILE_INDENT_CHARS = "   ";
-        private const string XML_FILE_TAG_NODE = "tag";
-        private const string XML_FILE_TAGS_NODE = "tags";
+        private const string XML_FILE_MACRO_TAG_NODE = "macrotag";
+        private const string XML_FILE_MACRO_TAGS_NODE = "macrotags";
         private const string XML_FILE_ROOT_NODE = "autoscreen";
 
-        private const string TAG_NAME = "name";
-        private const string TAG_DESCRIPTION = "description";
-        private const string TAG_NOTES = "notes";
-        private const string TAG_TYPE = "type";
+        private const string MACRO_TAG_NAME = "name";
+        private const string MACRO_TAG_DESCRIPTION = "description";
+        private const string MACRO_TAG_NOTES = "notes";
+        private const string MACRO_TAG_TYPE = "type";
 
-        private const string TAG_DATETIME_FORMAT_VALUE = "datetime_format_value";
+        private const string MACRO_TAG_DATETIME_FORMAT_VALUE = "datetime_format_value";
 
-        private const string TAG_TIMERANGE_MACRO1_START = "timerange_macro1_start";
-        private const string TAG_TIMERANGE_MACRO1_END = "timerange_macro1_end";
+        private const string MACRO_TAG_TIMERANGE_MACRO1_START = "timerange_macro1_start";
+        private const string MACRO_TAG_TIMERANGE_MACRO1_END = "timerange_macro1_end";
 
-        private const string TAG_TIMERANGE_MACRO2_START = "timerange_macro2_start";
-        private const string TAG_TIMERANGE_MACRO2_END = "timerange_macro2_end";
+        private const string MACRO_TAG_TIMERANGE_MACRO2_START = "timerange_macro2_start";
+        private const string MACRO_TAG_TIMERANGE_MACRO2_END = "timerange_macro2_end";
 
-        private const string TAG_TIMERANGE_MACRO3_START = "timerange_macro3_start";
-        private const string TAG_TIMERANGE_MACRO3_END = "timerange_macro3_end";
+        private const string MACRO_TAG_TIMERANGE_MACRO3_START = "timerange_macro3_start";
+        private const string MACRO_TAG_TIMERANGE_MACRO3_END = "timerange_macro3_end";
 
-        private const string TAG_TIMERANGE_MACRO4_START = "timerange_macro4_start";
-        private const string TAG_TIMERANGE_MACRO4_END = "timerange_macro4_end";
+        private const string MACRO_TAG_TIMERANGE_MACRO4_START = "timerange_macro4_start";
+        private const string MACRO_TAG_TIMERANGE_MACRO4_END = "timerange_macro4_end";
 
-        private const string TAG_TIMERANGE_MACRO1_MACRO = "timerange_macro1_macro";
-        private const string TAG_TIMERANGE_MACRO2_MACRO = "timerange_macro2_macro";
-        private const string TAG_TIMERANGE_MACRO3_MACRO = "timerange_macro3_macro";
-        private const string TAG_TIMERANGE_MACRO4_MACRO = "timerange_macro4_macro";
+        private const string MACRO_TAG_TIMERANGE_MACRO1_MACRO = "timerange_macro1_macro";
+        private const string MACRO_TAG_TIMERANGE_MACRO2_MACRO = "timerange_macro2_macro";
+        private const string MACRO_TAG_TIMERANGE_MACRO3_MACRO = "timerange_macro3_macro";
+        private const string MACRO_TAG_TIMERANGE_MACRO4_MACRO = "timerange_macro4_macro";
 
         // These are old "Time of Day" fields from versions older than 2.3.2.6
-        private const string TAG_TIME_OF_DAY_MORNING_START = "time_of_day_morning_start";
-        private const string TAG_TIME_OF_DAY_MORNING_END = "time_of_day_morning_end";
-        private const string TAG_TIME_OF_DAY_AFTERNOON_START = "time_of_day_afternoon_start";
-        private const string TAG_TIME_OF_DAY_AFTERNOON_END = "time_of_day_afternoon_end";
-        private const string TAG_TIME_OF_DAY_EVENING_START = "time_of_day_evening_start";
-        private const string TAG_TIME_OF_DAY_EVENING_END = "time_of_day_evening_end";
-        private const string TAG_TIME_OF_DAY_MORNING_VALUE = "time_of_day_morning_value";
-        private const string TAG_TIME_OF_DAY_AFTERNOON_VALUE = "time_of_day_afternoon_value";
-        private const string TAG_TIME_OF_DAY_EVENING_VALUE = "time_of_day_evening_value";
-        private const string TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
+        private const string MACRO_TAG_TIME_OF_DAY_MORNING_START = "time_of_day_morning_start";
+        private const string MACRO_TAG_TIME_OF_DAY_MORNING_END = "time_of_day_morning_end";
+        private const string MACRO_TAG_TIME_OF_DAY_AFTERNOON_START = "time_of_day_afternoon_start";
+        private const string MACRO_TAG_TIME_OF_DAY_AFTERNOON_END = "time_of_day_afternoon_end";
+        private const string MACRO_TAG_TIME_OF_DAY_EVENING_START = "time_of_day_evening_start";
+        private const string MACRO_TAG_TIME_OF_DAY_EVENING_END = "time_of_day_evening_end";
+        private const string MACRO_TAG_TIME_OF_DAY_MORNING_VALUE = "time_of_day_morning_value";
+        private const string MACRO_TAG_TIME_OF_DAY_AFTERNOON_VALUE = "time_of_day_afternoon_value";
+        private const string MACRO_TAG_TIME_OF_DAY_EVENING_VALUE = "time_of_day_evening_value";
+        private const string MACRO_TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING = "evening_extends_to_next_morning";
 
-        private const string TAG_ENABLE = "enable";
+        private const string MACRO_TAG_ENABLE = "enable";
 
-        private readonly string TAG_XPATH;
+        private readonly string MACRO_TAG_XPATH;
 
         private string AppCodename { get; set; }
         private string AppVersion { get; set; }
@@ -86,11 +86,11 @@ namespace AutoScreenCapture
             sb.Append("/");
             sb.Append(XML_FILE_ROOT_NODE);
             sb.Append("/");
-            sb.Append(XML_FILE_TAGS_NODE);
+            sb.Append(XML_FILE_MACRO_TAGS_NODE);
             sb.Append("/");
-            sb.Append(XML_FILE_TAG_NODE);
+            sb.Append(XML_FILE_MACRO_TAG_NODE);
 
-            TAG_XPATH = sb.ToString();
+            MACRO_TAG_XPATH = sb.ToString();
         }
 
         /// <summary>
@@ -111,25 +111,31 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Loads the tags.
+        /// Loads the macro tags.
         /// </summary>
         public bool LoadXmlFileAndAddTags(Config config, MacroParser macroParser, FileSystem fileSystem, Log log)
         {
             try
             {
-                if (fileSystem.FileExists(fileSystem.TagsFile))
+                if (fileSystem.FileExists(fileSystem.MacroTagsFile))
                 {
-                    log.WriteDebugMessage("Tags file \"" + fileSystem.TagsFile + "\" found. Attempting to load XML document");
+                    log.WriteDebugMessage("Macro Tags file \"" + fileSystem.MacroTagsFile + "\" found. Attempting to load XML document");
 
                     XmlDocument xDoc = new XmlDocument();
-                    xDoc.Load(fileSystem.TagsFile);
+                    xDoc.Load(fileSystem.MacroTagsFile);
 
                     log.WriteDebugMessage("XML document loaded");
 
                     AppVersion = xDoc.SelectSingleNode("/autoscreen").Attributes["app:version"]?.Value;
                     AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
-                    XmlNodeList xTags = xDoc.SelectNodes(TAG_XPATH);
+                    XmlNodeList xTags = xDoc.SelectNodes(MACRO_TAG_XPATH);
+
+                    // This is to maintain backwards compatibility with versions that are older than 2.4
+                    if (xTags.Count == 0)
+                    {
+                        xTags = xDoc.SelectNodes(@"/autoscreen/tags/tag");
+                    }
 
                     bool eveningExtendsToNextMorning = false;
 
@@ -144,7 +150,7 @@ namespace AutoScreenCapture
                             {
                                 switch (xReader.Name)
                                 {
-                                    case TAG_NAME:
+                                    case MACRO_TAG_NAME:
                                         xReader.Read();
                                         tag.Name = xReader.Value;
 
@@ -156,26 +162,26 @@ namespace AutoScreenCapture
 
                                         break;
 
-                                    case TAG_DESCRIPTION:
+                                    case MACRO_TAG_DESCRIPTION:
                                         xReader.Read();
                                         tag.Description = xReader.Value;
                                         break;
 
-                                    case TAG_NOTES:
+                                    case MACRO_TAG_NOTES:
                                         xReader.Read();
                                         tag.Notes = xReader.Value;
                                         break;
 
-                                    case TAG_TYPE:
+                                    case MACRO_TAG_TYPE:
                                         xReader.Read();
 
                                         string value = xReader.Value;
 
-                                        // Change the data for each Tag that's being loaded if we've detected that
+                                        // Change the data for each Macro Tag that's being loaded if we've detected that
                                         // the XML document is from an older version of the application.
                                         if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                                         {
-                                            log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+                                            log.WriteDebugMessage("An old version of the macrotags.xml file was detected. Attempting upgrade to new schema.");
 
                                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                                             Version v2326 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.2.6");
@@ -201,86 +207,86 @@ namespace AutoScreenCapture
                                         tag.Type = (MacroTagType)Enum.Parse(typeof(MacroTagType), value);
                                         break;
 
-                                    case TAG_DATETIME_FORMAT_VALUE:
+                                    case MACRO_TAG_DATETIME_FORMAT_VALUE:
                                         xReader.Read();
                                         tag.DateTimeFormatValue = xReader.Value;
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO1_START:
-                                    case TAG_TIME_OF_DAY_MORNING_START:
+                                    case MACRO_TAG_TIMERANGE_MACRO1_START:
+                                    case MACRO_TAG_TIME_OF_DAY_MORNING_START:
                                         xReader.Read();
                                         tag.TimeRangeMacro1Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO1_END:
-                                    case TAG_TIME_OF_DAY_MORNING_END:
+                                    case MACRO_TAG_TIMERANGE_MACRO1_END:
+                                    case MACRO_TAG_TIME_OF_DAY_MORNING_END:
                                         xReader.Read();
                                         tag.TimeRangeMacro1End = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO2_START:
-                                    case TAG_TIME_OF_DAY_AFTERNOON_START:
+                                    case MACRO_TAG_TIMERANGE_MACRO2_START:
+                                    case MACRO_TAG_TIME_OF_DAY_AFTERNOON_START:
                                         xReader.Read();
                                         tag.TimeRangeMacro2Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO2_END:
-                                    case TAG_TIME_OF_DAY_AFTERNOON_END:
+                                    case MACRO_TAG_TIMERANGE_MACRO2_END:
+                                    case MACRO_TAG_TIME_OF_DAY_AFTERNOON_END:
                                         xReader.Read();
                                         tag.TimeRangeMacro2End = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO3_START:
-                                    case TAG_TIME_OF_DAY_EVENING_START:
+                                    case MACRO_TAG_TIMERANGE_MACRO3_START:
+                                    case MACRO_TAG_TIME_OF_DAY_EVENING_START:
                                         xReader.Read();
                                         tag.TimeRangeMacro3Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO3_END:
-                                    case TAG_TIME_OF_DAY_EVENING_END:
+                                    case MACRO_TAG_TIMERANGE_MACRO3_END:
+                                    case MACRO_TAG_TIME_OF_DAY_EVENING_END:
                                         xReader.Read();
                                         tag.TimeRangeMacro3End = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO4_START:
+                                    case MACRO_TAG_TIMERANGE_MACRO4_START:
                                         xReader.Read();
                                         tag.TimeRangeMacro4Start = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO4_END:
+                                    case MACRO_TAG_TIMERANGE_MACRO4_END:
                                         xReader.Read();
                                         tag.TimeRangeMacro4End = Convert.ToDateTime(xReader.Value);
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO1_MACRO:
-                                    case TAG_TIME_OF_DAY_MORNING_VALUE:
+                                    case MACRO_TAG_TIMERANGE_MACRO1_MACRO:
+                                    case MACRO_TAG_TIME_OF_DAY_MORNING_VALUE:
                                         xReader.Read();
                                         tag.TimeRangeMacro1Macro = xReader.Value;
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO2_MACRO:
-                                    case TAG_TIME_OF_DAY_AFTERNOON_VALUE:
+                                    case MACRO_TAG_TIMERANGE_MACRO2_MACRO:
+                                    case MACRO_TAG_TIME_OF_DAY_AFTERNOON_VALUE:
                                         xReader.Read();
                                         tag.TimeRangeMacro2Macro = xReader.Value;
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO3_MACRO:
-                                    case TAG_TIME_OF_DAY_EVENING_VALUE:
+                                    case MACRO_TAG_TIMERANGE_MACRO3_MACRO:
+                                    case MACRO_TAG_TIME_OF_DAY_EVENING_VALUE:
                                         xReader.Read();
                                         tag.TimeRangeMacro3Macro = xReader.Value;
                                         break;
 
-                                    case TAG_TIMERANGE_MACRO4_MACRO:
+                                    case MACRO_TAG_TIMERANGE_MACRO4_MACRO:
                                         xReader.Read();
                                         tag.TimeRangeMacro4Macro = xReader.Value;
                                         break;
 
-                                    case TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING:
+                                    case MACRO_TAG_TIME_OF_DAY_EVENING_EXTENDS_TO_NEXT_MORNING:
                                         xReader.Read();
                                         eveningExtendsToNextMorning = Convert.ToBoolean(xReader.Value);
                                         break;
 
-                                    case TAG_ENABLE:
+                                    case MACRO_TAG_ENABLE:
                                     case "active": // Any version older than 2.4.0.0 used "active" instead of "enable".
                                         xReader.Read();
                                         tag.Enable = Convert.ToBoolean(xReader.Value);
@@ -291,11 +297,11 @@ namespace AutoScreenCapture
 
                         xReader.Close();
 
-                        // Change the data for each Tag that's being loaded if we've detected that
+                        // Change the data for each Macro Tag that's being loaded if we've detected that
                         // the XML document is from an older version of the application.
                         if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                         {
-                            log.WriteDebugMessage("An old version of the tags.xml file was detected. Attempting upgrade to new schema.");
+                            log.WriteDebugMessage("An old version of the macrotags.xml file was detected. Attempting upgrade to new schema.");
 
                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                             Version v2326 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.2.6");
@@ -305,11 +311,11 @@ namespace AutoScreenCapture
                             {
                                 log.WriteDebugMessage("Dalek 2.2.4.6 or older detected");
 
-                                // This is a new property for Tag that was introduced in 2.3.0.0
+                                // This is a new property for Macro Tag that was introduced in 2.3.0.0
                                 // so any version before 2.3.0.0 needs to have it during an upgrade.
                                 tag.Enable = true;
 
-                                // "Description" is a new property for Tag that was introduced in 2.3.0.0
+                                // "Description" is a new property for Macro Tag that was introduced in 2.3.0.0
                                 switch (tag.Type)
                                 {
                                     case MacroTagType.ActiveWindowTitle:
@@ -317,7 +323,7 @@ namespace AutoScreenCapture
                                         break;
 
                                     case MacroTagType.DateTimeFormat:
-                                        tag.Description = "A value representing either a date, a time, or a combination of the date and time (" + tag.Name + ")";
+                                        tag.Description = "A value representing either a date, a time, or a combination of the date and time";
                                         break;
 
                                     case MacroTagType.ImageFormat:
@@ -337,11 +343,11 @@ namespace AutoScreenCapture
                                         break;
 
                                     case MacroTagType.User:
-                                        tag.Description = "The name of the user (" + tag.Name + ")";
+                                        tag.Description = "The name of the user";
                                         break;
 
                                     case MacroTagType.Machine:
-                                        tag.Description = "The name of the computer (" + tag.Name + ")";
+                                        tag.Description = "The name of the computer";
                                         break;
 
                                     case MacroTagType.TimeRange:
@@ -349,7 +355,7 @@ namespace AutoScreenCapture
                                         break;
 
                                     case MacroTagType.DateTimeFormatExpression:
-                                        tag.Description = "An expression which represents a time that is either ahead or behind the current time (" + tag.Name + ")";
+                                        tag.Description = "An expression which represents a time that is either ahead or behind the current time";
                                         break;
                                 }
                             }
@@ -383,46 +389,46 @@ namespace AutoScreenCapture
 
                     if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
                     {
-                        log.WriteDebugMessage("Tags file detected as an old version");
+                        log.WriteDebugMessage("Macro Tags file detected as an old version");
 
                         // Go through the macro tags we want to add. If we can't find them then add them to the collection.
 
-                        if (GetByName("timerange") == null)
+                        if (GetByName("%timerange%") == null)
                         {
                             Add(new MacroTag(macroParser, "timerange", "The macro to use during a specific time range. At the moment it is %timerange%", MacroTagType.TimeRange, enable: true));
                         }
 
-                        if (GetByName("quarteryear") == null)
+                        if (GetByName("%quarteryear%") == null)
                         {
                             Add(new MacroTag(macroParser, "quarteryear", "A number representing the current quarter of the current year (%quarteryear%)", MacroTagType.QuarterYear, enable: true));
                         }
 
-                        if (GetByName("x") == null)
+                        if (GetByName("%x%") == null)
                         {
                             Add(new MacroTag(macroParser, "x", "The X value of the screen or region", MacroTagType.X, enable: true));
                         }
 
-                        if (GetByName("y") == null)
+                        if (GetByName("%y%") == null)
                         {
                             Add(new MacroTag(macroParser, "y", "The Y value of the screen or region", MacroTagType.Y, enable: true));
                         }
 
-                        if (GetByName("width") == null)
+                        if (GetByName("%width%") == null)
                         {
                             Add(new MacroTag(macroParser, "width", "The Width value of the screen or region", MacroTagType.Width, enable: true));
                         }
 
-                        if (GetByName("height") == null)
+                        if (GetByName("%height%") == null)
                         {
                             Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
                         }
 
-                        if (GetByName("process") == null)
+                        if (GetByName("%process%") == null)
                         {
                             Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
                         }
 
-                        if (GetByName("label") == null)
+                        if (GetByName("%label%") == null)
                         {
                             Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
                         }
@@ -432,7 +438,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    log.WriteDebugMessage("WARNING: Unable to load tags");
+                    log.WriteDebugMessage("WARNING: Unable to load macro tags");
 
                     // Setup a few "built in" tags by default.
                     Add(new MacroTag(macroParser, "name", "The name of the screen or region", MacroTagType.ScreenName, enable: true));
@@ -473,7 +479,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                log.WriteExceptionMessage("TagCollection::LoadXmlFileAndAddTags", ex);
+                log.WriteExceptionMessage("MacroTagCollection::LoadXmlFileAndAddTags", ex);
 
                 return false;
             }
@@ -496,51 +502,51 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(fileSystem.TagsFile))
+                if (string.IsNullOrEmpty(fileSystem.MacroTagsFile))
                 {
-                    fileSystem.TagsFile = fileSystem.DefaultTagsFile;
+                    fileSystem.MacroTagsFile = fileSystem.DefaultMacroTagsFile;
 
                     if (fileSystem.FileExists(fileSystem.ConfigFile))
                     {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nTagsFile=" + fileSystem.TagsFile);
+                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nMacroTagsFile=" + fileSystem.MacroTagsFile);
                     }
                 }
 
-                if (fileSystem.FileExists(fileSystem.TagsFile))
+                if (fileSystem.FileExists(fileSystem.MacroTagsFile))
                 {
-                    fileSystem.DeleteFile(fileSystem.TagsFile);
+                    fileSystem.DeleteFile(fileSystem.MacroTagsFile);
                 }
 
-                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.TagsFile, xSettings))
+                using (XmlWriter xWriter = XmlWriter.Create(fileSystem.MacroTagsFile, xSettings))
                 {
                     xWriter.WriteStartDocument();
                     xWriter.WriteStartElement(XML_FILE_ROOT_NODE);
                     xWriter.WriteAttributeString("app", "version", XML_FILE_ROOT_NODE, config.Settings.ApplicationVersion);
                     xWriter.WriteAttributeString("app", "codename", XML_FILE_ROOT_NODE, config.Settings.ApplicationCodename);
-                    xWriter.WriteStartElement(XML_FILE_TAGS_NODE);
+                    xWriter.WriteStartElement(XML_FILE_MACRO_TAGS_NODE);
 
                     foreach (MacroTag tag in base.Collection)
                     {
-                        xWriter.WriteStartElement(XML_FILE_TAG_NODE);
+                        xWriter.WriteStartElement(XML_FILE_MACRO_TAG_NODE);
 
-                        xWriter.WriteElementString(TAG_ENABLE, tag.Enable.ToString());
-                        xWriter.WriteElementString(TAG_NAME, tag.Name);
-                        xWriter.WriteElementString(TAG_DESCRIPTION, tag.Description);
-                        xWriter.WriteElementString(TAG_NOTES, tag.Notes);
-                        xWriter.WriteElementString(TAG_TYPE, tag.Type.ToString());
-                        xWriter.WriteElementString(TAG_DATETIME_FORMAT_VALUE, tag.DateTimeFormatValue);
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO1_START, tag.TimeRangeMacro1Start.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO1_END, tag.TimeRangeMacro1End.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO2_START, tag.TimeRangeMacro2Start.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO2_END, tag.TimeRangeMacro2End.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO3_START, tag.TimeRangeMacro3Start.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO3_END, tag.TimeRangeMacro3End.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO4_START, tag.TimeRangeMacro4Start.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO4_END, tag.TimeRangeMacro4End.ToString());
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO1_MACRO, tag.TimeRangeMacro1Macro);
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO2_MACRO, tag.TimeRangeMacro2Macro);
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO3_MACRO, tag.TimeRangeMacro3Macro);
-                        xWriter.WriteElementString(TAG_TIMERANGE_MACRO4_MACRO, tag.TimeRangeMacro4Macro);
+                        xWriter.WriteElementString(MACRO_TAG_ENABLE, tag.Enable.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_NAME, tag.Name);
+                        xWriter.WriteElementString(MACRO_TAG_DESCRIPTION, tag.Description);
+                        xWriter.WriteElementString(MACRO_TAG_NOTES, tag.Notes);
+                        xWriter.WriteElementString(MACRO_TAG_TYPE, tag.Type.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_DATETIME_FORMAT_VALUE, tag.DateTimeFormatValue);
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO1_START, tag.TimeRangeMacro1Start.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO1_END, tag.TimeRangeMacro1End.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO2_START, tag.TimeRangeMacro2Start.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO2_END, tag.TimeRangeMacro2End.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO3_START, tag.TimeRangeMacro3Start.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO3_END, tag.TimeRangeMacro3End.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO4_START, tag.TimeRangeMacro4Start.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO4_END, tag.TimeRangeMacro4End.ToString());
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO1_MACRO, tag.TimeRangeMacro1Macro);
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO2_MACRO, tag.TimeRangeMacro2Macro);
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO3_MACRO, tag.TimeRangeMacro3Macro);
+                        xWriter.WriteElementString(MACRO_TAG_TIMERANGE_MACRO4_MACRO, tag.TimeRangeMacro4Macro);
 
                         xWriter.WriteEndElement();
                     }
@@ -557,7 +563,7 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                log.WriteExceptionMessage("TagCollection::SaveToXmlFile", ex);
+                log.WriteExceptionMessage("MacroTagCollection::SaveToXmlFile", ex);
 
                 return false;
             }

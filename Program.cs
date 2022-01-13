@@ -40,12 +40,17 @@ namespace AutoScreenCapture
         [DllImport("shcore.dll")]
         private static extern int SetProcessDpiAwareness(ProcessDPIAwareness value);
 
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        /// <param name="args">A list of command line arguments that could be given to the application.</param>
         [STAThread]
         private static void Main(string[] args)
         {
             Config config = new Config();
             FileSystem fileSystem = new FileSystem();
 
+            // Look for the -kill command. We want to find all the instances of Auto Screen Capture and kill them.
             if (args.Length == 1 && !string.IsNullOrEmpty(args[0]) && args[0].Equals("-kill"))
             {
                 // Find all instances of autoscreen and kill them.
@@ -77,6 +82,7 @@ namespace AutoScreenCapture
                         // If we're not already running then start a new instance of the application.
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
 
+                        // Sets DPI awareness if we're running on a version of Windows that supports DPI scaling.
                         if ((Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 3) ||
                             Environment.OSVersion.Version.Major >= 10)
                         {
@@ -101,6 +107,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Parse the given command line arguments.
+        /// </summary>
+        /// <param name="args">The command line arguments to parse.</param>
+        /// <param name="config">The config file to use.</param>
         private static void ParseCommandLineArguments(string[] args, Config config)
         {
             bool cleanStartup = false;
@@ -130,8 +141,8 @@ namespace AutoScreenCapture
                 }
             }
 
-            // We didn't get a -config command line argument so just load the default config
-            // and let the application parse any other command line options.
+            // We didn't get a -config or -cleanStartup command line argument so just load the default config
+            // and let the application parse any other command line options that were given to it.
             if (config.Settings == null)
             {
                 config.Load(fileSystem, cleanStartup);

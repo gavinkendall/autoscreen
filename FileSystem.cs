@@ -42,12 +42,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// The name of the log files that get messages written if logging is enabled. The Log class uses its own file extension so only the name is used here.
         /// </summary>
-        public string LogFile = "autoscreen-log";
+        public readonly string LogFile = "autoscreen-log";
 
         /// <summary>
         /// The error file containing possible exception error messages when the application encounters an error.
         /// </summary>
-        public string ErrorFile = "autoscreen-error.txt";
+        public readonly string ErrorFile = "autoscreen-error.txt";
 
         /// <summary>
         /// The name of the Auto Screen Capture Configuration File.
@@ -67,53 +67,53 @@ namespace AutoScreenCapture
         /// <summary>
         /// Default settings folder.
         /// </summary>
-        public string DefaultSettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
+        public readonly string DefaultSettingsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\";
 
         /// <summary>
         /// Default screenshots folder.
         /// </summary>
-        public string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
+        public readonly string DefaultScreenshotsFolder = AppDomain.CurrentDomain.BaseDirectory + "screenshots\\";
 
         /// <summary>
         /// Default filename pattern.
         /// </summary>
-        public string DefaultFilenamePattern = @"%date%\%name%\%process% (%date% %time%).%format%";
+        public readonly string DefaultFilenamePattern = @"%date%\%name%\%process% (%date% %time%).%format%";
 
         /// <summary>
         /// Default debug folder.
         /// </summary>
-        public string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+        public readonly string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
 
         /// <summary>
         /// Default logs folder.
         /// </summary>
-        public string DefaultLogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\logs\\";
+        public readonly string DefaultLogsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\logs\\";
 
         /// <summary>
         /// The default command file if the actual command file cannot be found. This will most likely happen with an
         /// older version of Auto Screen Capture so we need to make sure that, since 2.3.0.0, we have a command file.
         /// </summary>
-        public string DefaultCommandFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command.txt";
+        public readonly string DefaultCommandFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\command.txt";
 
         /// <summary>
         /// Default application settings file.
         /// </summary>
-        public string DefaultApplicationSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\application.xml";
+        public readonly string DefaultApplicationSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\application.xml";
 
         /// <summary>
         /// Default SMTP settings file.
         /// </summary>
-        public string DefaultSmtpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\smtp.xml";
+        public readonly string DefaultSmtpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\smtp.xml";
 
         /// <summary>
         /// Default SFTP settings file.
         /// </summary>
-        public string DefaultSftpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\sftp.xml";
+        public readonly string DefaultSftpSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\sftp.xml";
 
         /// <summary>
         /// Default user settings file.
         /// </summary>
-        public string DefaultUserSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\user.xml";
+        public readonly string DefaultUserSettingsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\settings\\user.xml";
 
         /// <summary>
         /// The file containing the references to Editors.
@@ -141,9 +141,9 @@ namespace AutoScreenCapture
         public readonly string DefaultScreenshotsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\screenshots.xml";
 
         /// <summary>
-        /// The file containing the references to Tags.
+        /// The file containing the references to Macro Tags.
         /// </summary>
-        public readonly string DefaultTagsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\tags.xml";
+        public readonly string DefaultMacroTagsFile = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\macrotags.xml";
 
         /// <summary>
         /// The file containing the references to Schedules.
@@ -223,7 +223,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Tags file.
         /// </summary>
-        public string TagsFile;
+        public string MacroTagsFile;
 
         /// <summary>
         /// Schedules file.

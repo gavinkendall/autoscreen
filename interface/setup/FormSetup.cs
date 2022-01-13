@@ -229,6 +229,40 @@ namespace AutoScreenCapture
 
                 listBoxScreenshotLabel.SelectedItem = screenshotLabel;
             }
+
+            string imageFormat = _config.Settings.User.GetByKey("ImageFormat", ScreenCapture.ImageFormat).Value.ToString();
+
+            // Image Format
+            switch (imageFormat)
+            {
+                case "BMP":
+                    radioButtonImageFormatBmp.Checked = true;
+                    break;
+
+                case "EMF":
+                    radioButtonImageFormatEmf.Checked = true;
+                    break;
+
+                case "GIF":
+                    radioButtonImageFormatGif.Checked = true;
+                    break;
+
+                case "JPEG":
+                    radioButtonImageFormatJpeg.Checked = true;
+                    break;
+
+                case "PNG":
+                    radioButtonImageFormatPng.Checked = true;
+                    break;
+
+                case "TIFF":
+                    radioButtonImageFormatTiff.Checked = true;
+                    break;
+
+                case "WMF":
+                    radioButtonImageFormatWmf.Checked = true;
+                    break;
+            }
         }
 
         private void HelpMessage(string message)
@@ -282,6 +316,48 @@ namespace AutoScreenCapture
                 _config.Settings.User.SetValueByKey("FilenamePattern", textBoxFilenamePattern.Text);
 
                 _config.Settings.User.SetValueByKey("ApplyScreenshotLabel", checkBoxScreenshotLabel.Checked);
+
+                if (radioButtonImageFormatBmp.Checked)
+                {
+                    ScreenCapture.ImageFormat = "BMP";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "BMP");
+                }
+
+                if (radioButtonImageFormatEmf.Checked)
+                {
+                    ScreenCapture.ImageFormat = "EMF";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "EMF");
+                }
+
+                if (radioButtonImageFormatGif.Checked)
+                {
+                    ScreenCapture.ImageFormat = "GIF";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "GIF");
+                }
+
+                if (radioButtonImageFormatJpeg.Checked)
+                {
+                    ScreenCapture.ImageFormat = "JPEG";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "JPEG");
+                }
+
+                if (radioButtonImageFormatPng.Checked)
+                {
+                    ScreenCapture.ImageFormat = "PNG";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "PNG");
+                }
+
+                if (radioButtonImageFormatTiff.Checked)
+                {
+                    ScreenCapture.ImageFormat = "TIFF";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "TIFF");
+                }
+
+                if (radioButtonImageFormatWmf.Checked)
+                {
+                    ScreenCapture.ImageFormat = "WMF";
+                    _config.Settings.User.SetValueByKey("ImageFormat", "WMF");
+                }
 
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
 
@@ -809,6 +885,110 @@ namespace AutoScreenCapture
             _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
 
             MessageBox.Show("All regions are now using the filename pattern \"" + textBoxFilenamePattern.Text + "\"", "Filename Pattern Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonImageFormatApplyToAllScreens_Click(object sender, EventArgs e)
+        {
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                if (radioButtonImageFormatBmp.Checked)
+                {
+                    ScreenCapture.ImageFormat = "BMP";
+                    screen.Format = new ImageFormat("BMP", ".bmp");
+                }
+
+                if (radioButtonImageFormatEmf.Checked)
+                {
+                    ScreenCapture.ImageFormat = "EMF";
+                    screen.Format = new ImageFormat("EMF", ".emf");
+                }
+
+                if (radioButtonImageFormatGif.Checked)
+                {
+                    ScreenCapture.ImageFormat = "GIF";
+                    screen.Format = new ImageFormat("GIF", ".gif");
+                }
+
+                if (radioButtonImageFormatJpeg.Checked)
+                {
+                    ScreenCapture.ImageFormat = "JPEG";
+                    screen.Format = new ImageFormat("JPEG", ".jpeg");
+                }
+
+                if (radioButtonImageFormatPng.Checked)
+                {
+                    ScreenCapture.ImageFormat = "PNG";
+                    screen.Format = new ImageFormat("PNG", ".png");
+                }
+
+                if (radioButtonImageFormatTiff.Checked)
+                {
+                    ScreenCapture.ImageFormat = "TIFF";
+                    screen.Format = new ImageFormat("TIFF", ".tiff");
+                }
+
+                if (radioButtonImageFormatWmf.Checked)
+                {
+                    ScreenCapture.ImageFormat = "WMF";
+                    screen.Format = new ImageFormat("WMF", ".wmf");
+                }
+            }
+
+            _formScreen.ScreenCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All screens are now using the image format \"" + ScreenCapture.ImageFormat + "\"", "Image Format Applied To All Screens", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonImageFormatApplyToAllRegions_Click(object sender, EventArgs e)
+        {
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                if (radioButtonImageFormatBmp.Checked)
+                {
+                    ScreenCapture.ImageFormat = "BMP";
+                    region.Format = new ImageFormat("BMP", ".bmp");
+                }
+
+                if (radioButtonImageFormatEmf.Checked)
+                {
+                    ScreenCapture.ImageFormat = "EMF";
+                    region.Format = new ImageFormat("EMF", ".emf");
+                }
+
+                if (radioButtonImageFormatGif.Checked)
+                {
+                    ScreenCapture.ImageFormat = "GIF";
+                    region.Format = new ImageFormat("GIF", ".gif");
+                }
+
+                if (radioButtonImageFormatJpeg.Checked)
+                {
+                    ScreenCapture.ImageFormat = "JPEG";
+                    region.Format = new ImageFormat("JPEG", ".jpeg");
+                }
+
+                if (radioButtonImageFormatPng.Checked)
+                {
+                    ScreenCapture.ImageFormat = "PNG";
+                    region.Format = new ImageFormat("PNG", ".png");
+                }
+
+                if (radioButtonImageFormatTiff.Checked)
+                {
+                    ScreenCapture.ImageFormat = "TIFF";
+                    region.Format = new ImageFormat("TIFF", ".tiff");
+                }
+
+                if (radioButtonImageFormatWmf.Checked)
+                {
+                    ScreenCapture.ImageFormat = "WMF";
+                    region.Format = new ImageFormat("WMF", ".wmf");
+                }
+            }
+
+            _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
+
+            MessageBox.Show("All regions are now using the image format \"" + ScreenCapture.ImageFormat + "\"", "Image Format Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

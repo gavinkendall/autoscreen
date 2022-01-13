@@ -53,7 +53,9 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("ScreensFile=" + _fileSystem.ScreensFile);
                 _log.WriteDebugMessage("RegionsFile=" + _fileSystem.RegionsFile);
                 _log.WriteDebugMessage("EditorsFile=" + _fileSystem.EditorsFile);
-                _log.WriteDebugMessage("TagsFile = " + _fileSystem.TagsFile);
+                _log.WriteDebugMessage("MacroTagsFile=" + _fileSystem.MacroTagsFile);
+                _log.WriteDebugMessage("FilenamePattern=" + _fileSystem.FilenamePattern);
+                _log.WriteDebugMessage("ImageFormat=" + ScreenCapture.ImageFormat);
 
                 _log.WriteDebugMessage("It looks like the application successfully parsed your \"" + _fileSystem.ConfigFile + "\" file");
 

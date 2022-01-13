@@ -3,7 +3,7 @@
 //     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>The Auto Screen Capture Configuration File is a special file for specifying the folders and files to be used by Auto Screen Capture.</summary>
+// <summary>The Auto Screen Capture Configuration File.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,6 +28,12 @@ namespace AutoScreenCapture
     /// </summary>
     public class Config
     {
+        // Image Format
+        private const string REGEX_IMAGE_FORMAT = "^ImageFormat=(?<ImageFormat>[A-Z]{4})$";
+
+        // Filename Pattern
+        private const string REGEX_FILENAME_PATTERN = "^FilenamePattern=(?<FilenamePattern>.+)$";
+
         // Folders
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
         private const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
@@ -44,7 +50,7 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENS_FILE = "^ScreensFile=(?<Path>.+)$";
         private const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
         private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
-        private const string REGEX_TAGS_FILE = "^TagsFile=(?<Path>.+)$";
+        private const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
         /// <summary>
@@ -70,7 +76,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Access to file system methods.
         /// </summary>
-        public FileSystem FileSystem { get; set; }
+        public FileSystem FileSystem { get; private set; }
 
         /// <summary>
         /// A parser for parsing macro tags.
@@ -119,135 +125,149 @@ namespace AutoScreenCapture
                 _macroTagCollection.Add(new MacroTag(MacroParser, "user", "The user using this computer (%user%)", MacroTagType.User, enable: true));
                 _macroTagCollection.Add(new MacroTag(MacroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, enable: true));
 
-                string configDirectory = FileSystem.GetDirectoryName(FileSystem.ConfigFile);
+                string configDirectory = fileSystem.GetDirectoryName(fileSystem.ConfigFile);
 
-                if (!string.IsNullOrEmpty(configDirectory) && !FileSystem.DirectoryExists(configDirectory))
+                if (!string.IsNullOrEmpty(configDirectory) && !fileSystem.DirectoryExists(configDirectory))
                 {
-                    FileSystem.CreateDirectory(configDirectory);
+                    fileSystem.CreateDirectory(configDirectory);
                 }
 
-                if (!FileSystem.FileExists(FileSystem.ConfigFile))
+                if (!fileSystem.FileExists(fileSystem.ConfigFile))
                 {
                     string[] linesToWrite =
                     {
-                        "# Auto Screen Capture Configuration File",
-                        "# Use this file to tell the application what folders and files it should utilize.",
-                        "# Each key-value pair can be the name of a folder or file or a path to a folder or file.",
-                        "# If only the folder name is given then it will be parsed as the sub-folder of the folder",
-                        "# where the executed autoscreen.exe binary is located.", "",
-                        "# This is the folder where screenshots will be stored by default.",
-                        "ScreenshotsFolder=" + FileSystem.DefaultScreenshotsFolder, "",
-                        "# This is the filename pattern that will be used.",
-                        "FilenamePattern=" + FileSystem.DefaultFilenamePattern, "",
-                        "# If any errors are encountered then you will find them in this folder.",
-                        "DebugFolder=" + FileSystem.DefaultDebugFolder, "",
-                        "# Logs are stored in this folder when either Logging or DebugMode is enabled.",
-                        "LogsFolder=" + FileSystem.DefaultLogsFolder, "",
-                        "# This file is monitored by the application for commands issued from the command line while it's running.",
-                        "CommandFile=" + FileSystem.DefaultCommandFile, "",
-                        "# The application settings (such as DebugMode).",
-                        "ApplicationSettingsFile=" + FileSystem.DefaultApplicationSettingsFile, "",
+                        "# Auto Screen Capture Configuration File", "",
+                        "# The default screenshots folder.",
+                        "ScreenshotsFolder=" + fileSystem.DefaultScreenshotsFolder, "",
+                        "# The default filename pattern.",
+                        "FilenamePattern=" + fileSystem.DefaultFilenamePattern, "",
+                        "# The default image format.",
+                        "ImageFormat=" + ScreenCapture.DefaultImageFormat, "",
+                        "# The folder to store any errors encountered by the application.",
+                        "DebugFolder=" + fileSystem.DefaultDebugFolder, "",
+                        "# The folder to store logs.",
+                        "LogsFolder=" + fileSystem.DefaultLogsFolder, "",
+                        "# The file that the application monitors for provided commands.",
+                        "CommandFile=" + fileSystem.DefaultCommandFile, "",
+                        "# The application settings.",
+                        "ApplicationSettingsFile=" + fileSystem.DefaultApplicationSettingsFile, "",
                         "# Your personal settings.",
-                        "UserSettingsFile=" + FileSystem.DefaultUserSettingsFile, "",
+                        "UserSettingsFile=" + fileSystem.DefaultUserSettingsFile, "",
                         "# SMTP settings for emailing screenshots using an email server.",
-                        "SMTPSettingsFile=" + FileSystem.DefaultSmtpSettingsFile, "",
+                        "SMTPSettingsFile=" + fileSystem.DefaultSmtpSettingsFile, "",
                         "# SFTP settings for uploading screenshots to a file server.",
-                        "SFTPSettingsFile=" + FileSystem.DefaultSftpSettingsFile, "",
+                        "SFTPSettingsFile=" + fileSystem.DefaultSftpSettingsFile, "",
                         "# References to image editors.",
-                        "EditorsFile=" + FileSystem.DefaultEditorsFile, "",
+                        "EditorsFile=" + fileSystem.DefaultEditorsFile, "",
                         "# References to regions.",
-                        "RegionsFile=" + FileSystem.DefaultRegionsFile, "",
+                        "RegionsFile=" + fileSystem.DefaultRegionsFile, "",
                         "# References to screens.",
-                        "ScreensFile=" + FileSystem.DefaultScreensFile, "",
+                        "ScreensFile=" + fileSystem.DefaultScreensFile, "",
                         "# References to triggers.",
-                        "TriggersFile=" + FileSystem.DefaultTriggersFile, "",
+                        "TriggersFile=" + fileSystem.DefaultTriggersFile, "",
                         "# References to screenshots.",
-                        "ScreenshotsFile=" + FileSystem.DefaultScreenshotsFile, "",
+                        "ScreenshotsFile=" + fileSystem.DefaultScreenshotsFile, "",
                         "# References to macro tags.",
-                        "TagsFile=" + FileSystem.DefaultTagsFile, "",
+                        "MacroTagsFile=" + fileSystem.DefaultMacroTagsFile, "",
                         "# References to schedules.",
-                        "SchedulesFile=" + FileSystem.DefaultSchedulesFile, ""
+                        "SchedulesFile=" + fileSystem.DefaultSchedulesFile, ""
                     };
 
-                    FileSystem.WriteToFile(FileSystem.ConfigFile, linesToWrite);
+                    fileSystem.WriteToFile(fileSystem.ConfigFile, linesToWrite);
                 }
 
-                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
                 {
                     if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                     {
                         continue;
                     }
 
-                    if (string.IsNullOrEmpty(FileSystem.FilenamePattern))
+                    if (string.IsNullOrEmpty(fileSystem.FilenamePattern))
                     {
-                        FileSystem.FilenamePattern = Regex.Match(line, "^FilenamePattern=(?<FilenamePattern>.+)$").Groups["FilenamePattern"].Value;
+                        fileSystem.FilenamePattern = Regex.Match(line, REGEX_FILENAME_PATTERN).Groups["FilenamePattern"].Value;
+                    }
+
+                    if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
+                    {
+                        ScreenCapture.ImageFormat = Regex.Match(line, REGEX_IMAGE_FORMAT).Groups["ImageFormat"].Value;
                     }
 
                     string path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SCREENSHOTS_FOLDER, out path))
-                        FileSystem.ScreenshotsFolder = path;
+                        fileSystem.ScreenshotsFolder = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_DEBUG_FOLDER, out path))
-                        FileSystem.DebugFolder = path;
+                        fileSystem.DebugFolder = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_LOGS_FOLDER, out path))
-                        FileSystem.LogsFolder = path;
+                        fileSystem.LogsFolder = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_COMMAND_FILE, out path))
-                        FileSystem.CommandFile = path;
+                        fileSystem.CommandFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
-                        FileSystem.ApplicationSettingsFile = path;
+                        fileSystem.ApplicationSettingsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SMTP_SETTINGS_FILE, out path))
-                        FileSystem.SmtpSettingsFile = path;
+                        fileSystem.SmtpSettingsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SFTP_SETTINGS_FILE, out path))
-                        FileSystem.SftpSettingsFile = path;
+                        fileSystem.SftpSettingsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_USER_SETTINGS_FILE, out path))
-                        FileSystem.UserSettingsFile = path;
+                        fileSystem.UserSettingsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_EDITORS_FILE, out path))
-                        FileSystem.EditorsFile = path;
+                        fileSystem.EditorsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_REGIONS_FILE, out path))
-                        FileSystem.RegionsFile = path;
+                        fileSystem.RegionsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SCREENS_FILE, out path))
-                        FileSystem.ScreensFile = path;
+                        fileSystem.ScreensFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_TRIGGERS_FILE, out path))
-                        FileSystem.TriggersFile = path;
+                        fileSystem.TriggersFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SCREENSHOTS_FILE, out path))
-                        FileSystem.ScreenshotsFile = path;
+                        fileSystem.ScreenshotsFile = path;
 
-                    if (GetPathAndCreateIfNotFound(line, REGEX_TAGS_FILE, out path))
-                        FileSystem.TagsFile = path;
+                    if (GetPathAndCreateIfNotFound(line, REGEX_MACRO_TAGS_FILE, out path))
+                        fileSystem.MacroTagsFile = path;
+
+                    // This is for backwards compability for versions of the application that are older than 2.4
+                    if (string.IsNullOrEmpty(fileSystem.MacroTagsFile) && GetPathAndCreateIfNotFound(line, "^TagsFile=(?<Path>.+)$", out path))
+                        fileSystem.MacroTagsFile = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_SCHEDULES_FILE, out path))
-                        FileSystem.SchedulesFile = path;
+                        fileSystem.SchedulesFile = path;
                 }
 
                 // This is for when we didn't find an entry for FilenamePattern.
                 // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
-                if (string.IsNullOrEmpty(FileSystem.FilenamePattern))
+                if (string.IsNullOrEmpty(fileSystem.FilenamePattern))
                 {
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nFilenamePattern=" + FileSystem.DefaultFilenamePattern);
+                    fileSystem.AppendToFile(fileSystem.ConfigFile, "\nFilenamePattern=" + fileSystem.DefaultFilenamePattern);
 
-                    FileSystem.FilenamePattern = FileSystem.DefaultFilenamePattern;
+                    fileSystem.FilenamePattern = fileSystem.DefaultFilenamePattern;
                 }
 
                 CheckAndCreateFolders();
 
-                Settings.Load(FileSystem);
+                Settings.Load(fileSystem);
 
-                Log = new Log(Settings, FileSystem, MacroParser);
-                ScreenCapture = new ScreenCapture(this, FileSystem, Log);
+                Log = new Log(Settings, fileSystem, MacroParser);
+                ScreenCapture = new ScreenCapture(this, fileSystem, Log);
                 Security security = new Security();
+
+                if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
+                {
+                    fileSystem.AppendToFile(fileSystem.ConfigFile, "\nImageFormat=" + ScreenCapture.DefaultImageFormat);
+
+                    ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
+                }
 
                 CheckAndCreateFiles(security, ScreenCapture, Log);
             }
@@ -431,9 +451,9 @@ namespace AutoScreenCapture
                     triggerCollection.LoadXmlFileAndAddTriggers(this, FileSystem, log);
                 }
 
-                if (string.IsNullOrEmpty(FileSystem.TagsFile))
+                if (string.IsNullOrEmpty(FileSystem.MacroTagsFile))
                 {
-                    // Loading tags will automatically create the default tags and add them to the collection.
+                    // Loading macro tags will automatically create the default macro tags and add them to the collection.
                     MacroTagCollection tagCollection = new MacroTagCollection();
                     tagCollection.LoadXmlFileAndAddTags(this, MacroParser, FileSystem, log);
                 }

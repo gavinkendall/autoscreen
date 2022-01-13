@@ -169,7 +169,7 @@ namespace AutoScreenCapture
                 textBoxMacro.Text = _fileSystem.FilenamePattern;
                 comboBoxScreenSource.SelectedIndex = 0;
                 comboBoxScreenCaptureMethod.SelectedIndex = 0;
-                comboBoxFormat.SelectedItem = ScreenCapture.DefaultImageFormat;
+                comboBoxFormat.SelectedItem = ScreenCapture.ImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
                 checkBoxEnable.Checked = true;

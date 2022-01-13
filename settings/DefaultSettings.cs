@@ -58,8 +58,8 @@ namespace AutoScreenCapture
         internal readonly string ActiveWindowTitleCaptureText = string.Empty;
         internal readonly string ActiveWindowTitleSampleText = string.Empty;
         internal readonly string ApplicationFocus = string.Empty;
-        internal readonly string AutoSaveFolder = MacroParser.DefaultAutoSaveFolder;
-        internal readonly string AutoSaveMacro = MacroParser.DefaultAutoSaveMacro;
+        internal readonly string AutoSaveFolder = MacroParser.DefaultRegionSelectAutoSaveFolder;
+        internal readonly string AutoSaveMacro = MacroParser.DefaultRegionSelectAutoSaveMacro;
         internal readonly string AutoSaveFormat = "JPEG";
         internal readonly int ApplicationFocusDelayBefore = 0;
         internal readonly int ApplicationFocusDelayAfter = 0;

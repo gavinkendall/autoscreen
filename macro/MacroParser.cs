@@ -167,12 +167,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default folder used for Region Select / Auto Save.
         /// </summary>
-        public static readonly string DefaultAutoSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        public static readonly string DefaultRegionSelectAutoSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         /// <summary>
         /// The default macro used for Region Select / Auto Save.
         /// </summary>
-        public static readonly string DefaultAutoSaveMacro = "Screenshot on %date% at %time%.%format%";
+        public static readonly string DefaultRegionSelectAutoSaveMacro = "Screenshot on %date% at %time%.%format%";
 
         /// <summary>
         /// Replaces a tag (such as "%year%") with an appropriate value (such as "2020").

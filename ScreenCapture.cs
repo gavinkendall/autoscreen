@@ -273,8 +273,16 @@ namespace AutoScreenCapture
         /// <summary>
         /// The default image format.
         /// </summary>
-        public const string DefaultImageFormat = "JPEG";
+        public static readonly string DefaultImageFormat = "JPEG";
 
+        /// <summary>
+        /// The image format as defined by the configuration file (autoscreen.conf).
+        /// </summary>
+        public static string ImageFormat;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private const int MAX_CHARS = 48000;
 
         /// <summary>
@@ -480,7 +488,7 @@ namespace AutoScreenCapture
 
                     screenshot.SavedToDisk = true;
 
-                    _log.WriteMessage("Screenshot (with ID \"" + screenshot.Id + "\") saved to file at \"" + screenshot.Path + "\"");
+                    _log.WriteMessage("Screenshot (id = " + screenshot.Id + ", viewid = " + screenshot.ViewId + ", encrypted = " + screenshot.Encrypted.ToString() + ") saved to \"" + screenshot.Path + "\"");
                 }
             }
             catch

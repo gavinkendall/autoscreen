@@ -47,6 +47,16 @@
             this.textBoxFilenamePattern = new System.Windows.Forms.TextBox();
             this.labelFilenamePatternHelp = new System.Windows.Forms.Label();
             this.tabPageImageFormat = new System.Windows.Forms.TabPage();
+            this.buttonImageFormatApplyToAllRegions = new System.Windows.Forms.Button();
+            this.buttonImageFormatApplyToAllScreens = new System.Windows.Forms.Button();
+            this.labelImageFormatHelp = new System.Windows.Forms.Label();
+            this.radioButtonImageFormatWmf = new System.Windows.Forms.RadioButton();
+            this.radioButtonImageFormatTiff = new System.Windows.Forms.RadioButton();
+            this.radioButtonImageFormatPng = new System.Windows.Forms.RadioButton();
+            this.radioButtonImageFormatJpeg = new System.Windows.Forms.RadioButton();
+            this.radioButtonImageFormatGif = new System.Windows.Forms.RadioButton();
+            this.radioButtonImageFormatEmf = new System.Windows.Forms.RadioButton();
+            this.radioButtonImageFormatBmp = new System.Windows.Forms.RadioButton();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
             this.labelLimit = new System.Windows.Forms.Label();
             this.labelLimitHelp = new System.Windows.Forms.Label();
@@ -150,9 +160,12 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.labelFilenamePatternPreview = new System.Windows.Forms.Label();
+            this.labelFilenamePatternFilename = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
+            this.tabPageImageFormat.SuspendLayout();
             this.tabPageInterval.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
@@ -283,6 +296,8 @@
             // 
             // tabPageFilenamePattern
             // 
+            this.tabPageFilenamePattern.Controls.Add(this.labelFilenamePatternFilename);
+            this.tabPageFilenamePattern.Controls.Add(this.labelFilenamePatternPreview);
             this.tabPageFilenamePattern.Controls.Add(this.labelFilenamePatternApplyHelp);
             this.tabPageFilenamePattern.Controls.Add(this.listBoxMacroTags);
             this.tabPageFilenamePattern.Controls.Add(this.buttonFilenamePatternApplyToAllRegions);
@@ -304,7 +319,8 @@
             this.labelFilenamePatternApplyHelp.Name = "labelFilenamePatternApplyHelp";
             this.labelFilenamePatternApplyHelp.Size = new System.Drawing.Size(335, 23);
             this.labelFilenamePatternApplyHelp.TabIndex = 40;
-            this.labelFilenamePatternApplyHelp.Text = "The macro tags that can be used are listed below.";
+            this.labelFilenamePatternApplyHelp.Text = "The macro tags that can be used in the filename are listed below:";
+            this.labelFilenamePatternApplyHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // listBoxMacroTags
             // 
@@ -339,19 +355,19 @@
             // 
             // textBoxMacroPreview
             // 
-            this.textBoxMacroPreview.Location = new System.Drawing.Point(6, 79);
+            this.textBoxMacroPreview.Location = new System.Drawing.Point(60, 79);
             this.textBoxMacroPreview.Name = "textBoxMacroPreview";
             this.textBoxMacroPreview.ReadOnly = true;
-            this.textBoxMacroPreview.Size = new System.Drawing.Size(665, 20);
+            this.textBoxMacroPreview.Size = new System.Drawing.Size(611, 20);
             this.textBoxMacroPreview.TabIndex = 36;
             this.textBoxMacroPreview.TabStop = false;
             // 
             // textBoxFilenamePattern
             // 
             this.textBoxFilenamePattern.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.textBoxFilenamePattern.Location = new System.Drawing.Point(6, 48);
+            this.textBoxFilenamePattern.Location = new System.Drawing.Point(60, 48);
             this.textBoxFilenamePattern.Name = "textBoxFilenamePattern";
-            this.textBoxFilenamePattern.Size = new System.Drawing.Size(665, 25);
+            this.textBoxFilenamePattern.Size = new System.Drawing.Size(611, 25);
             this.textBoxFilenamePattern.TabIndex = 35;
             this.textBoxFilenamePattern.TabStop = false;
             this.textBoxFilenamePattern.TextChanged += new System.EventHandler(this.textBoxFilenamePattern_TextChanged);
@@ -367,12 +383,125 @@
             // 
             // tabPageImageFormat
             // 
+            this.tabPageImageFormat.Controls.Add(this.buttonImageFormatApplyToAllRegions);
+            this.tabPageImageFormat.Controls.Add(this.buttonImageFormatApplyToAllScreens);
+            this.tabPageImageFormat.Controls.Add(this.labelImageFormatHelp);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatWmf);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatTiff);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatPng);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatJpeg);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatGif);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatEmf);
+            this.tabPageImageFormat.Controls.Add(this.radioButtonImageFormatBmp);
             this.tabPageImageFormat.Location = new System.Drawing.Point(4, 22);
             this.tabPageImageFormat.Name = "tabPageImageFormat";
             this.tabPageImageFormat.Size = new System.Drawing.Size(677, 253);
             this.tabPageImageFormat.TabIndex = 9;
             this.tabPageImageFormat.Text = "Image Format";
             this.tabPageImageFormat.UseVisualStyleBackColor = true;
+            // 
+            // buttonImageFormatApplyToAllRegions
+            // 
+            this.buttonImageFormatApplyToAllRegions.Location = new System.Drawing.Point(175, 209);
+            this.buttonImageFormatApplyToAllRegions.Name = "buttonImageFormatApplyToAllRegions";
+            this.buttonImageFormatApplyToAllRegions.Size = new System.Drawing.Size(159, 23);
+            this.buttonImageFormatApplyToAllRegions.TabIndex = 39;
+            this.buttonImageFormatApplyToAllRegions.TabStop = false;
+            this.buttonImageFormatApplyToAllRegions.Text = "Apply To All Regions";
+            this.buttonImageFormatApplyToAllRegions.UseVisualStyleBackColor = true;
+            this.buttonImageFormatApplyToAllRegions.Click += new System.EventHandler(this.buttonImageFormatApplyToAllRegions_Click);
+            // 
+            // buttonImageFormatApplyToAllScreens
+            // 
+            this.buttonImageFormatApplyToAllScreens.Location = new System.Drawing.Point(10, 209);
+            this.buttonImageFormatApplyToAllScreens.Name = "buttonImageFormatApplyToAllScreens";
+            this.buttonImageFormatApplyToAllScreens.Size = new System.Drawing.Size(159, 23);
+            this.buttonImageFormatApplyToAllScreens.TabIndex = 38;
+            this.buttonImageFormatApplyToAllScreens.TabStop = false;
+            this.buttonImageFormatApplyToAllScreens.Text = "Apply To All Screens";
+            this.buttonImageFormatApplyToAllScreens.UseVisualStyleBackColor = true;
+            this.buttonImageFormatApplyToAllScreens.Click += new System.EventHandler(this.buttonImageFormatApplyToAllScreens_Click);
+            // 
+            // labelImageFormatHelp
+            // 
+            this.labelImageFormatHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelImageFormatHelp.Location = new System.Drawing.Point(6, 13);
+            this.labelImageFormatHelp.Name = "labelImageFormatHelp";
+            this.labelImageFormatHelp.Size = new System.Drawing.Size(665, 32);
+            this.labelImageFormatHelp.TabIndex = 35;
+            this.labelImageFormatHelp.Text = resources.GetString("labelImageFormatHelp.Text");
+            // 
+            // radioButtonImageFormatWmf
+            // 
+            this.radioButtonImageFormatWmf.AutoSize = true;
+            this.radioButtonImageFormatWmf.Location = new System.Drawing.Point(10, 186);
+            this.radioButtonImageFormatWmf.Name = "radioButtonImageFormatWmf";
+            this.radioButtonImageFormatWmf.Size = new System.Drawing.Size(51, 17);
+            this.radioButtonImageFormatWmf.TabIndex = 6;
+            this.radioButtonImageFormatWmf.TabStop = true;
+            this.radioButtonImageFormatWmf.Text = "WMF";
+            this.radioButtonImageFormatWmf.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonImageFormatTiff
+            // 
+            this.radioButtonImageFormatTiff.AutoSize = true;
+            this.radioButtonImageFormatTiff.Location = new System.Drawing.Point(10, 163);
+            this.radioButtonImageFormatTiff.Name = "radioButtonImageFormatTiff";
+            this.radioButtonImageFormatTiff.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonImageFormatTiff.TabIndex = 5;
+            this.radioButtonImageFormatTiff.TabStop = true;
+            this.radioButtonImageFormatTiff.Text = "TIFF";
+            this.radioButtonImageFormatTiff.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonImageFormatPng
+            // 
+            this.radioButtonImageFormatPng.AutoSize = true;
+            this.radioButtonImageFormatPng.Location = new System.Drawing.Point(10, 140);
+            this.radioButtonImageFormatPng.Name = "radioButtonImageFormatPng";
+            this.radioButtonImageFormatPng.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonImageFormatPng.TabIndex = 4;
+            this.radioButtonImageFormatPng.Text = "PNG";
+            this.radioButtonImageFormatPng.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonImageFormatJpeg
+            // 
+            this.radioButtonImageFormatJpeg.AutoSize = true;
+            this.radioButtonImageFormatJpeg.Location = new System.Drawing.Point(10, 117);
+            this.radioButtonImageFormatJpeg.Name = "radioButtonImageFormatJpeg";
+            this.radioButtonImageFormatJpeg.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonImageFormatJpeg.TabIndex = 3;
+            this.radioButtonImageFormatJpeg.Text = "JPEG";
+            this.radioButtonImageFormatJpeg.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonImageFormatGif
+            // 
+            this.radioButtonImageFormatGif.AutoSize = true;
+            this.radioButtonImageFormatGif.Location = new System.Drawing.Point(10, 94);
+            this.radioButtonImageFormatGif.Name = "radioButtonImageFormatGif";
+            this.radioButtonImageFormatGif.Size = new System.Drawing.Size(42, 17);
+            this.radioButtonImageFormatGif.TabIndex = 2;
+            this.radioButtonImageFormatGif.Text = "GIF";
+            this.radioButtonImageFormatGif.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonImageFormatEmf
+            // 
+            this.radioButtonImageFormatEmf.AutoSize = true;
+            this.radioButtonImageFormatEmf.Location = new System.Drawing.Point(10, 71);
+            this.radioButtonImageFormatEmf.Name = "radioButtonImageFormatEmf";
+            this.radioButtonImageFormatEmf.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonImageFormatEmf.TabIndex = 1;
+            this.radioButtonImageFormatEmf.Text = "EMF";
+            this.radioButtonImageFormatEmf.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonImageFormatBmp
+            // 
+            this.radioButtonImageFormatBmp.AutoSize = true;
+            this.radioButtonImageFormatBmp.Location = new System.Drawing.Point(10, 48);
+            this.radioButtonImageFormatBmp.Name = "radioButtonImageFormatBmp";
+            this.radioButtonImageFormatBmp.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonImageFormatBmp.TabIndex = 0;
+            this.radioButtonImageFormatBmp.Text = "BMP";
+            this.radioButtonImageFormatBmp.UseVisualStyleBackColor = true;
             // 
             // tabPageInterval
             // 
@@ -1494,6 +1623,24 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // labelFilenamePatternPreview
+            // 
+            this.labelFilenamePatternPreview.AutoSize = true;
+            this.labelFilenamePatternPreview.Location = new System.Drawing.Point(6, 82);
+            this.labelFilenamePatternPreview.Name = "labelFilenamePatternPreview";
+            this.labelFilenamePatternPreview.Size = new System.Drawing.Size(48, 13);
+            this.labelFilenamePatternPreview.TabIndex = 41;
+            this.labelFilenamePatternPreview.Text = "Preview:";
+            // 
+            // labelFilenamePatternFilename
+            // 
+            this.labelFilenamePatternFilename.AutoSize = true;
+            this.labelFilenamePatternFilename.Location = new System.Drawing.Point(6, 54);
+            this.labelFilenamePatternFilename.Name = "labelFilenamePatternFilename";
+            this.labelFilenamePatternFilename.Size = new System.Drawing.Size(52, 13);
+            this.labelFilenamePatternFilename.TabIndex = 42;
+            this.labelFilenamePatternFilename.Text = "Filename:";
+            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1517,6 +1664,8 @@
             this.tabPageScreenshotsFolder.PerformLayout();
             this.tabPageFilenamePattern.ResumeLayout(false);
             this.tabPageFilenamePattern.PerformLayout();
+            this.tabPageImageFormat.ResumeLayout(false);
+            this.tabPageImageFormat.PerformLayout();
             this.tabPageInterval.ResumeLayout(false);
             this.tabPageInterval.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCaptureLimit)).EndInit();
@@ -1866,5 +2015,17 @@
         private System.Windows.Forms.Button buttonFilenamePatternApplyToAllScreens;
         private System.Windows.Forms.ListBox listBoxMacroTags;
         private System.Windows.Forms.Label labelFilenamePatternApplyHelp;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatWmf;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatTiff;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatPng;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatJpeg;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatGif;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatEmf;
+        private System.Windows.Forms.RadioButton radioButtonImageFormatBmp;
+        private System.Windows.Forms.Label labelImageFormatHelp;
+        private System.Windows.Forms.Button buttonImageFormatApplyToAllRegions;
+        private System.Windows.Forms.Button buttonImageFormatApplyToAllScreens;
+        private System.Windows.Forms.Label labelFilenamePatternPreview;
+        private System.Windows.Forms.Label labelFilenamePatternFilename;
     }
 }
