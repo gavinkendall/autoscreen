@@ -40,7 +40,9 @@
             this.comboBoxLabels.Location = new System.Drawing.Point(43, 4);
             this.comboBoxLabels.Name = "comboBoxLabels";
             this.comboBoxLabels.Size = new System.Drawing.Size(561, 21);
+            this.comboBoxLabels.Sorted = true;
             this.comboBoxLabels.TabIndex = 0;
+            this.comboBoxLabels.TabStop = false;
             this.comboBoxLabels.SelectedIndexChanged += new System.EventHandler(this.comboBoxLabels_SelectedIndexChanged);
             // 
             // buttonStartStopScreenCapture
