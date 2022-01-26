@@ -118,9 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBoxApplication.Text" xml:space="preserve">
-    <value>Auto Screen Capture 2.4.0.0 ("Blade")
-An automated screen capture utility for Windows
-Copyright © 2008-2022 Gavin Kendall
+    <value>An automated screen capture utility for Windows by Gavin Kendall
+Copyright © 2008-2022 Gavin Kendall (https://paypal.me/codewalker777)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -148,9 +147,7 @@ Twitter
 https://twitter.com/autoscreen2/
 
 YouTube
-https://youtube.com/gavinkendall/
-
-"I like the music from the first scene in the movie"</value>
+https://youtube.com/gavinkendall/</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="pictureBoxBanner.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -299,7 +296,7 @@ Steve Neunhoffer (Royal Geelong Yacht Club, Australia) who initiated the discuss
 
 "Cmdr Vex" (@CmdrVex [Twitter]) for testing displays in various resolutions
 
-Anik for the suggestion of including encrypted screenshots</value>
+Anik for the suggestion of implementing encrypted screenshots</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

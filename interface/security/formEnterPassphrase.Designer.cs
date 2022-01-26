@@ -112,7 +112,7 @@
             this.MinimizeBox = false;
             this.Name = "FormEnterPassphrase";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Enter Passphrase";
+            this.Text = "Auto Screen Capture - Enter Passphrase";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FormEnterPassphrase_Load);
             this.ResumeLayout(false);

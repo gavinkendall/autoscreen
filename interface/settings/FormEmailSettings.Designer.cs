@@ -71,7 +71,7 @@
             // 
             // textBoxHost
             // 
-            this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxHost.Location = new System.Drawing.Point(70, 24);
             this.textBoxHost.Name = "textBoxHost";
@@ -133,7 +133,7 @@
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxUsername.Location = new System.Drawing.Point(70, 50);
             this.textBoxUsername.Name = "textBoxUsername";
@@ -170,7 +170,7 @@
             // 
             // textBoxFrom
             // 
-            this.textBoxFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxFrom.Location = new System.Drawing.Point(58, 25);
             this.textBoxFrom.Name = "textBoxFrom";
@@ -179,7 +179,7 @@
             // 
             // groupBoxServer
             // 
-            this.groupBoxServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxServer.Controls.Add(this.checkBoxPrompt);
             this.groupBoxServer.Controls.Add(this.labelHost);
@@ -211,8 +211,8 @@
             // 
             // groupBoxMessage
             // 
-            this.groupBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.groupBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxMessage.Controls.Add(this.textBoxBody);
             this.groupBoxMessage.Controls.Add(this.textBoxSubject);
@@ -234,8 +234,8 @@
             // 
             // textBoxBody
             // 
-            this.textBoxBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxBody.Location = new System.Drawing.Point(6, 155);
             this.textBoxBody.Multiline = true;
@@ -245,7 +245,7 @@
             // 
             // textBoxSubject
             // 
-            this.textBoxSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSubject.Location = new System.Drawing.Point(58, 129);
             this.textBoxSubject.Name = "textBoxSubject";
@@ -263,7 +263,7 @@
             // 
             // textBoxBCC
             // 
-            this.textBoxBCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxBCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxBCC.Location = new System.Drawing.Point(58, 103);
             this.textBoxBCC.Name = "textBoxBCC";
@@ -281,7 +281,7 @@
             // 
             // textBoxCC
             // 
-            this.textBoxCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxCC.Location = new System.Drawing.Point(58, 77);
             this.textBoxCC.Name = "textBoxCC";
@@ -299,7 +299,7 @@
             // 
             // textBoxTo
             // 
-            this.textBoxTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.textBoxTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxTo.Location = new System.Drawing.Point(58, 51);
             this.textBoxTo.Name = "textBoxTo";
@@ -365,7 +365,7 @@
             this.MinimumSize = new System.Drawing.Size(755, 522);
             this.Name = "FormEmailSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Email Settings";
+            this.Text = "Auto Screen Capture - Email Settings";
             this.Load += new System.EventHandler(this.FormEmailSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).EndInit();
             this.groupBoxServer.ResumeLayout(false);

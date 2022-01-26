@@ -24,7 +24,7 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// The Label Switcher tool.
     /// </summary>
     public partial class FormLabelSwitcher : Form
     {
@@ -32,10 +32,10 @@ namespace AutoScreenCapture
         private FileSystem _fileSystem;
 
         /// <summary>
-        /// 
+        /// Constructor.
         /// </summary>
-        /// <param name="config"></param>
-        /// <param name="fileSystem"></param>
+        /// <param name="config">Configuration.</param>
+        /// <param name="fileSystem">File system.</param>
         public FormLabelSwitcher(Config config, FileSystem fileSystem)
         {
             InitializeComponent();
@@ -50,6 +50,11 @@ namespace AutoScreenCapture
             Hide();
         }
 
+        /// <summary>
+        /// Changes the screenshot label based on what's selected in the drop-down control list and applies the selected label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxLabels_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxLabels.SelectedItem != null)

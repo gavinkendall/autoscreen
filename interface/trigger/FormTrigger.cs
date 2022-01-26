@@ -64,11 +64,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// A collection of tags.
         /// </summary>
-        public MacroTagCollection TagCollection { get; set; }
+        public MacroTagCollection MacroTagCollection { get; set; }
 
         /// <summary>
-        /// Empty constructor.
+        /// Constructor.
         /// </summary>
+        /// <param name="fileSystem">File system.</param>
         public FormTrigger(FileSystem fileSystem)
         {
             InitializeComponent();
@@ -144,6 +145,10 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Shows a help message.
+        /// </summary>
+        /// <param name="message">The message to show as a help message.</param>
         private void HelpMessage(string message)
         {
             labelHelp.Text = "       " + message;
@@ -166,6 +171,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Adds a trigger to the collection of triggers.
+        /// </summary>
         private void AddTrigger()
         {
             if (InputValid())
@@ -215,6 +223,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Changes the configuration of the trigger.
+        /// </summary>
         private void ChangeTrigger()
         {
             if (InputValid())
@@ -267,11 +278,18 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Trims the input.
+        /// </summary>
         private void TrimInput()
         {
             textBoxTriggerName.Text = textBoxTriggerName.Text.Trim();
         }
 
+        /// <summary>
+        /// Validates the input.
+        /// </summary>
+        /// <returns>True if the input is valid. False if the input is not valid.</returns>
         private bool InputValid()
         {
             if (!string.IsNullOrEmpty(textBoxTriggerName.Text))
@@ -284,6 +302,10 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Determines if the trigger's name changed.
+        /// </summary>
+        /// <returns>True if the trigger's name changed. False if the trigger's name doesn't change.</returns>
         private bool NameChanged()
         {
             if (TriggerObject != null &&
@@ -297,6 +319,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// What to do when the user clicks on the OK button.
+        /// </summary>
         private void Okay()
         {
             DialogResult = DialogResult.OK;
@@ -309,6 +334,9 @@ namespace AutoScreenCapture
             Close();
         }
 
+        /// <summary>
+        /// Populates the list of conditions.
+        /// </summary>
         private void LoadConditions()
         {
             comboBoxDay.SelectedIndex = 0;
@@ -335,6 +363,9 @@ namespace AutoScreenCapture
             listBoxCondition.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Populates the list of actions.
+        /// </summary>
         private void LoadActions()
         {
             listBoxAction.Items.Clear();
@@ -377,6 +408,9 @@ namespace AutoScreenCapture
             listBoxAction.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Populates the list of editors, screens, regions, schedules, macro tags, or triggers (depending on what type of module has been selected).
+        /// </summary>
         private void LoadModuleItems()
         {
             listBoxModuleItemList.Items.Clear();
@@ -431,7 +465,7 @@ namespace AutoScreenCapture
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.EnableMacroTag ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.DisableMacroTag)
             {
-                foreach (MacroTag tag in TagCollection)
+                foreach (MacroTag tag in MacroTagCollection)
                 {
                     if (tag != null)
                     {
@@ -458,6 +492,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Determines what controls to enable or disable based on the condition being selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listBoxCondition_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowConditionHelpText();
@@ -492,6 +531,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Determines what controls to enable or disable based on the action being selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadModuleItems();
@@ -582,6 +626,9 @@ namespace AutoScreenCapture
             DetermineModuleListEnable();
         }
 
+        /// <summary>
+        /// Determines if we should enable the list of modules (this could be a list of screens, regions, schedules, macro tags, or triggers).
+        /// </summary>
         private void DetermineModuleListEnable()
         {
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.RunEditor ||
@@ -604,6 +651,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Displays the help text based on the selected condition.
+        /// </summary>
         private void ShowConditionHelpText()
         {
             switch (listBoxCondition.SelectedIndex)
@@ -685,6 +735,9 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Displays the help text based on the selected action.
+        /// </summary>
         private void ShowActionHelpText()
         {
             switch (listBoxAction.SelectedIndex)

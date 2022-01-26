@@ -39,6 +39,8 @@
             this.buttonScreenshotsFolderBrowseFolder = new System.Windows.Forms.Button();
             this.textBoxScreenshotsFolder = new System.Windows.Forms.TextBox();
             this.tabPageFilenamePattern = new System.Windows.Forms.TabPage();
+            this.labelFilenamePatternFilename = new System.Windows.Forms.Label();
+            this.labelFilenamePatternPreview = new System.Windows.Forms.Label();
             this.labelFilenamePatternApplyHelp = new System.Windows.Forms.Label();
             this.listBoxMacroTags = new System.Windows.Forms.ListBox();
             this.buttonFilenamePatternApplyToAllRegions = new System.Windows.Forms.Button();
@@ -160,8 +162,6 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.labelFilenamePatternPreview = new System.Windows.Forms.Label();
-            this.labelFilenamePatternFilename = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -311,6 +311,24 @@
             this.tabPageFilenamePattern.TabIndex = 8;
             this.tabPageFilenamePattern.Text = "Filename Pattern";
             this.tabPageFilenamePattern.UseVisualStyleBackColor = true;
+            // 
+            // labelFilenamePatternFilename
+            // 
+            this.labelFilenamePatternFilename.AutoSize = true;
+            this.labelFilenamePatternFilename.Location = new System.Drawing.Point(6, 54);
+            this.labelFilenamePatternFilename.Name = "labelFilenamePatternFilename";
+            this.labelFilenamePatternFilename.Size = new System.Drawing.Size(52, 13);
+            this.labelFilenamePatternFilename.TabIndex = 42;
+            this.labelFilenamePatternFilename.Text = "Filename:";
+            // 
+            // labelFilenamePatternPreview
+            // 
+            this.labelFilenamePatternPreview.AutoSize = true;
+            this.labelFilenamePatternPreview.Location = new System.Drawing.Point(6, 82);
+            this.labelFilenamePatternPreview.Name = "labelFilenamePatternPreview";
+            this.labelFilenamePatternPreview.Size = new System.Drawing.Size(48, 13);
+            this.labelFilenamePatternPreview.TabIndex = 41;
+            this.labelFilenamePatternPreview.Text = "Preview:";
             // 
             // labelFilenamePatternApplyHelp
             // 
@@ -1610,7 +1628,7 @@
             // 
             // labelHelp
             // 
-            this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelHelp.AutoEllipsis = true;
             this.labelHelp.BackColor = System.Drawing.Color.LightYellow;
@@ -1622,24 +1640,6 @@
             this.labelHelp.Size = new System.Drawing.Size(685, 17);
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelFilenamePatternPreview
-            // 
-            this.labelFilenamePatternPreview.AutoSize = true;
-            this.labelFilenamePatternPreview.Location = new System.Drawing.Point(6, 82);
-            this.labelFilenamePatternPreview.Name = "labelFilenamePatternPreview";
-            this.labelFilenamePatternPreview.Size = new System.Drawing.Size(48, 13);
-            this.labelFilenamePatternPreview.TabIndex = 41;
-            this.labelFilenamePatternPreview.Text = "Preview:";
-            // 
-            // labelFilenamePatternFilename
-            // 
-            this.labelFilenamePatternFilename.AutoSize = true;
-            this.labelFilenamePatternFilename.Location = new System.Drawing.Point(6, 54);
-            this.labelFilenamePatternFilename.Name = "labelFilenamePatternFilename";
-            this.labelFilenamePatternFilename.Size = new System.Drawing.Size(52, 13);
-            this.labelFilenamePatternFilename.TabIndex = 42;
-            this.labelFilenamePatternFilename.Text = "Filename:";
             // 
             // FormSetup
             // 
@@ -1656,7 +1656,7 @@
             this.MinimizeBox = false;
             this.Name = "FormSetup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Setup";
+            this.Text = "Auto Screen Capture - Setup";
             this.Load += new System.EventHandler(this.FormSetup_Load);
             this.Shown += new System.EventHandler(this.FormSetup_Shown);
             this.tabControlSetup.ResumeLayout(false);

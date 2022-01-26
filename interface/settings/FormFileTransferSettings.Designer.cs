@@ -202,7 +202,7 @@
             this.MinimumSize = new System.Drawing.Size(618, 240);
             this.Name = "FormFileTransferSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "File Transfer Settings";
+            this.Text = "Auto Screen Capture - File Transfer Settings";
             this.Load += new System.EventHandler(this.FormFileTransferSettings_Load);
             this.groupBoxServer.ResumeLayout(false);
             this.groupBoxServer.PerformLayout();

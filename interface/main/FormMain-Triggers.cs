@@ -40,7 +40,7 @@ namespace AutoScreenCapture
             _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
             _formTrigger.RegionCollection = _formRegion.RegionCollection;
             _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
-            _formTrigger.TagCollection = _formMacroTag.MacroTagCollection;
+            _formTrigger.MacroTagCollection = _formMacroTag.MacroTagCollection;
 
             if (!_formTrigger.Visible)
             {
@@ -125,7 +125,7 @@ namespace AutoScreenCapture
             _formTrigger.ScreenCollection = _formScreen.ScreenCollection;
             _formTrigger.RegionCollection = _formRegion.RegionCollection;
             _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
-            _formTrigger.TagCollection = _formMacroTag.MacroTagCollection;
+            _formTrigger.MacroTagCollection = _formMacroTag.MacroTagCollection;
 
             _formTrigger.ShowDialog(this);
 

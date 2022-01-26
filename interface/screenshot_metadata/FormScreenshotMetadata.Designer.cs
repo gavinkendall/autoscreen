@@ -285,7 +285,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormScreenshotMetadata";
-            this.Text = "Screenshot Metadata";
+            this.Text = "Auto Screen Capture - Screenshot Metadata";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScreenshotMetadata_FormClosing);
             this.statusStripScreenshotMetadata.ResumeLayout(false);

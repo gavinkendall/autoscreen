@@ -30,7 +30,7 @@ namespace AutoScreenCapture
     public partial class FormDynamicRegexValidator : Form
     {
         /// <summary>
-        /// The Dynamic Regex Validator tool.
+        /// Constructor.
         /// </summary>
         public FormDynamicRegexValidator()
         {
@@ -50,6 +50,10 @@ namespace AutoScreenCapture
             Hide();
         }
 
+        /// <summary>
+        /// Shows a help message.
+        /// </summary>
+        /// <param name="message">The message to show as a help message.</param>
         private void HelpMessage(string message)
         {
             labelHelp.Text = "       " + message;
@@ -65,6 +69,9 @@ namespace AutoScreenCapture
             CheckRegex();
         }
 
+        /// <summary>
+        /// Checks the provided regular expression pattern compared to the given text and indicates if it's a match or not a match.
+        /// </summary>
         private void CheckRegex()
         {
             try

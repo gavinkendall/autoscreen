@@ -3,7 +3,7 @@
 //     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>The Label Switcher tool.</summary>
+// <summary>The Encryptor / Decryptor tool for encrypting/decrypting screenshots, files, and text.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -30,16 +30,24 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// 
+    /// The Encryptor / Decryptor tool for encrypting/decrypting screenshots, files, and text.
     /// </summary>
     public partial class FormEncryptorDecryptor : Form
     {
+        private Security _security;
+        private ScreenshotCollection _screenshotCollection;
+
         /// <summary>
-        /// 
+        /// Constructor.
         /// </summary>
-        public FormEncryptorDecryptor()
+        /// <param name="security">Security.</param>
+        /// <param name="screenshotCollection">Screenshot collection.</param>
+        public FormEncryptorDecryptor(Security security, ScreenshotCollection screenshotCollection)
         {
             InitializeComponent();
+
+            _security = security;
+            _screenshotCollection = screenshotCollection;
         }
 
         private void FormEncryptorDecryptor_FormClosing(object sender, FormClosingEventArgs e)
