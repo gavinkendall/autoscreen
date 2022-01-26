@@ -88,6 +88,9 @@ namespace AutoScreenCapture
         // The Label Switcher tool.
         private FormLabelSwitcher _formLabelSwitcher;
 
+        // Encryptor / Decryptor tool.
+        private FormEncryptorDecryptor _formEncryptorDecryptor;
+
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
         private string _keyboardShortcutStartScreenCaptureKeyUserSetting;
@@ -604,7 +607,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the Dynamic Regex Validator tool.
+        /// Shows the "Dynamic Regex Validator" tool.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -621,7 +624,24 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the Label Switcher tool.
+        /// Shows the "Encryptor / Decryptor" tool.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemEncryptorDecryptor_Click(object sender, EventArgs e)
+        {
+            if (!_formEncryptorDecryptor.Visible)
+            {
+                _formEncryptorDecryptor.Show();
+            }
+            else
+            {
+                _formEncryptorDecryptor.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Screen Capture Status With Label Switcher" tool.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -704,6 +724,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Opens the appropriate tab in the Setup form based on the selected Setup menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripMenuItemSetup_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem selectedMenuItem = (ToolStripMenuItem)sender;
@@ -720,6 +745,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Toggles "Preview".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripDropDownButtonPreview_Click(object sender, EventArgs e)
         {
             _preview = !_preview;
@@ -731,6 +761,11 @@ namespace AutoScreenCapture
             SaveSettings();
         }
 
+        /// <summary>
+        /// Displays the appropriate help tip for the selected module.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabControlModules_SelectedIndexChanged(object sender, EventArgs e)
         {
             _config.Settings.User.SetValueByKey("SelectedModuleIndex", tabControlModules.SelectedIndex);
@@ -769,6 +804,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Opens the program folder.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripMenuItemOpenProgramFolder_Click(object sender, EventArgs e)
         {
             try
@@ -790,6 +830,11 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// Exits the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripDropDownButtonExit_Click(object sender, EventArgs e)
         {
             ExitApplication();

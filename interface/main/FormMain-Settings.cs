@@ -103,6 +103,7 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Initializing forms");
                 _formAbout = new FormAbout();
                 _formHelp = new FormHelp();
+                _formEncryptorDecryptor = new FormEncryptorDecryptor();
                 _formDynamicRegexValidator = new FormDynamicRegexValidator();
                 _formScreenshotMetadata = new FormScreenshotMetadata();
                 _formLabelSwitcher = new FormLabelSwitcher(_config, _fileSystem);

@@ -277,6 +277,16 @@ namespace AutoScreenCapture
 
             tools.DropDown.Items.Add(toolsDynamicRegexValidator);
 
+            ToolStripMenuItem toolsEncryptorDecryptor = new ToolStripMenuItem
+            {
+                Text = "Encryptor / Decryptor",
+                AutoToolTip = false
+            };
+
+            toolsEncryptorDecryptor.Click += new EventHandler(toolStripMenuItemEncryptorDecryptor_Click);
+
+            tools.DropDown.Items.Add(toolsEncryptorDecryptor);
+
             ToolStripMenuItem toolsLabelSwitcher = new ToolStripMenuItem
             {
                 Text = "Screen Capture Status With Label Switcher",

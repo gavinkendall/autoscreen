@@ -207,6 +207,12 @@
     <Compile Include="interface\region_select\FormRegionSelectWithMouse.Designer.cs">
       <DependentUpon>FormRegionSelectWithMouse.cs</DependentUpon>
     </Compile>
+    <Compile Include="interface\tools\FormEncryptorDecryptor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\tools\FormEncryptorDecryptor.Designer.cs">
+      <DependentUpon>FormEncryptorDecryptor.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\tools\FormLabelSwitcher.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -375,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="interface\macro_tag\FormMacroTag.resx">
       <DependentUpon>FormMacroTag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\tools\FormEncryptorDecryptor.resx">
+      <DependentUpon>FormEncryptorDecryptor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\tools\FormLabelSwitcher.resx">
       <DependentUpon>FormLabelSwitcher.cs</DependentUpon>

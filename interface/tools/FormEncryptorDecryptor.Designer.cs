@@ -1,6 +1,6 @@
 ﻿namespace AutoScreenCapture
 {
-    partial class FormScreenCaptureStatus
+    partial class FormEncryptorDecryptor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,24 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreenCaptureStatus));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEncryptorDecryptor));
             this.SuspendLayout();
             // 
-            // FormScreenCaptureStatus
+            // FormEncryptorDecryptor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(434, 0);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FormScreenCaptureStatus";
-            this.ShowInTaskbar = false;
+            this.Name = "FormEncryptorDecryptor";
+            this.Text = "Encryptor / Decryptor";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInformationWindow_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEncryptorDecryptor_FormClosing);
             this.ResumeLayout(false);
 
         }

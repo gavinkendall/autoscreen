@@ -124,6 +124,7 @@ namespace AutoScreenCapture
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.labelModuleHelp = new System.Windows.Forms.Label();
+            this.toolStripMenuItemEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -456,7 +457,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 420);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -676,6 +677,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripMenuItemTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemDynamicRegexValidator,
+            this.toolStripMenuItemEncryptorDecryptor,
             this.toolStripMenuItemLabelSwitcher});
             this.toolStripMenuItemTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
@@ -1007,6 +1009,13 @@ namespace AutoScreenCapture
     "n enabled while viewing the Dashboard to see what would be captured when startin" +
     "g a screen capture session.";
             // 
+            // toolStripMenuItemEncryptorDecryptor
+            // 
+            this.toolStripMenuItemEncryptorDecryptor.Name = "toolStripMenuItemEncryptorDecryptor";
+            this.toolStripMenuItemEncryptorDecryptor.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMenuItemEncryptorDecryptor.Text = "Encryptor / Decryptor";
+            this.toolStripMenuItemEncryptorDecryptor.Click += new System.EventHandler(this.toolStripMenuItemEncryptorDecryptor_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1139,5 +1148,6 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemLabelSwitcher;
         private ToolStripMenuItem toolStripMenuItemFilenamePattern;
         private ToolStripMenuItem toolStripMenuItemImageFormat;
+        private ToolStripMenuItem toolStripMenuItemEncryptorDecryptor;
     }
 }
