@@ -93,12 +93,40 @@ namespace AutoScreenCapture
 
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
+
+        // Keyboard Shortcuts - Start Screen Capture
+        private string _keyboardShortcutStartScreenCaptureModifier1UserSetting;
+        private string _keyboardShortcutStartScreenCaptureModifier2UserSetting;
         private string _keyboardShortcutStartScreenCaptureKeyUserSetting;
+
+        // Keyboard Shortcuts - Stop Screen Capture
+        private string _keyboardShortcutStopScreenCaptureModifier1UserSetting;
+        private string _keyboardShortcutStopScreenCaptureModifier2UserSetting;
         private string _keyboardShortcutStopScreenCaptureKeyUserSetting;
+
+        // Keyboard Shortcuts - Capture Now Archive
+        private string _keyboardShortcutCaptureNowArchiveModifier1UserSetting;
+        private string _keyboardShortcutCaptureNowArchiveModifier2UserSetting;
         private string _keyboardShortcutCaptureNowArchiveKeyUserSetting;
+
+        // Keyboard Shortcuts - Capture Now Edit
+        private string _keyboardShortcutCaptureNowEditModifier1UserSetting;
+        private string _keyboardShortcutCaptureNowEditModifier2UserSetting;
         private string _keyboardShortcutCaptureNowEditKeyUserSetting;
+
+        // Keyboard Shortcuts - Region Select Clipboard
+        private string _keyboardShortcutRegionSelectClipboardModifier1UserSetting;
+        private string _keyboardShortcutRegionSelectClipboardModifier2UserSetting;
         private string _keyboardShortcutRegionSelectClipboardKeyUserSetting;
+
+        // Keyboard Shorcuts - Region Select Auto Save
+        private string _keyboardShortcutRegionSelectAutoSaveModifier1UserSetting;
+        private string _keyboardShortcutRegionSelectAutoSaveModifier2UserSetting;
         private string _keyboardShortcutRegionSelectAutoSaveKeyUserSetting;
+
+        // Keyboard Shortcuts - Region Select Edit
+        private string _keyboardShortcutRegionSelectEditModifier1UserSetting;
+        private string _keyboardShortcutRegionSelectEditModifier2UserSetting;
         private string _keyboardShortcutRegionSelectEditKeyUserSetting;
 
         // Classes
