@@ -147,7 +147,6 @@ namespace AutoScreenCapture
                     string exceptionError = appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message + " - Exception Message: " + ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace;
 
                     _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, exceptionError);
-                    _fileSystem.AppendToFile(_fileSystem.LogsFolder + _fileSystem.LogFile + _extension, exceptionError);
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.

@@ -254,6 +254,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (fileSystem.FileExists(fileSystem.RegionsFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.RegionsFile);
+
+                    log.WriteErrorMessage("The file \"" + fileSystem.RegionsFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 log.WriteExceptionMessage("RegionCollection::Load", ex);
 
                 return false;

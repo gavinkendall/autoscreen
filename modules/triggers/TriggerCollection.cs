@@ -371,6 +371,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (fileSystem.FileExists(fileSystem.TriggersFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.TriggersFile);
+
+                    log.WriteErrorMessage("The file \"" + fileSystem.TriggersFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 log.WriteExceptionMessage("TriggerCollection::LoadXmlFileAndAddTriggers", ex);
 
                 return false;

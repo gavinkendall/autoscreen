@@ -479,6 +479,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (fileSystem.FileExists(fileSystem.MacroTagsFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.MacroTagsFile);
+
+                    log.WriteErrorMessage("The file \"" + fileSystem.MacroTagsFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 log.WriteExceptionMessage("MacroTagCollection::LoadXmlFileAndAddTags", ex);
 
                 return false;

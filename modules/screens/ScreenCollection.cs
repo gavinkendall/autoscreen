@@ -375,6 +375,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (fileSystem.FileExists(fileSystem.ScreensFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.ScreensFile);
+
+                    log.WriteErrorMessage("The file \"" + fileSystem.ScreensFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 log.WriteExceptionMessage("ScreenCollection::LoadXmlFileAndAddScreens", ex);
 
                 return false;

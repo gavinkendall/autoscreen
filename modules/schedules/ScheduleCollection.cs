@@ -404,6 +404,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (fileSystem.FileExists(fileSystem.SchedulesFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.SchedulesFile);
+
+                    log.WriteErrorMessage("The file \"" + fileSystem.SchedulesFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 log.WriteExceptionMessage("ScheduleCollection::LoadXmlFileAndAddSchedules", ex);
 
                 return false;

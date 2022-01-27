@@ -616,6 +616,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (_fileSystem.FileExists(_fileSystem.ScreenshotsFile))
+                {
+                    _fileSystem.DeleteFile(_fileSystem.ScreenshotsFile);
+
+                    _log.WriteErrorMessage("The file \"" + _fileSystem.ScreenshotsFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 _log.WriteExceptionMessage("ScreenshotCollection::LoadXmlFile", ex);
             }
             finally
@@ -1012,6 +1019,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (_fileSystem.FileExists(_fileSystem.ScreenshotsFile))
+                {
+                    _fileSystem.DeleteFile(_fileSystem.ScreenshotsFile);
+
+                    _log.WriteErrorMessage("The file \"" + _fileSystem.ScreenshotsFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 _log.WriteExceptionMessage("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
 
                 return -1;

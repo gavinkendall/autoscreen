@@ -242,6 +242,13 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (fileSystem.FileExists(fileSystem.EditorsFile))
+                {
+                    fileSystem.DeleteFile(fileSystem.EditorsFile);
+
+                    log.WriteErrorMessage("The file \"" + fileSystem.EditorsFile + "\" had to be deleted because an error was encountered. You may need to force quit the application and run it again.");
+                }
+
                 log.WriteExceptionMessage("EditorCollection::LoadXmlFileAndAddEditors", ex);
 
                 return false;
