@@ -259,44 +259,6 @@ namespace AutoScreenCapture
 
             configure.DropDown.Items.Add(configureTrigger);
 
-            ToolStripDropDownButton tools = new ToolStripDropDownButton
-            {
-                Alignment = ToolStripItemAlignment.Left,
-                AutoToolTip = false,
-                Text = "Tools",
-                Image = Resources.tools
-            };
-
-            ToolStripMenuItem toolsDynamicRegexValidator = new ToolStripMenuItem
-            {
-                Text = "Dynamic Regex Validator",
-                AutoToolTip = false
-            };
-
-            toolsDynamicRegexValidator.Click += new EventHandler(toolStripMenuItemDynamicRegexValidator_Click);
-
-            tools.DropDown.Items.Add(toolsDynamicRegexValidator);
-
-            ToolStripMenuItem toolsEncryptorDecryptor = new ToolStripMenuItem
-            {
-                Text = "Encryptor / Decryptor",
-                AutoToolTip = false
-            };
-
-            toolsEncryptorDecryptor.Click += new EventHandler(toolStripMenuItemEncryptorDecryptor_Click);
-
-            tools.DropDown.Items.Add(toolsEncryptorDecryptor);
-
-            ToolStripMenuItem toolsLabelSwitcher = new ToolStripMenuItem
-            {
-                Text = "Screen Capture Status With Label Switcher",
-                AutoToolTip = false
-            };
-
-            toolsLabelSwitcher.Click += new EventHandler(toolStripMenuItemLabelSwitcher_Click);
-
-            tools.DropDown.Items.Add(toolsLabelSwitcher);
-
             ToolStripButton zoomIn = new ToolStripButton
             {
                 Image = Resources.zoom_in,
@@ -315,8 +277,6 @@ namespace AutoScreenCapture
             toolStripDashboard.Items.Add(add);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(configure);
-            toolStripDashboard.Items.Add(new ToolStripSeparator());
-            toolStripDashboard.Items.Add(tools);
             toolStripDashboard.Items.Add(new ToolStripSeparator());
             toolStripDashboard.Items.Add(zoomIn);
             toolStripDashboard.Items.Add(zoomOut);
