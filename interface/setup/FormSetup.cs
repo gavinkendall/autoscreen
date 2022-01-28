@@ -192,17 +192,6 @@ namespace AutoScreenCapture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
 
             // Application Focus
-            string applicationFocus = _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value.ToString();
-
-            if (string.IsNullOrEmpty(applicationFocus))
-            {
-                checkBoxEnableApplicationFocus.Checked = false;
-            }
-            else
-            {
-                checkBoxEnableApplicationFocus.Checked = true;
-            }
-
             RefreshApplicationFocusList();
 
             HelpMessage("This is where to configure your screen capture settings");
