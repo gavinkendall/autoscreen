@@ -412,6 +412,7 @@
     <None Include="autoscreen.pfx" />
     <None Include="help\help-0.rtf" />
     <None Include="help\help-1.rtf" />
+    <None Include="help\help-10.rtf" />
     <None Include="help\help-2.rtf" />
     <None Include="help\help-3.rtf" />
     <None Include="help\help-4.rtf" />

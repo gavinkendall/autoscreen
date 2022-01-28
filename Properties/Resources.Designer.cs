@@ -342,12 +342,12 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\colortbl ;\red0\green0\blue255;\red0\green77\blue187;}
+        ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Welcome\fs22\par
         ///\b0 You made it!\par
         ///Auto Screen Capture is like a bottle of scotch that sits on the top shelf collecting dust over the years; it&apos;s not popular, but it proves to be unique and special once you understand it.\par
-        ///This application is a portable autom [rest of string was truncated]&quot;;.
+        ///This application is a portable automated screen capture ut [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_0 {
             get {
@@ -372,6 +372,20 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///{\colortbl ;\red255\green255\blue255;\red0\green0\blue0;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Command Line\b0\par
+        ///\fs22 Auto Screen Capture can be controlled from a command line terminal such as Command Prompt (cmd.exe) or Windows PowerShell (powershell.exe) depending on what you prefer to use.\par
+        ///Simply running &quot;autoscreen.exe&quot; without command line  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_10 {
+            get {
+                return ResourceManager.GetString("help_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
         ///{\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
@@ -387,12 +401,12 @@ namespace AutoScreenCapture.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Getting Started\fs22\par
         ///
         ///\pard\sa200\sl240\slmult1\b0 Check what will be captured before starting a screen capture session by making sure that the Preview button is enabled.\par
-        ///You should see a real-time preview when looking at the tab named &quot;Dashboard&quot; or any of the tabs to the right of the Dashboard tab.\par
-        ///The Preview button c [rest of string was truncated]&quot;;.
+        ///You should see a real-time preview when looking at the tab named &quot;Dashboard&quot; or any of the tabs to the right of the Dash [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_3 {
             get {
