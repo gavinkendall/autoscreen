@@ -140,17 +140,17 @@ namespace AutoScreenCapture
         /// <summary>
         /// Regex for parsing the -activeWindowTitle command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE = "^-activeWindowTitle=(?<ActiveWindowTitle>.+)$";
+        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE = "^-activeWindowTitle=(?<ActiveWindowTitle>.*)$";
 
         /// <summary>
         /// Regex for parsing the -activeWindowTitleMatch command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH = "^-activeWindowTitleMatch=(?<ActiveWindowTitleMatch>.+)$"; // The command line option -activeWindowTitleMatch is the same as -activeWindowTitle (to maintain backwards compatibility with previous versions since -activeWindowTitle is the old command line option)
+        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH = "^-activeWindowTitleMatch=(?<ActiveWindowTitleMatch>.*)$"; // The command line option -activeWindowTitleMatch is the same as -activeWindowTitle (to maintain backwards compatibility with previous versions since -activeWindowTitle is the old command line option)
 
         /// <summary>
         /// Regex for parsing the -activeWindowTitleNoMatch command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_NO_MATCH = "^-activeWindowTitleNoMatch=(?<ActiveWindowTitleNoMatch>.+)$";
+        internal const string REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_NO_MATCH = "^-activeWindowTitleNoMatch=(?<ActiveWindowTitleNoMatch>.*)$";
 
         /// <summary>
         /// Regex for parsing the -activeWindowTitleMatchType command.
@@ -160,12 +160,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Regex for parsing the -applicationFocus command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_APPLICATION_FOCUS = "^-applicationFocus=(?<ApplicationFocus>.+)$";
+        internal const string REGEX_COMMAND_LINE_APPLICATION_FOCUS = "^-applicationFocus=(?<ApplicationFocus>.*)$";
 
         /// <summary>
         /// Regex for parsing the -label command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_LABEL = "^-label=(?<Label>.+)$";
+        internal const string REGEX_COMMAND_LINE_LABEL = "^-label=(?<Label>.*)$";
 
         /// <summary>
         /// Regex for parsing the -applicationFocusDelayBefore command.
@@ -568,15 +568,12 @@ namespace AutoScreenCapture
                     {
                         string activeWindowTitle = Regex.Match(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE).Groups["ActiveWindowTitle"].Value;
 
-                        if (activeWindowTitle.Length > 0)
+                        if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
-                            {
-                                _config.Load(_fileSystem);
-                            }
-
-                            SetActiveWindowTitleAsMatch(activeWindowTitle);
+                            _config.Load(_fileSystem);
                         }
+
+                        SetActiveWindowTitleAsMatch(activeWindowTitle);
                     }
 
                     // -activeWindowTitleMatch="x"
@@ -584,15 +581,12 @@ namespace AutoScreenCapture
                     {
                         string activeWindowTitle = Regex.Match(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH).Groups["ActiveWindowTitleMatch"].Value;
 
-                        if (activeWindowTitle.Length > 0)
+                        if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
-                            {
-                                _config.Load(_fileSystem);
-                            }
-
-                            SetActiveWindowTitleAsMatch(activeWindowTitle);
+                            _config.Load(_fileSystem);
                         }
+
+                        SetActiveWindowTitleAsMatch(activeWindowTitle);
                     }
 
                     // -activeWindowTitleNoMatch="x"
@@ -600,15 +594,12 @@ namespace AutoScreenCapture
                     {
                         string activeWindowTitle = Regex.Match(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_NO_MATCH).Groups["ActiveWindowTitleNoMatch"].Value;
 
-                        if (activeWindowTitle.Length > 0)
+                        if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
-                            {
-                                _config.Load(_fileSystem);
-                            }
-
-                            //SetActiveWindowTitleAsNoMatch(activeWindowTitle);
+                            _config.Load(_fileSystem);
                         }
+
+                        SetActiveWindowTitleAsNoMatch(activeWindowTitle);
                     }
 
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_ACTIVE_WINDOW_TITLE_MATCH_TYPE))
@@ -636,15 +627,12 @@ namespace AutoScreenCapture
                     {
                         string applicationFocus = Regex.Match(arg, REGEX_COMMAND_LINE_APPLICATION_FOCUS).Groups["ApplicationFocus"].Value;
 
-                        if (applicationFocus.Length > 0)
+                        if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
-                            {
-                                _config.Load(_fileSystem);
-                            }
-
-                            _formSetup.SetApplicationFocus(applicationFocus);
+                            _config.Load(_fileSystem);
                         }
+
+                        _formSetup.SetApplicationFocus(applicationFocus);
                     }
 
                     // -label="x"
@@ -652,15 +640,12 @@ namespace AutoScreenCapture
                     {
                         string label = Regex.Match(arg, REGEX_COMMAND_LINE_LABEL).Groups["Label"].Value;
 
-                        if (label.Length > 0)
+                        if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
                         {
-                            if (string.IsNullOrEmpty(_fileSystem.UserSettingsFile))
-                            {
-                                _config.Load(_fileSystem);
-                            }
-
-                            ApplyLabel(label);
+                            _config.Load(_fileSystem);
                         }
+
+                        ApplyLabel(label);
                     }
 
                     // -applicationFocusDelayBefore=x
