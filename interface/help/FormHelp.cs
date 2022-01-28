@@ -48,6 +48,7 @@ namespace AutoScreenCapture
             listBoxHelpItems.Items.Add("Macro Tags");
             listBoxHelpItems.Items.Add("Triggers");
             listBoxHelpItems.Items.Add("Command Line");
+            listBoxHelpItems.Items.Add("Common Setup Scenarios");
 
             listBoxHelpItems.SelectedIndex = 0;
         }
@@ -106,6 +107,10 @@ namespace AutoScreenCapture
 
                 case 10:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.help_10;
+                    break;
+
+                case 11:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_11;
                     break;
             }
         }

@@ -372,16 +372,30 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
         ///{\colortbl ;\red255\green255\blue255;\red0\green0\blue0;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Command Line\b0\par
         ///\fs22 Auto Screen Capture can be controlled from a command line terminal such as Command Prompt (cmd.exe) or Windows PowerShell (powershell.exe) depending on what you prefer to use.\par
-        ///Simply running &quot;autoscreen.exe&quot; without command line  [rest of string was truncated]&quot;;.
+        ///Simply running &quot;autoscreen.exe&quot; without c [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_10 {
             get {
                 return ResourceManager.GetString("help_10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Common Setup Scenarios\b0\par
+        ///\par
+        ///}
+        ///.
+        /// </summary>
+        internal static string help_11 {
+            get {
+                return ResourceManager.GetString("help_11", resourceCulture);
             }
         }
         
