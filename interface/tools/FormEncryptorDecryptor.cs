@@ -400,5 +400,60 @@ namespace AutoScreenCapture
         {
             FormEncryptorDecryptor_Shown(sender, e);
         }
+
+        private void buttonEncryptFile_Click(object sender, EventArgs e)
+        {
+            if (_fileSystem.FileExists(textBoxFilepath.Text))
+            {
+                textBoxFileKey.Text = _security.EncryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-encrypted");
+
+                toolStripStatusLabel.Text = "File encrypted";
+            }
+        }
+
+        private void buttonDecryptFile_Click(object sender, EventArgs e)
+        {
+            if (_fileSystem.FileExists(textBoxFilepath.Text))
+            {
+                try
+                {
+                    _security.DecryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-decrypted", textBoxFileKey.Text);
+
+                    textBoxFileKey.Text = string.Empty;
+
+                    toolStripStatusLabel.Text = "File decrypted";
+                }
+                catch
+                {
+                    toolStripStatusLabel.Text = "An error was encountered";
+                }
+            }
+        }
+
+        private void buttonEncryptText_Click(object sender, EventArgs e)
+        {
+            textBoxText.Text = _security.EncryptText(textBoxText.Text, textBoxTextKey.Text);
+
+            toolStripStatusLabel.Text = "Text encrypted";
+        }
+
+        private void buttonDecryptText_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                textBoxText.Text = _security.DecryptText(textBoxText.Text, textBoxTextKey.Text);
+
+                toolStripStatusLabel.Text = "Text decrypted";
+            }
+            catch
+            {
+                toolStripStatusLabel.Text = "An error was encountered";
+            }
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = string.Empty;
+        }
     }
 }
