@@ -618,7 +618,14 @@ namespace AutoScreenCapture
         /// <returns>A Date/Time object representing the first date in the screenshots collection.</returns>
         public DateTime GetFirstScreenshotsDate()
         {
-            return DateTime.Parse(_screenshotList.FirstOrDefault<Screenshot>().Date).Date;
+            Screenshot screenshot = _screenshotList.FirstOrDefault<Screenshot>();
+
+            if (screenshot != null && !string.IsNullOrEmpty(screenshot.Date))
+            {
+                return DateTime.Parse(screenshot.Date).Date;
+            }
+
+            return DateTime.Now;
         }
 
         /// <summary>
@@ -627,7 +634,14 @@ namespace AutoScreenCapture
         /// <returns>A Date/Time object representing the last date in the screenshots collection.</returns>
         public DateTime GetLastScreenshotsDate()
         {
-            return DateTime.Parse(_screenshotList.LastOrDefault<Screenshot>().Date).Date;
+            Screenshot screenshot = _screenshotList.LastOrDefault<Screenshot>();
+
+            if (screenshot != null && !string.IsNullOrEmpty(screenshot.Date))
+            {
+                return DateTime.Parse(screenshot.Date).Date;
+            }
+
+            return DateTime.Now;
         }
 
         /// <summary>
