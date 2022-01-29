@@ -467,20 +467,23 @@ namespace AutoScreenCapture
                         screenshot.Bitmap.Save(screenshot.Path, screenshot.Format.Format);
                     }
 
-                    if (screenshot.Encrypted)
+                    if (screenshot.Encrypt)
                     {
                         string key = security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
 
                         if (!string.IsNullOrEmpty(key))
                         {
-                            screenshot.Key = key;
-
                             if (_fileSystem.FileExists(screenshot.Path))
                             {
-                                _fileSystem.DeleteFile(screenshot.Path);
-                            }
+                                if (_fileSystem.DeleteFile(screenshot.Path))
+                                {
+                                    _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
 
-                            _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+                                    screenshot.Key = key;
+                                    screenshot.Encrypt = false;
+                                    screenshot.Encrypted = true;
+                                }
+                            }
                         }
                     }
 

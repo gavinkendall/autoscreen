@@ -107,7 +107,7 @@ namespace AutoScreenCapture
                     }
                     catch (Exception ex)
                     {
-                        _log.WriteMessage("WARNING: Error with file decryption. Exception is " + ex);
+                        _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.Path + "\". Exception is " + ex);
                     }
 
                     if (_fileSystem.FileExists(screenshot.Path))
@@ -131,21 +131,29 @@ namespace AutoScreenCapture
                 {
                     string key = _security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
 
-                    if (_fileSystem.FileExists(screenshot.Path))
+                    if (!string.IsNullOrEmpty(key))
                     {
-                        if (_fileSystem.DeleteFile(screenshot.Path))
+                        if (_fileSystem.FileExists(screenshot.Path))
                         {
-                            _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+                            if (_fileSystem.DeleteFile(screenshot.Path))
+                            {
+                                _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
 
-                            screenshot.Key = key;
-                            screenshot.Encrypted = true;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Cannot encrypt the file. It may be in use by another process.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                screenshot.Key = key;
+                                screenshot.Encrypt = false;
+                                screenshot.Encrypted = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Cannot encrypt the file. It may be in use by another process.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            return;
+                                return;
+                            }
                         }
+                    }
+                    else
+                    {
+                        _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.Path + "\"");
                     }
                 }
 
@@ -1215,6 +1223,26 @@ namespace AutoScreenCapture
             }
 
             return returnedBitmap;
+        }
+
+        /// <summary>
+        /// When the "Encryptor / Decryptor" tool has finished encrypting screenshots.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScreenshotsEncrypted(object sender, EventArgs e)
+        {
+            ShowScreenshotBySlideIndex();
+        }
+
+        /// <summary>
+        /// When the "Encryptor / Decryptor" tool has finished decrypting screenshots.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScreenshotsDecrypted(object sender, EventArgs e)
+        {
+            ShowScreenshotBySlideIndex();
         }
     }
 }

@@ -551,6 +551,17 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Gets a list of screenshots between a start date and an end date.
+        /// </summary>
+        /// <param name="startDate">The date representing the beginning of the date range.</param>
+        /// <param name="endDate">The date representing the end of the date range.</param>
+        /// <returns>A list of screenshots.</returns>
+        public List<Screenshot> GetScreenshots(DateTime startDate, DateTime endDate)
+        {
+            return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date && DateTime.Parse(x.Date).Date <= endDate.Date).ToList();
+        }
+
+        /// <summary>
         /// Loads screenshot references from the screenshots.xml file into an XmlDocument so it's available in memory.
         /// The old way of loading screenshots also had the application construct each Screenshot object from an XML screenshot node and add it to the collection. This would take a long time to load for a large screenshots.xml file.
         /// The new way (as of version 2.3.0.0) will only load XML screenshot nodes whenever necessary.

@@ -109,6 +109,11 @@ namespace AutoScreenCapture
         public bool Encrypted { get; set; }
 
         /// <summary>
+        /// Determines if we should encrypt the screenshot.
+        /// </summary>
+        public bool Encrypt { get; set; }
+
+        /// <summary>
         /// The key used for encrypting the screenshot.
         /// </summary>
         public string Key { get; set; }

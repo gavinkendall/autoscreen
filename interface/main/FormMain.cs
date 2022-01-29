@@ -23,8 +23,8 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
-using Gavin.Kendall.SFTP;
 using System.Diagnostics;
+using Gavin.Kendall.SFTP;
 
 namespace AutoScreenCapture
 {

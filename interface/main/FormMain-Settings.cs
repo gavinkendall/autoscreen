@@ -103,7 +103,6 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Initializing forms");
                 _formAbout = new FormAbout();
                 _formHelp = new FormHelp();
-                _formEncryptorDecryptor = new FormEncryptorDecryptor(_security, _screenshotCollection);
                 _formDynamicRegexValidator = new FormDynamicRegexValidator();
                 _formScreenshotMetadata = new FormScreenshotMetadata();
                 _formLabelSwitcher = new FormLabelSwitcher(_config, _fileSystem);
@@ -226,10 +225,15 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Building view tab pages");
                 BuildViewTabPages();
 
+                // Screenshots Collection
                 _log.WriteDebugMessage("Initializing screenshot collection");
                 _screenshotCollection = new ScreenshotCollection(_imageFormatCollection, _formScreen.ScreenCollection, _screenCapture, _config, _fileSystem, _log);
-
                 _screenshotCollection.LoadXmlFile(_config);
+
+                // Encryptor / Decryptor
+                _formEncryptorDecryptor = new FormEncryptorDecryptor(_log, _security, _fileSystem, _screenshotCollection);
+                _formEncryptorDecryptor.screenshotsEncrypted += ScreenshotsEncrypted;
+                _formEncryptorDecryptor.screenshotsDecrypted += ScreenshotsDecrypted;
 
                 int screenCaptureInterval = Convert.ToInt32(_config.Settings.User.GetByKey("ScreenCaptureInterval", _config.Settings.DefaultSettings.ScreenCaptureInterval).Value);
                 _log.WriteDebugMessage("ScreenCaptureInterval = " + screenCaptureInterval);

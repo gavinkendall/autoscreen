@@ -384,7 +384,7 @@ namespace AutoScreenCapture
                 Format = format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",
                 Label = label,
-                Encrypted = encrypt
+                Encrypt = encrypt
             };
 
             int errorLevel = _screenCapture.SaveScreenshot(_security, jpegQuality, screenshot, _screenshotCollection);
