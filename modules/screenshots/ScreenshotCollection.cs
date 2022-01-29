@@ -551,14 +551,83 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Gets a list of screenshots between a start date and an end date.
+        /// Gets a list of screenshots between a start date/time and an end date/time and based on a filter.
         /// </summary>
-        /// <param name="startDate">The date representing the beginning of the date range.</param>
-        /// <param name="endDate">The date representing the end of the date range.</param>
+        /// <param name="startDate">The date representing the beginning of the date/time range.</param>
+        /// <param name="endDate">The date representing the end of the date/time range.</param>
+        /// <param name="startTime">The time representing the beginning of the date/time range.</param>
+        /// <param name="endTime">The time representing the end of the date/time range.</param>
+        /// <param name="filterType">The filter type.</param>
+        /// <param name="filterValue">The filter value (which corresponds to the filter type).</param>
         /// <returns>A list of screenshots.</returns>
-        public List<Screenshot> GetScreenshots(DateTime startDate, DateTime endDate)
+        public List<Screenshot> GetScreenshots(DateTime startDate, DateTime endDate, DateTime startTime, DateTime endTime, string filterType, string filterValue)
         {
-            return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date && DateTime.Parse(x.Date).Date <= endDate.Date).ToList();
+            if (filterType.Equals("Image Format"))
+            {
+                return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date &&
+                    DateTime.Parse(x.Date).Date <= endDate.Date &&
+                    DateTime.Parse(x.Time) >= startTime &&
+                    DateTime.Parse(x.Time) <= endTime &&
+                    x.Format != null &&
+                    !string.IsNullOrEmpty(x.Format.Name) &&
+                    x.Format.Name.Equals(filterValue)).ToList();
+            }
+
+            if (filterType.Equals("Label"))
+            {
+                return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date &&
+                    DateTime.Parse(x.Date).Date <= endDate.Date &&
+                    DateTime.Parse(x.Time) >= startTime &&
+                    DateTime.Parse(x.Time) <= endTime &&
+                    x.Label != null &&
+                    !string.IsNullOrEmpty(x.Label) &&
+                    x.Label.Equals(filterValue)).ToList();
+            }
+
+            if (filterType.Equals("Process Name"))
+            {
+                return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date &&
+                    DateTime.Parse(x.Date).Date <= endDate.Date &&
+                    DateTime.Parse(x.Time) >= startTime &&
+                    DateTime.Parse(x.Time) <= endTime &&
+                    x.ProcessName != null &&
+                    !string.IsNullOrEmpty(x.ProcessName) &&
+                    x.ProcessName.Equals(filterValue)).ToList();
+            }
+
+            if (filterType.Equals("Window Title"))
+            {
+                return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date &&
+                    DateTime.Parse(x.Date).Date <= endDate.Date &&
+                    DateTime.Parse(x.Time) >= startTime &&
+                    DateTime.Parse(x.Time) <= endTime &&
+                    x.WindowTitle != null &&
+                    !string.IsNullOrEmpty(x.WindowTitle) &&
+                    x.WindowTitle.Equals(filterValue)).ToList();
+            }
+
+            return _screenshotList.Where(x => DateTime.Parse(x.Date).Date >= startDate.Date &&
+                    DateTime.Parse(x.Date).Date <= endDate.Date &&
+                    DateTime.Parse(x.Time) >= startTime &&
+                    DateTime.Parse(x.Time) <= endTime).ToList();
+        }
+
+        /// <summary>
+        /// Gets the very first date in the screenshots collection.
+        /// </summary>
+        /// <returns>A Date/Time object representing the first date in the screenshots collection.</returns>
+        public DateTime GetFirstScreenshotsDate()
+        {
+            return DateTime.Parse(_screenshotList.FirstOrDefault<Screenshot>().Date).Date;
+        }
+
+        /// <summary>
+        /// Gets the very last date in the screenshots collection.
+        /// </summary>
+        /// <returns>A Date/Time object representing the last date in the screenshots collection.</returns>
+        public DateTime GetLastScreenshotsDate()
+        {
+            return DateTime.Parse(_screenshotList.LastOrDefault<Screenshot>().Date).Date;
         }
 
         /// <summary>

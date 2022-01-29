@@ -1172,15 +1172,6 @@ namespace AutoScreenCapture
             ShowScreenshotBySlideIndex();
         }
 
-        private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxFilterValue.SelectedIndex > 0)
-            {
-                SearchDates();
-                ShowScreenshots();
-            }
-        }
-
         private void buttonRefreshFilterValues_Click(object sender, EventArgs e)
         {
             SearchFilterValues();

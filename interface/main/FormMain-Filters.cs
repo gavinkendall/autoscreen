@@ -42,14 +42,15 @@ namespace AutoScreenCapture
                 SearchDates();
                 ShowScreenshots();
 
-                if (comboBoxFilterValue.Items.Count > 1)
-                {
-                    comboBoxFilterValue.SelectedIndex = 0;
-                }
-
                 comboBoxFilterValue.Enabled = false;
                 buttonRefreshFilterValues.Enabled = false;
             }
+        }
+
+        private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SearchDates();
+            ShowScreenshots();
         }
 
         private void DoWork_runFilterSearchThread(object sender, DoWorkEventArgs e)
@@ -69,7 +70,6 @@ namespace AutoScreenCapture
                 {
                     List<string> filterValueList = new List<string>();
                     filterValueList = _screenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
-                    filterValueList.Add(string.Empty);
                     filterValueList.Sort();
 
                     comboBoxFilterValue.DataSource = filterValueList;

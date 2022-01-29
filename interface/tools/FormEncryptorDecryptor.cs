@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -36,6 +37,9 @@ namespace AutoScreenCapture
 
         private BackgroundWorker runScreenshotsEncryption = null;
         private BackgroundWorker runScreenshotsDecryption = null;
+
+        private delegate void RunScreenshotsEncryptionDelegate();
+        private delegate void RunScreenshotsDecryptionDelegate();
 
         /// <summary>
         /// When the "Encryptor / Decryptor" tool has finished encrypting screenshots.
@@ -82,9 +86,53 @@ namespace AutoScreenCapture
             runScreenshotsDecryption.RunWorkerCompleted += RunScreenshotsDecryption_RunWorkerCompleted;
         }
 
+        private void FormEncryptorDecryptor_Load(object sender, EventArgs e)
+        {
+            dateTimePickerScreenshotsStartDateRange.Value = _screenshotCollection.GetFirstScreenshotsDate();
+            dateTimePickerScreenshotsEndDateRange.Value = _screenshotCollection.GetLastScreenshotsDate();
+
+            dateTimePickerScreenshotsStartTimeRange.Value = DateTime.Parse("00:00:00.000");
+            dateTimePickerScreenshotsEndTimeRange.Value = DateTime.Parse("23:59:59.999");
+
+            for (int i = 0; i < dataGridViewScreenshots.Columns.Count; i++)
+            {
+                dataGridViewScreenshots.Columns[i].Visible = false;
+            }
+
+            dataGridViewScreenshots.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewScreenshots.Columns["Time"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewScreenshots.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewScreenshots.Columns["Encrypted"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            dataGridViewScreenshots.Columns["Key"].Visible = true;
+            dataGridViewScreenshots.Columns["Date"].Visible = true;
+            dataGridViewScreenshots.Columns["Time"].Visible = true;
+            dataGridViewScreenshots.Columns["Path"].Visible = true;
+            dataGridViewScreenshots.Columns["Label"].Visible = true;
+            dataGridViewScreenshots.Columns["Encrypted"].Visible = true;
+            dataGridViewScreenshots.Columns["WindowTitle"].Visible = true;
+            dataGridViewScreenshots.Columns["ProcessName"].Visible = true;
+
+            dataGridViewScreenshots.Columns["Date"].DisplayIndex = 0;
+            dataGridViewScreenshots.Columns["Time"].DisplayIndex = 1;
+            dataGridViewScreenshots.Columns["Encrypted"].DisplayIndex = 2;
+            dataGridViewScreenshots.Columns["Key"].DisplayIndex = 3;
+            dataGridViewScreenshots.Columns["Path"].DisplayIndex = 4;
+            dataGridViewScreenshots.Columns["ProcessName"].DisplayIndex = 5;
+            dataGridViewScreenshots.Columns["WindowTitle"].DisplayIndex = 6;
+            dataGridViewScreenshots.Columns["Label"].DisplayIndex = 8; // This needs to be 8 so it appears after "Window Title". I tried 7 but it's doesn't work. I'm not sure why.
+
+            dataGridViewScreenshots.Columns["ProcessName"].HeaderText = "Process Name";
+            dataGridViewScreenshots.Columns["WindowTitle"].HeaderText = "Window Title";
+        }
+
         private void FormEncryptorDecryptor_Shown(object sender, EventArgs e)
         {
-            dataGridViewScreenshots.DataSource = _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value, dateTimePickerScreenshotsEndDateRange.Value);
+            dataGridViewScreenshots.DataSource = _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
+                    dateTimePickerScreenshotsEndDateRange.Value,
+                    dateTimePickerScreenshotsStartTimeRange.Value,
+                    dateTimePickerScreenshotsEndTimeRange.Value,
+                    comboBoxFilterType.Text, comboBoxFilterValue.Text);
         }
 
         private void FormEncryptorDecryptor_FormClosing(object sender, FormClosingEventArgs e)
@@ -166,31 +214,51 @@ namespace AutoScreenCapture
         /// </summary>
         private void RunScreenshotsEncryption()
         {
-            foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value, dateTimePickerScreenshotsEndDateRange.Value))
+            if (comboBoxFilterType.InvokeRequired || comboBoxFilterValue.InvokeRequired)
             {
-                if (!screenshot.Encrypted)
+                if (comboBoxFilterType.InvokeRequired)
                 {
-                    string key = _security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+                    comboBoxFilterType.Invoke(new RunScreenshotsEncryptionDelegate(RunScreenshotsEncryption));
+                }
 
-                    if (!string.IsNullOrEmpty(key))
+                if (comboBoxFilterValue.InvokeRequired)
+                {
+                    comboBoxFilterValue.Invoke(new RunScreenshotsEncryptionDelegate(RunScreenshotsEncryption));
+                }
+            }
+            else
+            {
+                foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
+                    dateTimePickerScreenshotsEndDateRange.Value,
+                    dateTimePickerScreenshotsStartTimeRange.Value,
+                    dateTimePickerScreenshotsEndTimeRange.Value,
+                    comboBoxFilterType.Text,
+                    comboBoxFilterValue.Text))
+                {
+                    if (!screenshot.Encrypted)
                     {
-                        if (_fileSystem.FileExists(screenshot.Path))
+                        string key = _security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+
+                        if (!string.IsNullOrEmpty(key))
                         {
-                            if (_fileSystem.DeleteFile(screenshot.Path))
+                            if (_fileSystem.FileExists(screenshot.Path))
                             {
-                                _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+                                if (_fileSystem.DeleteFile(screenshot.Path))
+                                {
+                                    _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
 
-                                screenshot.Key = key;
-                                screenshot.Encrypt = false;
-                                screenshot.Encrypted = true;
+                                    screenshot.Key = key;
+                                    screenshot.Encrypt = false;
+                                    screenshot.Encrypted = true;
 
-                                UpdateScreenshotCollection(screenshot);
+                                    UpdateScreenshotCollection(screenshot);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.Path + "\"");
+                        else
+                        {
+                            _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.Path + "\"");
+                        }
                     }
                 }
             }
@@ -201,29 +269,49 @@ namespace AutoScreenCapture
         /// </summary>
         private void RunScreenshotsDecryption()
         {
-            foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value, dateTimePickerScreenshotsEndDateRange.Value))
+            if (comboBoxFilterType.InvokeRequired || comboBoxFilterValue.InvokeRequired)
             {
-                if (screenshot.Encrypted)
+                if (comboBoxFilterType.InvokeRequired)
                 {
-                    try
-                    {
-                        _security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key);
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.Path + "\". Exception is " + ex);
-                    }
+                    comboBoxFilterType.Invoke(new RunScreenshotsDecryptionDelegate(RunScreenshotsDecryption));
+                }
 
-                    if (_fileSystem.FileExists(screenshot.Path))
+                if (comboBoxFilterValue.InvokeRequired)
+                {
+                    comboBoxFilterValue.Invoke(new RunScreenshotsDecryptionDelegate(RunScreenshotsDecryption));
+                }
+            }
+            else
+            {
+                foreach (Screenshot screenshot in _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
+                    dateTimePickerScreenshotsEndDateRange.Value,
+                    dateTimePickerScreenshotsStartTimeRange.Value,
+                    dateTimePickerScreenshotsEndTimeRange.Value,
+                    comboBoxFilterType.Text,
+                    comboBoxFilterValue.Text))
+                {
+                    if (screenshot.Encrypted)
                     {
-                        if (_fileSystem.DeleteFile(screenshot.Path))
+                        try
                         {
-                            _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
+                            _security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key);
+                        }
+                        catch (Exception ex)
+                        {
+                            _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.Path + "\". Exception is " + ex);
+                        }
 
-                            screenshot.Key = string.Empty;
-                            screenshot.Encrypted = false;
+                        if (_fileSystem.FileExists(screenshot.Path))
+                        {
+                            if (_fileSystem.DeleteFile(screenshot.Path))
+                            {
+                                _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
 
-                            UpdateScreenshotCollection(screenshot);
+                                screenshot.Key = string.Empty;
+                                screenshot.Encrypted = false;
+
+                                UpdateScreenshotCollection(screenshot);
+                            }
                         }
                     }
                 }
@@ -260,6 +348,8 @@ namespace AutoScreenCapture
 
             toolStripStatusLabel.Text = "Screenshots encrypted";
 
+            dataGridViewScreenshots.Refresh();
+
             screenshotsEncrypted?.Invoke(sender, e);
         }
 
@@ -272,7 +362,43 @@ namespace AutoScreenCapture
 
             toolStripStatusLabel.Text = "Screenshots decrypted";
 
+            dataGridViewScreenshots.Refresh();
+
             screenshotsDecrypted?.Invoke(sender, e);
+        }
+
+        private void dateTimePickerScreenshots_ValueChanged(object sender, EventArgs e)
+        {
+            FormEncryptorDecryptor_Shown(sender, e);
+        }
+
+        private void comboBoxFilterType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(comboBoxFilterType.Text))
+            {
+                if (comboBoxFilterType.SelectedItem != null && !string.IsNullOrEmpty(comboBoxFilterType.Text))
+                {
+                    List<string> filterValueList = _screenshotCollection.GetFilterValueList(comboBoxFilterType.Text);
+                    filterValueList.Sort();
+
+                    comboBoxFilterValue.DataSource = filterValueList;
+
+                    comboBoxFilterValue.Enabled = true;
+                }
+            }
+            else
+            {
+                comboBoxFilterValue.DataSource = null;
+
+                comboBoxFilterValue.Enabled = false;
+            }
+
+            FormEncryptorDecryptor_Shown(sender, e);
+        }
+
+        private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FormEncryptorDecryptor_Shown(sender, e);
         }
     }
 }
