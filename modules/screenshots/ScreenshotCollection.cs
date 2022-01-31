@@ -431,7 +431,7 @@ namespace AutoScreenCapture
 
             int screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
 
-            LoadXmlFileAndAddScreenshots(date, screenshotsLoadLimit, out int errorCode);
+            LoadXmlFileAndAddScreenshots(date, screenshotsLoadLimit, out int nodeLoadCount, out int errorCode);
 
             if (errorCode == 1)
             {
@@ -810,11 +810,14 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="date">The date to load screenshots from.</param>
         /// <param name="screenshotsLoadLimit">The maximum number of screenshots that can be loaded.</param>
+        /// <param name="nodeLoadCount">The number of nodes loaded.</param>
         /// <param name="errorCode">The error code that is returned based on what type of error is encountered.</param>
-        public void LoadXmlFileAndAddScreenshots(string date, int screenshotsLoadLimit, out int errorCode)
+        public void LoadXmlFileAndAddScreenshots(string date, int screenshotsLoadLimit, out int nodeLoadCount, out int errorCode)
         {
             try
             {
+                nodeLoadCount = 0;
+
                 errorCode = 0;
 
                 _mutexWriteFile.WaitOne();
@@ -824,6 +827,8 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(date))
                 {
                     errorCode = 1;
+
+                    return;
                 }
 
                 if (xDoc != null)
@@ -834,16 +839,20 @@ namespace AutoScreenCapture
                         AppCodename = xDoc.SelectSingleNode("/autoscreen").Attributes["app:codename"]?.Value;
 
                         _log.WriteDebugMessage("Loading screenshots taken on " + date + " from \"" + _fileSystem.ScreenshotsFile + "\" using XPath query \"" + SCREENSHOT_XPATH + "[date='" + date + "']" + "\"");
-                        
+
                         xScreenshots = xDoc.SelectNodes(SCREENSHOT_XPATH + "[date='" + date + "']");
 
                         if (xScreenshots != null)
                         {
                             _log.WriteDebugMessage("Loading " + xScreenshots.Count + " screenshots taken on " + date);
 
+                            nodeLoadCount = xScreenshots.Count;
+
                             if (xScreenshots.Count >= screenshotsLoadLimit)
                             {
                                 errorCode = 2;
+
+                                return;
                             }
 
                             foreach (XmlNode xScreenshot in xScreenshots)
@@ -1106,6 +1115,8 @@ namespace AutoScreenCapture
                 }
 
                 _log.WriteExceptionMessage("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
+
+                nodeLoadCount = 0;
 
                 errorCode = -1;
             }

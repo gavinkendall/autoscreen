@@ -31,8 +31,6 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEncryptorDecryptor : Form
     {
-        private const int MAX_SCREENSHOTS_TO_LOAD = 5000;
-
         private Log _log;
         private Security _security;
         private FileSystem _fileSystem;
@@ -45,6 +43,9 @@ namespace AutoScreenCapture
         private delegate void RunScreenshotLoadDelegate();
         private delegate void RunScreenshotsEncryptionDelegate();
         private delegate void RunScreenshotsDecryptionDelegate();
+
+        private int _totalNodeLoadCount;
+        private int _screenshotsLoadLimit;
 
         /// <summary>
         /// When the "Encryptor / Decryptor" tool has finished encrypting screenshots.
@@ -60,12 +61,15 @@ namespace AutoScreenCapture
         /// Constructor.
         /// </summary>
         /// <param name="log">The logging class.</param>
+        /// <param name="config">Configuration.</param>
         /// <param name="security">Security.</param>
         /// <param name="fileSystem">File system.</param>
         /// <param name="screenshotCollection">Screenshot collection.</param>
-        public FormEncryptorDecryptor(Log log, Security security, FileSystem fileSystem, ScreenshotCollection screenshotCollection)
+        public FormEncryptorDecryptor(Log log, Config config, Security security, FileSystem fileSystem, ScreenshotCollection screenshotCollection)
         {
             InitializeComponent();
+
+            _screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
 
             _log = log;
             _security = security;
@@ -140,6 +144,8 @@ namespace AutoScreenCapture
         /// </summary>
         private void LoadScreenshots()
         {
+            _totalNodeLoadCount = 0;
+
             toolStripStatusLabel.Text = "Loading screenshots between " + dateTimePickerScreenshotsStartDateRange.Value.Date.ToString("yyyy-MM-dd") + " and " + dateTimePickerScreenshotsEndDateRange.Value.Date.ToString("yyyy-MM-dd");
 
             if (!runScreenshotLoad.IsBusy)
@@ -155,6 +161,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void buttonEncryptScreenshots_Click(object sender, EventArgs e)
         {
+            if (dataGridViewScreenshots.Rows.Count == 0)
+            {
+                return;
+            }
+
             if (!runScreenshotsEncryption.IsBusy)
             {
                 buttonEncryptScreenshots.Enabled = false;
@@ -172,6 +183,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void buttonDecryptScreenshots_Click(object sender, EventArgs e)
         {
+            if (dataGridViewScreenshots.Rows.Count == 0)
+            {
+                return;
+            }
+
             if (!runScreenshotsDecryption.IsBusy)
             {
                 buttonDecryptScreenshots.Enabled = false;
@@ -255,7 +271,23 @@ namespace AutoScreenCapture
             {
                 foreach (string dateStr in _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text))
                 {
-                    _screenshotCollection.LoadXmlFileAndAddScreenshots(dateStr, MAX_SCREENSHOTS_TO_LOAD, out int errorCode);
+                    if (DateTime.Parse(dateStr) >= dateTimePickerScreenshotsStartDateRange.Value &&
+                        DateTime.Parse(dateStr) <= dateTimePickerScreenshotsEndDateRange.Value)
+                    {
+                        _screenshotCollection.LoadXmlFileAndAddScreenshots(dateStr, _screenshotsLoadLimit, out int nodeLoadCount, out int errorCode);
+
+                        _totalNodeLoadCount += nodeLoadCount;
+
+                        if (_totalNodeLoadCount >= _screenshotsLoadLimit)
+                        {
+                            return;
+                        }
+
+                        if (errorCode == 2)
+                        {
+                            return;
+                        }
+                    }
                 }
 
                 if (_screenshotCollection.Count == 0)
@@ -439,7 +471,16 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         protected void OnScreenshotLoadCompleted(object sender, EventArgs e)
         {
-            toolStripStatusLabel.Text = dataGridViewScreenshots.Rows.Count + " screenshots loaded";
+            if (_totalNodeLoadCount >= _screenshotsLoadLimit)
+            {
+                dataGridViewScreenshots.DataSource = null;
+
+                toolStripStatusLabel.Text = "Total number of screenshots to be loaded exceeded configured maximum number allowed in load. Please reduce date range or filter appropriately";
+            }
+            else
+            {
+                toolStripStatusLabel.Text = dataGridViewScreenshots.Rows.Count + " screenshots loaded";
+            }
         }
 
         /// <summary>

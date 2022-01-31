@@ -231,7 +231,7 @@ namespace AutoScreenCapture
                 _screenshotCollection.LoadXmlFile(_config);
 
                 // Encryptor / Decryptor
-                _formEncryptorDecryptor = new FormEncryptorDecryptor(_log, _security, _fileSystem, _screenshotCollection);
+                _formEncryptorDecryptor = new FormEncryptorDecryptor(_log, _config, _security, _fileSystem, _screenshotCollection);
                 _formEncryptorDecryptor.screenshotsEncrypted += ScreenshotsEncrypted;
                 _formEncryptorDecryptor.screenshotsDecrypted += ScreenshotsDecrypted;
 
