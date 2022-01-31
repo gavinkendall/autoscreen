@@ -24,9 +24,10 @@ Auto Screen Capture by Gavin Kendall
 - New schedules "Work Schedule - Morning" and "Work Schedule - Afternoon" created on startup just in case people find them useful; they're disabled by default
 - Any sub-forms that are currently open when a screen capture session is about to start will now close
 - Screen Capture Status With Label Switcher tool introduced so you can keep an eye on when the next set of screenshots are going to be taken, what label will currently be applied to each screenshot, and have the ability to change the label from the tool instead of needing to open the Apply Label menu from the system tray icon. You can also start and stop a screen capture session from the tool
+- Encryptor/Decryptor tool introduced to encrypt and decrypt screenshots, files, and text
 
 Codename "Boombayah"
-2.3.7.0    Attempting to fix bug with region select not working on multiple displays.
+2.3.7.0    Attempting to fix bug with region select not working on multiple displays. (December 8, 2021)
 2.3.6.9    Maybe fixed the bug with region select not working on multiple displays. Maybe. I haven't had multiple displays to test this properly for myself due to working from a laptop since March 2020.
 2.3.6.8    Fixed bug with "the handle is invalid" to prevent application from crashing when Windows is locked. The check on the invalid handle was accidentally removed in 2.3.4.1 but has now been restored.
 2.3.6.7    Fixed bug with emailing screenshots from a one time schedule.

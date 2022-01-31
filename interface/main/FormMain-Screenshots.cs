@@ -1161,15 +1161,15 @@ namespace AutoScreenCapture
         {
             ClearScreenshotMetadataFields();
 
-            // There's no point saving the value if the tab control view was cleared.
-            if (tabControlViews.SelectedIndex <= 0)
+            int screenTabCount = _formScreen.ScreenCollection.Count;
+            int regionTabCount = _formRegion.RegionCollection.Count;
+
+            if (tabControlViews.TabCount == (screenTabCount + regionTabCount + 1))
             {
-                return;
+                _config.Settings.User.SetValueByKey("SelectedTabPageIndex", tabControlViews.SelectedIndex);
+
+                ShowScreenshotBySlideIndex();
             }
-
-            _config.Settings.User.SetValueByKey("SelectedTabPageIndex", tabControlViews.SelectedIndex);
-
-            ShowScreenshotBySlideIndex();
         }
 
         private void buttonRefreshFilterValues_Click(object sender, EventArgs e)
