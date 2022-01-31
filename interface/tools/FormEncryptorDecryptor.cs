@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace AutoScreenCapture
 {
@@ -30,14 +31,18 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEncryptorDecryptor : Form
     {
+        private const int MAX_SCREENSHOTS_TO_LOAD = 5000;
+
         private Log _log;
         private Security _security;
         private FileSystem _fileSystem;
         private ScreenshotCollection _screenshotCollection;
 
+        private BackgroundWorker runScreenshotLoad = null;
         private BackgroundWorker runScreenshotsEncryption = null;
         private BackgroundWorker runScreenshotsDecryption = null;
 
+        private delegate void RunScreenshotLoadDelegate();
         private delegate void RunScreenshotsEncryptionDelegate();
         private delegate void RunScreenshotsDecryptionDelegate();
 
@@ -67,6 +72,15 @@ namespace AutoScreenCapture
             _fileSystem = fileSystem;
             _screenshotCollection = screenshotCollection;
 
+            runScreenshotLoad = new BackgroundWorker
+            {
+                WorkerReportsProgress = false,
+                WorkerSupportsCancellation = true
+            };
+
+            runScreenshotLoad.DoWork += new DoWorkEventHandler(DoWork_runScreenshotLoad);
+            runScreenshotLoad.RunWorkerCompleted += RunScreenshotLoad_RunWorkerCompleted;
+
             runScreenshotsEncryption = new BackgroundWorker
             {
                 WorkerReportsProgress = false,
@@ -88,51 +102,31 @@ namespace AutoScreenCapture
 
         private void FormEncryptorDecryptor_Load(object sender, EventArgs e)
         {
-            dateTimePickerScreenshotsStartDateRange.Value = _screenshotCollection.GetFirstScreenshotsDate();
-            dateTimePickerScreenshotsEndDateRange.Value = _screenshotCollection.GetLastScreenshotsDate();
+            XmlNode minDateNode = _screenshotCollection.GetMinDateFromXMLDocument();
+
+            if (minDateNode != null)
+            {
+                dateTimePickerScreenshotsStartDateRange.Value = DateTime.Parse(minDateNode.FirstChild.Value).Date;
+            }
+            else
+            {
+                dateTimePickerScreenshotsStartDateRange.Value = DateTime.Now;
+            }
+
+            dateTimePickerScreenshotsEndDateRange.Value = DateTime.Now;
 
             dateTimePickerScreenshotsStartTimeRange.Value = DateTime.Parse("00:00:00.000");
             dateTimePickerScreenshotsEndTimeRange.Value = DateTime.Parse("23:59:59.999");
 
-            for (int i = 0; i < dataGridViewScreenshots.Columns.Count; i++)
-            {
-                dataGridViewScreenshots.Columns[i].Visible = false;
-            }
+            comboBoxFilterValue.SelectedIndexChanged += new EventHandler(control_ValueChanged);
 
-            dataGridViewScreenshots.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewScreenshots.Columns["Time"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewScreenshots.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewScreenshots.Columns["Encrypted"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dateTimePickerScreenshotsStartDateRange.ValueChanged += new EventHandler(control_ValueChanged);
+            dateTimePickerScreenshotsEndDateRange.ValueChanged += new EventHandler(control_ValueChanged);
 
-            dataGridViewScreenshots.Columns["Key"].Visible = true;
-            dataGridViewScreenshots.Columns["Date"].Visible = true;
-            dataGridViewScreenshots.Columns["Time"].Visible = true;
-            dataGridViewScreenshots.Columns["Path"].Visible = true;
-            dataGridViewScreenshots.Columns["Label"].Visible = true;
-            dataGridViewScreenshots.Columns["Encrypted"].Visible = true;
-            dataGridViewScreenshots.Columns["WindowTitle"].Visible = true;
-            dataGridViewScreenshots.Columns["ProcessName"].Visible = true;
+            dateTimePickerScreenshotsStartTimeRange.ValueChanged += new EventHandler(control_ValueChanged);
+            dateTimePickerScreenshotsEndTimeRange.ValueChanged += new EventHandler(control_ValueChanged);
 
-            dataGridViewScreenshots.Columns["Date"].DisplayIndex = 0;
-            dataGridViewScreenshots.Columns["Time"].DisplayIndex = 1;
-            dataGridViewScreenshots.Columns["Encrypted"].DisplayIndex = 2;
-            dataGridViewScreenshots.Columns["Key"].DisplayIndex = 3;
-            dataGridViewScreenshots.Columns["Path"].DisplayIndex = 4;
-            dataGridViewScreenshots.Columns["ProcessName"].DisplayIndex = 5;
-            dataGridViewScreenshots.Columns["WindowTitle"].DisplayIndex = 6;
-            dataGridViewScreenshots.Columns["Label"].DisplayIndex = 8; // This needs to be 8 so it appears after "Window Title". I tried 7 but it's doesn't work. I'm not sure why.
-
-            dataGridViewScreenshots.Columns["ProcessName"].HeaderText = "Process Name";
-            dataGridViewScreenshots.Columns["WindowTitle"].HeaderText = "Window Title";
-        }
-
-        private void FormEncryptorDecryptor_Shown(object sender, EventArgs e)
-        {
-            dataGridViewScreenshots.DataSource = _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
-                    dateTimePickerScreenshotsEndDateRange.Value,
-                    dateTimePickerScreenshotsStartTimeRange.Value,
-                    dateTimePickerScreenshotsEndTimeRange.Value,
-                    comboBoxFilterType.Text, comboBoxFilterValue.Text);
+            LoadScreenshots();
         }
 
         private void FormEncryptorDecryptor_FormClosing(object sender, FormClosingEventArgs e)
@@ -142,17 +136,33 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Runs the screenshot loading thread to load screenshots into the data grid view.
+        /// </summary>
+        private void LoadScreenshots()
+        {
+            toolStripStatusLabel.Text = "Loading screenshots between " + dateTimePickerScreenshotsStartDateRange.Value.Date.ToString("yyyy-MM-dd") + " and " + dateTimePickerScreenshotsEndDateRange.Value.Date.ToString("yyyy-MM-dd");
+
+            if (!runScreenshotLoad.IsBusy)
+            {
+                runScreenshotLoad.RunWorkerAsync();
+            }
+        }
+
+        /// <summary>
         /// Encrypts the screenshots in the specified date range.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void buttonEncryptScreenshots_Click(object sender, EventArgs e)
         {
-            buttonEncryptScreenshots.Enabled = false;
+            if (!runScreenshotsEncryption.IsBusy)
+            {
+                buttonEncryptScreenshots.Enabled = false;
 
-            toolStripStatusLabel.Text = "Encrypting screenshots between " + dateTimePickerScreenshotsStartDateRange.Value.Date.ToString("yyyy-MM-dd") + " and " + dateTimePickerScreenshotsEndDateRange.Value.Date.ToString("yyyy-MM-dd");
+                toolStripStatusLabel.Text = "Encrypting screenshots between " + dateTimePickerScreenshotsStartDateRange.Value.Date.ToString("yyyy-MM-dd") + " and " + dateTimePickerScreenshotsEndDateRange.Value.Date.ToString("yyyy-MM-dd");
 
-            runScreenshotsEncryption.RunWorkerAsync(e);
+                runScreenshotsEncryption.RunWorkerAsync(e);
+            }
         }
 
         /// <summary>
@@ -162,11 +172,24 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void buttonDecryptScreenshots_Click(object sender, EventArgs e)
         {
-            buttonDecryptScreenshots.Enabled = false;
+            if (!runScreenshotsDecryption.IsBusy)
+            {
+                buttonDecryptScreenshots.Enabled = false;
 
-            toolStripStatusLabel.Text = "Decrypting screenshots between " + dateTimePickerScreenshotsStartDateRange.Value.Date.ToString("yyyy-MM-dd") + " and " + dateTimePickerScreenshotsEndDateRange.Value.Date.ToString("yyyy-MM-dd");
+                toolStripStatusLabel.Text = "Decrypting screenshots between " + dateTimePickerScreenshotsStartDateRange.Value.Date.ToString("yyyy-MM-dd") + " and " + dateTimePickerScreenshotsEndDateRange.Value.Date.ToString("yyyy-MM-dd");
 
-            runScreenshotsDecryption.RunWorkerAsync();
+                runScreenshotsDecryption.RunWorkerAsync();
+            }
+        }
+
+        /// <summary>
+        /// Gets screenshots.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoWork_runScreenshotLoad(object sender, DoWorkEventArgs e)
+        {
+            RunScreenshotLoad();
         }
 
         /// <summary>
@@ -190,6 +213,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Gets screenshots.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RunScreenshotLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            OnScreenshotLoadCompleted(sender, e);
+        }
+
+        /// <summary>
         /// Encrypts the screenshots in the specified date range.
         /// </summary>
         /// <param name="sender"></param>
@@ -207,6 +240,66 @@ namespace AutoScreenCapture
         private void RunScreenshotsDecryption_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             OnScreenshotsDecrypted(sender ,e);
+        }
+
+        /// <summary>
+        /// The method executed by the thread that loads screenshots into the data grid view.
+        /// </summary>
+        private void RunScreenshotLoad()
+        {
+            if (dataGridViewScreenshots.InvokeRequired)
+            {
+                dataGridViewScreenshots.Invoke(new RunScreenshotLoadDelegate(RunScreenshotLoad));
+            }
+            else
+            {
+                foreach (string dateStr in _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text))
+                {
+                    _screenshotCollection.LoadXmlFileAndAddScreenshots(dateStr, MAX_SCREENSHOTS_TO_LOAD, out int errorCode);
+                }
+
+                if (_screenshotCollection.Count == 0)
+                {
+                    return;
+                }
+
+                dataGridViewScreenshots.DataSource = _screenshotCollection.GetScreenshots(dateTimePickerScreenshotsStartDateRange.Value,
+                        dateTimePickerScreenshotsEndDateRange.Value,
+                        dateTimePickerScreenshotsStartTimeRange.Value,
+                        dateTimePickerScreenshotsEndTimeRange.Value,
+                        comboBoxFilterType.Text, comboBoxFilterValue.Text);
+
+                for (int i = 0; i < dataGridViewScreenshots.Columns.Count; i++)
+                {
+                    dataGridViewScreenshots.Columns[i].Visible = false;
+                }
+
+                dataGridViewScreenshots.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridViewScreenshots.Columns["Time"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridViewScreenshots.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridViewScreenshots.Columns["Encrypted"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+                dataGridViewScreenshots.Columns["Key"].Visible = true;
+                dataGridViewScreenshots.Columns["Date"].Visible = true;
+                dataGridViewScreenshots.Columns["Time"].Visible = true;
+                dataGridViewScreenshots.Columns["Path"].Visible = true;
+                dataGridViewScreenshots.Columns["Label"].Visible = true;
+                dataGridViewScreenshots.Columns["Encrypted"].Visible = true;
+                dataGridViewScreenshots.Columns["WindowTitle"].Visible = true;
+                dataGridViewScreenshots.Columns["ProcessName"].Visible = true;
+
+                dataGridViewScreenshots.Columns["Date"].DisplayIndex = 0;
+                dataGridViewScreenshots.Columns["Time"].DisplayIndex = 1;
+                dataGridViewScreenshots.Columns["Encrypted"].DisplayIndex = 2;
+                dataGridViewScreenshots.Columns["Key"].DisplayIndex = 3;
+                dataGridViewScreenshots.Columns["Path"].DisplayIndex = 4;
+                dataGridViewScreenshots.Columns["ProcessName"].DisplayIndex = 5;
+                dataGridViewScreenshots.Columns["WindowTitle"].DisplayIndex = 6;
+                dataGridViewScreenshots.Columns["Label"].DisplayIndex = 8; // This needs to be 8 so it appears after "Window Title". I tried 7 but it's doesn't work. I'm not sure why.
+
+                dataGridViewScreenshots.Columns["ProcessName"].HeaderText = "Process Name";
+                dataGridViewScreenshots.Columns["WindowTitle"].HeaderText = "Window Title";
+            }
         }
 
         /// <summary>
@@ -340,6 +433,16 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// What to do when screenshots have been loaded.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnScreenshotLoadCompleted(object sender, EventArgs e)
+        {
+            toolStripStatusLabel.Text = dataGridViewScreenshots.Rows.Count + " screenshots loaded";
+        }
+
+        /// <summary>
         /// What to do when screenshots have been encrypted.
         /// </summary>
         protected void OnScreenshotsEncrypted(object sender, EventArgs e)
@@ -367,9 +470,9 @@ namespace AutoScreenCapture
             screenshotsDecrypted?.Invoke(sender, e);
         }
 
-        private void dateTimePickerScreenshots_ValueChanged(object sender, EventArgs e)
+        private void control_ValueChanged(object sender, EventArgs e)
         {
-            FormEncryptorDecryptor_Shown(sender, e);
+            LoadScreenshots();
         }
 
         private void comboBoxFilterType_SelectedIndexChanged(object sender, EventArgs e)
@@ -393,12 +496,7 @@ namespace AutoScreenCapture
                 comboBoxFilterValue.Enabled = false;
             }
 
-            FormEncryptorDecryptor_Shown(sender, e);
-        }
-
-        private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            FormEncryptorDecryptor_Shown(sender, e);
+            LoadScreenshots();
         }
 
         private void buttonEncryptFile_Click(object sender, EventArgs e)

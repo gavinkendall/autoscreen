@@ -128,7 +128,6 @@
             this.comboBoxFilterValue.Size = new System.Drawing.Size(88, 21);
             this.comboBoxFilterValue.TabIndex = 39;
             this.comboBoxFilterValue.TabStop = false;
-            this.comboBoxFilterValue.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterValue_SelectedIndexChanged);
             // 
             // comboBoxFilterType
             // 
@@ -159,7 +158,6 @@
             this.dateTimePickerScreenshotsEndTimeRange.Size = new System.Drawing.Size(92, 20);
             this.dateTimePickerScreenshotsEndTimeRange.TabIndex = 37;
             this.dateTimePickerScreenshotsEndTimeRange.TabStop = false;
-            this.dateTimePickerScreenshotsEndTimeRange.ValueChanged += new System.EventHandler(this.dateTimePickerScreenshots_ValueChanged);
             // 
             // dateTimePickerScreenshotsStartTimeRange
             // 
@@ -170,7 +168,6 @@
             this.dateTimePickerScreenshotsStartTimeRange.Size = new System.Drawing.Size(92, 20);
             this.dateTimePickerScreenshotsStartTimeRange.TabIndex = 36;
             this.dateTimePickerScreenshotsStartTimeRange.TabStop = false;
-            this.dateTimePickerScreenshotsStartTimeRange.ValueChanged += new System.EventHandler(this.dateTimePickerScreenshots_ValueChanged);
             // 
             // dataGridViewScreenshots
             // 
@@ -233,7 +230,6 @@
             this.dateTimePickerScreenshotsEndDateRange.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerScreenshotsEndDateRange.TabIndex = 3;
             this.dateTimePickerScreenshotsEndDateRange.TabStop = false;
-            this.dateTimePickerScreenshotsEndDateRange.ValueChanged += new System.EventHandler(this.dateTimePickerScreenshots_ValueChanged);
             // 
             // labelScreenshotsEndDateTimeRange
             // 
@@ -260,7 +256,6 @@
             this.dateTimePickerScreenshotsStartDateRange.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerScreenshotsStartDateRange.TabIndex = 0;
             this.dateTimePickerScreenshotsStartDateRange.TabStop = false;
-            this.dateTimePickerScreenshotsStartDateRange.ValueChanged += new System.EventHandler(this.dateTimePickerScreenshots_ValueChanged);
             // 
             // tabPageFile
             // 
@@ -483,7 +478,6 @@
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEncryptorDecryptor_FormClosing);
             this.Load += new System.EventHandler(this.FormEncryptorDecryptor_Load);
-            this.Shown += new System.EventHandler(this.FormEncryptorDecryptor_Shown);
             this.tabControl.ResumeLayout(false);
             this.tabPageScreenshots.ResumeLayout(false);
             this.tabPageScreenshots.PerformLayout();

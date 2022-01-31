@@ -124,7 +124,11 @@ namespace AutoScreenCapture
             }
         }
 
-        private XmlNode GetMinDateFromXMLDocument()
+        /// <summary>
+        /// Gets the XML node representing the minimum date when screenshots were taken.
+        /// </summary>
+        /// <returns></returns>
+        public XmlNode GetMinDateFromXMLDocument()
         {
             if (xDoc != null)
             {
@@ -180,6 +184,11 @@ namespace AutoScreenCapture
             AddedScreenshotHashList = new List<string>();
             EmailedScreenshotHashList = new List<string>();
         }
+
+        /// <summary>
+        /// The number of screenshots in the screenshot collection.
+        /// </summary>
+        public int Count { get { return _screenshotList.Count; } }
 
         /// <summary>
         /// Adds a screenshot to the collection.
@@ -420,8 +429,21 @@ namespace AutoScreenCapture
 
             _log.WriteDebugMessage("Getting slides from screenshot list");
 
-            if (LoadXmlFileAndAddScreenshots(date, config) != 0)
+            int screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
+
+            LoadXmlFileAndAddScreenshots(date, screenshotsLoadLimit, out int errorCode);
+
+            if (errorCode == 1)
             {
+                return null;
+            }
+
+            if (errorCode == 2)
+            {
+                HelpTip.Message = "Cannot load screenshots taken on " + date + " as the number of screenshots being loaded exceeds the allowed load limit (" + screenshotsLoadLimit + ")";
+
+                _log.WriteDebugMessage("Cannot load screenshots. The number of screenshots to be loaded exceeded the number allowed set by ScreenshotsLoadLimit (" + screenshotsLoadLimit + ")");
+
                 return null;
             }
 
@@ -613,38 +635,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Gets the very first date in the screenshots collection.
-        /// </summary>
-        /// <returns>A Date/Time object representing the first date in the screenshots collection.</returns>
-        public DateTime GetFirstScreenshotsDate()
-        {
-            Screenshot screenshot = _screenshotList.FirstOrDefault<Screenshot>();
-
-            if (screenshot != null && !string.IsNullOrEmpty(screenshot.Date))
-            {
-                return DateTime.Parse(screenshot.Date).Date;
-            }
-
-            return DateTime.Now;
-        }
-
-        /// <summary>
-        /// Gets the very last date in the screenshots collection.
-        /// </summary>
-        /// <returns>A Date/Time object representing the last date in the screenshots collection.</returns>
-        public DateTime GetLastScreenshotsDate()
-        {
-            Screenshot screenshot = _screenshotList.LastOrDefault<Screenshot>();
-
-            if (screenshot != null && !string.IsNullOrEmpty(screenshot.Date))
-            {
-                return DateTime.Parse(screenshot.Date).Date;
-            }
-
-            return DateTime.Now;
-        }
-
-        /// <summary>
         /// Loads screenshot references from the screenshots.xml file into an XmlDocument so it's available in memory.
         /// The old way of loading screenshots also had the application construct each Screenshot object from an XML screenshot node and add it to the collection. This would take a long time to load for a large screenshots.xml file.
         /// The new way (as of version 2.3.0.0) will only load XML screenshot nodes whenever necessary.
@@ -819,18 +809,21 @@ namespace AutoScreenCapture
         /// Loads the screenshots taken on a particular day from the screenshots.xml file.
         /// </summary>
         /// <param name="date">The date to load screenshots from.</param>
-        /// <param name="config"></param>
-        public int LoadXmlFileAndAddScreenshots(string date, Config config)
+        /// <param name="screenshotsLoadLimit">The maximum number of screenshots that can be loaded.</param>
+        /// <param name="errorCode">The error code that is returned based on what type of error is encountered.</param>
+        public void LoadXmlFileAndAddScreenshots(string date, int screenshotsLoadLimit, out int errorCode)
         {
             try
             {
+                errorCode = 0;
+
                 _mutexWriteFile.WaitOne();
 
                 XmlNodeList xScreenshots = null;
 
                 if (string.IsNullOrEmpty(date))
                 {
-                    return 1;
+                    errorCode = 1;
                 }
 
                 if (xDoc != null)
@@ -848,15 +841,9 @@ namespace AutoScreenCapture
                         {
                             _log.WriteDebugMessage("Loading " + xScreenshots.Count + " screenshots taken on " + date);
 
-                            int screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
-
                             if (xScreenshots.Count >= screenshotsLoadLimit)
                             {
-                                HelpTip.Message = "Cannot load screenshots taken on " + date + " as the number of screenshots being loaded (" + xScreenshots.Count + ") exceeds the allowed load limit (" + screenshotsLoadLimit + ")";
-
-                                _log.WriteDebugMessage("Cannot load screenshots. The number of screenshots to be loaded (" + xScreenshots.Count + ") exceeded the number allowed set by ScreenshotsLoadLimit (" + screenshotsLoadLimit + ")");
-
-                                return 2;
+                                errorCode = 2;
                             }
 
                             foreach (XmlNode xScreenshot in xScreenshots)
@@ -1108,8 +1095,6 @@ namespace AutoScreenCapture
                         }
                     }
                 }
-
-                return 0;
             }
             catch (Exception ex)
             {
@@ -1122,7 +1107,7 @@ namespace AutoScreenCapture
 
                 _log.WriteExceptionMessage("ScreenshotCollection::LoadXmlFileAndAddScreenshots", ex);
 
-                return -1;
+                errorCode = -1;
             }
             finally
             {
