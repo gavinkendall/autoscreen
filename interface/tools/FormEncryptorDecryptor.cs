@@ -475,7 +475,7 @@ namespace AutoScreenCapture
             {
                 dataGridViewScreenshots.DataSource = null;
 
-                toolStripStatusLabel.Text = "Total number of screenshots to be loaded exceeded configured maximum number allowed in load. Please reduce date range or filter appropriately";
+                toolStripStatusLabel.Text = "Total number of screenshots to be loaded exceeds configured maximum number allowed in load. Please filter appropriately or reduce date range";
             }
             else
             {
@@ -542,25 +542,70 @@ namespace AutoScreenCapture
 
         private void buttonEncryptFile_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBoxFilepath.Text))
+            {
+                MessageBox.Show("No filepath provided. Please provide the filepath to a file in the Filepath field.", "Empty Filepath", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             if (_fileSystem.FileExists(textBoxFilepath.Text))
             {
                 textBoxFileKey.Text = _security.EncryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-encrypted");
 
-                toolStripStatusLabel.Text = "File encrypted";
+                if (_fileSystem.FileExists(textBoxFilepath.Text))
+                {
+                    if (_fileSystem.DeleteFile(textBoxFilepath.Text))
+                    {
+                        _fileSystem.MoveFile(textBoxFilepath.Text + "-encrypted", textBoxFilepath.Text);
+
+                        listBoxHistory.Items.Add("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] File \"" + textBoxFilepath.Text + "\" encrypted using key \"" + textBoxFileKey.Text + "\"");
+
+                        listBoxHistory.SelectedIndex = (listBoxHistory.Items.Count - 1);
+
+                        toolStripStatusLabel.Text = "File encrypted";
+                    }
+                }
             }
         }
 
         private void buttonDecryptFile_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBoxFilepath.Text))
+            {
+                MessageBox.Show("No filepath provided. Please provide the filepath to a file in the Filepath field.", "Empty Filepath", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(textBoxFileKey.Text))
+            {
+                MessageBox.Show("No key has been provided to decrypt the file. Please provide the key that was used to encrypt the file in the Key field to ensure that the file can be decrypted.", "Key Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             if (_fileSystem.FileExists(textBoxFilepath.Text))
             {
                 try
                 {
                     _security.DecryptFile(textBoxFilepath.Text, textBoxFilepath.Text + "-decrypted", textBoxFileKey.Text);
 
-                    textBoxFileKey.Text = string.Empty;
+                    if (_fileSystem.FileExists(textBoxFilepath.Text))
+                    {
+                        if (_fileSystem.DeleteFile(textBoxFilepath.Text))
+                        {
+                            _fileSystem.MoveFile(textBoxFilepath.Text + "-decrypted", textBoxFilepath.Text);
 
-                    toolStripStatusLabel.Text = "File decrypted";
+                            listBoxHistory.Items.Add("[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "] File \"" + textBoxFilepath.Text + "\" decrypted using key \"" + textBoxFileKey.Text + "\"");
+
+                            listBoxHistory.SelectedIndex = (listBoxHistory.Items.Count - 1);
+
+                            textBoxFileKey.Text = string.Empty;
+
+                            toolStripStatusLabel.Text = "File decrypted";
+                        }
+                    }
                 }
                 catch
                 {
@@ -571,6 +616,20 @@ namespace AutoScreenCapture
 
         private void buttonEncryptText_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBoxText.Text))
+            {
+                MessageBox.Show("No text provided. Please provide text to encrypt.", "No Text", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(textBoxTextKey.Text))
+            {
+                MessageBox.Show("No key provided. Please provide a key to use for encrypting the text.", "Key Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
             textBoxText.Text = _security.EncryptText(textBoxText.Text, textBoxTextKey.Text);
 
             toolStripStatusLabel.Text = "Text encrypted";
@@ -580,6 +639,20 @@ namespace AutoScreenCapture
         {
             try
             {
+                if (string.IsNullOrEmpty(textBoxText.Text))
+                {
+                    MessageBox.Show("No text provided. Please provide encrypted text to decrypt.", "No Text", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(textBoxTextKey.Text))
+                {
+                    MessageBox.Show("No key provided. Please provide the key that was used to encrypt the text for decrypting the encrypted text.", "Key Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    return;
+                }
+
                 textBoxText.Text = _security.DecryptText(textBoxText.Text, textBoxTextKey.Text);
 
                 toolStripStatusLabel.Text = "Text decrypted";

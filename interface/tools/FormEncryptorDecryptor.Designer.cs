@@ -62,6 +62,8 @@
             this.labelTextHelp = new System.Windows.Forms.Label();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.listBoxHistory = new System.Windows.Forms.ListBox();
+            this.labelHistory = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPageScreenshots.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScreenshots)).BeginInit();
@@ -109,7 +111,7 @@
             // labelFilter
             // 
             this.labelFilter.AutoSize = true;
-            this.labelFilter.Location = new System.Drawing.Point(652, 27);
+            this.labelFilter.Location = new System.Drawing.Point(8, 27);
             this.labelFilter.Name = "labelFilter";
             this.labelFilter.Size = new System.Drawing.Size(32, 13);
             this.labelFilter.TabIndex = 40;
@@ -123,7 +125,7 @@
             this.comboBoxFilterValue.Enabled = false;
             this.comboBoxFilterValue.FormattingEnabled = true;
             this.comboBoxFilterValue.IntegralHeight = false;
-            this.comboBoxFilterValue.Location = new System.Drawing.Point(749, 43);
+            this.comboBoxFilterValue.Location = new System.Drawing.Point(105, 43);
             this.comboBoxFilterValue.Name = "comboBoxFilterValue";
             this.comboBoxFilterValue.Size = new System.Drawing.Size(88, 21);
             this.comboBoxFilterValue.TabIndex = 39;
@@ -142,7 +144,7 @@
             "Label",
             "Process Name",
             "Window Title"});
-            this.comboBoxFilterType.Location = new System.Drawing.Point(655, 43);
+            this.comboBoxFilterType.Location = new System.Drawing.Point(11, 43);
             this.comboBoxFilterType.Name = "comboBoxFilterType";
             this.comboBoxFilterType.Size = new System.Drawing.Size(88, 21);
             this.comboBoxFilterType.TabIndex = 38;
@@ -152,7 +154,7 @@
             // dateTimePickerScreenshotsEndTimeRange
             // 
             this.dateTimePickerScreenshotsEndTimeRange.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScreenshotsEndTimeRange.Location = new System.Drawing.Point(539, 43);
+            this.dateTimePickerScreenshotsEndTimeRange.Location = new System.Drawing.Point(745, 43);
             this.dateTimePickerScreenshotsEndTimeRange.Name = "dateTimePickerScreenshotsEndTimeRange";
             this.dateTimePickerScreenshotsEndTimeRange.ShowUpDown = true;
             this.dateTimePickerScreenshotsEndTimeRange.Size = new System.Drawing.Size(92, 20);
@@ -162,7 +164,7 @@
             // dateTimePickerScreenshotsStartTimeRange
             // 
             this.dateTimePickerScreenshotsStartTimeRange.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerScreenshotsStartTimeRange.Location = new System.Drawing.Point(217, 43);
+            this.dateTimePickerScreenshotsStartTimeRange.Location = new System.Drawing.Point(441, 43);
             this.dateTimePickerScreenshotsStartTimeRange.Name = "dateTimePickerScreenshotsStartTimeRange";
             this.dateTimePickerScreenshotsStartTimeRange.ShowUpDown = true;
             this.dateTimePickerScreenshotsStartTimeRange.Size = new System.Drawing.Size(92, 20);
@@ -196,8 +198,8 @@
             this.labelScreenshotsHelp.Name = "labelScreenshotsHelp";
             this.labelScreenshotsHelp.Size = new System.Drawing.Size(833, 17);
             this.labelScreenshotsHelp.TabIndex = 34;
-            this.labelScreenshotsHelp.Text = "Specify a date/time range and select a filter then click either the Encrypt Scree" +
-    "nshots or Decrypt Screenshots button.";
+            this.labelScreenshotsHelp.Text = "Select a filter (optional) and specify a date/time range to load screenshots then" +
+    " click either the Encrypt Screenshots or Decrypt Screenshots button";
             // 
             // buttonDecryptScreenshots
             // 
@@ -225,7 +227,7 @@
             // 
             // dateTimePickerScreenshotsEndDateRange
             // 
-            this.dateTimePickerScreenshotsEndDateRange.Location = new System.Drawing.Point(333, 43);
+            this.dateTimePickerScreenshotsEndDateRange.Location = new System.Drawing.Point(539, 43);
             this.dateTimePickerScreenshotsEndDateRange.Name = "dateTimePickerScreenshotsEndDateRange";
             this.dateTimePickerScreenshotsEndDateRange.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerScreenshotsEndDateRange.TabIndex = 3;
@@ -234,7 +236,7 @@
             // labelScreenshotsEndDateTimeRange
             // 
             this.labelScreenshotsEndDateTimeRange.AutoSize = true;
-            this.labelScreenshotsEndDateTimeRange.Location = new System.Drawing.Point(330, 27);
+            this.labelScreenshotsEndDateTimeRange.Location = new System.Drawing.Point(536, 27);
             this.labelScreenshotsEndDateTimeRange.Name = "labelScreenshotsEndDateTimeRange";
             this.labelScreenshotsEndDateTimeRange.Size = new System.Drawing.Size(118, 13);
             this.labelScreenshotsEndDateTimeRange.TabIndex = 2;
@@ -243,7 +245,7 @@
             // labelScreenshotsStartDateTimeRange
             // 
             this.labelScreenshotsStartDateTimeRange.AutoSize = true;
-            this.labelScreenshotsStartDateTimeRange.Location = new System.Drawing.Point(8, 27);
+            this.labelScreenshotsStartDateTimeRange.Location = new System.Drawing.Point(232, 27);
             this.labelScreenshotsStartDateTimeRange.Name = "labelScreenshotsStartDateTimeRange";
             this.labelScreenshotsStartDateTimeRange.Size = new System.Drawing.Size(121, 13);
             this.labelScreenshotsStartDateTimeRange.TabIndex = 1;
@@ -251,7 +253,7 @@
             // 
             // dateTimePickerScreenshotsStartDateRange
             // 
-            this.dateTimePickerScreenshotsStartDateRange.Location = new System.Drawing.Point(11, 43);
+            this.dateTimePickerScreenshotsStartDateRange.Location = new System.Drawing.Point(235, 43);
             this.dateTimePickerScreenshotsStartDateRange.Name = "dateTimePickerScreenshotsStartDateRange";
             this.dateTimePickerScreenshotsStartDateRange.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerScreenshotsStartDateRange.TabIndex = 0;
@@ -259,6 +261,8 @@
             // 
             // tabPageFile
             // 
+            this.tabPageFile.Controls.Add(this.labelHistory);
+            this.tabPageFile.Controls.Add(this.listBoxHistory);
             this.tabPageFile.Controls.Add(this.buttonDecryptFile);
             this.tabPageFile.Controls.Add(this.buttonEncryptFile);
             this.tabPageFile.Controls.Add(this.textBoxFileKey);
@@ -347,8 +351,9 @@
             this.labelFileHelp.Name = "labelFileHelp";
             this.labelFileHelp.Size = new System.Drawing.Size(833, 17);
             this.labelFileHelp.TabIndex = 35;
-            this.labelFileHelp.Text = "Specify a date/time range and select a filter then click either the Encrypt Scree" +
-    "nshots or Decrypt Screenshots button.";
+            this.labelFileHelp.Text = "Give the filepath to a file then click Encrypt File. A key will be generated (and" +
+    " will not be saved so please remember it). Use the same key for decrypting the f" +
+    "ile";
             // 
             // tabPageText
             // 
@@ -443,8 +448,8 @@
             this.labelTextHelp.Name = "labelTextHelp";
             this.labelTextHelp.Size = new System.Drawing.Size(833, 17);
             this.labelTextHelp.TabIndex = 35;
-            this.labelTextHelp.Text = "Specify a date/time range and select a filter then click either the Encrypt Scree" +
-    "nshots or Decrypt Screenshots button.";
+            this.labelTextHelp.Text = "Type some text in the Key field to use for your \"key\". Type some text in the Text" +
+    " field and click Encrypt Text. Use the same key to decrypt encrypted text";
             // 
             // statusStrip
             // 
@@ -463,6 +468,29 @@
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
             this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // listBoxHistory
+            // 
+            this.listBoxHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxHistory.FormattingEnabled = true;
+            this.listBoxHistory.HorizontalScrollbar = true;
+            this.listBoxHistory.Location = new System.Drawing.Point(6, 115);
+            this.listBoxHistory.Name = "listBoxHistory";
+            this.listBoxHistory.ScrollAlwaysVisible = true;
+            this.listBoxHistory.Size = new System.Drawing.Size(831, 277);
+            this.listBoxHistory.TabIndex = 42;
+            this.listBoxHistory.TabStop = false;
+            // 
+            // labelHistory
+            // 
+            this.labelHistory.AutoSize = true;
+            this.labelHistory.Location = new System.Drawing.Point(6, 99);
+            this.labelHistory.Name = "labelHistory";
+            this.labelHistory.Size = new System.Drawing.Size(42, 13);
+            this.labelHistory.TabIndex = 43;
+            this.labelHistory.Text = "History:";
             // 
             // FormEncryptorDecryptor
             // 
@@ -527,5 +555,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelText;
         private System.Windows.Forms.TextBox textBoxText;
+        private System.Windows.Forms.Label labelHistory;
+        private System.Windows.Forms.ListBox listBoxHistory;
     }
 }
