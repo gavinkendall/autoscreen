@@ -98,20 +98,35 @@ namespace AutoScreenCapture
         {
             _sendToClipboard = sendToClipboard;
 
-            Rectangle canvas = SystemInformation.VirtualScreen;
+            Top = 0;
+            Left = 0;
+
+            int width = 0;
+            int height = 0;
+
+            foreach (System.Windows.Forms.Screen windowsScreen in System.Windows.Forms.Screen.AllScreens)
+            {
+                if (windowsScreen.Bounds.X < Left)
+                {
+                    Left = windowsScreen.Bounds.X;
+                }
+
+                if (windowsScreen.Bounds.Y < Top)
+                {
+                    Top = windowsScreen.Bounds.Y;
+                }
+
+                width += windowsScreen.Bounds.Width;
+                height += windowsScreen.Bounds.Height;
+            }
 
             WindowState = FormWindowState.Normal;
-
-            Top = canvas.X;
-            Left = canvas.Y;
-            Width = canvas.Width;
-            Height = canvas.Height;
-
-            WindowState = FormWindowState.Normal;
+            Width = width;
+            Height = height;
 
             Hide();
 
-            _bitmapSource = new Bitmap(Width, Height);
+            _bitmapSource = new Bitmap(width, height);
 
             using (Graphics graphics = Graphics.FromImage(_bitmapSource))
             {
