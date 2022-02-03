@@ -59,12 +59,17 @@
             this.numericUpDownSecondsInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
-            this.labelInterval = new System.Windows.Forms.Label();
+            this.groupBoxInterval = new System.Windows.Forms.GroupBox();
+            this.labelHours = new System.Windows.Forms.Label();
+            this.labelMinutes = new System.Windows.Forms.Label();
+            this.labelSeconds = new System.Windows.Forms.Label();
+            this.labelMilliseconds = new System.Windows.Forms.Label();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
+            this.groupBoxInterval.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonCancel
@@ -176,7 +181,7 @@
             // checkBoxMonday
             // 
             this.checkBoxMonday.AutoSize = true;
-            this.checkBoxMonday.Location = new System.Drawing.Point(119, 19);
+            this.checkBoxMonday.Location = new System.Drawing.Point(100, 19);
             this.checkBoxMonday.Name = "checkBoxMonday";
             this.checkBoxMonday.Size = new System.Drawing.Size(64, 17);
             this.checkBoxMonday.TabIndex = 19;
@@ -185,8 +190,6 @@
             // 
             // groupBoxDays
             // 
-            this.groupBoxDays.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxDays.Controls.Add(this.checkBoxWeekend);
             this.groupBoxDays.Controls.Add(this.checkBoxWorkWeek);
             this.groupBoxDays.Controls.Add(this.checkBoxSunday);
@@ -196,9 +199,9 @@
             this.groupBoxDays.Controls.Add(this.checkBoxWednesday);
             this.groupBoxDays.Controls.Add(this.checkBoxTuesday);
             this.groupBoxDays.Controls.Add(this.checkBoxMonday);
-            this.groupBoxDays.Location = new System.Drawing.Point(12, 149);
+            this.groupBoxDays.Location = new System.Drawing.Point(12, 136);
             this.groupBoxDays.Name = "groupBoxDays";
-            this.groupBoxDays.Size = new System.Drawing.Size(732, 67);
+            this.groupBoxDays.Size = new System.Drawing.Size(475, 67);
             this.groupBoxDays.TabIndex = 17;
             this.groupBoxDays.TabStop = false;
             this.groupBoxDays.Text = "Days";
@@ -228,7 +231,7 @@
             // checkBoxSunday
             // 
             this.checkBoxSunday.AutoSize = true;
-            this.checkBoxSunday.Location = new System.Drawing.Point(189, 42);
+            this.checkBoxSunday.Location = new System.Drawing.Point(170, 42);
             this.checkBoxSunday.Name = "checkBoxSunday";
             this.checkBoxSunday.Size = new System.Drawing.Size(62, 17);
             this.checkBoxSunday.TabIndex = 26;
@@ -238,7 +241,7 @@
             // checkBoxSaturday
             // 
             this.checkBoxSaturday.AutoSize = true;
-            this.checkBoxSaturday.Location = new System.Drawing.Point(119, 42);
+            this.checkBoxSaturday.Location = new System.Drawing.Point(100, 42);
             this.checkBoxSaturday.Name = "checkBoxSaturday";
             this.checkBoxSaturday.Size = new System.Drawing.Size(68, 17);
             this.checkBoxSaturday.TabIndex = 25;
@@ -248,7 +251,7 @@
             // checkBoxFriday
             // 
             this.checkBoxFriday.AutoSize = true;
-            this.checkBoxFriday.Location = new System.Drawing.Point(427, 19);
+            this.checkBoxFriday.Location = new System.Drawing.Point(408, 19);
             this.checkBoxFriday.Name = "checkBoxFriday";
             this.checkBoxFriday.Size = new System.Drawing.Size(54, 17);
             this.checkBoxFriday.TabIndex = 23;
@@ -258,7 +261,7 @@
             // checkBoxThursday
             // 
             this.checkBoxThursday.AutoSize = true;
-            this.checkBoxThursday.Location = new System.Drawing.Point(351, 19);
+            this.checkBoxThursday.Location = new System.Drawing.Point(332, 19);
             this.checkBoxThursday.Name = "checkBoxThursday";
             this.checkBoxThursday.Size = new System.Drawing.Size(70, 17);
             this.checkBoxThursday.TabIndex = 22;
@@ -268,7 +271,7 @@
             // checkBoxWednesday
             // 
             this.checkBoxWednesday.AutoSize = true;
-            this.checkBoxWednesday.Location = new System.Drawing.Point(262, 19);
+            this.checkBoxWednesday.Location = new System.Drawing.Point(243, 19);
             this.checkBoxWednesday.Name = "checkBoxWednesday";
             this.checkBoxWednesday.Size = new System.Drawing.Size(83, 17);
             this.checkBoxWednesday.TabIndex = 21;
@@ -278,7 +281,7 @@
             // checkBoxTuesday
             // 
             this.checkBoxTuesday.AutoSize = true;
-            this.checkBoxTuesday.Location = new System.Drawing.Point(189, 19);
+            this.checkBoxTuesday.Location = new System.Drawing.Point(170, 19);
             this.checkBoxTuesday.Name = "checkBoxTuesday";
             this.checkBoxTuesday.Size = new System.Drawing.Size(67, 17);
             this.checkBoxTuesday.TabIndex = 20;
@@ -330,7 +333,7 @@
             // labelNotes
             // 
             this.labelNotes.AutoSize = true;
-            this.labelNotes.Location = new System.Drawing.Point(9, 229);
+            this.labelNotes.Location = new System.Drawing.Point(9, 206);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
             this.labelNotes.TabIndex = 27;
@@ -341,18 +344,17 @@
             this.textBoxNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNotes.Location = new System.Drawing.Point(9, 245);
+            this.textBoxNotes.Location = new System.Drawing.Point(9, 222);
             this.textBoxNotes.MaxLength = 500;
             this.textBoxNotes.Multiline = true;
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxNotes.Size = new System.Drawing.Size(735, 160);
+            this.textBoxNotes.Size = new System.Drawing.Size(735, 183);
             this.textBoxNotes.TabIndex = 28;
             // 
             // numericUpDownMillisecondsInterval
             // 
-            this.numericUpDownMillisecondsInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(700, 111);
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(6, 101);
             this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
             999,
             0,
@@ -364,8 +366,7 @@
             // 
             // numericUpDownSecondsInterval
             // 
-            this.numericUpDownSecondsInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(652, 111);
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(6, 75);
             this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -377,8 +378,7 @@
             // 
             // numericUpDownMinutesInterval
             // 
-            this.numericUpDownMinutesInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(604, 111);
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(6, 49);
             this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -390,8 +390,7 @@
             // 
             // numericUpDownHoursInterval
             // 
-            this.numericUpDownHoursInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(556, 111);
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(6, 23);
             this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
             23,
             0,
@@ -401,14 +400,60 @@
             this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownHoursInterval.TabIndex = 13;
             // 
-            // labelInterval
+            // groupBoxInterval
             // 
-            this.labelInterval.AutoSize = true;
-            this.labelInterval.Location = new System.Drawing.Point(482, 113);
-            this.labelInterval.Name = "labelInterval";
-            this.labelInterval.Size = new System.Drawing.Size(63, 13);
-            this.labelInterval.TabIndex = 12;
-            this.labelInterval.Text = "with interval";
+            this.groupBoxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxInterval.Controls.Add(this.labelMilliseconds);
+            this.groupBoxInterval.Controls.Add(this.labelSeconds);
+            this.groupBoxInterval.Controls.Add(this.labelMinutes);
+            this.groupBoxInterval.Controls.Add(this.labelHours);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownHoursInterval);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownMinutesInterval);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownSecondsInterval);
+            this.groupBoxInterval.Location = new System.Drawing.Point(493, 74);
+            this.groupBoxInterval.Name = "groupBoxInterval";
+            this.groupBoxInterval.Size = new System.Drawing.Size(251, 129);
+            this.groupBoxInterval.TabIndex = 31;
+            this.groupBoxInterval.TabStop = false;
+            this.groupBoxInterval.Text = "Interval";
+            // 
+            // labelHours
+            // 
+            this.labelHours.AutoSize = true;
+            this.labelHours.Location = new System.Drawing.Point(54, 25);
+            this.labelHours.Name = "labelHours";
+            this.labelHours.Size = new System.Drawing.Size(33, 13);
+            this.labelHours.TabIndex = 17;
+            this.labelHours.Text = "hours";
+            // 
+            // labelMinutes
+            // 
+            this.labelMinutes.AutoSize = true;
+            this.labelMinutes.Location = new System.Drawing.Point(54, 51);
+            this.labelMinutes.Name = "labelMinutes";
+            this.labelMinutes.Size = new System.Drawing.Size(43, 13);
+            this.labelMinutes.TabIndex = 18;
+            this.labelMinutes.Text = "minutes";
+            // 
+            // labelSeconds
+            // 
+            this.labelSeconds.AutoSize = true;
+            this.labelSeconds.Location = new System.Drawing.Point(54, 77);
+            this.labelSeconds.Name = "labelSeconds";
+            this.labelSeconds.Size = new System.Drawing.Size(47, 13);
+            this.labelSeconds.TabIndex = 19;
+            this.labelSeconds.Text = "seconds";
+            // 
+            // labelMilliseconds
+            // 
+            this.labelMilliseconds.AutoSize = true;
+            this.labelMilliseconds.Location = new System.Drawing.Point(54, 105);
+            this.labelMilliseconds.Name = "labelMilliseconds";
+            this.labelMilliseconds.Size = new System.Drawing.Size(63, 13);
+            this.labelMilliseconds.TabIndex = 20;
+            this.labelMilliseconds.Text = "milliseconds";
             // 
             // FormSchedule
             // 
@@ -417,11 +462,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(756, 454);
-            this.Controls.Add(this.labelInterval);
-            this.Controls.Add(this.numericUpDownMillisecondsInterval);
-            this.Controls.Add(this.numericUpDownSecondsInterval);
-            this.Controls.Add(this.numericUpDownMinutesInterval);
-            this.Controls.Add(this.numericUpDownHoursInterval);
+            this.Controls.Add(this.groupBoxInterval);
             this.Controls.Add(this.labelNotes);
             this.Controls.Add(this.textBoxNotes);
             this.Controls.Add(this.labelHelp);
@@ -451,6 +492,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
+            this.groupBoxInterval.ResumeLayout(false);
+            this.groupBoxInterval.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -488,6 +531,10 @@
         private System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
-        private System.Windows.Forms.Label labelInterval;
+        private System.Windows.Forms.GroupBox groupBoxInterval;
+        private System.Windows.Forms.Label labelMilliseconds;
+        private System.Windows.Forms.Label labelSeconds;
+        private System.Windows.Forms.Label labelMinutes;
+        private System.Windows.Forms.Label labelHours;
     }
 }

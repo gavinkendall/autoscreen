@@ -149,7 +149,7 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
                 dateTimePickerStopAt.Enabled = false;
-                labelInterval.Enabled = false;
+                groupBoxInterval.Enabled = false;
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
@@ -364,7 +364,7 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
                 dateTimePickerStopAt.Enabled = false;
-                labelInterval.Enabled = false;
+                groupBoxInterval.Enabled = false;
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
@@ -383,7 +383,7 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = true;
                 labelAnd.Enabled = true;
                 dateTimePickerStopAt.Enabled = true;
-                labelInterval.Enabled = true;
+                groupBoxInterval.Enabled = true;
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
