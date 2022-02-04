@@ -204,9 +204,12 @@ namespace AutoScreenCapture
             ExitApplication();
         }
 
-        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            toolStripMenuItemShowHideInterface_Click(sender, e);
+            if (e.Button == MouseButtons.Left)
+            {
+                RunTriggersOfConditionType(TriggerConditionType.SystemTrayIconDoubleClick);
+            }
         }
 
         private void ShowSystemTrayIcon()

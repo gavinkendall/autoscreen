@@ -359,6 +359,7 @@ namespace AutoScreenCapture
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotTaken, "Before Screenshot Taken").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotReferencesSaved, "Before Screenshot References Saved").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.AfterScreenshotReferencesSaved, "After Screenshot References Saved").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.SystemTrayIconDoubleClick, "System Tray Icon Double Click").Description);
 
             listBoxCondition.SelectedIndex = 0;
         }
@@ -404,6 +405,13 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowSystemTrayIcon, "Show System Tray Icon").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.HideSystemTrayIcon, "Hide System Tray Icon").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.TakeScreenshot, "Take Screenshot").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RegionSelectClipboard, "Region Select Clipboard").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RegionSelectClipboardAutoSave, "Region Select Clipboard Auto Save").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RegionSelectClipboardAutoSaveEdit, "Region Select Clipboard Auto Save Edit").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RegionSelectClipboardFloatingScreenshot, "Region Select Clipboard Floating Screenshot").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RegionSelectFloatingScreenshot, "Region Select Floating Screenshot").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowOrHideInterface, "Show Interface or Hide Interface").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartOrStopScreenCapture, "Start Screen Capture or Stop Screen Capture").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -732,6 +740,11 @@ namespace AutoScreenCapture
                 case 14:
                     textBoxConditionHelp.Text = "When screenshot references have been saved to disk during a recurring five minute maintenance timer.";
                     break;
+
+                // System Tray Icon Double Click
+                case 15:
+                    textBoxConditionHelp.Text = "When you double-click on the system tray icon.";
+                    break;
             }
         }
 
@@ -875,6 +888,41 @@ namespace AutoScreenCapture
                 // Take Screenshot
                 case 26:
                     textBoxActionHelp.Text = "Take a set of screenshots.";
+                    break;
+
+                // Region Select->Clipboard.
+                case 27:
+                    textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard from Region Select.";
+                    break;
+
+                // Region Select->Clipboard/Auto Save.
+                case 28:
+                    textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard/Auto Save from Region Select.";
+                    break;
+
+                // Region Select->Clipboard/Auto Save/Edit.
+                case 29:
+                    textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard/Auto Save/Edit from Region Select.";
+                    break;
+
+                // Region Select->Clipboard/Floating Screenshot.
+                case 30:
+                    textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard/Floating Screenshot from Region Select.";
+                    break;
+
+                // Region Select->Floating Screenshot.
+                case 31:
+                    textBoxActionHelp.Text = "Perform the same action as if you had selected Floating Screenshot from Region Select.";
+                    break;
+
+                // Shows or hides the interface.
+                case 32:
+                    textBoxActionHelp.Text = "Show or hide the interface depending on its current visibility state.";
+                    break;
+
+                // Starts or stops screen capture.
+                case 33:
+                    textBoxActionHelp.Text = "Start or stop screen capture.";
                     break;
             }
         }

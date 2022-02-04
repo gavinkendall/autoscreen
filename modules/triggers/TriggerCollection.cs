@@ -91,6 +91,7 @@ namespace AutoScreenCapture
 
                     Version v2300 = null;
                     Version v2340 = null;
+                    Version v2404 = null;
                     Version configVersion = null;
 
                     // Change the data for each Trigger that's being loaded if we've detected that
@@ -101,6 +102,8 @@ namespace AutoScreenCapture
 
                         v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                         v2340 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
+                        v2404 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.4.0.4");
+
                         configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
                     }
 
@@ -234,7 +237,7 @@ namespace AutoScreenCapture
                     if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                     {
                         log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected");
-                        
+
                         int days = 30;
 
                         if (config.Settings.VersionManager.OldUserSettings.KeyExists("DaysOldWhenRemoveSlides"))
@@ -255,7 +258,7 @@ namespace AutoScreenCapture
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
                         {
                             Enable = false,
-                            Name = $"Keep screenshots for {days} days",
+                            Name = "Delete Screenshots",
                             ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                             ActionType = TriggerActionType.DeleteScreenshots,
                             Date = DateTime.Now,
@@ -265,6 +268,24 @@ namespace AutoScreenCapture
                         };
 
                         Add(triggerBeforeScreenshotSavedDeleteScreenshots);
+                    }
+
+                    if (v2404 != null && configVersion != null && configVersion.VersionNumber <= v2404.VersionNumber)
+                    {
+                        log.WriteDebugMessage("Blade 2.4.0.4 or older detected");
+
+                        Trigger triggerSystemTrayIconDoubleClickShowOrHideInterface = new Trigger()
+                        {
+                            Enable = true,
+                            Name = "Icon Double Click",
+                            ConditionType = TriggerConditionType.SystemTrayIconDoubleClick,
+                            ActionType = TriggerActionType.ShowOrHideInterface,
+                            Date = DateTime.Now,
+                            Time = DateTime.Now,
+                            ScreenCaptureInterval = 0
+                        };
+
+                        Add(triggerSystemTrayIconDoubleClickShowOrHideInterface);
                     }
 
                     if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
@@ -279,7 +300,7 @@ namespace AutoScreenCapture
                     Trigger triggerApplicationStartupShowSystemTrayIcon = new Trigger()
                     {
                         Enable = true,
-                        Name = "Show system tray icon at startup",
+                        Name = "Show Icon on Startup",
                         ConditionType = TriggerConditionType.ApplicationStartup,
                         ActionType = TriggerActionType.ShowSystemTrayIcon,
                         Date = DateTime.Now,
@@ -290,7 +311,7 @@ namespace AutoScreenCapture
                     Trigger triggerApplicationStartupShowInterface = new Trigger()
                     {
                         Enable = true,
-                        Name = "Show interface at startup",
+                        Name = "Show Interface on Startup",
                         ConditionType = TriggerConditionType.ApplicationStartup,
                         ActionType = TriggerActionType.ShowInterface,
                         Date = DateTime.Now,
@@ -301,7 +322,7 @@ namespace AutoScreenCapture
                     Trigger triggerScreenCaptureStartedHideInterface = new Trigger()
                     {
                         Enable = true,
-                        Name = "Hide interface when starting screen capture",
+                        Name = "Hide Interface on Start",
                         ConditionType = TriggerConditionType.ScreenCaptureStarted,
                         ActionType = TriggerActionType.HideInterface,
                         Date = DateTime.Now,
@@ -312,7 +333,7 @@ namespace AutoScreenCapture
                     Trigger triggerScreenCaptureStoppedShowInterface = new Trigger()
                     {
                         Enable = true,
-                        Name = "Show interface when screen capture stops",
+                        Name = "Show Interface on Stop",
                         ConditionType = TriggerConditionType.ScreenCaptureStopped,
                         ActionType = TriggerActionType.ShowInterface,
                         Date = DateTime.Now,
@@ -323,7 +344,7 @@ namespace AutoScreenCapture
                     Trigger triggerInterfaceClosingHideInterface = new Trigger()
                     {
                         Enable = true,
-                        Name = "Hide when interface closing",
+                        Name = "Hide Interface on Close",
                         ConditionType = TriggerConditionType.InterfaceClosing,
                         ActionType = TriggerActionType.HideInterface,
                         Date = DateTime.Now,
@@ -334,7 +355,7 @@ namespace AutoScreenCapture
                     Trigger triggerLimitReachedStopScreenCapture = new Trigger()
                     {
                         Enable = true,
-                        Name = "Stop when limit reached",
+                        Name = "Stop on Limit",
                         ConditionType = TriggerConditionType.LimitReached,
                         ActionType = TriggerActionType.StopScreenCapture,
                         Date = DateTime.Now,
@@ -345,7 +366,7 @@ namespace AutoScreenCapture
                     Trigger triggerBeforeScreenshotReferencesSavedDeleteScreenshots = new Trigger()
                     {
                         Enable = false,
-                        Name = "Keep screenshots for 30 days",
+                        Name = "Delete Screenshots",
                         ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
                         ActionType = TriggerActionType.DeleteScreenshots,
                         Date = DateTime.Now,
@@ -353,6 +374,17 @@ namespace AutoScreenCapture
                         ScreenCaptureInterval = 0,
                         Days = 30, // Check if screenshots were created 30 days ago
                         Value = fileSystem.DefaultScreenshotsFolder + "$date[yyyy-MM-dd]$" // We use $date[yyyy-MM-dd]$ to delete the directory of screenshots from the specified number of days ago in yyyy-MM-dd format
+                    };
+
+                    Trigger triggerSystemTrayIconDoubleClickShowOrHideInterface = new Trigger()
+                    {
+                        Enable = true,
+                        Name = "Icon Double Click",
+                        ConditionType = TriggerConditionType.SystemTrayIconDoubleClick,
+                        ActionType = TriggerActionType.ShowOrHideInterface,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
                     };
 
                     // Setup a few "built in" triggers by default.
@@ -363,6 +395,7 @@ namespace AutoScreenCapture
                     Add(triggerInterfaceClosingHideInterface);
                     Add(triggerLimitReachedStopScreenCapture);
                     Add(triggerBeforeScreenshotReferencesSavedDeleteScreenshots);
+                    Add(triggerSystemTrayIconDoubleClickShowOrHideInterface);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

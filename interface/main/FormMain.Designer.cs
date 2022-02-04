@@ -52,6 +52,10 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonCommandLine = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonEmailSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonFileTransferSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButtonTools = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItemToolsDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemToolsEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButtonHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonExit = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
@@ -125,10 +129,6 @@ namespace AutoScreenCapture
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.labelModuleHelp = new System.Windows.Forms.Label();
-            this.toolStripDropDownButtonTools = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItemToolsDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemToolsEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -354,6 +354,40 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonFileTransferSettings.Text = "File Transfer Settings";
             this.toolStripDropDownButtonFileTransferSettings.Click += new System.EventHandler(this.toolStripDropDownButtonFileTransferSettings_Click);
             // 
+            // toolStripDropDownButtonTools
+            // 
+            this.toolStripDropDownButtonTools.AutoToolTip = false;
+            this.toolStripDropDownButtonTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemToolsDynamicRegexValidator,
+            this.toolStripMenuItemToolsEncryptorDecryptor,
+            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher});
+            this.toolStripDropDownButtonTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
+            this.toolStripDropDownButtonTools.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonTools.Name = "toolStripDropDownButtonTools";
+            this.toolStripDropDownButtonTools.Size = new System.Drawing.Size(64, 20);
+            this.toolStripDropDownButtonTools.Text = "Tools";
+            // 
+            // toolStripMenuItemToolsDynamicRegexValidator
+            // 
+            this.toolStripMenuItemToolsDynamicRegexValidator.Name = "toolStripMenuItemToolsDynamicRegexValidator";
+            this.toolStripMenuItemToolsDynamicRegexValidator.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMenuItemToolsDynamicRegexValidator.Text = "Dynamic Regex Validator";
+            this.toolStripMenuItemToolsDynamicRegexValidator.Click += new System.EventHandler(this.toolStripMenuItemDynamicRegexValidator_Click);
+            // 
+            // toolStripMenuItemToolsEncryptorDecryptor
+            // 
+            this.toolStripMenuItemToolsEncryptorDecryptor.Name = "toolStripMenuItemToolsEncryptorDecryptor";
+            this.toolStripMenuItemToolsEncryptorDecryptor.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMenuItemToolsEncryptorDecryptor.Text = "Encryptor / Decryptor";
+            this.toolStripMenuItemToolsEncryptorDecryptor.Click += new System.EventHandler(this.toolStripMenuItemEncryptorDecryptor_Click);
+            // 
+            // toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher
+            // 
+            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Name = "toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher";
+            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Size = new System.Drawing.Size(296, 22);
+            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Text = "Screen Capture Status With Label Switcher";
+            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
+            // 
             // toolStripDropDownButtonHelp
             // 
             this.toolStripDropDownButtonHelp.AutoToolTip = false;
@@ -390,7 +424,7 @@ namespace AutoScreenCapture
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(251, 17);
+            this.toolStripInfo.Size = new System.Drawing.Size(282, 17);
             this.toolStripInfo.Spring = true;
             this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -432,7 +466,7 @@ namespace AutoScreenCapture
             // 
             this.notifyIcon.ContextMenuStrip = this.contextMenuStripSystemTrayIcon;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
-            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
             // contextMenuStripSystemTrayIcon
             // 
@@ -1020,40 +1054,6 @@ namespace AutoScreenCapture
             this.labelModuleHelp.Text = "Screens are listed here. Each screen represents a display. Have the Preview butto" +
     "n enabled while viewing the Dashboard to see what would be captured when startin" +
     "g a screen capture session.";
-            // 
-            // toolStripDropDownButtonTools
-            // 
-            this.toolStripDropDownButtonTools.AutoToolTip = false;
-            this.toolStripDropDownButtonTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemToolsDynamicRegexValidator,
-            this.toolStripMenuItemToolsEncryptorDecryptor,
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher});
-            this.toolStripDropDownButtonTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
-            this.toolStripDropDownButtonTools.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonTools.Name = "toolStripDropDownButtonTools";
-            this.toolStripDropDownButtonTools.Size = new System.Drawing.Size(64, 20);
-            this.toolStripDropDownButtonTools.Text = "Tools";
-            // 
-            // toolStripMenuItemToolsDynamicRegexValidator
-            // 
-            this.toolStripMenuItemToolsDynamicRegexValidator.Name = "toolStripMenuItemToolsDynamicRegexValidator";
-            this.toolStripMenuItemToolsDynamicRegexValidator.Size = new System.Drawing.Size(296, 22);
-            this.toolStripMenuItemToolsDynamicRegexValidator.Text = "Dynamic Regex Validator";
-            this.toolStripMenuItemToolsDynamicRegexValidator.Click += new System.EventHandler(this.toolStripMenuItemDynamicRegexValidator_Click);
-            // 
-            // toolStripMenuItemToolsEncryptorDecryptor
-            // 
-            this.toolStripMenuItemToolsEncryptorDecryptor.Name = "toolStripMenuItemToolsEncryptorDecryptor";
-            this.toolStripMenuItemToolsEncryptorDecryptor.Size = new System.Drawing.Size(296, 22);
-            this.toolStripMenuItemToolsEncryptorDecryptor.Text = "Encryptor / Decryptor";
-            this.toolStripMenuItemToolsEncryptorDecryptor.Click += new System.EventHandler(this.toolStripMenuItemEncryptorDecryptor_Click);
-            // 
-            // toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher
-            // 
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Name = "toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher";
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Size = new System.Drawing.Size(296, 22);
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Text = "Screen Capture Status With Label Switcher";
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
             // 
             // FormMain
             // 

@@ -158,6 +158,41 @@ namespace AutoScreenCapture
         /// <summary>
         /// Take a set of screenshots.
         /// </summary>
-        TakeScreenshot = 26
+        TakeScreenshot = 26,
+
+        /// <summary>
+        /// Region Select->Clipboard.
+        /// </summary>
+        RegionSelectClipboard = 27,
+
+        /// <summary>
+        /// Region Select->Clipboard/Auto Save.
+        /// </summary>
+        RegionSelectClipboardAutoSave = 28,
+
+        /// <summary>
+        /// Region Select->Clipboard/Auto Save/Edit.
+        /// </summary>
+        RegionSelectClipboardAutoSaveEdit = 29,
+
+        /// <summary>
+        /// Region Select->Clipboard/Floating Screenshot.
+        /// </summary>
+        RegionSelectClipboardFloatingScreenshot = 30,
+
+        /// <summary>
+        /// Region Select->Floating Screenshot.
+        /// </summary>
+        RegionSelectFloatingScreenshot = 31,
+
+        /// <summary>
+        /// Shows or hides the interface. It's basically a toggle.
+        /// </summary>
+        ShowOrHideInterface = 32,
+
+        /// <summary>
+        /// Starts or stops screen capture.
+        /// </summary>
+        StartOrStopScreenCapture = 33
     }
 }

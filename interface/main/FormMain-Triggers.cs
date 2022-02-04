@@ -302,6 +302,41 @@ namespace AutoScreenCapture
                 case TriggerActionType.TakeScreenshot:
                     TakeScreenshot(captureNow: true);
                     break;
+
+                case TriggerActionType.RegionSelectClipboard:
+                    toolStripMenuItemRegionSelectClipboard_Click(null, null);
+                    break;
+
+                case TriggerActionType.RegionSelectClipboardAutoSave:
+                    toolStripMenuItemRegionSelectClipboardAutoSave_Click(null, null);
+                    break;
+
+                case TriggerActionType.RegionSelectClipboardAutoSaveEdit:
+                    toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click(null, null);
+                    break;
+
+                case TriggerActionType.RegionSelectClipboardFloatingScreenshot:
+                    toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click(null, null);
+                    break;
+
+                case TriggerActionType.RegionSelectFloatingScreenshot:
+                    toolStripMenuItemRegionSelectFloatingScreenshot_Click(null, null);
+                    break;
+
+                case TriggerActionType.ShowOrHideInterface:
+                    toolStripMenuItemShowHideInterface_Click(null, null);
+                    break;
+
+                case TriggerActionType.StartOrStopScreenCapture:
+                    if (_screenCapture.Running)
+                    {
+                        StopScreenCapture();
+                    }
+                    else
+                    {
+                        StartScreenCapture();
+                    }
+                    break;
             }
         }
     }

@@ -252,6 +252,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.1")); // Region Select fix.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.2")); // Region Select fix.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.3")); // Region Select fix.
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.4")); // Fix to versioning system.
 
             Application = new SettingCollection()
             {

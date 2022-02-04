@@ -98,6 +98,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// When screenshot references are saved.
         /// </summary>
-        AfterScreenshotReferencesSaved = 14
+        AfterScreenshotReferencesSaved = 14,
+
+        /// <summary>
+        /// When the system tray icon is double-clicked.
+        /// </summary>
+        SystemTrayIconDoubleClick = 15
     }
 }
