@@ -250,6 +250,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.3.7.0")); // Attempting to fix bug with region select not working on multiple displays.
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.4.0.0")); // Release of 2.4 "Blade"
             _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.4.0.1")); // Region Select fix.
+            _versionCollection.Add(new Version(CODENAME_BOOMBAYAH, "2.4.0.2")); // Region Select fix.
 
             Application = new SettingCollection()
             {

@@ -101,8 +101,8 @@ namespace AutoScreenCapture
             Top = 0;
             Left = 0;
 
-            int width = 0;
-            int height = 0;
+            Width = 0;
+            Height = 0;
 
             foreach (System.Windows.Forms.Screen windowsScreen in System.Windows.Forms.Screen.AllScreens)
             {
@@ -116,21 +116,19 @@ namespace AutoScreenCapture
                     Top = windowsScreen.Bounds.Y;
                 }
 
-                width += windowsScreen.Bounds.Width;
-                height += windowsScreen.Bounds.Height;
+                Width += windowsScreen.Bounds.Width;
+                Height += windowsScreen.Bounds.Height;
             }
 
             WindowState = FormWindowState.Normal;
-            Width = width;
-            Height = height;
 
             Hide();
 
-            _bitmapSource = new Bitmap(width, height);
+            _bitmapSource = new Bitmap(Width, Height);
 
             using (Graphics graphics = Graphics.FromImage(_bitmapSource))
             {
-                graphics.CopyFromScreen(0, 0, 0, 0, _bitmapSource.Size);
+                graphics.CopyFromScreen(Top, Left, Top, Left, _bitmapSource.Size);
 
                 using (MemoryStream s = new MemoryStream())
                 {
