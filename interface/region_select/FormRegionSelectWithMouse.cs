@@ -129,7 +129,7 @@ namespace AutoScreenCapture
 
             _log.Write($"RegionSelectWithMouse(LoadCanvas) X={Left}, Y={Top}, Width={Width}, Height={Height}", writeError: false, null);
 
-            Bitmap bitmap = _screenCapture.GetScreenBitmap(-1, -1, 1, Left, Top, Width, Height, false);
+            Bitmap bitmap = _screenCapture.GetScreenBitmap(source: -1, component: -1, captureMethod: 1, Left, Top, Width, Height, resolutionRatio: 100, mouse: false);
 
             using (MemoryStream s = new MemoryStream())
             {

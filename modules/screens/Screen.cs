@@ -126,6 +126,11 @@ namespace AutoScreenCapture
         public bool Encrypt { get; set; }
 
         /// <summary>
+        /// The resolution ratio of the bitmap. A lower value makes the bitmap more blurry.
+        /// </summary>
+        public int ResolutionRatio { get; set; }
+
+        /// <summary>
         /// The empty constructor of the screen.
         /// </summary>
         public Screen()

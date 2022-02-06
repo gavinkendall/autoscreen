@@ -206,7 +206,8 @@ namespace AutoScreenCapture
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
                         Enable = checkBoxEnable.Checked,
-                        Encrypt = checkBoxEncrypt.Checked
+                        Encrypt = checkBoxEncrypt.Checked,
+                        ResolutionRatio = (int)numericUpDownResolutionRatio.Value
                     });
 
                     Okay();
@@ -241,14 +242,15 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Folder = _fileSystem.CorrectScreenshotsFolderPath(textBoxFolder.Text);
                         RegionCollection.Get(RegionObject).Macro = textBoxMacro.Text;
                         RegionCollection.Get(RegionObject).Format = ImageFormatCollection.GetByName(comboBoxFormat.Text);
-                        RegionCollection.Get(RegionObject).JpegQuality = (int) numericUpDownJpegQuality.Value;
+                        RegionCollection.Get(RegionObject).JpegQuality = (int)numericUpDownJpegQuality.Value;
                         RegionCollection.Get(RegionObject).Mouse = checkBoxMouse.Checked;
-                        RegionCollection.Get(RegionObject).X = (int) numericUpDownX.Value;
-                        RegionCollection.Get(RegionObject).Y = (int) numericUpDownY.Value;
-                        RegionCollection.Get(RegionObject).Width = (int) numericUpDownWidth.Value;
-                        RegionCollection.Get(RegionObject).Height = (int) numericUpDownHeight.Value;
+                        RegionCollection.Get(RegionObject).X = (int)numericUpDownX.Value;
+                        RegionCollection.Get(RegionObject).Y = (int)numericUpDownY.Value;
+                        RegionCollection.Get(RegionObject).Width = (int)numericUpDownWidth.Value;
+                        RegionCollection.Get(RegionObject).Height = (int)numericUpDownHeight.Value;
                         RegionCollection.Get(RegionObject).Enable = checkBoxEnable.Checked;
                         RegionCollection.Get(RegionObject).Encrypt = checkBoxEncrypt.Checked;
+                        RegionCollection.Get(RegionObject).ResolutionRatio = (int)numericUpDownResolutionRatio.Value;
 
                         Okay();
                     }
@@ -296,7 +298,8 @@ namespace AutoScreenCapture
                  RegionObject.Width != (int)numericUpDownWidth.Value ||
                  RegionObject.Height != (int)numericUpDownHeight.Value ||
                  RegionObject.Enable.Equals(checkBoxEnable.Checked) ||
-                 !RegionObject.Encrypt.Equals(checkBoxEncrypt.Checked)))
+                 !RegionObject.Encrypt.Equals(checkBoxEncrypt.Checked) ||
+                 RegionObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value))
             {
                 return true;
             }
@@ -341,11 +344,12 @@ namespace AutoScreenCapture
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                         -1,
                         -1,
-                        1,
+                        captureMethod: 0,
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
                         (int)numericUpDownHeight.Value,
+                        (int)numericUpDownResolutionRatio.Value,
                         checkBoxMouse.Checked
                     );
 

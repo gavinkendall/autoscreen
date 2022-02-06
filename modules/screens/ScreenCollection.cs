@@ -52,6 +52,7 @@ namespace AutoScreenCapture
         private const string SCREEN_AUTO_ADAPT = "auto_adapt";
         private const string SCREEN_CAPTURE_METHOD = "capture_method";
         private const string SCREEN_ENCRYPT = "encrypt";
+        private const string SCREEN_RESOLUTION_RATIO = "resolution_ratio";
 
         private readonly string SCREEN_XPATH;
 
@@ -92,7 +93,8 @@ namespace AutoScreenCapture
                     DeviceName = string.Empty,
                     AutoAdapt = true, // 2.4.0.0 has a new "Auto Adapt" feature which will automatically figure out the position and resolution for each screen.
                     CaptureMethod = 1,
-                    Encrypt = false
+                    Encrypt = false,
+                    ResolutionRatio = 100 // First introduced in an older version of Auto Screen Capture (that was later removed) but now restored in version 2.4.0.7
                 });
 
                 log.WriteDebugMessage($"Screen {screenNumber} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{fileSystem.FilenamePattern}\" for macro.");
@@ -266,6 +268,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         screen.Encrypt = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case SCREEN_RESOLUTION_RATIO:
+                                        xReader.Read();
+                                        screen.ResolutionRatio = Convert.ToInt32(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -280,6 +287,7 @@ namespace AutoScreenCapture
 
                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                             Version v2338 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.3.8");
+                            Version v2406 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.3.0.6");
                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -310,10 +318,18 @@ namespace AutoScreenCapture
                                         screen.CaptureMethod = 1;
                                         screen.AutoAdapt = true; // 2.4.0.0 has a new "Auto Adapt" feature which will automatically figure out the position and resolution for each screen.
                                         screen.Encrypt = false;
+                                        screen.ResolutionRatio = 100; // 2.4.0.7
                                     }
 
                                     screenIndex++;
                                 }
+                            }
+
+                            if (v2406 != null && configVersion != null && configVersion.VersionNumber <= v2406.VersionNumber)
+                            {
+                                log.WriteDebugMessage("Blade 2.4.0.6 or older detected");
+
+                                screen.ResolutionRatio = 100;
                             }
                         }
 
@@ -450,6 +466,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCREEN_AUTO_ADAPT, screen.AutoAdapt.ToString());
                         xWriter.WriteElementString(SCREEN_CAPTURE_METHOD, screen.CaptureMethod.ToString());
                         xWriter.WriteElementString(SCREEN_ENCRYPT, screen.Encrypt.ToString());
+                        xWriter.WriteElementString(SCREEN_RESOLUTION_RATIO, screen.ResolutionRatio.ToString());
 
                         xWriter.WriteEndElement();
                     }

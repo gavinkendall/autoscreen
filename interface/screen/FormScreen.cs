@@ -247,7 +247,8 @@ namespace AutoScreenCapture
                         Source = comboBoxScreenSource.SelectedIndex,
                         AutoAdapt = checkBoxAutoAdapt.Checked,
                         CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex,
-                        Encrypt = checkBoxEncrypt.Checked
+                        Encrypt = checkBoxEncrypt.Checked,
+                        ResolutionRatio = (int)numericUpDownResolutionRatio.Value
                     });
 
                     Okay();
@@ -296,6 +297,7 @@ namespace AutoScreenCapture
                         ScreenCollection.Get(ScreenObject).AutoAdapt = checkBoxAutoAdapt.Checked;
                         ScreenCollection.Get(ScreenObject).CaptureMethod = comboBoxScreenCaptureMethod.SelectedIndex;
                         ScreenCollection.Get(ScreenObject).Encrypt = checkBoxEncrypt.Checked;
+                        ScreenCollection.Get(ScreenObject).ResolutionRatio = (int)numericUpDownResolutionRatio.Value;
 
                         Okay();
                     }
@@ -343,10 +345,11 @@ namespace AutoScreenCapture
                  ScreenObject.X != (int)numericUpDownX.Value ||
                  ScreenObject.Y != (int)numericUpDownY.Value ||
                  ScreenObject.Width != (int)numericUpDownWidth.Value ||
-                 ScreenObject.Height != (int)numericUpDownHeight.Value) ||
+                 ScreenObject.Height != (int)numericUpDownHeight.Value ||
                  ScreenObject.Source != comboBoxScreenSource.SelectedIndex ||
                  ScreenObject.AutoAdapt != checkBoxAutoAdapt.Checked ||
-                 !ScreenObject.Encrypt.Equals(checkBoxEncrypt.Checked))
+                 !ScreenObject.Encrypt.Equals(checkBoxEncrypt.Checked) ||
+                 ScreenObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value))
             {
                 return true;
             }
@@ -435,6 +438,8 @@ namespace AutoScreenCapture
                     numericUpDownY.Enabled = false;
                     numericUpDownWidth.Enabled = false;
                     numericUpDownHeight.Enabled = false;
+
+                    comboBoxScreenCaptureMethod.SelectedIndex = 0;
                 }
 
                 pictureBoxPreview.Image = null;
@@ -474,6 +479,7 @@ namespace AutoScreenCapture
                             y,
                             width,
                             height,
+                            (int)numericUpDownResolutionRatio.Value,
                             checkBoxMouse.Checked
                         );
                     }
@@ -482,7 +488,7 @@ namespace AutoScreenCapture
                         // The Source is "Auto Screen Capture" and the Component is "Active Window".
                         if (comboBoxScreenSource.SelectedIndex == 0 && comboBoxScreenComponent.SelectedIndex == 0)
                         {
-                            pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap();
+                            pictureBoxPreview.Image = screenCapture.GetActiveWindowBitmap((int)numericUpDownResolutionRatio.Value, checkBoxMouse.Checked);
                         }
                         else
                         {
@@ -494,6 +500,7 @@ namespace AutoScreenCapture
                                 (int)numericUpDownY.Value,
                                 (int)numericUpDownWidth.Value,
                                 (int)numericUpDownHeight.Value,
+                                (int)numericUpDownResolutionRatio.Value,
                                 checkBoxMouse.Checked
                             );
                         }
@@ -551,6 +558,17 @@ namespace AutoScreenCapture
 
         private void updatePositionAndSize(object sender, EventArgs e)
         {
+            if (comboBoxScreenCaptureMethod.SelectedIndex == 0)
+            {
+                labelResolutionRatio.Enabled = true;
+                numericUpDownResolutionRatio.Enabled = true;
+            }
+            else
+            {
+                labelResolutionRatio.Enabled = false;
+                numericUpDownResolutionRatio.Enabled = false;
+            }
+
             string component = comboBoxScreenComponent.Text;
 
             Regex rgxPosition = new Regex(@"X:(?<X>-?\d+) Y:(?<Y>-?\d+)");

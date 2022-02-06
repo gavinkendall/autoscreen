@@ -286,6 +286,16 @@ namespace AutoScreenCapture
         private const int MAX_CHARS = 48000;
 
         /// <summary>
+        /// The minimum image resolution ratio.
+        /// </summary>
+        private const int IMAGE_RESOLUTION_RATIO_MIN = 1;
+
+        /// <summary>
+        /// The maximum image resolution ratio.
+        /// </summary>
+        public const int IMAGE_RESOLUTION_RATIO_MAX = 100;
+
+        /// <summary>
         /// The interval delay for the timer when a screen capture session is running.
         /// </summary>
         public int Interval { get; set; }
@@ -567,18 +577,30 @@ namespace AutoScreenCapture
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
         /// <param name="height">The Height value of the bitmap.</param>
+        /// <param name="resolutionRatio">The resolution ratio to apply to the bitmap.</param>
         /// <param name="mouse">Determines if the mouse pointer should be included in the bitmap.</param>
         /// <returns>A bitmap image representing what we captured.</returns>
-        public Bitmap GetScreenBitmap(int source, int component, int captureMethod, int x, int y, int width, int height, bool mouse)
+        public Bitmap GetScreenBitmap(int source, int component, int captureMethod, int x, int y, int width, int height, int resolutionRatio, bool mouse)
         {
             try
             {
                 CaptureError = false;
 
-                Bitmap bmp = null;
+                Bitmap bmpSource = null;
+                Bitmap bmpDestination = null;
 
                 if (width > 0 && height > 0)
                 {
+                    if (resolutionRatio < IMAGE_RESOLUTION_RATIO_MIN || resolutionRatio > IMAGE_RESOLUTION_RATIO_MAX)
+                    {
+                        resolutionRatio = 100;
+                    }
+
+                    float imageResolutionRatio = (float)resolutionRatio / 100;
+
+                    int destinationWidth = (int)(width * imageResolutionRatio);
+                    int destinationHeight = (int)(height * imageResolutionRatio);
+
                     if (source > 0 && component > -1)
                     {
                         try
@@ -597,11 +619,15 @@ namespace AutoScreenCapture
                     {
                         Size blockRegionSize = new Size(width, height);
 
-                        bmp = new Bitmap(width, height);
+                        bmpSource = new Bitmap(width, height);
+                        bmpDestination = new Bitmap(destinationWidth, destinationHeight);
 
-                        using (Graphics g = Graphics.FromImage(bmp))
+                        using (Graphics graphicsSource = Graphics.FromImage(bmpSource))
                         {
-                            g.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+                            graphicsSource.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
+
+                            Graphics graphicsDestination = Graphics.FromImage(bmpDestination);
+                            graphicsDestination.DrawImage(bmpSource, 0, 0, destinationWidth, destinationHeight);
 
                             if (mouse)
                             {
@@ -612,13 +638,15 @@ namespace AutoScreenCapture
                                 {
                                     if (pci.flags == CURSOR_SHOWING)
                                     {
-                                        var hdc = g.GetHdc();
+                                        var hdc = graphicsDestination.GetHdc();
                                         DrawIconEx(hdc, pci.ptScreenPos.x - x, pci.ptScreenPos.y - y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
-                                        g.ReleaseHdc();
+                                        graphicsDestination.ReleaseHdc();
                                     }
                                 }
                             }
                         }
+
+                        bmpSource.Dispose();
                     }
                     else if (captureMethod == 1) // BitBlt (gdi32.dll)
                     {
@@ -650,12 +678,12 @@ namespace AutoScreenCapture
                         DeleteDC(hdcDest);
                         ReleaseDC(handle, hdcSrc);
 
-                        bmp = Image.FromHbitmap(hBitmap);
+                        bmpDestination = Image.FromHbitmap(hBitmap);
 
                         DeleteObject(hBitmap);
                     }
 
-                    return bmp;
+                    return bmpDestination;
                 }
 
                 return null;
@@ -677,8 +705,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// Gets the bitmap image of the active window.
         /// </summary>
+        /// <param name="resolutionRatio">The resolution ratio.</param>
+        /// <param name="mouse">Determines if we should capture the mouse pointer.</param>
         /// <returns>A bitmap image representing the active window.</returns>
-        public Bitmap GetActiveWindowBitmap()
+        public Bitmap GetActiveWindowBitmap(int resolutionRatio, bool mouse)
         {
             try
             {
@@ -689,16 +719,48 @@ namespace AutoScreenCapture
 
                 if (width > 0 && height > 0)
                 {
-                    Bitmap bmp = new Bitmap(width, height);
-
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    if (resolutionRatio < IMAGE_RESOLUTION_RATIO_MIN || resolutionRatio > IMAGE_RESOLUTION_RATIO_MAX)
                     {
-                        g.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height));
+                        resolutionRatio = 100;
                     }
+
+                    float imageResolutionRatio = (float)resolutionRatio / 100;
+
+                    int destinationWidth = (int)(width * imageResolutionRatio);
+                    int destinationHeight = (int)(height * imageResolutionRatio);
+
+                    Bitmap bmpSource = new Bitmap(width, height);
+                    Bitmap bmpDestination = new Bitmap(destinationWidth, destinationHeight);
+
+                    using (Graphics graphicsSource = Graphics.FromImage(bmpSource))
+                    {
+                        graphicsSource.CopyFromScreen(new Point(rect.X, rect.Y), new Point(0, 0), new Size(width, height), CopyPixelOperation.SourceCopy);
+
+                        Graphics graphicsDestination = Graphics.FromImage(bmpDestination);
+                        graphicsDestination.DrawImage(bmpSource, 0, 0, destinationWidth, destinationHeight);
+
+                        if (mouse)
+                        {
+                            CURSORINFO pci;
+                            pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
+
+                            if (GetCursorInfo(out pci))
+                            {
+                                if (pci.flags == CURSOR_SHOWING)
+                                {
+                                    var hdc = graphicsDestination.GetHdc();
+                                    DrawIconEx(hdc, pci.ptScreenPos.x - rect.X, pci.ptScreenPos.y - rect.Y, pci.hCursor, 0, 0, 0, IntPtr.Zero, DI_NORMAL);
+                                    graphicsDestination.ReleaseHdc();
+                                }
+                            }
+                        }
+                    }
+
+                    bmpSource.Dispose();
 
                     CaptureError = false;
 
-                    return bmp;
+                    return bmpDestination;
                 }
 
                 CaptureError = true;
@@ -788,18 +850,19 @@ namespace AutoScreenCapture
         /// <param name="y">The Y value of the bitmap.</param>
         /// <param name="width">The Width value of the bitmap.</param>
         /// <param name="height">The Height value of the bitmap.</param>
+        /// <param name="resolutionRatio">The resolution ratio of the bitmap. A lower value makes the bitmap more blurry.</param>
         /// <param name="mouse">Determines if we include the mouse pointer in the captured bitmap.</param>
         /// <param name="bitmap">The bitmap to operate on.</param>
         /// <returns>A boolean to indicate if we were successful in getting a bitmap.</returns>
-        public bool GetScreenImages(int source, int component, int captureMethod, bool autoAdapt, int x, int y, int width, int height, bool mouse, out Bitmap bitmap)
+        public bool GetScreenImages(int source, int component, int captureMethod, bool autoAdapt, int x, int y, int width, int height, int resolutionRatio, bool mouse, out Bitmap bitmap)
         {
             try
             {
                 CaptureError = false;
 
                 bitmap = source == 0 && component == 0 && !autoAdapt
-                    ? GetActiveWindowBitmap()
-                    : GetScreenBitmap(source, component, captureMethod, x, y, width, height, mouse);
+                    ? GetActiveWindowBitmap(resolutionRatio, mouse)
+                    : GetScreenBitmap(source, component, captureMethod, x, y, width, height, resolutionRatio, mouse);
 
                 if (bitmap != null)
                 {

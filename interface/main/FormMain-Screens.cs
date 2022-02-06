@@ -152,7 +152,7 @@ namespace AutoScreenCapture
                     {
                         if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt) // Active Window
                         {
-                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, autoAdapt: false, 0, 0, 0, 0, false, out Bitmap bitmap))
+                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, autoAdapt: false, 0, 0, 0, 0, screen.ResolutionRatio, mouse: false, out Bitmap bitmap))
                             {
                                 if (!SaveScreenshot(bitmap, screen))
                                 {
@@ -170,6 +170,7 @@ namespace AutoScreenCapture
                                 y,
                                 width,
                                 height,
+                                screen.ResolutionRatio,
                                 screen.Mouse,
                                 out Bitmap bitmap))
                             {

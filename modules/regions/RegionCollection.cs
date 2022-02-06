@@ -47,6 +47,7 @@ namespace AutoScreenCapture
         private const string REGION_HEIGHT = "height";
         private const string REGION_ENABLE = "enable";
         private const string REGION_ENCRYPT = "encrypt";
+        private const string REGION_RESOLUTION_RATIO = "resolution_ratio";
 
         private readonly string REGION_XPATH;
 
@@ -166,6 +167,11 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         region.Encrypt = Convert.ToBoolean(xReader.Value);
                                         break;
+
+                                    case REGION_RESOLUTION_RATIO:
+                                        xReader.Read();
+                                        region.ResolutionRatio = Convert.ToInt32(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -181,6 +187,7 @@ namespace AutoScreenCapture
                             Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                             Version v2338 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.3.8");
+                            Version v2406 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.3.0.6");
                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                             if (v2182 != null && string.IsNullOrEmpty(AppCodename) && string.IsNullOrEmpty(AppVersion))
@@ -202,6 +209,7 @@ namespace AutoScreenCapture
                                 region.Mouse = true;
                                 region.Enable = true;
                                 region.Encrypt = false;
+                                region.ResolutionRatio = 100; // 2.4.0.7
                             }
 
                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -214,6 +222,8 @@ namespace AutoScreenCapture
 
                                 // Introduced in 2.4.0.0
                                 region.Encrypt = false;
+
+                                region.ResolutionRatio = 100; // 2.4.0.7
                             }
 
                             if (v2338 != null && configVersion != null && configVersion.VersionNumber < v2338.VersionNumber)
@@ -226,6 +236,13 @@ namespace AutoScreenCapture
                                 {
                                     region.Name = string.Empty;
                                 }
+                            }
+
+                            if (v2406 != null && configVersion != null && configVersion.VersionNumber <= v2406.VersionNumber)
+                            {
+                                log.WriteDebugMessage("Blade 2.4.0.6 or older detected");
+
+                                region.ResolutionRatio = 100;
                             }
                         }
 
@@ -324,6 +341,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(REGION_WIDTH, region.Width.ToString());
                         xWriter.WriteElementString(REGION_HEIGHT, region.Height.ToString());
                         xWriter.WriteElementString(REGION_ENCRYPT, region.Encrypt.ToString());
+                        xWriter.WriteElementString(REGION_RESOLUTION_RATIO, region.ResolutionRatio.ToString());
 
                         xWriter.WriteEndElement();
                     }

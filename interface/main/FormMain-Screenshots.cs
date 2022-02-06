@@ -1197,12 +1197,12 @@ namespace AutoScreenCapture
                 // Active Window
                 if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt)
                 {
-                    returnedBitmap = _screenCapture.GetActiveWindowBitmap();
+                    returnedBitmap = _screenCapture.GetActiveWindowBitmap(screen.ResolutionRatio, screen.Mouse);
                 }
                 else
                 {
                     // Screen
-                    returnedBitmap = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, screen.CaptureMethod, x, y, width, height, screen.Mouse);
+                    returnedBitmap = _screenCapture.GetScreenBitmap(screen.Source, screen.Component, screen.CaptureMethod, x, y, width, height, screen.ResolutionRatio, screen.Mouse);
                 }
             }
 
@@ -1210,7 +1210,7 @@ namespace AutoScreenCapture
             {
                 Region region = (Region)tag;
 
-                returnedBitmap = _screenCapture.GetScreenBitmap(-1, -1, 1, region.X, region.Y, region.Width, region.Height, region.Mouse);
+                returnedBitmap = _screenCapture.GetScreenBitmap(-1, -1, 1, region.X, region.Y, region.Width, region.Height, region.ResolutionRatio, region.Mouse);
             }
 
             return returnedBitmap;
