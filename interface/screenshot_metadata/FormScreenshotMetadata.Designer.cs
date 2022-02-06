@@ -65,6 +65,7 @@
             // 
             // textBoxScreenshotLabel
             // 
+            this.textBoxScreenshotLabel.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotLabel.Location = new System.Drawing.Point(92, 114);
             this.textBoxScreenshotLabel.Name = "textBoxScreenshotLabel";
             this.textBoxScreenshotLabel.ReadOnly = true;
@@ -74,6 +75,7 @@
             // 
             // textBoxScreenshotTime
             // 
+            this.textBoxScreenshotTime.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotTime.Location = new System.Drawing.Point(536, 10);
             this.textBoxScreenshotTime.Name = "textBoxScreenshotTime";
             this.textBoxScreenshotTime.ReadOnly = true;
@@ -92,6 +94,7 @@
             // 
             // textBoxScreenshotDate
             // 
+            this.textBoxScreenshotDate.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotDate.Location = new System.Drawing.Point(411, 10);
             this.textBoxScreenshotDate.Name = "textBoxScreenshotDate";
             this.textBoxScreenshotDate.ReadOnly = true;
@@ -110,6 +113,7 @@
             // 
             // textBoxScreenshotHeight
             // 
+            this.textBoxScreenshotHeight.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotHeight.Location = new System.Drawing.Point(306, 10);
             this.textBoxScreenshotHeight.MaximumSize = new System.Drawing.Size(47, 20);
             this.textBoxScreenshotHeight.Name = "textBoxScreenshotHeight";
@@ -129,6 +133,7 @@
             // 
             // textBoxScreenshotWidth
             // 
+            this.textBoxScreenshotWidth.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotWidth.Location = new System.Drawing.Point(199, 10);
             this.textBoxScreenshotWidth.MaximumSize = new System.Drawing.Size(47, 20);
             this.textBoxScreenshotWidth.Name = "textBoxScreenshotWidth";
@@ -148,6 +153,7 @@
             // 
             // textBoxScreenshotFormat
             // 
+            this.textBoxScreenshotFormat.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotFormat.Location = new System.Drawing.Point(92, 10);
             this.textBoxScreenshotFormat.Name = "textBoxScreenshotFormat";
             this.textBoxScreenshotFormat.ReadOnly = true;
@@ -166,6 +172,7 @@
             // 
             // textBoxScreenshotTitle
             // 
+            this.textBoxScreenshotTitle.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotTitle.Location = new System.Drawing.Point(92, 88);
             this.textBoxScreenshotTitle.Name = "textBoxScreenshotTitle";
             this.textBoxScreenshotTitle.ReadOnly = true;
@@ -184,6 +191,7 @@
             // 
             // textBoxScreenshotPath
             // 
+            this.textBoxScreenshotPath.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotPath.Location = new System.Drawing.Point(92, 36);
             this.textBoxScreenshotPath.Name = "textBoxScreenshotPath";
             this.textBoxScreenshotPath.ReadOnly = true;
@@ -220,6 +228,7 @@
             // 
             // textBoxScreenshotKey
             // 
+            this.textBoxScreenshotKey.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotKey.Location = new System.Drawing.Point(92, 140);
             this.textBoxScreenshotKey.Name = "textBoxScreenshotKey";
             this.textBoxScreenshotKey.ReadOnly = true;
@@ -238,6 +247,7 @@
             // 
             // textBoxScreenshotProcessName
             // 
+            this.textBoxScreenshotProcessName.BackColor = System.Drawing.Color.White;
             this.textBoxScreenshotProcessName.Location = new System.Drawing.Point(92, 62);
             this.textBoxScreenshotProcessName.Name = "textBoxScreenshotProcessName";
             this.textBoxScreenshotProcessName.ReadOnly = true;
