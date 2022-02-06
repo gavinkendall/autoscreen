@@ -254,6 +254,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.3")); // Region Select fix.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.4")); // Fix to versioning system.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.5")); // Icon Double Click trigger implemented. Added more trigger actions.
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.6")); // Screen Capture Status and Screen Capture Status With Label Switcher windows have larger text, Region Select uses BitBlt capture method, Preview for Screen and Region use BitBlt capture method, Initial Capture is set as default, Region Select logs selection information to log file.
 
             Application = new SettingCollection()
             {

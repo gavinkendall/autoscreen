@@ -247,7 +247,7 @@ namespace AutoScreenCapture
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.DrawImage(bitmapDestination, _selectX, _selectY, rect, GraphicsUnit.Pixel);
+                    g.DrawImage(bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
                 }
 
                 return bitmapSource;

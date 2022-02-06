@@ -96,6 +96,10 @@
         /// 
         /// </summary>
         public System.Windows.Forms.Button buttonStartStopScreenCapture;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public System.Windows.Forms.Label labelScreenCaptureStatus;
     }
 }
