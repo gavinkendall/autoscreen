@@ -515,7 +515,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboard_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
 
@@ -526,7 +526,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboardAutoSave_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
@@ -538,7 +538,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboardAutoSaveEdit_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
@@ -550,7 +550,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectClipboardFloatingScreenshot_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectClipboardFloatingScreenshotMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: true);
         }
@@ -562,7 +562,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripMenuItemRegionSelectFloatingScreenshot_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectFloatingScreenshotMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
         }

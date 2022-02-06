@@ -316,8 +316,9 @@ namespace AutoScreenCapture
                 }
 
                 toolStripInfo.Text = notifyIcon.Text;
-                _formLabelSwitcher.Text = notifyIcon.Text;
-                _formScreenCaptureStatus.Text = notifyIcon.Text;
+
+                _formLabelSwitcher.labelScreenCaptureStatus.Text = notifyIcon.Text;
+                _formScreenCaptureStatus.labelScreenCaptureStatus.Text = notifyIcon.Text;
             }
             catch (Exception)
             {

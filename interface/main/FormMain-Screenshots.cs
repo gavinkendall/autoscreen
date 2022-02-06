@@ -1210,7 +1210,7 @@ namespace AutoScreenCapture
             {
                 Region region = (Region)tag;
 
-                returnedBitmap = _screenCapture.GetScreenBitmap(-1, -1, 0, region.X, region.Y, region.Width, region.Height, region.Mouse);
+                returnedBitmap = _screenCapture.GetScreenBitmap(-1, -1, 1, region.X, region.Y, region.Width, region.Height, region.Mouse);
             }
 
             return returnedBitmap;

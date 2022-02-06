@@ -45,7 +45,7 @@ namespace AutoScreenCapture
         internal readonly int ScreenCaptureInterval = 60000;
         internal readonly int CaptureLimit = 0;
         internal readonly bool CaptureLimitCheck = false;
-        internal readonly bool TakeInitialScreenshot = false;
+        internal readonly bool TakeInitialScreenshot = true;
         internal readonly bool ShowSystemTrayIcon = false;
         internal readonly string Passphrase = string.Empty;
         internal readonly string ScreenshotLabel = string.Empty;

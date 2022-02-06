@@ -341,7 +341,7 @@ namespace AutoScreenCapture
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                         -1,
                         -1,
-                        0,
+                        1,
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
@@ -449,7 +449,7 @@ namespace AutoScreenCapture
 
         private void buttonRegionSelect_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse();
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
 

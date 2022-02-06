@@ -31,10 +31,10 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegionSelectWithMouse : Form
     {
-        private bool _sendToClipboard;
+        Log _log;
+        ScreenCapture _screenCapture;
 
-        private Bitmap _bitmapSource;
-        private Bitmap _bitmapDestination;
+        private bool _sendToClipboard;
 
         private int _selectX;
         private int _selectY;
@@ -65,9 +65,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormRegionSelectWithMouse()
+        public FormRegionSelectWithMouse(Log log, ScreenCapture screenCapture)
         {
             InitializeComponent();
+
+            _log = log;
+            _screenCapture = screenCapture;
 
             outputX = 0;
             outputY = 0;
@@ -124,22 +127,19 @@ namespace AutoScreenCapture
 
             Hide();
 
-            _bitmapSource = new Bitmap(Width, Height);
+            _log.Write($"RegionSelectWithMouse(LoadCanvas) X={Left}, Y={Top}, Width={Width}, Height={Height}", writeError: false, null);
 
-            using (Graphics graphics = Graphics.FromImage(_bitmapSource))
+            Bitmap bitmap = _screenCapture.GetScreenBitmap(-1, -1, 1, Left, Top, Width, Height, false);
+
+            using (MemoryStream s = new MemoryStream())
             {
-                graphics.CopyFromScreen(Top, Left, Top, Left, _bitmapSource.Size);
+                bitmap.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
 
-                using (MemoryStream s = new MemoryStream())
-                {
-                    _bitmapSource.Save(s, System.Drawing.Imaging.ImageFormat.Bmp);
-
-                    pictureBoxMouseCanvas.Size = new Size(Width, Height);
-                    pictureBoxMouseCanvas.Image = Image.FromStream(s);
-                }
+                pictureBoxMouseCanvas.Size = new Size(Width, Height);
+                pictureBoxMouseCanvas.Image = Image.FromStream(s);
             }
 
-            _bitmapSource.Dispose();
+            bitmap.Dispose();
 
             Show();
 
@@ -219,6 +219,8 @@ namespace AutoScreenCapture
                 outputWidth = _selectWidth;
                 outputHeight = _selectHeight;
 
+                _log.Write($"RegionSelectWithMouse(CompleteMouseSelection) X={outputX}, Y={outputY}, Width={outputWidth}, Height={outputHeight}", writeError: false, null);
+
                 CompleteMouseSelection(sender, e);
             }
 
@@ -236,19 +238,19 @@ namespace AutoScreenCapture
             if (_selectWidth > 0)
             {
                 Rectangle rect = new Rectangle(_selectX, _selectY, _selectWidth, _selectHeight);
-                _bitmapDestination = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
+                Bitmap bitmapDestination = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
 
-                _bitmapSource = new Bitmap(_selectWidth, _selectHeight);
+                Bitmap bitmapSource = new Bitmap(_selectWidth, _selectHeight);
 
-                using (Graphics g = Graphics.FromImage(_bitmapSource))
+                using (Graphics g = Graphics.FromImage(bitmapSource))
                 {
                     g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.PixelOffsetMode = PixelOffsetMode.HighQuality;
                     g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.DrawImage(_bitmapDestination, 0, 0, rect, GraphicsUnit.Pixel);
+                    g.DrawImage(bitmapDestination, _selectX, _selectY, rect, GraphicsUnit.Pixel);
                 }
 
-                return _bitmapSource;
+                return bitmapSource;
             }
 
             return null;

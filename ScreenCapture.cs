@@ -627,10 +627,10 @@ namespace AutoScreenCapture
 
                         IntPtr hdcSrc = GetWindowDC(handle);
                         IntPtr hdcDest = CreateCompatibleDC(hdcSrc);
-                        IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, rect.Width, rect.Height);
+                        IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, width, height);
                         IntPtr hOld = SelectObject(hdcDest, hBitmap);
 
-                        BitBlt(hdcDest, 0, 0, rect.Width, rect.Height, hdcSrc, rect.X, rect.Y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+                        BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x, y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
 
                         if (mouse)
                         {
