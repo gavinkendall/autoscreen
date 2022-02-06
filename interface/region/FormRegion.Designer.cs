@@ -66,8 +66,6 @@
             this.checkBoxEncrypt = new System.Windows.Forms.CheckBox();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.labelSecurity = new System.Windows.Forms.Label();
-            this.numericUpDownResolutionRatio = new System.Windows.Forms.NumericUpDown();
-            this.labelResolutionRatio = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
@@ -80,7 +78,6 @@
             this.groupBoxPreview.SuspendLayout();
             this.groupBoxScreenTemplate.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             this.SuspendLayout();
             // 
             // labelName
@@ -354,8 +351,6 @@
             // groupBoxImageAttributes
             // 
             this.groupBoxImageAttributes.BackColor = System.Drawing.SystemColors.Control;
-            this.groupBoxImageAttributes.Controls.Add(this.labelResolutionRatio);
-            this.groupBoxImageAttributes.Controls.Add(this.numericUpDownResolutionRatio);
             this.groupBoxImageAttributes.Controls.Add(this.labelFormat);
             this.groupBoxImageAttributes.Controls.Add(this.checkBoxMouse);
             this.groupBoxImageAttributes.Controls.Add(this.labelJpegQuality);
@@ -521,34 +516,6 @@
             this.labelSecurity.Text = "Applications will not be able to open encrypted screenshots. Anyone with the key " +
     "for a screenshot can decrypt it.";
             // 
-            // numericUpDownResolutionRatio
-            // 
-            this.numericUpDownResolutionRatio.Location = new System.Drawing.Point(148, 75);
-            this.numericUpDownResolutionRatio.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
-            this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 25;
-            this.numericUpDownResolutionRatio.TabStop = false;
-            this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreviewImage);
-            // 
-            // labelResolutionRatio
-            // 
-            this.labelResolutionRatio.AutoSize = true;
-            this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
-            this.labelResolutionRatio.Name = "labelResolutionRatio";
-            this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 26;
-            this.labelResolutionRatio.Text = "Resolution Ratio:";
-            // 
             // FormRegion
             // 
             this.AcceptButton = this.buttonOK;
@@ -601,7 +568,6 @@
             this.groupBoxScreenTemplate.ResumeLayout(false);
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -646,7 +612,5 @@
         private System.Windows.Forms.CheckBox checkBoxEncrypt;
         private System.Windows.Forms.GroupBox groupBoxSecurity;
         private System.Windows.Forms.Label labelSecurity;
-        private System.Windows.Forms.Label labelResolutionRatio;
-        private System.Windows.Forms.NumericUpDown numericUpDownResolutionRatio;
     }
 }

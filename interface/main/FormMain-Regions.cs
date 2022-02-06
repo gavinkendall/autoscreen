@@ -175,7 +175,7 @@ namespace AutoScreenCapture
                 {
                     if (region.Enable)
                     {
-                        if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 0, autoAdapt: false, region.X, region.Y, region.Width, region.Height, region.ResolutionRatio, region.Mouse, out Bitmap bitmap))
+                        if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 1, autoAdapt: false, region.X, region.Y, region.Width, region.Height, resolutionRatio: 100, region.Mouse, out Bitmap bitmap))
                         {
                             if (!SaveScreenshot(bitmap, region))
                             {

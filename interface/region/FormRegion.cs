@@ -206,8 +206,7 @@ namespace AutoScreenCapture
                         Width = (int)numericUpDownWidth.Value,
                         Height = (int)numericUpDownHeight.Value,
                         Enable = checkBoxEnable.Checked,
-                        Encrypt = checkBoxEncrypt.Checked,
-                        ResolutionRatio = (int)numericUpDownResolutionRatio.Value
+                        Encrypt = checkBoxEncrypt.Checked
                     });
 
                     Okay();
@@ -250,7 +249,6 @@ namespace AutoScreenCapture
                         RegionCollection.Get(RegionObject).Height = (int)numericUpDownHeight.Value;
                         RegionCollection.Get(RegionObject).Enable = checkBoxEnable.Checked;
                         RegionCollection.Get(RegionObject).Encrypt = checkBoxEncrypt.Checked;
-                        RegionCollection.Get(RegionObject).ResolutionRatio = (int)numericUpDownResolutionRatio.Value;
 
                         Okay();
                     }
@@ -298,8 +296,7 @@ namespace AutoScreenCapture
                  RegionObject.Width != (int)numericUpDownWidth.Value ||
                  RegionObject.Height != (int)numericUpDownHeight.Value ||
                  RegionObject.Enable.Equals(checkBoxEnable.Checked) ||
-                 !RegionObject.Encrypt.Equals(checkBoxEncrypt.Checked) ||
-                 RegionObject.ResolutionRatio != (int)numericUpDownResolutionRatio.Value))
+                 !RegionObject.Encrypt.Equals(checkBoxEncrypt.Checked)))
             {
                 return true;
             }
@@ -339,17 +336,6 @@ namespace AutoScreenCapture
         {
             try
             {
-                // The mouse pointer gets really weird if we go under 100 resolution ratio
-                // so disable the mouse checkbox control to indicate we can't show the mouse pointer.
-                if (numericUpDownResolutionRatio.Value == 100)
-                {
-                    checkBoxMouse.Enabled = true;
-                }
-                else
-                {
-                    checkBoxMouse.Enabled = false;
-                }
-
                 if (checkBoxEnable.Checked)
                 {
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
@@ -360,7 +346,7 @@ namespace AutoScreenCapture
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
                         (int)numericUpDownHeight.Value,
-                        (int)numericUpDownResolutionRatio.Value,
+                        resolutionRatio: 100,
                         checkBoxMouse.Checked
                     );
 
