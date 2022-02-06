@@ -339,11 +339,22 @@ namespace AutoScreenCapture
         {
             try
             {
+                // The mouse pointer gets really weird if we go under 100 resolution ratio
+                // so disable the mouse checkbox control to indicate we can't show the mouse pointer.
+                if (numericUpDownResolutionRatio.Value == 100)
+                {
+                    checkBoxMouse.Enabled = true;
+                }
+                else
+                {
+                    checkBoxMouse.Enabled = false;
+                }
+
                 if (checkBoxEnable.Checked)
                 {
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
-                        -1,
-                        -1,
+                        source: -1,
+                        component: -1,
                         captureMethod: 0,
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,

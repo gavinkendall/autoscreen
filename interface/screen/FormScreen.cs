@@ -92,7 +92,7 @@ namespace AutoScreenCapture
         {
             textBoxScreenName.Focus();
 
-            HelpMessage("This is where to configure a screen capture. Select a source and a component then adjust the display properties and image attributes");
+            HelpMessage("This is where to configure a screen capture. Select a source, component, and capture method then adjust the display properties and image attributes");
 
             _toolTip.SetToolTip(checkBoxMouse, "You can include the mouse pointer in your screenshots if the \"Include mouse pointer\" option is checked");
             _toolTip.SetToolTip(comboBoxFormat, "Change the image format for the screenshots taken by this screen capture. JPEG is the recommended image format");
@@ -389,6 +389,19 @@ namespace AutoScreenCapture
         {
             try
             {
+                // The mouse pointer gets really weird if we go under 100 resolution ratio
+                // so disable the mouse checkbox control to indicate we can't show the mouse pointer.
+                if (numericUpDownResolutionRatio.Value == 100)
+                {
+                    checkBoxMouse.Enabled = true;
+                }
+                else
+                {
+                    checkBoxMouse.Enabled = false;
+                }
+
+                comboBoxScreenCaptureMethod.Enabled = true;
+
                 if (checkBoxAutoAdapt.Checked)
                 {
                     labelScreenSource.Enabled = false;
@@ -439,7 +452,11 @@ namespace AutoScreenCapture
                     numericUpDownWidth.Enabled = false;
                     numericUpDownHeight.Enabled = false;
 
-                    comboBoxScreenCaptureMethod.SelectedIndex = 0;
+                    if (!checkBoxAutoAdapt.Checked)
+                    {
+                        comboBoxScreenCaptureMethod.SelectedIndex = 0;
+                        comboBoxScreenCaptureMethod.Enabled = false;
+                    }
                 }
 
                 pictureBoxPreview.Image = null;

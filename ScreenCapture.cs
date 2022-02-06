@@ -629,7 +629,8 @@ namespace AutoScreenCapture
                             Graphics graphicsDestination = Graphics.FromImage(bmpDestination);
                             graphicsDestination.DrawImage(bmpSource, 0, 0, destinationWidth, destinationHeight);
 
-                            if (mouse)
+                            // The mouse pointer gets really weird if we go under 100 resolution ratio so we'll keep the resolution ratio at 100 if the mouse option is enabled.
+                            if (mouse && resolutionRatio == 100)
                             {
                                 CURSORINFO pci;
                                 pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
@@ -739,7 +740,8 @@ namespace AutoScreenCapture
                         Graphics graphicsDestination = Graphics.FromImage(bmpDestination);
                         graphicsDestination.DrawImage(bmpSource, 0, 0, destinationWidth, destinationHeight);
 
-                        if (mouse)
+                        // The mouse pointer gets really weird if we go under 100 resolution ratio so we'll keep the resolution ratio at 100 if the mouse option is enabled.
+                        if (mouse && resolutionRatio == 100)
                         {
                             CURSORINFO pci;
                             pci.cbSize = Marshal.SizeOf(typeof(CURSORINFO));
