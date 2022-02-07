@@ -498,7 +498,7 @@ namespace AutoScreenCapture
             int width = _formRegionSelectWithMouse.outputWidth - 2;
             int height = _formRegionSelectWithMouse.outputHeight - 2;
 
-            if (_screenCapture.GetScreenImages(-1, -1, 0, autoAdapt: false, x, y, width, height, resolutionRatio: 100, mouse: false, out Bitmap bitmap))
+            if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 1, autoAdapt: false, x, y, width, height, resolutionRatio: 100, mouse: false, out Bitmap bitmap))
             {
                 return bitmap;
             }

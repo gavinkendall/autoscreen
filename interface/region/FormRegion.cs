@@ -341,7 +341,7 @@ namespace AutoScreenCapture
                     pictureBoxPreview.Image = screenCapture.GetScreenBitmap(
                         source: -1,
                         component: -1,
-                        captureMethod: 0,
+                        captureMethod: 1,
                         (int)numericUpDownX.Value,
                         (int)numericUpDownY.Value,
                         (int)numericUpDownWidth.Value,
