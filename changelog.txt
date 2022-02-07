@@ -1,7 +1,7 @@
 Auto Screen Capture by Gavin Kendall
 
 
-2.4.0.9    Various small bug fixes with Region Select to work with systems that prefer GDI screen capture method (2.4.0.1 - 2.4.0.9). Interval section added to Schedule (2.4.0.2). Icon Double Click trigger implemented (2.4.0.5). Screen Capture Status and Screen Capture Status With Label Switcher windows have larger text and Initial Capture is set as default (2.4.0.6). Resolution Ratio implemented for Screen (2.4.0.7). Region Preview fix to work with systems that prefer GDI screen capture method (2.4.0.8).
+2.4.0.9    Various small bug fixes with Region Select to work with systems that prefer GDI screen capture method (2.4.0.1 - 2.4.0.9). Interval section added to Schedule (2.4.0.2). Icon Double Click trigger implemented (2.4.0.5). Screen Capture Status and Screen Capture Status With Label Switcher windows have larger text and Initial Capture is set as default (2.4.0.6). Resolution Ratio implemented for Screen (2.4.0.7). Region Preview fix to work with systems that prefer GDI screen capture method (2.4.0.8). Active Window to work with systems that prefer GDI screen capture method (2.4.0.9).
 2.4.0.0
 - Interface redesigned to separate the list of screenshots from setup and configuration elements so you can always see what set of screenshots are selected while you're changing things
 - Setup module changed to be a multi-tab dialog box with helpful explanations on how to use the various setup options
