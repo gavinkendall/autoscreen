@@ -450,7 +450,7 @@ namespace AutoScreenCapture
 
         private void buttonRegionSelect_Click(object sender, EventArgs e)
         {
-            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_log, _screenCapture);
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_screenCapture);
             _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
 

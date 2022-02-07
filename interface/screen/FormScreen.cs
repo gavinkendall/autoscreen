@@ -400,8 +400,6 @@ namespace AutoScreenCapture
                     checkBoxMouse.Enabled = false;
                 }
 
-                comboBoxScreenCaptureMethod.Enabled = true;
-
                 if (checkBoxAutoAdapt.Checked)
                 {
                     labelScreenSource.Enabled = false;
@@ -451,12 +449,6 @@ namespace AutoScreenCapture
                     numericUpDownY.Enabled = false;
                     numericUpDownWidth.Enabled = false;
                     numericUpDownHeight.Enabled = false;
-
-                    if (!checkBoxAutoAdapt.Checked)
-                    {
-                        comboBoxScreenCaptureMethod.SelectedIndex = 0;
-                        comboBoxScreenCaptureMethod.Enabled = false;
-                    }
                 }
 
                 pictureBoxPreview.Image = null;

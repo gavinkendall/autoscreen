@@ -31,7 +31,6 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormRegionSelectWithMouse : Form
     {
-        Log _log;
         ScreenCapture _screenCapture;
 
         private bool _sendToClipboard;
@@ -65,11 +64,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormRegionSelectWithMouse(Log log, ScreenCapture screenCapture)
+        public FormRegionSelectWithMouse(ScreenCapture screenCapture)
         {
             InitializeComponent();
 
-            _log = log;
             _screenCapture = screenCapture;
 
             outputX = 0;
@@ -126,8 +124,6 @@ namespace AutoScreenCapture
             WindowState = FormWindowState.Normal;
 
             Hide();
-
-            _log.Write($"RegionSelectWithMouse(LoadCanvas) X={Left}, Y={Top}, Width={Width}, Height={Height}", writeError: false, null);
 
             Bitmap bitmap = _screenCapture.GetScreenBitmap(source: -1, component: -1, captureMethod: 1, Left, Top, Width, Height, resolutionRatio: 100, mouse: false);
 
@@ -218,8 +214,6 @@ namespace AutoScreenCapture
                 outputY = _selectY;
                 outputWidth = _selectWidth;
                 outputHeight = _selectHeight;
-
-                _log.Write($"RegionSelectWithMouse(CompleteMouseSelection) X={outputX}, Y={outputY}, Width={outputWidth}, Height={outputHeight}", writeError: false, null);
 
                 CompleteMouseSelection(sender, e);
             }
