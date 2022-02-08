@@ -257,7 +257,8 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.6")); // Screen Capture Status and Screen Capture Status With Label Switcher windows have larger text, Region Select uses BitBlt capture method, Preview for Screen and Region use BitBlt capture method, Initial Capture is set as default, Region Select logs selection information to log file.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.7")); // Resolution Ratio implemented
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.8")); // Region Preview fix.
-            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.9"));
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.9")); // Allow Active Window to use GDI screen capture method for Screen. Removed logging from FormRegionSelectWithMouse.
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.0")); // Region Select fix.
 
             Application = new SettingCollection()
             {
