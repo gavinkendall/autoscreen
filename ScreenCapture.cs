@@ -452,7 +452,7 @@ namespace AutoScreenCapture
                 // We don't want to stop the screen capture session at this point because there may be other components that
                 // can write to their given paths. If this is a misconfigured path for a particular component then just log an error.
                 _log.WriteErrorMessage($"Cannot write to \"{screenshot.Path}\" because the user may not have the appropriate permissions to access the path");
-                
+
                 return returnFlag | (int)ScreenSavingErrorLevels.UserNotEnoughPermissions;
             }
         }
@@ -589,22 +589,6 @@ namespace AutoScreenCapture
                 Bitmap bmpSource = null;
                 Bitmap bmpDestination = null;
 
-                int destinationX = 0;
-                int destinationY = 0;
-
-                foreach (System.Windows.Forms.Screen windowsScreen in System.Windows.Forms.Screen.AllScreens)
-                {
-                    if (windowsScreen.Bounds.X < destinationX)
-                    {
-                        destinationX = windowsScreen.Bounds.X;
-                    }
-
-                    if (windowsScreen.Bounds.Y < destinationY)
-                    {
-                        destinationY = windowsScreen.Bounds.Y;
-                    }
-                }
-
                 if (width > 0 && height > 0)
                 {
                     if (resolutionRatio < IMAGE_RESOLUTION_RATIO_MIN || resolutionRatio > IMAGE_RESOLUTION_RATIO_MAX)
@@ -640,10 +624,10 @@ namespace AutoScreenCapture
 
                         using (Graphics graphicsSource = Graphics.FromImage(bmpSource))
                         {
-                            graphicsSource.CopyFromScreen(x, y, destinationX, destinationY, blockRegionSize, CopyPixelOperation.SourceCopy);
+                            graphicsSource.CopyFromScreen(x, y, 0, 0, blockRegionSize, CopyPixelOperation.SourceCopy);
 
                             Graphics graphicsDestination = Graphics.FromImage(bmpDestination);
-                            graphicsDestination.DrawImage(bmpSource, destinationX, destinationY, destinationWidth, destinationHeight);
+                            graphicsDestination.DrawImage(bmpSource, 0, 0, destinationWidth, destinationHeight);
 
                             // The mouse pointer gets really weird if we go under 100 resolution ratio so we'll keep the resolution ratio at 100 if the mouse option is enabled.
                             if (mouse && resolutionRatio == 100)
@@ -675,7 +659,7 @@ namespace AutoScreenCapture
                         IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, width, height);
                         IntPtr hOld = SelectObject(hdcDest, hBitmap);
 
-                        BitBlt(hdcDest, destinationX, destinationY, width, height, hdcSrc, x, y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
+                        BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x, y, CopyPixelOperation.SourceCopy | CopyPixelOperation.CaptureBlt);
 
                         if (mouse)
                         {
@@ -962,7 +946,7 @@ namespace AutoScreenCapture
                         {
                             // Drive isn't ready so log an error message.
                             _log.WriteErrorMessage($"Unable to save screenshot for \"{screenshot.Path}\" because the drive is not found or not ready");
-                            
+
                             return returnFlag | (int)ScreenSavingErrorLevels.DriveNotReady;
                         }
                     }

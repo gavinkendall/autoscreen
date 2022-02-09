@@ -259,6 +259,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.8")); // Region Preview fix.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.0.9")); // Allow Active Window to use GDI screen capture method for Screen. Removed logging from FormRegionSelectWithMouse.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.0")); // Region Select fix.
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.1"));
 
             Application = new SettingCollection()
             {
