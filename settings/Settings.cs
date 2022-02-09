@@ -261,6 +261,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.0")); // Region Select fix.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.1")); // GetScreenBitmap fix. (but it actually made it worse for a dual-display setup)
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.2")); // Reverted changes to GetScreenBitmap method in ScreenCapture.
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.3")); // Small corrections made to Region Select methods after mouse selection has completed.
 
             Application = new SettingCollection()
             {
