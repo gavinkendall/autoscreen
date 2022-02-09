@@ -39,5 +39,25 @@ namespace AutoScreenCapture
         /// The value of the slide.
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// The image format from the associated screenshot.
+        /// </summary>
+        public string ImageFormat { get; set; }
+
+        /// <summary>
+        /// The label from the associated screenshot.
+        /// </summary>
+        public string Label { get; set; }
+
+        /// <summary>
+        /// The process name from the associated screenshot.
+        /// </summary>
+        public string ProcessName { get; set; }
+
+        /// <summary>
+        /// The active window title from the associated screenshot.
+        /// </summary>
+        public string WindowTitle { get; set; }
     }
 }

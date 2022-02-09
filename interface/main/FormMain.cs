@@ -383,14 +383,17 @@ namespace AutoScreenCapture
                     List<string> dates = new List<string>();
                     dates = _screenshotCollection.GetDatesByFilter(comboBoxFilterType.Text, comboBoxFilterValue.Text);
 
-                    DateTime[] boldedDates = new DateTime[dates.Count];
-
-                    for (int i = 0; i < dates.Count; i++)
+                    if (dates != null)
                     {
-                        boldedDates.SetValue(ConvertDateStringToDateTime(dates[i].ToString()), i);
-                    }
+                        DateTime[] boldedDates = new DateTime[dates.Count];
 
-                    monthCalendar.BoldedDates = boldedDates;
+                        for (int i = 0; i < dates.Count; i++)
+                        {
+                            boldedDates.SetValue(ConvertDateStringToDateTime(dates[i].ToString()), i);
+                        }
+
+                        monthCalendar.BoldedDates = boldedDates;
+                    }
                 }
             }
         }

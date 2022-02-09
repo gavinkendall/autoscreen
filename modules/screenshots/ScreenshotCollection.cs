@@ -115,6 +115,15 @@ namespace AutoScreenCapture
                         if (!_slideNameList.Contains(screenshot.Slide.Name))
                         {
                             _slideNameList.Add(screenshot.Slide.Name);
+
+                            // Make sure that "Slide" gets the same data as what "screenshot" has
+                            // so we can display the appropriate information in the screenshots list
+                            // based on the Filter selection.
+                            screenshot.Slide.ImageFormat = screenshot.Format.Name;
+                            screenshot.Slide.Label = screenshot.Label;
+                            screenshot.Slide.ProcessName = screenshot.ProcessName;
+                            screenshot.Slide.WindowTitle = screenshot.WindowTitle;
+
                             _slideList.Add(screenshot.Slide);
                         }
                     }
@@ -380,34 +389,57 @@ namespace AutoScreenCapture
                 if (filterType.Equals("Image Format"))
                 {
                     dates = LoadXmlFileAndReturnNodeValues("format", filterValue, "date");
-                    dates.AddRange(_screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue)).Select(x => x.Date));
+
+                    if (dates != null)
+                    {
+                        dates.AddRange(_screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue)).Select(x => x.Date));
+                    }
                 }
 
                 if (filterType.Equals("Label"))
                 {
                     dates = LoadXmlFileAndReturnNodeValues("label", filterValue, "date");
-                    dates.AddRange(_screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date));
+
+                    if (dates != null)
+                    {
+                        dates.AddRange(_screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue)).Select(x => x.Date));
+                    }
                 }
 
                 if (filterType.Equals("Process Name"))
                 {
                     dates = LoadXmlFileAndReturnNodeValues("processname", filterValue, "date");
-                    dates.AddRange(_screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue)).Select(x => x.Date));
+
+                    if (dates != null)
+                    {
+                        dates.AddRange(_screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue)).Select(x => x.Date));
+                    }
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
                     dates = LoadXmlFileAndReturnNodeValues("windowtitle", filterValue, "date");
-                    dates.AddRange(_screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue)).Select(x => x.Date));
+
+                    if (dates != null)
+                    {
+                        dates.AddRange(_screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue)).Select(x => x.Date));
+                    }
                 }
             }
             else
             {
                 dates = LoadXmlFileAndReturnNodeValues("date", null, "date");
-                dates.AddRange(_screenshotList.Select(x => x.Date));
+
+                if (dates != null)
+                {
+                    dates.AddRange(_screenshotList.Select(x => x.Date));
+                }
             }
 
-            dates = dates.Distinct().ToList();
+            if (dates != null)
+            {
+                dates = dates.Distinct().ToList();
+            }
 
             return dates;
         }
@@ -419,12 +451,15 @@ namespace AutoScreenCapture
         /// <param name="filterValue">The filter value to use.</param>
         /// <param name="date">The date to use.</param>
         /// <param name="config">The configuration file to use.</param>
+        /// <param name="slideValueToDisplay">The slide value to display in the list of screenshots.</param>
         /// <returns>A list of slides based on the filters being used.</returns>
-        public List<Slide> GetSlides(string filterType, string filterValue, string date, Config config)
+        public List<Slide> GetSlides(string filterType, string filterValue, string date, Config config, string slideValueToDisplay)
         {
+            List<Slide> localSlideList = null;
+
             if (string.IsNullOrEmpty(date))
             {
-                return null;
+                localSlideList = null;
             }
 
             _log.WriteDebugMessage("Getting slides from screenshot list");
@@ -435,7 +470,7 @@ namespace AutoScreenCapture
 
             if (errorCode == 1)
             {
-                return null;
+                localSlideList = null;
             }
 
             if (errorCode == 2)
@@ -444,37 +479,79 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Cannot load screenshots. The number of screenshots to be loaded exceeded the number allowed set by ScreenshotsLoadLimit (" + screenshotsLoadLimit + ")");
 
-                return null;
+                localSlideList = null;
             }
 
-            if (!string.IsNullOrEmpty(filterValue))
+            if (string.IsNullOrEmpty(filterType) || string.IsNullOrEmpty(filterValue))
+            {
+                localSlideList = _slideList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
+            }
+            else
             {
                 if (filterType.Equals("Image Format"))
                 {
                     _log.WriteDebugMessage("Getting slides from screenshot list based on Image Format filter");
-                    return _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
+
+                    localSlideList = _screenshotList.Where(x => x.Format != null && !string.IsNullOrEmpty(x.Format.Name) && x.Format.Name.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Label"))
                 {
                     _log.WriteDebugMessage("Getting slides from screenshot list based on Label filter");
-                    return _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
+
+                    localSlideList = _screenshotList.Where(x => x.Label != null && !string.IsNullOrEmpty(x.Label) && x.Label.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Process Name"))
                 {
                     _log.WriteDebugMessage("Getting slides from screenshot list based on Process Name filter");
-                    return _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
+
+                    localSlideList = _screenshotList.Where(x => x.ProcessName != null && !string.IsNullOrEmpty(x.ProcessName) && x.ProcessName.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
 
                 if (filterType.Equals("Window Title"))
                 {
                     _log.WriteDebugMessage("Getting slides from screenshot list based on Window Title filter");
-                    return _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
+
+                    localSlideList = _screenshotList.Where(x => x.WindowTitle != null && !string.IsNullOrEmpty(x.WindowTitle) && x.WindowTitle.Equals(filterValue) && x.Date.Equals(date)).GroupBy(x => x.Slide.Name).Select(x => x.First().Slide).ToList();
                 }
             }
 
-            return _slideList.Where(x => x.Date.Equals(date)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
+            foreach(Slide slide in localSlideList)
+            {
+                string slideValue = string.Empty;
+
+                if (string.IsNullOrEmpty(slideValueToDisplay))
+                {
+                    slideValue = slide.WindowTitle + " (" + slide.ProcessName + ") " + slide.ImageFormat;
+                }
+                else
+                {
+                    if (slideValueToDisplay.Equals("Image Format") && !string.IsNullOrEmpty(slide.ImageFormat))
+                    {
+                        slideValue = slide.ImageFormat;
+                    }
+
+                    if (slideValueToDisplay.Equals("Label") && !string.IsNullOrEmpty(slide.Label))
+                    {
+                        slideValue = slide.Label;
+                    }
+
+                    if (slideValueToDisplay.Equals("Process Name") && !string.IsNullOrEmpty(slide.ProcessName))
+                    {
+                        slideValue = slide.ProcessName;
+                    }
+
+                    if (slideValueToDisplay.Equals("Window Title") && !string.IsNullOrEmpty(slide.WindowTitle))
+                    {
+                        slideValue = slide.WindowTitle;
+                    }
+                }
+
+                slide.Value = Regex.Replace(slide.Value, @"\[.*\]", "[" + slideValue + "]");
+            }
+
+            return localSlideList;
         }
 
         /// <summary>

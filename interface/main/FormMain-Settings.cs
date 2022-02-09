@@ -312,6 +312,10 @@ namespace AutoScreenCapture
 
                 CaptureLimitCheck();
 
+                // Set the filter type to be the last selected index that was saved (and if no setting is found just set it to selected index 0).
+                // IMPORTANT: Do not attempt to set the same index for Filter Value here as that control is populated based on the selected index of Filter Type.
+                comboBoxFilterType.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterType", 0).Value);
+                
                 _log.WriteDebugMessage("Settings loaded");
             }
             catch (Exception ex)

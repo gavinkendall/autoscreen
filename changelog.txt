@@ -1,6 +1,7 @@
 Auto Screen Capture by Gavin Kendall
 
 
+2.4.1.5    List of screenshots show information based on Filter selection. Filter selection and screenshots list index saved.
 2.4.1.4    Removed width check on SelectBitmap in FormRegionSelectWithMouse.
 2.4.1.3    Small corrections made to Region Select methods after mouse selection has completed. (February 9, 2021)
 2.4.1.2    Reverted changes that were implemented in 2.4.1.1 essentially making this version the same as 2.4.1.0

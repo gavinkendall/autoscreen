@@ -1006,9 +1006,9 @@ namespace AutoScreenCapture
             "Label",
             "Process Name",
             "Window Title"});
-            this.comboBoxFilterType.Location = new System.Drawing.Point(39, 30);
+            this.comboBoxFilterType.Location = new System.Drawing.Point(32, 30);
             this.comboBoxFilterType.Name = "comboBoxFilterType";
-            this.comboBoxFilterType.Size = new System.Drawing.Size(88, 21);
+            this.comboBoxFilterType.Size = new System.Drawing.Size(95, 21);
             this.comboBoxFilterType.TabIndex = 0;
             this.comboBoxFilterType.TabStop = false;
             this.comboBoxFilterType.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterType_SelectedIndexChanged);

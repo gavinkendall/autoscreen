@@ -29,31 +29,39 @@ namespace AutoScreenCapture
     {
         private void comboBoxFilterType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Save the selected index of Filter Type.
+            _config.Settings.User.SetValueByKey("FilterType", comboBoxFilterType.SelectedIndex);
+
+            SearchFilterValues();
+
             if (!string.IsNullOrEmpty(comboBoxFilterType.Text))
             {
                 comboBoxFilterValue.Enabled = true;
-                buttonRefreshFilterValues.Enabled = true;
 
-                SearchFilterValues();
+                buttonRefreshFilterValues.Enabled = true;
             }
             else
             {
-                SearchFilterValues();
                 SearchDates();
                 ShowScreenshots();
 
-                if (comboBoxFilterValue.Items.Count > 1)
-                {
-                    comboBoxFilterValue.SelectedIndex = 0;
-                }
-
+                comboBoxFilterValue.Text = string.Empty;
                 comboBoxFilterValue.Enabled = false;
+
                 buttonRefreshFilterValues.Enabled = false;
             }
         }
 
         private void comboBoxFilterValue_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Make sure the filter search thread is not busy when we save the Filter Value selected index.
+            // This avoids problems when the DataSource for comboBoxFilterValue is set (which triggers this method to be called).
+            if (!runFilterSearchThread.IsBusy)
+            {
+                // Save the selected index of Filter Value.
+                _config.Settings.User.SetValueByKey("FilterValue", comboBoxFilterValue.SelectedIndex);
+            }
+
             SearchDates();
             ShowScreenshots();
         }
@@ -79,6 +87,23 @@ namespace AutoScreenCapture
                     filterValueList.Sort();
 
                     comboBoxFilterValue.DataSource = filterValueList;
+
+                    int selectedFilterValueIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterValue", 0).Value);
+
+                    if (comboBoxFilterValue.Items.Count > 0)
+                    {
+                        if (selectedFilterValueIndex == -1)
+                        {
+                            selectedFilterValueIndex = 0;
+                        }
+
+                        if (selectedFilterValueIndex >= comboBoxFilterValue.Items.Count)
+                        {
+                            selectedFilterValueIndex = comboBoxFilterValue.Items.Count - 1;
+                        }
+
+                        comboBoxFilterValue.SelectedIndex = selectedFilterValueIndex;
+                    }
                 }
             }
         }

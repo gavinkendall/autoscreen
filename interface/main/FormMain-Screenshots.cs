@@ -304,8 +304,6 @@ namespace AutoScreenCapture
 
             listBoxScreenshots.BeginUpdate();
 
-            listBoxScreenshots.DataSource = null;
-
             if (runScreenshotSearchThread == null)
             {
                 runScreenshotSearchThread = new BackgroundWorker
@@ -342,12 +340,26 @@ namespace AutoScreenCapture
                     listBoxScreenshots.DisplayMember = "Value";
                     listBoxScreenshots.ValueMember = "Name";
                     listBoxScreenshots.Sorted = true;
-                    listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(comboBoxFilterType.Text, comboBoxFilterValue.Text, monthCalendar.SelectionStart.ToString(_macroParser.DateFormat), _config);
+                    listBoxScreenshots.DataSource = _screenshotCollection.GetSlides(filterType: comboBoxFilterType.Text, filterValue: comboBoxFilterValue.Text,
+                        date: monthCalendar.SelectionStart.ToString(_macroParser.DateFormat),
+                        config: _config,
+                        slideValueToDisplay: comboBoxFilterType.Text); // Give the currently selected filter type as the slide value to display
 
-                    // Show the last set of screenshots only if the user is on today's list.
-                    if (listBoxScreenshots.Items.Count > 0 && monthCalendar.SelectionStart.Date.Equals(DateTime.Now.Date))
+                    int selectedSlideIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedSlideIndex", 0).Value);
+
+                    if (listBoxScreenshots.Items.Count > 0)
                     {
-                        listBoxScreenshots.SelectedIndex = listBoxScreenshots.Items.Count - 1;
+                        if (selectedSlideIndex == -1)
+                        {
+                            selectedSlideIndex = 0;
+                        }
+
+                        if (selectedSlideIndex >= listBoxScreenshots.Items.Count)
+                        {
+                            selectedSlideIndex = listBoxScreenshots.Items.Count - 1;
+                        }
+
+                        listBoxScreenshots.SelectedIndex = selectedSlideIndex;
                     }
                 }
             }
@@ -365,6 +377,12 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void SelectedIndexChanged_listBoxScreenshots(object sender, EventArgs e)
         {
+            if (!runScreenshotSearchThread.IsBusy)
+            {
+                // Save the selected slide index.
+                _config.Settings.User.SetValueByKey("SelectedSlideIndex", listBoxScreenshots.SelectedIndex);
+            }
+
             _slideShow.Index = listBoxScreenshots.SelectedIndex;
             _slideShow.Count = listBoxScreenshots.Items.Count;
 
