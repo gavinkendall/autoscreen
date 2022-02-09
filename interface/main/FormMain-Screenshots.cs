@@ -52,6 +52,11 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void DateSelected_monthCalendar(object sender, DateRangeEventArgs e)
         {
+            if (!runDateSearchThread.IsBusy)
+            {
+                _config.Settings.User.SetValueByKey("SelectedCalendarDay", monthCalendar.SelectionStart.ToString());
+            }
+
             ShowScreenshots();
         }
 
