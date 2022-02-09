@@ -493,10 +493,10 @@ namespace AutoScreenCapture
         /// <returns>The bitmap image from the Region Select canvas.</returns>
         private Bitmap GetBitmapFromRegionSelect()
         {
-            int x = _formRegionSelectWithMouse.outputX + 1;
-            int y = _formRegionSelectWithMouse.outputY + 1;
-            int width = _formRegionSelectWithMouse.outputWidth - 2;
-            int height = _formRegionSelectWithMouse.outputHeight - 2;
+            int x = _formRegionSelectWithMouse.outputX;
+            int y = _formRegionSelectWithMouse.outputY;
+            int width = _formRegionSelectWithMouse.outputWidth;
+            int height = _formRegionSelectWithMouse.outputHeight;
 
             if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 1, autoAdapt: false, x, y, width, height, resolutionRatio: 100, mouse: false, out Bitmap bitmap))
             {

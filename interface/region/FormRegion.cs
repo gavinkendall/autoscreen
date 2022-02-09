@@ -459,10 +459,10 @@ namespace AutoScreenCapture
 
         private void _formRegionSelectWithMouse_RegionSelectMouseSelectionCompleted(object sender, EventArgs e)
         {
-            int x = _formRegionSelectWithMouse.outputX + 1;
-            int y = _formRegionSelectWithMouse.outputY + 1;
-            int width = _formRegionSelectWithMouse.outputWidth - 2;
-            int height = _formRegionSelectWithMouse.outputHeight - 2;
+            int x = _formRegionSelectWithMouse.outputX;
+            int y = _formRegionSelectWithMouse.outputY;
+            int width = _formRegionSelectWithMouse.outputWidth;
+            int height = _formRegionSelectWithMouse.outputHeight;
 
             numericUpDownX.Value = x;
             numericUpDownY.Value = y;
