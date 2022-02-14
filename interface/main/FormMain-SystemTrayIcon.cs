@@ -254,7 +254,7 @@ namespace AutoScreenCapture
                     else if (_screenCapture.ApplicationWarning)
                     {
                         notifyIcon.Icon = Resources.autoscreen_warning;
-                        notifyIcon.Text = "A drive being used is running low on available disk space";
+                        notifyIcon.Text = "Disk drive is running low on free disk space";
                     }
                 }
                 else

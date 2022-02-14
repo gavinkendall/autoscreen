@@ -409,6 +409,9 @@
     <Content Include="images\tools.png" />
     <Content Include="images\zoom_in.png" />
     <Content Include="images\zoom_out.png" />
+    <Content Include="autoscreen.conf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="autoscreen.pfx" />
     <None Include="help\help-0.rtf" />
     <None Include="help\help-1.rtf" />

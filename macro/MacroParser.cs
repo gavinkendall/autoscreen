@@ -283,6 +283,16 @@ namespace AutoScreenCapture
                     break;
             }
 
+            // If we encounter "$AppDataLocal$" then replace it with the user's local AppData directory.
+            // This is used by the installer in case the user puts the application in the "Program Files" folder
+            // where we can't write any files to since we don't have permissions to write files in that folder
+            // unless the application is running as Administrator so for it to work for normal users we have to
+            // make sure that we write all the necessary XML files to the user's local AppData folder.
+            macro = macro.Replace("$AppDataLocal$", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
+
+            // For roaming profiles.
+            macro = macro.Replace("$AppDataRoaming$", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+
             return StripInvalidWindowsCharacters(macro);
         }
 

@@ -263,6 +263,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.2")); // Reverted changes to GetScreenBitmap method in ScreenCapture.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.3")); // Small corrections made to Region Select methods after mouse selection has completed.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.4")); // Removed width check on SelectBitmap in FormRegionSelectWithMouse.
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.5")); // List of screenshots show information based on Filter selection. Filter selection, selected calendar day, and screenshots list index saved.
 
             Application = new SettingCollection()
             {

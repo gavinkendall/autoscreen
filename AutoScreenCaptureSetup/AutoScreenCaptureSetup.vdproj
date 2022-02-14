@@ -15,14 +15,26 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
+        "MsmKey" = "8:_D313724F5AAB4313BD1D897FF37EF95E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F5D35A4CE885407C967C5246831CE10C"
+        "MsmKey" = "8:_EAC6C3C9B48043ACB1BA89D949F3B52C"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F970EC21805F4ECA8D2175F1195BA734"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D313724F5AAB4313BD1D897FF37EF95E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -120,13 +132,18 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9ACC9C115A4F4BCABA938B9FF9F2199F"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D313724F5AAB4313BD1D897FF37EF95E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:autoscreen, Version=2.4.1.6, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D313724F5AAB4313BD1D897FF37EF95E"
+                    {
+                    "Name" = "8:autoscreen.exe"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\bin\\Release\\autoscreen.exe"
             "TargetName" = "8:"
@@ -146,10 +163,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F5D35A4CE885407C967C5246831CE10C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EAC6C3C9B48043ACB1BA89D949F3B52C"
             {
             "SourcePath" = "8:..\\autoscreen.ico"
             "TargetName" = "8:autoscreen.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F970EC21805F4ECA8D2175F1195BA734"
+            {
+            "SourcePath" = "8:..\\bin\\Release\\autoscreen.conf"
+            "TargetName" = "8:autoscreen.conf"
             "Tag" = "8:"
             "Folder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
             "Condition" = "8:"
@@ -207,7 +244,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_BFEF860BA1F440C4925C3DAA085A020E"
             {
-            "DefaultLocation" = "8:[LocalAppDataFolder]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -233,15 +270,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
-        "ProductCode" = "8:{82481669-C6C5-435D-B80A-8625E7002D08}"
-        "PackageCode" = "8:{15BD69E0-1746-42C2-A523-4E5E04E282B0}"
+        "ProductCode" = "8:{43A2A26F-8BDC-4347-A058-9CBDF19F0214}"
+        "PackageCode" = "8:{AC6B7982-3185-4F37-9636-A241BD6240F8}"
         "UpgradeCode" = "8:{6B29B7BC-0101-4495-B28C-26B6D3CDCC02}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.4.15"
+        "InstallAllUsers" = "11:TRUE"
+        "ProductVersion" = "8:2.4.16"
         "Manufacturer" = "8:Gavin Kendall"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://sourceforge.net/p/autoscreen/tickets/"
@@ -251,7 +288,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Automated screen capture utility for gamers, designers, and testers"
         "ARPURLINFOABOUT" = "8:https://sourceforge.net/projects/autoscreen/"
-        "ARPPRODUCTICON" = "8:_F5D35A4CE885407C967C5246831CE10C"
+        "ARPPRODUCTICON" = "8:_EAC6C3C9B48043ACB1BA89D949F3B52C"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -354,7 +391,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_554DEA7002B144C4AE046AE8591270DA"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C1828EE6B6D64B97B81D45A910499A6C"
             {
             "Name" = "8:Auto Screen Capture"
             "Arguments" = "8:"
@@ -362,13 +399,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
+            "Target" = "8:_D313724F5AAB4313BD1D897FF37EF95E"
             "Folder" = "8:_FCA2E1CC41974EE59078A70D21490803"
             "WorkingFolder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
-            "Icon" = "8:_F5D35A4CE885407C967C5246831CE10C"
+            "Icon" = "8:_EAC6C3C9B48043ACB1BA89D949F3B52C"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7EF8B80465784E32AB5897FB75F15CF2"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D43198C5F88C4623AA2E9E5BED72EDC5"
             {
             "Name" = "8:Auto Screen Capture"
             "Arguments" = "8:"
@@ -376,10 +413,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_9ACC9C115A4F4BCABA938B9FF9F2199F"
+            "Target" = "8:_D313724F5AAB4313BD1D897FF37EF95E"
             "Folder" = "8:_78D75DC2F80F481C8A0886AA0CEFCBBF"
             "WorkingFolder" = "8:_BFEF860BA1F440C4925C3DAA085A020E"
-            "Icon" = "8:_F5D35A4CE885407C967C5246831CE10C"
+            "Icon" = "8:_EAC6C3C9B48043ACB1BA89D949F3B52C"
             "Feature" = "8:"
             }
         }

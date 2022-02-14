@@ -925,8 +925,9 @@ namespace AutoScreenCapture
                             }
                             else
                             {
-                                // There is not enough disk space on the drive so log an error message and change the system tray icon's colour to yellow.
-                                _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for {screenshot.Path} (at " + freeDiskSpacePercentage + "%) which is lower than the LowDiskPercentageThreshold setting that is currently set to " + lowDiskSpacePercentageThreshold + "%");
+                                // There is not enough disk space on the drive so log an error message.
+                                // Change the system tray icon's colour to yellow for a warning if StopOnLowDiskError is set to False or red for an error if StopOnLowDiskError is set to True.
+                                _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive (that has {freeDiskSpacePercentage}% free disk space) for {screenshot.Path} which is lower than the LowDiskPercentageThreshold setting that is currently set to {lowDiskSpacePercentageThreshold}%");
 
                                 bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
 

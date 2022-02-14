@@ -174,6 +174,10 @@ namespace AutoScreenCapture
             {
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
+                    // If there was an application error just forget about it for now
+                    // and reset the ApplicationError flag when starting a screen capture session.
+                    _screenCapture.ApplicationError = false;
+
                     // Increment the number of times the user has started a screen capture session.
                     int startScreenCaptureCount = Convert.ToInt32(_config.Settings.User.GetByKey("StartScreenCaptureCount", _config.Settings.DefaultSettings.StartScreenCaptureCount).Value);
                     startScreenCaptureCount++;
