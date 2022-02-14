@@ -386,12 +386,15 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs22\lang9 Common Setup Scenarios\b0\par
-        ///\par
-        ///}
-        ///.
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Common Setup Scenarios\b0\fs22\par
+        ///You want Auto Screen Capture to not show its interface on startup:\par
+        ///
+        ///\pard 
+        ///{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+        ///\fi-360\li720\sa200\sl276\slmult1 Go to the Triggers module\par
+        ///{\pntext\f0 2.\tab}Click on the green square for the &quot;Show Interface on Start [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_11 {
             get {
@@ -400,8 +403,22 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
-        ///{\colortbl ;\red0\green0\blue255;\red0\green0\blue0;}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
+        ///{\colortbl ;\red0\green128\blue0;\red0\green0\blue0;\red0\green0\blue255;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Configuration File\b0\par
+        ///\fs22 Auto Screen Capture comes with its own configuration file named &quot;autoscreen.conf&quot; that is usually found in the same folder as &quot;autoscreen.exe&quot;.\par
+        ///{\pict{\*\picprop}\wmetafile8\ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string help_12 {
+            get {
+                return ResourceManager.GetString("help_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Consolas;}{\f2\fnil\fcharset0 Consolas;}}
+        ///{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
         ///Who reads these things?\par
@@ -498,13 +515,13 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Triggers\b0\fs22\par
         ///The &quot;Triggers&quot; module gives you the ability to add, configure, and remove triggers.\par
         ///A trigger controls the behaviour of Auto Screen Capture by having the application perform a specified action based on a specified condition.\par
         ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6403 [rest of string was truncated]&quot;;.
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string help_9 {
             get {
