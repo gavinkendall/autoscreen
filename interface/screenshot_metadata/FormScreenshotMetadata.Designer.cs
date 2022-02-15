@@ -51,6 +51,8 @@
             this.labelScreenshotKey = new System.Windows.Forms.Label();
             this.textBoxScreenshotProcessName = new System.Windows.Forms.TextBox();
             this.labelScreenshotProcessName = new System.Windows.Forms.Label();
+            this.textBoxScreenshotHash = new System.Windows.Forms.TextBox();
+            this.labelScreenshotHash = new System.Windows.Forms.Label();
             this.statusStripScreenshotMetadata.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -213,7 +215,7 @@
             this.statusStripScreenshotMetadata.BackColor = System.Drawing.Color.LightYellow;
             this.statusStripScreenshotMetadata.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelScreenshotMetadata});
-            this.statusStripScreenshotMetadata.Location = new System.Drawing.Point(0, 167);
+            this.statusStripScreenshotMetadata.Location = new System.Drawing.Point(0, 192);
             this.statusStripScreenshotMetadata.Name = "statusStripScreenshotMetadata";
             this.statusStripScreenshotMetadata.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.statusStripScreenshotMetadata.Size = new System.Drawing.Size(621, 22);
@@ -229,7 +231,7 @@
             // textBoxScreenshotKey
             // 
             this.textBoxScreenshotKey.BackColor = System.Drawing.Color.White;
-            this.textBoxScreenshotKey.Location = new System.Drawing.Point(92, 140);
+            this.textBoxScreenshotKey.Location = new System.Drawing.Point(92, 166);
             this.textBoxScreenshotKey.Name = "textBoxScreenshotKey";
             this.textBoxScreenshotKey.ReadOnly = true;
             this.textBoxScreenshotKey.Size = new System.Drawing.Size(517, 20);
@@ -239,7 +241,7 @@
             // labelScreenshotKey
             // 
             this.labelScreenshotKey.AutoSize = true;
-            this.labelScreenshotKey.Location = new System.Drawing.Point(12, 143);
+            this.labelScreenshotKey.Location = new System.Drawing.Point(12, 169);
             this.labelScreenshotKey.Name = "labelScreenshotKey";
             this.labelScreenshotKey.Size = new System.Drawing.Size(28, 13);
             this.labelScreenshotKey.TabIndex = 24;
@@ -264,11 +266,32 @@
             this.labelScreenshotProcessName.TabIndex = 26;
             this.labelScreenshotProcessName.Text = "Process Name:";
             // 
+            // textBoxScreenshotHash
+            // 
+            this.textBoxScreenshotHash.BackColor = System.Drawing.Color.White;
+            this.textBoxScreenshotHash.Location = new System.Drawing.Point(92, 140);
+            this.textBoxScreenshotHash.Name = "textBoxScreenshotHash";
+            this.textBoxScreenshotHash.ReadOnly = true;
+            this.textBoxScreenshotHash.Size = new System.Drawing.Size(517, 20);
+            this.textBoxScreenshotHash.TabIndex = 27;
+            this.textBoxScreenshotHash.TabStop = false;
+            // 
+            // labelScreenshotHash
+            // 
+            this.labelScreenshotHash.AutoSize = true;
+            this.labelScreenshotHash.Location = new System.Drawing.Point(12, 143);
+            this.labelScreenshotHash.Name = "labelScreenshotHash";
+            this.labelScreenshotHash.Size = new System.Drawing.Size(35, 13);
+            this.labelScreenshotHash.TabIndex = 28;
+            this.labelScreenshotHash.Text = "Hash:";
+            // 
             // FormScreenshotMetadata
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 189);
+            this.ClientSize = new System.Drawing.Size(621, 214);
+            this.Controls.Add(this.labelScreenshotHash);
+            this.Controls.Add(this.textBoxScreenshotHash);
             this.Controls.Add(this.labelScreenshotProcessName);
             this.Controls.Add(this.textBoxScreenshotProcessName);
             this.Controls.Add(this.labelScreenshotKey);
@@ -397,9 +420,15 @@
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotProcessName;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxScreenshotHash;
+
         private System.Windows.Forms.Label labelScreenshotPath;
         private System.Windows.Forms.StatusStrip statusStripScreenshotMetadata;
         private System.Windows.Forms.Label labelScreenshotKey;
         private System.Windows.Forms.Label labelScreenshotProcessName;
+        private System.Windows.Forms.Label labelScreenshotHash;
     }
 }

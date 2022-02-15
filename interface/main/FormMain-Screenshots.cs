@@ -722,6 +722,8 @@ namespace AutoScreenCapture
 
                             _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.Path;
 
+                            _formScreenshotMetadata.textBoxScreenshotHash.Text = selectedScreenshot.Hash;
+
                             _formScreenshotMetadata.textBoxScreenshotProcessName.Text = selectedScreenshot.ProcessName;
 
                             if (selectedScreenshot.Encrypted)
@@ -768,6 +770,7 @@ namespace AutoScreenCapture
             _formScreenshotMetadata.textBoxScreenshotKey.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotPath.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotProcessName.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotHash.Text = string.Empty;
 
             _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = string.Empty;
         }
