@@ -233,20 +233,27 @@ namespace AutoScreenCapture
         /// <returns>Returns a bitmap image based on X, Y, Width, and Height.</returns>
         private Bitmap SelectBitmap()
         {
-            Rectangle rect = new Rectangle(_selectX, _selectY, _selectWidth, _selectHeight);
-            Bitmap bitmapDestination = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
-
-            Bitmap bitmapSource = new Bitmap(_selectWidth, _selectHeight);
-
-            using (Graphics g = Graphics.FromImage(bitmapSource))
+            if (_selectWidth > 0 && _selectHeight > 0)
             {
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                g.CompositingQuality = CompositingQuality.HighQuality;
-                g.DrawImage(bitmapDestination, Left, Top, rect, GraphicsUnit.Pixel);
-            }
+                Rectangle rect = new Rectangle(_selectX, _selectY, _selectWidth, _selectHeight);
+                Bitmap bitmapDestination = new Bitmap(pictureBoxMouseCanvas.Image, pictureBoxMouseCanvas.Width, pictureBoxMouseCanvas.Height);
 
-            return bitmapSource;
+                Bitmap bitmapSource = new Bitmap(_selectWidth, _selectHeight);
+
+                using (Graphics g = Graphics.FromImage(bitmapSource))
+                {
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.DrawImage(bitmapDestination, Left, Top, rect, GraphicsUnit.Pixel);
+                }
+
+                return bitmapSource;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
