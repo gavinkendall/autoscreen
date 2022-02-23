@@ -689,8 +689,6 @@ namespace AutoScreenCapture
                     return bmpDestination;
                 }
 
-                CaptureError = true;
-
                 _log.WriteDebugMessage("There were no values provided for width and height so a screen image could not be captured");
 
                 return null;
@@ -772,8 +770,6 @@ namespace AutoScreenCapture
 
                     return bmpDestination;
                 }
-
-                CaptureError = true;
 
                 _log.WriteDebugMessage("There were no values provided for width and height so an active window image could not be captured");
 
