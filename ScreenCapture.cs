@@ -589,6 +589,8 @@ namespace AutoScreenCapture
                 Bitmap bmpSource = null;
                 Bitmap bmpDestination = null;
 
+                _log.WriteDebugMessage($"Attempting to capture screen image using source={source}, component={component}, captureMethod={captureMethod}, x={x}, y={y}, width={width}, height={height}, resolutionRatio={resolutionRatio}, mouse={mouse}");
+
                 if (width > 0 && height > 0)
                 {
                     if (resolutionRatio < IMAGE_RESOLUTION_RATIO_MIN || resolutionRatio > IMAGE_RESOLUTION_RATIO_MAX)
@@ -687,6 +689,10 @@ namespace AutoScreenCapture
                     return bmpDestination;
                 }
 
+                CaptureError = true;
+
+                _log.WriteDebugMessage("There were no values provided for width and height so a screen image could not be captured");
+
                 return null;
             }
             catch (Exception ex)
@@ -695,9 +701,9 @@ namespace AutoScreenCapture
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
                     _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
-                }
 
-                CaptureError = true;
+                    CaptureError = true;
+                }
 
                 return null;
             }
@@ -717,6 +723,8 @@ namespace AutoScreenCapture
 
                 int width = rect.Width - rect.X;
                 int height = rect.Height - rect.Y;
+
+                _log.WriteDebugMessage($"Attempting to capture active window image using width={width}, height={height}, resolutionRatio={resolutionRatio}, mouse={mouse}");
 
                 if (width > 0 && height > 0)
                 {
@@ -767,6 +775,8 @@ namespace AutoScreenCapture
 
                 CaptureError = true;
 
+                _log.WriteDebugMessage("There were no values provided for width and height so an active window image could not be captured");
+
                 return null;
             }
             catch (Exception ex)
@@ -775,9 +785,9 @@ namespace AutoScreenCapture
                 if (!ex.Message.Equals("The handle is invalid"))
                 {
                     _log.WriteExceptionMessage("ScreenCapture::GetActiveWindowBitmap", ex);
-                }
 
-                CaptureError = true;
+                    CaptureError = true;
+                }
 
                 return null;
             }
