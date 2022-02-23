@@ -693,16 +693,9 @@ namespace AutoScreenCapture
 
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Don't log an error if Windows is locked at the time a screenshot was taken.
-                if (!ex.Message.Equals("The handle is invalid"))
-                {
-                    _log.WriteExceptionMessage("ScreenCapture::GetScreenBitmap", ex);
-
-                    CaptureError = true;
-                }
-
+                // Just return nothing if there's an exception.
                 return null;
             }
         }
@@ -775,16 +768,9 @@ namespace AutoScreenCapture
 
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Don't log an error if Windows is locked at the time a screenshot was taken.
-                if (!ex.Message.Equals("The handle is invalid"))
-                {
-                    _log.WriteExceptionMessage("ScreenCapture::GetActiveWindowBitmap", ex);
-
-                    CaptureError = true;
-                }
-
+                // Just return nothing if there's an exception.
                 return null;
             }
         }
