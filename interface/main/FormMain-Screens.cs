@@ -159,6 +159,10 @@ namespace AutoScreenCapture
                                     continue;
                                 }
                             }
+                            else
+                            {
+                                _log.WriteDebugMessage($"No image was captured for active window {screen.Name}");
+                            }
                         }
                         else // Screen (regardless of how many displays there are)
                         {
@@ -178,6 +182,10 @@ namespace AutoScreenCapture
                                 {
                                     continue;
                                 }
+                            }
+                            else
+                            {
+                                _log.WriteDebugMessage($"No image was captured for screen {screen.Name}");
                             }
                         }
                     }

@@ -182,6 +182,10 @@ namespace AutoScreenCapture
                                 continue;
                             }
                         }
+                        else
+                        {
+                            _log.WriteDebugMessage($"No image was captured for region {region.Name}");
+                        }
                     }
                 }
             }
