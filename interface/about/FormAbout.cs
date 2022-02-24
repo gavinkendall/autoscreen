@@ -39,29 +39,12 @@ namespace AutoScreenCapture
             InitializeComponent();
         }
 
-        private void FormAbout_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _currentBanner = -1;
-
-            pictureBoxBanner.Image = Properties.Resources.blade;
-
-            richTextBoxContributors.BringToFront();
-
-            e.Cancel = true;
-            Hide();
-        }
-
-        private void richTextBoxApplication_LinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            Process.Start(e.LinkText);
-        }
-
-        private void pictureBoxBanner_Click(object sender, System.EventArgs e)
+        private void FormAbout_Load(object sender, EventArgs e)
         {
             richTextBoxBladeDetails.Text = "\"Blade\"" + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Release Date: August 21, 1998" + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Rating: R (strong violence)" + Environment.NewLine;
-            richTextBoxBladeDetails.Text += "Genres: Action, Horror, Sci-Fi" + Environment.NewLine +Environment.NewLine;
+            richTextBoxBladeDetails.Text += "Genres: Action, Horror, Sci-Fi" + Environment.NewLine + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Director: Stephen Norrington" + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Writer: David S. Goyer" + Environment.NewLine + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Starring:" + Environment.NewLine;
@@ -71,9 +54,25 @@ namespace AutoScreenCapture
             richTextBoxBladeDetails.Text += "N'Bushe Wright (Karen)" + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Donal Logue (Quinn)" + Environment.NewLine;
             richTextBoxBladeDetails.Text += "Udo Kier (Dragonetti)" + Environment.NewLine;
+        }
 
-            richTextBoxBladeDetails.BringToFront();
+        private void FormAbout_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _currentBanner = -1;
 
+            pictureBoxBanner.Image = Properties.Resources.blade;
+
+            e.Cancel = true;
+            Hide();
+        }
+
+        private void richTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
+        }
+
+        private void pictureBoxBanner_Click(object sender, System.EventArgs e)
+        {
             _currentBanner++;
 
             switch (_currentBanner)
