@@ -31,12 +31,6 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D313724F5AAB4313BD1D897FF37EF95E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -265,15 +259,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Auto Screen Capture"
-        "ProductCode" = "8:{686EFFDE-3991-493A-86A9-5DFC145A335F}"
-        "PackageCode" = "8:{94215230-2535-453D-88CE-D5ACB647D15A}"
+        "ProductCode" = "8:{24591D05-1087-4A1C-8375-BB9AD81DC2F0}"
+        "PackageCode" = "8:{34957AA3-36A2-42B3-A9C2-A41EB15987CD}"
         "UpgradeCode" = "8:{6B29B7BC-0101-4495-B28C-26B6D3CDCC02}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.4.17"
+        "ProductVersion" = "8:2.4.18"
         "Manufacturer" = "8:Gavin Kendall"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://sourceforge.net/p/autoscreen/tickets/"

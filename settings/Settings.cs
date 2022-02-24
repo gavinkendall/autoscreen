@@ -265,6 +265,7 @@ namespace AutoScreenCapture
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.4")); // Removed width check on SelectBitmap in FormRegionSelectWithMouse.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.5")); // List of screenshots show information based on Filter selection. Filter selection, selected calendar day, and screenshots list index saved.
             _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.6")); // $AppDataLocal$ and $AppDataRoaming$ introduced for autoscreen.conf and autoscreen.conf included as part of installation so that an installation of the application can run under normal user privileges without needing to run autoscreen.exe as Administrator from "C:\Program Files" or "C:\Program Files (x86)" since the data files are being written to the user's local or roaming app data folder  (AppData\Local by default).
+            _versionCollection.Add(new Version(CODENAME_BLADE, "2.4.1.7")); // Hash included in Screenshot Metadata. Additional debug logging has been included in the screen capture methods.
 
             Application = new SettingCollection()
             {

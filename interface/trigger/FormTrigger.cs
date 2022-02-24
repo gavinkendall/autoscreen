@@ -587,7 +587,7 @@ namespace AutoScreenCapture
                 if (TriggerObject == null)
                 {
                     numericUpDownDays.Value = 30;
-                    textBoxTriggerValue.Text = _fileSystem.DefaultScreenshotsFolder + "$date[yyyy-MM-dd]$";
+                    textBoxTriggerValue.Text = _fileSystem.ScreenshotsFolder + "$date[yyyy-MM-dd]$";
                 }
                 else if (TriggerObject.ActionType == TriggerActionType.DeleteScreenshots)
                 {
