@@ -3,10 +3,10 @@ Auto Screen Capture by Gavin Kendall
 
 2.4.1.8    Delete Screenshots trigger uses ScreenshotsFolder instead of DefaultScreenshotsFolder.
 2.4.1.7    Hash included in Screenshot Metadata. Additional debug logging has been included in the screen capture methods.
-2.4.1.6    $AppDataLocal$ and $AppDataRoaming$ introduced for autoscreen.conf and autoscreen.conf included as part of installation so that an installation of the application can run under normal user privileges without needing to run autoscreen.exe as Administrator from "C:\Program Files" or "C:\Program Files (x86)" since the data files are being written to the user's local or roaming app data folder  (AppData\Local by default).
+2.4.1.6    $AppDataLocal$ and $AppDataRoaming$ introduced for autoscreen.conf and autoscreen.conf included as part of installation so that an installation of the application can run under normal user privileges without needing to run autoscreen.exe as Administrator from "C:\Program Files" or "C:\Program Files (x86)" since the data files are being written to the user's local or roaming app data folder (AppData\Local by default).
 2.4.1.5    List of screenshots show information based on Filter selection. Filter selection, selected calendar day, and screenshots list index saved.
 2.4.1.4    Removed width check on SelectBitmap in FormRegionSelectWithMouse.
-2.4.1.3    Small corrections made to Region Select methods after mouse selection has completed. (February 9, 2021)
+2.4.1.3    Small corrections made to Region Select methods after mouse selection has completed. (February 9, 2022)
 2.4.1.2    Reverted changes that were implemented in 2.4.1.1 essentially making this version the same as 2.4.1.0
 2.4.1.1    !!! DO NOT USE THIS VERSION !!! These were changes to the GetScreenBitmap method which were absolutely terrible and should never have been implemented for dual-screen displays.
 2.4.1.0    Attempted fix for Region Select.
