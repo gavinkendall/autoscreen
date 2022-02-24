@@ -3,7 +3,7 @@
 //     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>Shows a help system for Auto Screen Capture.</summary>
+// <summary>A wrapper of Renci SSH Net.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

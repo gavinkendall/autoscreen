@@ -36,6 +36,14 @@
             this.tabPageAboutApplication = new System.Windows.Forms.TabPage();
             this.tabPageAboutLicense = new System.Windows.Forms.TabPage();
             this.richTextBoxAboutLicense = new System.Windows.Forms.RichTextBox();
+            this.tabPageAboutLibraryUsage = new System.Windows.Forms.TabPage();
+            this.tabControlAboutLibraryUsage = new System.Windows.Forms.TabControl();
+            this.tabPageAboutLibraryUsageGavinKendallSftp = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.tabPageAboutLibraryUsageILMerge = new System.Windows.Forms.TabPage();
+            this.richTextBoxAboutLibraryUsageILMerge = new System.Windows.Forms.RichTextBox();
+            this.tabPageAboutLibraryUsageRenciSshNet = new System.Windows.Forms.TabPage();
+            this.richTextBoxAboutLibraryUsageRenciSshNet = new System.Windows.Forms.RichTextBox();
             this.tabPageAboutSpecialThanks = new System.Windows.Forms.TabPage();
             this.richTextBoxAboutSpecialThanks = new System.Windows.Forms.RichTextBox();
             this.tabPageAboutContact = new System.Windows.Forms.TabPage();
@@ -44,6 +52,11 @@
             this.tabControlAbout.SuspendLayout();
             this.tabPageAboutApplication.SuspendLayout();
             this.tabPageAboutLicense.SuspendLayout();
+            this.tabPageAboutLibraryUsage.SuspendLayout();
+            this.tabControlAboutLibraryUsage.SuspendLayout();
+            this.tabPageAboutLibraryUsageGavinKendallSftp.SuspendLayout();
+            this.tabPageAboutLibraryUsageILMerge.SuspendLayout();
+            this.tabPageAboutLibraryUsageRenciSshNet.SuspendLayout();
             this.tabPageAboutSpecialThanks.SuspendLayout();
             this.tabPageAboutContact.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +105,7 @@
             // 
             this.tabControlAbout.Controls.Add(this.tabPageAboutApplication);
             this.tabControlAbout.Controls.Add(this.tabPageAboutLicense);
+            this.tabControlAbout.Controls.Add(this.tabPageAboutLibraryUsage);
             this.tabControlAbout.Controls.Add(this.tabPageAboutSpecialThanks);
             this.tabControlAbout.Controls.Add(this.tabPageAboutContact);
             this.tabControlAbout.Location = new System.Drawing.Point(223, 2);
@@ -135,6 +149,100 @@
             this.richTextBoxAboutLicense.TabStop = false;
             this.richTextBoxAboutLicense.Text = resources.GetString("richTextBoxAboutLicense.Text");
             this.richTextBoxAboutLicense.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox_LinkClicked);
+            // 
+            // tabPageAboutLibraryUsage
+            // 
+            this.tabPageAboutLibraryUsage.Controls.Add(this.tabControlAboutLibraryUsage);
+            this.tabPageAboutLibraryUsage.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAboutLibraryUsage.Name = "tabPageAboutLibraryUsage";
+            this.tabPageAboutLibraryUsage.Size = new System.Drawing.Size(575, 511);
+            this.tabPageAboutLibraryUsage.TabIndex = 4;
+            this.tabPageAboutLibraryUsage.Text = "Library Usage";
+            this.tabPageAboutLibraryUsage.UseVisualStyleBackColor = true;
+            // 
+            // tabControlAboutLibraryUsage
+            // 
+            this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageGavinKendallSftp);
+            this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageILMerge);
+            this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageRenciSshNet);
+            this.tabControlAboutLibraryUsage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlAboutLibraryUsage.Location = new System.Drawing.Point(0, 0);
+            this.tabControlAboutLibraryUsage.Name = "tabControlAboutLibraryUsage";
+            this.tabControlAboutLibraryUsage.SelectedIndex = 0;
+            this.tabControlAboutLibraryUsage.Size = new System.Drawing.Size(575, 511);
+            this.tabControlAboutLibraryUsage.TabIndex = 0;
+            // 
+            // tabPageAboutLibraryUsageGavinKendallSftp
+            // 
+            this.tabPageAboutLibraryUsageGavinKendallSftp.Controls.Add(this.richTextBox1);
+            this.tabPageAboutLibraryUsageGavinKendallSftp.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAboutLibraryUsageGavinKendallSftp.Name = "tabPageAboutLibraryUsageGavinKendallSftp";
+            this.tabPageAboutLibraryUsageGavinKendallSftp.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAboutLibraryUsageGavinKendallSftp.Size = new System.Drawing.Size(567, 485);
+            this.tabPageAboutLibraryUsageGavinKendallSftp.TabIndex = 2;
+            this.tabPageAboutLibraryUsageGavinKendallSftp.Text = "Gavin Kendall SFTP";
+            this.tabPageAboutLibraryUsageGavinKendallSftp.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.Color.White;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox1.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(561, 479);
+            this.richTextBox1.TabIndex = 5;
+            this.richTextBox1.TabStop = false;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // tabPageAboutLibraryUsageILMerge
+            // 
+            this.tabPageAboutLibraryUsageILMerge.Controls.Add(this.richTextBoxAboutLibraryUsageILMerge);
+            this.tabPageAboutLibraryUsageILMerge.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAboutLibraryUsageILMerge.Name = "tabPageAboutLibraryUsageILMerge";
+            this.tabPageAboutLibraryUsageILMerge.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAboutLibraryUsageILMerge.Size = new System.Drawing.Size(567, 485);
+            this.tabPageAboutLibraryUsageILMerge.TabIndex = 0;
+            this.tabPageAboutLibraryUsageILMerge.Text = "ILMerge";
+            this.tabPageAboutLibraryUsageILMerge.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxAboutLibraryUsageILMerge
+            // 
+            this.richTextBoxAboutLibraryUsageILMerge.BackColor = System.Drawing.Color.White;
+            this.richTextBoxAboutLibraryUsageILMerge.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxAboutLibraryUsageILMerge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxAboutLibraryUsageILMerge.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxAboutLibraryUsageILMerge.Name = "richTextBoxAboutLibraryUsageILMerge";
+            this.richTextBoxAboutLibraryUsageILMerge.ReadOnly = true;
+            this.richTextBoxAboutLibraryUsageILMerge.Size = new System.Drawing.Size(561, 479);
+            this.richTextBoxAboutLibraryUsageILMerge.TabIndex = 3;
+            this.richTextBoxAboutLibraryUsageILMerge.TabStop = false;
+            this.richTextBoxAboutLibraryUsageILMerge.Text = resources.GetString("richTextBoxAboutLibraryUsageILMerge.Text");
+            // 
+            // tabPageAboutLibraryUsageRenciSshNet
+            // 
+            this.tabPageAboutLibraryUsageRenciSshNet.Controls.Add(this.richTextBoxAboutLibraryUsageRenciSshNet);
+            this.tabPageAboutLibraryUsageRenciSshNet.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAboutLibraryUsageRenciSshNet.Name = "tabPageAboutLibraryUsageRenciSshNet";
+            this.tabPageAboutLibraryUsageRenciSshNet.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAboutLibraryUsageRenciSshNet.Size = new System.Drawing.Size(567, 485);
+            this.tabPageAboutLibraryUsageRenciSshNet.TabIndex = 1;
+            this.tabPageAboutLibraryUsageRenciSshNet.Text = "Renci SSH Net";
+            this.tabPageAboutLibraryUsageRenciSshNet.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxAboutLibraryUsageRenciSshNet
+            // 
+            this.richTextBoxAboutLibraryUsageRenciSshNet.BackColor = System.Drawing.Color.White;
+            this.richTextBoxAboutLibraryUsageRenciSshNet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxAboutLibraryUsageRenciSshNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxAboutLibraryUsageRenciSshNet.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxAboutLibraryUsageRenciSshNet.Name = "richTextBoxAboutLibraryUsageRenciSshNet";
+            this.richTextBoxAboutLibraryUsageRenciSshNet.ReadOnly = true;
+            this.richTextBoxAboutLibraryUsageRenciSshNet.Size = new System.Drawing.Size(561, 479);
+            this.richTextBoxAboutLibraryUsageRenciSshNet.TabIndex = 4;
+            this.richTextBoxAboutLibraryUsageRenciSshNet.TabStop = false;
+            this.richTextBoxAboutLibraryUsageRenciSshNet.Text = resources.GetString("richTextBoxAboutLibraryUsageRenciSshNet.Text");
             // 
             // tabPageAboutSpecialThanks
             // 
@@ -206,6 +314,11 @@
             this.tabControlAbout.ResumeLayout(false);
             this.tabPageAboutApplication.ResumeLayout(false);
             this.tabPageAboutLicense.ResumeLayout(false);
+            this.tabPageAboutLibraryUsage.ResumeLayout(false);
+            this.tabControlAboutLibraryUsage.ResumeLayout(false);
+            this.tabPageAboutLibraryUsageGavinKendallSftp.ResumeLayout(false);
+            this.tabPageAboutLibraryUsageILMerge.ResumeLayout(false);
+            this.tabPageAboutLibraryUsageRenciSshNet.ResumeLayout(false);
             this.tabPageAboutSpecialThanks.ResumeLayout(false);
             this.tabPageAboutContact.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -225,5 +338,13 @@
         private System.Windows.Forms.RichTextBox richTextBoxAboutSpecialThanks;
         private System.Windows.Forms.TabPage tabPageAboutContact;
         private System.Windows.Forms.RichTextBox richTextBoxAboutContact;
+        private System.Windows.Forms.TabPage tabPageAboutLibraryUsage;
+        private System.Windows.Forms.TabControl tabControlAboutLibraryUsage;
+        private System.Windows.Forms.TabPage tabPageAboutLibraryUsageILMerge;
+        private System.Windows.Forms.RichTextBox richTextBoxAboutLibraryUsageILMerge;
+        private System.Windows.Forms.TabPage tabPageAboutLibraryUsageRenciSshNet;
+        private System.Windows.Forms.RichTextBox richTextBoxAboutLibraryUsageRenciSshNet;
+        private System.Windows.Forms.TabPage tabPageAboutLibraryUsageGavinKendallSftp;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
