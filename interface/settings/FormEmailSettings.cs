@@ -32,16 +32,18 @@ namespace AutoScreenCapture
     {
         Config _config;
         FileSystem _fileSystem;
+        Log _log;
 
         /// <summary>
         ///  Email Settings
         /// </summary>
-        public FormEmailSettings(Config config, FileSystem fileSystem)
+        public FormEmailSettings(Config config, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
 
             _config = config;
             _fileSystem = fileSystem;
+            _log = log;
         }
 
         private void FormEmailSettings_Load(object sender, EventArgs e)
@@ -173,8 +175,13 @@ namespace AutoScreenCapture
                 buttonSendTestEmail.Text = "Send Test Email";
                 buttonSendTestEmail.Enabled = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                buttonSendTestEmail.Text = "Send Test Email";
+                buttonSendTestEmail.Enabled = true;
+
+                _log.WriteErrorMessage(ex.Message + "\n" + ex.StackTrace);
+
                 MessageBox.Show("The email message could not be sent.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

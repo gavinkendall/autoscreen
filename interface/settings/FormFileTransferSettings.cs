@@ -30,16 +30,18 @@ namespace AutoScreenCapture
     {
         Config _config;
         FileSystem _fileSystem;
+        Log _log;
 
         /// <summary>
         /// File Transfer Settings
         /// </summary>
-        public FormFileTransferSettings(Config config, FileSystem fileSystem)
+        public FormFileTransferSettings(Config config, FileSystem fileSystem, Log log)
         {
             InitializeComponent();
 
             _config = config;
             _fileSystem = fileSystem;
+            _log = log;
         }
 
         private void FormFileTransferSettings_Load(object sender, EventArgs e)
@@ -108,12 +110,14 @@ namespace AutoScreenCapture
                 buttonTestConnection.Text = "Test Connection";
                 buttonTestConnection.Enabled = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("An error was encountered when attempting to establish a connection with the file server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                 buttonTestConnection.Text = "Test Connection";
                 buttonTestConnection.Enabled = true;
+
+                _log.WriteErrorMessage(ex.Message + "\n" + ex.StackTrace);
+
+                MessageBox.Show("An error was encountered when attempting to establish a connection with the file server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
