@@ -211,7 +211,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
                 }
 
-                bool.TryParse(_config.Settings.Application.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
+                bool.TryParse(Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
 
                 if (EmailScreenshot(selectedScreenshot, prompt))
                 {
