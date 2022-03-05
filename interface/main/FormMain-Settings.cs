@@ -121,6 +121,9 @@ namespace AutoScreenCapture
 
                 _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click;
 
+                _log.WriteDebugMessage("Initializing email manager");
+                _emailManager = new EmailManager(_log);
+
                 if (_config.CleanStartup)
                 {
                     _log.WriteDebugMessage("CleanStartup detected so we will not load XML data");

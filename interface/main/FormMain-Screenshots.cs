@@ -22,8 +22,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net;
-using System.Net.Mail;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -948,67 +946,50 @@ namespace AutoScreenCapture
                     return false;
                 }
 
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(@from)
-                };
+                _emailManager.ComposeEmailMessage(@from,
+                    to,
+                    cc,
+                    bcc,
+                    subject,
+                    body,
+                    isBodyHtml: false,
+                    ssl,
+                    host,
+                    port,
+                    username,
+                    password);
 
-                mailMessage.To.Add(to);
+                _log.WriteDebugMessage("SMTP client prepared and email message composed");
 
-                if (!string.IsNullOrEmpty(cc))
-                {
-                    mailMessage.CC.Add(cc);
-                }
+                _emailManager.AddFileAttachmentByFilePath(screenshot.Path);
 
-                if (!string.IsNullOrEmpty(bcc))
-                {
-                    mailMessage.Bcc.Add(bcc);
-                }
-
-                if (!string.IsNullOrEmpty(subject))
-                {
-                    mailMessage.Subject = subject;
-                }
-
-                if (!string.IsNullOrEmpty(body))
-                {
-                    mailMessage.Body = body;
-                }
-
-                mailMessage.IsBodyHtml = false;
-
-                mailMessage.Attachments.Add(new Attachment(screenshot.Path));
-
-                if (mailMessage.Attachments == null || mailMessage.Attachments.Count <= 0)
+                if (_emailManager.AttachmentsCount == 0)
                 {
                     return false;
                 }
 
                 _log.WriteDebugMessage("Added screenshot as attachment");
 
-                var smtpClient = new SmtpClient(host, port)
-                {
-                    EnableSsl = ssl,
-                    Credentials = new NetworkCredential(username, password)
-                };
-
-                _log.WriteDebugMessage("SMTP client prepared");
-
                 if (prompt)
                 {
-                    DialogResult dialogResult = MessageBox.Show($"Do you want to email this screenshot from \"{from}\" to \"{to}\" using \"{host}:{port}\"?", "Email Screenshot", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult dialogResult = MessageBox.Show(_emailManager.AskQuestionAboutSendingEmailMessage(), "Email Screenshot", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (dialogResult == DialogResult.Yes)
                     {
                         _log.WriteDebugMessage("Sending email with prompt confirmation");
 
-                        smtpClient.Send(mailMessage);
-
-                        _log.WriteDebugMessage("Email sent");
+                        if (_emailManager.SendEmailMessage())
+                        {
+                            _log.WriteDebugMessage("Email sent");
+                        }
+                        else
+                        {
+                            _log.WriteDebugMessage("Email not sent because an error was encountered");
+                        }
                     }
                     else
                     {
-                        smtpClient.Dispose();
+                        _emailManager.DisposeSmtpClient();
 
                         return false;
                     }
@@ -1017,12 +998,17 @@ namespace AutoScreenCapture
                 {
                     _log.WriteDebugMessage("Sending email without prompt confirmation");
 
-                    smtpClient.Send(mailMessage);
-
-                    _log.WriteDebugMessage("Email sent");
+                    if (_emailManager.SendEmailMessage())
+                    {
+                        _log.WriteDebugMessage("Email sent");
+                    }
+                    else
+                    {
+                        _log.WriteDebugMessage("Email not sent because an error was encountered");
+                    }
                 }
 
-                smtpClient.Dispose();
+                _emailManager.DisposeSmtpClient();
 
                 _log.WriteDebugMessage("SMTP client disposed");
 

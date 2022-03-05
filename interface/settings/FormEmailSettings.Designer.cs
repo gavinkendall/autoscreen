@@ -41,6 +41,7 @@
             this.labelFrom = new System.Windows.Forms.Label();
             this.textBoxFrom = new System.Windows.Forms.TextBox();
             this.groupBoxServer = new System.Windows.Forms.GroupBox();
+            this.comboBoxHost = new System.Windows.Forms.ComboBox();
             this.checkBoxPrompt = new System.Windows.Forms.CheckBox();
             this.groupBoxMessage = new System.Windows.Forms.GroupBox();
             this.textBoxBody = new System.Windows.Forms.TextBox();
@@ -55,6 +56,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonSendTestEmail = new System.Windows.Forms.Button();
+            this.labelHelp = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPort)).BeginInit();
             this.groupBoxServer.SuspendLayout();
             this.groupBoxMessage.SuspendLayout();
@@ -73,10 +75,12 @@
             // 
             this.textBoxHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxHost.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHost.Location = new System.Drawing.Point(70, 24);
             this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.Size = new System.Drawing.Size(282, 20);
+            this.textBoxHost.Size = new System.Drawing.Size(259, 22);
             this.textBoxHost.TabIndex = 3;
+            this.textBoxHost.TextChanged += new System.EventHandler(this.textBoxHost_TextChanged);
             // 
             // labelPort
             // 
@@ -135,9 +139,10 @@
             // 
             this.textBoxUsername.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUsername.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxUsername.Location = new System.Drawing.Point(70, 50);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(282, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(282, 22);
             this.textBoxUsername.TabIndex = 9;
             // 
             // labelPassword
@@ -153,10 +158,11 @@
             // textBoxPassword
             // 
             this.textBoxPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxPassword.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPassword.Location = new System.Drawing.Point(420, 50);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(289, 20);
+            this.textBoxPassword.Size = new System.Drawing.Size(289, 22);
             this.textBoxPassword.TabIndex = 11;
             // 
             // labelFrom
@@ -172,15 +178,17 @@
             // 
             this.textBoxFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxFrom.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxFrom.Location = new System.Drawing.Point(58, 25);
             this.textBoxFrom.Name = "textBoxFrom";
-            this.textBoxFrom.Size = new System.Drawing.Size(651, 20);
+            this.textBoxFrom.Size = new System.Drawing.Size(651, 22);
             this.textBoxFrom.TabIndex = 14;
             // 
             // groupBoxServer
             // 
             this.groupBoxServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxServer.Controls.Add(this.comboBoxHost);
             this.groupBoxServer.Controls.Add(this.checkBoxPrompt);
             this.groupBoxServer.Controls.Add(this.labelHost);
             this.groupBoxServer.Controls.Add(this.textBoxHost);
@@ -191,12 +199,29 @@
             this.groupBoxServer.Controls.Add(this.checkBoxEnableSSL);
             this.groupBoxServer.Controls.Add(this.textBoxUsername);
             this.groupBoxServer.Controls.Add(this.labelUsername);
-            this.groupBoxServer.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxServer.Location = new System.Drawing.Point(12, 24);
             this.groupBoxServer.Name = "groupBoxServer";
             this.groupBoxServer.Size = new System.Drawing.Size(715, 85);
             this.groupBoxServer.TabIndex = 1;
             this.groupBoxServer.TabStop = false;
             this.groupBoxServer.Text = "Server";
+            // 
+            // comboBoxHost
+            // 
+            this.comboBoxHost.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxHost.DropDownWidth = 350;
+            this.comboBoxHost.FormattingEnabled = true;
+            this.comboBoxHost.Items.AddRange(new object[] {
+            "",
+            "Gmail (smtp.gmail.com:587) [make sure less secure apps are allowed]",
+            "Hotmail / Live / Outlook (smtp-mail.outlook.com:587)",
+            "Office 365 (smtp.office365.com:587)"});
+            this.comboBoxHost.Location = new System.Drawing.Point(335, 23);
+            this.comboBoxHost.Name = "comboBoxHost";
+            this.comboBoxHost.Size = new System.Drawing.Size(17, 21);
+            this.comboBoxHost.TabIndex = 12;
+            this.comboBoxHost.TabStop = false;
+            this.comboBoxHost.SelectedIndexChanged += new System.EventHandler(this.comboBoxHost_SelectedIndexChanged);
             // 
             // checkBoxPrompt
             // 
@@ -225,9 +250,9 @@
             this.groupBoxMessage.Controls.Add(this.labelTo);
             this.groupBoxMessage.Controls.Add(this.labelFrom);
             this.groupBoxMessage.Controls.Add(this.textBoxFrom);
-            this.groupBoxMessage.Location = new System.Drawing.Point(12, 103);
+            this.groupBoxMessage.Location = new System.Drawing.Point(12, 115);
             this.groupBoxMessage.Name = "groupBoxMessage";
-            this.groupBoxMessage.Size = new System.Drawing.Size(715, 339);
+            this.groupBoxMessage.Size = new System.Drawing.Size(715, 327);
             this.groupBoxMessage.TabIndex = 12;
             this.groupBoxMessage.TabStop = false;
             this.groupBoxMessage.Text = "Message";
@@ -237,19 +262,21 @@
             this.textBoxBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxBody.Location = new System.Drawing.Point(6, 155);
+            this.textBoxBody.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxBody.Location = new System.Drawing.Point(6, 157);
             this.textBoxBody.Multiline = true;
             this.textBoxBody.Name = "textBoxBody";
-            this.textBoxBody.Size = new System.Drawing.Size(703, 178);
+            this.textBoxBody.Size = new System.Drawing.Size(703, 164);
             this.textBoxBody.TabIndex = 23;
             // 
             // textBoxSubject
             // 
             this.textBoxSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSubject.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxSubject.Location = new System.Drawing.Point(58, 129);
             this.textBoxSubject.Name = "textBoxSubject";
-            this.textBoxSubject.Size = new System.Drawing.Size(651, 20);
+            this.textBoxSubject.Size = new System.Drawing.Size(651, 22);
             this.textBoxSubject.TabIndex = 22;
             // 
             // labelSubject
@@ -265,9 +292,10 @@
             // 
             this.textBoxBCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxBCC.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxBCC.Location = new System.Drawing.Point(58, 103);
             this.textBoxBCC.Name = "textBoxBCC";
-            this.textBoxBCC.Size = new System.Drawing.Size(651, 20);
+            this.textBoxBCC.Size = new System.Drawing.Size(651, 22);
             this.textBoxBCC.TabIndex = 20;
             // 
             // labelBCC
@@ -283,9 +311,10 @@
             // 
             this.textBoxCC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxCC.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxCC.Location = new System.Drawing.Point(58, 77);
             this.textBoxCC.Name = "textBoxCC";
-            this.textBoxCC.Size = new System.Drawing.Size(651, 20);
+            this.textBoxCC.Size = new System.Drawing.Size(651, 22);
             this.textBoxCC.TabIndex = 18;
             // 
             // labelCC
@@ -301,9 +330,10 @@
             // 
             this.textBoxTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxTo.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxTo.Location = new System.Drawing.Point(58, 51);
             this.textBoxTo.Name = "textBoxTo";
-            this.textBoxTo.Size = new System.Drawing.Size(651, 20);
+            this.textBoxTo.Size = new System.Drawing.Size(651, 22);
             this.textBoxTo.TabIndex = 16;
             // 
             // labelTo
@@ -349,6 +379,21 @@
             this.buttonSendTestEmail.UseVisualStyleBackColor = true;
             this.buttonSendTestEmail.Click += new System.EventHandler(this.buttonSendTestEmail_Click);
             // 
+            // labelHelp
+            // 
+            this.labelHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelHelp.AutoEllipsis = true;
+            this.labelHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.labelHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelHelp.Image = global::AutoScreenCapture.Properties.Resources.about;
+            this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelHelp.Location = new System.Drawing.Point(2, 4);
+            this.labelHelp.Name = "labelHelp";
+            this.labelHelp.Size = new System.Drawing.Size(736, 17);
+            this.labelHelp.TabIndex = 34;
+            this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormEmailSettings
             // 
             this.AcceptButton = this.buttonOK;
@@ -356,6 +401,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(739, 483);
+            this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.buttonSendTestEmail);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
@@ -404,5 +450,7 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonSendTestEmail;
         private System.Windows.Forms.CheckBox checkBoxPrompt;
+        private System.Windows.Forms.ComboBox comboBoxHost;
+        private System.Windows.Forms.Label labelHelp;
     }
 }

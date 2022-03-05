@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="config\Config.cs" />
     <Compile Include="DataConvert.cs" />
+    <Compile Include="EmailManager.cs" />
     <Compile Include="help\HelpTip.cs" />
     <Compile Include="interface\about\FormAbout.cs">
       <SubType>Form</SubType>

@@ -19,8 +19,6 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Net;
-using System.Net.Mail;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
@@ -30,9 +28,10 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEmailSettings : Form
     {
-        Config _config;
-        FileSystem _fileSystem;
-        Log _log;
+        private Config _config;
+        private FileSystem _fileSystem;
+        private Log _log;
+        private EmailManager _emailManager;
 
         /// <summary>
         ///  Email Settings
@@ -44,10 +43,14 @@ namespace AutoScreenCapture
             _config = config;
             _fileSystem = fileSystem;
             _log = log;
+
+            _emailManager = new EmailManager(log);
         }
 
         private void FormEmailSettings_Load(object sender, EventArgs e)
         {
+            HelpMessage("This is where to configure email settings such as the host, port number, username, password, recipients, and email message");
+
             textBoxHost.Text = Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
             numericUpDownPort.Value = Convert.ToInt32(Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value);
             checkBoxEnableSSL.Checked = Convert.ToBoolean(Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value);
@@ -60,6 +63,11 @@ namespace AutoScreenCapture
             textBoxBCC.Text = Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
             textBoxSubject.Text = Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
             textBoxBody.Text = Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
+        }
+
+        private void HelpMessage(string message)
+        {
+            labelHelp.Text = "       " + message;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -89,6 +97,52 @@ namespace AutoScreenCapture
             Close();
         }
 
+        private void comboBoxHost_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxHost.SelectedIndex > 0)
+            {
+                switch (comboBoxHost.SelectedIndex)
+                {
+                    case 1:
+                        textBoxHost.Text = "smtp.gmail.com";
+                        numericUpDownPort.Value = 587;
+                        checkBoxEnableSSL.Checked = true;
+                        break;
+                    case 2:
+                        textBoxHost.Text = "smtp-mail.outlook.com";
+                        numericUpDownPort.Value = 587;
+                        checkBoxEnableSSL.Checked = true;
+                        break;
+
+                    case 3:
+                        textBoxHost.Text = "smtp.office365.com";
+                        numericUpDownPort.Value = 587;
+                        checkBoxEnableSSL.Checked = true;
+                        break;
+                }
+
+                comboBoxHost.SelectedIndex = 0;
+            }
+        }
+
+        private void textBoxHost_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxHost.Text.Trim().Equals("smtp.gmail.com"))
+            {
+                HelpMessage("Gmail requires less secure app access to be enabled for sending email with this application so please check Google account security settings");
+            }
+
+            if (textBoxHost.Text.Trim().Equals("smtp-mail.outlook.com"))
+            {
+                HelpMessage("Outlook accounts that are associated with a corporate email address may require Office 365 SMTP rather than Outlook SMTP");
+            }
+
+            if (textBoxHost.Text.Trim().Equals("smtp.office365.com"))
+            {
+                HelpMessage("Office 365 accounts may require authentication with an internal corporate email server. Multi-factor authentication does not work with this application");
+            }
+        }
+
         private void buttonSendTestEmail_Click(object sender, EventArgs e)
         {
             try
@@ -105,57 +159,40 @@ namespace AutoScreenCapture
                     return;
                 }
 
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress(textBoxFrom.Text)
-                };
-
-                mailMessage.To.Add(textBoxTo.Text);
-
-                if (!string.IsNullOrEmpty(textBoxCC.Text))
-                {
-                    mailMessage.CC.Add(textBoxCC.Text);
-                }
-
-                if (!string.IsNullOrEmpty(textBoxBCC.Text))
-                {
-                    mailMessage.Bcc.Add(textBoxBCC.Text);
-                }
-
-                if (!string.IsNullOrEmpty(textBoxSubject.Text))
-                {
-                    mailMessage.Subject = textBoxSubject.Text;
-                }
-
-                if (!string.IsNullOrEmpty(textBoxBody.Text))
-                {
-                    mailMessage.Body = textBoxBody.Text;
-                }
-
-                mailMessage.IsBodyHtml = false;
-
-                var smtpClient = new SmtpClient(textBoxHost.Text, (int)numericUpDownPort.Value)
-                {
-                    EnableSsl = checkBoxEnableSSL.Checked,
-                    Credentials = new NetworkCredential(textBoxUsername.Text, textBoxPassword.Text)
-                };
+                _emailManager.ComposeEmailMessage(textBoxFrom.Text,
+                    textBoxTo.Text,
+                    textBoxCC.Text,
+                    textBoxBCC.Text,
+                    textBoxSubject.Text,
+                    textBoxBody.Text,
+                    isBodyHtml: false,
+                    checkBoxEnableSSL.Checked,
+                    textBoxHost.Text,
+                    (int)numericUpDownPort.Value,
+                    textBoxUsername.Text,
+                    textBoxPassword.Text);
 
                 if (checkBoxPrompt.Checked)
                 {
-                    DialogResult dialogResult = MessageBox.Show($"Do you want to send this email message from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\" using \"{textBoxHost.Text}:{numericUpDownPort.Value}\"?", "Email Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult dialogResult = MessageBox.Show(_emailManager.AskQuestionAboutSendingEmailMessage(), "Email Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (dialogResult == DialogResult.Yes)
                     {
                         buttonSendTestEmail.Text = "Sending ...";
                         buttonSendTestEmail.Enabled = false;
 
-                        smtpClient.Send(mailMessage);
-
-                        MessageBox.Show($"The email message has been sent from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\".", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (_emailManager.SendEmailMessage())
+                        {
+                            MessageBox.Show("The email message has been sent.", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("The email message was not sent because an error was encountered.", "Email Message Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
-                        smtpClient.Dispose();
+                        _emailManager.DisposeSmtpClient();
 
                         return;
                     }
@@ -165,12 +202,17 @@ namespace AutoScreenCapture
                     buttonSendTestEmail.Text = "Sending ...";
                     buttonSendTestEmail.Enabled = false;
 
-                    smtpClient.Send(mailMessage);
-
-                    MessageBox.Show($"The email message has been sent from \"{textBoxFrom.Text}\" to \"{textBoxTo.Text}\".", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (_emailManager.SendEmailMessage())
+                    {
+                        MessageBox.Show("The email message has been sent.", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("The email message was not sent because an error was encountered.", "Email Message Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
-                smtpClient.Dispose();
+                _emailManager.DisposeSmtpClient();
 
                 buttonSendTestEmail.Text = "Send Test Email";
                 buttonSendTestEmail.Enabled = true;
@@ -180,7 +222,15 @@ namespace AutoScreenCapture
                 buttonSendTestEmail.Text = "Send Test Email";
                 buttonSendTestEmail.Enabled = true;
 
-                _log.WriteErrorMessage(ex.Message + "\n" + ex.StackTrace);
+                _log.WriteErrorMessage("Email Settings form has encountered an error");
+                _log.WriteErrorMessage(ex.Message);
+
+                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
+                {
+                    _log.WriteErrorMessage(ex.InnerException.Message);
+                }
+
+                _log.WriteErrorMessage(ex.StackTrace);
 
                 MessageBox.Show("The email message could not be sent.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

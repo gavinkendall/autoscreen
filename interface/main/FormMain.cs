@@ -140,6 +140,7 @@ namespace AutoScreenCapture
         private MacroParser _macroParser;
         private ImageFormatCollection _imageFormatCollection;
         private ScreenshotCollection _screenshotCollection;
+        private EmailManager _emailManager;
 
         /// <summary>
         /// Threads for background operations.

@@ -93,9 +93,10 @@
             // 
             // textBoxHost
             // 
+            this.textBoxHost.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHost.Location = new System.Drawing.Point(70, 24);
             this.textBoxHost.Name = "textBoxHost";
-            this.textBoxHost.Size = new System.Drawing.Size(354, 20);
+            this.textBoxHost.Size = new System.Drawing.Size(354, 22);
             this.textBoxHost.TabIndex = 3;
             // 
             // labelHost
@@ -122,10 +123,11 @@
             // 
             // textBoxPassword
             // 
+            this.textBoxPassword.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPassword.Location = new System.Drawing.Point(70, 50);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(502, 20);
+            this.textBoxPassword.Size = new System.Drawing.Size(502, 22);
             this.textBoxPassword.TabIndex = 10;
             // 
             // labelPassword
@@ -139,9 +141,10 @@
             // 
             // textBoxUsername
             // 
+            this.textBoxUsername.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxUsername.Location = new System.Drawing.Point(70, 24);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(502, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(502, 22);
             this.textBoxUsername.TabIndex = 8;
             // 
             // labelUsername
