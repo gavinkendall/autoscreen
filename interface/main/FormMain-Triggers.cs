@@ -337,6 +337,11 @@ namespace AutoScreenCapture
                         StartScreenCapture();
                     }
                     break;
+
+                case TriggerActionType.RestartScreenCapture:
+                    StopScreenCapture();
+                    StartScreenCapture();
+                    break;
             }
         }
     }

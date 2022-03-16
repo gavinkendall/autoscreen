@@ -412,6 +412,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RegionSelectFloatingScreenshot, "Region Select Floating Screenshot").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowOrHideInterface, "Show Interface or Hide Interface").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartOrStopScreenCapture, "Start Screen Capture or Stop Screen Capture").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RestartScreenCapture, "Restart Screen Capture").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -922,7 +923,12 @@ namespace AutoScreenCapture
 
                 // Starts or stops screen capture.
                 case 33:
-                    textBoxActionHelp.Text = "Start or stop screen capture.";
+                    textBoxActionHelp.Text = "Start or stop screen capture depending on the current state. This will start a session if the session is idle (ready to be started) or stop a session if the session is already running.";
+                    break;
+
+                // Restart the screen capture session.
+                case 34:
+                    textBoxActionHelp.Text = "Restart the screen capture session. This is useful if you will be changing the interval during a running screen capture session and need the session to restart using the new interval. This is a simple stop and start operation.";
                     break;
             }
         }

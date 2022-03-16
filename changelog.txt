@@ -1,6 +1,7 @@
 Auto Screen Capture by Gavin Kendall
 
 
+2.4.1.9    Screenshots count is reset when screenshots limit is reached to avoid falling into an infinite loop. New trigger action "Restart Screen Capture".
 2.4.1.8    Delete Screenshots trigger uses ScreenshotsFolder instead of DefaultScreenshotsFolder. Sending a test email from Email Settings logs any exception error and the Send Test Email button is enabled again after an exception has been caught. Email Settings form accepts multiple email addresses in TO, CC, and BCC fields using either ; or , as a separator.
 2.4.1.7    Hash included in Screenshot Metadata. Additional debug logging has been included in the screen capture methods.
 2.4.1.6    $AppDataLocal$ and $AppDataRoaming$ introduced for autoscreen.conf and autoscreen.conf included as part of installation so that an installation of the application can run under normal user privileges without needing to run autoscreen.exe as Administrator from "C:\Program Files" or "C:\Program Files (x86)" since the data files are being written to the user's local or roaming app data folder (AppData\Local by default).

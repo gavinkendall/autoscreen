@@ -193,6 +193,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// Starts or stops screen capture.
         /// </summary>
-        StartOrStopScreenCapture = 33
+        StartOrStopScreenCapture = 33,
+
+        /// <summary>
+        /// Restart the screen capture session.
+        /// </summary>
+        RestartScreenCapture = 34
     }
 }

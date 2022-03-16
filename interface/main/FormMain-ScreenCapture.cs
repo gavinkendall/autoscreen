@@ -685,6 +685,9 @@ namespace AutoScreenCapture
 
                     if (_screenCapture.Count == _screenCapture.Limit)
                     {
+                        // Reset the count to avoid falling into an infinite loop.
+                        _screenCapture.Count = 0;
+
                         _log.WriteDebugMessage("Running triggers of condition type LimitReached");
                         RunTriggersOfConditionType(TriggerConditionType.LimitReached);
                     }
