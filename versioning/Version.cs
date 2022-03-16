@@ -48,31 +48,12 @@ namespace AutoScreenCapture
         public bool IsCurrentVersion { get; }
 
         /// <summary>
-        /// The constructor for a Version object. Accepts codename and version number (as a string value).
-        /// </summary>
-        /// <param name="appCodename">The codename of the application.</param>
-        /// <param name="appVersion">The version number of the application (as a string value).</param>
-        public Version(string appCodename, string appVersion)
-        {
-            if (string.IsNullOrEmpty(appCodename) && string.IsNullOrEmpty(appVersion))
-            {
-                appCodename = Settings.CODENAME_CLARA;
-                appVersion = Settings.CODEVERSION_CLARA;
-            }
-
-            Codename = appCodename;
-            VersionString = appVersion;
-            VersionNumber = Convert.ToInt32(appVersion.Replace(".", string.Empty));
-            IsCurrentVersion = false;
-        }
-
-        /// <summary>
-        /// The constructor for a Version object. Accepts codename, version number, and if this is the current version.
+        /// The constructor for a Version object. Accepts codename, version number (as a string value), and if this is the current version.
         /// </summary>
         /// <param name="appCodename"></param>
         /// <param name="appVersion"></param>
         /// <param name="isCurrentVersion"></param>
-        public Version(string appCodename, string appVersion, bool isCurrentVersion)
+        public Version(string appCodename, string appVersion, bool isCurrentVersion = false)
         {
             if (string.IsNullOrEmpty(appCodename) && string.IsNullOrEmpty(appVersion))
             {

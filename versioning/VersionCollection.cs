@@ -28,13 +28,16 @@ namespace AutoScreenCapture
     /// </summary>
     public class VersionCollection : IEnumerable<Version>
     {
+        private Version _currentVersion;
         private readonly List<Version> _versionList;
 
         /// <summary>
         /// A collection class to store and manage Version objects.
         /// </summary>
-        public VersionCollection()
+        public VersionCollection(Settings settings)
         {
+            _currentVersion = new Version(settings.ApplicationCodename, settings.ApplicationVersion, isCurrentVersion: true);
+
             _versionList = new List<Version>();
         }
 
@@ -74,35 +77,44 @@ namespace AutoScreenCapture
         /// <returns>A Version object.</returns>
         public Version Get(string appCodename, string appVersion)
         {
-            if (!string.IsNullOrEmpty(appVersion) &&
-                    (appVersion.Equals("2.2.0.10") ||
-                     appVersion.Equals("2.2.0.11") ||
-                     appVersion.Equals("2.2.0.12") ||
-                     appVersion.Equals("2.2.0.13") ||
-                     appVersion.Equals("2.2.0.14") ||
-                     appVersion.Equals("2.2.0.15") ||
-                     appVersion.Equals("2.2.0.16") ||
-                     appVersion.Equals("2.2.0.17") ||
-                     appVersion.Equals("2.2.0.18") ||
-                     appVersion.Equals("2.2.0.19") ||
-                     appVersion.Equals("2.2.0.20") ||
-                     appVersion.Equals("2.2.0.21") ||
-                     appVersion.Equals("2.2.0.22")))
+            Version versionFromInput = new Version(appCodename, appVersion);
+
+            // Return the current version if the version number we're considering is equal or higher than the current version.
+            if (versionFromInput.Codename.Equals(_currentVersion.Codename) &&
+                versionFromInput.VersionNumber >= _currentVersion.VersionNumber)
+            {
+                return _currentVersion;
+            }
+
+            if (versionFromInput.VersionString.Equals("2.2.0.10") ||
+                     versionFromInput.VersionString.Equals("2.2.0.11") ||
+                     versionFromInput.VersionString.Equals("2.2.0.12") ||
+                     versionFromInput.VersionString.Equals("2.2.0.13") ||
+                     versionFromInput.VersionString.Equals("2.2.0.14") ||
+                     versionFromInput.VersionString.Equals("2.2.0.15") ||
+                     versionFromInput.VersionString.Equals("2.2.0.16") ||
+                     versionFromInput.VersionString.Equals("2.2.0.17") ||
+                     versionFromInput.VersionString.Equals("2.2.0.18") ||
+                     versionFromInput.VersionString.Equals("2.2.0.19") ||
+                     versionFromInput.VersionString.Equals("2.2.0.20") ||
+                     versionFromInput.VersionString.Equals("2.2.0.21") ||
+                     versionFromInput.VersionString.Equals("2.2.0.22"))
             {
                 // If it's any of the "bad" versions then return as 2.2.1.0
                 return new Version(Settings.CODENAME_DALEK, "2.2.1.0");
             }
 
-            foreach (Version version in _versionList)
+            foreach (Version versionInList in _versionList)
             {
-                if (version.Codename.Equals(appCodename) &&
-                    version.VersionString.Equals(appVersion))
+                if (versionInList.Codename.Equals(appCodename) &&
+                    versionInList.VersionString.Equals(appVersion))
                 {
-                    return version;
+                    return versionInList;
                 }
             }
 
-            // Assume we're handling "Clara" 2.1.8.2 instead of returning null because that will just mess up the upgrade path
+            // We can't find a version that's in the version list and it's not the current version or higher than the current version.
+            // So assume we're handling "Clara" 2.1.8.2 instead of returning null because that will just mess up the upgrade path.
             return new Version(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
         }
     }

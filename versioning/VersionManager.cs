@@ -79,6 +79,13 @@ namespace AutoScreenCapture
                 Version versionInConfig = Versions.Get(appCodenameToCheck, appVersionToCheck);
                 Version versionHere = Versions.Get(settings.ApplicationCodename, settings.ApplicationVersion);
 
+                // It's either this version here or it's a version higher than the current version (which would return the current version)
+                // so therefore it's not an old version we're handling.
+                if (versionInConfig.IsCurrentVersion)
+                {
+                    return false;
+                }
+
                 // All of these were a mistake. They should never have had their revision numbers go beyond 9.
                 // So if we find any of these versions then treat them as old versions of the application.
                 if (versionInConfig != null &&

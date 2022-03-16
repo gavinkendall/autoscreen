@@ -138,7 +138,7 @@ namespace AutoScreenCapture
         {
             DefaultSettings = new DefaultSettings();
 
-            _versionCollection = new VersionCollection();
+            _versionCollection = new VersionCollection(this);
 
             // This version.
             _versionCollection.Add(new Version(ApplicationCodename, ApplicationVersion, isCurrentVersion: true));
@@ -630,7 +630,7 @@ namespace AutoScreenCapture
                 return;
             }
 
-            var versionInConfig = new Version(settingCollection.AppCodename, settingCollection.AppVersion, false);
+            var versionInConfig = new Version(settingCollection.AppCodename, settingCollection.AppVersion);
             Version v2346 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, "2.3.4.6");
 
             // SaveScreenshotRefs is a new user setting as of 2.3.4.7 so make sure to add it for older versions.
