@@ -115,7 +115,22 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        textBoxActiveWindowTitle.Text = TriggerObject.Value;
+                        if (textBoxLabel.Enabled)
+                        {
+                            textBoxLabel.Text = TriggerObject.Value;
+                        }
+                        else if (textBoxApplicationFocus.Enabled)
+                        {
+                            textBoxApplicationFocus.Text = TriggerObject.Value;
+                        }
+                        else if (textBoxActiveWindowTitle.Enabled)
+                        {
+                            textBoxActiveWindowTitle.Text = TriggerObject.Value;
+                        }
+                        else if (textBoxDeleteFolder.Enabled)
+                        {
+                            textBoxDeleteFolder.Text = TriggerObject.Value;
+                        }
                     }
                 }
 
@@ -213,6 +228,10 @@ namespace AutoScreenCapture
                     {
                         trigger.Value = textBoxActiveWindowTitle.Text.Trim();
                     }
+                    else if (textBoxDeleteFolder.Enabled)
+                    {
+                        trigger.Value = textBoxDeleteFolder.Text.Trim();
+                    }
                     else
                     {
                         trigger.Value = listBoxModuleItemList.SelectedItem != null ? listBoxModuleItemList.SelectedItem.ToString() : string.Empty;
@@ -269,6 +288,10 @@ namespace AutoScreenCapture
                     else if (textBoxActiveWindowTitle.Enabled)
                     {
                         TriggerCollection.Get(TriggerObject).Value = textBoxActiveWindowTitle.Text.Trim();
+                    }
+                    else if (textBoxDeleteFolder.Enabled)
+                    {
+                        TriggerCollection.Get(TriggerObject).Value = textBoxDeleteFolder.Text.Trim();
                     }
                     else
                     {
@@ -344,11 +367,6 @@ namespace AutoScreenCapture
         private void Okay()
         {
             DialogResult = DialogResult.OK;
-
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.EmailScreenshot)
-            {
-                MessageBox.Show("Please ensure that the application's email (SMTP) settings are correctly configured in order to automatically email screenshots to the intended recipient. It is important that you do not use this application to spam people. Thank you.\n\nThe settings are located in " + _fileSystem.SmtpSettingsFile, "Check Email Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
 
             Close();
         }
@@ -737,7 +755,7 @@ namespace AutoScreenCapture
 
                 // Limit Reached
                 case 5:
-                    textBoxConditionHelp.Text = "When the number of screen capture cycles reach the specified limit.";
+                    textBoxConditionHelp.Text = "When the number of screen capture cycles reach the limit as specified by the Limit option in Setup.";
                     break;
 
                 // Screen Capture Started
@@ -891,7 +909,7 @@ namespace AutoScreenCapture
 
                 // DeleteScreenshotsByDays
                 case 18:
-                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. Use \"Days 0\" for today's date. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete date-stamped folders.";
+                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. Use \"Days 0\" for today's date if you want to always delete screenshots. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete screenshots in date-stamped folders (and the folders themselves).";
                     break;
 
                 // SetLabel
@@ -981,7 +999,7 @@ namespace AutoScreenCapture
 
                 // DeleteScreenshotsFromOldestCaptureCycle
                 case 36:
-                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also set the Interval at 1 second and Limit as 1 (in Setup) and use the Limit Reached condition. Run a screen capture session for a few seconds first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
+                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also set the Limit (in Setup) and use the Limit Reached condition. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
                     break;
             }
         }
