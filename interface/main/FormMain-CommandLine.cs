@@ -198,6 +198,11 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_HIDE = "^-hide$";
 
         /// <summary>
+        /// Regex for parsing the -restart command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_RESTART = "^-restart$";
+
+        /// <summary>
         /// Parse commands issued externally via the command line.
         /// </summary>
         private void ParseCommandLineArguments()
@@ -758,6 +763,15 @@ namespace AutoScreenCapture
                         {
                             _screenCapture.ApplicationError = true;
                         }
+                    }
+
+                    // -restart
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_RESTART))
+                    {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
+                        StopScreenCapture();
+                        StartScreenCapture();
                     }
                 }
 
