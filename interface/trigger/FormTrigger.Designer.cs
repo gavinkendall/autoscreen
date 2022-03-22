@@ -56,22 +56,22 @@
             this.labelPage = new System.Windows.Forms.Label();
             this.groupBoxCondition = new System.Windows.Forms.GroupBox();
             this.groupBoxAction = new System.Windows.Forms.GroupBox();
-            this.textBoxActionHelp = new System.Windows.Forms.TextBox();
-            this.groupBoxDeleteScreenshots = new System.Windows.Forms.GroupBox();
-            this.groupBoxInterval = new System.Windows.Forms.GroupBox();
-            this.labelMilliseconds = new System.Windows.Forms.Label();
-            this.labelSeconds = new System.Windows.Forms.Label();
-            this.labelMinutes = new System.Windows.Forms.Label();
-            this.labelHours = new System.Windows.Forms.Label();
-            this.textBoxDeleteFolder = new System.Windows.Forms.TextBox();
-            this.labelDeleteFolder = new System.Windows.Forms.Label();
-            this.numericUpDownCycleCount = new System.Windows.Forms.NumericUpDown();
-            this.labelCycleCount = new System.Windows.Forms.Label();
-            this.groupBoxModules = new System.Windows.Forms.GroupBox();
-            this.labelLabel = new System.Windows.Forms.Label();
-            this.textBoxLabel = new System.Windows.Forms.TextBox();
-            this.labelApplicationFocus = new System.Windows.Forms.Label();
             this.textBoxApplicationFocus = new System.Windows.Forms.TextBox();
+            this.labelApplicationFocus = new System.Windows.Forms.Label();
+            this.textBoxLabel = new System.Windows.Forms.TextBox();
+            this.labelLabel = new System.Windows.Forms.Label();
+            this.groupBoxModules = new System.Windows.Forms.GroupBox();
+            this.groupBoxInterval = new System.Windows.Forms.GroupBox();
+            this.labelHours = new System.Windows.Forms.Label();
+            this.labelMinutes = new System.Windows.Forms.Label();
+            this.labelSeconds = new System.Windows.Forms.Label();
+            this.labelMilliseconds = new System.Windows.Forms.Label();
+            this.groupBoxDeleteScreenshots = new System.Windows.Forms.GroupBox();
+            this.labelCycleCount = new System.Windows.Forms.Label();
+            this.numericUpDownCycleCount = new System.Windows.Forms.NumericUpDown();
+            this.labelDeleteFolder = new System.Windows.Forms.Label();
+            this.textBoxDeleteFolder = new System.Windows.Forms.TextBox();
+            this.textBoxActionHelp = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
@@ -79,10 +79,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             this.groupBoxCondition.SuspendLayout();
             this.groupBoxAction.SuspendLayout();
-            this.groupBoxDeleteScreenshots.SuspendLayout();
-            this.groupBoxInterval.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).BeginInit();
             this.groupBoxModules.SuspendLayout();
+            this.groupBoxInterval.SuspendLayout();
+            this.groupBoxDeleteScreenshots.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).BeginInit();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -408,33 +408,53 @@
             this.groupBoxAction.TabStop = false;
             this.groupBoxAction.Text = "Action";
             // 
-            // textBoxActionHelp
+            // textBoxApplicationFocus
             // 
-            this.textBoxActionHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxActionHelp.BackColor = System.Drawing.Color.LightYellow;
-            this.textBoxActionHelp.Location = new System.Drawing.Point(6, 19);
-            this.textBoxActionHelp.Multiline = true;
-            this.textBoxActionHelp.Name = "textBoxActionHelp";
-            this.textBoxActionHelp.ReadOnly = true;
-            this.textBoxActionHelp.Size = new System.Drawing.Size(447, 82);
-            this.textBoxActionHelp.TabIndex = 33;
-            this.textBoxActionHelp.TabStop = false;
+            this.textBoxApplicationFocus.Enabled = false;
+            this.textBoxApplicationFocus.Location = new System.Drawing.Point(117, 291);
+            this.textBoxApplicationFocus.Name = "textBoxApplicationFocus";
+            this.textBoxApplicationFocus.Size = new System.Drawing.Size(336, 20);
+            this.textBoxApplicationFocus.TabIndex = 40;
+            this.textBoxApplicationFocus.TabStop = false;
             // 
-            // groupBoxDeleteScreenshots
+            // labelApplicationFocus
             // 
-            this.groupBoxDeleteScreenshots.Controls.Add(this.labelCycleCount);
-            this.groupBoxDeleteScreenshots.Controls.Add(this.numericUpDownCycleCount);
-            this.groupBoxDeleteScreenshots.Controls.Add(this.labelDeleteFolder);
-            this.groupBoxDeleteScreenshots.Controls.Add(this.textBoxDeleteFolder);
-            this.groupBoxDeleteScreenshots.Controls.Add(this.numericUpDownDays);
-            this.groupBoxDeleteScreenshots.Controls.Add(this.labelDays);
-            this.groupBoxDeleteScreenshots.Enabled = false;
-            this.groupBoxDeleteScreenshots.Location = new System.Drawing.Point(6, 398);
-            this.groupBoxDeleteScreenshots.Name = "groupBoxDeleteScreenshots";
-            this.groupBoxDeleteScreenshots.Size = new System.Drawing.Size(447, 77);
-            this.groupBoxDeleteScreenshots.TabIndex = 35;
-            this.groupBoxDeleteScreenshots.TabStop = false;
-            this.groupBoxDeleteScreenshots.Text = "Delete Old Screenshots";
+            this.labelApplicationFocus.AutoSize = true;
+            this.labelApplicationFocus.Enabled = false;
+            this.labelApplicationFocus.Location = new System.Drawing.Point(6, 294);
+            this.labelApplicationFocus.Name = "labelApplicationFocus";
+            this.labelApplicationFocus.Size = new System.Drawing.Size(94, 13);
+            this.labelApplicationFocus.TabIndex = 39;
+            this.labelApplicationFocus.Text = "Application Focus:";
+            // 
+            // textBoxLabel
+            // 
+            this.textBoxLabel.Enabled = false;
+            this.textBoxLabel.Location = new System.Drawing.Point(117, 265);
+            this.textBoxLabel.Name = "textBoxLabel";
+            this.textBoxLabel.Size = new System.Drawing.Size(336, 20);
+            this.textBoxLabel.TabIndex = 38;
+            this.textBoxLabel.TabStop = false;
+            // 
+            // labelLabel
+            // 
+            this.labelLabel.AutoSize = true;
+            this.labelLabel.Enabled = false;
+            this.labelLabel.Location = new System.Drawing.Point(6, 268);
+            this.labelLabel.Name = "labelLabel";
+            this.labelLabel.Size = new System.Drawing.Size(36, 13);
+            this.labelLabel.TabIndex = 37;
+            this.labelLabel.Text = "Label:";
+            // 
+            // groupBoxModules
+            // 
+            this.groupBoxModules.Controls.Add(this.listBoxModuleItemList);
+            this.groupBoxModules.Location = new System.Drawing.Point(459, 19);
+            this.groupBoxModules.Name = "groupBoxModules";
+            this.groupBoxModules.Size = new System.Drawing.Size(333, 456);
+            this.groupBoxModules.TabIndex = 33;
+            this.groupBoxModules.TabStop = false;
+            this.groupBoxModules.Text = "Screens / Regions / Editors / Schedules / Macro Tags / Triggers";
             // 
             // groupBoxInterval
             // 
@@ -453,23 +473,14 @@
             this.groupBoxInterval.TabStop = false;
             this.groupBoxInterval.Text = "Set Screen Capture Interval";
             // 
-            // labelMilliseconds
+            // labelHours
             // 
-            this.labelMilliseconds.AutoSize = true;
-            this.labelMilliseconds.Location = new System.Drawing.Point(320, 21);
-            this.labelMilliseconds.Name = "labelMilliseconds";
-            this.labelMilliseconds.Size = new System.Drawing.Size(67, 13);
-            this.labelMilliseconds.TabIndex = 22;
-            this.labelMilliseconds.Text = "Milliseconds:";
-            // 
-            // labelSeconds
-            // 
-            this.labelSeconds.AutoSize = true;
-            this.labelSeconds.Location = new System.Drawing.Point(209, 21);
-            this.labelSeconds.Name = "labelSeconds";
-            this.labelSeconds.Size = new System.Drawing.Size(52, 13);
-            this.labelSeconds.TabIndex = 23;
-            this.labelSeconds.Text = "Seconds:";
+            this.labelHours.AutoSize = true;
+            this.labelHours.Location = new System.Drawing.Point(6, 21);
+            this.labelHours.Name = "labelHours";
+            this.labelHours.Size = new System.Drawing.Size(38, 13);
+            this.labelHours.TabIndex = 25;
+            this.labelHours.Text = "Hours:";
             // 
             // labelMinutes
             // 
@@ -480,31 +491,48 @@
             this.labelMinutes.TabIndex = 24;
             this.labelMinutes.Text = "Minutes:";
             // 
-            // labelHours
+            // labelSeconds
             // 
-            this.labelHours.AutoSize = true;
-            this.labelHours.Location = new System.Drawing.Point(6, 21);
-            this.labelHours.Name = "labelHours";
-            this.labelHours.Size = new System.Drawing.Size(38, 13);
-            this.labelHours.TabIndex = 25;
-            this.labelHours.Text = "Hours:";
+            this.labelSeconds.AutoSize = true;
+            this.labelSeconds.Location = new System.Drawing.Point(209, 21);
+            this.labelSeconds.Name = "labelSeconds";
+            this.labelSeconds.Size = new System.Drawing.Size(52, 13);
+            this.labelSeconds.TabIndex = 23;
+            this.labelSeconds.Text = "Seconds:";
             // 
-            // textBoxDeleteFolder
+            // labelMilliseconds
             // 
-            this.textBoxDeleteFolder.Location = new System.Drawing.Point(85, 51);
-            this.textBoxDeleteFolder.Name = "textBoxDeleteFolder";
-            this.textBoxDeleteFolder.Size = new System.Drawing.Size(356, 20);
-            this.textBoxDeleteFolder.TabIndex = 37;
-            this.textBoxDeleteFolder.TabStop = false;
+            this.labelMilliseconds.AutoSize = true;
+            this.labelMilliseconds.Location = new System.Drawing.Point(320, 21);
+            this.labelMilliseconds.Name = "labelMilliseconds";
+            this.labelMilliseconds.Size = new System.Drawing.Size(67, 13);
+            this.labelMilliseconds.TabIndex = 22;
+            this.labelMilliseconds.Text = "Milliseconds:";
             // 
-            // labelDeleteFolder
+            // groupBoxDeleteScreenshots
             // 
-            this.labelDeleteFolder.AutoSize = true;
-            this.labelDeleteFolder.Location = new System.Drawing.Point(6, 54);
-            this.labelDeleteFolder.Name = "labelDeleteFolder";
-            this.labelDeleteFolder.Size = new System.Drawing.Size(73, 13);
-            this.labelDeleteFolder.TabIndex = 37;
-            this.labelDeleteFolder.Text = "Delete Folder:";
+            this.groupBoxDeleteScreenshots.Controls.Add(this.labelCycleCount);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.numericUpDownCycleCount);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.labelDeleteFolder);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.textBoxDeleteFolder);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.numericUpDownDays);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.labelDays);
+            this.groupBoxDeleteScreenshots.Enabled = false;
+            this.groupBoxDeleteScreenshots.Location = new System.Drawing.Point(6, 398);
+            this.groupBoxDeleteScreenshots.Name = "groupBoxDeleteScreenshots";
+            this.groupBoxDeleteScreenshots.Size = new System.Drawing.Size(447, 77);
+            this.groupBoxDeleteScreenshots.TabIndex = 35;
+            this.groupBoxDeleteScreenshots.TabStop = false;
+            this.groupBoxDeleteScreenshots.Text = "Delete Screenshots";
+            // 
+            // labelCycleCount
+            // 
+            this.labelCycleCount.AutoSize = true;
+            this.labelCycleCount.Location = new System.Drawing.Point(6, 27);
+            this.labelCycleCount.Name = "labelCycleCount";
+            this.labelCycleCount.Size = new System.Drawing.Size(67, 13);
+            this.labelCycleCount.TabIndex = 39;
+            this.labelCycleCount.Text = "Cycle Count:";
             // 
             // numericUpDownCycleCount
             // 
@@ -519,62 +547,34 @@
             this.numericUpDownCycleCount.TabIndex = 38;
             this.numericUpDownCycleCount.TabStop = false;
             // 
-            // labelCycleCount
+            // labelDeleteFolder
             // 
-            this.labelCycleCount.AutoSize = true;
-            this.labelCycleCount.Location = new System.Drawing.Point(6, 27);
-            this.labelCycleCount.Name = "labelCycleCount";
-            this.labelCycleCount.Size = new System.Drawing.Size(67, 13);
-            this.labelCycleCount.TabIndex = 39;
-            this.labelCycleCount.Text = "Cycle Count:";
+            this.labelDeleteFolder.AutoSize = true;
+            this.labelDeleteFolder.Location = new System.Drawing.Point(6, 54);
+            this.labelDeleteFolder.Name = "labelDeleteFolder";
+            this.labelDeleteFolder.Size = new System.Drawing.Size(73, 13);
+            this.labelDeleteFolder.TabIndex = 37;
+            this.labelDeleteFolder.Text = "Delete Folder:";
             // 
-            // groupBoxModules
+            // textBoxDeleteFolder
             // 
-            this.groupBoxModules.Controls.Add(this.listBoxModuleItemList);
-            this.groupBoxModules.Location = new System.Drawing.Point(459, 19);
-            this.groupBoxModules.Name = "groupBoxModules";
-            this.groupBoxModules.Size = new System.Drawing.Size(333, 456);
-            this.groupBoxModules.TabIndex = 33;
-            this.groupBoxModules.TabStop = false;
-            this.groupBoxModules.Text = "Screens / Regions / Editors / Schedules / Macro Tags / Triggers";
+            this.textBoxDeleteFolder.Location = new System.Drawing.Point(85, 51);
+            this.textBoxDeleteFolder.Name = "textBoxDeleteFolder";
+            this.textBoxDeleteFolder.Size = new System.Drawing.Size(356, 20);
+            this.textBoxDeleteFolder.TabIndex = 37;
+            this.textBoxDeleteFolder.TabStop = false;
             // 
-            // labelLabel
+            // textBoxActionHelp
             // 
-            this.labelLabel.AutoSize = true;
-            this.labelLabel.Enabled = false;
-            this.labelLabel.Location = new System.Drawing.Point(6, 268);
-            this.labelLabel.Name = "labelLabel";
-            this.labelLabel.Size = new System.Drawing.Size(36, 13);
-            this.labelLabel.TabIndex = 37;
-            this.labelLabel.Text = "Label:";
-            // 
-            // textBoxLabel
-            // 
-            this.textBoxLabel.Enabled = false;
-            this.textBoxLabel.Location = new System.Drawing.Point(117, 265);
-            this.textBoxLabel.Name = "textBoxLabel";
-            this.textBoxLabel.Size = new System.Drawing.Size(336, 20);
-            this.textBoxLabel.TabIndex = 38;
-            this.textBoxLabel.TabStop = false;
-            // 
-            // labelApplicationFocus
-            // 
-            this.labelApplicationFocus.AutoSize = true;
-            this.labelApplicationFocus.Enabled = false;
-            this.labelApplicationFocus.Location = new System.Drawing.Point(6, 294);
-            this.labelApplicationFocus.Name = "labelApplicationFocus";
-            this.labelApplicationFocus.Size = new System.Drawing.Size(94, 13);
-            this.labelApplicationFocus.TabIndex = 39;
-            this.labelApplicationFocus.Text = "Application Focus:";
-            // 
-            // textBoxApplicationFocus
-            // 
-            this.textBoxApplicationFocus.Enabled = false;
-            this.textBoxApplicationFocus.Location = new System.Drawing.Point(117, 291);
-            this.textBoxApplicationFocus.Name = "textBoxApplicationFocus";
-            this.textBoxApplicationFocus.Size = new System.Drawing.Size(336, 20);
-            this.textBoxApplicationFocus.TabIndex = 40;
-            this.textBoxApplicationFocus.TabStop = false;
+            this.textBoxActionHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxActionHelp.BackColor = System.Drawing.Color.LightYellow;
+            this.textBoxActionHelp.Location = new System.Drawing.Point(6, 19);
+            this.textBoxActionHelp.Multiline = true;
+            this.textBoxActionHelp.Name = "textBoxActionHelp";
+            this.textBoxActionHelp.ReadOnly = true;
+            this.textBoxActionHelp.Size = new System.Drawing.Size(447, 82);
+            this.textBoxActionHelp.TabIndex = 33;
+            this.textBoxActionHelp.TabStop = false;
             // 
             // FormTrigger
             // 
@@ -608,12 +608,12 @@
             this.groupBoxCondition.PerformLayout();
             this.groupBoxAction.ResumeLayout(false);
             this.groupBoxAction.PerformLayout();
-            this.groupBoxDeleteScreenshots.ResumeLayout(false);
-            this.groupBoxDeleteScreenshots.PerformLayout();
+            this.groupBoxModules.ResumeLayout(false);
             this.groupBoxInterval.ResumeLayout(false);
             this.groupBoxInterval.PerformLayout();
+            this.groupBoxDeleteScreenshots.ResumeLayout(false);
+            this.groupBoxDeleteScreenshots.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).EndInit();
-            this.groupBoxModules.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -415,7 +415,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableTrigger, "Disable Trigger").Description);
 
             // More actions.
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteOldScreenshotsByDays, "Delete Old Screenshots By Days").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshotsByDays, "Delete Screenshots By Days").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetLabel, "Apply Label").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitleAsMatch, "Set Active Window Title As Match").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetApplicationFocus, "Set Application Focus").Description);
@@ -432,7 +432,8 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowOrHideInterface, "Show Interface or Hide Interface").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartOrStopScreenCapture, "Start Screen Capture or Stop Screen Capture").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RestartScreenCapture, "Restart Screen Capture").Description);
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteOldScreenshotsByCycleCount, "Delete Old Screenshots By Cycle Count").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshotsByCycleCount, "Delete Screenshots By Cycle Count").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshotsFromOldestCaptureCycle, "Delete Screenshots From Oldest Capture Cycle").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -606,7 +607,7 @@ namespace AutoScreenCapture
                 numericUpDownMillisecondsInterval.Enabled = true;
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteOldScreenshotsByDays)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsByDays)
             {
                 groupBoxDeleteScreenshots.Enabled = true;
                 labelDays.Enabled = true;
@@ -620,7 +621,7 @@ namespace AutoScreenCapture
                     numericUpDownDays.Value = 30;
                     textBoxDeleteFolder.Text = _fileSystem.ScreenshotsFolder + "$date[yyyy-MM-dd]$";
                 }
-                else if (TriggerObject.ActionType == TriggerActionType.DeleteOldScreenshotsByDays)
+                else if (TriggerObject.ActionType == TriggerActionType.DeleteScreenshotsByDays)
                 {
                     numericUpDownDays.Value = TriggerObject.Days;
                     textBoxDeleteFolder.Text = TriggerObject.Value;
@@ -667,7 +668,7 @@ namespace AutoScreenCapture
                 }
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteOldScreenshotsByCycleCount)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshotsByCycleCount)
             {
                 groupBoxDeleteScreenshots.Enabled = true;
                 labelCycleCount.Enabled = true;
@@ -888,9 +889,9 @@ namespace AutoScreenCapture
                     textBoxActionHelp.Text = "Disable a specified Trigger.";
                     break;
 
-                // DeleteOldScreenshotsByDays
+                // DeleteScreenshotsByDays
                 case 18:
-                    textBoxActionHelp.Text = "Delete old screenshots after a specified number of days. Use \"Days 0\" for today's date. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete old date-stamped folders.";
+                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. Use \"Days 0\" for today's date. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete date-stamped folders.";
                     break;
 
                 // SetLabel
@@ -973,9 +974,14 @@ namespace AutoScreenCapture
                     textBoxActionHelp.Text = "Restart the screen capture session. This is useful if you will be changing the interval during a running screen capture session and need the session to restart using the new interval. This is a simple stop and start operation.";
                     break;
 
-                // DeleteOldScreenshotsByCycleCount
+                // DeleteScreenshotsByCycleCount
                 case 35:
-                    textBoxActionHelp.Text = "Delete old screenshots after a specified number of screen capture cycles. Each time a set of screenshots are taken (for multiple screens and/or regions) it represents a screen capture cycle. The screenshots are deleted in order from the oldest screen capture cycle to the newest screen capture cycle. You can maintain a rolling delete if you correctly configure Interval and Limit (in Setup), the Limit Reached condition, and Cycle Count.";
+                    textBoxActionHelp.Text = "Delete screenshots after a specified number of screen capture cycles. Each time a set of screenshots are taken (for multiple screens and/or regions) it represents a screen capture cycle. The screenshots are deleted in order from the oldest screen capture cycle to the newest screen capture cycle. This action will delete all screenshots when triggered.";
+                    break;
+
+                // DeleteScreenshotsFromOldestCaptureCycle
+                case 36:
+                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also set the Interval at 1 second and Limit as 1 (in Setup) and use the Limit Reached condition. Run a screen capture session for a few seconds first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
                     break;
             }
         }

@@ -95,6 +95,7 @@ namespace AutoScreenCapture
                     Version v2300 = null;
                     Version v2340 = null;
                     Version v2404 = null;
+                    Version v2419 = null;
                     Version configVersion = null;
 
                     // Change the data for each Trigger that's being loaded if we've detected that
@@ -106,6 +107,7 @@ namespace AutoScreenCapture
                         v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                         v2340 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.4.0");
                         v2404 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.4.0.4");
+                        v2419 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.4.1.9");
 
                         configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
                     }
@@ -133,12 +135,11 @@ namespace AutoScreenCapture
 
                                         if (v2340 != null && configVersion != null && configVersion.VersionNumber < v2340.VersionNumber)
                                         {
-                                            log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected when parsing for trigger condition type");
-
-                                            // 2.3.4.0 changes the trigger condition of "ScreenshotTaken" to "AfterScreenshotTaken"
+                                           // 2.3.4.0 changes the trigger condition of "ScreenshotTaken" to "AfterScreenshotTaken"
                                             // because of the new condition "BeforeScreenshotTaken" introduced so now we separate those conditions.
                                             if (nodeValue.Equals("ScreenshotTaken"))
                                             {
+                                                log.WriteDebugMessage("Boombayah 2.3.3.4 or older detected when parsing for trigger condition type ScreenshotsTaken so converting to condition type to AfterScreenshotTaken");
                                                 nodeValue = TriggerConditionType.AfterScreenshotTaken.ToString();
                                             }
                                         }
@@ -155,9 +156,20 @@ namespace AutoScreenCapture
                                     case TRIGGER_ACTION:
                                         xReader.Read();
 
+                                        string triggerActionNode = xReader.Value;
+
+                                        if (v2419 != null && configVersion != null && configVersion.VersionNumber < v2419.VersionNumber)
+                                        {
+                                            if (triggerActionNode.Equals("DeleteScreenshots"))
+                                            {
+                                                log.WriteDebugMessage("Blade 2.4.1.8 or older detected when parsing for trigger action type DeleteScreenshots so converting action type to DeleteScreenshotsByDays");
+                                                triggerActionNode = TriggerActionType.DeleteScreenshotsByDays.ToString();
+                                            }
+                                        }
+                                        
                                         TriggerActionType triggerActionType;
 
-                                        if (Enum.TryParse(xReader.Value, out triggerActionType))
+                                        if (Enum.TryParse(triggerActionNode, out triggerActionType))
                                         {
                                             trigger.ActionType = triggerActionType;
                                         }
@@ -269,7 +281,7 @@ namespace AutoScreenCapture
                             Enable = false,
                             Name = "Delete Screenshots " + days + " Days Old",
                             ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
-                            ActionType = TriggerActionType.DeleteOldScreenshotsByDays,
+                            ActionType = TriggerActionType.DeleteScreenshotsByDays,
                             Date = DateTime.Now,
                             Time = DateTime.Now,
                             ScreenCaptureInterval = 0,
@@ -377,7 +389,7 @@ namespace AutoScreenCapture
                         Enable = false,
                         Name = "Delete Screenshots 30 Days Old",
                         ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
-                        ActionType = TriggerActionType.DeleteOldScreenshotsByDays,
+                        ActionType = TriggerActionType.DeleteScreenshotsByDays,
                         Date = DateTime.Now,
                         Time = DateTime.Now,
                         ScreenCaptureInterval = 0,

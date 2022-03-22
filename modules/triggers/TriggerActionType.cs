@@ -116,9 +116,9 @@ namespace AutoScreenCapture
         DisableTrigger = 17,
 
         /// <summary>
-        /// Delete old screenshots by days.
+        /// Delete screenshots by days.
         /// </summary>
-        DeleteOldScreenshotsByDays = 18,
+        DeleteScreenshotsByDays = 18,
 
         /// <summary>
         /// Set the label with the specific text.
@@ -201,8 +201,13 @@ namespace AutoScreenCapture
         RestartScreenCapture = 34,
 
         /// <summary>
-        /// Delete old screenshots by cycle count.
+        /// Delete screenshots by cycle count.
         /// </summary>
-        DeleteOldScreenshotsByCycleCount = 35
+        DeleteScreenshotsByCycleCount = 35,
+
+        /// <summary>
+        /// Delete screenshots from the oldest capture cycle.
+        /// </summary>
+        DeleteScreenshotsFromOldestCaptureCycle = 36
     }
 }

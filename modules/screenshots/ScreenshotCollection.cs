@@ -1411,13 +1411,13 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Deletes old screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
+        /// Deletes screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
         /// </summary>
         /// <param name="days">The number of days to consider.</param>
         /// <param name="folder">The folder to delete. The folder path may contain macro tags.</param>
         /// <param name="macroParser">The macro tag parser to use.</param>
         /// <param name="macroTagCollection">A collectino of macro tags.</param>
-        public void DeleteOldScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection)
+        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection)
         {
             try
             {
@@ -1478,15 +1478,15 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                _log.WriteExceptionMessage("ScreenshotCollection::DeleteOldScreenshotsByDays", ex);
+                _log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshotsByDays", ex);
             }
         }
 
         /// <summary>
-        /// 
+        /// Deletes screenshots based on the specified screen capture cycle count. This value needs to be greater than 0.
         /// </summary>
-        /// <param name="cycleCount"></param>
-        public void DeleteOldScreenshotsByCycleCount(int cycleCount)
+        /// <param name="cycleCount">The cycle count to use when considering when to delete screenshots.</param>
+        public void DeleteScreenshotsByCycleCount(int cycleCount)
         {
             try
             {
@@ -1541,7 +1541,54 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                _log.WriteExceptionMessage("ScreenshotCollection::DeleteOldScreenshotsByCycleCount", ex);
+                _log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshotsByCycleCount", ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes screenshots from the oldest screen capture cycle. You can use this for a rolling delete given the correctly configured setup.
+        /// </summary>
+        public void DeleteScreenshotsFromOldestCaptureCycle()
+        {
+            try
+            {
+                lock (_slideList)
+                {
+                    // Get the first slide in the slide list. This should be the oldest slide we can find.
+                    Slide slide = _slideList.First<Slide>();
+
+                    Regex rgxSlideNameSplitToDateAndTime = new Regex(@"^\{date=(?<Date>\d{4}-\d{2}-\d{2})\}\{time=(?<Time>\d{2}:\d{2}:\d{2}\.\d{3})\}$");
+
+                    if (rgxSlideNameSplitToDateAndTime.IsMatch(slide.Name))
+                    {
+                        string strDate = rgxSlideNameSplitToDateAndTime.Match(slide.Name).Groups["Date"].Value;
+                        string strTime = rgxSlideNameSplitToDateAndTime.Match(slide.Name).Groups["Time"].Value;
+
+                        lock (_screenshotList)
+                        {
+                            // Use the extracted date and time to get the list of screenshots we need to delete
+                            // based on when those screenshots were taken.
+                            List<Screenshot> screenshotsToDelete = GetScreenshots(strDate, strTime);
+
+                            // Delete the screenshots.
+                            DeleteScreenshots(screenshotsToDelete);
+                        }
+
+                        // Get a list of screenshot nodes by date and time.
+                        XmlNodeList screenshotNodesToDeleteByDateAndTime = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + strDate + "' and " + SCREENSHOT_TIME + "='" + strTime + "']");
+
+                        // Delete the screenshot XNL nodes.
+                        DeleteScreenshotNodes(screenshotNodesToDeleteByDateAndTime);
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                _log.WriteErrorMessage("Access to the file system was denied due to insufficient permissions during screenshot deletion operation");
+            }
+            catch (Exception ex)
+            {
+                _log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshotsFromOldestCaptureCycle", ex);
             }
         }
 
