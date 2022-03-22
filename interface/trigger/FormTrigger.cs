@@ -103,6 +103,7 @@ namespace AutoScreenCapture
                 }
 
                 numericUpDownDays.Value = TriggerObject.Days;
+                numericUpDownCycleCount.Value = TriggerObject.CycleCount;
 
                 comboBoxDay.SelectedIndex = comboBoxDay.Items.IndexOf(TriggerObject.Day);
 
@@ -114,7 +115,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        textBoxTriggerValue.Text = TriggerObject.Value;
+                        textBoxActiveWindowTitle.Text = TriggerObject.Value;
                     }
                 }
 
@@ -196,12 +197,21 @@ namespace AutoScreenCapture
                         Time = dateTimePickerTime.Value,
                         Day = comboBoxDay.Text,
                         Days = (int)numericUpDownDays.Value,
+                        CycleCount = (int)numericUpDownCycleCount.Value,
                         ScreenCaptureInterval = screenCaptureInterval
                     };
 
-                    if (textBoxTriggerValue.Enabled)
+                    if (textBoxLabel.Enabled)
                     {
-                        trigger.Value = textBoxTriggerValue.Text.Trim();
+                        trigger.Value = textBoxLabel.Text.Trim();
+                    }
+                    else if (textBoxApplicationFocus.Enabled)
+                    {
+                        trigger.Value = textBoxApplicationFocus.Text.Trim();
+                    }
+                    else if (textBoxActiveWindowTitle.Enabled)
+                    {
+                        trigger.Value = textBoxActiveWindowTitle.Text.Trim();
                     }
                     else
                     {
@@ -246,10 +256,19 @@ namespace AutoScreenCapture
                     TriggerCollection.Get(TriggerObject).Time = dateTimePickerTime.Value;
                     TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
                     TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
+                    TriggerCollection.Get(TriggerObject).CycleCount = (int)numericUpDownCycleCount.Value;
 
-                    if (textBoxTriggerValue.Enabled)
+                    if (textBoxLabel.Enabled)
                     {
-                        TriggerCollection.Get(TriggerObject).Value = textBoxTriggerValue.Text.Trim();
+                        TriggerCollection.Get(TriggerObject).Value = textBoxLabel.Text.Trim();
+                    }
+                    else if (textBoxApplicationFocus.Enabled)
+                    {
+                        TriggerCollection.Get(TriggerObject).Value = textBoxApplicationFocus.Text.Trim();
+                    }
+                    else if (textBoxActiveWindowTitle.Enabled)
+                    {
+                        TriggerCollection.Get(TriggerObject).Value = textBoxActiveWindowTitle.Text.Trim();
                     }
                     else
                     {
@@ -396,7 +415,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DisableTrigger, "Disable Trigger").Description);
 
             // More actions.
-            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteScreenshots, "Delete Screenshots").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteOldScreenshotsByDays, "Delete Old Screenshots By Days").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetLabel, "Apply Label").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetActiveWindowTitleAsMatch, "Set Active Window Title As Match").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.SetApplicationFocus, "Set Application Focus").Description);
@@ -413,6 +432,7 @@ namespace AutoScreenCapture
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.ShowOrHideInterface, "Show Interface or Hide Interface").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.StartOrStopScreenCapture, "Start Screen Capture or Stop Screen Capture").Description);
             listBoxAction.Items.Add(new TriggerAction(TriggerActionType.RestartScreenCapture, "Restart Screen Capture").Description);
+            listBoxAction.Items.Add(new TriggerAction(TriggerActionType.DeleteOldScreenshotsByCycleCount, "Delete Old Screenshots By Cycle Count").Description);
 
             listBoxAction.SelectedIndex = 0;
         }
@@ -551,12 +571,24 @@ namespace AutoScreenCapture
 
             ShowActionHelpText();
 
-            labelDays.Enabled = false;
-            labelInterval.Enabled = false;
-            labelTriggerValue.Enabled = false;
+            labelLabel.Enabled = false;
+            textBoxLabel.Enabled = false;
 
-            textBoxTriggerValue.Enabled = false;
-            textBoxTriggerValue.Text = string.Empty;
+            labelApplicationFocus.Enabled = false;
+            textBoxApplicationFocus.Enabled = false;
+
+            labelActiveWindowTitle.Enabled = false;
+            textBoxActiveWindowTitle.Enabled = false;
+
+            groupBoxDeleteScreenshots.Enabled = false;
+            labelCycleCount.Enabled = false;
+            numericUpDownCycleCount.Enabled = false;
+            labelDays.Enabled = false;
+            numericUpDownDays.Enabled = false;
+            labelDeleteFolder.Enabled = false;
+            textBoxDeleteFolder.Enabled = false;
+
+            groupBoxInterval.Enabled = false;
 
             numericUpDownHoursInterval.Enabled = false;
             numericUpDownMinutesInterval.Enabled = false;
@@ -564,36 +596,34 @@ namespace AutoScreenCapture
             numericUpDownMillisecondsInterval.Enabled = false;
 
             numericUpDownDays.Value = 30;
-            numericUpDownDays.Enabled = false;
 
             if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetScreenCaptureInterval)
             {
-                labelInterval.Enabled = true;
+                groupBoxInterval.Enabled = true;
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
                 numericUpDownMillisecondsInterval.Enabled = true;
             }
 
-            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteScreenshots)
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteOldScreenshotsByDays)
             {
-                labelTriggerValue.Text = "Delete Folder";
-                labelTriggerValue.Enabled = true;
-                textBoxTriggerValue.Enabled = true;
-
+                groupBoxDeleteScreenshots.Enabled = true;
                 labelDays.Enabled = true;
                 numericUpDownDays.Enabled = true;
+                labelDeleteFolder.Enabled = true;
+                textBoxDeleteFolder.Enabled = true;
 
                 // Suggest some values to help out the user. These are the default values used by the "Keep screenshots for 30 days" trigger.
                 if (TriggerObject == null)
                 {
                     numericUpDownDays.Value = 30;
-                    textBoxTriggerValue.Text = _fileSystem.ScreenshotsFolder + "$date[yyyy-MM-dd]$";
+                    textBoxDeleteFolder.Text = _fileSystem.ScreenshotsFolder + "$date[yyyy-MM-dd]$";
                 }
-                else if (TriggerObject.ActionType == TriggerActionType.DeleteScreenshots)
+                else if (TriggerObject.ActionType == TriggerActionType.DeleteOldScreenshotsByDays)
                 {
                     numericUpDownDays.Value = TriggerObject.Days;
-                    textBoxTriggerValue.Text = TriggerObject.Value;
+                    textBoxDeleteFolder.Text = TriggerObject.Value;
                 }
             }
 
@@ -602,34 +632,46 @@ namespace AutoScreenCapture
                 listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsNoMatch ||
                 listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
             {
-                labelTriggerValue.Enabled = true;
-                textBoxTriggerValue.Enabled = true;
-
                 if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetLabel)
                 {
-                    labelTriggerValue.Text = "Label:";
+                    labelLabel.Enabled = true;
+                    textBoxLabel.Enabled = true;
+
+                    if (TriggerObject != null)
+                    {
+                        textBoxLabel.Text = TriggerObject.Value;
+                    }
+                }
+
+                if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
+                {
+                    labelApplicationFocus.Enabled = true;
+                    textBoxApplicationFocus.Enabled = true;
+
+                    if (TriggerObject != null)
+                    {
+                        textBoxApplicationFocus.Text = TriggerObject.Value;
+                    }
                 }
 
                 if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsMatch ||
                     listBoxAction.SelectedIndex == (int)TriggerActionType.SetActiveWindowTitleAsNoMatch)
                 {
-                    labelTriggerValue.Text = "Active Window Title:";
-                }
+                    labelActiveWindowTitle.Enabled = true;
+                    textBoxActiveWindowTitle.Enabled = true;
 
-                if (listBoxAction.SelectedIndex == (int)TriggerActionType.SetApplicationFocus)
-                {
-                    labelTriggerValue.Text = "Application Focus:";
+                    if (TriggerObject != null)
+                    {
+                        textBoxActiveWindowTitle.Text = TriggerObject.Value;
+                    }
                 }
+            }
 
-                if (TriggerObject != null &&
-                    (TriggerObject.ActionType == TriggerActionType.SetLabel ||
-                    TriggerObject.ActionType == TriggerActionType.SetActiveWindowTitleAsMatch ||
-                    TriggerObject.ActionType == TriggerActionType.SetActiveWindowTitleAsNoMatch ||
-                    TriggerObject.ActionType == TriggerActionType.SetApplicationFocus))
-                {
-                    numericUpDownDays.Value = TriggerObject.Days;
-                    textBoxTriggerValue.Text = TriggerObject.Value;
-                }
+            if (listBoxAction.SelectedIndex == (int)TriggerActionType.DeleteOldScreenshotsByCycleCount)
+            {
+                groupBoxDeleteScreenshots.Enabled = true;
+                labelCycleCount.Enabled = true;
+                numericUpDownCycleCount.Enabled = true;
             }
 
             DetermineModuleListEnable();
@@ -756,179 +798,184 @@ namespace AutoScreenCapture
         {
             switch (listBoxAction.SelectedIndex)
             {
-                // Exit Application
+                // ExitApplication
                 case 0:
                     textBoxActionHelp.Text = "Exit the application.";
                     break;
 
-                // Hide Interface
+                // HideInterface
                 case 1:
                     textBoxActionHelp.Text = "Hide the application's main interface window.";
                     break;
 
-                // Run Editor
+                // RunEditor
                 case 2:
                     textBoxActionHelp.Text = "Run a specified Editor.";
                     break;
 
-                // Show Interface
+                // ShowInterface
                 case 3:
                     textBoxActionHelp.Text = "Show the application's main interface window.";
                     break;
 
-                // Start Screen Capture
+                // StartScreenCapture
                 case 4:
                     textBoxActionHelp.Text = "Start a screen capture session.";
                     break;
 
-                // Stop Screen Capture
+                // StopScreenCapture
                 case 5:
                     textBoxActionHelp.Text = "Stop the currently running screen capture session.";
                     break;
 
-                // Email Screenshot (SMTP)
+                // EmailScreenshot
                 case 6:
                     textBoxActionHelp.Text = "Email screenshots using the configured email server settings.";
                     break;
 
-                // Set Screen Capture Interval
+                // SetScreenCaptureInterval
                 case 7:
                     textBoxActionHelp.Text = "Set the timer's screen capture interval.";
                     break;
 
-                // Enable Screen
+                // EnableScreen
                 case 8:
                     textBoxActionHelp.Text = "Enable a specified Screen.";
                     break;
 
-                // Enable Region
+                // EnableRegion
                 case 9:
                     textBoxActionHelp.Text = "Enable a specified Region.";
                     break;
 
-                // Enable Schedule
+                // EnableSchedule
                 case 10:
                     textBoxActionHelp.Text = "Enable a specified Schedule.";
                     break;
 
-                // Enable Macro Tag
+                // EnableMacroTag
                 case 11:
                     textBoxActionHelp.Text = "Enable a specified Macro Tag.";
                     break;
 
-                // Enable Trigger
+                // EnableTrigger
                 case 12:
                     textBoxActionHelp.Text = "Enable a specified Trigger.";
                     break;
 
-                // Disable Screen
+                // DisableScreen
                 case 13:
                     textBoxActionHelp.Text = "Disable a specified Screen.";
                     break;
 
-                // Disable Region
+                // DisableRegion
                 case 14:
                     textBoxActionHelp.Text = "Disable a specified Region.";
                     break;
 
-                // Disable Schedule
+                // DisableSchedule
                 case 15:
                     textBoxActionHelp.Text = "Disable a specified Schedule.";
                     break;
 
-                // Disable Macro Tag
+                // DisableMacroTag
                 case 16:
                     textBoxActionHelp.Text = "Disable a specified Macro Tag.";
                     break;
 
-                // Disable Trigger
+                // DisableTrigger
                 case 17:
                     textBoxActionHelp.Text = "Disable a specified Trigger.";
                     break;
 
-                // Delete Screenshots
+                // DeleteOldScreenshotsByDays
                 case 18:
-                    textBoxActionHelp.Text = "Delete screenshots after a specified number of days. Use \"Days 0\" for today's date. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete old date-stamped folders.";
+                    textBoxActionHelp.Text = "Delete old screenshots after a specified number of days. Use \"Days 0\" for today's date. It is recommended to use $date[yyyy-MM-dd]$ in the Delete Folder field if you want to delete old date-stamped folders.";
                     break;
 
-                // Apply Label
+                // SetLabel
                 case 19:
                     textBoxActionHelp.Text = "Apply a specified label to each screenshot during a screen capture session.";
                     break;
 
-                // Set Active Window Title As Match
+                // SetActiveWindowTitleAsMatch
                 case 20:
                     textBoxActionHelp.Text = "Set the text used for comparison against the title of the active window and match on the given text.";
                     break;
 
-                // Set Application Focus
+                // SetApplicationFocus
                 case 21:
                     textBoxActionHelp.Text = "Set the name of the process to be forced into focus.";
                     break;
 
-                // File Transfer Screenshot (SFTP)
+                // FileTransferScreenshot
                 case 22:
                     textBoxActionHelp.Text = "Transfer screenshots to a file server using the configured File Transfer settings.";
                     break;
 
-                // Set Active Window Title As No Match
+                // SetActiveWindowTitleAsNoMatch
                 case 23:
                     textBoxActionHelp.Text = "Set the text used for comparison against the title of the active window and do not match on the given text.";
                     break;
 
-                // Show System Tray Icon
+                // ShowSystemTrayIcon
                 case 24:
                     textBoxActionHelp.Text = "Show the system tray icon.";
                     break;
 
-                // Hide System Tray Icon
+                // HideSystemTrayIcon
                 case 25:
                     textBoxActionHelp.Text = "Hide the system tray icon.";
                     break;
 
-                // Take Screenshot
+                // TakeScreenshot
                 case 26:
                     textBoxActionHelp.Text = "Take a set of screenshots.";
                     break;
 
-                // Region Select->Clipboard.
+                // RegionSelectClipboard
                 case 27:
                     textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard from Region Select.";
                     break;
 
-                // Region Select->Clipboard/Auto Save.
+                // RegionSelectClipboardAutoSave
                 case 28:
                     textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard/Auto Save from Region Select.";
                     break;
 
-                // Region Select->Clipboard/Auto Save/Edit.
+                // RegionSelectClipboardAutoSaveEdit
                 case 29:
                     textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard/Auto Save/Edit from Region Select.";
                     break;
 
-                // Region Select->Clipboard/Floating Screenshot.
+                // RegionSelectClipboardFloatingScreenshot
                 case 30:
                     textBoxActionHelp.Text = "Perform the same action as if you had selected Clipboard/Floating Screenshot from Region Select.";
                     break;
 
-                // Region Select->Floating Screenshot.
+                // RegionSelectFloatingScreenshot
                 case 31:
                     textBoxActionHelp.Text = "Perform the same action as if you had selected Floating Screenshot from Region Select.";
                     break;
 
-                // Shows or hides the interface.
+                // ShowOrHideInterface
                 case 32:
                     textBoxActionHelp.Text = "Show or hide the interface depending on its current visibility state.";
                     break;
 
-                // Starts or stops screen capture.
+                // StartOrStopScreenCapture
                 case 33:
                     textBoxActionHelp.Text = "Start or stop screen capture depending on the current state. This will start a session if the session is idle (ready to be started) or stop a session if the session is already running.";
                     break;
 
-                // Restart the screen capture session.
+                // RestartScreenCapture
                 case 34:
                     textBoxActionHelp.Text = "Restart the screen capture session. This is useful if you will be changing the interval during a running screen capture session and need the session to restart using the new interval. This is a simple stop and start operation.";
+                    break;
+
+                // DeleteOldScreenshotsByCycleCount
+                case 35:
+                    textBoxActionHelp.Text = "Delete old screenshots after a specified number of screen capture cycles. Each time a set of screenshots are taken (for multiple screens and/or regions) it represents a screen capture cycle. The screenshots are deleted in order from the oldest screen capture cycle to the newest screen capture cycle. You can maintain a rolling delete if you correctly configure Interval and Limit (in Setup), the Limit Reached condition, and Cycle Count.";
                     break;
             }
         }

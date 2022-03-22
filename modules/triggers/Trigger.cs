@@ -63,7 +63,7 @@ namespace AutoScreenCapture
         public string Day { get; set; }
 
         /// <summary>
-        /// The number of days.
+        /// The number of days. This is used by the DeleteOldScreenshotsByDays action.
         /// </summary>
         public int Days { get; set; }
 
@@ -78,6 +78,11 @@ namespace AutoScreenCapture
         /// Maybe the label to use when applying a Label.
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// The number of screen capture cycles. This is used by the DeleteOldScreenshotsByCycleCount action.
+        /// </summary>
+        public int CycleCount { get; set; }
 
         /// <summary>
         /// The empty constructor for the trigger.

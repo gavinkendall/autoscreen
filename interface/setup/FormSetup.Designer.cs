@@ -549,11 +549,11 @@
             // labelLimit
             // 
             this.labelLimit.AutoSize = true;
-            this.labelLimit.Location = new System.Drawing.Point(74, 206);
+            this.labelLimit.Location = new System.Drawing.Point(30, 206);
             this.labelLimit.Name = "labelLimit";
-            this.labelLimit.Size = new System.Drawing.Size(24, 13);
+            this.labelLimit.Size = new System.Drawing.Size(31, 13);
             this.labelLimit.TabIndex = 4;
-            this.labelLimit.Text = "limit";
+            this.labelLimit.Text = "Limit:";
             // 
             // labelLimitHelp
             // 
@@ -604,7 +604,7 @@
             // 
             // numericUpDownCaptureLimit
             // 
-            this.numericUpDownCaptureLimit.Location = new System.Drawing.Point(26, 204);
+            this.numericUpDownCaptureLimit.Location = new System.Drawing.Point(67, 204);
             this.numericUpDownCaptureLimit.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -1618,7 +1618,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOK.Location = new System.Drawing.Point(12, 311);
+            this.buttonOK.Location = new System.Drawing.Point(578, 311);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
             this.buttonOK.TabIndex = 31;

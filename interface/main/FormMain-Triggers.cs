@@ -267,8 +267,8 @@ namespace AutoScreenCapture
                     BuildTriggersModule();
                     break;
 
-                case TriggerActionType.DeleteScreenshots:
-                    _screenshotCollection.DeleteScreenshots(trigger.Days, trigger.Value, _macroParser, _formMacroTag.MacroTagCollection, _log);
+                case TriggerActionType.DeleteOldScreenshotsByDays:
+                    _screenshotCollection.DeleteOldScreenshotsByDays(trigger.Days, trigger.Value, _macroParser, _formMacroTag.MacroTagCollection);
                     break;
 
                 case TriggerActionType.SetLabel:
@@ -341,6 +341,10 @@ namespace AutoScreenCapture
                 case TriggerActionType.RestartScreenCapture:
                     StopScreenCapture();
                     StartScreenCapture();
+                    break;
+
+                case TriggerActionType.DeleteOldScreenshotsByCycleCount:
+                    _screenshotCollection.DeleteOldScreenshotsByCycleCount(trigger.CycleCount);
                     break;
             }
         }

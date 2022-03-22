@@ -60,10 +60,10 @@
             this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
             this.groupBoxInterval = new System.Windows.Forms.GroupBox();
-            this.labelHours = new System.Windows.Forms.Label();
-            this.labelMinutes = new System.Windows.Forms.Label();
-            this.labelSeconds = new System.Windows.Forms.Label();
             this.labelMilliseconds = new System.Windows.Forms.Label();
+            this.labelSeconds = new System.Windows.Forms.Label();
+            this.labelMinutes = new System.Windows.Forms.Label();
+            this.labelHours = new System.Windows.Forms.Label();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
@@ -76,7 +76,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(117, 420);
+            this.buttonCancel.Location = new System.Drawing.Point(645, 419);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
             this.buttonCancel.TabIndex = 30;
@@ -87,7 +87,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOK.Location = new System.Drawing.Point(12, 420);
+            this.buttonOK.Location = new System.Drawing.Point(540, 419);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
             this.buttonOK.TabIndex = 29;
@@ -419,23 +419,14 @@
             this.groupBoxInterval.TabStop = false;
             this.groupBoxInterval.Text = "Interval";
             // 
-            // labelHours
+            // labelMilliseconds
             // 
-            this.labelHours.AutoSize = true;
-            this.labelHours.Location = new System.Drawing.Point(54, 25);
-            this.labelHours.Name = "labelHours";
-            this.labelHours.Size = new System.Drawing.Size(33, 13);
-            this.labelHours.TabIndex = 17;
-            this.labelHours.Text = "hours";
-            // 
-            // labelMinutes
-            // 
-            this.labelMinutes.AutoSize = true;
-            this.labelMinutes.Location = new System.Drawing.Point(54, 51);
-            this.labelMinutes.Name = "labelMinutes";
-            this.labelMinutes.Size = new System.Drawing.Size(43, 13);
-            this.labelMinutes.TabIndex = 18;
-            this.labelMinutes.Text = "minutes";
+            this.labelMilliseconds.AutoSize = true;
+            this.labelMilliseconds.Location = new System.Drawing.Point(54, 105);
+            this.labelMilliseconds.Name = "labelMilliseconds";
+            this.labelMilliseconds.Size = new System.Drawing.Size(63, 13);
+            this.labelMilliseconds.TabIndex = 20;
+            this.labelMilliseconds.Text = "milliseconds";
             // 
             // labelSeconds
             // 
@@ -446,14 +437,23 @@
             this.labelSeconds.TabIndex = 19;
             this.labelSeconds.Text = "seconds";
             // 
-            // labelMilliseconds
+            // labelMinutes
             // 
-            this.labelMilliseconds.AutoSize = true;
-            this.labelMilliseconds.Location = new System.Drawing.Point(54, 105);
-            this.labelMilliseconds.Name = "labelMilliseconds";
-            this.labelMilliseconds.Size = new System.Drawing.Size(63, 13);
-            this.labelMilliseconds.TabIndex = 20;
-            this.labelMilliseconds.Text = "milliseconds";
+            this.labelMinutes.AutoSize = true;
+            this.labelMinutes.Location = new System.Drawing.Point(54, 51);
+            this.labelMinutes.Name = "labelMinutes";
+            this.labelMinutes.Size = new System.Drawing.Size(43, 13);
+            this.labelMinutes.TabIndex = 18;
+            this.labelMinutes.Text = "minutes";
+            // 
+            // labelHours
+            // 
+            this.labelHours.AutoSize = true;
+            this.labelHours.Location = new System.Drawing.Point(54, 25);
+            this.labelHours.Name = "labelHours";
+            this.labelHours.Size = new System.Drawing.Size(33, 13);
+            this.labelHours.TabIndex = 17;
+            this.labelHours.Text = "hours";
             // 
             // FormSchedule
             // 

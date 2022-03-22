@@ -37,8 +37,8 @@
             this.listBoxCondition = new System.Windows.Forms.ListBox();
             this.listBoxModuleItemList = new System.Windows.Forms.ListBox();
             this.listBoxAction = new System.Windows.Forms.ListBox();
-            this.labelTriggerValue = new System.Windows.Forms.Label();
-            this.textBoxTriggerValue = new System.Windows.Forms.TextBox();
+            this.labelActiveWindowTitle = new System.Windows.Forms.Label();
+            this.textBoxActiveWindowTitle = new System.Windows.Forms.TextBox();
             this.labelDay = new System.Windows.Forms.Label();
             this.labelTime = new System.Windows.Forms.Label();
             this.labelDate = new System.Windows.Forms.Label();
@@ -56,8 +56,22 @@
             this.labelPage = new System.Windows.Forms.Label();
             this.groupBoxCondition = new System.Windows.Forms.GroupBox();
             this.groupBoxAction = new System.Windows.Forms.GroupBox();
-            this.labelInterval = new System.Windows.Forms.Label();
             this.textBoxActionHelp = new System.Windows.Forms.TextBox();
+            this.groupBoxDeleteScreenshots = new System.Windows.Forms.GroupBox();
+            this.groupBoxInterval = new System.Windows.Forms.GroupBox();
+            this.labelMilliseconds = new System.Windows.Forms.Label();
+            this.labelSeconds = new System.Windows.Forms.Label();
+            this.labelMinutes = new System.Windows.Forms.Label();
+            this.labelHours = new System.Windows.Forms.Label();
+            this.textBoxDeleteFolder = new System.Windows.Forms.TextBox();
+            this.labelDeleteFolder = new System.Windows.Forms.Label();
+            this.numericUpDownCycleCount = new System.Windows.Forms.NumericUpDown();
+            this.labelCycleCount = new System.Windows.Forms.Label();
+            this.groupBoxModules = new System.Windows.Forms.GroupBox();
+            this.labelLabel = new System.Windows.Forms.Label();
+            this.textBoxLabel = new System.Windows.Forms.TextBox();
+            this.labelApplicationFocus = new System.Windows.Forms.Label();
+            this.textBoxApplicationFocus = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDays)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
@@ -65,6 +79,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             this.groupBoxCondition.SuspendLayout();
             this.groupBoxAction.SuspendLayout();
+            this.groupBoxDeleteScreenshots.SuspendLayout();
+            this.groupBoxInterval.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).BeginInit();
+            this.groupBoxModules.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelEditorName
@@ -81,14 +99,14 @@
             this.textBoxTriggerName.Location = new System.Drawing.Point(56, 32);
             this.textBoxTriggerName.MaxLength = 50;
             this.textBoxTriggerName.Name = "textBoxTriggerName";
-            this.textBoxTriggerName.Size = new System.Drawing.Size(546, 20);
+            this.textBoxTriggerName.Size = new System.Drawing.Size(1111, 20);
             this.textBoxTriggerName.TabIndex = 2;
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(117, 428);
+            this.buttonCancel.Location = new System.Drawing.Point(1148, 549);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
             this.buttonCancel.TabIndex = 9;
@@ -101,7 +119,7 @@
             // 
             this.checkBoxEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEnable.AutoSize = true;
-            this.checkBoxEnable.Location = new System.Drawing.Point(688, 34);
+            this.checkBoxEnable.Location = new System.Drawing.Point(1188, 34);
             this.checkBoxEnable.Name = "checkBoxEnable";
             this.checkBoxEnable.Size = new System.Drawing.Size(59, 17);
             this.checkBoxEnable.TabIndex = 3;
@@ -120,16 +138,16 @@
             this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelHelp.Location = new System.Drawing.Point(2, 4);
             this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(772, 17);
+            this.labelHelp.Size = new System.Drawing.Size(1275, 17);
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // listBoxCondition
             // 
             this.listBoxCondition.FormattingEnabled = true;
-            this.listBoxCondition.Location = new System.Drawing.Point(6, 68);
+            this.listBoxCondition.Location = new System.Drawing.Point(6, 107);
             this.listBoxCondition.Name = "listBoxCondition";
-            this.listBoxCondition.Size = new System.Drawing.Size(348, 225);
+            this.listBoxCondition.Size = new System.Drawing.Size(419, 316);
             this.listBoxCondition.TabIndex = 5;
             this.listBoxCondition.TabStop = false;
             this.listBoxCondition.SelectedIndexChanged += new System.EventHandler(this.listBoxCondition_SelectedIndexChanged);
@@ -137,9 +155,9 @@
             // listBoxModuleItemList
             // 
             this.listBoxModuleItemList.FormattingEnabled = true;
-            this.listBoxModuleItemList.Location = new System.Drawing.Point(6, 197);
+            this.listBoxModuleItemList.Location = new System.Drawing.Point(6, 19);
             this.listBoxModuleItemList.Name = "listBoxModuleItemList";
-            this.listBoxModuleItemList.Size = new System.Drawing.Size(354, 95);
+            this.listBoxModuleItemList.Size = new System.Drawing.Size(320, 433);
             this.listBoxModuleItemList.TabIndex = 14;
             this.listBoxModuleItemList.TabStop = false;
             this.listBoxModuleItemList.UseTabStops = false;
@@ -147,37 +165,37 @@
             // listBoxAction
             // 
             this.listBoxAction.FormattingEnabled = true;
-            this.listBoxAction.Location = new System.Drawing.Point(6, 68);
+            this.listBoxAction.Location = new System.Drawing.Point(6, 107);
             this.listBoxAction.Name = "listBoxAction";
-            this.listBoxAction.Size = new System.Drawing.Size(354, 121);
+            this.listBoxAction.Size = new System.Drawing.Size(447, 147);
             this.listBoxAction.TabIndex = 22;
             this.listBoxAction.TabStop = false;
             this.listBoxAction.SelectedIndexChanged += new System.EventHandler(this.listBoxAction_SelectedIndexChanged);
             // 
-            // labelTriggerValue
+            // labelActiveWindowTitle
             // 
-            this.labelTriggerValue.AutoSize = true;
-            this.labelTriggerValue.Enabled = false;
-            this.labelTriggerValue.Location = new System.Drawing.Point(6, 303);
-            this.labelTriggerValue.Name = "labelTriggerValue";
-            this.labelTriggerValue.Size = new System.Drawing.Size(105, 13);
-            this.labelTriggerValue.TabIndex = 28;
-            this.labelTriggerValue.Text = "Active Window Title:";
+            this.labelActiveWindowTitle.AutoSize = true;
+            this.labelActiveWindowTitle.Enabled = false;
+            this.labelActiveWindowTitle.Location = new System.Drawing.Point(6, 320);
+            this.labelActiveWindowTitle.Name = "labelActiveWindowTitle";
+            this.labelActiveWindowTitle.Size = new System.Drawing.Size(105, 13);
+            this.labelActiveWindowTitle.TabIndex = 28;
+            this.labelActiveWindowTitle.Text = "Active Window Title:";
             // 
-            // textBoxTriggerValue
+            // textBoxActiveWindowTitle
             // 
-            this.textBoxTriggerValue.Enabled = false;
-            this.textBoxTriggerValue.Location = new System.Drawing.Point(126, 300);
-            this.textBoxTriggerValue.Name = "textBoxTriggerValue";
-            this.textBoxTriggerValue.Size = new System.Drawing.Size(234, 20);
-            this.textBoxTriggerValue.TabIndex = 27;
-            this.textBoxTriggerValue.TabStop = false;
+            this.textBoxActiveWindowTitle.Enabled = false;
+            this.textBoxActiveWindowTitle.Location = new System.Drawing.Point(117, 317);
+            this.textBoxActiveWindowTitle.Name = "textBoxActiveWindowTitle";
+            this.textBoxActiveWindowTitle.Size = new System.Drawing.Size(336, 20);
+            this.textBoxActiveWindowTitle.TabIndex = 27;
+            this.textBoxActiveWindowTitle.TabStop = false;
             // 
             // labelDay
             // 
             this.labelDay.AutoSize = true;
             this.labelDay.Enabled = false;
-            this.labelDay.Location = new System.Drawing.Point(6, 332);
+            this.labelDay.Location = new System.Drawing.Point(6, 459);
             this.labelDay.Name = "labelDay";
             this.labelDay.Size = new System.Drawing.Size(29, 13);
             this.labelDay.TabIndex = 26;
@@ -187,7 +205,7 @@
             // 
             this.labelTime.AutoSize = true;
             this.labelTime.Enabled = false;
-            this.labelTime.Location = new System.Drawing.Point(180, 332);
+            this.labelTime.Location = new System.Drawing.Point(251, 459);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(33, 13);
             this.labelTime.TabIndex = 25;
@@ -197,7 +215,7 @@
             // 
             this.labelDate.AutoSize = true;
             this.labelDate.Enabled = false;
-            this.labelDate.Location = new System.Drawing.Point(5, 303);
+            this.labelDate.Location = new System.Drawing.Point(6, 435);
             this.labelDate.Name = "labelDate";
             this.labelDate.Size = new System.Drawing.Size(33, 13);
             this.labelDate.TabIndex = 24;
@@ -206,8 +224,7 @@
             // labelDays
             // 
             this.labelDays.AutoSize = true;
-            this.labelDays.Enabled = false;
-            this.labelDays.Location = new System.Drawing.Point(6, 332);
+            this.labelDays.Location = new System.Drawing.Point(167, 27);
             this.labelDays.Name = "labelDays";
             this.labelDays.Size = new System.Drawing.Size(34, 13);
             this.labelDays.TabIndex = 23;
@@ -215,8 +232,7 @@
             // 
             // numericUpDownDays
             // 
-            this.numericUpDownDays.Enabled = false;
-            this.numericUpDownDays.Location = new System.Drawing.Point(46, 328);
+            this.numericUpDownDays.Location = new System.Drawing.Point(207, 25);
             this.numericUpDownDays.Maximum = new decimal(new int[] {
             -469762049,
             -590869294,
@@ -242,9 +258,9 @@
             "Friday",
             "Saturday",
             "Sunday"});
-            this.comboBoxDay.Location = new System.Drawing.Point(44, 328);
+            this.comboBoxDay.Location = new System.Drawing.Point(45, 455);
             this.comboBoxDay.Name = "comboBoxDay";
-            this.comboBoxDay.Size = new System.Drawing.Size(130, 21);
+            this.comboBoxDay.Size = new System.Drawing.Size(183, 21);
             this.comboBoxDay.TabIndex = 14;
             this.comboBoxDay.TabStop = false;
             // 
@@ -252,7 +268,7 @@
             // 
             this.dateTimePickerTime.Enabled = false;
             this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerTime.Location = new System.Drawing.Point(219, 328);
+            this.dateTimePickerTime.Location = new System.Drawing.Point(290, 455);
             this.dateTimePickerTime.Name = "dateTimePickerTime";
             this.dateTimePickerTime.ShowUpDown = true;
             this.dateTimePickerTime.Size = new System.Drawing.Size(135, 20);
@@ -262,16 +278,16 @@
             // dateTimePickerDate
             // 
             this.dateTimePickerDate.Enabled = false;
-            this.dateTimePickerDate.Location = new System.Drawing.Point(44, 300);
+            this.dateTimePickerDate.Location = new System.Drawing.Point(45, 429);
             this.dateTimePickerDate.Name = "dateTimePickerDate";
-            this.dateTimePickerDate.Size = new System.Drawing.Size(310, 20);
+            this.dateTimePickerDate.Size = new System.Drawing.Size(380, 20);
             this.dateTimePickerDate.TabIndex = 14;
             this.dateTimePickerDate.TabStop = false;
             // 
             // numericUpDownMillisecondsInterval
             // 
             this.numericUpDownMillisecondsInterval.Enabled = false;
-            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(318, 328);
+            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(393, 19);
             this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
             999,
             0,
@@ -285,7 +301,7 @@
             // numericUpDownHoursInterval
             // 
             this.numericUpDownHoursInterval.Enabled = false;
-            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(174, 328);
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(50, 19);
             this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
             23,
             0,
@@ -299,7 +315,7 @@
             // numericUpDownMinutesInterval
             // 
             this.numericUpDownMinutesInterval.Enabled = false;
-            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(222, 328);
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(156, 19);
             this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -313,7 +329,7 @@
             // numericUpDownSecondsInterval
             // 
             this.numericUpDownSecondsInterval.Enabled = false;
-            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(270, 328);
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(267, 19);
             this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -331,14 +347,14 @@
             this.textBoxConditionHelp.Multiline = true;
             this.textBoxConditionHelp.Name = "textBoxConditionHelp";
             this.textBoxConditionHelp.ReadOnly = true;
-            this.textBoxConditionHelp.Size = new System.Drawing.Size(348, 43);
+            this.textBoxConditionHelp.Size = new System.Drawing.Size(419, 82);
             this.textBoxConditionHelp.TabIndex = 11;
             this.textBoxConditionHelp.TabStop = false;
             // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(12, 428);
+            this.buttonOK.Location = new System.Drawing.Point(1043, 549);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
             this.buttonOK.TabIndex = 14;
@@ -367,41 +383,30 @@
             this.groupBoxCondition.Controls.Add(this.labelTime);
             this.groupBoxCondition.Location = new System.Drawing.Point(12, 58);
             this.groupBoxCondition.Name = "groupBoxCondition";
-            this.groupBoxCondition.Size = new System.Drawing.Size(360, 358);
+            this.groupBoxCondition.Size = new System.Drawing.Size(431, 485);
             this.groupBoxCondition.TabIndex = 31;
             this.groupBoxCondition.TabStop = false;
             this.groupBoxCondition.Text = "Condition";
             // 
             // groupBoxAction
             // 
-            this.groupBoxAction.Controls.Add(this.labelInterval);
-            this.groupBoxAction.Controls.Add(this.labelDays);
-            this.groupBoxAction.Controls.Add(this.numericUpDownMillisecondsInterval);
-            this.groupBoxAction.Controls.Add(this.listBoxModuleItemList);
+            this.groupBoxAction.Controls.Add(this.textBoxApplicationFocus);
+            this.groupBoxAction.Controls.Add(this.labelApplicationFocus);
+            this.groupBoxAction.Controls.Add(this.textBoxLabel);
+            this.groupBoxAction.Controls.Add(this.labelLabel);
+            this.groupBoxAction.Controls.Add(this.groupBoxModules);
+            this.groupBoxAction.Controls.Add(this.groupBoxInterval);
+            this.groupBoxAction.Controls.Add(this.groupBoxDeleteScreenshots);
             this.groupBoxAction.Controls.Add(this.textBoxActionHelp);
             this.groupBoxAction.Controls.Add(this.listBoxAction);
-            this.groupBoxAction.Controls.Add(this.numericUpDownMinutesInterval);
-            this.groupBoxAction.Controls.Add(this.labelTriggerValue);
-            this.groupBoxAction.Controls.Add(this.numericUpDownHoursInterval);
-            this.groupBoxAction.Controls.Add(this.numericUpDownDays);
-            this.groupBoxAction.Controls.Add(this.textBoxTriggerValue);
-            this.groupBoxAction.Controls.Add(this.numericUpDownSecondsInterval);
-            this.groupBoxAction.Location = new System.Drawing.Point(378, 58);
+            this.groupBoxAction.Controls.Add(this.labelActiveWindowTitle);
+            this.groupBoxAction.Controls.Add(this.textBoxActiveWindowTitle);
+            this.groupBoxAction.Location = new System.Drawing.Point(449, 58);
             this.groupBoxAction.Name = "groupBoxAction";
-            this.groupBoxAction.Size = new System.Drawing.Size(366, 358);
+            this.groupBoxAction.Size = new System.Drawing.Size(798, 485);
             this.groupBoxAction.TabIndex = 32;
             this.groupBoxAction.TabStop = false;
             this.groupBoxAction.Text = "Action";
-            // 
-            // labelInterval
-            // 
-            this.labelInterval.AutoSize = true;
-            this.labelInterval.Enabled = false;
-            this.labelInterval.Location = new System.Drawing.Point(123, 332);
-            this.labelInterval.Name = "labelInterval";
-            this.labelInterval.Size = new System.Drawing.Size(45, 13);
-            this.labelInterval.TabIndex = 34;
-            this.labelInterval.Text = "Interval:";
             // 
             // textBoxActionHelp
             // 
@@ -411,16 +416,172 @@
             this.textBoxActionHelp.Multiline = true;
             this.textBoxActionHelp.Name = "textBoxActionHelp";
             this.textBoxActionHelp.ReadOnly = true;
-            this.textBoxActionHelp.Size = new System.Drawing.Size(354, 43);
+            this.textBoxActionHelp.Size = new System.Drawing.Size(447, 82);
             this.textBoxActionHelp.TabIndex = 33;
             this.textBoxActionHelp.TabStop = false;
+            // 
+            // groupBoxDeleteScreenshots
+            // 
+            this.groupBoxDeleteScreenshots.Controls.Add(this.labelCycleCount);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.numericUpDownCycleCount);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.labelDeleteFolder);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.textBoxDeleteFolder);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.numericUpDownDays);
+            this.groupBoxDeleteScreenshots.Controls.Add(this.labelDays);
+            this.groupBoxDeleteScreenshots.Enabled = false;
+            this.groupBoxDeleteScreenshots.Location = new System.Drawing.Point(6, 398);
+            this.groupBoxDeleteScreenshots.Name = "groupBoxDeleteScreenshots";
+            this.groupBoxDeleteScreenshots.Size = new System.Drawing.Size(447, 77);
+            this.groupBoxDeleteScreenshots.TabIndex = 35;
+            this.groupBoxDeleteScreenshots.TabStop = false;
+            this.groupBoxDeleteScreenshots.Text = "Delete Old Screenshots";
+            // 
+            // groupBoxInterval
+            // 
+            this.groupBoxInterval.Controls.Add(this.labelHours);
+            this.groupBoxInterval.Controls.Add(this.labelMinutes);
+            this.groupBoxInterval.Controls.Add(this.labelSeconds);
+            this.groupBoxInterval.Controls.Add(this.labelMilliseconds);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownSecondsInterval);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownMinutesInterval);
+            this.groupBoxInterval.Controls.Add(this.numericUpDownHoursInterval);
+            this.groupBoxInterval.Location = new System.Drawing.Point(6, 347);
+            this.groupBoxInterval.Name = "groupBoxInterval";
+            this.groupBoxInterval.Size = new System.Drawing.Size(447, 45);
+            this.groupBoxInterval.TabIndex = 36;
+            this.groupBoxInterval.TabStop = false;
+            this.groupBoxInterval.Text = "Set Screen Capture Interval";
+            // 
+            // labelMilliseconds
+            // 
+            this.labelMilliseconds.AutoSize = true;
+            this.labelMilliseconds.Location = new System.Drawing.Point(320, 21);
+            this.labelMilliseconds.Name = "labelMilliseconds";
+            this.labelMilliseconds.Size = new System.Drawing.Size(67, 13);
+            this.labelMilliseconds.TabIndex = 22;
+            this.labelMilliseconds.Text = "Milliseconds:";
+            // 
+            // labelSeconds
+            // 
+            this.labelSeconds.AutoSize = true;
+            this.labelSeconds.Location = new System.Drawing.Point(209, 21);
+            this.labelSeconds.Name = "labelSeconds";
+            this.labelSeconds.Size = new System.Drawing.Size(52, 13);
+            this.labelSeconds.TabIndex = 23;
+            this.labelSeconds.Text = "Seconds:";
+            // 
+            // labelMinutes
+            // 
+            this.labelMinutes.AutoSize = true;
+            this.labelMinutes.Location = new System.Drawing.Point(103, 21);
+            this.labelMinutes.Name = "labelMinutes";
+            this.labelMinutes.Size = new System.Drawing.Size(47, 13);
+            this.labelMinutes.TabIndex = 24;
+            this.labelMinutes.Text = "Minutes:";
+            // 
+            // labelHours
+            // 
+            this.labelHours.AutoSize = true;
+            this.labelHours.Location = new System.Drawing.Point(6, 21);
+            this.labelHours.Name = "labelHours";
+            this.labelHours.Size = new System.Drawing.Size(38, 13);
+            this.labelHours.TabIndex = 25;
+            this.labelHours.Text = "Hours:";
+            // 
+            // textBoxDeleteFolder
+            // 
+            this.textBoxDeleteFolder.Location = new System.Drawing.Point(85, 51);
+            this.textBoxDeleteFolder.Name = "textBoxDeleteFolder";
+            this.textBoxDeleteFolder.Size = new System.Drawing.Size(356, 20);
+            this.textBoxDeleteFolder.TabIndex = 37;
+            this.textBoxDeleteFolder.TabStop = false;
+            // 
+            // labelDeleteFolder
+            // 
+            this.labelDeleteFolder.AutoSize = true;
+            this.labelDeleteFolder.Location = new System.Drawing.Point(6, 54);
+            this.labelDeleteFolder.Name = "labelDeleteFolder";
+            this.labelDeleteFolder.Size = new System.Drawing.Size(73, 13);
+            this.labelDeleteFolder.TabIndex = 37;
+            this.labelDeleteFolder.Text = "Delete Folder:";
+            // 
+            // numericUpDownCycleCount
+            // 
+            this.numericUpDownCycleCount.Location = new System.Drawing.Point(85, 25);
+            this.numericUpDownCycleCount.Maximum = new decimal(new int[] {
+            -469762049,
+            -590869294,
+            5421010,
+            0});
+            this.numericUpDownCycleCount.Name = "numericUpDownCycleCount";
+            this.numericUpDownCycleCount.Size = new System.Drawing.Size(71, 20);
+            this.numericUpDownCycleCount.TabIndex = 38;
+            this.numericUpDownCycleCount.TabStop = false;
+            // 
+            // labelCycleCount
+            // 
+            this.labelCycleCount.AutoSize = true;
+            this.labelCycleCount.Location = new System.Drawing.Point(6, 27);
+            this.labelCycleCount.Name = "labelCycleCount";
+            this.labelCycleCount.Size = new System.Drawing.Size(67, 13);
+            this.labelCycleCount.TabIndex = 39;
+            this.labelCycleCount.Text = "Cycle Count:";
+            // 
+            // groupBoxModules
+            // 
+            this.groupBoxModules.Controls.Add(this.listBoxModuleItemList);
+            this.groupBoxModules.Location = new System.Drawing.Point(459, 19);
+            this.groupBoxModules.Name = "groupBoxModules";
+            this.groupBoxModules.Size = new System.Drawing.Size(333, 456);
+            this.groupBoxModules.TabIndex = 33;
+            this.groupBoxModules.TabStop = false;
+            this.groupBoxModules.Text = "Screens / Regions / Editors / Schedules / Macro Tags / Triggers";
+            // 
+            // labelLabel
+            // 
+            this.labelLabel.AutoSize = true;
+            this.labelLabel.Enabled = false;
+            this.labelLabel.Location = new System.Drawing.Point(6, 268);
+            this.labelLabel.Name = "labelLabel";
+            this.labelLabel.Size = new System.Drawing.Size(36, 13);
+            this.labelLabel.TabIndex = 37;
+            this.labelLabel.Text = "Label:";
+            // 
+            // textBoxLabel
+            // 
+            this.textBoxLabel.Enabled = false;
+            this.textBoxLabel.Location = new System.Drawing.Point(117, 265);
+            this.textBoxLabel.Name = "textBoxLabel";
+            this.textBoxLabel.Size = new System.Drawing.Size(336, 20);
+            this.textBoxLabel.TabIndex = 38;
+            this.textBoxLabel.TabStop = false;
+            // 
+            // labelApplicationFocus
+            // 
+            this.labelApplicationFocus.AutoSize = true;
+            this.labelApplicationFocus.Enabled = false;
+            this.labelApplicationFocus.Location = new System.Drawing.Point(6, 294);
+            this.labelApplicationFocus.Name = "labelApplicationFocus";
+            this.labelApplicationFocus.Size = new System.Drawing.Size(94, 13);
+            this.labelApplicationFocus.TabIndex = 39;
+            this.labelApplicationFocus.Text = "Application Focus:";
+            // 
+            // textBoxApplicationFocus
+            // 
+            this.textBoxApplicationFocus.Enabled = false;
+            this.textBoxApplicationFocus.Location = new System.Drawing.Point(117, 291);
+            this.textBoxApplicationFocus.Name = "textBoxApplicationFocus";
+            this.textBoxApplicationFocus.Size = new System.Drawing.Size(336, 20);
+            this.textBoxApplicationFocus.TabIndex = 40;
+            this.textBoxApplicationFocus.TabStop = false;
             // 
             // FormTrigger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(756, 454);
+            this.ClientSize = new System.Drawing.Size(1259, 580);
             this.Controls.Add(this.groupBoxAction);
             this.Controls.Add(this.labelPage);
             this.Controls.Add(this.buttonOK);
@@ -447,6 +608,12 @@
             this.groupBoxCondition.PerformLayout();
             this.groupBoxAction.ResumeLayout(false);
             this.groupBoxAction.PerformLayout();
+            this.groupBoxDeleteScreenshots.ResumeLayout(false);
+            this.groupBoxDeleteScreenshots.PerformLayout();
+            this.groupBoxInterval.ResumeLayout(false);
+            this.groupBoxInterval.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCycleCount)).EndInit();
+            this.groupBoxModules.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -477,11 +644,25 @@
         private System.Windows.Forms.Label labelDays;
         private System.Windows.Forms.Label labelDay;
         private System.Windows.Forms.Label labelPage;
-        private System.Windows.Forms.TextBox textBoxTriggerValue;
-        private System.Windows.Forms.Label labelTriggerValue;
+        private System.Windows.Forms.TextBox textBoxActiveWindowTitle;
+        private System.Windows.Forms.Label labelActiveWindowTitle;
         private System.Windows.Forms.GroupBox groupBoxCondition;
         private System.Windows.Forms.GroupBox groupBoxAction;
         private System.Windows.Forms.TextBox textBoxActionHelp;
-        private System.Windows.Forms.Label labelInterval;
+        private System.Windows.Forms.GroupBox groupBoxDeleteScreenshots;
+        private System.Windows.Forms.GroupBox groupBoxInterval;
+        private System.Windows.Forms.Label labelHours;
+        private System.Windows.Forms.Label labelMinutes;
+        private System.Windows.Forms.Label labelSeconds;
+        private System.Windows.Forms.Label labelMilliseconds;
+        private System.Windows.Forms.Label labelCycleCount;
+        private System.Windows.Forms.NumericUpDown numericUpDownCycleCount;
+        private System.Windows.Forms.Label labelDeleteFolder;
+        private System.Windows.Forms.TextBox textBoxDeleteFolder;
+        private System.Windows.Forms.GroupBox groupBoxModules;
+        private System.Windows.Forms.TextBox textBoxApplicationFocus;
+        private System.Windows.Forms.Label labelApplicationFocus;
+        private System.Windows.Forms.TextBox textBoxLabel;
+        private System.Windows.Forms.Label labelLabel;
     }
 }

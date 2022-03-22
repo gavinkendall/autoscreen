@@ -51,6 +51,9 @@ namespace AutoScreenCapture
         // 2.3.4.0 and newer
         private const string TRIGGER_VALUE = "value";
 
+        // 2.4.1.9 introduced Cycle Count for Trigger
+        private const string TRIGGER_CYCLE_COUNT = "cycle_count";
+
         private readonly string TRIGGER_XPATH;
 
         private string AppCodename { get; set; }
@@ -210,6 +213,12 @@ namespace AutoScreenCapture
                                         xReader.Read();
                                         trigger.Value = xReader.Value;
                                         break;
+
+                                        // 2.4.1.9
+                                    case TRIGGER_CYCLE_COUNT:
+                                        xReader.Read();
+                                        trigger.CycleCount = Convert.ToInt32(xReader.Value);
+                                        break;
                                 }
                             }
                         }
@@ -258,9 +267,9 @@ namespace AutoScreenCapture
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
                         {
                             Enable = false,
-                            Name = "Delete Screenshots",
+                            Name = "Delete Screenshots " + days + " Days Old",
                             ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
-                            ActionType = TriggerActionType.DeleteScreenshots,
+                            ActionType = TriggerActionType.DeleteOldScreenshotsByDays,
                             Date = DateTime.Now,
                             Time = DateTime.Now,
                             ScreenCaptureInterval = 0,
@@ -366,9 +375,9 @@ namespace AutoScreenCapture
                     Trigger triggerBeforeScreenshotReferencesSavedDeleteScreenshots = new Trigger()
                     {
                         Enable = false,
-                        Name = "Delete Screenshots",
+                        Name = "Delete Screenshots 30 Days Old",
                         ConditionType = TriggerConditionType.BeforeScreenshotReferencesSaved,
-                        ActionType = TriggerActionType.DeleteScreenshots,
+                        ActionType = TriggerActionType.DeleteOldScreenshotsByDays,
                         Date = DateTime.Now,
                         Time = DateTime.Now,
                         ScreenCaptureInterval = 0,
@@ -468,6 +477,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(TRIGGER_DAYS, trigger.Days.ToString());
                         xWriter.WriteElementString(TRIGGER_SCREEN_CAPTURE_INTERVAL, trigger.ScreenCaptureInterval.ToString());
                         xWriter.WriteElementString(TRIGGER_VALUE, trigger.Value);
+                        xWriter.WriteElementString(TRIGGER_CYCLE_COUNT, trigger.CycleCount.ToString());
 
                         xWriter.WriteEndElement();
                     }

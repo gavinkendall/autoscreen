@@ -79,6 +79,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormLabelSwitcher";
+            this.Text = "Screen Capture Status With Label Switcher";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLabelSwitcher_FormClosing);
             this.ResumeLayout(false);

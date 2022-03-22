@@ -58,6 +58,7 @@
             this.MinimumSize = new System.Drawing.Size(624, 70);
             this.Name = "FormScreenCaptureStatus";
             this.ShowInTaskbar = false;
+            this.Text = "Screen Capture Status";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormInformationWindow_FormClosing);
             this.ResumeLayout(false);

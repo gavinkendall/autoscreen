@@ -134,6 +134,48 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
+        /// Delete all the screenshots and associated slides based on the given list of screenshots.
+        /// </summary>
+        /// <param name="screenshotsToDelete">A list of screenshots to delete.</param>
+        private void DeleteScreenshots(List<Screenshot> screenshotsToDelete)
+        {
+            lock (_screenshotList)
+            {
+                foreach (Screenshot screenshot in screenshotsToDelete)
+                {
+                    // Delete the screenshots and slides.
+                    _screenshotList.Remove(screenshot);
+                    _slideList.Remove(screenshot.Slide);
+                    _slideNameList.Remove(screenshot.Slide.Name);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes screenshot XML nodes from the XML document.
+        /// </summary>
+        /// <param name="screenshotNodesToDelete">A list of screenshot XML nodes to delete.</param>
+        private void DeleteScreenshotNodesAndFiles(XmlNodeList screenshotNodesToDelete)
+        {
+            foreach (XmlNode node in screenshotNodesToDelete)
+            {
+                string path = node.SelectSingleNode("path").FirstChild.Value;
+
+                if (_fileSystem.FileExists(path))
+                {
+                    _fileSystem.DeleteFile(path);
+                    _log.WriteDebugMessage($"Deleted file \"{path}\"");
+                }
+                else
+                {
+                    _log.WriteDebugMessage($"File \"{path}\" not found");
+                }
+
+                node.ParentNode.RemoveChild(node);
+            }
+        }
+
+        /// <summary>
         /// Gets the XML node representing the minimum date when screenshots were taken.
         /// </summary>
         /// <returns></returns>
@@ -641,8 +683,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// Gets a list of screenshots based on the date and time.
         /// </summary>
-        /// <param name="date">The date for when screenshots were taken.</param>
-        /// <param name="time">The time for when screenshots were taken.</param>
+        /// <param name="date">The date for when screenshots were taken (the date format should match "yyyy-MM-dd").</param>
+        /// <param name="time">The time for when screenshots were taken (the time format should match "HH:mm:ss.fff").</param>
         /// <returns>A list of screenshots.</returns>
         public List<Screenshot> GetScreenshots(string date, string time)
         {
@@ -1370,14 +1412,13 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Deletes screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
+        /// Deletes old screenshots based on a number of days. If 0 is provided then all screenshots are deleted.
         /// </summary>
         /// <param name="days">The number of days to consider.</param>
         /// <param name="folder">The folder to delete. The folder path may contain macro tags.</param>
         /// <param name="macroParser">The macro tag parser to use.</param>
         /// <param name="macroTagCollection">A collectino of macro tags.</param>
-        /// <param name="log">The log to use.</param>
-        public void DeleteScreenshots(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Log log)
+        public void DeleteOldScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection)
         {
             try
             {
@@ -1385,14 +1426,15 @@ namespace AutoScreenCapture
                 {
                     lock (_screenshotList)
                     {
+                        // Get a list of screenshots to delete.
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date)).ToList();
+
+                        // Delete the screenshots.
+                        DeleteScreenshots(screenshotsToDelete);
 
                         foreach (Screenshot screenshot in screenshotsToDelete)
                         {
-                            _screenshotList.Remove(screenshot);
-                            _slideList.Remove(screenshot.Slide);
-                            _slideNameList.Remove(screenshot.Slide.Name);
-
+                            // Delete the actual image files containing the screenshots.
                             if (_fileSystem.FileExists(screenshot.Path))
                             {
                                 _fileSystem.DeleteFile(screenshot.Path);
@@ -1406,11 +1448,12 @@ namespace AutoScreenCapture
 
                         foreach (XmlNode node in xDoc.SelectNodes(SCREENSHOT_XPATH))
                         {
+                            // Remove the XML node from the XML document.
                             node.ParentNode.RemoveChild(node);
                         }
 
                         // Delete everything in the specified folder and delete the folder itself.
-                        DeleteFolderByDate(folder, DateTime.Now, macroParser, macroTagCollection, log);
+                        DeleteFolderByDate(folder, DateTime.Now, macroParser, macroTagCollection, _log);
                     }
                 }
                 else
@@ -1420,44 +1463,30 @@ namespace AutoScreenCapture
                         // Check what we already have in memory and remove the screenshot object from every list.
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
 
-                        foreach (Screenshot screenshot in screenshotsToDelete)
-                        {
-                            _screenshotList.Remove(screenshot);
-                            _slideList.Remove(screenshot.Slide);
-                            _slideNameList.Remove(screenshot.Slide.Name);
-                        }
+                        // Delete the screenshots.
+                        DeleteScreenshots(screenshotsToDelete);
                     }
 
                     XmlNode minDateNode = GetMinDateFromXMLDocument();
 
                     if (minDateNode != null)
                     {
+                        // Get the minimum date for the oldest screenshot available.
                         DateTime dtMin = DateTime.Parse(minDateNode.FirstChild.Value).Date;
+
+                        // Get the maximum date we want to consider based on the value of "days".
+                        // So this should be the date of "days" old.
                         DateTime dtMax = DateTime.Now.Date.AddDays(-days).Date;
 
+                        // Delete the screenshot XML nodes and associated files based on the dates.
                         for (DateTime date = dtMin; date.Date <= dtMax; date = date.AddDays(1))
                         {
                             XmlNodeList screenshotNodesToDeleteByDate = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + date.ToString(macroParser.DateFormat) + "']");
 
-                            foreach (XmlNode node in screenshotNodesToDeleteByDate)
-                            {
-                                string path = node.SelectSingleNode("path").FirstChild.Value;
-
-                                if (_fileSystem.FileExists(path))
-                                {
-                                    _fileSystem.DeleteFile(path);
-                                    _log.WriteDebugMessage($"Deleted file \"{path}\"");
-                                }
-                                else
-                                {
-                                    _log.WriteDebugMessage($"File \"{path}\" not found");
-                                }
-
-                                node.ParentNode.RemoveChild(node);
-                            }
+                            DeleteScreenshotNodesAndFiles(screenshotNodesToDeleteByDate);
 
                             // Let's see if we can delete the folder by the date of the current iteration if a folder path has been provided.
-                            DeleteFolderByDate(folder, date, macroParser, macroTagCollection, log);
+                            DeleteFolderByDate(folder, date, macroParser, macroTagCollection, _log);
                         }
                     }
                 }
@@ -1468,7 +1497,70 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                _log.WriteExceptionMessage("ScreenshotCollection::DeleteScreenshots", ex);
+                _log.WriteExceptionMessage("ScreenshotCollection::DeleteOldScreenshotsByDays", ex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cycleCount"></param>
+        public void DeleteOldScreenshotsByCycleCount(int cycleCount)
+        {
+            try
+            {
+                if (cycleCount > 0)
+                {
+                    lock (_slideList)
+                    {
+                        List<Slide> slidesToDelete = new List<Slide>();
+
+                        // Get a list of slides representing the screen capture cycles.
+                        // This should be in order from oldest to newest so the oldest slide
+                        // in this list should be the first slide we encounter (by index).
+                        for (int i = 0; i < cycleCount; i++)
+                        {
+                            Slide slide = _slideList[i];
+                            slidesToDelete.Add(slide);
+                        }
+
+                        // Now that we have the slides go through each slide and extract the date and time from the slide name.
+                        foreach (Slide slide in slidesToDelete)
+                        {
+                            Regex rgxSlideNameSplitToDateAndTime = new Regex(@"^\{date=(?<Date>\d{4}-\d{2}-\d{2})\}\{time=(?<Time>\d{2}:\d{2}:\d{2}\.\d{3})\}$");
+
+                            if (rgxSlideNameSplitToDateAndTime.IsMatch(slide.Name))
+                            {
+                                string strDate = rgxSlideNameSplitToDateAndTime.Match(slide.Name).Groups["Date"].Value;
+                                string strTime = rgxSlideNameSplitToDateAndTime.Match(slide.Name).Groups["Time"].Value;
+
+                                lock (_screenshotList)
+                                {
+                                    // Use the extracted date and time to get the list of screenshots we need to delete
+                                    // based on when those screenshots were taken.
+                                    List<Screenshot> screenshotsToDelete = GetScreenshots(strDate, strTime);
+
+                                    // Delete the screenshots.
+                                    DeleteScreenshots(screenshotsToDelete);
+                                }
+
+                                // Get a list of screenshot nodes by date and time.
+                                XmlNodeList screenshotNodesToDeleteByDateAndTime = xDoc.SelectNodes(SCREENSHOT_XPATH + "[" + SCREENSHOT_DATE + "='" + strDate + "' and " + SCREENSHOT_TIME + "='" + strTime + "']");
+
+                                // Delete the screenshot XNL nodes and the associated files.
+                                DeleteScreenshotNodesAndFiles(screenshotNodesToDeleteByDateAndTime);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                _log.WriteErrorMessage("Access to the file system was denied due to insufficient permissions during screenshot deletion operation");
+            }
+            catch (Exception ex)
+            {
+                _log.WriteExceptionMessage("ScreenshotCollection::DeleteOldScreenshotsByCycleCount", ex);
             }
         }
 
