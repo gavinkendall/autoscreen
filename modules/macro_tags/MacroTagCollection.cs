@@ -471,6 +471,7 @@ namespace AutoScreenCapture
                     Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
                     Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
                     Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
+                    Add(new MacroTag(macroParser, "capturenow", "The number of times Capture Now has been used", MacroTagType.CountNow, enable: true));
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

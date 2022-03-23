@@ -281,6 +281,10 @@ namespace AutoScreenCapture
                 case MacroTagType.Label:
                     macro = macro.Replace(tag.Name, label);
                     break;
+
+                case MacroTagType.CountNow:
+                    macro = macro.Replace(tag.Name, screenCapture == null ? "0" : screenCapture.CountNow.ToString());
+                    break;
             }
 
             // If we encounter "$AppDataLocal$" then replace it with the user's local AppData directory.

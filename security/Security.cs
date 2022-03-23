@@ -32,7 +32,7 @@ namespace AutoScreenCapture
     public class Security
     {
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
         public Security()
         {

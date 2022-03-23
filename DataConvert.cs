@@ -28,7 +28,7 @@ namespace AutoScreenCapture
     public class DataConvert
     {
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
         public DataConvert()
         {

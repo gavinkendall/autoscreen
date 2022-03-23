@@ -108,6 +108,11 @@ namespace AutoScreenCapture
         /// <summary>
         /// The label that is applied to the saved screenshot.
         /// </summary>
-        Label = 16
+        Label = 16,
+
+        /// <summary>
+        /// The number of times the user has used "Capture Now".
+        /// </summary>
+        CountNow = 17
     }
 }

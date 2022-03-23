@@ -331,97 +331,97 @@
         #endregion
 
         /// <summary>
-        /// 
+        /// A label that shows "Label:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotLabel;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Label:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotLabel;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Time:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotTime;
 
         /// <summary>
-        /// 
+        /// A label that shows "Time:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotTime;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Date:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotDate;
 
         /// <summary>
-        /// 
+        /// A label that shows "Date:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotDate;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Height:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotHeight;
 
         /// <summary>
-        /// 
+        /// A label that shows "Height:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotHeight;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Width:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotWidth;
 
         /// <summary>
-        /// 
+        /// A label that shows "Width:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotWidth;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Format:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotFormat;
 
         /// <summary>
-        /// 
+        /// A label that shows "Format:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotFormat;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Title:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotTitle;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Path:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotPath;
 
         /// <summary>
-        /// 
+        /// A label that shows "Title:".
         /// </summary>
         public System.Windows.Forms.Label labelScreenshotTitle;
 
         /// <summary>
-        /// 
+        /// A toolstrip status to show the status of the screenshot currently being viewed.
         /// </summary>
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScreenshotMetadata;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Key:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotKey;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Process:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotProcessName;
 
         /// <summary>
-        /// 
+        /// The textbox field for "Hash:".
         /// </summary>
         public System.Windows.Forms.TextBox textBoxScreenshotHash;
 

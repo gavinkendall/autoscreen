@@ -483,7 +483,7 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of application settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        /// <param name="fileSystem"></param>
+        /// <param name="fileSystem">The file system to use.</param>
         public void UpgradeApplicationSettings(SettingCollection settingCollection, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
@@ -517,7 +517,7 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of SMTP settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        /// <param name="fileSystem"></param>
+        /// <param name="fileSystem">The file system to use.</param>
         public void UpgradeSmtpSettings(SettingCollection settingCollection, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
@@ -605,7 +605,7 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of SFTP settings that may have come from an old version of the application. 
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        /// <param name="fileSystem"></param>
+        /// <param name="fileSystem">The file system to use.</param>
         public void UpgradeSftpSettings(SettingCollection settingCollection, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))
@@ -620,9 +620,9 @@ namespace AutoScreenCapture
         /// Attempts an upgrade on a collection of user settings that may have come from an old version of the application.
         /// </summary>
         /// <param name="settingCollection">The collection of settings to upgrade.</param>
-        /// <param name="screenCapture"></param>
-        /// <param name="security"></param>
-        /// <param name="fileSystem"></param>
+        /// <param name="screenCapture">The screen capture class to use.</param>
+        /// <param name="security">The securiy class to use.</param>
+        /// <param name="fileSystem">The file system to use.</param>
         public void UpgradeUserSettings(SettingCollection settingCollection, ScreenCapture screenCapture, Security security, FileSystem fileSystem)
         {
             if (!VersionManager.IsOldAppVersion(this, settingCollection.AppCodename, settingCollection.AppVersion))

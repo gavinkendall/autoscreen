@@ -35,17 +35,17 @@ namespace AutoScreenCapture
     {
         private XmlDocument xDoc;
 
-        private Log _log;
-        private Config _config;
-        private List<Slide> _slideList;
-        private List<string> _slideNameList;
-        private List<Screenshot> _screenshotList;
-        private List<string> _screenshotPathList;
-        private ImageFormatCollection _imageFormatCollection;
+        private readonly Log _log;
+        private readonly Config _config;
+        private readonly List<Slide> _slideList;
+        private readonly List<string> _slideNameList;
+        private readonly List<Screenshot> _screenshotList;
+        private readonly List<string> _screenshotPathList;
+        private readonly ImageFormatCollection _imageFormatCollection;
 
-        private FileSystem _fileSystem;
-        private ScreenCapture _screenCapture;
-        private ScreenCollection _screenCollection;
+        private readonly FileSystem _fileSystem;
+        private readonly ScreenCapture _screenCapture;
+        private readonly ScreenCollection _screenCollection;
 
         // Required when multiple threads are writing to the same file.
         private readonly Mutex _mutexWriteFile = new Mutex();

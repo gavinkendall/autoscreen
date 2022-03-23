@@ -83,9 +83,9 @@ namespace AutoScreenCapture
     /// </summary>
     public class ScreenCapture
     {
-        private Log _log;
-        private Config _config;
-        private FileSystem _fileSystem;
+        private readonly Log _log;
+        private readonly Config _config;
+        private readonly FileSystem _fileSystem;
 
         [StructLayout(LayoutKind.Sequential)]
         private struct CURSORINFO
@@ -200,37 +200,37 @@ namespace AutoScreenCapture
             private const int CCHDEVICENAME = 0x20;
             private const int CCHFORMNAME = 0x20;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
-            private string dmDeviceName;
-            private short dmSpecVersion;
-            private short dmDriverVersion;
+            private readonly string dmDeviceName;
+            private readonly short dmSpecVersion;
+            private readonly short dmDriverVersion;
             internal short dmSize;
-            private short dmDriverExtra;
-            private int dmFields;
-            private int dmPositionX;
-            private int dmPositionY;
-            private ScreenOrientation dmDisplayOrientation;
-            private int dmDisplayFixedOutput;
-            private short dmColor;
-            private short dmDuplex;
-            private short dmYResolution;
-            private short dmTTOption;
-            private short dmCollate;
+            private readonly short dmDriverExtra;
+            private readonly int dmFields;
+            private readonly int dmPositionX;
+            private readonly int dmPositionY;
+            private readonly ScreenOrientation dmDisplayOrientation;
+            private readonly int dmDisplayFixedOutput;
+            private readonly short dmColor;
+            private readonly short dmDuplex;
+            private readonly short dmYResolution;
+            private readonly short dmTTOption;
+            private readonly short dmCollate;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
-            private string dmFormName;
-            private short dmLogPixels;
-            private int dmBitsPerPel;
-            internal int dmPelsWidth;
-            internal int dmPelsHeight;
-            private int dmDisplayFlags;
-            private int dmDisplayFrequency;
-            private int dmICMMethod;
-            private int dmICMIntent;
-            private int dmMediaType;
-            private int dmDitherType;
-            private int dmReserved1;
-            private int dmReserved2;
-            private int dmPanningWidth;
-            private int dmPanningHeight;
+            private readonly string dmFormName;
+            private readonly short dmLogPixels;
+            private readonly int dmBitsPerPel;
+            internal readonly int dmPelsWidth;
+            internal readonly int dmPelsHeight;
+            private readonly int dmDisplayFlags;
+            private readonly int dmDisplayFrequency;
+            private readonly int dmICMMethod;
+            private readonly int dmICMIntent;
+            private readonly int dmMediaType;
+            private readonly int dmDitherType;
+            private readonly int dmReserved1;
+            private readonly int dmReserved2;
+            private readonly int dmPanningWidth;
+            private readonly int dmPanningHeight;
         }
 
         private DEVMODE _dm;
@@ -281,7 +281,7 @@ namespace AutoScreenCapture
         public static string ImageFormat;
 
         /// <summary>
-        /// 
+        /// Default maximum characters allowd for active window title.
         /// </summary>
         private const int MAX_CHARS = 48000;
 
@@ -314,6 +314,11 @@ namespace AutoScreenCapture
         /// The number of screen capture cycles we've gone through during a screen capture session.
         /// </summary>
         public int Count { get; set; }
+
+        /// <summary>
+        /// The numer of times the user did a "Capture Now".
+        /// </summary>
+        public int CountNow { get; set; }
 
         /// <summary>
         /// Determines if the screen capture session is locked.

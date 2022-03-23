@@ -146,7 +146,7 @@ namespace AutoScreenCapture
     public enum ModifierKeys : uint
     {
         /// <summary>
-        /// 
+        /// None
         /// </summary>
         None = 0,
 

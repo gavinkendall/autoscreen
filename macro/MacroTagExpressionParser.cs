@@ -37,7 +37,7 @@ namespace AutoScreenCapture
         private readonly string DateTimeFormatTagExpressionRegex = @"^\{(?<DateTimePart>year|month|day|hour|minute|second)(?<Operator>[\-\+])(?<Value>\d{1,5})\}(?<DateTimeFormat>\[.+\])?$";
 
         /// <summary>
-        /// 
+        /// Empty constructor.
         /// </summary>
         public MacroTagExpressionParser()
         {

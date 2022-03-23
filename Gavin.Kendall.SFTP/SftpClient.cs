@@ -30,11 +30,22 @@ namespace Gavin.Kendall.SFTP
     {
         private Renci.SshNet.SftpClient _sftpClient;
 
+        /// <summary>
+        /// An SFTP client to handle SFTP operations.
+        /// </summary>
+        /// <param name="host">The host.</param>
+        /// <param name="port">The port number.</param>
+        /// <param name="username">The username to use to connect to the host.</param>
+        /// <param name="password">The password to use to connect to the host.</param>
         public SftpClient(string host, int port, string username, string password)
         {
             _sftpClient = new Renci.SshNet.SftpClient(host, port, username, password);
         }
 
+        /// <summary>
+        /// Connects to the host.
+        /// </summary>
+        /// <returns>Returns true if connection was successful or false if connection was not successful.</returns>
         public bool Connect()
         {
             try

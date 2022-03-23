@@ -89,17 +89,17 @@
         #endregion
 
         /// <summary>
-        /// 
+        /// A combo box for containing the labels that the user can switch between.
         /// </summary>
         public System.Windows.Forms.ComboBox comboBoxLabels;
 
         /// <summary>
-        /// 
+        /// A button for either starting a screen capture session or stopping the currently running screen capture session.
         /// </summary>
         public System.Windows.Forms.Button buttonStartStopScreenCapture;
 
         /// <summary>
-        /// 
+        /// The status of the current screen capture session.
         /// </summary>
         public System.Windows.Forms.Label labelScreenCaptureStatus;
     }

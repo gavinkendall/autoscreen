@@ -31,21 +31,21 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormEncryptorDecryptor : Form
     {
-        private Log _log;
-        private Security _security;
-        private FileSystem _fileSystem;
-        private ScreenshotCollection _screenshotCollection;
+        private readonly Log _log;
+        private readonly Security _security;
+        private readonly FileSystem _fileSystem;
+        private readonly ScreenshotCollection _screenshotCollection;
 
-        private BackgroundWorker runScreenshotLoad = null;
-        private BackgroundWorker runScreenshotsEncryption = null;
-        private BackgroundWorker runScreenshotsDecryption = null;
+        private readonly BackgroundWorker runScreenshotLoad = null;
+        private readonly BackgroundWorker runScreenshotsEncryption = null;
+        private readonly BackgroundWorker runScreenshotsDecryption = null;
 
         private delegate void RunScreenshotLoadDelegate();
         private delegate void RunScreenshotsEncryptionDelegate();
         private delegate void RunScreenshotsDecryptionDelegate();
 
         private int _totalNodeLoadCount;
-        private int _screenshotsLoadLimit;
+        private readonly int _screenshotsLoadLimit;
 
         /// <summary>
         /// When the "Encryptor / Decryptor" tool has finished encrypting screenshots.

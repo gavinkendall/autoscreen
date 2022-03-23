@@ -1725,239 +1725,16 @@
         private System.Windows.Forms.Label labelRegionSelectClipboard;
         private System.Windows.Forms.Label labelCaptureNowEdit;
         private System.Windows.Forms.Label labelCaptureNowArchive;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.CheckBox checkBoxInitialScreenshot;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.CheckBox checkBoxCaptureLimit;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.CheckBox checkBoxScreenshotLabel;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.RadioButton radioButtonRegularExpressionMatch;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.RadioButton radioButtonCaseSensitiveMatch;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.RadioButton radioButtonCaseInsensitiveMatch;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxActiveWindowTitle;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.CheckBox checkBoxActiveWindowTitleComparisonCheck;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownApplicationFocusDelayAfter;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownApplicationFocusDelayBefore;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.Label labelApplicationFocusDelayAfter;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.Label labelApplicationFocusDelayBefore;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.Button buttonApplicationFocusTest;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.Button buttonApplicationFocusRefresh;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxPassphrase;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutStopScreenCaptureKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStopScreenCaptureModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStopScreenCaptureModifier1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutStartScreenCaptureKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStartScreenCaptureModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStartScreenCaptureModifier1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectEditKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectEditModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectEditModifier1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectAutoSaveKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectClipboardKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectClipboardModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectClipboardModifier1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutCaptureNowEditKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowEditModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowEditModifier1;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxKeyboardShortcutCaptureNowArchiveKey;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowArchiveModifier2;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowArchiveModifier1;
-        private System.Windows.Forms.CheckBox checkBoxUseKeyboardShortcuts;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.CheckBox checkBoxActiveWindowTitleComparisonCheckReverse;
-
         private System.Windows.Forms.Button buttonClearPassphrase;
         private System.Windows.Forms.Label labelLastUpdated;
         private System.Windows.Forms.Label labelHash;
-
-        /// <summary>
-        /// The passphrase hash used for a password-protected screen capture session.
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxPassphraseHash;
-
+        private System.Windows.Forms.CheckBox checkBoxUseKeyboardShortcuts;
         private System.Windows.Forms.Label labelPassphrase;
         private System.Windows.Forms.Label labelIntervalHelp;
         private System.Windows.Forms.Label labelInitialCaptureHelp;
         private System.Windows.Forms.Label labelLimitHelp;
         private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.TabPage tabPageOptimizeScreenCapture;
-
-        /// <summary>
-        /// A list of screenshot labels.
-        /// </summary>
-        public System.Windows.Forms.ListBox listBoxScreenshotLabel;
-
         private System.Windows.Forms.Button buttonAddScreenshotLabelToList;
         private System.Windows.Forms.Label labelScreenshotLabel;
         private System.Windows.Forms.TextBox textBoxScreenshotLabel;
@@ -1965,26 +1742,11 @@
         private System.Windows.Forms.Label labelActiveWindowTitle;
         private System.Windows.Forms.Label labelActiveWindowTitleHelp;
         private System.Windows.Forms.Label labelActiveWindowTitleTest;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.TextBox textBoxActiveWindowTitleTest;
         private System.Windows.Forms.Label labelMatchTestResult;
         private System.Windows.Forms.Label labelMatchHelp;
         private System.Windows.Forms.TextBox textBoxRegularExpressionHelp;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.CheckBox checkBoxOptimizeScreenCapture;
         private System.Windows.Forms.CheckBox checkBoxEnableApplicationFocus;
         private System.Windows.Forms.Label labelApplicationFocusHelp;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public System.Windows.Forms.ListBox listBoxProcessList;
         private System.Windows.Forms.Label labelOptimizeScreenCaptureHelp;
         private System.Windows.Forms.GroupBox groupBoxEnabled;
         private System.Windows.Forms.Label labelBladeEnabled2;
@@ -2027,5 +1789,240 @@
         private System.Windows.Forms.Button buttonImageFormatApplyToAllScreens;
         private System.Windows.Forms.Label labelFilenamePatternPreview;
         private System.Windows.Forms.Label labelFilenamePatternFilename;
+
+        /// <summary>
+        /// The checkbox control for "Initial Capture".
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxInitialScreenshot;
+
+        /// <summary>
+        /// The numeric up/down control for "Limit".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownCaptureLimit;
+
+        /// <summary>
+        /// The checkbox control for "Limit".
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxCaptureLimit;
+
+        /// <summary>
+        /// The numeric up/down control for "Milliseconds".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
+
+        /// <summary>
+        /// The numeric up/down control for "Seconds".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownSecondsInterval;
+
+        /// <summary>
+        /// The numeric up/down control for "Minutes".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
+
+        /// <summary>
+        /// The numeric up/down control for "Hours".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
+
+        /// <summary>
+        /// The checkbox control for applying a label.
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxScreenshotLabel;
+
+        /// <summary>
+        /// The radio button control for "Regular Expression Match".
+        /// </summary>
+        public System.Windows.Forms.RadioButton radioButtonRegularExpressionMatch;
+
+        /// <summary>
+        /// The radio button control for "Case Sensitive Match".
+        /// </summary>
+        public System.Windows.Forms.RadioButton radioButtonCaseSensitiveMatch;
+
+        /// <summary>
+        /// The radio button control for "Case Insensitive Match".
+        /// </summary>
+        public System.Windows.Forms.RadioButton radioButtonCaseInsensitiveMatch;
+
+        /// <summary>
+        /// The textbox control for the active window title text to compare with the active window title.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxActiveWindowTitle;
+
+        /// <summary>
+        /// The checkbox control for enabling an active window title comparison check.
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxActiveWindowTitleComparisonCheck;
+
+        /// <summary>
+        /// The radio button control for "Case Sensitive Match".
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownApplicationFocusDelayAfter;
+
+        /// <summary>
+        /// The numeric up/down control for Application Focus Delay Before (in milliseconds).
+        /// </summary>
+        public System.Windows.Forms.NumericUpDown numericUpDownApplicationFocusDelayBefore;
+
+        /// <summary>
+        /// A label for Application Focus Delay After.
+        /// </summary>
+        public System.Windows.Forms.Label labelApplicationFocusDelayAfter;
+
+        /// <summary>
+        /// A label for Application Focus Delay Before.
+        /// </summary>
+        public System.Windows.Forms.Label labelApplicationFocusDelayBefore;
+
+        /// <summary>
+        /// A button for testing the Application Focus feature.
+        /// </summary>
+        public System.Windows.Forms.Button buttonApplicationFocusTest;
+
+        /// <summary>
+        /// A button for refreshing the process list for Application Focus.
+        /// </summary>
+        public System.Windows.Forms.Button buttonApplicationFocusRefresh;
+
+        /// <summary>
+        /// The textbox field for the passphrase to use when locking down the application from unauthorized usage.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxPassphrase;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Stop Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutStopScreenCaptureKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Stop Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStopScreenCaptureModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Stop Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStopScreenCaptureModifier1;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Start Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutStartScreenCaptureKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Start Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStartScreenCaptureModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Start Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutStartScreenCaptureModifier1;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Edit.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectEditKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Edit.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectEditModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Edit.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectEditModifier1;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Auto Save.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectAutoSaveKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Auto Save.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectAutoSaveModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Auto Save.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectAutoSaveModifier1;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Clipboard.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutRegionSelectClipboardKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Clipboard.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectClipboardModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Region Select Clipboard.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutRegionSelectClipboardModifier1;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Capture Now Edit.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutCaptureNowEditKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Capture Now Edit.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowEditModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Capture Now Edit.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowEditModifier1;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Capture Now Archive.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxKeyboardShortcutCaptureNowArchiveKey;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Capture Now Archive.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowArchiveModifier2;
+
+        /// <summary>
+        /// Keyboard shortcut for doing Capture Now Archive.
+        /// </summary>
+        public System.Windows.Forms.ComboBox comboBoxKeyboardShortcutCaptureNowArchiveModifier1;
+
+        /// <summary>
+        /// A checkbox control for the active window title comparison check but in reverse logic.
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxActiveWindowTitleComparisonCheckReverse;
+
+        /// <summary>
+        /// The passphrase hash used for a password-protected screen capture session.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxPassphraseHash;
+
+        /// <summary>
+        /// A list of screenshot labels.
+        /// </summary>
+        public System.Windows.Forms.ListBox listBoxScreenshotLabel;
+
+        /// <summary>
+        /// A textbox field for testing the active window title text comparison check.
+        /// </summary>
+        public System.Windows.Forms.TextBox textBoxActiveWindowTitleTest;
+
+        /// <summary>
+        /// A checkbox to enable or disable Optimize Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxOptimizeScreenCapture;
+
+        /// <summary>
+        /// A listbox control for the process list.
+        /// </summary>
+        public System.Windows.Forms.ListBox listBoxProcessList;
     }
 }

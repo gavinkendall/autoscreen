@@ -31,7 +31,6 @@ namespace AutoScreenCapture
     /// </summary>
     public class SettingCollection : IEnumerable<Setting>
     {
-        private Security _security;
         private List<Setting> _settingList;
 
         private const int MAX_FILE_SIZE = 5242880;
@@ -61,7 +60,6 @@ namespace AutoScreenCapture
         /// </summary>
         public SettingCollection()
         {
-            _security = new Security();
             _settingList = new List<Setting>();
 
             StringBuilder sb = new StringBuilder();
