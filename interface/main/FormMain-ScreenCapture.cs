@@ -425,7 +425,7 @@ namespace AutoScreenCapture
         /// </summary>
         private void ScreenshotTakenWithSuccess()
         {
-            _log.WriteDebugMessage("Running triggers of condition type ScreenshotTaken");
+            _log.WriteDebugMessage("Running triggers of condition type AfterScreenshotTaken");
 
             RunTriggersOfConditionType(TriggerConditionType.AfterScreenshotTaken);
         }

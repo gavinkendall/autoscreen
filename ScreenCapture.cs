@@ -720,10 +720,14 @@ namespace AutoScreenCapture
                 int width = rect.Width - rect.X;
                 int height = rect.Height - rect.Y;
 
-                _log.WriteDebugMessage($"Attempting to capture active window image using width={width}, height={height}, resolutionRatio={resolutionRatio}, mouse={mouse}");
-
                 if (width > 0 && height > 0)
                 {
+                    // We don't need to log this message if the resolution ratio is 0 since if it is 0 then it's most likely a test of the screen capture method.
+                    if (resolutionRatio > 0)
+                    {
+                        _log.WriteDebugMessage($"Attempting to capture active window image using width={width}, height={height}, resolutionRatio={resolutionRatio}, mouse={mouse}");
+                    }
+
                     if (resolutionRatio < IMAGE_RESOLUTION_RATIO_MIN || resolutionRatio > IMAGE_RESOLUTION_RATIO_MAX)
                     {
                         resolutionRatio = 100;

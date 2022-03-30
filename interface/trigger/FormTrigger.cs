@@ -999,7 +999,7 @@ namespace AutoScreenCapture
 
                 // DeleteScreenshotsFromOldestCaptureCycle
                 case 36:
-                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also set the Limit (in Setup) and use the Limit Reached condition. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
+                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also use the After Screenshot Taken condition. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
                     break;
             }
         }

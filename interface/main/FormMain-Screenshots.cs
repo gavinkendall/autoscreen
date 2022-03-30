@@ -19,15 +19,20 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture
 {
     public partial class FormMain : Form
     {
+        // A dictionary of failed uploads containing filepaths and hosts.
+        private Dictionary<string, string> _failedUploads = new Dictionary<string, string>();
+
         /// <summary>
         /// Saves screenshot references every five minutes (300000 milliseconds).
         /// </summary>
@@ -908,7 +913,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    _log.WriteDebugMessage("Password = [I'm not going to log this so check the application settings file]");
+                    _log.WriteDebugMessage("Password = [I'm not revealing this here]");
                 }
 
                 string from = Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
@@ -1090,7 +1095,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    _log.WriteDebugMessage("Password = [I'm not going to log this so check the user settings file]");
+                    _log.WriteDebugMessage("Password = [I'm not revealing this here]");
                 }
 
                 if (string.IsNullOrEmpty(host) ||
@@ -1119,6 +1124,14 @@ namespace AutoScreenCapture
                     {
                         _log.WriteDebugMessage("Could not establish a connection with the file server");
 
+                        // Add the screenshot filepath and host to a dictionary of failed uploads so we'll attempt to upload the screenshot for that host later.
+                        if (!_failedUploads.ContainsKey(screenshot.Path))
+                        {
+                            _log.WriteDebugMessage($"Screenshot ({screenshot.Path}) has been added to the dictionary of failed uploads because a connection to the file server could not be established at this time so an attempt to retry the upload will occur in the next capture cycle");
+
+                            _failedUploads.Add(screenshot.Path, host);
+                        }
+
                         return false;
                     }
                 }
@@ -1126,25 +1139,41 @@ namespace AutoScreenCapture
                 // Make sure we are connected to the file server. If we were not connected earlier then a connection request would have been sent prior to this check.
                 if (_sftpClient.IsConnected)
                 {
-                    string destinationPath = System.IO.Path.GetFileName(screenshot.Path);
-                    
-                    _log.WriteDebugMessage("Attempting to upload screenshot to file server");
-                    _log.WriteDebugMessage("Source: " + screenshot.Path);
-                    _log.WriteDebugMessage("Destination: " + destinationPath);
+                    // This is necessary since we are going to be removing entries from the _failedUploads dictionary while enumerating the collection
+                    // so instead of modifying the collection that we're enumerating it's better to simply enumerate over a copy of the filepaths.
+                    string[] pathsOfFailedUploads = new string[_failedUploads.Count];
+                    _failedUploads.Keys.CopyTo(pathsOfFailedUploads, 0);
 
-                    if (_sftpClient.UploadFile(screenshot.Path, destinationPath))
+                    foreach (string path in pathsOfFailedUploads)
                     {
-                        _log.WriteDebugMessage("Successfully uploaded screenshot");
-                    }
-                    else
-                    {
-                        _log.WriteDebugMessage("Failed to upload screenshot");
+                        if (_failedUploads.ContainsKey(path))
+                        {
+                            if (_failedUploads.TryGetValue(path, out string hostAssociatedWithPath))
+                            {
+                                _log.WriteDebugMessage($"Screenshot ({path}) was found in dictionary of failed uploads");
 
-                        return false;
+                                // Make sure that the host associated with the path is equal to the host we're currently handling
+                                // so we don't accidentally upload the screenshot to the wrong SFTP server just in case the user changes hosts.
+                                if (hostAssociatedWithPath.Equals(host))
+                                {
+                                    if (UploadScreenshot(host, path))
+                                    {
+                                        _log.WriteDebugMessage($"This screenshot previously failed to upload. It has now been successfully uploaded to {host}");
+                                    }
+                                }
+                                else
+                                {
+                                    _log.WriteDebugMessage($"This screenshot previously failed to upload. It could not be uploaded to {host} at the moment because the screenshot is intended for {hostAssociatedWithPath}");
+                                }
+                            }
+                        }
                     }
+
+                    // Upload the screenshot we're currently handling.
+                    return UploadScreenshot(host, screenshot.Path);
                 }
 
-                return true;
+                return false;
             }
             catch (Exception ex)
             {
@@ -1152,10 +1181,64 @@ namespace AutoScreenCapture
 
                 _log.WriteExceptionMessage("FormMain-Screenshots::FileTransferScreenshot", ex);
 
+                // We can't simply say that the SFTP client is now disconnected so we just need to nullify the SFTP client.
+                _sftpClient = null;
+
                 return false;
             }
         }
 
+        /// <summary>
+        /// Uploads a screenshot image file to the SFTP server given the provided local path of the screenshot.
+        /// </summary>
+        /// <param name="host">The hostname for the SFTP server.</param>
+        /// <param name="path">The filepath of the screenshot.</param>
+        /// <returns>True if the upload was successful. False if the upload failed.</returns>
+        private bool UploadScreenshot(string host, string path)
+        {
+            string destinationPath = Path.GetFileName(path);
+
+            _log.WriteDebugMessage("Attempting to upload screenshot to file server");
+            _log.WriteDebugMessage("Source: " + path);
+            _log.WriteDebugMessage("Destination: " + destinationPath);
+
+            if (_sftpClient.UploadFile(path, destinationPath))
+            {
+                _log.WriteDebugMessage("Successfully uploaded screenshot");
+
+                // Remove the path from the dictionary of failed uploads if we were successful in uploading the file to the SFTP server.
+                if (_failedUploads.ContainsKey(path))
+                {
+                    _log.WriteDebugMessage($"Screenshot ({path}) has been removed from the dictionary of failed uploads because the upload was successful");
+
+                    _failedUploads.Remove(path);
+                }
+            }
+            else
+            {
+                _log.WriteDebugMessage("Failed to upload screenshot");
+
+                // Add the screenshot filepath and host to a dictionary of failed uploads so we'll attempt to upload the screenshot later.
+                if (!_failedUploads.ContainsKey(path))
+                {
+                    _log.WriteDebugMessage($"Screenshot ({path}) has been added to the dictionary of failed uploads because the upload failed at this time so an attempt to retry the upload will occur in the next capture cycle");
+
+                    _failedUploads.Add(path, host);
+                }
+
+                // We can't simply say that the SFTP client is now disconnected so we just need to nullify the SFTP client.
+                _sftpClient = null;
+
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Uploads a screenshot to an SFTP server based on a trigger action type.
+        /// </summary>
+        /// <param name="triggerActionType">The trigger action type to use.</param>
         private void FileTransferScreenshot(TriggerActionType triggerActionType)
         {
             if (triggerActionType == TriggerActionType.FileTransferScreenshot && _screenCapture.Running)
@@ -1164,7 +1247,14 @@ namespace AutoScreenCapture
 
                 if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path))
                 {
-                    FileTransferScreenshot(lastScreenshotOfThisView);
+                    if (FileTransferScreenshot(lastScreenshotOfThisView))
+                    {
+                        _log.WriteDebugMessage($"The screenshot ({lastScreenshotOfThisView.Path}) was successfully uploaded");
+                    }
+                    else
+                    {
+                        _log.WriteDebugMessage($"The screenshot ({lastScreenshotOfThisView.Path}) failed to upload");
+                    }
                 }
             }
         }
