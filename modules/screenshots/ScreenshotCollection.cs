@@ -134,10 +134,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Delete all the screenshots, associated slides, and files based on the given list of screenshots.
+        /// Delete all the screenshots, associated slides, and files based on the given list of screenshots but not the files that are still in the failed uploads dictionary.
         /// </summary>
         /// <param name="screenshotsToDelete">A list of screenshots to delete.</param>
-        private void DeleteScreenshots(List<Screenshot> screenshotsToDelete)
+        /// <param name="failedUploads">A dictionary of failed uploads.</param>
+        private void DeleteScreenshots(List<Screenshot> screenshotsToDelete, Dictionary<string, string> failedUploads)
         {
             lock (_screenshotList)
             {
@@ -147,6 +148,15 @@ namespace AutoScreenCapture
                     _screenshotList.Remove(screenshot);
                     _slideList.Remove(screenshot.Slide);
                     _slideNameList.Remove(screenshot.Slide.Name);
+
+                    // Do not delete the screenshot if the path exists in the dictionary of failed uploads.
+                    string[] filePathsOfFailedUploads = new string[failedUploads.Count];
+                    failedUploads.Keys.CopyTo(filePathsOfFailedUploads, 0);
+                    
+                    if (filePathsOfFailedUploads.Contains(screenshot.Path))
+                    {
+                        continue;
+                    }
 
                     // Delete the actual image file containing the screenshot.
                     if (_fileSystem.FileExists(screenshot.Path))
@@ -297,12 +307,35 @@ namespace AutoScreenCapture
                             return false; // (just in case something went wrong with the hashing)
                         }
 
+                        bool compareWithAnyPreviousImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
+                        bool compareWithLastImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
+
+                        // Add the screenshot to the collection and the hash to the hash list if there is no last screenshot
+                        // (since this is a new screenshot from a fresh screen capture session)
+                        if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                        {
+                            AddScreenshotToCollection(screenshot);
+
+                            AddedScreenshotHashList.Add(screenshot.Hash);
+
+                            return true;
+                        }
+
                         // Then we compare that hash we just generated with the list of hashes we already have and if that list of hashes
                         // has no knowledge of the new hash then we know it's a new image. So we can add the screenshot to the collection.
                         // This ensures we only care about screenshots that are actually different from each other and ignore screenshots
                         // that are exactly the same as what we've already captured. This is the magic of using MD5 hashes.
-                        if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) ||
-                            !AddedScreenshotHashList.Contains(screenshot.Hash))
+                        if (compareWithAnyPreviousImage && !AddedScreenshotHashList.Contains(screenshot.Hash))
+                        {
+                            AddScreenshotToCollection(screenshot);
+
+                            AddedScreenshotHashList.Add(screenshot.Hash);
+
+                            result = true;
+                        }
+
+                        if (compareWithLastImage && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) &&
+                            !screenshot.Hash.Equals(lastScreenshotOfThisView.Hash))
                         {
                             AddScreenshotToCollection(screenshot);
 
@@ -1417,7 +1450,8 @@ namespace AutoScreenCapture
         /// <param name="folder">The folder to delete. The folder path may contain macro tags.</param>
         /// <param name="macroParser">The macro tag parser to use.</param>
         /// <param name="macroTagCollection">A collectino of macro tags.</param>
-        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection)
+        /// <param name="filePathsOfFailedUploads">The filepaths of the failed uploads.</param>
+        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Dictionary<string, string> filePathsOfFailedUploads)
         {
             try
             {
@@ -1429,7 +1463,7 @@ namespace AutoScreenCapture
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date)).ToList();
 
                         // Delete the screenshots and their associated image files.
-                        DeleteScreenshots(screenshotsToDelete);
+                        DeleteScreenshots(screenshotsToDelete, filePathsOfFailedUploads);
 
                         DeleteScreenshotNodes(xDoc.SelectNodes(SCREENSHOT_XPATH));
 
@@ -1445,7 +1479,7 @@ namespace AutoScreenCapture
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
 
                         // Delete the screenshots and their associated image files.
-                        DeleteScreenshots(screenshotsToDelete);
+                        DeleteScreenshots(screenshotsToDelete, filePathsOfFailedUploads);
                     }
 
                     XmlNode minDateNode = GetMinDateFromXMLDocument();
@@ -1486,7 +1520,8 @@ namespace AutoScreenCapture
         /// Deletes screenshots based on the specified screen capture cycle count. This value needs to be greater than 0.
         /// </summary>
         /// <param name="cycleCount">The cycle count to use when considering when to delete screenshots.</param>
-        public void DeleteScreenshotsByCycleCount(int cycleCount)
+        /// <param name="failedUploads">A dictionary of failed uploads.</param>
+        public void DeleteScreenshotsByCycleCount(int cycleCount, Dictionary<string, string> failedUploads)
         {
             try
             {
@@ -1522,7 +1557,7 @@ namespace AutoScreenCapture
                                     List<Screenshot> screenshotsToDelete = GetScreenshots(strDate, strTime);
 
                                     // Delete the screenshots.
-                                    DeleteScreenshots(screenshotsToDelete);
+                                    DeleteScreenshots(screenshotsToDelete, failedUploads);
                                 }
 
                                 // Get a list of screenshot nodes by date and time.
@@ -1548,7 +1583,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// Deletes screenshots from the oldest screen capture cycle. You can use this for a rolling delete given the correctly configured setup.
         /// </summary>
-        public void DeleteScreenshotsFromOldestCaptureCycle()
+        /// <param name="failedUploads">A dictionary of failed uploads.</param>
+        public void DeleteScreenshotsFromOldestCaptureCycle(Dictionary<string, string> failedUploads)
         {
             try
             {
@@ -1571,7 +1607,7 @@ namespace AutoScreenCapture
                             List<Screenshot> screenshotsToDelete = GetScreenshots(strDate, strTime);
 
                             // Delete the screenshots.
-                            DeleteScreenshots(screenshotsToDelete);
+                            DeleteScreenshots(screenshotsToDelete, failedUploads);
                         }
 
                         // Get a list of screenshot nodes by date and time.

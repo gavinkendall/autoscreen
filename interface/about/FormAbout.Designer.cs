@@ -306,7 +306,7 @@
             this.MinimumSize = new System.Drawing.Size(781, 526);
             this.Name = "FormAbout";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Auto Screen Capture 2.4.1.9 (\"Blade\")";
+            this.Text = "Auto Screen Capture 2.4.2.0 (\"Blade\")";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAbout_FormClosing);
             this.Load += new System.EventHandler(this.FormAbout_Load);

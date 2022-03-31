@@ -35,6 +35,8 @@
             this.textBoxHost = new System.Windows.Forms.TextBox();
             this.labelHost = new System.Windows.Forms.Label();
             this.groupBoxClient = new System.Windows.Forms.GroupBox();
+            this.checkBoxKeepFailedUploads = new System.Windows.Forms.CheckBox();
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload = new System.Windows.Forms.CheckBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.labelPassword = new System.Windows.Forms.Label();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
@@ -55,7 +57,7 @@
             this.groupBoxServer.Controls.Add(this.labelHost);
             this.groupBoxServer.Location = new System.Drawing.Point(12, 12);
             this.groupBoxServer.Name = "groupBoxServer";
-            this.groupBoxServer.Size = new System.Drawing.Size(578, 55);
+            this.groupBoxServer.Size = new System.Drawing.Size(578, 56);
             this.groupBoxServer.TabIndex = 1;
             this.groupBoxServer.TabStop = false;
             this.groupBoxServer.Text = "Server";
@@ -110,16 +112,39 @@
             // 
             // groupBoxClient
             // 
+            this.groupBoxClient.Controls.Add(this.checkBoxKeepFailedUploads);
+            this.groupBoxClient.Controls.Add(this.checkBoxDeleteLocalFileAfterSuccessfulUpload);
             this.groupBoxClient.Controls.Add(this.textBoxPassword);
             this.groupBoxClient.Controls.Add(this.labelPassword);
             this.groupBoxClient.Controls.Add(this.textBoxUsername);
             this.groupBoxClient.Controls.Add(this.labelUsername);
-            this.groupBoxClient.Location = new System.Drawing.Point(12, 73);
+            this.groupBoxClient.Location = new System.Drawing.Point(12, 74);
             this.groupBoxClient.Name = "groupBoxClient";
-            this.groupBoxClient.Size = new System.Drawing.Size(578, 81);
+            this.groupBoxClient.Size = new System.Drawing.Size(578, 125);
             this.groupBoxClient.TabIndex = 6;
             this.groupBoxClient.TabStop = false;
             this.groupBoxClient.Text = "Client";
+            // 
+            // checkBoxKeepFailedUploads
+            // 
+            this.checkBoxKeepFailedUploads.AutoSize = true;
+            this.checkBoxKeepFailedUploads.Location = new System.Drawing.Point(9, 102);
+            this.checkBoxKeepFailedUploads.Name = "checkBoxKeepFailedUploads";
+            this.checkBoxKeepFailedUploads.Size = new System.Drawing.Size(438, 17);
+            this.checkBoxKeepFailedUploads.TabIndex = 12;
+            this.checkBoxKeepFailedUploads.Text = "Keep failed uploads in queue and retry uploads with each capture cycle until succ" +
+    "essful";
+            this.checkBoxKeepFailedUploads.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxDeleteLocalFileAfterSuccessfulUpload
+            // 
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.AutoSize = true;
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.Location = new System.Drawing.Point(9, 81);
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.Name = "checkBoxDeleteLocalFileAfterSuccessfulUpload";
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.Size = new System.Drawing.Size(210, 17);
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.TabIndex = 11;
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.Text = "Delete local file after successful upload";
+            this.checkBoxDeleteLocalFileAfterSuccessfulUpload.UseVisualStyleBackColor = true;
             // 
             // textBoxPassword
             // 
@@ -158,7 +183,7 @@
             // 
             // buttonTestConnection
             // 
-            this.buttonTestConnection.Location = new System.Drawing.Point(12, 171);
+            this.buttonTestConnection.Location = new System.Drawing.Point(12, 205);
             this.buttonTestConnection.Name = "buttonTestConnection";
             this.buttonTestConnection.Size = new System.Drawing.Size(114, 23);
             this.buttonTestConnection.TabIndex = 11;
@@ -168,7 +193,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(434, 171);
+            this.buttonOK.Location = new System.Drawing.Point(434, 205);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 12;
@@ -179,7 +204,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(515, 171);
+            this.buttonCancel.Location = new System.Drawing.Point(515, 205);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 13;
@@ -193,7 +218,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(602, 201);
+            this.ClientSize = new System.Drawing.Size(602, 240);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonTestConnection);
@@ -231,5 +256,15 @@
         private System.Windows.Forms.Button buttonTestConnection;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxDeleteLocalFileAfterSuccessfulUpload;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.CheckBox checkBoxKeepFailedUploads;
     }
 }

@@ -268,7 +268,7 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.DeleteScreenshotsByDays:
-                    _screenshotCollection.DeleteScreenshotsByDays(trigger.Days, trigger.Value, _macroParser, _formMacroTag.MacroTagCollection);
+                    _screenshotCollection.DeleteScreenshotsByDays(trigger.Days, trigger.Value, _macroParser, _formMacroTag.MacroTagCollection, _failedUploads);
                     break;
 
                 case TriggerActionType.SetLabel:
@@ -344,11 +344,11 @@ namespace AutoScreenCapture
                     break;
 
                 case TriggerActionType.DeleteScreenshotsByCycleCount:
-                    _screenshotCollection.DeleteScreenshotsByCycleCount(trigger.CycleCount);
+                    _screenshotCollection.DeleteScreenshotsByCycleCount(trigger.CycleCount, _failedUploads);
                     break;
 
                 case TriggerActionType.DeleteScreenshotsFromOldestCaptureCycle:
-                    _screenshotCollection.DeleteScreenshotsFromOldestCaptureCycle();
+                    _screenshotCollection.DeleteScreenshotsFromOldestCaptureCycle(_failedUploads);
                     break;
             }
         }

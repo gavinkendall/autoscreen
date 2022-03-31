@@ -657,7 +657,7 @@
 </value>
   </data>
   <data name="labelOptimizeScreenCaptureHelp.Text" xml:space="preserve">
-    <value>Determine if the screen capture session should be optimized. If it is optimized then the new image captured is compared with any previous image captured and, if the image is exactly the same, then the screenshot will not be saved so we only write to disk when necessary.</value>
+    <value>Determine if the screen capture session should be optimized. If it is optimized then the new image captured is compared with any previous image (or the last image) captured and, if the image is exactly the same, then the screenshot will not be saved.</value>
   </data>
   <data name="labelScreenshotLabelHelp.Text" xml:space="preserve">
     <value>You can apply a label to each screenshot taken so that you can filter by that label when reviewing screenshots. Type your label in the text field "Screenshot Label", click the "Add To List" button, and ensure the "Apply this label to each screenshot" option is enabled.</value>

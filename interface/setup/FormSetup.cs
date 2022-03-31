@@ -190,6 +190,8 @@ namespace AutoScreenCapture
 
             // Optimize Screen Capture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
+            radioButtonCompareWithAnyPreviousImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
+            radioButtonCompareWithLastImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
 
             // Application Focus
             RefreshApplicationFocusList();

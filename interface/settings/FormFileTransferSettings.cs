@@ -28,9 +28,9 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormFileTransferSettings : Form
     {
-        Config _config;
-        FileSystem _fileSystem;
-        Log _log;
+        private readonly Config _config;
+        private readonly FileSystem _fileSystem;
+        private readonly Log _log;
 
         /// <summary>
         /// File Transfer Settings
@@ -50,6 +50,9 @@ namespace AutoScreenCapture
             numericUpDownPort.Value = Convert.ToInt32(Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value);
             textBoxUsername.Text = Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
             textBoxPassword.Text = Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
+
+            checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _config.Settings.DefaultSettings.SFTPDeleteLocalFileAfterSuccessfulUpload).Value);
+            checkBoxKeepFailedUploads.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value);
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

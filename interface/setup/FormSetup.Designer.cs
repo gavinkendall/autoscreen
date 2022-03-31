@@ -76,6 +76,8 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.radioButtonCompareWithLastImage = new System.Windows.Forms.RadioButton();
+            this.radioButtonCompareWithAnyPreviousImage = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pictureBoxBladeNewImageCaptured = new System.Windows.Forms.PictureBox();
             this.groupBoxEnabled = new System.Windows.Forms.GroupBox();
@@ -706,6 +708,8 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.radioButtonCompareWithLastImage);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.radioButtonCompareWithAnyPreviousImage);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBox1);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBoxEnabled);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBoxNotEnabled);
@@ -719,13 +723,35 @@
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
             // 
+            // radioButtonCompareWithLastImage
+            // 
+            this.radioButtonCompareWithLastImage.AutoSize = true;
+            this.radioButtonCompareWithLastImage.Location = new System.Drawing.Point(6, 98);
+            this.radioButtonCompareWithLastImage.Name = "radioButtonCompareWithLastImage";
+            this.radioButtonCompareWithLastImage.Size = new System.Drawing.Size(139, 17);
+            this.radioButtonCompareWithLastImage.TabIndex = 2;
+            this.radioButtonCompareWithLastImage.TabStop = true;
+            this.radioButtonCompareWithLastImage.Text = "Compare with last image";
+            this.radioButtonCompareWithLastImage.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCompareWithAnyPreviousImage
+            // 
+            this.radioButtonCompareWithAnyPreviousImage.AutoSize = true;
+            this.radioButtonCompareWithAnyPreviousImage.Location = new System.Drawing.Point(6, 75);
+            this.radioButtonCompareWithAnyPreviousImage.Name = "radioButtonCompareWithAnyPreviousImage";
+            this.radioButtonCompareWithAnyPreviousImage.Size = new System.Drawing.Size(183, 17);
+            this.radioButtonCompareWithAnyPreviousImage.TabIndex = 1;
+            this.radioButtonCompareWithAnyPreviousImage.TabStop = true;
+            this.radioButtonCompareWithAnyPreviousImage.Text = "Compare with any previous image";
+            this.radioButtonCompareWithAnyPreviousImage.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox1.Controls.Add(this.pictureBoxBladeNewImageCaptured);
-            this.groupBox1.Location = new System.Drawing.Point(3, 90);
+            this.groupBox1.Location = new System.Drawing.Point(3, 121);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(180, 157);
+            this.groupBox1.Size = new System.Drawing.Size(180, 126);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "New Image Captured";
@@ -733,7 +759,7 @@
             // pictureBoxBladeNewImageCaptured
             // 
             this.pictureBoxBladeNewImageCaptured.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNewImageCaptured.Image")));
-            this.pictureBoxBladeNewImageCaptured.Location = new System.Drawing.Point(37, 43);
+            this.pictureBoxBladeNewImageCaptured.Location = new System.Drawing.Point(37, 30);
             this.pictureBoxBladeNewImageCaptured.Name = "pictureBoxBladeNewImageCaptured";
             this.pictureBoxBladeNewImageCaptured.Size = new System.Drawing.Size(101, 82);
             this.pictureBoxBladeNewImageCaptured.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2024,5 +2050,15 @@
         /// A listbox control for the process list.
         /// </summary>
         public System.Windows.Forms.ListBox listBoxProcessList;
+
+        /// <summary>
+        /// A radio button for comparing with any previous image for Optimize Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.RadioButton radioButtonCompareWithAnyPreviousImage;
+
+        /// <summary>
+        /// A radio button for comparing with the last image for Optimize Screen Capture.
+        /// </summary>
+        public System.Windows.Forms.RadioButton radioButtonCompareWithLastImage;
     }
 }

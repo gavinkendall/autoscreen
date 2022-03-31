@@ -753,6 +753,8 @@ namespace AutoScreenCapture
             if (_formFileTransferSettings.DialogResult == DialogResult.OK)
             {
                 BuildViewTabPages();
+
+                SaveSettings();
             }
         }
 
