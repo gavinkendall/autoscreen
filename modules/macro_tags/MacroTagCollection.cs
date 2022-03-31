@@ -433,6 +433,11 @@ namespace AutoScreenCapture
                             Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
                         }
 
+                        if (GetByName("%capturenow%") == null)
+                        {
+                            Add(new MacroTag(macroParser, "capturenow", "The number of times Capture Now has been used", MacroTagType.CountNow, enable: true));
+                        }
+
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }

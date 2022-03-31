@@ -1450,8 +1450,8 @@ namespace AutoScreenCapture
         /// <param name="folder">The folder to delete. The folder path may contain macro tags.</param>
         /// <param name="macroParser">The macro tag parser to use.</param>
         /// <param name="macroTagCollection">A collectino of macro tags.</param>
-        /// <param name="filePathsOfFailedUploads">The filepaths of the failed uploads.</param>
-        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Dictionary<string, string> filePathsOfFailedUploads)
+        /// <param name="failedUploads">A dictionary of failed uploads.</param>
+        public void DeleteScreenshotsByDays(int days, string folder, MacroParser macroParser, MacroTagCollection macroTagCollection, Dictionary<string, string> failedUploads)
         {
             try
             {
@@ -1463,7 +1463,7 @@ namespace AutoScreenCapture
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date)).ToList();
 
                         // Delete the screenshots and their associated image files.
-                        DeleteScreenshots(screenshotsToDelete, filePathsOfFailedUploads);
+                        DeleteScreenshots(screenshotsToDelete, failedUploads);
 
                         DeleteScreenshotNodes(xDoc.SelectNodes(SCREENSHOT_XPATH));
 
@@ -1479,7 +1479,7 @@ namespace AutoScreenCapture
                         List<Screenshot> screenshotsToDelete = _screenshotList.Where(x => !string.IsNullOrEmpty(x.Date) && Convert.ToDateTime(x.Date) <= DateTime.Now.Date.AddDays(-days)).ToList();
 
                         // Delete the screenshots and their associated image files.
-                        DeleteScreenshots(screenshotsToDelete, filePathsOfFailedUploads);
+                        DeleteScreenshots(screenshotsToDelete, failedUploads);
                     }
 
                     XmlNode minDateNode = GetMinDateFromXMLDocument();
