@@ -331,7 +331,10 @@ namespace AutoScreenCapture
                         {
                             AddScreenshotToCollection(screenshot);
 
-                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
+                            if (!AddedScreenshotHashList.ContainsKey(screenshot.Hash))
+                            {
+                                AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
+                            }
 
                             result = true;
                         }
