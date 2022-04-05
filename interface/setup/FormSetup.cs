@@ -47,16 +47,17 @@ namespace AutoScreenCapture
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="log"></param>
-        /// <param name="security"></param>
-        /// <param name="config"></param>
-        /// <param name="fileSystem"></param>
-        /// <param name="screenCapture"></param>
-        /// <param name="formLabelSwitcher"></param>
-        /// <param name="formScreen"></param>
-        /// <param name="formRegion"></param>
-        /// <param name="macroTagCollection"></param>
-        /// <param name="macroParser"></param>
+        /// <param name="log">The log to use.</param>
+        /// <param name="security">The securiy class to use.</param>
+        /// <param name="config">The config class to use.</param>
+        /// <param name="fileSystem">The file system to use.</param>
+        /// <param name="screenCapture">The screen capture class to use.</param>
+        /// <param name="formLabelSwitcher">The Label Switcher tool.</param>
+        /// <param name="formScreen">The Screen form.</param>
+        /// <param name="formRegion">The Region form.</param>
+        /// <param name="macroTagCollection">The macro tags collection to use.</param>
+        /// <param name="macroParser">The macro parser to use.</param>
+        /// <param name="screenshotCollection">The screenshot collection to use.</param>
         public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser, ScreenshotCollection screenshotCollection)
         {
             InitializeComponent();
