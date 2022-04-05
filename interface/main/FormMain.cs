@@ -231,6 +231,18 @@ namespace AutoScreenCapture
             timerScheduledCapture.Enabled = true;
             timerScheduledCapture.Start();
 
+            if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+            {
+                toolStripMenuItemEmailSettings.Enabled = false;
+                toolStripMenuItemEmailSettingsFromStatusBar.Enabled = false;
+            }
+
+            if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+            {
+                toolStripMenuItemFileTransferSettings.Enabled = false;
+                toolStripMenuItemFileTransferSettingsFromStatusBar.Enabled = false;
+            }
+
             // Set this to true so anything that needs to be processed at startup will be done in the
             // first tick of the scheduled capture timer. This is when using -hide and -start command line options
             // so we avoid having to show the interface and/or the system tray icon too early during application startup.

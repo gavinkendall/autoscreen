@@ -171,18 +171,10 @@ namespace AutoScreenCapture
                 toolStripMenuItemAdd.Visible = true;
                 toolStripMenuItemConfigure.Visible = true;
                 toolStripMenuItemHelp.Visible = true;
-
-                if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
-                {
-                    toolStripMenuItemSettings.Visible = true;
-                    toolStripMenuItemEmailSettings.Visible = true;
-                }
-
-                if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
-                {
-                    toolStripMenuItemSettings.Visible = true;
-                    toolStripMenuItemFileTransferSettings.Visible = true;
-                }
+                toolStripMenuItemSettings.Visible = true;
+                toolStripMenuItemEmailSettings.Visible = true;
+                toolStripMenuItemSettings.Visible = true;
+                toolStripMenuItemFileTransferSettings.Visible = true;
 
                 toolStripMenuItemTools.Visible = true;
                 toolStripSeparatorTools.Visible = true;

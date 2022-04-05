@@ -408,6 +408,28 @@ namespace AutoScreenCapture
                         ScreenCaptureInterval = 0
                     };
 
+                    Trigger triggerEmailScreenshots = new Trigger()
+                    {
+                        Enable = false,
+                        Name = "Email Screenshots",
+                        ConditionType = TriggerConditionType.AfterScreenshotTaken,
+                        ActionType = TriggerActionType.EmailScreenshot,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
+                    };
+
+                    Trigger triggerUploadScreenshotsSFTP = new Trigger()
+                    {
+                        Enable = false,
+                        Name = "Upload With SFTP",
+                        ConditionType = TriggerConditionType.AfterScreenshotTaken,
+                        ActionType = TriggerActionType.FileTransferScreenshot,
+                        Date = DateTime.Now,
+                        Time = DateTime.Now,
+                        ScreenCaptureInterval = 0
+                    };
+
                     // Setup a few "built in" triggers by default.
                     Add(triggerApplicationStartupShowSystemTrayIcon);
                     Add(triggerApplicationStartupShowInterface);
@@ -417,6 +439,8 @@ namespace AutoScreenCapture
                     Add(triggerLimitReachedStopScreenCapture);
                     Add(triggerBeforeScreenshotReferencesSavedDeleteScreenshots);
                     Add(triggerSystemTrayIconDoubleClickShowOrHideInterface);
+                    Add(triggerEmailScreenshots);
+                    Add(triggerUploadScreenshotsSFTP);
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

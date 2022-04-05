@@ -471,16 +471,6 @@ namespace AutoScreenCapture
             this.toolStripMenuItemFileTransferSettings.Visible = false;
             this.toolStripMenuItemFileTransferSettings.Click += new System.EventHandler(this.fileTransferSettings_Click);
             // 
-            // toolStripDropDownButtonEmailSettings
-            // 
-            this.toolStripDropDownButtonEmailSettings.Name = "toolStripDropDownButtonEmailSettings";
-            this.toolStripDropDownButtonEmailSettings.Size = new System.Drawing.Size(23, 23);
-            // 
-            // toolStripDropDownButtonFileTransferSettings
-            // 
-            this.toolStripDropDownButtonFileTransferSettings.Name = "toolStripDropDownButtonFileTransferSettings";
-            this.toolStripDropDownButtonFileTransferSettings.Size = new System.Drawing.Size(23, 23);
-            // 
             // tabControlViews
             // 
             this.tabControlViews.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 

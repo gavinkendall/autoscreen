@@ -281,24 +281,6 @@ namespace AutoScreenCapture
             toolStripDashboard.Items.Add(zoomIn);
             toolStripDashboard.Items.Add(zoomOut);
 
-            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
-            {
-                toolStripDropDownButtonEmailSettings.Enabled = true;
-            }
-            else
-            {
-                toolStripDropDownButtonEmailSettings.Enabled = false;
-            }
-
-            if (Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
-            {
-                toolStripDropDownButtonFileTransferSettings.Enabled = true;
-            }
-            else
-            {
-                toolStripDropDownButtonFileTransferSettings.Enabled = false;
-            }
-
             flowLayoutPanel = new FlowLayoutPanel
             {
                 Name = "flowLayoutPanel",
