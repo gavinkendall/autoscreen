@@ -406,6 +406,13 @@ namespace AutoScreenCapture
                     (errorLevel & (int)ScreenSavingErrorLevels.PathLengthExceeded) != 0 ||
                     (errorLevel & (int)ScreenSavingErrorLevels.DriveNotReady) != 0;
 
+            // Just return false if a hash duplicate has been found because technically the screenshot hasn't been saved and we don't
+            // want to be calling the ScreenshotTakenWithSuccess method (which will run Triggers with the AfterScreenshotTaken condition).
+            if (errorLevel == (int)ScreenSavingErrorLevels.HashDuplicate)
+            {
+                return false;
+            }
+
             if (screenSaved)
             {
                 ScreenshotTakenWithSuccess();

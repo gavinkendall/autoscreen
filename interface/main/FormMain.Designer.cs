@@ -50,15 +50,22 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonStopScreenCapture = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonOpenProgramFolder = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonCommandLine = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripDropDownButtonEmailSettings = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripDropDownButtonFileTransferSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButtonSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItemEmailSettingsFromStatusBar = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButtonTools = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemToolsDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButtonHelp = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripDropDownButtonExit = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripMenuItemEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFileTransferSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButtonEmailSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripDropDownButtonFileTransferSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabControlViews = new System.Windows.Forms.TabControl();
             this.contextMenuStripScreenshot = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.listBoxScreenshots = new System.Windows.Forms.ListBox();
@@ -89,8 +96,6 @@ namespace AutoScreenCapture
             this.toolStripMenuItemChangeMacroTag = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemChangeTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemFileTransferSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemTools = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
@@ -153,16 +158,17 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonStopScreenCapture,
             this.toolStripDropDownButtonOpenProgramFolder,
             this.toolStripDropDownButtonCommandLine,
-            this.toolStripDropDownButtonEmailSettings,
-            this.toolStripDropDownButtonFileTransferSettings,
+            this.toolStripDropDownButtonSettings,
             this.toolStripDropDownButtonTools,
             this.toolStripDropDownButtonHelp,
             this.toolStripDropDownButtonExit,
-            this.toolStripInfo});
-            this.statusStrip.Location = new System.Drawing.Point(0, 712);
+            this.toolStripSpacer,
+            this.toolStripInfo,
+            this.toolStripCount});
+            this.statusStrip.Location = new System.Drawing.Point(0, 710);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(1330, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1330, 24);
             this.statusStrip.TabIndex = 3;
             // 
             // toolStripDropDownButtonSetup
@@ -184,7 +190,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSetup.Image = global::AutoScreenCapture.Properties.Resources.setup;
             this.toolStripDropDownButtonSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonSetup.Name = "toolStripDropDownButtonSetup";
-            this.toolStripDropDownButtonSetup.Size = new System.Drawing.Size(66, 20);
+            this.toolStripDropDownButtonSetup.Size = new System.Drawing.Size(66, 22);
             this.toolStripDropDownButtonSetup.Text = "Setup";
             // 
             // toolStripMenuItemScreenshotsFolder
@@ -268,7 +274,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonPreview.Name = "toolStripDropDownButtonPreview";
             this.toolStripDropDownButtonPreview.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripDropDownButtonPreview.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonPreview.Size = new System.Drawing.Size(52, 20);
+            this.toolStripDropDownButtonPreview.Size = new System.Drawing.Size(52, 22);
             this.toolStripDropDownButtonPreview.Text = "Preview";
             this.toolStripDropDownButtonPreview.Click += new System.EventHandler(this.toolStripDropDownButtonPreview_Click);
             // 
@@ -283,7 +289,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonStartScreenCapture.Name = "toolStripDropDownButtonStartScreenCapture";
             this.toolStripDropDownButtonStartScreenCapture.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripDropDownButtonStartScreenCapture.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonStartScreenCapture.Size = new System.Drawing.Size(134, 20);
+            this.toolStripDropDownButtonStartScreenCapture.Size = new System.Drawing.Size(134, 22);
             this.toolStripDropDownButtonStartScreenCapture.Text = "Start Screen Capture";
             this.toolStripDropDownButtonStartScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStartScreenCapture_Click);
             // 
@@ -298,7 +304,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonStopScreenCapture.Name = "toolStripDropDownButtonStopScreenCapture";
             this.toolStripDropDownButtonStopScreenCapture.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripDropDownButtonStopScreenCapture.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonStopScreenCapture.Size = new System.Drawing.Size(134, 20);
+            this.toolStripDropDownButtonStopScreenCapture.Size = new System.Drawing.Size(134, 22);
             this.toolStripDropDownButtonStopScreenCapture.Text = "Stop Screen Capture";
             this.toolStripDropDownButtonStopScreenCapture.Click += new System.EventHandler(this.toolStripMenuItemStopScreenCapture_Click);
             // 
@@ -310,7 +316,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonOpenProgramFolder.Name = "toolStripDropDownButtonOpenProgramFolder";
             this.toolStripDropDownButtonOpenProgramFolder.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripDropDownButtonOpenProgramFolder.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonOpenProgramFolder.Size = new System.Drawing.Size(141, 20);
+            this.toolStripDropDownButtonOpenProgramFolder.Size = new System.Drawing.Size(141, 22);
             this.toolStripDropDownButtonOpenProgramFolder.Text = "Open Program Folder";
             this.toolStripDropDownButtonOpenProgramFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenProgramFolder_Click);
             // 
@@ -324,35 +330,37 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonCommandLine.Name = "toolStripDropDownButtonCommandLine";
             this.toolStripDropDownButtonCommandLine.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripDropDownButtonCommandLine.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonCommandLine.Size = new System.Drawing.Size(109, 20);
+            this.toolStripDropDownButtonCommandLine.Size = new System.Drawing.Size(109, 22);
             this.toolStripDropDownButtonCommandLine.Text = "Command Line";
             this.toolStripDropDownButtonCommandLine.Click += new System.EventHandler(this.toolStripDropDownButtonCommandLine_Click);
             // 
-            // toolStripDropDownButtonEmailSettings
+            // toolStripDropDownButtonSettings
             // 
-            this.toolStripDropDownButtonEmailSettings.AutoToolTip = false;
-            this.toolStripDropDownButtonEmailSettings.BackColor = System.Drawing.Color.White;
-            this.toolStripDropDownButtonEmailSettings.ForeColor = System.Drawing.Color.Black;
-            this.toolStripDropDownButtonEmailSettings.Image = global::AutoScreenCapture.Properties.Resources.email;
-            this.toolStripDropDownButtonEmailSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonEmailSettings.Name = "toolStripDropDownButtonEmailSettings";
-            this.toolStripDropDownButtonEmailSettings.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonEmailSettings.Size = new System.Drawing.Size(101, 20);
-            this.toolStripDropDownButtonEmailSettings.Text = "Email Settings";
-            this.toolStripDropDownButtonEmailSettings.Click += new System.EventHandler(this.toolStripDropDownButtonEmailSettings_Click);
+            this.toolStripDropDownButtonSettings.AutoToolTip = false;
+            this.toolStripDropDownButtonSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemEmailSettingsFromStatusBar,
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar});
+            this.toolStripDropDownButtonSettings.Image = global::AutoScreenCapture.Properties.Resources.configure;
+            this.toolStripDropDownButtonSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonSettings.Name = "toolStripDropDownButtonSettings";
+            this.toolStripDropDownButtonSettings.Size = new System.Drawing.Size(78, 22);
+            this.toolStripDropDownButtonSettings.Text = "Settings";
             // 
-            // toolStripDropDownButtonFileTransferSettings
+            // toolStripMenuItemEmailSettingsFromStatusBar
             // 
-            this.toolStripDropDownButtonFileTransferSettings.AutoToolTip = false;
-            this.toolStripDropDownButtonFileTransferSettings.BackColor = System.Drawing.Color.White;
-            this.toolStripDropDownButtonFileTransferSettings.ForeColor = System.Drawing.Color.Black;
-            this.toolStripDropDownButtonFileTransferSettings.Image = global::AutoScreenCapture.Properties.Resources.file_transfer;
-            this.toolStripDropDownButtonFileTransferSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonFileTransferSettings.Name = "toolStripDropDownButtonFileTransferSettings";
-            this.toolStripDropDownButtonFileTransferSettings.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonFileTransferSettings.Size = new System.Drawing.Size(135, 20);
-            this.toolStripDropDownButtonFileTransferSettings.Text = "File Transfer Settings";
-            this.toolStripDropDownButtonFileTransferSettings.Click += new System.EventHandler(this.toolStripDropDownButtonFileTransferSettings_Click);
+            this.toolStripMenuItemEmailSettingsFromStatusBar.Image = global::AutoScreenCapture.Properties.Resources.email;
+            this.toolStripMenuItemEmailSettingsFromStatusBar.Name = "toolStripMenuItemEmailSettingsFromStatusBar";
+            this.toolStripMenuItemEmailSettingsFromStatusBar.Size = new System.Drawing.Size(182, 22);
+            this.toolStripMenuItemEmailSettingsFromStatusBar.Text = "Email Settings";
+            this.toolStripMenuItemEmailSettingsFromStatusBar.Click += new System.EventHandler(this.emailSettings_Click);
+            // 
+            // toolStripMenuItemFileTransferSettingsFromStatusBar
+            // 
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar.Image = global::AutoScreenCapture.Properties.Resources.file_transfer;
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar.Name = "toolStripMenuItemFileTransferSettingsFromStatusBar";
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar.Size = new System.Drawing.Size(182, 22);
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar.Text = "File Transfer Settings";
+            this.toolStripMenuItemFileTransferSettingsFromStatusBar.Click += new System.EventHandler(this.fileTransferSettings_Click);
             // 
             // toolStripDropDownButtonTools
             // 
@@ -364,7 +372,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
             this.toolStripDropDownButtonTools.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonTools.Name = "toolStripDropDownButtonTools";
-            this.toolStripDropDownButtonTools.Size = new System.Drawing.Size(64, 20);
+            this.toolStripDropDownButtonTools.Size = new System.Drawing.Size(64, 22);
             this.toolStripDropDownButtonTools.Text = "Tools";
             // 
             // toolStripMenuItemToolsDynamicRegexValidator
@@ -398,7 +406,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonHelp.Name = "toolStripDropDownButtonHelp";
             this.toolStripDropDownButtonHelp.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripDropDownButtonHelp.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonHelp.Size = new System.Drawing.Size(52, 20);
+            this.toolStripDropDownButtonHelp.Size = new System.Drawing.Size(52, 22);
             this.toolStripDropDownButtonHelp.Text = "Help";
             this.toolStripDropDownButtonHelp.Click += new System.EventHandler(this.toolStripDropDownButtonHelp_Click);
             // 
@@ -409,9 +417,16 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButtonExit.Name = "toolStripDropDownButtonExit";
             this.toolStripDropDownButtonExit.ShowDropDownArrow = false;
-            this.toolStripDropDownButtonExit.Size = new System.Drawing.Size(45, 20);
+            this.toolStripDropDownButtonExit.Size = new System.Drawing.Size(45, 22);
             this.toolStripDropDownButtonExit.Text = "Exit";
             this.toolStripDropDownButtonExit.Click += new System.EventHandler(this.toolStripDropDownButtonExit_Click);
+            // 
+            // toolStripSpacer
+            // 
+            this.toolStripSpacer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripSpacer.Name = "toolStripSpacer";
+            this.toolStripSpacer.Size = new System.Drawing.Size(3, 19);
+            this.toolStripSpacer.Spring = true;
             // 
             // toolStripInfo
             // 
@@ -424,10 +439,47 @@ namespace AutoScreenCapture
             this.toolStripInfo.Name = "toolStripInfo";
             this.toolStripInfo.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripInfo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripInfo.Size = new System.Drawing.Size(282, 17);
-            this.toolStripInfo.Spring = true;
-            this.toolStripInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripInfo.Size = new System.Drawing.Size(350, 19);
+            this.toolStripInfo.Text = "Ready";
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // toolStripCount
+            // 
+            this.toolStripCount.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)));
+            this.toolStripCount.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
+            this.toolStripCount.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripCount.Name = "toolStripCount";
+            this.toolStripCount.Size = new System.Drawing.Size(56, 19);
+            this.toolStripCount.Text = "Count: 0";
+            this.toolStripCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripMenuItemEmailSettings
+            // 
+            this.toolStripMenuItemEmailSettings.Image = global::AutoScreenCapture.Properties.Resources.email;
+            this.toolStripMenuItemEmailSettings.Name = "toolStripMenuItemEmailSettings";
+            this.toolStripMenuItemEmailSettings.Size = new System.Drawing.Size(182, 22);
+            this.toolStripMenuItemEmailSettings.Text = "Email Settings";
+            this.toolStripMenuItemEmailSettings.Visible = false;
+            this.toolStripMenuItemEmailSettings.Click += new System.EventHandler(this.emailSettings_Click);
+            // 
+            // toolStripMenuItemFileTransferSettings
+            // 
+            this.toolStripMenuItemFileTransferSettings.Image = global::AutoScreenCapture.Properties.Resources.file_transfer;
+            this.toolStripMenuItemFileTransferSettings.Name = "toolStripMenuItemFileTransferSettings";
+            this.toolStripMenuItemFileTransferSettings.Size = new System.Drawing.Size(182, 22);
+            this.toolStripMenuItemFileTransferSettings.Text = "File Transfer Settings";
+            this.toolStripMenuItemFileTransferSettings.Visible = false;
+            this.toolStripMenuItemFileTransferSettings.Click += new System.EventHandler(this.fileTransferSettings_Click);
+            // 
+            // toolStripDropDownButtonEmailSettings
+            // 
+            this.toolStripDropDownButtonEmailSettings.Name = "toolStripDropDownButtonEmailSettings";
+            this.toolStripDropDownButtonEmailSettings.Size = new System.Drawing.Size(23, 23);
+            // 
+            // toolStripDropDownButtonFileTransferSettings
+            // 
+            this.toolStripDropDownButtonFileTransferSettings.Name = "toolStripDropDownButtonFileTransferSettings";
+            this.toolStripDropDownButtonFileTransferSettings.Size = new System.Drawing.Size(23, 23);
             // 
             // tabControlViews
             // 
@@ -693,24 +745,6 @@ namespace AutoScreenCapture
             this.toolStripMenuItemSettings.Name = "toolStripMenuItemSettings";
             this.toolStripMenuItemSettings.Size = new System.Drawing.Size(219, 22);
             this.toolStripMenuItemSettings.Text = "Settings";
-            // 
-            // toolStripMenuItemEmailSettings
-            // 
-            this.toolStripMenuItemEmailSettings.Image = global::AutoScreenCapture.Properties.Resources.email;
-            this.toolStripMenuItemEmailSettings.Name = "toolStripMenuItemEmailSettings";
-            this.toolStripMenuItemEmailSettings.Size = new System.Drawing.Size(182, 22);
-            this.toolStripMenuItemEmailSettings.Text = "Email Settings";
-            this.toolStripMenuItemEmailSettings.Visible = false;
-            this.toolStripMenuItemEmailSettings.Click += new System.EventHandler(this.toolStripDropDownButtonEmailSettings_Click);
-            // 
-            // toolStripMenuItemFileTransferSettings
-            // 
-            this.toolStripMenuItemFileTransferSettings.Image = global::AutoScreenCapture.Properties.Resources.file_transfer;
-            this.toolStripMenuItemFileTransferSettings.Name = "toolStripMenuItemFileTransferSettings";
-            this.toolStripMenuItemFileTransferSettings.Size = new System.Drawing.Size(182, 22);
-            this.toolStripMenuItemFileTransferSettings.Text = "File Transfer Settings";
-            this.toolStripMenuItemFileTransferSettings.Visible = false;
-            this.toolStripMenuItemFileTransferSettings.Click += new System.EventHandler(this.toolStripDropDownButtonFileTransferSettings_Click);
             // 
             // toolStripMenuItemTools
             // 
@@ -1192,5 +1226,10 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemToolsDynamicRegexValidator;
         private ToolStripMenuItem toolStripMenuItemToolsEncryptorDecryptor;
         private ToolStripMenuItem toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher;
+        private ToolStripStatusLabel toolStripCount;
+        private ToolStripDropDownButton toolStripDropDownButtonSettings;
+        private ToolStripStatusLabel toolStripSpacer;
+        private ToolStripMenuItem toolStripMenuItemEmailSettingsFromStatusBar;
+        private ToolStripMenuItem toolStripMenuItemFileTransferSettingsFromStatusBar;
     }
 }

@@ -315,6 +315,7 @@ namespace AutoScreenCapture
                     labelHelp.BackColor = System.Drawing.Color.LightYellow;
                 }
 
+                toolStripCount.Text = $"Count: {_screenCapture.Count}";
                 toolStripInfo.Text = notifyIcon.Text;
 
                 _formLabelSwitcher.labelScreenCaptureStatus.Text = notifyIcon.Text;

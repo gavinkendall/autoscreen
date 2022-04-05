@@ -713,7 +713,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripDropDownButtonEmailSettings_Click(object sender, EventArgs e)
+        private void emailSettings_Click(object sender, EventArgs e)
         {
             ShowInterface();
 
@@ -737,7 +737,7 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripDropDownButtonFileTransferSettings_Click(object sender, EventArgs e)
+        private void fileTransferSettings_Click(object sender, EventArgs e)
         {
             ShowInterface();
 
