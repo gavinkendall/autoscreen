@@ -117,7 +117,6 @@ namespace AutoScreenCapture
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
-                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser);
 
                 _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click;
 
@@ -263,6 +262,9 @@ namespace AutoScreenCapture
 
                 decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
                 _log.WriteDebugMessage("Milliseconds = " + screenCaptureIntervalMilliseconds);
+
+                // Setup
+                _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser, _screenshotCollection);
 
                 _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;

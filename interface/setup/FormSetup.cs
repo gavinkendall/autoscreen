@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -41,6 +42,7 @@ namespace AutoScreenCapture
         private FormRegion _formRegion;
         private MacroTagCollection _macroTagCollection;
         private MacroParser _macroParser;
+        private ScreenshotCollection _screenshotCollection;
 
         /// <summary>
         /// 
@@ -55,7 +57,7 @@ namespace AutoScreenCapture
         /// <param name="formRegion"></param>
         /// <param name="macroTagCollection"></param>
         /// <param name="macroParser"></param>
-        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser)
+        public FormSetup(Log log, Security security, Config config, FileSystem fileSystem, ScreenCapture screenCapture, FormLabelSwitcher formLabelSwitcher, FormScreen formScreen, FormRegion formRegion, MacroTagCollection macroTagCollection, MacroParser macroParser, ScreenshotCollection screenshotCollection)
         {
             InitializeComponent();
 
@@ -69,6 +71,7 @@ namespace AutoScreenCapture
             _formRegion = formRegion;
             _macroTagCollection = macroTagCollection;
             _macroParser = macroParser;
+            _screenshotCollection = screenshotCollection;
         }
 
         private void FormSetup_Load(object sender, EventArgs e)
@@ -192,6 +195,7 @@ namespace AutoScreenCapture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
             radioButtonCompareWithAnyPreviousImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
             radioButtonCompareWithLastImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
+            buttonRefreshHashDictionary_Click(sender, e);
 
             // Application Focus
             RefreshApplicationFocusList();
@@ -980,6 +984,39 @@ namespace AutoScreenCapture
             _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
 
             MessageBox.Show("All regions are now using the image format \"" + ScreenCapture.ImageFormat + "\"", "Image Format Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonRefreshHashDictionary_Click(object sender, EventArgs e)
+        {
+            Screenshot[] screenshotsForHashDictionary = new Screenshot[_screenshotCollection.AddedScreenshotHashList.Count];
+            _screenshotCollection.AddedScreenshotHashList.Values.CopyTo(screenshotsForHashDictionary, 0);
+            dataGridViewHashDictionary.DataSource = screenshotsForHashDictionary;
+
+            for (int i = 0; i < dataGridViewHashDictionary.Columns.Count; i++)
+            {
+                dataGridViewHashDictionary.Columns[i].Visible = false;
+            }
+
+            dataGridViewHashDictionary.Columns["Hash"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewHashDictionary.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+            dataGridViewHashDictionary.Columns["Hash"].Visible = true;
+            dataGridViewHashDictionary.Columns["Path"].Visible = true;
+
+            dataGridViewHashDictionary.Columns["Hash"].DisplayIndex = 0;
+            dataGridViewHashDictionary.Columns["Path"].DisplayIndex = 1;
+        }
+
+        private void buttonClearHashDictionary_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear the hash dictionary?", "Clear Hash Dictionary", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                _screenshotCollection.AddedScreenshotHashList.Clear();
+
+                buttonRefreshHashDictionary_Click(sender, e);
+            }
         }
     }
 }

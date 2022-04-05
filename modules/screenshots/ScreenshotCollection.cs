@@ -40,7 +40,6 @@ namespace AutoScreenCapture
         private readonly List<Slide> _slideList;
         private readonly List<string> _slideNameList;
         private readonly List<Screenshot> _screenshotList;
-        private readonly List<string> _screenshotPathList;
         private readonly ImageFormatCollection _imageFormatCollection;
 
         private readonly FileSystem _fileSystem;
@@ -85,9 +84,9 @@ namespace AutoScreenCapture
         public Guid LastViewId { get; set; }
 
         /// <summary>
-        /// A list of screenshot hash values to be used when adding screenshots so we do not add duplicate screenshots while running and when OptimizeScreenCapture is set.
+        /// A dictionary of screenshot hash values and screenshot objects to be used when adding screenshots so we do not add duplicate screenshots while running and when OptimizeScreenCapture is set.
         /// </summary>
-        public List<string> AddedScreenshotHashList { get; set; }
+        public Dictionary<string, Screenshot> AddedScreenshotHashList { get; set; }
 
         /// <summary>
         /// A list of screenshot hash values to be used when emailing screenshots so we do not email duplicate screenshots while running and when OptimizeScreenCapture is set.
@@ -98,13 +97,9 @@ namespace AutoScreenCapture
         {
             lock (_screenshotList)
             {
-                // Add the screenshot to the screenshot collection only if the path hasn't been encountered before.
-                // This is to prevent having too many screenshot objects in the collection when the user clicks on a day in the calendar.
-                // It's assumed that the screenshot's filepath can safely be used as a unique key.
-                if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && !_screenshotPathList.Contains(screenshot.Path))
+                // Add the screenshot to the screenshot collection.
+                if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
                 {
-                    _screenshotPathList.Add(screenshot.Path);
-
                     _screenshotList.Add(screenshot);
 
                     // Slides are a little different because a single slide can potentially have many screenshots associated with it
@@ -230,9 +225,6 @@ namespace AutoScreenCapture
             _screenshotList = new List<Screenshot>();
             _log.WriteDebugMessage("Initialized screenshot list");
 
-            _screenshotPathList = new List<string>();
-            _log.WriteDebugMessage("Initialized screenshot path list");
-
             _slideList = new List<Slide>();
             _log.WriteDebugMessage("Initialized slide list");
 
@@ -241,7 +233,7 @@ namespace AutoScreenCapture
 
             _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture", config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
 
-            AddedScreenshotHashList = new List<string>();
+            AddedScreenshotHashList = new Dictionary<string, Screenshot>();
             EmailedScreenshotHashList = new List<string>();
         }
 
@@ -316,7 +308,7 @@ namespace AutoScreenCapture
                         {
                             AddScreenshotToCollection(screenshot);
 
-                            AddedScreenshotHashList.Add(screenshot.Hash);
+                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
 
                             return true;
                         }
@@ -325,11 +317,11 @@ namespace AutoScreenCapture
                         // has no knowledge of the new hash then we know it's a new image. So we can add the screenshot to the collection.
                         // This ensures we only care about screenshots that are actually different from each other and ignore screenshots
                         // that are exactly the same as what we've already captured. This is the magic of using MD5 hashes.
-                        if (compareWithAnyPreviousImage && !AddedScreenshotHashList.Contains(screenshot.Hash))
+                        if (compareWithAnyPreviousImage && !AddedScreenshotHashList.ContainsKey(screenshot.Hash))
                         {
                             AddScreenshotToCollection(screenshot);
 
-                            AddedScreenshotHashList.Add(screenshot.Hash);
+                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
 
                             result = true;
                         }
@@ -339,7 +331,7 @@ namespace AutoScreenCapture
                         {
                             AddScreenshotToCollection(screenshot);
 
-                            AddedScreenshotHashList.Add(screenshot.Hash);
+                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
 
                             result = true;
                         }
@@ -379,11 +371,8 @@ namespace AutoScreenCapture
 
                 lock (_screenshotList)
                 {
-                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) && _screenshotPathList.Contains(screenshot.Path))
+                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
                     {
-                        // Remove the screenshot's path from the list of screenshot paths.
-                        _screenshotPathList.Remove(screenshot.Path);
-
                         // Remove the screenshot object from the screenshot collection.
                         _screenshotList.Remove(screenshot);
 

@@ -76,20 +76,10 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.buttonRefreshHashDictionary = new System.Windows.Forms.Button();
+            this.buttonClearHashDictionary = new System.Windows.Forms.Button();
             this.radioButtonCompareWithLastImage = new System.Windows.Forms.RadioButton();
             this.radioButtonCompareWithAnyPreviousImage = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBoxBladeNewImageCaptured = new System.Windows.Forms.PictureBox();
-            this.groupBoxEnabled = new System.Windows.Forms.GroupBox();
-            this.labelBladeEnabled2 = new System.Windows.Forms.Label();
-            this.labelBladeEnabled1 = new System.Windows.Forms.Label();
-            this.pictureBoxBladeEnabled2 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBladeEnabled1 = new System.Windows.Forms.PictureBox();
-            this.groupBoxNotEnabled = new System.Windows.Forms.GroupBox();
-            this.labelBladeNotEnabled2 = new System.Windows.Forms.Label();
-            this.labelBladeNotEnabled1 = new System.Windows.Forms.Label();
-            this.pictureBoxBladeNotEnabled2 = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBladeNotEnabled1 = new System.Windows.Forms.PictureBox();
             this.labelOptimizeScreenCaptureHelp = new System.Windows.Forms.Label();
             this.checkBoxOptimizeScreenCapture = new System.Windows.Forms.CheckBox();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
@@ -164,6 +154,7 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.dataGridViewHashDictionary = new System.Windows.Forms.DataGridView();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -175,14 +166,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.tabPageOptimizeScreenCapture.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNewImageCaptured)).BeginInit();
-            this.groupBoxEnabled.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled1)).BeginInit();
-            this.groupBoxNotEnabled.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled1)).BeginInit();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
@@ -190,6 +173,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -708,11 +692,11 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.dataGridViewHashDictionary);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.buttonRefreshHashDictionary);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.buttonClearHashDictionary);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.radioButtonCompareWithLastImage);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.radioButtonCompareWithAnyPreviousImage);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBox1);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBoxEnabled);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.groupBoxNotEnabled);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.labelOptimizeScreenCaptureHelp);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.checkBoxOptimizeScreenCapture);
             this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
@@ -723,10 +707,32 @@
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
             // 
+            // buttonRefreshHashDictionary
+            // 
+            this.buttonRefreshHashDictionary.Location = new System.Drawing.Point(347, 224);
+            this.buttonRefreshHashDictionary.Name = "buttonRefreshHashDictionary";
+            this.buttonRefreshHashDictionary.Size = new System.Drawing.Size(159, 23);
+            this.buttonRefreshHashDictionary.TabIndex = 5;
+            this.buttonRefreshHashDictionary.TabStop = false;
+            this.buttonRefreshHashDictionary.Text = "Refresh Hash Dictionary";
+            this.buttonRefreshHashDictionary.UseVisualStyleBackColor = true;
+            this.buttonRefreshHashDictionary.Click += new System.EventHandler(this.buttonRefreshHashDictionary_Click);
+            // 
+            // buttonClearHashDictionary
+            // 
+            this.buttonClearHashDictionary.Location = new System.Drawing.Point(512, 224);
+            this.buttonClearHashDictionary.Name = "buttonClearHashDictionary";
+            this.buttonClearHashDictionary.Size = new System.Drawing.Size(159, 23);
+            this.buttonClearHashDictionary.TabIndex = 4;
+            this.buttonClearHashDictionary.TabStop = false;
+            this.buttonClearHashDictionary.Text = "Clear Hash Dictionary";
+            this.buttonClearHashDictionary.UseVisualStyleBackColor = true;
+            this.buttonClearHashDictionary.Click += new System.EventHandler(this.buttonClearHashDictionary_Click);
+            // 
             // radioButtonCompareWithLastImage
             // 
             this.radioButtonCompareWithLastImage.AutoSize = true;
-            this.radioButtonCompareWithLastImage.Location = new System.Drawing.Point(6, 98);
+            this.radioButtonCompareWithLastImage.Location = new System.Drawing.Point(356, 52);
             this.radioButtonCompareWithLastImage.Name = "radioButtonCompareWithLastImage";
             this.radioButtonCompareWithLastImage.Size = new System.Drawing.Size(139, 17);
             this.radioButtonCompareWithLastImage.TabIndex = 2;
@@ -737,139 +743,13 @@
             // radioButtonCompareWithAnyPreviousImage
             // 
             this.radioButtonCompareWithAnyPreviousImage.AutoSize = true;
-            this.radioButtonCompareWithAnyPreviousImage.Location = new System.Drawing.Point(6, 75);
+            this.radioButtonCompareWithAnyPreviousImage.Location = new System.Drawing.Point(167, 52);
             this.radioButtonCompareWithAnyPreviousImage.Name = "radioButtonCompareWithAnyPreviousImage";
             this.radioButtonCompareWithAnyPreviousImage.Size = new System.Drawing.Size(183, 17);
             this.radioButtonCompareWithAnyPreviousImage.TabIndex = 1;
             this.radioButtonCompareWithAnyPreviousImage.TabStop = true;
             this.radioButtonCompareWithAnyPreviousImage.Text = "Compare with any previous image";
             this.radioButtonCompareWithAnyPreviousImage.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBox1.Controls.Add(this.pictureBoxBladeNewImageCaptured);
-            this.groupBox1.Location = new System.Drawing.Point(3, 121);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(180, 126);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "New Image Captured";
-            // 
-            // pictureBoxBladeNewImageCaptured
-            // 
-            this.pictureBoxBladeNewImageCaptured.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNewImageCaptured.Image")));
-            this.pictureBoxBladeNewImageCaptured.Location = new System.Drawing.Point(37, 30);
-            this.pictureBoxBladeNewImageCaptured.Name = "pictureBoxBladeNewImageCaptured";
-            this.pictureBoxBladeNewImageCaptured.Size = new System.Drawing.Size(101, 82);
-            this.pictureBoxBladeNewImageCaptured.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxBladeNewImageCaptured.TabIndex = 3;
-            this.pictureBoxBladeNewImageCaptured.TabStop = false;
-            // 
-            // groupBoxEnabled
-            // 
-            this.groupBoxEnabled.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBoxEnabled.Controls.Add(this.labelBladeEnabled2);
-            this.groupBoxEnabled.Controls.Add(this.labelBladeEnabled1);
-            this.groupBoxEnabled.Controls.Add(this.pictureBoxBladeEnabled2);
-            this.groupBoxEnabled.Controls.Add(this.pictureBoxBladeEnabled1);
-            this.groupBoxEnabled.Location = new System.Drawing.Point(433, 48);
-            this.groupBoxEnabled.Name = "groupBoxEnabled";
-            this.groupBoxEnabled.Size = new System.Drawing.Size(238, 199);
-            this.groupBoxEnabled.TabIndex = 0;
-            this.groupBoxEnabled.TabStop = false;
-            this.groupBoxEnabled.Text = "When Optimized";
-            // 
-            // labelBladeEnabled2
-            // 
-            this.labelBladeEnabled2.AutoSize = true;
-            this.labelBladeEnabled2.Location = new System.Drawing.Point(6, 180);
-            this.labelBladeEnabled2.Name = "labelBladeEnabled2";
-            this.labelBladeEnabled2.Size = new System.Drawing.Size(122, 13);
-            this.labelBladeEnabled2.TabIndex = 5;
-            this.labelBladeEnabled2.Text = "[08:01] Image not saved";
-            // 
-            // labelBladeEnabled1
-            // 
-            this.labelBladeEnabled1.AutoSize = true;
-            this.labelBladeEnabled1.Location = new System.Drawing.Point(6, 88);
-            this.labelBladeEnabled1.Name = "labelBladeEnabled1";
-            this.labelBladeEnabled1.Size = new System.Drawing.Size(104, 13);
-            this.labelBladeEnabled1.TabIndex = 4;
-            this.labelBladeEnabled1.Text = "[08:00] Image saved";
-            // 
-            // pictureBoxBladeEnabled2
-            // 
-            this.pictureBoxBladeEnabled2.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxBladeEnabled2.Location = new System.Drawing.Point(131, 111);
-            this.pictureBoxBladeEnabled2.Name = "pictureBoxBladeEnabled2";
-            this.pictureBoxBladeEnabled2.Size = new System.Drawing.Size(101, 82);
-            this.pictureBoxBladeEnabled2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxBladeEnabled2.TabIndex = 3;
-            this.pictureBoxBladeEnabled2.TabStop = false;
-            // 
-            // pictureBoxBladeEnabled1
-            // 
-            this.pictureBoxBladeEnabled1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeEnabled1.Image")));
-            this.pictureBoxBladeEnabled1.Location = new System.Drawing.Point(131, 19);
-            this.pictureBoxBladeEnabled1.Name = "pictureBoxBladeEnabled1";
-            this.pictureBoxBladeEnabled1.Size = new System.Drawing.Size(101, 82);
-            this.pictureBoxBladeEnabled1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxBladeEnabled1.TabIndex = 2;
-            this.pictureBoxBladeEnabled1.TabStop = false;
-            // 
-            // groupBoxNotEnabled
-            // 
-            this.groupBoxNotEnabled.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.groupBoxNotEnabled.Controls.Add(this.labelBladeNotEnabled2);
-            this.groupBoxNotEnabled.Controls.Add(this.labelBladeNotEnabled1);
-            this.groupBoxNotEnabled.Controls.Add(this.pictureBoxBladeNotEnabled2);
-            this.groupBoxNotEnabled.Controls.Add(this.pictureBoxBladeNotEnabled1);
-            this.groupBoxNotEnabled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxNotEnabled.Location = new System.Drawing.Point(189, 48);
-            this.groupBoxNotEnabled.Name = "groupBoxNotEnabled";
-            this.groupBoxNotEnabled.Size = new System.Drawing.Size(238, 199);
-            this.groupBoxNotEnabled.TabIndex = 0;
-            this.groupBoxNotEnabled.TabStop = false;
-            this.groupBoxNotEnabled.Text = "When Not Optimized";
-            // 
-            // labelBladeNotEnabled2
-            // 
-            this.labelBladeNotEnabled2.AutoSize = true;
-            this.labelBladeNotEnabled2.Location = new System.Drawing.Point(6, 180);
-            this.labelBladeNotEnabled2.Name = "labelBladeNotEnabled2";
-            this.labelBladeNotEnabled2.Size = new System.Drawing.Size(104, 13);
-            this.labelBladeNotEnabled2.TabIndex = 5;
-            this.labelBladeNotEnabled2.Text = "[08:01] Image saved";
-            // 
-            // labelBladeNotEnabled1
-            // 
-            this.labelBladeNotEnabled1.AutoSize = true;
-            this.labelBladeNotEnabled1.Location = new System.Drawing.Point(6, 88);
-            this.labelBladeNotEnabled1.Name = "labelBladeNotEnabled1";
-            this.labelBladeNotEnabled1.Size = new System.Drawing.Size(104, 13);
-            this.labelBladeNotEnabled1.TabIndex = 4;
-            this.labelBladeNotEnabled1.Text = "[08:00] Image saved";
-            // 
-            // pictureBoxBladeNotEnabled2
-            // 
-            this.pictureBoxBladeNotEnabled2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNotEnabled2.Image")));
-            this.pictureBoxBladeNotEnabled2.Location = new System.Drawing.Point(131, 111);
-            this.pictureBoxBladeNotEnabled2.Name = "pictureBoxBladeNotEnabled2";
-            this.pictureBoxBladeNotEnabled2.Size = new System.Drawing.Size(101, 82);
-            this.pictureBoxBladeNotEnabled2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxBladeNotEnabled2.TabIndex = 3;
-            this.pictureBoxBladeNotEnabled2.TabStop = false;
-            // 
-            // pictureBoxBladeNotEnabled1
-            // 
-            this.pictureBoxBladeNotEnabled1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxBladeNotEnabled1.Image")));
-            this.pictureBoxBladeNotEnabled1.Location = new System.Drawing.Point(131, 19);
-            this.pictureBoxBladeNotEnabled1.Name = "pictureBoxBladeNotEnabled1";
-            this.pictureBoxBladeNotEnabled1.Size = new System.Drawing.Size(101, 82);
-            this.pictureBoxBladeNotEnabled1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxBladeNotEnabled1.TabIndex = 2;
-            this.pictureBoxBladeNotEnabled1.TabStop = false;
             // 
             // labelOptimizeScreenCaptureHelp
             // 
@@ -1667,6 +1547,14 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // dataGridViewHashDictionary
+            // 
+            this.dataGridViewHashDictionary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewHashDictionary.Location = new System.Drawing.Point(6, 75);
+            this.dataGridViewHashDictionary.Name = "dataGridViewHashDictionary";
+            this.dataGridViewHashDictionary.Size = new System.Drawing.Size(665, 143);
+            this.dataGridViewHashDictionary.TabIndex = 6;
+            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1701,16 +1589,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.tabPageOptimizeScreenCapture.ResumeLayout(false);
             this.tabPageOptimizeScreenCapture.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNewImageCaptured)).EndInit();
-            this.groupBoxEnabled.ResumeLayout(false);
-            this.groupBoxEnabled.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeEnabled1)).EndInit();
-            this.groupBoxNotEnabled.ResumeLayout(false);
-            this.groupBoxNotEnabled.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBladeNotEnabled1)).EndInit();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
@@ -1723,6 +1601,7 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1774,18 +1653,6 @@
         private System.Windows.Forms.CheckBox checkBoxEnableApplicationFocus;
         private System.Windows.Forms.Label labelApplicationFocusHelp;
         private System.Windows.Forms.Label labelOptimizeScreenCaptureHelp;
-        private System.Windows.Forms.GroupBox groupBoxEnabled;
-        private System.Windows.Forms.Label labelBladeEnabled2;
-        private System.Windows.Forms.Label labelBladeEnabled1;
-        private System.Windows.Forms.PictureBox pictureBoxBladeEnabled2;
-        private System.Windows.Forms.PictureBox pictureBoxBladeEnabled1;
-        private System.Windows.Forms.GroupBox groupBoxNotEnabled;
-        private System.Windows.Forms.Label labelBladeNotEnabled2;
-        private System.Windows.Forms.Label labelBladeNotEnabled1;
-        private System.Windows.Forms.PictureBox pictureBoxBladeNotEnabled2;
-        private System.Windows.Forms.PictureBox pictureBoxBladeNotEnabled1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.PictureBox pictureBoxBladeNewImageCaptured;
         private System.Windows.Forms.TabPage tabPageScreenshotsFolder;
         private System.Windows.Forms.TextBox textBoxScreenshotsFolder;
         private System.Windows.Forms.Button buttonScreenshotsFolderBrowseFolder;
@@ -2060,5 +1927,8 @@
         /// A radio button for comparing with the last image for Optimize Screen Capture.
         /// </summary>
         public System.Windows.Forms.RadioButton radioButtonCompareWithLastImage;
+        private System.Windows.Forms.Button buttonClearHashDictionary;
+        private System.Windows.Forms.Button buttonRefreshHashDictionary;
+        private System.Windows.Forms.DataGridView dataGridViewHashDictionary;
     }
 }
