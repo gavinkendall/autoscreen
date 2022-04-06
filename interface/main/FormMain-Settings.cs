@@ -237,6 +237,9 @@ namespace AutoScreenCapture
                 _formEncryptorDecryptor.screenshotsEncrypted += ScreenshotsEncrypted;
                 _formEncryptorDecryptor.screenshotsDecrypted += ScreenshotsDecrypted;
 
+                // Region Select Command Deck
+                _formRegionSelectCommandDeck = new FormRegionSelectCommandDeck();
+
                 int screenCaptureInterval = Convert.ToInt32(_config.Settings.User.GetByKey("ScreenCaptureInterval", _config.Settings.DefaultSettings.ScreenCaptureInterval).Value);
                 _log.WriteDebugMessage("ScreenCaptureInterval = " + screenCaptureInterval);
 

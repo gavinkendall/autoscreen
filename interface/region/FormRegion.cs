@@ -41,6 +41,26 @@ namespace AutoScreenCapture
         private FormRegionSelectWithMouse _formRegionSelectWithMouse;
 
         /// <summary>
+        /// X
+        /// </summary>
+        public int X { get; set; }
+
+        /// <summary>
+        /// Y
+        /// </summary>
+        public int Y { get; set; }
+
+        /// <summary>
+        /// Width
+        /// </summary>
+        public new int Width { get; set; }
+
+        /// <summary>
+        /// Height
+        /// </summary>
+        public new int Height { get; set; }
+
+        /// <summary>
         /// A collection of regions.
         /// </summary>
         public RegionCollection RegionCollection { get; } = new RegionCollection();
@@ -150,10 +170,10 @@ namespace AutoScreenCapture
                 comboBoxFormat.SelectedItem = ScreenCapture.ImageFormat;
                 numericUpDownJpegQuality.Value = 100;
                 checkBoxMouse.Checked = true;
-                numericUpDownX.Value = 0;
-                numericUpDownY.Value = 0;
-                numericUpDownWidth.Value = 800;
-                numericUpDownHeight.Value = 600;
+                numericUpDownX.Value = X;
+                numericUpDownY.Value = Y;
+                numericUpDownWidth.Value = Width;
+                numericUpDownHeight.Value = Height;
                 checkBoxEnable.Checked = true;
                 checkBoxEncrypt.Checked = false;
             }

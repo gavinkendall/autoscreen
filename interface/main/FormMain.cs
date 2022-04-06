@@ -91,6 +91,9 @@ namespace AutoScreenCapture
         // Encryptor / Decryptor tool.
         private FormEncryptorDecryptor _formEncryptorDecryptor;
 
+        // Region Select Command Deck
+        private FormRegionSelectCommandDeck _formRegionSelectCommandDeck;
+
         // Keyboard Shortcuts
         private HotKeyMap _hotKeyMap;
 
@@ -700,6 +703,23 @@ namespace AutoScreenCapture
             else
             {
                 _formLabelSwitcher.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Shows the "Region Select Command Deck" tool.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemRegionSelectCommandDeck_Click(object sender, EventArgs e)
+        {
+            if (!_formRegionSelectCommandDeck.Visible)
+            {
+                _formRegionSelectCommandDeck.Show();
+            }
+            else
+            {
+                _formRegionSelectCommandDeck.Activate();
             }
         }
 

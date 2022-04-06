@@ -584,6 +584,13 @@ namespace AutoScreenCapture
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
         }
 
+        private void toolStripMenuItemRegionSelectNewRegion_Click(object sender, EventArgs e)
+        {
+            _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_screenCapture);
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectNewRegionMouseSelectionCompleted;
+            _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
+        }
+
         /// <summary>
         /// The event method used by "Region Select -> Clipboard / Auto Save".
         /// </summary>
@@ -676,6 +683,21 @@ namespace AutoScreenCapture
             {
                 FormFloatingScreenshot formFloatingScreenshot = new FormFloatingScreenshot(bitmap);
                 formFloatingScreenshot.Show();
+            }
+        }
+
+        private void _formRegionSelectWithMouse_RegionSelectNewRegionMouseSelectionCompleted(object sender, EventArgs e)
+        {
+            Bitmap bitmap = GetBitmapFromRegionSelect();
+
+            if (bitmap != null)
+            {
+                _formRegion.X = _formRegionSelectWithMouse.outputX;
+                _formRegion.Y = _formRegionSelectWithMouse.outputY;
+                _formRegion.Width = _formRegionSelectWithMouse.outputWidth;
+                _formRegion.Height = _formRegionSelectWithMouse.outputHeight;
+
+                addRegion_Click(sender, e);
             }
         }
 

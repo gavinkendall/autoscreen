@@ -50,6 +50,7 @@
             this.ClientSize = new System.Drawing.Size(421, 322);
             this.Controls.Add(this.pictureBoxScreenshot);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(250, 250);
             this.Name = "FormFloatingScreenshot";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxScreenshot)).EndInit();
