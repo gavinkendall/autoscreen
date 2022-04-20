@@ -35,11 +35,13 @@
             this.buttonRegionSelectClipboardFloatingScreenshot = new System.Windows.Forms.Button();
             this.buttonRegionSelectFloatingScreenshot = new System.Windows.Forms.Button();
             this.buttonRegionSelectNewRegion = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonRegionSelectClipboard
             // 
-            this.buttonRegionSelectClipboard.Location = new System.Drawing.Point(12, 12);
+            this.buttonRegionSelectClipboard.Enabled = false;
+            this.buttonRegionSelectClipboard.Location = new System.Drawing.Point(12, 61);
             this.buttonRegionSelectClipboard.Name = "buttonRegionSelectClipboard";
             this.buttonRegionSelectClipboard.Size = new System.Drawing.Size(331, 23);
             this.buttonRegionSelectClipboard.TabIndex = 0;
@@ -49,7 +51,8 @@
             // 
             // buttonRegionSelectClipboardAutoSave
             // 
-            this.buttonRegionSelectClipboardAutoSave.Location = new System.Drawing.Point(12, 41);
+            this.buttonRegionSelectClipboardAutoSave.Enabled = false;
+            this.buttonRegionSelectClipboardAutoSave.Location = new System.Drawing.Point(12, 90);
             this.buttonRegionSelectClipboardAutoSave.Name = "buttonRegionSelectClipboardAutoSave";
             this.buttonRegionSelectClipboardAutoSave.Size = new System.Drawing.Size(331, 23);
             this.buttonRegionSelectClipboardAutoSave.TabIndex = 1;
@@ -59,7 +62,8 @@
             // 
             // buttonRegionSelectClipboardAutoSaveEdit
             // 
-            this.buttonRegionSelectClipboardAutoSaveEdit.Location = new System.Drawing.Point(12, 70);
+            this.buttonRegionSelectClipboardAutoSaveEdit.Enabled = false;
+            this.buttonRegionSelectClipboardAutoSaveEdit.Location = new System.Drawing.Point(12, 119);
             this.buttonRegionSelectClipboardAutoSaveEdit.Name = "buttonRegionSelectClipboardAutoSaveEdit";
             this.buttonRegionSelectClipboardAutoSaveEdit.Size = new System.Drawing.Size(331, 23);
             this.buttonRegionSelectClipboardAutoSaveEdit.TabIndex = 2;
@@ -69,7 +73,8 @@
             // 
             // buttonRegionSelectClipboardFloatingScreenshot
             // 
-            this.buttonRegionSelectClipboardFloatingScreenshot.Location = new System.Drawing.Point(12, 99);
+            this.buttonRegionSelectClipboardFloatingScreenshot.Enabled = false;
+            this.buttonRegionSelectClipboardFloatingScreenshot.Location = new System.Drawing.Point(12, 148);
             this.buttonRegionSelectClipboardFloatingScreenshot.Name = "buttonRegionSelectClipboardFloatingScreenshot";
             this.buttonRegionSelectClipboardFloatingScreenshot.Size = new System.Drawing.Size(331, 23);
             this.buttonRegionSelectClipboardFloatingScreenshot.TabIndex = 3;
@@ -79,7 +84,8 @@
             // 
             // buttonRegionSelectFloatingScreenshot
             // 
-            this.buttonRegionSelectFloatingScreenshot.Location = new System.Drawing.Point(12, 128);
+            this.buttonRegionSelectFloatingScreenshot.Enabled = false;
+            this.buttonRegionSelectFloatingScreenshot.Location = new System.Drawing.Point(12, 177);
             this.buttonRegionSelectFloatingScreenshot.Name = "buttonRegionSelectFloatingScreenshot";
             this.buttonRegionSelectFloatingScreenshot.Size = new System.Drawing.Size(331, 23);
             this.buttonRegionSelectFloatingScreenshot.TabIndex = 4;
@@ -89,7 +95,8 @@
             // 
             // buttonRegionSelectNewRegion
             // 
-            this.buttonRegionSelectNewRegion.Location = new System.Drawing.Point(12, 157);
+            this.buttonRegionSelectNewRegion.Enabled = false;
+            this.buttonRegionSelectNewRegion.Location = new System.Drawing.Point(12, 206);
             this.buttonRegionSelectNewRegion.Name = "buttonRegionSelectNewRegion";
             this.buttonRegionSelectNewRegion.Size = new System.Drawing.Size(331, 23);
             this.buttonRegionSelectNewRegion.TabIndex = 5;
@@ -97,11 +104,23 @@
             this.buttonRegionSelectNewRegion.UseVisualStyleBackColor = true;
             this.buttonRegionSelectNewRegion.Click += new System.EventHandler(this.buttonRegionSelectNewRegion_Click);
             // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.LightYellow;
+            this.label1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(9, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(334, 39);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "This tool is currently in development and will be made available when it\'s ready." +
+    "";
+            // 
             // FormRegionSelectCommandDeck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 190);
+            this.ClientSize = new System.Drawing.Size(355, 241);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonRegionSelectNewRegion);
             this.Controls.Add(this.buttonRegionSelectFloatingScreenshot);
             this.Controls.Add(this.buttonRegionSelectClipboardFloatingScreenshot);
@@ -129,5 +148,6 @@
         private System.Windows.Forms.Button buttonRegionSelectClipboardFloatingScreenshot;
         private System.Windows.Forms.Button buttonRegionSelectFloatingScreenshot;
         private System.Windows.Forms.Button buttonRegionSelectNewRegion;
+        private System.Windows.Forms.Label label1;
     }
 }

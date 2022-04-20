@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormRegionSelectOptions));
             this.buttonBrowseFolder = new System.Windows.Forms.Button();
-            this.labelAutoSaveFile = new System.Windows.Forms.Label();
+            this.labelAutoSaveMacro = new System.Windows.Forms.Label();
             this.labelAutoSaveFolder = new System.Windows.Forms.Label();
-            this.textBoxAutoSaveFile = new System.Windows.Forms.TextBox();
+            this.textBoxAutoSaveMacro = new System.Windows.Forms.TextBox();
             this.textBoxAutoSaveFolder = new System.Windows.Forms.TextBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -50,14 +50,14 @@
             this.buttonBrowseFolder.UseVisualStyleBackColor = true;
             this.buttonBrowseFolder.Click += new System.EventHandler(this.buttonBrowseFolder_Click);
             // 
-            // labelAutoSaveFile
+            // labelAutoSaveMacro
             // 
-            this.labelAutoSaveFile.AutoSize = true;
-            this.labelAutoSaveFile.Location = new System.Drawing.Point(12, 38);
-            this.labelAutoSaveFile.Name = "labelAutoSaveFile";
-            this.labelAutoSaveFile.Size = new System.Drawing.Size(26, 13);
-            this.labelAutoSaveFile.TabIndex = 0;
-            this.labelAutoSaveFile.Text = "File:";
+            this.labelAutoSaveMacro.AutoSize = true;
+            this.labelAutoSaveMacro.Location = new System.Drawing.Point(12, 38);
+            this.labelAutoSaveMacro.Name = "labelAutoSaveMacro";
+            this.labelAutoSaveMacro.Size = new System.Drawing.Size(40, 13);
+            this.labelAutoSaveMacro.TabIndex = 0;
+            this.labelAutoSaveMacro.Text = "Macro:";
             // 
             // labelAutoSaveFolder
             // 
@@ -68,12 +68,12 @@
             this.labelAutoSaveFolder.TabIndex = 0;
             this.labelAutoSaveFolder.Text = "Folder:";
             // 
-            // textBoxAutoSaveFile
+            // textBoxAutoSaveMacro
             // 
-            this.textBoxAutoSaveFile.Location = new System.Drawing.Point(58, 35);
-            this.textBoxAutoSaveFile.Name = "textBoxAutoSaveFile";
-            this.textBoxAutoSaveFile.Size = new System.Drawing.Size(424, 20);
-            this.textBoxAutoSaveFile.TabIndex = 3;
+            this.textBoxAutoSaveMacro.Location = new System.Drawing.Point(58, 35);
+            this.textBoxAutoSaveMacro.Name = "textBoxAutoSaveMacro";
+            this.textBoxAutoSaveMacro.Size = new System.Drawing.Size(424, 20);
+            this.textBoxAutoSaveMacro.TabIndex = 3;
             // 
             // textBoxAutoSaveFolder
             // 
@@ -134,9 +134,9 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonBrowseFolder);
-            this.Controls.Add(this.labelAutoSaveFile);
+            this.Controls.Add(this.labelAutoSaveMacro);
             this.Controls.Add(this.labelAutoSaveFolder);
-            this.Controls.Add(this.textBoxAutoSaveFile);
+            this.Controls.Add(this.textBoxAutoSaveMacro);
             this.Controls.Add(this.textBoxAutoSaveFolder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -154,9 +154,9 @@
         #endregion
 
         private System.Windows.Forms.Button buttonBrowseFolder;
-        private System.Windows.Forms.Label labelAutoSaveFile;
+        private System.Windows.Forms.Label labelAutoSaveMacro;
         private System.Windows.Forms.Label labelAutoSaveFolder;
-        private System.Windows.Forms.TextBox textBoxAutoSaveFile;
+        private System.Windows.Forms.TextBox textBoxAutoSaveMacro;
         private System.Windows.Forms.TextBox textBoxAutoSaveFolder;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;

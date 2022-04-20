@@ -45,6 +45,8 @@
             this.labelJpegQuality = new System.Windows.Forms.Label();
             this.checkBoxMouse = new System.Windows.Forms.CheckBox();
             this.groupBoxImageAttributes = new System.Windows.Forms.GroupBox();
+            this.labelResolutionRatio = new System.Windows.Forms.Label();
+            this.numericUpDownResolutionRatio = new System.Windows.Forms.NumericUpDown();
             this.groupBoxDisplayProperties = new System.Windows.Forms.GroupBox();
             this.comboBoxScreenCaptureMethod = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,11 +72,10 @@
             this.checkBoxEncrypt = new System.Windows.Forms.CheckBox();
             this.groupBoxSecurity = new System.Windows.Forms.GroupBox();
             this.labelSecurity = new System.Windows.Forms.Label();
-            this.labelResolutionRatio = new System.Windows.Forms.Label();
-            this.numericUpDownResolutionRatio = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).BeginInit();
             this.groupBoxImageAttributes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             this.groupBoxDisplayProperties.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
@@ -82,7 +83,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownY)).BeginInit();
             this.groupBoxPreview.SuspendLayout();
             this.groupBoxSecurity.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).BeginInit();
             this.SuspendLayout();
             // 
             // labelName
@@ -108,9 +108,9 @@
             this.labelMacro.AutoSize = true;
             this.labelMacro.Location = new System.Drawing.Point(229, 537);
             this.labelMacro.Name = "labelMacro";
-            this.labelMacro.Size = new System.Drawing.Size(26, 13);
+            this.labelMacro.Size = new System.Drawing.Size(40, 13);
             this.labelMacro.TabIndex = 32;
-            this.labelMacro.Text = "File:";
+            this.labelMacro.Text = "Macro:";
             // 
             // textBoxMacro
             // 
@@ -261,6 +261,34 @@
             this.groupBoxImageAttributes.TabIndex = 18;
             this.groupBoxImageAttributes.TabStop = false;
             this.groupBoxImageAttributes.Text = "Image Attributes";
+            // 
+            // labelResolutionRatio
+            // 
+            this.labelResolutionRatio.AutoSize = true;
+            this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
+            this.labelResolutionRatio.Name = "labelResolutionRatio";
+            this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
+            this.labelResolutionRatio.TabIndex = 28;
+            this.labelResolutionRatio.Text = "Resolution Ratio:";
+            // 
+            // numericUpDownResolutionRatio
+            // 
+            this.numericUpDownResolutionRatio.Location = new System.Drawing.Point(148, 75);
+            this.numericUpDownResolutionRatio.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
+            this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
+            this.numericUpDownResolutionRatio.TabIndex = 27;
+            this.numericUpDownResolutionRatio.TabStop = false;
+            this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreviewImage);
             // 
             // groupBoxDisplayProperties
             // 
@@ -570,34 +598,6 @@
             this.labelSecurity.Text = "Applications will not be able to open encrypted screenshots. Anyone with the key " +
     "for a screenshot can decrypt it.";
             // 
-            // labelResolutionRatio
-            // 
-            this.labelResolutionRatio.AutoSize = true;
-            this.labelResolutionRatio.Location = new System.Drawing.Point(6, 77);
-            this.labelResolutionRatio.Name = "labelResolutionRatio";
-            this.labelResolutionRatio.Size = new System.Drawing.Size(88, 13);
-            this.labelResolutionRatio.TabIndex = 28;
-            this.labelResolutionRatio.Text = "Resolution Ratio:";
-            // 
-            // numericUpDownResolutionRatio
-            // 
-            this.numericUpDownResolutionRatio.Location = new System.Drawing.Point(148, 75);
-            this.numericUpDownResolutionRatio.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownResolutionRatio.Name = "numericUpDownResolutionRatio";
-            this.numericUpDownResolutionRatio.Size = new System.Drawing.Size(51, 20);
-            this.numericUpDownResolutionRatio.TabIndex = 27;
-            this.numericUpDownResolutionRatio.TabStop = false;
-            this.numericUpDownResolutionRatio.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericUpDownResolutionRatio.ValueChanged += new System.EventHandler(this.updatePreviewImage);
-            // 
             // FormScreen
             // 
             this.AcceptButton = this.buttonOK;
@@ -634,6 +634,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownJpegQuality)).EndInit();
             this.groupBoxImageAttributes.ResumeLayout(false);
             this.groupBoxImageAttributes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();
             this.groupBoxDisplayProperties.ResumeLayout(false);
             this.groupBoxDisplayProperties.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
@@ -644,7 +645,6 @@
             this.groupBoxPreview.PerformLayout();
             this.groupBoxSecurity.ResumeLayout(false);
             this.groupBoxSecurity.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownResolutionRatio)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

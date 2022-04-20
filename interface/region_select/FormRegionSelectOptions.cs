@@ -55,7 +55,7 @@ namespace AutoScreenCapture
         private void LoadOptions()
         {
             textBoxAutoSaveFolder.Text = _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value.ToString();
-            textBoxAutoSaveFile.Text = _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value.ToString();
+            textBoxAutoSaveMacro.Text = _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value.ToString();
 
             comboBoxFormat.Items.Clear();
 
@@ -70,7 +70,7 @@ namespace AutoScreenCapture
         private void SaveOptions()
         {
             _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value = textBoxAutoSaveFolder.Text.Trim();
-            _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value = textBoxAutoSaveFile.Text.Trim();
+            _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value = textBoxAutoSaveMacro.Text.Trim();
             _config.Settings.User.GetByKey("AutoSaveFormat", _config.Settings.DefaultSettings.AutoSaveFormat).Value = comboBoxFormat.Text;
 
             _config.Settings.User.Save(_config.Settings, _fileSystem);
