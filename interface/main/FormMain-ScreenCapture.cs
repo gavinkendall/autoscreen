@@ -382,14 +382,18 @@ namespace AutoScreenCapture
                 label = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
             }
 
+            string folderPath = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log));
+            string macroPath = _macroParser.ParseTags(preview: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log);
+
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
-            string path = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log)) + // Folder path
-                _macroParser.ParseTags(preview: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log); // Filename path
+            string screenshotPath = folderPath + macroPath;
 
             Screenshot screenshot = new Screenshot(_screenCapture.ActiveWindowTitle, _screenCapture.DateTimeScreenshotsTaken, _macroParser, _config)
             {
                 ViewId = viewId,
-                Path = path,
+                FilePath = screenshotPath,
+                FolderPath = folderPath,
+                MacroPath = macroPath,
                 Bitmap = bitmap,
                 Format = format,
                 ProcessName = _screenCapture.ActiveWindowProcessName + ".exe",

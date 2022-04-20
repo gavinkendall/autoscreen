@@ -213,9 +213,9 @@ namespace AutoScreenCapture
 
                 foreach (Screenshot screenshot in screenshots)
                 {
-                    if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Path))
+                    if (screenshot != null && screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.FilePath))
                     {
-                        _log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.Path + "\"");
+                        _log.WriteDebugMessage("Running editor (based on TriggerActionType.RunEditor) \"" + editor.Name + "\" using screenshot path \"" + screenshot.FilePath + "\"");
 
                         if (!RunEditor(editor, screenshot))
                         {
@@ -236,14 +236,14 @@ namespace AutoScreenCapture
         {
             // Execute the chosen image editor. If the $filepath$ argument happens to be included
             // then we'll use that argument as the screenshot file path when executing the image editor.
-            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.Path) &&
-                _fileSystem.FileExists(editor.Application) && _fileSystem.FileExists(screenshot.Path)))
+            if (editor != null && (screenshot != null && !string.IsNullOrEmpty(screenshot.FilePath) &&
+                _fileSystem.FileExists(editor.Application) && _fileSystem.FileExists(screenshot.FilePath)))
             {
                 _log.WriteDebugMessage("Starting process for editor \"" + editor.Name + "\" ...");
                 _log.WriteDebugMessage("Application: " + editor.Application);
-                _log.WriteDebugMessage("Arguments: " + editor.Arguments.Replace("$filepath$", "\"" + screenshot.Path + "\""));
+                _log.WriteDebugMessage("Arguments: " + editor.Arguments.Replace("$filepath$", "\"" + screenshot.FilePath + "\""));
 
-                _ = Process.Start(editor.Application, editor.Arguments.Replace("$filepath$", "\"" + screenshot.Path + "\""));
+                _ = Process.Start(editor.Application, editor.Arguments.Replace("$filepath$", "\"" + screenshot.FilePath + "\""));
 
                 // We successfully opened the editor with the given screenshot path.
                 return true;

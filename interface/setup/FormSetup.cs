@@ -999,13 +999,13 @@ namespace AutoScreenCapture
             }
 
             dataGridViewHashDictionary.Columns["Hash"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewHashDictionary.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewHashDictionary.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 
             dataGridViewHashDictionary.Columns["Hash"].Visible = true;
-            dataGridViewHashDictionary.Columns["Path"].Visible = true;
+            dataGridViewHashDictionary.Columns["FilePath"].Visible = true;
 
             dataGridViewHashDictionary.Columns["Hash"].DisplayIndex = 0;
-            dataGridViewHashDictionary.Columns["Path"].DisplayIndex = 1;
+            dataGridViewHashDictionary.Columns["FilePath"].DisplayIndex = 1;
         }
 
         private void buttonClearHashDictionary_Click(object sender, EventArgs e)

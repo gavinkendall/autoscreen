@@ -414,11 +414,11 @@ namespace AutoScreenCapture
         private int AddScreenshotAndSaveToFile(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             int returnFlag = 0;
-            string dirName = _fileSystem.GetDirectoryName(screenshot.Path);
+            string dirName = _fileSystem.GetDirectoryName(screenshot.FilePath);
 
             if (string.IsNullOrEmpty(dirName))
             {
-                _log.WriteDebugMessage("Directory name for screenshot with path \"" + screenshot.Path + "\" could not be found");
+                _log.WriteDebugMessage("Directory name for screenshot with path \"" + screenshot.FilePath + "\" could not be found");
 
                 return returnFlag | (int)ScreenSavingErrorLevels.DirNotFound;
             }
@@ -447,7 +447,7 @@ namespace AutoScreenCapture
                         hash = "hash (" + screenshot.Hash + ")";
                     }
 
-                    _log.WriteDebugMessage("Could not save screenshot with ID \"" + screenshot.Id + "\" and path \"" + screenshot.Path + "\" because its hash (" + hash + ") may have matched with a previous hash that has already been used for an earlier screenshot");
+                    _log.WriteDebugMessage("Could not save screenshot with ID \"" + screenshot.Id + "\" and path \"" + screenshot.FilePath + "\" because its hash (" + hash + ") may have matched with a previous hash that has already been used for an earlier screenshot");
 
                     return returnFlag | (int)ScreenSavingErrorLevels.HashDuplicate;
                 }
@@ -456,7 +456,7 @@ namespace AutoScreenCapture
             {
                 // We don't want to stop the screen capture session at this point because there may be other components that
                 // can write to their given paths. If this is a misconfigured path for a particular component then just log an error.
-                _log.WriteErrorMessage($"Cannot write to \"{screenshot.Path}\" because the user may not have the appropriate permissions to access the path");
+                _log.WriteErrorMessage($"Cannot write to \"{screenshot.FilePath}\" because the user may not have the appropriate permissions to access the path");
 
                 return returnFlag | (int)ScreenSavingErrorLevels.UserNotEnoughPermissions;
             }
@@ -466,7 +466,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                if (screenshot.Bitmap != null && screenshot.Format != null && !string.IsNullOrEmpty(screenshot.Path))
+                if (screenshot.Bitmap != null && screenshot.Format != null && !string.IsNullOrEmpty(screenshot.FilePath))
                 {
                     if (screenshot.Format.Name.Equals("JPEG"))
                     {
@@ -475,24 +475,24 @@ namespace AutoScreenCapture
 
                         var encoderInfo = GetEncoderInfo("image/jpeg");
 
-                        screenshot.Bitmap.Save(screenshot.Path, encoderInfo, encoderParams);
+                        screenshot.Bitmap.Save(screenshot.FilePath, encoderInfo, encoderParams);
                     }
                     else
                     {
-                        screenshot.Bitmap.Save(screenshot.Path, screenshot.Format.Format);
+                        screenshot.Bitmap.Save(screenshot.FilePath, screenshot.Format.Format);
                     }
 
                     if (screenshot.Encrypt)
                     {
-                        string key = security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+                        string key = security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
 
                         if (!string.IsNullOrEmpty(key))
                         {
-                            if (_fileSystem.FileExists(screenshot.Path))
+                            if (_fileSystem.FileExists(screenshot.FilePath))
                             {
-                                if (_fileSystem.DeleteFile(screenshot.Path))
+                                if (_fileSystem.DeleteFile(screenshot.FilePath))
                                 {
-                                    _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+                                    _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
 
                                     screenshot.Key = key;
                                     screenshot.Encrypt = false;
@@ -506,7 +506,7 @@ namespace AutoScreenCapture
 
                     screenshot.SavedToDisk = true;
 
-                    _log.WriteMessage("Screenshot (id = " + screenshot.Id + ", viewid = " + screenshot.ViewId + ", encrypted = " + screenshot.Encrypted.ToString() + ") saved to \"" + screenshot.Path + "\"");
+                    _log.WriteMessage("Screenshot (id = " + screenshot.Id + ", viewid = " + screenshot.ViewId + ", encrypted = " + screenshot.Encrypted.ToString() + ") saved to \"" + screenshot.FilePath + "\"");
                 }
             }
             catch
@@ -902,23 +902,23 @@ namespace AutoScreenCapture
             {
                 int filepathLengthLimit = Convert.ToInt32(_config.Settings.Application.GetByKey("FilepathLengthLimit", _config.Settings.DefaultSettings.FilepathLengthLimit).Value);
 
-                if (!string.IsNullOrEmpty(screenshot.Path))
+                if (!string.IsNullOrEmpty(screenshot.FilePath))
                 {
-                    if (screenshot.Path.Length > filepathLengthLimit)
+                    if (screenshot.FilePath.Length > filepathLengthLimit)
                     {
                         _log.WriteMessage($"File path length exceeds the configured length of {filepathLengthLimit} characters so value was truncated. Correct the value for the FilepathLengthLimit application setting to prevent truncation");
-                        screenshot.Path = screenshot.Path.Substring(0, filepathLengthLimit);
+                        screenshot.FilePath = screenshot.FilePath.Substring(0, filepathLengthLimit);
                     }
 
                     // This is a normal path used in Windows (such as "C:\screenshots\").
-                    if (!screenshot.Path.StartsWith(_fileSystem.PathDelimiter))
+                    if (!screenshot.FilePath.StartsWith(_fileSystem.PathDelimiter))
                     {
-                        if (_fileSystem.DriveReady(screenshot.Path))
+                        if (_fileSystem.DriveReady(screenshot.FilePath))
                         {
                             int lowDiskSpacePercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold", _config.Settings.DefaultSettings.LowDiskPercentageThreshold).Value);
-                            double freeDiskSpacePercentage = _fileSystem.FreeDiskSpacePercentage(screenshot.Path);
+                            double freeDiskSpacePercentage = _fileSystem.FreeDiskSpacePercentage(screenshot.FilePath);
 
-                            _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.Path + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
+                            _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.FilePath + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
 
                             if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
                             {
@@ -928,7 +928,7 @@ namespace AutoScreenCapture
                             {
                                 // There is not enough disk space on the drive so log an error message.
                                 // Change the system tray icon's colour to yellow for a warning if StopOnLowDiskError is set to False or red for an error if StopOnLowDiskError is set to True.
-                                _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive (that has {freeDiskSpacePercentage}% free disk space) for \"{screenshot.Path}\" which is lower than the LowDiskPercentageThreshold setting that is currently set to {lowDiskSpacePercentageThreshold}%");
+                                _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive (that has {freeDiskSpacePercentage}% free disk space) for \"{screenshot.FilePath}\" which is lower than the LowDiskPercentageThreshold setting that is currently set to {lowDiskSpacePercentageThreshold}%");
 
                                 bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
 
@@ -947,7 +947,7 @@ namespace AutoScreenCapture
                         else
                         {
                             // Drive isn't ready so log an error message.
-                            _log.WriteErrorMessage($"Unable to save screenshot for \"{screenshot.Path}\" because the drive is not found or not ready");
+                            _log.WriteErrorMessage($"Unable to save screenshot for \"{screenshot.FilePath}\" because the drive is not found or not ready");
 
                             return returnFlag | (int)ScreenSavingErrorLevels.DriveNotReady;
                         }
@@ -963,7 +963,7 @@ namespace AutoScreenCapture
             }
             catch (PathTooLongException ex)
             {
-                _log.WriteErrorMessage($"The path is too long. I see the path is \"{screenshot.Path}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
+                _log.WriteErrorMessage($"The path is too long. I see the path is \"{screenshot.FilePath}\" but the length exceeds what Windows can handle so the file could not be saved. There is probably an exception error from Windows explaining why");
                 _log.WriteExceptionMessage("ScreenCapture::SaveScreenshot", ex);
 
                 // This shouldn't be an error that should stop a screen capture session.

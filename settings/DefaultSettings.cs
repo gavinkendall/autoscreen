@@ -118,6 +118,7 @@ namespace AutoScreenCapture
         internal readonly int FileTransferServerPort = 22;
         internal readonly string FileTransferClientUsername = string.Empty;
         internal readonly string FileTransferClientPassword = string.Empty;
+        internal readonly bool FileTransferIsLinuxServer = true;
 
         // Old default user settings.
         internal readonly bool BoolCaptureStartAt = false;

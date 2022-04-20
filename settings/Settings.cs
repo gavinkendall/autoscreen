@@ -99,12 +99,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// The SMTP settings collection.
         /// </summary>
-        public static SettingCollection SMTP;
+        public SettingCollection SMTP;
 
         /// <summary>
         /// The SFTP settings collection.
         /// </summary>
-        public static SettingCollection SFTP;
+        public SettingCollection SFTP;
 
         /// <summary>
         /// The user settings collection.

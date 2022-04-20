@@ -98,7 +98,7 @@ namespace AutoScreenCapture
             lock (_screenshotList)
             {
                 // Add the screenshot to the screenshot collection.
-                if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
+                if (screenshot != null && !string.IsNullOrEmpty(screenshot.FilePath))
                 {
                     _screenshotList.Add(screenshot);
 
@@ -148,20 +148,20 @@ namespace AutoScreenCapture
                     string[] filePathsOfFailedUploads = new string[failedUploads.Count];
                     failedUploads.Keys.CopyTo(filePathsOfFailedUploads, 0);
                     
-                    if (filePathsOfFailedUploads.Contains(screenshot.Path))
+                    if (filePathsOfFailedUploads.Contains(screenshot.FilePath))
                     {
                         continue;
                     }
 
                     // Delete the actual image file containing the screenshot.
-                    if (_fileSystem.FileExists(screenshot.Path))
+                    if (_fileSystem.FileExists(screenshot.FilePath))
                     {
-                        _fileSystem.DeleteFile(screenshot.Path);
-                        _log.WriteDebugMessage($"Deleted file \"{screenshot.Path}\"");
+                        _fileSystem.DeleteFile(screenshot.FilePath);
+                        _log.WriteDebugMessage($"Deleted file \"{screenshot.FilePath}\"");
                     }
                     else
                     {
-                        _log.WriteDebugMessage($"File \"{screenshot.Path}\" not found");
+                        _log.WriteDebugMessage($"File \"{screenshot.FilePath}\" not found");
                     }
                 }
             }
@@ -374,7 +374,7 @@ namespace AutoScreenCapture
 
                 lock (_screenshotList)
                 {
-                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.Path))
+                    if (screenshot != null && !string.IsNullOrEmpty(screenshot.FilePath))
                     {
                         // Remove the screenshot object from the screenshot collection.
                         _screenshotList.Remove(screenshot);
@@ -384,7 +384,7 @@ namespace AutoScreenCapture
 
                         // Get the individual screenshot to remove from the parent node by using the path provided.
                         // This keeps backwards compatibility with older versions of the application that don't have the "Id" property.
-                        XmlNode xScreenshotToRemove = xScreenshots.SelectSingleNode(SCREENSHOT_XPATH + "[path='" + screenshot.Path + "']");
+                        XmlNode xScreenshotToRemove = xScreenshots.SelectSingleNode(SCREENSHOT_XPATH + "[path='" + screenshot.FilePath + "']");
 
                         // We could be attempting to remove a screenshot that hasn't had its reference saved
                         // to the "screenshots.xml" file yet so that's why this check is necessary.
@@ -1053,7 +1053,7 @@ namespace AutoScreenCapture
 
                                             case SCREENSHOT_PATH:
                                                 xReader.Read();
-                                                screenshot.Path = xReader.Value;
+                                                screenshot.FilePath = xReader.Value;
                                                 break;
 
                                             case SCREENSHOT_FORMAT:
@@ -1175,7 +1175,7 @@ namespace AutoScreenCapture
                                     xTime.InnerText = screenshot.Time;
 
                                     XmlElement xPath = xDoc.CreateElement(SCREENSHOT_PATH);
-                                    xPath.InnerText = screenshot.Path;
+                                    xPath.InnerText = screenshot.FilePath;
 
                                     XmlElement xFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
                                     xFormat.InnerText = screenshot.Format.Name;
@@ -1223,7 +1223,7 @@ namespace AutoScreenCapture
 
                                 if (!string.IsNullOrEmpty(screenshot.Date) &&
                                         !string.IsNullOrEmpty(screenshot.Time) &&
-                                        !string.IsNullOrEmpty(screenshot.Path) &&
+                                        !string.IsNullOrEmpty(screenshot.FilePath) &&
                                         screenshot.Format != null &&
                                         !string.IsNullOrEmpty(screenshot.Slide.Name) &&
                                         !string.IsNullOrEmpty(screenshot.Slide.Value) &&
@@ -1352,7 +1352,7 @@ namespace AutoScreenCapture
                             xTime.InnerText = screenshot.Time;
 
                             XmlElement xPath = xDoc.CreateElement(SCREENSHOT_PATH);
-                            xPath.InnerText = screenshot.Path;
+                            xPath.InnerText = screenshot.FilePath;
 
                             XmlElement xFormat = xDoc.CreateElement(SCREENSHOT_FORMAT);
                             xFormat.InnerText = screenshot.Format.Name;

@@ -46,10 +46,11 @@ namespace AutoScreenCapture
 
         private void FormFileTransferSettings_Load(object sender, EventArgs e)
         {
-            textBoxHost.Text = Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
-            numericUpDownPort.Value = Convert.ToInt32(Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value);
-            textBoxUsername.Text = Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
-            textBoxPassword.Text = Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
+            textBoxHost.Text = _config.Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
+            numericUpDownPort.Value = Convert.ToInt32(_config.Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value);
+            textBoxUsername.Text = _config.Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
+            textBoxPassword.Text = _config.Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
+            checkBoxIsLinux.Checked = Convert.ToBoolean(_config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer", _config.Settings.DefaultSettings.FileTransferIsLinuxServer).Value);
 
             checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _config.Settings.DefaultSettings.SFTPDeleteLocalFileAfterSuccessfulUpload).Value);
             checkBoxKeepFailedUploads.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value);
@@ -62,12 +63,12 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value = textBoxHost.Text;
-            Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value = numericUpDownPort.Value;
-            Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value = textBoxUsername.Text;
-            Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value = textBoxPassword.Text;
+            _config.Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value = textBoxHost.Text;
+            _config.Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value = numericUpDownPort.Value;
+            _config.Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value = textBoxUsername.Text;
+            _config.Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value = textBoxPassword.Text;
 
-            Settings.SFTP.Save(_config.Settings, _fileSystem);
+            _config.Settings.SFTP.Save(_config.Settings, _fileSystem);
 
             DialogResult = DialogResult.OK;
 

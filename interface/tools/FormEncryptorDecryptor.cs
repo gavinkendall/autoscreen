@@ -308,13 +308,13 @@ namespace AutoScreenCapture
 
                 dataGridViewScreenshots.Columns["Date"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridViewScreenshots.Columns["Time"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridViewScreenshots.Columns["Path"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridViewScreenshots.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridViewScreenshots.Columns["Encrypted"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 
                 dataGridViewScreenshots.Columns["Key"].Visible = true;
                 dataGridViewScreenshots.Columns["Date"].Visible = true;
                 dataGridViewScreenshots.Columns["Time"].Visible = true;
-                dataGridViewScreenshots.Columns["Path"].Visible = true;
+                dataGridViewScreenshots.Columns["FilePath"].Visible = true;
                 dataGridViewScreenshots.Columns["Label"].Visible = true;
                 dataGridViewScreenshots.Columns["Encrypted"].Visible = true;
                 dataGridViewScreenshots.Columns["WindowTitle"].Visible = true;
@@ -324,7 +324,7 @@ namespace AutoScreenCapture
                 dataGridViewScreenshots.Columns["Time"].DisplayIndex = 1;
                 dataGridViewScreenshots.Columns["Encrypted"].DisplayIndex = 2;
                 dataGridViewScreenshots.Columns["Key"].DisplayIndex = 3;
-                dataGridViewScreenshots.Columns["Path"].DisplayIndex = 4;
+                dataGridViewScreenshots.Columns["FilePath"].DisplayIndex = 4;
                 dataGridViewScreenshots.Columns["ProcessName"].DisplayIndex = 5;
                 dataGridViewScreenshots.Columns["WindowTitle"].DisplayIndex = 6;
                 dataGridViewScreenshots.Columns["Label"].DisplayIndex = 8; // This needs to be 8 so it appears after "Window Title". I tried 7 but it's doesn't work. I'm not sure why.
@@ -362,15 +362,15 @@ namespace AutoScreenCapture
                 {
                     if (!screenshot.Encrypted)
                     {
-                        string key = _security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+                        string key = _security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
 
                         if (!string.IsNullOrEmpty(key))
                         {
-                            if (_fileSystem.FileExists(screenshot.Path))
+                            if (_fileSystem.FileExists(screenshot.FilePath))
                             {
-                                if (_fileSystem.DeleteFile(screenshot.Path))
+                                if (_fileSystem.DeleteFile(screenshot.FilePath))
                                 {
-                                    _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+                                    _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
 
                                     screenshot.Key = key;
                                     screenshot.Encrypt = false;
@@ -382,7 +382,7 @@ namespace AutoScreenCapture
                         }
                         else
                         {
-                            _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.Path + "\"");
+                            _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.FilePath + "\"");
                         }
                     }
                 }
@@ -419,18 +419,18 @@ namespace AutoScreenCapture
                     {
                         try
                         {
-                            _security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key);
+                            _security.DecryptFile(screenshot.FilePath, screenshot.FilePath + "-decrypted", screenshot.Key);
                         }
                         catch (Exception ex)
                         {
-                            _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.Path + "\". Exception is " + ex);
+                            _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.FilePath + "\". Exception is " + ex);
                         }
 
-                        if (_fileSystem.FileExists(screenshot.Path))
+                        if (_fileSystem.FileExists(screenshot.FilePath))
                         {
-                            if (_fileSystem.DeleteFile(screenshot.Path))
+                            if (_fileSystem.DeleteFile(screenshot.FilePath))
                             {
-                                _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
+                                _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
 
                                 screenshot.Key = string.Empty;
                                 screenshot.Encrypted = false;

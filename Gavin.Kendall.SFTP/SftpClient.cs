@@ -54,7 +54,7 @@ namespace Gavin.Kendall.SFTP
 
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
@@ -69,7 +69,7 @@ namespace Gavin.Kendall.SFTP
             {
                 _sftpClient.Disconnect();
             }
-            catch (Exception)
+            catch
             {
 
             }
@@ -84,22 +84,69 @@ namespace Gavin.Kendall.SFTP
         /// Uploads a file to the SFTP server.
         /// </summary>
         /// <param name="sourcePath">The local path of the file to read from on the client.</param>
-        /// <param name="destinationPath">The remote path to write to on the server.</param>
+        /// <param name="destinationFolderPath">The remote folder path to write to on the server.</param>
+        /// <param name="destinationFilename">The remote filename to write to on the server.</param>
+        /// <param name="isLinux">Determines if we are connecting to a Linux server (if so then backslashes in the destination folder path are replaced with forward slashes).</param>
         /// <returns>True if the upload was successful otherwise false if the upload failed.</returns>
-        public bool UploadFile(string sourcePath, string destinationPath)
+        public bool UploadFile(string sourcePath, string destinationFolderPath, string destinationFilename, bool isLinux = true)
         {
             try
             {
+                string initialWorkingDirectory = _sftpClient.WorkingDirectory;
+
+                if (!string.IsNullOrEmpty(destinationFolderPath))
+                {
+                    if (isLinux)
+                    {
+                        destinationFolderPath = destinationFolderPath.Replace("\\", "/");
+
+                        foreach (string folder in destinationFolderPath.Split('/'))
+                        {
+                            CreateRemoteDirectory(folder);
+
+                            _sftpClient.ChangeDirectory(folder);
+                        }
+                    }
+                    else
+                    {
+                        CreateRemoteDirectory(destinationFolderPath);
+
+                        _sftpClient.ChangeDirectory(destinationFolderPath);
+
+                    }
+                }
+
                 using (var fileStream = File.OpenRead(sourcePath))
                 {
-                    _sftpClient.UploadFile(fileStream, destinationPath, true);
+                    _sftpClient.UploadFile(fileStream, destinationFilename, true);
                 }
+
+                // We have to make sure that we change directory back to the initial working directory
+                // so we avoid creating sub-folders within sub-folders. We always want to start from the root
+                // with each call of the UploadFile method.
+                _sftpClient.ChangeDirectory(initialWorkingDirectory);
 
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Create a directory on the remote server. Catch any exception errors.
+        /// </summary>
+        /// <param name="folder">The folder to create on the remote server.</param>
+        private void CreateRemoteDirectory(string folder)
+        {
+            try
+            {
+                _sftpClient.CreateDirectory(folder);
+            }
+            catch
+            {
+
             }
         }
     }

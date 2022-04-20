@@ -49,9 +49,19 @@ namespace AutoScreenCapture
         public string Time { get; set; }
 
         /// <summary>
-        /// The path of the screenshot's image file.
+        /// The filepath of the screenshot's image file.
         /// </summary>
-        public string Path { get; set; }
+        public string FilePath { get; set; }
+
+        /// <summary>
+        /// The path of the folder where the screenshot came from (which could be a Screen or a Region).
+        /// </summary>
+        public string FolderPath { get; set; }
+
+        /// <summary>
+        /// The path of the macro (file pattern) which the screenshot extracts from either a Screen or a Region.
+        /// </summary>
+        public string MacroPath { get; set; }
 
         /// <summary>
         /// The image format of the screenshot.

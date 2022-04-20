@@ -102,7 +102,7 @@ namespace AutoScreenCapture
                     screenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                if (!_fileSystem.FileExists(screenshot.Path))
+                if (!_fileSystem.FileExists(screenshot.FilePath))
                 {
                     return;
                 }
@@ -111,18 +111,18 @@ namespace AutoScreenCapture
                 {
                     try
                     {
-                        _security.DecryptFile(screenshot.Path, screenshot.Path + "-decrypted", screenshot.Key);
+                        _security.DecryptFile(screenshot.FilePath, screenshot.FilePath + "-decrypted", screenshot.Key);
                     }
                     catch (Exception ex)
                     {
-                        _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.Path + "\". Exception is " + ex);
+                        _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.FilePath + "\". Exception is " + ex);
                     }
 
-                    if (_fileSystem.FileExists(screenshot.Path))
+                    if (_fileSystem.FileExists(screenshot.FilePath))
                     {
-                        if (_fileSystem.DeleteFile(screenshot.Path))
+                        if (_fileSystem.DeleteFile(screenshot.FilePath))
                         {
-                            _fileSystem.MoveFile(screenshot.Path + "-decrypted", screenshot.Path);
+                            _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
 
                             screenshot.Key = string.Empty;
                             screenshot.Encrypted = false;
@@ -137,15 +137,15 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    string key = _security.EncryptFile(screenshot.Path, screenshot.Path + "-encrypted");
+                    string key = _security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
 
                     if (!string.IsNullOrEmpty(key))
                     {
-                        if (_fileSystem.FileExists(screenshot.Path))
+                        if (_fileSystem.FileExists(screenshot.FilePath))
                         {
-                            if (_fileSystem.DeleteFile(screenshot.Path))
+                            if (_fileSystem.DeleteFile(screenshot.FilePath))
                             {
-                                _fileSystem.MoveFile(screenshot.Path + "-encrypted", screenshot.Path);
+                                _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
 
                                 screenshot.Key = key;
                                 screenshot.Encrypt = false;
@@ -161,7 +161,7 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.Path + "\"");
+                        _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.FilePath + "\"");
                     }
                 }
 
@@ -216,7 +216,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
                 }
 
-                bool.TryParse(Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
+                bool.TryParse(_config.Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
 
                 if (EmailScreenshot(selectedScreenshot, prompt))
                 {
@@ -478,7 +478,7 @@ namespace AutoScreenCapture
                                     {
                                         selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
-                                        if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                                        if (!string.IsNullOrEmpty(selectedScreenshot.FilePath))
                                         {
                                             // Change the font color to dark red to indicate that this is an outdated screenshot we're showing.
                                             groupBox.ForeColor = Color.DarkRed;
@@ -490,33 +490,33 @@ namespace AutoScreenCapture
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.Path : string.Empty))
+                        if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.FilePath : string.Empty))
                         {
                             if (selectedScreenshot.Encrypted)
                             {
-                                if (_fileSystem.FileExists(selectedScreenshot.Path))
+                                if (_fileSystem.FileExists(selectedScreenshot.FilePath))
                                 {
                                     try
                                     {
-                                        _security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key);
-                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path + "-decrypted");
+                                        _security.DecryptFile(selectedScreenshot.FilePath, selectedScreenshot.FilePath + "-decrypted", selectedScreenshot.Key);
+                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath + "-decrypted");
                                     }
                                     catch (Exception ex)
                                     {
                                         // Write an error to the error file in th debug directory regardless if debug mode or logging is enabled or disabled.
                                         // We want to force write this error out to the error file. The image will remain black to indicate that an error was encountered.
-                                        _log.Write($"Decryption failed for \"{selectedScreenshot.Path}\". Exception: {ex}", writeError: true, null);
+                                        _log.Write($"Decryption failed for \"{selectedScreenshot.FilePath}\". Exception: {ex}", writeError: true, null);
                                     }
 
-                                    if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
+                                    if (_fileSystem.FileExists(selectedScreenshot.FilePath + "-decrypted"))
                                     {
-                                        _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
+                                        _fileSystem.DeleteFile(selectedScreenshot.FilePath + "-decrypted");
                                     }
                                 }
                             }
                             else
                             {
-                                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath);
                             }
                         }
                     }
@@ -603,7 +603,7 @@ namespace AutoScreenCapture
                                 {
                                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
-                                    if (!string.IsNullOrEmpty(selectedScreenshot.Path))
+                                    if (!string.IsNullOrEmpty(selectedScreenshot.FilePath))
                                     {
                                         // Change the font color to dark red to indicate that this is an outdated screenshot we're showing.
                                         toolStrip.ForeColor = Color.DarkRed;
@@ -615,7 +615,7 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    string path = selectedScreenshot != null ? selectedScreenshot.Path : string.Empty;
+                    string path = selectedScreenshot != null ? selectedScreenshot.FilePath : string.Empty;
 
                     if (!string.IsNullOrEmpty(path))
                     {
@@ -624,7 +624,7 @@ namespace AutoScreenCapture
 
                         string dirName = _fileSystem.GetDirectoryName(path);
 
-                        if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.Path : string.Empty))
+                        if (!string.IsNullOrEmpty(selectedScreenshot != null ? selectedScreenshot.FilePath : string.Empty))
                         {
                             if (selectedScreenshot.Encrypted)
                             {
@@ -652,23 +652,23 @@ namespace AutoScreenCapture
                                 toolStripButtonEncryptDecrypt.ToolTipText = "Decrypt the screenshot";
                                 toolStripButtonEncryptDecrypt.Image = Properties.Resources.unlock;
 
-                                if (_fileSystem.FileExists(selectedScreenshot.Path))
+                                if (_fileSystem.FileExists(selectedScreenshot.FilePath))
                                 {
                                     try
                                     {
-                                        _security.DecryptFile(selectedScreenshot.Path, selectedScreenshot.Path + "-decrypted", selectedScreenshot.Key);
-                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path + "-decrypted");
+                                        _security.DecryptFile(selectedScreenshot.FilePath, selectedScreenshot.FilePath + "-decrypted", selectedScreenshot.Key);
+                                        pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath + "-decrypted");
                                     }
                                     catch (Exception ex)
                                     {
                                         // Write an error to the error file in the debug directory regardless if debug mode or logging is enabled or disabled.
                                         // We want to force write this error out to the error file. The image will remain black to indicate that an error was encountered.
-                                        _log.Write($"Decryption failed for \"{selectedScreenshot.Path}\". Exception: {ex}", writeError: true, null);
+                                        _log.Write($"Decryption failed for \"{selectedScreenshot.FilePath}\". Exception: {ex}", writeError: true, null);
                                     }
 
-                                    if (_fileSystem.FileExists(selectedScreenshot.Path + "-decrypted"))
+                                    if (_fileSystem.FileExists(selectedScreenshot.FilePath + "-decrypted"))
                                     {
-                                        _fileSystem.DeleteFile(selectedScreenshot.Path + "-decrypted");
+                                        _fileSystem.DeleteFile(selectedScreenshot.FilePath + "-decrypted");
                                     }
                                 }
                             }
@@ -698,7 +698,7 @@ namespace AutoScreenCapture
                                 toolStripButtonEncryptDecrypt.ToolTipText = "Encrypt the screenshot";
                                 toolStripButtonEncryptDecrypt.Image = Properties.Resources._lock;
 
-                                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.Path);
+                                pictureBox.Image = _screenCapture.GetImageByPath(selectedScreenshot.FilePath);
                             }
                         }
 
@@ -723,7 +723,7 @@ namespace AutoScreenCapture
                             _formScreenshotMetadata.textBoxScreenshotDate.Text = selectedScreenshot.Date;
                             _formScreenshotMetadata.textBoxScreenshotTime.Text = selectedScreenshot.Time;
 
-                            _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.Path;
+                            _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.FilePath;
 
                             _formScreenshotMetadata.textBoxScreenshotHash.Text = selectedScreenshot.Hash;
 
@@ -832,10 +832,10 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                 }
 
-                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.Path) &&
-                    _fileSystem.FileExists(selectedScreenshot.Path))
+                if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.FilePath) &&
+                    _fileSystem.FileExists(selectedScreenshot.FilePath))
                 {
-                    Process.Start(_fileSystem.FileManager, "/select,\"" + selectedScreenshot.Path + "\"");
+                    Process.Start(_fileSystem.FileManager, "/select,\"" + selectedScreenshot.FilePath + "\"");
                 }
             }
         }
@@ -878,34 +878,34 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Emailing screenshots");
 
-                if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
+                if (screenshot == null || string.IsNullOrEmpty(screenshot.FilePath))
                 {
                     _log.WriteDebugMessage("Cannot email screenshot because screenshot is either null or path is empty");
 
                     return false;
                 }
 
-                _log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.Path + "\"");
+                _log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.FilePath + "\"");
 
-                string host = Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
+                string host = _config.Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
 
                 _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int port);
+                int.TryParse(_config.Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int port);
 
                 _log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
+                bool.TryParse(_config.Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
 
                 _log.WriteDebugMessage("SSL = " + ssl);
 
                 _log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
+                string username = _config.Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
 
                 _log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = _config.Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -916,27 +916,27 @@ namespace AutoScreenCapture
                     _log.WriteDebugMessage("Password = [I'm not revealing this here]");
                 }
 
-                string from = Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
+                string from = _config.Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
 
                 _log.WriteDebugMessage("From = " + from);
 
-                string to = Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
+                string to = _config.Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
 
                 _log.WriteDebugMessage("To = " + to);
 
-                string cc = Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
+                string cc = _config.Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
 
                 _log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
+                string bcc = _config.Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
 
                 _log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
+                string subject = _config.Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
 
                 _log.WriteDebugMessage("Subject = " + subject);
 
-                string body = Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
+                string body = _config.Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
 
                 _log.WriteDebugMessage("Body = " + body);
 
@@ -966,7 +966,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("SMTP client prepared and email message composed");
 
-                _emailManager.AddFileAttachmentByFilePath(screenshot.Path);
+                _emailManager.AddFileAttachmentByFilePath(screenshot.FilePath);
 
                 if (_emailManager.AttachmentsCount == 0)
                 {
@@ -1035,7 +1035,7 @@ namespace AutoScreenCapture
             {
                 Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
-                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path))
+                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.FilePath))
                 {
                     if (_screenCapture.OptimizeScreenCapture)
                     {
@@ -1066,28 +1066,28 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Screenshot attempting to transfer to file server");
 
-                if (screenshot == null || string.IsNullOrEmpty(screenshot.Path))
+                if (screenshot == null || string.IsNullOrEmpty(screenshot.FilePath))
                 {
                     _log.WriteDebugMessage("Cannot upload screenshot to file server because screenshot is either null or path is empty");
 
                     return false;
                 }
 
-                _log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.Path + "\" to file server");
+                _log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.FilePath + "\" to file server");
 
-                string host = Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
+                string host = _config.Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
 
                 _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
+                int.TryParse(_config.Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
 
                 _log.WriteDebugMessage("Port = " + port);
 
-                string username = Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
+                string username = _config.Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
 
                 _log.WriteDebugMessage("Username = " + username);
 
-                string password = Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
+                string password = _config.Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -1127,11 +1127,11 @@ namespace AutoScreenCapture
                         if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value))
                         {
                             // Add the screenshot filepath and host to a dictionary of failed uploads so we'll attempt to upload the screenshot for that host later.
-                            if (!_failedUploads.ContainsKey(screenshot.Path))
+                            if (!_failedUploads.ContainsKey(screenshot.FilePath))
                             {
-                                _log.WriteDebugMessage($"Screenshot ({screenshot.Path}) has been added to the dictionary of failed uploads because a connection to the file server could not be established at this time so an attempt to retry the upload will occur in the next capture cycle");
+                                _log.WriteDebugMessage($"Screenshot ({screenshot.FilePath}) has been added to the dictionary of failed uploads because a connection to the file server could not be established at this time so an attempt to retry the upload will occur in the next capture cycle");
 
-                                _failedUploads.Add(screenshot.Path, host);
+                                _failedUploads.Add(screenshot.FilePath, host);
                             }
                         }
 
@@ -1159,7 +1159,7 @@ namespace AutoScreenCapture
                                 // so we don't accidentally upload the screenshot to the wrong SFTP server just in case the user changes hosts.
                                 if (hostAssociatedWithPath.Equals(host))
                                 {
-                                    if (UploadScreenshot(host, path))
+                                    if (UploadScreenshot(host, path, path))
                                     {
                                         _log.WriteDebugMessage($"This screenshot previously failed to upload. It has now been successfully uploaded to {host}");
                                     }
@@ -1173,7 +1173,7 @@ namespace AutoScreenCapture
                     }
 
                     // Upload the screenshot we're currently handling.
-                    return UploadScreenshot(host, screenshot.Path);
+                    return UploadScreenshot(host, screenshot.FilePath, screenshot.MacroPath);
                 }
 
                 return false;
@@ -1192,20 +1192,23 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Uploads a screenshot image file to the SFTP server given the provided local path of the screenshot.
+        /// Uploads a screenshot image file to the SFTP server given the provided local filepath and macro path of the screenshot.
         /// </summary>
         /// <param name="host">The hostname for the SFTP server.</param>
-        /// <param name="path">The filepath of the screenshot.</param>
+        /// <param name="path">The local filepath of the screenshot.</param>
+        /// <param name="macroPath">The screenshot's macro path (filename pattern) which will be used for the remote directory on the SFTP server.</param>
         /// <returns>True if the upload was successful. False if the upload failed.</returns>
-        private bool UploadScreenshot(string host, string path)
+        private bool UploadScreenshot(string host, string path, string macroPath)
         {
-            string destinationPath = Path.GetFileName(path);
+            string destinationFolder = Path.GetDirectoryName(macroPath);
+            string destinationFilename = Path.GetFileName(macroPath);
 
             _log.WriteDebugMessage("Attempting to upload screenshot to file server");
-            _log.WriteDebugMessage("Source: " + path);
-            _log.WriteDebugMessage("Destination: " + destinationPath);
+            _log.WriteDebugMessage("Source (Local) Path: " + path);
+            _log.WriteDebugMessage("Destination (Remote) Folder Path: " + destinationFolder);
+            _log.WriteDebugMessage("Destination (Remote) Filename: " + destinationFilename);
 
-            if (_sftpClient.UploadFile(path, destinationPath))
+            if (_sftpClient.UploadFile(path, destinationFolder, destinationFilename))
             {
                 _log.WriteDebugMessage("Successfully uploaded screenshot");
 
@@ -1261,15 +1264,15 @@ namespace AutoScreenCapture
             {
                 Screenshot lastScreenshotOfThisView = _screenshotCollection.GetLastScreenshotOfView(_screenshotCollection.LastViewId);
 
-                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.Path))
+                if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.FilePath))
                 {
                     if (FileTransferScreenshot(lastScreenshotOfThisView))
                     {
-                        _log.WriteDebugMessage($"The screenshot ({lastScreenshotOfThisView.Path}) was successfully uploaded");
+                        _log.WriteDebugMessage($"The screenshot ({lastScreenshotOfThisView.FilePath}) was successfully uploaded");
                     }
                     else
                     {
-                        _log.WriteDebugMessage($"The screenshot ({lastScreenshotOfThisView.Path}) failed to upload");
+                        _log.WriteDebugMessage($"The screenshot ({lastScreenshotOfThisView.FilePath}) failed to upload");
                     }
                 }
             }
