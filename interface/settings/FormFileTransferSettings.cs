@@ -67,6 +67,7 @@ namespace AutoScreenCapture
             _config.Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value = numericUpDownPort.Value;
             _config.Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value = textBoxUsername.Text;
             _config.Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value = textBoxPassword.Text;
+            _config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer", _config.Settings.DefaultSettings.FileTransferIsLinuxServer).Value = checkBoxIsLinux.Checked;
 
             _config.Settings.SFTP.Save(_config.Settings, _fileSystem);
 

@@ -18,7 +18,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
-using System;
 using System.IO;
 
 namespace Gavin.Kendall.SFTP
@@ -88,7 +87,7 @@ namespace Gavin.Kendall.SFTP
         /// <param name="destinationFilename">The remote filename to write to on the server.</param>
         /// <param name="isLinux">Determines if we are connecting to a Linux server (if so then backslashes in the destination folder path are replaced with forward slashes).</param>
         /// <returns>True if the upload was successful otherwise false if the upload failed.</returns>
-        public bool UploadFile(string sourcePath, string destinationFolderPath, string destinationFilename, bool isLinux = true)
+        public bool UploadFile(string sourcePath, string destinationFolderPath, string destinationFilename, bool isLinux)
         {
             try
             {

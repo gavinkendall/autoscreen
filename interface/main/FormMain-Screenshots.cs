@@ -1203,12 +1203,15 @@ namespace AutoScreenCapture
             string destinationFolder = Path.GetDirectoryName(macroPath);
             string destinationFilename = Path.GetFileName(macroPath);
 
+            bool isLinuxServer = Convert.ToBoolean(_config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer", _config.Settings.DefaultSettings.FileTransferIsLinuxServer).Value);
+
             _log.WriteDebugMessage("Attempting to upload screenshot to file server");
             _log.WriteDebugMessage("Source (Local) Path: " + path);
             _log.WriteDebugMessage("Destination (Remote) Folder Path: " + destinationFolder);
             _log.WriteDebugMessage("Destination (Remote) Filename: " + destinationFilename);
+            _log.WriteDebugMessage("Is Linux Server: " + isLinuxServer.ToString());
 
-            if (_sftpClient.UploadFile(path, destinationFolder, destinationFilename))
+            if (_sftpClient.UploadFile(path, destinationFolder, destinationFilename, isLinuxServer))
             {
                 _log.WriteDebugMessage("Successfully uploaded screenshot");
 
