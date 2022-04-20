@@ -751,7 +751,8 @@ namespace AutoScreenCapture
 
                         foreach (Trigger trigger in _formTrigger.TriggerCollection)
                         {
-                            if (trigger.ActionType == TriggerActionType.ShowInterface)
+                            if (trigger.ActionType == TriggerActionType.ShowInterface ||
+                                trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
                             {
                                 trigger.Enable = false;
                             }
