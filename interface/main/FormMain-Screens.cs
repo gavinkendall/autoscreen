@@ -128,7 +128,14 @@ namespace AutoScreenCapture
             _formScreen.ImageFormatCollection = _imageFormatCollection;
             _formScreen.TagCollection = _formMacroTag.MacroTagCollection;
 
-            _formScreen.ShowDialog(this);
+            if (!_formScreen.Visible)
+            {
+                _formScreen.ShowDialog(this);
+            }
+            else
+            {
+                _formScreen.Activate();
+            }
 
             if (_formScreen.DialogResult == DialogResult.OK)
             {

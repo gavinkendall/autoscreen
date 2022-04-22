@@ -127,7 +127,14 @@ namespace AutoScreenCapture
             _formTrigger.ScheduleCollection = _formSchedule.ScheduleCollection;
             _formTrigger.MacroTagCollection = _formMacroTag.MacroTagCollection;
 
-            _formTrigger.ShowDialog(this);
+            if (!_formTrigger.Visible)
+            {
+                _formTrigger.ShowDialog(this);
+            }
+            else
+            {
+                _formTrigger.Activate();
+            }
 
             if (_formTrigger.DialogResult == DialogResult.OK)
             {

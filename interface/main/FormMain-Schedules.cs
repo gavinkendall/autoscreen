@@ -174,6 +174,78 @@ namespace AutoScreenCapture
                             DoTriggerAction(trigger);
                         }
                     }
+
+                    if (trigger.ConditionType == TriggerConditionType.DurationFromStartScreenCapture)
+                    {
+                        switch (trigger.DurationType)
+                        {
+                            // Seconds
+                            case 0:
+                                if (dtStartScreenCapture.AddSeconds(trigger.Duration).Hour == dtNow.Hour &&
+                                    dtStartScreenCapture.AddSeconds(trigger.Duration).Minute == dtNow.Minute &&
+                                    dtStartScreenCapture.AddSeconds(trigger.Duration).Second == dtNow.Second)
+                                {
+                                    DoTriggerAction(trigger);
+                                }
+                                break;
+
+                            // Minutes
+                            case 1:
+                                if (dtStartScreenCapture.AddMinutes(trigger.Duration).Hour == dtNow.Hour &&
+                                    dtStartScreenCapture.AddMinutes(trigger.Duration).Minute == dtNow.Minute &&
+                                    dtStartScreenCapture.AddMinutes(trigger.Duration).Second == dtNow.Second)
+                                {
+                                    DoTriggerAction(trigger);
+                                }
+                                break;
+
+                            // Hours
+                            case 2:
+                                if (dtStartScreenCapture.AddHours(trigger.Duration).Hour == dtNow.Hour &&
+                                    dtStartScreenCapture.AddHours(trigger.Duration).Minute == dtNow.Minute &&
+                                    dtStartScreenCapture.AddHours(trigger.Duration).Second == dtNow.Second)
+                                {
+                                    DoTriggerAction(trigger);
+                                }
+                                break;
+                        }
+                    }
+
+                    if (trigger.ConditionType == TriggerConditionType.DurationFromStopScreenCapture)
+                    {
+                        switch (trigger.DurationType)
+                        {
+                            // Seconds
+                            case 0:
+                                if (dtStopScreenCapture.AddSeconds(trigger.Duration).Hour == dtNow.Hour &&
+                                    dtStopScreenCapture.AddSeconds(trigger.Duration).Minute == dtNow.Minute &&
+                                    dtStopScreenCapture.AddSeconds(trigger.Duration).Second == dtNow.Second)
+                                {
+                                    DoTriggerAction(trigger);
+                                }
+                                break;
+
+                            // Minutes
+                            case 1:
+                                if (dtStopScreenCapture.AddMinutes(trigger.Duration).Hour == dtNow.Hour &&
+                                    dtStopScreenCapture.AddMinutes(trigger.Duration).Minute == dtNow.Minute &&
+                                    dtStopScreenCapture.AddMinutes(trigger.Duration).Second == dtNow.Second)
+                                {
+                                    DoTriggerAction(trigger);
+                                }
+                                break;
+
+                            // Hours
+                            case 2:
+                                if (dtStopScreenCapture.AddHours(trigger.Duration).Hour == dtNow.Hour &&
+                                    dtStopScreenCapture.AddHours(trigger.Duration).Minute == dtNow.Minute &&
+                                    dtStopScreenCapture.AddHours(trigger.Duration).Second == dtNow.Second)
+                                {
+                                    DoTriggerAction(trigger);
+                                }
+                                break;
+                        }
+                    }
                 }
 
                 if (_appStarted)
@@ -281,7 +353,14 @@ namespace AutoScreenCapture
 
             _formSchedule.ScheduleObject = schedule;
 
-            _formSchedule.ShowDialog(this);
+            if (!_formSchedule.Visible)
+            {
+                _formSchedule.ShowDialog(this);
+            }
+            else
+            {
+                _formSchedule.Activate();
+            }
 
             if (_formSchedule.DialogResult == DialogResult.OK)
             {

@@ -55,6 +55,9 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelPage = new System.Windows.Forms.Label();
             this.groupBoxCondition = new System.Windows.Forms.GroupBox();
+            this.comboBoxDuration = new System.Windows.Forms.ComboBox();
+            this.numericUpDownDuration = new System.Windows.Forms.NumericUpDown();
+            this.labelDuration = new System.Windows.Forms.Label();
             this.groupBoxAction = new System.Windows.Forms.GroupBox();
             this.textBoxApplicationFocus = new System.Windows.Forms.TextBox();
             this.labelApplicationFocus = new System.Windows.Forms.Label();
@@ -78,6 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             this.groupBoxCondition.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDuration)).BeginInit();
             this.groupBoxAction.SuspendLayout();
             this.groupBoxModules.SuspendLayout();
             this.groupBoxInterval.SuspendLayout();
@@ -215,7 +219,7 @@
             // 
             this.labelDate.AutoSize = true;
             this.labelDate.Enabled = false;
-            this.labelDate.Location = new System.Drawing.Point(6, 435);
+            this.labelDate.Location = new System.Drawing.Point(6, 431);
             this.labelDate.Name = "labelDate";
             this.labelDate.Size = new System.Drawing.Size(33, 13);
             this.labelDate.TabIndex = 24;
@@ -280,7 +284,7 @@
             this.dateTimePickerDate.Enabled = false;
             this.dateTimePickerDate.Location = new System.Drawing.Point(45, 429);
             this.dateTimePickerDate.Name = "dateTimePickerDate";
-            this.dateTimePickerDate.Size = new System.Drawing.Size(380, 20);
+            this.dateTimePickerDate.Size = new System.Drawing.Size(183, 20);
             this.dateTimePickerDate.TabIndex = 14;
             this.dateTimePickerDate.TabStop = false;
             // 
@@ -373,6 +377,9 @@
             // 
             // groupBoxCondition
             // 
+            this.groupBoxCondition.Controls.Add(this.comboBoxDuration);
+            this.groupBoxCondition.Controls.Add(this.numericUpDownDuration);
+            this.groupBoxCondition.Controls.Add(this.labelDuration);
             this.groupBoxCondition.Controls.Add(this.labelDay);
             this.groupBoxCondition.Controls.Add(this.listBoxCondition);
             this.groupBoxCondition.Controls.Add(this.textBoxConditionHelp);
@@ -387,6 +394,42 @@
             this.groupBoxCondition.TabIndex = 31;
             this.groupBoxCondition.TabStop = false;
             this.groupBoxCondition.Text = "Condition";
+            // 
+            // comboBoxDuration
+            // 
+            this.comboBoxDuration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDuration.FormattingEnabled = true;
+            this.comboBoxDuration.Items.AddRange(new object[] {
+            "Seconds",
+            "Minutes",
+            "Hours"});
+            this.comboBoxDuration.Location = new System.Drawing.Point(358, 428);
+            this.comboBoxDuration.Name = "comboBoxDuration";
+            this.comboBoxDuration.Size = new System.Drawing.Size(67, 21);
+            this.comboBoxDuration.TabIndex = 29;
+            this.comboBoxDuration.TabStop = false;
+            // 
+            // numericUpDownDuration
+            // 
+            this.numericUpDownDuration.Location = new System.Drawing.Point(307, 429);
+            this.numericUpDownDuration.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numericUpDownDuration.Name = "numericUpDownDuration";
+            this.numericUpDownDuration.Size = new System.Drawing.Size(45, 20);
+            this.numericUpDownDuration.TabIndex = 28;
+            this.numericUpDownDuration.TabStop = false;
+            // 
+            // labelDuration
+            // 
+            this.labelDuration.AutoSize = true;
+            this.labelDuration.Location = new System.Drawing.Point(251, 431);
+            this.labelDuration.Name = "labelDuration";
+            this.labelDuration.Size = new System.Drawing.Size(50, 13);
+            this.labelDuration.TabIndex = 27;
+            this.labelDuration.Text = "Duration:";
             // 
             // groupBoxAction
             // 
@@ -606,6 +649,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
             this.groupBoxCondition.ResumeLayout(false);
             this.groupBoxCondition.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDuration)).EndInit();
             this.groupBoxAction.ResumeLayout(false);
             this.groupBoxAction.PerformLayout();
             this.groupBoxModules.ResumeLayout(false);
@@ -664,5 +708,8 @@
         private System.Windows.Forms.Label labelApplicationFocus;
         private System.Windows.Forms.TextBox textBoxLabel;
         private System.Windows.Forms.Label labelLabel;
+        private System.Windows.Forms.ComboBox comboBoxDuration;
+        private System.Windows.Forms.NumericUpDown numericUpDownDuration;
+        private System.Windows.Forms.Label labelDuration;
     }
 }

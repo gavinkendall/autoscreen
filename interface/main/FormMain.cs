@@ -167,6 +167,9 @@ namespace AutoScreenCapture
         private const int CAPTURE_LIMIT_MIN = 0;
         private const int CAPTURE_LIMIT_MAX = 9999;
 
+        DateTime dtStartScreenCapture;
+        DateTime dtStopScreenCapture;
+
         /// <summary>
         /// Constructor for the main form.
         /// </summary>
@@ -801,7 +804,14 @@ namespace AutoScreenCapture
 
             _formSetup.ShowTabPage(selectedMenuItem.Text);
 
-            _formSetup.ShowDialog(this);
+            if (!_formSetup.Visible)
+            {
+                _formSetup.ShowDialog(this);
+            }
+            else
+            {
+                _formSetup.Activate();
+            }
 
             if (_formSetup.DialogResult == DialogResult.OK)
             {

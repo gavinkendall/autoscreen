@@ -85,6 +85,16 @@ namespace AutoScreenCapture
         public int CycleCount { get; set; }
 
         /// <summary>
+        /// The duration when something happens.
+        /// </summary>
+        public int Duration { get; set; }
+
+        /// <summary>
+        /// The type of duration.
+        /// </summary>
+        public int DurationType { get; set; }
+
+        /// <summary>
         /// The empty constructor for the trigger.
         /// </summary>
         public Trigger()

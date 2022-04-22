@@ -110,8 +110,6 @@ namespace AutoScreenCapture
         /// </summary>
         private void TakeScreenshot(bool captureNow)
         {
-            RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
-
             // Test to see if we can get images of the screen before continuing.
             if (_screenCapture.GetScreenImages(0, 0, 0, autoAdapt: false, 0, 0, 0, 0, 0, false, out _))
             {
@@ -158,6 +156,10 @@ namespace AutoScreenCapture
 
                 RunScreenCaptures();
             }
+
+            _log.WriteDebugMessage("Running triggers of condition type CaptureCycleElapsed");
+
+            RunTriggersOfConditionType(TriggerConditionType.CaptureCycleElapsed);
         }
 
         /// <summary>
@@ -217,6 +219,8 @@ namespace AutoScreenCapture
                     _screenCapture.Limit = _formSetup.checkBoxCaptureLimit.Checked ? (int)_formSetup.numericUpDownCaptureLimit.Value : 0;
 
                     _log.WriteMessage("Starting screen capture");
+
+                    dtStartScreenCapture = DateTime.Now;
 
                     _screenCapture.Running = true;
                     _screenCapture.ApplicationWarning = false;
@@ -288,6 +292,8 @@ namespace AutoScreenCapture
                 DisableStopCapture();
                 EnableStartCapture();
 
+                dtStopScreenCapture = DateTime.Now;
+
                 _screenCapture.Count = 0;
                 _screenCapture.Running = false;
                 _screenCapture.DateTimePreviousCycle = DateTime.MinValue;
@@ -346,6 +352,10 @@ namespace AutoScreenCapture
             {
                 return false;
             }
+
+            _log.WriteDebugMessage("Running triggers of condition type BeforeScreenshotTaken");
+
+            RunTriggersOfConditionType(TriggerConditionType.BeforeScreenshotTaken);
 
             Guid viewId = Guid.Empty;
             string folder = string.Empty;

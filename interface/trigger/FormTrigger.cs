@@ -143,6 +143,9 @@ namespace AutoScreenCapture
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
                 numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
+
+                numericUpDownDuration.Value = TriggerObject.Duration;
+                comboBoxDuration.SelectedIndex = TriggerObject.DurationType;
             }
             else
             {
@@ -158,6 +161,9 @@ namespace AutoScreenCapture
                 numericUpDownMinutesInterval.Value = 0;
                 numericUpDownSecondsInterval.Value = 0;
                 numericUpDownMillisecondsInterval.Value = 0;
+
+                numericUpDownDuration.Value = 0;
+                comboBoxDuration.SelectedIndex = 0;
             }
         }
 
@@ -213,7 +219,9 @@ namespace AutoScreenCapture
                         Day = comboBoxDay.Text,
                         Days = (int)numericUpDownDays.Value,
                         CycleCount = (int)numericUpDownCycleCount.Value,
-                        ScreenCaptureInterval = screenCaptureInterval
+                        ScreenCaptureInterval = screenCaptureInterval,
+                        Duration = (int)numericUpDownDuration.Value,
+                        DurationType = comboBoxDuration.SelectedIndex
                     };
 
                     if (textBoxLabel.Enabled)
@@ -276,6 +284,8 @@ namespace AutoScreenCapture
                     TriggerCollection.Get(TriggerObject).Day = comboBoxDay.Text;
                     TriggerCollection.Get(TriggerObject).Days = (int)numericUpDownDays.Value;
                     TriggerCollection.Get(TriggerObject).CycleCount = (int)numericUpDownCycleCount.Value;
+                    TriggerCollection.Get(TriggerObject).Duration = (int)numericUpDownDuration.Value;
+                    TriggerCollection.Get(TriggerObject).DurationType = comboBoxDuration.SelectedIndex;
 
                     if (textBoxLabel.Enabled)
                     {
@@ -397,6 +407,9 @@ namespace AutoScreenCapture
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.BeforeScreenshotReferencesSaved, "Before Screenshot References Saved").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.AfterScreenshotReferencesSaved, "After Screenshot References Saved").Description);
             listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.SystemTrayIconDoubleClick, "System Tray Icon Double Click").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.CaptureCycleElapsed, "Capture Cycle Elapsed").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.DurationFromStartScreenCapture, "Duration From Start Screen Capture").Description);
+            listBoxCondition.Items.Add(new TriggerCondition(TriggerConditionType.DurationFromStopScreenCapture, "Duration From Stop Screen Capture").Description);
 
             listBoxCondition.SelectedIndex = 0;
         }
@@ -556,6 +569,10 @@ namespace AutoScreenCapture
             dateTimePickerTime.Enabled = false;
             comboBoxDay.Enabled = false;
 
+            labelDuration.Enabled = false;
+            numericUpDownDuration.Enabled = false;
+            comboBoxDuration.Enabled = false;
+
             if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DateTime)
             {
                 labelDate.Enabled = true;
@@ -576,6 +593,14 @@ namespace AutoScreenCapture
                 labelTime.Enabled = true;
                 dateTimePickerTime.Enabled = true;
                 comboBoxDay.Enabled = true;
+            }
+
+            if (listBoxCondition.SelectedIndex == (int)TriggerConditionType.DurationFromStartScreenCapture ||
+                listBoxCondition.SelectedIndex == (int)TriggerConditionType.DurationFromStopScreenCapture)
+            {
+                labelDuration.Enabled = true;
+                numericUpDownDuration.Enabled = true;
+                comboBoxDuration.Enabled = true;
             }
         }
 
@@ -807,6 +832,21 @@ namespace AutoScreenCapture
                 case 15:
                     textBoxConditionHelp.Text = "When you double-click on the system tray icon.";
                     break;
+
+                // CaptureCycleElapsed
+                case 16:
+                    textBoxConditionHelp.Text = "When the capture cycle elapses.";
+                    break;
+
+                // DurationFromStartScreenCapture
+                case 17:
+                    textBoxConditionHelp.Text = "When a specified duration has been reached from starting a screen capture session.";
+                    break;
+
+                // DurationFromStopScreenCapture
+                case 18:
+                    textBoxConditionHelp.Text = "When a specified duration has been reached from stopping the currently running screen capture session.";
+                    break;
             }
         }
 
@@ -849,7 +889,7 @@ namespace AutoScreenCapture
 
                 // EmailScreenshot
                 case 6:
-                    textBoxActionHelp.Text = "Email screenshots using the configured email server settings.";
+                    textBoxActionHelp.Text = "Email a screenshot using the configured email server settings.";
                     break;
 
                 // SetScreenCaptureInterval
@@ -999,7 +1039,7 @@ namespace AutoScreenCapture
 
                 // DeleteScreenshotsFromOldestCaptureCycle
                 case 36:
-                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also use the After Screenshot Taken condition. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
+                    textBoxActionHelp.Text = "Delete screenshots from the oldest capture cycle. You can use this action to perform a rolling delete if you also use the Capture Cycle Elapsed condition. Run a screen capture session for a while first to define the required set of cycles and then trigger this action to start doing the rolling delete.";
                     break;
             }
         }

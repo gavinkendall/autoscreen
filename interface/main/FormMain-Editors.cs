@@ -142,7 +142,14 @@ namespace AutoScreenCapture
 
             _formEditor.EditorObject = editor;
 
-            _formEditor.ShowDialog(this);
+            if (!_formEditor.Visible)
+            {
+                _formEditor.ShowDialog(this);
+            }
+            else
+            {
+                _formEditor.Activate();
+            }
 
             if (_formEditor.DialogResult == DialogResult.OK)
             {

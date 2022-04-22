@@ -103,6 +103,21 @@ namespace AutoScreenCapture
         /// <summary>
         /// When the system tray icon is double-clicked.
         /// </summary>
-        SystemTrayIconDoubleClick = 15
+        SystemTrayIconDoubleClick = 15,
+
+        /// <summary>
+        /// When the capture cycle elapses.
+        /// </summary>
+        CaptureCycleElapsed = 16,
+
+        /// <summary>
+        /// When the duration from Start Screen Capture has been reached.
+        /// </summary>
+        DurationFromStartScreenCapture = 17,
+
+        /// <summary>
+        /// When the duration from Stop Screen Capture has been reached.
+        /// </summary>
+        DurationFromStopScreenCapture = 18
     }
 }

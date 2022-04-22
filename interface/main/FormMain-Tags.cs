@@ -115,7 +115,14 @@ namespace AutoScreenCapture
 
             _formMacroTag.MacroTagObject = macroTag;
 
-            _formMacroTag.ShowDialog(this);
+            if (!_formMacroTag.Visible)
+            {
+                _formMacroTag.ShowDialog(this);
+            }
+            else
+            {
+                _formMacroTag.Activate();
+            }
 
             if (_formMacroTag.DialogResult == DialogResult.OK)
             {
