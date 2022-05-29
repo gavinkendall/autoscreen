@@ -363,7 +363,8 @@ namespace AutoScreenCapture
                 !ScheduleObject.Saturday.Equals(checkBoxSaturday.Checked) ||
                 !ScheduleObject.Sunday.Equals(checkBoxSunday.Checked) ||
                 !ScheduleObject.Notes.Equals(textBoxNotes.Text) ||
-                !ScheduleObject.Scope.Equals(comboBoxScope.Text)))
+                !ScheduleObject.Scope.Equals(comboBoxScope.Text) ||
+                !ScheduleObject.Logic.Equals(comboBoxLogic.SelectedIndex)))
             {
                 return true;
             }
