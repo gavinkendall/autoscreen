@@ -120,6 +120,8 @@ namespace AutoScreenCapture
                     checkBoxWeekend.Checked = true;
                 }
 
+                comboBoxType.SelectedIndex = ScheduleObject.Type;
+
                 textBoxNotes.Text = ScheduleObject.Notes;
             }
             else
@@ -151,6 +153,8 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
                 dateTimePickerStopAt.Enabled = false;
+                labelType.Enabled = false;
+                comboBoxType.Enabled = false;
                 groupBoxInterval.Enabled = false;
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
@@ -158,6 +162,8 @@ namespace AutoScreenCapture
 
                 checkBoxWorkWeek.Checked = true;
                 checkBoxWeekend.Checked = false;
+
+                comboBoxType.SelectedIndex = 0;
 
                 textBoxNotes.Text = string.Empty;
             }
@@ -241,7 +247,8 @@ namespace AutoScreenCapture
                         Sunday = checkBoxSunday.Checked,
                         Notes = textBoxNotes.Text,
                         Scope = comboBoxScope.Text,
-                        CaptureNextIntervalStep = dateTimePickerStartAt.Value
+                        CaptureNextIntervalStep = dateTimePickerStartAt.Value,
+                        Type = comboBoxType.SelectedIndex
                     };
 
                     ScheduleCollection.Add(schedule);
@@ -300,6 +307,8 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).Scope = comboBoxScope.Text;
 
                         ScheduleCollection.Get(ScheduleObject).CaptureNextIntervalStep = dateTimePickerStartAt.Value;
+
+                        ScheduleCollection.Get(ScheduleObject).Type = comboBoxType.SelectedIndex;
 
                         Okay();
                     }
@@ -394,6 +403,8 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = false;
                 labelAnd.Enabled = false;
                 dateTimePickerStopAt.Enabled = false;
+                labelType.Enabled = false;
+                comboBoxType.Enabled = false;
                 groupBoxInterval.Enabled = false;
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
@@ -412,6 +423,8 @@ namespace AutoScreenCapture
                 dateTimePickerStartAt.Enabled = true;
                 labelAnd.Enabled = true;
                 dateTimePickerStopAt.Enabled = true;
+                labelType.Enabled = true;
+                comboBoxType.Enabled = true;
                 groupBoxInterval.Enabled = true;
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;

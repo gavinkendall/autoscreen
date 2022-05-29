@@ -108,6 +108,11 @@ namespace AutoScreenCapture
         public string Notes { get; set; }
 
         /// <summary>
+        /// The type of schedule.
+        /// </summary>
+        public int Type { get; set; }
+
+        /// <summary>
         /// The scope of which the schedule handles a screen capture (such as "All Screens and Regions", "All Screens", or "All Regions").
         /// </summary>
         public string Scope { get; set; }

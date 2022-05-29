@@ -116,23 +116,45 @@ namespace AutoScreenCapture
 
                         if (schedule.ModePeriod)
                         {
-                            if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                (dtNow.Minute == schedule.StopAt.Minute) &&
-                                (dtNow.Second == schedule.StopAt.Second))
+                            if (schedule.Type == 0)
                             {
-                                // Do not proceed. Simply continue to next iteration.
-                                continue;
+                                if ((dtNow.Hour == schedule.StartAt.Hour) &&
+                                (dtNow.Minute == schedule.StartAt.Minute) &&
+                                (dtNow.Second == schedule.StartAt.Second))
+                                {
+                                    StartScreenCapture(schedule.ScreenCaptureInterval);
+                                }
+
+                                if ((dtNow.Hour == schedule.StopAt.Hour) &&
+                                    (dtNow.Minute == schedule.StopAt.Minute) &&
+                                    (dtNow.Second == schedule.StopAt.Second))
+                                {
+                                    StopScreenCapture();
+                                }
                             }
 
-                            // The value of CaptureNextIntervalStep should have already been set as the start time when the schedule was created or changed.
-                            if ((dtNow.Hour == schedule.CaptureNextIntervalStep.Hour) &&
-                                (dtNow.Minute == schedule.CaptureNextIntervalStep.Minute) &&
-                                (dtNow.Second == schedule.CaptureNextIntervalStep.Second))
+                            if (schedule.Type == 1)
                             {
-                                TakeScreenshot(captureNow: true);
+                                if ((dtNow.Hour == schedule.StopAt.Hour) &&
+                                    (dtNow.Minute == schedule.StopAt.Minute) &&
+                                    (dtNow.Second == schedule.StopAt.Second))
+                                {
+                                    TakeScreenshot(captureNow: true);
 
-                                // Set the CaptureNextIntervalStep value based on the specified scheduled interval.
-                                schedule.CaptureNextIntervalStep = schedule.CaptureNextIntervalStep.AddMilliseconds(schedule.ScreenCaptureInterval);
+                                    // Do not proceed. Simply continue to next iteration.
+                                    continue;
+                                }
+
+                                // The value of CaptureNextIntervalStep should have already been set as the start time when the schedule was created or changed.
+                                if ((dtNow.Hour == schedule.CaptureNextIntervalStep.Hour) &&
+                                    (dtNow.Minute == schedule.CaptureNextIntervalStep.Minute) &&
+                                    (dtNow.Second == schedule.CaptureNextIntervalStep.Second))
+                                {
+                                    TakeScreenshot(captureNow: true);
+
+                                    // Set the CaptureNextIntervalStep value based on the specified scheduled interval.
+                                    schedule.CaptureNextIntervalStep = schedule.CaptureNextIntervalStep.AddMilliseconds(schedule.ScreenCaptureInterval);
+                                }
                             }
                         }
                     }
@@ -268,7 +290,7 @@ namespace AutoScreenCapture
                     // around the weird situation where an ApplicationStartup trigger needs to run after the command line options get parsed
                     // (and one of thse options might be -hide which needs to disable triggers using the ShowInterface action).
                     // For example we don't want any triggers showing the interface if we're starting the application with something like ...
-                    // autoscreen.exe -interval=00:00:05.000 -start -hide
+                    // autoscreen.exe -interval=00:00:05 -start -hide
                     _appStarted = false;
                 }
             }
@@ -286,8 +308,7 @@ namespace AutoScreenCapture
             _formSchedule.ScheduleObject = null;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)_formSetup.numericUpDownHoursInterval.Value,
-                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value,
-                        (int)_formSetup.numericUpDownMillisecondsInterval.Value);
+                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value, 0);
 
             _formSchedule.ScreenCaptureInterval = screenCaptureInterval;
 

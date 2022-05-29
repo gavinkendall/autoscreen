@@ -263,16 +263,12 @@ namespace AutoScreenCapture
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Seconds);
                 _log.WriteDebugMessage("Seconds = " + screenCaptureIntervalSeconds);
 
-                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(screenCaptureInterval)).Milliseconds);
-                _log.WriteDebugMessage("Milliseconds = " + screenCaptureIntervalMilliseconds);
-
                 // Setup
                 _formSetup = new FormSetup(_log, _security, _config, _fileSystem, _screenCapture, _formLabelSwitcher, _formScreen, _formRegion, _formMacroTag.MacroTagCollection, _macroParser, _screenshotCollection);
 
                 _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
-                _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 // Optimize Screen Capture
                 _formSetup.checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);

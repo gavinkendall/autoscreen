@@ -50,6 +50,7 @@ namespace AutoScreenCapture
         private const string SCHEDULE_SATURDAY = "saturday";
         private const string SCHEDULE_SUNDAY = "sunday";
         private const string SCHEDULE_NOTES = "notes";
+        private const string SCHEDULE_TYPE = "type";
         private const string SCHEDULE_SCOPE = "scope";
 
         private readonly string SCHEDULE_XPATH;
@@ -223,6 +224,11 @@ namespace AutoScreenCapture
                                     case SCHEDULE_NOTES:
                                         xReader.Read();
                                         schedule.Notes = xReader.Value;
+                                        break;
+
+                                    case SCHEDULE_TYPE:
+                                        xReader.Read();
+                                        schedule.Type = Convert.ToInt32(xReader.Value);
                                         break;
 
                                     case SCHEDULE_SCOPE:
@@ -482,6 +488,7 @@ namespace AutoScreenCapture
                         xWriter.WriteElementString(SCHEDULE_SATURDAY, schedule.Saturday.ToString());
                         xWriter.WriteElementString(SCHEDULE_SUNDAY, schedule.Sunday.ToString());
                         xWriter.WriteElementString(SCHEDULE_NOTES, schedule.Notes);
+                        xWriter.WriteElementString(SCHEDULE_TYPE, schedule.Type.ToString());
                         xWriter.WriteElementString(SCHEDULE_SCOPE, schedule.Scope);
 
                         xWriter.WriteEndElement();

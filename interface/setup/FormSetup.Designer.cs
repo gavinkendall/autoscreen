@@ -60,7 +60,6 @@
             this.radioButtonImageFormatEmf = new System.Windows.Forms.RadioButton();
             this.radioButtonImageFormatBmp = new System.Windows.Forms.RadioButton();
             this.tabPageInterval = new System.Windows.Forms.TabPage();
-            this.labelLimit = new System.Windows.Forms.Label();
             this.labelLimitHelp = new System.Windows.Forms.Label();
             this.labelInitialCaptureHelp = new System.Windows.Forms.Label();
             this.labelIntervalHelp = new System.Windows.Forms.Label();
@@ -70,12 +69,11 @@
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
             this.checkBoxCaptureLimit = new System.Windows.Forms.CheckBox();
             this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
-            this.labelMillisecondsInterval = new System.Windows.Forms.Label();
             this.numericUpDownSecondsInterval = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMillisecondsInterval = new System.Windows.Forms.NumericUpDown();
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.dataGridViewHashDictionary = new System.Windows.Forms.DataGridView();
             this.buttonRefreshHashDictionary = new System.Windows.Forms.Button();
             this.buttonClearHashDictionary = new System.Windows.Forms.Button();
             this.radioButtonCompareWithLastImage = new System.Windows.Forms.RadioButton();
@@ -154,7 +152,6 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.dataGridViewHashDictionary = new System.Windows.Forms.DataGridView();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -164,8 +161,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).BeginInit();
             this.tabPageOptimizeScreenCapture.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).BeginInit();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
@@ -173,7 +170,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -509,7 +505,6 @@
             // 
             // tabPageInterval
             // 
-            this.tabPageInterval.Controls.Add(this.labelLimit);
             this.tabPageInterval.Controls.Add(this.labelLimitHelp);
             this.tabPageInterval.Controls.Add(this.labelInitialCaptureHelp);
             this.tabPageInterval.Controls.Add(this.labelIntervalHelp);
@@ -519,9 +514,7 @@
             this.tabPageInterval.Controls.Add(this.numericUpDownHoursInterval);
             this.tabPageInterval.Controls.Add(this.checkBoxCaptureLimit);
             this.tabPageInterval.Controls.Add(this.numericUpDownMinutesInterval);
-            this.tabPageInterval.Controls.Add(this.labelMillisecondsInterval);
             this.tabPageInterval.Controls.Add(this.numericUpDownSecondsInterval);
-            this.tabPageInterval.Controls.Add(this.numericUpDownMillisecondsInterval);
             this.tabPageInterval.Controls.Add(this.labelMinutesInterval);
             this.tabPageInterval.Controls.Add(this.labelSecondsInterval);
             this.tabPageInterval.Location = new System.Drawing.Point(4, 22);
@@ -531,15 +524,6 @@
             this.tabPageInterval.TabIndex = 0;
             this.tabPageInterval.Text = "Interval";
             this.tabPageInterval.UseVisualStyleBackColor = true;
-            // 
-            // labelLimit
-            // 
-            this.labelLimit.AutoSize = true;
-            this.labelLimit.Location = new System.Drawing.Point(30, 206);
-            this.labelLimit.Name = "labelLimit";
-            this.labelLimit.Size = new System.Drawing.Size(31, 13);
-            this.labelLimit.TabIndex = 4;
-            this.labelLimit.Text = "Limit:";
             // 
             // labelLimitHelp
             // 
@@ -590,7 +574,7 @@
             // 
             // numericUpDownCaptureLimit
             // 
-            this.numericUpDownCaptureLimit.Location = new System.Drawing.Point(67, 204);
+            this.numericUpDownCaptureLimit.Location = new System.Drawing.Point(57, 205);
             this.numericUpDownCaptureLimit.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -619,9 +603,10 @@
             this.checkBoxCaptureLimit.AutoSize = true;
             this.checkBoxCaptureLimit.Location = new System.Drawing.Point(9, 206);
             this.checkBoxCaptureLimit.Name = "checkBoxCaptureLimit";
-            this.checkBoxCaptureLimit.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxCaptureLimit.Size = new System.Drawing.Size(50, 17);
             this.checkBoxCaptureLimit.TabIndex = 0;
             this.checkBoxCaptureLimit.TabStop = false;
+            this.checkBoxCaptureLimit.Text = "Limit:";
             this.checkBoxCaptureLimit.UseVisualStyleBackColor = true;
             // 
             // numericUpDownMinutesInterval
@@ -637,15 +622,6 @@
             this.numericUpDownMinutesInterval.TabIndex = 0;
             this.numericUpDownMinutesInterval.TabStop = false;
             // 
-            // labelMillisecondsInterval
-            // 
-            this.labelMillisecondsInterval.AutoSize = true;
-            this.labelMillisecondsInterval.Location = new System.Drawing.Point(444, 50);
-            this.labelMillisecondsInterval.Name = "labelMillisecondsInterval";
-            this.labelMillisecondsInterval.Size = new System.Drawing.Size(63, 13);
-            this.labelMillisecondsInterval.TabIndex = 0;
-            this.labelMillisecondsInterval.Text = "milliseconds";
-            // 
             // numericUpDownSecondsInterval
             // 
             this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(258, 48);
@@ -658,19 +634,6 @@
             this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownSecondsInterval.TabIndex = 0;
             this.numericUpDownSecondsInterval.TabStop = false;
-            // 
-            // numericUpDownMillisecondsInterval
-            // 
-            this.numericUpDownMillisecondsInterval.Location = new System.Drawing.Point(396, 48);
-            this.numericUpDownMillisecondsInterval.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numericUpDownMillisecondsInterval.Name = "numericUpDownMillisecondsInterval";
-            this.numericUpDownMillisecondsInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownMillisecondsInterval.TabIndex = 0;
-            this.numericUpDownMillisecondsInterval.TabStop = false;
             // 
             // labelMinutesInterval
             // 
@@ -706,6 +669,14 @@
             this.tabPageOptimizeScreenCapture.TabIndex = 6;
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewHashDictionary
+            // 
+            this.dataGridViewHashDictionary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewHashDictionary.Location = new System.Drawing.Point(6, 75);
+            this.dataGridViewHashDictionary.Name = "dataGridViewHashDictionary";
+            this.dataGridViewHashDictionary.Size = new System.Drawing.Size(665, 143);
+            this.dataGridViewHashDictionary.TabIndex = 6;
             // 
             // buttonRefreshHashDictionary
             // 
@@ -1547,14 +1518,6 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // dataGridViewHashDictionary
-            // 
-            this.dataGridViewHashDictionary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewHashDictionary.Location = new System.Drawing.Point(6, 75);
-            this.dataGridViewHashDictionary.Name = "dataGridViewHashDictionary";
-            this.dataGridViewHashDictionary.Size = new System.Drawing.Size(665, 143);
-            this.dataGridViewHashDictionary.TabIndex = 6;
-            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1586,9 +1549,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHoursInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMillisecondsInterval)).EndInit();
             this.tabPageOptimizeScreenCapture.ResumeLayout(false);
             this.tabPageOptimizeScreenCapture.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).EndInit();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
@@ -1601,7 +1564,6 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1615,7 +1577,6 @@
         private System.Windows.Forms.TabPage tabPageApplicationFocus;
         private System.Windows.Forms.TabPage tabPageSecurity;
         private System.Windows.Forms.TabPage tabPageKeyboardShortcuts;
-        private System.Windows.Forms.Label labelMillisecondsInterval;
         private System.Windows.Forms.Label labelSecondsInterval;
         private System.Windows.Forms.Label labelMinutesInterval;
         private System.Windows.Forms.Label labelHoursInterval;
@@ -1638,7 +1599,6 @@
         private System.Windows.Forms.Label labelIntervalHelp;
         private System.Windows.Forms.Label labelInitialCaptureHelp;
         private System.Windows.Forms.Label labelLimitHelp;
-        private System.Windows.Forms.Label labelLimit;
         private System.Windows.Forms.TabPage tabPageOptimizeScreenCapture;
         private System.Windows.Forms.Button buttonAddScreenshotLabelToList;
         private System.Windows.Forms.Label labelScreenshotLabel;
@@ -1697,11 +1657,6 @@
         /// The checkbox control for "Limit".
         /// </summary>
         public System.Windows.Forms.CheckBox checkBoxCaptureLimit;
-
-        /// <summary>
-        /// The numeric up/down control for "Milliseconds".
-        /// </summary>
-        public System.Windows.Forms.NumericUpDown numericUpDownMillisecondsInterval;
 
         /// <summary>
         /// The numeric up/down control for "Seconds".

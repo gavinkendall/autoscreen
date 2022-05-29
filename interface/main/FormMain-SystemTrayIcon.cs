@@ -228,8 +228,7 @@ namespace AutoScreenCapture
                 notifyIcon.Text = "Ready [" +
                     _formSetup.numericUpDownHoursInterval.Value.ToString("00") + ":" +
                     _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
-                    _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "." +
-                    _formSetup.numericUpDownMillisecondsInterval.Value.ToString("000") + "] " +
+                    _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "] " +
                     (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
                     (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
 

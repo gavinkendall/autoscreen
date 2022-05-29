@@ -214,12 +214,10 @@ namespace AutoScreenCapture
                     decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Hours);
                     decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Minutes);
                     decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Seconds);
-                    decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(trigger.ScreenCaptureInterval)).Milliseconds);
 
                     _formSetup.numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                     _formSetup.numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                     _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
-                    _formSetup.numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                     timerScreenCapture.Start();
                     break;

@@ -59,11 +59,12 @@
             this.numericUpDownMinutesInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownHoursInterval = new System.Windows.Forms.NumericUpDown();
             this.groupBoxInterval = new System.Windows.Forms.GroupBox();
-            this.labelSeconds = new System.Windows.Forms.Label();
             this.labelMinutes = new System.Windows.Forms.Label();
             this.labelHours = new System.Windows.Forms.Label();
             this.comboBoxScope = new System.Windows.Forms.ComboBox();
             this.labelScope = new System.Windows.Forms.Label();
+            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.labelType = new System.Windows.Forms.Label();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
@@ -75,7 +76,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(645, 419);
+            this.buttonCancel.Location = new System.Drawing.Point(583, 399);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
             this.buttonCancel.TabIndex = 30;
@@ -86,7 +87,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOK.Location = new System.Drawing.Point(540, 419);
+            this.buttonOK.Location = new System.Drawing.Point(478, 399);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
             this.buttonOK.TabIndex = 29;
@@ -99,7 +100,7 @@
             this.textBoxName.Location = new System.Drawing.Point(56, 32);
             this.textBoxName.MaxLength = 50;
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(557, 20);
+            this.textBoxName.Size = new System.Drawing.Size(431, 20);
             this.textBoxName.TabIndex = 2;
             // 
             // labelScheduleName
@@ -115,7 +116,7 @@
             // 
             this.checkBoxEnable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxEnable.AutoSize = true;
-            this.checkBoxEnable.Location = new System.Drawing.Point(688, 34);
+            this.checkBoxEnable.Location = new System.Drawing.Point(623, 34);
             this.checkBoxEnable.Name = "checkBoxEnable";
             this.checkBoxEnable.Size = new System.Drawing.Size(59, 17);
             this.checkBoxEnable.TabIndex = 3;
@@ -126,7 +127,7 @@
             // 
             this.dateTimePickerStartAt.CustomFormat = "HH:mm:ss";
             this.dateTimePickerStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStartAt.Location = new System.Drawing.Point(243, 110);
+            this.dateTimePickerStartAt.Location = new System.Drawing.Point(243, 166);
             this.dateTimePickerStartAt.Name = "dateTimePickerStartAt";
             this.dateTimePickerStartAt.ShowUpDown = true;
             this.dateTimePickerStartAt.Size = new System.Drawing.Size(68, 20);
@@ -136,7 +137,7 @@
             // 
             this.dateTimePickerStopAt.CustomFormat = "HH:mm:ss";
             this.dateTimePickerStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStopAt.Location = new System.Drawing.Point(403, 110);
+            this.dateTimePickerStopAt.Location = new System.Drawing.Point(403, 166);
             this.dateTimePickerStopAt.Name = "dateTimePickerStopAt";
             this.dateTimePickerStopAt.ShowUpDown = true;
             this.dateTimePickerStopAt.Size = new System.Drawing.Size(68, 20);
@@ -146,7 +147,7 @@
             // 
             this.radioButtonOneTime.AutoSize = true;
             this.radioButtonOneTime.Checked = true;
-            this.radioButtonOneTime.Location = new System.Drawing.Point(12, 75);
+            this.radioButtonOneTime.Location = new System.Drawing.Point(12, 131);
             this.radioButtonOneTime.Name = "radioButtonOneTime";
             this.radioButtonOneTime.Size = new System.Drawing.Size(71, 17);
             this.radioButtonOneTime.TabIndex = 4;
@@ -158,7 +159,7 @@
             // radioButtonPeriod
             // 
             this.radioButtonPeriod.AutoSize = true;
-            this.radioButtonPeriod.Location = new System.Drawing.Point(12, 111);
+            this.radioButtonPeriod.Location = new System.Drawing.Point(12, 167);
             this.radioButtonPeriod.Name = "radioButtonPeriod";
             this.radioButtonPeriod.Size = new System.Drawing.Size(55, 17);
             this.radioButtonPeriod.TabIndex = 7;
@@ -171,7 +172,7 @@
             // 
             this.dateTimePickerCaptureAt.CustomFormat = "HH:mm:ss";
             this.dateTimePickerCaptureAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerCaptureAt.Location = new System.Drawing.Point(243, 74);
+            this.dateTimePickerCaptureAt.Location = new System.Drawing.Point(243, 130);
             this.dateTimePickerCaptureAt.Name = "dateTimePickerCaptureAt";
             this.dateTimePickerCaptureAt.ShowUpDown = true;
             this.dateTimePickerCaptureAt.Size = new System.Drawing.Size(68, 20);
@@ -198,7 +199,7 @@
             this.groupBoxDays.Controls.Add(this.checkBoxWednesday);
             this.groupBoxDays.Controls.Add(this.checkBoxTuesday);
             this.groupBoxDays.Controls.Add(this.checkBoxMonday);
-            this.groupBoxDays.Location = new System.Drawing.Point(12, 136);
+            this.groupBoxDays.Location = new System.Drawing.Point(12, 58);
             this.groupBoxDays.Name = "groupBoxDays";
             this.groupBoxDays.Size = new System.Drawing.Size(475, 67);
             this.groupBoxDays.TabIndex = 17;
@@ -290,7 +291,7 @@
             // labelTakeScreenshotsOnce
             // 
             this.labelTakeScreenshotsOnce.AutoSize = true;
-            this.labelTakeScreenshotsOnce.Location = new System.Drawing.Point(101, 77);
+            this.labelTakeScreenshotsOnce.Location = new System.Drawing.Point(101, 133);
             this.labelTakeScreenshotsOnce.Name = "labelTakeScreenshotsOnce";
             this.labelTakeScreenshotsOnce.Size = new System.Drawing.Size(140, 13);
             this.labelTakeScreenshotsOnce.TabIndex = 5;
@@ -299,7 +300,7 @@
             // labelTakeScreenshotsPeriod
             // 
             this.labelTakeScreenshotsPeriod.AutoSize = true;
-            this.labelTakeScreenshotsPeriod.Location = new System.Drawing.Point(101, 113);
+            this.labelTakeScreenshotsPeriod.Location = new System.Drawing.Point(101, 169);
             this.labelTakeScreenshotsPeriod.Name = "labelTakeScreenshotsPeriod";
             this.labelTakeScreenshotsPeriod.Size = new System.Drawing.Size(141, 13);
             this.labelTakeScreenshotsPeriod.TabIndex = 8;
@@ -308,7 +309,7 @@
             // labelAnd
             // 
             this.labelAnd.AutoSize = true;
-            this.labelAnd.Location = new System.Drawing.Point(317, 113);
+            this.labelAnd.Location = new System.Drawing.Point(317, 169);
             this.labelAnd.Name = "labelAnd";
             this.labelAnd.Size = new System.Drawing.Size(80, 13);
             this.labelAnd.TabIndex = 10;
@@ -325,14 +326,14 @@
             this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelHelp.Location = new System.Drawing.Point(2, 4);
             this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(752, 17);
+            this.labelHelp.Size = new System.Drawing.Size(688, 17);
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelNotes
             // 
             this.labelNotes.AutoSize = true;
-            this.labelNotes.Location = new System.Drawing.Point(9, 206);
+            this.labelNotes.Location = new System.Drawing.Point(9, 239);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
             this.labelNotes.TabIndex = 27;
@@ -343,17 +344,17 @@
             this.textBoxNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNotes.Location = new System.Drawing.Point(9, 222);
+            this.textBoxNotes.Location = new System.Drawing.Point(9, 259);
             this.textBoxNotes.MaxLength = 500;
             this.textBoxNotes.Multiline = true;
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxNotes.Size = new System.Drawing.Size(735, 183);
+            this.textBoxNotes.Size = new System.Drawing.Size(673, 126);
             this.textBoxNotes.TabIndex = 28;
             // 
             // numericUpDownSecondsInterval
             // 
-            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(6, 75);
+            this.numericUpDownSecondsInterval.Location = new System.Drawing.Point(138, 24);
             this.numericUpDownSecondsInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -365,7 +366,7 @@
             // 
             // numericUpDownMinutesInterval
             // 
-            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(6, 49);
+            this.numericUpDownMinutesInterval.Location = new System.Drawing.Point(74, 24);
             this.numericUpDownMinutesInterval.Maximum = new decimal(new int[] {
             59,
             0,
@@ -377,7 +378,7 @@
             // 
             // numericUpDownHoursInterval
             // 
-            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(6, 23);
+            this.numericUpDownHoursInterval.Location = new System.Drawing.Point(10, 24);
             this.numericUpDownHoursInterval.Maximum = new decimal(new int[] {
             23,
             0,
@@ -391,64 +392,76 @@
             // 
             this.groupBoxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxInterval.Controls.Add(this.labelSeconds);
             this.groupBoxInterval.Controls.Add(this.labelMinutes);
             this.groupBoxInterval.Controls.Add(this.labelHours);
             this.groupBoxInterval.Controls.Add(this.numericUpDownHoursInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownMinutesInterval);
             this.groupBoxInterval.Controls.Add(this.numericUpDownSecondsInterval);
-            this.groupBoxInterval.Location = new System.Drawing.Point(493, 74);
+            this.groupBoxInterval.Location = new System.Drawing.Point(493, 166);
             this.groupBoxInterval.Name = "groupBoxInterval";
-            this.groupBoxInterval.Size = new System.Drawing.Size(120, 129);
+            this.groupBoxInterval.Size = new System.Drawing.Size(189, 56);
             this.groupBoxInterval.TabIndex = 31;
             this.groupBoxInterval.TabStop = false;
             this.groupBoxInterval.Text = "Interval";
             // 
-            // labelSeconds
-            // 
-            this.labelSeconds.AutoSize = true;
-            this.labelSeconds.Location = new System.Drawing.Point(54, 77);
-            this.labelSeconds.Name = "labelSeconds";
-            this.labelSeconds.Size = new System.Drawing.Size(47, 13);
-            this.labelSeconds.TabIndex = 19;
-            this.labelSeconds.Text = "seconds";
-            // 
             // labelMinutes
             // 
             this.labelMinutes.AutoSize = true;
-            this.labelMinutes.Location = new System.Drawing.Point(54, 51);
+            this.labelMinutes.Location = new System.Drawing.Point(122, 26);
             this.labelMinutes.Name = "labelMinutes";
-            this.labelMinutes.Size = new System.Drawing.Size(43, 13);
+            this.labelMinutes.Size = new System.Drawing.Size(10, 13);
             this.labelMinutes.TabIndex = 18;
-            this.labelMinutes.Text = "minutes";
+            this.labelMinutes.Text = ":";
             // 
             // labelHours
             // 
             this.labelHours.AutoSize = true;
-            this.labelHours.Location = new System.Drawing.Point(54, 25);
+            this.labelHours.Location = new System.Drawing.Point(58, 26);
             this.labelHours.Name = "labelHours";
-            this.labelHours.Size = new System.Drawing.Size(33, 13);
+            this.labelHours.Size = new System.Drawing.Size(10, 13);
             this.labelHours.TabIndex = 17;
-            this.labelHours.Text = "hours";
+            this.labelHours.Text = ":";
             // 
             // comboBoxScope
             // 
             this.comboBoxScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxScope.FormattingEnabled = true;
-            this.comboBoxScope.Location = new System.Drawing.Point(619, 182);
+            this.comboBoxScope.Location = new System.Drawing.Point(491, 75);
             this.comboBoxScope.Name = "comboBoxScope";
-            this.comboBoxScope.Size = new System.Drawing.Size(125, 21);
+            this.comboBoxScope.Size = new System.Drawing.Size(189, 21);
             this.comboBoxScope.TabIndex = 32;
             this.comboBoxScope.TabStop = false;
             // 
             // labelScope
             // 
             this.labelScope.AutoSize = true;
-            this.labelScope.Location = new System.Drawing.Point(619, 166);
+            this.labelScope.Location = new System.Drawing.Point(493, 58);
             this.labelScope.Name = "labelScope";
             this.labelScope.Size = new System.Drawing.Size(41, 13);
             this.labelScope.TabIndex = 33;
             this.labelScope.Text = "Scope:";
+            // 
+            // comboBoxType
+            // 
+            this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxType.FormattingEnabled = true;
+            this.comboBoxType.Items.AddRange(new object[] {
+            "Schedule controls main timer and overrides main interval",
+            "Schedule acts independently and can overlap other schedules"});
+            this.comboBoxType.Location = new System.Drawing.Point(141, 201);
+            this.comboBoxType.Name = "comboBoxType";
+            this.comboBoxType.Size = new System.Drawing.Size(346, 21);
+            this.comboBoxType.TabIndex = 34;
+            this.comboBoxType.TabStop = false;
+            // 
+            // labelType
+            // 
+            this.labelType.AutoSize = true;
+            this.labelType.Location = new System.Drawing.Point(101, 204);
+            this.labelType.Name = "labelType";
+            this.labelType.Size = new System.Drawing.Size(34, 13);
+            this.labelType.TabIndex = 35;
+            this.labelType.Text = "Type:";
             // 
             // FormSchedule
             // 
@@ -456,7 +469,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(756, 454);
+            this.ClientSize = new System.Drawing.Size(692, 434);
+            this.Controls.Add(this.labelType);
+            this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.labelScope);
             this.Controls.Add(this.comboBoxScope);
             this.Controls.Add(this.groupBoxInterval);
@@ -466,7 +481,6 @@
             this.Controls.Add(this.labelAnd);
             this.Controls.Add(this.labelTakeScreenshotsPeriod);
             this.Controls.Add(this.labelTakeScreenshotsOnce);
-            this.Controls.Add(this.groupBoxDays);
             this.Controls.Add(this.dateTimePickerCaptureAt);
             this.Controls.Add(this.radioButtonPeriod);
             this.Controls.Add(this.radioButtonOneTime);
@@ -477,10 +491,11 @@
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.groupBoxDays);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(772, 493);
+            this.MinimumSize = new System.Drawing.Size(708, 473);
             this.Name = "FormSchedule";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormSchedule_Load);
@@ -529,10 +544,11 @@
         private System.Windows.Forms.NumericUpDown numericUpDownMinutesInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownHoursInterval;
         private System.Windows.Forms.GroupBox groupBoxInterval;
-        private System.Windows.Forms.Label labelSeconds;
         private System.Windows.Forms.Label labelMinutes;
         private System.Windows.Forms.Label labelHours;
         private System.Windows.Forms.ComboBox comboBoxScope;
         private System.Windows.Forms.Label labelScope;
+        private System.Windows.Forms.ComboBox comboBoxType;
+        private System.Windows.Forms.Label labelType;
     }
 }
