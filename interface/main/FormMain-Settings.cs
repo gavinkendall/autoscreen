@@ -113,7 +113,7 @@ namespace AutoScreenCapture
                 _formEmailSettings = new FormEmailSettings(_config, _fileSystem, _log);
                 _formFileTransferSettings = new FormFileTransferSettings(_config, _fileSystem, _log);
                 _formRegionSelectOptions = new FormRegionSelectOptions(_config, _fileSystem, _imageFormatCollection);
-                _formSchedule = new FormSchedule();
+                _formSchedule = new FormSchedule(_formScreen, _formRegion);
                 _formTrigger = new FormTrigger(_fileSystem);
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();

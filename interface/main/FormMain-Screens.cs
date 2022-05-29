@@ -155,44 +155,50 @@ namespace AutoScreenCapture
             {
                 foreach (Screen screen in _formScreen.ScreenCollection)
                 {
-                    if (screen.Enable)
+                    if (!string.IsNullOrEmpty(_screenCapture.Scope) &&
+                        (_screenCapture.Scope.Equals("All Screens and Regions") ||
+                        _screenCapture.Scope.Equals("All Screens") ||
+                        _screenCapture.Scope.Equals(screen.Name)))
                     {
-                        if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt) // Active Window
+                        if (screen.Enable)
                         {
-                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, autoAdapt: false, 0, 0, 0, 0, screen.ResolutionRatio, mouse: false, out Bitmap bitmap))
+                            if (screen.Source == 0 && screen.Component == 0 && !screen.AutoAdapt) // Active Window
                             {
-                                if (!SaveScreenshot(bitmap, screen))
+                                if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, autoAdapt: false, 0, 0, 0, 0, screen.ResolutionRatio, mouse: false, out Bitmap bitmap))
                                 {
-                                    continue;
+                                    if (!SaveScreenshot(bitmap, screen))
+                                    {
+                                        continue;
+                                    }
+                                }
+                                else
+                                {
+                                    _log.WriteDebugMessage($"No image was captured for active window {screen.Name}");
                                 }
                             }
-                            else
+                            else // Screen (regardless of how many displays there are)
                             {
-                                _log.WriteDebugMessage($"No image was captured for active window {screen.Name}");
-                            }
-                        }
-                        else // Screen (regardless of how many displays there are)
-                        {
-                            // Check to see if we need to get the position and size of whatever available screen is being used at this time.
-                            AutoAdapt(screen, out int x, out int y, out int width, out int height);
+                                // Check to see if we need to get the position and size of whatever available screen is being used at this time.
+                                AutoAdapt(screen, out int x, out int y, out int width, out int height);
 
-                            if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, screen.AutoAdapt,
-                                x,
-                                y,
-                                width,
-                                height,
-                                screen.ResolutionRatio,
-                                screen.Mouse,
-                                out Bitmap bitmap))
-                            {
-                                if (!SaveScreenshot(bitmap, screen))
+                                if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, screen.AutoAdapt,
+                                    x,
+                                    y,
+                                    width,
+                                    height,
+                                    screen.ResolutionRatio,
+                                    screen.Mouse,
+                                    out Bitmap bitmap))
                                 {
-                                    continue;
+                                    if (!SaveScreenshot(bitmap, screen))
+                                    {
+                                        continue;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                _log.WriteDebugMessage($"No image was captured for screen {screen.Name}");
+                                else
+                                {
+                                    _log.WriteDebugMessage($"No image was captured for screen {screen.Name}");
+                                }
                             }
                         }
                     }

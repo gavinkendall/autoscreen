@@ -180,18 +180,24 @@ namespace AutoScreenCapture
             {
                 foreach (Region region in _formRegion.RegionCollection)
                 {
-                    if (region.Enable)
+                    if (!string.IsNullOrEmpty(_screenCapture.Scope) &&
+                        (_screenCapture.Scope.Equals("All Screens and Regions") ||
+                        _screenCapture.Scope.Equals("All Regions") ||
+                        _screenCapture.Scope.Equals(region.Name)))
                     {
-                        if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 1, autoAdapt: false, region.X, region.Y, region.Width, region.Height, resolutionRatio: 100, region.Mouse, out Bitmap bitmap))
+                        if (region.Enable)
                         {
-                            if (!SaveScreenshot(bitmap, region))
+                            if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 1, autoAdapt: false, region.X, region.Y, region.Width, region.Height, resolutionRatio: 100, region.Mouse, out Bitmap bitmap))
                             {
-                                continue;
+                                if (!SaveScreenshot(bitmap, region))
+                                {
+                                    continue;
+                                }
                             }
-                        }
-                        else
-                        {
-                            _log.WriteDebugMessage($"No image was captured for region {region.Name}");
+                            else
+                            {
+                                _log.WriteDebugMessage($"No image was captured for region {region.Name}");
+                            }
                         }
                     }
                 }

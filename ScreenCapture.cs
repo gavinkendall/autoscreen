@@ -393,6 +393,11 @@ namespace AutoScreenCapture
         public bool CaptureNow { get; set; }
 
         /// <summary>
+        /// Defines the screen capture scope of what will be captured (such as "All Screens and Regions", "All Screens", or "All Regions").
+        /// </summary>
+        public string Scope { get; set; }
+
+        /// <summary>
         /// A class for handling screen capture methods.
         /// </summary>
         public ScreenCapture(Config config, FileSystem fileSystem, Log log)
@@ -403,6 +408,8 @@ namespace AutoScreenCapture
 
             _dm = new DEVMODE();
             _device = new DeviceOptions();
+
+            Scope = "All Screens and Regions";
         }
 
         private ImageCodecInfo GetEncoderInfo(string mimeType)

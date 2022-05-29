@@ -58,7 +58,7 @@ namespace AutoScreenCapture
         public DateTime StopAt { get; set; }
 
         /// <summary>
-        /// The interval to use. This overrides the main interval.
+        /// The interval to use.
         /// </summary>
         public int ScreenCaptureInterval { get; set; }
 
@@ -108,11 +108,22 @@ namespace AutoScreenCapture
         public string Notes { get; set; }
 
         /// <summary>
+        /// The scope of which the schedule handles a screen capture (such as "All Screens and Regions", "All Screens", or "All Regions").
+        /// </summary>
+        public string Scope { get; set; }
+
+        /// <summary>
+        /// The time when screenshots should be taken at the next scheduled interval step.
+        /// </summary>
+        public DateTime CaptureNextIntervalStep { get; set; }
+
+        /// <summary>
         /// An empty constructor for a new schedule.
         /// </summary>
         public Schedule()
         {
             Notes = string.Empty;
+            Scope = string.Empty;
         }
     }
 }

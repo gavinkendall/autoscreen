@@ -865,7 +865,7 @@ namespace AutoScreenCapture
 
                 // Schedules
                 case 3:
-                    labelModuleHelp.Text = "Create a schedule to take screenshots at a particular time or between a start time and an end time on certain days of the week. Each schedule can also have its own screen capture interval.";
+                    labelModuleHelp.Text = "Create a schedule to take screenshots at a particular time or between a start time and an end time on certain days of the week. Each schedule has its own screen capture interval and scope.";
                     break;
 
                 // Macro Tags

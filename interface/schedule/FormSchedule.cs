@@ -28,6 +28,9 @@ namespace AutoScreenCapture
     /// </summary>
     public partial class FormSchedule : Form
     {
+        private FormScreen _formScreen;
+        private FormRegion _formRegion;
+
         private DataConvert _dataConvert;
 
         private ToolTip _toolTip = new ToolTip();
@@ -50,9 +53,12 @@ namespace AutoScreenCapture
         /// <summary>
         /// Empty constructor.
         /// </summary>
-        public FormSchedule()
+        public FormSchedule(FormScreen formScreen, FormRegion formRegion)
         {
             InitializeComponent();
+
+            _formScreen = formScreen;
+            _formRegion = formRegion;
 
             _dataConvert = new DataConvert();
             ScheduleCollection = new ScheduleCollection();
@@ -86,12 +92,10 @@ namespace AutoScreenCapture
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Hours);
                 decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Minutes);
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Seconds);
-                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScheduleObject.ScreenCaptureInterval)).Milliseconds);
 
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
-                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 checkBoxMonday.Checked = ScheduleObject.Monday;
                 checkBoxTuesday.Checked = ScheduleObject.Tuesday;
@@ -132,12 +136,10 @@ namespace AutoScreenCapture
                 decimal screenCaptureIntervalHours = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Hours);
                 decimal screenCaptureIntervalMinutes = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Minutes);
                 decimal screenCaptureIntervalSeconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Seconds);
-                decimal screenCaptureIntervalMilliseconds = Convert.ToDecimal(TimeSpan.FromMilliseconds(Convert.ToDouble(ScreenCaptureInterval)).Milliseconds);
 
                 numericUpDownHoursInterval.Value = screenCaptureIntervalHours;
                 numericUpDownMinutesInterval.Value = screenCaptureIntervalMinutes;
                 numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
-                numericUpDownMillisecondsInterval.Value = screenCaptureIntervalMilliseconds;
 
                 radioButtonOneTime.Checked = true;
                 radioButtonPeriod.Checked = false;
@@ -153,12 +155,37 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
-                numericUpDownMillisecondsInterval.Enabled = false;
 
                 checkBoxWorkWeek.Checked = true;
                 checkBoxWeekend.Checked = false;
 
                 textBoxNotes.Text = string.Empty;
+            }
+        }
+
+        private void FormSchedule_Shown(object sender, EventArgs e)
+        {
+            comboBoxScope.Items.Clear();
+
+            comboBoxScope.Items.Add("All Screens and Regions");
+            comboBoxScope.Items.Add("All Screens");
+            comboBoxScope.Items.Add("All Regions");
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                comboBoxScope.Items.Add(screen.Name);
+            }
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                comboBoxScope.Items.Add(region.Name);
+            }
+
+            comboBoxScope.SelectedIndex = 0;
+
+            if (ScheduleObject != null && !string.IsNullOrEmpty(ScheduleObject.Scope) && comboBoxScope.Items.Contains(ScheduleObject.Scope))
+            {
+                comboBoxScope.SelectedIndex = comboBoxScope.Items.IndexOf(ScheduleObject.Scope);
             }
         }
 
@@ -193,8 +220,7 @@ namespace AutoScreenCapture
                 if (ScheduleCollection.GetByName(textBoxName.Text) == null)
                 {
                     int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                        (int)numericUpDownMillisecondsInterval.Value);
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, 0);
 
                     Schedule schedule = new Schedule()
                     {
@@ -213,7 +239,9 @@ namespace AutoScreenCapture
                         Friday = checkBoxFriday.Checked,
                         Saturday = checkBoxSaturday.Checked,
                         Sunday = checkBoxSunday.Checked,
-                        Notes = textBoxNotes.Text
+                        Notes = textBoxNotes.Text,
+                        Scope = comboBoxScope.Text,
+                        CaptureNextIntervalStep = dateTimePickerStartAt.Value
                     };
 
                     ScheduleCollection.Add(schedule);
@@ -257,8 +285,7 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerStopAt.Value;
 
                         int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                            (int)numericUpDownMillisecondsInterval.Value);
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, 0);
 
                         ScheduleCollection.Get(ScheduleObject).ScreenCaptureInterval = screenCaptureInterval;
 
@@ -270,6 +297,9 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).Saturday = checkBoxSaturday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Sunday = checkBoxSunday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Notes = textBoxNotes.Text;
+                        ScheduleCollection.Get(ScheduleObject).Scope = comboBoxScope.Text;
+
+                        ScheduleCollection.Get(ScheduleObject).CaptureNextIntervalStep = dateTimePickerStartAt.Value;
 
                         Okay();
                     }
@@ -311,8 +341,7 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value,
-                            (int)numericUpDownMillisecondsInterval.Value);
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, 0);
 
             if (ScheduleObject != null &&
                 (!ScheduleObject.Enable.Equals(checkBoxEnable.Checked) ||
@@ -327,7 +356,8 @@ namespace AutoScreenCapture
                 !ScheduleObject.Friday.Equals(checkBoxFriday.Checked) ||
                 !ScheduleObject.Saturday.Equals(checkBoxSaturday.Checked) ||
                 !ScheduleObject.Sunday.Equals(checkBoxSunday.Checked) ||
-                !ScheduleObject.Notes.Equals(textBoxNotes.Text)))
+                !ScheduleObject.Notes.Equals(textBoxNotes.Text) ||
+                !ScheduleObject.Scope.Equals(comboBoxScope.Text)))
             {
                 return true;
             }
@@ -368,7 +398,6 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
-                numericUpDownMillisecondsInterval.Enabled = false;
             }
         }
 
@@ -387,7 +416,6 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
-                numericUpDownMillisecondsInterval.Enabled = true;
             }
         }
 

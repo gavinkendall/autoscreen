@@ -108,6 +108,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Takes a screenshot of each available region and screen.
         /// </summary>
+        /// /// <param name="captureNow">Determines if screen capture should occur immediately.</param>
         private void TakeScreenshot(bool captureNow)
         {
             // Test to see if we can get images of the screen before continuing.

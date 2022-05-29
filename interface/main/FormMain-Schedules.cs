@@ -94,6 +94,8 @@ namespace AutoScreenCapture
                         continue;
                     }
 
+                    _screenCapture.Scope = schedule.Scope;
+
                     if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
                         (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
                         (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
@@ -114,18 +116,23 @@ namespace AutoScreenCapture
 
                         if (schedule.ModePeriod)
                         {
-                            if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                (dtNow.Minute == schedule.StartAt.Minute) &&
-                                (dtNow.Second == schedule.StartAt.Second))
-                            {
-                                StartScreenCapture(schedule.ScreenCaptureInterval);
-                            }
-
                             if ((dtNow.Hour == schedule.StopAt.Hour) &&
                                 (dtNow.Minute == schedule.StopAt.Minute) &&
                                 (dtNow.Second == schedule.StopAt.Second))
                             {
-                                StopScreenCapture();
+                                // Do not proceed. Simply continue to next iteration.
+                                continue;
+                            }
+
+                            // The value of CaptureNextIntervalStep should have already been set as the start time when the schedule was created or changed.
+                            if ((dtNow.Hour == schedule.CaptureNextIntervalStep.Hour) &&
+                                (dtNow.Minute == schedule.CaptureNextIntervalStep.Minute) &&
+                                (dtNow.Second == schedule.CaptureNextIntervalStep.Second))
+                            {
+                                TakeScreenshot(captureNow: true);
+
+                                // Set the CaptureNextIntervalStep value based on the specified scheduled interval.
+                                schedule.CaptureNextIntervalStep = schedule.CaptureNextIntervalStep.AddMilliseconds(schedule.ScreenCaptureInterval);
                             }
                         }
                     }
