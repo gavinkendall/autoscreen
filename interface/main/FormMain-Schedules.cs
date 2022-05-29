@@ -135,6 +135,11 @@ namespace AutoScreenCapture
 
                             if (schedule.Type == 1)
                             {
+                                if (schedule.CaptureNextIntervalStep < schedule.StartAt)
+                                {
+                                    schedule.CaptureNextIntervalStep = schedule.StartAt;
+                                }
+
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
                                     (dtNow.Minute == schedule.StopAt.Minute) &&
                                     (dtNow.Second == schedule.StopAt.Second))
@@ -145,14 +150,12 @@ namespace AutoScreenCapture
                                     continue;
                                 }
 
-                                // The value of CaptureNextIntervalStep should have already been set as the start time when the schedule was created or changed.
                                 if ((dtNow.Hour == schedule.CaptureNextIntervalStep.Hour) &&
                                     (dtNow.Minute == schedule.CaptureNextIntervalStep.Minute) &&
                                     (dtNow.Second == schedule.CaptureNextIntervalStep.Second))
                                 {
                                     TakeScreenshot(captureNow: true);
 
-                                    // Set the CaptureNextIntervalStep value based on the specified scheduled interval.
                                     schedule.CaptureNextIntervalStep = schedule.CaptureNextIntervalStep.AddMilliseconds(schedule.ScreenCaptureInterval);
                                 }
                             }

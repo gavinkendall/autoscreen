@@ -247,7 +247,6 @@ namespace AutoScreenCapture
                         Sunday = checkBoxSunday.Checked,
                         Notes = textBoxNotes.Text,
                         Scope = comboBoxScope.Text,
-                        CaptureNextIntervalStep = dateTimePickerStartAt.Value,
                         Type = comboBoxType.SelectedIndex
                     };
 
@@ -303,11 +302,9 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).Friday = checkBoxFriday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Saturday = checkBoxSaturday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Sunday = checkBoxSunday.Checked;
+
                         ScheduleCollection.Get(ScheduleObject).Notes = textBoxNotes.Text;
                         ScheduleCollection.Get(ScheduleObject).Scope = comboBoxScope.Text;
-
-                        ScheduleCollection.Get(ScheduleObject).CaptureNextIntervalStep = dateTimePickerStartAt.Value;
-
                         ScheduleCollection.Get(ScheduleObject).Type = comboBoxType.SelectedIndex;
 
                         Okay();
