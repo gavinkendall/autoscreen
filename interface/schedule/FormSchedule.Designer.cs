@@ -63,7 +63,7 @@
             this.labelHours = new System.Windows.Forms.Label();
             this.comboBoxScope = new System.Windows.Forms.ComboBox();
             this.labelScope = new System.Windows.Forms.Label();
-            this.comboBoxType = new System.Windows.Forms.ComboBox();
+            this.comboBoxLogic = new System.Windows.Forms.ComboBox();
             this.labelLogic = new System.Windows.Forms.Label();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
@@ -443,16 +443,16 @@
             // 
             // comboBoxType
             // 
-            this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxType.FormattingEnabled = true;
-            this.comboBoxType.Items.AddRange(new object[] {
+            this.comboBoxLogic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxLogic.FormattingEnabled = true;
+            this.comboBoxLogic.Items.AddRange(new object[] {
             "Schedule controls main timer and overrides main interval",
             "Schedule acts independently and can overlap other schedules"});
-            this.comboBoxType.Location = new System.Drawing.Point(143, 201);
-            this.comboBoxType.Name = "comboBoxType";
-            this.comboBoxType.Size = new System.Drawing.Size(344, 21);
-            this.comboBoxType.TabIndex = 34;
-            this.comboBoxType.TabStop = false;
+            this.comboBoxLogic.Location = new System.Drawing.Point(143, 201);
+            this.comboBoxLogic.Name = "comboBoxType";
+            this.comboBoxLogic.Size = new System.Drawing.Size(344, 21);
+            this.comboBoxLogic.TabIndex = 34;
+            this.comboBoxLogic.TabStop = false;
             // 
             // labelLogic
             // 
@@ -471,7 +471,7 @@
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(692, 434);
             this.Controls.Add(this.labelLogic);
-            this.Controls.Add(this.comboBoxType);
+            this.Controls.Add(this.comboBoxLogic);
             this.Controls.Add(this.labelScope);
             this.Controls.Add(this.comboBoxScope);
             this.Controls.Add(this.groupBoxInterval);
@@ -548,7 +548,7 @@
         private System.Windows.Forms.Label labelHours;
         private System.Windows.Forms.ComboBox comboBoxScope;
         private System.Windows.Forms.Label labelScope;
-        private System.Windows.Forms.ComboBox comboBoxType;
+        private System.Windows.Forms.ComboBox comboBoxLogic;
         private System.Windows.Forms.Label labelLogic;
     }
 }
