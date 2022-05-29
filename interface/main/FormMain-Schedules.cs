@@ -119,8 +119,8 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 0)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                (dtNow.Minute == schedule.StartAt.Minute) &&
-                                (dtNow.Second == schedule.StartAt.Second))
+                                    (dtNow.Minute == schedule.StartAt.Minute) &&
+                                    (dtNow.Second == schedule.StartAt.Second))
                                 {
                                     StartScreenCapture(schedule.ScreenCaptureInterval);
                                 }
@@ -154,9 +154,9 @@ namespace AutoScreenCapture
                                     (dtNow.Minute == schedule.CaptureNextIntervalStep.Minute) &&
                                     (dtNow.Second == schedule.CaptureNextIntervalStep.Second))
                                 {
-                                    TakeScreenshot(captureNow: true);
-
                                     schedule.CaptureNextIntervalStep = schedule.CaptureNextIntervalStep.AddMilliseconds(schedule.ScreenCaptureInterval);
+
+                                    TakeScreenshot(captureNow: true);
                                 }
                             }
                         }

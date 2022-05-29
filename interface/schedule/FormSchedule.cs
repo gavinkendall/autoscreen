@@ -308,8 +308,6 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).Scope = comboBoxScope.Text;
                         ScheduleCollection.Get(ScheduleObject).Logic = comboBoxLogic.SelectedIndex;
 
-                        ScheduleCollection.Get(ScheduleObject).CaptureNextIntervalStep = dateTimePickerStartAt.Value;
-
                         Okay();
                     }
                 }
