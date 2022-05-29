@@ -65,6 +65,7 @@
             this.labelScope = new System.Windows.Forms.Label();
             this.comboBoxLogic = new System.Windows.Forms.ComboBox();
             this.labelLogic = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
@@ -441,7 +442,7 @@
             this.labelScope.TabIndex = 33;
             this.labelScope.Text = "Scope:";
             // 
-            // comboBoxType
+            // comboBoxLogic
             // 
             this.comboBoxLogic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLogic.FormattingEnabled = true;
@@ -449,7 +450,7 @@
             "Schedule controls main timer and overrides main interval",
             "Schedule acts independently and can overlap other schedules"});
             this.comboBoxLogic.Location = new System.Drawing.Point(143, 201);
-            this.comboBoxLogic.Name = "comboBoxType";
+            this.comboBoxLogic.Name = "comboBoxLogic";
             this.comboBoxLogic.Size = new System.Drawing.Size(344, 21);
             this.comboBoxLogic.TabIndex = 34;
             this.comboBoxLogic.TabStop = false;
@@ -463,6 +464,15 @@
             this.labelLogic.TabIndex = 35;
             this.labelLogic.Text = "Logic:";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(32, 399);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "label1";
+            // 
             // FormSchedule
             // 
             this.AcceptButton = this.buttonOK;
@@ -470,6 +480,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(692, 434);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.labelLogic);
             this.Controls.Add(this.comboBoxLogic);
             this.Controls.Add(this.labelScope);
@@ -550,5 +561,6 @@
         private System.Windows.Forms.Label labelScope;
         private System.Windows.Forms.ComboBox comboBoxLogic;
         private System.Windows.Forms.Label labelLogic;
+        private System.Windows.Forms.Label label1;
     }
 }
