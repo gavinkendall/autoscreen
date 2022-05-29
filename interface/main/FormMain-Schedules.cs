@@ -116,7 +116,7 @@ namespace AutoScreenCapture
 
                         if (schedule.ModePeriod)
                         {
-                            if (schedule.Type == 0)
+                            if (schedule.Logic == 0)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
                                 (dtNow.Minute == schedule.StartAt.Minute) &&
@@ -133,7 +133,7 @@ namespace AutoScreenCapture
                                 }
                             }
 
-                            if (schedule.Type == 1)
+                            if (schedule.Logic == 1)
                             {
                                 if (schedule.CaptureNextIntervalStep < schedule.StartAt)
                                 {
