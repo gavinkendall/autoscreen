@@ -7,5 +7,4 @@ bin/
 obj/
 packages/
 images/Thumbs.db
-build/autoscreen.exe
-build/AutoScreenCaptureSetup.msi
+build/
