@@ -295,7 +295,19 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void ScheduleTimer_Tick(object sender, EventArgs e)
         {
-            TakeScreenshot(captureNow: true);
+            if (sender.GetType().Equals(typeof(Timer)))
+            {
+                Timer timer = (Timer)sender;
+
+                if (timer.Tag != null && timer.Tag.GetType().Equals(typeof(Schedule)))
+                {
+                    Schedule schedule = (Schedule)timer.Tag;
+
+                    _screenCapture.Scope = schedule.Scope;
+
+                    TakeScreenshot(captureNow: true);
+                }
+            }
         }
 
         private void addSchedule_Click(object sender, EventArgs e)
@@ -323,6 +335,7 @@ namespace AutoScreenCapture
                 if (_formSchedule.ScheduleObject != null)
                 {
                     // Initialize the Tick event but keep it disabled for now.
+                    _formSchedule.ScheduleObject.Timer.Tag = _formSchedule.ScheduleObject;
                     _formSchedule.ScheduleObject.Timer.Enabled = false;
                     _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
                 }

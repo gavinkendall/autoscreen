@@ -212,6 +212,7 @@ namespace AutoScreenCapture
                 // and acts independently from the main timer (depending on the logic chosen for the schedule).
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
+                    schedule.Timer.Tag = schedule;
                     schedule.Timer.Enabled = false;
                     schedule.Timer.Tick += ScheduleTimer_Tick;
                 }
