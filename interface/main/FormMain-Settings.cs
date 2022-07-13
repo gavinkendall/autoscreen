@@ -207,6 +207,15 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Building screenshot preview context menu");
                 BuildScreenshotPreviewContextualMenu();
 
+                // Add the ScheduleTimer_Tick event to each schedule.
+                // This ensures that each schedule can run on its own interval when taking screenshots
+                // and acts independently from the main timer (depending on the logic chosen for the schedule).
+                foreach (Schedule schedule in _formSchedule.ScheduleCollection)
+                {
+                    schedule.Timer.Enabled = false;
+                    schedule.Timer.Tick += ScheduleTimer_Tick;
+                }
+
                 // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
                 tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
 

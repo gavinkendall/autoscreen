@@ -33,6 +33,11 @@ namespace AutoScreenCapture
         public string Name { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public System.Windows.Forms.Timer Timer { get; set; }
+
+        /// <summary>
         /// Determines if we are taking screenshots only once using CaptureAt.
         /// </summary>
         public bool ModeOneTime { get; set; }
@@ -118,17 +123,15 @@ namespace AutoScreenCapture
         public string Scope { get; set; }
 
         /// <summary>
-        /// The time when screenshots should be taken at the next scheduled interval step.
-        /// </summary>
-        public DateTime CaptureNextIntervalStep { get; set; }
-
-        /// <summary>
         /// An empty constructor for a new schedule.
         /// </summary>
         public Schedule()
         {
             Notes = string.Empty;
             Scope = string.Empty;
+
+            Timer = new System.Windows.Forms.Timer();
+            Timer.Enabled = false;
         }
     }
 }

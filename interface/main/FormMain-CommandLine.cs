@@ -55,17 +55,17 @@ namespace AutoScreenCapture
         /// <summary>
         /// Regex for parsing the -captureat command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_CAPTUREAT = @"^-captureat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+        internal const string REGEX_COMMAND_LINE_CAPTUREAT = @"^-captureat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.4.2.4 to maintain backwards compatibility with older versions
 
         /// <summary>
         /// Regex for parsing the -stopat command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+        internal const string REGEX_COMMAND_LINE_STOPAT = @"^-stopat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.4.2.4 to maintain backwards compatibility with older versions
 
         /// <summary>
         /// Regex for parsing the -startat command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+        internal const string REGEX_COMMAND_LINE_STARTAT = @"^-startat=(?<Hours>\d{2}):(?<Minutes>\d{2})(:(?<Seconds>\d{2}))?$"; // Seconds became optional with 2.4.2.4 to maintain backwards compatibility with older versions
 
         /// <summary>
         /// Regex for parsing the -interval command.
@@ -521,49 +521,46 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    // -startat=hh:mm:ss
+                    // -startat=hh:mm
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STARTAT))
                     {
                         _screenCapture.AutoStartFromCommandLine = false;
 
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STARTAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.SpecialScheduleEnabled = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleActivated = true;
                         _formSchedule.ScheduleCollection.SpecialScheduleModeOneTime = false;
                         _formSchedule.ScheduleCollection.SpecialScheduleModePeriod = true;
-                        _formSchedule.ScheduleCollection.SpecialScheduleStartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+                        _formSchedule.ScheduleCollection.SpecialScheduleStartAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
                     }
 
-                    // -stopat=hh:mm:ss
+                    // -stopat=hh:mm
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_STOPAT))
                     {
                         _screenCapture.AutoStartFromCommandLine = false;
 
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_STOPAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.SpecialScheduleEnabled = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleActivated = true;
                         _formSchedule.ScheduleCollection.SpecialScheduleModeOneTime = false;
                         _formSchedule.ScheduleCollection.SpecialScheduleModePeriod = true;
-                        _formSchedule.ScheduleCollection.SpecialScheduleStopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+                        _formSchedule.ScheduleCollection.SpecialScheduleStopAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
                     }
 
-                    // -captureat=hh:mm:ss
+                    // -captureat=hh:mm
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_CAPTUREAT))
                     {
                         _screenCapture.AutoStartFromCommandLine = false;
 
                         int hours = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Hours"].Value);
                         int minutes = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Minutes"].Value);
-                        int seconds = Convert.ToInt32(Regex.Match(arg, REGEX_COMMAND_LINE_CAPTUREAT).Groups["Seconds"].Value);
 
-                        _formSchedule.ScheduleCollection.SpecialScheduleEnabled = true;
+                        _formSchedule.ScheduleCollection.SpecialScheduleActivated = true;
                         _formSchedule.ScheduleCollection.SpecialScheduleModeOneTime = true;
                         _formSchedule.ScheduleCollection.SpecialScheduleModePeriod = false;
-                        _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, seconds);
+                        _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
                     }
 
                     // -activeWindowTitle="x"

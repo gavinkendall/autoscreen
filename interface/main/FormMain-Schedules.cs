@@ -52,36 +52,33 @@ namespace AutoScreenCapture
                 ShowInfo();
 
                 // Special Schedule
-                if (_formSchedule.ScheduleCollection.SpecialScheduleEnabled)
+                if (_formSchedule.ScheduleCollection.SpecialScheduleActivated)
                 {
                     if (_formSchedule.ScheduleCollection.SpecialScheduleModeOneTime)
                     {
                         if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Hour) &&
-                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Minute) &&
-                            (dtNow.Second == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Second))
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleCaptureAt.Minute))
                         {
                             TakeScreenshot(captureNow: true);
 
-                            _formSchedule.ScheduleCollection.SpecialScheduleEnabled = false;
+                            _formSchedule.ScheduleCollection.SpecialScheduleActivated = false;
                         }
                     }
 
                     if (_formSchedule.ScheduleCollection.SpecialScheduleModePeriod)
                     {
                         if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Hour) &&
-                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Minute) &&
-                            (dtNow.Second == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Second))
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStartAt.Minute))
                         {
                             StartScreenCapture(_formSchedule.ScheduleCollection.SpecialScheduleScreenCaptureInterval);
                         }
 
                         if ((dtNow.Hour == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Hour) &&
-                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Minute) &&
-                            (dtNow.Second == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Second))
+                            (dtNow.Minute == _formSchedule.ScheduleCollection.SpecialScheduleStopAt.Minute))
                         {
                             StopScreenCapture();
 
-                            _formSchedule.ScheduleCollection.SpecialScheduleEnabled = false;
+                            _formSchedule.ScheduleCollection.SpecialScheduleActivated = false;
                         }
                     }
                 }
@@ -107,8 +104,7 @@ namespace AutoScreenCapture
                         if (schedule.ModeOneTime)
                         {
                             if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
-                                (dtNow.Minute == schedule.CaptureAt.Minute) &&
-                                (dtNow.Second == schedule.CaptureAt.Second))
+                                (dtNow.Minute == schedule.CaptureAt.Minute))
                             {
                                 TakeScreenshot(captureNow: true);
                             }
@@ -119,15 +115,13 @@ namespace AutoScreenCapture
                             if (schedule.Logic == 0)
                             {
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
-                                    (dtNow.Minute == schedule.StartAt.Minute) &&
-                                    (dtNow.Second == schedule.StartAt.Second))
+                                    (dtNow.Minute == schedule.StartAt.Minute))
                                 {
                                     StartScreenCapture(schedule.ScreenCaptureInterval);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute) &&
-                                    (dtNow.Second == schedule.StopAt.Second))
+                                    (dtNow.Minute == schedule.StopAt.Minute))
                                 {
                                     StopScreenCapture();
                                 }
@@ -135,28 +129,18 @@ namespace AutoScreenCapture
 
                             if (schedule.Logic == 1)
                             {
-                                if (schedule.CaptureNextIntervalStep < schedule.StartAt)
+                                if ((dtNow.Hour == schedule.StartAt.Hour) &&
+                                    (dtNow.Minute == schedule.StartAt.Minute))
                                 {
-                                    schedule.CaptureNextIntervalStep = schedule.StartAt;
+                                    schedule.Timer.Enabled = true;
+                                    schedule.Timer.Start();
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
-                                    (dtNow.Minute == schedule.StopAt.Minute) &&
-                                    (dtNow.Second == schedule.StopAt.Second))
+                                    (dtNow.Minute == schedule.StopAt.Minute))
                                 {
-                                    TakeScreenshot(captureNow: true);
-
-                                    // Do not proceed. Simply continue to next iteration.
-                                    continue;
-                                }
-
-                                if ((dtNow.Hour == schedule.CaptureNextIntervalStep.Hour) &&
-                                    (dtNow.Minute == schedule.CaptureNextIntervalStep.Minute) &&
-                                    (dtNow.Second == schedule.CaptureNextIntervalStep.Second))
-                                {
-                                    schedule.CaptureNextIntervalStep = schedule.CaptureNextIntervalStep.AddMilliseconds(schedule.ScreenCaptureInterval);
-
-                                    TakeScreenshot(captureNow: true);
+                                    schedule.Timer.Stop();
+                                    schedule.Timer.Enabled = false;
                                 }
                             }
                         }
@@ -304,6 +288,16 @@ namespace AutoScreenCapture
             }
         }
 
+        /// <summary>
+        /// An event handler to take screenshots whenever a schedule's interval's "tick" has elapsed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScheduleTimer_Tick(object sender, EventArgs e)
+        {
+            TakeScreenshot(captureNow: true);
+        }
+
         private void addSchedule_Click(object sender, EventArgs e)
         {
             ShowInterface();
@@ -311,7 +305,7 @@ namespace AutoScreenCapture
             _formSchedule.ScheduleObject = null;
 
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)_formSetup.numericUpDownHoursInterval.Value,
-                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value, 0);
+                        (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value);
 
             _formSchedule.ScreenCaptureInterval = screenCaptureInterval;
 
@@ -326,6 +320,13 @@ namespace AutoScreenCapture
 
             if (_formSchedule.DialogResult == DialogResult.OK)
             {
+                if (_formSchedule.ScheduleObject != null)
+                {
+                    // Initialize the Tick event but keep it disabled for now.
+                    _formSchedule.ScheduleObject.Timer.Enabled = false;
+                    _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
+                }
+
                 BuildSchedulesModule();
 
                 if (!_formSchedule.ScheduleCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log))

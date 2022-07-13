@@ -26,16 +26,15 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
-        /// Converts the given hours, minutes, seconds, and milliseconds into an aggregate milliseconds value.
+        /// Converts the given hours, minutes, and seconds into an aggregate milliseconds value.
         /// </summary>
         /// <param name="hours">The number of hours to be converted.</param>
         /// <param name="minutes">The number of minutes to be converted.</param>
         /// <param name="seconds">The number of seconds to be converted.</param>
-        /// <param name="milliseconds">The number of milliseconds to be converted.</param>
-        /// <returns></returns>
-        private int ConvertIntoMilliseconds(int hours, int minutes, int seconds, int milliseconds)
+        /// <returns>An integer representing milliseconds.</returns>
+        private int ConvertIntoMilliseconds(int hours, int minutes, int seconds)
         {
-            return _dataConvert.ConvertIntoMilliseconds(hours, minutes, seconds, milliseconds);
+            return _dataConvert.ConvertIntoMilliseconds(hours, minutes, seconds);
         }
 
         /// <summary>

@@ -62,9 +62,9 @@ namespace AutoScreenCapture
         // These are used for the -startat, -stopat, and -captureat command line options.
 
         /// <summary>
-        /// Determines if the Special Schedule is enabled.
+        /// Determines if the Special Schedule is activated.
         /// </summary>
-        public bool SpecialScheduleEnabled { get; set; }
+        public bool SpecialScheduleActivated { get; set; }
 
         /// <summary>
         /// Determines if we're doing a single capture.

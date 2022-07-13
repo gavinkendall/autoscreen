@@ -226,7 +226,7 @@ namespace AutoScreenCapture
                 if (ScheduleCollection.GetByName(textBoxName.Text) == null)
                 {
                     int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, 0);
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
 
                     Schedule schedule = new Schedule()
                     {
@@ -247,11 +247,16 @@ namespace AutoScreenCapture
                         Sunday = checkBoxSunday.Checked,
                         Notes = textBoxNotes.Text,
                         Scope = comboBoxScope.Text,
-                        Logic = comboBoxLogic.SelectedIndex,
-                        CaptureNextIntervalStep = dateTimePickerStartAt.Value
+                        Logic = comboBoxLogic.SelectedIndex
                     };
 
+                    // Set the schedule's timer interval.
+                    schedule.Timer.Interval = screenCaptureInterval;
+
                     ScheduleCollection.Add(schedule);
+
+                    // Give the new schedule to ScheduleObject so we can deal with it in FormMain after this form closes.
+                    ScheduleObject = schedule;
 
                     Okay();
                 }
@@ -292,9 +297,13 @@ namespace AutoScreenCapture
                         ScheduleCollection.Get(ScheduleObject).StopAt = dateTimePickerStopAt.Value;
 
                         int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, 0);
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
 
                         ScheduleCollection.Get(ScheduleObject).ScreenCaptureInterval = screenCaptureInterval;
+
+                        // Set the schedule's timer interval.
+                        ScheduleCollection.Get(ScheduleObject).Timer.Interval = screenCaptureInterval;
+                        ScheduleCollection.Get(ScheduleObject).Timer.Enabled = true;
 
                         ScheduleCollection.Get(ScheduleObject).Monday = checkBoxMonday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Tuesday = checkBoxTuesday.Checked;
@@ -348,7 +357,7 @@ namespace AutoScreenCapture
         private bool InputChanged()
         {
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value, 0);
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
 
             if (ScheduleObject != null &&
                 (!ScheduleObject.Enable.Equals(checkBoxEnable.Checked) ||

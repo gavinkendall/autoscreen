@@ -126,22 +126,22 @@
             // 
             // dateTimePickerStartAt
             // 
-            this.dateTimePickerStartAt.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerStartAt.CustomFormat = "HH:mm";
             this.dateTimePickerStartAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStartAt.Location = new System.Drawing.Point(243, 166);
+            this.dateTimePickerStartAt.Location = new System.Drawing.Point(247, 166);
             this.dateTimePickerStartAt.Name = "dateTimePickerStartAt";
             this.dateTimePickerStartAt.ShowUpDown = true;
-            this.dateTimePickerStartAt.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerStartAt.Size = new System.Drawing.Size(51, 20);
             this.dateTimePickerStartAt.TabIndex = 9;
             // 
             // dateTimePickerStopAt
             // 
-            this.dateTimePickerStopAt.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerStopAt.CustomFormat = "HH:mm";
             this.dateTimePickerStopAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStopAt.Location = new System.Drawing.Point(403, 166);
+            this.dateTimePickerStopAt.Location = new System.Drawing.Point(398, 166);
             this.dateTimePickerStopAt.Name = "dateTimePickerStopAt";
             this.dateTimePickerStopAt.ShowUpDown = true;
-            this.dateTimePickerStopAt.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerStopAt.Size = new System.Drawing.Size(51, 20);
             this.dateTimePickerStopAt.TabIndex = 11;
             // 
             // radioButtonOneTime
@@ -171,12 +171,12 @@
             // 
             // dateTimePickerCaptureAt
             // 
-            this.dateTimePickerCaptureAt.CustomFormat = "HH:mm:ss";
+            this.dateTimePickerCaptureAt.CustomFormat = "HH:mm";
             this.dateTimePickerCaptureAt.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerCaptureAt.Location = new System.Drawing.Point(243, 130);
+            this.dateTimePickerCaptureAt.Location = new System.Drawing.Point(247, 130);
             this.dateTimePickerCaptureAt.Name = "dateTimePickerCaptureAt";
             this.dateTimePickerCaptureAt.ShowUpDown = true;
-            this.dateTimePickerCaptureAt.Size = new System.Drawing.Size(68, 20);
+            this.dateTimePickerCaptureAt.Size = new System.Drawing.Size(51, 20);
             this.dateTimePickerCaptureAt.TabIndex = 6;
             // 
             // checkBoxMonday
@@ -310,7 +310,7 @@
             // labelAnd
             // 
             this.labelAnd.AutoSize = true;
-            this.labelAnd.Location = new System.Drawing.Point(317, 169);
+            this.labelAnd.Location = new System.Drawing.Point(309, 169);
             this.labelAnd.Name = "labelAnd";
             this.labelAnd.Size = new System.Drawing.Size(80, 13);
             this.labelAnd.TabIndex = 10;

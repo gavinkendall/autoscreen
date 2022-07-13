@@ -36,7 +36,7 @@ namespace AutoScreenCapture
         private int GetScreenCaptureInterval()
         {
             return ConvertIntoMilliseconds((int)_formSetup.numericUpDownHoursInterval.Value,
-                (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value, 0);
+                (int)_formSetup.numericUpDownMinutesInterval.Value, (int)_formSetup.numericUpDownSecondsInterval.Value);
         }
 
         /// <summary>
@@ -107,8 +107,9 @@ namespace AutoScreenCapture
         /// <summary>
         /// Takes a screenshot of each available region and screen.
         /// </summary>
-        /// /// <param name="captureNow">Determines if screen capture should occur immediately.</param>
-        private void TakeScreenshot(bool captureNow)
+        /// <param name="captureNow">Determines if screen capture should occur immediately.</param>
+        /// <param name="initiatedByUser">Determines if the screen capture was initiated by the user.</param>
+        private void TakeScreenshot(bool captureNow = false, bool initiatedByUser = false)
         {
             // Test to see if we can get images of the screen before continuing.
             if (_screenCapture.GetScreenImages(0, 0, 0, autoAdapt: false, 0, 0, 0, 0, 0, false, out _))
@@ -119,7 +120,7 @@ namespace AutoScreenCapture
                 _screenCapture.CaptureNow = captureNow;
 
                 // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
-                if (captureNow)
+                if (captureNow && initiatedByUser)
                 {
                     _screenCapture.CountNow++;
                 }
@@ -233,7 +234,7 @@ namespace AutoScreenCapture
                     {
                         _log.WriteMessage("Taking initial screenshots");
 
-                        TakeScreenshot(captureNow: false);
+                        TakeScreenshot();
                     }
 
                     // Start taking screenshots.
@@ -261,53 +262,56 @@ namespace AutoScreenCapture
         {
             try
             {
-                _log.WriteMessage("Stopping screen capture");
-
-                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
-
-                if (!string.IsNullOrEmpty(passphrase))
+                if (_screenCapture.Running)
                 {
-                    _screenCapture.LockScreenCaptureSession = true;
+                    _log.WriteMessage("Stopping screen capture");
 
-                    if (!_formEnterPassphrase.Visible)
+                    string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+
+                    if (!string.IsNullOrEmpty(passphrase))
                     {
-                        _formEnterPassphrase.Text = "Auto Screen Capture - Enter Passphrase (Stop Screen Capture)";
-                        _formEnterPassphrase.ShowDialog(this);
-                    }
-                    else
-                    {
-                        _formEnterPassphrase.Activate();
+                        _screenCapture.LockScreenCaptureSession = true;
+
+                        if (!_formEnterPassphrase.Visible)
+                        {
+                            _formEnterPassphrase.Text = "Auto Screen Capture - Enter Passphrase (Stop Screen Capture)";
+                            _formEnterPassphrase.ShowDialog(this);
+                        }
+                        else
+                        {
+                            _formEnterPassphrase.Activate();
+                        }
+
+                        if (_formEnterPassphrase.DialogResult != DialogResult.OK)
+                        {
+                            _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot stop screen capture session. Screen capture session has been locked. Interface is now hidden");
+
+                            return;
+                        }
+
+                        _screenCapture.LockScreenCaptureSession = false;
                     }
 
-                    if (_formEnterPassphrase.DialogResult != DialogResult.OK)
-                    {
-                        _log.WriteErrorMessage("Passphrase incorrect or not entered. Cannot stop screen capture session. Screen capture session has been locked. Interface is now hidden");
+                    DisableStopCapture();
+                    EnableStartCapture();
 
-                        return;
-                    }
+                    dtStopScreenCapture = DateTime.Now;
 
-                    _screenCapture.LockScreenCaptureSession = false;
+                    _screenCapture.Count = 0;
+                    _screenCapture.Running = false;
+                    _screenCapture.DateTimePreviousCycle = DateTime.MinValue;
+
+                    timerScreenCapture.Stop();
+                    timerScreenCapture.Enabled = false;
+
+                    _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
+
+                    SearchFilterValues();
+                    SearchDates();
+
+                    _log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
+                    RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
                 }
-
-                DisableStopCapture();
-                EnableStartCapture();
-
-                dtStopScreenCapture = DateTime.Now;
-
-                _screenCapture.Count = 0;
-                _screenCapture.Running = false;
-                _screenCapture.DateTimePreviousCycle = DateTime.MinValue;
-
-                timerScreenCapture.Stop();
-                timerScreenCapture.Enabled = false;
-
-                _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
-
-                SearchFilterValues();
-                SearchDates();
-
-                _log.WriteDebugMessage("Running triggers of condition type ScreenCaptureStopped");
-                RunTriggersOfConditionType(TriggerConditionType.ScreenCaptureStopped);
             }
             catch (Exception ex)
             {
@@ -318,7 +322,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowArchive()
         {
-            TakeScreenshot(captureNow: true);
+            TakeScreenshot(captureNow: true, initiatedByUser: true);
         }
 
         private void CaptureNowEdit()
@@ -330,7 +334,7 @@ namespace AutoScreenCapture
                 return;
             }
 
-            TakeScreenshot(captureNow: true);
+            TakeScreenshot(captureNow: true, initiatedByUser: true);
 
             Editor editor = _formEditor.EditorCollection.GetByName(defaultEditor);
 
@@ -729,7 +733,7 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.Count < _screenCapture.Limit)
                     {
-                        TakeScreenshot(captureNow: false);
+                        TakeScreenshot();
                     }
 
                     if (_screenCapture.Count == _screenCapture.Limit)
@@ -743,7 +747,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    TakeScreenshot(captureNow: false);
+                    TakeScreenshot();
                 }
             }
             else

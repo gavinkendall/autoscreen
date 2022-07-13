@@ -125,7 +125,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Returns a string representation of a time in the format HH:mm:ss
+        /// Returns a string representation of a time in the format HH:mm
         /// </summary>
         public string TimeFormatForTrigger
         {
@@ -136,8 +136,6 @@ namespace AutoScreenCapture
                 sb.Append(HourFormat);
                 sb.Append(":");
                 sb.Append(MinuteFormat);
-                sb.Append(":");
-                sb.Append(SecondFormat);
 
                 return sb.ToString();
             }
