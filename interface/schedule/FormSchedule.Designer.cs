@@ -189,6 +189,7 @@
             this.checkBoxMonday.TabIndex = 6;
             this.checkBoxMonday.Text = "Monday";
             this.checkBoxMonday.UseVisualStyleBackColor = true;
+            this.checkBoxMonday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // groupBoxDays
             // 
@@ -239,6 +240,7 @@
             this.checkBoxSunday.TabIndex = 13;
             this.checkBoxSunday.Text = "Sunday";
             this.checkBoxSunday.UseVisualStyleBackColor = true;
+            this.checkBoxSunday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // checkBoxSaturday
             // 
@@ -249,6 +251,7 @@
             this.checkBoxSaturday.TabIndex = 12;
             this.checkBoxSaturday.Text = "Saturday";
             this.checkBoxSaturday.UseVisualStyleBackColor = true;
+            this.checkBoxSaturday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // checkBoxFriday
             // 
@@ -259,6 +262,7 @@
             this.checkBoxFriday.TabIndex = 10;
             this.checkBoxFriday.Text = "Friday";
             this.checkBoxFriday.UseVisualStyleBackColor = true;
+            this.checkBoxFriday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // checkBoxThursday
             // 
@@ -269,6 +273,7 @@
             this.checkBoxThursday.TabIndex = 9;
             this.checkBoxThursday.Text = "Thursday";
             this.checkBoxThursday.UseVisualStyleBackColor = true;
+            this.checkBoxThursday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // checkBoxWednesday
             // 
@@ -279,6 +284,7 @@
             this.checkBoxWednesday.TabIndex = 8;
             this.checkBoxWednesday.Text = "Wednesday";
             this.checkBoxWednesday.UseVisualStyleBackColor = true;
+            this.checkBoxWednesday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // checkBoxTuesday
             // 
@@ -289,6 +295,7 @@
             this.checkBoxTuesday.TabIndex = 7;
             this.checkBoxTuesday.Text = "Tuesday";
             this.checkBoxTuesday.UseVisualStyleBackColor = true;
+            this.checkBoxTuesday.CheckedChanged += new System.EventHandler(this.checkBoxAnyDay_CheckedChanged);
             // 
             // labelTakeScreenshotsOnce
             // 
@@ -432,6 +439,7 @@
             this.comboBoxScope.Name = "comboBoxScope";
             this.comboBoxScope.Size = new System.Drawing.Size(189, 21);
             this.comboBoxScope.TabIndex = 15;
+            this.comboBoxScope.SelectedIndexChanged += new System.EventHandler(this.comboBoxScope_SelectedIndexChanged);
             // 
             // labelScope
             // 
@@ -447,7 +455,7 @@
             this.comboBoxLogic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLogic.FormattingEnabled = true;
             this.comboBoxLogic.Items.AddRange(new object[] {
-            "Schedule controls main timer and overrides main interval",
+            "Schedule controls main timer and overrides interval and scope",
             "Schedule acts independently and can overlap other schedules"});
             this.comboBoxLogic.Location = new System.Drawing.Point(143, 201);
             this.comboBoxLogic.Name = "comboBoxLogic";
@@ -522,7 +530,6 @@
             this.Name = "FormSchedule";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FormSchedule_Load);
-            this.Shown += new System.EventHandler(this.FormSchedule_Shown);
             this.groupBoxDays.ResumeLayout(false);
             this.groupBoxDays.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
