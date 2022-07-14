@@ -91,8 +91,6 @@ namespace AutoScreenCapture
                         continue;
                     }
 
-                    _screenCapture.Scope = schedule.Scope;
-
                     if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
                         (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
                         (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
@@ -106,7 +104,7 @@ namespace AutoScreenCapture
                             if ((dtNow.Hour == schedule.CaptureAt.Hour) &&
                                 (dtNow.Minute == schedule.CaptureAt.Minute))
                             {
-                                TakeScreenshot(captureNow: true);
+                                TakeScreenshot(schedule.Scope, captureNow: true);
                             }
                         }
 
@@ -117,7 +115,7 @@ namespace AutoScreenCapture
                                 if ((dtNow.Hour == schedule.StartAt.Hour) &&
                                     (dtNow.Minute == schedule.StartAt.Minute))
                                 {
-                                    StartScreenCapture(schedule.ScreenCaptureInterval);
+                                    StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                                 }
 
                                 if ((dtNow.Hour == schedule.StopAt.Hour) &&
@@ -303,9 +301,7 @@ namespace AutoScreenCapture
                 {
                     Schedule schedule = (Schedule)timer.Tag;
 
-                    _screenCapture.Scope = schedule.Scope;
-
-                    TakeScreenshot(captureNow: true);
+                    TakeScreenshot(schedule.Scope, captureNow: true);
                 }
             }
         }

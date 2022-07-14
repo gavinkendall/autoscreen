@@ -107,9 +107,10 @@ namespace AutoScreenCapture
         /// <summary>
         /// Takes a screenshot of each available region and screen.
         /// </summary>
+        /// <param name="scope">Defines the screen capture scope of what will be captured (such as "All Screens and Regions", "All Screens", "All Regions", or the name of a Screen or Region).</param>
         /// <param name="captureNow">Determines if screen capture should occur immediately.</param>
         /// <param name="initiatedByUser">Determines if the screen capture was initiated by the user.</param>
-        private void TakeScreenshot(bool captureNow = false, bool initiatedByUser = false)
+        private void TakeScreenshot(string scope = "All Screens and Regions", bool captureNow = false, bool initiatedByUser = false)
         {
             // Test to see if we can get images of the screen before continuing.
             if (_screenCapture.GetScreenImages(0, 0, 0, autoAdapt: false, 0, 0, 0, 0, 0, false, out _))
@@ -153,9 +154,9 @@ namespace AutoScreenCapture
                     }
                 }
 
-                RunRegionCaptures();
+                RunRegionCaptures(scope);
 
-                RunScreenCaptures();
+                RunScreenCaptures(scope);
             }
 
             _log.WriteDebugMessage("Running triggers of condition type CaptureCycleElapsed");
@@ -166,18 +167,20 @@ namespace AutoScreenCapture
         /// <summary>
         /// Starts a screen capture session with the default screen capture interval.
         /// </summary>
-        private void StartScreenCapture()
+        /// <param name="scope">Defines the screen capture scope of what will be captured (such as "All Screens and Regions", "All Screens", "All Regions", or the name of a Screen or Region).</param>
+        private void StartScreenCapture(string scope = "All Screens and Regions")
         {
             int screenCaptureInterval = GetScreenCaptureInterval();
 
-            StartScreenCapture(screenCaptureInterval);
+            StartScreenCapture(screenCaptureInterval, scope);
         }
 
         /// <summary>
         /// Starts a screen capture session with a defined screen capture interval.
         /// </summary>
+        /// <param name="scope">Defines the screen capture scope of what will be captured (such as "All Screens and Regions", "All Screens", "All Regions", or the name of a Screen or Region).</param>
         /// <param name="screenCaptureInterval">The screen capture interval to use.</param>
-        private void StartScreenCapture(int screenCaptureInterval)
+        private void StartScreenCapture(int screenCaptureInterval, string scope = "All Screens and Regions")
         {
             try
             {

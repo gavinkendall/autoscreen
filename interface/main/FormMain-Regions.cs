@@ -174,16 +174,16 @@ namespace AutoScreenCapture
             }
         }
 
-        private void RunRegionCaptures()
+        private void RunRegionCaptures(string scope)
         {
             try
             {
                 foreach (Region region in _formRegion.RegionCollection)
                 {
-                    if (!string.IsNullOrEmpty(_screenCapture.Scope) &&
-                        (_screenCapture.Scope.Equals("All Screens and Regions") ||
-                        _screenCapture.Scope.Equals("All Regions") ||
-                        _screenCapture.Scope.Equals(region.Name)))
+                    if (!string.IsNullOrEmpty(scope) &&
+                        (scope.Equals("All Screens and Regions") ||
+                        scope.Equals("All Regions") ||
+                        scope.Equals(region.Name)))
                     {
                         if (region.Enable)
                         {

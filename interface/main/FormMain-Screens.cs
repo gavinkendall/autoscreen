@@ -149,16 +149,16 @@ namespace AutoScreenCapture
             }
         }
 
-        private void RunScreenCaptures()
+        private void RunScreenCaptures(string scope)
         {
             try
             {
                 foreach (Screen screen in _formScreen.ScreenCollection)
                 {
-                    if (!string.IsNullOrEmpty(_screenCapture.Scope) &&
-                        (_screenCapture.Scope.Equals("All Screens and Regions") ||
-                        _screenCapture.Scope.Equals("All Screens") ||
-                        _screenCapture.Scope.Equals(screen.Name)))
+                    if (!string.IsNullOrEmpty(scope) &&
+                        (scope.Equals("All Screens and Regions") ||
+                        scope.Equals("All Screens") ||
+                        scope.Equals(screen.Name)))
                     {
                         if (screen.Enable)
                         {
