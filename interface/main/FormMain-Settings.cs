@@ -118,6 +118,9 @@ namespace AutoScreenCapture
                 _formEnterPassphrase = new FormEnterPassphrase(_security, _config, _log);
                 _formScreenCaptureStatus = new FormScreenCaptureStatus();
 
+                // Event Handlers
+                _formSchedule.StartSchedule += _formSchedule_StartSchedule;
+                _formSchedule.StopSchedule += _formSchedule_StopSchedule;
                 _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click;
 
                 _log.WriteDebugMessage("Initializing email manager");

@@ -206,7 +206,7 @@
             // 
             this.labelTime.AutoSize = true;
             this.labelTime.Enabled = false;
-            this.labelTime.Location = new System.Drawing.Point(251, 459);
+            this.labelTime.Location = new System.Drawing.Point(241, 459);
             this.labelTime.Name = "labelTime";
             this.labelTime.Size = new System.Drawing.Size(33, 13);
             this.labelTime.TabIndex = 25;
@@ -269,11 +269,11 @@
             // 
             this.dateTimePickerTime.CustomFormat = "HH:mm";
             this.dateTimePickerTime.Enabled = false;
-            this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerTime.Location = new System.Drawing.Point(290, 455);
+            this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePickerTime.Location = new System.Drawing.Point(297, 455);
             this.dateTimePickerTime.Name = "dateTimePickerTime";
             this.dateTimePickerTime.ShowUpDown = true;
-            this.dateTimePickerTime.Size = new System.Drawing.Size(135, 20);
+            this.dateTimePickerTime.Size = new System.Drawing.Size(55, 20);
             this.dateTimePickerTime.TabIndex = 14;
             this.dateTimePickerTime.TabStop = false;
             // 
@@ -395,21 +395,21 @@
             // 
             // numericUpDownDuration
             // 
-            this.numericUpDownDuration.Location = new System.Drawing.Point(307, 429);
+            this.numericUpDownDuration.Location = new System.Drawing.Point(297, 429);
             this.numericUpDownDuration.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
             this.numericUpDownDuration.Name = "numericUpDownDuration";
-            this.numericUpDownDuration.Size = new System.Drawing.Size(45, 20);
+            this.numericUpDownDuration.Size = new System.Drawing.Size(55, 20);
             this.numericUpDownDuration.TabIndex = 28;
             this.numericUpDownDuration.TabStop = false;
             // 
             // labelDuration
             // 
             this.labelDuration.AutoSize = true;
-            this.labelDuration.Location = new System.Drawing.Point(251, 431);
+            this.labelDuration.Location = new System.Drawing.Point(241, 431);
             this.labelDuration.Name = "labelDuration";
             this.labelDuration.Size = new System.Drawing.Size(50, 13);
             this.labelDuration.TabIndex = 27;

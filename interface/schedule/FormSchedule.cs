@@ -51,6 +51,16 @@ namespace AutoScreenCapture
         public Schedule ScheduleObject { get; set; }
 
         /// <summary>
+        /// An event handler for handling the start schedule event.
+        /// </summary>
+        public event EventHandler StartSchedule;
+
+        /// <summary>
+        /// An event handler for handling the stop schedule event.
+        /// </summary>
+        public event EventHandler StopSchedule;
+
+        /// <summary>
         /// Empty constructor.
         /// </summary>
         public FormSchedule(FormScreen formScreen, FormRegion formRegion)
@@ -69,6 +79,9 @@ namespace AutoScreenCapture
             textBoxName.Focus();
 
             HelpMessage("This is where to configure a schedule to determine when screenshots should be taken");
+
+            buttonStartSchedule.Enabled = false;
+            buttonStopSchedule.Enabled = false;
 
             _toolTip.SetToolTip(checkBoxEnable, "The day and time values in this schedule will be considered if Enable is checked (turned on)");
             _toolTip.SetToolTip(dateTimePickerCaptureAt, "The time at which screenshots will be taken for a single capture cycle");
@@ -207,14 +220,52 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (ScheduleObject != null)
-            {
-                ChangeSchedule();
-            }
-            else
+            // We can't rely on ScheduleObject being null (or not being null)
+            // because we create a new ScheduleObject when the user wants to
+            // use "Period". So we have to check the form's title text.
+
+            if (Text.Equals("Add Schedule"))
             {
                 AddSchedule();
             }
+            else if (Text.Equals("Configure Schedule"))
+            {
+                ChangeSchedule();
+            }
+        }
+
+        private Schedule CreateScheduleObject()
+        {
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+
+            Schedule schedule = new Schedule()
+            {
+                Name = textBoxName.Text,
+                Enable = checkBoxEnable.Checked,
+                ModeOneTime = radioButtonOneTime.Checked,
+                ModePeriod = radioButtonPeriod.Checked,
+                CaptureAt = dateTimePickerCaptureAt.Value,
+                StartAt = dateTimePickerStartAt.Value,
+                StopAt = dateTimePickerStopAt.Value,
+                ScreenCaptureInterval = screenCaptureInterval,
+                Monday = checkBoxMonday.Checked,
+                Tuesday = checkBoxTuesday.Checked,
+                Wednesday = checkBoxWednesday.Checked,
+                Thursday = checkBoxThursday.Checked,
+                Friday = checkBoxFriday.Checked,
+                Saturday = checkBoxSaturday.Checked,
+                Sunday = checkBoxSunday.Checked,
+                Notes = textBoxNotes.Text,
+                Scope = comboBoxScope.Text,
+                Logic = comboBoxLogic.SelectedIndex
+            };
+
+            // Set the schedule's timer interval and make sure to not enable the timer until we're ready for it.
+            schedule.Timer.Interval = screenCaptureInterval;
+            schedule.Timer.Enabled = false;
+
+            return schedule;
         }
 
         private void AddSchedule()
@@ -225,34 +276,7 @@ namespace AutoScreenCapture
 
                 if (ScheduleCollection.GetByName(textBoxName.Text) == null)
                 {
-                    int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
-
-                    Schedule schedule = new Schedule()
-                    {
-                        Name = textBoxName.Text,
-                        Enable = checkBoxEnable.Checked,
-                        ModeOneTime = radioButtonOneTime.Checked,
-                        ModePeriod = radioButtonPeriod.Checked,
-                        CaptureAt = dateTimePickerCaptureAt.Value,
-                        StartAt = dateTimePickerStartAt.Value,
-                        StopAt = dateTimePickerStopAt.Value,
-                        ScreenCaptureInterval = screenCaptureInterval,
-                        Monday = checkBoxMonday.Checked,
-                        Tuesday = checkBoxTuesday.Checked,
-                        Wednesday = checkBoxWednesday.Checked,
-                        Thursday = checkBoxThursday.Checked,
-                        Friday = checkBoxFriday.Checked,
-                        Saturday = checkBoxSaturday.Checked,
-                        Sunday = checkBoxSunday.Checked,
-                        Notes = textBoxNotes.Text,
-                        Scope = comboBoxScope.Text,
-                        Logic = comboBoxLogic.SelectedIndex
-                    };
-
-                    // Set the schedule's timer interval and make sure to not enable the timer until we're ready for it.
-                    schedule.Timer.Interval = screenCaptureInterval;
-                    schedule.Timer.Enabled = false;
+                    Schedule schedule = CreateScheduleObject();
 
                     ScheduleCollection.Add(schedule);
 
@@ -418,6 +442,11 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = false;
                 numericUpDownMinutesInterval.Enabled = false;
                 numericUpDownSecondsInterval.Enabled = false;
+
+                StopSchedule.Invoke(sender, e);
+
+                buttonStartSchedule.Enabled = false;
+                buttonStopSchedule.Enabled = false;
             }
         }
 
@@ -438,6 +467,10 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
+
+                ScheduleObject = CreateScheduleObject();
+
+                CheckTimerEnabled();
             }
         }
 
@@ -472,6 +505,82 @@ namespace AutoScreenCapture
             {
                 checkBoxSaturday.Checked = false;
                 checkBoxSunday.Checked = false;
+            }
+        }
+
+        private void comboBoxLogic_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (comboBoxLogic.SelectedIndex == 1)
+            //{ 
+            //    if (ScheduleObject == null)
+            //    {
+            //        ScheduleObject = CreateScheduleObject();
+            //    }
+
+            //    CheckTimerEnabled();
+            //}
+            //else
+            //{
+            //    buttonStartSchedule.Enabled = false;
+            //    buttonStopSchedule.Enabled = false;
+            //}
+        }
+
+        private void buttonStartSchedule_Click(object sender, EventArgs e)
+        {
+            buttonStartSchedule.Enabled = false;
+            buttonStopSchedule.Enabled = true;
+
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+
+            if (comboBoxLogic.SelectedIndex == 0)
+            {
+                ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
+                ScheduleObject.Timer.Tag = null;
+            }
+            else if (comboBoxLogic.SelectedIndex == 1)
+            {
+                ScheduleObject.Timer.Interval = screenCaptureInterval;
+                ScheduleObject.Timer.Tag = ScheduleObject;
+                ScheduleObject.Enable = checkBoxEnable.Checked;
+                ScheduleObject.Scope = comboBoxScope.Text;                
+            }
+
+            StartSchedule.Invoke(sender, e);
+        }
+
+        private void buttonStopSchedule_Click(object sender, EventArgs e)
+        {
+            buttonStartSchedule.Enabled = true;
+            buttonStopSchedule.Enabled = false;
+
+            if (comboBoxLogic.SelectedIndex == 0)
+            {
+                ScheduleObject.Timer.Tag = null;
+            }
+            else if (comboBoxLogic.SelectedIndex == 1)
+            {
+                ScheduleObject.Timer.Tag = ScheduleObject;
+            }
+
+            StopSchedule.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Determines if we need the Start Schedule and Stop Schedule buttons enabled or not (based on the schedule's timer's Enabled property).
+        /// </summary>
+        public void CheckTimerEnabled()
+        {
+            if (ScheduleObject.Timer.Enabled)
+            {
+                buttonStartSchedule.Enabled = false;
+                buttonStopSchedule.Enabled = true;
+            }
+            else
+            {
+                buttonStartSchedule.Enabled = true;
+                buttonStopSchedule.Enabled = false;
             }
         }
     }

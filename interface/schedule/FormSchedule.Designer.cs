@@ -65,6 +65,8 @@
             this.labelScope = new System.Windows.Forms.Label();
             this.comboBoxLogic = new System.Windows.Forms.ComboBox();
             this.labelLogic = new System.Windows.Forms.Label();
+            this.buttonStartSchedule = new System.Windows.Forms.Button();
+            this.buttonStopSchedule = new System.Windows.Forms.Button();
             this.groupBoxDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
@@ -79,7 +81,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(583, 399);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(99, 23);
-            this.buttonCancel.TabIndex = 30;
+            this.buttonCancel.TabIndex = 37;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -90,7 +92,7 @@
             this.buttonOK.Location = new System.Drawing.Point(478, 399);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(99, 23);
-            this.buttonOK.TabIndex = 29;
+            this.buttonOK.TabIndex = 36;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -131,7 +133,7 @@
             this.dateTimePickerStartAt.Name = "dateTimePickerStartAt";
             this.dateTimePickerStartAt.ShowUpDown = true;
             this.dateTimePickerStartAt.Size = new System.Drawing.Size(51, 20);
-            this.dateTimePickerStartAt.TabIndex = 9;
+            this.dateTimePickerStartAt.TabIndex = 21;
             // 
             // dateTimePickerStopAt
             // 
@@ -141,7 +143,7 @@
             this.dateTimePickerStopAt.Name = "dateTimePickerStopAt";
             this.dateTimePickerStopAt.ShowUpDown = true;
             this.dateTimePickerStopAt.Size = new System.Drawing.Size(51, 20);
-            this.dateTimePickerStopAt.TabIndex = 11;
+            this.dateTimePickerStopAt.TabIndex = 23;
             // 
             // radioButtonOneTime
             // 
@@ -150,7 +152,7 @@
             this.radioButtonOneTime.Location = new System.Drawing.Point(12, 131);
             this.radioButtonOneTime.Name = "radioButtonOneTime";
             this.radioButtonOneTime.Size = new System.Drawing.Size(71, 17);
-            this.radioButtonOneTime.TabIndex = 4;
+            this.radioButtonOneTime.TabIndex = 16;
             this.radioButtonOneTime.TabStop = true;
             this.radioButtonOneTime.Text = "One Time";
             this.radioButtonOneTime.UseVisualStyleBackColor = true;
@@ -162,7 +164,7 @@
             this.radioButtonPeriod.Location = new System.Drawing.Point(12, 167);
             this.radioButtonPeriod.Name = "radioButtonPeriod";
             this.radioButtonPeriod.Size = new System.Drawing.Size(55, 17);
-            this.radioButtonPeriod.TabIndex = 7;
+            this.radioButtonPeriod.TabIndex = 19;
             this.radioButtonPeriod.TabStop = true;
             this.radioButtonPeriod.Text = "Period";
             this.radioButtonPeriod.UseVisualStyleBackColor = true;
@@ -176,7 +178,7 @@
             this.dateTimePickerCaptureAt.Name = "dateTimePickerCaptureAt";
             this.dateTimePickerCaptureAt.ShowUpDown = true;
             this.dateTimePickerCaptureAt.Size = new System.Drawing.Size(51, 20);
-            this.dateTimePickerCaptureAt.TabIndex = 6;
+            this.dateTimePickerCaptureAt.TabIndex = 18;
             // 
             // checkBoxMonday
             // 
@@ -184,7 +186,7 @@
             this.checkBoxMonday.Location = new System.Drawing.Point(100, 19);
             this.checkBoxMonday.Name = "checkBoxMonday";
             this.checkBoxMonday.Size = new System.Drawing.Size(64, 17);
-            this.checkBoxMonday.TabIndex = 19;
+            this.checkBoxMonday.TabIndex = 6;
             this.checkBoxMonday.Text = "Monday";
             this.checkBoxMonday.UseVisualStyleBackColor = true;
             // 
@@ -202,7 +204,7 @@
             this.groupBoxDays.Location = new System.Drawing.Point(12, 58);
             this.groupBoxDays.Name = "groupBoxDays";
             this.groupBoxDays.Size = new System.Drawing.Size(475, 67);
-            this.groupBoxDays.TabIndex = 17;
+            this.groupBoxDays.TabIndex = 4;
             this.groupBoxDays.TabStop = false;
             this.groupBoxDays.Text = "Days";
             // 
@@ -212,7 +214,7 @@
             this.checkBoxWeekend.Location = new System.Drawing.Point(10, 42);
             this.checkBoxWeekend.Name = "checkBoxWeekend";
             this.checkBoxWeekend.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxWeekend.TabIndex = 24;
+            this.checkBoxWeekend.TabIndex = 11;
             this.checkBoxWeekend.Text = "Weekend";
             this.checkBoxWeekend.UseVisualStyleBackColor = true;
             this.checkBoxWeekend.CheckedChanged += new System.EventHandler(this.checkBoxWeekend_CheckedChanged);
@@ -223,7 +225,7 @@
             this.checkBoxWorkWeek.Location = new System.Drawing.Point(10, 19);
             this.checkBoxWorkWeek.Name = "checkBoxWorkWeek";
             this.checkBoxWorkWeek.Size = new System.Drawing.Size(84, 17);
-            this.checkBoxWorkWeek.TabIndex = 18;
+            this.checkBoxWorkWeek.TabIndex = 5;
             this.checkBoxWorkWeek.Text = "Work Week";
             this.checkBoxWorkWeek.UseVisualStyleBackColor = true;
             this.checkBoxWorkWeek.CheckedChanged += new System.EventHandler(this.checkBoxWorkWeek_CheckedChanged);
@@ -234,7 +236,7 @@
             this.checkBoxSunday.Location = new System.Drawing.Point(170, 42);
             this.checkBoxSunday.Name = "checkBoxSunday";
             this.checkBoxSunday.Size = new System.Drawing.Size(62, 17);
-            this.checkBoxSunday.TabIndex = 26;
+            this.checkBoxSunday.TabIndex = 13;
             this.checkBoxSunday.Text = "Sunday";
             this.checkBoxSunday.UseVisualStyleBackColor = true;
             // 
@@ -244,7 +246,7 @@
             this.checkBoxSaturday.Location = new System.Drawing.Point(100, 42);
             this.checkBoxSaturday.Name = "checkBoxSaturday";
             this.checkBoxSaturday.Size = new System.Drawing.Size(68, 17);
-            this.checkBoxSaturday.TabIndex = 25;
+            this.checkBoxSaturday.TabIndex = 12;
             this.checkBoxSaturday.Text = "Saturday";
             this.checkBoxSaturday.UseVisualStyleBackColor = true;
             // 
@@ -254,7 +256,7 @@
             this.checkBoxFriday.Location = new System.Drawing.Point(408, 19);
             this.checkBoxFriday.Name = "checkBoxFriday";
             this.checkBoxFriday.Size = new System.Drawing.Size(54, 17);
-            this.checkBoxFriday.TabIndex = 23;
+            this.checkBoxFriday.TabIndex = 10;
             this.checkBoxFriday.Text = "Friday";
             this.checkBoxFriday.UseVisualStyleBackColor = true;
             // 
@@ -264,7 +266,7 @@
             this.checkBoxThursday.Location = new System.Drawing.Point(332, 19);
             this.checkBoxThursday.Name = "checkBoxThursday";
             this.checkBoxThursday.Size = new System.Drawing.Size(70, 17);
-            this.checkBoxThursday.TabIndex = 22;
+            this.checkBoxThursday.TabIndex = 9;
             this.checkBoxThursday.Text = "Thursday";
             this.checkBoxThursday.UseVisualStyleBackColor = true;
             // 
@@ -274,7 +276,7 @@
             this.checkBoxWednesday.Location = new System.Drawing.Point(243, 19);
             this.checkBoxWednesday.Name = "checkBoxWednesday";
             this.checkBoxWednesday.Size = new System.Drawing.Size(83, 17);
-            this.checkBoxWednesday.TabIndex = 21;
+            this.checkBoxWednesday.TabIndex = 8;
             this.checkBoxWednesday.Text = "Wednesday";
             this.checkBoxWednesday.UseVisualStyleBackColor = true;
             // 
@@ -284,7 +286,7 @@
             this.checkBoxTuesday.Location = new System.Drawing.Point(170, 19);
             this.checkBoxTuesday.Name = "checkBoxTuesday";
             this.checkBoxTuesday.Size = new System.Drawing.Size(67, 17);
-            this.checkBoxTuesday.TabIndex = 20;
+            this.checkBoxTuesday.TabIndex = 7;
             this.checkBoxTuesday.Text = "Tuesday";
             this.checkBoxTuesday.UseVisualStyleBackColor = true;
             // 
@@ -293,9 +295,9 @@
             this.labelTakeScreenshotsOnce.AutoSize = true;
             this.labelTakeScreenshotsOnce.Location = new System.Drawing.Point(101, 133);
             this.labelTakeScreenshotsOnce.Name = "labelTakeScreenshotsOnce";
-            this.labelTakeScreenshotsOnce.Size = new System.Drawing.Size(140, 13);
-            this.labelTakeScreenshotsOnce.TabIndex = 5;
-            this.labelTakeScreenshotsOnce.Text = "Take screenshots exactly at";
+            this.labelTakeScreenshotsOnce.Size = new System.Drawing.Size(131, 13);
+            this.labelTakeScreenshotsOnce.TabIndex = 17;
+            this.labelTakeScreenshotsOnce.Text = "Take screenshots once at";
             // 
             // labelTakeScreenshotsPeriod
             // 
@@ -303,7 +305,7 @@
             this.labelTakeScreenshotsPeriod.Location = new System.Drawing.Point(101, 169);
             this.labelTakeScreenshotsPeriod.Name = "labelTakeScreenshotsPeriod";
             this.labelTakeScreenshotsPeriod.Size = new System.Drawing.Size(141, 13);
-            this.labelTakeScreenshotsPeriod.TabIndex = 8;
+            this.labelTakeScreenshotsPeriod.TabIndex = 20;
             this.labelTakeScreenshotsPeriod.Text = "Take screenshots starting at";
             // 
             // labelAnd
@@ -312,7 +314,7 @@
             this.labelAnd.Location = new System.Drawing.Point(309, 169);
             this.labelAnd.Name = "labelAnd";
             this.labelAnd.Size = new System.Drawing.Size(80, 13);
-            this.labelAnd.TabIndex = 10;
+            this.labelAnd.TabIndex = 22;
             this.labelAnd.Text = "and stopping at";
             // 
             // labelHelp
@@ -336,7 +338,7 @@
             this.labelNotes.Location = new System.Drawing.Point(9, 239);
             this.labelNotes.Name = "labelNotes";
             this.labelNotes.Size = new System.Drawing.Size(38, 13);
-            this.labelNotes.TabIndex = 27;
+            this.labelNotes.TabIndex = 34;
             this.labelNotes.Text = "Notes:";
             // 
             // textBoxNotes
@@ -350,7 +352,7 @@
             this.textBoxNotes.Name = "textBoxNotes";
             this.textBoxNotes.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxNotes.Size = new System.Drawing.Size(673, 126);
-            this.textBoxNotes.TabIndex = 28;
+            this.textBoxNotes.TabIndex = 35;
             // 
             // numericUpDownSecondsInterval
             // 
@@ -362,7 +364,7 @@
             0});
             this.numericUpDownSecondsInterval.Name = "numericUpDownSecondsInterval";
             this.numericUpDownSecondsInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownSecondsInterval.TabIndex = 15;
+            this.numericUpDownSecondsInterval.TabIndex = 31;
             // 
             // numericUpDownMinutesInterval
             // 
@@ -374,7 +376,7 @@
             0});
             this.numericUpDownMinutesInterval.Name = "numericUpDownMinutesInterval";
             this.numericUpDownMinutesInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownMinutesInterval.TabIndex = 14;
+            this.numericUpDownMinutesInterval.TabIndex = 29;
             // 
             // numericUpDownHoursInterval
             // 
@@ -386,7 +388,7 @@
             0});
             this.numericUpDownHoursInterval.Name = "numericUpDownHoursInterval";
             this.numericUpDownHoursInterval.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDownHoursInterval.TabIndex = 13;
+            this.numericUpDownHoursInterval.TabIndex = 27;
             // 
             // groupBoxInterval
             // 
@@ -400,7 +402,7 @@
             this.groupBoxInterval.Location = new System.Drawing.Point(493, 166);
             this.groupBoxInterval.Name = "groupBoxInterval";
             this.groupBoxInterval.Size = new System.Drawing.Size(189, 56);
-            this.groupBoxInterval.TabIndex = 31;
+            this.groupBoxInterval.TabIndex = 26;
             this.groupBoxInterval.TabStop = false;
             this.groupBoxInterval.Text = "Interval";
             // 
@@ -410,7 +412,7 @@
             this.labelMinutes.Location = new System.Drawing.Point(122, 26);
             this.labelMinutes.Name = "labelMinutes";
             this.labelMinutes.Size = new System.Drawing.Size(10, 13);
-            this.labelMinutes.TabIndex = 18;
+            this.labelMinutes.TabIndex = 30;
             this.labelMinutes.Text = ":";
             // 
             // labelHours
@@ -419,7 +421,7 @@
             this.labelHours.Location = new System.Drawing.Point(58, 26);
             this.labelHours.Name = "labelHours";
             this.labelHours.Size = new System.Drawing.Size(10, 13);
-            this.labelHours.TabIndex = 17;
+            this.labelHours.TabIndex = 28;
             this.labelHours.Text = ":";
             // 
             // comboBoxScope
@@ -429,8 +431,7 @@
             this.comboBoxScope.Location = new System.Drawing.Point(491, 75);
             this.comboBoxScope.Name = "comboBoxScope";
             this.comboBoxScope.Size = new System.Drawing.Size(189, 21);
-            this.comboBoxScope.TabIndex = 32;
-            this.comboBoxScope.TabStop = false;
+            this.comboBoxScope.TabIndex = 15;
             // 
             // labelScope
             // 
@@ -438,7 +439,7 @@
             this.labelScope.Location = new System.Drawing.Point(493, 58);
             this.labelScope.Name = "labelScope";
             this.labelScope.Size = new System.Drawing.Size(41, 13);
-            this.labelScope.TabIndex = 33;
+            this.labelScope.TabIndex = 14;
             this.labelScope.Text = "Scope:";
             // 
             // comboBoxLogic
@@ -451,8 +452,8 @@
             this.comboBoxLogic.Location = new System.Drawing.Point(143, 201);
             this.comboBoxLogic.Name = "comboBoxLogic";
             this.comboBoxLogic.Size = new System.Drawing.Size(344, 21);
-            this.comboBoxLogic.TabIndex = 34;
-            this.comboBoxLogic.TabStop = false;
+            this.comboBoxLogic.TabIndex = 25;
+            this.comboBoxLogic.SelectedIndexChanged += new System.EventHandler(this.comboBoxLogic_SelectedIndexChanged);
             // 
             // labelLogic
             // 
@@ -460,14 +461,38 @@
             this.labelLogic.Location = new System.Drawing.Point(101, 204);
             this.labelLogic.Name = "labelLogic";
             this.labelLogic.Size = new System.Drawing.Size(36, 13);
-            this.labelLogic.TabIndex = 35;
+            this.labelLogic.TabIndex = 24;
             this.labelLogic.Text = "Logic:";
+            // 
+            // buttonStartSchedule
+            // 
+            this.buttonStartSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonStartSchedule.Location = new System.Drawing.Point(493, 228);
+            this.buttonStartSchedule.Name = "buttonStartSchedule";
+            this.buttonStartSchedule.Size = new System.Drawing.Size(90, 23);
+            this.buttonStartSchedule.TabIndex = 32;
+            this.buttonStartSchedule.Text = "Start Schedule";
+            this.buttonStartSchedule.UseVisualStyleBackColor = true;
+            this.buttonStartSchedule.Click += new System.EventHandler(this.buttonStartSchedule_Click);
+            // 
+            // buttonStopSchedule
+            // 
+            this.buttonStopSchedule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonStopSchedule.Location = new System.Drawing.Point(592, 228);
+            this.buttonStopSchedule.Name = "buttonStopSchedule";
+            this.buttonStopSchedule.Size = new System.Drawing.Size(90, 23);
+            this.buttonStopSchedule.TabIndex = 33;
+            this.buttonStopSchedule.Text = "Stop Schedule";
+            this.buttonStopSchedule.UseVisualStyleBackColor = true;
+            this.buttonStopSchedule.Click += new System.EventHandler(this.buttonStopSchedule_Click);
             // 
             // FormSchedule
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(692, 434);
+            this.Controls.Add(this.buttonStopSchedule);
+            this.Controls.Add(this.buttonStartSchedule);
             this.Controls.Add(this.labelLogic);
             this.Controls.Add(this.comboBoxLogic);
             this.Controls.Add(this.labelScope);
@@ -548,5 +573,7 @@
         private System.Windows.Forms.Label labelScope;
         private System.Windows.Forms.ComboBox comboBoxLogic;
         private System.Windows.Forms.Label labelLogic;
+        private System.Windows.Forms.Button buttonStartSchedule;
+        private System.Windows.Forms.Button buttonStopSchedule;
     }
 }

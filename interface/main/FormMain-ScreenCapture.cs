@@ -605,10 +605,10 @@ namespace AutoScreenCapture
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
         }
 
-        private void toolStripMenuItemRegionSelectNewRegion_Click(object sender, EventArgs e)
+        private void toolStripMenuItemRegionSelectAddRegion_Click(object sender, EventArgs e)
         {
             _formRegionSelectWithMouse = new FormRegionSelectWithMouse(_screenCapture);
-            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectNewRegionMouseSelectionCompleted;
+            _formRegionSelectWithMouse.MouseSelectionCompleted += _formRegionSelectWithMouse_RegionSelectAddRegionMouseSelectionCompleted;
             _formRegionSelectWithMouse.LoadCanvas(sendToClipboard: false);
         }
 
@@ -707,7 +707,12 @@ namespace AutoScreenCapture
             }
         }
 
-        private void _formRegionSelectWithMouse_RegionSelectNewRegionMouseSelectionCompleted(object sender, EventArgs e)
+        /// <summary>
+        /// The event method for "Region Select -> Add Region".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _formRegionSelectWithMouse_RegionSelectAddRegionMouseSelectionCompleted(object sender, EventArgs e)
         {
             Bitmap bitmap = GetBitmapFromRegionSelect();
 

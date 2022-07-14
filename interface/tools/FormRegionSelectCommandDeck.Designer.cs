@@ -34,7 +34,7 @@
             this.buttonRegionSelectClipboardAutoSaveEdit = new System.Windows.Forms.Button();
             this.buttonRegionSelectClipboardFloatingScreenshot = new System.Windows.Forms.Button();
             this.buttonRegionSelectFloatingScreenshot = new System.Windows.Forms.Button();
-            this.buttonRegionSelectNewRegion = new System.Windows.Forms.Button();
+            this.buttonRegionSelectAddRegion = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -93,16 +93,16 @@
             this.buttonRegionSelectFloatingScreenshot.UseVisualStyleBackColor = true;
             this.buttonRegionSelectFloatingScreenshot.Click += new System.EventHandler(this.buttonRegionSelectFloatingScreenshot_Click);
             // 
-            // buttonRegionSelectNewRegion
+            // buttonRegionSelectAddRegion
             // 
-            this.buttonRegionSelectNewRegion.Enabled = false;
-            this.buttonRegionSelectNewRegion.Location = new System.Drawing.Point(12, 206);
-            this.buttonRegionSelectNewRegion.Name = "buttonRegionSelectNewRegion";
-            this.buttonRegionSelectNewRegion.Size = new System.Drawing.Size(331, 23);
-            this.buttonRegionSelectNewRegion.TabIndex = 5;
-            this.buttonRegionSelectNewRegion.Text = "Region Select / New Region";
-            this.buttonRegionSelectNewRegion.UseVisualStyleBackColor = true;
-            this.buttonRegionSelectNewRegion.Click += new System.EventHandler(this.buttonRegionSelectNewRegion_Click);
+            this.buttonRegionSelectAddRegion.Enabled = false;
+            this.buttonRegionSelectAddRegion.Location = new System.Drawing.Point(12, 206);
+            this.buttonRegionSelectAddRegion.Name = "buttonRegionSelectAddRegion";
+            this.buttonRegionSelectAddRegion.Size = new System.Drawing.Size(331, 23);
+            this.buttonRegionSelectAddRegion.TabIndex = 5;
+            this.buttonRegionSelectAddRegion.Text = "Region Select / Add Region";
+            this.buttonRegionSelectAddRegion.UseVisualStyleBackColor = true;
+            this.buttonRegionSelectAddRegion.Click += new System.EventHandler(this.buttonRegionSelectNewRegion_Click);
             // 
             // label1
             // 
@@ -121,7 +121,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(355, 241);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonRegionSelectNewRegion);
+            this.Controls.Add(this.buttonRegionSelectAddRegion);
             this.Controls.Add(this.buttonRegionSelectFloatingScreenshot);
             this.Controls.Add(this.buttonRegionSelectClipboardFloatingScreenshot);
             this.Controls.Add(this.buttonRegionSelectClipboardAutoSaveEdit);
@@ -147,7 +147,7 @@
         private System.Windows.Forms.Button buttonRegionSelectClipboardAutoSaveEdit;
         private System.Windows.Forms.Button buttonRegionSelectClipboardFloatingScreenshot;
         private System.Windows.Forms.Button buttonRegionSelectFloatingScreenshot;
-        private System.Windows.Forms.Button buttonRegionSelectNewRegion;
+        private System.Windows.Forms.Button buttonRegionSelectAddRegion;
         private System.Windows.Forms.Label label1;
     }
 }

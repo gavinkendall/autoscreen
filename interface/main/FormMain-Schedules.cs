@@ -265,5 +265,43 @@ namespace AutoScreenCapture
                 }
             }
         }
+
+        private void _formSchedule_StartSchedule(object sender, EventArgs e)
+        {
+            if (_formSchedule.ScheduleObject != null)
+            {
+                if (_formSchedule.ScheduleObject.Timer.Tag == null)
+                {
+                    StartScreenCapture(_formSchedule.ScheduleObject.ScreenCaptureInterval, _formSchedule.ScheduleObject.Scope);
+                }
+                else
+                {
+                    _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
+                    _formSchedule.ScheduleObject.Timer.Enabled = true;
+                    _formSchedule.ScheduleObject.Timer.Start();
+
+                    _formSchedule.CheckTimerEnabled();
+                }
+            }
+        }
+
+        private void _formSchedule_StopSchedule(object sender, EventArgs e)
+        {
+            if (_formSchedule.ScheduleObject != null)
+            {
+                if (_formSchedule.ScheduleObject.Timer.Tag == null)
+                {
+                    StopScreenCapture();
+                }
+                else
+                {
+                    _formSchedule.ScheduleObject.Timer.Stop();
+                    _formSchedule.ScheduleObject.Timer.Enabled = false;
+                    _formSchedule.ScheduleObject.Timer.Tick -= ScheduleTimer_Tick;
+
+                    _formSchedule.CheckTimerEnabled();
+                }
+            }
+        }
     }
 }
