@@ -26,6 +26,151 @@ namespace AutoScreenCapture
     public partial class FormMain : Form
     {
         /// <summary>
+        /// The timer to check enabled Triggers.
+        /// This runs every second.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerTriggerCheck_Tick(object sender, EventArgs e)
+        {
+            DateTime dtNow = DateTime.Now;
+
+            // Process the list of triggers of condition type Date/Time, condition type Time, and condition type Day/Time.
+            foreach (Trigger trigger in _formTrigger.TriggerCollection)
+            {
+                if (!trigger.Enable)
+                {
+                    continue;
+                }
+
+                if (trigger.ConditionType == TriggerConditionType.DateTime &&
+                    trigger.Date.ToString(_macroParser.DateFormat).Equals(dtNow.ToString(_macroParser.DateFormat)) &&
+                    trigger.Time.ToString(_macroParser.TimeFormatForTrigger).Equals(dtNow.ToString(_macroParser.TimeFormatForTrigger)))
+                {
+                    DoTriggerAction(trigger);
+                }
+
+                if (trigger.ConditionType == TriggerConditionType.Time &&
+                    trigger.Time.ToString(_macroParser.TimeFormatForTrigger).Equals(dtNow.ToString(_macroParser.TimeFormatForTrigger)))
+                {
+                    DoTriggerAction(trigger);
+                }
+
+                if (trigger.ConditionType == TriggerConditionType.DayTime &&
+                    trigger.Time.ToString(_macroParser.TimeFormatForTrigger).Equals(dtNow.ToString(_macroParser.TimeFormatForTrigger)))
+                {
+                    if (trigger.Day.Equals(dtNow.DayOfWeek.ToString()))
+                    {
+                        DoTriggerAction(trigger);
+                    }
+
+                    if (trigger.Day.Equals("Weekday") && (dtNow.DayOfWeek == DayOfWeek.Monday ||
+                            dtNow.DayOfWeek == DayOfWeek.Tuesday ||
+                            dtNow.DayOfWeek == DayOfWeek.Wednesday ||
+                            dtNow.DayOfWeek == DayOfWeek.Thursday ||
+                            dtNow.DayOfWeek == DayOfWeek.Friday))
+                    {
+                        DoTriggerAction(trigger);
+                    }
+
+                    if (trigger.Day.Equals("Weekend") && (dtNow.DayOfWeek == DayOfWeek.Saturday || dtNow.DayOfWeek == DayOfWeek.Sunday))
+                    {
+                        DoTriggerAction(trigger);
+                    }
+                }
+
+                if (trigger.ConditionType == TriggerConditionType.DurationFromStartScreenCapture)
+                {
+                    switch (trigger.DurationType)
+                    {
+                        // Seconds
+                        case 0:
+                            if (dtStartScreenCapture.AddSeconds(trigger.Duration).Hour == dtNow.Hour &&
+                                dtStartScreenCapture.AddSeconds(trigger.Duration).Minute == dtNow.Minute &&
+                                dtStartScreenCapture.AddSeconds(trigger.Duration).Second == dtNow.Second)
+                            {
+                                DoTriggerAction(trigger);
+                            }
+                            break;
+
+                        // Minutes
+                        case 1:
+                            if (dtStartScreenCapture.AddMinutes(trigger.Duration).Hour == dtNow.Hour &&
+                                dtStartScreenCapture.AddMinutes(trigger.Duration).Minute == dtNow.Minute &&
+                                dtStartScreenCapture.AddMinutes(trigger.Duration).Second == dtNow.Second)
+                            {
+                                DoTriggerAction(trigger);
+                            }
+                            break;
+
+                        // Hours
+                        case 2:
+                            if (dtStartScreenCapture.AddHours(trigger.Duration).Hour == dtNow.Hour &&
+                                dtStartScreenCapture.AddHours(trigger.Duration).Minute == dtNow.Minute &&
+                                dtStartScreenCapture.AddHours(trigger.Duration).Second == dtNow.Second)
+                            {
+                                DoTriggerAction(trigger);
+                            }
+                            break;
+                    }
+                }
+
+                if (trigger.ConditionType == TriggerConditionType.DurationFromStopScreenCapture)
+                {
+                    switch (trigger.DurationType)
+                    {
+                        // Seconds
+                        case 0:
+                            if (dtStopScreenCapture.AddSeconds(trigger.Duration).Hour == dtNow.Hour &&
+                                dtStopScreenCapture.AddSeconds(trigger.Duration).Minute == dtNow.Minute &&
+                                dtStopScreenCapture.AddSeconds(trigger.Duration).Second == dtNow.Second)
+                            {
+                                DoTriggerAction(trigger);
+                            }
+                            break;
+
+                        // Minutes
+                        case 1:
+                            if (dtStopScreenCapture.AddMinutes(trigger.Duration).Hour == dtNow.Hour &&
+                                dtStopScreenCapture.AddMinutes(trigger.Duration).Minute == dtNow.Minute &&
+                                dtStopScreenCapture.AddMinutes(trigger.Duration).Second == dtNow.Second)
+                            {
+                                DoTriggerAction(trigger);
+                            }
+                            break;
+
+                        // Hours
+                        case 2:
+                            if (dtStopScreenCapture.AddHours(trigger.Duration).Hour == dtNow.Hour &&
+                                dtStopScreenCapture.AddHours(trigger.Duration).Minute == dtNow.Minute &&
+                                dtStopScreenCapture.AddHours(trigger.Duration).Second == dtNow.Second)
+                            {
+                                DoTriggerAction(trigger);
+                            }
+                            break;
+                    }
+                }
+            }
+
+            if (_appStarted)
+            {
+                // We want to figure out the visibility for the system tray icon here so it doesn't appear too early if we happen to use -hide.
+                notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
+                _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
+
+                _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
+                RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
+
+                // Okay the application started so we can set this back to false. I really hate doing this but for now it's easy to get
+                // around the weird situation where an ApplicationStartup trigger needs to run after the command line options get parsed
+                // (and one of thse options might be -hide which needs to disable triggers using the ShowInterface action).
+                // For example we don't want any triggers showing the interface if we're starting the application with something like ...
+                // autoscreen.exe -interval=00:00:05 -start -hide
+                _appStarted = false;
+            }
+        }
+
+        /// <summary>
         /// Shows the "Add Trigger" window to enable the user to add a chosen Trigger.
         /// </summary>
         /// <param name="sender"></param>

@@ -128,7 +128,7 @@ namespace AutoScreenCapture
             this.tabPageSchedules = new System.Windows.Forms.TabPage();
             this.tabPageMacroTags = new System.Windows.Forms.TabPage();
             this.tabPageTriggers = new System.Windows.Forms.TabPage();
-            this.timerScheduledCapture = new System.Windows.Forms.Timer(this.components);
+            this.timerHelpTips = new System.Windows.Forms.Timer(this.components);
             this.timerScreenCapture = new System.Windows.Forms.Timer(this.components);
             this.comboBoxFilterValue = new System.Windows.Forms.ComboBox();
             this.labelFilter = new System.Windows.Forms.Label();
@@ -138,6 +138,9 @@ namespace AutoScreenCapture
             this.labelHelp = new System.Windows.Forms.Label();
             this.timerShowNextHelpTip = new System.Windows.Forms.Timer(this.components);
             this.labelModuleHelp = new System.Windows.Forms.Label();
+            this.timerParseCommands = new System.Windows.Forms.Timer(this.components);
+            this.timerScheduleCheck = new System.Windows.Forms.Timer(this.components);
+            this.timerTriggerCheck = new System.Windows.Forms.Timer(this.components);
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
@@ -560,7 +563,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 420);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -1015,10 +1018,11 @@ namespace AutoScreenCapture
             this.tabPageTriggers.Text = "Triggers";
             this.tabPageTriggers.UseVisualStyleBackColor = true;
             // 
-            // timerScheduledCapture
+            // timerHelpTips
             // 
-            this.timerScheduledCapture.Interval = 1000;
-            this.timerScheduledCapture.Tick += new System.EventHandler(this.timerScheduledCapture_Tick);
+            this.timerHelpTips.Enabled = true;
+            this.timerHelpTips.Interval = 1000;
+            this.timerHelpTips.Tick += new System.EventHandler(this.timerHelpTip_Tick);
             // 
             // timerScreenCapture
             // 
@@ -1125,6 +1129,24 @@ namespace AutoScreenCapture
     "n enabled while viewing the Dashboard to see what would be captured when startin" +
     "g a screen capture session.";
             // 
+            // timerParseCommands
+            // 
+            this.timerParseCommands.Enabled = true;
+            this.timerParseCommands.Interval = 1000;
+            this.timerParseCommands.Tick += new System.EventHandler(this.timerParseCommands_Tick);
+            // 
+            // timerScheduleCheck
+            // 
+            this.timerScheduleCheck.Enabled = true;
+            this.timerScheduleCheck.Interval = 60000;
+            this.timerScheduleCheck.Tick += new System.EventHandler(this.timerScheduleCheck_Tick);
+            // 
+            // timerTriggerCheck
+            // 
+            this.timerTriggerCheck.Enabled = true;
+            this.timerTriggerCheck.Interval = 1000;
+            this.timerTriggerCheck.Tick += new System.EventHandler(this.timerTriggerCheck_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1179,7 +1201,7 @@ namespace AutoScreenCapture
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorCaptureNow;
         private System.Windows.Forms.TabControl tabControlModules;
-        private System.Windows.Forms.Timer timerScheduledCapture;
+        private System.Windows.Forms.Timer timerHelpTips;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorAbout;
         private System.Windows.Forms.Timer timerScreenCapture;
@@ -1271,5 +1293,8 @@ namespace AutoScreenCapture
         private ToolStripMenuItem regionSelectCommandDeckToolStripMenuItem;
         private ToolStripMenuItem regionSelectCommandDeckToolStripMenuItemFromRegionSelect;
         private ToolStripMenuItem newRegionToolStripMenuItem;
+        private Timer timerParseCommands;
+        private Timer timerScheduleCheck;
+        private Timer timerTriggerCheck;
     }
 }

@@ -203,6 +203,16 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_RESTART = "^-restart$";
 
         /// <summary>
+        /// The timer to check commands provided to the application. This runs every second.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerParseCommands_Tick(object sender, EventArgs e)
+        {
+            ParseCommandLineArguments();
+        }
+
+        /// <summary>
         /// Parse commands issued externally via the command line.
         /// </summary>
         private void ParseCommandLineArguments()

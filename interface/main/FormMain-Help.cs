@@ -51,6 +51,28 @@ namespace AutoScreenCapture
             _toolTip.SetToolTip(buttonRefreshFilterValues, "Click this button to refresh the list of filter values");
         }
 
+        /// <summary>
+        /// The timer to check help tips issued by classes that aren't part of FormMain and also to show the tool tip in the system tray icon.
+        /// This runs every second.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerHelpTip_Tick(object sender, EventArgs e)
+        {
+            // Display help tip message from any class that isn't part of FormMain.
+            if (!string.IsNullOrEmpty(HelpTip.Message))
+            {
+                RestartHelpTipTimer();
+
+                HelpMessage(HelpTip.Message);
+                HelpTip.Message = string.Empty;
+            }
+
+            // Displays the next time screenshots are going to be captured
+            // in the system tray icon's tool tip, the main interface, and information window.
+            ShowInfo();
+        }
+
         private void timerShowNextHelpTip_Tick(object sender, EventArgs e)
         {
             if (_helpTipIndex < _helpTips.Count)

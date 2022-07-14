@@ -250,8 +250,9 @@ namespace AutoScreenCapture
                         Logic = comboBoxLogic.SelectedIndex
                     };
 
-                    // Set the schedule's timer interval.
+                    // Set the schedule's timer interval and make sure to not enable the timer until we're ready for it.
                     schedule.Timer.Interval = screenCaptureInterval;
+                    schedule.Timer.Enabled = false;
 
                     ScheduleCollection.Add(schedule);
 
@@ -301,9 +302,9 @@ namespace AutoScreenCapture
 
                         ScheduleCollection.Get(ScheduleObject).ScreenCaptureInterval = screenCaptureInterval;
 
-                        // Set the schedule's timer interval.
+                        // Set the schedule's timer interval and make sure to not enable the timer until we're ready for it.
                         ScheduleCollection.Get(ScheduleObject).Timer.Interval = screenCaptureInterval;
-                        ScheduleCollection.Get(ScheduleObject).Timer.Enabled = true;
+                        ScheduleCollection.Get(ScheduleObject).Timer.Enabled = false;
 
                         ScheduleCollection.Get(ScheduleObject).Monday = checkBoxMonday.Checked;
                         ScheduleCollection.Get(ScheduleObject).Tuesday = checkBoxTuesday.Checked;

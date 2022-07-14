@@ -232,11 +232,6 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
-            // Start the scheduled capture timer.
-            timerScheduledCapture.Interval = 1000;
-            timerScheduledCapture.Enabled = true;
-            timerScheduledCapture.Start();
-
             if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
             {
                 toolStripMenuItemEmailSettings.Enabled = false;
@@ -250,7 +245,7 @@ namespace AutoScreenCapture
             }
 
             // Set this to true so anything that needs to be processed at startup will be done in the
-            // first tick of the scheduled capture timer. This is when using -hide and -start command line options
+            // first tick of the trigger check timer. This is when using -hide and -start command line options
             // so we avoid having to show the interface and/or the system tray icon too early during application startup.
             _appStarted = true;
         }
