@@ -409,6 +409,8 @@ namespace AutoScreenCapture
 
         private void radioButtonOneTime_CheckedChanged(object sender, EventArgs e)
         {
+            ModifyScheduleObject();
+
             if (radioButtonOneTime.Checked)
             {
                 labelTakeScreenshotsOnce.Enabled = true;
@@ -434,6 +436,8 @@ namespace AutoScreenCapture
 
         private void radioButtonPeriod_CheckedChanged(object sender, EventArgs e)
         {
+            ModifyScheduleObject();
+
             if (radioButtonPeriod.Checked)
             {
                 labelTakeScreenshotsOnce.Enabled = false;
