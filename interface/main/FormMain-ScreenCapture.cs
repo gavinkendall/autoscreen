@@ -178,8 +178,8 @@ namespace AutoScreenCapture
         /// <summary>
         /// Starts a screen capture session with a defined screen capture interval.
         /// </summary>
-        /// <param name="scope">Defines the screen capture scope of what will be captured (such as "All Screens and Regions", "All Screens", "All Regions", or the name of a Screen or Region).</param>
         /// <param name="screenCaptureInterval">The screen capture interval to use.</param>
+        /// <param name="scope">Defines the screen capture scope of what will be captured (such as "All Screens and Regions", "All Screens", "All Regions", or the name of a Screen or Region).</param>
         private void StartScreenCapture(int screenCaptureInterval, string scope = "All Screens and Regions")
         {
             try
@@ -237,7 +237,7 @@ namespace AutoScreenCapture
                     {
                         _log.WriteMessage("Taking initial screenshots");
 
-                        TakeScreenshot();
+                        TakeScreenshot(scope);
                     }
 
                     // Start taking screenshots.
