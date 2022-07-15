@@ -70,7 +70,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Regex for parsing the -interval command.
         /// </summary>
-        internal const string REGEX_COMMAND_LINE_INTERVAL = @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})$";
+        internal const string REGEX_COMMAND_LINE_INTERVAL = @"^-interval=(?<Hours>\d{2}):(?<Minutes>\d{2}):(?<Seconds>\d{2})(\.(?<Milliseconds>\d{3}))?$";
 
         /// <summary>
         /// Regex for parsing the -passphrase command.
