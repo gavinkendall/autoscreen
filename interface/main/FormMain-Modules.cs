@@ -172,9 +172,19 @@ namespace AutoScreenCapture
                     Location = new Point(xPos + X_POS_TEXTBOX, yPos),
                     Text = text,
                     ReadOnly = true,
-                    TabStop = false
+                    TabStop = false,
+                    BackColor = Color.LightYellow
                 };
-                tabPage.Controls.Add(textBoxObjectName);
+
+                // Add a tool tip for any text that's more than 20 characters so you can hover over the text field
+                // and see the full name of a Screen, Region, Trigger, Schedule, Macro Tag, etc.
+                if (text.Length > 20)
+                {
+                    ToolTip toolTipForTextBoxObjectName = new ToolTip();
+                    toolTipForTextBoxObjectName.AutomaticDelay = 100;
+                    toolTipForTextBoxObjectName.AutoPopDelay = 5000;
+                    toolTipForTextBoxObjectName.SetToolTip(textBoxObjectName, text);
+                }
 
                 // Add a button so that the user can configure the object.
                 Button buttonConfigure = new Button
@@ -190,8 +200,57 @@ namespace AutoScreenCapture
                     TabStop = false
                 };
                 buttonConfigure.Click += eventhandlerForConfigure;
-                tabPage.Controls.Add(buttonConfigure);
                 _toolTipButtonConfigure.SetToolTip(buttonConfigure, "Configure this item");
+
+                Button buttonScheduleTimer = new Button();
+
+                // The following is only specific to Schedules.
+                if (t.Equals(typeof(Schedule)))
+                {
+                    buttonScheduleTimer = new Button
+                    {
+                        Size = new Size(SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT),
+                        Location = new Point(xPos + X_POS_BUTTON + 23, yPos),
+                        FlatStyle = FlatStyle.Flat,
+                        BackColor = Color.Transparent,
+                        ForeColor = Color.Transparent,
+                        ImageAlign = ContentAlignment.MiddleCenter,
+                        Tag = @object,
+                        TabStop = false
+                    };
+
+                    // Convert the generic type to a Schedule.
+                    Schedule schedule = (Schedule)Convert.ChangeType(@object, typeof(Schedule));
+
+                    if (schedule.Timer.Enabled)
+                    {
+                        // If the schedule's timer is running make sure to indiciate this to the user by changing the color of the text field.
+                        textBoxObjectName.BackColor = Color.PaleGreen;
+
+                        // Change the image to a "stop" symbol.
+                        buttonScheduleTimer.Image = Properties.Resources.stop_screen_capture;
+
+                        // Add the Stop Schedule event to Click.
+                        buttonScheduleTimer.Click += ScheduleModuleList_StopSchedule;
+                    }
+                    else
+                    {
+                        // Change the image to a "play" symbol.
+                        buttonScheduleTimer.Image = Properties.Resources.start_screen_capture;
+
+                        // Add the Start Schedule event to Click.
+                        buttonScheduleTimer.Click += ScheduleModuleList_StartSchedule;
+                    }
+                }
+
+                // Add the controls to the tab page.
+                tabPage.Controls.Add(textBoxObjectName);
+                tabPage.Controls.Add(buttonConfigure);
+
+                if (t.Equals(typeof(Schedule)))
+                {
+                    tabPage.Controls.Add(buttonScheduleTimer);
+                }
 
                 // Move down the tab page so we're ready to loop around again and add the next object to it.
                 yPos += Y_POS_INCREMENT;

@@ -348,15 +348,6 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
-                    ScheduleObject.StartAt = dateTimePickerStartAt.Value;
-                    ScheduleObject.StopAt = dateTimePickerStopAt.Value;
-
-                    int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
-
-                    ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
-
                     Okay();
                 }
             }
@@ -402,6 +393,15 @@ namespace AutoScreenCapture
 
         private void Okay()
         {
+            ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
+            ScheduleObject.StartAt = dateTimePickerStartAt.Value;
+            ScheduleObject.StopAt = dateTimePickerStopAt.Value;
+
+            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+
+            ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
+
             DialogResult = DialogResult.OK;
 
             Close();

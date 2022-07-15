@@ -278,56 +278,84 @@ namespace AutoScreenCapture
             }
         }
 
-        private void _formSchedule_StartSchedule(object sender, EventArgs e)
+        private void StartSchedule(Schedule schedule)
         {
-            if (_formSchedule.ScheduleObject != null)
+            if (schedule != null)
             {
                 // Checking the Timer's Tag determines if this schedule is controlling the application's main timer or if the
                 // schedule is acting indepdently on its own timer.
-                if (_formSchedule.ScheduleObject.Timer.Tag == null)
+                if (schedule.Timer.Tag == null)
                 {
                     // Start the main timer.
-                    StartScreenCapture(_formSchedule.ScheduleObject.ScreenCaptureInterval, _formSchedule.ScheduleObject.Scope);
+                    StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                 }
                 else
                 {
                     // Subscribe to the Tick event only if the schedule is new.
                     // Existing schedules would have already had their Tick events subscribed during LoadSettings.
                     // If we subscribe to the Tick event again for an existing schedule we end up creating a duplicate screenshot for every tick.
-                    if (_formSchedule.ScheduleObject.IsNew)
+                    if (schedule.IsNew)
                     {
-                        _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
+                        schedule.Timer.Tick += ScheduleTimer_Tick;
                     }
 
-                    _formSchedule.ScheduleObject.Timer.Enabled = true;
-                    _formSchedule.ScheduleObject.Timer.Start();
+                    schedule.Timer.Enabled = true;
+                    schedule.Timer.Start();
                 }
+
+                BuildSchedulesModule();
             }
         }
 
-        private void _formSchedule_StopSchedule(object sender, EventArgs e)
+        private void StopSchedule(Schedule schedule)
         {
-            if (_formSchedule.ScheduleObject != null)
+            if (schedule != null)
             {
                 // Checking the Timer's Tag determines if this schedule is controlling the application's main timer or if the
                 // schedule is acting indepdently on its own timer.
-                if (_formSchedule.ScheduleObject.Timer.Tag == null)
+                if (schedule.Timer.Tag == null)
                 {
                     // Stop the main timer.
                     StopScreenCapture();
                 }
                 else
                 {
-                    _formSchedule.ScheduleObject.Timer.Stop();
-                    _formSchedule.ScheduleObject.Timer.Enabled = false;
+                    schedule.Timer.Stop();
+                    schedule.Timer.Enabled = false;
 
                     // Unsubscribe to the Tick event only if the schedule is new.
-                    if (_formSchedule.ScheduleObject.IsNew)
+                    if (schedule.IsNew)
                     {
-                        _formSchedule.ScheduleObject.Timer.Tick -= ScheduleTimer_Tick;
+                        schedule.Timer.Tick -= ScheduleTimer_Tick;
                     }
                 }
+
+                BuildSchedulesModule();
             }
+        }
+
+        private void _formSchedule_StartSchedule(object sender, EventArgs e)
+        {
+            StartSchedule(_formSchedule.ScheduleObject);
+        }
+
+        private void _formSchedule_StopSchedule(object sender, EventArgs e)
+        {
+            StopSchedule(_formSchedule.ScheduleObject);
+        }
+
+        private void ScheduleModuleList_StartSchedule(object sender, EventArgs e)
+        {
+            Button buttonStartSchedule = (Button)sender;
+
+            StartSchedule((Schedule)buttonStartSchedule.Tag);
+        }
+
+        private void ScheduleModuleList_StopSchedule(object sender, EventArgs e)
+        {
+            Button buttonStopSchedule = (Button)sender;
+
+            StopSchedule((Schedule)buttonStopSchedule.Tag);
         }
     }
 }
