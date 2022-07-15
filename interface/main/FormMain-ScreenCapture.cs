@@ -118,6 +118,7 @@ namespace AutoScreenCapture
                 _macroParser.screenCapture = _screenCapture;
 
                 _screenCapture.Count++;
+                _screenCapture.Scope = scope;
                 _screenCapture.CaptureNow = captureNow;
 
                 // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
@@ -741,7 +742,7 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.Count < _screenCapture.Limit)
                     {
-                        TakeScreenshot();
+                        TakeScreenshot(_screenCapture.Scope);
                     }
 
                     if (_screenCapture.Count == _screenCapture.Limit)
@@ -755,7 +756,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    TakeScreenshot();
+                    TakeScreenshot(_screenCapture.Scope);
                 }
             }
             else
