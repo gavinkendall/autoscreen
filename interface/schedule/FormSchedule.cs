@@ -393,6 +393,7 @@ namespace AutoScreenCapture
 
         private void Okay()
         {
+            ScheduleObject.Name = textBoxName.Text;
             ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
             ScheduleObject.StartAt = dateTimePickerStartAt.Value;
             ScheduleObject.StopAt = dateTimePickerStopAt.Value;
