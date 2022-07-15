@@ -33,7 +33,15 @@ namespace AutoScreenCapture
         public string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// Determines if this is a new schedule that's being added.
+        /// We use this to check if we need to subscribe to the schedule's Tick event.
+        /// An existing schedule would have already had its Tick event subscribed during LoadSettings.
+        /// We want to avoid subscribing to the Tick event multiple times unnecessarily.
+        /// </summary>
+        public bool IsNew { get; set; }
+
+        /// <summary>
+        /// The timer the schedule uses for its own interval.
         /// </summary>
         public System.Windows.Forms.Timer Timer { get; set; }
 

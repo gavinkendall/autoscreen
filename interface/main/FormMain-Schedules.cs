@@ -153,7 +153,19 @@ namespace AutoScreenCapture
                 {
                     Schedule schedule = (Schedule)timer.Tag;
 
-                    TakeScreenshot(schedule.Scope, captureNow: true);
+                    DateTime dtNow = DateTime.Now;
+
+                    if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
+                            (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
+                            (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
+                            (dtNow.DayOfWeek == DayOfWeek.Thursday && schedule.Thursday) ||
+                            (dtNow.DayOfWeek == DayOfWeek.Friday && schedule.Friday) ||
+                            (dtNow.DayOfWeek == DayOfWeek.Saturday && schedule.Saturday) ||
+                            (dtNow.DayOfWeek == DayOfWeek.Sunday && schedule.Sunday))
+                    {
+
+                        TakeScreenshot(schedule.Scope, captureNow: true);
+                    }
                 }
             }
         }
@@ -270,17 +282,25 @@ namespace AutoScreenCapture
         {
             if (_formSchedule.ScheduleObject != null)
             {
+                // Checking the Timer's Tag determines if this schedule is controlling the application's main timer or if the
+                // schedule is acting indepdently on its own timer.
                 if (_formSchedule.ScheduleObject.Timer.Tag == null)
                 {
+                    // Start the main timer.
                     StartScreenCapture(_formSchedule.ScheduleObject.ScreenCaptureInterval, _formSchedule.ScheduleObject.Scope);
                 }
                 else
                 {
-                    _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
+                    // Subscribe to the Tick event only if the schedule is new.
+                    // Existing schedules would have already had their Tick events subscribed during LoadSettings.
+                    // If we subscribe to the Tick event again for an existing schedule we end up creating a duplicate screenshot for every tick.
+                    if (_formSchedule.ScheduleObject.IsNew)
+                    {
+                        _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
+                    }
+
                     _formSchedule.ScheduleObject.Timer.Enabled = true;
                     _formSchedule.ScheduleObject.Timer.Start();
-
-                    _formSchedule.CheckTimerEnabled();
                 }
             }
         }
@@ -289,17 +309,23 @@ namespace AutoScreenCapture
         {
             if (_formSchedule.ScheduleObject != null)
             {
+                // Checking the Timer's Tag determines if this schedule is controlling the application's main timer or if the
+                // schedule is acting indepdently on its own timer.
                 if (_formSchedule.ScheduleObject.Timer.Tag == null)
                 {
+                    // Stop the main timer.
                     StopScreenCapture();
                 }
                 else
                 {
                     _formSchedule.ScheduleObject.Timer.Stop();
                     _formSchedule.ScheduleObject.Timer.Enabled = false;
-                    _formSchedule.ScheduleObject.Timer.Tick -= ScheduleTimer_Tick;
 
-                    _formSchedule.CheckTimerEnabled();
+                    // Unsubscribe to the Tick event only if the schedule is new.
+                    if (_formSchedule.ScheduleObject.IsNew)
+                    {
+                        _formSchedule.ScheduleObject.Timer.Tick -= ScheduleTimer_Tick;
+                    }
                 }
             }
         }

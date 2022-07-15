@@ -185,6 +185,8 @@ namespace AutoScreenCapture
                 textBoxNotes.Text = string.Empty;
 
                 ScheduleObject = CreateScheduleObject();
+
+                ScheduleObject.IsNew = true;
             }
 
             comboBoxScope.Items.Clear();
@@ -209,6 +211,8 @@ namespace AutoScreenCapture
             {
                 comboBoxScope.SelectedIndex = comboBoxScope.Items.IndexOf(ScheduleObject.Scope);
             }
+
+            CheckTimerEnabled();
 
             _ready = true;
         }
@@ -346,6 +350,10 @@ namespace AutoScreenCapture
                     }
                     else
                     {
+                        ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
+                        ScheduleObject.StartAt = dateTimePickerStartAt.Value;
+                        ScheduleObject.StopAt = dateTimePickerStopAt.Value;
+
                         Okay();
                     }
                 }
@@ -573,7 +581,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Determines if we need the Start Schedule and Stop Schedule buttons enabled or not (based on the schedule's timer's Enabled property).
         /// </summary>
-        public void CheckTimerEnabled()
+        private void CheckTimerEnabled()
         {
             if (ScheduleObject != null && ScheduleObject.Timer != null)
             {

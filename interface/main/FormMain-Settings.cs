@@ -216,6 +216,7 @@ namespace AutoScreenCapture
                 foreach (Schedule schedule in _formSchedule.ScheduleCollection)
                 {
                     schedule.Timer.Tag = schedule;
+                    schedule.Timer.Interval = schedule.ScreenCaptureInterval;
                     schedule.Timer.Enabled = false;
                     schedule.Timer.Tick += ScheduleTimer_Tick;
                 }
