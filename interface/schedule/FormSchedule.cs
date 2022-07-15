@@ -354,6 +354,11 @@ namespace AutoScreenCapture
                         ScheduleObject.StartAt = dateTimePickerStartAt.Value;
                         ScheduleObject.StopAt = dateTimePickerStopAt.Value;
 
+                        int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+
+                        ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
+
                         Okay();
                     }
                 }
