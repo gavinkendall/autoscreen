@@ -339,32 +339,25 @@ namespace AutoScreenCapture
         {
             if (InputValid())
             {
-                if (NameChanged() || InputChanged())
+                TrimInput();
+
+                if (ScheduleCollection.GetByName(textBoxName.Text) != null && NameChanged())
                 {
-                    TrimInput();
-
-                    if (ScheduleCollection.GetByName(textBoxName.Text) != null && NameChanged())
-                    {
-                        MessageBox.Show("A schedule with this name already exists.", "Duplicate Name Conflict",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
-                        ScheduleObject.StartAt = dateTimePickerStartAt.Value;
-                        ScheduleObject.StopAt = dateTimePickerStopAt.Value;
-
-                        int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
-
-                        ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
-
-                        Okay();
-                    }
+                    MessageBox.Show("A schedule with this name already exists.", "Duplicate Name Conflict",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    Close();
+                    ScheduleObject.CaptureAt = dateTimePickerCaptureAt.Value;
+                    ScheduleObject.StartAt = dateTimePickerStartAt.Value;
+                    ScheduleObject.StopAt = dateTimePickerStopAt.Value;
+
+                    int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
+                        (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
+
+                    ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
+
+                    Okay();
                 }
             }
             else
@@ -389,34 +382,6 @@ namespace AutoScreenCapture
                 checkBoxFriday.Checked ||
                 checkBoxSaturday.Checked ||
                 checkBoxSunday.Checked))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool InputChanged()
-        {
-            int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
-                            (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
-
-            if (ScheduleObject != null &&
-                (!ScheduleObject.Enable.Equals(checkBoxEnable.Checked) ||
-                !ScheduleObject.CaptureAt.Equals(dateTimePickerCaptureAt.Value) ||
-                !ScheduleObject.StartAt.Equals(dateTimePickerStartAt.Value) ||
-                !ScheduleObject.StopAt.Equals(dateTimePickerStopAt.Value) ||
-                !ScheduleObject.ScreenCaptureInterval.Equals(screenCaptureInterval) ||
-                !ScheduleObject.Monday.Equals(checkBoxMonday.Checked) ||
-                !ScheduleObject.Tuesday.Equals(checkBoxTuesday.Checked) ||
-                !ScheduleObject.Wednesday.Equals(checkBoxWednesday.Checked) ||
-                !ScheduleObject.Thursday.Equals(checkBoxThursday.Checked) ||
-                !ScheduleObject.Friday.Equals(checkBoxFriday.Checked) ||
-                !ScheduleObject.Saturday.Equals(checkBoxSaturday.Checked) ||
-                !ScheduleObject.Sunday.Equals(checkBoxSunday.Checked) ||
-                !ScheduleObject.Notes.Equals(textBoxNotes.Text) ||
-                !ScheduleObject.Scope.Equals(comboBoxScope.Text) ||
-                !ScheduleObject.Logic.Equals(comboBoxLogic.SelectedIndex)))
             {
                 return true;
             }
