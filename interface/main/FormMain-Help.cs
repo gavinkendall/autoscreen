@@ -60,7 +60,7 @@ namespace AutoScreenCapture
         private void timerHelpTip_Tick(object sender, EventArgs e)
         {
             // Display help tip message from any class that isn't part of FormMain.
-            if (!string.IsNullOrEmpty(HelpTip.Message))
+            if (!string.IsNullOrEmpty(HelpTip.Message) && !_screenCapture.ApplicationError)
             {
                 RestartHelpTipTimer();
 
@@ -75,7 +75,7 @@ namespace AutoScreenCapture
 
         private void timerShowNextHelpTip_Tick(object sender, EventArgs e)
         {
-            if (_helpTipIndex < _helpTips.Count)
+            if (_helpTipIndex < _helpTips.Count && !_screenCapture.ApplicationError)
             {
                 HelpMessage(_helpTips[_helpTipIndex]);
                 _helpTipIndex++;
