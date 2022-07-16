@@ -33,6 +33,12 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerTriggerCheck_Tick(object sender, EventArgs e)
         {
+            if (!_appReady)
+            {
+                // Don't check triggers until the application is ready.
+                return;
+            }
+
             DateTime dtNow = DateTime.Now;
 
             // Process the list of triggers of condition type Date/Time, condition type Time, and condition type Day/Time.
@@ -150,23 +156,6 @@ namespace AutoScreenCapture
                             break;
                     }
                 }
-            }
-
-            if (_appStarted)
-            {
-                // We want to figure out the visibility for the system tray icon here so it doesn't appear too early if we happen to use -hide.
-                notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
-                _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
-
-                _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
-                RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
-
-                // Okay the application started so we can set this back to false. I really hate doing this but for now it's easy to get
-                // around the weird situation where an ApplicationStartup trigger needs to run after the command line options get parsed
-                // (and one of thse options might be -hide which needs to disable triggers using the ShowInterface action).
-                // For example we don't want any triggers showing the interface if we're starting the application with something like ...
-                // autoscreen.exe -interval=00:00:05 -start -hide
-                _appStarted = false;
             }
         }
 

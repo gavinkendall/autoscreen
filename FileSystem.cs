@@ -77,7 +77,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Default filename pattern.
         /// </summary>
-        public readonly string DefaultFilenamePattern = @"%date%\%name%\%process% (%date% %time%).%format%";
+        public readonly string DefaultFilenamePattern = @"%date%\%name%\%date%_%time%_(%process%).%format%";
 
         /// <summary>
         /// Default debug folder.
@@ -372,6 +372,19 @@ namespace AutoScreenCapture
             DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
 
             return (driveInfo.AvailableFreeSpace / (float)driveInfo.TotalSize) * 100;
+        }
+
+        /// <summary>
+        /// Gets the free disk space of the drive for a given path.
+        /// </summary>
+        /// <param name="path">The path of the drive to check.</param>
+        /// <returns>The available free space (in bytes)</returns>
+        public long FreeDiskSpace(string path)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            DriveInfo driveInfo = new DriveInfo(fileInfo.Directory.Root.FullName);
+
+            return driveInfo.AvailableFreeSpace;
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace AutoScreenCapture
         // Determines if the application has started so it can run any trigger
         // with the ApplicationStartup condition. This is so we don't accidentally
         // run these types of triggers before command line options get a chance to be parsed.
-        private bool _appStarted = false;
+        private bool _appReady = false;
 
         // Preview
         bool _preview = false;
@@ -175,6 +175,12 @@ namespace AutoScreenCapture
         /// </summary>
         public FormMain(Config config)
         {
+            Opacity = 0;
+            Visible = false;
+            ShowInTaskbar = false;
+            Size = new Size(0, 0);
+            Hide();
+
             _config = config;
             _fileSystem = config.FileSystem;
             _log = config.Log;
@@ -243,11 +249,6 @@ namespace AutoScreenCapture
                 toolStripMenuItemFileTransferSettings.Enabled = false;
                 toolStripMenuItemFileTransferSettingsFromStatusBar.Enabled = false;
             }
-
-            // Set this to true so anything that needs to be processed at startup will be done in the
-            // first tick of the trigger check timer. This is when using -hide and -start command line options
-            // so we avoid having to show the interface and/or the system tray icon too early during application startup.
-            _appStarted = true;
         }
 
         /// <summary>
@@ -261,23 +262,18 @@ namespace AutoScreenCapture
             // ShowInterface or HideInterface have been called and therefore the _initialVisibilitySet bool variable
             // has been flagged as true by those methods. This fixes a situation where the user could have no Triggers at all so
             // we want to keep the main form invisible if there are no Triggers to trigger either ShowInterface or HideInterface.
-            if (!_initialVisibilitySet)
-            {
-                return;
-            }
-
-            if (Visible)
-            {
-                Opacity = 100;
-                ShowInTaskbar = true;
-                Show();
-                Focus();
-            }
-            else
+            if (!_initialVisibilitySet || !Visible)
             {
                 Opacity = 0;
                 ShowInTaskbar = false;
                 Hide();
+            }
+            else
+            {
+                Opacity = 100;
+                ShowInTaskbar = true;
+                Show();
+                Activate();
             }
 
             base.OnVisibleChanged(e);

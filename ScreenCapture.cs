@@ -418,6 +418,32 @@ namespace AutoScreenCapture
             return encoders.FirstOrDefault(t => t.MimeType == mimeType);
         }
 
+        private int NotEnoughDiskSpace(Screenshot screenshot, int returnFlag, double freeDiskSpacePercentage, int lowDiskPercentageThreshold, long freeDisk, long lowDiskBytesThreshold)
+        {
+            // There is not enough disk space on the drive so log an error message.
+
+            _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for \"{screenshot.FilePath}\"");
+            _log.WriteErrorMessage($"Free disk space percentage: {freeDiskSpacePercentage}%");
+            _log.WriteErrorMessage($"Low disk percentage threshold: {lowDiskPercentageThreshold}%");
+            _log.WriteErrorMessage($"Free disk space in bytes: {freeDisk} bytes");
+            _log.WriteErrorMessage($"Low disk bytes threshold: {lowDiskBytesThreshold} bytes");
+
+            bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
+
+            if (stopOnLowDiskError)
+            {
+                _log.WriteErrorMessage("Running screen capture session has stopped because application setting StopOnLowDiskError is set to True when the available disk space on any drive is too low");
+
+                ApplicationError = true;
+
+                return returnFlag | (int)ScreenSavingErrorLevels.StopOnLowDiskError;
+            }
+
+            ApplicationWarning = true;
+
+            return returnFlag & (int)ScreenSavingErrorLevels.None;
+        }
+
         private int AddScreenshotAndSaveToFile(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             int returnFlag = 0;
@@ -922,33 +948,45 @@ namespace AutoScreenCapture
                     {
                         if (_fileSystem.DriveReady(screenshot.FilePath))
                         {
-                            int lowDiskSpacePercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold", _config.Settings.DefaultSettings.LowDiskPercentageThreshold).Value);
+                            // The low disk mode we want to use (either check by percentage (0) or check the number of available bytes (1)).
+                            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode", _config.Settings.DefaultSettings.LowDiskMode).Value);
+
+                            // Low disk space threshold by percentage.
+                            int lowDiskPercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold", _config.Settings.DefaultSettings.LowDiskPercentageThreshold).Value);
                             double freeDiskSpacePercentage = _fileSystem.FreeDiskSpacePercentage(screenshot.FilePath);
 
-                            _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.FilePath + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskSpacePercentageThreshold + "%");
+                            // Low disk space threshold in bytes.
+                            long lowDiskBytesThreshold = Convert.ToInt64(_config.Settings.Application.GetByKey("LowDiskBytesThreshold", _config.Settings.DefaultSettings.LowDiskBytesThreshold).Value);
+                            long freeDiskSpace = _fileSystem.FreeDiskSpace(screenshot.FilePath);
 
-                            if (freeDiskSpacePercentage > lowDiskSpacePercentageThreshold)
+                            _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.FilePath + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskPercentageThreshold + "%");
+                            _log.WriteDebugMessage("Bytes of free disk space on drive for \"" + screenshot.FilePath + "\" is " + freeDiskSpace + " and low disk bytes threshold is set to " + lowDiskBytesThreshold);
+
+                            // Check low disk space by percentage.
+                            if (lowDiskMode == 0)
+                            {
+                                if (freeDiskSpacePercentage < lowDiskPercentageThreshold)
+                                {
+                                    return NotEnoughDiskSpace(screenshot, returnFlag, freeDiskSpacePercentage, lowDiskPercentageThreshold, freeDiskSpace, lowDiskBytesThreshold);
+                                }
+                            }
+                            
+                            // Check low disk space in bytes.
+                            if (lowDiskMode == 1)
+                            {
+                                if (freeDiskSpace < lowDiskBytesThreshold)
+                                {
+                                    return NotEnoughDiskSpace(screenshot, returnFlag, freeDiskSpacePercentage, lowDiskPercentageThreshold, freeDiskSpace, lowDiskBytesThreshold);
+                                }
+                            }
+
+                            if (freeDiskSpacePercentage > lowDiskPercentageThreshold)
                             {
                                 return AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
                             }
                             else
                             {
-                                // There is not enough disk space on the drive so log an error message.
-                                // Change the system tray icon's colour to yellow for a warning if StopOnLowDiskError is set to False or red for an error if StopOnLowDiskError is set to True.
-                                _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive (that has {freeDiskSpacePercentage}% free disk space) for \"{screenshot.FilePath}\" which is lower than the LowDiskPercentageThreshold setting that is currently set to {lowDiskSpacePercentageThreshold}%");
-
-                                bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
-
-                                if (stopOnLowDiskError)
-                                {
-                                    _log.WriteErrorMessage("Running screen capture session has stopped because application setting StopOnLowDiskError is set to True when the available disk space on any drive is lower than the value of LowDiskPercentageThreshold");
-
-                                    ApplicationError = true;
-
-                                    return returnFlag | (int)ScreenSavingErrorLevels.StopOnLowDiskError;
-                                }
-
-                                ApplicationWarning = true;
+                                
                             }
                         }
                         else

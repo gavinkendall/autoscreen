@@ -203,13 +203,34 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_RESTART = "^-restart$";
 
         /// <summary>
-        /// The timer to check commands provided to the application. This runs every second.
+        /// The timer to check commands provided to the application.
+        /// This runs every second.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerParseCommands_Tick(object sender, EventArgs e)
         {
             ParseCommandLineArguments();
+
+            // We need to check if the application is not ready yet here before setting the visibility for the system tray icon
+            // and running Triggers based on the ApplicationStartup condition because at this point the main interface is hidden,
+            // the ParseCommandLineArguments method has potentially been called and is now in a constant 1 second loop parsing any commmands
+            // given to the application (such as "-hide"), and since we're in the first tick of timerParseCommands we can figure out the visibility
+            // of the system tray icon and run the startup triggers before allowing the Trigger timer to loop through all the triggers and run them.
+            if (!_appReady)
+            {
+                // We want to figure out the visibility for the system tray icon here so it doesn't appear too early if we happen to use -hide.
+                notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
+                _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
+
+                // Run any Triggers that need to run on application startup before we run any other type of Triggers.
+                _log.WriteDebugMessage("Running triggers of condition type ApplicationStartup");
+                RunTriggersOfConditionType(TriggerConditionType.ApplicationStartup);
+            }
+
+            // The application is ready. This will allow Triggers to ... uh ... trigger (since the trigger timer is on a 1 second loop but won't
+            // run through the triggers until _appReady is set to true).
+            _appReady = true;
         }
 
         /// <summary>
@@ -281,6 +302,50 @@ namespace AutoScreenCapture
 
                 foreach (string arg in args)
                 {
+                    // -hide
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
+                    {
+                        _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        HideSystemTrayIcon();
+
+                        HideInterface();
+
+                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                        {
+                            if (trigger.ActionType == TriggerActionType.ShowInterface ||
+                                trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
+                            {
+                                trigger.Enable = false;
+                            }
+                        }
+
+                        BuildTriggersModule();
+
+                        if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+                    }
+
+                    // -hideSystemTrayIcon
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
+                    {
+                        _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
+
+                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
+                        {
+                            _screenCapture.ApplicationError = true;
+                        }
+
+                        HideSystemTrayIcon();
+                    }
+
                     // -debug
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_DEBUG))
                     {
@@ -379,14 +444,6 @@ namespace AutoScreenCapture
                         StopScreenCapture();
                     }
 
-                    // -exit
-                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_EXIT))
-                    {
-                        _screenCapture.AutoStartFromCommandLine = false;
-
-                        ExitApplication();
-                    }
-
                     // -showSystemTrayIcon
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_SHOW_SYSTEM_TRAY_ICON))
                     {
@@ -398,19 +455,6 @@ namespace AutoScreenCapture
                         }
 
                         ShowSystemTrayIcon();
-                    }
-
-                    // -hideSystemTrayIcon
-                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE_SYSTEM_TRAY_ICON))
-                    {
-                        _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
-
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                        {
-                            _screenCapture.ApplicationError = true;
-                        }
-
-                        HideSystemTrayIcon();
                     }
 
                     // -initial
@@ -741,37 +785,6 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    // -hide
-                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
-                    {
-                        _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
-
-                        if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
-                        {
-                            _screenCapture.ApplicationError = true;
-                        }
-
-                        HideSystemTrayIcon();
-
-                        HideInterface();
-
-                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
-                        {
-                            if (trigger.ActionType == TriggerActionType.ShowInterface ||
-                                trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
-                            {
-                                trigger.Enable = false;
-                            }
-                        }
-
-                        BuildTriggersModule();
-
-                        if (!_formTrigger.TriggerCollection.SaveToXmlFile(_config, _fileSystem, _log))
-                        {
-                            _screenCapture.ApplicationError = true;
-                        }
-                    }
-
                     // -restart
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_RESTART))
                     {
@@ -779,6 +792,14 @@ namespace AutoScreenCapture
 
                         StopScreenCapture();
                         StartScreenCapture();
+                    }
+
+                    // -exit
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_EXIT))
+                    {
+                        _screenCapture.AutoStartFromCommandLine = false;
+
+                        ExitApplication();
                     }
                 }
 

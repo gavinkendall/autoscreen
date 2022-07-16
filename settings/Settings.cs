@@ -317,9 +317,19 @@ namespace AutoScreenCapture
                         Application.Add(new Setting("Logging", DefaultSettings.Logging));
                     }
 
+                    if (!Application.KeyExists("LowDiskMode"))
+                    {
+                        Application.Add(new Setting("LowDiskMode", DefaultSettings.LowDiskMode));
+                    }
+
                     if (!Application.KeyExists("LowDiskPercentageThreshold"))
                     {
                         Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
+                    }
+
+                    if (!Application.KeyExists("LowDiskBytesThreshold"))
+                    {
+                        Application.Add(new Setting("LowDiskBytesThreshold", DefaultSettings.LowDiskBytesThreshold));
                     }
 
                     if (!Application.KeyExists("ScreenshotsLoadLimit"))
@@ -395,7 +405,9 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
                     Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
                     Application.Add(new Setting("Logging", DefaultSettings.Logging));
+                    Application.Add(new Setting("LowDiskMode", DefaultSettings.LowDiskMode));
                     Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
+                    Application.Add(new Setting("LowDiskBytesThreshold", DefaultSettings.LowDiskBytesThreshold));
                     Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
                     Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
                     Application.Add(new Setting("ShowStartupError", DefaultSettings.ShowStartupError));
