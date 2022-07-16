@@ -957,37 +957,30 @@ namespace AutoScreenCapture
 
                             // Low disk space threshold in bytes.
                             long lowDiskBytesThreshold = Convert.ToInt64(_config.Settings.Application.GetByKey("LowDiskBytesThreshold", _config.Settings.DefaultSettings.LowDiskBytesThreshold).Value);
-                            long freeDiskSpace = _fileSystem.FreeDiskSpace(screenshot.FilePath);
+                            long freeDiskSpaceBytes = _fileSystem.FreeDiskSpace(screenshot.FilePath);
 
                             _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.FilePath + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskPercentageThreshold + "%");
-                            _log.WriteDebugMessage("Bytes of free disk space on drive for \"" + screenshot.FilePath + "\" is " + freeDiskSpace + " and low disk bytes threshold is set to " + lowDiskBytesThreshold);
+                            _log.WriteDebugMessage("Bytes of free disk space on drive for \"" + screenshot.FilePath + "\" is " + freeDiskSpaceBytes + " and low disk bytes threshold is set to " + lowDiskBytesThreshold);
 
                             // Check low disk space by percentage.
                             if (lowDiskMode == 0)
                             {
                                 if (freeDiskSpacePercentage < lowDiskPercentageThreshold)
                                 {
-                                    return NotEnoughDiskSpace(screenshot, returnFlag, freeDiskSpacePercentage, lowDiskPercentageThreshold, freeDiskSpace, lowDiskBytesThreshold);
+                                    return NotEnoughDiskSpace(screenshot, returnFlag, freeDiskSpacePercentage, lowDiskPercentageThreshold, freeDiskSpaceBytes, lowDiskBytesThreshold);
                                 }
                             }
                             
                             // Check low disk space in bytes.
                             if (lowDiskMode == 1)
                             {
-                                if (freeDiskSpace < lowDiskBytesThreshold)
+                                if (freeDiskSpaceBytes < lowDiskBytesThreshold)
                                 {
-                                    return NotEnoughDiskSpace(screenshot, returnFlag, freeDiskSpacePercentage, lowDiskPercentageThreshold, freeDiskSpace, lowDiskBytesThreshold);
+                                    return NotEnoughDiskSpace(screenshot, returnFlag, freeDiskSpacePercentage, lowDiskPercentageThreshold, freeDiskSpaceBytes, lowDiskBytesThreshold);
                                 }
                             }
 
-                            if (freeDiskSpacePercentage > lowDiskPercentageThreshold)
-                            {
-                                return AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
-                            }
-                            else
-                            {
-                                
-                            }
+                            return AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
                         }
                         else
                         {
