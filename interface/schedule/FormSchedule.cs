@@ -520,16 +520,15 @@ namespace AutoScreenCapture
             int screenCaptureInterval = _dataConvert.ConvertIntoMilliseconds((int)numericUpDownHoursInterval.Value,
                             (int)numericUpDownMinutesInterval.Value, (int)numericUpDownSecondsInterval.Value);
 
+            ScheduleObject.Timer.Tag = ScheduleObject;
+
             if (comboBoxLogic.SelectedIndex == 0)
             {
                 ScheduleObject.ScreenCaptureInterval = screenCaptureInterval;
-                ScheduleObject.Timer.Tag = null;
             }
             else if (comboBoxLogic.SelectedIndex == 1)
             {
                 ScheduleObject.Timer.Interval = screenCaptureInterval;
-                ScheduleObject.Timer.Tag = ScheduleObject;
-                ScheduleObject.Enable = checkBoxEnable.Checked;
                 ScheduleObject.Scope = comboBoxScope.Text;                
             }
 

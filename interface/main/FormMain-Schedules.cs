@@ -153,19 +153,7 @@ namespace AutoScreenCapture
                 {
                     Schedule schedule = (Schedule)timer.Tag;
 
-                    DateTime dtNow = DateTime.Now;
-
-                    if ((dtNow.DayOfWeek == DayOfWeek.Monday && schedule.Monday) ||
-                            (dtNow.DayOfWeek == DayOfWeek.Tuesday && schedule.Tuesday) ||
-                            (dtNow.DayOfWeek == DayOfWeek.Wednesday && schedule.Wednesday) ||
-                            (dtNow.DayOfWeek == DayOfWeek.Thursday && schedule.Thursday) ||
-                            (dtNow.DayOfWeek == DayOfWeek.Friday && schedule.Friday) ||
-                            (dtNow.DayOfWeek == DayOfWeek.Saturday && schedule.Saturday) ||
-                            (dtNow.DayOfWeek == DayOfWeek.Sunday && schedule.Sunday))
-                    {
-
-                        TakeScreenshot(schedule.Scope, captureNow: true);
-                    }
+                    TakeScreenshot(schedule.Scope, captureNow: true);
                 }
             }
         }
@@ -282,14 +270,15 @@ namespace AutoScreenCapture
         {
             if (schedule != null)
             {
-                // Checking the Timer's Tag determines if this schedule is controlling the application's main timer or if the
-                // schedule is acting indepdently on its own timer.
-                if (schedule.Timer.Tag == null)
+                // This schedule is being started with the intention that it controls the main timer and overrides its interval and scope.
+                if (schedule.Logic == 0)
                 {
                     // Start the main timer.
                     StartScreenCapture(schedule.ScreenCaptureInterval, schedule.Scope);
                 }
-                else
+
+                // This schedule is being started with the intention that it runs with its own independent interval and scope.
+                if (schedule.Logic == 1)
                 {
                     // Subscribe to the Tick event only if the schedule is new.
                     // Existing schedules would have already had their Tick events subscribed during LoadSettings.

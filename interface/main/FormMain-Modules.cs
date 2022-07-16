@@ -232,7 +232,7 @@ namespace AutoScreenCapture
                         buttonScheduleTimer.Image = Properties.Resources.stop_screen_capture;
 
                         // Set the tool tip.
-                        _toolTipButtonScheduleTimer.SetToolTip(buttonScheduleTimer, "Stop the running schedule");
+                        _toolTipButtonScheduleTimer.SetToolTip(buttonScheduleTimer, "Stop this running schedule");
 
                         // Add the Stop Schedule event to Click.
                         buttonScheduleTimer.Click += ScheduleModuleList_StopSchedule;
@@ -243,7 +243,7 @@ namespace AutoScreenCapture
                         buttonScheduleTimer.Image = Properties.Resources.start_screen_capture;
 
                         // Set the tool tip.
-                        _toolTipButtonScheduleTimer.SetToolTip(buttonScheduleTimer, "Run the schedule");
+                        _toolTipButtonScheduleTimer.SetToolTip(buttonScheduleTimer, "Run this schedule");
 
                         // Add the Start Schedule event to Click.
                         buttonScheduleTimer.Click += ScheduleModuleList_StartSchedule;
