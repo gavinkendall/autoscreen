@@ -22,9 +22,10 @@ devenv ..\autoscreen_vs2019.sln /Project ..\AutoScreenCapture.csproj /Build Rele
 signtool sign /f ..\autoscreen.pfx /p Sonic2020! /fd SHA256 ..\bin\Release\AutoScreenCapture.exe
 signtool sign /f ..\autoscreen.pfx /p Sonic2020! /fd SHA256 ..\bin\Release\Renci.SshNet.dll
 signtool sign /f ..\autoscreen.pfx /p Sonic2020! /fd SHA256 ..\bin\Release\Gavin.Kendall.SFTP.dll
+signtool sign /f ..\autoscreen.pfx /p Sonic2020! /fd SHA256 ..\bin\Release\XnaFan.ImageComparison.dll
 
 :: Use the "AutoScreenCapture.exe" executable and its associated DLLs to merge them all into a single executable named "autoscreen.exe"
-ILMerge ..\bin\Release\AutoScreenCapture.exe /out:..\bin\Release\autoscreen.exe ..\bin\Release\Renci.SshNet.dll ..\bin\Release\Gavin.Kendall.SFTP.dll
+ILMerge ..\bin\Release\AutoScreenCapture.exe /out:..\bin\Release\autoscreen.exe ..\bin\Release\Renci.SshNet.dll ..\bin\Release\Gavin.Kendall.SFTP.dll ..\bin\Release\XnaFan.ImageComparison.dll
 
 :: This is necessary to get around a weird error with Visual Studio when building the installation package
 if exist "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\VSI\DisableOutOfProcBuild\DisableOutOfProcBuild.exe" (
@@ -50,6 +51,9 @@ del ..\bin\Release\Gavin.Kendall.SFTP.dll
 del ..\bin\Release\Gavin.Kendall.SFTP.pdb
 del ..\bin\Release\Renci.SshNet.dll
 del ..\bin\Release\Renci.SshNet.xml
+del ..\bin\Release\XnaFan.ImageComparison.dll
+del ..\bin\Release\XnaFan.ImageComparison.dll.config
+del ..\bin\Release\XnaFan.ImageComparison.pdb
 del ..\AutoScreenCaptureSetup\Release\setup.exe
 
 :: Grab the EXE and the MSI from their respective Release directories and move them here to the "build" directory
