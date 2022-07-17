@@ -48,7 +48,7 @@ namespace AutoScreenCapture
         DirNotFound = 2,
 
         /// <summary>
-        /// Could not save screenshot with given path because its hash may have matched with a previous hash that has already been used for an earlier screenshot
+        /// Could not save screenshot with given path because there is no enough of a difference between the current image versus the previous image
         /// </summary>
         HashDuplicate = 4,
 
@@ -257,8 +257,6 @@ namespace AutoScreenCapture
         }
 
         private DeviceOptions _device;
-
-        private StringBuilder _sb;
 
         /// <summary>
         /// The minimum capture limit.
@@ -534,8 +532,6 @@ namespace AutoScreenCapture
                             }
                         }
                     }
-
-                    screenshot.Bitmap.Dispose();
 
                     screenshot.SavedToDisk = true;
 
@@ -1045,42 +1041,23 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Gets the MD5 hash of the bitmap image based on image format.
+        /// Gets the MD5 hash of the provided text.
         /// </summary>
-        /// <param name="bitmap">The bitmap to operate on.</param>
-        /// <param name="format">The image format to use.</param>
-        /// <returns>A hash of the image.</returns>
-        public string GetMD5Hash(Bitmap bitmap, ImageFormat format)
+        /// <param name="text">The text to hash.</param>
+        /// <returns>A hash of the text.</returns>
+        public string GetMD5Hash(string text)
         {
             try
             {
-                byte[] hash = null;
-                byte[] bytes = null;
+                var md5Provider = MD5.Create();
+                StringBuilder stringBuilder = new StringBuilder();
 
-                using (MemoryStream ms = new MemoryStream())
+                foreach (byte b in md5Provider.ComputeHash(Encoding.UTF8.GetBytes(text)))
                 {
-                    bitmap.Save(ms, format.Format);
-                    bytes = ms.ToArray();
+                    stringBuilder.Append(b.ToString("x2").ToLower());
                 }
 
-                using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
-                {
-                    hash = md5.ComputeHash(bytes);
-                }
-
-                if (hash == null)
-                {
-                    return null;
-                }
-
-                _sb = new StringBuilder();
-
-                foreach (byte b in hash)
-                {
-                    _sb.Append(b.ToString("x2").ToLower());
-                }
-
-                return _sb.ToString();
+                return stringBuilder.ToString();                
             }
             catch
             {

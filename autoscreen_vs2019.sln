@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gavin.Kendall.SFTP", "Gavin
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AutoScreenCaptureSetup", "AutoScreenCaptureSetup\AutoScreenCaptureSetup.vdproj", "{4AD61299-A941-4F09-8234-38D146806AE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageComparison", "ImageComparison\ImageComparison.csproj", "{6772439E-22D0-41EF-8029-85154929EAF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{0C6E9617-7386-4D38-BEA9-F71F48226FAC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AD61299-A941-4F09-8234-38D146806AE9}.Debug|Any CPU.ActiveCfg = Debug
 		{4AD61299-A941-4F09-8234-38D146806AE9}.Release|Any CPU.ActiveCfg = Release
+		{6772439E-22D0-41EF-8029-85154929EAF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6772439E-22D0-41EF-8029-85154929EAF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6772439E-22D0-41EF-8029-85154929EAF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6772439E-22D0-41EF-8029-85154929EAF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

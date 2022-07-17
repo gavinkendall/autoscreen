@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="XnaFan.ImageComparison.ExtensionMethods">
+    <Position X="0.5" Y="2" Width="2.75" />
+    <Members>
+      <Field Name="brushes" Hidden="true" />
+      <Field Name="ColorMatrix" Hidden="true" />
+      <Field Name="DefaultFont" Hidden="true" />
+      <Method Name="ExtensionMethods" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>gAgAAIAAAEAIAAAAAAAACAAAAAAAQCAAAAAASAEAAAA=</HashCode>
+      <FileName>ExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="XnaFan.ImageComparison.ImageTool">
+    <Position X="0.5" Y="0.5" Width="5" />
+    <Members>
+      <Method Name="CheckIfFileExists" Hidden="true" />
+      <Field Name="Comparer" Hidden="true" />
+      <Method Name="GetDuplicateGroups" Hidden="true" />
+      <Method Name="GetSortedGrayscaleValues" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAgAAAAAAAAAAAABIAAAAAAABAAAAAAAAQA=</HashCode>
+      <FileName>ImageTool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

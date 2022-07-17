@@ -26,6 +26,9 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+// A library written by Jakob Krarup (https://www.codeproject.com/Articles/374386/Simple-image-comparison-in-NET)
+using XnaFan.ImageComparison;
+
 namespace AutoScreenCapture
 {
     /// <summary>
@@ -267,14 +270,6 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.OptimizeScreenCapture)
                     {
-                        // Apparently we can't hash EMF and WMF images so just add the screenshot to the collection and return true.
-                        if (screenshot.Format.Name.Equals("EMF") || screenshot.Format.Name.Equals("WMF"))
-                        {
-                            AddScreenshotToCollection(screenshot);
-
-                            return true;
-                        }
-
                         // If the screenshot already has a hash then just add it to the collection
                         // and return true because it doesn't need to be hashed again. This could happen
                         // when we're attemping to encrypt an optimized screenshot. We don't want to hash it again
@@ -286,62 +281,85 @@ namespace AutoScreenCapture
                             return true;
                         }
 
-                        // This is actually really cool ...
-
                         // We get the last screenshot of this view.
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
-                        // We generate an MD5 hash for the screenshot we're currently handling.
-                        screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
-
-                        if (string.IsNullOrEmpty(screenshot.Hash))
-                        {
-                            return false; // (just in case something went wrong with the hashing)
-                        }
-
-                        bool compareWithAnyPreviousImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
-                        bool compareWithLastImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
-
-                        // Add the screenshot to the collection and the hash to the hash list if there is no last screenshot
-                        // (since this is a new screenshot from a fresh screen capture session)
-                        if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                        // We don't have a previous image to compare with because this is the first time we're taking a screenshot.
+                        if (lastScreenshotOfThisView == null || lastScreenshotOfThisView.Bitmap == null)
                         {
                             AddScreenshotToCollection(screenshot);
-
-                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
-
-                            return true;
-                        }
-
-                        // Then we compare that hash we just generated with the list of hashes we already have and if that list of hashes
-                        // has no knowledge of the new hash then we know it's a new image. So we can add the screenshot to the collection.
-                        // This ensures we only care about screenshots that are actually different from each other and ignore screenshots
-                        // that are exactly the same as what we've already captured. This is the magic of using MD5 hashes.
-                        if (compareWithAnyPreviousImage && !AddedScreenshotHashList.ContainsKey(screenshot.Hash))
-                        {
-                            AddScreenshotToCollection(screenshot);
-
-                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
 
                             result = true;
                         }
-
-                        if (compareWithLastImage && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) &&
-                            !screenshot.Hash.Equals(lastScreenshotOfThisView.Hash))
+                        else
                         {
-                            AddScreenshotToCollection(screenshot);
+                            float imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.Bitmap);
 
-                            if (!AddedScreenshotHashList.ContainsKey(screenshot.Hash))
+                            // Dispose the bitmap from the last screenshot of this view so we don't accumulate unnecessary memory.
+                            lastScreenshotOfThisView.Bitmap.Dispose();
+
+                            if (imageDiff == -1)
                             {
-                                AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
+                                result = false;
                             }
+                            else
+                            {
+                                // Check if the image difference is greater than 70%.
+                                if (imageDiff > 0.7)
+                                {
+                                    // Generate a hash of the current screenshot's filename, the previous screenshot's filename, and the difference between the images.
+                                    screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.FilePath + ":" + lastScreenshotOfThisView.FilePath + ":" + imageDiff.ToString());
 
-                            result = true;
+                                    if (string.IsNullOrEmpty(screenshot.Hash))
+                                    {
+                                        return false; // (just in case something went wrong with the hashing)
+                                    }
+
+                                    bool compareWithAnyPreviousImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
+                                    bool compareWithLastImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
+
+                                    // Add the screenshot to the collection and the hash to the hash list if there is no last screenshot
+                                    // (since this is a new screenshot from a fresh screen capture session)
+                                    if (lastScreenshotOfThisView == null || string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                                    {
+                                        AddScreenshotToCollection(screenshot);
+
+                                        AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
+
+                                        return true;
+                                    }
+
+                                    // Then we compare that hash we just generated with the list of hashes we already have and if that list of hashes
+                                    // has no knowledge of the new hash then we know it's a new image. So we can add the screenshot to the collection.
+                                    // This ensures we only care about screenshots that are actually different from each other and ignore screenshots
+                                    // that are exactly the same as what we've already captured. This is the magic of using MD5 hashes.
+                                    if (compareWithAnyPreviousImage && !AddedScreenshotHashList.ContainsKey(screenshot.Hash))
+                                    {
+                                        AddScreenshotToCollection(screenshot);
+
+                                        AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
+
+                                        result = true;
+                                    }
+
+                                    if (compareWithLastImage && !string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) && !screenshot.Hash.Equals(lastScreenshotOfThisView.Hash))
+                                    {
+                                        AddScreenshotToCollection(screenshot);
+
+                                        if (!AddedScreenshotHashList.ContainsKey(screenshot.Hash))
+                                        {
+                                            AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
+                                        }
+
+                                        result = true;
+                                    }
+                                }
+                            }
                         }
                     }
                     else
                     {
-                        // This is for when we don't care about comparing hashes. We simply add the screenshot
+                        // This is for when we don't care about Optimize Screen Capture. We simply add the screenshot
                         // to the collection regardless if it's the exact same image as an image we've already captured.
                         AddScreenshotToCollection(screenshot);
 
@@ -698,7 +716,7 @@ namespace AutoScreenCapture
 
                 return foundScreenshot;
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }

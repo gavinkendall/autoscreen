@@ -500,6 +500,10 @@
       <Project>{0c6e9617-7386-4d38-bea9-f71f48226fac}</Project>
       <Name>Gavin.Kendall.SFTP</Name>
     </ProjectReference>
+    <ProjectReference Include="ImageComparison\ImageComparison.csproj">
+      <Project>{6772439e-22d0-41ef-8029-85154929eaf0}</Project>
+      <Name>ImageComparison</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
