@@ -278,13 +278,20 @@ namespace AutoScreenCapture
                         //    return true;
                         //}
 
+                        if (lastScreenshotOfThisView == null)
+                        {
+                            AddScreenshotToCollection(screenshot);
+
+                            return true;
+                        }
+
                         // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
                         float imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
 
-                        // Check if the image difference is greater than 70%.
-                        //if (imageDiff > 0.7)
+                        // Check if the image difference is greater than 90%.
+                        if (imageDiff > 0.9)
                         // Check if the image difference is 100%.
-                        if (imageDiff == 1)
+                        //if (imageDiff == 1)
                         {
                             AddScreenshotToCollection(screenshot);
 
