@@ -187,7 +187,7 @@ namespace AutoScreenCapture
             {
                 if (!_screenCapture.Running && screenCaptureInterval > 0)
                 {
-                    // If there was an application error just forget about it for now
+                   // If there was an application error just forget about it for now
                     // and reset the ApplicationError flag when starting a screen capture session.
                     _screenCapture.ApplicationError = false;
 

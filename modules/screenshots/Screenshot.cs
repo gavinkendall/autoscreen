@@ -109,11 +109,6 @@ namespace AutoScreenCapture
         public Bitmap Bitmap { get; set; }
 
         /// <summary>
-        /// The hash of the bitmap image associated with the screenshot.
-        /// </summary>
-        public string Hash { get; set; }
-
-        /// <summary>
         /// The percentage of image difference between the current screenshot's image and the previous screenshot's image.
         /// </summary>
         public int DiffPercentageWithPreviousImage { get; set; }

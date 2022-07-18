@@ -260,7 +260,7 @@ namespace AutoScreenCapture
 
                 Log = new Log(Settings, fileSystem, MacroParser);
                 ScreenCapture = new ScreenCapture(this, fileSystem, Log);
-                Security security = new Security();
+                Security security = new Security(fileSystem);
 
                 if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
                 {
@@ -420,7 +420,7 @@ namespace AutoScreenCapture
                     ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
                     ScreenCollection screenCollection = new ScreenCollection();
 
-                    ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, FileSystem, log);
+                    ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, FileSystem, log, security);
                     screenshotCollection.SaveToXmlFile(this);
                 }
 

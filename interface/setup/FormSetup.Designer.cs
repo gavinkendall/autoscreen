@@ -147,6 +147,9 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.trackBarImageDifference = new System.Windows.Forms.TrackBar();
+            this.labelImageDifference = new System.Windows.Forms.Label();
+            this.labelImageDifferenceSelected = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -164,6 +167,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarImageDifference)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -649,6 +653,9 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.labelImageDifferenceSelected);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.labelImageDifference);
+            this.tabPageOptimizeScreenCapture.Controls.Add(this.trackBarImageDifference);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.labelOptimizeScreenCaptureHelp);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.checkBoxOptimizeScreenCapture);
             this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
@@ -1455,6 +1462,37 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // trackBarImageDifference
+            // 
+            this.trackBarImageDifference.Location = new System.Drawing.Point(6, 103);
+            this.trackBarImageDifference.Maximum = 100;
+            this.trackBarImageDifference.Name = "trackBarImageDifference";
+            this.trackBarImageDifference.Size = new System.Drawing.Size(665, 45);
+            this.trackBarImageDifference.TabIndex = 1;
+            this.trackBarImageDifference.TabStop = false;
+            this.trackBarImageDifference.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackBarImageDifference.Value = 20;
+            this.trackBarImageDifference.Scroll += new System.EventHandler(this.trackBarImageDifference_Scroll);
+            // 
+            // labelImageDifference
+            // 
+            this.labelImageDifference.AutoSize = true;
+            this.labelImageDifference.Location = new System.Drawing.Point(6, 87);
+            this.labelImageDifference.Name = "labelImageDifference";
+            this.labelImageDifference.Size = new System.Drawing.Size(502, 13);
+            this.labelImageDifference.TabIndex = 2;
+            this.labelImageDifference.Text = "Percentage of acceptable difference between the new image captured and the previo" +
+    "us image captured:";
+            // 
+            // labelImageDifferenceSelected
+            // 
+            this.labelImageDifferenceSelected.AutoSize = true;
+            this.labelImageDifferenceSelected.Location = new System.Drawing.Point(634, 87);
+            this.labelImageDifferenceSelected.Name = "labelImageDifferenceSelected";
+            this.labelImageDifferenceSelected.Size = new System.Drawing.Size(27, 13);
+            this.labelImageDifferenceSelected.TabIndex = 3;
+            this.labelImageDifferenceSelected.Text = "20%";
+            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1500,6 +1538,7 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarImageDifference)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1578,6 +1617,8 @@
         private System.Windows.Forms.Button buttonImageFormatApplyToAllScreens;
         private System.Windows.Forms.Label labelFilenamePatternPreview;
         private System.Windows.Forms.Label labelFilenamePatternFilename;
+        private System.Windows.Forms.Label labelImageDifference;
+        private System.Windows.Forms.Label labelImageDifferenceSelected;
 
         /// <summary>
         /// The checkbox control for "Initial Capture".
@@ -1808,5 +1849,10 @@
         /// A listbox control for the process list.
         /// </summary>
         public System.Windows.Forms.ListBox listBoxProcessList;
+
+        /// <summary>
+        /// A trackbar control for the image difference percentage.
+        /// </summary>
+        public System.Windows.Forms.TrackBar trackBarImageDifference;
     }
 }

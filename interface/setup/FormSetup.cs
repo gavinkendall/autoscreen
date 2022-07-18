@@ -19,7 +19,6 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -351,6 +350,10 @@ namespace AutoScreenCapture
                     ScreenCapture.ImageFormat = "WMF";
                     _config.Settings.User.SetValueByKey("ImageFormat", "WMF");
                 }
+
+                // Optimize Screen Capture
+                _config.Settings.User.SetValueByKey("OptimizeScreenCapture", checkBoxOptimizeScreenCapture.Checked);
+                _config.Settings.User.SetValueByKey("ImageDifferencePercentage", trackBarImageDifference.Value);
 
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
 
@@ -982,6 +985,11 @@ namespace AutoScreenCapture
             _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
 
             MessageBox.Show("All regions are now using the image format \"" + ScreenCapture.ImageFormat + "\"", "Image Format Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void trackBarImageDifference_Scroll(object sender, EventArgs e)
+        {
+            labelImageDifferenceSelected.Text = trackBarImageDifference.Value.ToString() + "%";
         }
     }
 }

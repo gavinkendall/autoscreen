@@ -471,14 +471,7 @@ namespace AutoScreenCapture
                 }
                 else
                 {
-                    string hash = "hash";
-
-                    if (!string.IsNullOrEmpty(screenshot.Hash))
-                    {
-                        hash = "hash (" + screenshot.Hash + ")";
-                    }
-
-                    _log.WriteDebugMessage("Could not save screenshot with ID \"" + screenshot.Id + "\" and path \"" + screenshot.FilePath + "\" because its hash (" + hash + ") may have matched with a previous hash that has already been used for an earlier screenshot");
+                    _log.WriteDebugMessage("Could not save screenshot with ID \"" + screenshot.Id + "\" and path \"" + screenshot.FilePath + "\" because the image difference percentage with the previous screenshot's image (" + screenshot.DiffPercentageWithPreviousImage + "%) wasn't significant enough");
 
                     return returnFlag | (int)ScreenSavingErrorLevels.HashDuplicate;
                 }

@@ -49,6 +49,7 @@
     <Compile Include="PathGrayscaleTupleComparer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>

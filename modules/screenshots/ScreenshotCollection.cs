@@ -40,6 +40,7 @@ namespace AutoScreenCapture
 
         private readonly Log _log;
         private readonly Config _config;
+        private readonly Security _security;
         private readonly List<Slide> _slideList;
         private readonly List<string> _slideNameList;
         private readonly List<Screenshot> _screenshotList;
@@ -68,7 +69,7 @@ namespace AutoScreenCapture
         private const string SCREENSHOT_PROCESS_NAME = "processname";
         private const string SCREENSHOT_LABEL = "label";
         private const string SCREENSHOT_VERSION = "version";
-        private const string SCREENSHOT_HASH = "hash";
+        private const string SCREENSHOT_IMAGE_DIFF = "image_diff";
         private const string SCREENSHOT_ENCRYPTED = "encrypted";
         private const string SCREENSHOT_KEY = "key";
 
@@ -87,14 +88,14 @@ namespace AutoScreenCapture
         public Guid LastViewId { get; set; }
 
         /// <summary>
-        /// A dictionary of screenshot hash values and screenshot objects to be used when adding screenshots so we do not add duplicate screenshots while running and when OptimizeScreenCapture is set.
+        /// A list of screenshot filepaths to be used when emailing screenshots so we do not email duplicate screenshots.
         /// </summary>
-        public Dictionary<string, Screenshot> AddedScreenshotHashList { get; set; }
+        public List<string> EmailedScreenshotFilePathList { get; set; }
 
         /// <summary>
-        /// A list of screenshot hash values to be used when emailing screenshots so we do not email duplicate screenshots while running and when OptimizeScreenCapture is set.
+        /// The number of screenshots in the screenshot collection.
         /// </summary>
-        public List<string> EmailedScreenshotHashList { get; set; }
+        public int Count { get { return _screenshotList.Count; } }
 
         private void AddScreenshotToCollection(Screenshot screenshot)
         {
@@ -183,23 +184,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Gets the XML node representing the minimum date when screenshots were taken.
-        /// </summary>
-        /// <returns></returns>
-        public XmlNode GetMinDateFromXMLDocument()
-        {
-            if (xDoc != null)
-            {
-                return xDoc.SelectSingleNode(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE + "[not(. >=../preceding-sibling::" + SCREENSHOT_DATE + ") and not(. >=../following-sibling::" + SCREENSHOT_DATE + ")]");
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// A collection of screenshots.
         /// </summary>
-        public ScreenshotCollection(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, ScreenCapture screenCapture, Config config, FileSystem fileSystem, Log log)
+        public ScreenshotCollection(ImageFormatCollection imageFormatCollection, ScreenCollection screenCollection, ScreenCapture screenCapture, Config config, FileSystem fileSystem, Log log, Security security)
         {
             StringBuilder sbScreenshots = new StringBuilder();
             sbScreenshots.Append("/");
@@ -224,6 +211,7 @@ namespace AutoScreenCapture
             _screenCapture = screenCapture;
             _fileSystem = fileSystem;
             _log = log;
+            _security = security;
 
             _screenshotList = new List<Screenshot>();
             _log.WriteDebugMessage("Initialized screenshot list");
@@ -236,14 +224,22 @@ namespace AutoScreenCapture
 
             _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture", config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
 
-            AddedScreenshotHashList = new Dictionary<string, Screenshot>();
-            EmailedScreenshotHashList = new List<string>();
+            EmailedScreenshotFilePathList = new List<string>();
         }
 
         /// <summary>
-        /// The number of screenshots in the screenshot collection.
+        /// Gets the XML node representing the minimum date when screenshots were taken.
         /// </summary>
-        public int Count { get { return _screenshotList.Count; } }
+        /// <returns></returns>
+        public XmlNode GetMinDateFromXMLDocument()
+        {
+            if (xDoc != null)
+            {
+                return xDoc.SelectSingleNode(SCREENSHOT_XPATH + "/" + SCREENSHOT_DATE + "[not(. >=../preceding-sibling::" + SCREENSHOT_DATE + ") and not(. >=../following-sibling::" + SCREENSHOT_DATE + ")]");
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Adds a screenshot to the collection.
@@ -268,15 +264,9 @@ namespace AutoScreenCapture
                 {
                     if (_screenCapture.OptimizeScreenCapture)
                     {
+                        int imageDifferencePercentage = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
+
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
-
-                        // If the bitmap of the last screenshot of this view is null then we're handling the first screenshot in the current session.
-                        //if (!lastScreenshotOfThisView.SavedToDisk)
-                        //{
-                        //    AddScreenshotToCollection(screenshot);
-
-                        //    return true;
-                        //}
 
                         if (lastScreenshotOfThisView == null)
                         {
@@ -285,13 +275,51 @@ namespace AutoScreenCapture
                             return true;
                         }
 
-                        // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
-                        float imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
+                        float imageDiff = -1;
 
-                        // Check if the image difference is greater than 90%.
-                        if (imageDiff > 0.9)
-                        // Check if the image difference is 100%.
-                        //if (imageDiff == 1)
+                        // If the previous image is encrypted we need to decrypt it before doing the image comparison with it.
+                        // Then encrypt it again.
+                        if (lastScreenshotOfThisView.Encrypted)
+                        {
+                            Screenshot decryptedScreenshot = new Screenshot();
+                            Screenshot encryptedScreenshot = new Screenshot();
+
+                            decryptedScreenshot = _security.DecryptScreenshot(lastScreenshotOfThisView);
+
+                            if (decryptedScreenshot != null)
+                            {
+                                // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
+                                imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, decryptedScreenshot.FilePath);
+
+                                encryptedScreenshot = _security.EncryptScreenshot(decryptedScreenshot);
+
+                                if (encryptedScreenshot != null)
+                                {
+                                    lastScreenshotOfThisView = encryptedScreenshot;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
+                            imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
+                        }
+
+                        // Add the new screenshot to the collection if there was an error with the image comparison
+                        // since we'll treat it as if we're not using Optimize Screen Capture.
+                        if (imageDiff == -1)
+                        {
+                            AddScreenshotToCollection(screenshot);
+
+                            return true;
+                        }
+
+                        screenshot.DiffPercentageWithPreviousImage = (int)(imageDiff * 100);
+
+                        _log.WriteDebugMessage("Screenshot's image is " + screenshot.DiffPercentageWithPreviousImage + "% different compared to the previous screenshot's image (your acceptable percentage is " + imageDifferencePercentage + "%)");
+
+                        // Check if the image difference percentage is greater than or equal to the user's preferred image difference percentage.
+                        if (screenshot.DiffPercentageWithPreviousImage >= imageDifferencePercentage)
                         {
                             AddScreenshotToCollection(screenshot);
 
@@ -1068,9 +1096,9 @@ namespace AutoScreenCapture
                                                 screenshot.Label = xReader.Value;
                                                 break;
 
-                                            case SCREENSHOT_HASH:
+                                            case SCREENSHOT_IMAGE_DIFF:
                                                 xReader.Read();
-                                                screenshot.Hash = xReader.Value;
+                                                screenshot.DiffPercentageWithPreviousImage = Convert.ToInt32(xReader.Value);
                                                 break;
 
                                             case SCREENSHOT_ENCRYPTED:
@@ -1154,8 +1182,8 @@ namespace AutoScreenCapture
                                     XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
                                     xLabel.InnerText = screenshot.Label;
 
-                                    XmlElement xHash = xDoc.CreateElement(SCREENSHOT_HASH);
-                                    xHash.InnerText = screenshot.Hash;
+                                    XmlElement xImageDiff = xDoc.CreateElement(SCREENSHOT_IMAGE_DIFF);
+                                    xImageDiff.InnerText = screenshot.DiffPercentageWithPreviousImage.ToString();
 
                                     XmlElement xEncrypted = xDoc.CreateElement(SCREENSHOT_ENCRYPTED);
                                     xEncrypted.InnerText = screenshot.Encrypted.ToString();
@@ -1175,7 +1203,7 @@ namespace AutoScreenCapture
                                     xScreenshot.AppendChild(xWindowTitle);
                                     xScreenshot.AppendChild(xProcessName);
                                     xScreenshot.AppendChild(xLabel);
-                                    xScreenshot.AppendChild(xHash);
+                                    xScreenshot.AppendChild(xImageDiff);
                                     xScreenshot.AppendChild(xEncrypted);
                                     xScreenshot.AppendChild(xKey);
                                 }
@@ -1331,8 +1359,8 @@ namespace AutoScreenCapture
                             XmlElement xLabel = xDoc.CreateElement(SCREENSHOT_LABEL);
                             xLabel.InnerText = screenshot.Label;
 
-                            XmlElement xHash = xDoc.CreateElement(SCREENSHOT_HASH);
-                            xHash.InnerText = screenshot.Hash;
+                            XmlElement xImageDiff = xDoc.CreateElement(SCREENSHOT_IMAGE_DIFF);
+                            xImageDiff.InnerText = screenshot.DiffPercentageWithPreviousImage.ToString();
 
                             XmlElement xEncrypted = xDoc.CreateElement(SCREENSHOT_ENCRYPTED);
                             xEncrypted.InnerText = screenshot.Encrypted.ToString();
@@ -1351,7 +1379,7 @@ namespace AutoScreenCapture
                             xScreenshot.AppendChild(xWindowTitle);
                             xScreenshot.AppendChild(xProcessName);
                             xScreenshot.AppendChild(xLabel);
-                            xScreenshot.AppendChild(xHash);
+                            xScreenshot.AppendChild(xImageDiff);
                             xScreenshot.AppendChild(xEncrypted);
                             xScreenshot.AppendChild(xKey);
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -31,9 +30,49 @@ namespace XnaFan.ImageComparison
         {
             if (image1 != null && !string.IsNullOrEmpty(image2Path))
             {
-                Image image2 = Image.FromFile(image2Path);
+                if (!File.Exists(image2Path))
+                {
+                    return -1;
+                }
 
-                return image1.PercentageDifference(image2, threshold);
+                FileInfo fileInfo = new FileInfo(image2Path);
+
+                if (fileInfo != null)
+                {
+                    byte[] data = new byte[fileInfo.Length];
+
+                    using (FileStream fs = fileInfo.OpenRead())
+                    {
+                        fs.Read(data, 0, data.Length);
+                    }
+
+                    Image image2 = null;
+
+                    try
+                    {
+                        using (MemoryStream memstr = new MemoryStream(data))
+                        {
+                            image2 = Image.FromStream(memstr);
+                        }
+                    }
+                    catch
+                    {
+                        return -1;
+                    }
+
+                    if (image2 != null)
+                    {
+                        return image1.PercentageDifference(image2, threshold);
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+                else
+                {
+                    return -1;
+                }
             }
             else
             {

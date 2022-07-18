@@ -109,60 +109,27 @@ namespace AutoScreenCapture
 
                 if (screenshot.Encrypted)
                 {
-                    try
-                    {
-                        _security.DecryptFile(screenshot.FilePath, screenshot.FilePath + "-decrypted", screenshot.Key);
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.WriteMessage("WARNING: Error with file decryption for \"" + screenshot.FilePath + "\". Exception is " + ex);
-                    }
+                    screenshot = _security.DecryptScreenshot(screenshot);
 
-                    if (_fileSystem.FileExists(screenshot.FilePath))
+                    if (screenshot == null)
                     {
-                        if (_fileSystem.DeleteFile(screenshot.FilePath))
-                        {
-                            _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
+                        _log.WriteMessage("WARNING: Error with decryption for \"" + screenshot.FilePath + "\"");
 
-                            screenshot.Key = string.Empty;
-                            screenshot.Encrypted = false;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Cannot decrypt the file. It may be in use by another process.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                            return;
-                        }
+                        return;
                     }
                 }
                 else
                 {
-                    string key = _security.EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
+                    screenshot = _security.EncryptScreenshot(screenshot);
 
-                    if (!string.IsNullOrEmpty(key))
+                    if (screenshot == null)
                     {
-                        if (_fileSystem.FileExists(screenshot.FilePath))
-                        {
-                            if (_fileSystem.DeleteFile(screenshot.FilePath))
-                            {
-                                _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
+                        _log.WriteMessage("WARNING: Error with encryption for \"" + screenshot.FilePath + "\"");
 
-                                screenshot.Key = key;
-                                screenshot.Encrypt = false;
-                                screenshot.Encrypted = true;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Cannot encrypt the file. It may be in use by another process.", "I/O Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _log.WriteMessage("WARNING: Error with file encryption for \"" + screenshot.FilePath + "\"");
-                    }
+                    screenshot.Encrypt = false;
                 }
 
                 // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
@@ -725,7 +692,7 @@ namespace AutoScreenCapture
 
                             _formScreenshotMetadata.textBoxScreenshotPath.Text = selectedScreenshot.FilePath;
 
-                            _formScreenshotMetadata.textBoxScreenshotHash.Text = selectedScreenshot.Hash;
+                            _formScreenshotMetadata.textBoxScreenshotDiffPercentage.Text = selectedScreenshot.DiffPercentageWithPreviousImage.ToString();
 
                             _formScreenshotMetadata.textBoxScreenshotProcessName.Text = selectedScreenshot.ProcessName;
 
@@ -773,7 +740,7 @@ namespace AutoScreenCapture
             _formScreenshotMetadata.textBoxScreenshotKey.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotPath.Text = string.Empty;
             _formScreenshotMetadata.textBoxScreenshotProcessName.Text = string.Empty;
-            _formScreenshotMetadata.textBoxScreenshotHash.Text = string.Empty;
+            _formScreenshotMetadata.textBoxScreenshotDiffPercentage.Text = string.Empty;
 
             _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = string.Empty;
         }
@@ -1037,19 +1004,12 @@ namespace AutoScreenCapture
 
                 if (lastScreenshotOfThisView != null && lastScreenshotOfThisView.Slide != null && !string.IsNullOrEmpty(lastScreenshotOfThisView.FilePath))
                 {
-                    if (_screenCapture.OptimizeScreenCapture)
+                    if (!string.IsNullOrEmpty(lastScreenshotOfThisView.FilePath) && !_screenshotCollection.EmailedScreenshotFilePathList.Contains(lastScreenshotOfThisView.FilePath))
                     {
-                        if (!string.IsNullOrEmpty(lastScreenshotOfThisView.Hash) && !_screenshotCollection.EmailedScreenshotHashList.Contains(lastScreenshotOfThisView.Hash))
+                        if (EmailScreenshot(lastScreenshotOfThisView, prompt: false))
                         {
-                            if (EmailScreenshot(lastScreenshotOfThisView, prompt: false))
-                            {
-                                _screenshotCollection.EmailedScreenshotHashList.Add(lastScreenshotOfThisView.Hash);
-                            }
+                            _screenshotCollection.EmailedScreenshotFilePathList.Add(lastScreenshotOfThisView.FilePath);
                         }
-                    }
-                    else
-                    {
-                        EmailScreenshot(lastScreenshotOfThisView, prompt: false);
                     }
                 }
             }

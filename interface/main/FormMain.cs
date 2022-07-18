@@ -193,7 +193,7 @@ namespace AutoScreenCapture
 
             InitializeComponent();
 
-            _security = new Security();
+            _security = new Security(_fileSystem);
             _slideShow = new Slideshow();
             _dataConvert = new DataConvert();
 

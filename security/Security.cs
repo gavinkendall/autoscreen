@@ -31,12 +31,14 @@ namespace AutoScreenCapture
     /// </summary>
     public class Security
     {
+        private FileSystem _fileSystem;
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public Security()
+        public Security(FileSystem fileSystem)
         {
-
+            _fileSystem = fileSystem;
         }
 
         /// <summary>
@@ -83,6 +85,11 @@ namespace AutoScreenCapture
         /// <returns>The key (Base64 encoded) that was used for encryption.</returns>
         public string EncryptFile(string source, string destination)
         {
+            if (!_fileSystem.FileExists(source))
+            {
+                return string.Empty;
+            }
+
             try
             {
                 string keyBase64Encoded = string.Empty;
@@ -125,6 +132,11 @@ namespace AutoScreenCapture
         /// <param name="key">The key to use to decrypt the file.</param>
         public void DecryptFile(string source, string destination, string key)
         {
+            if (!_fileSystem.FileExists(source) || string.IsNullOrEmpty(key))
+            {
+                return;
+            }
+
             try
             {
                 byte[] keyByteArray = Convert.FromBase64String(key);
@@ -155,6 +167,72 @@ namespace AutoScreenCapture
             {
                 throw ex;
             }
+        }
+
+
+        /// <summary>
+        /// Encrypts the provided screenshot.
+        /// </summary>
+        /// <param name="screenshot">The screenshot to encrypt.</param>
+        /// <returns>The encrypted screenshot.</returns>
+        public Screenshot EncryptScreenshot(Screenshot screenshot)
+        {
+            if (!screenshot.Encrypted)
+            {
+                string key = EncryptFile(screenshot.FilePath, screenshot.FilePath + "-encrypted");
+
+                if (!string.IsNullOrEmpty(key))
+                {
+                    if (_fileSystem.FileExists(screenshot.FilePath))
+                    {
+                        if (_fileSystem.DeleteFile(screenshot.FilePath))
+                        {
+                            _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
+
+                            screenshot.Key = key;
+                            screenshot.Encrypted = true;
+
+                            return screenshot;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Decrypts the provided screenshot.
+        /// </summary>
+        /// <param name="screenshot">The screenshot to decrypt.</param>
+        public Screenshot DecryptScreenshot(Screenshot screenshot)
+        {
+            if (screenshot.Encrypted)
+            {
+                try
+                {
+                    DecryptFile(screenshot.FilePath, screenshot.FilePath + "-decrypted", screenshot.Key);
+                }
+                catch
+                {
+                    return null;
+                }
+
+                if (_fileSystem.FileExists(screenshot.FilePath))
+                {
+                    if (_fileSystem.DeleteFile(screenshot.FilePath))
+                    {
+                        _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
+
+                        screenshot.Key = string.Empty;
+                        screenshot.Encrypted = false;
+
+                        return screenshot;
+                    }
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="labelOptimizeScreenCaptureHelp.Text" xml:space="preserve">
+    <value>Determine if the screen capture session should be optimized. If it is optimized then the new image captured is compared with the previous image captured and, if the image is the same (or very similar), then the screenshot will not be saved.</value>
+  </data>
   <data name="labelScreenshotsFolderHelp.Text" xml:space="preserve">
     <value>This folder path will be used for the location of where screenshots will be saved. It will have initially been defined by the configuration file but you can change it here for your own purposes. A new Screen or Region that you add will use this folder path by default.</value>
   </data>
@@ -134,9 +137,6 @@
   </data>
   <data name="labelIntervalHelp.Text" xml:space="preserve">
     <value>Define the interval at which screenshots should be taken. The cycles can be as fast or as slow as you want. The timer starts when the Start Screen Capture button is clicked, the Start Screen Capture menu option is selected, or a scheduled start time is encountered.</value>
-  </data>
-  <data name="labelOptimizeScreenCaptureHelp.Text" xml:space="preserve">
-    <value>Determine if the screen capture session should be optimized. If it is optimized then the new image captured is compared with any previous image (or the last image) captured and, if the image is the same, then the screenshot will not be saved. A dictionary of MD5 hashes is used.</value>
   </data>
   <data name="labelScreenshotLabelHelp.Text" xml:space="preserve">
     <value>You can apply a label to each screenshot taken so that you can filter by that label when reviewing screenshots. Type your label in the text field "Screenshot Label", click the "Add To List" button, and ensure the "Apply this label to each screenshot" option is enabled.</value>
