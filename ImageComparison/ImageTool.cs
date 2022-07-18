@@ -24,17 +24,21 @@ namespace XnaFan.ImageComparison
         /// Gets the difference between two images as a percentage.
         /// </summary>
         /// <param name="image1">The first image.</param>
-        /// <param name="image2">The second image.</param>
+        /// <param name="image2Path">The path of the second image.</param>
         /// <param name="threshold">How big a difference (out of 255) will be ignored - the default is 3.</param>
         /// <returns>The difference between the two images as a percentage.</returns>
-        public static float GetPercentageDifference(Image image1, Image image2, byte threshold = 3)
+        public static float GetPercentageDifference(Image image1, string image2Path, byte threshold = 3)
         {
-            if (image1 != null && image2 != null)
+            if (image1 != null && !string.IsNullOrEmpty(image2Path))
             {
+                Image image2 = Image.FromFile(image2Path);
+
                 return image1.PercentageDifference(image2, threshold);
             }
-
-            return -1;
+            else
+            {
+                return -1;
+            }
         }
 
         /// <summary>
