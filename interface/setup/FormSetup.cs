@@ -194,9 +194,6 @@ namespace AutoScreenCapture
 
             // Optimize Screen Capture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
-            radioButtonCompareWithAnyPreviousImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
-            radioButtonCompareWithLastImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
-            buttonRefreshHashDictionary_Click(sender, e);
 
             // Application Focus
             RefreshApplicationFocusList();
@@ -985,39 +982,6 @@ namespace AutoScreenCapture
             _formRegion.RegionCollection.SaveToXmlFile(_config.Settings, _fileSystem, _log);
 
             MessageBox.Show("All regions are now using the image format \"" + ScreenCapture.ImageFormat + "\"", "Image Format Applied To All Regions", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void buttonRefreshHashDictionary_Click(object sender, EventArgs e)
-        {
-            Screenshot[] screenshotsForHashDictionary = new Screenshot[_screenshotCollection.AddedScreenshotHashList.Count];
-            _screenshotCollection.AddedScreenshotHashList.Values.CopyTo(screenshotsForHashDictionary, 0);
-            dataGridViewHashDictionary.DataSource = screenshotsForHashDictionary;
-
-            for (int i = 0; i < dataGridViewHashDictionary.Columns.Count; i++)
-            {
-                dataGridViewHashDictionary.Columns[i].Visible = false;
-            }
-
-            dataGridViewHashDictionary.Columns["Hash"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewHashDictionary.Columns["FilePath"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-
-            dataGridViewHashDictionary.Columns["Hash"].Visible = true;
-            dataGridViewHashDictionary.Columns["FilePath"].Visible = true;
-
-            dataGridViewHashDictionary.Columns["Hash"].DisplayIndex = 0;
-            dataGridViewHashDictionary.Columns["FilePath"].DisplayIndex = 1;
-        }
-
-        private void buttonClearHashDictionary_Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear the hash dictionary?", "Clear Hash Dictionary", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (dialogResult == DialogResult.Yes)
-            {
-                _screenshotCollection.AddedScreenshotHashList.Clear();
-
-                buttonRefreshHashDictionary_Click(sender, e);
-            }
         }
     }
 }

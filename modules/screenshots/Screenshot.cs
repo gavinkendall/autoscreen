@@ -114,6 +114,11 @@ namespace AutoScreenCapture
         public string Hash { get; set; }
 
         /// <summary>
+        /// The percentage of image difference between the current screenshot's image and the previous screenshot's image.
+        /// </summary>
+        public int DiffPercentageWithPreviousImage { get; set; }
+
+        /// <summary>
         /// Determines if the screenshot is encrypted.
         /// </summary>
         public bool Encrypted { get; set; }

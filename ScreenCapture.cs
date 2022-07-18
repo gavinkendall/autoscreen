@@ -258,8 +258,6 @@ namespace AutoScreenCapture
 
         private DeviceOptions _device;
 
-        private StringBuilder _sb;
-
         /// <summary>
         /// The minimum capture limit.
         /// </summary>
@@ -536,6 +534,7 @@ namespace AutoScreenCapture
                     }
 
                     screenshot.Bitmap.Dispose();
+                    screenshot.Bitmap = null;
 
                     screenshot.SavedToDisk = true;
 
@@ -1041,50 +1040,6 @@ namespace AutoScreenCapture
                 {
                     ShowWindowAsync(proc.MainWindowHandle, (int)ShowWindowCommands.Normal);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Gets the MD5 hash of the bitmap image based on image format.
-        /// </summary>
-        /// <param name="bitmap">The bitmap to operate on.</param>
-        /// <param name="format">The image format to use.</param>
-        /// <returns>A hash of the image.</returns>
-        public string GetMD5Hash(Bitmap bitmap, ImageFormat format)
-        {
-            try
-            {
-                byte[] hash = null;
-                byte[] bytes = null;
-
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    bitmap.Save(ms, format.Format);
-                    bytes = ms.ToArray();
-                }
-
-                using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
-                {
-                    hash = md5.ComputeHash(bytes);
-                }
-
-                if (hash == null)
-                {
-                    return null;
-                }
-
-                _sb = new StringBuilder();
-
-                foreach (byte b in hash)
-                {
-                    _sb.Append(b.ToString("x2").ToLower());
-                }
-
-                return _sb.ToString();
-            }
-            catch
-            {
-                return null;
             }
         }
     }

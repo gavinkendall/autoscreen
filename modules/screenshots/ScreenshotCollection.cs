@@ -258,7 +258,7 @@ namespace AutoScreenCapture
 
                 // If the bitmap image is null then we've loaded the screenshot from the screenshots.xml file
                 // and adding it to the collection otherwise we're adding the screenshot to the collection from a screen capture session.
-                if (screenshot.Bitmap == null)
+                if (screenshot.Bitmap == null && screenshot.ReferenceSaved && !screenshot.SavedToDisk)
                 {
                     AddScreenshotToCollection(screenshot);
 
@@ -270,90 +270,31 @@ namespace AutoScreenCapture
                     {
                         Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
-                        // There's no hash for the last screenshot of this view so we're handling the first screenshot in the current session.
-                        if (string.IsNullOrEmpty(lastScreenshotOfThisView.Hash))
+                        // If the bitmap of the last screenshot of this view is null then we're handling the first screenshot in the current session.
+                        //if (!lastScreenshotOfThisView.SavedToDisk)
+                        //{
+                        //    AddScreenshotToCollection(screenshot);
+
+                        //    return true;
+                        //}
+
+                        // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
+                        float imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
+
+                        // Check if the image difference is greater than 70%.
+                        //if (imageDiff > 0.7)
+                        // Check if the image difference is 100%.
+                        if (imageDiff == 1)
                         {
-                            screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
+                            AddScreenshotToCollection(screenshot);
 
-                            if (!AddedScreenshotHashList.ContainsKey(screenshot.Hash))
-                            {
-                                AddScreenshotToCollection(screenshot);
-
-                                AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
-
-                                return true;
-                            }
-                        }
-
-                        bool compareWithAnyPreviousImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
-                        bool compareWithLastImage = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
-
-                        if (compareWithAnyPreviousImage)
-                        {
-                            if (_screenshotList != null)
-                            {
-                                if (_screenshotList.Count > 0)
-                                {
-                                    lock (_screenshotList)
-                                    {
-                                        // Go through the screenshots that are in the current screen capture session.
-                                        // (any screenshots where the ReferenceSaved flag is currently false)
-                                        foreach (Screenshot screenshotFromCurrentSession in _screenshotList.Where(x => !x.ReferenceSaved))
-                                        {
-                                            if (!string.IsNullOrEmpty(screenshotFromCurrentSession.FilePath) && _fileSystem.FileExists(screenshotFromCurrentSession.FilePath))
-                                            {
-                                                // Get the percentage of difference between the images of the current screenshot and a screenshot in the current session.
-                                                float imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, screenshotFromCurrentSession.FilePath);
-
-                                                // Check if the image difference is greater than 70%.
-                                                if (imageDiff > 0.7)
-                                                {
-                                                    screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
-
-                                                    if (!AddedScreenshotHashList.ContainsKey(screenshot.Hash))
-                                                    {
-                                                        AddScreenshotToCollection(screenshot);
-
-                                                        AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
-
-                                                        return true;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        if (compareWithLastImage)
-                        {
-                            if (!string.IsNullOrEmpty(lastScreenshotOfThisView.FilePath) && _fileSystem.FileExists(lastScreenshotOfThisView.FilePath))
-                            {
-                                // Get the percentage of difference between the images of the current screenshot and the last screenshot.
-                                float imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
-
-                                // Check if the image difference is greater than 70%.
-                                if (imageDiff > 0.7)
-                                {
-                                    screenshot.Hash = _screenCapture.GetMD5Hash(screenshot.Bitmap, screenshot.Format);
-
-                                    if (!AddedScreenshotHashList.ContainsKey(screenshot.Hash))
-                                    {
-                                        AddScreenshotToCollection(screenshot);
-
-                                        AddedScreenshotHashList.Add(screenshot.Hash, screenshot);
-
-                                        return true;
-                                    }
-                                }
-                            }
+                            return true;
                         }
                     }
                     else
                     {
-                        // This is for when we don't care about comparing hashes. We simply add the screenshot
-                        // to the collection regardless if it's the exact same image as an image we've already captured.
+                        // This is for when we don't care about OptimizeScreenCapture. We simply add the screenshot
+                        // to the collection regardless if it's the exact same image as the previous image.
                         AddScreenshotToCollection(screenshot);
 
                         return true;

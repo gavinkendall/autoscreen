@@ -286,9 +286,7 @@ namespace AutoScreenCapture
 
                 // Optimize Screen Capture
                 _formSetup.checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
-                _formSetup.radioButtonCompareWithAnyPreviousImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value);
-                _formSetup.radioButtonCompareWithLastImage.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value);
-
+                
                 _formSetup.numericUpDownCaptureLimit.Value = Convert.ToInt32(_config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value);
                 _log.WriteDebugMessage("CaptureLimit = " + _formSetup.numericUpDownCaptureLimit.Value);
 
@@ -391,9 +389,7 @@ namespace AutoScreenCapture
 
                 // Optimize Screen Capture
                 _config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value = _formSetup.checkBoxOptimizeScreenCapture.Checked;
-                _config.Settings.User.GetByKey("CompareWithAnyPreviousImage", _config.Settings.DefaultSettings.CompareWithAnyPreviousImage).Value = _formSetup.radioButtonCompareWithAnyPreviousImage.Checked;
-                _config.Settings.User.GetByKey("CompareWithLastImage", _config.Settings.DefaultSettings.CompareWithLastImage).Value = _formSetup.radioButtonCompareWithLastImage.Checked;
-
+                
                 // SFTP
                 _config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _config.Settings.DefaultSettings.SFTPDeleteLocalFileAfterSuccessfulUpload).Value = _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked;
                 _config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value = _formFileTransferSettings.checkBoxKeepFailedUploads.Checked;

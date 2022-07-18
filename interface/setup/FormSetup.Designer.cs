@@ -73,11 +73,6 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
-            this.dataGridViewHashDictionary = new System.Windows.Forms.DataGridView();
-            this.buttonRefreshHashDictionary = new System.Windows.Forms.Button();
-            this.buttonClearHashDictionary = new System.Windows.Forms.Button();
-            this.radioButtonCompareWithLastImage = new System.Windows.Forms.RadioButton();
-            this.radioButtonCompareWithAnyPreviousImage = new System.Windows.Forms.RadioButton();
             this.labelOptimizeScreenCaptureHelp = new System.Windows.Forms.Label();
             this.checkBoxOptimizeScreenCapture = new System.Windows.Forms.CheckBox();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
@@ -162,7 +157,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             this.tabPageOptimizeScreenCapture.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).BeginInit();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
@@ -655,11 +649,6 @@
             // 
             // tabPageOptimizeScreenCapture
             // 
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.dataGridViewHashDictionary);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.buttonRefreshHashDictionary);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.buttonClearHashDictionary);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.radioButtonCompareWithLastImage);
-            this.tabPageOptimizeScreenCapture.Controls.Add(this.radioButtonCompareWithAnyPreviousImage);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.labelOptimizeScreenCaptureHelp);
             this.tabPageOptimizeScreenCapture.Controls.Add(this.checkBoxOptimizeScreenCapture);
             this.tabPageOptimizeScreenCapture.Location = new System.Drawing.Point(4, 22);
@@ -669,58 +658,6 @@
             this.tabPageOptimizeScreenCapture.TabIndex = 6;
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
-            // 
-            // dataGridViewHashDictionary
-            // 
-            this.dataGridViewHashDictionary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewHashDictionary.Location = new System.Drawing.Point(6, 75);
-            this.dataGridViewHashDictionary.Name = "dataGridViewHashDictionary";
-            this.dataGridViewHashDictionary.Size = new System.Drawing.Size(665, 143);
-            this.dataGridViewHashDictionary.TabIndex = 6;
-            // 
-            // buttonRefreshHashDictionary
-            // 
-            this.buttonRefreshHashDictionary.Location = new System.Drawing.Point(347, 224);
-            this.buttonRefreshHashDictionary.Name = "buttonRefreshHashDictionary";
-            this.buttonRefreshHashDictionary.Size = new System.Drawing.Size(159, 23);
-            this.buttonRefreshHashDictionary.TabIndex = 5;
-            this.buttonRefreshHashDictionary.TabStop = false;
-            this.buttonRefreshHashDictionary.Text = "Refresh Hash Dictionary";
-            this.buttonRefreshHashDictionary.UseVisualStyleBackColor = true;
-            this.buttonRefreshHashDictionary.Click += new System.EventHandler(this.buttonRefreshHashDictionary_Click);
-            // 
-            // buttonClearHashDictionary
-            // 
-            this.buttonClearHashDictionary.Location = new System.Drawing.Point(512, 224);
-            this.buttonClearHashDictionary.Name = "buttonClearHashDictionary";
-            this.buttonClearHashDictionary.Size = new System.Drawing.Size(159, 23);
-            this.buttonClearHashDictionary.TabIndex = 4;
-            this.buttonClearHashDictionary.TabStop = false;
-            this.buttonClearHashDictionary.Text = "Clear Hash Dictionary";
-            this.buttonClearHashDictionary.UseVisualStyleBackColor = true;
-            this.buttonClearHashDictionary.Click += new System.EventHandler(this.buttonClearHashDictionary_Click);
-            // 
-            // radioButtonCompareWithLastImage
-            // 
-            this.radioButtonCompareWithLastImage.AutoSize = true;
-            this.radioButtonCompareWithLastImage.Location = new System.Drawing.Point(356, 52);
-            this.radioButtonCompareWithLastImage.Name = "radioButtonCompareWithLastImage";
-            this.radioButtonCompareWithLastImage.Size = new System.Drawing.Size(139, 17);
-            this.radioButtonCompareWithLastImage.TabIndex = 2;
-            this.radioButtonCompareWithLastImage.TabStop = true;
-            this.radioButtonCompareWithLastImage.Text = "Compare with last image";
-            this.radioButtonCompareWithLastImage.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonCompareWithAnyPreviousImage
-            // 
-            this.radioButtonCompareWithAnyPreviousImage.AutoSize = true;
-            this.radioButtonCompareWithAnyPreviousImage.Location = new System.Drawing.Point(167, 52);
-            this.radioButtonCompareWithAnyPreviousImage.Name = "radioButtonCompareWithAnyPreviousImage";
-            this.radioButtonCompareWithAnyPreviousImage.Size = new System.Drawing.Size(183, 17);
-            this.radioButtonCompareWithAnyPreviousImage.TabIndex = 1;
-            this.radioButtonCompareWithAnyPreviousImage.TabStop = true;
-            this.radioButtonCompareWithAnyPreviousImage.Text = "Compare with any previous image";
-            this.radioButtonCompareWithAnyPreviousImage.UseVisualStyleBackColor = true;
             // 
             // labelOptimizeScreenCaptureHelp
             // 
@@ -1551,7 +1488,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
             this.tabPageOptimizeScreenCapture.ResumeLayout(false);
             this.tabPageOptimizeScreenCapture.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewHashDictionary)).EndInit();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
@@ -1872,18 +1808,5 @@
         /// A listbox control for the process list.
         /// </summary>
         public System.Windows.Forms.ListBox listBoxProcessList;
-
-        /// <summary>
-        /// A radio button for comparing with any previous image for Optimize Screen Capture.
-        /// </summary>
-        public System.Windows.Forms.RadioButton radioButtonCompareWithAnyPreviousImage;
-
-        /// <summary>
-        /// A radio button for comparing with the last image for Optimize Screen Capture.
-        /// </summary>
-        public System.Windows.Forms.RadioButton radioButtonCompareWithLastImage;
-        private System.Windows.Forms.Button buttonClearHashDictionary;
-        private System.Windows.Forms.Button buttonRefreshHashDictionary;
-        private System.Windows.Forms.DataGridView dataGridViewHashDictionary;
     }
 }

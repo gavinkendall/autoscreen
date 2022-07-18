@@ -72,8 +72,6 @@ namespace AutoScreenCapture
         internal readonly int DashboardGroupBoxSize = 250;
         internal readonly int SelectedTabPageIndex = 0;
         internal readonly int SelectedModuleIndex = 0;
-        internal readonly bool CompareWithAnyPreviousImage = true;
-        internal readonly bool CompareWithLastImage = false;
         internal readonly bool SFTPDeleteLocalFileAfterSuccessfulUpload = false;
         internal readonly bool SFTPKeepFailedUploads = true;
 
