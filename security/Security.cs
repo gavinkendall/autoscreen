@@ -165,15 +165,9 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                if (_fileSystem.FileExists(destination))
-                {
-                    _fileSystem.DeleteFile(destination);
-                }
-
                 throw ex;
             }
         }
-
 
         /// <summary>
         /// Encrypts the provided screenshot.
@@ -195,6 +189,7 @@ namespace AutoScreenCapture
                             _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
 
                             screenshot.Key = key;
+                            screenshot.Encrypt = false;
                             screenshot.Encrypted = true;
 
                             return screenshot;
@@ -220,7 +215,7 @@ namespace AutoScreenCapture
                 }
                 catch
                 {
-                    return null;
+
                 }
 
                 if (_fileSystem.FileExists(screenshot.FilePath))

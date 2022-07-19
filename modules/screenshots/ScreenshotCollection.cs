@@ -96,41 +96,7 @@ namespace AutoScreenCapture
         /// The number of screenshots in the screenshot collection.
         /// </summary>
         public int Count { get { return _screenshotList.Count; } }
-
-        private void AddScreenshotToCollection(Screenshot screenshot)
-        {
-            lock (_screenshotList)
-            {
-                // Add the screenshot to the screenshot collection.
-                if (screenshot != null && !string.IsNullOrEmpty(screenshot.FilePath))
-                {
-                    _screenshotList.Add(screenshot);
-
-                    // Slides are a little different because a single slide can potentially have many screenshots associated with it
-                    // depending on the number of screens and regions that were used when screenshots were taken at the time.
-                    // So you're likely going to see multiple screenshots with the same "slide name".
-                    if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
-                    {
-                        if (!_slideNameList.Contains(screenshot.Slide.Name))
-                        {
-                            _slideNameList.Add(screenshot.Slide.Name);
-
-                            // Make sure that "Slide" gets the same data as what "screenshot" has
-                            // so we can display the appropriate information in the screenshots list
-                            // based on the Filter selection.
-                            screenshot.Slide.ImageFormat = screenshot.Format.Name;
-                            screenshot.Slide.Label = screenshot.Label;
-                            screenshot.Slide.ProcessName = screenshot.ProcessName;
-                            screenshot.Slide.WindowTitle = screenshot.WindowTitle;
-
-                            _slideList.Add(screenshot.Slide);
-                        }
-                    }
-
-                    LastViewId = screenshot.ViewId;
-                }
-            }
-        }
+                
 
         /// <summary>
         /// Delete all the screenshots, associated slides, and files based on the given list of screenshots but not the files that are still in the failed uploads dictionary.
@@ -245,6 +211,45 @@ namespace AutoScreenCapture
         /// Adds a screenshot to the collection.
         /// </summary>
         /// <param name="screenshot">The screenshot to add to the collection.</param>
+        public void AddScreenshotToCollection(Screenshot screenshot)
+        {
+            lock (_screenshotList)
+            {
+                // Add the screenshot to the screenshot collection.
+                if (screenshot != null && !string.IsNullOrEmpty(screenshot.FilePath))
+                {
+                    _screenshotList.Add(screenshot);
+
+                    // Slides are a little different because a single slide can potentially have many screenshots associated with it
+                    // depending on the number of screens and regions that were used when screenshots were taken at the time.
+                    // So you're likely going to see multiple screenshots with the same "slide name".
+                    if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name))
+                    {
+                        if (!_slideNameList.Contains(screenshot.Slide.Name))
+                        {
+                            _slideNameList.Add(screenshot.Slide.Name);
+
+                            // Make sure that "Slide" gets the same data as what "screenshot" has
+                            // so we can display the appropriate information in the screenshots list
+                            // based on the Filter selection.
+                            screenshot.Slide.ImageFormat = screenshot.Format.Name;
+                            screenshot.Slide.Label = screenshot.Label;
+                            screenshot.Slide.ProcessName = screenshot.ProcessName;
+                            screenshot.Slide.WindowTitle = screenshot.WindowTitle;
+
+                            _slideList.Add(screenshot.Slide);
+                        }
+                    }
+
+                    LastViewId = screenshot.ViewId;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds a screenshot to the collection.
+        /// </summary>
+        /// <param name="screenshot">The screenshot to add to the collection.</param>
         public bool Add(Screenshot screenshot)
         {
             try
@@ -252,88 +257,77 @@ namespace AutoScreenCapture
                 // We want to keep track of what version of the application this screenshot is associated with.
                 screenshot.Version = _config.Settings.ApplicationVersion;
 
-                // If the bitmap image is null then we've loaded the screenshot from the screenshots.xml file
-                // and adding it to the collection otherwise we're adding the screenshot to the collection from a screen capture session.
-                if (screenshot.Bitmap == null && screenshot.ReferenceSaved && !screenshot.SavedToDisk)
+                if (_screenCapture.OptimizeScreenCapture)
                 {
-                    AddScreenshotToCollection(screenshot);
+                    int imageDifferencePercentage = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
 
-                    return true;
-                }
-                else
-                {
-                    if (_screenCapture.OptimizeScreenCapture)
+                    Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
+
+                    if (lastScreenshotOfThisView == null)
                     {
-                        int imageDifferencePercentage = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
-
-                        Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
-
-                        if (lastScreenshotOfThisView == null)
-                        {
-                            AddScreenshotToCollection(screenshot);
-
-                            return true;
-                        }
-
-                        float imageDiff = -1;
-
-                        // If the previous image is encrypted we need to decrypt it before doing the image comparison with it.
-                        // Then encrypt it again.
-                        if (lastScreenshotOfThisView.Encrypted)
-                        {
-                            Screenshot decryptedScreenshot = new Screenshot();
-                            Screenshot encryptedScreenshot = new Screenshot();
-
-                            decryptedScreenshot = _security.DecryptScreenshot(lastScreenshotOfThisView);
-
-                            if (decryptedScreenshot != null)
-                            {
-                                // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
-                                imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, decryptedScreenshot.FilePath);
-
-                                encryptedScreenshot = _security.EncryptScreenshot(decryptedScreenshot);
-
-                                if (encryptedScreenshot != null)
-                                {
-                                    lastScreenshotOfThisView = encryptedScreenshot;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
-                            imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
-                        }
-
-                        // Add the new screenshot to the collection if there was an error with the image comparison
-                        // since we'll treat it as if we're not using Optimize Screen Capture.
-                        if (imageDiff == -1)
-                        {
-                            AddScreenshotToCollection(screenshot);
-
-                            return true;
-                        }
-
-                        screenshot.DiffPercentageWithPreviousImage = (int)(imageDiff * 100);
-
-                        _log.WriteDebugMessage("Screenshot's image is " + screenshot.DiffPercentageWithPreviousImage + "% different compared to the previous screenshot's image (your acceptable percentage is " + imageDifferencePercentage + "%)");
-
-                        // Check if the image difference percentage is greater than or equal to the user's preferred image difference percentage.
-                        if (screenshot.DiffPercentageWithPreviousImage >= imageDifferencePercentage)
-                        {
-                            AddScreenshotToCollection(screenshot);
-
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        // This is for when we don't care about OptimizeScreenCapture. We simply add the screenshot
-                        // to the collection regardless if it's the exact same image as the previous image.
                         AddScreenshotToCollection(screenshot);
 
                         return true;
                     }
+
+                    float imageDiff = -1;
+
+                    // If the previous image is encrypted we need to decrypt it before doing the image comparison with it.
+                    // Then encrypt it again.
+                    if (lastScreenshotOfThisView.Encrypted)
+                    {
+                        Screenshot decryptedScreenshot = new Screenshot();
+                        Screenshot encryptedScreenshot = new Screenshot();
+
+                        decryptedScreenshot = _security.DecryptScreenshot(lastScreenshotOfThisView);
+
+                        if (decryptedScreenshot != null)
+                        {
+                            // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
+                            imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, decryptedScreenshot.FilePath);
+
+                            encryptedScreenshot = _security.EncryptScreenshot(decryptedScreenshot);
+
+                            if (encryptedScreenshot != null)
+                            {
+                                lastScreenshotOfThisView = encryptedScreenshot;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
+                        imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, lastScreenshotOfThisView.FilePath);
+                    }
+
+                    // Add the new screenshot to the collection if there was an error with the image comparison
+                    // since we'll treat it as if we're not using Optimize Screen Capture.
+                    if (imageDiff == -1)
+                    {
+                        AddScreenshotToCollection(screenshot);
+
+                        return true;
+                    }
+
+                    screenshot.DiffPercentageWithPreviousImage = (int)(imageDiff * 100);
+
+                    _log.WriteDebugMessage("Screenshot's image is " + screenshot.DiffPercentageWithPreviousImage + "% different compared to the previous screenshot's image (your acceptable percentage is " + imageDifferencePercentage + "%)");
+
+                    // Check if the image difference percentage is greater than or equal to the user's preferred image difference percentage.
+                    if (screenshot.DiffPercentageWithPreviousImage >= imageDifferencePercentage)
+                    {
+                        AddScreenshotToCollection(screenshot);
+
+                        return true;
+                    }
+                }
+                else
+                {
+                    // This is for when we don't care about OptimizeScreenCapture. We simply add the screenshot
+                    // to the collection regardless if it's the exact same image as the previous image.
+                    AddScreenshotToCollection(screenshot);
+
+                    return true;
                 }
 
                 return false;
@@ -605,6 +599,16 @@ namespace AutoScreenCapture
             }
 
             return localSlideList;
+        }
+
+        /// <summary>
+        /// Gets a screenshot based on its id.
+        /// </summary>
+        /// <param name="id">The Id of the screenshot to get.</param>
+        /// <returns>The screenshot that matches with the given Id.</returns>
+        public Screenshot GetScreenshot(Guid id)
+        {
+            return _screenshotList.Where(x => x.Id.Equals(id)).FirstOrDefault();
         }
 
         /// <summary>
@@ -1224,7 +1228,7 @@ namespace AutoScreenCapture
                                     // A screenshot flagged with a "ReferenceSaved" value of "false" will be treated as a new screenshot that should be saved to the file.
                                     screenshot.ReferenceSaved = true;
 
-                                    Add(screenshot);
+                                    AddScreenshotToCollection(screenshot);
                                 }
                             }
                         }

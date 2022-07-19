@@ -372,11 +372,9 @@ namespace AutoScreenCapture
                                 {
                                     _fileSystem.MoveFile(screenshot.FilePath + "-encrypted", screenshot.FilePath);
 
-                                    screenshot.Key = key;
-                                    screenshot.Encrypt = false;
-                                    screenshot.Encrypted = true;
-
-                                    UpdateScreenshotCollection(screenshot);
+                                    _screenshotCollection.GetScreenshot(screenshot.Id).Encrypted = true;
+                                    _screenshotCollection.GetScreenshot(screenshot.Id).Key = key;
+                                    _screenshotCollection.GetScreenshot(screenshot.Id).ReferenceSaved = false;
                                 }
                             }
                         }
@@ -432,36 +430,14 @@ namespace AutoScreenCapture
                             {
                                 _fileSystem.MoveFile(screenshot.FilePath + "-decrypted", screenshot.FilePath);
 
-                                screenshot.Key = string.Empty;
-                                screenshot.Encrypted = false;
-
-                                UpdateScreenshotCollection(screenshot);
+                                _screenshotCollection.GetScreenshot(screenshot.Id).Encrypted = false;
+                                _screenshotCollection.GetScreenshot(screenshot.Id).Key = string.Empty;
+                                _screenshotCollection.GetScreenshot(screenshot.Id).ReferenceSaved = false;
                             }
                         }
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Updates the screenshot collection with the given changed screenshot.
-        /// </summary>
-        /// <param name="screenshot">The changed screenshot to be given to the collection</param>
-        private void UpdateScreenshotCollection(Screenshot screenshot)
-        {
-            // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
-            // property to false whenever a screenshot has been encrypted or decrypted (because its data has changed).
-            screenshot.ReferenceSaved = false;
-
-            // Because this screenshot's data has changed there's a collection and an internal XML document that needs to be updated so the best way
-            // to do this is by removing the "old" screenshot from the collection and then adding the "new" screenshot (with the updated data) back in.
-            // There are XML nodes to manage and a few other things to take care of. It's not a simple operation.
-
-            // Remove the screenshot from the screenshot collection.
-            _screenshotCollection.Remove(screenshot);
-
-            // Add it back in.
-            _screenshotCollection.Add(screenshot);
         }
 
         /// <summary>

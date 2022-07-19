@@ -82,6 +82,8 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void encryptDecryptScreenshot_Click(object sender, EventArgs e)
         {
+            ToolStripButton toolStripButton = (ToolStripButton)sender;
+
             Screenshot screenshot = null;
 
             Slide selectedSlide = _slideShow.SelectedSlide;
@@ -107,44 +109,35 @@ namespace AutoScreenCapture
                     return;
                 }
 
-                if (screenshot.Encrypted)
+                if (toolStripButton.Text.Equals("Decrypt") && screenshot.Encrypted)
                 {
-                    screenshot = _security.DecryptScreenshot(screenshot);
+                    Screenshot decryptedScreenshot = _security.DecryptScreenshot(screenshot);
 
-                    if (screenshot == null)
+                    if (decryptedScreenshot != null)
                     {
-                        _log.WriteMessage("WARNING: Error with decryption for \"" + screenshot.FilePath + "\"");
+                        _screenshotCollection.GetScreenshot(screenshot.Id).Encrypted = false;
+                        _screenshotCollection.GetScreenshot(screenshot.Id).Key = string.Empty;
 
-                        return;
+                        // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
+                        // property to false whenever a screenshot has been encrypted or decrypted (because its data has changed).
+                        _screenshotCollection.GetScreenshot(screenshot.Id).ReferenceSaved = false;
                     }
                 }
-                else
+
+                if (toolStripButton.Text.Equals("Encrypt") && !screenshot.Encrypted)
                 {
-                    screenshot = _security.EncryptScreenshot(screenshot);
+                    Screenshot encryptedScreenshot = _security.EncryptScreenshot(screenshot);
 
-                    if (screenshot == null)
+                    if (encryptedScreenshot != null)
                     {
-                        _log.WriteMessage("WARNING: Error with encryption for \"" + screenshot.FilePath + "\"");
+                        _screenshotCollection.GetScreenshot(screenshot.Id).Encrypted = true;
+                        _screenshotCollection.GetScreenshot(screenshot.Id).Key = encryptedScreenshot.Key;
 
-                        return;
+                        // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
+                        // property to false whenever a screenshot has been encrypted or decrypted (because its data has changed).
+                        _screenshotCollection.GetScreenshot(screenshot.Id).ReferenceSaved = false;
                     }
-
-                    screenshot.Encrypt = false;
                 }
-
-                // We need to make sure this screenshot's reference is saved to the screenshots.xml file so set this
-                // property to false whenever a screenshot has been encrypted or decrypted (because its data has changed).
-                screenshot.ReferenceSaved = false;
-
-                // Because this screenshot's data has changed there's a collection and an internal XML document that needs to be updated so the best way
-                // to do this is by removing the "old" screenshot from the collection and then adding the "new" screenshot (with the updated data) back in.
-                // There are XML nodes to manage and a few other things to take care of. It's not a simple operation.
-
-                // Remove the screenshot from the screenshot collection.
-                _screenshotCollection.Remove(screenshot);
-
-                // Add it back in.
-                _screenshotCollection.Add(screenshot);
 
                 ShowScreenshotBySlideIndex();
             }
@@ -718,7 +711,7 @@ namespace AutoScreenCapture
                         toolStripTextBox.BackColor = Color.LightYellow;
                         toolStripTextBox.ToolTipText = string.Empty;
                         toolstripButtonOpenFolder.Enabled = false;
-                        
+
                         _formScreenshotMetadata.toolStripStatusLabelScreenshotMetadata.Text = "A screenshot could not be found. Perhaps a screenshot has yet to be captured for this component.";
                     }
                 }
