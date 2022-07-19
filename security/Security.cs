@@ -165,6 +165,11 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
+                if (_fileSystem.FileExists(destination))
+                {
+                    _fileSystem.DeleteFile(destination);
+                }
+
                 throw ex;
             }
         }

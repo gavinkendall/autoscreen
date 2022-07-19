@@ -73,6 +73,9 @@
             this.labelMinutesInterval = new System.Windows.Forms.Label();
             this.labelSecondsInterval = new System.Windows.Forms.Label();
             this.tabPageOptimizeScreenCapture = new System.Windows.Forms.TabPage();
+            this.labelImageDifferenceSelected = new System.Windows.Forms.Label();
+            this.labelImageDifference = new System.Windows.Forms.Label();
+            this.trackBarImageDifference = new System.Windows.Forms.TrackBar();
             this.labelOptimizeScreenCaptureHelp = new System.Windows.Forms.Label();
             this.checkBoxOptimizeScreenCapture = new System.Windows.Forms.CheckBox();
             this.tabPageLabels = new System.Windows.Forms.TabPage();
@@ -147,9 +150,6 @@
             this.comboBoxKeyboardShortcutCaptureNowArchiveModifier2 = new System.Windows.Forms.ComboBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.trackBarImageDifference = new System.Windows.Forms.TrackBar();
-            this.labelImageDifference = new System.Windows.Forms.Label();
-            this.labelImageDifferenceSelected = new System.Windows.Forms.Label();
             this.tabControlSetup.SuspendLayout();
             this.tabPageScreenshotsFolder.SuspendLayout();
             this.tabPageFilenamePattern.SuspendLayout();
@@ -160,6 +160,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutesInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).BeginInit();
             this.tabPageOptimizeScreenCapture.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarImageDifference)).BeginInit();
             this.tabPageLabels.SuspendLayout();
             this.tabPageActiveWindowTitle.SuspendLayout();
             this.tabPageApplicationFocus.SuspendLayout();
@@ -167,7 +168,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownApplicationFocusDelayBefore)).BeginInit();
             this.tabPageSecurity.SuspendLayout();
             this.tabPageKeyboardShortcuts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarImageDifference)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlSetup
@@ -665,6 +665,36 @@
             this.tabPageOptimizeScreenCapture.TabIndex = 6;
             this.tabPageOptimizeScreenCapture.Text = "Optimize Screen Capture";
             this.tabPageOptimizeScreenCapture.UseVisualStyleBackColor = true;
+            // 
+            // labelImageDifferenceSelected
+            // 
+            this.labelImageDifferenceSelected.AutoSize = true;
+            this.labelImageDifferenceSelected.Location = new System.Drawing.Point(634, 87);
+            this.labelImageDifferenceSelected.Name = "labelImageDifferenceSelected";
+            this.labelImageDifferenceSelected.Size = new System.Drawing.Size(0, 13);
+            this.labelImageDifferenceSelected.TabIndex = 3;
+            // 
+            // labelImageDifference
+            // 
+            this.labelImageDifference.AutoSize = true;
+            this.labelImageDifference.Location = new System.Drawing.Point(6, 87);
+            this.labelImageDifference.Name = "labelImageDifference";
+            this.labelImageDifference.Size = new System.Drawing.Size(502, 13);
+            this.labelImageDifference.TabIndex = 2;
+            this.labelImageDifference.Text = "Percentage of acceptable difference between the new image captured and the previo" +
+    "us image captured:";
+            // 
+            // trackBarImageDifference
+            // 
+            this.trackBarImageDifference.Location = new System.Drawing.Point(6, 103);
+            this.trackBarImageDifference.Maximum = 100;
+            this.trackBarImageDifference.Name = "trackBarImageDifference";
+            this.trackBarImageDifference.Size = new System.Drawing.Size(665, 45);
+            this.trackBarImageDifference.TabIndex = 1;
+            this.trackBarImageDifference.TabStop = false;
+            this.trackBarImageDifference.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackBarImageDifference.Value = 20;
+            this.trackBarImageDifference.Scroll += new System.EventHandler(this.trackBarImageDifference_Scroll);
             // 
             // labelOptimizeScreenCaptureHelp
             // 
@@ -1462,37 +1492,6 @@
             this.labelHelp.TabIndex = 33;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // trackBarImageDifference
-            // 
-            this.trackBarImageDifference.Location = new System.Drawing.Point(6, 103);
-            this.trackBarImageDifference.Maximum = 100;
-            this.trackBarImageDifference.Name = "trackBarImageDifference";
-            this.trackBarImageDifference.Size = new System.Drawing.Size(665, 45);
-            this.trackBarImageDifference.TabIndex = 1;
-            this.trackBarImageDifference.TabStop = false;
-            this.trackBarImageDifference.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarImageDifference.Value = 20;
-            this.trackBarImageDifference.Scroll += new System.EventHandler(this.trackBarImageDifference_Scroll);
-            // 
-            // labelImageDifference
-            // 
-            this.labelImageDifference.AutoSize = true;
-            this.labelImageDifference.Location = new System.Drawing.Point(6, 87);
-            this.labelImageDifference.Name = "labelImageDifference";
-            this.labelImageDifference.Size = new System.Drawing.Size(502, 13);
-            this.labelImageDifference.TabIndex = 2;
-            this.labelImageDifference.Text = "Percentage of acceptable difference between the new image captured and the previo" +
-    "us image captured:";
-            // 
-            // labelImageDifferenceSelected
-            // 
-            this.labelImageDifferenceSelected.AutoSize = true;
-            this.labelImageDifferenceSelected.Location = new System.Drawing.Point(634, 87);
-            this.labelImageDifferenceSelected.Name = "labelImageDifferenceSelected";
-            this.labelImageDifferenceSelected.Size = new System.Drawing.Size(27, 13);
-            this.labelImageDifferenceSelected.TabIndex = 3;
-            this.labelImageDifferenceSelected.Text = "20%";
-            // 
             // FormSetup
             // 
             this.AcceptButton = this.buttonOK;
@@ -1526,6 +1525,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSecondsInterval)).EndInit();
             this.tabPageOptimizeScreenCapture.ResumeLayout(false);
             this.tabPageOptimizeScreenCapture.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarImageDifference)).EndInit();
             this.tabPageLabels.ResumeLayout(false);
             this.tabPageLabels.PerformLayout();
             this.tabPageActiveWindowTitle.ResumeLayout(false);
@@ -1538,7 +1538,6 @@
             this.tabPageSecurity.PerformLayout();
             this.tabPageKeyboardShortcuts.ResumeLayout(false);
             this.tabPageKeyboardShortcuts.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarImageDifference)).EndInit();
             this.ResumeLayout(false);
 
         }

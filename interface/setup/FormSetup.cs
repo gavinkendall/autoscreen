@@ -193,6 +193,8 @@ namespace AutoScreenCapture
 
             // Optimize Screen Capture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
+            trackBarImageDifference.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
+            labelImageDifferenceSelected.Text = trackBarImageDifference.Value.ToString() + "%";
 
             // Application Focus
             RefreshApplicationFocusList();

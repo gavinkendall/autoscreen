@@ -234,7 +234,7 @@
             this.textBoxScreenshotKey.Location = new System.Drawing.Point(92, 140);
             this.textBoxScreenshotKey.Name = "textBoxScreenshotKey";
             this.textBoxScreenshotKey.ReadOnly = true;
-            this.textBoxScreenshotKey.Size = new System.Drawing.Size(261, 20);
+            this.textBoxScreenshotKey.Size = new System.Drawing.Size(313, 20);
             this.textBoxScreenshotKey.TabIndex = 23;
             this.textBoxScreenshotKey.TabStop = false;
             // 
@@ -269,21 +269,21 @@
             // textBoxScreenshotDiffPercentage
             // 
             this.textBoxScreenshotDiffPercentage.BackColor = System.Drawing.Color.White;
-            this.textBoxScreenshotDiffPercentage.Location = new System.Drawing.Point(568, 140);
+            this.textBoxScreenshotDiffPercentage.Location = new System.Drawing.Point(577, 140);
             this.textBoxScreenshotDiffPercentage.Name = "textBoxScreenshotDiffPercentage";
             this.textBoxScreenshotDiffPercentage.ReadOnly = true;
-            this.textBoxScreenshotDiffPercentage.Size = new System.Drawing.Size(41, 20);
+            this.textBoxScreenshotDiffPercentage.Size = new System.Drawing.Size(32, 20);
             this.textBoxScreenshotDiffPercentage.TabIndex = 27;
             this.textBoxScreenshotDiffPercentage.TabStop = false;
             // 
             // labelScreenshotDiffPercentage
             // 
             this.labelScreenshotDiffPercentage.AutoSize = true;
-            this.labelScreenshotDiffPercentage.Location = new System.Drawing.Point(370, 143);
+            this.labelScreenshotDiffPercentage.Location = new System.Drawing.Point(411, 143);
             this.labelScreenshotDiffPercentage.Name = "labelScreenshotDiffPercentage";
-            this.labelScreenshotDiffPercentage.Size = new System.Drawing.Size(192, 13);
+            this.labelScreenshotDiffPercentage.Size = new System.Drawing.Size(160, 13);
             this.labelScreenshotDiffPercentage.TabIndex = 28;
-            this.labelScreenshotDiffPercentage.Text = "Image Difference With Previous Image:";
+            this.labelScreenshotDiffPercentage.Text = "Difference With Previous Image:";
             // 
             // FormScreenshotMetadata
             // 

@@ -230,7 +230,7 @@ namespace AutoScreenCapture
                     _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
                     _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "] " +
                     (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
-                    (_screenCapture.OptimizeScreenCapture ? "[optimized]" : "[not optimized]");
+                    (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDifference.Value + "% tolerant)]" : "[not optimized]");
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -258,7 +258,7 @@ namespace AutoScreenCapture
                         if (_screenCapture.OptimizeScreenCapture)
                         {
                             // System tray icon is green if taking optimized screenshots.
-                            takingScreenshotsMessage = "Taking screenshots [optimized]";
+                            takingScreenshotsMessage = "Taking screenshots [optimized (" + _formSetup.trackBarImageDifference.Value + "% tolerant)]";
                             notifyIcon.Icon = Resources.autoscreen_running_optimized;
                         }
                         else
