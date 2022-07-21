@@ -69,7 +69,7 @@ namespace AutoScreenCapture
         internal readonly bool SaveScreenshotRefs = true;
         internal readonly bool Preview = true;
         internal readonly bool OptimizeScreenCapture = false;
-        internal readonly int ImageDifferencePercentage = 20;
+        internal readonly int ImageDiffTolerance = 20;
         internal readonly int DashboardGroupBoxSize = 250;
         internal readonly int SelectedTabPageIndex = 0;
         internal readonly int SelectedModuleIndex = 0;

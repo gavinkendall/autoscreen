@@ -424,13 +424,13 @@ namespace AutoScreenCapture
             // ScreenSavingErrorLevels enum written by Oskars Grauzis (https://github.com/grauziitisos)
             bool screenSaved = errorLevel == (int)ScreenSavingErrorLevels.None ||
                     // Here we list the error levels that should not stop the capturing session. Writing !=0 is shorther than == flag
-                    (errorLevel & (int)ScreenSavingErrorLevels.HashDuplicate) != 0 ||
+                    (errorLevel & (int)ScreenSavingErrorLevels.ImageDiffNotSignificant) != 0 ||
                     (errorLevel & (int)ScreenSavingErrorLevels.PathLengthExceeded) != 0 ||
                     (errorLevel & (int)ScreenSavingErrorLevels.DriveNotReady) != 0;
 
             // Just return false if a hash duplicate has been found because technically the screenshot hasn't been saved and we don't
             // want to be calling the ScreenshotTakenWithSuccess method (which will run Triggers with the AfterScreenshotTaken condition).
-            if (errorLevel == (int)ScreenSavingErrorLevels.HashDuplicate)
+            if (errorLevel == (int)ScreenSavingErrorLevels.ImageDiffNotSignificant)
             {
                 return false;
             }

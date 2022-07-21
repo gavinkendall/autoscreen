@@ -420,15 +420,16 @@ namespace AutoScreenCapture
 
                             selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
-                            if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                            if (selectedScreenshot == null)
                             {
                                 // *** Auto Screen Capture - Region Select / Auto Save ***
+                                // This screenshot could not be found for the view we're checking so it's likely to have been originated from Region Select -> Clipboard / Auto Save.
                                 selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                             }
 
                             // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
                             // So get the earliest screenshot of this view (working backwards from the current index) that has a valid path so we can still show something.
-                            if (selectedScreenshot.Slide == null)
+                            if (selectedScreenshot == null)
                             {
                                 for (int j = 0; (_slideShow.Index - j) >= 0; j++)
                                 {
@@ -438,7 +439,7 @@ namespace AutoScreenCapture
                                     {
                                         selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
-                                        if (!string.IsNullOrEmpty(selectedScreenshot.FilePath))
+                                        if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.FilePath))
                                         {
                                             // Change the font color to dark red to indicate that this is an outdated screenshot we're showing.
                                             groupBox.ForeColor = Color.DarkRed;
@@ -545,15 +546,16 @@ namespace AutoScreenCapture
 
                         selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
-                        if (selectedScreenshot != null && selectedScreenshot.ViewId.Equals(Guid.Empty))
+                        if (selectedScreenshot == null)
                         {
                             // *** Auto Screen Capture - Region Select / Auto Save ***
+                            // This screenshot could not be found for the view we're checking so it's likely to have been originated from Region Select -> Clipboard / Auto Save.
                             selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
                         }
 
                         // The screenshot may not have been found because it was not in the collection due to optimization (OptimizeScreenCapture).
                         // So get the earliest screenshot of this view that has a valid path so we can still show something.
-                        if (selectedScreenshot.Slide == null)
+                        if (selectedScreenshot == null)
                         {
                             for (int j = 0; (_slideShow.Index - j) >= 0; j++)
                             {
@@ -563,7 +565,7 @@ namespace AutoScreenCapture
                                 {
                                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, viewId);
 
-                                    if (!string.IsNullOrEmpty(selectedScreenshot.FilePath))
+                                    if (selectedScreenshot != null && !string.IsNullOrEmpty(selectedScreenshot.FilePath))
                                     {
                                         // Change the font color to dark red to indicate that this is an outdated screenshot we're showing.
                                         toolStrip.ForeColor = Color.DarkRed;

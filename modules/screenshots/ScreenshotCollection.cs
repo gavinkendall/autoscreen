@@ -208,10 +208,10 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Adds a screenshot to the collection.
+        /// Adds the given screenshot to the collection.
         /// </summary>
         /// <param name="screenshot">The screenshot to add to the collection.</param>
-        public void AddScreenshotToCollection(Screenshot screenshot)
+        public void Add(Screenshot screenshot)
         {
             lock (_screenshotList)
             {
@@ -247,51 +247,47 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Adds a screenshot to the collection.
+        /// Processes a screenshot.
         /// </summary>
-        /// <param name="screenshot">The screenshot to add to the collection.</param>
-        public bool Add(Screenshot screenshot)
+        /// <param name="screenshot">The screenshot to process.</param>
+        /// <returns>True if processing the screenshot was successful. False if processing the screenshot was unsuccessful.</returns>
+        public bool Process(Screenshot screenshot)
         {
             try
             {
                 // We want to keep track of what version of the application this screenshot is associated with.
                 screenshot.Version = _config.Settings.ApplicationVersion;
 
+                // Check the image difference between the provided screenshot and the previous screenshot of the same view if we're using the Optimize Screen Capture feature.
                 if (_screenCapture.OptimizeScreenCapture)
                 {
-                    int imageDifferencePercentage = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
+                    int imageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance", _config.Settings.DefaultSettings.ImageDiffTolerance).Value);
 
                     Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
+                    // Add the screenshot to the collection if no previous screenshot of this view was found.
+                    // This is likely because we're taking the first screenshot of this view.
                     if (lastScreenshotOfThisView == null)
                     {
-                        AddScreenshotToCollection(screenshot);
+                        Add(screenshot);
 
                         return true;
                     }
 
+                    // Prepare the initial image diff value as -1.
                     float imageDiff = -1;
 
-                    // If the previous image is encrypted we need to decrypt it before doing the image comparison with it.
+                    // If the previous image is encrypted then we need to decrypt it before doing the image comparison with it.
                     // Then encrypt it again.
                     if (lastScreenshotOfThisView.Encrypted)
                     {
-                        Screenshot decryptedScreenshot = new Screenshot();
-                        Screenshot encryptedScreenshot = new Screenshot();
-
-                        decryptedScreenshot = _security.DecryptScreenshot(lastScreenshotOfThisView);
+                        // Decrypt the previous screenshot.
+                        Screenshot decryptedScreenshot = _security.DecryptScreenshot(lastScreenshotOfThisView);
 
                         if (decryptedScreenshot != null)
                         {
                             // Get the percentage of difference between the images of the current screenshot the last screenshot of this view.
                             imageDiff = ImageTool.GetPercentageDifference(screenshot.Bitmap, decryptedScreenshot.FilePath);
-
-                            encryptedScreenshot = _security.EncryptScreenshot(decryptedScreenshot);
-
-                            if (encryptedScreenshot != null)
-                            {
-                                lastScreenshotOfThisView = encryptedScreenshot;
-                            }
                         }
                     }
                     else
@@ -304,19 +300,20 @@ namespace AutoScreenCapture
                     // since we'll treat it as if we're not using Optimize Screen Capture.
                     if (imageDiff == -1)
                     {
-                        AddScreenshotToCollection(screenshot);
+                        Add(screenshot);
 
                         return true;
                     }
 
+                    // Multiply imageDiff by 100. For example, if imageDiff is 0.12109375 then screenshot.DiffPercentageWithPreviousImage will be 12.
                     screenshot.DiffPercentageWithPreviousImage = (int)(imageDiff * 100);
 
-                    _log.WriteDebugMessage("Screenshot's image is " + screenshot.DiffPercentageWithPreviousImage + "% different compared to the previous screenshot's image (your acceptable percentage is " + imageDifferencePercentage + "%)");
+                    _log.WriteDebugMessage("Screenshot's image is " + screenshot.DiffPercentageWithPreviousImage + "% different compared to the previous screenshot's image (your acceptable percentage is " + imageDiffTolerance + "%)");
 
-                    // Check if the image difference percentage is greater than or equal to the user's preferred image difference percentage.
-                    if (screenshot.DiffPercentageWithPreviousImage >= imageDifferencePercentage)
+                    // Check if the image difference is greater than or equal to the user's selected "image diff tolerance".
+                    if (screenshot.DiffPercentageWithPreviousImage >= imageDiffTolerance)
                     {
-                        AddScreenshotToCollection(screenshot);
+                        Add(screenshot);
 
                         return true;
                     }
@@ -325,7 +322,7 @@ namespace AutoScreenCapture
                 {
                     // This is for when we don't care about OptimizeScreenCapture. We simply add the screenshot
                     // to the collection regardless if it's the exact same image as the previous image.
-                    AddScreenshotToCollection(screenshot);
+                    Add(screenshot);
 
                     return true;
                 }
@@ -334,14 +331,14 @@ namespace AutoScreenCapture
             }
             catch (Exception ex)
             {
-                _log.WriteExceptionMessage("ScreenshotCollection::Add", ex);
+                _log.WriteExceptionMessage("ScreenshotCollection::Process", ex);
 
                 return false;
             }
         }
 
         /// <summary>
-        /// Removes a screenshot from the screenshot collection and the internal XML document.
+        /// Removes the given screenshot from the screenshot collection.
         /// </summary>
         /// <param name="screenshot">The screenshot to remove.</param>
         public void Remove(Screenshot screenshot)
@@ -619,24 +616,28 @@ namespace AutoScreenCapture
         /// <returns></returns>
         public Screenshot GetScreenshot(string slideName, Guid viewId)
         {
-            Screenshot foundScreenshot = new Screenshot();
-
-            if (_screenshotList != null)
+            try
             {
-                lock (_screenshotList)
+                if (_screenshotList != null)
                 {
-                    foreach (Screenshot screenshot in _screenshotList.Where(x => x.ViewId.Equals(viewId)))
+                    lock (_screenshotList)
                     {
-                        if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName))
+                        foreach (Screenshot screenshot in _screenshotList.Where(x => x.ViewId.Equals(viewId)))
                         {
-                            foundScreenshot = screenshot;
-                            break;
+                            if (screenshot.Slide != null && !string.IsNullOrEmpty(screenshot.Slide.Name) && screenshot.Slide.Name.Equals(slideName))
+                            {
+                                return screenshot;
+                            }
                         }
                     }
                 }
-            }
 
-            return foundScreenshot;
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -647,19 +648,17 @@ namespace AutoScreenCapture
         {
             try
             {
-                Screenshot foundScreenshot = new Screenshot();
-
                 if (_screenshotList != null)
                 {
                     lock (_screenshotList)
                     {
-                        foundScreenshot = _screenshotList.Last();
+                        return _screenshotList.Last();
                     }
                 }
 
-                return foundScreenshot;
+                return null;
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }
@@ -674,20 +673,18 @@ namespace AutoScreenCapture
         {
             try
             {
-                Screenshot foundScreenshot = new Screenshot();
-
                 if (_screenshotList != null)
                 {
                     if (_screenshotList.Count > 0)
                     {
                         lock (_screenshotList)
                         {
-                            foundScreenshot = _screenshotList.Last(x => x.ViewId.Equals(viewId));
+                            return _screenshotList.Last(x => x.ViewId.Equals(viewId));
                         }
                     }
                 }
 
-                return foundScreenshot;
+                return null;
             }
             catch
             {
@@ -995,10 +992,7 @@ namespace AutoScreenCapture
                                 // and need to update the screenshot reference data appropriately.
                                 Screen screen = null;
 
-                                Screenshot screenshot = new Screenshot
-                                {
-                                    Slide = new Slide()
-                                };
+                                Screenshot screenshot = new Screenshot();
 
                                 XmlNodeReader xReader = new XmlNodeReader(xScreenshot);
 
@@ -1228,7 +1222,7 @@ namespace AutoScreenCapture
                                     // A screenshot flagged with a "ReferenceSaved" value of "false" will be treated as a new screenshot that should be saved to the file.
                                     screenshot.ReferenceSaved = true;
 
-                                    AddScreenshotToCollection(screenshot);
+                                    Add(screenshot);
                                 }
                             }
                         }

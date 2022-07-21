@@ -187,14 +187,18 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                if (selectedScreenshot == null)
                 {
-                    // *** Auto Screen Capture - Region Select / Auto Save ***
-                    selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
+                    return false;
                 }
-
-                if (selectedScreenshot != null)
+                else
                 {
+                    if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                    {
+                        // *** Auto Screen Capture - Region Select / Auto Save ***
+                        selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
+                    }
+
                     if (selectedScreenshot.Encrypted)
                     {
                         MessageBox.Show("This screenshot was encrypted by Auto Screen Capture.\n\nThe application you have selected to open this screenshot may have a problem reading the file.", "Encrypted Screenshot", MessageBoxButtons.OK, MessageBoxIcon.Warning);

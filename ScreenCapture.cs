@@ -48,9 +48,9 @@ namespace AutoScreenCapture
         DirNotFound = 2,
 
         /// <summary>
-        /// Could not save screenshot with given path because its hash may have matched with a previous hash that has already been used for an earlier screenshot
+        /// Could not save screenshot with given path because its image is not significantly different compared with the previous image
         /// </summary>
-        HashDuplicate = 4,
+        ImageDiffNotSignificant = 4,
 
         /// <summary>
         /// Cannot write to given path because the user may not have the appropriate permissions to access the path
@@ -418,13 +418,30 @@ namespace AutoScreenCapture
 
         private int NotEnoughDiskSpace(Screenshot screenshot, int returnFlag, double freeDiskSpacePercentage, int lowDiskPercentageThreshold, long freeDisk, long lowDiskBytesThreshold)
         {
-            // There is not enough disk space on the drive so log an error message.
+            // There is not enough disk space on the drive so log a few error messages.
 
             _log.WriteErrorMessage($"Unable to save screenshot due to lack of available disk space on drive for \"{screenshot.FilePath}\"");
-            _log.WriteErrorMessage($"Free disk space percentage: {freeDiskSpacePercentage}%");
-            _log.WriteErrorMessage($"Low disk percentage threshold: {lowDiskPercentageThreshold}%");
-            _log.WriteErrorMessage($"Free disk space in bytes: {freeDisk} bytes");
-            _log.WriteErrorMessage($"Low disk bytes threshold: {lowDiskBytesThreshold} bytes");
+
+            // Get the preferred "LowDiskMode".
+            // 0 == We check the available disk space as a percentage.
+            // 1 == We check the available disk space as a number of bytes.
+            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode", _config.Settings.DefaultSettings.LowDiskMode).Value); 
+
+            // Percentage.
+            if (lowDiskMode == 0)
+            {
+                _log.WriteErrorMessage("LowDiskMode is set to 0 so we check for percentage threshold of free disk space");
+                _log.WriteErrorMessage($"Free disk space percentage: {freeDiskSpacePercentage}%");
+                _log.WriteErrorMessage($"Configured low disk percentage threshold: {lowDiskPercentageThreshold}%");
+            }
+
+            // Number of bytes.
+            if (lowDiskMode == 1)
+            {
+                _log.WriteErrorMessage("LowDiskMode is set to 1 so we check for bytes threshold of free disk space");
+                _log.WriteErrorMessage($"Free disk space in bytes: {freeDisk} bytes");
+                _log.WriteErrorMessage($"Configured low disk bytes threshold: {lowDiskBytesThreshold} bytes");
+            }
 
             bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
 
@@ -442,7 +459,7 @@ namespace AutoScreenCapture
             return returnFlag & (int)ScreenSavingErrorLevels.None;
         }
 
-        private int AddScreenshotAndSaveToFile(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
+        private int SaveToFile(Security security, int jpegQuality, Screenshot screenshot, ScreenshotCollection screenshotCollection)
         {
             int returnFlag = 0;
             string dirName = _fileSystem.GetDirectoryName(screenshot.FilePath);
@@ -463,8 +480,11 @@ namespace AutoScreenCapture
                     _log.WriteDebugMessage("Directory \"" + dirName + "\" did not exist so it was created");
                 }
 
-                if (screenshotCollection.Add(screenshot))
+                // Attempt to process the screenshot before it's saved to disk.
+                // This means we'll check for image diff tolerance (if Optimize Screen Capture is enabled).
+                if (screenshotCollection.Process(screenshot))
                 {
+                    // Save the screenshot to disk if it processed successfully.
                     SaveToFile(screenshot, security, jpegQuality);
 
                     return returnFlag & (int)ScreenSavingErrorLevels.None;
@@ -473,7 +493,7 @@ namespace AutoScreenCapture
                 {
                     _log.WriteDebugMessage("Could not save screenshot with ID \"" + screenshot.Id + "\" and path \"" + screenshot.FilePath + "\" because the image difference percentage with the previous screenshot's image (" + screenshot.DiffPercentageWithPreviousImage + "%) wasn't significant enough");
 
-                    return returnFlag | (int)ScreenSavingErrorLevels.HashDuplicate;
+                    return returnFlag | (int)ScreenSavingErrorLevels.ImageDiffNotSignificant;
                 }
             }
             catch
@@ -972,7 +992,7 @@ namespace AutoScreenCapture
                                 }
                             }
 
-                            return AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
+                            return SaveToFile(security, jpegQuality, screenshot, screenshotCollection);
                         }
                         else
                         {
@@ -985,7 +1005,7 @@ namespace AutoScreenCapture
                     else
                     {
                         // This is a UNC network share path (such as "\\SERVER\screenshots\").
-                        return AddScreenshotAndSaveToFile(security, jpegQuality, screenshot, screenshotCollection);
+                        return SaveToFile(security, jpegQuality, screenshot, screenshotCollection);
                     }
                 }
 

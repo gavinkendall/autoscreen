@@ -230,7 +230,7 @@ namespace AutoScreenCapture
                     _formSetup.numericUpDownMinutesInterval.Value.ToString("00") + ":" +
                     _formSetup.numericUpDownSecondsInterval.Value.ToString("00") + "] " +
                     (_formSetup.checkBoxInitialScreenshot.Checked ? "[initial capture] " : string.Empty) +
-                    (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDifference.Value + "% tolerant)]" : "[not optimized]");
+                    (_screenCapture.OptimizeScreenCapture ? "[optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]" : "[not optimized]");
 
                 if (_screenCapture.ApplicationError || _screenCapture.ApplicationWarning)
                 {
@@ -258,7 +258,7 @@ namespace AutoScreenCapture
                         if (_screenCapture.OptimizeScreenCapture)
                         {
                             // System tray icon is green if taking optimized screenshots.
-                            takingScreenshotsMessage = "Taking screenshots [optimized (" + _formSetup.trackBarImageDifference.Value + "% tolerant)]";
+                            takingScreenshotsMessage = "Taking screenshots [optimized (" + _formSetup.trackBarImageDiffTolerance.Value + "% tolerant)]";
                             notifyIcon.Icon = Resources.autoscreen_running_optimized;
                         }
                         else
@@ -272,30 +272,33 @@ namespace AutoScreenCapture
                         {
                             string remainingTimeStr = takingScreenshotsMessage;
 
-                            int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
-                            int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
-                            int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
-
-                            string remainingHoursStr = (remainingHours > 0
-                                ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
-                                : string.Empty);
-
-                            string remainingMinutesStr = (remainingMinutes > 0
-                                ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
-                                : string.Empty);
-
-                            string remainingSecondsStr = (remainingSeconds > 0
-                                ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
-                                : string.Empty);
-
-                            if (remainingSeconds > 0)
+                            if (_screenCapture.DateTimeScreenshotsTaken <= DateTime.Now)
                             {
-                                remainingTimeStr = "Next capture in " +
-                                    remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
-                                    _screenCapture.DateTimeNextCycle.ToLongTimeString();
-                            }
+                                int remainingHours = _screenCapture.TimeRemainingForNextScreenshot.Hours;
+                                int remainingMinutes = _screenCapture.TimeRemainingForNextScreenshot.Minutes;
+                                int remainingSeconds = _screenCapture.TimeRemainingForNextScreenshot.Seconds;
 
-                            notifyIcon.Text = remainingTimeStr;
+                                string remainingHoursStr = (remainingHours > 0
+                                    ? remainingHours.ToString() + " hour" + (remainingHours > 1 ? "s" : string.Empty) + ", "
+                                    : string.Empty);
+
+                                string remainingMinutesStr = (remainingMinutes > 0
+                                    ? remainingMinutes.ToString() + " minute" + (remainingMinutes > 1 ? "s" : string.Empty) + ", "
+                                    : string.Empty);
+
+                                string remainingSecondsStr = (remainingSeconds > 0
+                                    ? remainingSeconds.ToString() + " second" + (remainingSeconds > 1 ? "s" : string.Empty)
+                                    : string.Empty);
+
+                                if (remainingSeconds > 0)
+                                {
+                                    remainingTimeStr = "Next capture in " +
+                                        remainingHoursStr + remainingMinutesStr + remainingSecondsStr + " at " +
+                                        _screenCapture.DateTimeNextCycle.ToLongTimeString();
+                                }
+
+                                notifyIcon.Text = remainingTimeStr;
+                            }
                         }
                     }
                     else

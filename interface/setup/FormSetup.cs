@@ -193,8 +193,9 @@ namespace AutoScreenCapture
 
             // Optimize Screen Capture
             checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
-            trackBarImageDifference.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
-            labelImageDifferenceSelected.Text = trackBarImageDifference.Value.ToString() + "%";
+            trackBarImageDiffTolerance.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance", _config.Settings.DefaultSettings.ImageDiffTolerance).Value);
+            labelSelectedImageDiffTolerance.Text = trackBarImageDiffTolerance.Value.ToString() + "%";
+            CheckEnabledStatusOnOptimizeScreenCaptureControls();
 
             // Application Focus
             RefreshApplicationFocusList();
@@ -355,7 +356,7 @@ namespace AutoScreenCapture
 
                 // Optimize Screen Capture
                 _config.Settings.User.SetValueByKey("OptimizeScreenCapture", checkBoxOptimizeScreenCapture.Checked);
-                _config.Settings.User.SetValueByKey("ImageDifferencePercentage", trackBarImageDifference.Value);
+                _config.Settings.User.SetValueByKey("ImageDiffTolerance", trackBarImageDiffTolerance.Value);
 
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
 
@@ -751,6 +752,26 @@ namespace AutoScreenCapture
         private void checkBoxOptimizeScreenCapture_CheckedChanged(object sender, EventArgs e)
         {
             _screenCapture.OptimizeScreenCapture = checkBoxOptimizeScreenCapture.Checked;
+
+            CheckEnabledStatusOnOptimizeScreenCaptureControls();
+        }
+
+        private void CheckEnabledStatusOnOptimizeScreenCaptureControls()
+        {
+            if (checkBoxOptimizeScreenCapture.Checked)
+            {
+                labelImageDifference.Enabled = true;
+                trackBarImageDiffTolerance.Enabled = true;
+                labelTolerance.Enabled = true;
+                labelSelectedImageDiffTolerance.Enabled = true;
+            }
+            else
+            {
+                labelImageDifference.Enabled = false;
+                trackBarImageDiffTolerance.Enabled = false;
+                labelTolerance.Enabled = false;
+                labelSelectedImageDiffTolerance.Enabled = false;
+            }
         }
 
         private void checkBoxEnableApplicationFocus_CheckedChanged(object sender, EventArgs e)
@@ -991,7 +1012,7 @@ namespace AutoScreenCapture
 
         private void trackBarImageDifference_Scroll(object sender, EventArgs e)
         {
-            labelImageDifferenceSelected.Text = trackBarImageDifference.Value.ToString() + "%";
+            labelSelectedImageDiffTolerance.Text = trackBarImageDiffTolerance.Value.ToString() + "%";
         }
     }
 }

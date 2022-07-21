@@ -286,7 +286,7 @@ namespace AutoScreenCapture
 
                 // Optimize Screen Capture
                 _formSetup.checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
-                _formSetup.trackBarImageDifference.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDifferencePercentage", _config.Settings.DefaultSettings.ImageDifferencePercentage).Value);
+                _formSetup.trackBarImageDiffTolerance.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance", _config.Settings.DefaultSettings.ImageDiffTolerance).Value);
 
                 _formSetup.numericUpDownCaptureLimit.Value = Convert.ToInt32(_config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value);
                 _log.WriteDebugMessage("CaptureLimit = " + _formSetup.numericUpDownCaptureLimit.Value);

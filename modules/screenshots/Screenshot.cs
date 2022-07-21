@@ -129,11 +129,11 @@ namespace AutoScreenCapture
         public string Key { get; set; }
 
         /// <summary>
-        /// The consructor for creating a screenshot.
+        /// The consructor for creating a screenshot (and its associated slide).
         /// </summary>
         public Screenshot()
         {
-
+            Slide = new Slide();
         }
 
         /// <summary>
