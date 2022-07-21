@@ -418,7 +418,7 @@ namespace AutoScreenCapture
 
             // If we have a macro being given to this method replace the value of "macroPath" with the value of "macroOverride".
             // This is currently being used by the Capture Now Macro from Capture Now Options.
-            if (!string.IsNullOrEmpty(macro))
+            if (!string.IsNullOrEmpty(macroOverride))
             {
                 macroPath = _macroParser.ParseTags(preview: false, macroOverride, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log);
             }
