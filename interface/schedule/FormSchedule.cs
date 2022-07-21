@@ -433,6 +433,8 @@ namespace AutoScreenCapture
                 buttonStartSchedule.Enabled = false;
                 buttonStopSchedule.Enabled = false;
             }
+
+            CheckTimerEnabled();
         }
 
         private void radioButtonPeriod_CheckedChanged(object sender, EventArgs e)
@@ -454,9 +456,9 @@ namespace AutoScreenCapture
                 numericUpDownHoursInterval.Enabled = true;
                 numericUpDownMinutesInterval.Enabled = true;
                 numericUpDownSecondsInterval.Enabled = true;
-
-                CheckTimerEnabled();
             }
+
+            CheckTimerEnabled();
         }
 
         private void checkBoxWorkWeek_CheckedChanged(object sender, EventArgs e)
@@ -557,7 +559,10 @@ namespace AutoScreenCapture
         /// </summary>
         private void CheckTimerEnabled()
         {
-            if (ScheduleObject != null && ScheduleObject.Timer != null)
+            buttonStartSchedule.Enabled = false;
+            buttonStopSchedule.Enabled = false;
+
+            if (radioButtonPeriod.Checked && ScheduleObject != null && ScheduleObject.Timer != null)
             {
                 if (ScheduleObject.Timer.Enabled)
                 {

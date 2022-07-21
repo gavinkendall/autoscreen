@@ -185,7 +185,6 @@ namespace AutoScreenCapture
                     // Initialize the Tick event but keep it disabled for now.
                     _formSchedule.ScheduleObject.Timer.Tag = _formSchedule.ScheduleObject;
                     _formSchedule.ScheduleObject.Timer.Enabled = false;
-                    _formSchedule.ScheduleObject.Timer.Tick += ScheduleTimer_Tick;
                 }
 
                 BuildSchedulesModule();
@@ -337,7 +336,10 @@ namespace AutoScreenCapture
         {
             Button buttonStartSchedule = (Button)sender;
 
-            StartSchedule((Schedule)buttonStartSchedule.Tag);
+            Schedule scheduleToStart = (Schedule)buttonStartSchedule.Tag;
+            scheduleToStart.IsNew = false;
+
+            StartSchedule(scheduleToStart);
         }
 
         private void ScheduleModuleList_StopSchedule(object sender, EventArgs e)
