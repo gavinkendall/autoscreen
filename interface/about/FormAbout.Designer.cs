@@ -48,6 +48,8 @@
             this.richTextBoxAboutSpecialThanks = new System.Windows.Forms.RichTextBox();
             this.tabPageAboutContact = new System.Windows.Forms.TabPage();
             this.richTextBoxAboutContact = new System.Windows.Forms.RichTextBox();
+            this.tabPageAboutLibraryUsageImageComparison = new System.Windows.Forms.TabPage();
+            this.richTextBoxAboutLibraryUsageImageComparison = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             this.tabControlAbout.SuspendLayout();
             this.tabPageAboutApplication.SuspendLayout();
@@ -59,6 +61,7 @@
             this.tabPageAboutLibraryUsageRenciSshNet.SuspendLayout();
             this.tabPageAboutSpecialThanks.SuspendLayout();
             this.tabPageAboutContact.SuspendLayout();
+            this.tabPageAboutLibraryUsageImageComparison.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBoxAboutApplication
@@ -165,6 +168,7 @@
             this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageGavinKendallSftp);
             this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageILMerge);
             this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageRenciSshNet);
+            this.tabControlAboutLibraryUsage.Controls.Add(this.tabPageAboutLibraryUsageImageComparison);
             this.tabControlAboutLibraryUsage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlAboutLibraryUsage.Location = new System.Drawing.Point(0, 0);
             this.tabControlAboutLibraryUsage.Name = "tabControlAboutLibraryUsage";
@@ -291,6 +295,30 @@
             this.richTextBoxAboutContact.Text = resources.GetString("richTextBoxAboutContact.Text");
             this.richTextBoxAboutContact.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox_LinkClicked);
             // 
+            // tabPageAboutLibraryUsageImageComparison
+            // 
+            this.tabPageAboutLibraryUsageImageComparison.Controls.Add(this.richTextBoxAboutLibraryUsageImageComparison);
+            this.tabPageAboutLibraryUsageImageComparison.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAboutLibraryUsageImageComparison.Name = "tabPageAboutLibraryUsageImageComparison";
+            this.tabPageAboutLibraryUsageImageComparison.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAboutLibraryUsageImageComparison.Size = new System.Drawing.Size(567, 485);
+            this.tabPageAboutLibraryUsageImageComparison.TabIndex = 3;
+            this.tabPageAboutLibraryUsageImageComparison.Text = "Image Comparison";
+            this.tabPageAboutLibraryUsageImageComparison.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxAboutLibraryUsageImageComparison
+            // 
+            this.richTextBoxAboutLibraryUsageImageComparison.BackColor = System.Drawing.Color.White;
+            this.richTextBoxAboutLibraryUsageImageComparison.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxAboutLibraryUsageImageComparison.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxAboutLibraryUsageImageComparison.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxAboutLibraryUsageImageComparison.Name = "richTextBoxAboutLibraryUsageImageComparison";
+            this.richTextBoxAboutLibraryUsageImageComparison.ReadOnly = true;
+            this.richTextBoxAboutLibraryUsageImageComparison.Size = new System.Drawing.Size(561, 479);
+            this.richTextBoxAboutLibraryUsageImageComparison.TabIndex = 5;
+            this.richTextBoxAboutLibraryUsageImageComparison.TabStop = false;
+            this.richTextBoxAboutLibraryUsageImageComparison.Text = resources.GetString("richTextBoxAboutLibraryUsageImageComparison.Text");
+            // 
             // FormAbout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,6 +349,7 @@
             this.tabPageAboutLibraryUsageRenciSshNet.ResumeLayout(false);
             this.tabPageAboutSpecialThanks.ResumeLayout(false);
             this.tabPageAboutContact.ResumeLayout(false);
+            this.tabPageAboutLibraryUsageImageComparison.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -346,5 +375,7 @@
         private System.Windows.Forms.RichTextBox richTextBoxAboutLibraryUsageRenciSshNet;
         private System.Windows.Forms.TabPage tabPageAboutLibraryUsageGavinKendallSftp;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TabPage tabPageAboutLibraryUsageImageComparison;
+        private System.Windows.Forms.RichTextBox richTextBoxAboutLibraryUsageImageComparison;
     }
 }
