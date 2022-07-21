@@ -432,6 +432,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="autoscreen.pfx" />
+    <None Include="help\quick_start.rtf" />
     <None Include="help\welcome.rtf" />
     <None Include="help\license.rtf" />
     <None Include="help\command_line.rtf" />

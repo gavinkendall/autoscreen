@@ -221,8 +221,6 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void timerParseCommands_Tick(object sender, EventArgs e)
         {
-            ParseCommandLineArguments();
-
             // We need to check if the application is not ready yet here before setting the visibility for the system tray icon
             // and running Triggers based on the ApplicationStartup condition because at this point the main interface is hidden,
             // the ParseCommandLineArguments method has potentially been called and is now in a constant 1 second loop parsing any commmands
@@ -242,6 +240,8 @@ namespace AutoScreenCapture
             // The application is ready. This will allow Triggers to ... uh ... trigger (since the trigger timer is on a 1 second loop but won't
             // run through the triggers until _appReady is set to true).
             _appReady = true;
+
+            ParseCommandLineArguments();
         }
 
         /// <summary>

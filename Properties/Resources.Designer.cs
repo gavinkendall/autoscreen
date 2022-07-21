@@ -498,6 +498,22 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Quick Start\fs22\par
+        ///\b0 Right-click on the system tray icon to open the system tray icon menu and select &quot;Screen Capture Status&quot;.\par
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6271\pich11404\picwgoal3555\pichgoal6465 
+        ///0100090000039c57020000007d57020000000400000003010800050000000c0251feed00050000
+        ///000b0200000000050 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string quick_start {
+            get {
+                return ResourceManager.GetString("quick_start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap refresh {
@@ -668,9 +684,8 @@ namespace AutoScreenCapture.Properties {
         ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
         ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Welcome\fs22\par
-        ///\b0 You made it!\par
-        ///Auto Screen Capture is like a bottle of scotch that sits on the top shelf collecting dust over the years; it&apos;s not popular, but it proves to be unique and special once you understand it.\par
-        ///This application is a portable automated screen capture ut [rest of string was truncated]&quot;;.
+        ///\b0 Auto Screen Capture takes screenshots at a set interval. The application is primarily used as a personal automated screen capture utility for keeping track of what you&apos;re working on.\par
+        ///A calendar is available to review what days screenshots were taken (this is indi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string welcome {
             get {
