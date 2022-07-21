@@ -515,6 +515,7 @@
             this.MinimumSize = new System.Drawing.Size(708, 473);
             this.Name = "FormSchedule";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSchedule_FormClosing);
             this.Load += new System.EventHandler(this.FormSchedule_Load);
             this.groupBoxDays.ResumeLayout(false);
             this.groupBoxDays.PerformLayout();
