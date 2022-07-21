@@ -423,19 +423,19 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="autoscreen.pfx" />
-    <None Include="help\help-0.rtf" />
-    <None Include="help\help-1.rtf" />
-    <None Include="help\help-10.rtf" />
-    <None Include="help\help-11.rtf" />
-    <None Include="help\help-12.rtf" />
-    <None Include="help\help-2.rtf" />
-    <None Include="help\help-3.rtf" />
-    <None Include="help\help-4.rtf" />
-    <None Include="help\help-5.rtf" />
-    <None Include="help\help-6.rtf" />
-    <None Include="help\help-7.rtf" />
-    <None Include="help\help-8.rtf" />
-    <None Include="help\help-9.rtf" />
+    <None Include="help\welcome.rtf" />
+    <None Include="help\license.rtf" />
+    <None Include="help\command_line.rtf" />
+    <None Include="help\common_setup_scenarios.rtf" />
+    <None Include="help\configuration_file.rtf" />
+    <None Include="help\changelog.rtf" />
+    <None Include="help\getting_started.rtf" />
+    <None Include="help\screens.rtf" />
+    <None Include="help\regions.rtf" />
+    <None Include="help\editors.rtf" />
+    <None Include="help\schedules.rtf" />
+    <None Include="help\macro_tags.rtf" />
+    <None Include="help\triggers.rtf" />
     <None Include="icons\ico\autoscreen-warning.ico" />
     <Content Include="icons\ico\autoscreen-running-optimized.ico" />
     <Content Include="icons\ico\autoscreen.ico" />
