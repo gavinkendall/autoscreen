@@ -292,7 +292,7 @@ namespace AutoScreenCapture
                 DisableStopCapture();
                 EnableStartCapture();
 
-                _screenCapture.Count = 0;
+                _screenCapture.CycleCount = 0;
                 _screenCapture.Running = false;
 
                 HideSystemTrayIcon();

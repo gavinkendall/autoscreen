@@ -99,7 +99,7 @@ namespace AutoScreenCapture
         {
             if (_formSetup.checkBoxCaptureLimit.Checked)
             {
-                _screenCapture.Count = 0;
+                _screenCapture.CycleCount = 0;
                 _screenCapture.Limit = (int)_formSetup.numericUpDownCaptureLimit.Value;
             }
         }
@@ -117,7 +117,7 @@ namespace AutoScreenCapture
             {
                 _macroParser.screenCapture = _screenCapture;
 
-                _screenCapture.Count++;
+                _screenCapture.CycleCount++;
                 _screenCapture.Scope = scope;
                 _screenCapture.CaptureNow = captureNow;
 
@@ -301,7 +301,7 @@ namespace AutoScreenCapture
 
                     dtStopScreenCapture = DateTime.Now;
 
-                    _screenCapture.Count = 0;
+                    _screenCapture.CycleCount = 0;
                     _screenCapture.Running = false;
                     _screenCapture.DateTimePreviousCycle = DateTime.MinValue;
 
@@ -740,15 +740,15 @@ namespace AutoScreenCapture
                 if (_screenCapture.Limit >= ScreenCapture.CAPTURE_LIMIT_MIN &&
                     _screenCapture.Limit <= ScreenCapture.CAPTURE_LIMIT_MAX)
                 {
-                    if (_screenCapture.Count < _screenCapture.Limit)
+                    if (_screenCapture.CycleCount < _screenCapture.Limit)
                     {
                         TakeScreenshot(_screenCapture.Scope);
                     }
 
-                    if (_screenCapture.Count == _screenCapture.Limit)
+                    if (_screenCapture.CycleCount == _screenCapture.Limit)
                     {
                         // Reset the count to avoid falling into an infinite loop.
-                        _screenCapture.Count = 0;
+                        _screenCapture.CycleCount = 0;
 
                         _log.WriteDebugMessage("Running triggers of condition type LimitReached");
                         RunTriggersOfConditionType(TriggerConditionType.LimitReached);

@@ -311,7 +311,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The number of screen capture cycles we've gone through during a screen capture session.
         /// </summary>
-        public int Count { get; set; }
+        public int CycleCount { get; set; }
 
         /// <summary>
         /// The numer of times the user did a "Capture Now".

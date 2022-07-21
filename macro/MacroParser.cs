@@ -201,7 +201,7 @@ namespace AutoScreenCapture
             }
             else
             {
-                count = screenCapture.Count;
+                count = screenCapture.CycleCount;
                 dt = screenCapture.DateTimeScreenshotsTaken;
             }
 

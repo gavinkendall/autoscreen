@@ -62,7 +62,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonExit = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripCycleCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripMenuItemEmailSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileTransferSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButtonEmailSettings = new System.Windows.Forms.ToolStripDropDownButton();
@@ -171,7 +171,7 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonExit,
             this.toolStripSpacer,
             this.toolStripInfo,
-            this.toolStripCount});
+            this.toolStripCycleCount});
             this.statusStrip.Location = new System.Drawing.Point(0, 710);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -440,7 +440,7 @@ namespace AutoScreenCapture
             // 
             this.toolStripSpacer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(34, 19);
+            this.toolStripSpacer.Size = new System.Drawing.Size(7, 19);
             this.toolStripSpacer.Spring = true;
             // 
             // toolStripInfo
@@ -458,15 +458,15 @@ namespace AutoScreenCapture
             this.toolStripInfo.Text = "Ready";
             this.toolStripInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             // 
-            // toolStripCount
+            // toolStripCycleCount
             // 
-            this.toolStripCount.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)));
-            this.toolStripCount.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
-            this.toolStripCount.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripCount.Name = "toolStripCount";
-            this.toolStripCount.Size = new System.Drawing.Size(56, 19);
-            this.toolStripCount.Text = "Count: 0";
-            this.toolStripCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolStripCycleCount.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top)));
+            this.toolStripCycleCount.BorderStyle = System.Windows.Forms.Border3DStyle.Sunken;
+            this.toolStripCycleCount.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripCycleCount.Name = "toolStripCycleCount";
+            this.toolStripCycleCount.Size = new System.Drawing.Size(52, 19);
+            this.toolStripCycleCount.Text = "Cycle: 0";
+            this.toolStripCycleCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolStripMenuItemEmailSettings
             // 
@@ -563,7 +563,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 420);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -1284,7 +1284,7 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemToolsDynamicRegexValidator;
         private ToolStripMenuItem toolStripMenuItemToolsEncryptorDecryptor;
         private ToolStripMenuItem toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher;
-        private ToolStripStatusLabel toolStripCount;
+        private ToolStripStatusLabel toolStripCycleCount;
         private ToolStripDropDownButton toolStripDropDownButtonSettings;
         private ToolStripStatusLabel toolStripSpacer;
         private ToolStripMenuItem toolStripMenuItemEmailSettingsFromStatusBar;

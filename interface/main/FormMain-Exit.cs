@@ -74,7 +74,7 @@ namespace AutoScreenCapture
                     _sftpClient.Disconnect();
                 }
 
-                _screenCapture.Count = 0;
+                _screenCapture.CycleCount = 0;
                 _screenCapture.Running = false;
 
                 HideSystemTrayIcon();
