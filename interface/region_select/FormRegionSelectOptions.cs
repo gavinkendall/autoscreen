@@ -3,7 +3,7 @@
 //     Copyright (c) 2008-2022 Gavin Kendall
 // </copyright>
 // <author>Gavin Kendall</author>
-// <summary>The form to manage Region Select options.</summary>
+// <summary>The dialog box to manage Region Select options.</summary>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ using System.Windows.Forms;
 namespace AutoScreenCapture
 {
     /// <summary>
-    /// The form to manage Region Select options.
+    /// The dialog box to manage Region Select options.
     /// </summary>
     public partial class FormRegionSelectOptions : Form
     {
@@ -33,7 +33,7 @@ namespace AutoScreenCapture
         private ImageFormatCollection _imageFormatCollection;
 
         /// <summary>
-        /// The form to manage Region Select options.
+        /// The dialog box to manage Region Select options.
         /// </summary>
         /// <param name="config">The configuration set to use.</param>
         /// <param name="fileSystem">The file system to use.</param>

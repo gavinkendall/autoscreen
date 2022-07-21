@@ -19,6 +19,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -248,6 +249,11 @@ namespace AutoScreenCapture
         /// </summary>
         private void ParseCommandLineArguments()
         {
+            if (!_fileSystem.DirectoryExists(Path.GetDirectoryName(_fileSystem.CommandFile)))
+            {
+                return;
+            }
+
             if (!_fileSystem.FileExists(_fileSystem.CommandFile))
             {
                 _fileSystem.CreateFile(_fileSystem.CommandFile);

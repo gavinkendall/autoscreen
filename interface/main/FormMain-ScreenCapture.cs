@@ -121,9 +121,21 @@ namespace AutoScreenCapture
                 _screenCapture.Scope = scope;
                 _screenCapture.CaptureNow = captureNow;
 
-                // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
+                // We can use this to override the value of any macro from a screen or region (if we need to).
+                // At the moment it's being used by the Capture Now Macro from Capture Now Options.
+                string macroOverride = string.Empty;
+
+                // Whenever the user selects "Capture Now / Archive" or "Capture Now / Edit".
                 if (captureNow && initiatedByUser)
                 {
+                    string captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro", _fileSystem.DefaultFilenamePattern).Value.ToString();
+
+                    if (!string.IsNullOrEmpty(captureNowMacro))
+                    {
+                        macroOverride = captureNowMacro;
+                    }
+
+                    // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
                     _screenCapture.CountNow++;
                 }
 
@@ -155,9 +167,9 @@ namespace AutoScreenCapture
                     }
                 }
 
-                RunRegionCaptures(scope);
+                RunRegionCaptures(scope, macroOverride);
 
-                RunScreenCaptures(scope);
+                RunScreenCaptures(scope, macroOverride);
             }
 
             _log.WriteDebugMessage("Running triggers of condition type CaptureCycleElapsed");
@@ -353,8 +365,9 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="bitmap">The bitmap image to use.</param>
         /// <param name="screenOrRegion">The screen or the region to use.</param>
+        /// <param name="macroOverride">The macro to use to override any macro from a screen or region so if this value is empty we'll use the macro from the screen or region.</param>
         /// <returns>Returns true if we were successful at saving the screenshot. Returns false if we were unsuccessful at saving the screenshot.</returns>
-        private bool SaveScreenshot(Bitmap bitmap, object screenOrRegion)
+        private bool SaveScreenshot(Bitmap bitmap, object screenOrRegion, string macroOverride)
         {
             if (bitmap == null || screenOrRegion == null)
             {
@@ -403,6 +416,12 @@ namespace AutoScreenCapture
             string folderPath = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log));
             string macroPath = _macroParser.ParseTags(preview: false, macro, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log);
 
+            // If we have a macro being given to this method replace the value of "macroPath" with the value of "macroOverride".
+            // This is currently being used by the Capture Now Macro from Capture Now Options.
+            if (!string.IsNullOrEmpty(macro))
+            {
+                macroPath = _macroParser.ParseTags(preview: false, macroOverride, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log);
+            }
             // The screenshot's entire path consists of the folder path and the macro (which is just the filename with all of the macro tags parsed; in other words you could have "C:\screenshots\%date%.%format%" where %date% and %format% are macro tags for the filename's macro).
             string screenshotPath = folderPath + macroPath;
 
@@ -510,7 +529,24 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the Region Select Options form.
+        /// Shows the Capture Now Options dialog box.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemCaptureNowOptions_Click(object sender, EventArgs e)
+        {
+            if (!_formCaptureNowOptions.Visible)
+            {
+                _formCaptureNowOptions.ShowDialog(this);
+            }
+            else
+            {
+                _formCaptureNowOptions.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Shows the Region Select Options dialog box.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -645,7 +681,7 @@ namespace AutoScreenCapture
                     Macro = autoSaveMacro
                 };
 
-                SaveScreenshot(bitmap, region);
+                SaveScreenshot(bitmap, region, string.Empty);
             }
         }
 

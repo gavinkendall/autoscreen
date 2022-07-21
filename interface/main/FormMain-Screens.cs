@@ -149,7 +149,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void RunScreenCaptures(string scope)
+        private void RunScreenCaptures(string scope, string macroOverride)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace AutoScreenCapture
                             {
                                 if (_screenCapture.GetScreenImages(screen.Source, screen.Component, screen.CaptureMethod, autoAdapt: false, 0, 0, 0, 0, screen.ResolutionRatio, mouse: false, out Bitmap bitmap))
                                 {
-                                    if (!SaveScreenshot(bitmap, screen))
+                                    if (!SaveScreenshot(bitmap, screen, macroOverride))
                                     {
                                         continue;
                                     }
@@ -190,7 +190,7 @@ namespace AutoScreenCapture
                                     screen.Mouse,
                                     out Bitmap bitmap))
                                 {
-                                    if (!SaveScreenshot(bitmap, screen))
+                                    if (!SaveScreenshot(bitmap, screen, macroOverride))
                                     {
                                         continue;
                                     }

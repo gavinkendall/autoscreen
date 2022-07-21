@@ -174,7 +174,7 @@ namespace AutoScreenCapture
             }
         }
 
-        private void RunRegionCaptures(string scope)
+        private void RunRegionCaptures(string scope, string macroOverride)
         {
             try
             {
@@ -189,7 +189,7 @@ namespace AutoScreenCapture
                         {
                             if (_screenCapture.GetScreenImages(source: -1, component: -1, captureMethod: 1, autoAdapt: false, region.X, region.Y, region.Width, region.Height, resolutionRatio: 100, region.Mouse, out Bitmap bitmap))
                             {
-                                if (!SaveScreenshot(bitmap, region))
+                                if (!SaveScreenshot(bitmap, region, macroOverride))
                                 {
                                     continue;
                                 }

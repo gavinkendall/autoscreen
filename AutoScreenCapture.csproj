@@ -94,6 +94,12 @@
     <Compile Include="interface\about\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="interface\capture_now\FormCaptureNowOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="interface\capture_now\FormCaptureNowOptions.Designer.cs">
+      <DependentUpon>FormCaptureNowOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="interface\settings\FormEmailSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -332,6 +338,9 @@
     <EmbeddedResource Include="interface\about\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="interface\capture_now\FormCaptureNowOptions.resx">
+      <DependentUpon>FormCaptureNowOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="interface\settings\FormEmailSettings.resx">
       <DependentUpon>FormEmailSettings.cs</DependentUpon>

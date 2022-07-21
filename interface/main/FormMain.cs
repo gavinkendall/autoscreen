@@ -56,8 +56,11 @@ namespace AutoScreenCapture
         // The "File Transfer Settings" form.
         private FormFileTransferSettings _formFileTransferSettings;
 
-        // The "Region Select Options" form.
+        // The "Region Select Options" dialog box.
         private FormRegionSelectOptions _formRegionSelectOptions;
+
+        // The "Capture Now Options" dialog box.
+        private FormCaptureNowOptions _formCaptureNowOptions;
 
         // SFTP client.
         private SftpClient _sftpClient = null;
