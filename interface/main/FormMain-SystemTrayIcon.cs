@@ -155,10 +155,12 @@ namespace AutoScreenCapture
                 toolStripMenuItemTools.Visible = false;
                 toolStripSeparatorTools.Visible = false;
                 toolStripMenuItemHelp.Visible = false;
+                toolStripMenuItemRegionSelectAddRegion.Visible = false;
 
                 // Hide the "Capture Now" memu items.
-                toolStripMenuItemCaptureNowEdit.Visible = false;
+                toolStripMenuItemCaptureNowOptions.Visible = false;
                 toolStripMenuItemCaptureNowArchive.Visible = false;
+                toolStripMenuItemCaptureNowEdit.Visible = false;
                 toolStripSeparatorCaptureNow.Visible = false;
             }
             else
@@ -175,13 +177,15 @@ namespace AutoScreenCapture
                 toolStripMenuItemEmailSettings.Visible = true;
                 toolStripMenuItemSettings.Visible = true;
                 toolStripMenuItemFileTransferSettings.Visible = true;
+                toolStripMenuItemRegionSelectAddRegion.Visible = true;
 
                 toolStripMenuItemTools.Visible = true;
                 toolStripSeparatorTools.Visible = true;
 
                 // Show the "Capture Now" memu items.
-                toolStripMenuItemCaptureNowEdit.Visible = true;
+                toolStripMenuItemCaptureNowOptions.Visible = true;
                 toolStripMenuItemCaptureNowArchive.Visible = true;
+                toolStripMenuItemCaptureNowEdit.Visible = true;
                 toolStripSeparatorCaptureNow.Visible = true;
             }
         }
