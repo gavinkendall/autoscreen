@@ -225,6 +225,9 @@ namespace AutoScreenCapture
 
                     if (schedule.Timer.Enabled)
                     {
+                        // Disable the configure button so we force the user to stop the schedule first before configuring it.
+                        buttonConfigure.Enabled = false;
+
                         // If the schedule's timer is running make sure to indiciate this to the user by changing the color of the text field.
                         textBoxObjectName.BackColor = Color.PaleGreen;
 
@@ -239,6 +242,8 @@ namespace AutoScreenCapture
                     }
                     else
                     {
+                        buttonConfigure.Enabled = true;
+
                         // Change the image to a "play" symbol.
                         buttonScheduleTimer.Image = Properties.Resources.start_screen_capture;
 
