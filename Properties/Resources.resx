@@ -199,12 +199,6 @@
   <data name="lightbulb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\lightbulb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="help_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-0.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="help_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-1.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="command_line" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\command_line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -250,9 +244,6 @@
   <data name="blade6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\blade6.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="help_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-2.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="zoom_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\zoom_in.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -262,34 +253,43 @@
   <data name="tools" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\tools.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="help_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-3.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="changelog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\changelog.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-4.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="command_line1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\command_line.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-5.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="common_setup_scenarios" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\common_setup_scenarios.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-6.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="configuration_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\configuration_file.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-7.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="editors" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\editors.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-8.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="getting_started" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\getting_started.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-9.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="license" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\license.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-10.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="macro_tags" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\macro_tags.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-11.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="regions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\regions.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="help_12" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\help\help-12.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="schedules" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\schedules.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="screens" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\screens.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="triggers" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\triggers.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="welcome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\help\welcome.rtf;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

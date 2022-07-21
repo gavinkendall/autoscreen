@@ -67,55 +67,55 @@ namespace AutoScreenCapture
             switch (listBoxHelpItems.SelectedIndex)
             {
                 case 0:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_0;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.welcome;
                     break;
 
                 case 1:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_1;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.license;
                     break;
 
                 case 2:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_2;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.changelog;
                     break;
 
                 case 3:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_3;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.getting_started;
                     break;
 
                 case 4:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_4;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.screens;
                     break;
 
                 case 5:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_5;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.regions;
                     break;
 
                 case 6:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_6;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.editors;
                     break;
 
                 case 7:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_7;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.schedules;
                     break;
 
                 case 8:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_8;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.macro_tags;
                     break;
 
                 case 9:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_9;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.triggers;
                     break;
 
                 case 10:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_10;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.command_line1;
                     break;
 
                 case 11:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_11;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.common_setup_scenarios;
                     break;
 
                 case 12:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.help_12;
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.configuration_file;
                     break;
             }
         }

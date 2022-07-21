@@ -203,6 +203,16 @@ namespace AutoScreenCapture
         internal const string REGEX_COMMAND_LINE_RESTART = "^-restart$";
 
         /// <summary>
+        /// Regex for parsing the -optimize=on command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_OPTIMIZE_ON = "^-optimize=on";
+
+        /// <summary>
+        /// Regex for parsing the -optimize=off command.
+        /// </summary>
+        internal const string REGEX_COMMAND_LINE_OPTIMIZE_OFF = "^-optimize=off";
+
+        /// <summary>
         /// The timer to check commands provided to the application.
         /// This runs every second.
         /// </summary>
@@ -800,6 +810,18 @@ namespace AutoScreenCapture
                         _screenCapture.AutoStartFromCommandLine = false;
 
                         ExitApplication();
+                    }
+
+                    // -optimize=on
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_OPTIMIZE_ON))
+                    {
+                        _screenCapture.OptimizeScreenCapture = true;
+                    }
+
+                    // -optimize=off
+                    if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_OPTIMIZE_OFF))
+                    {
+                        _screenCapture.OptimizeScreenCapture = false;
                     }
                 }
 

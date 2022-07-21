@@ -261,12 +261,71 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
+        ///{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
+        ///Who reads these things?\par
+        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0) [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string changelog {
+            get {
+                return ResourceManager.GetString("changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap command_line {
             get {
                 object obj = ResourceManager.GetObject("command_line", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
+        ///{\colortbl ;\red255\green255\blue255;\red0\green0\blue0;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Command Line\b0\par
+        ///\fs22 Auto Screen Capture can be controlled from a command line terminal such as Command Prompt (cmd.exe) or Windows PowerShell (powershell.exe) depending on what you prefer to use.\par
+        ///Simply running &quot;autoscreen.exe&quot; without c [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string command_line1 {
+            get {
+                return ResourceManager.GetString("command_line1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Common Setup Scenarios\b0\fs22\par
+        ///You want Auto Screen Capture to not show its interface on startup:\par
+        ///
+        ///\pard 
+        ///{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+        ///\fi-360\li720\sa200\sl276\slmult1 Go to the Triggers module\par
+        ///{\pntext\f0 2.\tab}Click on the green square for the &quot;Show Interface on Start [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string common_setup_scenarios {
+            get {
+                return ResourceManager.GetString("common_setup_scenarios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
+        ///{\colortbl ;\red0\green128\blue0;\red0\green0\blue0;\red0\green0\blue255;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Configuration File\b0\par
+        ///\fs22 Auto Screen Capture comes with its own configuration file named &quot;autoscreen.conf&quot; that is usually found in the same folder as &quot;autoscreen.exe&quot;.\par
+        ///{\pict{\*\picprop}\wmetafile8\ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string configuration_file {
+            get {
+                return ResourceManager.GetString("configuration_file", resourceCulture);
             }
         }
         
@@ -301,6 +360,20 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Editors\b0\fs22\par
+        ///The &quot;Editors&quot; module gives you the ability to add, configure, and remove applications and/or scripts that are used by Auto Screen Capture to edit or open screenshots. For example, you could have a screenshot opened by a PowerShell script or an application (such as Clip Studio Paint or GIMP).\par
+        ///
+        ///\pard\sa200\sl240 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string editors {
+            get {
+                return ResourceManager.GetString("editors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap email {
@@ -331,106 +404,6 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap help {
-            get {
-                object obj = ResourceManager.GetObject("help", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\colortbl ;\red0\green0\blue255;}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Welcome\fs22\par
-        ///\b0 You made it!\par
-        ///Auto Screen Capture is like a bottle of scotch that sits on the top shelf collecting dust over the years; it&apos;s not popular, but it proves to be unique and special once you understand it.\par
-        ///This application is a portable automated screen capture ut [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_0 {
-            get {
-                return ResourceManager.GetString("help_0", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\colortbl ;\red0\green0\blue255;}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\f0\fs22\lang9                     GNU GENERAL PUBLIC LICENSE\par
-        ///                       Version 3, 29 June 2007\par
-        ///\par
-        /// Copyright (C) 2007 Free Software Foundation, Inc. &lt;{{\field{\*\fldinst{HYPERLINK &quot;https://fsf.org/&quot;}}{\fldrslt{https://fsf.org/\ul0\cf0}}}}\f0\fs22 &gt;\par
-        /// Everyone is permitted to copy and distribute verb [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_1 {
-            get {
-                return ResourceManager.GetString("help_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}}
-        ///{\colortbl ;\red255\green255\blue255;\red0\green0\blue0;}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Command Line\b0\par
-        ///\fs22 Auto Screen Capture can be controlled from a command line terminal such as Command Prompt (cmd.exe) or Windows PowerShell (powershell.exe) depending on what you prefer to use.\par
-        ///Simply running &quot;autoscreen.exe&quot; without c [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_10 {
-            get {
-                return ResourceManager.GetString("help_10", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Common Setup Scenarios\b0\fs22\par
-        ///You want Auto Screen Capture to not show its interface on startup:\par
-        ///
-        ///\pard 
-        ///{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
-        ///\fi-360\li720\sa200\sl276\slmult1 Go to the Triggers module\par
-        ///{\pntext\f0 2.\tab}Click on the green square for the &quot;Show Interface on Start [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_11 {
-            get {
-                return ResourceManager.GetString("help_11", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil Consolas;}}
-        ///{\colortbl ;\red0\green128\blue0;\red0\green0\blue0;\red0\green0\blue255;}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Configuration File\b0\par
-        ///\fs22 Auto Screen Capture comes with its own configuration file named &quot;autoscreen.conf&quot; that is usually found in the same folder as &quot;autoscreen.exe&quot;.\par
-        ///{\pict{\*\picprop}\wmetafile8\ [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_12 {
-            get {
-                return ResourceManager.GetString("help_12", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil Consolas;}{\f2\fnil\fcharset0 Consolas;}}
-        ///{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Changelog\b0\fs22\par
-        ///Who reads these things?\par
-        ///This is where I keep track of the application&apos;s changes. You&apos;re going to find major releases divided into specific versions and code-named as Legacy (1.0), Phoenix (2.0) [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_2 {
-            get {
-                return ResourceManager.GetString("help_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
         ///{\colortbl ;\red0\green0\blue255;}
         ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
@@ -439,93 +412,19 @@ namespace AutoScreenCapture.Properties {
         ///\pard\sa200\sl240\slmult1\b0 Check what will be captured before starting a screen capture session by making sure that the Preview button is enabled.\par
         ///You should see a real-time preview when looking at the tab named &quot;Dashboard&quot; or any of the tabs to the right of the Dash [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string help_3 {
+        internal static string getting_started {
             get {
-                return ResourceManager.GetString("help_3", resourceCulture);
+                return ResourceManager.GetString("getting_started", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl240\slmult1\b\f0\fs28\lang9 Screens\b0\fs22\par
-        ///The &quot;Screens&quot; module shows you what displays you may have available. Each &quot;Screen&quot; that is created on the first run of Auto Screen Capture will be configured to adapt to your display setup and may not be an accurate representation of your current display setup. For example, if you see five screens listed [rest of string was truncated]&quot;;.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string help_4 {
+        internal static System.Drawing.Bitmap help {
             get {
-                return ResourceManager.GetString("help_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Regions\b0\fs22\par
-        ///The &quot;Regions&quot; module gives you the ability to add, configure, and remove multiple regions. A region represents an area of a screen and will always be defined by its X, Y, Width, and Height values.\par
-        ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6509\pich4763\picwgoal3690\pichgoal2700 
-        ///010009000003 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_5 {
-            get {
-                return ResourceManager.GetString("help_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Editors\b0\fs22\par
-        ///The &quot;Editors&quot; module gives you the ability to add, configure, and remove applications and/or scripts that are used by Auto Screen Capture to edit or open screenshots. For example, you could have a screenshot opened by a PowerShell script or an application (such as Clip Studio Paint or GIMP).\par
-        ///
-        ///\pard\sa200\sl240 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_6 {
-            get {
-                return ResourceManager.GetString("help_6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Schedules\b0\fs22\par
-        ///The &quot;Schedules&quot; module gives you the ability to add, configure, and remove schedules that define when screenshots should be taken between a time period.\par
-        ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6456\pich5159\picwgoal3660\pichgoal2925 
-        ///010009000003021701000000ec1601000000050000000b02000000 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_7 {
-            get {
-                return ResourceManager.GetString("help_7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Macro Tags\b0\fs22\par
-        ///The &quot;Macro Tags&quot; module gives you the ability to add, configure, and remove macro tags.\par
-        ///A macro tag can be included in the filename and acquires certain information based on what type of macro tag is being used. You could, for example, acquire the current time with the %time% macr [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_8 {
-            get {
-                return ResourceManager.GetString("help_8", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
-        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
-        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Triggers\b0\fs22\par
-        ///The &quot;Triggers&quot; module gives you the ability to add, configure, and remove triggers.\par
-        ///A trigger controls the behaviour of Auto Screen Capture by having the application perform a specified action based on a specified condition.\par
-        ///
-        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafi [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string help_9 {
-            get {
-                return ResourceManager.GetString("help_9", resourceCulture);
+                object obj = ResourceManager.GetObject("help", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -540,12 +439,41 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red0\green0\blue255;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\f0\fs22\lang9                     GNU GENERAL PUBLIC LICENSE\par
+        ///                       Version 3, 29 June 2007\par
+        ///\par
+        /// Copyright (C) 2007 Free Software Foundation, Inc. &lt;{{\field{\*\fldinst{HYPERLINK &quot;https://fsf.org/&quot;}}{\fldrslt{https://fsf.org/\ul0\cf0}}}}\f0\fs22 &gt;\par
+        /// Everyone is permitted to copy and distribute verb [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string license {
+            get {
+                return ResourceManager.GetString("license", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap lightbulb {
             get {
                 object obj = ResourceManager.GetObject("lightbulb", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Macro Tags\b0\fs22\par
+        ///The &quot;Macro Tags&quot; module gives you the ability to add, configure, and remove macro tags.\par
+        ///A macro tag can be included in the filename and acquires certain information based on what type of macro tag is being used. You could, for example, acquire the current time with the %time% macr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string macro_tags {
+            get {
+                return ResourceManager.GetString("macro_tags", resourceCulture);
             }
         }
         
@@ -590,6 +518,21 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Regions\b0\fs22\par
+        ///The &quot;Regions&quot; module gives you the ability to add, configure, and remove multiple regions. A region represents an area of a screen and will always be defined by its X, Y, Width, and Height values.\par
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6509\pich4763\picwgoal3690\pichgoal2700 
+        ///010009000003 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string regions {
+            get {
+                return ResourceManager.GetString("regions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap schedule {
@@ -600,12 +543,38 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Schedules\b0\fs22\par
+        ///The &quot;Schedules&quot; module gives you the ability to add, configure, and remove schedules that define when screenshots should be taken between a time period (and what screens and regions should be captured during the running schedule).\par
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafile8\picw6403\pich5080\picw [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string schedules {
+            get {
+                return ResourceManager.GetString("schedules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap screen {
             get {
                 object obj = ResourceManager.GetObject("screen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl240\slmult1\b\f0\fs28\lang9 Screens\b0\fs22\par
+        ///The &quot;Screens&quot; module shows you what displays you may have available. Each &quot;Screen&quot; that is created on the first run of Auto Screen Capture will be configured to adapt to your display setup and may not be an accurate representation of your current display setup. For example, if you see five screens listed [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string screens {
+            get {
+                return ResourceManager.GetString("screens", resourceCulture);
             }
         }
         
@@ -660,6 +629,21 @@ namespace AutoScreenCapture.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Triggers\b0\fs22\par
+        ///The &quot;Triggers&quot; module gives you the ability to add, configure, and remove triggers.\par
+        ///A trigger controls the behaviour of Auto Screen Capture by having the application perform a specified action based on a specified condition.\par
+        ///
+        ///\pard\sa200\sl240\slmult1{\pict{\*\picprop}\wmetafi [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string triggers {
+            get {
+                return ResourceManager.GetString("triggers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap unlock {
@@ -676,6 +660,21 @@ namespace AutoScreenCapture.Properties {
             get {
                 object obj = ResourceManager.GetObject("warning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+        ///{\colortbl ;\red0\green0\blue255;}
+        ///{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+        ///\pard\sa200\sl276\slmult1\b\f0\fs28\lang9 Welcome\fs22\par
+        ///\b0 You made it!\par
+        ///Auto Screen Capture is like a bottle of scotch that sits on the top shelf collecting dust over the years; it&apos;s not popular, but it proves to be unique and special once you understand it.\par
+        ///This application is a portable automated screen capture ut [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string welcome {
+            get {
+                return ResourceManager.GetString("welcome", resourceCulture);
             }
         }
         
