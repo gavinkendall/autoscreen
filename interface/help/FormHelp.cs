@@ -38,9 +38,9 @@ namespace AutoScreenCapture
         private void FormHelp_Load(object sender, System.EventArgs e)
         {
             listBoxHelpItems.Items.Add("Welcome");
-            listBoxHelpItems.Items.Add("Quick Start");
             listBoxHelpItems.Items.Add("License");
             listBoxHelpItems.Items.Add("Changelog");
+            listBoxHelpItems.Items.Add("Quick Start");
             listBoxHelpItems.Items.Add("Getting Started");
             listBoxHelpItems.Items.Add("Screens");
             listBoxHelpItems.Items.Add("Regions");
@@ -72,15 +72,15 @@ namespace AutoScreenCapture
                     break;
 
                 case 1:
-                    richTextBoxHelpText.SelectedRtf = Properties.Resources.quick_start;
-                    break;
-
-                case 2:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.license;
                     break;
 
-                case 3:
+                case 2:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.changelog;
+                    break;
+
+                case 3:
+                    richTextBoxHelpText.SelectedRtf = Properties.Resources.quick_start;
                     break;
 
                 case 4:

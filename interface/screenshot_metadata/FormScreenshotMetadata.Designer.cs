@@ -53,6 +53,8 @@
             this.labelScreenshotProcessName = new System.Windows.Forms.Label();
             this.textBoxScreenshotDiffPercentage = new System.Windows.Forms.TextBox();
             this.labelScreenshotDiffPercentage = new System.Windows.Forms.Label();
+            this.labelOptimizeScreenCaptureInfo = new System.Windows.Forms.Label();
+            this.labelEncryptionInfo = new System.Windows.Forms.Label();
             this.statusStripScreenshotMetadata.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -215,7 +217,7 @@
             this.statusStripScreenshotMetadata.BackColor = System.Drawing.Color.LightYellow;
             this.statusStripScreenshotMetadata.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelScreenshotMetadata});
-            this.statusStripScreenshotMetadata.Location = new System.Drawing.Point(0, 192);
+            this.statusStripScreenshotMetadata.Location = new System.Drawing.Point(0, 183);
             this.statusStripScreenshotMetadata.Name = "statusStripScreenshotMetadata";
             this.statusStripScreenshotMetadata.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.statusStripScreenshotMetadata.Size = new System.Drawing.Size(621, 22);
@@ -285,11 +287,31 @@
             this.labelScreenshotDiffPercentage.TabIndex = 28;
             this.labelScreenshotDiffPercentage.Text = "Difference With Previous Image:";
             // 
+            // labelOptimizeScreenCaptureInfo
+            // 
+            this.labelOptimizeScreenCaptureInfo.AutoSize = true;
+            this.labelOptimizeScreenCaptureInfo.Location = new System.Drawing.Point(408, 163);
+            this.labelOptimizeScreenCaptureInfo.Name = "labelOptimizeScreenCaptureInfo";
+            this.labelOptimizeScreenCaptureInfo.Size = new System.Drawing.Size(202, 13);
+            this.labelOptimizeScreenCaptureInfo.TabIndex = 29;
+            this.labelOptimizeScreenCaptureInfo.Text = "(If Optimize Screen Capture was enabled)";
+            // 
+            // labelEncryptionInfo
+            // 
+            this.labelEncryptionInfo.AutoSize = true;
+            this.labelEncryptionInfo.Location = new System.Drawing.Point(89, 163);
+            this.labelEncryptionInfo.Name = "labelEncryptionInfo";
+            this.labelEncryptionInfo.Size = new System.Drawing.Size(278, 13);
+            this.labelEncryptionInfo.TabIndex = 30;
+            this.labelEncryptionInfo.Text = "(This is assuming encryption was used for the screenshot)";
+            // 
             // FormScreenshotMetadata
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 214);
+            this.ClientSize = new System.Drawing.Size(621, 205);
+            this.Controls.Add(this.labelEncryptionInfo);
+            this.Controls.Add(this.labelOptimizeScreenCaptureInfo);
             this.Controls.Add(this.labelScreenshotDiffPercentage);
             this.Controls.Add(this.textBoxScreenshotDiffPercentage);
             this.Controls.Add(this.labelScreenshotProcessName);
@@ -430,5 +452,7 @@
         private System.Windows.Forms.Label labelScreenshotKey;
         private System.Windows.Forms.Label labelScreenshotProcessName;
         private System.Windows.Forms.Label labelScreenshotDiffPercentage;
+        private System.Windows.Forms.Label labelOptimizeScreenCaptureInfo;
+        private System.Windows.Forms.Label labelEncryptionInfo;
     }
 }
