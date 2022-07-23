@@ -185,6 +185,8 @@ namespace AutoScreenCapture
 
                                             Version v2300 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, Settings.CODEVERSION_BOOMBAYAH);
                                             Version v2326 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BOOMBAYAH, "2.3.2.6");
+                                            Version v2424 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_BLADE, "2.4.2.4");
+
                                             Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
 
                                             if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
@@ -201,6 +203,14 @@ namespace AutoScreenCapture
 
                                                 // Starting with 2.3.2.6 the TimeOfDay type became the TimeRange type.
                                                 value = value.Replace("TimeOfDay", "TimeRange");
+                                            }
+
+                                            if (v2424 != null && configVersion != null && configVersion.VersionNumber < v2424.VersionNumber)
+                                            {
+                                                log.WriteDebugMessage("Blade 2.4.2.3 or older detected");
+
+                                                // Starting with 2.4.2.4 the CountNow type became the CaptureNowCount type.
+                                                value = value.Replace("CountNow", "CaptureNowCount");
                                             }
                                         }
 
@@ -435,7 +445,7 @@ namespace AutoScreenCapture
 
                         if (GetByName("%capturenowcount%") == null)
                         {
-                            Add(new MacroTag(macroParser, "capturenowcount", "The number of times Capture Now has been used", MacroTagType.CountNow, enable: true));
+                            Add(new MacroTag(macroParser, "capturenowcount", "The number of times Capture Now has been used", MacroTagType.CaptureNowCount, enable: true));
                         }
 
                         SaveToXmlFile(config, fileSystem, log);
@@ -476,7 +486,7 @@ namespace AutoScreenCapture
                     Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
                     Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
                     Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
-                    Add(new MacroTag(macroParser, "capturenowcount", "The number of times Capture Now has been used", MacroTagType.CountNow, enable: true));
+                    Add(new MacroTag(macroParser, "capturenowcount", "The number of times Capture Now has been used", MacroTagType.CaptureNowCount, enable: true));
 
                     SaveToXmlFile(config, fileSystem, log);
                 }

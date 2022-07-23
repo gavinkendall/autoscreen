@@ -136,7 +136,7 @@ namespace AutoScreenCapture
                     }
 
                     // Keep a count of how many times the user has used "Capture Now" so we can include it in a Macro Tag.
-                    _screenCapture.CountNow++;
+                    _screenCapture.CaptureNowCount++;
                 }
 
                 DateTime dtNow = DateTime.Now;

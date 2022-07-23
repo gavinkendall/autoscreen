@@ -54,27 +54,27 @@ namespace AutoScreenCapture
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
 
         // Screen
-        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)$";
+        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
         // Region
-        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)$";
+        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
         // Editor
-        private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?< Name >.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.+)\"$";
+        private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?< Name >.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.+)\"\\]$";
 
         // Schedule
-        private const string REGEX_SCHEDULE = "^Schedule::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Scope=\"(?<Scope>.+)\", OneTime=(?<OneTime>False|True), Period=(?<Period>False|True), Logic=(?<Logic>\\d{1}), CaptureAt=(?<CaptureAt>\\d{2}:\\d{2}), StartAt=(?<StartAt>\\d{2}:\\d{2}), StopAt=(?<StopAt>\\d{2}:\\d{2}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), Monday=(?<Monday>False|True), Tuesday=(?<Tuesday>False|True), Wednesday=(?<Wednesday>False|True), Thursday=(?<Thursday>False|True), Friday=(?<Friday>False|True), Saturday=(?<Saturday>False|True), Sunday=(?<Sunday>False|True), Notes=\"(?<Notes>.+)\"$";
+        private const string REGEX_SCHEDULE = "^Schedule::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Scope=\"(?<Scope>.+)\", OneTime=(?<OneTime>False|True), Period=(?<Period>False|True), Logic=(?<Logic>\\d{1}), CaptureAt=(?<CaptureAt>\\d{2}:\\d{2}), StartAt=(?<StartAt>\\d{2}:\\d{2}), StopAt=(?<StopAt>\\d{2}:\\d{2}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), Monday=(?<Monday>False|True), Tuesday=(?<Tuesday>False|True), Wednesday=(?<Wednesday>False|True), Thursday=(?<Thursday>False|True), Friday=(?<Friday>False|True), Saturday=(?<Saturday>False|True), Sunday=(?<Sunday>False|True), Notes=\"(?<Notes>.+)\"\\]$";
 
         // Macro Tag
-        private const string REGEX_MACRO_TAG = "^MacroTag::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Description=\"(?<Description>.+)\", Type=\"(?<Type>.+)\", DateTimeFormatValue=\"(?<DateTimeFormatValue>.+)\", Macro1TimeRangeStart=(?<Macro1TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeEnd=(?<Macro1TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeMacro=\"(?<Macro1TimeRangeMacro>.+)\", Macro2TimeRangeStart=(?<Macro2TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeEnd=(?<Macro2TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeMacro=\"(?<Macro2TimeRangeMacro>.+)\" Macro3TimeRangeStart=(?<Macro3TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeEnd=(?<Macro3TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeMacro=\"(?<Macro3TimeRangeMacro>.+)\", Macro4TimeRangeStart=(?<Macro4TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeEnd=(?<Macro4TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeMacro=\"(?<Macro4TimeRangeMacro>.+)\", Notes=\"(?<Notes>.+)\"$";
+        private const string REGEX_MACRO_TAG = "^MacroTag::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Description=\"(?<Description>.+)\", Type=\"(?<Type>.+)\", DateTimeFormatValue=\"(?<DateTimeFormatValue>.+)\", Macro1TimeRangeStart=(?<Macro1TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeEnd=(?<Macro1TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeMacro=\"(?<Macro1TimeRangeMacro>.*)\", Macro2TimeRangeStart=(?<Macro2TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeEnd=(?<Macro2TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeMacro=\"(?<Macro2TimeRangeMacro>.*)\", Macro3TimeRangeStart=(?<Macro3TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeEnd=(?<Macro3TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeMacro=\"(?<Macro3TimeRangeMacro>.*)\", Macro4TimeRangeStart=(?<Macro4TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeEnd=(?<Macro4TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeMacro=\"(?<Macro4TimeRangeMacro>.*)\", Notes=\"(?<Notes>.*)\"\\]$";
 
         // Trigger
-        private const string REGEX_TRIGGER = "^Trigger::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Condition=\"(?<Condition>.+)\", Action=\"(?<Action>.+)\", Date=(?<Date>\\d{4}:\\d{2}:\\d{2}), Time=(?<Time>\\d{2}:\\d{2}), Day=(?<Day>Weekday|Weekend|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Days=(?<Days>\\d{1,8}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), CycleCount=(?<CycleCount=\\d{1,8}), Duration=(?<Duration>\\d{1,8}), DurationType=(?<DurationType>\\d{1}), Value=\"(?<Value>.+)\"$";
+        private const string REGEX_TRIGGER = "^Trigger::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Condition=\"(?<Condition>.+)\", Action=\"(?<Action>.+)\", Date=(?<Date>\\d{4}:\\d{2}:\\d{2}), Time=(?<Time>\\d{2}:\\d{2}), Day=(?<Day>Weekday|Weekend|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Days=(?<Days>\\d{1,8}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), CycleCount=(?<CycleCount=\\d{1,8}), Duration=(?<Duration>\\d{1,8}), DurationType=(?<DurationType>\\d{1}), Value=\"(?<Value>.+)\"\\]$";
 
         /// <summary>
         /// A collection of macro tags.
         /// </summary>
-        private MacroTagCollection _macroTagCollection;
+        //private MacroTagCollection _macroTagCollection;
 
         /// <summary>
         /// Determines if we do a clean startup. This means we do not load the XML data files. By default we load the XML data files.
@@ -106,6 +106,8 @@ namespace AutoScreenCapture
         /// </summary>
         public ScreenCapture ScreenCapture { get; set; }
 
+        public MacroTagCollection MacroTagCollection { get; set; }
+
         /// <summary>
         /// A class for handling configuration of the application.
         /// </summary>
@@ -130,19 +132,6 @@ namespace AutoScreenCapture
                 Settings = new Settings();
                 MacroParser = new MacroParser(Settings);
 
-                _macroTagCollection = new MacroTagCollection();
-                _macroTagCollection.Add(new MacroTag(MacroParser, "date", "The current date (%date%)", MacroTagType.DateTimeFormat, MacroParser.DateFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "time", "The current time (%time%)", MacroTagType.DateTimeFormat, MacroParser.TimeFormatForWindows, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "year", "The current year (%year%)", MacroTagType.DateTimeFormat, MacroParser.YearFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "month", "The current month (%month%)", MacroTagType.DateTimeFormat, MacroParser.MonthFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "day", "The current day (%day%)", MacroTagType.DateTimeFormat, MacroParser.DayFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "hour", "The current hour (%hour%)", MacroTagType.DateTimeFormat, MacroParser.HourFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "minute", "The current minute (%minute%)", MacroTagType.DateTimeFormat, MacroParser.MinuteFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "second", "The current second (%second%)", MacroTagType.DateTimeFormat, MacroParser.SecondFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "millisecond", "The current millisecond (%millisecond%)", MacroTagType.DateTimeFormat, MacroParser.MillisecondFormat, active: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "user", "The user using this computer (%user%)", MacroTagType.User, enable: true));
-                _macroTagCollection.Add(new MacroTag(MacroParser, "machine", "The name of the computer (%machine%)", MacroTagType.Machine, enable: true));
-
                 string configDirectory = fileSystem.GetDirectoryName(fileSystem.ConfigFile);
 
                 if (!string.IsNullOrEmpty(configDirectory) && !fileSystem.DirectoryExists(configDirectory))
@@ -152,47 +141,10 @@ namespace AutoScreenCapture
 
                 if (!fileSystem.FileExists(fileSystem.ConfigFile))
                 {
-                    string[] linesToWrite =
-                    {
-                        "# Auto Screen Capture Configuration File", "",
-                        "# The default screenshots folder.",
-                        "ScreenshotsFolder=" + fileSystem.DefaultScreenshotsFolder, "",
-                        "# The default filename pattern.",
-                        "FilenamePattern=" + fileSystem.DefaultFilenamePattern, "",
-                        "# The default image format.",
-                        "ImageFormat=" + ScreenCapture.DefaultImageFormat, "",
-                        "# The folder to store any errors encountered by the application.",
-                        "ErrorsFolder=" + fileSystem.DefaultErrorsFolder, "",
-                        "# The folder to store logs.",
-                        "LogsFolder=" + fileSystem.DefaultLogsFolder, "",
-                        "# The file that the application monitors for provided commands.",
-                        "CommandFile=" + fileSystem.DefaultCommandFile, "",
-                        "# The application settings.",
-                        "ApplicationSettingsFile=" + fileSystem.DefaultApplicationSettingsFile, "",
-                        "# Your personal settings.",
-                        "UserSettingsFile=" + fileSystem.DefaultUserSettingsFile, "",
-                        "# SMTP settings for emailing screenshots using an email server.",
-                        "SMTPSettingsFile=" + fileSystem.DefaultSmtpSettingsFile, "",
-                        "# SFTP settings for uploading screenshots to a file server.",
-                        "SFTPSettingsFile=" + fileSystem.DefaultSftpSettingsFile, "",
-                        "# References to image editors.",
-                        "EditorsFile=" + fileSystem.DefaultEditorsFile, "",
-                        "# References to regions.",
-                        "RegionsFile=" + fileSystem.DefaultRegionsFile, "",
-                        "# References to screens.",
-                        "ScreensFile=" + fileSystem.DefaultScreensFile, "",
-                        "# References to triggers.",
-                        "TriggersFile=" + fileSystem.DefaultTriggersFile, "",
-                        "# References to screenshots.",
-                        "ScreenshotsFile=" + fileSystem.DefaultScreenshotsFile, "",
-                        "# References to macro tags.",
-                        "MacroTagsFile=" + fileSystem.DefaultMacroTagsFile, "",
-                        "# References to schedules.",
-                        "SchedulesFile=" + fileSystem.DefaultSchedulesFile, ""
-                    };
-
-                    fileSystem.WriteToFile(fileSystem.ConfigFile, linesToWrite);
+                    // do something here if the configuration file doesn't exist
                 }
+
+                ParseMacroTags();
 
                 foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
                 {
@@ -304,7 +256,7 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
                 {
-                    FileSystem.ScreenshotsFolder = MacroParser.ParseTags(FileSystem.DefaultScreenshotsFolder, _macroTagCollection, Log);
+                    FileSystem.ScreenshotsFolder = MacroParser.ParseTags(FileSystem.DefaultScreenshotsFolder, MacroTagCollection, Log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
 
@@ -316,7 +268,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.ErrorsFolder))
                 {
-                    FileSystem.ErrorsFolder = MacroParser.ParseTags(FileSystem.DefaultErrorsFolder, _macroTagCollection, Log);
+                    FileSystem.ErrorsFolder = MacroParser.ParseTags(FileSystem.DefaultErrorsFolder, MacroTagCollection, Log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nErrorsFolder=" + FileSystem.ErrorsFolder);
 
@@ -328,7 +280,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.LogsFolder))
                 {
-                    FileSystem.LogsFolder = MacroParser.ParseTags(FileSystem.DefaultLogsFolder, _macroTagCollection, Log);
+                    FileSystem.LogsFolder = MacroParser.ParseTags(FileSystem.DefaultLogsFolder, MacroTagCollection, Log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.LogsFolder);
 
@@ -357,7 +309,7 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(FileSystem.CommandFile))
                 {
-                    FileSystem.CommandFile = MacroParser.ParseTags(FileSystem.DefaultCommandFile, _macroTagCollection, log);
+                    FileSystem.CommandFile = MacroParser.ParseTags(FileSystem.DefaultCommandFile, MacroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.CommandFile);
 
@@ -369,7 +321,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
                 {
-                    FileSystem.ApplicationSettingsFile = MacroParser.ParseTags(FileSystem.DefaultApplicationSettingsFile, _macroTagCollection, log);
+                    FileSystem.ApplicationSettingsFile = MacroParser.ParseTags(FileSystem.DefaultApplicationSettingsFile, MacroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
 
@@ -381,7 +333,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
                 {
-                    FileSystem.SmtpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSmtpSettingsFile, _macroTagCollection, log);
+                    FileSystem.SmtpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSmtpSettingsFile, MacroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.SmtpSettingsFile);
 
@@ -393,7 +345,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
                 {
-                    FileSystem.SftpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSftpSettingsFile, _macroTagCollection, log);
+                    FileSystem.SftpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSftpSettingsFile, MacroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.SftpSettingsFile);
 
@@ -405,7 +357,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                 {
-                    FileSystem.UserSettingsFile = MacroParser.ParseTags(FileSystem.DefaultUserSettingsFile, _macroTagCollection, log);
+                    FileSystem.UserSettingsFile = MacroParser.ParseTags(FileSystem.DefaultUserSettingsFile, MacroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.UserSettingsFile);
 
@@ -507,7 +459,7 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            path = MacroParser.ParseTags(path, _macroTagCollection, Log);
+            path = MacroParser.ParseTags(path, MacroTagCollection, Log);
 
             if (FileSystem.HasExtension(path))
             {
@@ -532,6 +484,146 @@ namespace AutoScreenCapture
             }
 
             return true;
+        }
+
+        private void ParseMacroTags()
+        {
+            try
+            {
+                MacroTagCollection = new MacroTagCollection();
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_MACRO_TAG))
+                    {
+                        bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_MACRO_TAG).Groups["Enable"].Value);
+                        string name = Regex.Match(line, REGEX_MACRO_TAG).Groups["Name"].Value;
+                        string description = Regex.Match(line, REGEX_MACRO_TAG).Groups["Description"].Value;
+                        string type = Regex.Match(line, REGEX_MACRO_TAG).Groups["Type"].Value;
+                        string dateTimeFormatValue = Regex.Match(line, REGEX_MACRO_TAG).Groups["DateTimeFormatValue"].Value;
+                        DateTime macro1TimeRangeStart = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro1TimeRangeStart"].Value);
+                        DateTime macro1TimeRangeEnd = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro1TimeRangeEnd"].Value);
+                        string macro1TimeRangeMacro = Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro1TimeRangeMacro"].Value;
+                        DateTime macro2TimeRangeStart = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro2TimeRangeStart"].Value);
+                        DateTime macro2TimeRangeEnd = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro2TimeRangeEnd"].Value);
+                        string macro2TimeRangeMacro = Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro2TimeRangeMacro"].Value;
+                        DateTime macro3TimeRangeStart = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro3TimeRangeStart"].Value);
+                        DateTime macro3TimeRangeEnd = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro3TimeRangeEnd"].Value);
+                        string macro3TimeRangeMacro = Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro3TimeRangeMacro"].Value;
+                        DateTime macro4TimeRangeStart = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro4TimeRangeStart"].Value);
+                        DateTime macro4TimeRangeEnd = DateTime.Parse(Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro4TimeRangeEnd"].Value);
+                        string macro4TimeRangeMacro = Regex.Match(line, REGEX_MACRO_TAG).Groups["Macro4TimeRangeMacro"].Value;
+                        string notes = Regex.Match(line, REGEX_MACRO_TAG).Groups["Notes"].Value;
+
+                        MacroTag macroTag = new MacroTag(MacroParser)
+                        {
+                            Enable = enable,
+                            Name = name,
+                            Description = description,
+                            DateTimeFormatValue = dateTimeFormatValue,
+                            TimeRangeMacro1Start = macro1TimeRangeStart,
+                            TimeRangeMacro1End = macro1TimeRangeEnd,
+                            TimeRangeMacro1Macro = macro1TimeRangeMacro,
+                            TimeRangeMacro2Start = macro2TimeRangeStart,
+                            TimeRangeMacro2End = macro2TimeRangeEnd,
+                            TimeRangeMacro2Macro = macro2TimeRangeMacro,
+                            TimeRangeMacro3Start = macro3TimeRangeStart,
+                            TimeRangeMacro3End = macro3TimeRangeEnd,
+                            TimeRangeMacro3Macro = macro3TimeRangeMacro,
+                            TimeRangeMacro4Start = macro4TimeRangeStart,
+                            TimeRangeMacro4End = macro4TimeRangeEnd,
+                            TimeRangeMacro4Macro = macro4TimeRangeMacro,
+                            Notes = notes
+                        };
+
+                        switch (type)
+                        {
+                            case "ScreenName":
+                                macroTag.Type = MacroTagType.ScreenName;
+                                break;
+
+                            case "ScreenNumber":
+                                macroTag.Type = MacroTagType.ScreenNumber;
+                                break;
+
+                            case "ImageFormat":
+                                macroTag.Type = MacroTagType.ImageFormat;
+                                break;
+
+                            case "ScreenCaptureCycleCount":
+                                macroTag.Type = MacroTagType.ScreenCaptureCycleCount;
+                                break;
+
+                            case "ActiveWindowTitle":
+                                macroTag.Type = MacroTagType.ActiveWindowTitle;
+                                break;
+
+                            case "DateTimeFormat":
+                                macroTag.Type = MacroTagType.DateTimeFormat;
+                                break;
+
+                            case "User":
+                                macroTag.Type = MacroTagType.User;
+                                break;
+
+                            case "Machine":
+                                macroTag.Type = MacroTagType.Machine;
+                                break;
+
+                            case "TimeRange":
+                                macroTag.Type = MacroTagType.TimeRange;
+                                break;
+
+                            case "DateTimeFormatExpression":
+                                macroTag.Type = MacroTagType.DateTimeFormatExpression;
+                                break;
+
+                            case "QuarterYear":
+                                macroTag.Type = MacroTagType.QuarterYear;
+                                break;
+
+                            case "X":
+                                macroTag.Type = MacroTagType.X;
+                                break;
+
+                            case "Y":
+                                macroTag.Type = MacroTagType.Y;
+                                break;
+
+                            case "Width":
+                                macroTag.Type = MacroTagType.Width;
+                                break;
+
+                            case "Height":
+                                macroTag.Type = MacroTagType.Height;
+                                break;
+
+                            case "Process":
+                                macroTag.Type = MacroTagType.Process;
+                                break;
+
+                            case "Label":
+                                macroTag.Type = MacroTagType.Label;
+                                break;
+
+                            case "CaptureNowCount":
+                                macroTag.Type = MacroTagType.CaptureNowCount;
+                                break;
+                        }
+
+                        MacroTagCollection.Add(macroTag);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseMacroTags", ex);
+            }
         }
     }
 }

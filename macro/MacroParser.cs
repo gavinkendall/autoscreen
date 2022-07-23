@@ -280,8 +280,8 @@ namespace AutoScreenCapture
                     macro = macro.Replace(tag.Name, label);
                     break;
 
-                case MacroTagType.CountNow:
-                    macro = macro.Replace(tag.Name, screenCapture == null ? "0" : screenCapture.CountNow.ToString());
+                case MacroTagType.CaptureNowCount:
+                    macro = macro.Replace(tag.Name, screenCapture == null ? "0" : screenCapture.CaptureNowCount.ToString());
                     break;
             }
 

@@ -113,6 +113,6 @@ namespace AutoScreenCapture
         /// <summary>
         /// The number of times the user has used "Capture Now".
         /// </summary>
-        CountNow = 17
+        CaptureNowCount = 17
     }
 }

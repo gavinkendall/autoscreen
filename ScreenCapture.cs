@@ -316,7 +316,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// The numer of times the user did a "Capture Now".
         /// </summary>
-        public int CountNow { get; set; }
+        public int CaptureNowCount { get; set; }
 
         /// <summary>
         /// Determines if the screen capture session is locked.
