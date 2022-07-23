@@ -80,9 +80,9 @@ namespace AutoScreenCapture
         public readonly string DefaultFilenamePattern = @"%date%\%name%\%date%_%time%_(%process%).%format%";
 
         /// <summary>
-        /// Default debug folder.
+        /// Default errors folder.
         /// </summary>
-        public readonly string DefaultDebugFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\debug\\";
+        public readonly string DefaultErrorsFolder = AppDomain.CurrentDomain.BaseDirectory + "!autoscreen\\errors\\";
 
         /// <summary>
         /// Default logs folder.
@@ -161,9 +161,9 @@ namespace AutoScreenCapture
         public string FilenamePattern;
 
         /// <summary>
-        /// Debug folder.
+        /// Errors folder.
         /// </summary>
-        public string DebugFolder;
+        public string ErrorsFolder;
 
         /// <summary>
         /// Logs folder.

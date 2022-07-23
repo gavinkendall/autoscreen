@@ -245,7 +245,7 @@ namespace AutoScreenCapture
 
                         labelHelp.Image = Resources.warning;
                         labelHelp.BackColor = System.Drawing.Color.PaleVioletRed;
-                        HelpMessage($"Please check \"{ _fileSystem.DebugFolder + _fileSystem.ErrorFile}\"");
+                        HelpMessage($"Please check \"{ _fileSystem.ErrorsFolder + _fileSystem.ErrorFile}\"");
                     }
                     else if (_screenCapture.ApplicationWarning)
                     {

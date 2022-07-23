@@ -44,7 +44,7 @@ namespace AutoScreenCapture
                 _log.WriteDebugMessage("Checking what we loaded from your autoscreen.conf file ...");
                 _log.WriteDebugMessage("ApplicationSettingsFile=" + _fileSystem.ApplicationSettingsFile);
                 _log.WriteDebugMessage("UserSettingsFile=" + _fileSystem.UserSettingsFile);
-                _log.WriteDebugMessage("DebugFolder=" + _fileSystem.DebugFolder);
+                _log.WriteDebugMessage("ErrorsFolder=" + _fileSystem.ErrorsFolder);
                 _log.WriteDebugMessage("LogsFolder=" + _fileSystem.LogsFolder);
                 _log.WriteDebugMessage("CommandFile=" + _fileSystem.CommandFile);
                 _log.WriteDebugMessage("ScreenshotsFolder=" + _fileSystem.ScreenshotsFolder);

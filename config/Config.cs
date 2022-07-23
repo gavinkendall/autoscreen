@@ -36,7 +36,7 @@ namespace AutoScreenCapture
 
         // Folders
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
-        private const string REGEX_DEBUG_FOLDER = "^DebugFolder=(?<Path>.+)$";
+        private const string REGEX_ERRORS_FOLDER = "^DebugFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
 
         // Files
@@ -52,6 +52,24 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
         private const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
+
+        // Screen
+        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)$";
+
+        // Region
+        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)$";
+
+        // Editor
+        private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?< Name >.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.+)\"$";
+
+        // Schedule
+        private const string REGEX_SCHEDULE = "^Schedule::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Scope=\"(?<Scope>.+)\", OneTime=(?<OneTime>False|True), Period=(?<Period>False|True), Logic=(?<Logic>\\d{1}), CaptureAt=(?<CaptureAt>\\d{2}:\\d{2}), StartAt=(?<StartAt>\\d{2}:\\d{2}), StopAt=(?<StopAt>\\d{2}:\\d{2}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), Monday=(?<Monday>False|True), Tuesday=(?<Tuesday>False|True), Wednesday=(?<Wednesday>False|True), Thursday=(?<Thursday>False|True), Friday=(?<Friday>False|True), Saturday=(?<Saturday>False|True), Sunday=(?<Sunday>False|True), Notes=\"(?<Notes>.+)\"$";
+
+        // Macro Tag
+        private const string REGEX_MACRO_TAG = "^MacroTag::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Description=\"(?<Description>.+)\", Type=\"(?<Type>.+)\", DateTimeFormatValue=\"(?<DateTimeFormatValue>.+)\", Macro1TimeRangeStart=(?<Macro1TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeEnd=(?<Macro1TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeMacro=\"(?<Macro1TimeRangeMacro>.+)\", Macro2TimeRangeStart=(?<Macro2TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeEnd=(?<Macro2TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeMacro=\"(?<Macro2TimeRangeMacro>.+)\" Macro3TimeRangeStart=(?<Macro3TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeEnd=(?<Macro3TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeMacro=\"(?<Macro3TimeRangeMacro>.+)\", Macro4TimeRangeStart=(?<Macro4TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeEnd=(?<Macro4TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeMacro=\"(?<Macro4TimeRangeMacro>.+)\", Notes=\"(?<Notes>.+)\"$";
+
+        // Trigger
+        private const string REGEX_TRIGGER = "^Trigger::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Condition=\"(?<Condition>.+)\", Action=\"(?<Action>.+)\", Date=(?<Date>\\d{4}:\\d{2}:\\d{2}), Time=(?<Time>\\d{2}:\\d{2}), Day=(?<Day>Weekday|Weekend|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Days=(?<Days>\\d{1,8}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), CycleCount=(?<CycleCount=\\d{1,8}), Duration=(?<Duration>\\d{1,8}), DurationType=(?<DurationType>\\d{1}), Value=\"(?<Value>.+)\"$";
 
         /// <summary>
         /// A collection of macro tags.
@@ -144,7 +162,7 @@ namespace AutoScreenCapture
                         "# The default image format.",
                         "ImageFormat=" + ScreenCapture.DefaultImageFormat, "",
                         "# The folder to store any errors encountered by the application.",
-                        "DebugFolder=" + fileSystem.DefaultDebugFolder, "",
+                        "ErrorsFolder=" + fileSystem.DefaultErrorsFolder, "",
                         "# The folder to store logs.",
                         "LogsFolder=" + fileSystem.DefaultLogsFolder, "",
                         "# The file that the application monitors for provided commands.",
@@ -198,8 +216,8 @@ namespace AutoScreenCapture
                     if (GetPathAndCreateIfNotFound(line, REGEX_SCREENSHOTS_FOLDER, out path))
                         fileSystem.ScreenshotsFolder = path;
 
-                    if (GetPathAndCreateIfNotFound(line, REGEX_DEBUG_FOLDER, out path))
-                        fileSystem.DebugFolder = path;
+                    if (GetPathAndCreateIfNotFound(line, REGEX_ERRORS_FOLDER, out path))
+                        fileSystem.ErrorsFolder = path;
 
                     if (GetPathAndCreateIfNotFound(line, REGEX_LOGS_FOLDER, out path))
                         fileSystem.LogsFolder = path;
@@ -296,15 +314,15 @@ namespace AutoScreenCapture
                     }
                 }
 
-                if (string.IsNullOrEmpty(FileSystem.DebugFolder))
+                if (string.IsNullOrEmpty(FileSystem.ErrorsFolder))
                 {
-                    FileSystem.DebugFolder = MacroParser.ParseTags(FileSystem.DefaultDebugFolder, _macroTagCollection, Log);
+                    FileSystem.ErrorsFolder = MacroParser.ParseTags(FileSystem.DefaultErrorsFolder, _macroTagCollection, Log);
 
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nDebugFolder=" + FileSystem.DebugFolder);
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nErrorsFolder=" + FileSystem.ErrorsFolder);
 
-                    if (!FileSystem.DirectoryExists(FileSystem.DebugFolder))
+                    if (!FileSystem.DirectoryExists(FileSystem.ErrorsFolder))
                     {
-                        FileSystem.CreateDirectory(FileSystem.DebugFolder);
+                        FileSystem.CreateDirectory(FileSystem.ErrorsFolder);
                     }
                 }
 

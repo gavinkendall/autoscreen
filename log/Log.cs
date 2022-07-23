@@ -115,19 +115,19 @@ namespace AutoScreenCapture
 
                 string appVersion = "[(v" + _settings.ApplicationVersion + ") ";
 
-                if (string.IsNullOrEmpty(_fileSystem.DebugFolder))
+                if (string.IsNullOrEmpty(_fileSystem.ErrorsFolder))
                 {
-                    _fileSystem.DebugFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + _fileSystem.PathDelimiter + "debug" + _fileSystem.PathDelimiter;
+                    _fileSystem.ErrorsFolder = AppDomain.CurrentDomain.BaseDirectory + @"!autoscreen" + _fileSystem.PathDelimiter + "errors" + _fileSystem.PathDelimiter;
                 }
 
                 if (string.IsNullOrEmpty(_fileSystem.LogsFolder))
                 {
-                    _fileSystem.LogsFolder = _fileSystem.DebugFolder + "logs" + _fileSystem.PathDelimiter;
+                    _fileSystem.LogsFolder = _fileSystem.LogsFolder + "logs" + _fileSystem.PathDelimiter;
                 }
 
-                if (!_fileSystem.DirectoryExists(_fileSystem.DebugFolder))
+                if (!_fileSystem.DirectoryExists(_fileSystem.ErrorsFolder))
                 {
-                    _fileSystem.CreateDirectory(_fileSystem.DebugFolder);
+                    _fileSystem.CreateDirectory(_fileSystem.ErrorsFolder);
                 }
 
                 if (!_fileSystem.DirectoryExists(_fileSystem.LogsFolder))
@@ -138,7 +138,7 @@ namespace AutoScreenCapture
                 // These are just general errors from the application so, if we have one, then write it out to the error file.
                 if (writeError)
                 {
-                    _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] ERROR: " + message);
+                    _fileSystem.AppendToFile(_fileSystem.ErrorsFolder + _fileSystem.ErrorFile, appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] ERROR: " + message);
                 }
 
                 // Log any exception errors we encounter.
@@ -146,7 +146,7 @@ namespace AutoScreenCapture
                 {
                     string exceptionError = appVersion + DateTime.Now.ToString(_macroParser.DateFormat + " " + _macroParser.TimeFormat) + "] " + message + " - Exception Message: " + ex.Message + "\nInner Exception: " + (ex.InnerException != null ? ex.InnerException.Message : string.Empty) + "\nSource: " + ex.Source + "\nStack Trace: " + ex.StackTrace;
 
-                    _fileSystem.AppendToFile(_fileSystem.DebugFolder + _fileSystem.ErrorFile, exceptionError);
+                    _fileSystem.AppendToFile(_fileSystem.ErrorsFolder + _fileSystem.ErrorFile, exceptionError);
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.
