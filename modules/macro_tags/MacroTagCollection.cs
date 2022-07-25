@@ -451,45 +451,6 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config, fileSystem, log);
                     }
                 }
-                else
-                {
-                    log.WriteDebugMessage("WARNING: Unable to load macro tags");
-
-                    // Setup a few "built in" tags by default.
-                    Add(new MacroTag(macroParser, "name", "The name of the screen or region", MacroTagType.ScreenName, enable: true));
-                    Add(new MacroTag(macroParser, "screen", "The screen number. For example, the first display is screen 1 and the second display is screen 2", MacroTagType.ScreenNumber, enable: true));
-                    Add(new MacroTag(macroParser, "format", "The image format such as jpeg or png", MacroTagType.ImageFormat, enable: true));
-                    Add(new MacroTag(macroParser, "date", "The current date", MacroTagType.DateTimeFormat, macroParser.DateFormat, active: true));
-                    Add(new MacroTag(macroParser, "time", "The current time", MacroTagType.DateTimeFormat, macroParser.TimeFormatForWindows, active: true));
-                    Add(new MacroTag(macroParser, "year", "The current year", MacroTagType.DateTimeFormat, macroParser.YearFormat, active: true));
-                    Add(new MacroTag(macroParser, "month", "The current month", MacroTagType.DateTimeFormat, macroParser.MonthFormat, active: true));
-                    Add(new MacroTag(macroParser, "day", "The current day", MacroTagType.DateTimeFormat, macroParser.DayFormat, active: true));
-                    Add(new MacroTag(macroParser, "hour", "The current hour", MacroTagType.DateTimeFormat, macroParser.HourFormat, active: true));
-                    Add(new MacroTag(macroParser, "minute", "The current minute", MacroTagType.DateTimeFormat, macroParser.MinuteFormat, active: true));
-                    Add(new MacroTag(macroParser, "second", "The current second", MacroTagType.DateTimeFormat, macroParser.SecondFormat, active: true));
-                    Add(new MacroTag(macroParser, "millisecond", "The current millisecond", MacroTagType.DateTimeFormat, macroParser.MillisecondFormat, active: true));
-                    Add(new MacroTag(macroParser, "lastyear", "The previous year", MacroTagType.DateTimeFormatExpression, "{year-1}", active: true));
-                    Add(new MacroTag(macroParser, "lastmonth", "The previous month", MacroTagType.DateTimeFormatExpression, "{month-1}", active: true));
-                    Add(new MacroTag(macroParser, "yesterday", "The previous day", MacroTagType.DateTimeFormatExpression, "{day-1}[yyyy-MM-dd]", active: true));
-                    Add(new MacroTag(macroParser, "tomorrow", "The next day", MacroTagType.DateTimeFormatExpression, "{day+1}[yyyy-MM-dd]", active: true));
-                    Add(new MacroTag(macroParser, "6hoursbehind", "Six hours behind the current hour", MacroTagType.DateTimeFormatExpression, "{hour-6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new MacroTag(macroParser, "6hoursahead", "Six hours ahead the current hour", MacroTagType.DateTimeFormatExpression, "{hour+6}[yyyy-MM-dd_HH-mm-ss.fff]", active: true));
-                    Add(new MacroTag(macroParser, "count", "The number of capture cycles during a running screen capture session.", MacroTagType.ScreenCaptureCycleCount, enable: true));
-                    Add(new MacroTag(macroParser, "user", "The user using this computer", MacroTagType.User, enable: true));
-                    Add(new MacroTag(macroParser, "machine", "The name of the computer", MacroTagType.Machine, enable: true));
-                    Add(new MacroTag(macroParser, "title", "The title of the active window", MacroTagType.ActiveWindowTitle, enable: true));
-                    Add(new MacroTag(macroParser, "timerange", "The macro to use during a specific time range", MacroTagType.TimeRange, enable: true));
-                    Add(new MacroTag(macroParser, "quarteryear", "A number representing the current quarter of the current year", MacroTagType.QuarterYear, enable: true));
-                    Add(new MacroTag(macroParser, "x", "The X value of the screen or region", MacroTagType.X, enable: true));
-                    Add(new MacroTag(macroParser, "y", "The Y value of the screen or region", MacroTagType.Y, enable: true));
-                    Add(new MacroTag(macroParser, "width", "The Width value of the screen or region", MacroTagType.Width, enable: true));
-                    Add(new MacroTag(macroParser, "height", "The Height value of the screen or region", MacroTagType.Height, enable: true));
-                    Add(new MacroTag(macroParser, "process", "The name of the active process", MacroTagType.Process, enable: true));
-                    Add(new MacroTag(macroParser, "label", "The label being applied to the saved screenshot", MacroTagType.Label, enable: true));
-                    Add(new MacroTag(macroParser, "capturenowcount", "The number of times Capture Now has been used", MacroTagType.CaptureNowCount, enable: true));
-
-                    SaveToXmlFile(config, fileSystem, log);
-                }
 
                 return true;
             }
