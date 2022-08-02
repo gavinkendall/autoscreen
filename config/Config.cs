@@ -78,7 +78,7 @@ namespace AutoScreenCapture
         private const string REGEX_MACRO_TAG = "^MacroTag::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Description=\"(?<Description>.+)\", Type=\"(?<Type>.+)\", DateTimeFormatValue=\"(?<DateTimeFormatValue>.+)\", Macro1TimeRangeStart=(?<Macro1TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeEnd=(?<Macro1TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeMacro=\"(?<Macro1TimeRangeMacro>.*)\", Macro2TimeRangeStart=(?<Macro2TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeEnd=(?<Macro2TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeMacro=\"(?<Macro2TimeRangeMacro>.*)\", Macro3TimeRangeStart=(?<Macro3TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeEnd=(?<Macro3TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeMacro=\"(?<Macro3TimeRangeMacro>.*)\", Macro4TimeRangeStart=(?<Macro4TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeEnd=(?<Macro4TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeMacro=\"(?<Macro4TimeRangeMacro>.*)\", Notes=\"(?<Notes>.*)\"\\]$";
 
         // Trigger Definition Regex
-        private const string REGEX_TRIGGER = "^Trigger::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Condition=\"(?<Condition>.+)\", Action=\"(?<Action>.+)\", Date=(?<Date>\\d{4}:\\d{2}:\\d{2}), Time=(?<Time>\\d{2}:\\d{2}), Day=(?<Day>Weekday|Weekend|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Days=(?<Days>\\d{1,8}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), CycleCount=(?<CycleCount=\\d{1,8}), Duration=(?<Duration>\\d{1,8}), DurationType=(?<DurationType>\\d{1}), Value=\"(?<Value>.+)\"\\]$";
+        private const string REGEX_TRIGGER = "^Trigger::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Condition=\"(?<Condition>.+)\", Action=\"(?<Action>.+)\", Date=(?<Date>\\d{4}:\\d{2}:\\d{2}), Time=(?<Time>\\d{2}:\\d{2}), Day=(?<Day>Weekday|Weekend|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Days=(?<Days>\\d{1,8}), Interval=(?<Interval>\\d{1,6}), CycleCount=(?<CycleCount=\\d{1,8}), Duration=(?<Duration>\\d{1,8}), DurationType=(?<DurationType>\\d{1}), Value=\"(?<Value>.*)\"\\]$";
 
         /// <summary>
         /// A collection of default screens.
@@ -99,6 +99,11 @@ namespace AutoScreenCapture
         /// A collection of default schedules.
         /// </summary>
         private ScheduleCollection _scheduleCollection;
+
+        /// <summary>
+        /// A collection of default triggers.
+        /// </summary>
+        private TriggerCollection _triggerCollection;
 
         /// <summary>
         /// A collection of default macro tags.
@@ -163,6 +168,8 @@ namespace AutoScreenCapture
 
                 if (fileSystem.FileExists(fileSystem.ConfigFile))
                 {
+                    // We need to parse and load all default macro tags before parsing the paths used for files and folders
+                    // because they may have macro tags in the paths.
                     ParseMacroTagDefinitions();
 
                     foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
@@ -244,6 +251,8 @@ namespace AutoScreenCapture
 
                     ParseScheduleDefinitions();
 
+                    ParseTriggerDefinitions();
+
                     // Save the data for each collection that's been loaded from the configuration file.
 
                     // Save the screen collection if the screens data file (screens.xml) cannot be found. This will create the default screens.
@@ -274,6 +283,12 @@ namespace AutoScreenCapture
                     if (!FileSystem.FileExists(FileSystem.MacroTagsFile))
                     {
                         _macroTagCollection.SaveToXmlFile(this, FileSystem, Log);
+                    }
+
+                    // Save the trigger collection if the triggers data file (triggers.xml) cannot be found. This will create the default triggers.
+                    if (!FileSystem.FileExists(FileSystem.TriggersFile))
+                    {
+                        _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
                     }
                 }
             }
@@ -768,6 +783,62 @@ namespace AutoScreenCapture
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("Config::ParseScheduleDefinitions", ex);
+            }
+        }
+
+        private void ParseTriggerDefinitions()
+        {
+            try
+            {
+                _triggerCollection = new TriggerCollection();
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_TRIGGER))
+                    {
+                        bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_TRIGGER).Groups["Enable"].Value);
+                        string name = Regex.Match(line, REGEX_TRIGGER).Groups["Name"].Value;
+                        string condition = Regex.Match(line, REGEX_TRIGGER).Groups["Condition"].Value;
+                        string action = Regex.Match(line, REGEX_TRIGGER).Groups["Action"].Value;
+                        string date = Regex.Match(line, REGEX_TRIGGER).Groups["Date"].Value;
+                        string time = Regex.Match(line, REGEX_TRIGGER).Groups["Time"].Value;
+                        string day = Regex.Match(line, REGEX_TRIGGER).Groups["Day"].Value;
+                        int days = Convert.ToInt32(Regex.Match(line, REGEX_TRIGGER).Groups["Days"].Value);
+                        int interval = Convert.ToInt32(Regex.Match(line, REGEX_TRIGGER).Groups["Interval"].Value);
+                        int cycleCount = Convert.ToInt32(Regex.Match(line, REGEX_TRIGGER).Groups["CycleCount"].Value);
+                        int duration = Convert.ToInt32(Regex.Match(line, REGEX_TRIGGER).Groups["Duration"].Value);
+                        int durationType = Convert.ToInt32(Regex.Match(line, REGEX_TRIGGER).Groups["DurationType"].Value);
+                        string value = Regex.Match(line, REGEX_TRIGGER).Groups["Value"].Value;
+
+                        Trigger trigger = new Trigger()
+                        {
+                            Enable = enable,
+                            Name = name,
+                            ConditionType = Enum.TryParse(condition, out TriggerConditionType triggerConditionType) ? triggerConditionType : TriggerConditionType.ApplicationStartup,
+                            ActionType = Enum.TryParse(action, out TriggerActionType triggerActionType) ? triggerActionType : TriggerActionType.ExitApplication,
+                            Date = DateTime.Parse(date),
+                            Time = DateTime.Parse(time),
+                            Day = day,
+                            Days = days,
+                            ScreenCaptureInterval = interval,
+                            CycleCount = cycleCount,
+                            Duration = duration,
+                            DurationType = durationType,
+                            Value = value
+                        };
+
+                        _triggerCollection.Add(trigger);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseTriggerDefinitions", ex);
             }
         }
 
