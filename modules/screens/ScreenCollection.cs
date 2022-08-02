@@ -59,57 +59,11 @@ namespace AutoScreenCapture
         private string AppCodename { get; set; }
         private string AppVersion { get; set; }
 
-        private ImageFormatCollection _imageFormatCollection;
-
-        /// <summary>
-        /// Adds the available screens to the screen collection based on the current display setup while Auto Screen Capture is starting up for the first time.
-        /// </summary>
-        /// <param name="macroParser">The macro parser class to use.</param>
-        /// <param name="fileSystem">The file system class to use.</param>
-        /// <param name="log">The logging class to use.</param>
-        private void AddDefaultScreens(MacroParser macroParser, FileSystem fileSystem, Log log)
-        {
-            int screenNumber = 1;
-            const int MAX_DEFAULT_SCREENS = 5;
-
-            for (int i = 0; i < MAX_DEFAULT_SCREENS; i++)
-            {
-                Add(new Screen()
-                {
-                    ViewId = Guid.NewGuid(),
-                    Name = "Screen " + screenNumber,
-                    Folder = fileSystem.ScreenshotsFolder,
-                    Macro = fileSystem.FilenamePattern,
-                    Component = 0,
-                    Format = _imageFormatCollection.GetByName(ScreenCapture.ImageFormat),
-                    JpegQuality = 100,
-                    Mouse = true,
-                    Enable = true,
-                    X = 0,
-                    Y = 0,
-                    Width = 0,
-                    Height = 0,
-                    Source = 0,
-                    DeviceName = string.Empty,
-                    AutoAdapt = true, // 2.4.0.0 has a new "Auto Adapt" feature which will automatically figure out the position and resolution for each screen.
-                    CaptureMethod = 1,
-                    Encrypt = false,
-                    ResolutionRatio = 100 // First introduced in an older version of Auto Screen Capture (that was later removed) but now restored in version 2.4.0.7
-                });
-
-                log.WriteDebugMessage($"Screen {screenNumber} created using \"{fileSystem.ScreenshotsFolder}\" for folder path and \"{fileSystem.FilenamePattern}\" for macro.");
-
-                screenNumber++;
-            }
-        }
-
         /// <summary>
         /// The empty constructor for the screen collection.
         /// </summary>
         public ScreenCollection()
         {
-            _imageFormatCollection = new ImageFormatCollection();
-
             StringBuilder sb = new StringBuilder();
             sb.Append("/");
             sb.Append(XML_FILE_ROOT_NODE);

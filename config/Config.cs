@@ -29,10 +29,13 @@ namespace AutoScreenCapture
     public class Config
     {
         // Image Format
-        private const string REGEX_IMAGE_FORMAT = "^ImageFormat=(?<ImageFormat>[A-Z]{4})$";
+        private const string REGEX_IMAGE_FORMAT = "^ImageFormat=(?<ImageFormat>[A-Z]{3,4})$";
 
         // Filename Pattern
         private const string REGEX_FILENAME_PATTERN = "^FilenamePattern=(?<FilenamePattern>.+)$";
+
+        // Default Editor
+        private const string REGEX_DEFAULT_EDITOR = "^DefaultEditor=(?<DefaultEditor>.+)$";
 
         // Folders
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
@@ -60,16 +63,16 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
 
         // Screen Definition Regex
-        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>BMP|EMF|GIF|JPEG|PNG|TIFF|WMF), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
         // Region Definition Regex
-        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>BMP|EMF|GIF|JPEG|PNG|TIFF|WMF), JPEGQuality=(?<JPEGQuality>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
         // Editor Definition Regex
-        private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?< Name >.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.+)\"\\]$";
+        private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?<Name>.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.*)\"\\]$";
 
         // Schedule Definition Regex
-        private const string REGEX_SCHEDULE = "^Schedule::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Scope=\"(?<Scope>.+)\", OneTime=(?<OneTime>False|True), Period=(?<Period>False|True), Logic=(?<Logic>\\d{1}), CaptureAt=(?<CaptureAt>\\d{2}:\\d{2}), StartAt=(?<StartAt>\\d{2}:\\d{2}), StopAt=(?<StopAt>\\d{2}:\\d{2}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), Monday=(?<Monday>False|True), Tuesday=(?<Tuesday>False|True), Wednesday=(?<Wednesday>False|True), Thursday=(?<Thursday>False|True), Friday=(?<Friday>False|True), Saturday=(?<Saturday>False|True), Sunday=(?<Sunday>False|True), Notes=\"(?<Notes>.+)\"\\]$";
+        private const string REGEX_SCHEDULE = "^Schedule::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Scope=\"(?<Scope>.+)\", OneTime=(?<OneTime>False|True), Period=(?<Period>False|True), Logic=(?<Logic>\\d{1}), CaptureAt=(?<CaptureAt>\\d{2}:\\d{2}), StartAt=(?<StartAt>\\d{2}:\\d{2}), StopAt=(?<StopAt>\\d{2}:\\d{2}), Interval=(?<Interval>\\d{1,6}), Monday=(?<Monday>False|True), Tuesday=(?<Tuesday>False|True), Wednesday=(?<Wednesday>False|True), Thursday=(?<Thursday>False|True), Friday=(?<Friday>False|True), Saturday=(?<Saturday>False|True), Sunday=(?<Sunday>False|True), Notes=\"(?<Notes>.*)\"\\]$";
 
         // Macro Tag Definition Regex
         private const string REGEX_MACRO_TAG = "^MacroTag::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Description=\"(?<Description>.+)\", Type=\"(?<Type>.+)\", DateTimeFormatValue=\"(?<DateTimeFormatValue>.+)\", Macro1TimeRangeStart=(?<Macro1TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeEnd=(?<Macro1TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeMacro=\"(?<Macro1TimeRangeMacro>.*)\", Macro2TimeRangeStart=(?<Macro2TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeEnd=(?<Macro2TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeMacro=\"(?<Macro2TimeRangeMacro>.*)\", Macro3TimeRangeStart=(?<Macro3TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeEnd=(?<Macro3TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeMacro=\"(?<Macro3TimeRangeMacro>.*)\", Macro4TimeRangeStart=(?<Macro4TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeEnd=(?<Macro4TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeMacro=\"(?<Macro4TimeRangeMacro>.*)\", Notes=\"(?<Notes>.*)\"\\]$";
@@ -86,6 +89,16 @@ namespace AutoScreenCapture
         /// A collection of default regions.
         /// </summary>
         private RegionCollection _regionCollection;
+
+        /// <summary>
+        /// A collection of default editors.
+        /// </summary>
+        private EditorCollection _editorCollection;
+
+        /// <summary>
+        /// A collection of default schedules.
+        /// </summary>
+        private ScheduleCollection _scheduleCollection;
 
         /// <summary>
         /// A collection of default macro tags.
@@ -159,16 +172,6 @@ namespace AutoScreenCapture
                             continue;
                         }
 
-                        if (string.IsNullOrEmpty(fileSystem.FilenamePattern))
-                        {
-                            fileSystem.FilenamePattern = Regex.Match(line, REGEX_FILENAME_PATTERN).Groups["FilenamePattern"].Value;
-                        }
-
-                        if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
-                        {
-                            ScreenCapture.ImageFormat = Regex.Match(line, REGEX_IMAGE_FORMAT).Groups["ImageFormat"].Value;
-                        }
-
                         string path;
 
                         if (GetPathAndCreateIfNotFound(line, REGEX_SCREENSHOTS_FOLDER, out path))
@@ -221,16 +224,9 @@ namespace AutoScreenCapture
                             fileSystem.SchedulesFile = path;
                     }
 
-                    // This is for when we didn't find an entry for FilenamePattern.
-                    // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
-                    if (string.IsNullOrEmpty(fileSystem.FilenamePattern))
-                    {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nFilenamePattern=" + fileSystem.DefaultFilenamePattern);
-
-                        fileSystem.FilenamePattern = fileSystem.DefaultFilenamePattern;
-                    }
-
                     CheckAndCreateFolders();
+
+                    ParseDefaultUserSettings();
 
                     Settings.Load(fileSystem);
 
@@ -238,31 +234,40 @@ namespace AutoScreenCapture
                     ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
                     Security security = new Security(fileSystem);
 
-                    if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
-                    {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nImageFormat=" + ScreenCapture.DefaultImageFormat);
-
-                        ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
-                    }
-
                     CheckAndCreateFiles(security, screenCapture, Log);
 
                     ParseScreenDefinitions();
 
                     ParseRegionDefinitions();
 
+                    ParseEditorDefinitions();
+
+                    ParseScheduleDefinitions();
+
                     // Save the data for each collection that's been loaded from the configuration file.
 
-                    // Save the screen collection if the screen data file (screens.xml) cannot be found. This will create the default screens.
+                    // Save the screen collection if the screens data file (screens.xml) cannot be found. This will create the default screens.
                     if (!FileSystem.FileExists(FileSystem.ScreensFile))
                     {
                         _screenCollection.SaveToXmlFile(Settings, FileSystem, Log);
                     }
 
-                    // Save the region collection if the region data file (regions.xml) cannot be found. This will create the default regions.
+                    // Save the region collection if the regions data file (regions.xml) cannot be found. This will create the default regions.
                     if (!FileSystem.FileExists(FileSystem.RegionsFile))
                     {
                         _regionCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the editor collection if the editors data file (editors.xml) cannot be found. This will create the default editors.
+                    if (!FileSystem.FileExists(FileSystem.EditorsFile))
+                    {
+                        _editorCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the schedule collection if the schedules data file (schedules.xml) cannot be found. This will create the default schedules.
+                    if (!FileSystem.FileExists(FileSystem.SchedulesFile))
+                    {
+                        _scheduleCollection.SaveToXmlFile(Settings, FileSystem, Log);
                     }
 
                     // Save the macro tag collection if the macro tags data file (macrotags.xml) cannot be found. This will create the default macro tags.
@@ -423,27 +428,6 @@ namespace AutoScreenCapture
                     ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, _screenCollection, screenCapture, this, FileSystem, log, security);
                     screenshotCollection.SaveToXmlFile(this);
                 }
-
-                if (string.IsNullOrEmpty(FileSystem.EditorsFile))
-                {
-                    // Loading the editor collection will automatically create the default editors and add them to the collection.
-                    EditorCollection editorCollection = new EditorCollection();
-                    editorCollection.LoadXmlFileAndAddEditors(this, FileSystem, log);
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.TriggersFile))
-                {
-                    // Loading triggers will automatically create the default triggers and add them to the collection.
-                    TriggerCollection triggerCollection = new TriggerCollection();
-                    triggerCollection.LoadXmlFileAndAddTriggers(this, FileSystem, log);
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.SchedulesFile))
-                {
-                    // Loading schedules will automatically create the default schedules and add them to the collection.
-                    ScheduleCollection scheduleCollection = new ScheduleCollection();
-                    scheduleCollection.LoadXmlFileAndAddSchedules(this, FileSystem, log);
-                }
             }
             catch (Exception ex)
             {
@@ -497,7 +481,61 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Parses screen definitions found in the configuration file.
+        /// Parses default user settings found in the configuration file.
+        /// </summary>
+        private void ParseDefaultUserSettings()
+        {
+            try
+            {
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_FILENAME_PATTERN))
+                    {
+                        FileSystem.FilenamePattern = Regex.Match(line, REGEX_FILENAME_PATTERN).Groups["FilenamePattern"].Value;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_IMAGE_FORMAT))
+                    {
+                        ScreenCapture.ImageFormat = Regex.Match(line, REGEX_IMAGE_FORMAT).Groups["ImageFormat"].Value;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_DEFAULT_EDITOR))
+                    {
+                        Settings.User.SetValueByKey("DefaultEditor", Regex.Match(line, REGEX_DEFAULT_EDITOR).Groups["DefaultEditor"].Value);
+                    }
+                }
+
+                // This is for when we didn't find an entry for FilenamePattern.
+                // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
+                if (string.IsNullOrEmpty(FileSystem.FilenamePattern))
+                {
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nFilenamePattern=" + FileSystem.DefaultFilenamePattern);
+
+                    FileSystem.FilenamePattern = FileSystem.DefaultFilenamePattern;
+                }
+
+                // This is for when we didn't find an entry for ImageFormat.
+                // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
+                if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
+                {
+                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nImageFormat=" + ScreenCapture.DefaultImageFormat);
+
+                    ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseDefaultUserSettings", ex);
+            }
+        }
+
+        /// <summary>
+        /// Parses default screen definitions found in the configuration file.
         /// </summary>
         private void ParseScreenDefinitions()
         {
@@ -566,7 +604,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Parses region definitions found in the configuration file.
+        /// Parses default region definitions found in the configuration file.
         /// </summary>
         private void ParseRegionDefinitions()
         {
@@ -624,7 +662,117 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Parses macro tag definitions found in the configuration file.
+        /// Parses default editor definitions found in the configuration file.
+        /// </summary>
+        private void ParseEditorDefinitions()
+        {
+            try
+            {
+                _editorCollection = new EditorCollection();
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_EDITOR))
+                    {
+                        string name = Regex.Match(line, REGEX_EDITOR).Groups["Name"].Value;
+                        string applicationPath = Regex.Match(line, REGEX_EDITOR).Groups["ApplicationPath"].Value;
+                        string applicationArguments = Regex.Match(line, REGEX_EDITOR).Groups["ApplicationArguments"].Value;
+                        string notes = Regex.Match(line, REGEX_EDITOR).Groups["Notes"].Value;
+
+                        Editor editor = new Editor()
+                        {
+                            Name = name,
+                            Application = applicationPath,
+                            Arguments = applicationArguments,
+                            Notes = notes
+                        };
+
+                        _editorCollection.Add(editor);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseEditorDefinitions", ex);
+            }
+        }
+
+        /// <summary>
+        /// Parses default schedule definitions found in the configuration file.
+        /// </summary>
+        private void ParseScheduleDefinitions()
+        {
+            try
+            {
+                _scheduleCollection = new ScheduleCollection();
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SCHEDULE))
+                    {
+                        bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Enable"].Value);
+                        string name = Regex.Match(line, REGEX_SCHEDULE).Groups["Name"].Value;
+                        string scope = Regex.Match(line, REGEX_SCHEDULE).Groups["Scope"].Value;
+                        bool oneTime = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["OneTime"].Value);
+                        bool period = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Period"].Value);
+                        int logic = Convert.ToInt32(Regex.Match(line, REGEX_SCHEDULE).Groups["Logic"].Value);
+                        string captureAt = Regex.Match(line, REGEX_SCHEDULE).Groups["CaptureAt"].Value;
+                        string startAt = Regex.Match(line, REGEX_SCHEDULE).Groups["StartAt"].Value;
+                        string stopAt = Regex.Match(line, REGEX_SCHEDULE).Groups["StopAt"].Value;
+                        int interval = Convert.ToInt32(Regex.Match(line, REGEX_SCHEDULE).Groups["Interval"].Value);
+                        bool monday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Monday"].Value);
+                        bool tuesday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Tuesday"].Value);
+                        bool wednesday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Wednesday"].Value);
+                        bool thursday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Thursday"].Value);
+                        bool friday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Friday"].Value);
+                        bool saturday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Saturday"].Value);
+                        bool sunday = Convert.ToBoolean(Regex.Match(line, REGEX_SCHEDULE).Groups["Sunday"].Value);
+                        string notes = Regex.Match(line, REGEX_EDITOR).Groups["Notes"].Value;
+
+                        Schedule schedule = new Schedule()
+                        {
+                            Enable = enable,
+                            Name = name,
+                            Scope = scope,
+                            ModeOneTime = oneTime,
+                            ModePeriod = period,
+                            Logic = logic,
+                            CaptureAt = DateTime.Parse(captureAt),
+                            StartAt = DateTime.Parse(startAt),
+                            StopAt = DateTime.Parse(stopAt),
+                            ScreenCaptureInterval = interval,
+                            Monday = monday,
+                            Tuesday = tuesday,
+                            Wednesday = wednesday,
+                            Thursday = thursday,
+                            Friday = friday,
+                            Saturday = saturday,
+                            Sunday = sunday,
+                            Notes = notes
+                        };
+
+                        _scheduleCollection.Add(schedule);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseScheduleDefinitions", ex);
+            }
+        }
+
+        /// <summary>
+        /// Parses default macro tag definitions found in the configuration file.
         /// </summary>
         private void ParseMacroTagDefinitions()
         {
