@@ -345,47 +345,6 @@ namespace AutoScreenCapture
                         SaveToXmlFile(config.Settings, fileSystem, log);
                     }
                 }
-                else
-                {
-                    log.WriteDebugMessage("WARNING: Unable to load screens");
-
-                    // Active Window
-                    if (config.Settings.VersionManager.IsOldAppVersion(config.Settings, AppCodename, AppVersion))
-                    {
-                        Version v2182 = config.Settings.VersionManager.Versions.Get(Settings.CODENAME_CLARA, Settings.CODEVERSION_CLARA);
-                        Version configVersion = config.Settings.VersionManager.Versions.Get(AppCodename, AppVersion);
-
-                        if (v2182 != null && configVersion != null && v2182.VersionNumber == configVersion.VersionNumber)
-                        {
-                            Add(new Screen()
-                            {
-                                ViewId = Guid.NewGuid(),
-                                Name = "Active Window",
-                                Folder = fileSystem.ScreenshotsFolder,
-                                Macro = fileSystem.FilenamePattern,
-                                Component = 0,
-                                Format = _imageFormatCollection.GetByName(ScreenCapture.ImageFormat),
-                                JpegQuality = 100,
-                                Mouse = true,
-                                Enable = true,
-                                X = 0,
-                                Y = 0,
-                                Width = 0,
-                                Height = 0,
-                                Source = 0,
-                                DeviceName = string.Empty,
-                                AutoAdapt = false,
-                                CaptureMethod = 1, // BitBlt
-                                Encrypt = false
-                            });
-                        }
-                    }
-
-                    // Since we're creating the screens.xml file for the first time we'll need to add a default number of screens and have them all part of the "Auto Adapt" group.
-                    AddDefaultScreens(macroParser, fileSystem, log);
-
-                    SaveToXmlFile(config.Settings, fileSystem, log);
-                }
 
                 return true;
             }

@@ -39,42 +39,58 @@ namespace AutoScreenCapture
         private const string REGEX_ERRORS_FOLDER = "^ErrorsFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
 
-        // Files
+        // Commands
         private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
+
+        // Settings
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
+        private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
         private const string REGEX_SMTP_SETTINGS_FILE = "^SMTPSettingsFile=(?<Path>.+)$";
         private const string REGEX_SFTP_SETTINGS_FILE = "^SFTPSettingsFile=(?<Path>.+)$";
-        private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
-        private const string REGEX_EDITORS_FILE = "^EditorsFile=(?<Path>.+)$";
-        private const string REGEX_REGIONS_FILE = "^RegionsFile=(?<Path>.+)$";
+
+        // Modules
         private const string REGEX_SCREENS_FILE = "^ScreensFile=(?<Path>.+)$";
-        private const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
-        private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
-        private const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
+        private const string REGEX_REGIONS_FILE = "^RegionsFile=(?<Path>.+)$";
+        private const string REGEX_EDITORS_FILE = "^EditorsFile=(?<Path>.+)$";
         private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
+        private const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
+        private const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
 
-        // Screen
-        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+        // Screenshots
+        private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
 
-        // Region
-        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>JPEG), JPEGQuality=(?<JPEGQuality>\\d{1,3}), MousePointer=(?<MousePointer>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+        // Screen Definition Regex
+        private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>BMP|EMF|GIF|JPEG|PNG|TIFF|WMF), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
 
-        // Editor
+        // Region Definition Regex
+        private const string REGEX_REGION = "^Region::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), Format=(?<Format>BMP|EMF|GIF|JPEG|PNG|TIFF|WMF), JPEGQuality=(?<JPEGQuality>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
+
+        // Editor Definition Regex
         private const string REGEX_EDITOR = "^Editor::\\[Name=\"(?< Name >.+)\", ApplicationPath=\"(?<ApplicationPath>.+)\", ApplicationArguments=\"(?<ApplicationArguments>.+)\", Notes=\"(?<Notes>.+)\"\\]$";
 
-        // Schedule
+        // Schedule Definition Regex
         private const string REGEX_SCHEDULE = "^Schedule::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Scope=\"(?<Scope>.+)\", OneTime=(?<OneTime>False|True), Period=(?<Period>False|True), Logic=(?<Logic>\\d{1}), CaptureAt=(?<CaptureAt>\\d{2}:\\d{2}), StartAt=(?<StartAt>\\d{2}:\\d{2}), StopAt=(?<StopAt>\\d{2}:\\d{2}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), Monday=(?<Monday>False|True), Tuesday=(?<Tuesday>False|True), Wednesday=(?<Wednesday>False|True), Thursday=(?<Thursday>False|True), Friday=(?<Friday>False|True), Saturday=(?<Saturday>False|True), Sunday=(?<Sunday>False|True), Notes=\"(?<Notes>.+)\"\\]$";
 
-        // Macro Tag
+        // Macro Tag Definition Regex
         private const string REGEX_MACRO_TAG = "^MacroTag::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Description=\"(?<Description>.+)\", Type=\"(?<Type>.+)\", DateTimeFormatValue=\"(?<DateTimeFormatValue>.+)\", Macro1TimeRangeStart=(?<Macro1TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeEnd=(?<Macro1TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro1TimeRangeMacro=\"(?<Macro1TimeRangeMacro>.*)\", Macro2TimeRangeStart=(?<Macro2TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeEnd=(?<Macro2TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro2TimeRangeMacro=\"(?<Macro2TimeRangeMacro>.*)\", Macro3TimeRangeStart=(?<Macro3TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeEnd=(?<Macro3TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro3TimeRangeMacro=\"(?<Macro3TimeRangeMacro>.*)\", Macro4TimeRangeStart=(?<Macro4TimeRangeStart>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeEnd=(?<Macro4TimeRangeEnd>\\d{2}:\\d{2}:\\d{2}), Macro4TimeRangeMacro=\"(?<Macro4TimeRangeMacro>.*)\", Notes=\"(?<Notes>.*)\"\\]$";
 
-        // Trigger
+        // Trigger Definition Regex
         private const string REGEX_TRIGGER = "^Trigger::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Condition=\"(?<Condition>.+)\", Action=\"(?<Action>.+)\", Date=(?<Date>\\d{4}:\\d{2}:\\d{2}), Time=(?<Time>\\d{2}:\\d{2}), Day=(?<Day>Weekday|Weekend|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), Days=(?<Days>\\d{1,8}), Interval=(?<Interval>\\d{2}:\\d{2}:\\d{2}), CycleCount=(?<CycleCount=\\d{1,8}), Duration=(?<Duration>\\d{1,8}), DurationType=(?<DurationType>\\d{1}), Value=\"(?<Value>.+)\"\\]$";
 
         /// <summary>
-        /// A collection of macro tags.
+        /// A collection of default screens.
         /// </summary>
-        //private MacroTagCollection _macroTagCollection;
+        private ScreenCollection _screenCollection;
+
+        /// <summary>
+        /// A collection of default regions.
+        /// </summary>
+        private RegionCollection _regionCollection;
+
+        /// <summary>
+        /// A collection of default macro tags.
+        /// </summary>
+        private MacroTagCollection _macroTagCollection;
 
         /// <summary>
         /// Determines if we do a clean startup. This means we do not load the XML data files. By default we load the XML data files.
@@ -100,13 +116,6 @@ namespace AutoScreenCapture
         /// A parser for parsing macro tags.
         /// </summary>
         public MacroParser MacroParser { get; set; }
-
-        /// <summary>
-        /// A class for handling screen capture operations.
-        /// </summary>
-        public ScreenCapture ScreenCapture { get; set; }
-
-        public MacroTagCollection MacroTagCollection { get; set; }
 
         /// <summary>
         /// A class for handling configuration of the application.
@@ -141,7 +150,7 @@ namespace AutoScreenCapture
 
                 if (fileSystem.FileExists(fileSystem.ConfigFile))
                 {
-                    ParseMacroTags();
+                    ParseMacroTagDefinitions();
 
                     foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
                     {
@@ -226,7 +235,7 @@ namespace AutoScreenCapture
                     Settings.Load(fileSystem);
 
                     Log = new Log(Settings, fileSystem, MacroParser);
-                    ScreenCapture = new ScreenCapture(this, fileSystem, Log);
+                    ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
                     Security security = new Security(fileSystem);
 
                     if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
@@ -236,14 +245,30 @@ namespace AutoScreenCapture
                         ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
                     }
 
-                    CheckAndCreateFiles(security, ScreenCapture, Log);
+                    CheckAndCreateFiles(security, screenCapture, Log);
+
+                    ParseScreenDefinitions();
+
+                    ParseRegionDefinitions();
 
                     // Save the data for each collection that's been loaded from the configuration file.
+
+                    // Save the screen collection if the screen data file (screens.xml) cannot be found. This will create the default screens.
+                    if (!FileSystem.FileExists(FileSystem.ScreensFile))
+                    {
+                        _screenCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
+
+                    // Save the region collection if the region data file (regions.xml) cannot be found. This will create the default regions.
+                    if (!FileSystem.FileExists(FileSystem.RegionsFile))
+                    {
+                        _regionCollection.SaveToXmlFile(Settings, FileSystem, Log);
+                    }
 
                     // Save the macro tag collection if the macro tags data file (macrotags.xml) cannot be found. This will create the default macro tags.
                     if (!FileSystem.FileExists(FileSystem.MacroTagsFile))
                     {
-                        MacroTagCollection.SaveToXmlFile(this, FileSystem, Log);
+                        _macroTagCollection.SaveToXmlFile(this, FileSystem, Log);
                     }
                 }
             }
@@ -262,7 +287,7 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
                 {
-                    FileSystem.ScreenshotsFolder = MacroParser.ParseTags(FileSystem.DefaultScreenshotsFolder, MacroTagCollection, Log);
+                    FileSystem.ScreenshotsFolder = MacroParser.ParseTags(FileSystem.DefaultScreenshotsFolder, _macroTagCollection, Log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
 
@@ -274,7 +299,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.ErrorsFolder))
                 {
-                    FileSystem.ErrorsFolder = MacroParser.ParseTags(FileSystem.DefaultErrorsFolder, MacroTagCollection, Log);
+                    FileSystem.ErrorsFolder = MacroParser.ParseTags(FileSystem.DefaultErrorsFolder, _macroTagCollection, Log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nErrorsFolder=" + FileSystem.ErrorsFolder);
 
@@ -286,7 +311,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.LogsFolder))
                 {
-                    FileSystem.LogsFolder = MacroParser.ParseTags(FileSystem.DefaultLogsFolder, MacroTagCollection, Log);
+                    FileSystem.LogsFolder = MacroParser.ParseTags(FileSystem.DefaultLogsFolder, _macroTagCollection, Log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.LogsFolder);
 
@@ -315,7 +340,7 @@ namespace AutoScreenCapture
             {
                 if (string.IsNullOrEmpty(FileSystem.CommandFile))
                 {
-                    FileSystem.CommandFile = MacroParser.ParseTags(FileSystem.DefaultCommandFile, MacroTagCollection, log);
+                    FileSystem.CommandFile = MacroParser.ParseTags(FileSystem.DefaultCommandFile, _macroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.CommandFile);
 
@@ -327,7 +352,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
                 {
-                    FileSystem.ApplicationSettingsFile = MacroParser.ParseTags(FileSystem.DefaultApplicationSettingsFile, MacroTagCollection, log);
+                    FileSystem.ApplicationSettingsFile = MacroParser.ParseTags(FileSystem.DefaultApplicationSettingsFile, _macroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
 
@@ -339,7 +364,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
                 {
-                    FileSystem.SmtpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSmtpSettingsFile, MacroTagCollection, log);
+                    FileSystem.SmtpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSmtpSettingsFile, _macroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.SmtpSettingsFile);
 
@@ -351,7 +376,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
                 {
-                    FileSystem.SftpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSftpSettingsFile, MacroTagCollection, log);
+                    FileSystem.SftpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSftpSettingsFile, _macroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.SftpSettingsFile);
 
@@ -363,7 +388,7 @@ namespace AutoScreenCapture
 
                 if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
                 {
-                    FileSystem.UserSettingsFile = MacroParser.ParseTags(FileSystem.DefaultUserSettingsFile, MacroTagCollection, log);
+                    FileSystem.UserSettingsFile = MacroParser.ParseTags(FileSystem.DefaultUserSettingsFile, _macroTagCollection, log);
 
                     FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.UserSettingsFile);
 
@@ -394,9 +419,8 @@ namespace AutoScreenCapture
                 if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
                 {
                     ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
-                    ScreenCollection screenCollection = new ScreenCollection();
 
-                    ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, screenCollection, screenCapture, this, FileSystem, log, security);
+                    ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, _screenCollection, screenCapture, this, FileSystem, log, security);
                     screenshotCollection.SaveToXmlFile(this);
                 }
 
@@ -405,19 +429,6 @@ namespace AutoScreenCapture
                     // Loading the editor collection will automatically create the default editors and add them to the collection.
                     EditorCollection editorCollection = new EditorCollection();
                     editorCollection.LoadXmlFileAndAddEditors(this, FileSystem, log);
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.RegionsFile))
-                {
-                    RegionCollection regionCollection = new RegionCollection();
-                    regionCollection.SaveToXmlFile(Settings, FileSystem, log);
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.ScreensFile))
-                {
-                    // Loading the screen collection will automatically create the available screens and add them to the collection.
-                    ScreenCollection screenCollection = new ScreenCollection();
-                    screenCollection.LoadXmlFileAndAddScreens(new ImageFormatCollection(), this, MacroParser, FileSystem, log);
                 }
 
                 if (string.IsNullOrEmpty(FileSystem.TriggersFile))
@@ -458,7 +469,7 @@ namespace AutoScreenCapture
 
             path = Regex.Match(line, regex).Groups["Path"].Value;
 
-            path = MacroParser.ParseTags(path, MacroTagCollection, Log);
+            path = MacroParser.ParseTags(path, _macroTagCollection, Log);
 
             if (FileSystem.HasExtension(path))
             {
@@ -485,11 +496,141 @@ namespace AutoScreenCapture
             return true;
         }
 
-        private void ParseMacroTags()
+        /// <summary>
+        /// Parses screen definitions found in the configuration file.
+        /// </summary>
+        private void ParseScreenDefinitions()
         {
             try
             {
-                MacroTagCollection = new MacroTagCollection();
+                _screenCollection = new ScreenCollection();
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SCREEN))
+                    {
+                        bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["Enable"].Value);
+                        string name = Regex.Match(line, REGEX_SCREEN).Groups["Name"].Value;
+                        string folder = Regex.Match(line, REGEX_SCREEN).Groups["Folder"].Value;
+                        string macro = Regex.Match(line, REGEX_SCREEN).Groups["Macro"].Value;
+                        int source = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Source"].Value);
+                        int component = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Component"].Value);
+                        int captureMethod = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["CaptureMethod"].Value);
+                        int x = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["X"].Value);
+                        int y = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Y"].Value);
+                        int width = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Width"].Value);
+                        int height = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["Height"].Value);
+                        bool autoAdapt = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["AutoAdapt"].Value);
+                        string format = Regex.Match(line, REGEX_SCREEN).Groups["Format"].Value;
+                        int jpegQuality = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["JPEGQuality"].Value);
+                        int resolutionRatio = Convert.ToInt32(Regex.Match(line, REGEX_SCREEN).Groups["ResolutionRatio"].Value);
+                        bool mouse = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["Mouse"].Value);
+                        bool encrypt = Convert.ToBoolean(Regex.Match(line, REGEX_SCREEN).Groups["Encrypt"].Value);
+
+                        Screen screen = new Screen()
+                        {
+                            ViewId = Guid.NewGuid(),
+                            DeviceName = string.Empty,
+                            Enable = enable,
+                            Name = name,
+                            Folder = folder,
+                            Macro = macro,
+                            Source = source,
+                            Component = component,
+                            CaptureMethod = captureMethod,
+                            X = x,
+                            Y = y,
+                            Width = width,
+                            Height = height,
+                            AutoAdapt = autoAdapt,
+                            Format = new ImageFormat(format, "." + format.ToLower()),
+                            JpegQuality = jpegQuality,
+                            ResolutionRatio = resolutionRatio,
+                            Mouse = mouse,
+                            Encrypt = encrypt
+                        };
+
+                        _screenCollection.Add(screen);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseScreenDefinitions", ex);
+            }
+        }
+
+        /// <summary>
+        /// Parses region definitions found in the configuration file.
+        /// </summary>
+        private void ParseRegionDefinitions()
+        {
+            try
+            {
+                _regionCollection = new RegionCollection();
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_REGION))
+                    {
+                        bool enable = Convert.ToBoolean(Regex.Match(line, REGEX_REGION).Groups["Enable"].Value);
+                        string name = Regex.Match(line, REGEX_REGION).Groups["Name"].Value;
+                        string folder = Regex.Match(line, REGEX_REGION).Groups["Folder"].Value;
+                        string macro = Regex.Match(line, REGEX_REGION).Groups["Macro"].Value;
+                        int x = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["X"].Value);
+                        int y = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["Y"].Value);
+                        int width = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["Width"].Value);
+                        int height = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["Height"].Value);
+                        string format = Regex.Match(line, REGEX_REGION).Groups["Format"].Value;
+                        int jpegQuality = Convert.ToInt32(Regex.Match(line, REGEX_REGION).Groups["JPEGQuality"].Value);
+                        bool mouse = Convert.ToBoolean(Regex.Match(line, REGEX_REGION).Groups["Mouse"].Value);
+                        bool encrypt = Convert.ToBoolean(Regex.Match(line, REGEX_REGION).Groups["Encrypt"].Value);
+
+                        Region region = new Region()
+                        {
+                            ViewId = Guid.NewGuid(),
+                            Enable = enable,
+                            Name = name,
+                            Folder = folder,
+                            Macro = macro,
+                            X = x,
+                            Y = y,
+                            Width = width,
+                            Height = height,
+                            Format = new ImageFormat(format, "." + format.ToLower()),
+                            JpegQuality = jpegQuality,
+                            Mouse = mouse,
+                            Encrypt = encrypt
+                        };
+
+                        _regionCollection.Add(region);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseRegionDefinitions", ex);
+            }
+        }
+
+        /// <summary>
+        /// Parses macro tag definitions found in the configuration file.
+        /// </summary>
+        private void ParseMacroTagDefinitions()
+        {
+            try
+            {
+                _macroTagCollection = new MacroTagCollection();
 
                 foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
@@ -615,13 +756,13 @@ namespace AutoScreenCapture
                                 break;
                         }
 
-                        MacroTagCollection.Add(macroTag);
+                        _macroTagCollection.Add(macroTag);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteExceptionMessage("Config::ParseMacroTags", ex);
+                Log.WriteExceptionMessage("Config::ParseMacroTagDefinitions", ex);
             }
         }
     }
