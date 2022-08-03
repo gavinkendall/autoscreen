@@ -36,7 +36,6 @@ namespace AutoScreenCapture
         internal readonly int LowDiskMode = 1;
         internal readonly int ScreenshotsLoadLimit = 5000;
         internal readonly bool AutoStartFromCommandLine = false;
-        internal readonly bool ShowStartupError = true;
         internal readonly int FilepathLengthLimit = 2000;
         internal readonly bool StopOnLowDiskError = true;
         internal readonly int ActiveWindowTitleLengthLimit = 2000;

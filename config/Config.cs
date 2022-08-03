@@ -28,6 +28,24 @@ namespace AutoScreenCapture
     /// </summary>
     public class Config
     {
+        // Screen Capture Interval
+        private const string REGEX_SCREEN_CAPTURE_INTERVAL = "^ScreenCaptureInterval=(?<ScreenCaptureInterval>\\d{1,6})$";
+
+        // Capture Limit
+        private const string REGEX_CAPTURE_LIMIT = "^CaptureLimit=(?<CaptureLimit>\\d{1,3})$";
+
+        // Take Initial Screenshot
+        private const string REGEX_TAKE_INITIAL_SCREENSHOT = "^TakeInitialScreenshot=(?<TakeInitialScreenshot>False|True)$";
+
+        // Save Screenshot Refs
+        private const string REGEX_SAVE_SCREENSHOT_REFS = "^SaveScreenshotRefs=(?<SaveScreenshotRefs>False|True)$";
+
+        // Optimize Screen Capture
+        private const string REGEX_OPTIMIZE_SCREEN_CAPTURE = "^OptimizeScreenCapture=(?<OptimizeScreenCapture>False|True)$";
+
+        // Image Diff Tolerance
+        private const string REGEX_IMAGE_DIFF_TOLERANCE = "^ImageDiffTolerance=(?<ImageDiffTolerance>\\d{1,3})$";
+
         // Image Format
         private const string REGEX_IMAGE_FORMAT = "^ImageFormat=(?<ImageFormat>[A-Z]{3,4})$";
 
@@ -41,6 +59,26 @@ namespace AutoScreenCapture
         private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
         private const string REGEX_ERRORS_FOLDER = "^ErrorsFolder=(?<Path>.+)$";
         private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
+
+        // Auto Save
+        private const string REGEX_AUTO_SAVE_FOLDER = "^AutoSaveFolder=(?<AutoSaveFolder>.+)$";
+        private const string REGEX_AUTO_SAVE_MACRO = "^AutoSaveMacro=(?<AutoSaveMacro>.+)$";
+        private const string REGEX_AUTO_SAVE_FORMAT = "^AutoSaveFormat=(?<AutoSaveFormat>[A-Z]{3,4})$";
+
+        // Capture Now
+        private const string REGEX_CAPTURE_NOW_MACRO = "^CaptureNowMacro=(?<CaptureNowMacro>.+)$";
+
+        // Preview
+        private const string REGEX_PREVIEW = "^Preview=(?<Preview>False|True)$";
+
+        // DebugMode
+        private const string REGEX_DEBUG_MODE = "^DebugMode=(?<DebugMode>False|True)$";
+
+        // Logging
+        private const string REGEX_LOGGING = "^Logging=(?<Logging>False|True)$";
+
+        // SneakyPastaSnake
+        private const string REGEX_SNEAKY_PASTA_SNAKE = "^SneakyPastaSnake=(?<SneakyPastaSnake>False|True)$";
 
         // Commands
         private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
@@ -148,7 +186,8 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="fileSystem">The file system to use.</param>
         /// <param name="cleanStartup">Determines if we do a clean startup. This means we do not load the XML data files. By default we load the XML data files.</param>
-        public void Load(FileSystem fileSystem, bool cleanStartup = false)
+        /// <returns>True if load successful otherwise False if load failed.</returns>
+        public bool Load(FileSystem fileSystem, bool cleanStartup = false)
         {
             try
             {
@@ -243,14 +282,11 @@ namespace AutoScreenCapture
 
                     CheckAndCreateFiles(security, screenCapture, Log);
 
+                    // Parse all the definitions in the configuration file for the various types of modules.
                     ParseScreenDefinitions();
-
                     ParseRegionDefinitions();
-
                     ParseEditorDefinitions();
-
                     ParseScheduleDefinitions();
-
                     ParseTriggerDefinitions();
 
                     // Save the data for each collection that's been loaded from the configuration file.
@@ -290,11 +326,17 @@ namespace AutoScreenCapture
                     {
                         _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
                     }
+
+                    return true;
                 }
+
+                return false;
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("Config::Load", ex);
+
+                return false;
             }
         }
 
@@ -509,6 +551,23 @@ namespace AutoScreenCapture
                         continue;
                     }
 
+                    if (Regex.IsMatch(line, REGEX_SCREEN_CAPTURE_INTERVAL))
+                    {
+                        Settings.User.SetValueByKey("ScreenCaptureInterval", Regex.Match(line, REGEX_SCREEN_CAPTURE_INTERVAL).Groups["ScreenCaptureInterval"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_CAPTURE_LIMIT))
+                    {
+                        int captureLimit = Convert.ToInt32(Regex.Match(line, REGEX_CAPTURE_LIMIT).Groups["CaptureLimit"].Value);
+
+                        Settings.User.SetValueByKey("CaptureLimit", Regex.Match(line, REGEX_CAPTURE_LIMIT).Groups["CaptureLimit"].Value);
+
+                        if (captureLimit > 0)
+                        {
+                            Settings.User.SetValueByKey("CaptureLimitCheck", true);
+                        }
+                    }
+
                     if (Regex.IsMatch(line, REGEX_FILENAME_PATTERN))
                     {
                         FileSystem.FilenamePattern = Regex.Match(line, REGEX_FILENAME_PATTERN).Groups["FilenamePattern"].Value;
@@ -522,6 +581,75 @@ namespace AutoScreenCapture
                     if (Regex.IsMatch(line, REGEX_DEFAULT_EDITOR))
                     {
                         Settings.User.SetValueByKey("DefaultEditor", Regex.Match(line, REGEX_DEFAULT_EDITOR).Groups["DefaultEditor"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_AUTO_SAVE_FOLDER))
+                    {
+                        Settings.User.SetValueByKey("AutoSaveFolder", Regex.Match(line, REGEX_AUTO_SAVE_FOLDER).Groups["AutoSaveFolder"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_AUTO_SAVE_MACRO))
+                    {
+                        Settings.User.SetValueByKey("AutoSaveMacro", Regex.Match(line, REGEX_AUTO_SAVE_MACRO).Groups["AutoSaveMacro"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_AUTO_SAVE_FORMAT))
+                    {
+                        Settings.User.SetValueByKey("AutoSaveFormat", Regex.Match(line, REGEX_AUTO_SAVE_FORMAT).Groups["AutoSaveFormat"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_CAPTURE_NOW_MACRO))
+                    {
+                        Settings.User.SetValueByKey("CaptureNowMacro", Regex.Match(line, REGEX_CAPTURE_NOW_MACRO).Groups["CaptureNowMacro"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_PREVIEW))
+                    {
+                        Settings.User.SetValueByKey("Preview", Regex.Match(line, REGEX_PREVIEW).Groups["Preview"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_TAKE_INITIAL_SCREENSHOT))
+                    {
+                        Settings.User.SetValueByKey("TakeInitialScreenshot", Regex.Match(line, REGEX_TAKE_INITIAL_SCREENSHOT).Groups["TakeInitialScreenshot"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SAVE_SCREENSHOT_REFS))
+                    {
+                        Settings.User.SetValueByKey("SaveScreenshotRefs", Regex.Match(line, REGEX_SAVE_SCREENSHOT_REFS).Groups["SaveScreenshotRefs"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_OPTIMIZE_SCREEN_CAPTURE))
+                    {
+                        Settings.User.SetValueByKey("OptimizeScreenCapture", Regex.Match(line, REGEX_OPTIMIZE_SCREEN_CAPTURE).Groups["OptimizeScreenCapture"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_IMAGE_DIFF_TOLERANCE))
+                    {
+                        Settings.User.SetValueByKey("ImageDiffTolerance", Regex.Match(line, REGEX_IMAGE_DIFF_TOLERANCE).Groups["ImageDiffTolerance"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_DEBUG_MODE))
+                    {
+                        Settings.Application.SetValueByKey("DebugMode", Regex.Match(line, REGEX_DEBUG_MODE).Groups["DebugMode"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_LOGGING))
+                    {
+                        Settings.Application.SetValueByKey("Logging", Regex.Match(line, REGEX_LOGGING).Groups["Logging"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SNEAKY_PASTA_SNAKE))
+                    {
+                        bool sneakyPastaSnake = Convert.ToBoolean(Regex.Match(line, REGEX_SNEAKY_PASTA_SNAKE).Groups["SneakyPastaSnake"].Value);
+
+                        Settings.User.SetValueByKey("SneakyPastaSnake", Regex.Match(line, REGEX_SNEAKY_PASTA_SNAKE).Groups["SneakyPastaSnake"].Value);
+
+                        if (sneakyPastaSnake)
+                        {
+                            // Hide everything if you're a sneaky pasta snake.
+                            Settings.User.SetValueByKey("ShowInterface", false);
+                            Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
+                        }
                     }
                 }
 

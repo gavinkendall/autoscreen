@@ -295,6 +295,12 @@ namespace AutoScreenCapture
             // For roaming profiles.
             macro = macro.Replace("$AppDataRoaming$", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
+            // The user's Desktop.
+            macro = macro.Replace("$Desktop$", Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+
+            // The user's "My Documents" folder.
+            macro = macro.Replace("$MyDocuments$", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
             return StripInvalidWindowsCharacters(macro);
         }
 

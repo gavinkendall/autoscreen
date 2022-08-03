@@ -355,11 +355,6 @@ namespace AutoScreenCapture
                         }
                     }
 
-                    if (!Application.KeyExists("ShowStartupError"))
-                    {
-                        Application.Add(new Setting("ShowStartupError", DefaultSettings.ShowStartupError));
-                    }
-
                     if (!Application.KeyExists("FilepathLengthLimit"))
                     {
                         Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
@@ -410,7 +405,6 @@ namespace AutoScreenCapture
                     Application.Add(new Setting("LowDiskBytesThreshold", DefaultSettings.LowDiskBytesThreshold));
                     Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
                     Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
-                    Application.Add(new Setting("ShowStartupError", DefaultSettings.ShowStartupError));
                     Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
                     Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
                     Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));

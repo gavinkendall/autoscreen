@@ -65,13 +65,19 @@ namespace AutoScreenCapture
                 // such as -debug, -log, -capture, -start, -stop, and -exit to the instance which is already running.
                 if (args.Length > 0)
                 {
-                    ParseCommandLineArguments(args, config);
+                    if (!ParseCommandLineArguments(args, config))
+                    {
+                        WriteStartupError(config, fileSystem, "Cannot start application. Error encountered when parsing command line arguments. Possibly missing configuration file. Where is \"" + fileSystem.ConfigFile + "\"?");
+                    }
                 }
                 else
                 {
                     // Normally we could use the -config command to specify the configuration file to use, but if we
                     // have no commands to parse then we'll load the settings from the default configuration file.
-                    config.Load(fileSystem);
+                    if (!config.Load(fileSystem))
+                    {
+                        WriteStartupError(config, fileSystem, "Cannot start application. Missing configuration file. Where is \"" + fileSystem.ConfigFile + "\"?");
+                    }
                 }
 
                 // This block of code figures out if we're already running an instance of the application.
@@ -95,12 +101,9 @@ namespace AutoScreenCapture
                     }
                     else
                     {
-                        if (args.Length == 0 && Convert.ToBoolean(config.Settings.Application.GetByKey("ShowStartupError", config.Settings.DefaultSettings.ShowStartupError).Value))
+                        if (args.Length == 0)
                         {
-                            // We've determined that an existing instance is already running. We should write out an error message informing the user.
-                            string appVersion = "[(v" + config.Settings.ApplicationVersion + ") ";
-
-                            fileSystem.AppendToFile(fileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(config.MacroParser.DateFormat + " " + config.MacroParser.TimeFormat) + "] Cannot start " + config.Settings.ApplicationName + " because an existing instance of the application is already running. To disable this error message set \"ShowStartupError\" to \"False\" in \"" + config.FileSystem.ApplicationSettingsFile + "\"");
+                            WriteStartupError(config, fileSystem, "Cannot start application. An existing instance of the application is already running.");
                         }
                     }
                 }
@@ -112,7 +115,8 @@ namespace AutoScreenCapture
         /// </summary>
         /// <param name="args">The command line arguments to parse.</param>
         /// <param name="config">The config file to use.</param>
-        private static void ParseCommandLineArguments(string[] args, Config config)
+        /// <returns>True if parsing command line arguments is successful. False if parsing command line arguments unsuccessful.</returns>
+        private static bool ParseCommandLineArguments(string[] args, Config config)
         {
             bool cleanStartup = false;
             FileSystem fileSystem = new FileSystem();
@@ -131,7 +135,11 @@ namespace AutoScreenCapture
                     if (configFile.Length > 0)
                     {
                         fileSystem.ConfigFile = configFile;
-                        config.Load(fileSystem);
+                        
+                        if (!config.Load(fileSystem))
+                        {
+                            return false;
+                        }
                     }
                 }
 
@@ -145,7 +153,10 @@ namespace AutoScreenCapture
             // and let the application parse any other command line options that were given to it.
             if (config.Settings == null)
             {
-                config.Load(fileSystem, cleanStartup);
+                if (!config.Load(fileSystem, cleanStartup))
+                {
+                    return false;
+                }
             }
 
             // All of these commands can be externally issued to an already running instance.
@@ -154,6 +165,24 @@ namespace AutoScreenCapture
             {
                 fileSystem.AppendToFile(fileSystem.CommandFile, arg);
             }
+
+            return true;
+        }
+
+        private static void WriteStartupError(Config config, FileSystem fileSystem, string message)
+        {
+            if (config == null)
+            {
+                fileSystem.AppendToFile(fileSystem.StartupErrorFile, "Cannot start application. Missing configuration.");
+            }
+            else
+            {
+                string appVersion = "[(v" + config.Settings.ApplicationVersion + ") ";
+
+                fileSystem.AppendToFile(fileSystem.StartupErrorFile, appVersion + DateTime.Now.ToString(config.MacroParser.DateFormat + " " + config.MacroParser.TimeFormat) + "] " + message);
+            }
+
+            Environment.Exit(1);
         }
     }
 }
