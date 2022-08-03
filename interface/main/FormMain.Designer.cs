@@ -142,9 +142,49 @@ namespace AutoScreenCapture
             this.timerParseCommands = new System.Windows.Forms.Timer(this.components);
             this.timerScheduleCheck = new System.Windows.Forms.Timer(this.components);
             this.timerTriggerCheck = new System.Windows.Forms.Timer(this.components);
+            this.menuStripMain = new System.Windows.Forms.MenuStrip();
+            this.toolStripMainMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemSetup = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemScreenshotsFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemFilenamePattern = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemImageFormat = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemInterval = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemOptimizeScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemLabels = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemActiveWindowTitle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemApplicationFocus = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemSecurity = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemKeyboardShortcuts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemScreens = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemRegions = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemEditors = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemSchedules = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemMacroTags = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemTriggers = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemAboutAutoScreenCapture = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainSeparatorAbout = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMainMenuItemHelpWelcome = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpLicense = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpChangelog = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpQuickStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpGettingStarted = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpScreens = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpRegions = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpEditors = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpSchedules = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpMacroTags = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpTriggers = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemHelpCommandLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemCommonSetupScenarios = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMainMenuItemConfigurationFile = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.contextMenuStripSystemTrayIcon.SuspendLayout();
             this.tabControlModules.SuspendLayout();
+            this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // monthCalendar
@@ -502,10 +542,10 @@ namespace AutoScreenCapture
             this.tabControlViews.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlViews.Location = new System.Drawing.Point(251, 27);
+            this.tabControlViews.Location = new System.Drawing.Point(251, 56);
             this.tabControlViews.Name = "tabControlViews";
             this.tabControlViews.SelectedIndex = 0;
-            this.tabControlViews.Size = new System.Drawing.Size(826, 682);
+            this.tabControlViews.Size = new System.Drawing.Size(826, 653);
             this.tabControlViews.TabIndex = 0;
             this.tabControlViews.TabStop = false;
             this.tabControlViews.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlViews_Selected);
@@ -565,7 +605,7 @@ namespace AutoScreenCapture
             this.toolStripMenuItemHelp,
             this.toolStripMenuItemExit});
             this.contextMenuStripSystemTrayIcon.Name = "contextMenuStrip";
-            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 464);
+            this.contextMenuStripSystemTrayIcon.Size = new System.Drawing.Size(220, 442);
             this.contextMenuStripSystemTrayIcon.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStripSystemTrayIcon_Opening);
             // 
             // toolStripMenuItemAbout
@@ -907,9 +947,9 @@ namespace AutoScreenCapture
             this.toolStripMenuItemRegionSelectFloatingScreenshot.Text = "Floating Screenshot";
             this.toolStripMenuItemRegionSelectFloatingScreenshot.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectFloatingScreenshot_Click);
             // 
-            // addRegionToolStripMenuItem
+            // toolStripMenuItemRegionSelectAddRegion
             // 
-            this.toolStripMenuItemRegionSelectAddRegion.Name = "addRegionToolStripMenuItem";
+            this.toolStripMenuItemRegionSelectAddRegion.Name = "toolStripMenuItemRegionSelectAddRegion";
             this.toolStripMenuItemRegionSelectAddRegion.Size = new System.Drawing.Size(241, 22);
             this.toolStripMenuItemRegionSelectAddRegion.Text = "Add Region";
             this.toolStripMenuItemRegionSelectAddRegion.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectAddRegion_Click);
@@ -1055,6 +1095,7 @@ namespace AutoScreenCapture
             // labelFilter
             // 
             this.labelFilter.AutoSize = true;
+            this.labelFilter.ForeColor = System.Drawing.SystemColors.ControlText;
             this.labelFilter.Location = new System.Drawing.Point(1, 33);
             this.labelFilter.Name = "labelFilter";
             this.labelFilter.Size = new System.Drawing.Size(32, 13);
@@ -1111,9 +1152,9 @@ namespace AutoScreenCapture
             this.labelHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.labelHelp.Image = global::AutoScreenCapture.Properties.Resources.about;
             this.labelHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelHelp.Location = new System.Drawing.Point(2, 4);
+            this.labelHelp.Location = new System.Drawing.Point(254, 31);
             this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(1326, 17);
+            this.labelHelp.Size = new System.Drawing.Size(823, 17);
             this.labelHelp.TabIndex = 0;
             this.labelHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelHelp.Click += new System.EventHandler(this.labelHelp_Click);
@@ -1156,10 +1197,297 @@ namespace AutoScreenCapture
             this.timerTriggerCheck.Interval = 1000;
             this.timerTriggerCheck.Tick += new System.EventHandler(this.timerTriggerCheck_Tick);
             // 
+            // menuStripMain
+            // 
+            this.menuStripMain.BackColor = System.Drawing.SystemColors.Control;
+            this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainMenuItemFile,
+            this.toolStripMainMenuItemSetup,
+            this.toolStripMainMenuItemScreenCapture,
+            this.toolStripMainMenuItemScreens,
+            this.toolStripMainMenuItemRegions,
+            this.toolStripMainMenuItemEditors,
+            this.toolStripMainMenuItemSchedules,
+            this.toolStripMainMenuItemMacroTags,
+            this.toolStripMainMenuItemTriggers,
+            this.toolStripMainMenuItemTools,
+            this.toolStripMainMenuItemHelp});
+            this.menuStripMain.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMain.Name = "menuStripMain";
+            this.menuStripMain.Size = new System.Drawing.Size(1330, 24);
+            this.menuStripMain.TabIndex = 5;
+            this.menuStripMain.Text = "menuStrip1";
+            // 
+            // toolStripMainMenuItemFile
+            // 
+            this.toolStripMainMenuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainMenuItemExit});
+            this.toolStripMainMenuItemFile.Name = "toolStripMainMenuItemFile";
+            this.toolStripMainMenuItemFile.Size = new System.Drawing.Size(37, 20);
+            this.toolStripMainMenuItemFile.Text = "File";
+            // 
+            // toolStripMainMenuItemExit
+            // 
+            this.toolStripMainMenuItemExit.Name = "toolStripMainMenuItemExit";
+            this.toolStripMainMenuItemExit.Size = new System.Drawing.Size(92, 22);
+            this.toolStripMainMenuItemExit.Text = "Exit";
+            this.toolStripMainMenuItemExit.Click += new System.EventHandler(this.toolStripDropDownButtonExit_Click);
+            // 
+            // toolStripMainMenuItemSetup
+            // 
+            this.toolStripMainMenuItemSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainMenuItemScreenshotsFolder,
+            this.toolStripMainMenuItemFilenamePattern,
+            this.toolStripMainMenuItemImageFormat,
+            this.toolStripMainMenuItemInterval,
+            this.toolStripMainMenuItemOptimizeScreenCapture,
+            this.toolStripMainMenuItemLabels,
+            this.toolStripMainMenuItemActiveWindowTitle,
+            this.toolStripMainMenuItemApplicationFocus,
+            this.toolStripMainMenuItemSecurity,
+            this.toolStripMainMenuItemKeyboardShortcuts});
+            this.toolStripMainMenuItemSetup.Name = "toolStripMainMenuItemSetup";
+            this.toolStripMainMenuItemSetup.Size = new System.Drawing.Size(49, 20);
+            this.toolStripMainMenuItemSetup.Text = "Setup";
+            // 
+            // toolStripMainMenuItemScreenshotsFolder
+            // 
+            this.toolStripMainMenuItemScreenshotsFolder.Name = "toolStripMainMenuItemScreenshotsFolder";
+            this.toolStripMainMenuItemScreenshotsFolder.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemScreenshotsFolder.Text = "Screenshots Folder";
+            // 
+            // toolStripMainMenuItemFilenamePattern
+            // 
+            this.toolStripMainMenuItemFilenamePattern.Name = "toolStripMainMenuItemFilenamePattern";
+            this.toolStripMainMenuItemFilenamePattern.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemFilenamePattern.Text = "Filename Pattern";
+            // 
+            // toolStripMainMenuItemImageFormat
+            // 
+            this.toolStripMainMenuItemImageFormat.Name = "toolStripMainMenuItemImageFormat";
+            this.toolStripMainMenuItemImageFormat.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemImageFormat.Text = "Image Format";
+            // 
+            // toolStripMainMenuItemInterval
+            // 
+            this.toolStripMainMenuItemInterval.Name = "toolStripMainMenuItemInterval";
+            this.toolStripMainMenuItemInterval.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemInterval.Text = "Interval";
+            // 
+            // toolStripMainMenuItemOptimizeScreenCapture
+            // 
+            this.toolStripMainMenuItemOptimizeScreenCapture.Name = "toolStripMainMenuItemOptimizeScreenCapture";
+            this.toolStripMainMenuItemOptimizeScreenCapture.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemOptimizeScreenCapture.Text = "Optimize Screen Capture";
+            // 
+            // toolStripMainMenuItemLabels
+            // 
+            this.toolStripMainMenuItemLabels.Name = "toolStripMainMenuItemLabels";
+            this.toolStripMainMenuItemLabels.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemLabels.Text = "Labels";
+            // 
+            // toolStripMainMenuItemActiveWindowTitle
+            // 
+            this.toolStripMainMenuItemActiveWindowTitle.Name = "toolStripMainMenuItemActiveWindowTitle";
+            this.toolStripMainMenuItemActiveWindowTitle.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemActiveWindowTitle.Text = "Active Window Title";
+            // 
+            // toolStripMainMenuItemApplicationFocus
+            // 
+            this.toolStripMainMenuItemApplicationFocus.Name = "toolStripMainMenuItemApplicationFocus";
+            this.toolStripMainMenuItemApplicationFocus.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemApplicationFocus.Text = "Application Focus";
+            // 
+            // toolStripMainMenuItemSecurity
+            // 
+            this.toolStripMainMenuItemSecurity.Name = "toolStripMainMenuItemSecurity";
+            this.toolStripMainMenuItemSecurity.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemSecurity.Text = "Security";
+            // 
+            // toolStripMainMenuItemKeyboardShortcuts
+            // 
+            this.toolStripMainMenuItemKeyboardShortcuts.Name = "toolStripMainMenuItemKeyboardShortcuts";
+            this.toolStripMainMenuItemKeyboardShortcuts.Size = new System.Drawing.Size(205, 22);
+            this.toolStripMainMenuItemKeyboardShortcuts.Text = "Keyboard Shortcuts";
+            // 
+            // toolStripMainMenuItemScreenCapture
+            // 
+            this.toolStripMainMenuItemScreenCapture.Name = "toolStripMainMenuItemScreenCapture";
+            this.toolStripMainMenuItemScreenCapture.Size = new System.Drawing.Size(99, 20);
+            this.toolStripMainMenuItemScreenCapture.Text = "Screen Capture";
+            // 
+            // toolStripMainMenuItemScreens
+            // 
+            this.toolStripMainMenuItemScreens.Image = global::AutoScreenCapture.Properties.Resources.screen;
+            this.toolStripMainMenuItemScreens.Name = "toolStripMainMenuItemScreens";
+            this.toolStripMainMenuItemScreens.Size = new System.Drawing.Size(75, 20);
+            this.toolStripMainMenuItemScreens.Text = "Screens";
+            // 
+            // toolStripMainMenuItemRegions
+            // 
+            this.toolStripMainMenuItemRegions.Image = global::AutoScreenCapture.Properties.Resources.region;
+            this.toolStripMainMenuItemRegions.Name = "toolStripMainMenuItemRegions";
+            this.toolStripMainMenuItemRegions.Size = new System.Drawing.Size(77, 20);
+            this.toolStripMainMenuItemRegions.Text = "Regions";
+            // 
+            // toolStripMainMenuItemEditors
+            // 
+            this.toolStripMainMenuItemEditors.Image = global::AutoScreenCapture.Properties.Resources.edit;
+            this.toolStripMainMenuItemEditors.Name = "toolStripMainMenuItemEditors";
+            this.toolStripMainMenuItemEditors.Size = new System.Drawing.Size(71, 20);
+            this.toolStripMainMenuItemEditors.Text = "Editors";
+            // 
+            // toolStripMainMenuItemSchedules
+            // 
+            this.toolStripMainMenuItemSchedules.Image = global::AutoScreenCapture.Properties.Resources.schedule;
+            this.toolStripMainMenuItemSchedules.Name = "toolStripMainMenuItemSchedules";
+            this.toolStripMainMenuItemSchedules.Size = new System.Drawing.Size(88, 20);
+            this.toolStripMainMenuItemSchedules.Text = "Schedules";
+            // 
+            // toolStripMainMenuItemMacroTags
+            // 
+            this.toolStripMainMenuItemMacroTags.Image = global::AutoScreenCapture.Properties.Resources.brick;
+            this.toolStripMainMenuItemMacroTags.Name = "toolStripMainMenuItemMacroTags";
+            this.toolStripMainMenuItemMacroTags.Size = new System.Drawing.Size(96, 20);
+            this.toolStripMainMenuItemMacroTags.Text = "Macro Tags";
+            // 
+            // toolStripMainMenuItemTriggers
+            // 
+            this.toolStripMainMenuItemTriggers.Image = global::AutoScreenCapture.Properties.Resources.trigger;
+            this.toolStripMainMenuItemTriggers.Name = "toolStripMainMenuItemTriggers";
+            this.toolStripMainMenuItemTriggers.Size = new System.Drawing.Size(77, 20);
+            this.toolStripMainMenuItemTriggers.Text = "Triggers";
+            // 
+            // toolStripMainMenuItemTools
+            // 
+            this.toolStripMainMenuItemTools.Name = "toolStripMainMenuItemTools";
+            this.toolStripMainMenuItemTools.Size = new System.Drawing.Size(47, 20);
+            this.toolStripMainMenuItemTools.Text = "Tools";
+            // 
+            // toolStripMainMenuItemHelp
+            // 
+            this.toolStripMainMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMainMenuItemAboutAutoScreenCapture,
+            this.toolStripMainSeparatorAbout,
+            this.toolStripMainMenuItemHelpWelcome,
+            this.toolStripMainMenuItemHelpLicense,
+            this.toolStripMainMenuItemHelpChangelog,
+            this.toolStripMainMenuItemHelpQuickStart,
+            this.toolStripMainMenuItemHelpGettingStarted,
+            this.toolStripMainMenuItemHelpScreens,
+            this.toolStripMainMenuItemHelpRegions,
+            this.toolStripMainMenuItemHelpEditors,
+            this.toolStripMainMenuItemHelpSchedules,
+            this.toolStripMainMenuItemHelpMacroTags,
+            this.toolStripMainMenuItemHelpTriggers,
+            this.toolStripMainMenuItemHelpCommandLine,
+            this.toolStripMainMenuItemCommonSetupScenarios,
+            this.toolStripMainMenuItemConfigurationFile});
+            this.toolStripMainMenuItemHelp.Name = "toolStripMainMenuItemHelp";
+            this.toolStripMainMenuItemHelp.Size = new System.Drawing.Size(44, 20);
+            this.toolStripMainMenuItemHelp.Text = "Help";
+            // 
+            // toolStripMainMenuItemAboutAutoScreenCapture
+            // 
+            this.toolStripMainMenuItemAboutAutoScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.about;
+            this.toolStripMainMenuItemAboutAutoScreenCapture.Name = "toolStripMainMenuItemAboutAutoScreenCapture";
+            this.toolStripMainMenuItemAboutAutoScreenCapture.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemAboutAutoScreenCapture.Text = "About Auto Screen Capture";
+            // 
+            // toolStripMainSeparatorAbout
+            // 
+            this.toolStripMainSeparatorAbout.Name = "toolStripMainSeparatorAbout";
+            this.toolStripMainSeparatorAbout.Size = new System.Drawing.Size(216, 6);
+            // 
+            // toolStripMainMenuItemHelpWelcome
+            // 
+            this.toolStripMainMenuItemHelpWelcome.Name = "toolStripMainMenuItemHelpWelcome";
+            this.toolStripMainMenuItemHelpWelcome.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpWelcome.Text = "Welcome";
+            // 
+            // toolStripMainMenuItemHelpLicense
+            // 
+            this.toolStripMainMenuItemHelpLicense.Name = "toolStripMainMenuItemHelpLicense";
+            this.toolStripMainMenuItemHelpLicense.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpLicense.Text = "License";
+            // 
+            // toolStripMainMenuItemHelpChangelog
+            // 
+            this.toolStripMainMenuItemHelpChangelog.Name = "toolStripMainMenuItemHelpChangelog";
+            this.toolStripMainMenuItemHelpChangelog.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpChangelog.Text = "Changelog";
+            // 
+            // toolStripMainMenuItemHelpQuickStart
+            // 
+            this.toolStripMainMenuItemHelpQuickStart.Name = "toolStripMainMenuItemHelpQuickStart";
+            this.toolStripMainMenuItemHelpQuickStart.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpQuickStart.Text = "Quick Start";
+            // 
+            // toolStripMainMenuItemHelpGettingStarted
+            // 
+            this.toolStripMainMenuItemHelpGettingStarted.Name = "toolStripMainMenuItemHelpGettingStarted";
+            this.toolStripMainMenuItemHelpGettingStarted.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpGettingStarted.Text = "Getting Started";
+            // 
+            // toolStripMainMenuItemHelpScreens
+            // 
+            this.toolStripMainMenuItemHelpScreens.Name = "toolStripMainMenuItemHelpScreens";
+            this.toolStripMainMenuItemHelpScreens.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpScreens.Text = "Screens";
+            // 
+            // toolStripMainMenuItemHelpRegions
+            // 
+            this.toolStripMainMenuItemHelpRegions.Name = "toolStripMainMenuItemHelpRegions";
+            this.toolStripMainMenuItemHelpRegions.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpRegions.Text = "Regions";
+            // 
+            // toolStripMainMenuItemHelpEditors
+            // 
+            this.toolStripMainMenuItemHelpEditors.Name = "toolStripMainMenuItemHelpEditors";
+            this.toolStripMainMenuItemHelpEditors.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpEditors.Text = "Editors";
+            // 
+            // toolStripMainMenuItemHelpSchedules
+            // 
+            this.toolStripMainMenuItemHelpSchedules.Name = "toolStripMainMenuItemHelpSchedules";
+            this.toolStripMainMenuItemHelpSchedules.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpSchedules.Text = "Schedules";
+            // 
+            // toolStripMainMenuItemHelpMacroTags
+            // 
+            this.toolStripMainMenuItemHelpMacroTags.Name = "toolStripMainMenuItemHelpMacroTags";
+            this.toolStripMainMenuItemHelpMacroTags.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpMacroTags.Text = "Macro Tags";
+            // 
+            // toolStripMainMenuItemHelpTriggers
+            // 
+            this.toolStripMainMenuItemHelpTriggers.Name = "toolStripMainMenuItemHelpTriggers";
+            this.toolStripMainMenuItemHelpTriggers.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpTriggers.Text = "Triggers";
+            // 
+            // toolStripMainMenuItemHelpCommandLine
+            // 
+            this.toolStripMainMenuItemHelpCommandLine.Name = "toolStripMainMenuItemHelpCommandLine";
+            this.toolStripMainMenuItemHelpCommandLine.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemHelpCommandLine.Text = "Command Line";
+            // 
+            // toolStripMainMenuItemCommonSetupScenarios
+            // 
+            this.toolStripMainMenuItemCommonSetupScenarios.Name = "toolStripMainMenuItemCommonSetupScenarios";
+            this.toolStripMainMenuItemCommonSetupScenarios.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemCommonSetupScenarios.Text = "Common Setup Scenarios";
+            // 
+            // toolStripMainMenuItemConfigurationFile
+            // 
+            this.toolStripMainMenuItemConfigurationFile.Name = "toolStripMainMenuItemConfigurationFile";
+            this.toolStripMainMenuItemConfigurationFile.Size = new System.Drawing.Size(219, 22);
+            this.toolStripMainMenuItemConfigurationFile.Text = "Configuration File";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(1330, 734);
             this.Controls.Add(this.labelModuleHelp);
             this.Controls.Add(this.listBoxScreenshots);
@@ -1171,8 +1499,10 @@ namespace AutoScreenCapture
             this.Controls.Add(this.tabControlModules);
             this.Controls.Add(this.tabControlViews);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStripMain);
             this.Controls.Add(this.monthCalendar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStripMain;
             this.MinimumSize = new System.Drawing.Size(1346, 773);
             this.Name = "FormMain";
             this.Opacity = 0D;
@@ -1184,6 +1514,8 @@ namespace AutoScreenCapture
             this.statusStrip.PerformLayout();
             this.contextMenuStripSystemTrayIcon.ResumeLayout(false);
             this.tabControlModules.ResumeLayout(false);
+            this.menuStripMain.ResumeLayout(false);
+            this.menuStripMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1306,5 +1638,44 @@ namespace AutoScreenCapture
         private Timer timerScheduleCheck;
         private Timer timerTriggerCheck;
         private ToolStripMenuItem toolStripMenuItemCaptureNowOptions;
+        private MenuStrip menuStripMain;
+        private ToolStripMenuItem toolStripMainMenuItemFile;
+        private ToolStripMenuItem toolStripMainMenuItemExit;
+        private ToolStripMenuItem toolStripMainMenuItemSetup;
+        private ToolStripMenuItem toolStripMainMenuItemScreenCapture;
+        private ToolStripMenuItem toolStripMainMenuItemScreens;
+        private ToolStripMenuItem toolStripMainMenuItemRegions;
+        private ToolStripMenuItem toolStripMainMenuItemEditors;
+        private ToolStripMenuItem toolStripMainMenuItemSchedules;
+        private ToolStripMenuItem toolStripMainMenuItemMacroTags;
+        private ToolStripMenuItem toolStripMainMenuItemTriggers;
+        private ToolStripMenuItem toolStripMainMenuItemTools;
+        private ToolStripMenuItem toolStripMainMenuItemHelp;
+        private ToolStripMenuItem toolStripMainMenuItemScreenshotsFolder;
+        private ToolStripMenuItem toolStripMainMenuItemFilenamePattern;
+        private ToolStripMenuItem toolStripMainMenuItemImageFormat;
+        private ToolStripMenuItem toolStripMainMenuItemInterval;
+        private ToolStripMenuItem toolStripMainMenuItemOptimizeScreenCapture;
+        private ToolStripMenuItem toolStripMainMenuItemLabels;
+        private ToolStripMenuItem toolStripMainMenuItemActiveWindowTitle;
+        private ToolStripMenuItem toolStripMainMenuItemApplicationFocus;
+        private ToolStripMenuItem toolStripMainMenuItemSecurity;
+        private ToolStripMenuItem toolStripMainMenuItemKeyboardShortcuts;
+        private ToolStripMenuItem toolStripMainMenuItemAboutAutoScreenCapture;
+        private ToolStripSeparator toolStripMainSeparatorAbout;
+        private ToolStripMenuItem toolStripMainMenuItemHelpWelcome;
+        private ToolStripMenuItem toolStripMainMenuItemHelpLicense;
+        private ToolStripMenuItem toolStripMainMenuItemHelpChangelog;
+        private ToolStripMenuItem toolStripMainMenuItemHelpQuickStart;
+        private ToolStripMenuItem toolStripMainMenuItemHelpGettingStarted;
+        private ToolStripMenuItem toolStripMainMenuItemHelpScreens;
+        private ToolStripMenuItem toolStripMainMenuItemHelpRegions;
+        private ToolStripMenuItem toolStripMainMenuItemHelpEditors;
+        private ToolStripMenuItem toolStripMainMenuItemHelpSchedules;
+        private ToolStripMenuItem toolStripMainMenuItemHelpMacroTags;
+        private ToolStripMenuItem toolStripMainMenuItemHelpTriggers;
+        private ToolStripMenuItem toolStripMainMenuItemHelpCommandLine;
+        private ToolStripMenuItem toolStripMainMenuItemCommonSetupScenarios;
+        private ToolStripMenuItem toolStripMainMenuItemConfigurationFile;
     }
 }
