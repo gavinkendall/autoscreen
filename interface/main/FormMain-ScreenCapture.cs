@@ -246,6 +246,7 @@ namespace AutoScreenCapture
                     _screenCapture.Running = true;
                     _screenCapture.ApplicationWarning = false;
 
+                    _formScreenCaptureStatus.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
                     _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.stop_screen_capture;
 
                     _screenCapture.DateTimeStartCapture = DateTime.Now;
@@ -324,6 +325,7 @@ namespace AutoScreenCapture
                     timerScreenCapture.Stop();
                     timerScreenCapture.Enabled = false;
 
+                    _formScreenCaptureStatus.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
                     _formLabelSwitcher.buttonStartStopScreenCapture.Image = Properties.Resources.start_screen_capture;
 
                     SearchFilterValues();

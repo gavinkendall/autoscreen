@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScreenCaptureStatus));
             this.labelScreenCaptureStatus = new System.Windows.Forms.Label();
+            this.buttonStartStopScreenCapture = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelScreenCaptureStatus
@@ -44,12 +45,24 @@
             this.labelScreenCaptureStatus.TabIndex = 0;
             this.labelScreenCaptureStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // buttonStartStopScreenCapture
+            // 
+            this.buttonStartStopScreenCapture.Dock = System.Windows.Forms.DockStyle.Left;
+            this.buttonStartStopScreenCapture.Image = global::AutoScreenCapture.Properties.Resources.start_screen_capture;
+            this.buttonStartStopScreenCapture.Location = new System.Drawing.Point(0, 0);
+            this.buttonStartStopScreenCapture.Name = "buttonStartStopScreenCapture";
+            this.buttonStartStopScreenCapture.Size = new System.Drawing.Size(37, 31);
+            this.buttonStartStopScreenCapture.TabIndex = 2;
+            this.buttonStartStopScreenCapture.TabStop = false;
+            this.buttonStartStopScreenCapture.UseVisualStyleBackColor = true;
+            // 
             // FormScreenCaptureStatus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(608, 31);
+            this.Controls.Add(this.buttonStartStopScreenCapture);
             this.Controls.Add(this.labelScreenCaptureStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -71,5 +84,6 @@
         /// Label for Screen Capture Status form.
         /// </summary>
         public System.Windows.Forms.Label labelScreenCaptureStatus;
+        public System.Windows.Forms.Button buttonStartStopScreenCapture;
     }
 }

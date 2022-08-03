@@ -122,7 +122,14 @@ namespace AutoScreenCapture
                 // Event Handlers
                 _formSchedule.StartSchedule += _formSchedule_StartSchedule;
                 _formSchedule.StopSchedule += _formSchedule_StopSchedule;
-                _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click;
+                _formScreenCaptureStatus.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click; // Screen Capture Status
+                _formLabelSwitcher.buttonStartStopScreenCapture.Click += _formLabelSwitcher_buttonStartStopScreenCapture_Click; // Screen Capture Status With Label Switcher
+
+                ToolTip toolTipButtonStartStopScreenCaptureScreenCaptureStatus = new ToolTip();
+                toolTipButtonStartStopScreenCaptureScreenCaptureStatus.SetToolTip(_formScreenCaptureStatus.buttonStartStopScreenCapture, "Start/Stop Screen Capture");
+
+                ToolTip toolTipButtonStartStopScreenCaptureLabelSwitcher = new ToolTip();
+                toolTipButtonStartStopScreenCaptureLabelSwitcher.SetToolTip(_formLabelSwitcher.buttonStartStopScreenCapture, "Start/Stop Screen Capture");
 
                 _log.WriteDebugMessage("Initializing email manager");
                 _emailManager = new EmailManager(_log);
