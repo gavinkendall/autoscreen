@@ -116,6 +116,10 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void toolStripDropDownButtonHelp_Click(object sender, EventArgs e)
         {
+            ToolStripMenuItem selectedMenuItem = (ToolStripMenuItem)sender;
+
+            _formHelp.ShowSection(selectedMenuItem.Text);
+
             if (!_formHelp.Visible)
             {
                 _formHelp.Show();

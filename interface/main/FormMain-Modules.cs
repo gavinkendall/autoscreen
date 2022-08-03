@@ -409,6 +409,7 @@ namespace AutoScreenCapture
             toolStripMainMenuItemRegions.DropDownItems.Clear();
 
             toolStripMainMenuItemRegions.DropDown.Items.Add(new ToolStripMenuItem("Add Region ...", null, addRegion_Click));
+            toolStripMainMenuItemRegions.DropDown.Items.Add(new ToolStripMenuItem("Region Select / Add Region ...", null, toolStripMenuItemRegionSelectAddRegion_Click));
             toolStripMainMenuItemRegions.DropDown.Items.Add(new ToolStripSeparator());
 
             foreach (Region region in _formRegion.RegionCollection)

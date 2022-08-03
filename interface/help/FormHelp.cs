@@ -33,10 +33,7 @@ namespace AutoScreenCapture
         public FormHelp()
         {
             InitializeComponent();
-        }
 
-        private void FormHelp_Load(object sender, System.EventArgs e)
-        {
             listBoxHelpItems.Items.Add("Welcome");
             listBoxHelpItems.Items.Add("License");
             listBoxHelpItems.Items.Add("Changelog");
@@ -122,6 +119,24 @@ namespace AutoScreenCapture
                 case 13:
                     richTextBoxHelpText.SelectedRtf = Properties.Resources.configuration_file;
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Shows the necessary help section.
+        /// </summary>
+        /// <param name="sectionToShow">The name of the help section to show.</param>
+        public void ShowSection(string sectionToShow)
+        {
+            if (!string.IsNullOrEmpty(sectionToShow))
+            {
+                // If the text is "Help" then it's coming from the system tray icon menu so make sure to redirect to the "Welcome" page.
+                if (sectionToShow.Equals("Help"))
+                {
+                    sectionToShow = "Welcome";
+                }
+
+                listBoxHelpItems.SelectedIndex = listBoxHelpItems.Items.IndexOf(sectionToShow);
             }
         }
     }

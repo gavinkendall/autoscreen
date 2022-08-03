@@ -406,9 +406,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// 
+        /// Shows the necessary tab page.
         /// </summary>
-        /// <param name="tabPageToShow"></param>
+        /// <param name="tabPageToShow">The name of the tab page to show.</param>
         public void ShowTabPage(string tabPageToShow)
         {
             for (int i = 0; i < tabControlSetup.TabPages.Count; i++)

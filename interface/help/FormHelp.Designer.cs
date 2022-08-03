@@ -76,7 +76,6 @@
             this.Text = "Auto Screen Capture - Help";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormHelp_FormClosing);
-            this.Load += new System.EventHandler(this.FormHelp_Load);
             this.ResumeLayout(false);
 
         }

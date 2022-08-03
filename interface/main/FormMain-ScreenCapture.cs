@@ -48,6 +48,7 @@ namespace AutoScreenCapture
             {
                 toolStripDropDownButtonStartScreenCapture.Enabled = true;
                 toolStripMenuItemStartScreenCapture.Enabled = true;
+                toolStripMainMenuItemStartScreenCapture.Enabled = true;
             }
             else
             {
@@ -62,6 +63,7 @@ namespace AutoScreenCapture
         {
             toolStripDropDownButtonStopScreenCapture.Enabled = true;
             toolStripMenuItemStopScreenCapture.Enabled = true;
+            toolStripMainMenuItemStopScreenCapture.Enabled = true;
         }
 
         /// <summary>
@@ -71,6 +73,7 @@ namespace AutoScreenCapture
         {
             toolStripDropDownButtonStopScreenCapture.Enabled = false;
             toolStripMenuItemStopScreenCapture.Enabled = false;
+            toolStripMainMenuItemStopScreenCapture.Enabled = false;
         }
 
         /// <summary>
@@ -80,6 +83,7 @@ namespace AutoScreenCapture
         {
             toolStripDropDownButtonStartScreenCapture.Enabled = false;
             toolStripMenuItemStartScreenCapture.Enabled = false;
+            toolStripMainMenuItemStartScreenCapture.Enabled = false;
         }
 
         /// <summary>
