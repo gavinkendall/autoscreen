@@ -96,7 +96,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Region" window to enable the user to edit a chosen Region.
+        /// Shows the "Configure Region" window to enable the user to edit a chosen Region.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

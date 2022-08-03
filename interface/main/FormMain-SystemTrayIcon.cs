@@ -90,7 +90,7 @@ namespace AutoScreenCapture
                     Tag = editor
                 };
 
-                editorMenuItem.Click += new EventHandler(changeEditor_Click);
+                editorMenuItem.Click += new EventHandler(configureEditor_Click);
 
                 toolStripMenuItemChangeEditor.DropDown.Items.Add(editorMenuItem);
             }
@@ -105,7 +105,7 @@ namespace AutoScreenCapture
                     Tag = schedule
                 };
 
-                scheduleMenuItem.Click += new EventHandler(changeSchedule_Click);
+                scheduleMenuItem.Click += new EventHandler(configureSchedule_Click);
 
                 toolStripMenuItemChangeSchedule.DropDown.Items.Add(scheduleMenuItem);
             }
@@ -120,7 +120,7 @@ namespace AutoScreenCapture
                     Tag = macrotag
                 };
 
-                macrotagMenuItem.Click += new EventHandler(changeMacroTag_Click);
+                macrotagMenuItem.Click += new EventHandler(configureMacroTag_Click);
 
                 toolStripMenuItemChangeMacroTag.DropDown.Items.Add(macrotagMenuItem);
             }
@@ -135,7 +135,7 @@ namespace AutoScreenCapture
                     Tag = trigger
                 };
 
-                triggerMenuItem.Click += new EventHandler(changeTrigger_Click);
+                triggerMenuItem.Click += new EventHandler(configureTrigger_Click);
 
                 toolStripMenuItemChangeTrigger.DropDown.Items.Add(triggerMenuItem);
             }

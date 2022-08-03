@@ -225,7 +225,12 @@ namespace AutoScreenCapture
             }
         }
 
-        private void changeSchedule_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Shows the "Configure Schedule" window to enable the user to edit a chosen Schedule.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void configureSchedule_Click(object sender, EventArgs e)
         {
             ShowInterface();
 

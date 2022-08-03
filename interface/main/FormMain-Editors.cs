@@ -118,11 +118,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Editor" window to enable the user to edit a chosen Editor.
+        /// Shows the "Configure Editor" window to enable the user to edit a chosen Editor.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeEditor_Click(object sender, EventArgs e)
+        private void configureEditor_Click(object sender, EventArgs e)
         {
             ShowInterface();
 

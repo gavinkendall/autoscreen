@@ -96,7 +96,7 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Screen" window to enable the user to edit a chosen Screen.
+        /// Shows the "Configure Screen" window to enable the user to edit a chosen Screen.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -1318,44 +1318,38 @@ namespace AutoScreenCapture
             // 
             // toolStripMainMenuItemScreens
             // 
-            this.toolStripMainMenuItemScreens.Image = global::AutoScreenCapture.Properties.Resources.screen;
             this.toolStripMainMenuItemScreens.Name = "toolStripMainMenuItemScreens";
-            this.toolStripMainMenuItemScreens.Size = new System.Drawing.Size(75, 20);
+            this.toolStripMainMenuItemScreens.Size = new System.Drawing.Size(59, 20);
             this.toolStripMainMenuItemScreens.Text = "Screens";
             // 
             // toolStripMainMenuItemRegions
             // 
-            this.toolStripMainMenuItemRegions.Image = global::AutoScreenCapture.Properties.Resources.region;
             this.toolStripMainMenuItemRegions.Name = "toolStripMainMenuItemRegions";
-            this.toolStripMainMenuItemRegions.Size = new System.Drawing.Size(77, 20);
+            this.toolStripMainMenuItemRegions.Size = new System.Drawing.Size(61, 20);
             this.toolStripMainMenuItemRegions.Text = "Regions";
             // 
             // toolStripMainMenuItemEditors
             // 
-            this.toolStripMainMenuItemEditors.Image = global::AutoScreenCapture.Properties.Resources.edit;
             this.toolStripMainMenuItemEditors.Name = "toolStripMainMenuItemEditors";
-            this.toolStripMainMenuItemEditors.Size = new System.Drawing.Size(71, 20);
+            this.toolStripMainMenuItemEditors.Size = new System.Drawing.Size(55, 20);
             this.toolStripMainMenuItemEditors.Text = "Editors";
             // 
             // toolStripMainMenuItemSchedules
             // 
-            this.toolStripMainMenuItemSchedules.Image = global::AutoScreenCapture.Properties.Resources.schedule;
             this.toolStripMainMenuItemSchedules.Name = "toolStripMainMenuItemSchedules";
-            this.toolStripMainMenuItemSchedules.Size = new System.Drawing.Size(88, 20);
+            this.toolStripMainMenuItemSchedules.Size = new System.Drawing.Size(72, 20);
             this.toolStripMainMenuItemSchedules.Text = "Schedules";
             // 
             // toolStripMainMenuItemMacroTags
             // 
-            this.toolStripMainMenuItemMacroTags.Image = global::AutoScreenCapture.Properties.Resources.brick;
             this.toolStripMainMenuItemMacroTags.Name = "toolStripMainMenuItemMacroTags";
-            this.toolStripMainMenuItemMacroTags.Size = new System.Drawing.Size(96, 20);
+            this.toolStripMainMenuItemMacroTags.Size = new System.Drawing.Size(80, 20);
             this.toolStripMainMenuItemMacroTags.Text = "Macro Tags";
             // 
             // toolStripMainMenuItemTriggers
             // 
-            this.toolStripMainMenuItemTriggers.Image = global::AutoScreenCapture.Properties.Resources.trigger;
             this.toolStripMainMenuItemTriggers.Name = "toolStripMainMenuItemTriggers";
-            this.toolStripMainMenuItemTriggers.Size = new System.Drawing.Size(77, 20);
+            this.toolStripMainMenuItemTriggers.Size = new System.Drawing.Size(61, 20);
             this.toolStripMainMenuItemTriggers.Text = "Triggers";
             // 
             // toolStripMainMenuItemTools

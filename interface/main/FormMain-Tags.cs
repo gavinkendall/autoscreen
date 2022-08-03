@@ -91,11 +91,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Macro Tag" window to enable the user to edit a chosen Macro Tag.
+        /// Shows the "Configure Macro Tag" window to enable the user to edit a chosen Macro Tag.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeMacroTag_Click(object sender, EventArgs e)
+        private void configureMacroTag_Click(object sender, EventArgs e)
         {
             ShowInterface();
 

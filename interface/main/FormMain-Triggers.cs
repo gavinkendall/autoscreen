@@ -231,11 +231,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Shows the "Change Trigger" window to enable the user to edit a chosen Trigger.
+        /// Shows the "Configure Trigger" window to enable the user to edit a chosen Trigger.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void changeTrigger_Click(object sender, EventArgs e)
+        private void configureTrigger_Click(object sender, EventArgs e)
         {
             ShowInterface();
 

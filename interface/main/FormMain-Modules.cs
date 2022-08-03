@@ -382,31 +382,139 @@ namespace AutoScreenCapture
         private void BuildScreensModule()
         {
             BuildModule(_formScreen.ScreenCollection, tabPageScreens, addScreen_Click, removeSelectedScreens_Click, configureScreen_Click);
+
+            toolStripMainMenuItemScreens.DropDownItems.Clear();
+
+            toolStripMainMenuItemScreens.DropDown.Items.Add(new ToolStripMenuItem("Add Screen ...", null, addScreen_Click));
+            toolStripMainMenuItemScreens.DropDown.Items.Add(new ToolStripSeparator());
+
+            foreach (Screen screen in _formScreen.ScreenCollection)
+            {
+                ToolStripMenuItem screenMenuItem = new ToolStripMenuItem
+                {
+                    Text = screen.Name,
+                    Tag = screen
+                };
+
+                screenMenuItem.Click += new EventHandler(configureScreen_Click);
+
+                toolStripMainMenuItemScreens.DropDown.Items.Add(screenMenuItem);
+            }
         }
 
         private void BuildRegionsModule()
         {
             BuildModule(_formRegion.RegionCollection, tabPageRegions, addRegion_Click, removeSelectedRegions_Click, configureRegion_Click);
+
+            toolStripMainMenuItemRegions.DropDownItems.Clear();
+
+            toolStripMainMenuItemRegions.DropDown.Items.Add(new ToolStripMenuItem("Add Region ...", null, addRegion_Click));
+            toolStripMainMenuItemRegions.DropDown.Items.Add(new ToolStripSeparator());
+
+            foreach (Region region in _formRegion.RegionCollection)
+            {
+                ToolStripMenuItem regionMenuItem = new ToolStripMenuItem
+                {
+                    Text = region.Name,
+                    Tag = region
+                };
+
+                regionMenuItem.Click += new EventHandler(configureRegion_Click);
+
+                toolStripMainMenuItemRegions.DropDown.Items.Add(regionMenuItem);
+            }
         }
 
         private void BuildMacroTagsModule()
         {
-            BuildModule(_formMacroTag.MacroTagCollection, tabPageMacroTags, addMacroTag_Click, removeSelectedMacroTags_Click, changeMacroTag_Click);
+            BuildModule(_formMacroTag.MacroTagCollection, tabPageMacroTags, addMacroTag_Click, removeSelectedMacroTags_Click, configureMacroTag_Click);
+
+            toolStripMainMenuItemMacroTags.DropDownItems.Clear();
+
+            toolStripMainMenuItemMacroTags.DropDown.Items.Add(new ToolStripMenuItem("Add Macro Tag ...", null, addMacroTag_Click));
+            toolStripMainMenuItemMacroTags.DropDown.Items.Add(new ToolStripSeparator());
+
+            foreach (MacroTag macroTag in _formMacroTag.MacroTagCollection)
+            {
+                ToolStripMenuItem macroTagMenuItem = new ToolStripMenuItem
+                {
+                    Text = macroTag.Name,
+                    Tag = macroTag
+                };
+
+                macroTagMenuItem.Click += new EventHandler(configureMacroTag_Click);
+
+                toolStripMainMenuItemMacroTags.DropDown.Items.Add(macroTagMenuItem);
+            }
         }
 
         private void BuildEditorsModule()
         {
-            BuildModule(_formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, changeEditor_Click);
+            BuildModule(_formEditor.EditorCollection, tabPageEditors, addEditor_Click, removeSelectedEditors_Click, configureEditor_Click);
+
+            toolStripMainMenuItemEditors.DropDownItems.Clear();
+
+            toolStripMainMenuItemEditors.DropDown.Items.Add(new ToolStripMenuItem("Add Editor ...", null, addEditor_Click));
+            toolStripMainMenuItemEditors.DropDown.Items.Add(new ToolStripSeparator());
+
+            foreach (Editor editor in _formEditor.EditorCollection)
+            {
+                ToolStripMenuItem editorMenuItem = new ToolStripMenuItem
+                {
+                    Text = editor.Name,
+                    Tag = editor
+                };
+
+                editorMenuItem.Click += new EventHandler(configureEditor_Click);
+
+                toolStripMainMenuItemEditors.DropDown.Items.Add(editorMenuItem);
+            }
         }
 
         private void BuildTriggersModule()
         {
-            BuildModule(_formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, changeTrigger_Click);
+            BuildModule(_formTrigger.TriggerCollection, tabPageTriggers, addTrigger_Click, removeSelectedTriggers_Click, configureTrigger_Click);
+
+            toolStripMainMenuItemTriggers.DropDownItems.Clear();
+
+            toolStripMainMenuItemTriggers.DropDown.Items.Add(new ToolStripMenuItem("Add Trigger ...", null, addTrigger_Click));
+            toolStripMainMenuItemTriggers.DropDown.Items.Add(new ToolStripSeparator());
+
+            foreach (Trigger trigger in _formTrigger.TriggerCollection)
+            {
+                ToolStripMenuItem triggerMenuItem = new ToolStripMenuItem
+                {
+                    Text = trigger.Name,
+                    Tag = trigger
+                };
+
+                triggerMenuItem.Click += new EventHandler(configureTrigger_Click);
+
+                toolStripMainMenuItemTriggers.DropDown.Items.Add(triggerMenuItem);
+            }
         }
 
         private void BuildSchedulesModule()
         {
-            BuildModule(_formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, changeSchedule_Click);
+            BuildModule(_formSchedule.ScheduleCollection, tabPageSchedules, addSchedule_Click, removeSelectedSchedules_Click, configureSchedule_Click);
+
+            toolStripMainMenuItemSchedules.DropDownItems.Clear();
+
+            toolStripMainMenuItemSchedules.DropDown.Items.Add(new ToolStripMenuItem("Add Schedule ...", null, addSchedule_Click));
+            toolStripMainMenuItemSchedules.DropDown.Items.Add(new ToolStripSeparator());
+
+            foreach (Schedule schedule in _formSchedule.ScheduleCollection)
+            {
+                ToolStripMenuItem scheduleMenuItem = new ToolStripMenuItem
+                {
+                    Text = schedule.Name,
+                    Tag = schedule
+                };
+
+                scheduleMenuItem.Click += new EventHandler(configureSchedule_Click);
+
+                toolStripMainMenuItemSchedules.DropDown.Items.Add(scheduleMenuItem);
+            }
         }
     }
 }
