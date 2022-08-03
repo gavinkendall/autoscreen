@@ -170,7 +170,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                if (selectedScreenshot == null || selectedScreenshot.ViewId.Equals(Guid.Empty))
                 {
                     // *** Auto Screen Capture - Region Select / Auto Save ***
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
@@ -220,7 +220,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, region.ViewId);
                 }
 
-                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                if (selectedScreenshot == null || selectedScreenshot.ViewId.Equals(Guid.Empty))
                 {
                     // *** Auto Screen Capture - Region Select / Auto Save ***
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
@@ -788,7 +788,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, region.ViewId);
                 }
 
-                if (selectedScreenshot.ViewId.Equals(Guid.Empty))
+                if (selectedScreenshot == null || selectedScreenshot.ViewId.Equals(Guid.Empty))
                 {
                     // *** Auto Screen Capture - Region Select / Auto Save ***
                     selectedScreenshot = _screenshotCollection.GetScreenshot(_slideShow.SelectedSlide.Name, Guid.Empty);
