@@ -158,6 +158,32 @@ namespace AutoScreenCapture
 
                     _log.WriteDebugMessage("Number of triggers loaded = " + _formTrigger.TriggerCollection.Count);
 
+                    // If the ShowInterface is False then make sure to disable all Triggers that use the ShowInterface action.
+                    // (This would have been set in autoscreen.conf)
+                    if (!Convert.ToBoolean(_config.Settings.User.GetByKey("ShowInterface").Value))
+                    {
+                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                        {
+                            if (trigger.ActionType == TriggerActionType.ShowInterface)
+                            {
+                                trigger.Enable = false;
+                            }
+                        }
+                    }
+
+                    // If the ShowSystemTrayIcon is False then make sure to disable all Triggers that use the ShowSystemTrayIcon action.
+                    // (This would have been set in autoscreen.conf)
+                    if (!Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon").Value))
+                    {
+                        foreach (Trigger trigger in _formTrigger.TriggerCollection)
+                        {
+                            if (trigger.ActionType == TriggerActionType.ShowSystemTrayIcon)
+                            {
+                                trigger.Enable = false;
+                            }
+                        }
+                    }
+
                     _log.WriteDebugMessage("Initializing region collection");
 
                     if (!_formRegion.RegionCollection.LoadXmlFileAndAddRegions(_imageFormatCollection, _config, _fileSystem, _log))

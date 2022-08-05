@@ -53,11 +53,6 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonSettings = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItemEmailSettingsFromStatusBar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileTransferSettingsFromStatusBar = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripDropDownButtonTools = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItemToolsDynamicRegexValidator = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemToolsEncryptorDecryptor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher = new System.Windows.Forms.ToolStripMenuItem();
-            this.regionCommandDeckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripCycleCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -223,7 +218,6 @@ namespace AutoScreenCapture
             this.toolStripDropDownButtonOpenProgramFolder,
             this.toolStripDropDownButtonCommandLine,
             this.toolStripDropDownButtonSettings,
-            this.toolStripDropDownButtonTools,
             this.toolStripSpacer,
             this.toolStripInfo,
             this.toolStripCycleCount});
@@ -424,53 +418,11 @@ namespace AutoScreenCapture
             this.toolStripMenuItemFileTransferSettingsFromStatusBar.Text = "File Transfer Settings";
             this.toolStripMenuItemFileTransferSettingsFromStatusBar.Click += new System.EventHandler(this.fileTransferSettings_Click);
             // 
-            // toolStripDropDownButtonTools
-            // 
-            this.toolStripDropDownButtonTools.AutoToolTip = false;
-            this.toolStripDropDownButtonTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemToolsDynamicRegexValidator,
-            this.toolStripMenuItemToolsEncryptorDecryptor,
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher,
-            this.regionCommandDeckToolStripMenuItem});
-            this.toolStripDropDownButtonTools.Image = global::AutoScreenCapture.Properties.Resources.tools;
-            this.toolStripDropDownButtonTools.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonTools.Name = "toolStripDropDownButtonTools";
-            this.toolStripDropDownButtonTools.Size = new System.Drawing.Size(64, 22);
-            this.toolStripDropDownButtonTools.Text = "Tools";
-            // 
-            // toolStripMenuItemToolsDynamicRegexValidator
-            // 
-            this.toolStripMenuItemToolsDynamicRegexValidator.Name = "toolStripMenuItemToolsDynamicRegexValidator";
-            this.toolStripMenuItemToolsDynamicRegexValidator.Size = new System.Drawing.Size(296, 22);
-            this.toolStripMenuItemToolsDynamicRegexValidator.Text = "Dynamic Regex Validator";
-            this.toolStripMenuItemToolsDynamicRegexValidator.Click += new System.EventHandler(this.toolStripMenuItemDynamicRegexValidator_Click);
-            // 
-            // toolStripMenuItemToolsEncryptorDecryptor
-            // 
-            this.toolStripMenuItemToolsEncryptorDecryptor.Name = "toolStripMenuItemToolsEncryptorDecryptor";
-            this.toolStripMenuItemToolsEncryptorDecryptor.Size = new System.Drawing.Size(296, 22);
-            this.toolStripMenuItemToolsEncryptorDecryptor.Text = "Encryptor / Decryptor";
-            this.toolStripMenuItemToolsEncryptorDecryptor.Click += new System.EventHandler(this.toolStripMenuItemEncryptorDecryptor_Click);
-            // 
-            // toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher
-            // 
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Name = "toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher";
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Size = new System.Drawing.Size(296, 22);
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Text = "Screen Capture Status With Label Switcher";
-            this.toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher.Click += new System.EventHandler(this.toolStripMenuItemLabelSwitcher_Click);
-            // 
-            // regionCommandDeckToolStripMenuItem
-            // 
-            this.regionCommandDeckToolStripMenuItem.Name = "regionCommandDeckToolStripMenuItem";
-            this.regionCommandDeckToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
-            this.regionCommandDeckToolStripMenuItem.Text = "Region Select Command Deck";
-            this.regionCommandDeckToolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItemRegionSelectCommandDeck_Click);
-            // 
             // toolStripSpacer
             // 
             this.toolStripSpacer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripSpacer.Name = "toolStripSpacer";
-            this.toolStripSpacer.Size = new System.Drawing.Size(104, 19);
+            this.toolStripSpacer.Size = new System.Drawing.Size(168, 19);
             this.toolStripSpacer.Spring = true;
             // 
             // toolStripInfo
@@ -1775,16 +1727,11 @@ namespace AutoScreenCapture
         private ToolStripMenuItem toolStripMenuItemFilenamePattern;
         private ToolStripMenuItem toolStripMenuItemImageFormat;
         private ToolStripMenuItem toolStripMenuItemEncryptorDecryptor;
-        private ToolStripDropDownButton toolStripDropDownButtonTools;
-        private ToolStripMenuItem toolStripMenuItemToolsDynamicRegexValidator;
-        private ToolStripMenuItem toolStripMenuItemToolsEncryptorDecryptor;
-        private ToolStripMenuItem toolStripMenuItemToolsScreenCaptureStatusWithLabelSwitcher;
         private ToolStripStatusLabel toolStripCycleCount;
         private ToolStripDropDownButton toolStripDropDownButtonSettings;
         private ToolStripStatusLabel toolStripSpacer;
         private ToolStripMenuItem toolStripMenuItemEmailSettingsFromStatusBar;
         private ToolStripMenuItem toolStripMenuItemFileTransferSettingsFromStatusBar;
-        private ToolStripMenuItem regionCommandDeckToolStripMenuItem;
         private ToolStripMenuItem regionSelectCommandDeckToolStripMenuItem;
         private ToolStripMenuItem regionSelectCommandDeckToolStripMenuItemFromRegionSelect;
         private ToolStripMenuItem toolStripMenuItemRegionSelectAddRegion;

@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace AutoScreenCapture

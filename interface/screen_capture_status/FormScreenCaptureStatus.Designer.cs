@@ -84,6 +84,10 @@
         /// Label for Screen Capture Status form.
         /// </summary>
         public System.Windows.Forms.Label labelScreenCaptureStatus;
+
+        /// <summary>
+        /// A button to start and stop a screen capture session.
+        /// </summary>
         public System.Windows.Forms.Button buttonStartStopScreenCapture;
     }
 }

@@ -299,7 +299,7 @@ namespace AutoScreenCapture
         /// <summary>
         /// Parses the command line and processes the commands the user has chosen from the command line.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">The command line arguments to parse.</param>
         private void ParseCommandLineArguments(string[] args)
         {
             try
@@ -321,6 +321,7 @@ namespace AutoScreenCapture
                     // -hide
                     if (Regex.IsMatch(arg, REGEX_COMMAND_LINE_HIDE))
                     {
+                        _config.Settings.User.SetValueByKey("ShowInterface", false);
                         _config.Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
 
                         if (!_config.Settings.User.Save(_config.Settings, _fileSystem))

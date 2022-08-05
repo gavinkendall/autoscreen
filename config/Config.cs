@@ -77,8 +77,37 @@ namespace AutoScreenCapture
         // Logging
         private const string REGEX_LOGGING = "^Logging=(?<Logging>False|True)$";
 
+        // Show Interface
+        private const string REGEX_SHOW_INTERFACE = "^ShowInterface=(?<ShowInterface>False|True)$";
+
+        // Show System Tray Icon
+        private const string REGEX_SHOW_SYSTEM_TRAY_ICON = "^ShowSystemTrayIcon=(?<ShowSystemTrayIcon>False|True)$";
+
         // SneakyPastaSnake
         private const string REGEX_SNEAKY_PASTA_SNAKE = "^SneakyPastaSnake=(?<SneakyPastaSnake>False|True)$";
+
+        // SFTP
+        private const string REGEX_SFTP_SERVER_HOST = "^FileTransferServerHost=(?<FileTransferServerHost>.*)$";
+        private const string REGEX_SFTP_SERVER_PORT = "^FileTransferServerPort=(?<FileTransferServerPort>\\d{1,8})$";
+        private const string REGEX_SFTP_CLIENT_USERNAME = "^FileTransferClientUsername=(?<FileTransferClientUsername>.*)$";
+        private const string REGEX_SFTP_CLIENT_PASSWORD = "^FileTransferClientPassword=(?<FileTransferClientPassword>.*)$";
+        private const string REGEX_SFTP_IS_LINUX_SERVER = "^FileTransferIsLinuxServer=(?<FileTransferIsLinuxServer>False|True)$";
+        private const string REGEX_SFTP_DELETE_LOCAL_FILE_AFTER_SUCCESSFUL_UPLOAD = "^SFTPDeleteLocalFileAfterSuccessfulUpload=(?<SFTPDeleteLocalFileAfterSuccessfulUpload>False|True)$";
+        private const string REGEX_SFTP_KEEP_FAILED_UPLOADS = "^SFTPKeepFailedUploads=(?<SFTPKeepFailedUploads>False|True)$";
+
+        // SMTP
+        private const string REGEX_SMTP_SERVER_HOST = "^EmailServerHost=(?<EmailServerHost>.*)$";
+        private const string REGEX_SMTP_SERVER_PORT = "^EmailServerPort=(?<EmailServerPort>\\d{1,8})$";
+        private const string REGEX_SMTP_SERVER_SSL = "^EmailServerEnableSSL=(?<EmailServerEnableSSL>False|True)$";
+        private const string REGEX_SMTP_CLIENT_USERNAME = "^EmailClientUsername=(?<EmailClientUsername>.*)$";
+        private const string REGEX_SMTP_CLIENT_PASSWORD = "^EmailClientPassword=(?<EmailClientPassword>.*)$";
+        private const string REGEX_SMTP_MESSAGE_FROM = "^EmailMessageFrom=(?<EmailMessageFrom>.*)$";
+        private const string REGEX_SMTP_MESSAGE_TO = "^EmailMessageTo=(?<EmailMessageTo>.*)$";
+        private const string REGEX_SMTP_MESSAGE_CC = "^EmailMessageCC=(?<EmailMessageCC>.*)$";
+        private const string REGEX_SMTP_MESSAGE_BCC = "^EmailMessageBCC=(?<EmailMessageBCC>.*)$";
+        private const string REGEX_SMTP_MESSAGE_SUBJECT = "^EmailMessageSubject=(?<EmailMessageSubject>.*)$";
+        private const string REGEX_SMTP_MESSAGE_BODY = "^EmailMessageBody=(?<EmailMessageBody>.*)$";
+        private const string REGEX_SMTP_PROMPT = "^EmailPrompt=(?<EmailPrompt>False|True)$";
 
         // Commands
         private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
@@ -274,7 +303,7 @@ namespace AutoScreenCapture
 
                     Settings.Load(fileSystem);
 
-                    ParseDefaultUserSettings();
+                    ParseDefaultSettings();
 
                     Log = new Log(Settings, fileSystem, MacroParser);
                     ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
@@ -538,9 +567,9 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Parses default user settings found in the configuration file.
+        /// Parses default settings found in the configuration file.
         /// </summary>
-        private void ParseDefaultUserSettings()
+        private void ParseDefaultSettings()
         {
             try
             {
@@ -638,6 +667,16 @@ namespace AutoScreenCapture
                         Settings.Application.SetValueByKey("Logging", Regex.Match(line, REGEX_LOGGING).Groups["Logging"].Value);
                     }
 
+                    if (Regex.IsMatch(line, REGEX_SHOW_INTERFACE))
+                    {
+                        Settings.User.SetValueByKey("ShowInterface", Convert.ToBoolean(Regex.Match(line, REGEX_SHOW_INTERFACE).Groups["ShowInterface"].Value));
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SHOW_SYSTEM_TRAY_ICON))
+                    {
+                        Settings.User.SetValueByKey("ShowSystemTrayIcon", Convert.ToBoolean(Regex.Match(line, REGEX_SHOW_SYSTEM_TRAY_ICON).Groups["ShowSystemTrayIcon"].Value));
+                    }
+
                     if (Regex.IsMatch(line, REGEX_SNEAKY_PASTA_SNAKE))
                     {
                         bool sneakyPastaSnake = Convert.ToBoolean(Regex.Match(line, REGEX_SNEAKY_PASTA_SNAKE).Groups["SneakyPastaSnake"].Value);
@@ -650,6 +689,106 @@ namespace AutoScreenCapture
                             Settings.User.SetValueByKey("ShowInterface", false);
                             Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
                         }
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_SERVER_HOST))
+                    {
+                        Settings.SFTP.SetValueByKey("FileTransferServerHost", Regex.Match(line, REGEX_SFTP_SERVER_HOST).Groups["FileTransferServerHost"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_SERVER_PORT))
+                    {
+                        Settings.SFTP.SetValueByKey("FileTransferServerPort", Regex.Match(line, REGEX_SFTP_SERVER_PORT).Groups["FileTransferServerPort"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_CLIENT_USERNAME))
+                    {
+                        Settings.SFTP.SetValueByKey("FileTransferClientUsername", Regex.Match(line, REGEX_SFTP_CLIENT_USERNAME).Groups["FileTransferClientUsername"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_CLIENT_PASSWORD))
+                    {
+                        Settings.SFTP.SetValueByKey("FileTransferClientPassword", Regex.Match(line, REGEX_SFTP_CLIENT_PASSWORD).Groups["FileTransferClientPassword"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_IS_LINUX_SERVER))
+                    {
+                        Settings.SFTP.SetValueByKey("FileTransferIsLinuxServer", Regex.Match(line, REGEX_SFTP_IS_LINUX_SERVER).Groups["FileTransferIsLinuxServer"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_DELETE_LOCAL_FILE_AFTER_SUCCESSFUL_UPLOAD))
+                    {
+                        Settings.User.SetValueByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", Regex.Match(line, REGEX_SFTP_DELETE_LOCAL_FILE_AFTER_SUCCESSFUL_UPLOAD).Groups["SFTPDeleteLocalFileAfterSuccessfulUpload"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_KEEP_FAILED_UPLOADS))
+                    {
+                        Settings.User.SetValueByKey("SFTPKeepFailedUploads", Regex.Match(line, REGEX_SFTP_KEEP_FAILED_UPLOADS).Groups["SFTPKeepFailedUploads"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_HOST))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailServerHost", Regex.Match(line, REGEX_SMTP_SERVER_HOST).Groups["EmailServerHost"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_PORT))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailServerPort", Regex.Match(line, REGEX_SMTP_SERVER_PORT).Groups["EmailServerPort"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_SSL))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailServerEnableSSL", Regex.Match(line, REGEX_SMTP_SERVER_SSL).Groups["EmailServerEnableSSL"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_SSL))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailServerEnableSSL", Regex.Match(line, REGEX_SMTP_SERVER_SSL).Groups["EmailServerEnableSSL"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_CLIENT_USERNAME))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailClientUsername", Regex.Match(line, REGEX_SMTP_CLIENT_USERNAME).Groups["EmailClientUsername"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_CLIENT_PASSWORD))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailClientPassword", Regex.Match(line, REGEX_SMTP_CLIENT_PASSWORD).Groups["EmailClientPassword"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_FROM))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailMessageFrom", Regex.Match(line, REGEX_SMTP_MESSAGE_FROM).Groups["EmailMessageFrom"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_TO))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailMessageTo", Regex.Match(line, REGEX_SMTP_MESSAGE_TO).Groups["EmailMessageTo"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_CC))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailMessageCC", Regex.Match(line, REGEX_SMTP_MESSAGE_CC).Groups["EmailMessageCC"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_BCC))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailMessageBCC", Regex.Match(line, REGEX_SMTP_MESSAGE_BCC).Groups["EmailMessageBCC"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_SUBJECT))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailMessageSubject", Regex.Match(line, REGEX_SMTP_MESSAGE_SUBJECT).Groups["EmailMessageSubject"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_BODY))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailMessageBody", Regex.Match(line, REGEX_SMTP_MESSAGE_BODY).Groups["EmailMessageBody"].Value);
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_PROMPT))
+                    {
+                        Settings.SMTP.SetValueByKey("EmailPrompt", Regex.Match(line, REGEX_SMTP_PROMPT).Groups["EmailPrompt"].Value);
                     }
                 }
 
