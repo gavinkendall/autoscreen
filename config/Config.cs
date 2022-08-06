@@ -194,39 +194,67 @@ namespace AutoScreenCapture
                     // Now that we have the File System setup with the filepaths for application, user, SFTP, and SMTP settings we can initialize settings.
                     Settings.Initialize(fileSystem);
 
-                    // The folders for errors and logs are in the application settings collection so make sure to parse the configuration file for application settings.
-                    ParseDefaultApplicationSettings();
+                    if (fileSystem.FileExists(fileSystem.ApplicationSettingsFile))
+                    {
+                        Settings.Application.Load(Settings, FileSystem);
 
-                    fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
-                    fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
+                        // The folders for errors and logs are in the application settings collection.
+                        fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
+                        fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
 
-                    // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
-                    fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
-                    fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
-                    fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
-                    fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
-                    fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
-                    fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
-                    fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
-                    fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+                        // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
+                        fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
+                        fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
+                        fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
+                        fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
+                        fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
+                        fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
+                        fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
+                        fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+                    }
+                    else
+                    {
+                        ParseDefaultApplicationSettings();
 
-                    // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
-                    ParseDefaultUserSettings();
+                        Settings.Application.Save(Settings, FileSystem);
+                    }
 
-                    // The screenshots folder is from user settings.
-                    fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
+                    if (fileSystem.FileExists(fileSystem.UserSettingsFile))
+                    {
+                        Settings.User.Load(Settings, FileSystem);
 
-                    // Now to acquire the SFTP settings.
-                    ParseDefaultSFTPSettings();
+                        // The screenshots folder is from user settings.
+                        fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
+                    }
+                    else
+                    {
+                        // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
+                        ParseDefaultUserSettings();
+                    }
 
-                    // And, finally, the SMTP settings.
-                    ParseDefaultSMTPSettings();
+                    if (fileSystem.FileExists(fileSystem.SftpSettingsFile))
+                    {
+                        Settings.SFTP.Load(Settings, FileSystem);
+                    }
+                    else
+                    {
+                        // Acquire default SFTP settings.
+                        ParseDefaultSFTPSettings();
+                    }
+
+                    if (fileSystem.FileExists(fileSystem.SmtpSettingsFile))
+                    {
+                        Settings.SMTP.Load(Settings, FileSystem);
+                    }
+                    else
+                    {
+                        // Acquire default SMTP settings.
+                        ParseDefaultSMTPSettings();
+                    }
 
                     Log = new Log(Settings, fileSystem, MacroParser);
                     ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
                     Security security = new Security(fileSystem);
-
-                    SaveSettings();
 
                     // Parse all the definitions in the configuration file for the various types of modules.
                     ParseScreenDefinitions();
@@ -273,7 +301,17 @@ namespace AutoScreenCapture
                         _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
                     }
 
-                    LoadSettings(security, screenCapture);
+                    Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
+
+                    Settings.VersionManager.OldUserSettings = Settings.User.Clone();
+
+                    Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
+
+                    Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
+
+                    Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
+
+                    Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
 
                     return true;
                 }
@@ -358,6 +396,7 @@ namespace AutoScreenCapture
                 // We don't want to keep the passphrase in the configuration file so give it an empty value here
                 // and let the user set their passphrase (which is a secure hash).
                 Settings.User.SetValueByKey("Passphrase", string.Empty);
+                Settings.User.SetValueByKey("PassphraseLastUpdated", string.Empty);
 
                 foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
@@ -870,40 +909,6 @@ namespace AutoScreenCapture
             {
                 Log.WriteExceptionMessage("Config::ParseMacroTagDefinitions", ex);
             }
-        }
-
-        private void LoadSettings(Security security, ScreenCapture screenCapture)
-        {
-            Settings.Application.Load(Settings, FileSystem);
-
-            Settings.User.Load(Settings, FileSystem);
-
-            Settings.SFTP.Load(Settings, FileSystem);
-
-            Settings.SMTP.Load(Settings, FileSystem);
-
-            Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
-
-            Settings.VersionManager.OldUserSettings = Settings.User.Clone();
-
-            Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
-
-            Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
-
-            Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
-
-            Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
-        }
-
-        private void SaveSettings()
-        {
-            Settings.Application.Save(Settings, FileSystem);
-
-            Settings.User.Save(Settings, FileSystem);
-
-            Settings.SFTP.Save(Settings, FileSystem);
-
-            Settings.SMTP.Save(Settings, FileSystem);
         }
     }
 }
