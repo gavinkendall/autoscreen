@@ -89,7 +89,7 @@ namespace AutoScreenCapture
                 textBoxApplication.Text = EditorObject.Application;
                 textBoxArguments.Text = EditorObject.Arguments;
 
-                string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
+                string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor").Value.ToString();
 
                 if (EditorObject.Name.Equals(defaultEditor))
                 {
@@ -124,7 +124,7 @@ namespace AutoScreenCapture
         {
             if (checkBoxMakeDefaultEditor.Checked && !string.IsNullOrEmpty(textBoxName.Text))
             {
-                _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value = textBoxName.Text;
+                _config.Settings.User.GetByKey("DefaultEditor").Value = textBoxName.Text;
                 _config.Settings.User.Save(_config.Settings, _fileSystem);
             }
 

@@ -132,7 +132,7 @@ namespace AutoScreenCapture
                 // Whenever the user selects "Capture Now / Archive" or "Capture Now / Edit".
                 if (captureNow && initiatedByUser)
                 {
-                    string captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro", _fileSystem.DefaultFilenamePattern).Value.ToString();
+                    string captureNowMacro = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
 
                     if (!string.IsNullOrEmpty(captureNowMacro))
                     {
@@ -208,12 +208,12 @@ namespace AutoScreenCapture
                     _screenCapture.ApplicationError = false;
 
                     // Increment the number of times the user has started a screen capture session.
-                    int startScreenCaptureCount = Convert.ToInt32(_config.Settings.User.GetByKey("StartScreenCaptureCount", _config.Settings.DefaultSettings.StartScreenCaptureCount).Value);
+                    int startScreenCaptureCount = Convert.ToInt32(_config.Settings.User.GetByKey("StartScreenCaptureCount").Value);
                     startScreenCaptureCount++;
                     _config.Settings.User.SetValueByKey("StartScreenCaptureCount", startScreenCaptureCount);
 
                     // Turn off "FirstRun" on the first run.
-                    if (startScreenCaptureCount == 1)
+                    if (startScreenCaptureCount >= 1)
                     {
                         _config.Settings.User.SetValueByKey("FirstRun", false);
                     }
@@ -287,7 +287,7 @@ namespace AutoScreenCapture
                 {
                     _log.WriteMessage("Stopping screen capture");
 
-                    string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+                    string passphrase = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
 
                     if (!string.IsNullOrEmpty(passphrase))
                     {
@@ -349,7 +349,7 @@ namespace AutoScreenCapture
 
         private void CaptureNowEdit()
         {
-            string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
+            string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor").Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {
@@ -412,11 +412,11 @@ namespace AutoScreenCapture
             }
 
             string label = string.Empty;
-            bool applyScreenshotLabel = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
+            bool applyScreenshotLabel = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel").Value);
 
             if (applyScreenshotLabel)
             {
-                label = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                label = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
             }
 
             string folderPath = _fileSystem.CorrectScreenshotsFolderPath(_macroParser.ParseTags(preview: false, folder, screenOrRegion, _screenCapture.ActiveWindowTitle, _screenCapture.ActiveWindowProcessName, label, _formMacroTag.MacroTagCollection, _log));
@@ -666,9 +666,9 @@ namespace AutoScreenCapture
 
             if (bitmap != null)
             {
-                string autoSaveFolder = _config.Settings.User.GetByKey("AutoSaveFolder", _config.Settings.DefaultSettings.AutoSaveFolder).Value.ToString();
-                string autoSaveMacro = _config.Settings.User.GetByKey("AutoSaveMacro", _config.Settings.DefaultSettings.AutoSaveMacro).Value.ToString();
-                string autoSaveFormat = _config.Settings.User.GetByKey("AutoSaveFormat", _config.Settings.DefaultSettings.AutoSaveFormat).Value.ToString();
+                string autoSaveFolder = _config.Settings.User.GetByKey("AutoSaveFolder").Value.ToString();
+                string autoSaveMacro = _config.Settings.User.GetByKey("AutoSaveMacro").Value.ToString();
+                string autoSaveFormat = _config.Settings.User.GetByKey("AutoSaveFormat").Value.ToString();
 
                 ImageFormat imageFormat = new ImageFormat(autoSaveFormat, "." + autoSaveFormat.ToLower());
 
@@ -699,7 +699,7 @@ namespace AutoScreenCapture
         private void _formRegionSelectWithMouse_RegionSelectClipboardAutoSaveEditMouseSelectionCompleted(object sender, EventArgs e)
         {
             // Get the name of the default image editor.
-            string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
+            string defaultEditor = _config.Settings.User.GetByKey("DefaultEditor").Value.ToString();
 
             if (string.IsNullOrEmpty(defaultEditor))
             {

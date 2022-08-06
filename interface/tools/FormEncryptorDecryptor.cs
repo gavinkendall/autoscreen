@@ -69,7 +69,7 @@ namespace AutoScreenCapture
         {
             InitializeComponent();
 
-            _screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
+            _screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit").Value);
 
             _log = log;
             _security = security;

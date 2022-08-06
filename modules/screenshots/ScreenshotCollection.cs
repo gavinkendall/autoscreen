@@ -188,7 +188,7 @@ namespace AutoScreenCapture
             _slideNameList = new List<string>();
             _log.WriteDebugMessage("Initialized slide name list");
 
-            _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture", config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
+            _screenCapture.OptimizeScreenCapture = Convert.ToBoolean(config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
 
             EmailedScreenshotFilePathList = new List<string>();
         }
@@ -261,7 +261,7 @@ namespace AutoScreenCapture
                 // Check the image difference between the provided screenshot and the previous screenshot of the same view if we're using the Optimize Screen Capture feature.
                 if (_screenCapture.OptimizeScreenCapture)
                 {
-                    int imageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance", _config.Settings.DefaultSettings.ImageDiffTolerance).Value);
+                    int imageDiffTolerance = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value);
 
                     Screenshot lastScreenshotOfThisView = GetLastScreenshotOfView(screenshot.ViewId);
 
@@ -508,7 +508,7 @@ namespace AutoScreenCapture
 
             _log.WriteDebugMessage("Getting slides from screenshot list");
 
-            int screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit", config.Settings.DefaultSettings.ScreenshotsLoadLimit).Value);
+            int screenshotsLoadLimit = Convert.ToInt32(config.Settings.Application.GetByKey("ScreenshotsLoadLimit").Value);
 
             LoadXmlFileAndAddScreenshots(date, screenshotsLoadLimit, out int nodeLoadCount, out int errorCode);
 
@@ -1263,12 +1263,10 @@ namespace AutoScreenCapture
             {
                 _mutexWriteFile.WaitOne();
 
-                bool saveScreenshotRefs = Convert.ToBoolean(config.Settings.User.GetByKey("SaveScreenshotRefs", config.Settings.DefaultSettings.SaveScreenshotRefs).Value);
+                bool saveScreenshotRefs = Convert.ToBoolean(config.Settings.User.GetByKey("SaveScreenshotRefs").Value);
 
                 if (string.IsNullOrEmpty(_fileSystem.ScreenshotsFile))
                 {
-                    _fileSystem.ScreenshotsFile = _fileSystem.DefaultScreenshotsFile;
-
                     if (xDoc == null)
                     {
                         xDoc = new XmlDocument();

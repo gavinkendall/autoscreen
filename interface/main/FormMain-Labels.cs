@@ -92,7 +92,7 @@ namespace AutoScreenCapture
                     }
                 }
 
-                string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel", _config.Settings.DefaultSettings.ScreenshotLabel).Value.ToString();
+                string screenshotLabel = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
 
                 if (!string.IsNullOrEmpty(screenshotLabel))
                 {

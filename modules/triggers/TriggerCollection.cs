@@ -279,17 +279,17 @@ namespace AutoScreenCapture
 
                         if (config.Settings.VersionManager.OldUserSettings.KeyExists("DaysOldWhenRemoveSlides"))
                         {
-                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("DaysOldWhenRemoveSlides", days).Value.ToString());
+                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("DaysOldWhenRemoveSlides").Value.ToString());
                         }
 
                         if (config.Settings.VersionManager.OldUserSettings.KeyExists("IntKeepScreenshotsForDays"))
                         {
-                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("IntKeepScreenshotsForDays", days).Value.ToString());
+                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("IntKeepScreenshotsForDays").Value.ToString());
                         }
 
                         if (config.Settings.VersionManager.OldUserSettings.KeyExists("KeepScreenshotsForDays"))
                         {
-                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("KeepScreenshotsForDays", days).Value.ToString());
+                            days = Convert.ToInt32(config.Settings.VersionManager.OldUserSettings.GetByKey("KeepScreenshotsForDays").Value.ToString());
                         }
 
                         Trigger triggerBeforeScreenshotSavedDeleteScreenshots = new Trigger()
@@ -364,16 +364,6 @@ namespace AutoScreenCapture
                 xSettings.IndentChars = XML_FILE_INDENT_CHARS;
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-                if (string.IsNullOrEmpty(fileSystem.TriggersFile))
-                {
-                    fileSystem.TriggersFile = fileSystem.DefaultTriggersFile;
-
-                    if (fileSystem.FileExists(fileSystem.ConfigFile))
-                    {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nTriggersFile=" + fileSystem.TriggersFile);
-                    }
-                }
 
                 fileSystem.DeleteFile(fileSystem.TriggersFile);
 

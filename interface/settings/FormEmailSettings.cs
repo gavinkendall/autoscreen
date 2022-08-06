@@ -51,18 +51,18 @@ namespace AutoScreenCapture
         {
             HelpMessage("This is where to configure email settings such as the host, port number, username, password, recipients, and email message");
 
-            textBoxHost.Text = _config.Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
-            numericUpDownPort.Value = Convert.ToInt32(_config.Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value);
-            checkBoxEnableSSL.Checked = Convert.ToBoolean(_config.Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value);
-            checkBoxPrompt.Checked = Convert.ToBoolean(_config.Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value);
-            textBoxUsername.Text = _config.Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
-            textBoxPassword.Text = _config.Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
-            textBoxFrom.Text = _config.Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
-            textBoxTo.Text = _config.Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
-            textBoxCC.Text = _config.Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
-            textBoxBCC.Text = _config.Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
-            textBoxSubject.Text = _config.Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
-            textBoxBody.Text = _config.Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
+            textBoxHost.Text = _config.Settings.SMTP.GetByKey("EmailServerHost").Value.ToString();
+            numericUpDownPort.Value = Convert.ToInt32(_config.Settings.SMTP.GetByKey("EmailServerPort").Value);
+            checkBoxEnableSSL.Checked = Convert.ToBoolean(_config.Settings.SMTP.GetByKey("EmailServerEnableSSL").Value);
+            checkBoxPrompt.Checked = Convert.ToBoolean(_config.Settings.SMTP.GetByKey("EmailPrompt").Value);
+            textBoxUsername.Text = _config.Settings.SMTP.GetByKey("EmailClientUsername").Value.ToString();
+            textBoxPassword.Text = _config.Settings.SMTP.GetByKey("EmailClientPassword").Value.ToString();
+            textBoxFrom.Text = _config.Settings.SMTP.GetByKey("EmailMessageFrom").Value.ToString();
+            textBoxTo.Text = _config.Settings.SMTP.GetByKey("EmailMessageTo").Value.ToString();
+            textBoxCC.Text = _config.Settings.SMTP.GetByKey("EmailMessageCC").Value.ToString();
+            textBoxBCC.Text = _config.Settings.SMTP.GetByKey("EmailMessageBCC").Value.ToString();
+            textBoxSubject.Text = _config.Settings.SMTP.GetByKey("EmailMessageSubject").Value.ToString();
+            textBoxBody.Text = _config.Settings.SMTP.GetByKey("EmailMessageBody").Value.ToString();
         }
 
         private void HelpMessage(string message)
@@ -77,18 +77,18 @@ namespace AutoScreenCapture
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            _config.Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value = textBoxHost.Text;
-            _config.Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value = numericUpDownPort.Value;
-            _config.Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value = checkBoxEnableSSL.Checked;
-            _config.Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value = checkBoxPrompt.Checked;
-            _config.Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value = textBoxUsername.Text;
-            _config.Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value = textBoxPassword.Text;
-            _config.Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value = textBoxFrom.Text;
-            _config.Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value = textBoxTo.Text;
-            _config.Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value = textBoxCC.Text;
-            _config.Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value = textBoxBCC.Text;
-            _config.Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value = textBoxSubject.Text;
-            _config.Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value = textBoxBody.Text;
+            _config.Settings.SMTP.GetByKey("EmailServerHost").Value = textBoxHost.Text;
+            _config.Settings.SMTP.GetByKey("EmailServerPort").Value = numericUpDownPort.Value;
+            _config.Settings.SMTP.GetByKey("EmailServerEnableSSL").Value = checkBoxEnableSSL.Checked;
+            _config.Settings.SMTP.GetByKey("EmailPrompt").Value = checkBoxPrompt.Checked;
+            _config.Settings.SMTP.GetByKey("EmailClientUsername").Value = textBoxUsername.Text;
+            _config.Settings.SMTP.GetByKey("EmailClientPassword").Value = textBoxPassword.Text;
+            _config.Settings.SMTP.GetByKey("EmailMessageFrom").Value = textBoxFrom.Text;
+            _config.Settings.SMTP.GetByKey("EmailMessageTo").Value = textBoxTo.Text;
+            _config.Settings.SMTP.GetByKey("EmailMessageCC").Value = textBoxCC.Text;
+            _config.Settings.SMTP.GetByKey("EmailMessageBCC").Value = textBoxBCC.Text;
+            _config.Settings.SMTP.GetByKey("EmailMessageSubject").Value = textBoxSubject.Text;
+            _config.Settings.SMTP.GetByKey("EmailMessageBody").Value = textBoxBody.Text;
 
             _config.Settings.SMTP.Save(_config.Settings, _fileSystem);
 

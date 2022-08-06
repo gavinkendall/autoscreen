@@ -219,7 +219,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun", _config.Settings.DefaultSettings.FirstRun).Value);
+            bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun").Value);
 
             string welcome = "Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\")";
 
@@ -241,13 +241,13 @@ namespace AutoScreenCapture
             SearchDates();
             SearchScreenshots();
 
-            if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings", _config.Settings.DefaultSettings.AllowUserToConfigureEmailSettings).Value))
+            if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureEmailSettings").Value))
             {
                 toolStripMenuItemEmailSettings.Enabled = false;
                 toolStripMenuItemEmailSettingsFromStatusBar.Enabled = false;
             }
 
-            if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings", _config.Settings.DefaultSettings.AllowUserToConfigureFileTransferSettings).Value))
+            if (!Convert.ToBoolean(_config.Settings.Application.GetByKey("AllowUserToConfigureFileTransferSettings").Value))
             {
                 toolStripMenuItemFileTransferSettings.Enabled = false;
                 toolStripMenuItemFileTransferSettingsFromStatusBar.Enabled = false;
@@ -435,7 +435,7 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Showing interface");
 
-                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+                string passphrase = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
 
                 if (!string.IsNullOrEmpty(passphrase))
                 {
@@ -501,7 +501,7 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Hiding interface");
 
-                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+                string passphrase = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
 
                 if (!string.IsNullOrEmpty(passphrase))
                 {

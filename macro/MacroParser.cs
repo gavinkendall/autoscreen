@@ -360,9 +360,9 @@ namespace AutoScreenCapture
                 format = region.Format;
             }
 
-            if (_settings != null && _settings.DefaultSettings != null)
+            if (_settings != null)
             {
-                int activeWindowTitleLengthLimit = Convert.ToInt32(_settings.Application.GetByKey("ActiveWindowTitleLengthLimit", _settings.DefaultSettings.ActiveWindowTitleLengthLimit).Value);
+                int activeWindowTitleLengthLimit = Convert.ToInt32(_settings.Application.GetByKey("ActiveWindowTitleLengthLimit").Value);
 
                 if (!string.IsNullOrEmpty(activeWindowTitle) && activeWindowTitle.Length > activeWindowTitleLengthLimit)
                 {

@@ -190,7 +190,7 @@ namespace AutoScreenCapture
                                 region.ViewId = Guid.NewGuid();
 
                                 // Get the screenshots folder path from the old user settings to be used for the region's folder property.
-                                region.Folder = config.Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory", fileSystem.ScreenshotsFolder).Value.ToString();
+                                region.Folder = config.Settings.VersionManager.OldUserSettings.GetByKey("ScreenshotsDirectory").Value.ToString();
 
                                 region.Folder = fileSystem.CorrectScreenshotsFolderPath(region.Folder);
 
@@ -277,16 +277,6 @@ namespace AutoScreenCapture
                 xSettings.IndentChars = XML_FILE_INDENT_CHARS;
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
-
-                if (string.IsNullOrEmpty(fileSystem.RegionsFile))
-                {
-                    fileSystem.RegionsFile = fileSystem.DefaultRegionsFile;
-
-                    if (fileSystem.FileExists(fileSystem.ConfigFile))
-                    {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nRegionsFile=" + fileSystem.RegionsFile);
-                    }
-                }
 
                 if (fileSystem.FileExists(fileSystem.RegionsFile))
                 {

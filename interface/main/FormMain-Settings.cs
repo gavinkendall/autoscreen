@@ -32,7 +32,7 @@ namespace AutoScreenCapture
         {
             try
             {
-                _macroParser = new MacroParser(_config.Settings);
+                _macroParser = _config.MacroParser;
 
                 _log.WriteMessage("*** Welcome to " + _config.Settings.ApplicationName + " " + _config.Settings.ApplicationVersion + " (\"" + _config.Settings.ApplicationCodename + "\") ***");
                 _log.WriteMessage("Starting application");
@@ -256,7 +256,7 @@ namespace AutoScreenCapture
                 }
 
                 // Set the tab page we want to look at. By default it's going to be index 0 for the "Dashboard" tab page.
-                tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
+                tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex").Value);
 
                 if (tabControlViews.SelectedIndex < 0)
                 {
@@ -264,13 +264,13 @@ namespace AutoScreenCapture
                 }
 
                 // Set the module we want to look at.
-                tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex", _config.Settings.DefaultSettings.SelectedModuleIndex).Value);
+                tabControlModules.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedModuleIndex").Value);
 
                 // Preview
-                _preview = Convert.ToBoolean(_config.Settings.User.GetByKey("Preview", _config.Settings.DefaultSettings.Preview).Value);
+                _preview = Convert.ToBoolean(_config.Settings.User.GetByKey("Preview").Value);
                 _log.WriteDebugMessage("Preview = " + _preview.ToString());
 
-                _dashboardGroupBoxSize = Convert.ToInt32(_config.Settings.User.GetByKey("DashboardGroupBoxSize", _config.Settings.DefaultSettings.DashboardGroupBoxSize).Value);
+                _dashboardGroupBoxSize = Convert.ToInt32(_config.Settings.User.GetByKey("DashboardGroupBoxSize").Value);
                 _log.WriteDebugMessage("DashboardGroupBoxSize = " + _dashboardGroupBoxSize);
                 _log.WriteDebugMessage("Building view tab pages");
                 BuildViewTabPages();
@@ -288,14 +288,8 @@ namespace AutoScreenCapture
                 // Region Select Command Deck
                 _formRegionSelectCommandDeck = new FormRegionSelectCommandDeck();
 
-                int screenCaptureInterval = Convert.ToInt32(_config.Settings.User.GetByKey("ScreenCaptureInterval", _config.Settings.DefaultSettings.ScreenCaptureInterval).Value);
+                int screenCaptureInterval = Convert.ToInt32(_config.Settings.User.GetByKey("ScreenCaptureInterval").Value);
                 _log.WriteDebugMessage("ScreenCaptureInterval = " + screenCaptureInterval);
-
-                if (screenCaptureInterval == 0)
-                {
-                    screenCaptureInterval = _config.Settings.DefaultSettings.ScreenCaptureInterval;
-                    _log.WriteDebugMessage("WARNING: Screen capture interval was found to be 0 so 60,000 milliseconds (or 1 minute) is being used as the default value");
-                }
 
                 // Set the interval for "Special Schedule"
                 _formSchedule.ScheduleCollection.SpecialScheduleScreenCaptureInterval = screenCaptureInterval;
@@ -319,25 +313,25 @@ namespace AutoScreenCapture
                 _formSetup.numericUpDownSecondsInterval.Value = screenCaptureIntervalSeconds;
 
                 // Optimize Screen Capture
-                _formSetup.checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value);
-                _formSetup.trackBarImageDiffTolerance.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance", _config.Settings.DefaultSettings.ImageDiffTolerance).Value);
+                _formSetup.checkBoxOptimizeScreenCapture.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("OptimizeScreenCapture").Value);
+                _formSetup.trackBarImageDiffTolerance.Value = Convert.ToInt32(_config.Settings.User.GetByKey("ImageDiffTolerance").Value);
 
-                _formSetup.numericUpDownCaptureLimit.Value = Convert.ToInt32(_config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value);
+                _formSetup.numericUpDownCaptureLimit.Value = Convert.ToInt32(_config.Settings.User.GetByKey("CaptureLimit").Value);
                 _log.WriteDebugMessage("CaptureLimit = " + _formSetup.numericUpDownCaptureLimit.Value);
 
-                _formSetup.checkBoxCaptureLimit.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value);
+                _formSetup.checkBoxCaptureLimit.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("CaptureLimitCheck").Value);
                 _log.WriteDebugMessage("CaptureLimitCheck = " + _formSetup.checkBoxCaptureLimit.Checked);
 
-                _formSetup.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value);
+                _formSetup.checkBoxInitialScreenshot.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("TakeInitialScreenshot").Value);
                 _log.WriteDebugMessage("TakeInitialScreenshot = " + _formSetup.checkBoxInitialScreenshot.Checked);
 
                 // Active Window Title
-                _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value);
-                _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value);
-                _formSetup.textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value.ToString();
-                _formSetup.textBoxActiveWindowTitleTest.Text = _config.Settings.User.GetByKey("ActiveWindowTitleSampleText", _config.Settings.DefaultSettings.ActiveWindowTitleSampleText).Value.ToString();
+                _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck").Value);
+                _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck").Value);
+                _formSetup.textBoxActiveWindowTitle.Text = _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText").Value.ToString();
+                _formSetup.textBoxActiveWindowTitleTest.Text = _config.Settings.User.GetByKey("ActiveWindowTitleSampleText").Value.ToString();
 
-                int activeWindowTitleMatchType = Convert.ToInt32(_config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value);
+                int activeWindowTitleMatchType = Convert.ToInt32(_config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value);
 
                 switch (activeWindowTitleMatchType)
                 {
@@ -355,7 +349,7 @@ namespace AutoScreenCapture
                 }
 
                 // Labels
-                _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value);
+                _formSetup.checkBoxScreenshotLabel.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("ApplyScreenshotLabel").Value);
                 PopulateLabelList();
 
                 // Application Focus
@@ -367,13 +361,13 @@ namespace AutoScreenCapture
 
                 // Set the filter type to be the last selected index that was saved (and if no setting is found just set it to selected index 0).
                 // IMPORTANT: Do not attempt to set the same index for Filter Value here as that control is populated based on the selected index of Filter Type.
-                comboBoxFilterType.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterType", 0).Value);
+                comboBoxFilterType.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterType").Value);
 
-                monthCalendar.SelectionStart = Convert.ToDateTime(_config.Settings.User.GetByKey("SelectedCalendarDay", DateTime.Now).Value);
+                monthCalendar.SelectionStart = Convert.ToDateTime(_macroParser.ParseTags(_config.Settings.User.GetByKey("SelectedCalendarDay").Value.ToString(), _formMacroTag.MacroTagCollection, _log));
 
                 // SFTP
-                _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _config.Settings.DefaultSettings.SFTPDeleteLocalFileAfterSuccessfulUpload).Value);
-                _formFileTransferSettings.checkBoxKeepFailedUploads.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value);
+                _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload").Value);
+                _formFileTransferSettings.checkBoxKeepFailedUploads.Checked = Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads").Value);
 
                 _log.WriteDebugMessage("Settings loaded");
             }
@@ -391,43 +385,43 @@ namespace AutoScreenCapture
         {
             try
             {
-                _config.Settings.User.GetByKey("ScreenCaptureInterval", _config.Settings.DefaultSettings.ScreenCaptureInterval).Value = GetScreenCaptureInterval();
-                _config.Settings.User.GetByKey("CaptureLimit", _config.Settings.DefaultSettings.CaptureLimit).Value = _formSetup.numericUpDownCaptureLimit.Value;
-                _config.Settings.User.GetByKey("CaptureLimitCheck", _config.Settings.DefaultSettings.CaptureLimitCheck).Value = _formSetup.checkBoxCaptureLimit.Checked;
-                _config.Settings.User.GetByKey("TakeInitialScreenshot", _config.Settings.DefaultSettings.TakeInitialScreenshot).Value = _formSetup.checkBoxInitialScreenshot.Checked;
+                _config.Settings.User.GetByKey("ScreenCaptureInterval").Value = GetScreenCaptureInterval();
+                _config.Settings.User.GetByKey("CaptureLimit").Value = _formSetup.numericUpDownCaptureLimit.Value;
+                _config.Settings.User.GetByKey("CaptureLimitCheck").Value = _formSetup.checkBoxCaptureLimit.Checked;
+                _config.Settings.User.GetByKey("TakeInitialScreenshot").Value = _formSetup.checkBoxInitialScreenshot.Checked;
 
-                _config.Settings.User.GetByKey("ApplyScreenshotLabel", _config.Settings.DefaultSettings.ApplyScreenshotLabel).Value = _formSetup.checkBoxScreenshotLabel.Checked;
+                _config.Settings.User.GetByKey("ApplyScreenshotLabel").Value = _formSetup.checkBoxScreenshotLabel.Checked;
 
                 // Active Window Title
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureCheck).Value = _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked;
-                _config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck", _config.Settings.DefaultSettings.ActiveWindowTitleNoMatchCheck).Value = _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked;
-                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText", _config.Settings.DefaultSettings.ActiveWindowTitleCaptureText).Value = _formSetup.textBoxActiveWindowTitle.Text.Trim();
-                _config.Settings.User.GetByKey("ActiveWindowTitleSampleText", _config.Settings.DefaultSettings.ActiveWindowTitleSampleText).Value = _formSetup.textBoxActiveWindowTitleTest.Text.Trim();
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureCheck").Value = _formSetup.checkBoxActiveWindowTitleComparisonCheck.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleNoMatchCheck").Value = _formSetup.checkBoxActiveWindowTitleComparisonCheckReverse.Checked;
+                _config.Settings.User.GetByKey("ActiveWindowTitleCaptureText").Value = _formSetup.textBoxActiveWindowTitle.Text.Trim();
+                _config.Settings.User.GetByKey("ActiveWindowTitleSampleText").Value = _formSetup.textBoxActiveWindowTitleTest.Text.Trim();
 
                 if (_formSetup.radioButtonCaseSensitiveMatch.Checked)
                 {
-                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value = 1;
+                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value = 1;
                 }
                 else if (_formSetup.radioButtonCaseInsensitiveMatch.Checked)
                 {
-                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value = 2;
+                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value = 2;
                 }
                 else if (_formSetup.radioButtonRegularExpressionMatch.Checked)
                 {
-                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType", _config.Settings.DefaultSettings.ActiveWindowTitleMatchType).Value = 3;
+                    _config.Settings.User.GetByKey("ActiveWindowTitleMatchType").Value = 3;
                 }
 
                 // Application Focus
-                _config.Settings.User.GetByKey("ApplicationFocus", _config.Settings.DefaultSettings.ApplicationFocus).Value = _formSetup.listBoxProcessList.Text;
-                _config.Settings.User.GetByKey("ApplicationFocusDelayBefore", _config.Settings.DefaultSettings.ApplicationFocusDelayBefore).Value = (int)_formSetup.numericUpDownApplicationFocusDelayBefore.Value;
-                _config.Settings.User.GetByKey("ApplicationFocusDelayAfter", _config.Settings.DefaultSettings.ApplicationFocusDelayAfter).Value = (int)_formSetup.numericUpDownApplicationFocusDelayAfter.Value;
+                _config.Settings.User.GetByKey("ApplicationFocus").Value = _formSetup.listBoxProcessList.Text;
+                _config.Settings.User.GetByKey("ApplicationFocusDelayBefore").Value = (int)_formSetup.numericUpDownApplicationFocusDelayBefore.Value;
+                _config.Settings.User.GetByKey("ApplicationFocusDelayAfter").Value = (int)_formSetup.numericUpDownApplicationFocusDelayAfter.Value;
 
                 // Optimize Screen Capture
-                _config.Settings.User.GetByKey("OptimizeScreenCapture", _config.Settings.DefaultSettings.OptimizeScreenCapture).Value = _formSetup.checkBoxOptimizeScreenCapture.Checked;
+                _config.Settings.User.GetByKey("OptimizeScreenCapture").Value = _formSetup.checkBoxOptimizeScreenCapture.Checked;
                 
                 // SFTP
-                _config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _config.Settings.DefaultSettings.SFTPDeleteLocalFileAfterSuccessfulUpload).Value = _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked;
-                _config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value = _formFileTransferSettings.checkBoxKeepFailedUploads.Checked;
+                _config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload").Value = _formFileTransferSettings.checkBoxDeleteLocalFileAfterSuccessfulUpload.Checked;
+                _config.Settings.User.GetByKey("SFTPKeepFailedUploads").Value = _formFileTransferSettings.checkBoxKeepFailedUploads.Checked;
 
                 if (!_config.Settings.User.Save(_config.Settings, _fileSystem))
                 {

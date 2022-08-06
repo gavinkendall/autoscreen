@@ -440,7 +440,7 @@ namespace AutoScreenCapture
                 tabControlViews.Controls.Add(tabPageRegion);
             }
 
-            tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex", _config.Settings.DefaultSettings.SelectedTabPageIndex).Value);
+            tabControlViews.SelectedIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedTabPageIndex").Value);
 
             if (tabControlViews.SelectedIndex >= tabControlViews.TabCount)
             {
@@ -557,12 +557,12 @@ namespace AutoScreenCapture
 
             toolStripButtonEmail.Click += new EventHandler(emailScreenshot_Click);
 
-            string emailServerHost = _config.Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
-            int.TryParse(_config.Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int emailServerPort);
-            string emailClientUsername = _config.Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
-            string emailClientPassword = _config.Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
-            string emailMessageFrom = _config.Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
-            string emailMessageTo = _config.Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
+            string emailServerHost = _config.Settings.SMTP.GetByKey("EmailServerHost").Value.ToString();
+            int.TryParse(_config.Settings.SMTP.GetByKey("EmailServerPort").Value.ToString(), out int emailServerPort);
+            string emailClientUsername = _config.Settings.SMTP.GetByKey("EmailClientUsername").Value.ToString();
+            string emailClientPassword = _config.Settings.SMTP.GetByKey("EmailClientPassword").Value.ToString();
+            string emailMessageFrom = _config.Settings.SMTP.GetByKey("EmailMessageFrom").Value.ToString();
+            string emailMessageTo = _config.Settings.SMTP.GetByKey("EmailMessageTo").Value.ToString();
 
             if (string.IsNullOrEmpty(emailServerHost) ||
                 emailServerPort <= 0 ||
@@ -590,10 +590,10 @@ namespace AutoScreenCapture
 
             toolStripButtonFileTransfer.Click += new EventHandler(fileTransferScreenshot_Click);
 
-            string fileTransferServerHost = _config.Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
-            int.TryParse(_config.Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value.ToString(), out int fileTransferServerPort);
-            string fileTransferClientUsername = _config.Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
-            string fileTransferClientPassword = _config.Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
+            string fileTransferServerHost = _config.Settings.SFTP.GetByKey("FileTransferServerHost").Value.ToString();
+            int.TryParse(_config.Settings.SFTP.GetByKey("FileTransferServerPort").Value.ToString(), out int fileTransferServerPort);
+            string fileTransferClientUsername = _config.Settings.SFTP.GetByKey("FileTransferClientUsername").Value.ToString();
+            string fileTransferClientPassword = _config.Settings.SFTP.GetByKey("FileTransferClientPassword").Value.ToString();
 
             if (string.IsNullOrEmpty(fileTransferServerHost) ||
                 fileTransferServerPort <= 0 ||

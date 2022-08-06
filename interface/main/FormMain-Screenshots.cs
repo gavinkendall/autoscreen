@@ -176,7 +176,7 @@ namespace AutoScreenCapture
                     selectedScreenshot = _screenshotCollection.GetScreenshot(selectedSlide.Name, Guid.Empty);
                 }
 
-                bool.TryParse(_config.Settings.SMTP.GetByKey("EmailPrompt", _config.Settings.DefaultSettings.EmailPrompt).Value.ToString(), out bool prompt);
+                bool.TryParse(_config.Settings.SMTP.GetByKey("EmailPrompt").Value.ToString(), out bool prompt);
 
                 if (EmailScreenshot(selectedScreenshot, prompt))
                 {
@@ -313,7 +313,7 @@ namespace AutoScreenCapture
                         config: _config,
                         slideValueToDisplay: comboBoxFilterType.Text); // Give the currently selected filter type as the slide value to display
 
-                    int selectedSlideIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedSlideIndex", 0).Value);
+                    int selectedSlideIndex = Convert.ToInt32(_config.Settings.User.GetByKey("SelectedSlideIndex").Value);
 
                     if (listBoxScreenshots.Items.Count > 0)
                     {
@@ -849,25 +849,25 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Attempting to email screenshot \"" + screenshot.FilePath + "\"");
 
-                string host = _config.Settings.SMTP.GetByKey("EmailServerHost", _config.Settings.DefaultSettings.EmailServerHost).Value.ToString();
+                string host = _config.Settings.SMTP.GetByKey("EmailServerHost").Value.ToString();
 
                 _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(_config.Settings.SMTP.GetByKey("EmailServerPort", _config.Settings.DefaultSettings.EmailServerPort).Value.ToString(), out int port);
+                int.TryParse(_config.Settings.SMTP.GetByKey("EmailServerPort").Value.ToString(), out int port);
 
                 _log.WriteDebugMessage("Port = " + port);
 
-                bool.TryParse(_config.Settings.SMTP.GetByKey("EmailServerEnableSSL", _config.Settings.DefaultSettings.EmailServerEnableSSL).Value.ToString(), out bool ssl);
+                bool.TryParse(_config.Settings.SMTP.GetByKey("EmailServerEnableSSL").Value.ToString(), out bool ssl);
 
                 _log.WriteDebugMessage("SSL = " + ssl);
 
                 _log.WriteDebugMessage("Prompt = " + prompt);
 
-                string username = _config.Settings.SMTP.GetByKey("EmailClientUsername", _config.Settings.DefaultSettings.EmailClientUsername).Value.ToString();
+                string username = _config.Settings.SMTP.GetByKey("EmailClientUsername").Value.ToString();
 
                 _log.WriteDebugMessage("Username = " + username);
 
-                string password = _config.Settings.SMTP.GetByKey("EmailClientPassword", _config.Settings.DefaultSettings.EmailClientPassword).Value.ToString();
+                string password = _config.Settings.SMTP.GetByKey("EmailClientPassword").Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -878,27 +878,27 @@ namespace AutoScreenCapture
                     _log.WriteDebugMessage("Password = [I'm not revealing this here]");
                 }
 
-                string from = _config.Settings.SMTP.GetByKey("EmailMessageFrom", _config.Settings.DefaultSettings.EmailMessageFrom).Value.ToString();
+                string from = _config.Settings.SMTP.GetByKey("EmailMessageFrom").Value.ToString();
 
                 _log.WriteDebugMessage("From = " + from);
 
-                string to = _config.Settings.SMTP.GetByKey("EmailMessageTo", _config.Settings.DefaultSettings.EmailMessageTo).Value.ToString();
+                string to = _config.Settings.SMTP.GetByKey("EmailMessageTo").Value.ToString();
 
                 _log.WriteDebugMessage("To = " + to);
 
-                string cc = _config.Settings.SMTP.GetByKey("EmailMessageCC", _config.Settings.DefaultSettings.EmailMessageCC).Value.ToString();
+                string cc = _config.Settings.SMTP.GetByKey("EmailMessageCC").Value.ToString();
 
                 _log.WriteDebugMessage("CC = " + cc);
 
-                string bcc = _config.Settings.SMTP.GetByKey("EmailMessageBCC", _config.Settings.DefaultSettings.EmailMessageBCC).Value.ToString();
+                string bcc = _config.Settings.SMTP.GetByKey("EmailMessageBCC").Value.ToString();
 
                 _log.WriteDebugMessage("BCC = " + bcc);
 
-                string subject = _config.Settings.SMTP.GetByKey("EmailMessageSubject", _config.Settings.DefaultSettings.EmailMessageSubject).Value.ToString();
+                string subject = _config.Settings.SMTP.GetByKey("EmailMessageSubject").Value.ToString();
 
                 _log.WriteDebugMessage("Subject = " + subject);
 
-                string body = _config.Settings.SMTP.GetByKey("EmailMessageBody", _config.Settings.DefaultSettings.EmailMessageBody).Value.ToString();
+                string body = _config.Settings.SMTP.GetByKey("EmailMessageBody").Value.ToString();
 
                 _log.WriteDebugMessage("Body = " + body);
 
@@ -1030,19 +1030,19 @@ namespace AutoScreenCapture
 
                 _log.WriteDebugMessage("Attempting to upload screenshot \"" + screenshot.FilePath + "\" to file server");
 
-                string host = _config.Settings.SFTP.GetByKey("FileTransferServerHost", _config.Settings.DefaultSettings.FileTransferServerHost).Value.ToString();
+                string host = _config.Settings.SFTP.GetByKey("FileTransferServerHost").Value.ToString();
 
                 _log.WriteDebugMessage("Host = " + host);
 
-                int.TryParse(_config.Settings.SFTP.GetByKey("FileTransferServerPort", _config.Settings.DefaultSettings.FileTransferServerPort).Value.ToString(), out int port);
+                int.TryParse(_config.Settings.SFTP.GetByKey("FileTransferServerPort").Value.ToString(), out int port);
 
                 _log.WriteDebugMessage("Port = " + port);
 
-                string username = _config.Settings.SFTP.GetByKey("FileTransferClientUsername", _config.Settings.DefaultSettings.FileTransferClientUsername).Value.ToString();
+                string username = _config.Settings.SFTP.GetByKey("FileTransferClientUsername").Value.ToString();
 
                 _log.WriteDebugMessage("Username = " + username);
 
-                string password = _config.Settings.SFTP.GetByKey("FileTransferClientPassword", _config.Settings.DefaultSettings.FileTransferClientPassword).Value.ToString();
+                string password = _config.Settings.SFTP.GetByKey("FileTransferClientPassword").Value.ToString();
 
                 if (string.IsNullOrEmpty(password))
                 {
@@ -1079,7 +1079,7 @@ namespace AutoScreenCapture
                     {
                         _log.WriteDebugMessage("Could not establish a connection with the file server");
 
-                        if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value))
+                        if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads").Value))
                         {
                             // Add the screenshot filepath and host to a dictionary of failed uploads so we'll attempt to upload the screenshot for that host later.
                             if (!_failedUploads.ContainsKey(screenshot.FilePath))
@@ -1158,7 +1158,7 @@ namespace AutoScreenCapture
             string destinationFolder = Path.GetDirectoryName(macroPath);
             string destinationFilename = Path.GetFileName(macroPath);
 
-            bool isLinuxServer = Convert.ToBoolean(_config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer", _config.Settings.DefaultSettings.FileTransferIsLinuxServer).Value);
+            bool isLinuxServer = Convert.ToBoolean(_config.Settings.SFTP.GetByKey("FileTransferIsLinuxServer").Value);
 
             _log.WriteDebugMessage("Attempting to upload screenshot to file server");
             _log.WriteDebugMessage("Source (Local) Path: " + path);
@@ -1170,7 +1170,7 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Successfully uploaded screenshot");
 
-                if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", _config.Settings.DefaultSettings.SFTPDeleteLocalFileAfterSuccessfulUpload).Value))
+                if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPDeleteLocalFileAfterSuccessfulUpload").Value))
                 {
                     if (_fileSystem.FileExists(path))
                     {
@@ -1192,7 +1192,7 @@ namespace AutoScreenCapture
             {
                 _log.WriteDebugMessage("Failed to upload screenshot");
 
-                if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads", _config.Settings.DefaultSettings.SFTPKeepFailedUploads).Value))
+                if (Convert.ToBoolean(_config.Settings.User.GetByKey("SFTPKeepFailedUploads").Value))
                 {
                     // Add the screenshot filepath and host to a dictionary of failed uploads so we'll attempt to upload the screenshot later.
                     if (!_failedUploads.ContainsKey(path))

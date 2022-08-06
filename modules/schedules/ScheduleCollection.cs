@@ -265,7 +265,7 @@ namespace AutoScreenCapture
                                 log.WriteDebugMessage("Boombayah 2.3.1.8 or older detected");
 
                                 // A new property for Schedule introduced in 2.3.1.9
-                                schedule.ScreenCaptureInterval = Convert.ToInt32(config.Settings.User.GetByKey("ScreenCaptureInterval", config.Settings.DefaultSettings.ScreenCaptureInterval).Value);
+                                schedule.ScreenCaptureInterval = Convert.ToInt32(config.Settings.User.GetByKey("ScreenCaptureInterval").Value);
                             }
 
                             // 2.4 removes "Special Schedule" that was used in previous versions because 2.4 uses an internal special schedule going forward.
@@ -323,13 +323,6 @@ namespace AutoScreenCapture
                     NewLineHandling = NewLineHandling.Entitize,
                     ConformanceLevel = ConformanceLevel.Document
                 };
-
-                if (string.IsNullOrEmpty(fileSystem.SchedulesFile))
-                {
-                    fileSystem.SchedulesFile = fileSystem.DefaultSchedulesFile;
-
-                    fileSystem.AppendToFile(fileSystem.ConfigFile, "\nSchedulesFile=" + fileSystem.SchedulesFile);
-                }
 
                 if (fileSystem.FileExists(fileSystem.SchedulesFile))
                 {

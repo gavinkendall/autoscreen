@@ -545,7 +545,7 @@ namespace AutoScreenCapture
                 Format = ImageFormatCollection.GetByName(comboBoxFormat.Text)
             };
 
-            string label = _config.Settings.User.GetByKey("ScreenshotLabel", string.Empty).Value.ToString();
+            string label = _config.Settings.User.GetByKey("ScreenshotLabel").Value.ToString();
 
             textBoxMacroPreview.Text = _macroParser.ParseTags(preview: true, textBoxFolder.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, label, TagCollection, _log) +
                 _macroParser.ParseTags(preview: true, textBoxMacro.Text, screen, Text, Assembly.GetExecutingAssembly().GetName().Name, label, TagCollection, _log);

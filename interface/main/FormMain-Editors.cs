@@ -106,7 +106,7 @@ namespace AutoScreenCapture
 
             if (editorName.Equals("Edit"))
             {
-                editorName = _config.Settings.User.GetByKey("DefaultEditor", _config.Settings.DefaultSettings.DefaultEditor).Value.ToString();
+                editorName = _config.Settings.User.GetByKey("DefaultEditor").Value.ToString();
             }
 
             Editor editor = _formEditor.EditorCollection.GetByName(editorName);

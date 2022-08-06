@@ -229,7 +229,7 @@ namespace AutoScreenCapture
             if (!_appReady)
             {
                 // We want to figure out the visibility for the system tray icon here so it doesn't appear too early if we happen to use -hide.
-                notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon", _config.Settings.DefaultSettings.ShowSystemTrayIcon).Value);
+                notifyIcon.Visible = Convert.ToBoolean(_config.Settings.User.GetByKey("ShowSystemTrayIcon").Value);
                 _log.WriteDebugMessage("ShowSystemTrayIcon = " + notifyIcon.Visible);
 
                 // Run any Triggers that need to run on application startup before we run any other type of Triggers.
@@ -314,7 +314,7 @@ namespace AutoScreenCapture
                 // immediately removed from the file.
                 _fileSystem.WriteToFile(_fileSystem.CommandFile, string.Empty);
 
-                _screenCapture.AutoStartFromCommandLine = Convert.ToBoolean(_config.Settings.Application.GetByKey("AutoStartFromCommandLine", _config.Settings.DefaultSettings.AutoStartFromCommandLine).Value);
+                _screenCapture.AutoStartFromCommandLine = Convert.ToBoolean(_config.Settings.Application.GetByKey("AutoStartFromCommandLine").Value);
 
                 foreach (string arg in args)
                 {

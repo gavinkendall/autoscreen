@@ -63,7 +63,7 @@ namespace AutoScreenCapture
 
             textBoxPassphrase.Text = textBoxPassphrase.Text.Trim();
 
-            if (_security.Hash(textBoxPassphrase.Text).Equals(_config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value))
+            if (_security.Hash(textBoxPassphrase.Text).Equals(_config.Settings.User.GetByKey("Passphrase").Value))
             {
                 _log.WriteDebugMessage("User successfully accessed Auto Screen Capture by " + Environment.UserName + " on " + Environment.MachineName);
 

@@ -268,11 +268,6 @@ namespace AutoScreenCapture
         public const int CAPTURE_LIMIT_MAX = 9999;
 
         /// <summary>
-        /// The default image format.
-        /// </summary>
-        public static readonly string DefaultImageFormat = "JPEG";
-
-        /// <summary>
         /// The image format as defined by the configuration file (autoscreen.conf).
         /// </summary>
         public static string ImageFormat;
@@ -424,7 +419,7 @@ namespace AutoScreenCapture
             // Get the preferred "LowDiskMode".
             // 0 == We check the available disk space as a percentage.
             // 1 == We check the available disk space as a number of bytes.
-            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode", _config.Settings.DefaultSettings.LowDiskMode).Value); 
+            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode").Value); 
 
             // Percentage.
             if (lowDiskMode == 0)
@@ -442,7 +437,7 @@ namespace AutoScreenCapture
                 _log.WriteErrorMessage($"Configured low disk bytes threshold: {lowDiskBytesThreshold} bytes");
             }
 
-            bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError", _config.Settings.DefaultSettings.StopOnLowDiskError).Value);
+            bool stopOnLowDiskError = Convert.ToBoolean(_config.Settings.Application.GetByKey("StopOnLowDiskError").Value);
 
             if (stopOnLowDiskError)
             {
@@ -944,7 +939,7 @@ namespace AutoScreenCapture
 
             try
             {
-                int filepathLengthLimit = Convert.ToInt32(_config.Settings.Application.GetByKey("FilepathLengthLimit", _config.Settings.DefaultSettings.FilepathLengthLimit).Value);
+                int filepathLengthLimit = Convert.ToInt32(_config.Settings.Application.GetByKey("FilepathLengthLimit").Value);
 
                 if (!string.IsNullOrEmpty(screenshot.FilePath))
                 {
@@ -960,14 +955,14 @@ namespace AutoScreenCapture
                         if (_fileSystem.DriveReady(screenshot.FilePath))
                         {
                             // The low disk mode we want to use (either check by percentage (0) or check the number of available bytes (1)).
-                            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode", _config.Settings.DefaultSettings.LowDiskMode).Value);
+                            int lowDiskMode = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskMode").Value);
 
                             // Low disk space threshold by percentage.
-                            int lowDiskPercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold", _config.Settings.DefaultSettings.LowDiskPercentageThreshold).Value);
+                            int lowDiskPercentageThreshold = Convert.ToInt32(_config.Settings.Application.GetByKey("LowDiskPercentageThreshold").Value);
                             double freeDiskSpacePercentage = _fileSystem.FreeDiskSpacePercentage(screenshot.FilePath);
 
                             // Low disk space threshold in bytes.
-                            long lowDiskBytesThreshold = Convert.ToInt64(_config.Settings.Application.GetByKey("LowDiskBytesThreshold", _config.Settings.DefaultSettings.LowDiskBytesThreshold).Value);
+                            long lowDiskBytesThreshold = Convert.ToInt64(_config.Settings.Application.GetByKey("LowDiskBytesThreshold").Value);
                             long freeDiskSpaceBytes = _fileSystem.FreeDiskSpace(screenshot.FilePath);
 
                             _log.WriteDebugMessage("Percentage of free disk space on drive for \"" + screenshot.FilePath + "\" is " + (int)freeDiskSpacePercentage + "% and low disk percentage threshold is set to " + lowDiskPercentageThreshold + "%");

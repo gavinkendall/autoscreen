@@ -28,106 +28,23 @@ namespace AutoScreenCapture
     /// </summary>
     public class Config
     {
-        // Screen Capture Interval
-        private const string REGEX_SCREEN_CAPTURE_INTERVAL = "^ScreenCaptureInterval=(?<ScreenCaptureInterval>\\d{1,6})$";
-
-        // Capture Limit
-        private const string REGEX_CAPTURE_LIMIT = "^CaptureLimit=(?<CaptureLimit>\\d{1,3})$";
-
-        // Take Initial Screenshot
-        private const string REGEX_TAKE_INITIAL_SCREENSHOT = "^TakeInitialScreenshot=(?<TakeInitialScreenshot>False|True)$";
-
-        // Save Screenshot Refs
-        private const string REGEX_SAVE_SCREENSHOT_REFS = "^SaveScreenshotRefs=(?<SaveScreenshotRefs>False|True)$";
-
-        // Optimize Screen Capture
-        private const string REGEX_OPTIMIZE_SCREEN_CAPTURE = "^OptimizeScreenCapture=(?<OptimizeScreenCapture>False|True)$";
-
-        // Image Diff Tolerance
-        private const string REGEX_IMAGE_DIFF_TOLERANCE = "^ImageDiffTolerance=(?<ImageDiffTolerance>\\d{1,3})$";
-
-        // Image Format
-        private const string REGEX_IMAGE_FORMAT = "^ImageFormat=(?<ImageFormat>[A-Z]{3,4})$";
-
-        // Filename Pattern
-        private const string REGEX_FILENAME_PATTERN = "^FilenamePattern=(?<FilenamePattern>.+)$";
-
-        // Default Editor
-        private const string REGEX_DEFAULT_EDITOR = "^DefaultEditor=(?<DefaultEditor>.+)$";
-
-        // Folders
-        private const string REGEX_SCREENSHOTS_FOLDER = "^ScreenshotsFolder=(?<Path>.+)$";
-        private const string REGEX_ERRORS_FOLDER = "^ErrorsFolder=(?<Path>.+)$";
-        private const string REGEX_LOGS_FOLDER = "^LogsFolder=(?<Path>.+)$";
-
-        // Auto Save
-        private const string REGEX_AUTO_SAVE_FOLDER = "^AutoSaveFolder=(?<AutoSaveFolder>.+)$";
-        private const string REGEX_AUTO_SAVE_MACRO = "^AutoSaveMacro=(?<AutoSaveMacro>.+)$";
-        private const string REGEX_AUTO_SAVE_FORMAT = "^AutoSaveFormat=(?<AutoSaveFormat>[A-Z]{3,4})$";
-
-        // Capture Now
-        private const string REGEX_CAPTURE_NOW_MACRO = "^CaptureNowMacro=(?<CaptureNowMacro>.+)$";
-
-        // Preview
-        private const string REGEX_PREVIEW = "^Preview=(?<Preview>False|True)$";
-
-        // DebugMode
-        private const string REGEX_DEBUG_MODE = "^DebugMode=(?<DebugMode>False|True)$";
-
-        // Logging
-        private const string REGEX_LOGGING = "^Logging=(?<Logging>False|True)$";
-
-        // Show Interface
-        private const string REGEX_SHOW_INTERFACE = "^ShowInterface=(?<ShowInterface>False|True)$";
-
-        // Show System Tray Icon
-        private const string REGEX_SHOW_SYSTEM_TRAY_ICON = "^ShowSystemTrayIcon=(?<ShowSystemTrayIcon>False|True)$";
-
-        // SneakyPastaSnake
-        private const string REGEX_SNEAKY_PASTA_SNAKE = "^SneakyPastaSnake=(?<SneakyPastaSnake>False|True)$";
-
-        // SFTP
-        private const string REGEX_SFTP_SERVER_HOST = "^FileTransferServerHost=(?<FileTransferServerHost>.*)$";
-        private const string REGEX_SFTP_SERVER_PORT = "^FileTransferServerPort=(?<FileTransferServerPort>\\d{1,8})$";
-        private const string REGEX_SFTP_CLIENT_USERNAME = "^FileTransferClientUsername=(?<FileTransferClientUsername>.*)$";
-        private const string REGEX_SFTP_CLIENT_PASSWORD = "^FileTransferClientPassword=(?<FileTransferClientPassword>.*)$";
-        private const string REGEX_SFTP_IS_LINUX_SERVER = "^FileTransferIsLinuxServer=(?<FileTransferIsLinuxServer>False|True)$";
-        private const string REGEX_SFTP_DELETE_LOCAL_FILE_AFTER_SUCCESSFUL_UPLOAD = "^SFTPDeleteLocalFileAfterSuccessfulUpload=(?<SFTPDeleteLocalFileAfterSuccessfulUpload>False|True)$";
-        private const string REGEX_SFTP_KEEP_FAILED_UPLOADS = "^SFTPKeepFailedUploads=(?<SFTPKeepFailedUploads>False|True)$";
-
-        // SMTP
-        private const string REGEX_SMTP_SERVER_HOST = "^EmailServerHost=(?<EmailServerHost>.*)$";
-        private const string REGEX_SMTP_SERVER_PORT = "^EmailServerPort=(?<EmailServerPort>\\d{1,8})$";
-        private const string REGEX_SMTP_SERVER_SSL = "^EmailServerEnableSSL=(?<EmailServerEnableSSL>False|True)$";
-        private const string REGEX_SMTP_CLIENT_USERNAME = "^EmailClientUsername=(?<EmailClientUsername>.*)$";
-        private const string REGEX_SMTP_CLIENT_PASSWORD = "^EmailClientPassword=(?<EmailClientPassword>.*)$";
-        private const string REGEX_SMTP_MESSAGE_FROM = "^EmailMessageFrom=(?<EmailMessageFrom>.*)$";
-        private const string REGEX_SMTP_MESSAGE_TO = "^EmailMessageTo=(?<EmailMessageTo>.*)$";
-        private const string REGEX_SMTP_MESSAGE_CC = "^EmailMessageCC=(?<EmailMessageCC>.*)$";
-        private const string REGEX_SMTP_MESSAGE_BCC = "^EmailMessageBCC=(?<EmailMessageBCC>.*)$";
-        private const string REGEX_SMTP_MESSAGE_SUBJECT = "^EmailMessageSubject=(?<EmailMessageSubject>.*)$";
-        private const string REGEX_SMTP_MESSAGE_BODY = "^EmailMessageBody=(?<EmailMessageBody>.*)$";
-        private const string REGEX_SMTP_PROMPT = "^EmailPrompt=(?<EmailPrompt>False|True)$";
-
-        // Commands
-        private const string REGEX_COMMAND_FILE = "^CommandFile=(?<Path>.+)$";
-
         // Settings
         private const string REGEX_APPLICATION_SETTINGS_FILE = "^ApplicationSettingsFile=(?<Path>.+)$";
         private const string REGEX_USER_SETTINGS_FILE = "^UserSettingsFile=(?<Path>.+)$";
-        private const string REGEX_SMTP_SETTINGS_FILE = "^SMTPSettingsFile=(?<Path>.+)$";
         private const string REGEX_SFTP_SETTINGS_FILE = "^SFTPSettingsFile=(?<Path>.+)$";
+        private const string REGEX_SMTP_SETTINGS_FILE = "^SMTPSettingsFile=(?<Path>.+)$";
 
-        // Modules
-        private const string REGEX_SCREENS_FILE = "^ScreensFile=(?<Path>.+)$";
-        private const string REGEX_REGIONS_FILE = "^RegionsFile=(?<Path>.+)$";
-        private const string REGEX_EDITORS_FILE = "^EditorsFile=(?<Path>.+)$";
-        private const string REGEX_SCHEDULES_FILE = "^SchedulesFile=(?<Path>.+)$";
-        private const string REGEX_MACRO_TAGS_FILE = "^MacroTagsFile=(?<Path>.+)$";
-        private const string REGEX_TRIGGERS_FILE = "^TriggersFile=(?<Path>.+)$";
+        // Application Setting Definition Regex
+        private const string REGEX_APPLICATION_SETTING = "^ApplicationSetting::\\[Key=\"(?<Key>.+)\", Value=\"(?<Value>.*)\"\\]$";
 
-        // Screenshots
-        private const string REGEX_SCREENSHOTS_FILE = "^ScreenshotsFile=(?<Path>.+)$";
+        // User Setting Definition Regex
+        private const string REGEX_USER_SETTING = "^UserSetting::\\[Key=\"(?<Key>.+)\", Value=\"(?<Value>.*)\"\\]$";
+
+        // SFTP Setting Definition Regex
+        private const string REGEX_SFTP_SETTING = "^SFTPSetting::\\[Key=\"(?<Key>.+)\", Value=\"(?<Value>.*)\"\\]$";
+
+        // SMTP Setting Definition Regex
+        private const string REGEX_SMTP_SETTING = "^SMTPSetting::\\[Key=\"(?<Key>.+)\", Value=\"(?<Value>.*)\"\\]$";
 
         // Screen Definition Regex
         private const string REGEX_SCREEN = "^Screen::\\[Enable=(?<Enable>False|True), Name=\"(?<Name>.+)\", Folder=\"(?<Folder>.+)\", Macro=\"(?<Macro>.+)\", Source=(?<Source>\\d{1}), Component=(?<Component>\\d{1}), CaptureMethod=(?<CaptureMethod>\\d{1}), X=(?<X>\\d{1,4}), Y=(?<Y>\\d{1,4}), Width=(?<Width>\\d{1,4}), Height=(?<Height>\\d{1,4}), AutoAdapt=(?<AutoAdapt>False|True), Format=(?<Format>[A-Z]{3,4}), JPEGQuality=(?<JPEGQuality>\\d{1,3}), ResolutionRatio=(?<ResolutionRatio>\\d{1,3}), Mouse=(?<Mouse>False|True), Encrypt=(?<Encrypt>False|True)\\]$";
@@ -240,76 +157,76 @@ namespace AutoScreenCapture
                     // because they may have macro tags in the paths.
                     ParseMacroTagDefinitions();
 
+                    // Read each line of the configuration file looking for the filepaths of the application, user, SFTP, and SMTP settings files.
                     foreach (string line in fileSystem.ReadFromFile(fileSystem.ConfigFile))
                     {
+                        // Ignore any empty lines or comments in the configuration file.
                         if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
                         {
                             continue;
                         }
 
-                        string path;
+                        // Acquire the filepath for !autoscreen\settings\application.xml and create any sub-folders (that may contain macro tags).
+                        if (Regex.IsMatch(line, REGEX_APPLICATION_SETTINGS_FILE))
+                        {
+                            fileSystem.ApplicationSettingsFile = ProcessPath(Regex.Match(line, REGEX_APPLICATION_SETTINGS_FILE).Groups["Path"].Value);
+                        }
 
-                        if (GetPathAndCreateIfNotFound(line, REGEX_SCREENSHOTS_FOLDER, out path))
-                            fileSystem.ScreenshotsFolder = path;
+                        // Acquire the filepath for !autoscreen\settings\user.xml and create any sub-folders (that may contain macro tags).
+                        if (Regex.IsMatch(line, REGEX_USER_SETTINGS_FILE))
+                        {
+                            fileSystem.UserSettingsFile = ProcessPath(Regex.Match(line, REGEX_USER_SETTINGS_FILE).Groups["Path"].Value);
+                        }
 
-                        if (GetPathAndCreateIfNotFound(line, REGEX_ERRORS_FOLDER, out path))
-                            fileSystem.ErrorsFolder = path;
+                        // Acquire the filepath for !autoscreen\settings\sftp.xml and create any sub-folders (that may contain macro tags).
+                        if (Regex.IsMatch(line, REGEX_SFTP_SETTINGS_FILE))
+                        {
+                            fileSystem.SftpSettingsFile = ProcessPath(Regex.Match(line, REGEX_SFTP_SETTINGS_FILE).Groups["Path"].Value);
+                        }
 
-                        if (GetPathAndCreateIfNotFound(line, REGEX_LOGS_FOLDER, out path))
-                            fileSystem.LogsFolder = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_COMMAND_FILE, out path))
-                            fileSystem.CommandFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_APPLICATION_SETTINGS_FILE, out path))
-                            fileSystem.ApplicationSettingsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_SMTP_SETTINGS_FILE, out path))
-                            fileSystem.SmtpSettingsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_SFTP_SETTINGS_FILE, out path))
-                            fileSystem.SftpSettingsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_USER_SETTINGS_FILE, out path))
-                            fileSystem.UserSettingsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_EDITORS_FILE, out path))
-                            fileSystem.EditorsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_REGIONS_FILE, out path))
-                            fileSystem.RegionsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_SCREENS_FILE, out path))
-                            fileSystem.ScreensFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_TRIGGERS_FILE, out path))
-                            fileSystem.TriggersFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_SCREENSHOTS_FILE, out path))
-                            fileSystem.ScreenshotsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_MACRO_TAGS_FILE, out path))
-                            fileSystem.MacroTagsFile = path;
-
-                        // This is for backwards compability for versions of the application that are older than 2.4
-                        if (string.IsNullOrEmpty(fileSystem.MacroTagsFile) && GetPathAndCreateIfNotFound(line, "^TagsFile=(?<Path>.+)$", out path))
-                            fileSystem.MacroTagsFile = path;
-
-                        if (GetPathAndCreateIfNotFound(line, REGEX_SCHEDULES_FILE, out path))
-                            fileSystem.SchedulesFile = path;
+                        // Acquire the filepath for !autoscreen\settings\smtp.xml and create any sub-folders (that may contain macro tags).
+                        if (Regex.IsMatch(line, REGEX_SMTP_SETTINGS_FILE))
+                        {
+                            fileSystem.SmtpSettingsFile = ProcessPath(Regex.Match(line, REGEX_SMTP_SETTINGS_FILE).Groups["Path"].Value);
+                        }
                     }
 
-                    CheckAndCreateFolders();
+                    // Now that we have the File System setup with the filepaths for application, user, SFTP, and SMTP settings we can initialize settings.
+                    Settings.Initialize(fileSystem);
 
-                    Settings.Load(fileSystem);
+                    // The folders for errors and logs are in the application settings collection so make sure to parse the configuration file for application settings.
+                    ParseDefaultApplicationSettings();
 
-                    ParseDefaultSettings();
+                    fileSystem.ErrorsFolder = ProcessPath(Settings.Application.GetByKey("ErrorsFolder").Value.ToString());
+                    fileSystem.LogsFolder = ProcessPath(Settings.Application.GetByKey("LogsFolder").Value.ToString());
+
+                    // The command.txt, screenshots.xml, screens.xml, regions.xml, editors.xml, schedules.xml, macrotags.xml, and triggers.xml filepaths are in application settings.
+                    fileSystem.CommandFile = ProcessPath(Settings.Application.GetByKey("CommandFile").Value.ToString());
+                    fileSystem.ScreenshotsFile = ProcessPath(Settings.Application.GetByKey("ScreenshotsFile").Value.ToString());
+                    fileSystem.ScreensFile = ProcessPath(Settings.Application.GetByKey("ScreensFile").Value.ToString());
+                    fileSystem.RegionsFile = ProcessPath(Settings.Application.GetByKey("RegionsFile").Value.ToString());
+                    fileSystem.EditorsFile = ProcessPath(Settings.Application.GetByKey("EditorsFile").Value.ToString());
+                    fileSystem.SchedulesFile = ProcessPath(Settings.Application.GetByKey("SchedulesFile").Value.ToString());
+                    fileSystem.MacroTagsFile = ProcessPath(Settings.Application.GetByKey("MacroTagsFile").Value.ToString());
+                    fileSystem.TriggersFile = ProcessPath(Settings.Application.GetByKey("TriggersFile").Value.ToString());
+
+                    // Any default settings for users (such as screen capture interval, keyboard shortcuts, etc.) get parsed here.
+                    ParseDefaultUserSettings();
+
+                    // The screenshots folder is from user settings.
+                    fileSystem.ScreenshotsFolder = ProcessPath(Settings.User.GetByKey("ScreenshotsFolder").Value.ToString());
+
+                    // Now to acquire the SFTP settings.
+                    ParseDefaultSFTPSettings();
+
+                    // And, finally, the SMTP settings.
+                    ParseDefaultSMTPSettings();
 
                     Log = new Log(Settings, fileSystem, MacroParser);
                     ScreenCapture screenCapture = new ScreenCapture(this, fileSystem, Log);
                     Security security = new Security(fileSystem);
 
-                    CheckAndCreateFiles(security, screenCapture, Log);
+                    SaveSettings();
 
                     // Parse all the definitions in the configuration file for the various types of modules.
                     ParseScreenDefinitions();
@@ -356,6 +273,8 @@ namespace AutoScreenCapture
                         _triggerCollection.SaveToXmlFile(this, FileSystem, Log);
                     }
 
+                    LoadSettings(security, screenCapture);
+
                     return true;
                 }
 
@@ -370,175 +289,12 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Check the folders to make sure that each folder was included in the config file and the folder exists.
+        /// Processes a given folder path or filepath containing sub-folders to create the necessary sub-folders. Macro tags are also parsed.
         /// </summary>
-        private void CheckAndCreateFolders()
+        /// <param name="path">The folder path or a filepath containing sub-folders from the configuration file.</param>
+        /// <returns>The processed path that has been parsed for macro tags and includes directory separator character for sub-folders.</returns>
+        private string ProcessPath(string path)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(FileSystem.ScreenshotsFolder))
-                {
-                    FileSystem.ScreenshotsFolder = MacroParser.ParseTags(FileSystem.DefaultScreenshotsFolder, _macroTagCollection, Log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nScreenshotsFolder=" + FileSystem.ScreenshotsFolder);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.ScreenshotsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.ScreenshotsFolder);
-                    }
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.ErrorsFolder))
-                {
-                    FileSystem.ErrorsFolder = MacroParser.ParseTags(FileSystem.DefaultErrorsFolder, _macroTagCollection, Log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nErrorsFolder=" + FileSystem.ErrorsFolder);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.ErrorsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.ErrorsFolder);
-                    }
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.LogsFolder))
-                {
-                    FileSystem.LogsFolder = MacroParser.ParseTags(FileSystem.DefaultLogsFolder, _macroTagCollection, Log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nLogsFolder=" + FileSystem.LogsFolder);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.LogsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.LogsFolder);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.WriteExceptionMessage("Config::CheckAndCreateFolders", ex);
-            }
-        }
-
-        /// <summary>
-        /// Check to see if the configured files exist and, if they don't, create them.
-        /// There might be a permissions issue if these files are attempting to be created in folders that don't have the correct permissions.
-        /// </summary>
-        /// <param name="security">The security class to use.</param>
-        /// <param name="screenCapture">The screen capture class to use.</param>
-        /// <param name="log">The logging class to use.</param>
-        private void CheckAndCreateFiles(Security security, ScreenCapture screenCapture, Log log)
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(FileSystem.CommandFile))
-                {
-                    FileSystem.CommandFile = MacroParser.ParseTags(FileSystem.DefaultCommandFile, _macroTagCollection, log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nCommandFile=" + FileSystem.CommandFile);
-
-                    if (!FileSystem.FileExists(FileSystem.CommandFile))
-                    {
-                        FileSystem.CreateFile(FileSystem.CommandFile);
-                    }
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.ApplicationSettingsFile))
-                {
-                    FileSystem.ApplicationSettingsFile = MacroParser.ParseTags(FileSystem.DefaultApplicationSettingsFile, _macroTagCollection, log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nApplicationSettingsFile=" + FileSystem.ApplicationSettingsFile);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                    }
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.SmtpSettingsFile))
-                {
-                    FileSystem.SmtpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSmtpSettingsFile, _macroTagCollection, log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSMTPSettingsFile=" + FileSystem.SmtpSettingsFile);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                    }
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.SftpSettingsFile))
-                {
-                    FileSystem.SftpSettingsFile = MacroParser.ParseTags(FileSystem.DefaultSftpSettingsFile, _macroTagCollection, log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nSFTPSettingsFile=" + FileSystem.SftpSettingsFile);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                    }
-                }
-
-                if (string.IsNullOrEmpty(FileSystem.UserSettingsFile))
-                {
-                    FileSystem.UserSettingsFile = MacroParser.ParseTags(FileSystem.DefaultUserSettingsFile, _macroTagCollection, log);
-
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nUserSettingsFile=" + FileSystem.UserSettingsFile);
-
-                    if (!FileSystem.DirectoryExists(FileSystem.DefaultSettingsFolder))
-                    {
-                        FileSystem.CreateDirectory(FileSystem.DefaultSettingsFolder);
-                    }
-                }
-
-                Settings.User.Load(Settings, FileSystem);
-
-                Settings.SMTP.Load(Settings, FileSystem);
-
-                Settings.SFTP.Load(Settings, FileSystem);
-
-                Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
-
-                Settings.VersionManager.OldUserSettings = Settings.User.Clone();
-
-                Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
-
-                Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
-
-                Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
-
-                Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
-
-                if (string.IsNullOrEmpty(FileSystem.ScreenshotsFile))
-                {
-                    ImageFormatCollection imageFormatCollection = new ImageFormatCollection();
-
-                    ScreenshotCollection screenshotCollection = new ScreenshotCollection(imageFormatCollection, _screenCollection, screenCapture, this, FileSystem, log, security);
-                    screenshotCollection.SaveToXmlFile(this);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.WriteExceptionMessage("Config::CheckAndCreateFiles", ex);
-            }
-        }
-
-        /// <summary>
-        /// Gets the path from the configuration file based on what line is being processed and a regex pattern.
-        /// If the path cannot be found then the directory or file will be created.
-        /// </summary>
-        /// <param name="line">The line to read from the file.</param>
-        /// <param name="regex">The regex pattern to use against the line.</param>
-        /// <param name="path">The output of the path being returned.</param>
-        /// <returns>A boolean to indicate if getting a path was successful or not.</returns>
-        private bool GetPathAndCreateIfNotFound(string line, string regex, out string path)
-        {
-            if (!Regex.IsMatch(line, regex))
-            {
-                path = null;
-                return false;
-            }
-
-            path = Regex.Match(line, regex).Groups["Path"].Value;
-
             path = MacroParser.ParseTags(path, _macroTagCollection, Log);
 
             if (FileSystem.HasExtension(path))
@@ -563,13 +319,13 @@ namespace AutoScreenCapture
                 }
             }
 
-            return true;
+            return path;
         }
 
         /// <summary>
-        /// Parses default settings found in the configuration file.
+        /// Parses default application settings found in the configuration file.
         /// </summary>
-        private void ParseDefaultSettings()
+        private void ParseDefaultApplicationSettings()
         {
             try
             {
@@ -580,239 +336,100 @@ namespace AutoScreenCapture
                         continue;
                     }
 
-                    if (Regex.IsMatch(line, REGEX_SCREEN_CAPTURE_INTERVAL))
+                    if (Regex.IsMatch(line, REGEX_APPLICATION_SETTING))
                     {
-                        Settings.User.SetValueByKey("ScreenCaptureInterval", Regex.Match(line, REGEX_SCREEN_CAPTURE_INTERVAL).Groups["ScreenCaptureInterval"].Value);
-                    }
+                        string key = Regex.Match(line, REGEX_APPLICATION_SETTING).Groups["Key"].Value;
+                        string value = Regex.Match(line, REGEX_APPLICATION_SETTING).Groups["Value"].Value;
 
-                    if (Regex.IsMatch(line, REGEX_CAPTURE_LIMIT))
-                    {
-                        int captureLimit = Convert.ToInt32(Regex.Match(line, REGEX_CAPTURE_LIMIT).Groups["CaptureLimit"].Value);
-
-                        Settings.User.SetValueByKey("CaptureLimit", Regex.Match(line, REGEX_CAPTURE_LIMIT).Groups["CaptureLimit"].Value);
-
-                        if (captureLimit > 0)
-                        {
-                            Settings.User.SetValueByKey("CaptureLimitCheck", true);
-                        }
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_FILENAME_PATTERN))
-                    {
-                        FileSystem.FilenamePattern = Regex.Match(line, REGEX_FILENAME_PATTERN).Groups["FilenamePattern"].Value;
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_IMAGE_FORMAT))
-                    {
-                        ScreenCapture.ImageFormat = Regex.Match(line, REGEX_IMAGE_FORMAT).Groups["ImageFormat"].Value;
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_DEFAULT_EDITOR))
-                    {
-                        Settings.User.SetValueByKey("DefaultEditor", Regex.Match(line, REGEX_DEFAULT_EDITOR).Groups["DefaultEditor"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_AUTO_SAVE_FOLDER))
-                    {
-                        Settings.User.SetValueByKey("AutoSaveFolder", Regex.Match(line, REGEX_AUTO_SAVE_FOLDER).Groups["AutoSaveFolder"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_AUTO_SAVE_MACRO))
-                    {
-                        Settings.User.SetValueByKey("AutoSaveMacro", Regex.Match(line, REGEX_AUTO_SAVE_MACRO).Groups["AutoSaveMacro"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_AUTO_SAVE_FORMAT))
-                    {
-                        Settings.User.SetValueByKey("AutoSaveFormat", Regex.Match(line, REGEX_AUTO_SAVE_FORMAT).Groups["AutoSaveFormat"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_CAPTURE_NOW_MACRO))
-                    {
-                        Settings.User.SetValueByKey("CaptureNowMacro", Regex.Match(line, REGEX_CAPTURE_NOW_MACRO).Groups["CaptureNowMacro"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_PREVIEW))
-                    {
-                        Settings.User.SetValueByKey("Preview", Regex.Match(line, REGEX_PREVIEW).Groups["Preview"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_TAKE_INITIAL_SCREENSHOT))
-                    {
-                        Settings.User.SetValueByKey("TakeInitialScreenshot", Regex.Match(line, REGEX_TAKE_INITIAL_SCREENSHOT).Groups["TakeInitialScreenshot"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SAVE_SCREENSHOT_REFS))
-                    {
-                        Settings.User.SetValueByKey("SaveScreenshotRefs", Regex.Match(line, REGEX_SAVE_SCREENSHOT_REFS).Groups["SaveScreenshotRefs"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_OPTIMIZE_SCREEN_CAPTURE))
-                    {
-                        Settings.User.SetValueByKey("OptimizeScreenCapture", Regex.Match(line, REGEX_OPTIMIZE_SCREEN_CAPTURE).Groups["OptimizeScreenCapture"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_IMAGE_DIFF_TOLERANCE))
-                    {
-                        Settings.User.SetValueByKey("ImageDiffTolerance", Regex.Match(line, REGEX_IMAGE_DIFF_TOLERANCE).Groups["ImageDiffTolerance"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_DEBUG_MODE))
-                    {
-                        Settings.Application.SetValueByKey("DebugMode", Regex.Match(line, REGEX_DEBUG_MODE).Groups["DebugMode"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_LOGGING))
-                    {
-                        Settings.Application.SetValueByKey("Logging", Regex.Match(line, REGEX_LOGGING).Groups["Logging"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SHOW_INTERFACE))
-                    {
-                        Settings.User.SetValueByKey("ShowInterface", Convert.ToBoolean(Regex.Match(line, REGEX_SHOW_INTERFACE).Groups["ShowInterface"].Value));
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SHOW_SYSTEM_TRAY_ICON))
-                    {
-                        Settings.User.SetValueByKey("ShowSystemTrayIcon", Convert.ToBoolean(Regex.Match(line, REGEX_SHOW_SYSTEM_TRAY_ICON).Groups["ShowSystemTrayIcon"].Value));
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SNEAKY_PASTA_SNAKE))
-                    {
-                        bool sneakyPastaSnake = Convert.ToBoolean(Regex.Match(line, REGEX_SNEAKY_PASTA_SNAKE).Groups["SneakyPastaSnake"].Value);
-
-                        Settings.User.SetValueByKey("SneakyPastaSnake", Regex.Match(line, REGEX_SNEAKY_PASTA_SNAKE).Groups["SneakyPastaSnake"].Value);
-
-                        if (sneakyPastaSnake)
-                        {
-                            // Hide everything if you're a sneaky pasta snake.
-                            Settings.User.SetValueByKey("ShowInterface", false);
-                            Settings.User.SetValueByKey("ShowSystemTrayIcon", false);
-                        }
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_SERVER_HOST))
-                    {
-                        Settings.SFTP.SetValueByKey("FileTransferServerHost", Regex.Match(line, REGEX_SFTP_SERVER_HOST).Groups["FileTransferServerHost"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_SERVER_PORT))
-                    {
-                        Settings.SFTP.SetValueByKey("FileTransferServerPort", Regex.Match(line, REGEX_SFTP_SERVER_PORT).Groups["FileTransferServerPort"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_CLIENT_USERNAME))
-                    {
-                        Settings.SFTP.SetValueByKey("FileTransferClientUsername", Regex.Match(line, REGEX_SFTP_CLIENT_USERNAME).Groups["FileTransferClientUsername"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_CLIENT_PASSWORD))
-                    {
-                        Settings.SFTP.SetValueByKey("FileTransferClientPassword", Regex.Match(line, REGEX_SFTP_CLIENT_PASSWORD).Groups["FileTransferClientPassword"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_IS_LINUX_SERVER))
-                    {
-                        Settings.SFTP.SetValueByKey("FileTransferIsLinuxServer", Regex.Match(line, REGEX_SFTP_IS_LINUX_SERVER).Groups["FileTransferIsLinuxServer"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_DELETE_LOCAL_FILE_AFTER_SUCCESSFUL_UPLOAD))
-                    {
-                        Settings.User.SetValueByKey("SFTPDeleteLocalFileAfterSuccessfulUpload", Regex.Match(line, REGEX_SFTP_DELETE_LOCAL_FILE_AFTER_SUCCESSFUL_UPLOAD).Groups["SFTPDeleteLocalFileAfterSuccessfulUpload"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SFTP_KEEP_FAILED_UPLOADS))
-                    {
-                        Settings.User.SetValueByKey("SFTPKeepFailedUploads", Regex.Match(line, REGEX_SFTP_KEEP_FAILED_UPLOADS).Groups["SFTPKeepFailedUploads"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_HOST))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailServerHost", Regex.Match(line, REGEX_SMTP_SERVER_HOST).Groups["EmailServerHost"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_PORT))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailServerPort", Regex.Match(line, REGEX_SMTP_SERVER_PORT).Groups["EmailServerPort"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_SSL))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailServerEnableSSL", Regex.Match(line, REGEX_SMTP_SERVER_SSL).Groups["EmailServerEnableSSL"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_SERVER_SSL))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailServerEnableSSL", Regex.Match(line, REGEX_SMTP_SERVER_SSL).Groups["EmailServerEnableSSL"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_CLIENT_USERNAME))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailClientUsername", Regex.Match(line, REGEX_SMTP_CLIENT_USERNAME).Groups["EmailClientUsername"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_CLIENT_PASSWORD))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailClientPassword", Regex.Match(line, REGEX_SMTP_CLIENT_PASSWORD).Groups["EmailClientPassword"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_FROM))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailMessageFrom", Regex.Match(line, REGEX_SMTP_MESSAGE_FROM).Groups["EmailMessageFrom"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_TO))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailMessageTo", Regex.Match(line, REGEX_SMTP_MESSAGE_TO).Groups["EmailMessageTo"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_CC))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailMessageCC", Regex.Match(line, REGEX_SMTP_MESSAGE_CC).Groups["EmailMessageCC"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_BCC))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailMessageBCC", Regex.Match(line, REGEX_SMTP_MESSAGE_BCC).Groups["EmailMessageBCC"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_SUBJECT))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailMessageSubject", Regex.Match(line, REGEX_SMTP_MESSAGE_SUBJECT).Groups["EmailMessageSubject"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_MESSAGE_BODY))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailMessageBody", Regex.Match(line, REGEX_SMTP_MESSAGE_BODY).Groups["EmailMessageBody"].Value);
-                    }
-
-                    if (Regex.IsMatch(line, REGEX_SMTP_PROMPT))
-                    {
-                        Settings.SMTP.SetValueByKey("EmailPrompt", Regex.Match(line, REGEX_SMTP_PROMPT).Groups["EmailPrompt"].Value);
+                        Settings.Application.SetValueByKey(key, value);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseDefaultApplicationSettings", ex);
+            }
+        }
 
-                // This is for when we didn't find an entry for FilenamePattern.
-                // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
-                if (string.IsNullOrEmpty(FileSystem.FilenamePattern))
+        private void ParseDefaultUserSettings()
+        {
+            try
+            {
+                // We don't want to keep the passphrase in the configuration file so give it an empty value here
+                // and let the user set their passphrase (which is a secure hash).
+                Settings.User.SetValueByKey("Passphrase", string.Empty);
+
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
                 {
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nFilenamePattern=" + FileSystem.DefaultFilenamePattern);
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
 
-                    FileSystem.FilenamePattern = FileSystem.DefaultFilenamePattern;
-                }
+                    if (Regex.IsMatch(line, REGEX_USER_SETTING))
+                    {
+                        string key = Regex.Match(line, REGEX_USER_SETTING).Groups["Key"].Value;
+                        string value = Regex.Match(line, REGEX_USER_SETTING).Groups["Value"].Value;
 
-                // This is for when we didn't find an entry for ImageFormat.
-                // (which can happen if we're running autoscreen.exe with an old autoscreen.conf file not created by version 2.4 or higher)
-                if (string.IsNullOrEmpty(ScreenCapture.ImageFormat))
-                {
-                    FileSystem.AppendToFile(FileSystem.ConfigFile, "\nImageFormat=" + ScreenCapture.DefaultImageFormat);
-
-                    ScreenCapture.ImageFormat = ScreenCapture.DefaultImageFormat;
+                        Settings.User.SetValueByKey(key, value);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 Log.WriteExceptionMessage("Config::ParseDefaultUserSettings", ex);
+            }
+        }
+
+        private void ParseDefaultSFTPSettings()
+        {
+            try
+            {
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SFTP_SETTING))
+                    {
+                        string key = Regex.Match(line, REGEX_SFTP_SETTING).Groups["Key"].Value;
+                        string value = Regex.Match(line, REGEX_SFTP_SETTING).Groups["Value"].Value;
+
+                        Settings.SFTP.SetValueByKey(key, value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseDefaultSFTPSettings", ex);
+            }
+        }
+
+        private void ParseDefaultSMTPSettings()
+        {
+            try
+            {
+                foreach (string line in FileSystem.ReadFromFile(FileSystem.ConfigFile))
+                {
+                    if (string.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    {
+                        continue;
+                    }
+
+                    if (Regex.IsMatch(line, REGEX_SMTP_SETTING))
+                    {
+                        string key = Regex.Match(line, REGEX_SMTP_SETTING).Groups["Key"].Value;
+                        string value = Regex.Match(line, REGEX_SMTP_SETTING).Groups["Value"].Value;
+
+                        Settings.SMTP.SetValueByKey(key, value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.WriteExceptionMessage("Config::ParseDefaultSMTPSettings", ex);
             }
         }
 
@@ -1253,6 +870,40 @@ namespace AutoScreenCapture
             {
                 Log.WriteExceptionMessage("Config::ParseMacroTagDefinitions", ex);
             }
+        }
+
+        private void LoadSettings(Security security, ScreenCapture screenCapture)
+        {
+            Settings.Application.Load(Settings, FileSystem);
+
+            Settings.User.Load(Settings, FileSystem);
+
+            Settings.SFTP.Load(Settings, FileSystem);
+
+            Settings.SMTP.Load(Settings, FileSystem);
+
+            Settings.VersionManager.OldApplicationSettings = Settings.Application.Clone();
+
+            Settings.VersionManager.OldUserSettings = Settings.User.Clone();
+
+            Settings.UpgradeApplicationSettings(Settings.Application, FileSystem);
+
+            Settings.UpgradeUserSettings(Settings.User, screenCapture, security, FileSystem);
+
+            Settings.UpgradeSftpSettings(Settings.SFTP, FileSystem);
+
+            Settings.UpgradeSmtpSettings(Settings.SMTP, FileSystem);
+        }
+
+        private void SaveSettings()
+        {
+            Settings.Application.Save(Settings, FileSystem);
+
+            Settings.User.Save(Settings, FileSystem);
+
+            Settings.SFTP.Save(Settings, FileSystem);
+
+            Settings.SMTP.Save(Settings, FileSystem);
         }
     }
 }

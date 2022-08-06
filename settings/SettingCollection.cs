@@ -175,17 +175,6 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Gets a Setting by its unique key. This method also creates the Setting by using the given key if the Setting cannot be found in the collection.
-        /// </summary>
-        /// <param name="key">The unique key of the Setting.</param>
-        /// <param name="defaultValue">The default value to use if the Setting cannot be found in the collection.</param>
-        /// <returns>A Setting object (whether it be an existing Setting or a new Setting).</returns>
-        public Setting GetByKey(string key, object defaultValue)
-        {
-            return GetByKey(key, defaultValue, createKeyIfNotFound: true);
-        }
-
-        /// <summary>
         /// Gets a Setting by its unique key.
         /// </summary>
         /// <param name="key">The unique key of the Setting.</param>
@@ -258,11 +247,6 @@ namespace AutoScreenCapture
             if (string.IsNullOrEmpty(Filepath))
             {
                 return;
-            }
-
-            if (!fileSystem.FileExists(Filepath))
-            {
-                Save(settings, fileSystem);
             }
 
             if (fileSystem.FileExists(Filepath))

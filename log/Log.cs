@@ -54,8 +54,8 @@ namespace AutoScreenCapture
             _fileSystem = fileSystem;
             _macroParser = macroParser;
 
-            DebugMode = Convert.ToBoolean(settings.Application.GetByKey("DebugMode", settings.DefaultSettings.DebugMode).Value);
-            LoggingEnabled = Convert.ToBoolean(settings.Application.GetByKey("Logging", settings.DefaultSettings.Logging).Value);
+            DebugMode = Convert.ToBoolean(settings.Application.GetByKey("DebugMode").Value);
+            LoggingEnabled = Convert.ToBoolean(settings.Application.GetByKey("Logging").Value);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace AutoScreenCapture
 
                     // If we encounter an exception error it's probably better to just error out on exit
                     // but we'll let the user decide if that's what they really want to do.
-                    if (_settings.Application == null || Convert.ToBoolean(_settings.Application.GetByKey("ExitOnError", _settings.DefaultSettings.ExitOnError).Value))
+                    if (_settings.Application == null || Convert.ToBoolean(_settings.Application.GetByKey("ExitOnError").Value))
                     {
                         Environment.Exit(1);
                     }

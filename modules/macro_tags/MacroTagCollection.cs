@@ -486,16 +486,6 @@ namespace AutoScreenCapture
                 xSettings.NewLineHandling = NewLineHandling.Entitize;
                 xSettings.ConformanceLevel = ConformanceLevel.Document;
 
-                if (string.IsNullOrEmpty(fileSystem.MacroTagsFile))
-                {
-                    fileSystem.MacroTagsFile = fileSystem.DefaultMacroTagsFile;
-
-                    if (fileSystem.FileExists(fileSystem.ConfigFile))
-                    {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nMacroTagsFile=" + fileSystem.MacroTagsFile);
-                    }
-                }
-
                 if (fileSystem.FileExists(fileSystem.MacroTagsFile))
                 {
                     fileSystem.DeleteFile(fileSystem.MacroTagsFile);

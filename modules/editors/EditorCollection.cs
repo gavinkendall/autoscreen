@@ -200,16 +200,6 @@ namespace AutoScreenCapture
                     ConformanceLevel = ConformanceLevel.Document
                 };
 
-                if (string.IsNullOrEmpty(fileSystem.EditorsFile))
-                {
-                    fileSystem.EditorsFile = fileSystem.DefaultEditorsFile;
-
-                    if (fileSystem.FileExists(fileSystem.ConfigFile))
-                    {
-                        fileSystem.AppendToFile(fileSystem.ConfigFile, "\nEditorsFile=" + fileSystem.EditorsFile);
-                    }
-                }
-
                 if (fileSystem.FileExists(fileSystem.EditorsFile))
                 {
                     fileSystem.DeleteFile(fileSystem.EditorsFile);

@@ -88,7 +88,7 @@ namespace AutoScreenCapture
 
                     comboBoxFilterValue.DataSource = filterValueList;
 
-                    int selectedFilterValueIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterValue", 0).Value);
+                    int selectedFilterValueIndex = Convert.ToInt32(_config.Settings.User.GetByKey("FilterValue").Value);
 
                     if (comboBoxFilterValue.Items.Count > 0)
                     {

@@ -26,11 +26,6 @@ namespace AutoScreenCapture
     public class Settings
     {
         /// <summary>
-        /// The default settings.
-        /// </summary>
-        public DefaultSettings DefaultSettings { get; private set; }
-
-        /// <summary>
         /// The name of this application.
         /// </summary>
         public string ApplicationName { get; private set; }
@@ -131,13 +126,11 @@ namespace AutoScreenCapture
         }
 
         /// <summary>
-        /// Loads the settings and saves settings files based on the given file system.
+        /// Initializes the settings for the application.
         /// </summary>
         /// <param name="fileSystem">The file system to use.</param>
-        public void Load(FileSystem fileSystem)
+        public void Initialize(FileSystem fileSystem)
         {
-            DefaultSettings = new DefaultSettings();
-
             _versionCollection = new VersionCollection(this);
 
             // This version.
@@ -283,211 +276,18 @@ namespace AutoScreenCapture
                 Filepath = fileSystem.UserSettingsFile
             };
 
-            SMTP = new SettingCollection
-            {
-                Filepath = fileSystem.SmtpSettingsFile
-            };
-
             SFTP = new SettingCollection
             {
                 Filepath = fileSystem.SftpSettingsFile
             };
 
+            SMTP = new SettingCollection
+            {
+                Filepath = fileSystem.SmtpSettingsFile
+            };
+
             // Construct the version manager using the version collection and setting collection (containing the user's settings) we just prepared.
             VersionManager = new VersionManager(_versionCollection, User);
-
-            if (Application != null && !string.IsNullOrEmpty(Application.Filepath))
-            {
-                if (fileSystem.FileExists(Application.Filepath))
-                {
-                    Application.Load(this, fileSystem);
-
-                    if (!Application.KeyExists("DebugMode"))
-                    {
-                        Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
-                    }
-
-                    if (!Application.KeyExists("ExitOnError"))
-                    {
-                        Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
-                    }
-
-                    if (!Application.KeyExists("Logging"))
-                    {
-                        Application.Add(new Setting("Logging", DefaultSettings.Logging));
-                    }
-
-                    if (!Application.KeyExists("LowDiskMode"))
-                    {
-                        Application.Add(new Setting("LowDiskMode", DefaultSettings.LowDiskMode));
-                    }
-
-                    if (!Application.KeyExists("LowDiskPercentageThreshold"))
-                    {
-                        Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
-                    }
-
-                    if (!Application.KeyExists("LowDiskBytesThreshold"))
-                    {
-                        Application.Add(new Setting("LowDiskBytesThreshold", DefaultSettings.LowDiskBytesThreshold));
-                    }
-
-                    if (!Application.KeyExists("ScreenshotsLoadLimit"))
-                    {
-                        Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
-                    }
-
-                    if (!Application.KeyExists("AutoStartFromCommandLine"))
-                    {
-                        Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
-
-                        // If this is a version before 2.3.0.0 then set this setting to true because
-                        // starting a screen capture session was the old behaviour when running autoscreen.exe from the command line.
-                        if (VersionManager.IsOldAppVersion(this, Application.AppCodename, Application.AppVersion))
-                        {
-                            Version v2300 = VersionManager.Versions.Get(CODENAME_BOOMBAYAH, CODEVERSION_BOOMBAYAH);
-                            Version configVersion = VersionManager.Versions.Get(Application.AppCodename, Application.AppVersion);
-
-                            if (v2300 != null && configVersion != null && configVersion.VersionNumber < v2300.VersionNumber)
-                            {
-                                Application.GetByKey("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine).Value = true;
-                            }
-                        }
-                    }
-
-                    if (!Application.KeyExists("FilepathLengthLimit"))
-                    {
-                        Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
-                    }
-
-                    if (!Application.KeyExists("StopOnLowDiskError"))
-                    {
-                        Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
-                    }
-
-                    if (!Application.KeyExists("ActiveWindowTitleLengthLimit"))
-                    {
-                        Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
-                    }
-
-                    if (!Application.KeyExists("AllowUserToConfigureEmailSettings"))
-                    {
-                        Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
-                    }
-
-                    if (!Application.KeyExists("AllowUserToConfigureFileTransferSettings"))
-                    {
-                        Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
-                    }
-
-                    // We need to import the value of the OptimizeScreenCapture key and use it as a user setting if we find it as an application setting.
-                    // This is because 2.4 now uses the key as a user setting instead of an application setting.
-                    if (Application.KeyExists("OptimizeScreenCapture"))
-                    {
-                        if (User != null && !string.IsNullOrEmpty(User.Filepath) && fileSystem.FileExists(User.Filepath))
-                        {
-                            Setting optimizeScreenCapture = Application.GetByKey("OptimizeScreenCapture");
-
-                            if (optimizeScreenCapture != null)
-                            {
-                                User.Add(optimizeScreenCapture);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    Application.Add(new Setting("DebugMode", DefaultSettings.DebugMode));
-                    Application.Add(new Setting("ExitOnError", DefaultSettings.ExitOnError));
-                    Application.Add(new Setting("Logging", DefaultSettings.Logging));
-                    Application.Add(new Setting("LowDiskMode", DefaultSettings.LowDiskMode));
-                    Application.Add(new Setting("LowDiskPercentageThreshold", DefaultSettings.LowDiskPercentageThreshold));
-                    Application.Add(new Setting("LowDiskBytesThreshold", DefaultSettings.LowDiskBytesThreshold));
-                    Application.Add(new Setting("ScreenshotsLoadLimit", DefaultSettings.ScreenshotsLoadLimit));
-                    Application.Add(new Setting("AutoStartFromCommandLine", DefaultSettings.AutoStartFromCommandLine));
-                    Application.Add(new Setting("FilepathLengthLimit", DefaultSettings.FilepathLengthLimit));
-                    Application.Add(new Setting("StopOnLowDiskError", DefaultSettings.StopOnLowDiskError));
-                    Application.Add(new Setting("ActiveWindowTitleLengthLimit", DefaultSettings.ActiveWindowTitleLengthLimit));
-                    Application.Add(new Setting("AllowUserToConfigureEmailSettings", DefaultSettings.AllowUserToConfigureEmailSettings));
-                    Application.Add(new Setting("AllowUserToConfigureFileTransferSettings", DefaultSettings.AllowUserToConfigureFileTransferSettings));
-                    Application.Save(this, fileSystem);
-                }
-            }
-
-            if (User != null && !string.IsNullOrEmpty(User.Filepath) && !fileSystem.FileExists(User.Filepath))
-            {
-                User.Add(new Setting("ScreenCaptureInterval", DefaultSettings.ScreenCaptureInterval));
-                User.Add(new Setting("CaptureLimit", DefaultSettings.CaptureLimit));
-                User.Add(new Setting("CaptureLimitCheck", DefaultSettings.CaptureLimitCheck));
-                User.Add(new Setting("TakeInitialScreenshot", DefaultSettings.TakeInitialScreenshot));
-                User.Add(new Setting("ShowSystemTrayIcon", DefaultSettings.ShowSystemTrayIcon));
-                User.Add(new Setting("Passphrase", DefaultSettings.Passphrase));
-                User.Add(new Setting("ScreenshotLabel", DefaultSettings.ScreenshotLabel));
-                User.Add(new Setting("ApplyScreenshotLabel", DefaultSettings.ApplyScreenshotLabel));
-                User.Add(new Setting("DefaultEditor", DefaultSettings.DefaultEditor));
-                User.Add(new Setting("FirstRun", DefaultSettings.FirstRun));
-                User.Add(new Setting("StartScreenCaptureCount", DefaultSettings.StartScreenCaptureCount));
-                User.Add(new Setting("ActiveWindowTitleCaptureCheck", DefaultSettings.ActiveWindowTitleCaptureCheck));
-                User.Add(new Setting("ActiveWindowTitleNoMatchCheck", DefaultSettings.ActiveWindowTitleNoMatchCheck));
-                User.Add(new Setting("ActiveWindowTitleCaptureText", DefaultSettings.ActiveWindowTitleCaptureText));
-                User.Add(new Setting("UseKeyboardShortcuts", DefaultSettings.UseKeyboardShortcuts));
-                User.Add(new Setting("KeyboardShortcutStartScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier1));
-                User.Add(new Setting("KeyboardShortcutStartScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStartScreenCaptureModifier2));
-                User.Add(new Setting("KeyboardShortcutStartScreenCaptureKey", DefaultSettings.KeyboardShortcutStartScreenCaptureKey));
-                User.Add(new Setting("KeyboardShortcutStopScreenCaptureModifier1", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier1));
-                User.Add(new Setting("KeyboardShortcutStopScreenCaptureModifier2", DefaultSettings.KeyboardShortcutStopScreenCaptureModifier2));
-                User.Add(new Setting("KeyboardShortcutStopScreenCaptureKey", DefaultSettings.KeyboardShortcutStopScreenCaptureKey));
-                User.Add(new Setting("KeyboardShortcutCaptureNowArchiveModifier1", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier1));
-                User.Add(new Setting("KeyboardShortcutCaptureNowArchiveModifier2", DefaultSettings.KeyboardShortcutCaptureNowArchiveModifier2));
-                User.Add(new Setting("KeyboardShortcutCaptureNowArchiveKey", DefaultSettings.KeyboardShortcutCaptureNowArchiveKey));
-                User.Add(new Setting("KeyboardShortcutCaptureNowEditModifier1", DefaultSettings.KeyboardShortcutCaptureNowEditModifier1));
-                User.Add(new Setting("KeyboardShortcutCaptureNowEditModifier2", DefaultSettings.KeyboardShortcutCaptureNowEditModifier2));
-                User.Add(new Setting("KeyboardShortcutCaptureNowEditKey", DefaultSettings.KeyboardShortcutCaptureNowEditKey));
-                User.Add(new Setting("KeyboardShortcutRegionSelectClipboardModifier1", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier1));
-                User.Add(new Setting("KeyboardShortcutRegionSelectClipboardModifier2", DefaultSettings.KeyboardShortcutRegionSelectClipboardModifier2));
-                User.Add(new Setting("KeyboardShortcutRegionSelectClipboardKey", DefaultSettings.KeyboardShortcutRegionSelectClipboardKey));
-                User.Add(new Setting("AutoSaveFolder", DefaultSettings.AutoSaveFolder));
-                User.Add(new Setting("AutoSaveMacro", DefaultSettings.AutoSaveMacro));
-                User.Add(new Setting("KeyboardShortcutRegionSelectAutoSaveModifier1", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier1));
-                User.Add(new Setting("KeyboardShortcutRegionSelectAutoSaveModifier2", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveModifier2));
-                User.Add(new Setting("KeyboardShortcutRegionSelectAutoSaveKey", DefaultSettings.KeyboardShortcutRegionSelectAutoSaveKey));
-                User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier1", DefaultSettings.KeyboardShortcutRegionSelectEditModifier1));
-                User.Add(new Setting("KeyboardShortcutRegionSelectEditModifier2", DefaultSettings.KeyboardShortcutRegionSelectEditModifier2));
-                User.Add(new Setting("KeyboardShortcutRegionSelectEditKey", DefaultSettings.KeyboardShortcutRegionSelectEditKey));
-                User.Add(new Setting("ActiveWindowTitleMatchType", DefaultSettings.ActiveWindowTitleMatchType));
-                User.Add(new Setting("SaveScreenshotRefs", DefaultSettings.SaveScreenshotRefs));
-                User.Add(new Setting("Preview", DefaultSettings.Preview));
-                User.Add(new Setting("OptimizeScreenCapture", DefaultSettings.OptimizeScreenCapture));
-                User.Save(this, fileSystem);
-            }
-
-            if (SMTP != null && !string.IsNullOrEmpty(SMTP.Filepath) && !fileSystem.FileExists(SMTP.Filepath))
-            {
-                // Version 2.3.4.0 now keeps the email settings in its own SMTP settings file instead of application settings.
-                SMTP.Add(new Setting("EmailServerHost", DefaultSettings.EmailServerHost));
-                SMTP.Add(new Setting("EmailServerPort", DefaultSettings.EmailServerPort));
-                SMTP.Add(new Setting("EmailServerEnableSSL", DefaultSettings.EmailServerEnableSSL));
-                SMTP.Add(new Setting("EmailClientUsername", DefaultSettings.EmailClientUsername));
-                SMTP.Add(new Setting("EmailClientPassword", DefaultSettings.EmailClientPassword));
-                SMTP.Add(new Setting("EmailMessageFrom", DefaultSettings.EmailMessageFrom));
-                SMTP.Add(new Setting("EmailMessageTo", DefaultSettings.EmailMessageTo));
-                SMTP.Add(new Setting("EmailMessageCC", DefaultSettings.EmailMessageCC));
-                SMTP.Add(new Setting("EmailMessageBCC", DefaultSettings.EmailMessageBCC));
-                SMTP.Add(new Setting("EmailMessageSubject", DefaultSettings.EmailMessageSubject));
-                SMTP.Add(new Setting("EmailMessageBody", DefaultSettings.EmailMessageBody));
-                SMTP.Add(new Setting("EmailPrompt", DefaultSettings.EmailPrompt));
-                SMTP.Save(this, fileSystem);
-            }
-
-            if (SFTP != null && !string.IsNullOrEmpty(SFTP.Filepath) && !fileSystem.FileExists(SFTP.Filepath))
-            {
-                // Version 2.3.4.0 introduces File Transfer (SFTP) settings.
-                SFTP.Add(new Setting("FileTransferServerHost", DefaultSettings.FileTransferServerHost));
-                SFTP.Add(new Setting("FileTransferServerPort", DefaultSettings.FileTransferServerPort));
-                SFTP.Add(new Setting("FileTransferClientUsername", DefaultSettings.FileTransferClientUsername));
-                SFTP.Add(new Setting("FileTransferClientPassword", DefaultSettings.FileTransferClientPassword));
-                SFTP.Save(this, fileSystem);
-            }
         }
 
         /// <summary>
@@ -647,7 +447,7 @@ namespace AutoScreenCapture
             // SaveScreenshotRefs is a new user setting as of 2.3.4.7 so make sure to add it for older versions.
             if (v2346 != null && versionInConfig != null && versionInConfig.VersionNumber <= v2346.VersionNumber)
             {
-                User.Add(new Setting("SaveScreenshotRefs", DefaultSettings.SaveScreenshotRefs));
+                User.Add(new Setting("SaveScreenshotRefs", true));
             }
 
             if (versionInConfig.VersionString.Equals("2.2.0.0") ||

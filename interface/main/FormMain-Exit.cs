@@ -34,7 +34,7 @@ namespace AutoScreenCapture
             {
                 _log.WriteMessage("Exiting application");
 
-                string passphrase = _config.Settings.User.GetByKey("Passphrase", _config.Settings.DefaultSettings.Passphrase).Value.ToString();
+                string passphrase = _config.Settings.User.GetByKey("Passphrase").Value.ToString();
 
                 if (!string.IsNullOrEmpty(passphrase))
                 {

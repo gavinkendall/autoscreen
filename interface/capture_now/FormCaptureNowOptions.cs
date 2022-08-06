@@ -44,7 +44,7 @@ namespace AutoScreenCapture
 
         private void FormCaptureNowOptions_Load(object sender, System.EventArgs e)
         {
-            textBoxCaptureNowMacro.Text = _config.Settings.User.GetByKey("CaptureNowMacro", _fileSystem.DefaultFilenamePattern).Value.ToString();
+            textBoxCaptureNowMacro.Text = _config.Settings.User.GetByKey("CaptureNowMacro").Value.ToString();
         }
 
         private void Save()
