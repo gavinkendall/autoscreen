@@ -219,17 +219,7 @@ namespace AutoScreenCapture
         /// <param name="e"></param>
         private void FormMain_Load(object sender, EventArgs e)
         {
-            bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun").Value);
-
             string welcome = "Welcome to Auto Screen Capture";
-
-            if (firstRun)
-            {
-                welcome += " - Please click on Help to get started with the application";
-
-                // To be figured out later. I want to have a "Setup Wizard" opened on the first run.
-                //_formSetupWizard.ShowDialog(this);
-            }
 
             HelpMessage(welcome);
 
@@ -480,6 +470,21 @@ namespace AutoScreenCapture
                 if (WindowState == FormWindowState.Minimized)
                 {
                     WindowState = FormWindowState.Normal;
+                }
+
+                bool firstRun = Convert.ToBoolean(_config.Settings.User.GetByKey("FirstRun").Value);
+
+                if (firstRun)
+                {
+                    // Show "Screen Capture Status" if it's the first run.
+                    if (!_formScreenCaptureStatus.Visible)
+                    {
+                        _formScreenCaptureStatus.Show();
+                    }
+                    else
+                    {
+                        _formScreenCaptureStatus.Activate();
+                    }
                 }
 
                 _log.WriteDebugMessage("Running triggers of condition type InterfaceShowing");

@@ -242,6 +242,15 @@ namespace AutoScreenCapture
             _appReady = true;
 
             ParseCommandLineArguments();
+
+            // Show a preview of all screens and regions if Preview is enabled.
+            if (_preview)
+            {
+                ShowScreenshotBySlideIndex();
+
+                _formScreen.UpdatePreviewImage(_screenCapture);
+                _formRegion.UpdatePreviewImage(_screenCapture);
+            }
         }
 
         /// <summary>

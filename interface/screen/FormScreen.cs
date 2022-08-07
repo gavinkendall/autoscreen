@@ -385,7 +385,11 @@ namespace AutoScreenCapture
             }
         }
 
-        private void UpdatePreviewImage(ScreenCapture screenCapture)
+        /// <summary>
+        /// Update the preview image.
+        /// </summary>
+        /// <param name="screenCapture"></param>
+        public void UpdatePreviewImage(ScreenCapture screenCapture)
         {
             try
             {
